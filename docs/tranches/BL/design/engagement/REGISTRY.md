@@ -1688,3 +1688,264 @@ Unchanged (`§3.5`, `§P1-9.4`, `§P2-8.4`, `§P3-8.4`, `§P4-8.4`, `§P5-8.4`):
 - D2's `dock` adoption and the dock's `:active` presses land, or a dock scene renders with D2's leave and its presses name their listener;
 - D3's ambient amplitude lands, so CK-19 and CK-01's ambient cell can pass on hardware;
 - passes 7 and 8 are both clean.
+
+---
+
+# D5 · pass 7 · REGISTRY: the candidate A+E after pass 7
+
+| field | value |
+|---|---|
+| seat | D5 pass-7 agglomeration (`§P6-8.3` wave 4). It closes pass 7: the candidate's status as its two critics scored it, ruled where they differ, the clean-pass count, whether the loop has reached its fixed point, what D2 and D3 hold, the owner packet with F-5 asked, every next-pass defect class placed, and the pass-8 plan on the unchanged CK-01..CK-27 |
+| model | `claude-opus-5-5`, asserted from own system identity |
+| HEAD | `69dadf896`. `git diff --stat v10.1.0 HEAD -- src` prints nothing: every pass-7 seat built on the 10.1.0 bytes, in worktrees. `release/10.1.1`, `10.1.2` and `10.1.3` are **not** ancestors of HEAD (`git merge-base --is-ancestor`), so the base did not move and F5‴ carried unchanged (`§P6-8.2`) |
+| inputs, read in full | every report under `pass-7/`: `H7.md`, `P-A7.md`, `P-E7.md`, `C-E7.md`, `C-A7.md` (the completion seat's, which carries the first seat's partial state as a note); this file's earlier parts; `../../CHARTER.md` design-loop section; `../../audit/INBOUND.md` (mtime 2026-10-28 20:13, re-read at this seat's start; last row O-111, which W-0.1 owns, not D5; the last D5 row is still O-103d); `../../FORMATION-PROGRESS.md` to its 2026-10-29 "C-A7 completed (C-A7b)" line |
+| critics' completeness | **Both critiques are complete.** C-A7's first seat stopped inside E-7 having scored nothing (FORMATION-PROGRESS 2026-10-28, "C-A7 returned INCOMPLETE"). The completion seat C-A7b ran the whole battery in both engines, one WebKit acquisition, and scored all 27 rows (`C-A7.md` header and §2). C-E7 ran its whole battery in one acquisition (`C-E7.md` header). No row below rests on an unrun cell |
+| instruments | none that measure. This seat ran `shasum` on the four patches of record (all match their reports: `P-A7` `e6e42ba3…`, `P-E7` `a6c82db1…`, `F5ppp` `24cec509…`, `P-A6` `2464bf18…`), `grep -c STAGE_VEIL` on `P-E7.patch` (0), the ancestry check above, and `test -e` on every path in §P7-5. Every number cites the seat that measured it (P-3) |
+| fences | no source edit, no git write; this part is the only write. Nothing under `~/.claude` was read |
+| engines | Chromium 149.0.7827.55 and Playwright WebKit 26.5, headless shell, no GPU arguments. Playwright WebKit is not Safari. Under O-103d (3) every Safari cell is read against the seat's guarded WebKit run of record; Safari-only engine facts are reported, not gated. Real Safari: **UNMEASURED (owner's safaridriver checkbox)** |
+| rulings in force | O-103d (1)-(5); Q-1 (c) and Q-4 (b) as defaults; O-87 binds every rung's paint. No ruling arrived during pass 7 |
+
+Short citations: `C-A7 §0.6` is that critic's in-brief item 6; `C-E7 §3 CK-20` its per-row section; `H7 §n`, `P-A7 §n`, `P-E7 §n` the seats' sections.
+
+## P7-0 · In brief
+
+| candidate | built as | critics | rows closed / applicable | pass 6 | status |
+|---|---|---|---:|---:|---|
+| **A+E** (A's pop, press and chip; E's stage, one arm) | `P-E7.patch` `a6c82db1…` = F5‴ + P-A6 + A7 + E's part with the veil and `"every"` arms deleted | C-A7 **21/27**, C-E7 **20/27**; ruled **21/27 = 78 %** (§P7-4) | 18/27 = 67 % | **ADVANCE** (not converged) |
+
+Closed on the candidate: **CK-02, 03, 04, 05, 06, 07, 08, 09, 10, 11, 12, 13, 14, 15, 16, 18, 21, 23, 24, 26, 27.** Open: **CK-01, 17, 19** (held by D2 and D3) and **CK-20, 22, 25** (D5 can build).
+
+**Pass 7 is not a clean pass. The clean-pass count stays 0.** **The loop has not reached its fixed point:** CK-20, CK-22 and CK-25 hold counterexamples that D5 can remove by building. What D5 cannot close is D2's (the `dock` latch, the dock's `:active` presses) and D3's (the Aurora's pointer amplitude, and now the lean's own scalar, which A's reduce leg needs). The earliest convergence moves to the end of pass 9, and only if passes 8 and 9 are both clean.
+
+The score ran 52 % (pass 4, composition), 37 %, 67 %, 78 %. Six findings shape pass 8.
+
+1. **A's part closed every row it was sent to close, and its bytes now hold no buildable open item.** CK-12 closes on both critics: `--scale-commit-pop: calc(2 - var(--scale-press))` (1.04, the press mirrored about rest) and `--rung-crest: var(--scale-engage)` (1.06, the engaged rung, for a command and the 20 px bit). The bit clause cites `control-bit.css:289-290`'s 0.8 px legible floor, which predates D5 (`155aa2f11`, 2026-08-08), and both critics read it as admissible (C-A7 §3 CK-12, C-E7 §3). The `crest` plant fails 8/8 per engine in paint and in the unit cell, and both crest inputs, planted `nonsense`, either keep the pop or kill it with one `console.error` (C-A7 §0.1). CK-27 closes: the Configurator preset chip is `ConfiguratorPresetChip`, an exported `chosen` member that answers hover at 3.78-5.23 levels mean and press at 46.5-50.7 % of its pixels by ≥ 16 levels, and `chipmute` fails H7's cell in both engines (C-A7 §3 CK-27). P-1 holds: the pop's reduce arm is one mechanism, and `prmY` fails 28 cells per engine (P-A7 §3, both critics). `usePressMark` is public on `/motion-core`, the Aurora's cursor has one writer, and P-A5 row 4 and P-A4 M-9 are retired (P-A7 §5). The Button commits visibly in a still (×1.0597-1.0606 against pressed ×1.032), and the coarse dark Switch press lightens the thumb (ΔL 0.0873 / 0.0862 against the pass-6 light references 0.0782 / 0.0773). The ambient reduce leg is the one A item not built, and it cannot be built in A's bytes: one uniform, `uCursorStrength`, drives both the swirl (geometry) and the lean (light), so any reduce write that lights the field also swirls it (P-A7 §6 item 1). It waits on D3.
+2. **E's deletion is complete and the carry's halving is read to its cause.** `STAGE_VEIL`, `POINTER_STAGE`, the `"every"` branch, the stage veil and its CSS, and `flingStage` have 0 hits in `src` on both critics, against 17/6/12/4/6 on the pass-6 patch (C-E7 §1, C-A7 §1). E's `src` line is 51 lines smaller than in pass 6 after adding the clip (P-E7 §1). The WebKit halving was `flingStage`: a fine-pointer hold is a holder, so every slider release took the stage stretch, which moves the value point only by its fraction of the host's width. At matched release velocity the stretch carries 0.54-0.60 of the body carry in both engines, reproduced by both critics (P-E7 §3; C-E7 §3 CK-05; C-A7 §2 `fling6`). With the route deleted, every slider read whose release the rule measured above 0 px/s carries ≥ 5.95 px across three seats and both engines (§P7-3). **F-5 is askable** (§P7-6).
+3. **CK-20: the clip cures the overflow rectangle and nothing else.** H7's clip-vanish cell and P-E7's touch cell read 0 px² on every step in both engines, and `clip6` brings back the pass-6 figures to the px² (P-E7 §3, both critics). But `clipBox` reads only ancestors' `overflow` boxes and paint containment, and the library paints other clips. C-E7 drove four (C-E7 §3 CK-20):
+   - the library's own feather (`.fading-scroll`, the Configurator's controls column): promoted, the control paints at ×1.46 (Chromium) and ×1.39 (WebKit) of its in-flow visibility, against ×1.05 / ×1.00 with the feather off. fourier-analysis renders a glass `<Slider>` in that column (`VisualizationView.vue:459`, `EquationView.vue:495`);
+   - a 40 px rounded scroller: 221 px² (Chromium) and 201 px² (WebKit) painted in the corners, against a 16 px² bound;
+   - a scaled ancestor (`scale: 0.8`): the control jumps 52.2 px (Chromium) and 28.7 px (WebKit) in the frame it promotes, and paints at ×0.848 of its in-flow width. A translated ancestor reads 0.0 px;
+   - a wheel scroll in Chromium: one frame of 730 px² unclipped paint above the card in 5 of 9 engaged films (203 px² in a sixth), 0 of 9 released films, against `clip6`'s 731-866 px². WebKit is clean.
+4. **CK-25: CK-20's cure cuts the loupe.** A touch hold promotes the slider and the loupe rises 80.6 px above it. The clip now cuts the loupe at its scroller's edge: 93 % of it with the control 4 px below the top edge, 40 % mid-box in the 120 px `clipstale` scroller, in both engines (C-A7 §0.6, `c7-probe cliploupe`). Every loupe cell P-E7 ran was mid-page, so the cost could not show there. The loupe at `k` max passes E's four cells per engine and `loupe6` fails them, and both critics read it as better than pass 6: a window onto a magnified strip, not a split pill. Neither reads it as a lens yet: the fill still ends in its own round pill cap at the window's centre, which reads as a knob, and the housing has no lens edge (C-E7 §3 CK-25, C-A7 §3 CK-25).
+5. **The promoted body now buys only stacking, and E's promotion has met a place or clip counterexample five passes running.** Pass 2: one shared anchor (68 px teleport). Pass 4: place re-read only on mutation (127.2 px glide). Pass 5: the observer's inward and clipped blind spots. Pass 6: the escape over the card and the one-step vanish. Pass 7: every clip that is not an overflow rectangle, a scaled ancestor, a scroll lag, and the loupe cut. P-E7's clip makes a promoted body paint what its place would paint. A body that paints what its place paints is what the in-place grow already gives, with no top layer, no per-frame clip write and no anchor to lag. The one part of an engaged slider meant to leave its place is the loupe (C-A7 §4, "the clip should bound the control's body, not the loupe"). The charter asks for a fresh formulation when a pass stalls ("Portfolio management"). §P7-8 states the invariant once for the ruled construction, measures the fresh formulation beside it without scoring it, and §P7-6 holds the Q-3 question for the owner until both are measured.
+6. **CK-22: A's side is complete; E's side is not.** A's rows M-12..M-22 reproduce by both critics' greps at HEAD (slides 54, fourier-analysis 22, value.js 3 material-class lines; `:active` on a material class in consumer source 0; one pressable site, slides `DeckSettings.vue:149`, named in M-12). E retired none of its own stale rows. P-E2 §4 rows 1, 2 and 4, E-M7's `"every"` clause and E-M8's `true` arm describe deleted bytes. M-24 promises a promoted slider "stays inside the scroller or card it sits in, as it does at rest", which finding 3 shows false on a feathered, rounded or scaled card (C-E7 §3 CK-22, C-A7 §3 CK-22). C-A7 also finds M-20 counts the wrong population: it lists `setCursor` callers, while the surface it migrates is the `<Aurora>` root. The three `<Aurora>` mounts (atlas `Atmosphere.vue:137`, speedtest `App.vue:48`, keyframes.js `HeroAurora.vue:25`) are all `pointer-events: none`, so the root leg never fires in any consumer. "Nothing changes for them" holds, but for that reason (C-A7 §3 CK-22, a note).
+
+## P7-1 · Registry
+
+| id | family | status after pass 7 | centre | carries into pass 8 |
+|---|---|---|---|---|
+| **A+E** | the declared register with the engaged stage | ADVANCE, the one convergence candidate | A: one table, a stamp per member, the commit a geometric pop on `data-state` whose crests are register rows (the press mirrored; the engaged rung), one reduce mechanism, the press on the door's mark (public), the preset chip a `chosen` member, one cursor writer. E: the held control grown in place on a fine pointer and promoted on touch or keyboard (Q-3 (c)), no veil, the rest box heard each frame, the promoted body clipped to its place's overflow box, the carry on the body | A's bytes carry unchanged (no A build seat unless D3's lane lands, §P7-8.1). E's part builds to the place-paint invariant; the fresh formulation is measured beside it, not scored |
+| D5-B | the WAAPI commit path | RETIRED (O-103d (1), `§P6-2`) | — | none |
+| D5-B (door) | the door's parts | in the floor (F5‴) | hand (primary button only), modality, writer, release rule, stateless edge, press mark, one-frame arming | F5‴ unchanged unless the base moves or D3's lane is published (§P7-8.2) |
+| D5-C, D5-D | — | RETIRED at pass 1 | — | unchanged |
+| D5-X1..X3 | — | not minted | — | unchanged |
+
+## P7-2 · The candidate
+
+### A+E · ADVANCE, 78 %
+
+**What held**, both critics reproducing each item in both engines unless marked:
+- CK-02, CK-10: E-2 164/0 on both critics (narrowest margin now the checkbox's 0.40 px over the 0.8 px bound, where the chip's was 0.016 px; P-A7 §4); E-9 85/0 with 21 `commit-instant` cells per engine; H7's PRM plant reaches all 14 stateful faces, tabs included; `prmY` 28 FAIL per engine.
+- CK-03, CK-04 (E-3 22/0 per engine), CK-06 (E-5 56/0), CK-07 (S6 RETIRED), CK-08 (only `GlassDock.vue`'s `data-held`, D2's named clause), CK-09 (E-8 19/0), CK-11 (E-12 102/0 Chromium, 101/0/1 WebKit; the select press driven without opening in both engines, ×1.0000), CK-13, CK-14, CK-15 (one engaged root through every hand-off; the hand-off drop graded against its own release, 0.0071-0.0102 against the reference + 0.002).
+- CK-05: §P7-4.
+- CK-12: finding 1.
+- CK-16: rest 0 layouts/s in Chromium, WebKit the engine fact; the engaged idle loop runs 123-129 rAF and ResizeObserver callbacks/s in Chromium and 98/s in WebKit, on- and off-screen, at 0.0 layouts/s and 0.0 style recalcs/s, stated and not bounded (P-E7 §3, both critics). The row passes by its letter.
+- CK-18: `RELEASE_RULE` read by the slider, the sortable list, the Sheet detents and the tabs drag; the Sheet lands in velocity order (H7 §3.1; both critics).
+- CK-21: E-11 7/0/1 per engine; `--rung-crest` read loudly in the unit cell and, in the browser, by C-A7's `crestinput` (8/8 per engine).
+- CK-23: **198 files +5180/−1598 (`src` 153, +3243/−1318)**, reproduced to the line by both critics. CK-24. CK-26 (E's paint change is a `mask-image` and a deletion; no veil element; no blur token touched).
+- CK-27: finding 1. Every A7 and E7 plant is red in both engines; `fling6` reads by ratio in WebKit, where the 4 px bound cannot see it (§P7-6 F-5).
+- Gates: build, typecheck, `demo:dist:build` exit 0; vitest 247 files, 2426 passed, 10 expected fail, 1 skipped (P-E7 §2). Neither critic re-ran them, and both say so.
+
+**Open rows, each with its counterexample.** Rows marked ◇ cannot close inside D5. Unmarked rows can.
+
+1. **CK-01.** ◇ The `dock` latch, 54/55 (D2). ◇ The ambient runtime cell: WebKit 1.72-1.84 levels against 1.23-1.26 at rest, not ≥ 2× (D3's amplitude); Chromium headless is the engine limit (the SwiftShader `css` substrate). ◇ The ambient reduce leg reads 0.00: A's write is gated on D3 splitting the lean from the swirl (finding 1).
+2. **CK-17.** ◇ D2: the dock's `:active` presses name no `touchstart` listener. Every D5 press is on the mark.
+3. **CK-19.** ◇ D3: the amplitude, and the lean's own scalar for the reduce leg. Real hardware unmeasured this pass.
+4. **CK-20.** Four counterexamples (finding 3): the feather, the rounded scroller, the scaled ancestor and the Chromium scroll lag. C-A7's own `clipwheel` (14 real 3 px wheel events, a still per step) reads 0 px², which is a still and does not read a one-frame lag either way (C-A7 §3 CK-20).
+5. **CK-22.** E's stale rows and M-24's overclaim (finding 6).
+6. **CK-25.** Not iOS-27 grade, by both critics from their own frames:
+   - the touch loupe cut by the clip (finding 4), new;
+   - the loupe's centre reads as a knob, the housing has no lens edge;
+   - the promoted control over a feathered or rounded card ("the clearest below-grade frame in the set", C-E7 §3 CK-25);
+   - the ambient exemplar is static (D3).
+
+   The committed Button, the dark coarse Switch press (faint but present), the Switch commit, the accordion's full-row pop ("a commit, not a jolt", C-A7 §3 CK-25), the disclosure ladder and the sortable lift read well.
+
+**The pass-6 counterexamples this pass removed** (P-3: each cited where it was measured):
+- The crest figures sized by the witness and the sampler (CK-12; P-A7 §1 item 1).
+- The preset chip's elegant reduction (CK-27, CK-25; P-A7 §1 item 3).
+- The PRM plant's unreachable tabs face (CK-27; H7 §1).
+- Two mechanisms holding the reduce pop (P-1; P-A7 §1 item 2).
+- The material classes' press on a private mark, the second cursor writer, the missing MIGRATION rows for A's pass-6 changes, P-A5 row 4 and P-A4 M-9 (CK-22, A's side; P-A7 §5).
+- The committed Button unreadable in a still, the dark coarse Switch press (CK-25, A's items).
+- The clip escape and its one-step vanish over an overflow box, keyboard and touch (CK-20; P-E7 §3).
+- The WebKit carry's halving (CK-05; P-E7 §3).
+- The Sheet's "split" (CK-05): H7 read it as the drive's velocity spread crossing the detent threshold at 903..918 px/s, never an equal-velocity split (H7 §3.1).
+- The loupe's split pill and hard 1 px mark (CK-25, in part).
+- The veil and `"every"` arms' dead code (E-1, P-1).
+
+## P7-3 · The floor (F5‴) as pass 7 left it
+
+No floor seat ran. The base did not move, and H7's velocity cell found no Sheet split at equal velocity (`sheet_splits_at_equal_velocity: false`, H7 §3.1), so neither of `§P6-8.2`'s triggers fired. F5‴ carried byte for byte inside P-A7 (P-A7 §1).
+
+| item | state | evidence | row |
+|---|---|---|---|
+| F-1..F-4, F-7, F-9..F-12 | **hold** | both critics' replays | as `§P6-3` |
+| F-13 · the slider carry | **holds; the composition's thinning is cured** | the stage stretch deleted (finding 2). Carry by seat, reads with a measured release velocity only: P-E7 Chromium 14/15 ≥ 5.95 px (414-602 px/s at load 47; 11.95-12.66 px at load 12.4), WebKit 6.48-12.65 px; C-E7 Chromium min 6.32 (435 px/s), WebKit min 7.21 (476 px/s); C-A7 Chromium min 6.19 (428-893 px/s), WebKit 12.75-13.64 (1127-1356 px/s). The carry rises with the delivered velocity. Every 0.00-0.28 px read printed or was traced to a 0 px/s drive under load (P-E7 §3) | CK-05 |
+| F-14 · the Skeleton shimmer | **merge-time hunk, unchanged** | the base carries no 10.1.x | CK-16 |
+| F-5 · the carry's margin | **asked** (§P7-6) | the distribution above | CK-05 |
+
+## P7-4 · Where the critics differ, and the ruling
+
+Both critics scored the same candidate bytes (`a6c82db1…`) on the harness's own app in both engines. The rule this pass applies is the plan's: a row the critics disagree on is OPEN unless one critic's measurement refutes the other's on the same path. As in `§P5-4` and `§P6-4`, a counterexample one critic reproduced stands whichever critic read it.
+
+| row | C-A7 | C-E7 | ruling |
+|---|---|---|---|
+| CK-05 | CLOSED: every E-4 fail NOT-REPRODUCED 2/2 at loads 9-21 (sortable, slider, Sheet in Chromium); **C-E7's unread WebKit tabs cell re-read twice: 4/0 and 4/0** at 9.8 and 8.3, with E-4's own tabs cells passing (fling − still 10.23-41.38 px); WebKit slider 5/5 in E-4 at 12.9 | OPEN on one cell: the WebKit tabs fling failed at load 44.9 with the **still** release carrying 31.73 px, a load-only failure it could not re-read inside its one acquisition. It read its own WebKit slider fails (0.28, 0.00 px at 46.5) as 0 px/s drives | **CLOSED.** C-E7 held the row open for one reason, the unread WebKit tabs cell, and named no defect of the rule. C-A7 read that cell on the same path, in the same engine, twice, and both pass. The slider fails C-E7 saw in WebKit E-4 re-read 5/5 on C-A7's WebKit E-4, and the velocity-printing `e7-probe carry` passes 10/10 per engine on both critics. This is `§P6-4`'s CK-20 form (C-E6's driver removed C-A6's reason), not `§P6-4`'s CK-05 form, where three seats saw a split down to load 13.7 and no cell printed velocity. Here no read below load 33 fails, and the cause of every fail is readable as the drive. The witness gap stays a class: E-4's slider and sortable cells print no velocity (§P7-7 item 12) |
+
+The closures both critics share stand: CK-02, 03, 04, 06, 07, 08, 09, 10, 11, 12, 13, 14, 15, 16, 18, 21, 23, 24, 26, 27. On the rows both hold open (CK-01, 17, 19, 20, 22, 25) they agree on the cause. Two notes:
+- **CK-20.** C-A7 did not re-drive the feather, the radius or the scale, and its wheel cell is a still. C-E7's four counterexamples stand (C-A7 §3 CK-20 says the same).
+- **CK-27.** Both critics close it and both record a gate class beside it: C-A7's `chipfaint` (hover ink 0.001, 0.00-0.12 levels) passes H7's chip cell in both engines because its hover clause counts a changed computed `background-image`; C-E7's `clipOnly` passes E-10 13/13 because H7's keyboard clip-vanish cell gates only the step clause; `pvOnly` passes everything. The candidate's chip is not the faint case (C-A7's pixel read closes that item), and every new cell has a plant that fails it, which is the row's text. The three gaps are H8's and E's (§P7-7 items 2, 3, 8), as `§P6-4` placed C-E6's P3/Y.
+
+## P7-5 · The owner-glance packet, refreshed
+
+Every path is under `docs/tranches/BL/design/engagement/` and was checked to exist at this seat. Chromium unless marked. Playwright WebKit paints no `backdrop-filter`. With Q-5, Q-3 and Q-2 ruled, the packet shows the ruled build as it paints and what still reads below grade.
+
+### What pass 7 cured, as it paints
+
+| what | frame | figures |
+|---|---|---|
+| the committed Button against rest | `pass-7/A7/glance/frames/a7-chromium-fine-light-button-committed.png` · `pass-7/A7/glance/frames/a7-chromium-fine-light-button-rest.png` | ×1.0597-1.0606 committed, ×1.032 pressed (C-A7 §3 CK-25) |
+| the coarse Switch press, dark and light | `pass-7/C-A7/glance/c7-chromium-coarse-switch-press-pairs.png` (top: dark rest, pressed; bottom: light) | ΔL 0.0873 / 0.0862 against 0.0782 / 0.0773 |
+| the whole candidate | `pass-7/C-A7/glance/c7-chromium-fine.png`; `pass-7/C-E7/glance/ce7-chromium-fine.png`; the critic's pairs `pass-7/C-E7/glance/ce7-chromium-ck25-pairs.png` | E-2 164/0 |
+| the loupe, re-made (CK-25, still below grade) | `pass-7/E7/glance/loupe/e7-chromium-coarse-light-loupe-sustained.png` against the pass-6 construction in `pass-7/E7/plants/loupe/`; the critic's `pass-7/C-A7/glance/loupe/c7-chromium-coarse-light-loupe-sustained.png` | band ×1.600 = k max, no mark, the ends dissolve; the centre's pill cap reads as a knob |
+
+### Below grade, D5's to build
+
+| what | frame |
+|---|---|
+| the promoted control over the library's feather: released against promoted | `pass-7/C-E7/glance/clip/ce7-chromium-mask-on-released.png` · `pass-7/C-E7/glance/clip/ce7-chromium-mask-on-promoted.png` |
+| over a rounded card | `pass-7/C-E7/glance/clip/ce7-chromium-radius-engaged.png` · `pass-7/C-E7/glance/clip/ce7-chromium-radius-released.png` |
+| under a scaled ancestor | `pass-7/C-E7/glance/clip/ce7-chromium-scale-place-engaged.png` |
+| the touch loupe cut at the card's edge, against the pass-6 construction | `pass-7/C-A7/glance/probe/c7-chromium-cliploupe-edge.png` · `pass-7/C-A7/glance/probe/c7-chromium-cliploupe-mid.png` against `pass-7/C-A7/plants/probe/c7-chromium-cliploupe-edge.png` |
+| the Chromium scroll lag (films; figures in the log) | `pass-7/C-E7/logs/film-reread.txt`; worst frames `pass-7/C-E7/glance/clip/ce7-chromium-film-worst-*.png` |
+
+### Not D5's, in view of the owner
+
+- **The ambient exemplar is static** across the six columns (`pass-7/C-E7/glance/ce7-chromium-fine.png`), D3's amplitude.
+- **The preset chip's hover** answers at the library's `--fill-hover` rung, 5 % ink: about half its pixels move ≥ 4 levels and none ≥ 16 (C-A7 §3 CK-27, P-A7 §6 item 5). Its legibility is the 10.2.0 token wave's question (W-0.1), not D5's.
+- **The dark Button's warm halo** is still HEAD's (10.2.0's token wave).
+
+## P7-6 · What the owner must rule, and what D2 and D3 hold
+
+INBOUND was re-read at this seat's start (mtime 2026-10-28 20:13; last row O-111, placed in W-0.1). Nothing newer than O-103d binds D5.
+
+**No open row waits on the owner.**
+
+| id | question | default | what pass 7 adds | blocks |
+|---|---|---|---|---|
+| **F-5** (asked now) | the slider carry's bound in CK-05: (a) keep "fling minus still ≥ 4 px on the visible body"; or (b) a bound tied to the measured release velocity, from `RELEASE_RULE`'s own row (carry ≥ k × v, k derived from the floor's figures), which the owner writes into CK-05's text | (a) | P-E7 read the composition's carry as `§P6-6` asked: the cause found (`flingStage`), the route deleted, ≥ 15 reads per engine with the distribution and velocity printed. Every read whose release the rule measured carries ≥ 5.95 px (lowest at 414-602 px/s under load 47), so (a)'s margin is ≥ 1.95 px and both critics close the row on it. **What (a) cannot see:** the pass-6 halving, carried 0.54-0.60 of the body, passes 4 px in WebKit on every read (4.61-7.57 px; P-E7 §7 gap 3, C-A7 §2). (b) would make that halving a red cell; it changes a row's text, which only the owner does (`§P1-6`) | nothing; CK-05 is closed on (a) |
+| **Q-3′** (announced, asked at pass 8's close) | with a promoted body now clipped to its place, whether the body still promotes on touch and keyboard (Q-3 (c) as ruled), or grows in place under every modality and the loupe alone leaves its place | (c), as O-103d (5) ruled | finding 5. **Not asked yet:** the fresh formulation has not been built. Pass 8 measures it beside the ruled candidate (§P7-8.1), so the owner rules on two measured constructions, as F-5 was held one pass in `§P6-6` | nothing until measured; CK-20 and CK-25 build on (c) meanwhile |
+| **CK-12 (optional)** | withdrawn as a question: both critics closed CK-12 on the bit clause's design reason. The owner may still say the 0.8 px floor is not a reason a crest may derive from | — | finding 1 | nothing |
+| **Q-1**, **Q-4** | unchanged | (c), (b) | nothing new | nothing |
+| **next-pass classes** | admit any as a CK row, or leave it with its owner | — | §P7-7 | — |
+
+**What D2 holds** (it runs its own pass 8 on the dock's B2 hole; none of these is on its pass-8 list in FORMATION-PROGRESS 2026-10-28):
+- CK-01's `dock` latch: a D2 adoption of the dock into the register, or a harness scene that renders the dock with D2's leave.
+- CK-17: the dock's `:active` presses (`material.css:346-349`, `dock/styles/**`, the dock-only capsule `glass-capsule.css:128-135`) name their `touchstart` listener or move to the door's mark.
+- CK-08's named clause: `GlassDock.vue`'s `data-held`.
+- The capsule's lift and snap on `DockControl`. When D2 retires `.glass-capsule-hover` it owes the MIGRATION row for `keyframes.js/demo/components/instrument/pane/channel-controls/EasingField.vue:40`.
+
+**What D3 holds** (converged at pass 13; formation routes both into D3's landing wave, W-0.1 in 10.2.0):
+- CK-19 and CK-01's ambient runtime cell: the Aurora's pointer response at 2× its rest drift (WebKit reads 1.72-1.84 against 1.23-1.26; amplitude and radius 0.25, ceiling 0.8; P-A6 gap 2).
+- **New:** the lean on its own scalar, separate from the swirl's `uCursorStrength` (`aurora.frag.ts:298-312` and `:436-439`, `aurora.wgsl.ts:198-209` and `:379-`; the WGSL struct has two free lanes, `ints1.zw`, `uniformBridgeWGPU.ts:17`). With that lane, A's half of CK-01/CK-19's reduce leg is a runtime write: under reduce, `setCursor` snaps the lean to the pointer with no dynamics and the swirl stays 0 (P-A7 §6 item 1).
+
+Either lands in D5's base only when master carries it, or when D3 publishes the hunk and the floor carries it, as F5 carried D4's PF-1 hunk (§P7-8.2).
+
+**Formation** owes the master merge of `release/10.1.1`/`10.1.2`/`10.1.3` and F5‴'s rebase (`§P6-3`), unchanged.
+
+**Rows that cannot close inside D5:** CK-01 (D2 latch; D3 amplitude and lane), CK-17 (D2), CK-19 (D3).
+
+**Rows building can still close, which is why this is not the fixed point:** CK-20 (the four clip kinds and the scroll lag), CK-22 (E's stale rows, M-24, M-20's population), CK-25 (the loupe whole above the card, the loupe as a lens, the promoted control over a feathered or rounded card).
+
+## P7-7 · Next-pass defect classes (recorded; no CK row added), each placed
+
+From `§P6-7`:
+- Items 1, 2, 3 (the chip's reduction, the private press mark, the second cursor writer) were cured by P-A7. Item 3 recurs as item 10 below (the census of the wrong population).
+- Item 4 (instruments grading a retired form), item 6 (a plant that cannot reach a face), item 9 (a bound inside the engine's scatter) and item 14 (harness drives) were cured by H7.
+- Item 5 (two mechanisms, one guarantee) was cured for the pop (`prmY`) and recurs as items 3 and 4 below.
+- Item 7 (the promoted control and its scroller's clip) was cured for the overflow box and recurs as items 1 and 9 below.
+- Item 8 (a landing cell with no velocity) was cured for the Sheet and recurs as item 12 below.
+- Item 10 (a merge that thins a cured margin) was cured by deleting `flingStage`.
+- Item 11 (the idle frame loop) stands: stated, not bounded. P-E7 found no pause that keeps the invariant (P-E7 §7 gap 2). Finding 5's fresh formulation would remove the loop with the body's promotion; it is measured there.
+- Item 12 (a retarget from zero velocity) stands as a record. Item 13 (the crest's sampler margin) was cured by the crest rows.
+- Items 15 and 16 stand as records.
+
+New in pass 7:
+
+| # | class | source | placed at | owner of the cure |
+|---|---|---|---|---|
+| 1 | **A construction that reads one kind of clip**: `clipBox` reads `overflow` and paint containment; radius, mask, `clip-path` and transforms are the library's own clips (`FadingScroll`, every rounded card, a Dialog's entrance); the clip is written after Chromium's scroll moves the anchor | C-E7 §6.1, P-E7 §7 gap 5 | CK-20, CK-25 | E's part (the invariant in §P7-8.1); H8's cells |
+| 2 | **A row clause with no gating cell**: the keyboard path's "never paints outside" clause; `clipOnly` passes E-10 13/13 in both engines; the two-bound touch cell is a probe cell, not E-10's | C-E7 §6.2, P-E7 §7 gap 4 | CK-20's witness, CK-27 | H8 |
+| 3 | **A declaration no reading distinguishes**: `position-visibility: always` (`engage-stage.css:51`); `pvOnly` passes every cell | C-E7 §6.3 | P-1 | E's part: a cell that shows the path it serves, or it leaves |
+| 4 | **A registration whose reason is deleted**: `@property --veil-x/--veil-y` (`tokens/property-regs.css`) is registered so a moving veil would not step; its one writer (`Slider.vue`'s `writeVeilCentre`) is deleted and the one reader left sits at 50 % | C-E7 §6.4 | E-1, P-1 | E's part |
+| 5 | **A film reference that is not the page**: WebKit's recorded video opens on blank frames | C-E7 §6.5 | records; any film cell | H8, if it adopts films (it does for item 1) |
+| 6 | **Load-only WebKit fails that need a second acquisition to re-read** | C-E7 §6.6 | process | every seat: queue the re-read stages inside the one acquisition when the same witness failed under load in Chromium |
+| 7 | **The hover rung's legibility** (the chip's hover moves no pixel ≥ 16 levels at the library's `--fill-hover`) | C-E7 §6.7, P-A7 §6 item 5 | not D5's | the 10.2.0 token wave (W-0.1) |
+| 8 | **A hover clause that reads a property, not paint** (`chipfaint` passes H7's chip cell) | C-A7 §5.1 | CK-27's witness | H8: the hover clause reads pixels, `chipfaint` its plant |
+| 9 | **A cure measured where its cost cannot show**: the CK-20 clip proven on the body, every loupe cell mid-page | C-A7 §5.2 | CK-25, CK-20 | E's part; H8: a loupe cell at the scroller's edge |
+| 10 | **A MIGRATION census of the wrong population** (M-20 counts `setCursor` callers, not `<Aurora>` mounts) | C-A7 §5.3 | CK-22 | P-E8's consolidated MIGRATION table (§P7-8.1) |
+| 11 | **A probe cell that passes undriven** (a stateless control driven by `__e.commit()` read ×1.0000 as "intact"; cured in the seat) | C-A7 §5.4, §6 | records | any probe: a control cell that did not move is UNMEASURED, never PASS |
+| 12 | **Load-only E-4 fails read as the rule's**: E-4's slider and sortable cells print no velocity, so a 0 px/s drive under load reads as a 0.00 px carry | C-A7 §5.5, C-E7 §3 CK-05, P-E7 §3 | CK-05's witness | H8 |
+| 13 | **A private component rendered in another member's slot is counted to the host** (the chip inside `FadingScroll`'s slot fell the latch to 53/55; cured by exporting the chip) | P-A7 §4 CK-01 | records | — |
+| 14 | **The crest's loud read had no browser cell** (E-11's `--scale-commit-pop` UNMEASURED on the Switch path); C-A7's `crestinput` reads it 8/8 per engine | P-A7 §3, C-A7 §0.1 | CK-21's witness | H8: `crestinput` into E-11 |
+| 15 | **One library composer of `.glass-focus-veil`** (the Dialog overlay) after the Slider left it | P-E7 §7 gap 7 | records (a public CSS class, not an engagement surface) | — |
+| 16 | **Process.** H7 needed three WebKit acquisitions (the 90-min cap, then a region fix); its first equal-velocity rule (5 %) was wrong and was replaced before any score. C-A7's first seat stopped inside E-7 and a completion seat finished it. P-A7 stopped its first battery on the census defect and wrote one stray patch file, removed. P-E7 reset one file in its own worktree with `git checkout`, recorded. C-E7 edited no phase file under a running chain; one tool result was saved under `~/.claude` and not opened. No seat read `~/.claude`; no WebKit stage was skipped; no page closed outside the harness's NAV_CAP relaunch and HEAD's known WebKit press hang | the seats' process notes | records | every seat |
+
+## P7-8 · Pass-8 plan
+
+The checklist stays **CK-01..CK-27, unchanged**. Critics may not add rows. A defect is a counterexample to the row it breaks, or a next-pass defect class. Rulings in force: O-103d (1)-(5); Q-1 (c) and Q-4 (b) as defaults; F-5 on (a) until the owner answers. A ruling that arrives mid-pass is folded in at the next seat boundary, never inside a running battery. Each seat re-reads `../../audit/INBOUND.md` and `../../FORMATION-PROGRESS.md` at its start.
+
+**What pass 8 can be.** It is clean only if D2 lands the `dock` latch and the dock's presses and D3's amplitude and lane reach D5's base before its critics run. Otherwise its job is the fixed point: CK-20, CK-22 and CK-25 closed, so that only CK-01, CK-17 and CK-19 stay open, each held by D2 or D3.
+
+**One change of method, for E's promotion** (finding 5). The ruled construction is built once more, to one invariant stated in advance. The fresh formulation is built beside it as a measured probe, not a candidate, so the owner can rule Q-3′ on two measured constructions. Critics score the candidate alone.
+
+### P7-8.1 · The candidate's parts
+
+| part | built as | must prove in pass 8 |
+|---|---|---|
+| **A's part** | P-A7's bytes, unchanged. **No A build seat** unless D3's lane reaches the base first (§P7-8.2); then P-A8 writes the ambient reduce leg on it (CK-01, CK-19: a light answer under reduce, the swirl 0, with a plant that removes it) | nothing else: A's one remaining records item (M-20's population) goes into P-E8's consolidated table |
+| **E's part** | P-E8 on P-A7 (or on P-A8 if it runs), one arm, Q-3 (c) | **The invariant:** "an engaged control's body paints exactly what its place would paint (every clip, mask, radius and transform of its ancestors) in the same frame its place moves; the loupe alone leaves its place, and paints whole." **CK-20:** green on H8's whole clip family (overflow box, feather, radius, scaled and translated ancestor, the scroll film, keyboard and touch, both bounds), both engines, with the pass-7 construction as the plant. **CK-25:** the touch loupe paints whole at a scroller's top edge (H8's loupe-edge cell, the pass-7 construction its plant), and the loupe reads as a lens at `k` max (the centre not a knob: no pill cap at the window's centre, the housing's own edge, no lighting layer, no blur change; O-87). **P-1, E-1:** `position-visibility: always` has a cell that shows its path or leaves; `@property --veil-x/--veil-y` leaves, or a reader is shown. **CK-22:** **one consolidated MIGRATION table for the candidate** (P-3), superseding the scattered per-pass rows: P-E2 §4 rows 1, 2 and 4, E-M7's `"every"` clause and E-M8's `true` arm retired by name; M-24 stated as the bytes hold; M-20 restated on the `<Aurora>` mounts (each `pointer-events: none`, so the root leg never fires in a consumer); consumer greps re-run at the pass-8 HEAD. If no construction meets the invariant on some ancestor kind in both engines, P-E8 says so with the failing cell |
+| **the fresh formulation** (probe, not scored) | P-E8's second, smaller build, `inplace-loupe`: the body grows in place under every modality (no top layer, no clip write, no anchor); the loupe alone is promoted on touch and keyboard | read on the same H8 clip family, the loupe-edge cell, E-3 (CK-04's phone and keyboard arms, the four plants), E-10's hand-off and singleton cells, the idle loop (§P6-7 item 11) and CK-23's cost, both engines. Reported beside the candidate for Q-3′; the critics read it, but score only the candidate |
+
+### P7-8.2 · The floor
+
+No floor seat unless one of three things happens before P-E8 starts:
+- **the base moves** (master takes `release/10.1.x`): F5⁗ is F5‴ rebased as `§P6-3` lays out, with its battery on HEAD's scenes in both engines and F-14's browser cell;
+- **D3 publishes the lean lane** (and, separately, the amplitude): **F-16** carries D3's hunk unchanged, as F5 carried D4's PF-1 hunk, and P-A8 runs;
+- **D2 lands its dock adoption or a dock scene with its leave**: **F-17** carries it the same way.
+
+Otherwise F5‴ carries unchanged under every pass-8 build.
+
+### P7-8.3 · Seats and order
+
+Every seat is Opus, declared explicitly. D5 runs at most three seats at a time, counted against every live workflow. Browser runs follow the 2026-10-16 note: no `--light`, one browser per battery with a context per cell, `guarded --exclusive webkit` as the one WebKit lock. Each seat takes **one** WebKit acquisition for all its WebKit stages, queued after its Chromium phases and never skipped, and queues re-read stages inside it for any witness that failed under load in its Chromium phase (§P7-7 item 6). Films take no mid-film screenshot.
+
+| wave | seat | charter |
+|---|---|---|
+| 0 | — | re-read INBOUND and FORMATION-PROGRESS; record the base; formation tells D2 and D3 what they hold (§P7-6), D3 the new lane ask included. D5 edits none of their bytes |
+| 1 | **H8** (harness; the one owner of `../harness/`) | Each item inside the row it serves, with a plant. **CK-20:** C-E7's `ce7-probe` cells become E-10 cells (feather visibility ratio, rounded-corner overpaint, scaled-ancestor place and width, the scroll film read against the median of the page's frames, §P7-7 item 5), each red on the pass-7 construction; P-E7's two-bound clip cell (painted outside and adjacent steps) becomes E-10's on keyboard and touch, and `clipOnly` must fail it. **CK-25:** a loupe cell at the scroller's top edge and mid-box (`c7-probe cliploupe`'s shape), gated on the lens painted whole, red on the pass-7 construction; E's four loupe cells kept. **CK-27:** the chip cell's hover clause reads paint (`c7-probe chipfine`'s shape), `chipfaint` its plant. **CK-05:** E-4's slider and sortable cells print each run's release velocity and apply the Sheet's rule: a fling ≥ 100 px/s carrying 0.00 px fails by name, and a drive under 100 px/s is re-driven inside the stage and reported, never graded as the rule's. **CK-21:** `crestinput` into E-11. Self-test green in both engines; HEAD re-read only on changed witnesses |
+| 1b | **F5⁗ / F-16 / F-17** (only per §P7-8.2) | one patch at HEAD, its battery in both engines after H8's self-test |
+| 2 | **P-A8** (only if F-16 runs) | §P7-8.1, A's row |
+| 2 | **P-E8** | §P7-8.1, E's row and the fresh formulation's. Starts after H8's self-test, and on P-A8's patch if P-A8 runs |
+| 3 | **C-A8, C-E8** | two critics. Neither may have authored any D5 seat in passes 2-8, and neither may have been a critic in passes 3-7. **Both score CK-01..CK-27 in both engines on the one candidate** on the harness's own app, with the gestalt read from frames (CK-25), and both read the `inplace-loupe` probe's frames and cells beside it. Each drives every path the other's pass-7 counterpart found: the feather, the radius, the scaled ancestor and the scroll film (C-E7); the loupe at the edge, the chip's hover in paint and the crest inputs (C-A7); E-4 under load with velocity printed; the stale rows and M-20's population. A critic whose WebKit cells are not admitted returns those rows open |
+| 4 | agglomeration | the pass-8 registry: the candidate's status, the clean-pass count, whether only D2- and D3-held cells remain (the fixed point), what D2 and D3 hold, Q-3′ asked on the two measured constructions, and F-5 folded in if answered |
+
+### P7-8.4 · Convergence criterion
+
+Unchanged (`§3.5`, `§P1-9.4`, `§P2-8.4` .. `§P6-8.4`): at least three full passes (met at pass 3); zero open rows against CK-01..CK-27; a fresh adversarial audit by seats that did not author the winning spec; two consecutive clean passes. The clean-pass count after pass 7 is **0**, counted for the one candidate A+E. Convergence comes at the end of pass 9 at the earliest. That needs four things:
+- D2's `dock` adoption and the dock's presses land, or a dock scene renders with D2's leave and its presses name their listener;
+- D3's amplitude and the lean's own lane reach D5's base (through master or F-16), and A's reduce write lands on them;
+- passes 8 and 9 are both clean.
+
+If the owner rules Q-3′ toward the fresh formulation at pass 8's close, it becomes the candidate in pass 9, the count restarts on it, and the earliest convergence moves to the end of pass 10.
