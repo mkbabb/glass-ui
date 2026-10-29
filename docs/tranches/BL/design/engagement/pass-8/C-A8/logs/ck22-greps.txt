@@ -1,0 +1,92 @@
+# 2026-10-29 11:59:11 C-A8 consumer greps (a copy of E8/ck22-greps.sh, re-run by C-A8) · glass-ui HEAD 10f5a67e5
+## atlas HEAD 069708a
+## bbnf-buddy HEAD 2857c2f
+## chicago HEAD 
+## keyframes.js HEAD 5c48e3da
+## slides HEAD 7dcbb3b
+## speedtest HEAD e2d9444d
+## value.js HEAD b3d5d73f0
+## fourier-analysis HEAD 3a0e709
+## sci-report HEAD bbcbd503
+
+# S1 <Slider · S2 <NumberField · L glass-loupe · V glass-focus-veil · VX --veil-x/--veil-y · ST engage-footprint|data-engage-stage|data-engaged
+# PA position-anchor|clip-path|mask-image|transform on a glass-slider/number-field rule · HS --held-scale-|--stage-reach|--stage-room|--stage-w
+# AU <Aurora|<GlassAurora mounts · SC setCursor|clearCursor · TQ tap-squish|interactive-item · AC :active on .glass-slider
+atlas · S1 2 · S2 0 · L 0 · V 0 · VX 0 · ST 0 · PA 0 · HS 0 · AU 13 · SC 0 · TQ 0 · AC 0
+bbnf-buddy · S1 1 · S2 0 · L 0 · V 0 · VX 0 · ST 0 · PA 0 · HS 0 · AU 0 · SC 0 · TQ 0 · AC 0
+chicago · S1 0 · S2 0 · L 0 · V 0 · VX 0 · ST 0 · PA 0 · HS 0 · AU 0 · SC 0 · TQ 3 · AC 0
+keyframes.js · S1 4 · S2 1 · L 0 · V 0 · VX 0 · ST 0 · PA 0 · HS 0 · AU 1 · SC 6 · TQ 2 · AC 0
+slides · S1 0 · S2 0 · L 0 · V 0 · VX 0 · ST 0 · PA 0 · HS 0 · AU 0 · SC 0 · TQ 0 · AC 0
+speedtest · S1 2 · S2 6 · L 0 · V 0 · VX 0 · ST 0 · PA 0 · HS 0 · AU 8 · SC 0 · TQ 5 · AC 0
+value.js · S1 6 · S2 1 · L 0 · V 0 · VX 0 · ST 0 · PA 0 · HS 0 · AU 1 · SC 4 · TQ 0 · AC 0
+fourier-analysis · S1 5 · S2 1 · L 0 · V 0 · VX 0 · ST 0 · PA 0 · HS 0 · AU 0 · SC 0 · TQ 1 · AC 0
+sci-report · S1 5 · S2 0 · L 0 · V 0 · VX 0 · ST 0 · PA 0 · HS 0 · AU 1 · SC 0 · TQ 0 · AC 0
+
+# the L, V, VX, ST, PA, HS, TQ, AC lines in full
+atlas/types/platform/chrome/background/composables/useAuroraVeil.d.ts:21:        fallback-floor `--veil-*` pair + the `--veil-x`/`--veil-y` bloom-centroid). */
+atlas/src/platform/chrome/background/composables/useAuroraVeil.ts:51:        fallback-floor `--veil-*` pair + the `--veil-x`/`--veil-y` bloom-centroid). */
+atlas/src/platform/chrome/background/composables/useAuroraVeil.ts:116:        "--veil-x": centroid.value?.x ?? CORNER_X,
+atlas/src/platform/chrome/background/composables/useAuroraVeil.ts:117:        "--veil-y": centroid.value?.y ?? CORNER_Y,
+chicago/src/TempApp.vue:298:                    class="tap-squish"
+chicago/src/TempApp.vue:310:                    <DockControl shape="tab" class="tap-squish" :active="status !== 'any'" :aria-label="'Status: ' + statusLabel">
+chicago/src/TempApp.vue:336:            <DockControl class="tap-squish" aria-label="Add a listing" title="Add a listing" @click="edit(null)">
+keyframes.js/demo/app/dock/menu/MbabbMenu.vue:45:                 align-items:center` (unlayered) and `.interactive-item` carries
+keyframes.js/demo/components/instrument/pane/channel-controls/EasingField.vue:40:                    class="control-surface glass-control-edge glass-capsule-hover tap-squish focus-ring transition-control flex h-(--control-h-md) w-full min-w-0 cursor-pointer items-center justify-between gap-1.5 rounded-pill ps-3 pe-10 text-dropdown"
+speedtest/src/features/speedtest/ui/PhaseTimeline.vue:34:            class="timeline-region tap-squish"
+speedtest/src/components/admin/AdminDataSourceToggle.vue:110:            class="text-small tap-squish pointer-coarse:min-h-11 pointer-coarse:min-w-11"
+speedtest/src/components/survey/SurveyResultDock.vue:113:                    class="result-dock-pill tap-squish"
+speedtest/src/components/survey/AddressAutocomplete.vue:74:                        class="tap-squish w-full cursor-pointer rounded-xl px-3 py-2 text-left text-prose transition-colors hover:bg-accent/10 data-[highlighted]:bg-accent/10 data-[highlighted]:text-prose"
+speedtest/src/layouts/AdminDashboardLayout.vue:72:                     (0..1) drives a `scale(1 - value * 0.05)` tap-squish —
+fourier-analysis/web/e2e/f-w14v-c3.spec.ts:156:                bare.className = "menu__item interactive-item glass-menu-row";
+
+# AU: every <Aurora>/<GlassAurora> mount, and the pointer-events lines of the same file
+atlas/types/platform/chrome/background/composables/useAuroraConfig.d.ts:25:    /** The reactive pole-derived config — hand straight to `<Aurora :config>`. */
+atlas/types/platform/chrome/background/composables/useAuroraConfig.d.ts:29:    /** The theme-aware outer compositing envelope (→ `<Aurora :opacity-ceiling>`), pinned at the
+atlas/src/platform/chrome/background/Atmosphere.vue:44:// THE FIELDS. <Aurora> is the platform's thin glass-ui consumer (it keeps the oklab
+atlas/src/platform/chrome/background/Atmosphere.vue:137:        <Aurora v-if="field === 'aurora'" class="atmosphere__field" />
+   atlas/src/platform/chrome/background/Atmosphere.vue:166:    pointer-events: none;
+   atlas/src/platform/chrome/background/Atmosphere.vue:179:    pointer-events: none;
+   atlas/src/platform/chrome/background/Atmosphere.vue:188:    pointer-events: none;
+atlas/src/platform/chrome/background/composables/useAuroraConfig.ts:197:    /** The reactive pole-derived config — hand straight to `<Aurora :config>`. */
+atlas/src/platform/chrome/background/composables/useAuroraConfig.ts:201:    /** The theme-aware outer compositing envelope (→ `<Aurora :opacity-ceiling>`), pinned at the
+atlas/src/platform/chrome/background/composables/useAtmosphereActivity.ts:10:// `<Aurora>`'s exposed `pause()`/`resume()` (the substrate's "manual" suspend reason), `<Constellation
+atlas/src/platform/chrome/background/Aurora.vue:2:// Aurora — a THIN glass-ui <Aurora> consumer (C.W6.a Scope 2; fd-atmosphere-suffusion §3
+atlas/src/platform/chrome/background/Aurora.vue:12:// derives from and hand glass-ui's <Aurora> the pole-derived reactive AuroraConfig.
+atlas/src/platform/chrome/background/Aurora.vue:97:// is a reactive AuroraConfig glass-ui deep-watches; we hand it straight to <Aurora :config>. The
+atlas/src/platform/chrome/background/Aurora.vue:114:// THE O-F4 ACTIVITY BELT (motion-arch §2.1 MOVE 4). glass-ui's <Aurora> exposes imperative
+atlas/src/platform/chrome/background/Aurora.vue:150:        <GlassAurora
+atlas/src/platform/chrome/background/Aurora.vue:163:   <Aurora> fills this wrapper (its own canvas + CSS placeholder size to the container via
+   atlas/src/platform/chrome/background/Aurora.vue:162:   backdrop, never an overlay. pointer-events:none so it never eats a click. The glass-ui
+   atlas/src/platform/chrome/background/Aurora.vue:170:    pointer-events: none;
+keyframes.js/demo/app/hero/HeroAurora.vue:25:    <Aurora
+   keyframes.js/demo/app/hero/HeroAurora.vue:27:        class="hero-aurora pointer-events-none fixed inset-0"
+   keyframes.js/demo/app/hero/HeroAurora.vue:256:   renders a single root, so `fixed inset-0`, `pointer-events-none` and
+speedtest/tests/e2e/aj-w1-p0-smoke.spec.ts:477:        // init failure surfaces through `<Aurora>`'s `@init-error`
+speedtest/src/App.vue:48:            <Aurora
+speedtest/src/App.vue:307:// `0.5` muted ceiling is reversed (see the `<Aurora>` mount comment), so the
+speedtest/src/App.vue:363:// `<Aurora>` adapts its substrate via `renderMode` ("webgl" | "css" | "auto").
+speedtest/src/App.vue:404:// AH.W3-C: rIC hydration gate for Aurora. Holding the `<Aurora>` mount off
+speedtest/src/App.vue:420:// catches synchronous reactivity/lifecycle errors) cannot see it. `<Aurora>`'s
+   speedtest/src/App.vue:44:                class="aurora-placeholder z-behind pointer-events-none fixed
+   speedtest/src/App.vue:51:                class="z-behind pointer-events-none fixed inset-0 h-full w-full"
+   speedtest/src/App.vue:183:                 inner host carries `pointer-events-none` on the column
+   speedtest/src/App.vue:184:                 with the pill itself sitting in `pointer-events-auto`. -->
+   speedtest/src/App.vue:241:// (`aurora-placeholder` — `pointer-events-none fixed inset-0 z-behind`) keeps
+speedtest/src/composables/useRouteTransition.ts:116:     *  carrying it. The glass-ui `<Aurora>` exposes `:opacity-ceiling` as the
+speedtest/src/config/auroraConfig.ts:85://   matches. The aurora-generalization seam (App.vue `<Aurora>` mount / WebGL) is
+value.js/demo/app/composables/boot/useAtmosphere.ts:167:    // linear gradient (the `<Aurora>` placeholder idiom, glass-ui's
+sci-report/dashboards/home/DashboardView.vue:196:             <Aurora> field beneath the content plates, with the paper grain at the floor
+   sci-report/dashboards/home/DashboardView.vue:274:    pointer-events: none;
+   sci-report/dashboards/home/DashboardView.vue:277:    pointer-events: auto;
+
+# SC: setCursor/clearCursor callers
+keyframes.js/demo/app/hero/HeroAurora.vue:182:// ── Cursor wiring — the exposed setCursor API, ZERO element-geometry reads ───
+keyframes.js/demo/app/hero/HeroAurora.vue:185:// full-document layout ~1,100-2,000× the isolated cost). setCursor mutates JS
+keyframes.js/demo/app/hero/HeroAurora.vue:193:// `setCursor` API … so the consumer controls pointer policy"), so this is a
+keyframes.js/demo/app/hero/HeroAurora.vue:221:    // exposed (`setCursorRadius`) and calling it would spend an invented
+keyframes.js/demo/app/hero/HeroAurora.vue:223:    auroraRef.value?.setCursor(e.clientX / (width.value || 1), e.clientY / (height.value || 1));
+keyframes.js/demo/app/hero/HeroAurora.vue:227:    auroraRef.value?.clearCursor();
+value.js/demo/app/composables/boot/useAtmosphere.ts:293:    // half of the producer's SHIPPED pointer door. `setCursor` feeds the eased
+value.js/demo/app/composables/boot/useAtmosphere.ts:313:                // burst from consecutive `setCursor` position deltas internally,
+value.js/demo/app/composables/boot/useAtmosphere.ts:315:                aurora.setCursor(x, y, ATMOSPHERE_POINTER_STRENGTH);
+value.js/demo/app/composables/boot/useAtmosphere.ts:320:            aurora.clearCursor(); // decay-to-rest, never a snap

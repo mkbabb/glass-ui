@@ -1,0 +1,11 @@
+# 2026-10-29 15:08:52 start · load { 6.76 7.63 7.52 }
+# cmd: node /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/harness/e10-continuity.mjs --build /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p8/C-A8/wt/.ca8out/builds/plant-nomask --wt /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p8/C-A8/wt --engine webkit --out /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-8/C-A8/json/plant-nomask --scenes clipstale --part feather
+# E-10 · CK-20 no one-frame discontinuity on an engagement path
+# target /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p8/C-A8/wt/.ca8out/builds/plant-nomask · engine webkit · lock wait 0.0 s · other headless processes: chromium 8, webkit 0 · load 6.8/7.6/7.5 at start
+# scene app: harness scenes/App.vue (sha1 310d45686fce)
+# webkit 26.5 (Playwright WebKit, not Safari; real Safari UNMEASURED (owner's safaridriver checkbox))
+# narrowed to scenes clipstale
+  FAIL       E-10 clipstale clip feather · keyboard · keyboard engaged (promoted true) · the scroller's feather: linear-gradient(rgba(0, 0, 0, 0) 0px, rgb(0, 0, 0) 16px, rgb(0, 0, 0)  · --fade-start 16px · the control 4 px inside its feathered top edge · visibility in the scroller's top 28 px, engaged over released: ×1.39 feathered, ×1.00 unfeathered (the grow's own gain) · ratio of ratios 1.39 · bound ≤ 1.1 × ×1.00 = ×1.10 (an in-place body reads 1) · load 6.4/7.5/7.5
+  FAIL       E-10 clipstale clip feather · touch · touch engaged (promoted true) · the scroller's feather: linear-gradient(rgba(0, 0, 0, 0) 0px, rgb(0, 0, 0) 16px, rgb(0, 0, 0)  · --fade-start 16px · the control 4 px inside its feathered top edge · visibility in the scroller's top 28 px, engaged over released: ×0.95 feathered, ×0.81 unfeathered (the grow's own gain) · ratio of ratios 1.16 · bound ≤ 1.1 × ×0.81 = ×0.90 (an in-place body reads 1) · load 6.4/7.5/7.5
+E-10 webkit FAIL · 0 pass, 2 fail, 0 unmeasured of 2 gating cells (0 reported) · load 6.8/7.6/7.5 at start, 6.4/7.5/7.5 at end
+# 2026-10-29 15:09:11 end · exit 1 · load { 6.36 7.47 7.47 }

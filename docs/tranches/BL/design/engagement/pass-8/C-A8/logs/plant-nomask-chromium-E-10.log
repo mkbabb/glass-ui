@@ -1,0 +1,11 @@
+# 2026-10-29 12:36:34 start · load { 18.83 15.30 12.97 }
+# cmd: node /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/harness/e10-continuity.mjs --build /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p8/C-A8/wt/.ca8out/builds/plant-nomask --wt /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p8/C-A8/wt --engine chromium --out /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-8/C-A8/json/plant-nomask --scenes clipstale --part feather
+# E-10 · CK-20 no one-frame discontinuity on an engagement path
+# target /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p8/C-A8/wt/.ca8out/builds/plant-nomask · engine chromium · lock wait 118.8 s · other headless processes: chromium 12, webkit 2 · load 16.9/15.8/13.5 at start
+# scene app: harness scenes/App.vue (sha1 310d45686fce)
+# chromium 149.0.7827.55
+# narrowed to scenes clipstale
+  FAIL       E-10 clipstale clip feather · keyboard · keyboard engaged (promoted true) · the scroller's feather: linear-gradient(rgba(0, 0, 0, 0) 0px, rgb(0, 0, 0) 16px, rgb(0, 0, 0)  · --fade-start 16px · the control 4 px inside its feathered top edge · visibility in the scroller's top 28 px, engaged over released: ×1.46 feathered, ×1.05 unfeathered (the grow's own gain) · ratio of ratios 1.38 · bound ≤ 1.1 × ×1.05 = ×1.16 (an in-place body reads 1) · load 16.5/15.7/13.4
+  FAIL       E-10 clipstale clip feather · touch · touch engaged (promoted true) · the scroller's feather: linear-gradient(rgba(0, 0, 0, 0) 0px, rgb(0, 0, 0) 16px, rgb(0, 0, 0)  · --fade-start 16px · the control 4 px inside its feathered top edge · visibility in the scroller's top 28 px, engaged over released: ×1.44 feathered, ×1.24 unfeathered (the grow's own gain) · ratio of ratios 1.16 · bound ≤ 1.1 × ×1.24 = ×1.37 (an in-place body reads 1) · load 17.8/16.0/13.6
+E-10 chromium FAIL · 0 pass, 2 fail, 0 unmeasured of 2 gating cells (0 reported) · load 16.9/15.8/13.5 at start, 17.8/16.0/13.6 at end
+# 2026-10-29 12:38:56 end · exit 1 · load { 17.81 16.05 13.60 }

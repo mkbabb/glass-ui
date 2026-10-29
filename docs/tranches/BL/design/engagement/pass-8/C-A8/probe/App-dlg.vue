@@ -1,0 +1,420 @@
+<script setup lang="ts">
+// C-A8 PROBE FORK (pass 8): the harness app with a Slider inside the presented Dialog (C-A8 dlg cell); not a witness app.
+// D5 battery scene app, built against a worktree's library (build.mjs). One scene per ?scene=; ?scene=__index
+// serves only the index. The DOM contract the witnesses read (HARNESS.md §1.3) is stamped here, after every
+// mount, by selector, as a token list: [data-e~="target" | "body" | "root" | "thumb" | "veil" | "modal"], and the sentinels
+// [data-sentinel="before" | "after"]. window.__e carries the index, the programmatic commit, the deferred mount
+// (H-8), the declaration and the ladder and envelope tables read from the built library (E-1, E-8).
+import { ref, onMounted, nextTick, getCurrentInstance, defineComponent, onErrorCaptured, h } from "vue";
+import { Slider } from "@glass/components/slider";
+import { Switch } from "@glass/components/switch";
+import { Checkbox } from "@glass/components/checkbox";
+import { RadioGroup, RadioGroupItem } from "@glass/components/radio-group";
+import { SegmentedTabs } from "@glass/components/tabs";
+import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@glass/components/accordion";
+import { Chip } from "@glass/components/chip";
+import { Button } from "@glass/components/button";
+import { ToggleGroup, ToggleGroupItem } from "@glass/components/toggle-group";
+import { Separator } from "@glass/components/separator";
+import { Skeleton } from "@glass/components/skeleton";
+import { Dialog, DialogContent, DialogTitle } from "@glass/components/dialog";
+import { SheetContent } from "@glass/components/sheet";
+import { SortableList, SortableItem, SortableHandle } from "@glass/components/sortable-list";
+import { Carousel, CarouselContent, CarouselItem } from "@glass/components/carousel";
+import { Input } from "@glass/components/input";
+import { Textarea } from "@glass/components/textarea";
+import { Card, CardContent } from "@glass/components/card";
+import { Alert, AlertTitle, AlertDescription } from "@glass/components/alert";
+import { Badge } from "@glass/components/badge";
+import { Progress } from "@glass/components/progress";
+import { StatusDot } from "@glass/components/status-dot";
+import { PagerDots } from "@glass/components/pager-dots";
+import { Aurora } from "@glass/components/aurora";
+// H3 (pass 3): P-A2's gallery widening, moved into the harness's own app so CK-01's latch reads on one app (REGISTRY
+// §P2-7 item 2; P-A2 r3 read 89/94 and latch 54/55 on its fork, the harness app 25/55)
+import { Avatar, AvatarFallback } from "@glass/components/avatar";
+import { Collapsible, CollapsibleTrigger, CollapsibleContent } from "@glass/components/collapsible";
+import { Command, CommandInput, CommandList, CommandItem } from "@glass/components/command";
+import { Constellation } from "@glass/components/constellation";
+import { DarkModeToggle } from "@glass/components/dark-mode-toggle";
+import { EasingPicker } from "@glass/components/easing";
+import { ExpandableContainer } from "@glass/components/expandable-container";
+import { FadingScroll } from "@glass/components/fading-scroll";
+import { FourierField } from "@glass/components/fourier-field";
+import { HandMark } from "@glass/components/handmark";
+import { InfiniteScroll } from "@glass/components/infinite-scroll";
+import { Label } from "@glass/components/label";
+import { LabeledField } from "@glass/components/labeled-field";
+import { Metric } from "@glass/components/metric";
+import { MusicStaff } from "@glass/components/music-staff";
+import { NumberField, NumberFieldInput } from "@glass/components/number-field";
+import { ScrollProgressRim } from "@glass/components/scroll-progress-rim";
+import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@glass/components/select";
+import { Table, TableBody, TableRow, TableCell } from "@glass/components/table";
+import { Timeline } from "@glass/components/timeline";
+import { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from "@glass/components/tooltip";
+import { TypewriterText } from "@glass/components/typewriter";
+import { Blob, BLOB_CONFIG_DEFAULTS } from "@glass/components/blob";
+import { DataTable } from "@glass/components/data-table";
+import { DeckStage, DeckSlide, useDeck } from "@glass/components/deck";
+import { Popover, PopoverTrigger, PopoverContent } from "@glass/components/popover";
+import { Toaster, toast } from "@glass/components/toast";
+import { Configurator, ConfiguratorLayer, ConfiguratorRow } from "@glass/components/configurator";
+import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from "@glass/components/menu";
+// H4 (pass 4): CK-14's coarse dock-trigger hit-slop under forced colours, read on the real trigger (C-A3's `fcslop`)
+import { DockTrigger } from "@glass/components/dock";
+import { ENGAGE_LADDER, ENGAGE_ENVELOPES } from "@glass/composables/motion";
+import DIRS from "./dirs";
+import DECL from "./decl";
+import TYPE_DIR from "./members";
+import REKA from "./reka";
+
+const qs = new URLSearchParams(location.search);
+const scene = qs.get("scene") ?? "__index";
+const on = qs.get("on") === "1";
+const phone = qs.get("phone") === "1";
+const mounted = ref(qs.get("defer") !== "1");
+
+const COMMIT = ["E-2", "E-8", "E-9"];
+// scene → gates, the keyboard commit key and the selectors the tagger stamps. E-2's exemplars are the interactive
+// atoms at hand (round 0); H-2 replaces them with one exemplar per declared class once a family declares classes.
+// H8 (CK-25, CK-20): the slider's loupe, read by E-13 (its k max, registration, seam, line and run-on; painted whole at a
+// scroller's edge) and hidden by E-10's touch clip cells (the invariant exempts the loupe: it alone leaves its place)
+const LOUPE = { lens: ".glass-loupe", window: ".glass-loupe-window", clone: ".glass-loupe-clone", fill: ".glass-loupe-fill", track: ".slider-track" };
+const INDEX: Record<string, Record<string, unknown>> = {
+  // CK-02: `face` is the painted face (arm ii's px, arm iii's light); `keys` the keyboard commit (a commit the state
+  // precondition must see happen)
+  // H5: `rebound` (E-10's C-A4 rebound: a commit reversed 60/200 ms later, its light seat filmed) on the members whose
+  // programmatic commit toggles; `ladder` (capture.mjs's CK-25 ladder cell) on the disclosed exemplar
+  switch: { gates: [...COMMIT, "E-11", "E-10"], rebound: true, key: "Space", target: '[role="switch"]', body: ".switch__thumb", face: '[role="switch"] .control-bit__face', failLoud: [{ token: "--scale-commit-pop", value: "1", act: "commit", on: '[role="switch"]' }, { token: "--scale-press", value: "nonsense", act: "commit", html: true }, { token: "--scale-engage", value: "nonsense", act: "commit", html: true }] },
+  checkbox: { gates: [...COMMIT, "E-10", "E-11"], failLoud: [{ token: "--scale-press", value: "nonsense", act: "commit", html: true }, { token: "--scale-engage", value: "nonsense", act: "commit", html: true }], rebound: true, key: "Space", target: '[role="checkbox"]', face: '[role="checkbox"] .control-bit__face' },
+  radio: { gates: COMMIT, key: "ArrowDown", target: '[role="radio"]:nth-of-type(2)', face: '[role="radio"]:nth-of-type(2) .control-bit__face' },
+  tabs: { gates: [...COMMIT, "E-5"], key: "ArrowRight", target: ".segmented-tab:nth-of-type(2)", body: ".segmented-indicator", touch: ".segmented-tab:nth-of-type(3)" },
+  toggle: { gates: [...COMMIT, "E-5"], key: "ArrowRight", target: '[data-t="item-b"]', pf1: "webkit pointer entry closes the page (D4 PF-1)" },
+  chip: { gates: [...COMMIT, "E-5", "E-10", "E-11"], failLoud: [{ token: "--scale-press", value: "nonsense", act: "commit", html: true }, { token: "--scale-engage", value: "nonsense", act: "commit", html: true }], rebound: true, key: "Space", target: ".glass-chip" },
+  // `stateless`: no model to set. H3 rules the programmatic commit of a stateless control as its activation,
+  // `element.click()` on the target, driven by E-2 itself (not by __e.commit, which the pass-2 app wired to `clicks++`
+  // around the component, C-A2 §0.2); CK-03's arrival does not apply (nothing arrives)
+  chipaction: { gates: COMMIT, key: "Space", target: ".glass-chip", stateless: true },
+  accordion: { gates: [...COMMIT, "E-5", "E-10"], rebound: true, ladder: true, region: '[role="region"]', key: "Enter", target: ".disclosure-trigger", pf1: "webkit pointer entry closes the page (PORTFOLIO §1.3 item 7)" },
+  button: { gates: [...COMMIT, "E-5", "E-11"], failLoud: [{ token: "--scale-press", value: "nonsense", act: "commit", html: true }, { token: "--scale-engage", value: "nonsense", act: "commit", html: true }], key: "Space", target: ".button", stateless: true },
+  press_switch: { gates: ["E-5"], target: '[role="switch"]' },
+  press_checkbox: { gates: ["E-5"], target: '[role="checkbox"]' },
+  // CK-05: E-4 reads the slider's VISIBLE value point (the range's leading edge, `point` + `edge: "lead"`), pressed at
+  // the reka thumb; CK-20: the slider and the pair; CK-21: C-E's three plants (plant-fallback.mjs)
+  // H4: `engaged` is the selector a root matches while it is engaged (the door's one writer, `data-engaged`: CK-15's
+  // count in E-10, the engagement precondition of E-12's MIGRATION cells); `floor` names the E-12 cells a scene carries
+  // H6: `reads: 5` (CK-05: E-4's carry read five times, every read must pass; REGISTRY §P5-7 item 8)
+  slider: { gates: ["E-3", "E-4", "E-7", "E-9", "E-10", "E-11", "E-12", "E-13"], loupe: LOUPE, key: "ArrowRight", target: ".glass-slider", root: ".glass-slider", thumb: '[role="slider"]', body: ".slider-range", point: ".slider-range", edge: "lead", veil: ".glass-focus-veil", engaged: "[data-engaged]", floor: ["wheel", "anchor"], reads: 5,
+    failLoud: [{ token: "--space-section", value: "nonsense", act: "kbd" }, { token: "--scale-engage", value: "nonsense", act: "kbd" }, { token: "--spring-dock-settle", value: "nonsense", act: "fling" }] },
+  // H5: C-E4's stale place (CK-20): a paragraph that rewraps, a spacer the witness grows by a style write, the slider,
+  // a ticker below it the witness appends to (a childList mutation that moves nothing)
+  restale: { gates: ["E-10"], stale: true, root: '[data-t="slider-a"] .glass-slider', thumb: '[data-t="slider-a"] [role="slider"]', target: '[data-t="slider-a"] .glass-slider', veil: ".glass-focus-veil", engaged: "[data-engaged]" },
+  // H6 (CK-20): C-E5's clipped stale place moved into the harness's own app: the slider inside a 120 px clipping
+  // scroller (`overflow-anchor: none`), a spacer above it the witness sets by style, a ticker below the scroller
+  clipstale: { gates: ["E-10", "E-13"], loupe: LOUPE, feather: { cls: ["fading-scroll", "fading-scroll--y"], attrs: ["data-fade-start", "data-fade-end"] }, clip: { box: '[data-t="box"]', rest: '[data-t="slider-a"]', spacer: 60 }, root: '[data-t="slider-a"] .glass-slider', thumb: '[data-t="slider-a"] [role="slider"]', target: '[data-t="slider-a"] .glass-slider', veil: ".glass-focus-veil", engaged: "[data-engaged]" },
+  slider2: { gates: ["E-10"], pair: ['[data-t="slider-a"] .glass-slider', '[data-t="slider-b"] .glass-slider'], veil: ".glass-focus-veil", engaged: "[data-engaged]" },
+  // CK-05's repeat-run detent reads every detented Q-4 (b) surface: the tabs drag lands on a tab, the sortable row on a
+  // slot (pass-2/H2.md §2.3, HEAD read only the Sheet and the Carousel)
+  tabsdrag: { gates: ["E-4"], detents: true, root: ".segmented-tabs, [role=tablist]", thumb: ".segmented-indicator", target: ".segmented-indicator" },
+  // H-7: the Sheet's detents (a bottom sheet dragged up by its grip; UNMEASURED while it paints in flow, §P1-7), the
+  // sortable list (row a's handle dragged down; the drag ghost while it flies, then the landed row), one scroll-snap
+  // surface (the Carousel, a touch drag)
+  sheet: { gates: ["E-4"], axis: "y", dir: -1, detents: true, repeat: 8, fixed: '[role="dialog"]', root: "main[data-scene]", thumb: '[data-slot="sheet-detent-handle"]', target: '[data-slot="sheet-detent-handle"]' },
+  sortable: { gates: ["E-4"], axis: "y", dir: 1, detents: true, root: ".sortable-list", grip: '[data-sortable-id="a"] [data-sortable-handle]', thumb: ".sortable-ghost", land: '[data-sortable-id="a"]', target: '[data-sortable-id="a"]' },
+  carousel: { gates: ["E-4"], input: "touch", dir: -1, detents: true, platform: true, root: '[data-slot="carousel-content"]', thumb: '[data-slot="carousel-item"]', target: '[data-slot="carousel-item"]' },
+  modal: { gates: ["E-7"], modal: '[role="dialog"]', veil: ".glass-focus-veil" },
+  s6: { gates: ["E-6"], target: '[role="switch"]', subject: "the glass track (W-H.3.md:46 S6): the Switch's control bit" },
+  // CK-19: one exemplar per declared class beyond the commit scenes: presented (a Dialog with a target), field (an
+  // Input), ambient (a pointer field: the Aurora), static (Separator, Skeleton), and the census gallery (CK-01's latch
+  // reads every member some scene renders)
+  passive: { gates: [], target: '[data-t="sep"]' },
+  // H6 (CK-10 × O-100 R-1): `fade` names the presented plate and its scrim; E-9 dismisses and presents it under reduce
+  presented: { gates: [], target: '[role="dialog"] .button', modal: '[role="dialog"]', fade: { plate: '[role="dialog"]', scrim: ".bg-overlay-scrim" } },
+  field: { gates: [], target: 'input[data-t="field"]' },
+  ambient: { gates: [], target: '[data-t="ambient"]' },
+  gallery: { gates: [] },
+  // H4, E-12 (CK-14 × CK-13): the three dock triggers on a coarse pointer, compact (a consumer-sized 32×24 face, the
+  // rung touch-floor.css names). `census: false`: the dock is D2's fence and its latch closes only with D2's leave
+  // (REGISTRY §P3-6), so E-1 does not read this scene's members
+  docktrig: { gates: ["E-12"], floor: ["slop"], census: false, slop: '[data-t^="dt-"]' },
+  // H4, E-12 (CK-16): the rest-running members alone, so a layout count and an off-screen read are theirs
+  restloop: { gates: ["E-12"], floor: ["rest"] },
+  // H6 (CK-11, CK-14, CK-27; REGISTRY §P5-7 item 2): every composer of `.glass-capsule-hover` outside the dock, by
+  // directory, as HEAD's source names them (grep at H6): the Configurator's preset strip (an aria-pressed toggle), the
+  // glass Button (emphasis primary), the interactive Chip, a ToggleGroupItem, a non-selected pill SegmentedTab and the
+  // SelectTrigger. E-12 reads each one's hover, press and coarse tap, and checks this list against the source tree
+  capsule: { gates: ["E-12"], floor: ["capsule"], caps: {
+    configurator: '[data-t="cap-configurator"] .configurator-preset-chip:not(.is-active)', button: '[data-t="cap-button"] .button',
+    chip: '[data-t="cap-chip"] .glass-chip', "toggle-group": '[data-t="cap-toggle"] [data-t="cap-toggle-b"]',
+    tabs: '[data-t="cap-tabs"] .segmented-tab:nth-of-type(2)', select: '[data-t="cap-select"] [data-slot="select-trigger"]' },
+    // H7 (CK-11): the SelectTrigger opens on pointerdown, so E-12 reads its press with pointerdown withheld from the page's
+    // handlers (the press without the open); H7 (CK-27, C-A6's `chip` cell): the preset chip, an aria-pressed toggle,
+    // answers hover and press through a declared class
+    quiet: ["select"], answers: { "preset chip": '[data-t="cap-configurator"] .configurator-preset-chip:not(.is-active)' } },
+  // H6 (CK-25; REGISTRY §P5-7 item 10): the collapsible's and the menu's triggers alone, so capture.mjs's ladder cell
+  // reaches them (in the gallery P-A5's ladder probe hit another element and left them UNMEASURED)
+  collapsible: { gates: [], ladder: true, target: '[data-slot="collapsible-trigger"]' },
+  menu: { gates: [], ladder: true, target: '[data-slot="menu-trigger"]' },
+};
+// H4 (CK-19): a scene whose subject cannot paint its rung's input in this engine says so, read from the member's own
+// resolved state, never assumed. The Aurora stamps its resolved substrate (`data-aurora-substrate`); "css" is the
+// static palette ground its software-raster guard picks (constants/renderMode.ts isSoftwareWebGLRenderer). E-1 marks
+// the cell UNMEASURED with this reason, never PASS
+function rendererString(): string {
+  try {
+    const gl = document.createElement("canvas").getContext("webgl2");
+    if (!gl) return "no WebGL2 context";
+    const x = gl.getExtension("WEBGL_debug_renderer_info");
+    const r = String(x ? gl.getParameter(x.UNMASKED_RENDERER_WEBGL) : gl.getParameter(gl.RENDERER));
+    gl.getExtension("WEBGL_lose_context")?.loseContext();
+    return r;
+  } catch (e) { return `WebGL2 probe threw: ${String(e).slice(0, 80)}`; }
+}
+const LIMIT: Record<string, () => string | null> = {
+  ambient: () => {
+    const s = document.querySelector('[data-t="ambient"] [data-aurora-substrate]')?.getAttribute("data-aurora-substrate");
+    if (s == null) return "the Aurora rendered no substrate stamp (data-aurora-substrate absent)";
+    return s === "css" ? `the Aurora resolved its "css" substrate (data-aurora-substrate="css": the software-raster guard, constants/renderMode.ts; WebGL2 renderer "${rendererString()}"): a static palette ground with no pointer field in this engine` : null;
+  },
+};
+// E-1's runtime arm: which harness scene exemplifies a component directory (CK-19)
+const SCENE_OF_DIR: Record<string, string> = {
+  switch: "switch", checkbox: "checkbox", "radio-group": "radio", tabs: "tabs", "toggle-group": "toggle",
+  chip: "chip", accordion: "accordion", button: "button", slider: "slider", separator: "passive", skeleton: "passive", dialog: "presented",
+  sheet: "sheet", "sortable-list": "sortable", carousel: "carousel", input: "field", textarea: "gallery", aurora: "ambient",
+  card: "gallery", alert: "gallery", badge: "gallery", progress: "gallery", "status-dot": "gallery", "pager-dots": "gallery",
+};
+
+const capPreset = ref("a"); const capTabs = ref("a"); const capChip = ref(false); const capTg = ref("a");
+const capPresets = [{ key: "a", label: "Alpha" }, { key: "b", label: "Beta" }, { key: "c", label: "Gamma" }];
+const v = ref([40]); const v2 = ref([60]); const extra = ref(false); const ticks = ref<number[]>([]); const txt = ref(""); const sw = ref(on); const cb = ref(on); const rg = ref(on ? "b" : "a"); const tab = ref(on ? "b" : "a");
+const acc = ref<string | undefined>(on ? "one" : undefined); const chip = ref(on); const tg = ref(on ? "b" : "a"); const clicks = ref(0);
+const open = ref(false); const detent = ref(0.25);
+const rows = ref(["a", "b", "c", "d", "e", "f"].map((id) => ({ id, label: id.toUpperCase() }))); const slide = ref(0);
+const commit: Record<string, () => void> = {
+  switch: () => (sw.value = !sw.value), checkbox: () => (cb.value = !cb.value), radio: () => (rg.value = "b"),
+  tabs: () => (tab.value = "b"), accordion: () => (acc.value = acc.value ? undefined : "one"), chip: () => (chip.value = !chip.value),
+  toggle: () => (tg.value = "b"), slider: () => (v.value = [70]),
+};
+// CK-02's precondition: the model each scene binds, read before and after a commit
+const STATE: Record<string, () => unknown> = {
+  switch: () => sw.value, checkbox: () => cb.value, radio: () => rg.value, tabs: () => tab.value, tabsdrag: () => tab.value,
+  accordion: () => acc.value ?? null, chip: () => chip.value, chipaction: () => clicks.value, button: () => clicks.value, toggle: () => tg.value,
+  slider: () => v.value, restale: () => v.value, clipstale: () => v.value, capsule: () => [capPreset.value, capTabs.value, capChip.value, capTg.value], slider2: () => [v.value, v2.value], sheet: () => detent.value, sortable: () => rows.value.map((r) => r.id).join(""), carousel: () => slide.value,
+};
+// CK-01: the rendered members. The scene app walks its own component tree and attributes every element to the
+// innermost component a directory exports (members.ts maps each export to its directory); a component of the same
+// directory nested inside it is the same member instance. An element that is the root of a component whose own root is
+// another directory's component (Card over Surface) is the root of both. Handlers are the elements whose vnode
+// carries an on* prop.
+// H3 (pass 3), the origin of a handler: an on* prop belongs to the component whose render created the vnode
+// (`vnode.ctx`, which a slot's content keeps as its owner and a fall-through clone keeps as the child). A prop a
+// reka-ui component created is that library's own, unless reka received it on its own vnode (a fall-through from the
+// member or the consumer, which keeps that origin). reka-ui's Label binds `onMousedown` (a double-click selection
+// guard) through its Primitive: library-internal, so a static Label root is not live for it (C-A2 CK-01).
+const self = getCurrentInstance();
+type Group = { dir: string; root: Element | null; els: Element[]; handlers: Element[]; libHandlers: Element[] };
+const ON = /^on[A-Z]/;
+function originOf(vn: any, key: string, depth = 0): "lib" | "own" {
+  const c = vn?.ctx; if (!c || !(REKA as Set<unknown>).has(c.type) || depth > 32) return "own";
+  const pv = c.vnode; return pv?.props && key in pv.props ? originOf(pv, key, depth + 1) : "lib";
+}
+function members(): Group[] {
+  const out: Group[] = [];
+  const walk = (vn: any, owner: Group | null, pend: Group[]) => {
+    if (!vn || typeof vn !== "object") return;
+    if (vn.component) {
+      const d = (TYPE_DIR as Map<unknown, string>).get(vn.type);
+      let o = owner, p = pend;
+      if (d && (!owner || owner.dir !== d)) { o = { dir: d, root: null, els: [], handlers: [], libHandlers: [] }; out.push(o); p = [...pend.filter((g) => !g.root), o]; }
+      walk(vn.component.subTree, o, p); return;
+    }
+    if (vn.suspense) { walk(vn.suspense.activeBranch, owner, pend); return; }
+    let next = pend;
+    if (typeof vn.type === "string" && vn.el instanceof Element) {
+      const keys = Object.keys(vn.props ?? {}).filter((k) => ON.test(k)); const org = keys.map((k) => originOf(vn, k));
+      const own = org.includes("own"), lib = org.includes("lib");
+      for (const g of new Set([...pend.filter((x) => !x.root), ...(owner ? [owner] : [])])) {
+        if (!g.root) g.root = vn.el;
+        g.els.push(vn.el); if (own) g.handlers.push(vn.el); else if (lib) g.libHandlers.push(vn.el);
+      }
+      next = [];
+    }
+    if (Array.isArray(vn.children)) for (const c of vn.children) walk(c, owner, next);
+  };
+  walk(self?.subTree, null, []);
+  return out;
+}
+// a gallery member that throws renders nothing and leaves the others standing
+const Safe = defineComponent({ setup(_, { slots }) { const bad = ref(""); onErrorCaptured((e) => { bad.value = String(e); return false; }); return () => (bad.value ? h("i", { "data-t": "unrendered", title: bad.value }) : slots.default?.()); } });
+const base = scene.replace(/^press_/, "").replace(/^s6$/, "switch");
+
+function tag() {
+  const m = INDEX[scene]; if (!m) return;
+  for (const k of ["target", "body", "root", "thumb", "grip", "land", "modal", "veil", "face", "point"]) {
+    const sel = m[k] as string | undefined; if (!sel) continue;
+    const el = document.querySelector(sel); if (!el) continue;
+    const have = (el.getAttribute("data-e") ?? "").split(" ").filter(Boolean);
+    if (!have.includes(k)) el.setAttribute("data-e", [...have, k].join(" "));
+  }
+}
+const tabs3 = [{ label: "Alpha", value: "a" }, { label: "Beta", value: "b" }, { label: "Gamma", value: "c" }];
+// the gallery's deck (CK-01: a deck renders through its core) and its one toast (P-A2's widening, H3)
+const deck = useDeck(2);
+if (scene === "gallery") setTimeout(() => toast({ title: "Toast", description: "Body" }), 50);
+
+onMounted(async () => {
+  new MutationObserver(tag).observe(document.body, { childList: true, subtree: true });
+  const modalish = scene === "modal" || scene === "sheet" || scene === "presented";
+  const ticked = scene === "restale" || scene === "clipstale";
+  if (modalish) open.value = true;
+  await nextTick(); await new Promise((r) => setTimeout(r, modalish ? 900 : 300)); tag();
+  (window as any).__e = {
+    ready: true, kind: "build", scene, index: INDEX, sceneOfDir: SCENE_OF_DIR, dirs: DIRS, decl: DECL,
+    rungs: ENGAGE_LADDER.map((r) => r.rung), envelopes: ENGAGE_ENVELOPES.map((r) => ({ role: r.role, attackMs: r.attackMs, releaseMs: r.releaseMs })),
+    commit: () => commit[base]?.(),
+    limit: () => LIMIT[scene]?.() ?? null,
+    state: () => (STATE[base] ? JSON.parse(JSON.stringify(STATE[base]())) : null),
+    members,
+    // CK-20: a parent re-render puts a block before the slider during a hold
+    insertSibling: scene === "slider" ? async () => { extra.value = true; await nextTick(); } : undefined,
+    // H5 (CK-20): a layout-only move (a style write on the spacer before the slider: no childList mutation), and on the
+    // restale scene a childList mutation below the slider that moves nothing
+    grow: scene === "slider" || scene === "restale" || scene === "clipstale" ? (px: number) => { const e = document.querySelector<HTMLElement>('[data-t="spacer"]'); if (e) e.style.height = `${px}px`; } : undefined,
+    tick: ticked ? async () => { ticks.value = [...ticks.value, ticks.value.length]; await nextTick(); } : undefined,
+    mount: async () => { mounted.value = true; await nextTick(); tag(); },
+    // H6 (CK-10): the presented dialog dismissed and presented (E-9's fade under reduce)
+    open: scene === "presented" ? async (o: boolean) => { open.value = o; await nextTick(); tag(); } : undefined,
+  };
+});
+</script>
+
+<template>
+  <!-- H3: the page's own ground under every scene, the theme's `--background`. CK-02's light read composites a face on
+       the first opaque ground behind it and refuses to grade one with none (P-A2's ground, ruled with a plant:
+       fixtures.mjs e2-noground) -->
+  <main :style="(phone ? 'min-height:100vh;padding:48px 16px;box-sizing:border-box' : 'min-height:100vh;padding:48px;box-sizing:border-box') + ';background:var(--background)'" :data-scene="scene">
+    <button data-sentinel="before" data-t="before">before</button>
+    <div v-if="mounted" style="padding:24px 0">
+      <template v-if="scene === 'restale'">
+        <p style="margin:12px 0;max-width:600px">The world above the engaged control: a paragraph long enough to rewrap when the viewport narrows, so that a resize moves the control below it with no mutation of the document at all.</p>
+        <div data-t="spacer" style="height:0px"></div>
+        <div data-t="wrap" style="width:360px"><div data-t="slider-a"><Slider v-model="v" :min="0" :max="100" aria-label="Probe A" /></div></div>
+        <div data-t="ticker" style="height:20px;overflow:hidden"><span v-for="t in ticks" :key="t">·</span></div>
+      </template>
+      <template v-else-if="scene === 'clipstale'">
+        <p style="margin:12px 0;max-width:420px">A scrolling card holds the control; the card's edge clips it.</p>
+        <div data-t="box" style="width:400px;height:120px;overflow:auto;overflow-anchor:none;border:1px solid var(--border)">
+          <div style="height:200px"></div>
+          <div data-t="spacer" style="height:60px"></div>
+          <div data-t="slider-a" style="padding:0 20px"><Slider v-model="v" :min="0" :max="100" aria-label="Probe A" /></div>
+          <div style="height:400px"></div>
+        </div>
+        <div data-t="ticker" style="height:20px;overflow:hidden"><span v-for="t in ticks" :key="t">·</span></div>
+      </template>
+      <div v-else-if="scene === 'capsule'" style="width:520px;display:grid;gap:16px">
+        <div data-t="cap-configurator"><Safe><Configurator :presets="capPresets" :active-preset="capPreset" @select-preset="(k: string) => (capPreset = k)" /></Safe></div>
+        <div data-t="cap-button"><Safe><Button emphasis="primary" @click="clicks++">Capsule</Button></Safe></div>
+        <div data-t="cap-chip"><Safe><Chip mode="selectable" v-model="capChip">Capsule</Chip></Safe></div>
+        <div data-t="cap-toggle"><Safe><ToggleGroup type="single" v-model="capTg" aria-label="Capsule"><ToggleGroupItem value="a">Alpha</ToggleGroupItem><ToggleGroupItem value="b" data-t="cap-toggle-b">Beta</ToggleGroupItem></ToggleGroup></Safe></div>
+        <div data-t="cap-tabs"><Safe><SegmentedTabs v-model="capTabs" :options="tabs3" aria-label="Capsule" /></Safe></div>
+        <div data-t="cap-select"><Safe><Select><SelectTrigger aria-label="Pick"><SelectValue placeholder="Pick" /></SelectTrigger><SelectContent><SelectItem value="a">A</SelectItem></SelectContent></Select></Safe></div>
+      </div>
+      <div v-else-if="scene === 'collapsible'" style="width:320px"><Collapsible><CollapsibleTrigger>More</CollapsibleTrigger><CollapsibleContent>Body</CollapsibleContent></Collapsible></div>
+      <div v-else-if="scene === 'menu'"><DropdownMenu><DropdownMenuTrigger>Menu</DropdownMenuTrigger><DropdownMenuContent><DropdownMenuItem>One</DropdownMenuItem></DropdownMenuContent></DropdownMenu></div>
+      <template v-else-if="scene === 'slider'"><div data-t="spacer" style="height:0px"></div><div v-if="extra" data-t="inserted" style="height:40px"></div><div :style="phone ? 'width:100%' : 'width:360px'"><Slider v-model="v" :min="0" :max="100" aria-label="Probe" /></div></template>
+      <div v-else-if="scene === 'slider2'" style="width:360px;display:grid;gap:48px">
+        <div data-t="slider-a"><Slider v-model="v" :min="0" :max="100" aria-label="Probe A" /></div>
+        <div data-t="slider-b"><Slider v-model="v2" :min="0" :max="100" aria-label="Probe B" /></div>
+      </div>
+      <Switch v-else-if="base === 'switch'" v-model="sw" aria-label="Probe" />
+      <Checkbox v-else-if="base === 'checkbox'" v-model="cb" aria-label="Probe" />
+      <RadioGroup v-else-if="scene === 'radio'" v-model="rg" aria-label="Probe">
+        <RadioGroupItem value="a" aria-label="A" /><RadioGroupItem value="b" aria-label="B" />
+      </RadioGroup>
+      <SegmentedTabs v-else-if="scene === 'tabs' || scene === 'tabsdrag'" v-model="tab" :options="tabs3" aria-label="Probe" />
+      <Accordion v-else-if="scene === 'accordion'" v-model="acc" type="single" collapsible style="width:320px">
+        <AccordionItem value="one"><AccordionTrigger>One</AccordionTrigger><AccordionContent>Body one</AccordionContent></AccordionItem>
+      </Accordion>
+      <Chip v-else-if="scene === 'chip'" mode="selectable" v-model="chip">Probe</Chip>
+      <Chip v-else-if="scene === 'chipaction'" mode="action" @click="clicks++">Probe</Chip>
+      <Button v-else-if="scene === 'button'" @click="clicks++">Probe</Button>
+      <ToggleGroup v-else-if="scene === 'toggle'" type="single" v-model="tg" aria-label="Probe">
+        <ToggleGroupItem value="a" data-t="item-a">Alpha</ToggleGroupItem><ToggleGroupItem value="b" data-t="item-b">Beta</ToggleGroupItem>
+      </ToggleGroup>
+      <div v-else-if="scene === 'passive'" style="width:320px;display:grid;gap:16px"><Separator data-t="sep" /><Skeleton data-t="skel" style="height:24px" /></div>
+      <Dialog v-else-if="scene === 'presented'" v-model:open="open">
+        <DialogContent><DialogTitle>Probe</DialogTitle><p>Body</p><Button @click="clicks++">Act</Button><div data-t="dlg-slider" style="width:320px;padding:16px 0"><Slider v-model="v" :min="0" :max="100" aria-label="Probe D" /></div></DialogContent>
+      </Dialog>
+      <div v-else-if="scene === 'field'" style="width:320px"><Input v-model="txt" aria-label="Probe" data-t="field" /></div>
+      <div v-else-if="scene === 'ambient'" data-t="ambient" style="width:420px;height:240px;position:relative;overflow:hidden;border-radius:16px"><Safe><Aurora /></Safe></div>
+      <div v-else-if="scene === 'docktrig'" style="display:flex;gap:48px;align-items:center;padding:24px">
+        <Safe><Select><DockTrigger for="select" data-t="dt-select" aria-label="Pick" style="inline-size:32px;block-size:24px;padding:0;min-height:0"><SelectValue placeholder="A" /></DockTrigger><SelectContent><SelectItem value="a">A</SelectItem></SelectContent></Select></Safe>
+        <Safe><DropdownMenu><DockTrigger for="dropdown" data-t="dt-dropdown" aria-label="Menu" style="inline-size:32px;block-size:24px;padding:0;min-height:0">⋯</DockTrigger><DropdownMenuContent><DropdownMenuItem>One</DropdownMenuItem></DropdownMenuContent></DropdownMenu></Safe>
+        <Safe><Popover><DockTrigger for="popover" data-t="dt-popover" aria-label="Pop" style="inline-size:32px;block-size:24px;padding:0;min-height:0">⋯</DockTrigger><PopoverContent>Pop body</PopoverContent></Popover></Safe>
+      </div>
+      <div v-else-if="scene === 'restloop'" style="width:320px;display:grid;gap:16px"><Skeleton data-t="skel" style="height:24px" /><StatusDot state="active" data-t="dot" /></div>
+      <div v-else-if="scene === 'gallery'" style="width:420px;display:grid;gap:12px">
+        <Safe><Card><CardContent>Card</CardContent></Card></Safe>
+        <Safe><Card :selected="false"><CardContent>Card, selectable</CardContent></Card></Safe>
+        <Safe><Alert><AlertTitle>Alert</AlertTitle><AlertDescription>Body</AlertDescription></Alert></Safe>
+        <Safe><Badge>Badge</Badge></Safe>
+        <Safe><Progress :model-value="40" aria-label="Progress" /></Safe>
+        <Safe><StatusDot state="active" /></Safe>
+        <Safe><PagerDots :count="4" /></Safe>
+        <Safe><Textarea aria-label="Notes" /></Safe>
+        <Safe><Chip mode="removable" remove-label="Remove">Removable</Chip></Safe>
+        <Safe><Chip>Static chip</Chip></Safe>
+        <Safe><Avatar><AvatarFallback>AB</AvatarFallback></Avatar></Safe>
+        <Safe><Collapsible><CollapsibleTrigger>More</CollapsibleTrigger><CollapsibleContent>Body</CollapsibleContent></Collapsible></Safe>
+        <Safe><Command><CommandInput placeholder="Search" /><CommandList><CommandItem value="a">A</CommandItem></CommandList></Command></Safe>
+        <Safe><div style="height:96px;position:relative"><Constellation /></div></Safe>
+        <Safe><DarkModeToggle /></Safe>
+        <Safe><EasingPicker /></Safe>
+        <Safe><ExpandableContainer>Expandable</ExpandableContainer></Safe>
+        <Safe><FadingScroll><p>Fading</p></FadingScroll></Safe>
+        <Safe><div style="height:96px;position:relative"><FourierField /></div></Safe>
+        <Safe><HandMark /></Safe>
+        <Safe><InfiniteScroll :has-more="false"><p>Rows</p></InfiniteScroll></Safe>
+        <Safe><Label>Name</Label></Safe>
+        <Safe><LabeledField label="Name"><Input aria-label="Name" /></LabeledField></Safe>
+        <Safe><Metric label="Rate" :value="12" /></Safe>
+        <Safe><MusicStaff label="Staff" /></Safe>
+        <Safe><NumberField :default-value="3" aria-label="Count"><NumberFieldInput /></NumberField></Safe>
+        <Safe><ScrollProgressRim :value="0.4" /></Safe>
+        <Safe><Select><SelectTrigger aria-label="Pick"><SelectValue placeholder="Pick" /></SelectTrigger><SelectContent><SelectItem value="a">A</SelectItem></SelectContent></Select></Safe>
+        <Safe><Table><TableBody><TableRow><TableCell>Cell</TableCell></TableRow></TableBody></Table></Safe>
+        <Safe><Timeline /></Safe>
+        <Safe><TooltipProvider><Tooltip :open="true"><TooltipTrigger>Tip</TooltipTrigger><TooltipContent>Tip body</TooltipContent></Tooltip></TooltipProvider></Safe>
+        <Safe><TypewriterText text="Hello" /></Safe>
+        <Safe><div style="height:96px;position:relative"><Blob color="oklch(70% 0.15 250)" :config="BLOB_CONFIG_DEFAULTS" /></div></Safe>
+        <Safe><DataTable :columns="[{ key: 'n', label: 'N' }]" :rows="[{ _id: 1, n: 'one' }]" /></Safe>
+        <Safe><div style="width:320px"><DeckStage :deck="deck" :ratio="16 / 9" aria-label="Deck"><DeckSlide :index="0">One</DeckSlide><DeckSlide :index="1">Two</DeckSlide></DeckStage></div></Safe>
+        <Safe><Popover :default-open="true"><PopoverTrigger>Pop</PopoverTrigger><PopoverContent>Pop body</PopoverContent></Popover></Safe>
+        <Safe><Toaster /></Safe>
+        <Safe><Configurator><ConfiguratorLayer label="Layer" :default-open="true"><ConfiguratorRow label="Row">Value</ConfiguratorRow></ConfiguratorLayer></Configurator></Safe>
+        <Safe><DropdownMenu><DropdownMenuTrigger>Menu</DropdownMenuTrigger><DropdownMenuContent><DropdownMenuItem>One</DropdownMenuItem></DropdownMenuContent></DropdownMenu></Safe>
+      </div>
+      <Dialog v-else-if="scene === 'modal'" v-model:open="open">
+        <DialogContent><DialogTitle>Probe</DialogTitle><p>Body</p></DialogContent>
+      </Dialog>
+      <Dialog v-else-if="scene === 'sheet'" v-model:open="open">
+        <SheetContent side="bottom" :detents="[0.25, 0.5, 0.75, 1]" v-model:detent="detent"><DialogTitle>Probe</DialogTitle><p>Body</p></SheetContent>
+      </Dialog>
+      <div v-else-if="scene === 'sortable'" style="width:320px">
+        <SortableList :items="rows" :get-id="(r) => r.id" :get-label="(r) => r.label" label="Probe" @reorder="rows = $event">
+          <SortableItem v-for="r in rows" :key="r.id" :id="r.id"><SortableHandle />{{ r.label }}</SortableItem>
+        </SortableList>
+      </div>
+      <div v-else-if="scene === 'carousel'" style="width:600px">
+        <Carousel v-model:active="slide" aria-label="Probe">
+          <CarouselContent>
+            <CarouselItem v-for="i in 4" :key="i" :index="i - 1" :label="`Slide ${i}`"><div style="height:160px;display:grid;place-items:center">Slide {{ i }}</div></CarouselItem>
+          </CarouselContent>
+        </Carousel>
+      </div>
+    </div>
+    <button data-sentinel="after" data-t="after">after</button>
+  </main>
+</template>
