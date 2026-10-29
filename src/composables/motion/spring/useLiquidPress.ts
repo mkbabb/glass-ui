@@ -178,11 +178,19 @@ export function useLiquidPress(
               // `maxStretch` cap at rest 0.618, 1.0 at weight 0 (the observer/PRM fence). No
               // element → the static cap (still correct at rest weight). The reciprocal
               // squish is the GENTLE press register.
+              //
+              // At rest (press value 0) the travel is 0, so the stretch is 1 whatever the
+              // cap (`effectiveCap` never returns below 1). The getter therefore reads no
+              // computed style and tracks no element ref until a press moves the spring:
+              // a page of mounted controls pays no forced style recalculation and no
+              // second render when each template ref binds.
               maxStretch: () =>
-                  effectiveCap(
-                      options.el?.value ?? null,
-                      toValue(options.maxStretch ?? 1.04),
-                  ),
+                  press.value.value === 0
+                      ? 1
+                      : effectiveCap(
+                            options.el?.value ?? null,
+                            toValue(options.maxStretch ?? 1.04),
+                        ),
               squishLaw: "linear",
           })
         : null;

@@ -25,17 +25,37 @@
 const MOTION_TEMPO_IDENTITY = 1;
 
 /**
+ * The `:root` tempo read in the current task. Every element-agnostic spring reads
+ * `:root` at construction, and a page mounts dozens of them (one per pressable
+ * control) in one task. Each `getComputedStyle` read after a DOM insertion forces a
+ * style recalculation, so the read is taken once per task and dropped at the next
+ * microtask: a tempo change made between tasks is still read by the next mount.
+ */
+let rootTempoThisTask: number | null = null;
+
+function readTempo(source: Element): number {
+    const raw = getComputedStyle(source).getPropertyValue("--motion-tempo").trim();
+    const t = Number.parseFloat(raw);
+    return Number.isFinite(t) && t > 0 ? t : MOTION_TEMPO_IDENTITY;
+}
+
+/**
  * Read the effective `--motion-tempo` off `el` (or `:root` when omitted). Returns a
  * positive multiplier (the identity `1` off-DOM, on a malformed value, or on any
  * value ≤ 0). Read once at spring construction — a tempo change is a settings-level
- * knob (a re-mount picks it up), never a per-frame read.
+ * knob (a re-mount picks it up), never a per-frame read. The `:root` read is shared
+ * by every construction in one task.
  */
 export function motionTempo(el?: Element | null): number {
     if (typeof window === "undefined" || typeof getComputedStyle !== "function") {
         return MOTION_TEMPO_IDENTITY;
     }
-    const source = el ?? document.documentElement;
-    const raw = getComputedStyle(source).getPropertyValue("--motion-tempo").trim();
-    const t = Number.parseFloat(raw);
-    return Number.isFinite(t) && t > 0 ? t : MOTION_TEMPO_IDENTITY;
+    if (el) return readTempo(el);
+    if (rootTempoThisTask === null) {
+        rootTempoThisTask = readTempo(document.documentElement);
+        queueMicrotask(() => {
+            rootTempoThisTask = null;
+        });
+    }
+    return rootTempoThisTask;
 }
