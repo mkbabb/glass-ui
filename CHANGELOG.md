@@ -68,8 +68,12 @@ or renamed, and a consumer has nothing to change.
   not tap, and a swipe the run's `touch-action: pan-x` refuses ends in a `pointerup`
   with no click and no cancel (critique-2 D-1; the round-1 hold kept such a press in
   flight, so a later keyboard focus or hover no longer expanded the collapsed dock until
-  some click anywhere). An unresolved touch press is dropped, with what it deferred, by
-  the next `pointerdown`. The expand runs only if the focus is still inside or the
+  some click anywhere). A press also ends where the engine ends it with no release and
+  no click: at `dragstart` and at `contextmenu` (critique-6 D-1; in WebKit a link
+  dragged out of the dock and a right-click on a seat sent neither a `pointerup` nor a
+  `pointercancel`, so the hold stayed armed and a later hover or keyboard focus no
+  longer expanded the collapsed dock). An unresolved press of any pointer is dropped,
+  with what it deferred, by the next primary `pointerdown`. The expand runs only if the focus is still inside or the
   pointer has not left. A keyboard focus still expands at once. The click guard is
   unchanged.
 

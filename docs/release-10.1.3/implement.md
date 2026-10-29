@@ -464,3 +464,73 @@ Logs, beside the worktree in `fix-r5/`: `chain.sh`, `chain.log`, `typecheck.log`
 Housekeeping: `release-10.1.3/fix5/` (round 4's two stray Playwright JSON reports) is
 still untracked; removing it was refused by the permission system again. Delete it by hand
 before the tag.
+
+## Round 6 (critique-6)
+
+Implementer: claude-opus-5-5. The click guard and its constants are untouched.
+
+- **D-1: a press ends where the engine ends it without a release** (`useDockState.ts`,
+  the press rule). The hold ended only at a `click`, a `pointercancel`, a `pointerup`
+  task's end, or a new in-dock `pointerdown`. WebKit ends two ordinary mouse gestures
+  with none of those: a native drag of a dock link (`pointerdown`, `mousedown`,
+  `dragstart`, `dragend`) and a right-click (`pointerdown`, `mousedown`, `contextmenu`).
+  The hold now ends at `dragstart` and at `contextmenu`, which run what the press
+  deferred. Neither is followed by a click, so nothing that runs then can move a click's
+  target. An unresolved press of any pointer type now lapses, with what it deferred, at
+  the next primary `pointerdown` anywhere. Before, only a touch press did. A second
+  finger (`isPrimary: false`) leaves the first press holding. There is no timeout and no
+  tolerance.
+- **R-1:** the `shell.css` at-rest comment names the vertical scroll port as `.dock-run`
+  (`run.css`), not the root.
+
+### Witnesses
+
+- Unit (`GlassDock.posture.test.ts`, "a press that ends without a release"): `dragstart`
+  and `contextmenu` each run the deferred focus expand and leave no hold. A primary
+  `pointerdown` outside drops the press and what it deferred. A non-primary one does not.
+  RED 3/4 before the cure (the non-primary cell is the control), 23/23 GREEN after.
+- Engine (`release-10-1-3.spec.ts`, `-g critique-6`; the harness gains `?link=1`, a
+  draggable `<a href>` beside "Edit contour", and an outside button):
+  - a link dragged out of the collapsed dock, right- and left-anchored, then a focus or
+    a hover (4 cells);
+  - a right-click on the collapsed seat, then a focus;
+  - a hover-intent dwell that completes after a right-click: the pointer enters the
+    collapsed seat and right-clicks it inside the 60 ms dwell. The cell first checks
+    that the dock was still collapsed at the `contextmenu`;
+  - a mouse `pointerdown` with no release, then a `pointerdown` outside, then a focus
+    (any engine).
+
+  The critic's move-away-and-back hover after a right-click cannot be driven in
+  Playwright WebKit 2287. Once its context menu takes the release, no later mouse move
+  reaches the page. A diagnostic showed this on both trees:
+  - a right-click outside the dock, then a hover over it, expands nothing on v10.1.2 or
+    the branch;
+  - with the page cancelling `contextmenu`, the release and the moves arrive, and both
+    expand.
+
+  On v10.1.2 every event after the menu reports the pointer at the seat. Its hover
+  expand came from the morph sliding the seat out from under that pointer and back,
+  firing a spurious leave and enter: the O-110 defect. So that cell's v10.1.2 GREEN is
+  not a hover. The dwell cell replaces its hover arm.
+
+### Round 6 gates
+
+| gate | result |
+|---|---|
+| critique-6 cells (7), pre-cure tree (`17ef64035` `src` + these witnesses), Chromium | 6 GREEN, 1 RED: the supersede cell. Chromium cancels a drag and releases a right-click, so the D-1 gestures pass there before the cure, as critique-6 found |
+| the same, WebKit 2287 | 7/7 RED |
+| the same, v10.1.2 `src` + these witnesses, WebKit 2287 | 7/7 GREEN |
+| `npm run typecheck` | exit 0 |
+| `npm run build`, `npm run demo:dist:build` | exit 0 |
+| `npx vitest run --maxWorkers=2` | 246 files, 2391 passed, 10 expected fail, 1 skipped; 1 failed: `boot-graph` stale `dist-demo`, GREEN 14/14 after `demo:dist:build` |
+| `npm run verify:package` | the ratchet refused +76 B (the listeners); rebound 2939806 → 2939882 on the committed tree, then terminal CLEAN |
+| `release-10-1-1` + `release-10-1-2` + `release-10-1-3` specs, Chromium | 134/134 GREEN (the 77 release cells with the O-101 no-overflow cells, the 10.1.3 fourier cells, the 7 critique-6 cells) |
+| the same, WebKit 2287 (`guarded --exclusive webkit`) | 132 passed, 2 skipped (the CDP swipe cells are Chromium's) |
+
+Logs, beside the worktree in `fix-r6/`: `{pre,post}-{chromium,webkit}.log` (first
+pass, with the replaced hover arm RED on the branch in WebKit), `pre2-*`, `red2-webkit`,
+`post2-*` (final), `d2rep-webkit.log`, `d3/{branch,pre,red}/diag-webkit-*.json` with
+`_fix6-diag.spec.ts` (the context-menu diagnostic), `unit-{pre,post}.log`, `vitest*.log`,
+`typecheck*.log`, `build.log`, `demo-build.log`, `verify-package.log`, the chain scripts.
+
+Housekeeping: `fix5/` is removed.
