@@ -1,0 +1,22 @@
+# 2026-10-29 10:28:38 start · load { 6.95 8.66 9.20 }
+# cmd: node /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/harness/e6-idle.mjs --build /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p8/E8/wt/.e8out/builds/cand8 --wt /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p8/E8/wt --engine chromium --out /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-8/E8/json/cand8
+# E-6 · the idle rung under the compositor-only bound
+# target /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p8/E8/wt/.e8out/builds/cand8 · engine chromium · lock wait 0.0 s · other headless processes: chromium 12, webkit 2 · load 7.0/8.7/9.2 at start
+# scene app: harness scenes/App.vue (sha1 310d45686fce)
+# chromium 149.0.7827.55
+  FAIL       E-6 s6 present light · 0 running infinite animation(s) at rest · load 7.0/8.6/9.2
+  UNMEASURED E-6 s6 channel light · no idle animation to read · load 7.0/8.6/9.2
+  UNMEASURED E-6 s6 shape light · no idle animation to read · load 7.0/8.6/9.2
+  UNMEASURED E-6 s6 amplitude light · no idle animation to read · load 7.0/8.6/9.2
+  UNMEASURED E-6 s6 period light · no idle animation to read · load 7.0/8.6/9.2
+  PASS       E-6 s6 layouts/s light · layouts/s 0.0 · style recalcs/s 0.0 over 3 s at rest (bound 0 layouts/s) · load 7.0/8.6/9.2
+  PASS       E-6 s6 PRM light · 0 idle animation(s) under reduced motion, 0 spatial · load 7.0/8.6/9.2
+  FAIL       E-6 s6 present dark · 0 running infinite animation(s) at rest · load 7.0/8.6/9.2
+  UNMEASURED E-6 s6 channel dark · no idle animation to read · load 7.0/8.6/9.2
+  UNMEASURED E-6 s6 shape dark · no idle animation to read · load 7.0/8.6/9.2
+  UNMEASURED E-6 s6 amplitude dark · no idle animation to read · load 7.0/8.6/9.2
+  UNMEASURED E-6 s6 period dark · no idle animation to read · load 7.0/8.6/9.2
+  PASS       E-6 s6 layouts/s dark · layouts/s 0.0 · style recalcs/s 0.0 over 3 s at rest (bound 0 layouts/s) · load 7.0/8.6/9.2
+  PASS       E-6 s6 PRM dark · 0 idle animation(s) under reduced motion, 0 spatial · load 7.0/8.6/9.2
+E-6 chromium FAIL · 4 pass, 2 fail, 8 unmeasured of 14 gating cells (0 reported) · load 7.0/8.7/9.2 at start, 7.0/8.6/9.2 at end
+# 2026-10-29 10:28:54 end · exit 1 · load { 6.80 8.54 9.15 }

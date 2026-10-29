@@ -1,0 +1,12 @@
+# 2026-10-29 10:58:26 start · load { 8.44 10.66 10.32 }
+# cmd: node /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-8/E8/probe/e8-probe.mjs --build /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p8/E8/wt/.e8out/builds/plant-cand7 --engine webkit --out /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-8/E8/json/plant-cand7 --frames /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-8/E8/glance/loupe/plant-cand7
+# E8-probe · P-E8's loupe tip cell (CK-25: no pill cap at the window's centre)
+# target /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p8/E8/wt/.e8out/builds/plant-cand7 · engine webkit · lock wait 0.0 s · other headless processes: chromium 12, webkit 0 · load 8.2/10.6/10.3 at start
+# scene app: harness scenes/App.vue (sha1 310d45686fce)
+# webkit 26.5 (Playwright WebKit, not Safari; real Safari UNMEASURED (owner's safaridriver checkbox))
+  FAIL       E8 slider loupe tip square fine light · sustained 1200 ms · the fill's end crosses its mid-level on 21 band rows at x -4.14..-0.49 px from the window's centre · spread 3.64 px (≤ 1.5: square, no cap) · band 33.9 px · load 8.2/10.6/10.3
+  FAIL       E8 slider loupe tip square fine dark · sustained 1200 ms · the fill's end crosses its mid-level on 21 band rows at x -4.12..-0.52 px from the window's centre · spread 3.60 px (≤ 1.5: square, no cap) · band 33.9 px · load 8.2/10.6/10.3
+  FAIL       E8 slider loupe tip square coarse light · sustained 1200 ms · the fill's end crosses its mid-level on 21 band rows at x -4.14..-0.49 px from the window's centre · spread 3.64 px (≤ 1.5: square, no cap) · band 33.9 px · load 8.3/10.6/10.3
+  FAIL       E8 slider loupe tip square coarse dark · sustained 1200 ms · the fill's end crosses its mid-level on 21 band rows at x -4.12..-0.52 px from the window's centre · spread 3.60 px (≤ 1.5: square, no cap) · band 33.9 px · load 8.0/10.4/10.2
+E8-probe webkit FAIL · 0 pass, 4 fail, 0 unmeasured of 4 gating cells (0 reported) · load 8.2/10.6/10.3 at start, 8.0/10.4/10.2 at end
+# 2026-10-29 10:58:37 end · exit 1 · load { 7.96 10.44 10.25 }

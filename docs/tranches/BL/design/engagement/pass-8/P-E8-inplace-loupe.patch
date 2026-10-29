@@ -1,0 +1,711 @@
+diff --git a/src/composables/motion/engage/stage.ts b/src/composables/motion/engage/stage.ts
+index 8a4935f..53fb0af 100644
+--- a/src/composables/motion/engage/stage.ts
++++ b/src/composables/motion/engage/stage.ts
+@@ -1,82 +1,32 @@
+-// THE ENGAGED STAGE: the ladder's ENGAGED rung (`engageLadder.ts`, "the control promoted
+-// out of its own footprint"), built once, for every control of the `held` class whose
+-// door asks for it (useEngage's `stage`).
++// THE ENGAGED STAGE: the ladder's ENGAGED rung (`engageLadder.ts`), built once, for every
++// control of the `held` class whose door asks for it (useEngage's `stage`).
+ //
+-// PROMOTED WHERE IT STANDS. An engaged control takes `popover="manual"` and enters the top
+-// layer without leaving its place in the DOM, so it keeps what a moved node loses
+-// (pointer capture, focus, its inherited custom properties) and rises over every
+-// neighbour of its place. A footprint the size of the control stays in flow beneath it
+-// and holds the place. The grow is the held class's own recipe (utilities/engage.css
+-// `engage-held`), capped along the inline axis by the reach the stage computes
+-// (glass/engage-stage.css).
++// THE PROBE `inplace-loupe` (D5 pass 8, REGISTRY §P7-8.1: measured, not a candidate). The
++// engaged control grows IN PLACE under every modality: no top layer, no footprint, no
++// clip write, no anchor. It stays a child of every ancestor it has at rest, so it paints
++// exactly what its place paints (every clip, mask, radius and transform) in the frame
++// its place moves, by construction: the engine paints it there. The one part of an
++// engaged control that leaves its place is the slider's loupe (its own top-layer
++// popover, slider/styles.css). The grow is the held class's own recipe
++// (utilities/engage.css `engage-held`), capped along the inline axis by the reach the
++// stage computes (glass/engage-stage.css). No engagement veils the world (O-103d (5)).
+ //
+-// PROMOTED OR IN PLACE (Q-3 (c), O-103d (5)). The keyboard and a touch promote; a fine
+-// pointer's hold grows in place: the same holder, the same grow and reach, the same
+-// singleton and exit clock, but no top layer and no footprint, so the control stays in
+-// its own stacking context and its scroller's wheel. A holder keeps the mode it was
+-// engaged in until it leaves: a mode never changes under a held control (D-1). No
+-// engagement veils the world: the promoted control stands on its own plate and the world
+-// stays legible (O-87).
+-//
+-// THE INVARIANT (REGISTRY §P7-8.1, CK-20). An engaged control's body paints exactly what
+-// its place would paint (every clip, mask, radius and transform of its ancestors) in the
+-// same frame its place moves. The top layer lifts the control out of all of them, so the
+-// stage gives each back, read from the footprint where it stands, in the one step of a
+-// frame where script sees the layout that frame will paint (below):
+-//   · THE PLACE is the footprint's painted box (transforms included): the host is laid
+-//     out at the footprint's layout size, centred on the footprint's painted centre, and
+-//     carries its ancestors' scale as its own `transform`, so a translated or scaled card
+-//     paints its control where, and as large as, it would at rest;
+-//   · THE CLIP is the intersection of the padding boxes of the footprint's clipping
+-//     ancestors (an `overflow` other than `visible` on an axis, or paint containment),
+-//     each box and its padding-box corner radii read in the painted frame, written as the
+-//     host's `inset(… round …)` in its own frame;
+-//   · THE MASKS are the footprint's masking ancestors' own computed `mask-image`s, each
+-//     laid over that ancestor's painted box in the host's frame and intersected, so a
+-//     feathered scroller fades the control exactly where it fades its place.
+-// Place, clip and masks are written together, so no frame paints one without the
+-// others, and only when they change; they leave with the promotion. Nothing pins the
+-// host by anchor: an anchor's scroll adjustment and a script clip move on two clocks,
+-// and a wheel scroll in Chromium painted the control a frame outside its card (C-E7).
+-// The UA's `position-visibility` is an anchor's, so it has nothing to answer here.
+-//
+-// WHAT A PROMOTION BORROWS, IT GIVES BACK. A wheel over a promoted control scrolls the
+-// scroller its footprint sits in, as it would at rest: the top layer's fixed box would
+-// otherwise chain the wheel straight to the viewport. Every inline property the stage
+-// writes on the host is its own and is removed when the host leaves the stage.
++// THE REACH IS READ WHEN THE PLACE CAN MOVE. On the engagement, a scroll, a viewport
++// resize and a re-render; no frame loop: a control in flow moves with its world, so the
++// only figure the stage owns is the reach (`--stage-room`, `--stage-w`).
+ //
+ // ONE WRITER of `data-engaged`: this module.
+ //
+ // HANDED OVER, NEVER HIDDEN (D-1, CK-20). The ladder's rung is a singleton: a second
+-// engagement releases the first. The first does not leave in a frame: it springs home on
+-// its own exit clock while still promoted, exactly as its own release does, and leaves
+-// the top layer when its animations finish.
++// engagement releases the first, which springs home on its own exit clock and leaves the
++// stage when its animations finish.
+ //
+-// THE FOOTPRINT HOLDS THE PLACE. A parent re-render during a hold can insert a node
+-// between the footprint and the control, or move either. The stage re-seats the
+-// footprint against the control, and any change of the footprint's place glides the
+-// control from where it was on the `dock` row, during the hold and at the landing.
+-//
+-// THE STAGE HEARS EVERY MOVE OF THE REST BOX BEFORE THE NEXT FRAME IT PAINTS (CK-20).
+-// "Where it was" is the place last painted, so the stage keeps it current by reading the
+-// quantity itself, in the one step of a frame where script sees the layout that frame
+-// will paint: its resize observations, after every task, animation and animation-frame
+-// callback has written and layout has run, before paint. While anything is on the stage,
+-// each frame re-observes each holder's rest box (its footprint, or an in-place host), so
+-// that step reports it every frame whether or not its size changed; the report re-reads
+-// the reach (`--stage-room`, `--stage-w`) when the rest place moved, and a promoted
+-// control's place, clip and masks. A read that compares the box hears every move,
+-// whatever its cause or direction (a style write, a viewport resize, a font load, an
+-// inward move, a centred shrink, a scroll, a spring written from an animation-frame
+-// callback). A write the read makes is laid out before the same paint. The loop stops
+-// when the stage empties: nothing runs at rest. A move the layout made is not glided: it
+-// paints, and the control moves with its world. Only a move the stage sees before it
+-// paints (a re-render's mutation, handled in its own microtask) is travelled, from the
+-// place the person last saw.
++// A RE-RENDER THAT MOVES THE PLACE GLIDES. A move the stage sees before it paints (a
++// re-render's mutation, handled in its own microtask) is travelled on the `dock` row from
++// the place the person last saw.
+ //
+ // FAILS LOUD (CK-21). The grow figure and the reach are read back on every engagement;
+-// an unreadable one says so once (settle.ts `loud`). The registered reach's initial
+-// value is 0, a value no valid input computes to, so it can never pass for an answer.
++// an unreadable one says so once (settle.ts `loud`).
+ 
+ import { onBeforeUnmount, watch, type Ref } from "vue";
+ 
+@@ -84,56 +34,16 @@ import { loud, reducedMotion, rowClockMs, settleFrames } from "./settle";
+ 
+ interface Holder {
+     host: HTMLElement;
+-    /** The in-flow place a promoted host stands for; null for a host engaged in place. */
+-    footprint: HTMLElement | null;
+-    /** The rest place at the last read, free of transforms (a footprint's page-frame box, an in-place host's flow box), and the viewport it was read in. */
+-    at: Place;
+-    /** What the stage last wrote on a promoted host (its place, clip and masks), so a frame where none moved writes nothing. */
+-    paint: string;
++    /** The host's flow box at the last read (free of transforms), page frame. */
++    at: { x: number; y: number };
+     generation: number;
+     engaged: boolean;
+ }
+ 
+-interface Place {
+-    x: number;
+-    y: number;
+-    w: number;
+-    h: number;
+-    vw: number;
+-    vh: number;
+-}
+-
+-interface Box {
+-    l: number;
+-    t: number;
+-    r: number;
+-    b: number;
+-}
+-
+ const holders = new Map<HTMLElement, Holder>();
+ let current: Holder | null = null;
+ let generation = 0;
+ let observer: MutationObserver | null = null;
+-let frame = 0;
+-let sizes: ResizeObserver | null = null;
+-/** A holder's place before its first read. */
+-const NOWHERE: Place = { x: NaN, y: NaN, w: NaN, h: NaN, vw: NaN, vh: NaN };
+-/** The properties a promotion writes on its host, and removes when it leaves. */
+-const PAINT = [
+-    "left",
+-    "top",
+-    "inline-size",
+-    "block-size",
+-    "transform",
+-    "clip-path",
+-    "mask-image",
+-    "mask-position",
+-    "mask-size",
+-    "mask-repeat",
+-    "mask-clip",
+-    "mask-origin",
+-    "mask-composite",
+-] as const;
+ 
+ /** A host's place in flow, without its transforms (the grow, a glide in flight): its offset chain. */
+ const flowBox = (el: HTMLElement): { x: number; y: number } => {
+@@ -146,204 +56,15 @@ const flowBox = (el: HTMLElement): { x: number; y: number } => {
+     return { x, y };
+ };
+ 
+-/** Where the rest box stands, free of transforms: a footprint's page-frame box, an in-place host's flow box; and the viewport. */
+-function restPlace(h: Holder): Place {
+-    const vw = window.innerWidth;
+-    const vh = window.innerHeight;
+-    if (h.footprint) {
+-        const r = h.footprint.getBoundingClientRect();
+-        return { x: r.left + window.scrollX, y: r.top + window.scrollY, w: r.width, h: r.height, vw, vh };
+-    }
+-    const { x, y } = flowBox(h.host);
+-    return { x, y, w: h.host.offsetWidth, h: h.host.offsetHeight, vw, vh };
+-}
+-
+-const samePlace = (a: Place, b: Place): boolean =>
+-    a.x === b.x && a.y === b.y && a.w === b.w && a.h === b.h && a.vw === b.vw && a.vh === b.vh;
+-
+-/** The host's rest box: its footprint's, or (in place) its own layout box about its painted centre. */
+-function restBox(h: Holder): { left: number; right: number; top: number; bottom: number; width: number; height: number } {
+-    if (h.footprint) return h.footprint.getBoundingClientRect();
+-    const r = h.host.getBoundingClientRect();
+-    const w = h.host.offsetWidth;
+-    const ht = h.host.offsetHeight;
++function writeGeometry(h: Holder): void {
++    const host = h.host;
++    const r = host.getBoundingClientRect();
++    const w = host.offsetWidth;
+     const cx = r.left + r.width / 2;
+-    const cy = r.top + r.height / 2;
+-    return { left: cx - w / 2, right: cx + w / 2, top: cy - ht / 2, bottom: cy + ht / 2, width: w, height: ht };
+-}
+-
+-function writeGeometry(h: Holder, at = restPlace(h)): void {
+-    // Written on an engagement, a scroll, a re-render or a frame whose place moved; a
+-    // frame where nothing moved writes nothing.
+-    const rect = restBox(h);
+     const vw = window.innerWidth;
+-    h.host.style.setProperty("--stage-room", `${Math.max(0, Math.min(rect.left, vw - rect.right))}px`);
+-    h.host.style.setProperty("--stage-w", `${rect.width}px`);
+-    h.at = at;
+-}
+-
+-const CLIPS_PAINT = /paint|content|strict/;
+-const CLIPS = /hidden|clip|scroll|auto/;
+-const px = (v: number): string => `${Math.round(v * 100) / 100}px`;
+-
+-/** One corner radius `a [b]` (px or %) of a box `w`×`h`, as [x, y] px. */
+-function corner(v: string, w: number, h: number): [number, number] {
+-    const [a, b = a] = v.trim().split(/\s+/);
+-    const len = (s: string, of: number): number =>
+-        s.endsWith("%") ? (Number.parseFloat(s) / 100) * of : Number.parseFloat(s) || 0;
+-    return [len(a, w), len(b, h)];
+-}
+-
+-/** An element's painted scale along each axis (its ancestors' transforms and its own): painted box over layout box. */
+-const paintedScale = (el: HTMLElement, box: DOMRect): [number, number] => [
+-    el.offsetWidth ? box.width / el.offsetWidth : 1,
+-    el.offsetHeight ? box.height / el.offsetHeight : 1,
+-];
+-
+-/**
+- * The world `place` paints in, where it stands, in the viewport's painted frame:
+- * the intersection of the padding boxes of its clipping ancestors with the padding-box
+- * radius of each corner whose two edges one ancestor set (null when nothing clips it),
+- * and its masking ancestors' masks, each over that ancestor's painted border box.
+- */
+-function worldOf(place: Element): {
+-    clip: (Box & { radii: [number, number][] }) | null;
+-    masks: { image: string; box: DOMRect }[];
+-} {
+-    const edge: Box = { l: -Infinity, t: -Infinity, r: Infinity, b: Infinity };
+-    const by: (HTMLElement | null)[] = [null, null, null, null];
+-    const radii = new Map<HTMLElement, [number, number][]>();
+-    const masks: { image: string; box: DOMRect }[] = [];
+-    const root = document.scrollingElement;
+-    for (let el = place.parentElement; el && el !== root && el !== document.body; el = el.parentElement) {
+-        const cs = getComputedStyle(el);
+-        const mask = cs.getPropertyValue("mask-image") || cs.getPropertyValue("-webkit-mask-image");
+-        const box = el.getBoundingClientRect();
+-        if (mask && mask !== "none") masks.push({ image: mask, box });
+-        const paint = CLIPS_PAINT.test(cs.contain);
+-        const cx = paint || CLIPS.test(cs.overflowX);
+-        const cy = paint || CLIPS.test(cs.overflowY);
+-        if (!cx && !cy) continue;
+-        const [kx, ky] = paintedScale(el, box);
+-        const x0 = box.left + el.clientLeft * kx;
+-        const y0 = box.top + el.clientTop * ky;
+-        const x1 = x0 + el.clientWidth * kx;
+-        const y1 = y0 + el.clientHeight * ky;
+-        if (cx && x0 > edge.l) [edge.l, by[0]] = [x0, el];
+-        if (cy && y0 > edge.t) [edge.t, by[1]] = [y0, el];
+-        if (cx && x1 < edge.r) [edge.r, by[2]] = [x1, el];
+-        if (cy && y1 < edge.b) [edge.b, by[3]] = [y1, el];
+-        // the padding box's corners: the border radius less the border, in the painted frame
+-        const bw = [cs.borderLeftWidth, cs.borderTopWidth, cs.borderRightWidth, cs.borderBottomWidth].map(
+-            (v) => Number.parseFloat(v) || 0,
+-        );
+-        const W = el.offsetWidth;
+-        const H = el.offsetHeight;
+-        const inner = (v: string, sx: number, sy: number): [number, number] => {
+-            const [rx, ry] = corner(v, W, H);
+-            return [Math.max(0, rx - sx) * kx, Math.max(0, ry - sy) * ky];
+-        };
+-        radii.set(el, [
+-            inner(cs.borderTopLeftRadius, bw[0], bw[1]),
+-            inner(cs.borderTopRightRadius, bw[2], bw[1]),
+-            inner(cs.borderBottomRightRadius, bw[2], bw[3]),
+-            inner(cs.borderBottomLeftRadius, bw[0], bw[3]),
+-        ]);
+-    }
+-    if (!by.some(Boolean)) return { clip: null, masks };
+-    // a corner is rounded only where one ancestor set both of its edges
+-    const pairs: [number, number][] = [
+-        [0, 1],
+-        [2, 1],
+-        [2, 3],
+-        [0, 3],
+-    ];
+-    const r = pairs.map(([a, b], i): [number, number] =>
+-        by[a] && by[a] === by[b] ? radii.get(by[a]!)![i] : [0, 0],
+-    );
+-    return { clip: { ...edge, radii: r }, masks };
+-}
+-
+-/**
+- * Give a promoted host its place's paint (the header's invariant): its place (the
+- * footprint's painted centre, its layout size, its ancestors' scale), its clip and its
+- * masks, one write of each, only when one changed.
+- */
+-function writePaint(h: Holder): void {
+-    const fp = h.footprint;
+-    if (!fp) return;
+-    const host = h.host;
+-    const f = fp.getBoundingClientRect();
+-    const w = fp.offsetWidth;
+-    const ht = fp.offsetHeight;
+-    const [sx, sy] = paintedScale(fp, f);
+-    const scaled = Math.abs(sx - 1) > 1e-3 || Math.abs(sy - 1) > 1e-3;
+-    const place: [string, string][] = [
+-        ["left", px(f.left + f.width / 2 - w / 2)],
+-        ["top", px(f.top + f.height / 2 - ht / 2)],
+-        ["inline-size", px(w)],
+-        ["block-size", px(ht)],
+-        ["transform", scaled ? `scale(${Math.round(sx * 1e4) / 1e4}, ${Math.round(sy * 1e4) / 1e4})` : ""],
+-    ];
+-    for (const [k, v] of place) {
+-        if (v) host.style.setProperty(k, v);
+-        else host.style.removeProperty(k);
+-    }
+-    // the clip and masks in the host's own frame: mapped back through its painted box
+-    // (the place just written, the grow and any glide in flight)
+-    const { clip, masks } = worldOf(fp);
+-    const p = host.getBoundingClientRect();
+-    const ax = host.offsetWidth ? p.width / host.offsetWidth : 1;
+-    const ay = host.offsetHeight ? p.height / host.offsetHeight : 1;
+-    const FAR = 1e5;
+-    const ins = (v: number, a: number): string => (Number.isFinite(v) ? px(v / a) : `${-FAR}px`);
+-    let clipPath = "";
+-    if (clip) {
+-        const { l, t, r, b, radii } = clip;
+-        const round = radii.some(([x, y]) => x > 0 || y > 0)
+-            ? ` round ${radii.map(([x]) => px(x / ax)).join(" ")} / ${radii.map(([, y]) => px(y / ay)).join(" ")}`
+-            : "";
+-        clipPath = `inset(${ins(t - p.top, ay)} ${ins(p.right - r, ax)} ${ins(p.bottom - b, ay)} ${ins(l - p.left, ax)}${round})`;
+-    }
+-    const layer = (k: (m: { image: string; box: DOMRect }) => string): string => masks.map(k).join(", ");
+-    const mask: [string, string][] = masks.length
+-        ? [
+-              ["mask-image", layer((m) => m.image)],
+-              ["mask-position", layer((m) => `${px((m.box.left - p.left) / ax)} ${px((m.box.top - p.top) / ay)}`)],
+-              ["mask-size", layer((m) => `${px(m.box.width / ax)} ${px(m.box.height / ay)}`)],
+-              ["mask-repeat", layer(() => "no-repeat")],
+-              ["mask-origin", layer(() => "border-box")],
+-              ["mask-clip", layer(() => "no-clip")],
+-              // each layer intersects the ones below it (the bottom one has none to meet)
+-              ["mask-composite", masks.map((_, i) => (i < masks.length - 1 ? "intersect" : "add")).join(", ")],
+-          ]
+-        : [];
+-    const key = `${clipPath}|${mask.map(([, v]) => v).join("|")}`;
+-    if (key === h.paint) return;
+-    h.paint = key;
+-    if (clipPath) host.style.setProperty("clip-path", clipPath);
+-    else host.style.removeProperty("clip-path");
+-    for (const k of PAINT.filter((k) => k.startsWith("mask-"))) host.style.removeProperty(k);
+-    for (const [k, v] of mask) host.style.setProperty(k, v);
+-}
+-
+-/** Each frame while the stage holds anything: re-observe every rest box, so the frame's resize step reports it. */
+-function hear(): void {
+-    frame = requestAnimationFrame(hear);
+-    for (const h of holders.values()) {
+-        const el = h.footprint ?? h.host;
+-        sizes?.unobserve(el);
+-        sizes?.observe(el);
+-    }
+-}
+-
+-/** The frame's resize step (after layout, before paint): re-read every holder whose rest place moved, and give every promoted one its place's paint. */
+-function heard(): void {
+-    for (const h of holders.values()) {
+-        const at = restPlace(h);
+-        if (!samePlace(at, h.at)) writeGeometry(h, at);
+-        writePaint(h);
+-    }
++    host.style.setProperty("--stage-room", `${Math.max(0, Math.min(cx - w / 2, vw - (cx + w / 2)))}px`);
++    host.style.setProperty("--stage-w", `${w}px`);
++    h.at = flowBox(host);
+ }
+ 
+ /** Carry `host` from an offset of (dx, dy) px home on the `dock` row: a moved place is travelled, never jumped. */
+@@ -357,143 +78,50 @@ function glide(host: HTMLElement, dx: number, dy: number): void {
+     );
+ }
+ 
+-/** A re-render under a hold: re-seat each footprint against its control, and glide any control whose place moved (in place too). */
++/** A re-render under a hold: glide any control whose place moved. */
+ function onMutation(): void {
+     for (const h of holders.values()) {
+-        if (h.footprint && h.host.isConnected && h.host.previousSibling !== h.footprint) h.host.before(h.footprint);
+-        // the place it was is the rest box's last read, in the page frame (a scroll moves neither)
+         const was = h.at;
+         writeGeometry(h);
+-        writePaint(h);
+         glide(h.host, was.x - h.at.x, was.y - h.at.y);
+     }
+ }
+ 
+-function onScroll(): void {
++function onMove(): void {
+     for (const h of holders.values()) writeGeometry(h);
+ }
+ 
+-/** The first scroller up from `from` that can move along (dx, dy); the page's own scroll is never one. */
+-function scrollerFor(from: Element, dx: number, dy: number): HTMLElement | null {
+-    const root = document.scrollingElement;
+-    for (let el = from.parentElement; el && el !== root && el !== document.body; el = el.parentElement) {
+-        const cs = getComputedStyle(el);
+-        const can = (o: string, pos: number, room: number, d: number): boolean =>
+-            /auto|scroll|overlay/.test(o) && (d > 0 ? pos < room - 0.5 : d < 0 ? pos > 0.5 : false);
+-        if (
+-            can(cs.overflowY, el.scrollTop, el.scrollHeight - el.clientHeight, dy) ||
+-            can(cs.overflowX, Math.abs(el.scrollLeft), el.scrollWidth - el.clientWidth, dx)
+-        )
+-            return el;
+-        // a scroller that contains its overscroll ends the chain where it is
+-        const contain = (dy ? cs.overscrollBehaviorY : cs.overscrollBehaviorX) || cs.overscrollBehavior;
+-        if (/auto|scroll|overlay/.test(cs.overflowY + cs.overflowX) && /contain|none/.test(contain)) return el;
+-    }
+-    return null;
+-}
+-
+-/** A wheel over a promoted control: the scroller its footprint sits in takes it, as at rest. */
+-function onWheel(e: Event): void {
+-    const w = e as WheelEvent;
+-    const h = holders.get(w.currentTarget as HTMLElement);
+-    // a pinch (ctrl) is the page's zoom; a line- or page-mode delta (no target engine
+-    // sends one) has no pixel extent here, and chains to the page as before
+-    if (!h?.footprint || w.ctrlKey || w.deltaMode !== WheelEvent.DOM_DELTA_PIXEL) return;
+-    const dx = w.deltaX;
+-    const dy = w.deltaY;
+-    const to = scrollerFor(h.footprint, dx, dy);
+-    // no scroller in the chain: the page takes it, which is where the wheel goes anyway
+-    if (!to) return;
+-    w.preventDefault();
+-    to.scrollBy({ left: dx, top: dy, behavior: "instant" });
+-}
+-
+ /** Read back what the grow depends on; say so once if it cannot be read (CK-21). */
+ function readBack(host: HTMLElement): void {
+     const cs = getComputedStyle(host);
+     if (!(Number.parseFloat(cs.getPropertyValue("--scale-engage")) > 0)) loud("--scale-engage", host, "engage stage");
+-    // `--stage-reach` is registered with initial 0: an invalid `--space-section`,
+-    // `--stage-room` or `--stage-w` computes it to that, and no valid input does
+     if (!(Number.parseFloat(cs.getPropertyValue("--stage-reach")) >= 1))
+         loud("--stage-reach (from --space-section, --stage-room, --stage-w)", host, "engage stage");
+ }
+ 
+-/** While anything is on the stage: re-renders, scrolls and every frame's place re-read its geometry. */
+ function watchWorld(): void {
+     if (observer) return;
+     observer = new MutationObserver(onMutation);
+     observer.observe(document.body, { childList: true, subtree: true });
+-    window.addEventListener("scroll", onScroll, { passive: true, capture: true });
+-    sizes = new ResizeObserver(heard);
+-    frame = requestAnimationFrame(hear);
+-}
+-
+-/** Put `host` on the stage in place: the grow and its reach, no top layer, no footprint. */
+-function inPlace(host: HTMLElement): Holder {
+-    const h: Holder = { host, footprint: null, at: NOWHERE, paint: "", generation, engaged: false };
+-    holders.set(host, h);
+-    host.setAttribute("data-engage-stage", "");
+-    watchWorld();
+-    return h;
+-}
+-
+-function promote(host: HTMLElement): Holder {
+-    const cs = getComputedStyle(host);
+-    const footprint = document.createElement("span");
+-    footprint.className = "engage-footprint";
+-    footprint.setAttribute("aria-hidden", "true");
+-    // the layout size (a scaled ancestor paints it smaller; the footprint is laid out, not painted)
+-    footprint.style.inlineSize = `${host.offsetWidth}px`;
+-    footprint.style.blockSize = `${host.offsetHeight}px`;
+-    footprint.style.margin = cs.margin;
+-    footprint.style.display = cs.display.startsWith("inline") ? "inline-block" : "block";
+-    footprint.style.verticalAlign = cs.verticalAlign;
+-    host.before(footprint);
+-    const h: Holder = { host, footprint, at: NOWHERE, paint: "", generation, engaged: false };
+-    holders.set(host, h);
+-    host.setAttribute("popover", "manual");
+-    host.setAttribute("data-engage-stage", "");
+-    // its place's paint, written before it first paints in the top layer
+-    writePaint(h);
+-    host.showPopover();
+-    writePaint(h);
+-    host.addEventListener("wheel", onWheel, { passive: false });
+-    watchWorld();
+-    return h;
++    window.addEventListener("scroll", onMove, { passive: true, capture: true });
++    window.addEventListener("resize", onMove, { passive: true });
+ }
+ 
+ function hide(h: Holder): void {
+     const { host } = h;
+-    const before = host.getBoundingClientRect();
+-    sizes?.unobserve(h.footprint ?? host);
+     holders.delete(host);
+     if (holders.size === 0) {
+         observer?.disconnect();
+         observer = null;
+-        window.removeEventListener("scroll", onScroll, true);
+-        cancelAnimationFrame(frame);
+-        frame = 0;
+-        sizes?.disconnect();
+-        sizes = null;
++        window.removeEventListener("scroll", onMove, true);
++        window.removeEventListener("resize", onMove);
+     }
+     host.removeAttribute("data-engage-stage");
+     host.style.removeProperty("--stage-room");
+     host.style.removeProperty("--stage-w");
+-    if (!h.footprint) return;
+-    if (host.matches(":popover-open")) host.hidePopover();
+-    host.removeAttribute("popover");
+-    for (const k of PAINT) host.style.removeProperty(k);
+-    host.removeEventListener("wheel", onWheel);
+-    h.footprint.remove();
+-    // The landing: if the control's place in flow is not where its footprint held it
+-    // (a re-render moved it), it travels there; it never lands in a frame.
+-    if (host.isConnected) {
+-        const after = host.getBoundingClientRect();
+-        glide(host, before.left - after.left, before.top - after.top);
+-    }
+ }
+ 
+-/** Release `h` on its own exit clock; it leaves the top layer when its animations have run. */
++/** Release `h` on its own exit clock; it leaves the stage when its animations have run. */
+ function leave(h: Holder): void {
+     if (!h.engaged) return;
+     h.engaged = false;
+@@ -504,19 +132,21 @@ function leave(h: Holder): void {
+         .getAnimations({ subtree: true })
+         .filter((a) => a.effect?.getComputedTiming().endTime !== Infinity);
+     void Promise.all(running.map((a) => a.finished.catch(() => undefined))).then(() => {
+-        // a re-engagement during the exit took a new generation: this release is stale
+         if (holders.get(h.host) === h && !h.engaged && h.generation === mine) hide(h);
+     });
+ }
+ 
+-/**
+- * Engage `host` on the stage: promoted, or in place when `promoted` is false. A host
+- * already on the stage keeps the mode it is in.
+- */
+-function engageStage(host: HTMLElement, promoted: boolean): void {
++/** Engage `host` on the stage, in place. */
++function engageStage(host: HTMLElement): void {
+     generation += 1;
+     if (current && current.host !== host) leave(current);
+-    const h = holders.get(host) ?? (promoted ? promote(host) : inPlace(host));
++    let h = holders.get(host);
++    if (!h) {
++        h = { host, at: { x: NaN, y: NaN }, generation, engaged: false };
++        holders.set(host, h);
++        host.setAttribute("data-engage-stage", "");
++        watchWorld();
++    }
+     h.generation = generation;
+     h.engaged = true;
+     current = h;
+@@ -535,23 +165,21 @@ function releaseStage(host: HTMLElement, immediate = false): void {
+ 
+ /**
+  * Bind a control's engagement to the stage: `engaged` true puts the host on the stage,
+- * false releases it; `promote` says whether it promotes (else it is engaged in place).
+- * The engagement is the door's; the stage owns the rung.
++ * false releases it. The engagement is the door's; the stage owns the rung.
+  */
+ export function useEngageStage(
+     resolveHost: () => HTMLElement | null,
+     engaged: Readonly<Ref<boolean>>,
+     enabled: () => boolean = () => true,
+-    promoteWanted: () => boolean = () => true,
+ ): void {
+     let on = false;
+     watch(
+-        () => [engaged.value, promoteWanted()] as const,
+-        ([e, p]) => {
++        () => engaged.value,
++        (e) => {
+             const host = resolveHost();
+             if (!host || typeof window === "undefined") return;
+             if (e && enabled()) {
+-                engageStage(host, p);
++                engageStage(host);
+                 on = true;
+             } else if (on) {
+                 releaseStage(host);
+diff --git a/src/composables/motion/engage/useEngage.ts b/src/composables/motion/engage/useEngage.ts
+index d2a2d49..16fba52 100644
+--- a/src/composables/motion/engage/useEngage.ts
++++ b/src/composables/motion/engage/useEngage.ts
+@@ -44,9 +44,8 @@
+ //                   close the Dialog the control sits in: the next one does. A modifier
+ //                   alone, or a key the control does not act on, does nothing
+ //   · the stage     `stage`: the engagement puts the host on the engaged stage
+-//                   (stage.ts). The keyboard and a touch promote it; a fine pointer
+-//                   grows it in place (Q-3 (c), O-103d (5)). No engagement veils the
+-//                   world
++//                   (stage.ts), grown in place under every modality (the probe
++//                   `inplace-loupe`). No engagement veils the world
+ //   · the scrub     `scrub`: a press that starts on the scrub's surface and travels past
+ //                   the hand's slop (`HOLD_SLOP_PX`, the activation threshold) takes the
+ //                   control (a number field's value scrub): one `step` per pitch travelled.
+@@ -120,7 +119,7 @@ export interface UseEngageOptions {
+         /** Elements that carry `data-held` with the host (a grasp register's host). */
+         heldOn?: () => (Element | null | undefined)[];
+     };
+-    /** The engaged stage: whether an engagement promotes the host (default: always). */
++    /** The engaged stage: whether an engagement puts the host on it (default: always). */
+     stage?: () => boolean;
+     /**
+      * A press that travels takes the control: `step(n)` moves the value n steps (±).
+@@ -239,8 +238,6 @@ export function useEngage(
+     const held = o.hold ? useHold(host, { target: o.hold.target }) : null;
+     const hand: Readonly<Ref<boolean>> = held?.isHeld ?? shallowRef(false);
+     const scrubbing = shallowRef(false);
+-    // the scrub's hand is a touch's (its press's `pointerType`), read like the hold's
+-    let scrubTouch = false;
+     const isHeld = computed(() => hand.value || scrubbing.value);
+     const keyed = shallowRef(false);
+     const isEngaged = computed(() => isHeld.value || keyed.value);
+@@ -286,13 +283,8 @@ export function useEngage(
+             },
+             { flush: "post" },
+         );
+-        useEngageStage(
+-            host,
+-            isEngaged,
+-            () => o.stage?.() !== false,
+-            // Q-3 (c): the keyboard and a touch promote; a fine pointer grows in place
+-            () => (hand.value ? held!.byTouch.value : scrubbing.value ? scrubTouch : true),
+-        );
++        // the probe `inplace-loupe`: every modality grows in place (stage.ts)
++        useEngageStage(host, isEngaged, () => o.stage?.() !== false);
+     }
+ 
+     // ── the scrub: a press that travels takes the control ───────────────────────
+@@ -339,7 +331,6 @@ export function useEngage(
+                 pitch = v > 0 ? v : 0;
+                 if (!pitch) loud("--scrub-pitch", from, "engage scrub");
+                 armed = true;
+-                scrubTouch = p.pointerType === "touch";
+                 x0 = p.clientX;
+                 applied = 0;
+                 window.addEventListener("pointermove", move, { passive: false });
+diff --git a/src/styles/glass/engage-stage.css b/src/styles/glass/engage-stage.css
+index 14af7fb..81e17b0 100644
+--- a/src/styles/glass/engage-stage.css
++++ b/src/styles/glass/engage-stage.css
+@@ -1,47 +1,8 @@
+ /* glass/engage-stage.css
+-   THE ENGAGED STAGE (composables/motion/engage/stage.ts): the ladder's ENGAGED rung.
+-
+-   An engaged control takes `popover="manual"` + `[data-engage-stage]` and enters the top
+-   layer WHERE IT STANDS (no DOM move: pointer capture, focus and inheritance survive).
+-   Its footprint stays in flow and holds the place. The grow is the held class's
+-   (utilities/engage.css `engage-held`); this file fixes the box and computes the reach
+-   the grow may spend inline. The world is not veiled (Q-3 (c), O-103d (5)).
+-
+-   THE PLACE'S PAINT IS THE STAGE'S. A promoted control paints exactly what its place
+-   would paint: the stage writes, inline and together, the place (the footprint's painted
+-   centre and layout size, its ancestors' scale as the host's `transform`), the clip
+-   (`inset(… round …)`) and the masks of the footprint's ancestors, every frame they
+-   change (stage.ts `writePaint`, CK-20). This file declares only what never changes: a
+-   fixed box measured border to border.
+-
+-   TWO STRENGTHS, ON PURPOSE. The popover UA sheet paints a box (border, padding, margin,
+-   Canvas, CanvasText) the host never asked for: those are neutralized at the LOWEST
+-   author strength (`@layer base`, zero specificity), so any paint or box the host
+-   authors itself still wins. The box is GEOMETRY and has to win over the host's own: it
+-   is UNLAYERED at (0,2,0), because the hosts it promotes author their geometry unlayered
+-   at (0,1,0) (slider/styles.css). */
+-
+-@layer base {
+-    :where([popover][data-engage-stage]) {
+-        margin: 0;
+-        border: 0;
+-        padding: 0;
+-        overflow: visible;
+-        background: transparent;
+-        color: inherit;
+-    }
+-}
+-
+-.engage-footprint {
+-    display: block;
+-    flex: none;
+-}
+-
+-[popover][data-engage-stage] {
+-    position: fixed;
+-    inset: auto;
+-    box-sizing: border-box;
+-}
++   THE ENGAGED STAGE (composables/motion/engage/stage.ts): the ladder's ENGAGED rung. In
++   the probe `inplace-loupe` every engaged control grows where it stands, in flow, so it
++   paints exactly what its place paints; this file computes the reach the grow may spend
++   inline. The world is not veiled (O-103d (5)). */
+ 
+ /* THE GUTTER CAP, AND THE REACH. Inline, the grow may spend only the clearance the
+    control has beyond the page gutter (`--space-section`, the spacing register's "page
+@@ -49,9 +10,7 @@
+    already on its gutter (a full-width phone slider) keeps its width and grows along the
+    block axis alone. Registered so it computes to a number the stage reads back. Its initial
+    value is 0, which no valid input computes to, so an unreadable input can never pass
+-   for an answer: the stage reads it back and says so (CK-21). A host engaged IN PLACE
+-   (a fine pointer's hold, Q-3 (c)) carries `[data-engage-stage]`
+-   without the popover: the same reach, from its own box, and no pin. */
++   for an answer: the stage reads it back and says so (CK-21). */
+ @property --stage-reach {
+     syntax: "<number>";
+     inherits: false;

@@ -1,0 +1,996 @@
+diff --git a/a/src/components/dialog/ModalOverlay.vue b/b/src/components/dialog/ModalOverlay.vue
+index 4481c24..7ac4b8c 100644
+--- a/a/src/components/dialog/ModalOverlay.vue
++++ b/b/src/components/dialog/ModalOverlay.vue
+@@ -18,7 +18,7 @@ import { cn } from "../_shared/class-names";
+  * THE FOCUS VEIL IS GEOMETRY, so it is a decision the CALLER makes, not a constant.
+  * `.glass-focus-veil` (styles/glass/focus-veil.css, MOTION-CANON §5) is a centre-weighted
+  * frost mask: a fixed `--glass-focus-veil-core-x/-y` 13rem core plus a 7rem bloom, sited
+- * at `--veil-x`/`--veil-y`'s 50% rest. A CENTRED plate sits inside that core and IS the
++ * at the viewport's centre. A CENTRED plate sits inside that core and IS the
+  * definitional focus event. A SIDE SHEET does not: the engaged surface is anchored at an
+  * edge, so an unconditional veil paints a ~640×640 frost pool in the middle of the
+  * viewport with nothing engaged inside it — the pool measured against a 384-wide sheet at
+diff --git a/a/src/components/slider/Slider.vue b/b/src/components/slider/Slider.vue
+index 8302707..9316b2f 100644
+--- a/a/src/components/slider/Slider.vue
++++ b/b/src/components/slider/Slider.vue
+@@ -5,6 +5,7 @@ import {
+     onMounted,
+     ref,
+     useAttrs,
++    useId,
+     useTemplateRef,
+     watch,
+ } from "vue";
+@@ -58,8 +59,8 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits);
+ /* The engage door (composables/motion/engage/useEngage.ts) owns this slider's
+    engagement: `data-held` (the hand, on the root and the range, never the dock's posture
+    count), and the engagement (the hand or the keyboard driving it), which promotes the
+-   slider onto the engaged stage (engage/stage.ts): in place into the top layer, clipped
+-   to the box that clips its place (or, a fine pointer's hold, grown where it stands in
++   slider onto the engaged stage (engage/stage.ts): in place into the top layer, painting
++   exactly what its place paints (or, a fine pointer's hold, grown where it stands in
+    flow: Q-3 (c)), grown by the held class (`engage-held`). The stage writes
+    `data-engaged` and needs no z raise, no teleport and no veil.
+    Nothing in this template writes an engagement attribute. Its hand is
+@@ -124,8 +125,12 @@ function onGraspReleaseEnd(event: TransitionEvent): void {
+ }
+ 
+ // ── The LOUPE (slider/styles.css) ────────────────────────────────────────────────
+-// The lens organ over the scrub site, the promoted host's own child (no teleport: it
+-// rides the host into the top layer and inside the host's clip). Its geometry is measured ONCE per
++// The lens organ over the scrub site. The one part of an engaged slider that leaves its
++// place (REGISTRY §P7-8.1): a `popover="manual"` of its own, shown the frame it mounts, so
++// it paints whole above any scroller or card its control sits in, hung by anchor from
++// this slider's own track (`trackAnchor`, a name no other slider shares). It stays the
++// host's DOM child (no teleport), so it inherits the host's grow and velocity. Its
++// geometry is measured ONCE per
+ // grasp — the track's own width — and the per-value write is two custom properties,
+ // no layout read. `--loupe-x` is the value point in TRACK
+ // coordinates: the clone is laid out at 3× and transformed down by k/3, so
+@@ -135,6 +140,7 @@ function onGraspReleaseEnd(event: TransitionEvent): void {
+ // variant — so the spectrum is excluded here and nowhere else; horizontal-only is the
+ // stated occlusion rule. Nothing downstream re-tests either.
+ const loupeTrackW = ref(0);
++const trackAnchor = `--glass-slider-track-${useId()}`;
+ const loupeShown = computed(
+     () => grasping.value && props.orientation !== "vertical",
+ );
+@@ -170,6 +176,8 @@ function writeLoupeValue(): void {
+ watch(grasping, async (open) => {
+     if (!open) return;
+     await nextTick();
++    // shown after the host's own promotion, so it stands above it in the top layer
++    loupeRef.value?.showPopover();
+     writeLoupeGeometry();
+     writeLoupeValue();
+ });
+@@ -220,23 +228,30 @@ onMounted(() => {
+         v-bind="forwarded"
+     >
+         <!--
+-            The loupe rides INSIDE the host: promoted, the host is in the top layer, so no
+-            ancestor traps it and no teleport is needed; it is clipped where its host is,
+-            to the box that clips the host's place (engage/stage.ts). The clone is a SECOND
++            The loupe is the host's child in the DOM and its own top-layer popover in paint:
++            the one part that leaves its place, painting whole wherever the slider sits,
++            pinned to this slider's track by its anchor name. The clone is a SECOND
+             RENDER of the track at `--s: 3`, laid out once; only its transform moves per
+             value. It is seen through a window inset from the housing, so the housing's
+-            own glass rims the magnified track. The value point is the magnified fill's own
+-            tip at the window's centre: no mark is drawn over it. `loupeShown` is the one
++            own glass rims the magnified track, and the housing draws its own edge. The value point is the magnified fill's square end at
++            the window's centre: no mark is drawn over it, and no cap. `loupeShown` is the one
+             predicate (scrubber, horizontal).
+         -->
+-        <span v-if="loupeShown" ref="loupeRef" class="glass-loupe glass-plate" aria-hidden="true">
++        <span
++            v-if="loupeShown"
++            ref="loupeRef"
++            popover="manual"
++            class="glass-loupe glass-plate"
++            aria-hidden="true"
++            :style="{ positionAnchor: trackAnchor }"
++        >
+             <span class="glass-loupe-window">
+                 <span class="glass-loupe-clone">
+                     <span class="glass-loupe-fill"></span>
+                 </span>
+             </span>
+         </span>
+-        <SliderTrack class="slider-track track-well">
++        <SliderTrack class="slider-track track-well" :style="{ anchorName: trackAnchor }">
+             <span
+                 v-if="marks.length"
+                 class="glass-value-marks"
+diff --git a/a/src/components/slider/styles.css b/b/src/components/slider/styles.css
+index 40c2bf9..69000a9 100644
+--- a/a/src/components/slider/styles.css
++++ b/b/src/components/slider/styles.css
+@@ -383,12 +383,13 @@
+    · The clone carries NO material rung: content is never frosted. The housing is the
+      only glass, and it shows: the magnified track is seen through a WINDOW inset from
+      the housing by `--loupe-ring`, so the plate's own material rims the lens on every
+-     side. Without the rim the clone covered the housing edge to edge and the lens read
+-     as a split block of fill and track, not as glass (C-E4 §3, CK-25).
+-   · The magnified fill ends as the real fill ends, on its pill cap, and that tip at the
+-     window's centre IS the value point. No mark is drawn over it: a ruled line across
+-     the window is harder than any edge the track has, and with the fill cap on one side
+-     and the grey run on the other it read as a toggle's seam (C-A6 §4, C-E6 §4, CK-25).
++     side (C-E4 §3). The housing draws its own edge, the floating rung's hairline
++     (`--glass-border-floating`), so the lens has an edge of its own material and no
++     light (C-E7 §3, C-A7 §3: "the housing has no lens edge"; O-87, CK-25).
++   · The magnified fill ends square at the window's centre, and that edge IS the value
++     point. A fill that ended on its own pill cap there read as a knob (C-E7, C-A7,
++     CK-25); a mark drawn over it read as a toggle's seam (C-A6 §4, C-E6 §4). The cut is
++     the fill's own edge: no line, no light.
+    · WHAT IT SHOWS CONTINUES PAST IT. The window's two ends dissolve the band over one
+      band's length (a mask, not a light: no paint is added), so the magnified track runs
+      out of the lens on both sides rather than ending on the window's pill ends, which
+@@ -429,19 +430,31 @@
+        track's own thickness so it scales with the size rung. */
+     --loupe-ring: calc(var(--slider-track-height, 1.25rem) * 0.3);
+     --loupe-span: calc(var(--loupe-band) * 4 + 2 * var(--loupe-ring));
+-    /* Host-relative: the loupe is the promoted host's own child (engage/stage.ts), hung
+-       from the track's top edge at the track's centre. */
+-    position: absolute;
++    /* THE LOUPE ALONE LEAVES ITS PLACE (REGISTRY §P7-8.1). Its host's body paints only
++       what its place paints, clipped by its scroller and card like any content; the lens
++       rises above the finger and paints whole wherever its control sits, so it is a
++       top-layer popover of its own (Slider.vue), hung by anchor from its own track's top
++       edge at the track's centre (the anchor name is the slider's, written inline). The
++       popover's UA box is neutralized here; the plate is the housing's. It carries its
++       host's grow (`--held-scale-*`, utilities/engage.css), so the lens magnifies the
++       track as the person sees it. */
++    position: fixed;
++    inset: auto;
++    margin: 0;
++    padding: 0;
++    border: 1px solid var(--glass-border-floating);
++    box-sizing: border-box;
++    left: anchor(center);
++    bottom: anchor(top);
+     inline-size: var(--loupe-span);
+     block-size: calc(var(--loupe-band) * 2 + 2 * var(--loupe-ring));
+-    inset-block-start: calc(50% - var(--slider-track-height, 1.25rem) / 2);
+-    inset-inline-start: 50%;
+     /* The raise: a `present` spring from a 0.13 seed anchored on the well's centre. The
+        seed is a RATIFIED CONSTANT, written as one — nothing declares `--loupe-scale`
+        anywhere, and this file's own opening law is that a knob whose only declaration is
+        a fallback is a literal wearing a token's name. */
+-    translate: -50% -100%;
++    translate: -50% 0;
+     scale: 0.13;
++    transform: scale(var(--held-scale-x, 1), var(--held-scale-y, 1));
+     transform-origin: 50% 100%;
+     transition:
+         scale var(--spring-present-duration) var(--spring-present),
+@@ -482,7 +495,7 @@
+ 
+ .glass-loupe-window {
+     position: absolute;
+-    inset: var(--loupe-ring);
++    inset: calc(var(--loupe-ring) - 1px);
+     overflow: hidden;
+     border-radius: var(--radius-pill);
+     mask-image: linear-gradient(
+@@ -532,13 +545,13 @@
+     inset-block: 0;
+     inset-inline-start: 0;
+     inline-size: var(--loupe-fill-w, 0px);
+-    border-radius: calc(var(--radius-pill) * var(--s));
+     background: var(--slider-range-bg, var(--glass-capsule-warm));
+ }
+ 
+ @media (prefers-reduced-motion: reduce) {
+     .glass-loupe {
+         transition-duration: 0.01ms;
++        transform: none;
+     }
+     .glass-loupe-clone {
+         filter: none;
+diff --git a/a/src/composables/motion/engage/stage.ts b/b/src/composables/motion/engage/stage.ts
+index 33dede7..8a4935f 100644
+--- a/a/src/composables/motion/engage/stage.ts
++++ b/b/src/composables/motion/engage/stage.ts
+@@ -4,17 +4,11 @@
+ //
+ // PROMOTED WHERE IT STANDS. An engaged control takes `popover="manual"` and enters the top
+ // layer without leaving its place in the DOM, so it keeps what a moved node loses
+-// (pointer capture, focus, its inherited custom properties) and escapes every ancestor
+-// that would trap a fixed box (`backdrop-filter`, `transform`, `filter`,
+-// `contain: paint`). A footprint the size of the control stays in flow beneath it and is
+-// the anchor the control is pinned to (`anchor()`), so it tracks scroll with no listener.
+-// EACH FOOTPRINT HAS ITS OWN ANCHOR NAME (`--engage-footprint-<page>-<n>`, written inline
+-// on the footprint and on its control; `<page>` is drawn once per page, so no consumer
+-// name collides by accident). A shared name resolves to the last footprint in tree
+-// order, so during a hand-off, when two controls are on the stage, both would pin to one
+-// place and the outgoing (or incoming) control would jump onto the other's (C-E2 §0.1).
+-// The grow is the held class's own recipe (utilities/engage.css `engage-held`), capped
+-// along the inline axis by the reach the stage computes (glass/engage-stage.css).
++// (pointer capture, focus, its inherited custom properties) and rises over every
++// neighbour of its place. A footprint the size of the control stays in flow beneath it
++// and holds the place. The grow is the held class's own recipe (utilities/engage.css
++// `engage-held`), capped along the inline axis by the reach the stage computes
++// (glass/engage-stage.css).
+ //
+ // PROMOTED OR IN PLACE (Q-3 (c), O-103d (5)). The keyboard and a touch promote; a fine
+ // pointer's hold grows in place: the same holder, the same grow and reach, the same
+@@ -24,22 +18,32 @@
+ // engagement veils the world: the promoted control stands on its own plate and the world
+ // stays legible (O-87).
+ //
+-// PROMOTED, STILL INSIDE ITS PLACE'S CLIP (CK-20). The top layer lifts the control out of
+-// every ancestor that would trap a fixed box, and with them out of every ancestor that
+-// clips (a scroller, a card with `overflow: hidden`). A promotion is not licence to paint
+-// over the card: the control is clipped to the box that clips its footprint (the
+-// intersection of the footprint's clipping ancestors' padding boxes), written as a
+-// `clip-path` in the control's own frame on every frame the stage reads. So as its place
+-// scrolls under its scroller's edge the control is cut by that edge row by row, exactly as
+-// it would be at rest, and it leaves the paint continuously. The UA's own one-step answer
+-// (`position-visibility: anchors-visible`, which drops the whole control when the last
+-// pixel of its anchor leaves) is turned off: the clip is the one mechanism.
++// THE INVARIANT (REGISTRY §P7-8.1, CK-20). An engaged control's body paints exactly what
++// its place would paint (every clip, mask, radius and transform of its ancestors) in the
++// same frame its place moves. The top layer lifts the control out of all of them, so the
++// stage gives each back, read from the footprint where it stands, in the one step of a
++// frame where script sees the layout that frame will paint (below):
++//   · THE PLACE is the footprint's painted box (transforms included): the host is laid
++//     out at the footprint's layout size, centred on the footprint's painted centre, and
++//     carries its ancestors' scale as its own `transform`, so a translated or scaled card
++//     paints its control where, and as large as, it would at rest;
++//   · THE CLIP is the intersection of the padding boxes of the footprint's clipping
++//     ancestors (an `overflow` other than `visible` on an axis, or paint containment),
++//     each box and its padding-box corner radii read in the painted frame, written as the
++//     host's `inset(… round …)` in its own frame;
++//   · THE MASKS are the footprint's masking ancestors' own computed `mask-image`s, each
++//     laid over that ancestor's painted box in the host's frame and intersected, so a
++//     feathered scroller fades the control exactly where it fades its place.
++// Place, clip and masks are written together, so no frame paints one without the
++// others, and only when they change; they leave with the promotion. Nothing pins the
++// host by anchor: an anchor's scroll adjustment and a script clip move on two clocks,
++// and a wheel scroll in Chromium painted the control a frame outside its card (C-E7).
++// The UA's `position-visibility` is an anchor's, so it has nothing to answer here.
+ //
+-// WHAT A PROMOTION BORROWS, IT GIVES BACK. A consumer's own inline `position-anchor` on
+-// the host is set aside while the host is pinned to its footprint and written back when
+-// it leaves the stage. A wheel over a promoted control scrolls the scroller its footprint
+-// sits in, as it would at rest: the top layer's fixed box would otherwise chain the
+-// wheel straight to the viewport.
++// WHAT A PROMOTION BORROWS, IT GIVES BACK. A wheel over a promoted control scrolls the
++// scroller its footprint sits in, as it would at rest: the top layer's fixed box would
++// otherwise chain the wheel straight to the viewport. Every inline property the stage
++// writes on the host is its own and is removed when the host leaves the stage.
+ //
+ // ONE WRITER of `data-engaged`: this module.
+ //
+@@ -59,20 +63,16 @@
+ // will paint: its resize observations, after every task, animation and animation-frame
+ // callback has written and layout has run, before paint. While anything is on the stage,
+ // each frame re-observes each holder's rest box (its footprint, or an in-place host), so
+-// that step reports it every frame whether or not its size changed, and the report reads
+-// the rest place (a footprint's page box, an in-place host's flow box, both free of
+-// transforms) and the viewport, and re-reads the place and the reach (`--stage-room`,
+-// `--stage-w`) when any of them changed, and a promoted control's clip when it moved. A read that compares the box
+-// hears every move, whatever its cause or direction (a style write, a viewport resize, a
+-// font load, an inward move, a centred shrink, a move inside a clipping scroller, a
+-// spring written from an animation-frame callback). A change detector armed at its own
+-// rest reading (an observer's ratio) hears only the moves that change that reading,
+-// which three passes found the hard way. A write the read makes is laid out before the
+-// same paint, so the reach is right in the frame that first paints the move. The loop
+-// stops when the stage empties: nothing runs at rest. A move the layout made is not
+-// glided: it paints, and the control moves with its world. Only a move the stage sees
+-// before it paints (a re-render's mutation, handled in its own microtask) is travelled,
+-// from the place the person last saw.
++// that step reports it every frame whether or not its size changed; the report re-reads
++// the reach (`--stage-room`, `--stage-w`) when the rest place moved, and a promoted
++// control's place, clip and masks. A read that compares the box hears every move,
++// whatever its cause or direction (a style write, a viewport resize, a font load, an
++// inward move, a centred shrink, a scroll, a spring written from an animation-frame
++// callback). A write the read makes is laid out before the same paint. The loop stops
++// when the stage empties: nothing runs at rest. A move the layout made is not glided: it
++// paints, and the control moves with its world. Only a move the stage sees before it
++// paints (a re-render's mutation, handled in its own microtask) is travelled, from the
++// place the person last saw.
+ //
+ // FAILS LOUD (CK-21). The grow figure and the reach are read back on every engagement;
+ // an unreadable one says so once (settle.ts `loud`). The registered reach's initial
+@@ -84,14 +84,12 @@ import { loud, reducedMotion, rowClockMs, settleFrames } from "./settle";
+ 
+ interface Holder {
+     host: HTMLElement;
+-    /** The in-flow place a promoted host is pinned to; null for a host engaged in place. */
++    /** The in-flow place a promoted host stands for; null for a host engaged in place. */
+     footprint: HTMLElement | null;
+-    /** The consumer's own inline `position-anchor` (value, priority), set aside while promoted. */
+-    own: [string, string];
+     /** The rest place at the last read, free of transforms (a footprint's page-frame box, an in-place host's flow box), and the viewport it was read in. */
+     at: Place;
+-    /** The `clip-path` last written on a promoted host ("" when nothing clips its place). */
+-    clip: string;
++    /** What the stage last wrote on a promoted host (its place, clip and masks), so a frame where none moved writes nothing. */
++    paint: string;
+     generation: number;
+     engaged: boolean;
+ }
+@@ -105,16 +103,37 @@ interface Place {
+     vh: number;
+ }
+ 
++interface Box {
++    l: number;
++    t: number;
++    r: number;
++    b: number;
++}
++
+ const holders = new Map<HTMLElement, Holder>();
+ let current: Holder | null = null;
+ let generation = 0;
+-let anchors = 0;
+-const page = Math.random().toString(36).slice(2, 8);
+ let observer: MutationObserver | null = null;
+ let frame = 0;
+ let sizes: ResizeObserver | null = null;
+ /** A holder's place before its first read. */
+ const NOWHERE: Place = { x: NaN, y: NaN, w: NaN, h: NaN, vw: NaN, vh: NaN };
++/** The properties a promotion writes on its host, and removes when it leaves. */
++const PAINT = [
++    "left",
++    "top",
++    "inline-size",
++    "block-size",
++    "transform",
++    "clip-path",
++    "mask-image",
++    "mask-position",
++    "mask-size",
++    "mask-repeat",
++    "mask-clip",
++    "mask-origin",
++    "mask-composite",
++] as const;
+ 
+ /** A host's place in flow, without its transforms (the grow, a glide in flight): its offset chain. */
+ const flowBox = (el: HTMLElement): { x: number; y: number } => {
+@@ -165,64 +184,147 @@ function writeGeometry(h: Holder, at = restPlace(h)): void {
+ 
+ const CLIPS_PAINT = /paint|content|strict/;
+ const CLIPS = /hidden|clip|scroll|auto/;
++const px = (v: number): string => `${Math.round(v * 100) / 100}px`;
++
++/** One corner radius `a [b]` (px or %) of a box `w`×`h`, as [x, y] px. */
++function corner(v: string, w: number, h: number): [number, number] {
++    const [a, b = a] = v.trim().split(/\s+/);
++    const len = (s: string, of: number): number =>
++        s.endsWith("%") ? (Number.parseFloat(s) / 100) * of : Number.parseFloat(s) || 0;
++    return [len(a, w), len(b, h)];
++}
++
++/** An element's painted scale along each axis (its ancestors' transforms and its own): painted box over layout box. */
++const paintedScale = (el: HTMLElement, box: DOMRect): [number, number] => [
++    el.offsetWidth ? box.width / el.offsetWidth : 1,
++    el.offsetHeight ? box.height / el.offsetHeight : 1,
++];
+ 
+ /**
+- * The box that clips `place` where it stands: the intersection of the padding boxes of
+- * every ancestor that clips it (an `overflow` other than `visible` on an axis, or paint
+- * containment), in the viewport frame; null when nothing below the root clips it.
++ * The world `place` paints in, where it stands, in the viewport's painted frame:
++ * the intersection of the padding boxes of its clipping ancestors with the padding-box
++ * radius of each corner whose two edges one ancestor set (null when nothing clips it),
++ * and its masking ancestors' masks, each over that ancestor's painted border box.
+  */
+-function clipBox(place: Element): { l: number; t: number; r: number; b: number } | null {
+-    let l = -Infinity;
+-    let t = -Infinity;
+-    let r = Infinity;
+-    let b = Infinity;
++function worldOf(place: Element): {
++    clip: (Box & { radii: [number, number][] }) | null;
++    masks: { image: string; box: DOMRect }[];
++} {
++    const edge: Box = { l: -Infinity, t: -Infinity, r: Infinity, b: Infinity };
++    const by: (HTMLElement | null)[] = [null, null, null, null];
++    const radii = new Map<HTMLElement, [number, number][]>();
++    const masks: { image: string; box: DOMRect }[] = [];
+     const root = document.scrollingElement;
+     for (let el = place.parentElement; el && el !== root && el !== document.body; el = el.parentElement) {
+         const cs = getComputedStyle(el);
++        const mask = cs.getPropertyValue("mask-image") || cs.getPropertyValue("-webkit-mask-image");
++        const box = el.getBoundingClientRect();
++        if (mask && mask !== "none") masks.push({ image: mask, box });
+         const paint = CLIPS_PAINT.test(cs.contain);
+         const cx = paint || CLIPS.test(cs.overflowX);
+         const cy = paint || CLIPS.test(cs.overflowY);
+         if (!cx && !cy) continue;
+-        const box = el.getBoundingClientRect();
+-        const x0 = box.left + el.clientLeft;
+-        const y0 = box.top + el.clientTop;
+-        if (cx) {
+-            l = Math.max(l, x0);
+-            r = Math.min(r, x0 + el.clientWidth);
+-        }
+-        if (cy) {
+-            t = Math.max(t, y0);
+-            b = Math.min(b, y0 + el.clientHeight);
+-        }
++        const [kx, ky] = paintedScale(el, box);
++        const x0 = box.left + el.clientLeft * kx;
++        const y0 = box.top + el.clientTop * ky;
++        const x1 = x0 + el.clientWidth * kx;
++        const y1 = y0 + el.clientHeight * ky;
++        if (cx && x0 > edge.l) [edge.l, by[0]] = [x0, el];
++        if (cy && y0 > edge.t) [edge.t, by[1]] = [y0, el];
++        if (cx && x1 < edge.r) [edge.r, by[2]] = [x1, el];
++        if (cy && y1 < edge.b) [edge.b, by[3]] = [y1, el];
++        // the padding box's corners: the border radius less the border, in the painted frame
++        const bw = [cs.borderLeftWidth, cs.borderTopWidth, cs.borderRightWidth, cs.borderBottomWidth].map(
++            (v) => Number.parseFloat(v) || 0,
++        );
++        const W = el.offsetWidth;
++        const H = el.offsetHeight;
++        const inner = (v: string, sx: number, sy: number): [number, number] => {
++            const [rx, ry] = corner(v, W, H);
++            return [Math.max(0, rx - sx) * kx, Math.max(0, ry - sy) * ky];
++        };
++        radii.set(el, [
++            inner(cs.borderTopLeftRadius, bw[0], bw[1]),
++            inner(cs.borderTopRightRadius, bw[2], bw[1]),
++            inner(cs.borderBottomRightRadius, bw[2], bw[3]),
++            inner(cs.borderBottomLeftRadius, bw[0], bw[3]),
++        ]);
+     }
+-    return l === -Infinity && t === -Infinity && r === Infinity && b === Infinity ? null : { l, t, r, b };
++    if (!by.some(Boolean)) return { clip: null, masks };
++    // a corner is rounded only where one ancestor set both of its edges
++    const pairs: [number, number][] = [
++        [0, 1],
++        [2, 1],
++        [2, 3],
++        [0, 3],
++    ];
++    const r = pairs.map(([a, b], i): [number, number] =>
++        by[a] && by[a] === by[b] ? radii.get(by[a]!)![i] : [0, 0],
++    );
++    return { clip: { ...edge, radii: r }, masks };
+ }
+ 
+ /**
+- * Clip a promoted host to the box that clips its footprint (the header, CK-20). The clip
+- * is the host's own `clip-path`, in its untransformed frame, so the grow and any glide in
+- * flight are mapped back through the painted box: an inset may be negative (the host may
+- * paint past its border box, its loupe and its shadow, anywhere inside its place's clip).
+- * An axis nothing clips is left unbounded. Written only when it changes.
++ * Give a promoted host its place's paint (the header's invariant): its place (the
++ * footprint's painted centre, its layout size, its ancestors' scale), its clip and its
++ * masks, one write of each, only when one changed.
+  */
+-function writeClip(h: Holder): void {
+-    if (!h.footprint) return;
+-    const c = clipBox(h.footprint);
+-    let clip = "";
+-    if (c) {
+-        const p = h.host.getBoundingClientRect();
+-        const w = h.host.offsetWidth;
+-        const ht = h.host.offsetHeight;
+-        const ax = w ? p.width / w : 1;
+-        const ay = ht ? p.height / ht : 1;
+-        const FAR = 1e5;
+-        const px = (v: number): string => `${Number.isFinite(v) ? Math.round(v * 100) / 100 : -FAR}px`;
+-        clip = `inset(${px((c.t - p.top) / ay)} ${px((p.right - c.r) / ax)} ${px((p.bottom - c.b) / ay)} ${px((c.l - p.left) / ax)})`;
++function writePaint(h: Holder): void {
++    const fp = h.footprint;
++    if (!fp) return;
++    const host = h.host;
++    const f = fp.getBoundingClientRect();
++    const w = fp.offsetWidth;
++    const ht = fp.offsetHeight;
++    const [sx, sy] = paintedScale(fp, f);
++    const scaled = Math.abs(sx - 1) > 1e-3 || Math.abs(sy - 1) > 1e-3;
++    const place: [string, string][] = [
++        ["left", px(f.left + f.width / 2 - w / 2)],
++        ["top", px(f.top + f.height / 2 - ht / 2)],
++        ["inline-size", px(w)],
++        ["block-size", px(ht)],
++        ["transform", scaled ? `scale(${Math.round(sx * 1e4) / 1e4}, ${Math.round(sy * 1e4) / 1e4})` : ""],
++    ];
++    for (const [k, v] of place) {
++        if (v) host.style.setProperty(k, v);
++        else host.style.removeProperty(k);
++    }
++    // the clip and masks in the host's own frame: mapped back through its painted box
++    // (the place just written, the grow and any glide in flight)
++    const { clip, masks } = worldOf(fp);
++    const p = host.getBoundingClientRect();
++    const ax = host.offsetWidth ? p.width / host.offsetWidth : 1;
++    const ay = host.offsetHeight ? p.height / host.offsetHeight : 1;
++    const FAR = 1e5;
++    const ins = (v: number, a: number): string => (Number.isFinite(v) ? px(v / a) : `${-FAR}px`);
++    let clipPath = "";
++    if (clip) {
++        const { l, t, r, b, radii } = clip;
++        const round = radii.some(([x, y]) => x > 0 || y > 0)
++            ? ` round ${radii.map(([x]) => px(x / ax)).join(" ")} / ${radii.map(([, y]) => px(y / ay)).join(" ")}`
++            : "";
++        clipPath = `inset(${ins(t - p.top, ay)} ${ins(p.right - r, ax)} ${ins(p.bottom - b, ay)} ${ins(l - p.left, ax)}${round})`;
+     }
+-    if (clip === h.clip) return;
+-    h.clip = clip;
+-    if (clip) h.host.style.setProperty("clip-path", clip);
+-    else h.host.style.removeProperty("clip-path");
++    const layer = (k: (m: { image: string; box: DOMRect }) => string): string => masks.map(k).join(", ");
++    const mask: [string, string][] = masks.length
++        ? [
++              ["mask-image", layer((m) => m.image)],
++              ["mask-position", layer((m) => `${px((m.box.left - p.left) / ax)} ${px((m.box.top - p.top) / ay)}`)],
++              ["mask-size", layer((m) => `${px(m.box.width / ax)} ${px(m.box.height / ay)}`)],
++              ["mask-repeat", layer(() => "no-repeat")],
++              ["mask-origin", layer(() => "border-box")],
++              ["mask-clip", layer(() => "no-clip")],
++              // each layer intersects the ones below it (the bottom one has none to meet)
++              ["mask-composite", masks.map((_, i) => (i < masks.length - 1 ? "intersect" : "add")).join(", ")],
++          ]
++        : [];
++    const key = `${clipPath}|${mask.map(([, v]) => v).join("|")}`;
++    if (key === h.paint) return;
++    h.paint = key;
++    if (clipPath) host.style.setProperty("clip-path", clipPath);
++    else host.style.removeProperty("clip-path");
++    for (const k of PAINT.filter((k) => k.startsWith("mask-"))) host.style.removeProperty(k);
++    for (const [k, v] of mask) host.style.setProperty(k, v);
+ }
+ 
+ /** Each frame while the stage holds anything: re-observe every rest box, so the frame's resize step reports it. */
+@@ -235,12 +337,12 @@ function hear(): void {
+     }
+ }
+ 
+-/** The frame's resize step (after layout, before paint): re-read every holder whose rest place moved, and re-clip every promoted one. */
++/** The frame's resize step (after layout, before paint): re-read every holder whose rest place moved, and give every promoted one its place's paint. */
+ function heard(): void {
+     for (const h of holders.values()) {
+         const at = restPlace(h);
+         if (!samePlace(at, h.at)) writeGeometry(h, at);
+-        writeClip(h);
++        writePaint(h);
+     }
+ }
+ 
+@@ -259,10 +361,10 @@ function glide(host: HTMLElement, dx: number, dy: number): void {
+ function onMutation(): void {
+     for (const h of holders.values()) {
+         if (h.footprint && h.host.isConnected && h.host.previousSibling !== h.footprint) h.host.before(h.footprint);
+-        // the layout has already moved the pinned control with its footprint: the place it
+-        // was is the footprint's last read, in the page frame (a scroll moves neither)
++        // the place it was is the rest box's last read, in the page frame (a scroll moves neither)
+         const was = h.at;
+         writeGeometry(h);
++        writePaint(h);
+         glide(h.host, was.x - h.at.x, was.y - h.at.y);
+     }
+ }
+@@ -328,7 +430,7 @@ function watchWorld(): void {
+ 
+ /** Put `host` on the stage in place: the grow and its reach, no top layer, no footprint. */
+ function inPlace(host: HTMLElement): Holder {
+-    const h: Holder = { host, footprint: null, own: ["", ""], at: NOWHERE, clip: "", generation, engaged: false };
++    const h: Holder = { host, footprint: null, at: NOWHERE, paint: "", generation, engaged: false };
+     holders.set(host, h);
+     host.setAttribute("data-engage-stage", "");
+     watchWorld();
+@@ -336,32 +438,25 @@ function inPlace(host: HTMLElement): Holder {
+ }
+ 
+ function promote(host: HTMLElement): Holder {
+-    const rect = host.getBoundingClientRect();
+     const cs = getComputedStyle(host);
+     const footprint = document.createElement("span");
+     footprint.className = "engage-footprint";
+     footprint.setAttribute("aria-hidden", "true");
+-    footprint.style.inlineSize = `${rect.width}px`;
+-    footprint.style.blockSize = `${rect.height}px`;
++    // the layout size (a scaled ancestor paints it smaller; the footprint is laid out, not painted)
++    footprint.style.inlineSize = `${host.offsetWidth}px`;
++    footprint.style.blockSize = `${host.offsetHeight}px`;
+     footprint.style.margin = cs.margin;
+     footprint.style.display = cs.display.startsWith("inline") ? "inline-block" : "block";
+     footprint.style.verticalAlign = cs.verticalAlign;
+-    // one anchor name per footprint, never shared (the header)
+-    const anchor = `--engage-footprint-${page}-${++anchors}`;
+-    footprint.style.setProperty("anchor-name", anchor);
+-    const own: [string, string] = [
+-        host.style.getPropertyValue("position-anchor"),
+-        host.style.getPropertyPriority("position-anchor"),
+-    ];
+-    host.style.setProperty("position-anchor", anchor);
+     host.before(footprint);
+-    const h: Holder = { host, footprint, own, at: NOWHERE, clip: "", generation, engaged: false };
++    const h: Holder = { host, footprint, at: NOWHERE, paint: "", generation, engaged: false };
+     holders.set(host, h);
+     host.setAttribute("popover", "manual");
+     host.setAttribute("data-engage-stage", "");
++    // its place's paint, written before it first paints in the top layer
++    writePaint(h);
+     host.showPopover();
+-    // clipped in the frame it is promoted, before it first paints in the top layer
+-    writeClip(h);
++    writePaint(h);
+     host.addEventListener("wheel", onWheel, { passive: false });
+     watchWorld();
+     return h;
+@@ -387,11 +482,8 @@ function hide(h: Holder): void {
+     if (!h.footprint) return;
+     if (host.matches(":popover-open")) host.hidePopover();
+     host.removeAttribute("popover");
+-    host.style.removeProperty("clip-path");
++    for (const k of PAINT) host.style.removeProperty(k);
+     host.removeEventListener("wheel", onWheel);
+-    // the consumer's own anchor, back as it was (or none, as it was)
+-    if (h.own[0]) host.style.setProperty("position-anchor", h.own[0], h.own[1]);
+-    else host.style.removeProperty("position-anchor");
+     h.footprint.remove();
+     // The landing: if the control's place in flow is not where its footprint held it
+     // (a re-render moved it), it travels there; it never lands in a frame.
+diff --git a/a/src/styles/glass/engage-stage.css b/b/src/styles/glass/engage-stage.css
+index 75e17b8..14af7fb 100644
+--- a/a/src/styles/glass/engage-stage.css
++++ b/b/src/styles/glass/engage-stage.css
+@@ -3,25 +3,21 @@
+ 
+    An engaged control takes `popover="manual"` + `[data-engage-stage]` and enters the top
+    layer WHERE IT STANDS (no DOM move: pointer capture, focus and inheritance survive).
+-   Its footprint stays in flow and is the anchor it is pinned to, so the promoted control
+-   sits exactly on its rest box and follows scroll by anchor positioning. The anchor NAME
+-   is the stage's, one per footprint, written inline on the footprint (`anchor-name`) and
+-   on its control (`position-anchor`): a name shared by two footprints pins both controls
+-   to the last one in tree order, which is every hand-off. The grow is the
+-   held class's (utilities/engage.css `engage-held`); this file pins the box and computes
+-   the reach the grow may spend inline. The world is not veiled (Q-3 (c), O-103d (5)).
++   Its footprint stays in flow and holds the place. The grow is the held class's
++   (utilities/engage.css `engage-held`); this file fixes the box and computes the reach
++   the grow may spend inline. The world is not veiled (Q-3 (c), O-103d (5)).
+ 
+-   THE CLIP IS THE STAGE'S. A promoted control is clipped to the box that clips its
+-   footprint (stage.ts `writeClip`, an inline `clip-path`), so it never paints over the
+-   card its place sits in and leaves the paint row by row as its place scrolls away.
+-   `position-visibility: always` turns off the UA's one-step answer
+-   (`anchors-visible`, the initial value, drops the whole control in the frame the last
+-   pixel of its anchor leaves): one mechanism, the clip (CK-20).
++   THE PLACE'S PAINT IS THE STAGE'S. A promoted control paints exactly what its place
++   would paint: the stage writes, inline and together, the place (the footprint's painted
++   centre and layout size, its ancestors' scale as the host's `transform`), the clip
++   (`inset(… round …)`) and the masks of the footprint's ancestors, every frame they
++   change (stage.ts `writePaint`, CK-20). This file declares only what never changes: a
++   fixed box measured border to border.
+ 
+    TWO STRENGTHS, ON PURPOSE. The popover UA sheet paints a box (border, padding, margin,
+    Canvas, CanvasText) the host never asked for: those are neutralized at the LOWEST
+    author strength (`@layer base`, zero specificity), so any paint or box the host
+-   authors itself still wins. The pin is GEOMETRY and has to win over the host's own: it
++   authors itself still wins. The box is GEOMETRY and has to win over the host's own: it
+    is UNLAYERED at (0,2,0), because the hosts it promotes author their geometry unlayered
+    at (0,1,0) (slider/styles.css). */
+ 
+@@ -44,11 +40,7 @@
+ [popover][data-engage-stage] {
+     position: fixed;
+     inset: auto;
+-    left: anchor(left);
+-    top: anchor(top);
+-    inline-size: anchor-size(width);
+-    block-size: anchor-size(height);
+-    position-visibility: always;
++    box-sizing: border-box;
+ }
+ 
+ /* THE GUTTER CAP, AND THE REACH. Inline, the grow may spend only the clearance the
+diff --git a/a/src/styles/glass/focus-veil.css b/b/src/styles/glass/focus-veil.css
+index 227ec28..410f7cc 100644
+--- a/a/src/styles/glass/focus-veil.css
++++ b/b/src/styles/glass/focus-veil.css
+@@ -11,9 +11,8 @@
+ 
+    IT WAS ALREADY BUILT, HIDDEN INSIDE THE DIALOG. `dialog/placement.css` FORM 2 was
+    this exact geometry, `data-backdrop="graded"`-private and hard-centred at 50%. This
+-   file is that plate lifted out and generalised: the centre becomes `--veil-x`/`--veil-y`
+-   (registered, so it interpolates; 50% default = the centred-modal case byte-for-byte),
+-   the core becomes a per-axis half-extent a consumer writes from its own rect, and the
++   file is that plate lifted out and generalised: the centre is the viewport's (50%, the
++   centred-modal case byte-for-byte; the one reader is the Dialog's overlay), the core becomes a per-axis half-extent a consumer writes from its own rect, and the
+    five values become the `--glass-focus-veil-*` cohort in tokens/glass.css. The Dialog
+    now BINDS this class instead of re-spelling the recipe.
+ 
+@@ -82,14 +81,14 @@
+                 to right,
+                 transparent
+                     calc(
+-                        var(--veil-x) - var(--glass-focus-veil-core-x) -
++                        50% - var(--glass-focus-veil-core-x) -
+                             var(--glass-focus-veil-bloom)
+                     ),
+-                black calc(var(--veil-x) - var(--glass-focus-veil-core-x)),
+-                black calc(var(--veil-x) + var(--glass-focus-veil-core-x)),
++                black calc(50% - var(--glass-focus-veil-core-x)),
++                black calc(50% + var(--glass-focus-veil-core-x)),
+                 transparent
+                     calc(
+-                        var(--veil-x) + var(--glass-focus-veil-core-x) +
++                        50% + var(--glass-focus-veil-core-x) +
+                             var(--glass-focus-veil-bloom)
+                     )
+             ),
+@@ -97,14 +96,14 @@
+                 to bottom,
+                 transparent
+                     calc(
+-                        var(--veil-y) - var(--glass-focus-veil-core-y) -
++                        50% - var(--glass-focus-veil-core-y) -
+                             var(--glass-focus-veil-bloom)
+                     ),
+-                black calc(var(--veil-y) - var(--glass-focus-veil-core-y)),
+-                black calc(var(--veil-y) + var(--glass-focus-veil-core-y)),
++                black calc(50% - var(--glass-focus-veil-core-y)),
++                black calc(50% + var(--glass-focus-veil-core-y)),
+                 transparent
+                     calc(
+-                        var(--veil-y) + var(--glass-focus-veil-core-y) +
++                        50% + var(--glass-focus-veil-core-y) +
+                             var(--glass-focus-veil-bloom)
+                     )
+             );
+@@ -114,14 +113,14 @@
+                 to right,
+                 transparent
+                     calc(
+-                        var(--veil-x) - var(--glass-focus-veil-core-x) -
++                        50% - var(--glass-focus-veil-core-x) -
+                             var(--glass-focus-veil-bloom)
+                     ),
+-                black calc(var(--veil-x) - var(--glass-focus-veil-core-x)),
+-                black calc(var(--veil-x) + var(--glass-focus-veil-core-x)),
++                black calc(50% - var(--glass-focus-veil-core-x)),
++                black calc(50% + var(--glass-focus-veil-core-x)),
+                 transparent
+                     calc(
+-                        var(--veil-x) + var(--glass-focus-veil-core-x) +
++                        50% + var(--glass-focus-veil-core-x) +
+                             var(--glass-focus-veil-bloom)
+                     )
+             ),
+@@ -129,14 +128,14 @@
+                 to bottom,
+                 transparent
+                     calc(
+-                        var(--veil-y) - var(--glass-focus-veil-core-y) -
++                        50% - var(--glass-focus-veil-core-y) -
+                             var(--glass-focus-veil-bloom)
+                     ),
+-                black calc(var(--veil-y) - var(--glass-focus-veil-core-y)),
+-                black calc(var(--veil-y) + var(--glass-focus-veil-core-y)),
++                black calc(50% - var(--glass-focus-veil-core-y)),
++                black calc(50% + var(--glass-focus-veil-core-y)),
+                 transparent
+                     calc(
+-                        var(--veil-y) + var(--glass-focus-veil-core-y) +
++                        50% + var(--glass-focus-veil-core-y) +
+                             var(--glass-focus-veil-bloom)
+                     )
+             );
+diff --git a/a/src/styles/tokens/property-regs.css b/b/src/styles/tokens/property-regs.css
+index de14a92..e2778a1 100644
+--- a/a/src/styles/tokens/property-regs.css
++++ b/b/src/styles/tokens/property-regs.css
+@@ -36,22 +36,6 @@
+     initial-value: 50%;
+ }
+ 
+-/* The FOCUS-VEIL centre (glass/focus-veil.css): the viewport-space centre the veil's
+-   two mask ramps are built around. Registration is what makes the centre INTERPOLATE —
+-   an unregistered percentage var() in a gradient stop snaps between samples, so a veil
+-   following a moving control would step. `50%` is the centred-modal rest. */
+-@property --veil-x {
+-    syntax: "<percentage>";
+-    inherits: false;
+-    initial-value: 50%;
+-}
+-
+-@property --veil-y {
+-    syntax: "<percentage>";
+-    inherits: false;
+-    initial-value: 50%;
+-}
+-
+ @property --specular-intensity {
+     syntax: "<number>";
+     inherits: false;
+diff --git a/a/src/styles/utilities/engage.css b/b/src/styles/utilities/engage.css
+index c08705a..b47e6c2 100644
+--- a/a/src/styles/utilities/engage.css
++++ b/b/src/styles/utilities/engage.css
+@@ -171,8 +171,13 @@
+    keeps a phone's full-width control inside the page. */
+ @utility engage-held {
+     --rung-class: held;
+-    scale: calc(1 + (var(--stage-reach) - 1) * var(--rung-grow))
+-        calc(1 + (var(--scale-engage) - 1) * var(--rung-grow));
++    /* The grow, published once: the host scales by it, and the slider's loupe, which
++       leaves the host's paint for the top layer (slider/styles.css), reads the same
++       figure by inheritance (an unregistered custom property inherits its resolved
++       value, so the loupe follows the grow's transition frame by frame). */
++    --held-scale-x: calc(1 + (var(--stage-reach) - 1) * var(--rung-grow));
++    --held-scale-y: calc(1 + (var(--scale-engage) - 1) * var(--rung-grow));
++    scale: var(--held-scale-x) var(--held-scale-y);
+     transform-origin: center;
+     /* the host's ink leg rides with the grow: the slider lane (unlayered) declares no
+        transition of its own, so this list is the host's one */
+diff --git a/a/tests/composables/motion/engage-stage.test.ts b/b/tests/composables/motion/engage-stage.test.ts
+index 110488c..4de32a0 100644
+--- a/a/tests/composables/motion/engage-stage.test.ts
++++ b/b/tests/composables/motion/engage-stage.test.ts
+@@ -5,8 +5,8 @@
+ // pass 3), and the stage's second client, the NumberField scrub (CK-27), with its own
+ // pitch (CK-12), its arming surface (CK-22) and no veil (CK-25). Pass 4: Q-3's pointer arm, the consumer's own
+ // `position-anchor` given back on release, and the wheel over a promoted control (CK-22). Pass 7: Q-3 (c) with no veil
+-// (O-103d (5)) is the one construction (no veil element, no "every" arm), and a promoted control is clipped to the box
+-// that clips its place (CK-20). Paint is the D5
++// (O-103d (5)) is the one construction (no veil element, no "every" arm). Pass 8: a promoted control paints what its
++// place paints (CK-20): its place written, not pinned by anchor, its clip rounded as its card, its card's mask. Paint is the D5
+ // battery's; each case here has the input that must NOT do the thing beside the one that must.
+ 
+ import { readFileSync } from "node:fs";
+@@ -356,8 +356,8 @@ describe("the grow figure (CK-12): one source, the ladder's engaged row", () =>
+     });
+ });
+ 
+-describe("one anchor name per footprint (CK-20, pass 3)", () => {
+-    it("two controls on the stage pin to their own footprints, never to a shared name", async () => {
++describe("each control on its own footprint, pinned by no anchor (CK-20, pass 8)", () => {
++    it("two controls on the stage each keep their own footprint; neither names an anchor", async () => {
+         const w = mountPair();
+         let exitDone: () => void = () => {};
+         const exit = { effect: { getComputedTiming: () => ({ endTime: 300 }) }, finished: new Promise<void>((r) => (exitDone = r)) };
+@@ -370,18 +370,22 @@ describe("one anchor name per footprint (CK-20, pass 3)", () => {
+         expect(w.b.hasAttribute("data-engage-stage")).toBe(true);
+         const fa = w.a.previousElementSibling as HTMLElement;
+         const fb = w.b.previousElementSibling as HTMLElement;
+-        const name = (el: HTMLElement, p: string): string => el.style.getPropertyValue(p).trim();
+-        expect(name(fa, "anchor-name")).toMatch(/^--engage-footprint-[a-z0-9]+-\d+$/);
+-        expect(name(w.a, "position-anchor")).toBe(name(fa, "anchor-name"));
+-        expect(name(w.b, "position-anchor")).toBe(name(fb, "anchor-name"));
+-        expect(name(fa, "anchor-name")).not.toBe(name(fb, "anchor-name"));
+-        // the stylesheet names no anchor of its own: a shared name there would win back
++        expect(fa.classList.contains("engage-footprint")).toBe(true);
++        expect(fb.classList.contains("engage-footprint")).toBe(true);
++        expect(fa).not.toBe(fb);
++        // the place is written, not pinned: no anchor name anywhere, in the stylesheet either
++        for (const el of [fa, fb, w.a, w.b]) {
++            expect(el.style.getPropertyValue("anchor-name")).toBe("");
++            expect(el.style.getPropertyValue("position-anchor")).toBe("");
++        }
++        expect(w.a.style.getPropertyValue("left")).toMatch(/px$/);
+         const css = readFileSync(join(process.cwd(), "src/styles/glass/engage-stage.css"), "utf8").replace(/\/\*[\s\S]*?\*\//g, "");
+-        expect(css).not.toMatch(/anchor-name\s*:|position-anchor\s*:/);
++        expect(css).not.toMatch(/anchor\(|anchor-size\(|anchor-name\s*:|position-anchor\s*:|position-visibility/);
+         exitDone();
+         await new Promise((r) => setTimeout(r, 0));
+-        // off the stage, the control carries no pin
+-        expect(name(w.a, "position-anchor")).toBe("");
++        // off the stage, the control carries nothing the stage wrote
++        for (const p of ["left", "top", "inline-size", "block-size", "transform", "clip-path", "mask-image"])
++            expect(w.a.style.getPropertyValue(p)).toBe("");
+         w.w.unmount();
+     });
+ });
+@@ -570,12 +574,11 @@ describe("Q-3 (c): in place on a fine pointer, promoted on touch and keys", () =
+ });
+ 
+ describe("what a promotion borrows, it gives back (CK-22)", () => {
+-    it("a consumer's own inline position-anchor is set aside while promoted and written back on release", async () => {
++    it("a consumer's own inline position-anchor is never touched: kept while promoted and after", async () => {
+         const w = mountPair();
+         w.a.style.setProperty("position-anchor", "--consumer-own");
+         await press("Tab", () => w.a.focus());
+-        const fp = w.a.previousElementSibling as HTMLElement;
+-        expect(w.a.style.getPropertyValue("position-anchor")).toBe(fp.style.getPropertyValue("anchor-name"));
++        expect(w.a.style.getPropertyValue("position-anchor")).toBe("--consumer-own");
+         await press("Escape");
+         await settled();
+         expect(w.a.hasAttribute("data-engage-stage")).toBe(false);
+@@ -713,9 +716,57 @@ describe("a promoted control stays inside its place's clip (CK-20, pass 7)", ()
+         box.remove();
+     });
+ 
+-    it("the stylesheet turns off the UA's one-step drop: the clip is the one mechanism", () => {
+-        const css = readFileSync(join(process.cwd(), "src/styles/glass/engage-stage.css"), "utf8").replace(/\/\*[\s\S]*?\*\//g, "");
+-        const pin = css.slice(css.indexOf("[popover][data-engage-stage] {"));
+-        expect(pin.slice(0, pin.indexOf("}"))).toMatch(/position-visibility:\s*always;/);
++    it("a rounded card: the clip takes its padding-box corners (round), in the host's frame", async () => {
++        const w = mountPair();
++        const box = card("auto");
++        for (const c of ["borderTopLeftRadius", "borderTopRightRadius", "borderBottomRightRadius", "borderBottomLeftRadius"])
++            (box.style as unknown as Record<string, string>)[c] = "40px";
++        w.w.element.before(box);
++        box.append(w.w.element);
++        sized(w.a);
++        await press("Tab", () => w.a.focus());
++        await frame();
++        const clip = w.a.style.getPropertyValue("clip-path");
++        // 40 px corners, mapped through the ×1.06 grow: 37.74 px inline, 37.74 px block
++        expect(clip).toMatch(/round 37\.74px 37\.74px 37\.74px 37\.74px \/ 37\.74px/);
++        await press("Escape");
++        await settled();
++        w.w.unmount();
++        box.remove();
++    });
++
++    it("a masking card: its own mask is laid over its box in the host's frame, and leaves with the promotion", async () => {
++        const w = mountPair();
++        const box = card("auto");
++        box.style.setProperty("mask-image", "linear-gradient(black, transparent)");
++        w.w.element.before(box);
++        box.append(w.w.element);
++        sized(w.a);
++        await press("Tab", () => w.a.focus());
++        await frame();
++        expect(w.a.style.getPropertyValue("mask-image")).toContain("linear-gradient");
++        expect(w.a.style.getPropertyValue("mask-repeat")).toBe("no-repeat");
++        // the card's box (0, 100, 400×64) in the host's frame (painted at 9.2, 89.4, ×1.06)
++        expect(w.a.style.getPropertyValue("mask-size")).toBe("377.36px 60.38px");
++        await press("Escape");
++        await settled();
++        expect(w.a.style.getPropertyValue("mask-image")).toBe("");
++        w.w.unmount();
++        box.remove();
++    });
++
++    it("plant: a card with no mask writes none", async () => {
++        const w = mountPair();
++        const box = card("auto");
++        w.w.element.before(box);
++        box.append(w.w.element);
++        sized(w.a);
++        await press("Tab", () => w.a.focus());
++        await frame();
++        expect(w.a.style.getPropertyValue("mask-image")).toBe("");
++        await press("Escape");
++        await settled();
++        w.w.unmount();
++        box.remove();
+     });
+ });
+diff --git a/a/tests/styles/focus-veil.test.ts b/b/tests/styles/focus-veil.test.ts
+index fcdf18c..4c67e8c 100644
+--- a/a/tests/styles/focus-veil.test.ts
++++ b/b/tests/styles/focus-veil.test.ts
+@@ -155,21 +155,19 @@ describe("G-RUNG-ONLY · GRADIENT-BLUR arm — the primitive is token-driven", (
+         );
+     });
+ 
+-    it("registers the live centre so it interpolates instead of snapping", () => {
++    // D5 pass 8 (P-1, E-1): the centre's registration existed so a veil following a moving
++    // control would not step; that writer left with the engaged veil, and the one reader
++    // (the Dialog's overlay) sits at 50 %. The registration leaves with its reason.
++    it("the centre is the viewport's: no registered --veil-x/--veil-y, no reader of either", () => {
+         for (const axis of ["--veil-x", "--veil-y"]) {
+-            const block = propertyRegs.match(
+-                new RegExp(`@property ${axis} {[^}]*}`),
+-            )?.[0];
+-            expect(block, `${axis} is unregistered`).toBeTruthy();
+-            expect(block).toMatch(/syntax:\s*"<percentage>"/);
+-            expect(block).toMatch(/inherits:\s*false/);
+-            expect(block).toMatch(/initial-value:\s*50%/);
++            expect(propertyRegs).not.toContain(`@property ${axis}`);
++            expect(veil).not.toContain(`var(${axis})`);
+         }
+     });
+ 
+     it("carries every geometry value through a token — no literals in the recipe", () => {
+         const rule = veil.slice(veil.indexOf(".glass-focus-veil"));
+-        const stops = rule.match(/calc\([^)]*var\(--veil-[xy]\)[\s\S]*?\)\n/g) ?? [];
++        const stops = rule.match(/calc\(\s*50%[\s\S]*?\)\n/g) ?? [];
+         expect(stops.length).toBeGreaterThan(0);
+         // Every mask stop is centre ± core ± bloom, all three tokens.
+         expect(rule).toContain("var(--glass-focus-veil-core-x)");

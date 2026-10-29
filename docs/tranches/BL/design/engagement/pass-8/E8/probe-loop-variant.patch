@@ -1,0 +1,46 @@
+diff --git a/src/composables/motion/engage/stage.ts b/src/composables/motion/engage/stage.ts
+index 53fb0af..189d81e 100644
+--- a/src/composables/motion/engage/stage.ts
++++ b/src/composables/motion/engage/stage.ts
+@@ -44,6 +44,22 @@ const holders = new Map<HTMLElement, Holder>();
+ let current: Holder | null = null;
+ let generation = 0;
+ let observer: MutationObserver | null = null;
++let frame = 0;
++let sizes: ResizeObserver | null = null;
++/** VARIANT probe+loop: each frame re-observe every engaged host, so its resize step re-reads a moved place. */
++function hear(): void {
++    frame = requestAnimationFrame(hear);
++    for (const h of holders.values()) {
++        sizes?.unobserve(h.host);
++        sizes?.observe(h.host);
++    }
++}
++function heard(): void {
++    for (const h of holders.values()) {
++        const at = flowBox(h.host);
++        if (at.x !== h.at.x || at.y !== h.at.y) writeGeometry(h);
++    }
++}
+ 
+ /** A host's place in flow, without its transforms (the grow, a glide in flight): its offset chain. */
+ const flowBox = (el: HTMLElement): { x: number; y: number } => {
+@@ -105,6 +121,8 @@ function watchWorld(): void {
+     observer.observe(document.body, { childList: true, subtree: true });
+     window.addEventListener("scroll", onMove, { passive: true, capture: true });
+     window.addEventListener("resize", onMove, { passive: true });
++    sizes = new ResizeObserver(heard);
++    frame = requestAnimationFrame(hear);
+ }
+ 
+ function hide(h: Holder): void {
+@@ -115,6 +133,9 @@ function hide(h: Holder): void {
+         observer = null;
+         window.removeEventListener("scroll", onMove, true);
+         window.removeEventListener("resize", onMove);
++        cancelAnimationFrame(frame);
++        sizes?.disconnect();
++        sizes = null;
+     }
+     host.removeAttribute("data-engage-stage");
+     host.style.removeProperty("--stage-room");
