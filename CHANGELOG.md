@@ -1,6 +1,6 @@
 # Changelog
 
-## 10.1.3 — unreleased
+## 10.1.3 — 2026-10-29
 
 A patch for value.js O-110 (records: `docs/tranches/BL/audit/INBOUND.md` O-110;
 `docs/release-10.1.3/implement.md`), a regression in 10.1.2. No public API is removed
