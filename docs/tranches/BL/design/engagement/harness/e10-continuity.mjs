@@ -113,6 +113,43 @@
 //                    wheel|smooth (keyboard; recorded video from 300 ms before the drive, read against its per-pixel median, blank frames dropped;
 //                    engaged ≤ the released films' largest + one row). `--part vanish,feather,radius,place,film` runs these
 //                    alone. Plants e10-clipouter, e10-rectclip-{feather,radius,scale,film}, e10-layoutplace
+//   H9 (pass 9; REGISTRY §P8-7 items 1, 2, 3, 8; §P8-8.3 wave 1): the invariant on the ancestor kinds, paths and clocks the
+//                    pass-8 critics drove (C-E8's ce8-probe anc/trail, C-A8's ca8-probe ancestor/dlg/glidescale/feather),
+//                    each a gating cell with a fixture plant; `--part anc,dlg,trail,glide` runs them alone, `feather` the
+//                    feather cell (now two-sided):
+//   clip feather     TWO-SIDED (§P8-7 item 1): the ratio of ratios inside 1 ± 0.10 (H8's bound was the upper side only, so a
+//                    body under-painted by its mask passed: WebKit's keyboard ×0.58). Plants e10-rectclip-feather (over),
+//                    e10-featherunder (under)
+//   anc <kind> · keyboard|touch|fine   on `clip` rows: the scroller given `opacity: 0.5`, `filter: invert(1)`, `clip-path:
+//                    inset(0 45% 0 0)` or `rotate: 3deg` (or nothing: the row's own reference, REPORT); the rest box 40 px
+//                    inside it. The region is the scroller's painted box + 8 px; vis(x) = Σ|luma(x) − the region with the
+//                    control hidden| (ANC_MEASURE); the ratio vis(engaged) / vis(released 800 ms later) over the same ratio
+//                    with nothing set, two-sided ANC_K = 1 ± 0.10 (an in-place body reads 1; the clean fixture's scatter is
+//                    in ANC_SCATTER, read before the bound). A pointer is aimed at the thumb's painted centre and the line
+//                    prints what it hit. A kind whose in-place read scatters past the bound in an engine is REPORT there
+//                    (ANC_REPORT: WebKit's filter). Plant e10-ancpromote (promoted over its place with the pass-8 copy:
+//                    overflow clip, translate, scale; nothing else)
+//   dlg · esc2|scrim on rows with `dlg` (a slider inside a presented dialog plate, opened with the row's `q`): Tab from `from`
+//                    engages the slider, then the dialog is dismissed (Escape, 40 ms, Escape; a click outside the plate) and
+//                    filmed 1400 ms per frame: the effective opacity of the plate and of the slider's root (the product of
+//                    opacity up its ancestors, stopping at a top-layer element; 0 once disconnected). Bound: the root's
+//                    largest one-frame step ≤ the plate's own largest one-frame step + DLG_TOL (an in-place root fades with
+//                    its plate). NOT DRIVEN unless engaged before the dismissal and the plate faded or left. Plant
+//                    e10-dlgpromote (promoted while engaged and kept on its exit clock at opacity 1)
+//   trail · wheel-over|wheel-away|page   the place film (§P8-7 item 2; C-E8's trail with C-A8's page drive): the spacer
+//                    above the rest box painted red and the root blue; keyboard-engaged; the scroller (wheel-over, the
+//                    pointer over the control; wheel-away, over the scroller's content beside it) or the page (the pointer
+//                    outside the scroller) moved by six 8 px wheel ticks; recorded video 1:1, from FILM_LEAD before the
+//                    drive; per frame in one column through the root, the distance from the red spacer's last row to the
+//                    root's first blue row, against its own median. Three engaged and three released films. Chromium:
+//                    every engaged film's worst |Δ| ≤ the released films' worst + 1 px. WebKit: REPORT (its 25 fps film is
+//                    no one-frame witness, H8 §5; §P8-7 item 9). Plant e10-traillate (Chromium)
+//   glidescale · none|scale   C-A8's glidescale: keyboard-engaged, the scroller under `scale: 0.8` (origin 0 0) or not; a
+//                    40 px block inserted before the rest box inside the scroller (a re-render); rAF film of the root's
+//                    painted centre: the move in the insertion's frame under scale ≤ the same move unscaled + 1 px (the
+//                    glide starts where the control was painted). NOT DRIVEN unless engaged throughout and the place moved
+//                    > 10 px. Plant e10-glidescale (the glide's translate written in the painted frame's units, not its
+//                    parent's)
 // The sortable and tabs teleports are CK-05's continuity cell (E-4).
 //   node e10-continuity.mjs --build <dir> | --fixture [--fault e10-snap|e10-teleport|e10-teleportin] [--engine webkit]
 import fs from "node:fs";
@@ -129,6 +166,20 @@ const LUMA_STEP = 16, LUMA_FRAC = 0.05, REF_READS = 3, VANISH_ROWS = 3;
 // (touch) in Chromium; C-E7's unfeathered control ×1.00-1.05. 1.10 is that scatter, not C-E7's 1.25, which the pass-7
 // construction's touch arm passed at 1.16 (H8 §3)
 const FEATHER_K = 1.1;
+// H9: the two-sided form (REGISTRY §P8-7 item 1): an in-place body reads 1 from below too
+const FEATHER_LO = 0.9;
+// H9: the ancestor-kind cells (REGISTRY §P8-7 item 3). ANC_K: two-sided bound on the ratio of ratios. ANC_REPORT: the
+// (engine, kind, mode) cells where an IN-PLACE body (the clean fixture, or the library's in-place builds, which are their
+// place by construction) reads past the bound, so the read cannot tell a place defect from the engine's own paint there;
+// REPORT, each measured before the bound was set (../pass-9/H9.md §2): Chromium rotate on a pointer (the in-place held
+// fill paints paler under a rotated ancestor: ×0.79-0.81 on the in-place probe and on pass 8's fine path, the press on the
+// slider, its value unchanged), Chromium filter on a pointer (the clean fixture ×0.88), WebKit filter (the in-place probe
+// ×1.10-1.38, C-E8) and WebKit keyboard rotate (×1.11, C-E8). Every kind stays graded in each engine on some mode DLG_TOL: the dialog root's one-frame step over the plate's own. TRAIL_TOL: px over the released films' worst.
+// GLIDE_TOL: px over the unscaled glide's insertion-frame move
+const ANC_K = 0.1, ANC_INSET = 40;
+const ANC_KINDS = { opacity: { opacity: "0.5" }, filter: { filter: "invert(1)" }, clippath: { clipPath: "inset(0 45% 0 0)" }, rotate: { rotate: "3deg" } };
+const ANC_REPORT = { chromium: { rotate: ["touch", "fine"], filter: ["touch", "fine"] }, webkit: { filter: ["keyboard", "touch", "fine"], rotate: ["keyboard"] } };
+const DLG_TOL = 0.05, TRAIL_TOL = 1, GLIDE_TOL = 1;
 
 const TOL = 0.002, POS = 1, ENG = 1.03, VEIL_KEEP = 0.1;
 // H5: C-E4's stale-place step bound (px per 16.7 ms)
@@ -515,9 +566,9 @@ await witness("E-10", "CK-20 no one-frame discontinuity on an engagement path", 
       if (on.crashed || off.crashed) { cell(name, "FAIL", on.line ?? off.line); continue; }
       const vis = (x, e) => { let s = 0; for (let i = 0; i < x.o.length; i++) s += Math.abs(x.o[i] - e.o[i]); return s; };
       const ratio = (r) => vis(r.d.L, r.pre.empty) / Math.max(1, vis(r.z.L, r.pre.empty));
-      const kOn = ratio(on), kOff = ratio(off), bound = FEATHER_K * kOff;
+      const kOn = ratio(on), kOff = ratio(off), bound = FEATHER_K * kOff, lo = FEATHER_LO * kOff;
       const driven = on.d.st.eng && !on.z.st.eng && off.d.st.eng && !off.z.st.eng && !/^none/.test(on.d.mask);
-      cell(name, !driven ? "FAIL" : kOn <= bound ? "PASS" : "FAIL", `${driven ? "" : `NOT DRIVEN (engaged ${on.d.st.eng}/${off.d.st.eng}, released ${!on.z.st.eng}/${!off.z.st.eng}, mask ${on.d.mask}) · `}${mode} engaged (promoted ${on.d.st.promoted}) · the scroller's feather: ${on.d.mask} · the control 4 px inside its feathered top edge · visibility in the scroller's top 28 px, engaged over released: ×${f(kOn, 2)} feathered, ×${f(kOff, 2)} unfeathered (the grow's own gain) · ratio of ratios ${f(kOn / kOff, 2)} · bound ≤ ${FEATHER_K} × ×${f(kOff, 2)} = ×${f(bound, 2)} (an in-place body reads 1)`);
+      cell(name, !driven ? "FAIL" : kOn <= bound && kOn >= lo ? "PASS" : "FAIL", `${driven ? "" : `NOT DRIVEN (engaged ${on.d.st.eng}/${off.d.st.eng}, released ${!on.z.st.eng}/${!off.z.st.eng}, mask ${on.d.mask}) · `}${mode} engaged (promoted ${on.d.st.promoted}) · the scroller's feather: ${on.d.mask} · the control 4 px inside its feathered top edge · visibility in the scroller's top 28 px, engaged over released: ×${f(kOn, 3)} feathered, ×${f(kOff, 3)} unfeathered (the grow's own gain) · ratio of ratios ${f(kOn / kOff, 3)} · two-sided bound ${FEATHER_LO}..${FEATHER_K} × ×${f(kOff, 3)} = ×${f(lo, 3)}..×${f(bound, 3)} (an in-place body reads 1; H9: under-paint fails as over-paint does)`);
     }
 
     // the radius (C-E7's cell): the scroller rounded (border-radius 40 px, the rest box unpadded so the control's end sits in
@@ -606,6 +657,200 @@ await witness("E-10", "CK-20 no one-frame discontinuity on an engagement path", 
       const ok = engd.length === 3 && rel.length === 3 && !undriven.length;
       cell(`${name} · engaged`, !ok ? "FAIL" : bad.length ? "FAIL" : "PASS", `${ok ? "" : `NOT DRIVEN (${engd.length} engaged and ${rel.length} released films; ${undriven.length} not engaged as named or not scrolled > 20 px) · `}keyboard engaged, the scroller moved by ${drive === "wheel" ? "twelve 8 px wheel ticks" : "a smooth 90 px scrollBy"} · px² of the 24 px strip above the scroller differing ≥ 40 levels from the film's per-pixel median · engaged films: ${engd.map(lineOf).join(" | ")} · bound ≤ the released films' largest ${relMax} + one row × ${hw} px = ${bound}; ${bad.length} of ${engd.length} engaged films over it`);
       cell(`${name} · released`, "REPORT", rel.map(lineOf).join(" | "));
+    }
+
+    // ── H9: the ancestor kinds (REGISTRY §P8-7 item 3; C-E8's anc, C-A8's ancestor). The invariant names "every clip, mask,
+    // radius and transform of its ancestors"; an opacity, a filter, a clip-path and a rotation are four the pass-8 copy
+    // left out. Read on a fresh page per kind and mode; the region is the scroller's painted box + 8 px
+    if (want("anc")) {
+      const ref = {};
+      for (const mode of ["keyboard", "touch", "fine"]) for (const kind of ["none", ...Object.keys(ANC_KINDS)]) {
+        const name = `E-10 ${sc} anc ${kind} · ${mode}`;
+        const r = await guard(name, async () => {
+          const P = mode === "touch" ? await openTouchPage(E, T, sc) : await openPage(E, T, sc);
+          try {
+            if (mode === "touch" && !P.modeOk) return { mode: P.modeLine };
+            const { page } = P;
+            await hideLoupe(page, mode === "keyboard" ? "keyboard" : "touch");
+            if (kind !== "none") await page.evaluate(([b, css]) => Object.assign(document.querySelector(b).style, css), [box, ANC_KINDS[kind]]);
+            await setHid(page, -ANC_INSET); await page.waitForTimeout(150);
+            const reg = await page.evaluate((b) => { const q = document.querySelector(b).getBoundingClientRect(); return { x: q.left, y: q.top, w: q.width, h: q.height }; }, box);
+            const clip = { x: Math.max(0, Math.floor(reg.x) - 8), y: Math.max(0, Math.floor(reg.y) - 8), width: Math.ceil(reg.w) + 16, height: Math.ceil(reg.h) + 16 };
+            await page.evaluate((q) => { document.querySelector(q).style.visibility = "hidden"; }, rest); await page.waitForTimeout(100);
+            const empty = luma(await shotOf(P, clip));
+            await page.evaluate((q) => { document.querySelector(q).style.visibility = ""; }, rest); await page.waitForTimeout(150);
+            let eng = null, st = null, hit = "—";
+            const during = async () => { eng = luma(await shotOf(P, clip)); st = await stateOf(page); };
+            if (mode === "keyboard") { await page.focus('[data-sentinel="before"]'); await page.keyboard.press(tabKey(engine)); await page.waitForTimeout(600); await during(); await page.keyboard.press("Escape"); }
+            else {
+              // aimed at the thumb's painted centre (its box under every ancestor transform); the line prints what the point hits
+              const c = await center(page, thumbSel);
+              hit = await page.evaluate(([x, y, rt]) => { const e = document.elementFromPoint(x, y), h = document.querySelector(rt); return e && h && h.contains(e) ? "the slider" : `NOT the slider (${e ? (e.className || e.tagName).toString().slice(0, 40) : "nothing"})`; }, [c.x, c.y, root]);
+              if (mode === "fine") { await page.mouse.move(c.x, c.y); await page.mouse.down(); try { await page.waitForTimeout(700); await during(); } finally { await page.mouse.up(); } }
+              else await P.holdAt(c.x, c.y, [700], during);
+            }
+            await page.waitForTimeout(800);
+            const rel = luma(await shotOf(P, clip)); const z = await stateOf(page);
+            return { empty, eng, rel, st, z, hit };
+          } finally { await P.close(); }
+        }, 120000);
+        if (r.crashed) { cell(name, kind === "none" ? "REPORT" : "FAIL", r.line); continue; }
+        if (r.mode) { cell(name, "FAIL", `MODE NOT APPLIED ${r.mode}`); continue; }
+        const vis = (x) => { let s2 = 0; for (let i = 0; i < x.o.length; i++) s2 += Math.abs(x.o[i] - r.empty.o[i]); return s2; };
+        const k = vis(r.eng) / Math.max(1, vis(r.rel)); const driven = !!r.st?.eng && !r.z.eng;
+        const head = `${driven ? "" : `NOT DRIVEN (engaged ${r.st?.eng}, released ${!r.z.eng}) · `}${mode} engaged (promoted ${r.st?.promoted})${mode === "keyboard" ? "" : ` · the pointer aimed at the thumb's painted centre hit ${r.hit}`}`;
+        if (kind === "none") { ref[mode] = driven ? k : null; cell(name, driven ? "REPORT" : "FAIL", `${head} · the reference: visibility over the scroller's region engaged over released ×${f(k, 3)} (the grow's own gain)`); continue; }
+        if (!ref[mode]) { cell(name, "UNMEASURED", `${head} · no reference (anc none · ${mode} unread or not driven)`); continue; }
+        const rr = k / ref[mode]; const inBound = Math.abs(rr - 1) <= ANC_K; const rep = (ANC_REPORT[engine]?.[kind] ?? []).includes(mode);
+        cell(name, !driven ? "FAIL" : rep ? "REPORT" : inBound ? "PASS" : "FAIL", `${head} · the scroller ${Object.entries(ANC_KINDS[kind]).map(([p, v]) => `${p} ${v}`).join("")} · visibility engaged over released ×${f(k, 3)} against ×${f(ref[mode], 3)} with nothing set · ratio of ratios ${f(rr, 3)} (two-sided bound ${1 - ANC_K}..${1 + ANC_K}: an in-place body reads 1)${rep ? ` · REPORT in ${engine} ${mode}: an in-place body's ${kind} read scatters past the bound here (ANC_REPORT, ../pass-9/H9.md §2); this read is ${inBound ? "inside" : "outside"} it` : ""}`);
+      }
+    }
+
+    // ── H9: the place film (REGISTRY §P8-7 item 2): the body against its place in the same frame, on the compositor's scroll
+    // clock. The film reads PLACE (the red spacer's end to the root's top), not escape; keyboard (the touch path cannot be
+    // held across a recorded scroll in macOS WebKit). Chromium graded; WebKit REPORT
+    if (want("trail")) for (const drive of ["wheel-over", "wheel-away", "page"]) {
+      const name = `E-10 ${sc} trail · ${drive}`;
+      const spacerSel = `${box} [data-t="spacer"]`;
+      const r = await guard(name, async () => {
+        const vdir = fs.mkdtempSync(path.join(os.tmpdir(), "e10trail-"));
+        try {
+          const b = await E.nav(); const runs = [];
+          for (const mode of ["engaged", "released", "engaged", "released", "engaged", "released"]) {
+            const ctx = await b.newContext({ viewport: { width: 700, height: 500 }, deviceScaleFactor: 1, reducedMotion: "no-preference", recordVideo: { dir: vdir, size: { width: 700, height: 500 } } });
+            let page, x = null, t0 = 0;
+            try {
+              page = await ctx.newPage(); t0 = Date.now();
+              await page.addInitScript(INIT);
+              await page.goto(`${T.url}?${new URLSearchParams({ scene: sc, theme: "light" })}`);
+              await page.waitForFunction(() => window.__e && window.__e.ready === true, null, { timeout: 60000 });
+              const ground = await page.evaluate(([sp, rt, veil, tall]) => {
+                const st = document.createElement("style"); st.textContent = `${sp} { background: rgb(230, 0, 0) !important; } ${rt} { background: rgb(0, 0, 230) !important; outline: none !important; }${veil ? ` ${veil} { visibility: hidden !important; }` : ""}`; document.head.appendChild(st);
+                if (tall) document.querySelector("main").style.paddingBottom = "1600px";
+                // the ground under the column: the first opaque background up from the spacer's parent
+                for (let e = document.querySelector(sp)?.parentElement; e; e = e.parentElement) { const m2 = getComputedStyle(e).backgroundColor.match(/rgba?\(([\d.]+), ([\d.]+), ([\d.]+)(?:, ([\d.]+))?\)/); if (m2 && (m2[4] === undefined || +m2[4] > 0.9)) return [+m2[1], +m2[2], +m2[3]]; }
+                return [255, 255, 255];
+              }, [spacerSel, root, m.veil ?? null, drive === "page"]);
+              if (mode === "engaged") { await page.focus('[data-sentinel="before"]'); await page.keyboard.press(tabKey(engine)); await page.waitForTimeout(600); }
+              await setHid(page, -92); await page.waitForTimeout(500);
+              const g = await page.evaluate(([B, R]) => { const q = document.querySelector(B).getBoundingClientRect(), h = document.querySelector(R).getBoundingClientRect(); return { bl: q.left, bt: q.top, br: q.right, bb: q.bottom, rl: h.left, rc: h.left + h.width / 2, rm: h.top + h.height / 2 }; }, [box, root]);
+              const st0 = await stateOf(page); const s0 = await page.evaluate((B) => [document.querySelector(B).scrollTop, scrollY], box);
+              const lead = Math.max(0, Date.now() - t0 - FILM_LEAD);
+              const at = drive === "wheel-over" ? { x: g.rc + 40, y: g.rm } : drive === "wheel-away" ? { x: g.bl + 8, y: g.bb - 6 } : { x: 620, y: 420 };
+              await page.mouse.move(at.x, at.y); for (let k = 0; k < 6; k++) { await page.mouse.wheel(0, 8); await page.waitForTimeout(16); }
+              await page.waitForTimeout(700);
+              const s1 = await page.evaluate((B) => [document.querySelector(B).scrollTop, scrollY], box); const st1 = await stateOf(page);
+              x = { mode, g, st0, st1, moved: drive === "page" ? s1[1] - s0[1] : s1[0] - s0[0], lead, ground };
+            } finally { const v = page?.video(); await ctx.close(); if (x && v) { x.video = await v.path(); runs.push(x); } }
+          }
+          const out = [];
+          for (const x of runs) {
+            const cx = Math.round(x.g.rl + 12), y0 = Math.max(0, Math.floor(x.g.bt) - 70), Hh = Math.min(500 - y0, 2 * Math.ceil((x.g.bb - x.g.bt + 80) / 2));
+            const raw = execFileSync("ffmpeg", ["-v", "error", "-i", x.video, "-ss", `${x.lead / 1000}`, "-vf", `crop=2:${Hh}:${cx}:${y0}`, "-pix_fmt", "rgb24", "-f", "rawvideo", "-"], { maxBuffer: 1 << 28 });
+            const N = Math.floor(raw.length / (Hh * 6)); const d = []; const [gr, gg, gb] = x.ground;
+            for (let k = 0; k < N; k++) {
+              const fr = raw.subarray(k * Hh * 6, (k + 1) * Hh * 6); const px = (y) => [fr[y * 6], fr[y * 6 + 1], fr[y * 6 + 2]];
+              const red = (y) => { const [R, G, B] = px(y); return R > 150 && G < 90 && B < 90; };
+              const other = (y) => { const [R, G, B] = px(y); return !red(y) && Math.abs(R - gr) + Math.abs(G - gg) + Math.abs(B - gb) > 40; };
+              let rEnd = -1, bTop = -1;
+              for (let y = 0; y < Hh; y++) if (red(y)) rEnd = y;
+              for (let y = Math.max(0, rEnd + 1); y < Hh; y++) if (other(y)) { bTop = y; break; }
+              if (rEnd >= 0 && rEnd < Hh - 2 && bTop > rEnd) d.push({ k, dist: bTop - rEnd, rEnd });
+            }
+            const sorted = d.map((q) => q.dist).sort((p, q) => p - q); const med = sorted.length ? sorted[sorted.length >> 1] : NaN;
+            const worst = d.length ? Math.max(...d.map((q) => Math.abs(q.dist - med))) : NaN;
+            const moving = d.filter((q, i) => i && q.rEnd !== d[i - 1].rEnd).length;
+            out.push({ mode: x.mode, n: N, found: d.length, med, worst, at: d.filter((q) => Math.abs(q.dist - med) > TRAIL_TOL).map((q) => `${q.k}:${q.dist - med}`).slice(0, 10), moving, eng0: x.st0.eng, eng1: x.st1.eng, prom0: x.st0.promoted, moved: x.moved });
+          }
+          return { out };
+        } finally { fs.rmSync(vdir, { recursive: true, force: true }); }
+      }, 480000);
+      if (r.crashed) { cell(`${name} · engaged`, engine === "webkit" ? "REPORT" : "FAIL", r.line); continue; }
+      const engd = r.out.filter((x) => x.mode === "engaged"), rel = r.out.filter((x) => x.mode === "released");
+      const relWorst = Math.max(0, ...rel.map((x) => (Number.isFinite(x.worst) ? x.worst : 0))), bound = relWorst + TRAIL_TOL;
+      const undriven = engd.filter((x) => !x.eng0 || !x.eng1 || !(Math.abs(x.moved) > 20) || x.moving < 2 || !Number.isFinite(x.worst)).length + rel.filter((x) => x.eng0 || !(Math.abs(x.moved) > 20) || !Number.isFinite(x.worst)).length;
+      const bad = engd.filter((x) => x.worst > bound);
+      const lineOf = (x) => `${x.found} of ${x.n} frames read (${x.moving} with the spacer moving), distance median ${x.med} px, worst ${x.worst} px off${x.at.length ? ` (frame:Δ ${x.at.join(" ")})` : ""}, scrolled ${f(x.moved, 0)} px${x.mode === "engaged" ? `, promoted ${x.prom0}` : ""}`;
+      const ok = engd.length === 3 && rel.length === 3 && !undriven;
+      cell(`${name} · engaged`, engine === "webkit" ? "REPORT" : !ok ? "FAIL" : bad.length ? "FAIL" : "PASS", `${ok ? "" : `NOT DRIVEN (${engd.length} engaged and ${rel.length} released films; ${undriven} not engaged or released as named, not scrolled > 20 px, or unread) · `}keyboard engaged, ${drive === "wheel-over" ? "the scroller wheeled with the pointer over the control" : drive === "wheel-away" ? "the scroller wheeled with the pointer over its content beside the control" : "the page wheeled with the pointer outside the scroller"} (6 × 8 px) · per film frame, the red spacer's last row to the root's first row, against its median · engaged: ${engd.map(lineOf).join(" | ")} · bound ≤ the released films' worst ${relWorst} + ${TRAIL_TOL} = ${bound} px; ${bad.length} of ${engd.length} engaged films over it${engine === "webkit" ? " · REPORT in WebKit (its 25 fps film is no one-frame witness: H8 §5, REGISTRY §P8-7 item 9)" : ""}`);
+      cell(`${name} · released`, "REPORT", rel.map(lineOf).join(" | "));
+    }
+
+    // ── H9: the re-render glide under a scaled ancestor (REGISTRY §P8-7 item 8; C-A8's glidescale) ──
+    if (want("glide")) {
+      let g0 = null;
+      for (const [tag, css] of [["none", {}], ["scale", { scale: "0.8", transformOrigin: "0 0" }]]) {
+        const name = `E-10 ${sc} glidescale · ${tag}`;
+        const r = await guard(name, async () => {
+          const P = await openPage(E, T, sc);
+          try {
+            const { page } = P;
+            await hideLoupe(page, "keyboard");
+            await page.evaluate(([b, css]) => Object.assign(document.querySelector(b).style, css), [box, css]);
+            await setHid(page, -60); await page.waitForTimeout(100);
+            await page.focus('[data-sentinel="before"]'); await page.keyboard.press(tabKey(engine)); await page.waitForTimeout(600);
+            const s0 = await stateOf(page);
+            const out = await page.evaluate(([rt, rs]) => new Promise((ok) => {
+              const fr = []; const t0 = performance.now(); const h = document.querySelector(rt); let ins = -1, k = 0;
+              const tick = () => {
+                const q = h.getBoundingClientRect(); fr.push({ t: performance.now() - t0, cx: q.left + q.width / 2, cy: q.top + q.height / 2 });
+                if (++k === 6) { const d = document.createElement("div"); d.style.height = "40px"; d.setAttribute("data-t", "h9-inserted"); document.querySelector(rs).before(d); ins = fr.length; }
+                if (performance.now() - t0 < 900) requestAnimationFrame(tick); else ok({ fr, ins });
+              };
+              requestAnimationFrame(tick);
+            }), [root, rest]);
+            return { ...out, s0, s1: await stateOf(page) };
+          } finally { await P.close(); }
+        }, 90000);
+        if (r.crashed) { cell(name, tag === "none" ? "REPORT" : "FAIL", r.line); continue; }
+        const { fr, ins } = r; const before = fr[ins - 1], after = fr[ins];
+        const jump = before && after ? Math.hypot(after.cx - before.cx, after.cy - before.cy) : NaN;
+        let mv = 0; for (let k = ins + 1; k < fr.length; k++) mv = Math.max(mv, perFrame(Math.hypot(fr[k].cx - fr[k - 1].cx, fr[k].cy - fr[k - 1].cy), fr[k].t - fr[k - 1].t));
+        const placeMoved = before ? Math.abs(fr.at(-1).cy - before.cy) : 0;
+        const driven = r.s0.eng && r.s1.eng && placeMoved > 10 && Number.isFinite(jump);
+        if (tag === "none") { g0 = driven ? jump : null; cell(name, driven ? "REPORT" : "FAIL", `${driven ? "" : `NOT DRIVEN (engaged ${r.s0.eng}/${r.s1.eng}, place moved ${f(placeMoved, 1)} px) · `}keyboard engaged (promoted ${r.s0.promoted}), the scroller untransformed (the reference) · a 40 px block inserted before the rest box: the root's painted centre moved ${f(jump, 2)} px in the insertion's frame, then at most ${f(mv, 2)} px per 16.7 ms; the place moved ${f(placeMoved, 1)} px`); continue; }
+        if (g0 == null) { cell(name, "UNMEASURED", `no reference (glidescale · none unread or not driven) · the insertion-frame move ${f(jump, 2)} px`); continue; }
+        cell(name, !driven ? "FAIL" : jump <= g0 + GLIDE_TOL ? "PASS" : "FAIL", `${driven ? "" : `NOT DRIVEN (engaged ${r.s0.eng}/${r.s1.eng}, place moved ${f(placeMoved, 1)} px) · `}keyboard engaged (promoted ${r.s0.promoted}), the scroller under scale 0.8 (origin 0 0) · a 40 px block inserted before the rest box (a re-render): the root's painted centre moved ${f(jump, 2)} px in the insertion's frame (bound ≤ the unscaled reference's ${f(g0, 2)} + ${GLIDE_TOL} px: the glide starts where the control was painted), then at most ${f(mv, 2)} px per 16.7 ms; the place moved ${f(placeMoved, 1)} px`);
+      }
+    }
+  }
+
+  // ── H9: the presented dialog dismissed under a keyboard-engaged control (REGISTRY §P8-7 item 3; C-A8's dlg). On rows with
+  // `dlg` (any row: the scene app's presented Dialog opened with its `q`, the slider in the plate) ──
+  const effOpFilm = ([rootSel, plateSel, ms]) => new Promise((ok) => {
+    const host = document.querySelector(rootSel), plate = document.querySelector(plateSel);
+    // the opacity a body paints with: the product up its ancestors, stopping at a top-layer element (its DOM ancestors'
+    // opacity does not reach it); 0 once it leaves the document or is hidden
+    const eff = (el) => { if (!el || !el.isConnected) return 0; if (getComputedStyle(el).visibility === "hidden") return 0; let o = 1; for (let e = el; e && e.nodeType === 1; e = e.parentElement) { o *= +getComputedStyle(e).opacity; if (e !== document.documentElement && e.matches(":popover-open, :modal")) break; } return o; };
+    const fr = []; const t0 = performance.now();
+    const tick = () => { fr.push({ t: performance.now() - t0, h: eff(host), p: eff(plate), prom: !!host?.isConnected && host.matches(":popover-open") }); if (performance.now() - t0 < ms) requestAnimationFrame(tick); else ok(fr); };
+    requestAnimationFrame(tick);
+  });
+  for (const [sc, m] of want("dlg") ? Object.entries(idx).filter(([, x]) => x.dlg) : []) {
+    const D = m.dlg; const engSel = D.engaged ?? "[data-engaged]";
+    for (const drive of ["esc2", "scrim"]) {
+      const name = `E-10 ${sc} dlg · ${drive}`;
+      const r = await guard(name, async () => {
+        const P = await openPage(E, T, sc, { q: D.q ?? {} });
+        try {
+          const { page } = P;
+          if (!(await page.$(D.root))) return { absent: true };
+          await page.focus(D.from); await page.keyboard.press(tabKey(engine)); await page.waitForTimeout(700);
+          const s0 = await page.evaluate(([r2, e]) => { const h = document.querySelector(r2); return { eng: h.matches(e), promoted: h.matches(":popover-open") }; }, [D.root, engSel]);
+          const film = page.evaluate(effOpFilm, [D.root, D.plate, 1400]);
+          await page.waitForTimeout(50);
+          if (drive === "esc2") { await page.keyboard.press("Escape"); await page.waitForTimeout(40); await page.keyboard.press("Escape"); }
+          else await page.mouse.click(12, 12);
+          return { s0, fr: await film };
+        } finally { await P.close(); }
+      }, 120000);
+      if (r.crashed) { cell(name, "FAIL", r.line); continue; }
+      if (r.absent) { cell(name, "FAIL", `NOT DRIVEN: the scene renders no ${D.root} with ${JSON.stringify(D.q ?? {})}`); continue; }
+      const fr = r.fr; let hs = 0, hsAt = NaN, ps = 0, mis = 0, prom = 0;
+      for (let k = 1; k < fr.length; k++) { const a1 = Math.abs(fr[k].h - fr[k - 1].h), b1 = Math.abs(fr[k].p - fr[k - 1].p); if (a1 > hs) { hs = a1; hsAt = fr[k].t; } ps = Math.max(ps, b1); }
+      for (const x of fr) { mis = Math.max(mis, Math.abs(x.h - x.p)); if (x.prom) prom++; }
+      const faded = fr.some((x) => x.p < 0.9); const driven = r.s0.eng && faded;
+      cell(name, !driven ? "FAIL" : hs <= ps + DLG_TOL ? "PASS" : "FAIL", `${driven ? "" : `NOT DRIVEN (engaged before the dismissal ${r.s0.eng}, the plate faded ${faded}) · `}a slider in the presented plate, keyboard-engaged (promoted ${r.s0.promoted}), the dialog dismissed by ${drive === "esc2" ? "Escape, 40 ms, Escape" : "a click outside the plate"} · ${fr.length} frames (the root promoted on ${prom}): the root's effective opacity's largest one-frame step ${f(hs, 3)}${Number.isFinite(hsAt) ? ` at +${f(hsAt, 0)} ms` : ""} against the plate's own ${f(ps, 3)} (bound ≤ the plate's + ${DLG_TOL}: an in-place body fades with its plate) · largest root-over-plate mismatch ${f(mis, 3)} (printed)`);
     }
   }
   // ── H7: the rebound re-pointed to O-103d (1): the pop's reverse (REPORT) and the instant reverse under reduce (graded) ──

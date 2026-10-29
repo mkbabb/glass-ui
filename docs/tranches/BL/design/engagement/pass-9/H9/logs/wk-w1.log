@@ -1,0 +1,38 @@
+[guarded] waiting for the 'webkit' lock
+# 2026-10-29 17:38:06 WebKit lock acquired (w1) · load { 10.01 7.90 7.81 }
+# 17:38:06 waited 0 s for this seat's running Chromium stage
+## 17:38:06 [1] st-E-10 webkit  · load { 10.09 7.95 7.83 }
+selftest: 28 runs, 1 N/A; every witness passes its fixture, fails each planted violation on the planted cell, and passes each control, in every engine with an input for it
+# selftest exit 0 · 18:07:03 · load { 11.54 12.26 10.88 }
+## 18:07:03 [2] st-E-13 webkit  · load { 11.54 12.26 10.88 }
+selftest: 5 runs, 0 N/A; every witness passes its fixture, fails each planted violation on the planted cell, and passes each control, in every engine with an input for it
+# selftest exit 0 · 18:11:39 · load { 12.86 10.46 10.24 }
+## 18:11:39 [3] e10-cand8 webkit  · load { 12.86 10.46 10.24 }
+E-10 webkit FAIL · 4 pass, 9 fail, 0 unmeasured of 13 gating cells (14 reported) · load 12.9/10.5/10.2 at start, 10.8/10.4/10.3 at end
+# exit 1 · 18:13:36 · load { 10.82 10.43 10.25 }
+## 18:13:36 [4] e10-probe webkit  · load { 10.82 10.43 10.25 }
+E-10 webkit PASS · 13 pass, 0 fail, 0 unmeasured of 13 gating cells (14 reported) · load 10.8/10.4/10.3 at start, 5.9/8.9/9.7 at end
+# exit 0 · 18:15:32 · load { 5.91 8.89 9.68 }
+## 18:15:32 [5] e10-probeloop webkit  · load { 5.91 8.89 9.68 }
+E-10 webkit PASS · 13 pass, 0 fail, 0 unmeasured of 13 gating cells (14 reported) · load 7.1/9.1/9.7 at start, 5.2/7.9/9.2 at end
+# exit 0 · 18:17:28 · load { 5.20 7.93 9.21 }
+## 18:17:28 [6] e13-cand8 webkit  · load { 5.20 7.93 9.21 }
+E-13 webkit FAIL · 12 pass, 4 fail, 0 unmeasured of 16 gating cells (2 reported) · load 5.2/7.9/9.2 at start, 4.6/7.3/8.9 at end
+# exit 1 · 18:18:25 · load { 4.60 7.26 8.88 }
+## 18:18:25 [7] e13-probe webkit  · load { 4.60 7.26 8.88 }
+E-13 webkit FAIL · 12 pass, 4 fail, 0 unmeasured of 16 gating cells (2 reported) · load 4.6/7.3/8.9 at start, 4.8/6.8/8.6 at end
+# exit 1 · 18:19:23 · load { 4.80 6.78 8.58 }
+## 18:19:23 [8] e13-probeloop webkit  · load { 4.80 6.78 8.58 }
+E-13 webkit FAIL · 12 pass, 4 fail, 0 unmeasured of 16 gating cells (2 reported) · load 4.8/6.8/8.6 at start, 5.1/6.7/8.4 at end
+# exit 1 · 18:20:24 · load { 5.15 6.69 8.43 }
+## 18:20:24 [9] e10-head webkit  · load { 5.15 6.69 8.43 }
+E-10 webkit FAIL · 0 pass, 8 fail, 13 unmeasured of 21 gating cells (6 reported) · load 5.1/6.7/8.4 at start, 5.9/6.9/8.3 at end
+# exit 1 · 18:22:20 · load { 5.92 6.92 8.34 }
+## 18:22:20 [10] e13-head webkit  · load { 5.92 6.92 8.34 }
+E-13 webkit FAIL · 8 pass, 8 fail, 0 unmeasured of 16 gating cells (2 reported) · load 5.9/6.9/8.3 at start, 7.9/7.2/8.4 at end
+# exit 1 · 18:23:18 · load { 7.87 7.24 8.35 }
+## 18:23:18 [11] clean webkit  · load { 7.87 7.24 8.35 }
+CAP webkit PASS · 4 pass, 0 fail, 0 unmeasured of 4 gating cells (0 reported) · load 11.3/8.9/8.4 at start, 10.7/8.9/8.4 at end
+# exit 0 · 18:34:11 · load { 10.73 8.88 8.39 }
+# 18:34:11 END after 11 stages
+# 2026-10-29 18:34:11 WebKit acquisition (w1) end · load { 10.73 8.88 8.39 }

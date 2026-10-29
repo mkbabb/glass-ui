@@ -20,6 +20,18 @@
 //                    opacity > 0.9: the lens paints whole wherever its control sits. The row's `veil` is hidden (a page-wide
 //                    paint, not the lens). The geometry (how much of the lens
 //                    lies above the scroller's clip edge) is printed. Plant `e13-loupecut` (the lens rides inside the box)
+//   H9 (pass 9; REGISTRY §P8-7 item 5, C-E8's ce8-probe loupe cells; CK-25 "the loupe carries its track's painted transform
+//                    and paints whole at the viewport's top"), on loupe rows WITH a `clip`:
+//   loupe place · none|translate|scale · <pointer>   the scroller under `translate: 0 30px`, `scale: 0.8` (origin 0 0) or
+//                    neither, the rest box 50 px inside it, a hold sustained 1200 ms: k = the band (the clone's painted
+//                    height) over the held track's painted height within ±5 % of --loupe-k-max; the lens's centre at the
+//                    same fraction along the painted track as untransformed (Δ × the painted track's width ≤ 2 px); its
+//                    bottom's distance to the track's painted top within 2 px of the untransformed one; opacity > 0.9.
+//                    Plant `e13-loupeplace` (the lens without its ancestors' scale)
+//   loupe viewport · <pointer>   the scroller moved to the viewport's top (its edge 2 px below it), the rest box 4 px below
+//                    the scroller's edge: the lens's painted rows (inside the viewport; a row above it is unpainted) over
+//                    all its rows ≥ the unclipped reference's fraction − 0.05, opacity > 0.9; the lens's extent above the
+//                    viewport printed. Plant `e13-loupeviewport` (no fallback at the root scroller's edge)
 // Light theme for the whole cells; the k max cells light and dark. Real Safari: UNMEASURED (owner's safaridriver checkbox).
 //   node e13-loupe.mjs --build <dir> | --fixture [--fault e13-loupecut] [--engine webkit] [--frames <dir>]
 import fs from "node:fs";
@@ -30,6 +42,7 @@ const lumaOf = (buf) => { const p = PNG.sync.read(buf); const o = new Float32Arr
   const px = (x, y) => { const i = (Math.round(y) * p.width + Math.round(x)) * 4; return [p.data[i], p.data[i + 1], p.data[i + 2]]; };
   const cd = (x0, y0, x1, y1) => { const u = px(x0, y0), v = px(x1, y1); return Math.hypot(u[0] - v[0], u[1] - v[1], u[2] - v[2]); };
   return { w: p.width, h: p.height, o, at: (x, y) => o[Math.round(y) * p.width + Math.round(x)], cd }; };
+const PLACE = 2;
 const HOLD = 1200, KTOL = 0.05, REG = 2, SEAM = 6, LINE = 6, RUNS = 0.35, ROW_PX = 3, ROW_LEVELS = 8, WHOLE_TOL = 0.05;
 
 await witness("E-13", "CK-25 the loupe: k max, registration, seam, line, run-on; painted whole at a scroller's edge", async ({ a, E, T, cell, guard, idx, engine }) => {
@@ -128,6 +141,68 @@ await witness("E-13", "CK-25 the loupe: k max, registration, seam, line, run-on;
       const above = r.g.edge == null ? 0 : Math.max(0, Math.min(r.g.lens.y + r.g.lens.h, r.g.edge) - r.g.lens.y);
       const bound = refR.frac - WHOLE_TOL; const ok = r.frac >= bound && r.g.lens.op > 0.9;
       cell(name, ok ? "PASS" : "FAIL", `${pointer} hold, the rest box ${where === "edge" ? "4 px below its scroller's top edge" : "mid-box"} · ${r.painted} of ${r.rowsN} lens rows painted (${f(r.frac * 100, 1)} %; a row is painted when ≥ ${ROW_PX} of its pixels differ ≥ ${ROW_LEVELS} levels held against released) · bound ≥ the unclipped reference's ${f(refR.frac * 100, 1)} % − ${WHOLE_TOL * 100} = ${f(bound * 100, 1)} %, opacity ${f(r.g.lens.op, 2)} (> 0.9) · geometry: the lens ${f(r.g.lens.y, 1)}..${f(r.g.lens.y + r.g.lens.h, 1)} px, the scroller's clip edge at ${f(r.g.edge, 1)} px: ${f(above, 1)} of ${f(r.g.lens.h, 1)} px of the lens lie above it`);
+    }
+    // ── H9: the lens at the VIEWPORT's top (the root scroller's edge): every build of pass 8 drew 90-92 % of it above ──
+    for (const [sc, m] of clipRows) {
+      const name = `E-13 ${sc} loupe viewport · ${pointer}`;
+      const r = await guard(name, async () => {
+        const P = await open(sc, pointer, "light");
+        try {
+          if (pointer === "coarse" && !P.modeOk) return { mode: P.modeLine };
+          if (m.veil) await P.page.evaluate((v) => { const st = document.createElement("style"); st.textContent = `${v} { visibility: hidden !important; }`; document.head.appendChild(st); }, m.veil);
+          await P.page.evaluate(([B, Q]) => { const b = document.querySelector(B); const y = b.getBoundingClientRect().top; document.body.style.marginTop = `${-(y - 2)}px`; const q = document.querySelector(Q); const br = b.getBoundingClientRect(), rr = q.getBoundingClientRect(); b.scrollTop += rr.top - (br.top + b.clientTop + 4); }, [m.clip.box, m.clip.rest]);
+          await P.page.waitForTimeout(200);
+          const geo = () => P.page.evaluate(([L, B]) => { const lens = document.querySelector(L.lens); const l = lens?.getBoundingClientRect(); return { lens: l && l.width > 0 ? { x: l.left, y: l.top, w: l.width, h: l.height, op: +getComputedStyle(lens).opacity } : null, edge: document.querySelector(B).getBoundingClientRect().top }; }, [m.loupe, m.clip.box]);
+          const h = await held(P, m, pointer, async () => { const g = await geo(); if (!g.lens) return { g }; const y0 = Math.max(0, Math.floor(g.lens.y) - 2), y1 = Math.min(500, Math.ceil(g.lens.y + g.lens.h) + 2); if (y1 - y0 < 4) return { g, none: true }; const clip = { x: Math.max(0, Math.floor(g.lens.x) - 2), y: y0, width: Math.ceil(g.lens.w) + 4, height: y1 - y0 }; const buf = await shotOf(P, clip); return { g, clip, buf, Lh: lumaOf(buf) }; });
+          if (!h.g.lens) return { none: true, g: h.g };
+          if (h.none) return { g: h.g, frac: 0, painted: 0, rowsN: Math.round(h.g.lens.h) };
+          await P.page.waitForTimeout(900);
+          const Lr = lumaOf(await shotOf(P, h.clip));
+          // rows of the lens box inside the viewport that paint; the rows above the viewport count as unpainted
+          const top = h.g.lens.y, rowsN = Math.round(h.g.lens.h); let painted = 0;
+          for (let y = 0; y < h.clip.height; y++) { const vy = h.clip.y + y; if (vy < top || vy >= top + h.g.lens.h) continue; let n = 0; for (let x = 0; x < h.clip.width; x++) { const i = y * h.clip.width + x; if (Math.abs(h.Lh.o[i] - Lr.o[i]) >= ROW_LEVELS) n++; } if (n >= ROW_PX) painted++; }
+          return { g: h.g, frac: painted / rowsN, painted, rowsN, buf: h.buf };
+        } finally { await P.close(); }
+      }, 90000);
+      if (r.crashed) { cell(name, "FAIL", r.line); continue; }
+      if (r.mode) { cell(name, "FAIL", `MODE NOT APPLIED ${r.mode}`); continue; }
+      if (r.none && !r.g?.lens) { cell(name, "FAIL", `NO LOUPE: the held slider renders no ${m.loupe.lens} box`); continue; }
+      if (!refOk) { cell(name, "UNMEASURED", `no unclipped reference · ${r.painted} of ${r.rowsN} lens rows painted`); continue; }
+      if (frames && r.buf) fs.writeFileSync(path.join(frames, `e13-${engine}-${sc}-viewport-${pointer}-loupe.png`), r.buf);
+      const above = Math.max(0, Math.min(r.g.lens.h, -r.g.lens.y)); const bound = refR.frac - WHOLE_TOL; const ok = r.frac >= bound && r.g.lens.op > 0.9;
+      cell(name, ok ? "PASS" : "FAIL", `${pointer} hold, the scroller's top edge at ${f(r.g.edge, 1)} px (the viewport's top), the rest box 4 px below it · ${r.painted} of ${r.rowsN} lens rows painted (${f(r.frac * 100, 1)} %; a row above the viewport is unpainted) · bound ≥ the unclipped reference's ${f(refR.frac * 100, 1)} % − ${WHOLE_TOL * 100} = ${f(bound * 100, 1)} %, opacity ${f(r.g.lens.op, 2)} (> 0.9) · the lens ${f(r.g.lens.y, 1)}..${f(r.g.lens.y + r.g.lens.h, 1)} px: ${f(above, 1)} px above the viewport`);
+    }
+    // ── H9: the lens under an ancestor transform (C-E8's loupe place): it carries its track's painted transform ──
+    for (const [sc, m] of clipRows) {
+      let base = null;
+      for (const [tf, css] of [["none", {}], ["translate", { translate: "0 30px" }], ["scale", { scale: "0.8", transformOrigin: "0 0" }]]) {
+        const name = `E-13 ${sc} loupe place · ${tf} · ${pointer}`;
+        const r = await guard(name, async () => {
+          const P = await open(sc, pointer, "light");
+          try {
+            if (pointer === "coarse" && !P.modeOk) return { mode: P.modeLine };
+            if (m.veil) await P.page.evaluate((v) => { const st = document.createElement("style"); st.textContent = `${v} { visibility: hidden !important; }`; document.head.appendChild(st); }, m.veil);
+            await P.page.evaluate(([B, Q, css]) => { const b = document.querySelector(B); Object.assign(b.style, css); const q = document.querySelector(Q); const br = b.getBoundingClientRect(), k = br.height / b.offsetHeight, rr = q.getBoundingClientRect(); b.scrollTop += (rr.top - (br.top + b.clientTop * k + 50)) / k; }, [m.clip.box, m.clip.rest, css]);
+            await P.page.waitForTimeout(200);
+            let buf = null;
+            const g = await held(P, m, pointer, async () => {
+              const x = await P.page.evaluate((L) => { const l = document.querySelector(L.lens), c = l?.querySelector(L.clone), t = document.querySelector(L.track); if (!l || !c || !t) return null; const a1 = l.getBoundingClientRect(), b1 = c.getBoundingClientRect(), d = t.getBoundingClientRect(); if (!(a1.width > 0)) return null; return { lx: a1.left + a1.width / 2, lt: a1.top, lb: a1.bottom, lh: a1.height, band: b1.height, tl: d.left, tw: d.width, tt: d.top, th: d.height, kmax: Number.parseFloat(getComputedStyle(l).getPropertyValue("--loupe-k-max")), op: +getComputedStyle(l).opacity }; }, m.loupe);
+              if (x && frames) buf = await shotOf(P, { x: Math.max(0, Math.floor(Math.min(x.lx - 90, x.tl)) - 4), y: Math.max(0, Math.floor(x.lt) - 10), width: Math.min(560, Math.ceil(Math.max(x.tw, 180)) + 8), height: Math.min(300, Math.ceil(x.tt + x.th - x.lt) + 30) });
+              return x;
+            });
+            return { g, buf };
+          } finally { await P.close(); }
+        }, 90000);
+        if (r.crashed) { cell(name, "FAIL", r.line); continue; }
+        if (r.mode) { cell(name, "FAIL", `MODE NOT APPLIED ${r.mode}`); continue; }
+        if (!r.g) { cell(name, "FAIL", `NO LOUPE: the held slider renders no ${m.loupe.lens} with its ${m.loupe.clone} and ${m.loupe.track}`); continue; }
+        if (frames && r.buf) fs.writeFileSync(path.join(frames, `e13-${engine}-${sc}-place-${tf}-${pointer}-loupe.png`), r.buf);
+        const g = r.g; const u = (g.lx - g.tl) / g.tw, dy = g.lb - g.tt, k = g.band / g.th;
+        if (tf === "none") base = { u, dy };
+        const du = base ? (u - base.u) * g.tw : NaN, ddy = base ? dy - base.dy : NaN;
+        const kOk = Math.abs(k / g.kmax - 1) <= KTOL; const ok = base && Math.abs(du) <= PLACE && Math.abs(ddy) <= PLACE && kOk && g.op > 0.9;
+        cell(name, ok ? "PASS" : "FAIL", `${pointer} hold sustained ${HOLD} ms · the scroller ${tf === "none" ? "untransformed (the reference)" : Object.entries(css).map(([p2, v]) => `${p2} ${v}`).join(", ")} · band ${f(g.band, 1)} px over the held track's painted ${f(g.th, 1)} px = ×${f(k, 3)} (k max ${f(g.kmax, 2)} ± ${KTOL * 100} %) · the lens's centre at ${f(u * 100, 1)} % along the painted track (Δ against untransformed ${f(du, 1)} px, ≤ ${PLACE}) · its bottom ${f(dy, 1)} px from the track's painted top (Δ ${f(ddy, 1)} px, ≤ ${PLACE}) · lens ${f(g.lh, 1)} px tall, opacity ${f(g.op, 2)}`);
+      }
     }
   }
 });

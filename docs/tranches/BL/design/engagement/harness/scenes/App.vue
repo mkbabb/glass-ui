@@ -72,6 +72,9 @@ const qs = new URLSearchParams(location.search);
 const scene = qs.get("scene") ?? "__index";
 const on = qs.get("on") === "1";
 const phone = qs.get("phone") === "1";
+// H9 (CK-20, C-A8's dlg): `&slider=1` puts one Slider in the presented Dialog (E-10's dlg cells); without it the
+// presented scene renders byte for byte as before, so E-1, E-9, E-11 and E-12 read it unchanged
+const dlgSlider = qs.get("slider") === "1";
 const mounted = ref(qs.get("defer") !== "1");
 
 const COMMIT = ["E-2", "E-8", "E-9"];
@@ -129,7 +132,9 @@ const INDEX: Record<string, Record<string, unknown>> = {
   // reads every member some scene renders)
   passive: { gates: [], target: '[data-t="sep"]' },
   // H6 (CK-10 × O-100 R-1): `fade` names the presented plate and its scrim; E-9 dismisses and presents it under reduce
-  presented: { gates: [], target: '[role="dialog"] .button', modal: '[role="dialog"]', fade: { plate: '[role="dialog"]', scrim: ".bg-overlay-scrim" } },
+  // H9 (CK-20): `dlg` names E-10's Dialog cells on this scene, opened with `q` (the Slider in the plate): the slider is
+  // keyboard-engaged by Tab from `from`, then the Dialog is dismissed (Escape, 40 ms, Escape; a click outside the plate)
+  presented: { gates: [], target: '[role="dialog"] .button', modal: '[role="dialog"]', fade: { plate: '[role="dialog"]', scrim: ".bg-overlay-scrim" }, dlg: { q: { slider: "1" }, plate: '[role="dialog"]', from: '[role="dialog"] .button', root: '[data-t="dlg-slider"] .glass-slider', thumb: '[data-t="dlg-slider"] [role="slider"]', engaged: "[data-engaged]" } },
   field: { gates: [], target: 'input[data-t="field"]' },
   ambient: { gates: [], target: '[data-t="ambient"]' },
   gallery: { gates: [] },
@@ -344,7 +349,7 @@ onMounted(async () => {
       </ToggleGroup>
       <div v-else-if="scene === 'passive'" style="width:320px;display:grid;gap:16px"><Separator data-t="sep" /><Skeleton data-t="skel" style="height:24px" /></div>
       <Dialog v-else-if="scene === 'presented'" v-model:open="open">
-        <DialogContent><DialogTitle>Probe</DialogTitle><p>Body</p><Button @click="clicks++">Act</Button></DialogContent>
+        <DialogContent><DialogTitle>Probe</DialogTitle><p>Body</p><Button @click="clicks++">Act</Button><div v-if="dlgSlider" data-t="dlg-slider" style="width:320px;padding:16px 0"><Slider v-model="v" :min="0" :max="100" aria-label="Probe D" /></div></DialogContent>
       </Dialog>
       <div v-else-if="scene === 'field'" style="width:320px"><Input v-model="txt" aria-label="Probe" data-t="field" /></div>
       <div v-else-if="scene === 'ambient'" data-t="ambient" style="width:420px;height:240px;position:relative;overflow:hidden;border-radius:16px"><Safe><Aurora /></Safe></div>

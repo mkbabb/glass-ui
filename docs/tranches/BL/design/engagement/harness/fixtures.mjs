@@ -177,6 +177,14 @@ export const FAULTS = {
   "e12-chipfaint": { why: "CK-27 (H8, C-A7's chipfaint): the chip's hover changes its background-color by a fraction of a level (a property changes, no pixel an eye sees): the hover clause must read paint", witnesses: ["E-12"], cell: /fx chip answers/ },
   "e13-loupecut": { why: "CK-25 (H8, C-A7's cliploupe): the loupe rides inside the control's box, so its scroller clips it: at the scroller's top edge the lens is cut", witnesses: ["E-13"], cell: /clipstale loupe whole · edge/ },
   "e13-loupemark": { why: "CK-25 (H8, P-E7's loupe6): a 2 px mark drawn across the window's centre and no end fade: a seam, a line over glass, a band that ends on the window's pill end", witnesses: ["E-13"], cell: /slider loupe k max/ },
+  // ── H9 (pass 9): a plant per new cell (REGISTRY §P8-8.3 wave 1, §P8-7 items 1, 2, 3, 5, 8) ──
+  "e10-featherunder": { why: "CK-20 (H9, REGISTRY §P8-7 item 1; P-E8's WebKit keyboard feather ×0.58): the engaged slider under its scroller's feather paints at about half strength (a second mask on its own box): the two-sided feather cell must fail from below", witnesses: ["E-10"], cell: /clipstale clip feather · (keyboard|touch)/, args: ["--part", "feather"] },
+  "e10-ancpromote": { why: "CK-20 (H9, REGISTRY §P8-7 item 3; the pass-8 construction): the engaged slider (keyboard or touch) is promoted into the top layer over its place and clipped to its scroller's padding box each frame, copying no other ancestor paint: an ancestor's opacity, filter, clip-path and rotation never reach it", witnesses: ["E-10"], cell: /clipstale anc (opacity|clippath|rotate|filter) · (keyboard|touch)/, args: ["--part", "anc"] },
+  "e10-dlgpromote": { why: "CK-20 (H9, C-A8's dlg): the keyboard-engaged slider in the presented plate is promoted into the top layer and kept there 400 ms past its release (an exit clock): dismissed, the plate fades under a body at opacity 1, which then leaves with the plate in one frame", witnesses: ["E-10"], cell: /presented dlg · (esc2|scrim)/, args: ["--part", "dlg"] },
+  "e10-traillate": { why: "CK-20 (H9, REGISTRY §P8-7 item 2): the keyboard-engaged slider is promoted and placed over its place one animation frame late (no scroll listener), so on a scroll it trails its place by a frame. Chromium's film resolves one frame; WebKit's trail cell is REPORT by declaration", witnesses: ["E-10"], cell: /clipstale trail · (wheel-over|wheel-away|page) · engaged/, args: ["--part", "trail"], engines: ["chromium"] },
+  "e10-glidescale": { why: "CK-20 (H9, C-A8's glidescale, REGISTRY §P8-7 item 8): the re-render glide's translate is written in painted px, not in the root's parent's units, so under a scale 0.8 scroller the glide starts 20 % short of where the control was painted", witnesses: ["E-10"], cell: /clipstale glidescale · scale/, args: ["--part", "glide"] },
+  "e13-loupeplace": { why: "CK-25 (H9, C-E8's loupe place, REGISTRY §P8-7 item 5): the lens leaves its place without its ancestors' scale: under a scale 0.8 card the band magnifies ×2.0, not k max", witnesses: ["E-13"], cell: /clipstale loupe place · scale/ },
+  "e13-loupeviewport": { why: "CK-25 (H9, C-E8's loupe viewport, REGISTRY §P8-7 item 5): the lens hangs above its track with no fallback, so with the card at the viewport's top it is drawn above the viewport, unpainted", witnesses: ["E-13"], cell: /clipstale loupe viewport/ },
   "e12-chipmute": { why: "CK-27 (H7, C-A6 §0): the chip that left the capsule answers neither hover nor press (0.0 % / 0.0 %): the elegant-reduction trap", witnesses: ["E-12"], cell: /fx chip answers/ },
   "e12-chipundeclared": { why: "CK-27 (H7): the chip paints its hover and press through literal rules and composes no declared engage-* class", witnesses: ["E-12"], cell: /fx chip answers/ },
   "cap-ladderhit": { why: "CK-25 (H6, REGISTRY §P5-7 item 10): a transparent layer sits over the control, so the ladder's pointer never reaches it; a hit test that misses must FAIL the ladder as unread, never pass it as a hover that paints no rung", witnesses: ["CAP"], cell: /pop ladder fine/ },
@@ -206,7 +214,9 @@ export const FIXTURE_INDEX = {
   // H8: the loupe (E-13's edge cell; E-10's touch clip cells hide it) and the feather (a mask on the scroller)
   clipstale: { gates: ["E-10", "E-13"], veil: ".fx-veil", loupe: FX_LOUPE, feather: { cls: ["fx-feather"], attrs: [] }, clip: { box: '[data-t="box"]', rest: '[data-t="slider-a"]', spacer: 60 }, engaged: "[data-held], [data-kbd]" },
   // H6 (CK-10, O-100 R-1): a presented dialog whose opacity fade is its light leg
-  presented: { gates: [], fade: { plate: ".fx-pdialog", scrim: ".fx-pscrim" } },
+  // H9 (CK-20, C-A8's dlg): `&slider=1` puts a fixture slider in the plate (E-10's dlg cells); dismissed by Escape when no
+  // slider was engaged at the key, or by a click outside the plate: the plate fades on the release clock, then leaves
+  presented: { gates: [], fade: { plate: ".fx-pdialog", scrim: ".fx-pscrim" }, dlg: { q: { slider: "1" }, plate: ".fx-pdialog", from: '[data-t="dlg-from"]', root: '[data-t="dlg-slider"] .fx-slider', thumb: '[data-t="dlg-slider"] .fx-thumb', engaged: "[data-held], [data-kbd]" } },
   // H6 (CK-11, CK-14, CK-27): every composer of the capsule class the source tree names, by directory
   // H7: quiet (kappa's press read with pointerdown withheld, the select's class); answers (the chip a capsule left)
   capsule: { gates: ["E-12"], floor: ["capsule"], caps: { kappa: '[data-t="cap-kappa"]' }, quiet: ["kappa"], answers: { "fx chip": '[data-t="cap-chipx"]' } },
@@ -243,6 +253,7 @@ export function fixturePage(params, fault = "") {
   const on = params.get("on") === "1";
   const defer = params.get("defer") === "1";
   const phone = params.get("phone") === "1";
+  const dlgSlider = params.get("slider") === "1";
   const run = +(params.get("run") ?? 0);
   const F = (id) => fault === id;
   const nopress = F("e1-dead") || F("e5-hover");
@@ -379,6 +390,9 @@ ${F("e13-loupemark") ? ".fx-loupe-mark { position: absolute; left: calc(50% - 1p
 .fx-pdialog { position: fixed; left: 50%; top: 50%; translate: -50% -50%; width: 280px; padding: 24px; border-radius: 20px; background: var(--bg); opacity: 0; scale: 0.95;
   transition: opacity var(--engage-control-engage-release) linear, scale var(--spring-press-duration) var(--spring-press); }
 .fx-pdialog.open { opacity: 1; scale: 1; }
+/* H9: the slider in the presented plate (E-10 dlg); e10-featherunder's second mask on the engaged body under the feather */
+[data-t="dlg-slider"] .fx-slider { width: 220px; }
+${F("e10-featherunder") ? ".fx-feather .fx-slider:is([data-held], [data-kbd]) { mask-image: linear-gradient(#0007, #0007); }" : ""}
 @media (prefers-reduced-motion: reduce) {
   ${F("e9-fadespatial") ? "" : ".fx-pdialog { scale: 1; }"}
   ${F("e9-fadecut") ? "" : `.fx-pdialog { transition: opacity var(--engage-control-engage-release) linear${F("e9-fadespatial") ? ", scale var(--spring-press-duration) linear" : ""}; transition-duration: var(--engage-control-engage-release)${F("e9-fadespatial") ? ", var(--spring-press-duration)" : ""} !important; }`}
@@ -402,7 +416,7 @@ ${F("cap-ladderhit") ? ".fx-cover { position: absolute; inset: -8px; z-index: 5;
   else if (scene === "slider") body = `<div id="spacer"></div><div id="slot"></div>${slider()}`;
   else if (scene === "restale") body = `<p class="fx-para">The world above the engaged control: a paragraph long enough to rewrap when the viewport narrows, so that a resize moves the control below it with no mutation of the document at all.</p><div id="spacer"></div><div data-t="wrap">${slider()}</div><div class="fx-ticker" id="ticker"></div>`;
   else if (scene === "clipstale") body = `<p class="fx-para">A scrolling card holds the control; the card's edge clips it.</p><div class="fx-box" data-t="box"><div style="height:200px"></div><div id="spacer" data-t="spacer" style="height:60px"></div><div data-t="slider-a" style="padding:0 20px">${slider()}</div><div style="height:400px"></div></div><div class="fx-ticker" id="ticker"></div>`;
-  else if (scene === "presented") body = `<div class="fx-pscrim" data-t="scrim"></div><div class="fx-pdialog open" role="dialog" aria-label="Probe" data-e="target">Body</div>`;
+  else if (scene === "presented") body = `<div class="fx-pscrim" data-t="scrim"></div><div class="fx-pdialog open" role="dialog" aria-label="Probe" data-e="target">Body${dlgSlider ? `<button type="button" data-t="dlg-from">Act</button><div data-t="dlg-slider" style="padding:16px 0">${slider("D")}</div>` : ""}</div>`;
   else if (scene === "capsule") body = `<div role="group" aria-label="Presets" style="display:flex;gap:12px"><button class="capx glass-capsule-hover" type="button" data-t="cap-kappa" aria-pressed="false"${F("e12-openpop") ? ' data-state="closed" aria-expanded="false"' : ""}>Kappa</button><button class="fxchip${F("e12-chipundeclared") ? "" : " engage-chosen"}" type="button" data-t="cap-chipx" aria-pressed="false">Chip</button></div>`;
   else if (scene === "slider2") body = `${slider("A")}${slider("B")}`;
   else if (scene === "modal") body = `<div class="fx-scrim" data-state="open" data-e="veil"${F("e7-veil") ? " data-engaged" : ""}></div><div class="fx-dialog" role="dialog" aria-label="Probe" data-e="modal">Body</div>`;
@@ -420,7 +434,7 @@ ${F("cap-ladderhit") ? ".fx-cover { position: absolute; inset: -8px; z-index: 5;
   // dropped, C-E5 §0.2's class)
   const CLOCKS = [...new Set([...css.matchAll(/(?:transition|animation)[\w-]*\s*:[^;{}]*/g)].flatMap((m) => [...m[0].matchAll(/var\((--engage-[\w-]+)\)/g)].map((x) => x[1])))].filter((t) => !(F("e11-rename") && t.startsWith("--engage-control-engage-")));
   const script = `
-const FAULT = ${JSON.stringify(fault)}; const SCENE = ${JSON.stringify(scene)}; const DEFER = ${defer}; const ON = ${on}; const RUN = ${run}; const PHONE = ${phone};
+const FAULT = ${JSON.stringify(fault)}; const SCENE = ${JSON.stringify(scene)}; const DLGS = ${dlgSlider}; const DEFER = ${defer}; const ON = ${on}; const RUN = ${run}; const PHONE = ${phone};
 const DROP = ${carryDrop || slowDrive}; const SLOWDRIVE = ${slowDrive}; const CLOCKS = ${JSON.stringify(CLOCKS)};
 // H6 (CK-21): every clock the stylesheet transitions on is read loudly at mount and on every act
 function checkClocks() {
@@ -525,8 +539,16 @@ function loupe(root, th, on) {
   const grow = prm() ? 1 : tok("--fx-scale-engage");
   L.querySelector(".fx-loupe-clone").style.height = (1.6 * root.offsetHeight * grow) + "px";
   if (FAULT === "e13-loupecut") { L.style.left = (th.offsetLeft - 60) + "px"; L.style.top = "-80px"; root.appendChild(L); return; }
+  // H9 (CK-25): the lens carries its track's painted transform (the ancestors' scale: the root's parent painted over its
+  // layout width; e13-loupeplace drops it) and hangs flush on the track's painted top, scaled about its bottom centre; where
+  // that would leave the viewport (the root scroller's top edge) it hangs below the track instead, the position-try
+  // fallback (e13-loupeviewport never flips)
+  const par = root.parentElement; const anc = FAULT === "e13-loupeplace" ? 1 : (par.getBoundingClientRect().width / par.offsetWidth || 1);
   const t = th.getBoundingClientRect(), r = root.getBoundingClientRect();
-  L.style.left = (t.left + t.width / 2 - 60) + "px"; L.style.top = (r.top - 80) + "px"; document.body.appendChild(L);
+  const up = r.top - 60 * anc >= 0 || FAULT === "e13-loupeviewport";
+  L.style.left = (t.left + t.width / 2 - 60) + "px"; L.style.top = (up ? r.top - 60 : r.bottom) + "px";
+  L.style.transformOrigin = up ? "50% 100%" : "50% 0"; if (anc !== 1) L.style.scale = String(anc);
+  document.body.appendChild(L);
 }
 function settleVeil(now) {
   const want = engagedAny();
@@ -756,9 +778,11 @@ function mountScene() {
     // from layout offsets, which no ancestor transform moves. LAG 3: a clip one frame late (pass-7's lag) is resolved by
     // Chromium's film but not by WebKit's (H8 §2, the first WebKit self-test), so the plant writes it three frames late
     // (≈ 50 ms, two of WebKit's 25 fps video frames) to show the film cell can fail in both engines
-    if (/^e10-(clipouter|rectclip|layoutplace)/.test(FAULT)) {
+    // H9: e10-ancpromote is the pass-8 copy (the place's rect, its overflow clip written each frame, nothing else);
+    // e10-traillate places it one frame late from the frame loop alone (no scroll listener) and writes no clip
+    if (/^e10-(clipouter|rectclip|layoutplace|ancpromote|traillate)/.test(FAULT)) {
       const box = stage.querySelector('[data-t="box"]'), wrap = stage.querySelector('[data-t="slider-a"]'); let up = false, lag = [], raf = 0; const LAG = 3;
-      const rect = FAULT.startsWith("e10-rectclip"), layout = FAULT === "e10-layoutplace";
+      const rect = FAULT.startsWith("e10-rectclip"), layout = FAULT === "e10-layoutplace", late = FAULT === "e10-traillate"; let prev = null;
       const at = () => {
         if (layout) { let x = 0, y = 0; for (let e = wrap; e; e = e.offsetParent) { x += e.offsetLeft; y += e.offsetTop; } return { left: x - box.scrollLeft - scrollX + 20, top: y - box.scrollTop - scrollY + (wrap.offsetHeight - root.offsetHeight) / 2 }; }
         const r = wrap.getBoundingClientRect(), k = r.width / wrap.offsetWidth;
@@ -767,20 +791,50 @@ function mountScene() {
       const clipNow = () => { if (FAULT === "e10-clipouter") return ""; const b = box.getBoundingClientRect(), e = root.getBoundingClientRect();
         const t = b.top + box.clientTop, l = b.left + box.clientLeft, bt = t + box.clientHeight, br = l + box.clientWidth, sx = e.width / root.offsetWidth || 1;
         return "inset(" + [Math.max(0, t - e.top), Math.max(0, e.right - br), Math.max(0, e.bottom - bt), Math.max(0, l - e.left)].map((v) => (v / sx).toFixed(2) + "px").join(" ") + ")"; };
-      const place = () => { if (!up) return; const p = at(); root.style.left = p.left + "px"; root.style.top = p.top + "px"; if (!rect) root.style.clipPath = clipNow(); };
-      const loop = () => { if (!up) return; place(); if (rect) { lag.push(clipNow()); if (lag.length > LAG) root.style.clipPath = lag.shift(); } raf = requestAnimationFrame(loop); };
+      const place = () => { if (!up || late) return; const p = at(); root.style.left = p.left + "px"; root.style.top = p.top + "px"; if (!rect) root.style.clipPath = clipNow(); };
+      const loop = () => { if (!up) return; if (late) { const p = at(); if (prev) { root.style.left = prev.left + "px"; root.style.top = prev.top + "px"; } prev = p; } else place(); if (rect) { lag.push(clipNow()); if (lag.length > LAG) root.style.clipPath = lag.shift(); } raf = requestAnimationFrame(loop); };
       const engagedNow = () => root.dataset.kbd !== undefined || root.dataset.held !== undefined;
       new MutationObserver(() => { const k = engagedNow();
-        if (k && !up) { up = true; lag = []; wrap.style.height = wrap.offsetHeight + "px"; const w = root.offsetWidth, hh = root.offsetHeight; root.popover = "manual"; root.style.cssText += ";position:fixed;inset:auto;margin:0;padding:0;border:0;overflow:visible;width:" + w + "px;height:" + hh + "px;background:var(--ctl)"; root.showPopover(); place(); if (rect) root.style.clipPath = clipNow(); raf = requestAnimationFrame(loop); }
+        if (k && !up) { up = true; lag = []; prev = null; wrap.style.height = wrap.offsetHeight + "px"; const w = root.offsetWidth, hh = root.offsetHeight; root.popover = "manual"; root.style.cssText += ";position:fixed;inset:auto;margin:0;padding:0;border:0;overflow:visible;width:" + w + "px;height:" + hh + "px;background:var(--ctl)"; root.showPopover(); if (late) { const p = at(); root.style.left = p.left + "px"; root.style.top = p.top + "px"; } place(); if (rect) root.style.clipPath = clipNow(); raf = requestAnimationFrame(loop); }
         else if (!k && up) { up = false; cancelAnimationFrame(raf); root.hidePopover(); root.removeAttribute("popover"); for (const q of ["position", "inset", "margin", "padding", "border", "overflow", "width", "height", "background", "top", "left", "clip-path"]) root.style.removeProperty(q); wrap.style.height = ""; }
       }).observe(root, { attributes: true, attributeFilter: ["data-kbd", "data-held"] });
       box.addEventListener("scroll", place);
+      // e10-traillate forwards a wheel over the promoted body to its scroller, as the library's stage does
+      if (late) root.addEventListener("wheel", (e) => { if (!up) return; e.preventDefault(); box.scrollTop += e.deltaY; }, { passive: false });
     }
+  }
+  if (SCENE === "clipstale") {
+    // H9 (CK-20, glidescale): the re-render glide. While engaged, a childList change inside the scroller glides the slider
+    // from where it was last painted (read every frame) to its new place; the glide's translate is in the root's parent's
+    // units (the painted move over the ancestors' scale). e10-glidescale writes it in painted px: 20 % short under 0.8
+    const root = stage.querySelector(".fx-slider"), box = stage.querySelector('[data-t="box"]'); let last = null, anim = null;
+    const engaged = () => root.dataset.held !== undefined || root.dataset.kbd !== undefined;
+    const painted = () => { const q = root.getBoundingClientRect(); return { x: q.left + q.width / 2, y: q.top + q.height / 2 }; };
+    const loop = () => { last = engaged() ? painted() : null; requestAnimationFrame(loop); }; requestAnimationFrame(loop);
+    new MutationObserver((recs) => {
+      if (!engaged() || !last || !recs.some((x) => x.type === "childList")) return;
+      anim?.cancel(); const now = painted(); const par = root.parentElement;
+      const k = FAULT === "e10-glidescale" ? 1 : (par.getBoundingClientRect().width / par.offsetWidth || 1);
+      const dx = (last.x - now.x) / k, dy = (last.y - now.y) / k;
+      if (Math.hypot(dx, dy) > 0.5) anim = root.animate([{ translate: dx + "px " + dy + "px" }, { translate: "0 0" }], { duration: 300, easing: SPRING });
+    }).observe(box, { childList: true, subtree: true });
   }
   if (SCENE === "presented") {
     // H6 (CK-10): the dialog presents and dismisses on its class; its clock is read loudly like every act's
     const d = stage.querySelector(".fx-pdialog");
     E.open = (v) => { checkClocks(); d.classList.toggle("open", !!v); };
+    // H9 (CK-20, dlg): the slider in the plate; Escape dismisses when no slider was engaged at the key (the first Escape
+    // releases the slider, the second closes), a click outside the plate dismisses; the plate fades on the release clock and
+    // leaves 40 ms after it. e10-dlgpromote promotes the engaged slider and keeps it promoted 400 ms past its release
+    if (DLGS) {
+      const root = stage.querySelector('[data-t="dlg-slider"] .fx-slider'); const val = wireSlider(root); E.state = () => Math.round(val());
+      let closing = false, wasEng = false;
+      const close = () => { if (closing) return; closing = true; checkClocks(); d.classList.remove("open"); setTimeout(() => d.remove(), ms("--engage-control-engage-release") + 40); };
+      addEventListener("keydown", (e) => { if (e.key === "Escape") wasEng = engagedAny(); }, true);
+      addEventListener("keydown", (e) => { if (e.key === "Escape" && !wasEng) close(); });
+      addEventListener("click", (e) => { if (!d.contains(e.target)) close(); });
+      if (FAULT === "e10-dlgpromote") new MutationObserver(() => { if (root.dataset.kbd !== undefined) { clearTimeout(root._dt); promote(root, true); } else { clearTimeout(root._dt); root._dt = setTimeout(() => promote(root, false), 400); } }).observe(root, { attributes: true, attributeFilter: ["data-kbd"] });
+    }
   }
   if (SCENE === "capsule") {
     const c = stage.querySelector(".capx");

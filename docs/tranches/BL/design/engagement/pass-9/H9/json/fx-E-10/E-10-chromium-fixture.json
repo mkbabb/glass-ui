@@ -1,0 +1,176 @@
+{
+ "id": "E-10",
+ "engine": "chromium",
+ "version": "149.0.7827.55",
+ "target": {
+  "fixture": true,
+  "fault": null
+ },
+ "loadStart": "5.2/9.3/11.9",
+ "loadEnd": "5.1/8.3/11.3",
+ "verdict": "PASS",
+ "cells": [
+  {
+   "name": "E-10 clipstale clip feather · keyboard",
+   "status": "PASS",
+   "line": "keyboard engaged (promoted false) · the scroller's feather: linear-gradient(rgba(0, 0, 0, 0) 0px, rgb(0, 0, 0) 40px, rgb(0, 0, 0)  · --fade-start — · the control 4 px inside its feathered top edge · visibility in the scroller's top 28 px, engaged over released: ×1.112 feathered, ×1.117 unfeathered (the grow's own gain) · ratio of ratios 0.996 · two-sided bound 0.9..1.1 × ×1.117 = ×1.005..×1.228 (an in-place body reads 1; H9: under-paint fails as over-paint does)",
+   "load": "5.5/9.3/11.9"
+  },
+  {
+   "name": "E-10 clipstale clip feather · touch",
+   "status": "PASS",
+   "line": "touch engaged (promoted false) · the scroller's feather: linear-gradient(rgba(0, 0, 0, 0) 0px, rgb(0, 0, 0) 40px, rgb(0, 0, 0)  · --fade-start — · the control 4 px inside its feathered top edge · visibility in the scroller's top 28 px, engaged over released: ×1.185 feathered, ×1.196 unfeathered (the grow's own gain) · ratio of ratios 0.991 · two-sided bound 0.9..1.1 × ×1.196 = ×1.076..×1.315 (an in-place body reads 1; H9: under-paint fails as over-paint does)",
+   "load": "5.2/9.1/11.8"
+  },
+  {
+   "name": "E-10 clipstale anc none · keyboard",
+   "status": "REPORT",
+   "line": "keyboard engaged (promoted false) · the reference: visibility over the scroller's region engaged over released ×1.125 (the grow's own gain)",
+   "load": "5.2/9.1/11.8"
+  },
+  {
+   "name": "E-10 clipstale anc opacity · keyboard",
+   "status": "PASS",
+   "line": "keyboard engaged (promoted false) · the scroller opacity 0.5 · visibility engaged over released ×1.119 against ×1.125 with nothing set · ratio of ratios 0.994 (two-sided bound 0.9..1.1: an in-place body reads 1)",
+   "load": "5.1/9.0/11.8"
+  },
+  {
+   "name": "E-10 clipstale anc filter · keyboard",
+   "status": "PASS",
+   "line": "keyboard engaged (promoted false) · the scroller filter invert(1) · visibility engaged over released ×1.115 against ×1.125 with nothing set · ratio of ratios 0.990 (two-sided bound 0.9..1.1: an in-place body reads 1)",
+   "load": "5.1/9.0/11.8"
+  },
+  {
+   "name": "E-10 clipstale anc clippath · keyboard",
+   "status": "PASS",
+   "line": "keyboard engaged (promoted false) · the scroller clipPath inset(0 45% 0 0) · visibility engaged over released ×1.119 against ×1.125 with nothing set · ratio of ratios 0.994 (two-sided bound 0.9..1.1: an in-place body reads 1)",
+   "load": "5.1/9.0/11.8"
+  },
+  {
+   "name": "E-10 clipstale anc rotate · keyboard",
+   "status": "PASS",
+   "line": "keyboard engaged (promoted false) · the scroller rotate 3deg · visibility engaged over released ×1.124 against ×1.125 with nothing set · ratio of ratios 0.999 (two-sided bound 0.9..1.1: an in-place body reads 1)",
+   "load": "5.5/9.1/11.8"
+  },
+  {
+   "name": "E-10 clipstale anc none · touch",
+   "status": "REPORT",
+   "line": "touch engaged (promoted false) · the pointer aimed at the thumb's painted centre hit the slider · the reference: visibility over the scroller's region engaged over released ×1.268 (the grow's own gain)",
+   "load": "5.5/9.1/11.8"
+  },
+  {
+   "name": "E-10 clipstale anc opacity · touch",
+   "status": "PASS",
+   "line": "touch engaged (promoted false) · the pointer aimed at the thumb's painted centre hit the slider · the scroller opacity 0.5 · visibility engaged over released ×1.250 against ×1.268 with nothing set · ratio of ratios 0.986 (two-sided bound 0.9..1.1: an in-place body reads 1)",
+   "load": "5.2/8.9/11.7"
+  },
+  {
+   "name": "E-10 clipstale anc filter · touch",
+   "status": "REPORT",
+   "line": "touch engaged (promoted false) · the pointer aimed at the thumb's painted centre hit the slider · the scroller filter invert(1) · visibility engaged over released ×1.118 against ×1.268 with nothing set · ratio of ratios 0.881 (two-sided bound 0.9..1.1: an in-place body reads 1) · REPORT in chromium touch: an in-place body's filter read scatters past the bound here (ANC_REPORT, ../pass-9/H9.md §2); this read is outside it",
+   "load": "5.2/8.9/11.7"
+  },
+  {
+   "name": "E-10 clipstale anc clippath · touch",
+   "status": "PASS",
+   "line": "touch engaged (promoted false) · the pointer aimed at the thumb's painted centre hit the slider · the scroller clipPath inset(0 45% 0 0) · visibility engaged over released ×1.365 against ×1.268 with nothing set · ratio of ratios 1.076 (two-sided bound 0.9..1.1: an in-place body reads 1)",
+   "load": "5.6/9.0/11.7"
+  },
+  {
+   "name": "E-10 clipstale anc rotate · touch",
+   "status": "REPORT",
+   "line": "touch engaged (promoted false) · the pointer aimed at the thumb's painted centre hit the slider · the scroller rotate 3deg · visibility engaged over released ×1.260 against ×1.268 with nothing set · ratio of ratios 0.993 (two-sided bound 0.9..1.1: an in-place body reads 1) · REPORT in chromium touch: an in-place body's rotate read scatters past the bound here (ANC_REPORT, ../pass-9/H9.md §2); this read is inside it",
+   "load": "5.8/8.9/11.7"
+  },
+  {
+   "name": "E-10 clipstale anc none · fine",
+   "status": "REPORT",
+   "line": "fine engaged (promoted false) · the pointer aimed at the thumb's painted centre hit the slider · the reference: visibility over the scroller's region engaged over released ×1.268 (the grow's own gain)",
+   "load": "5.8/8.9/11.7"
+  },
+  {
+   "name": "E-10 clipstale anc opacity · fine",
+   "status": "PASS",
+   "line": "fine engaged (promoted false) · the pointer aimed at the thumb's painted centre hit the slider · the scroller opacity 0.5 · visibility engaged over released ×1.250 against ×1.268 with nothing set · ratio of ratios 0.986 (two-sided bound 0.9..1.1: an in-place body reads 1)",
+   "load": "5.8/8.9/11.7"
+  },
+  {
+   "name": "E-10 clipstale anc filter · fine",
+   "status": "REPORT",
+   "line": "fine engaged (promoted false) · the pointer aimed at the thumb's painted centre hit the slider · the scroller filter invert(1) · visibility engaged over released ×1.118 against ×1.268 with nothing set · ratio of ratios 0.881 (two-sided bound 0.9..1.1: an in-place body reads 1) · REPORT in chromium fine: an in-place body's filter read scatters past the bound here (ANC_REPORT, ../pass-9/H9.md §2); this read is outside it",
+   "load": "5.8/8.9/11.6"
+  },
+  {
+   "name": "E-10 clipstale anc clippath · fine",
+   "status": "PASS",
+   "line": "fine engaged (promoted false) · the pointer aimed at the thumb's painted centre hit the slider · the scroller clipPath inset(0 45% 0 0) · visibility engaged over released ×1.365 against ×1.268 with nothing set · ratio of ratios 1.076 (two-sided bound 0.9..1.1: an in-place body reads 1)",
+   "load": "5.8/8.9/11.6"
+  },
+  {
+   "name": "E-10 clipstale anc rotate · fine",
+   "status": "REPORT",
+   "line": "fine engaged (promoted false) · the pointer aimed at the thumb's painted centre hit the slider · the scroller rotate 3deg · visibility engaged over released ×1.260 against ×1.268 with nothing set · ratio of ratios 0.993 (two-sided bound 0.9..1.1: an in-place body reads 1) · REPORT in chromium fine: an in-place body's rotate read scatters past the bound here (ANC_REPORT, ../pass-9/H9.md §2); this read is inside it",
+   "load": "5.5/8.8/11.6"
+  },
+  {
+   "name": "E-10 clipstale trail · wheel-over · engaged",
+   "status": "PASS",
+   "line": "keyboard engaged, the scroller wheeled with the pointer over the control (6 × 8 px) · per film frame, the red spacer's last row to the root's first row, against its median · engaged: 34 of 34 frames read (4 with the spacer moving), distance median 1 px, worst 0 px off, scrolled 48 px, promoted false | 34 of 34 frames read (4 with the spacer moving), distance median 1 px, worst 0 px off, scrolled 48 px, promoted false | 34 of 34 frames read (4 with the spacer moving), distance median 1 px, worst 0 px off, scrolled 48 px, promoted false · bound ≤ the released films' worst 0 + 1 = 1 px; 0 of 3 engaged films over it",
+   "load": "5.8/8.7/11.5"
+  },
+  {
+   "name": "E-10 clipstale trail · wheel-over · released",
+   "status": "REPORT",
+   "line": "34 of 34 frames read (4 with the spacer moving), distance median 1 px, worst 0 px off, scrolled 48 px | 34 of 34 frames read (4 with the spacer moving), distance median 1 px, worst 0 px off, scrolled 48 px | 34 of 34 frames read (4 with the spacer moving), distance median 1 px, worst 0 px off, scrolled 48 px",
+   "load": "5.8/8.7/11.5"
+  },
+  {
+   "name": "E-10 clipstale trail · wheel-away · engaged",
+   "status": "PASS",
+   "line": "keyboard engaged, the scroller wheeled with the pointer over its content beside the control (6 × 8 px) · per film frame, the red spacer's last row to the root's first row, against its median · engaged: 34 of 34 frames read (4 with the spacer moving), distance median 1 px, worst 0 px off, scrolled 48 px, promoted false | 34 of 34 frames read (4 with the spacer moving), distance median 1 px, worst 0 px off, scrolled 48 px, promoted false | 34 of 34 frames read (4 with the spacer moving), distance median 1 px, worst 0 px off, scrolled 48 px, promoted false · bound ≤ the released films' worst 0 + 1 = 1 px; 0 of 3 engaged films over it",
+   "load": "5.3/8.5/11.4"
+  },
+  {
+   "name": "E-10 clipstale trail · wheel-away · released",
+   "status": "REPORT",
+   "line": "34 of 34 frames read (4 with the spacer moving), distance median 1 px, worst 0 px off, scrolled 48 px | 34 of 34 frames read (4 with the spacer moving), distance median 1 px, worst 0 px off, scrolled 48 px | 34 of 34 frames read (4 with the spacer moving), distance median 1 px, worst 0 px off, scrolled 48 px",
+   "load": "5.3/8.5/11.4"
+  },
+  {
+   "name": "E-10 clipstale trail · page · engaged",
+   "status": "PASS",
+   "line": "keyboard engaged, the page wheeled with the pointer outside the scroller (6 × 8 px) · per film frame, the red spacer's last row to the root's first row, against its median · engaged: 34 of 34 frames read (4 with the spacer moving), distance median 1 px, worst 0 px off, scrolled 48 px, promoted false | 34 of 34 frames read (4 with the spacer moving), distance median 1 px, worst 0 px off, scrolled 48 px, promoted false | 34 of 34 frames read (4 with the spacer moving), distance median 1 px, worst 0 px off, scrolled 48 px, promoted false · bound ≤ the released films' worst 0 + 1 = 1 px; 0 of 3 engaged films over it",
+   "load": "5.3/8.4/11.3"
+  },
+  {
+   "name": "E-10 clipstale trail · page · released",
+   "status": "REPORT",
+   "line": "34 of 34 frames read (4 with the spacer moving), distance median 1 px, worst 0 px off, scrolled 48 px | 34 of 34 frames read (4 with the spacer moving), distance median 1 px, worst 0 px off, scrolled 48 px | 34 of 34 frames read (4 with the spacer moving), distance median 1 px, worst 0 px off, scrolled 48 px",
+   "load": "5.3/8.4/11.3"
+  },
+  {
+   "name": "E-10 clipstale glidescale · none",
+   "status": "REPORT",
+   "line": "keyboard engaged (promoted false), the scroller untransformed (the reference) · a 40 px block inserted before the rest box: the root's painted centre moved 3.84 px in the insertion's frame, then at most 4.31 px per 16.7 ms; the place moved 40.0 px",
+   "load": "5.3/8.4/11.3"
+  },
+  {
+   "name": "E-10 clipstale glidescale · scale",
+   "status": "PASS",
+   "line": "keyboard engaged (promoted false), the scroller under scale 0.8 (origin 0 0) · a 40 px block inserted before the rest box (a re-render): the root's painted centre moved 2.81 px in the insertion's frame (bound ≤ the unscaled reference's 3.84 + 1 px: the glide starts where the control was painted), then at most 2.84 px per 16.7 ms; the place moved 32.0 px",
+   "load": "5.3/8.4/11.3"
+  },
+  {
+   "name": "E-10 presented dlg · esc2",
+   "status": "PASS",
+   "line": "a slider in the presented plate, keyboard-engaged (promoted false), the dialog dismissed by Escape, 40 ms, Escape · 169 frames (the root promoted on 0): the root's effective opacity's largest one-frame step 0.056 at +250 ms against the plate's own 0.056 (bound ≤ the plate's + 0.05: an in-place body fades with its plate) · largest root-over-plate mismatch 0.000 (printed)",
+   "load": "5.1/8.3/11.3"
+  },
+  {
+   "name": "E-10 presented dlg · scrim",
+   "status": "PASS",
+   "line": "a slider in the presented plate, keyboard-engaged (promoted false), the dialog dismissed by a click outside the plate · 169 frames (the root promoted on 0): the root's effective opacity's largest one-frame step 0.058 at +110 ms against the plate's own 0.058 (bound ≤ the plate's + 0.05: an in-place body fades with its plate) · largest root-over-plate mismatch 0.000 (printed)",
+   "load": "5.1/8.3/11.3"
+  }
+ ]
+}

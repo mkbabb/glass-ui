@@ -1,0 +1,50 @@
+{
+ "id": "E-10",
+ "engine": "chromium",
+ "version": "149.0.7827.55",
+ "target": {
+  "fixture": true,
+  "fault": "e10-traillate"
+ },
+ "loadStart": "5.1/6.9/10.1",
+ "loadEnd": "5.6/6.9/10.0",
+ "verdict": "FAIL",
+ "cells": [
+  {
+   "name": "E-10 clipstale trail · wheel-over · engaged",
+   "status": "FAIL",
+   "line": "keyboard engaged, the scroller wheeled with the pointer over the control (6 × 8 px) · per film frame, the red spacer's last row to the root's first row, against its median · engaged: 34 of 34 frames read (5 with the spacer moving), distance median 1 px, worst 7 px off (frame:Δ 7:7), scrolled 48 px, promoted true | 35 of 35 frames read (4 with the spacer moving), distance median 1 px, worst 7 px off (frame:Δ 8:7 9:7), scrolled 48 px, promoted true | 35 of 35 frames read (4 with the spacer moving), distance median 1 px, worst 7 px off (frame:Δ 7:7 9:7), scrolled 48 px, promoted true · bound ≤ the released films' worst 0 + 1 = 1 px; 3 of 3 engaged films over it",
+   "load": "5.8/7.0/10.1"
+  },
+  {
+   "name": "E-10 clipstale trail · wheel-over · released",
+   "status": "REPORT",
+   "line": "34 of 34 frames read (4 with the spacer moving), distance median 1 px, worst 0 px off, scrolled 48 px | 34 of 34 frames read (4 with the spacer moving), distance median 1 px, worst 0 px off, scrolled 48 px | 34 of 34 frames read (4 with the spacer moving), distance median 1 px, worst 0 px off, scrolled 48 px",
+   "load": "5.8/7.0/10.1"
+  },
+  {
+   "name": "E-10 clipstale trail · wheel-away · engaged",
+   "status": "FAIL",
+   "line": "keyboard engaged, the scroller wheeled with the pointer over its content beside the control (6 × 8 px) · per film frame, the red spacer's last row to the root's first row, against its median · engaged: 34 of 34 frames read (4 with the spacer moving), distance median 1 px, worst 7 px off (frame:Δ 6:7 8:7), scrolled 48 px, promoted true | 34 of 34 frames read (4 with the spacer moving), distance median 1 px, worst 7 px off (frame:Δ 6:7 8:7), scrolled 48 px, promoted true | 34 of 34 frames read (4 with the spacer moving), distance median 1 px, worst 7 px off (frame:Δ 8:7), scrolled 48 px, promoted true · bound ≤ the released films' worst 0 + 1 = 1 px; 3 of 3 engaged films over it",
+   "load": "5.7/7.0/10.1"
+  },
+  {
+   "name": "E-10 clipstale trail · wheel-away · released",
+   "status": "REPORT",
+   "line": "34 of 34 frames read (4 with the spacer moving), distance median 1 px, worst 0 px off, scrolled 48 px | 34 of 34 frames read (4 with the spacer moving), distance median 1 px, worst 0 px off, scrolled 48 px | 33 of 33 frames read (3 with the spacer moving), distance median 1 px, worst 0 px off, scrolled 48 px",
+   "load": "5.7/7.0/10.1"
+  },
+  {
+   "name": "E-10 clipstale trail · page · engaged",
+   "status": "FAIL",
+   "line": "keyboard engaged, the page wheeled with the pointer outside the scroller (6 × 8 px) · per film frame, the red spacer's last row to the root's first row, against its median · engaged: 34 of 34 frames read (4 with the spacer moving), distance median 1 px, worst 7 px off (frame:Δ 6:7 8:7), scrolled 48 px, promoted true | 34 of 34 frames read (4 with the spacer moving), distance median 1 px, worst 7 px off (frame:Δ 7:7 8:7), scrolled 48 px, promoted true | 34 of 34 frames read (4 with the spacer moving), distance median 1 px, worst 7 px off (frame:Δ 6:7 8:7), scrolled 48 px, promoted true · bound ≤ the released films' worst 0 + 1 = 1 px; 3 of 3 engaged films over it",
+   "load": "5.6/6.9/10.0"
+  },
+  {
+   "name": "E-10 clipstale trail · page · released",
+   "status": "REPORT",
+   "line": "34 of 34 frames read (4 with the spacer moving), distance median 1 px, worst 0 px off, scrolled 48 px | 34 of 34 frames read (4 with the spacer moving), distance median 1 px, worst 0 px off, scrolled 48 px | 34 of 34 frames read (4 with the spacer moving), distance median 1 px, worst 0 px off, scrolled 48 px",
+   "load": "5.6/6.9/10.0"
+  }
+ ]
+}

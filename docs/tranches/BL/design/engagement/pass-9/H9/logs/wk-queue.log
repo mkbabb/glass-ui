@@ -1,0 +1,7 @@
+2026-10-29 16:56:00 queued w1 (st-E-10, st-E-13, clean; the 90-min cap: the reads go to w2)
+2026-10-29 17:26:58 w1 list cut to st-E-10, st-E-13 (both fit one 90-min cap); clean moved to w2 with the reads
+2026-10-29 17:27:05 queued w2 (the reads on cand8, probe, probeloop, head; the clean fixture; forced by the 90-min cap: w1 holds the two self-tests)
+2026-10-29 18:07:22 w1 had 60 min of its cap left after st-E-10: w2's stages appended to w1 (reads first, clean last); w2 stays queued only for any stage the cap cuts
+2026-10-29 18:23:33 w2 withdrawn from the queue before it acquired (every stage ran inside w1); no second acquisition
+w2 guarded exit 143 2026-10-29 18:23:36
+w1 guarded exit 0 2026-10-29 18:34:15

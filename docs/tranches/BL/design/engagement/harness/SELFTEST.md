@@ -10,6 +10,10 @@
 | load | 7-31 (1-minute) across the pass-3 runs; other seats shared the machine. Every cell line carries its own load |
 | verdict | **GREEN in both engines** (pass 3): 204 runs, 203 OK, 1 N/A (`e4-stripstop` in WebKit), 0 BROKEN, 0 UNREAD on each witness's last run on its final code |
 
+## Pass 9 (H9)
+
+H9 changed E-10 and E-13, `fixtures.mjs` (the presented plate's `&slider=1`, the clip row's glide, the loupe's transform and viewport fallback, seven plants) and the scene app (the presented Dialog's `&slider=1` Slider). Its self-test of record, both engines, is `../pass-9/H9.md` §2 (logs `../pass-9/H9/logs/st-E-10-*.log`, `st-E-13-*.log`, JSON `../pass-9/H9/json/selftest/`): E-10 28 runs, 28 OK in Chromium; 28 runs, 27 OK and 1 N/A (`e10-traillate`, Chromium's by declaration) in WebKit; E-13 5 of 5 OK per engine. Every other witness and CAP re-read on the clean fixture in both engines (`../pass-9/H9/logs/clean-*.log`).
+
 ## Pass 8 (H8)
 
 H8 changed E-4, E-10, E-11, E-12 and E-13 (new), and `fixtures.mjs` and the scene app under every witness. Its self-test of record for those five, both engines, with loads and the superseded runs, is `../pass-8/H8.md` §2 (logs `../pass-8/H8/logs/st-*.log`, JSON `../pass-8/H8/json/selftest/`). The witnesses H8 did not change were re-read on the clean fixture in both engines (`clean` stage, CAP included). Pass 7's and pass 3's tables below stand for them.

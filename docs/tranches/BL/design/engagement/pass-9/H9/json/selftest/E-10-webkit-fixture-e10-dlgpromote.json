@@ -1,0 +1,26 @@
+{
+ "id": "E-10",
+ "engine": "webkit",
+ "version": "26.5",
+ "target": {
+  "fixture": true,
+  "fault": "e10-dlgpromote"
+ },
+ "loadStart": "13.8/12.7/10.9",
+ "loadEnd": "13.3/12.6/10.9",
+ "verdict": "FAIL",
+ "cells": [
+  {
+   "name": "E-10 presented dlg · esc2",
+   "status": "FAIL",
+   "line": "a slider in the presented plate, keyboard-engaged (promoted true), the dialog dismissed by Escape, 40 ms, Escape · 138 frames (the root promoted on 31): the root's effective opacity's largest one-frame step 1.000 at +318 ms against the plate's own 0.072 (bound ≤ the plate's + 0.05: an in-place body fades with its plate) · largest root-over-plate mismatch 1.000 (printed)",
+   "load": "13.3/12.6/10.9"
+  },
+  {
+   "name": "E-10 presented dlg · scrim",
+   "status": "FAIL",
+   "line": "a slider in the presented plate, keyboard-engaged (promoted true), the dialog dismissed by a click outside the plate · 138 frames (the root promoted on 27): the root's effective opacity's largest one-frame step 1.000 at +280 ms against the plate's own 0.067 (bound ≤ the plate's + 0.05: an in-place body fades with its plate) · largest root-over-plate mismatch 1.000 (printed)",
+   "load": "13.3/12.6/10.9"
+  }
+ ]
+}

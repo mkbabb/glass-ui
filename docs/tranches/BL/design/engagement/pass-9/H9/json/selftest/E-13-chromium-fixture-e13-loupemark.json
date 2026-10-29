@@ -1,0 +1,122 @@
+{
+ "id": "E-13",
+ "engine": "chromium",
+ "version": "149.0.7827.55",
+ "target": {
+  "fixture": true,
+  "fault": "e13-loupemark"
+ },
+ "loadStart": "9.1/9.9/10.1",
+ "loadEnd": "8.6/9.6/10.0",
+ "verdict": "FAIL",
+ "cells": [
+  {
+   "name": "E-13 slider loupe k max fine light",
+   "status": "FAIL",
+   "line": "sustained 1200 ms · band 33.9 px over the held track's 21.2 px = ×1.599 (k max 1.60; bound ±5 %) · the magnified tip 0.00 px from the window's centre (≤ 2) · seam: the band row's centre leaves its flanks' range by 107.1 levels (≤ 6) · line: the glass row's centre departs from its flanks by 253.1 levels (≤ 6) · runs on: the band's colour distance from the glass at the window's start 207.5 against 242.6 inside = 0.86 (≤ 0.35) · housing 120.0×60.0 px, window 106.0×46.0 px, opacity 1.00",
+   "load": "9.6/10.0/10.2"
+  },
+  {
+   "name": "E-13 slider loupe k max fine dark",
+   "status": "FAIL",
+   "line": "sustained 1200 ms · band 33.9 px over the held track's 21.2 px = ×1.599 (k max 1.60; bound ±5 %) · the magnified tip 0.00 px from the window's centre (≤ 2) · seam: the band row's centre leaves its flanks' range by 54.0 levels (≤ 6) · line: the glass row's centre departs from its flanks by 38.0 levels (≤ 6) · runs on: the band's colour distance from the glass at the window's start 236.1 against 209.4 inside = 1.13 (≤ 0.35) · housing 120.0×60.0 px, window 106.0×46.0 px, opacity 1.00",
+   "load": "9.6/10.0/10.2"
+  },
+  {
+   "name": "E-13 slider loupe k max coarse light",
+   "status": "FAIL",
+   "line": "sustained 1200 ms · band 33.9 px over the held track's 21.2 px = ×1.599 (k max 1.60; bound ±5 %) · the magnified tip 0.00 px from the window's centre (≤ 2) · seam: the band row's centre leaves its flanks' range by 107.1 levels (≤ 6) · line: the glass row's centre departs from its flanks by 253.1 levels (≤ 6) · runs on: the band's colour distance from the glass at the window's start 207.5 against 242.6 inside = 0.86 (≤ 0.35) · housing 120.0×60.0 px, window 106.0×46.0 px, opacity 1.00",
+   "load": "9.3/9.9/10.1"
+  },
+  {
+   "name": "E-13 slider loupe k max coarse dark",
+   "status": "FAIL",
+   "line": "sustained 1200 ms · band 33.9 px over the held track's 21.2 px = ×1.599 (k max 1.60; bound ±5 %) · the magnified tip 0.00 px from the window's centre (≤ 2) · seam: the band row's centre leaves its flanks' range by 54.0 levels (≤ 6) · line: the glass row's centre departs from its flanks by 38.0 levels (≤ 6) · runs on: the band's colour distance from the glass at the window's start 236.1 against 209.4 inside = 1.13 (≤ 0.35) · housing 120.0×60.0 px, window 106.0×46.0 px, opacity 1.00",
+   "load": "9.3/9.9/10.1"
+  },
+  {
+   "name": "E-13 slider loupe whole reference · fine",
+   "status": "REPORT",
+   "line": "unclipped: 60 of 60 lens rows painted (100.0 %), opacity 1.00",
+   "load": "9.3/9.9/10.1"
+  },
+  {
+   "name": "E-13 clipstale loupe whole · edge · fine",
+   "status": "PASS",
+   "line": "fine hold, the rest box 4 px below its scroller's top edge · 60 of 60 lens rows painted (100.0 %; a row is painted when ≥ 3 of its pixels differ ≥ 8 levels held against released) · bound ≥ the unclipped reference's 100.0 % − 5 = 95.0 %, opacity 1.00 (> 0.9) · geometry: the lens 80.0..140.0 px, the scroller's clip edge at 136.0 px: 56.0 of 60.0 px of the lens lie above it",
+   "load": "8.7/9.8/10.1"
+  },
+  {
+   "name": "E-13 clipstale loupe whole · mid · fine",
+   "status": "PASS",
+   "line": "fine hold, the rest box mid-box · 60 of 60 lens rows painted (100.0 %; a row is painted when ≥ 3 of its pixels differ ≥ 8 levels held against released) · bound ≥ the unclipped reference's 100.0 % − 5 = 95.0 %, opacity 1.00 (> 0.9) · geometry: the lens 126.0..186.0 px, the scroller's clip edge at 136.0 px: 10.0 of 60.0 px of the lens lie above it",
+   "load": "8.7/9.8/10.1"
+  },
+  {
+   "name": "E-13 clipstale loupe viewport · fine",
+   "status": "PASS",
+   "line": "fine hold, the scroller's top edge at 2.0 px (the viewport's top), the rest box 4 px below it · 60 of 60 lens rows painted (100.0 %; a row above the viewport is unpainted) · bound ≥ the unclipped reference's 100.0 % − 5 = 95.0 %, opacity 1.00 (> 0.9) · the lens 27.0..87.0 px: 0.0 px above the viewport",
+   "load": "8.0/9.6/10.0"
+  },
+  {
+   "name": "E-13 clipstale loupe place · none · fine",
+   "status": "PASS",
+   "line": "fine hold sustained 1200 ms · the scroller untransformed (the reference) · band 33.9 px over the held track's painted 21.2 px = ×1.599 (k max 1.60 ± 5 %) · the lens's centre at 40.6 % along the painted track (Δ against untransformed 0.0 px, ≤ 2) · its bottom 0.6 px from the track's painted top (Δ 0.0 px, ≤ 2) · lens 60.0 px tall, opacity 1.00",
+   "load": "8.0/9.6/10.0"
+  },
+  {
+   "name": "E-13 clipstale loupe place · translate · fine",
+   "status": "PASS",
+   "line": "fine hold sustained 1200 ms · the scroller translate 0 30px · band 33.9 px over the held track's painted 21.2 px = ×1.599 (k max 1.60 ± 5 %) · the lens's centre at 40.6 % along the painted track (Δ against untransformed 0.0 px, ≤ 2) · its bottom 0.6 px from the track's painted top (Δ 0.0 px, ≤ 2) · lens 60.0 px tall, opacity 1.00",
+   "load": "7.6/9.5/10.0"
+  },
+  {
+   "name": "E-13 clipstale loupe place · scale · fine",
+   "status": "PASS",
+   "line": "fine hold sustained 1200 ms · the scroller scale 0.8, transformOrigin 0 0 · band 27.1 px over the held track's painted 17.0 px = ×1.599 (k max 1.60 ± 5 %) · the lens's centre at 40.6 % along the painted track (Δ against untransformed -0.0 px, ≤ 2) · its bottom 0.5 px from the track's painted top (Δ -0.1 px, ≤ 2) · lens 48.0 px tall, opacity 1.00",
+   "load": "7.6/9.5/10.0"
+  },
+  {
+   "name": "E-13 slider loupe whole reference · coarse",
+   "status": "REPORT",
+   "line": "unclipped: 60 of 60 lens rows painted (100.0 %), opacity 1.00",
+   "load": "7.6/9.5/10.0"
+  },
+  {
+   "name": "E-13 clipstale loupe whole · edge · coarse",
+   "status": "PASS",
+   "line": "coarse hold, the rest box 4 px below its scroller's top edge · 60 of 60 lens rows painted (100.0 %; a row is painted when ≥ 3 of its pixels differ ≥ 8 levels held against released) · bound ≥ the unclipped reference's 100.0 % − 5 = 95.0 %, opacity 1.00 (> 0.9) · geometry: the lens 80.0..140.0 px, the scroller's clip edge at 136.0 px: 56.0 of 60.0 px of the lens lie above it",
+   "load": "8.2/9.6/10.0"
+  },
+  {
+   "name": "E-13 clipstale loupe whole · mid · coarse",
+   "status": "PASS",
+   "line": "coarse hold, the rest box mid-box · 60 of 60 lens rows painted (100.0 %; a row is painted when ≥ 3 of its pixels differ ≥ 8 levels held against released) · bound ≥ the unclipped reference's 100.0 % − 5 = 95.0 %, opacity 1.00 (> 0.9) · geometry: the lens 126.0..186.0 px, the scroller's clip edge at 136.0 px: 10.0 of 60.0 px of the lens lie above it",
+   "load": "8.9/9.7/10.1"
+  },
+  {
+   "name": "E-13 clipstale loupe viewport · coarse",
+   "status": "PASS",
+   "line": "coarse hold, the scroller's top edge at 2.0 px (the viewport's top), the rest box 4 px below it · 60 of 60 lens rows painted (100.0 %; a row above the viewport is unpainted) · bound ≥ the unclipped reference's 100.0 % − 5 = 95.0 %, opacity 1.00 (> 0.9) · the lens 27.0..87.0 px: 0.0 px above the viewport",
+   "load": "8.9/9.7/10.1"
+  },
+  {
+   "name": "E-13 clipstale loupe place · none · coarse",
+   "status": "PASS",
+   "line": "coarse hold sustained 1200 ms · the scroller untransformed (the reference) · band 33.9 px over the held track's painted 21.2 px = ×1.599 (k max 1.60 ± 5 %) · the lens's centre at 40.6 % along the painted track (Δ against untransformed 0.0 px, ≤ 2) · its bottom 0.6 px from the track's painted top (Δ 0.0 px, ≤ 2) · lens 60.0 px tall, opacity 1.00",
+   "load": "8.5/9.6/10.0"
+  },
+  {
+   "name": "E-13 clipstale loupe place · translate · coarse",
+   "status": "PASS",
+   "line": "coarse hold sustained 1200 ms · the scroller translate 0 30px · band 33.9 px over the held track's painted 21.2 px = ×1.599 (k max 1.60 ± 5 %) · the lens's centre at 40.6 % along the painted track (Δ against untransformed 0.0 px, ≤ 2) · its bottom 0.6 px from the track's painted top (Δ 0.0 px, ≤ 2) · lens 60.0 px tall, opacity 1.00",
+   "load": "8.5/9.6/10.0"
+  },
+  {
+   "name": "E-13 clipstale loupe place · scale · coarse",
+   "status": "PASS",
+   "line": "coarse hold sustained 1200 ms · the scroller scale 0.8, transformOrigin 0 0 · band 27.1 px over the held track's painted 17.0 px = ×1.599 (k max 1.60 ± 5 %) · the lens's centre at 40.6 % along the painted track (Δ against untransformed -0.0 px, ≤ 2) · its bottom 0.5 px from the track's painted top (Δ -0.1 px, ≤ 2) · lens 48.0 px tall, opacity 1.00",
+   "load": "8.6/9.6/10.0"
+  }
+ ]
+}
