@@ -1,0 +1,45 @@
+2026-10-28 18:30:15 build bp8 · load averages: 49.63 39.51 37.03
+2026-10-28 18:34:08 start PR · load averages: 38.17 39.23 37.51
+2026-10-28 18:34:24 end PR · load averages: 37.99 39.13 37.51
+2026-10-28 18:34:24 start F7 · load averages: 37.99 39.13 37.51
+2026-10-28 18:43:37 end F7 · load averages: 49.34 41.85 39.22
+2026-10-28 18:43:37 start bp8 chromium light · load averages: 49.34 41.85 39.22
+2026-10-28 19:01:18 end bp8 chromium light exit 0 · load averages: 38.62 38.50 38.78
+2026-10-28 19:01:18 start bp8 chromium dark · load averages: 38.62 38.50 38.78
+2026-10-28 19:23:09 end bp8 chromium dark exit 0 · load averages: 39.62 41.18 40.45
+2026-10-28 19:23:09 start bp8 webkit light · load averages: 39.62 41.18 40.45
+2026-10-28 19:50:19 end bp8 webkit light exit 0 · load averages: 42.05 39.16 39.77
+2026-10-28 19:50:19 start bp8 webkit dark · load averages: 42.05 39.16 39.77
+2026-10-28 20:21:36 end bp8 webkit dark exit 0 · load averages: 41.22 40.04 39.77
+2026-10-28 20:21:36 start fmlow webkit light (stage run 1) · load averages: 41.22 40.04 39.77
+2026-10-28 20:22:25 STOPPED by seat in fmlow light stage run 1, pre-lock load wait (no slot queued or held), to run the WebKit W3 A/B (ab-w3.sh); the remaining stages resume in chain2.sh · load averages: 32.58 37.92 39.00
+2026-10-28 20:22:52 start ab-w3 webkit light · load averages: 35.08 38.04 39.01
+2026-10-28 21:25:59 end ab-w3 webkit light · load averages: 38.49 38.86 40.63
+2026-10-28 21:25:59 start ab-w3 webkit dark · load averages: 38.49 38.86 40.63
+2026-10-28 21:42:20 end ab-w3 webkit dark · load averages: 38.26 41.02 40.70
+2026-10-28 21:42:20 start fmlow webkit light (stage run 1) · load averages: 38.26 41.02 40.70
+2026-10-28 21:42:38 STOPPED chain2 by seat in fmlow light stage run 1, pre-lock load wait (no slot queued or held): the W3 A/B places bp8-only reds; the tree changes (the lane floor) and the battery re-runs from chain3.sh · load averages: 36.23 40.48 40.52
+2026-10-28 23:57:39 NOTE: the lane floor (c5, patch 11dbf301…) and c5 with both heir edges cut (c6, b2316583…) were built and read in Chromium (superseded-11dbf301/, superseded-b2316583/): each splices on retarget·40 (s1|s4 at 7.8-8.4 px; c5 3 of 4 reads, c6 3 of 5) and c6 also on first-expand and warm-expand (s8|s3 at 10.0-10.4 px), which c4 never did. Both reverted; the tree is c4 again, its patch byte-equal (b1ea7d86…), and these records stand. chain5 rebuilds bp8 (c4) and runs fmlow, the slot probe and cost · load averages: 38.00 38.90 40.02
+2026-10-28 23:58:02 build bp8 (c4) · load averages: 36.93 38.51 39.84
+2026-10-29 00:00:57 start si chromium light · load averages: 35.16 37.60 39.26
+2026-10-29 00:02:50 start si chromium dark · load averages: 34.06 36.65 38.69
+2026-10-29 00:04:43 queue si webkit light · load averages: 45.15 39.12 39.34
+2026-10-29 00:21:55 end si webkit light · load averages: 17.87 24.01 29.06
+2026-10-29 00:21:55 queue si webkit dark · load averages: 17.87 24.01 29.06
+2026-10-29 02:13:40 end si webkit dark · load averages: 15.26 13.30 11.01
+2026-10-29 02:13:40 start fmlow webkit light (stage run 1) · load averages: 15.26 13.30 11.01
+2026-10-29 04:02:48 end fmlow webkit light (stage run 1) exit 0 · load averages: 9.02 8.21 8.44
+2026-10-29 04:02:48 start fmlow webkit dark (stage run 1) · load averages: 9.02 8.21 8.44
+2026-10-29 05:15:04 end fmlow webkit dark (stage run 1) exit 0 · load averages: 11.59 10.24 10.09
+2026-10-29 05:15:04 start cost · load averages: 11.59 10.24 10.09
+2026-10-29 05:24:06 CHAIN5-DONE · load averages: 9.94 10.25 10.27
+2026-10-29 05:24:13 start F7-low · load averages: 9.88 10.23 10.26
+2026-10-29 05:25:47 end F7-low · load averages: 14.56 11.59 10.77
+2026-10-29 05:25:47 start bp8 webkit light (low) · load averages: 14.56 11.59 10.77
+2026-10-29 06:55:39 end bp8 webkit light (low) exit 0 · load averages: 8.16 9.77 9.77
+2026-10-29 06:55:40 start bp8 webkit dark (low) · load averages: 8.16 9.77 9.77
+2026-10-29 08:41:05 end bp8 webkit dark (low) exit 0 · load averages: 9.03 11.39 9.92
+2026-10-29 08:41:05 start strips · load averages: 9.03 11.39 9.92
+2026-10-29 09:43:56 end strips · load averages: 8.32 7.94 8.57
+2026-10-29 09:43:56 CHAIN6-DONE · load averages: 8.32 7.94 8.57
+2026-10-29 09:45:02 worktree removed; the seat directory's rm -rf was refused by the permission system: out/, ref3/, ref5/, ref7/, chk/ (459 MB) remain for the owner · load averages: 7.88 7.82 8.47

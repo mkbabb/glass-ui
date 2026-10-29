@@ -1,0 +1,155 @@
+{
+ "witness": "W3",
+ "target": "bp8@38f68098",
+ "when": "2026-10-29T02:41:36.267Z",
+ "load": 46.89,
+ "cells": [
+  {
+   "engine": "chromium",
+   "cell": "retarget·40",
+   "pass": false,
+   "failed": [
+    "splice"
+   ],
+   "frames": 100,
+   "retargetFrame": 6,
+   "blank": {
+    "ok": true,
+    "entering": 3,
+    "movingFrames": 32,
+    "blankFrames": 0,
+    "longestRun": 0,
+    "atMs": null,
+    "why": "0 blank of 32 moving frame(s), longest run 0 (bound 1)"
+   },
+   "overlap": {
+    "ok": true,
+    "frames": 0,
+    "first": null
+   },
+   "leaving": {
+    "ok": true,
+    "leaving": 2,
+    "failing": 0,
+    "lengthMs": 309.9,
+    "rows": [
+     {
+      "seat": 1,
+      "ok": true,
+      "tracks": false,
+      "deficit": 1,
+      "fades": true,
+      "spanMs": 129.2,
+      "spanFrames": 16,
+      "path": [
+       0.941,
+       0.592,
+       0.348,
+       0.348,
+       0.348,
+       0.348,
+       0.348,
+       0.348,
+       0.348,
+       0.348,
+       0.348,
+       0.348,
+       0.348,
+       0.348,
+       0.348,
+       0.348,
+       0
+      ],
+      "vanish": {
+       "drop": 0.349,
+       "from": 0.941,
+       "to": 0.592,
+       "atMs": 51.5
+      }
+     },
+     {
+      "seat": 2,
+      "ok": true,
+      "tracks": false,
+      "deficit": 1,
+      "fades": true,
+      "spanMs": 141.1,
+      "spanFrames": 16,
+      "path": [
+       1,
+       0.651,
+       0.543,
+       0.543,
+       0.543,
+       0.34,
+       0.34,
+       0.339,
+       0.34,
+       0.34,
+       0.34,
+       0.339,
+       0.339,
+       0.34,
+       0.339,
+       0.316,
+       0
+      ],
+      "vanish": {
+       "drop": 0.349,
+       "from": 1,
+       "to": 0.651,
+       "atMs": 10.2
+      }
+     }
+    ],
+    "vanish": {
+     "ok": true,
+     "drop": 0.349,
+     "seat": 1,
+     "from": 0.941,
+     "to": 0.592,
+     "atMs": 51.5
+    },
+    "inkMax": 1,
+    "inkOk": true,
+    "why": "2 leaving seat(s), 0 failing; tightest seat 1: ink 0.941 → 0.592 → 0.348 → 0.348 → 0.348 → 0.348 → 0.348 → 0.348 → 0.348 → 0.348 → 0.348 → 0.348 → 0.348 → 0.348 → 0.348 → 0.348 → 0 over 129.2 ms / 16 frame(s) (fade bound ≥ 3 frames and ≥ 77.5 ms), coverage deficit 1 (track bound 0.1); vanish worst one-frame drop beyond the closing edge 0.349 (seat 1 0.941 → 0.592 at +51.5 ms) (bound 0.5); largest unit ink read 1 (an ink is a share of the unit's own box: ≤ 1, H6-3)"
+   },
+   "splice": {
+    "ok": false,
+    "spliceFrames": 1,
+    "sliverFrames": 0,
+    "firstSplice": {
+     "units": [
+      "s1",
+      "s4"
+     ],
+     "gapPx": 7.87,
+     "advPx": 10.86,
+     "atMs": 164.1
+    },
+    "firstSliver": null,
+    "why": "1 splice frame(s) (first at 164.1 ms: units s1|s4 meet at a 7.87 px gap, one advance 10.86 px), 0 sliver frame(s) (bound 0 each)"
+   },
+   "vanish": {
+    "drop": 0.35,
+    "seat": 1,
+    "from": 0.35,
+    "to": 0,
+    "atMs": 120.1
+   },
+   "stub": {
+    "ok": true,
+    "judged": 38,
+    "stubFrames": 0,
+    "glyphs": 27,
+    "first": null,
+    "rampPx": 7.71,
+    "unreadGlyphs": 0,
+    "why": "0 stub frame(s) of 38 judged (up to 27 glyphs a frame); narrowest ramp across a glyph 7.71 px (RECORD) (bound 0; a stub is a glyph painted 10-90 %, at any opacity, by an edge whose alpha goes 10→90 % inside 2 px, inside the plate)"
+   },
+   "pageErrors": [],
+   "summary": "swap to long retargeted to mid 40 ms later (scheduled in the page; frame 6): blank 0 blank of 32 moving frame(s), longest run 0 (bound 1); seat overlap 0 frame(s); leaving 2 leaving seat(s), 0 failing; tightest seat 1: ink 0.941 → 0.592 → 0.348 → 0.348 → 0.348 → 0.348 → 0.348 → 0.348 → 0.348 → 0.348 → 0.348 → 0.348 → 0.348 → 0.348 → 0.348 → 0.348 → 0 over 129.2 ms / 16 frame(s) (fade bound ≥ 3 frames and ≥ 77.5 ms), coverage deficit 1 (track bound 0.1); vanish worst one-frame drop beyond the closing edge 0.349 (seat 1 0.941 → 0.592 at +51.5 ms) (bound 0.5); largest unit ink read 1 (an ink is a share of the unit's own box: ≤ 1, H6-3); vanish worst one-frame drop from the retarget 0.35 (seat 1 0.35 → 0 at +120.1 ms) (bound 0.5), over the strip 0.349; splice 1 splice frame(s) (first at 164.1 ms: units s1|s4 meet at a 7.87 px gap, one advance 10.86 px), 0 sliver frame(s) (bound 0 each); stub 0 stub frame(s) of 38 judged (up to 27 glyphs a frame); narrowest ramp across a glyph 7.71 px (RECORD) (bound 0; a stub is a glyph painted 10-90 %, at any opacity, by an edge whose alpha goes 10→90 % inside 2 px, inside the plate); page errors 0  ⟶ FAILED: splice",
+   "load": 48.63
+  }
+ ]
+}

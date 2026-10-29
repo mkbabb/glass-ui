@@ -1,0 +1,71 @@
+/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D2/p8/Bp-proto/ref7
+20:23  up 23:45, 4 users, load averages: 40.03 38.75 39.20
+
+ RUN  v4.1.10 /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D2/p8/Bp-proto/ref7
+
+ ❯ tests/components/menu/contract.test.ts (12 tests | 1 failed) 2812ms
+     × keeps the click branch to one portaled menu and restores focus on execute 571ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/components/menu/contract.test.ts > DropdownMenu contract > keeps the click branch to one portaled menu and restores focus on execute
+AssertionError: expected <body><div data-v-app>…(1)</div></body> to be <button …(7)></button> // Object.is equality
+
+- Expected
++ Received
+
+@@ -1,5 +1,13 @@
++ <body>
++   <div
++     data-v-app=""
++   >
++     
++     
++     
++     
+      <button
+        aria-expanded="false"
+        aria-haspopup="menu"
+        class="menu__trigger"
+        data-slot="menu-trigger"
+@@ -7,5 +15,22 @@
+        id="reka-dropdown-menu-trigger-v-0"
+        type="button"
+      >
+        Open commands
+      </button>
++     <!--teleport start-->
++     <!--teleport end-->
++     
++     
++     
++     
++   </div>
++   
++   
++   
++   
++   <!---->
++   
++   
++   
++   
++ </body>
+
+ ❯ tests/components/menu/contract.test.ts:118:40
+    116|         expect((wrapper.vm as unknown as { open: boolean }).open).toBe…
+    117|         await new Promise((resolve) => setTimeout(resolve, 30));
+    118|         expect(document.activeElement).toBe(trigger.element);
+       |                                        ^
+    119|     });
+    120|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 11 passed (12)
+   Start at  20:23:50
+   Duration  9.86s (transform 3.27s, setup 322ms, import 4.90s, tests 2.81s, environment 1.06s)
+
+exit 1

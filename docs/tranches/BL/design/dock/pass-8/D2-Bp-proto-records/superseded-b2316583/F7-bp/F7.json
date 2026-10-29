@@ -1,0 +1,166 @@
+{
+ "witness": "F7",
+ "target": "wt",
+ "when": "2026-10-29T03:36:50.739Z",
+ "load": 33.97,
+ "steps": {
+  "lib": {
+   "exit": 0,
+   "ms": 44452,
+   "load": [
+    35.59,
+    38.43
+   ],
+   "tail": "\u001b[32m✓ built in 5.11s\u001b[39m | declaration entries: projected 63 public entries | gen-component-styles: wrote /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D2/p8/Bp-proto/wt/.glass-generation-ngGpB2/component-styles.css | {\"type\":\"glass-ui:ready\",\"generation\":\"1e96e4182769e158fe9d14b6ea463f9c04d4aa3cf8b82bb704145be10c2d6911\",\"output\":\"/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D2/p8/Bp-proto/wt/dist\",\"tuple\":\"js/sfc-css/declarations/relays/styles/fonts/utilities/component-styles\"} | \u001b[33m\u001b[33m[PLUGIN_TIMINGS] \u001b[0mYour build spent significant time in plugin `vite:vue`. See "
+  },
+  "demo": {
+   "exit": 0,
+   "ms": 16485,
+   "load": [
+    38.43,
+    39.75
+   ],
+   "tail": "dist-demo/assets/Blob-CQ11MtzF.js                                               93.77 kB │ gzip: 34.33 kB | dist-demo/assets/Aurora-BOppQyYQ.js                                            207.96 kB │ gzip: 69.28 kB |  | \u001b[32m✓ built in 11.98s\u001b[39m |  | a:b referenced in a:b didn't resolve at build time, it will remain unchanged to be resolved at runtime"
+  },
+  "typecheck": {
+   "exit": 0,
+   "ms": 89533,
+   "load": [
+    39.75,
+    46.33
+   ],
+   "tail": "> @mkbabb/glass-ui@10.1.0 typecheck | > vue-tsc --noEmit && vue-tsc --noEmit -p tsconfig.test.json"
+  },
+  "units": {
+   "exit": 1,
+   "ms": 290688,
+   "load": [
+    46.33,
+    33.97
+   ],
+   "tail": "    141|     it(\"every atom combination yields a valid in-range config (TOTAL)\"… |        |     ^ |     142|         const violations: string[] = []; |     143|         let count = 0; |  | ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯"
+  }
+ },
+ "cells": [
+  {
+   "engine": "source",
+   "cell": "f7·typecheck",
+   "pass": true,
+   "failed": [],
+   "summary": "typecheck exit 0",
+   "load": 33.97
+  },
+  {
+   "engine": "source",
+   "cell": "f7·build",
+   "pass": true,
+   "failed": [],
+   "summary": "lib build exit 0, demo dist build exit 0",
+   "load": 33.97
+  },
+  {
+   "engine": "source",
+   "cell": "f7·units",
+   "pass": false,
+   "failed": [
+    "units"
+   ],
+   "summary": "232 test file(s) outside tests/gates/, 2241 test(s); 2 file(s) failing: tests/components/menu/contract.test.ts (DropdownMenu contract keeps the click branch to one portaled menu and restores focus on execute), tests/components/custom/aurora/atoms.test.ts (resolveAtoms total-function fuzz every atom combination yields a valid in-range config (TOTAL))",
+   "load": 33.97,
+   "failingFiles": [
+    "tests/components/menu/contract.test.ts",
+    "tests/components/custom/aurora/atoms.test.ts"
+   ]
+  },
+  {
+   "engine": "source",
+   "cell": "f7·gate·boot-graph",
+   "pass": true,
+   "failed": [],
+   "summary": "14 assertion(s), 14 ran, 0 failing; build arm 3/3 ran",
+   "load": 33.97,
+   "failing": []
+  },
+  {
+   "engine": "source",
+   "cell": "f7·gate·comment-ratio",
+   "pass": true,
+   "failed": [],
+   "summary": "15 assertion(s), 15 ran, 0 failing",
+   "load": 33.97,
+   "failing": []
+  },
+  {
+   "engine": "source",
+   "cell": "f7·gate·feedback-tint-seam",
+   "pass": true,
+   "failed": [],
+   "summary": "3 assertion(s), 3 ran, 0 failing",
+   "load": 33.97,
+   "failing": []
+  },
+  {
+   "engine": "source",
+   "cell": "f7·gate·gate-register",
+   "pass": true,
+   "failed": [],
+   "summary": "21 assertion(s), 21 ran, 0 failing",
+   "load": 33.97,
+   "failing": []
+  },
+  {
+   "engine": "source",
+   "cell": "f7·gate·orphan-css-partial",
+   "pass": true,
+   "failed": [],
+   "summary": "9 assertion(s), 9 ran, 0 failing",
+   "load": 33.97,
+   "failing": []
+  },
+  {
+   "engine": "source",
+   "cell": "f7·gate·overfit-structure",
+   "pass": true,
+   "failed": [],
+   "summary": "15 assertion(s), 15 ran, 0 failing",
+   "load": 33.97,
+   "failing": []
+  },
+  {
+   "engine": "source",
+   "cell": "f7·gate·tabs-seam",
+   "pass": true,
+   "failed": [],
+   "summary": "26 assertion(s), 26 ran, 0 failing",
+   "load": 33.97,
+   "failing": []
+  },
+  {
+   "engine": "source",
+   "cell": "f7·gate·token-hygiene",
+   "pass": true,
+   "failed": [],
+   "summary": "4 assertion(s), 4 ran, 0 failing",
+   "load": 33.97,
+   "failing": []
+  },
+  {
+   "engine": "source",
+   "cell": "f7·gate·trap-gates",
+   "pass": true,
+   "failed": [],
+   "summary": "6 assertion(s), 6 ran, 0 failing",
+   "load": 33.97,
+   "failing": []
+  },
+  {
+   "engine": "source",
+   "cell": "f7·gate·type-hygiene",
+   "pass": true,
+   "failed": [],
+   "summary": "7 assertion(s), 7 ran, 0 failing",
+   "load": 33.97,
+   "failing": []
+  }
+ ]
+}

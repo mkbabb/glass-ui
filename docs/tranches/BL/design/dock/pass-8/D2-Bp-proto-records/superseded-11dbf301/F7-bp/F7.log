@@ -1,0 +1,22 @@
+21:51  up 1 day,  1:12, 4 users, load averages: 39.87 41.18 41.44
+[guarded] waiting for headroom (load 37 > 36)
+STEP  F7  lib  exit 0  46 s  [load 34.21-42.6]
+STEP  F7  demo  exit 0  11 s  [load 42.6-41.08]
+STEP  F7  typecheck  exit 0  101 s  [load 41.08-42.17]
+STEP  F7  units  exit 1  268 s  [load 42.17-39.09]
+PASS  F7  source  f7·typecheck  typecheck exit 0  [load 39.09]
+PASS  F7  source  f7·build  lib build exit 0, demo dist build exit 0  [load 39.09]
+FAIL  F7  source  f7·units  232 test file(s) outside tests/gates/, 2241 test(s); 1 file(s) failing: tests/components/menu/contract.test.ts (DropdownMenu contract keeps the click branch to one portaled menu and restores focus on execute)  [load 39.09]
+PASS  F7  source  f7·gate·boot-graph  14 assertion(s), 14 ran, 0 failing; build arm 3/3 ran  [load 39.09]
+PASS  F7  source  f7·gate·comment-ratio  15 assertion(s), 15 ran, 0 failing  [load 39.09]
+PASS  F7  source  f7·gate·feedback-tint-seam  3 assertion(s), 3 ran, 0 failing  [load 39.09]
+PASS  F7  source  f7·gate·gate-register  21 assertion(s), 21 ran, 0 failing  [load 39.09]
+PASS  F7  source  f7·gate·orphan-css-partial  9 assertion(s), 9 ran, 0 failing  [load 39.09]
+PASS  F7  source  f7·gate·overfit-structure  15 assertion(s), 15 ran, 0 failing  [load 39.09]
+PASS  F7  source  f7·gate·tabs-seam  26 assertion(s), 26 ran, 0 failing  [load 39.09]
+PASS  F7  source  f7·gate·token-hygiene  4 assertion(s), 4 ran, 0 failing  [load 39.09]
+PASS  F7  source  f7·gate·trap-gates  6 assertion(s), 6 ran, 0 failing  [load 39.09]
+PASS  F7  source  f7·gate·type-hygiene  7 assertion(s), 7 ran, 0 failing  [load 39.09]
+FAIL  F7  wt  12/13 cells pass  (json: /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D2/p8/Bp-proto/out/f7/runs/F7-wt/F7.json)
+exit 1
+22:00  up 1 day,  1:22, 4 users, load averages: 40.36 40.02 40.59
