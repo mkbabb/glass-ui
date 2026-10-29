@@ -1,0 +1,8 @@
+# H8 st-E-13 webkit · 2026-10-29 05:39:05 · load { 11.84 10.29 10.32 } · 
+OK     E-13 webkit   clean exit 0 · E-13 webkit PASS · 8 pass, 0 fail, 0 unmeasured of 8 gating cells (2 reported) · load 11.8/10.3/10.3 at start, 12.1/10.6/10.4 at end
+OK     E-13 webkit   fault   e13-loupecut (CK-25 (H8, C-A7's cliploupe): the loupe rides inside the control's box, so its scroller clips it: at the scroller's top edge the lens is cut) exit 1
+         first planted FAIL: FAIL       E-13 clipstale loupe whole · edge · fine · fine hold, the rest box 4 px below its scroller's top edge · 0 of 64 lens rows painted (0.0 %; a row is painted when ≥ 3 of its pixels differ ≥ 8 levels held against released) · bound ≥ 
+OK     E-13 webkit   fault   e13-loupemark (CK-25 (H8, P-E7's loupe6): a 2 px mark drawn across the window's centre and no end fade: a seam, a line over glass, a band that ends on the window's pill end) exit 1
+         first planted FAIL: FAIL       E-13 slider loupe k max fine light · sustained 1200 ms · band 33.9 px over the held track's 21.2 px = ×1.599 (k max 1.60; bound ±5 %) · the magnified tip 0.00 px from the window's centre (≤ 2) · seam: the band row's centre leaves
+selftest: 3 runs, 0 N/A; every witness passes its fixture, fails each planted violation on the planted cell, and passes each control, in every engine with an input for it
+# selftest exit 0 · 05:40:44 · load { 8.88 9.96 10.20 }

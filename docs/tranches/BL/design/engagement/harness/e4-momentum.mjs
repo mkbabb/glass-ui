@@ -55,6 +55,9 @@ const WINDOW = 2000, REST = 200, DRIVEN = 20, OVER = 0.5, REPEAT = 3, SPREAD = 2
 // H7: the release rule's window and ring (motion/engage/release.ts RELEASE_RULE.windowMs, VelocitySampler size), the
 // equal-velocity tolerance, and the fling floor (above)
 const V_WINDOW = 100, V_RING = 8, V_FLING = 100;
+// H8: a fling the release rule measured under V_FLING is re-driven on fresh pages up to REDRIVE more times (reported, never
+// graded as the rule's: a 0 px/s drive under load carries what the rule measured, REGISTRY §P7-7 item 12)
+const REDRIVE = 2;
 // the body read: a scene's visible value point when it names one, else its thumb, else the landed row
 const THUMB = ['[data-e~="point"]', '[data-e~="thumb"]', '[data-e~="land"]'];
 
@@ -124,7 +127,16 @@ await witness("E-4", "CK-05 momentum on the visible body, without a teleport", a
   for (const [sc, m] of scenesFor(idx, "E-4")) {
     const name = `E-4 ${sc} fling carries velocity`, cont = `E-4 ${sc} release continuity`;
     const nReads = Math.max(1, Number(m.reads ?? 1));
-    const r = await guard(`${sc} fling`, async () => ({ fl: await release(E, T, sc, m, false), st: await release(E, T, sc, m, true) }), 90000);
+    // H8: one fling-and-still pair; the fling re-driven while the rule measured it under V_FLING (each re-drive kept)
+    const pairOnce = async (label) => {
+      const slow = [];
+      for (let k = 0; ; k++) {
+        const q = await guard(`${sc} ${label}${k ? ` re-drive ${k}` : ""}`, async () => ({ fl: await release(E, T, sc, m, false), st: await release(E, T, sc, m, true) }), 90000);
+        if (q.crashed || q.fl.bad || q.st.bad || q.fl.inflow || q.st.inflow || q.fl.v >= V_FLING || k >= REDRIVE) return Object.assign(q, { slow });
+        slow.push(`${Number.isFinite(q.fl.v) ? `${f(q.fl.v, 0)} px/s` : q.fl.vtxt} (carry ${f(q.fl.carry, 2)} px)`);
+      }
+    };
+    const r = await pairOnce("fling");
     // H6: the further reads of the pair (fresh pages each), taken only when the first is driven and read
     const more = [];
     const undriven = (x) => !(Math.abs(x.moved) >= DRIVEN);
@@ -140,15 +152,24 @@ await witness("E-4", "CK-05 momentum on the visible body, without a teleport", a
     } else {
       driven = true;
       for (let k = 1; k < nReads; k++) {
-        const q = await guard(`${sc} fling read ${k + 1}`, async () => ({ fl: await release(E, T, sc, m, false), st: await release(E, T, sc, m, true) }), 90000);
+        const q = await pairOnce(`fling read ${k + 1}`);
         more.push(q.crashed ? { bad: q.line } : q.fl.bad || q.st.bad || q.fl.inflow || q.st.inflow ? { bad: q.fl.bad ?? q.st.bad ?? q.fl.inflow ?? q.st.inflow } : q.fl.invisible || q.st.invisible ? { bad: `INVISIBLE body on ${q.fl.invisible + q.st.invisible} frame(s)` } : undriven(q.fl) || undriven(q.st) ? { bad: `NOT DRIVEN: moved ${f(q.fl.moved, 1)} / ${f(q.st.moved, 1)} px` } : q);
       }
       const reads = [r, ...more];
-      const grade = (x) => { if (x.bad) return { ok: false, txt: `unreadable (${String(x.bad).slice(0, 80)})` }; const dc = x.fl.carry - x.st.carry, de = x.fl.end - x.st.end, d = Math.max(dc, de); const atRest = x.fl.rest && x.st.rest; return { ok: atRest && d >= TRAVEL, d, txt: `${atRest ? "" : "NOT AT REST · "}carry ${f(dc, 2)} / settle ${f(de, 2)} px` }; };
-      const gs = reads.map(grade); const allOk = gs.every((g) => g.ok);
+      // H8 (REGISTRY §P7-7 item 12): every read prints its fling's release velocity and its re-drives; a fling the rule
+      // measured ≥ V_FLING that carries 0.00 px fails BY NAME; a read still under V_FLING after its re-drives is UNGRADED
+      const redr = (x) => (x.slow?.length ? `, re-driven after ${x.slow.join(", ")}` : "");
+      const grade = (x) => { if (x.bad) return { ok: false, txt: `unreadable (${String(x.bad).slice(0, 80)})` };
+        const vt = `fling ${Number.isFinite(x.fl.v) ? `${f(x.fl.v, 0)} px/s` : x.fl.vtxt}${redr(x)}`;
+        if (!(x.fl.v >= V_FLING)) return { ok: null, txt: `UNGRADED: the drive stayed under ${V_FLING} px/s after ${x.slow.length + 1} drives (${vt})` };
+        if (x.fl.carry < 0.005) return { ok: false, zero: true, txt: `ZERO-CARRY FLING: released at ${f(x.fl.v, 0)} px/s, carried ${f(x.fl.carry, 2)} px${redr(x)}` };
+        const dc = x.fl.carry - x.st.carry, de = x.fl.end - x.st.end, d = Math.max(dc, de); const atRest = x.fl.rest && x.st.rest;
+        return { ok: atRest && d >= TRAVEL, d, txt: `${atRest ? "" : "NOT AT REST · "}carry ${f(dc, 2)} / settle ${f(de, 2)} px @ ${vt}` }; };
+      const gs = reads.map(grade); const allOk = gs.every((g) => g.ok === true); const anyFail = gs.some((g) => g.ok === false);
       const dc = r.fl.carry - r.st.carry, de = r.fl.end - r.st.end;
       const atRest = r.fl.rest && r.st.rest;
-      cell(name, allOk ? "PASS" : "FAIL", `${m.axis === "y" ? "axis y" : "axis x"}${m.dir === -1 ? ", dir −1" : ""}${m.input === "touch" ? ", touch" : ""}${m.edge === "lead" ? ", leading edge" : ""}, page frame · ${nReads > 1 ? `${nReads} reads, every one must pass: [${gs.map((g, i) => `${i + 1}: ${g.txt} ${g.ok ? "pass" : "FAIL"}`).join(" · ")}] (${gs.filter((g) => g.ok).length} of ${nReads} pass) · read 1 in full: ` : ""}${atRest ? "" : `NOT AT REST at ${WINDOW} ms (fling ${r.fl.rest}, still ${r.st.rest}) · `}fling: carry ${f(r.fl.carry, 2)} px, settles ${f(r.fl.end, 2)} px past release · still: carry ${f(r.st.carry, 2)} px, settles ${f(r.st.end, 2)} px · difference: carry ${f(dc, 2)} px, settle ${f(de, 2)} px (bound: either ≥ ${TRAVEL}, both at rest) · body opacity ≥ ${f(Math.min(r.fl.minOp, r.st.minOp), 3)} · ${r.fl.n} frames, median ${f(r.fl.med, 1)} ms${r.note ? ` · ${r.note}` : ""}`);
+      const zeroTxt = gs.filter((g) => g.zero).map((g) => g.txt);
+      cell(name, allOk ? "PASS" : anyFail ? "FAIL" : "UNMEASURED", `${zeroTxt.length ? `${zeroTxt.join("; ")} · ` : ""}${m.axis === "y" ? "axis y" : "axis x"}${m.dir === -1 ? ", dir −1" : ""}${m.input === "touch" ? ", touch" : ""}${m.edge === "lead" ? ", leading edge" : ""}, page frame · ${nReads > 1 ? `${nReads} reads, every one must pass: [${gs.map((g, i) => `${i + 1}: ${g.txt} ${g.ok === true ? "pass" : g.ok === false ? "FAIL" : "ungraded"}`).join(" · ")}] (${gs.filter((g) => g.ok === true).length} of ${nReads} pass) · read 1 in full: ` : `[${gs[0].txt}] · `}${atRest ? "" : `NOT AT REST at ${WINDOW} ms (fling ${r.fl.rest}, still ${r.st.rest}) · `}fling: carry ${f(r.fl.carry, 2)} px, settles ${f(r.fl.end, 2)} px past release · still: carry ${f(r.st.carry, 2)} px, settles ${f(r.st.end, 2)} px · difference: carry ${f(dc, 2)} px, settle ${f(de, 2)} px (bound: either ≥ ${TRAVEL}, both at rest, on every read whose fling the rule measured ≥ ${V_FLING} px/s; such a fling carrying 0.00 px fails by name; a drive under ${V_FLING} px/s is re-driven up to ${REDRIVE} times and, still under it, UNGRADED) · body opacity ≥ ${f(Math.min(r.fl.minOp, r.st.minOp), 3)} · ${r.fl.n} frames, median ${f(r.fl.med, 1)} ms${r.note ? ` · ${r.note}` : ""}`);
       const ok = reads.filter((x) => !x.bad);
       // each read's release against its own drive's bound
       const over = ok.map((x) => ({ j: Math.max(x.fl.jump, x.st.jump), b: Math.max(x.fl.driveMax, x.st.driveMax) * 1.5 + 2 }));

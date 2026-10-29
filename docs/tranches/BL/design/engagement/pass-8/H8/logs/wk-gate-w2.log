@@ -1,0 +1,38 @@
+[guarded] waiting for the 'webkit' lock
+# 2026-10-29 07:29:42 WebKit lock acquired (w2) · load { 10.60 11.04 9.94 }
+# 07:30:12 ready: fx-E-10 st-E-10:--faults+e10-clipvanish,e10-clipouter,e10-rectclip-feather,e10-rectclip-radius,e10-rectclip-scale,e10-rectclip-film,e10-layoutplace cand-e10 plant-clipOnly-e10 head-e10 clean st-E-10:--faults+e10-snap,e10-veildip,e10-escsnap,e10-rerender,e10-teleport,e10-teleportin,e10-twoengaged,e10-relayout,e10-stale,e10-staleresize,e10-ratio1,e10-clipratio,e10-noref,e10-clipratioptr,e10-prmrebound st-E-11 
+## 07:30:12 fx-E-10 webkit  · load { 11.13 11.19 10.04 }
+  PASS       E-10 pop rebound reverse (PRM) +200 dark · reduce · state "off" → "on" → back at +200 · instant: the face's scale range 0.0000 (bound < 0.002), in flight on 0 frame(s) (bound ≤ 1) over 60 frames · rests where it began: 300 ms after the reverse 0.0 % of the face's pixels differ by ≥ 16 levels from before the commit (bound < 5 %) · load 15.5/12.9/10.9
+E-10 webkit FAIL · 45 pass, 2 fail, 0 unmeasured of 47 gating cells (9 reported) · load 11.1/11.2/10.0 at start, 15.5/12.9/10.9 at end
+# exit 1 · 07:33:11 · load { 15.50 12.90 10.92 }
+## 07:33:11 st-E-10 webkit --faults e10-clipvanish,e10-clipouter,e10-rectclip-feather,e10-rectclip-radius,e10-rectclip-scale,e10-rectclip-film,e10-layoutplace · load { 15.50 12.90 10.92 }
+         first planted FAIL: FAIL       E-10 clipstale clip place · translate · keyboard · keyboard engaged (promoted true) · the scroller translate 0 30px · the control's centre at rest (249.0, 215.0), width 360.0 px → engaged (248.0, 184.0), width 381.6 px: the centr
+selftest: 1 of 7 runs BROKEN or UNREAD (0 N/A)
+# selftest exit 1 · 07:35:27 · load { 21.42 15.40 12.16 }
+## 07:35:27 cand-e10 webkit  · load { 21.42 15.40 12.16 }
+  REPORT     E-10 clipstale clip film · smooth · released · 67 of 70 frames read (largest 2 px² at frame 0; frames over 100 px²: none), scrolled 90 px | 67 of 70 frames read (largest 2 px² at frame 0; frames over 100 px²: none), scrolled 90 px | 66 of 70 frames read (largest 0 px² at frame 0; frames over 100 px²: none), scrolled 90 px · load 16.5/15.9/12.7
+E-10 webkit FAIL · 8 pass, 6 fail, 0 unmeasured of 14 gating cells (2 reported) · load 21.4/15.4/12.2 at start, 16.5/15.9/12.7 at end
+# exit 1 · 07:37:03 · load { 16.47 15.95 12.75 }
+/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-8/H8/run-h8.sh:45: parse error near `)'
+## 07:37:03 plant-clipOnly-e10 webkit  · load { 16.47 15.95 12.75 }
+  FAIL       E-10 clipstale clip-vanish · touch · touch engaged (promoted on every step true) · px² of the strip above the scroller that differ from the released strip per 1 px step of the 24.0 px rest box past its top edge (hidden 14/15/16/17/18/19/20/21/22): 1583 / 1737 / 1891 / 2045 / 2199 / 2352 / 2505 / 2656 / 2805 · (a) painted outside its card: largest 2805 px² (bound ≤ 3 rows × the control's 358 px = 1074: the edge's antialiasing) · (b) largest change between adjacent steps 154 px² (bound ≤ 1074: a 1 px scroll moves ≤ 1 px of the control; a larger drop is the control leaving the paint in one step) · load 14.0/15.4/12.6
+E-10 webkit FAIL · 0 pass, 2 fail, 0 unmeasured of 2 gating cells (0 reported) · load 15.6/15.8/12.7 at start, 14.0/15.4/12.6 at end
+# exit 1 · 07:37:16 · load { 14.00 15.43 12.62 }
+## 07:37:16 head-e10 webkit  · load { 14.00 15.43 12.62 }
+  REPORT     E-10 clipstale clip film · smooth · released · 55 of 55 frames read (largest 0 px² at frame 0; frames over 100 px²: none), scrolled 90 px | 54 of 54 frames read (largest 0 px² at frame 0; frames over 100 px²: none), scrolled 90 px | 55 of 55 frames read (largest 0 px² at frame 0; frames over 100 px²: none), scrolled 90 px · load 10.3/13.9/12.3
+E-10 webkit FAIL · 0 pass, 14 fail, 0 unmeasured of 14 gating cells (2 reported) · load 14.0/15.4/12.6 at start, 10.3/13.9/12.3 at end
+# exit 1 · 07:38:51 · load { 10.35 13.93 12.34 }
+## 07:38:51 clean webkit  · load { 10.35 13.93 12.34 }
+# capture done · load 15.6/14.9/13.2 at end
+CAP webkit PASS · 4 pass, 0 fail, 0 unmeasured of 4 gating cells (0 reported) · load 14.2/14.6/13.1 at start, 15.6/14.9/13.2 at end
+# exit 0 · 07:43:49 · load { 15.59 14.86 13.23 }
+## 07:43:49 st-E-10 webkit --faults e10-snap,e10-veildip,e10-escsnap,e10-rerender,e10-teleport,e10-teleportin,e10-twoengaged,e10-relayout,e10-stale,e10-staleresize,e10-ratio1,e10-clipratio,e10-noref,e10-clipratioptr,e10-prmrebound · load { 15.59 14.86 13.23 }
+         first planted FAIL: FAIL       E-10 pop rebound reverse (PRM) +60 light · reduce · state "off" → "on" → back at +60 · instant: the face's scale range 0.2103 (bound < 0.002), in flight on 32 frame(s) (bound ≤ 1) over 60 frames · rests where it began: 300 ms aft
+selftest: 15 runs, 0 N/A; every witness passes its fixture, fails each planted violation on the planted cell, and passes each control, in every engine with an input for it
+# selftest exit 0 · 08:04:25 · load { 6.00 7.17 9.61 }
+## 08:04:25 st-E-11 webkit  · load { 6.00 7.17 9.61 }
+         first planted FAIL: FAIL       E-11 pop fail-loud --fx-commit-crest (commit) · SILENT DEGRADATION · --fx-commit-crest: "nonsense" on <html> before the first script · clean {"peak":0,"rise":0.18171218443130568} {"peak":0,"rise":0.18171218443130568} {"peak":0,"r
+selftest: 6 runs, 0 N/A; every witness passes its fixture, fails each planted violation on the planted cell, and passes each control, in every engine with an input for it
+# selftest exit 0 · 08:30:19 · load { 8.49 7.40 7.45 }
+## 08:30:19 chain end · load { 8.49 7.40 7.45 }
+# 2026-10-29 08:30:19 WebKit acquisition (w2) end · load { 8.49 7.40 7.45 }

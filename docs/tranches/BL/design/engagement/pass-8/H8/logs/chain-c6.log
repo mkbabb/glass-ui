@@ -1,0 +1,33 @@
+## 06:49:41 cand-e10 chromium  · load { 9.85 10.41 9.82 }
+  REPORT     E-10 clipstale clip film · smooth · released · 46 of 46 frames read (largest 0 px² at frame 0; frames over 100 px²: none), scrolled 90 px | 46 of 46 frames read (largest 0 px² at frame 0; frames over 100 px²: none), scrolled 90 px | 45 of 46 frames read (largest 0 px² at frame 0; frames over 100 px²: none), scrolled 90 px · load 9.9/10.5/9.9
+E-10 chromium FAIL · 8 pass, 6 fail, 0 unmeasured of 14 gating cells (2 reported) · load 9.9/10.4/9.8 at start, 9.9/10.5/9.9 at end
+# exit 1 · 06:51:04 · load { 9.95 10.46 9.90 }
+## 06:51:04 cand-e13 chromium  · load { 9.95 10.46 9.90 }
+  FAIL       E-13 clipstale loupe whole · mid · coarse · coarse hold, the rest box mid-box · 48 of 81 lens rows painted (59.3 %; a row is painted when ≥ 3 of its pixels differ ≥ 8 levels held against released) · bound ≥ the unclipped reference's 100.0 % − 5 = 95.0 %, opacity 1.00 (> 0.9) · geometry: the lens 139.6..220.1 px, the scroller's clip edge at 171.7 px: 32.2 of 80.6 px of the lens lie above it · load 9.0/10.2/9.8
+E-13 chromium FAIL · 4 pass, 4 fail, 0 unmeasured of 8 gating cells (2 reported) · load 9.9/10.5/9.9 at start, 9.0/10.2/9.8 at end
+# exit 1 · 06:51:30 · load { 9.02 10.21 9.83 }
+## 06:51:30 cand-e12 chromium  · load { 9.02 10.21 9.83 }
+  PASS       E-12 capsule preset chip answers dark · [data-t="cap-configurator"] .configurator-preset-chip:not(.is-active) · hover 400 ms (:hover true): 51.1 % of its pixels moved by ≥ 4 levels (mean |Δ| 5.23 levels), 0.0 % by ≥ 16; properties changed [background-image] · held press 250 ms (door mark true): press-only paint [background-image], scale ×1.0000 → ×1.0000, 48.0 % of its pixels · declared class [engage-chosen] (--rung-class "chosen") (bound: the hover moves ≥ 10 % of the chip's pixels by ≥ 4 levels, the press ≥ 1 property its hover does not or Δscale ≥ 0.01, the element composes an engage-* class) · load 10.3/10.4/9.9
+E-12 chromium PASS · 31 pass, 0 fail, 0 unmeasured of 31 gating cells (10 reported) · load 9.0/10.2/9.8 at start, 10.3/10.4/9.9 at end
+# exit 0 · 06:52:16 · load { 10.28 10.36 9.90 }
+## 06:52:16 plant-clipOnly-e10 chromium  · load { 10.28 10.36 9.90 }
+  FAIL       E-10 clipstale clip-vanish · touch · touch engaged (promoted on every step true) · px² of the strip above the scroller that differ from the released strip per 1 px step of the 24.0 px rest box past its top edge (hidden 14/15/16/17/18/19/20/21/22): 1949 / 2104 / 2259 / 2414 / 2569 / 2722 / 2875 / 3026 / 3176 · (a) painted outside its card: largest 3176 px² (bound ≤ 3 rows × the control's 358 px = 1074: the edge's antialiasing) · (b) largest change between adjacent steps 155 px² (bound ≤ 1074: a 1 px scroll moves ≤ 1 px of the control; a larger drop is the control leaving the paint in one step) · load 9.5/10.2/9.8
+E-10 chromium FAIL · 0 pass, 2 fail, 0 unmeasured of 2 gating cells (0 reported) · load 10.3/10.4/9.9 at start, 9.5/10.2/9.8 at end
+# exit 1 · 06:52:27 · load { 9.47 10.19 9.84 }
+## 06:52:27 plant-chipfaint-e12 chromium  · load { 9.47 10.19 9.84 }
+  FAIL       E-12 capsule preset chip answers dark · [data-t="cap-configurator"] .configurator-preset-chip:not(.is-active) · hover 400 ms (:hover true): NO ANSWER · 0.0 % of its pixels moved by ≥ 4 levels (mean |Δ| 0.00 levels), 0.0 % by ≥ 16; properties changed [background-image] · held press 250 ms (door mark true): press-only paint [background-image], scale ×1.0000 → ×1.0000, 49.9 % of its pixels · declared class [engage-chosen] (--rung-class "chosen") (bound: the hover moves ≥ 10 % of the chip's pixels by ≥ 4 levels, the press ≥ 1 property its hover does not or Δscale ≥ 0.01, the element composes an engage-* class) · load 10.7/10.3/9.9
+E-12 chromium FAIL · 29 pass, 2 fail, 0 unmeasured of 31 gating cells (10 reported) · load 9.5/10.2/9.8 at start, 10.7/10.3/9.9 at end
+# exit 1 · 06:53:14 · load { 10.69 10.31 9.90 }
+## 06:53:14 plant-loupe6-e13 chromium  · load { 10.69 10.31 9.90 }
+  FAIL       E-13 slider loupe k max coarse dark · sustained 1200 ms · band 33.9 px over the held track's 21.2 px = ×1.600 (k max 1.60; bound ±5 %) · the magnified tip 0.00 px from the window's centre (≤ 2) · seam: the band row's centre leaves its flanks' range by 26.4 levels (≤ 6) · line: the glass row's centre departs from its flanks by 51.3 levels (≤ 6) · runs on: the band's colour distance from the glass at the window's start 107.6 against 107.9 inside = 1.00 (≤ 0.35) · housing 148.4×80.6 px, window 135.7×67.8 px, opacity 1.00 · load 10.1/10.2/9.9
+E-13 chromium FAIL · 0 pass, 4 fail, 0 unmeasured of 4 gating cells (0 reported) · load 10.7/10.3/9.9 at start, 12.6/10.7/10.0 at end
+# exit 1 · 06:53:22 · load { 12.63 10.71 10.05 }
+## 06:53:22 cand-e11 chromium  · load { 12.63 10.71 10.05 }
+  PASS       E-11 clock --engage-press-drain-release (enumerated) · --engage-press-drain-release: nonsense on <html> before the first script · fails loud · switch: 10 consumer read(s), 10 reading the clock unreadable, 10 with its timing changed in the act (rest | .control-bit__face #0: background-color, border-color, outline-color / 0.12s, 0.2s, 0.2s / 0s, 0s, 0s / none / 0s → all / 0s / 0s / none / 0s), console errors naming the clock 1 of 1 ("[glass-ui] engage: --engage-press-drain-release is unreadable on the host; the engagement it drives paints not"), on the clean page 0 · load 10.4/10.3/9.9
+E-11 chromium PASS · 11 pass, 0 fail, 5 unmeasured of 16 gating cells (1 reported) · load 12.6/10.7/10.0 at start, 10.4/10.3/9.9 at end
+# exit 0 · 06:54:36 · load { 10.43 10.30 9.94 }
+## 06:54:36 cand-e4 chromium  · load { 10.43 10.30 9.94 }
+  PASS       E-4 sortable release PRM · reduce · moved 83.8 px · fling: carry 0.00 px, settles -0.50 px past release, overshoot past its rest 0.00 px, at rest true (bound: at rest within 2000 ms, overshoot ≤ 0.5 px) · largest one-frame jump 36.2 px · load 8.9/10.0/9.8
+E-4 chromium PASS · 7 pass, 0 fail, 0 unmeasured of 7 gating cells (0 reported) · load 10.4/10.3/9.9 at start, 8.9/10.0/9.8 at end
+# exit 0 · 06:55:30 · load { 8.93 9.97 9.84 }
+## 06:55:30 chain end · load { 8.93 9.97 9.84 }

@@ -1,0 +1,26 @@
+{
+ "id": "E-10",
+ "engine": "webkit",
+ "version": "26.5",
+ "target": {
+  "fixture": true,
+  "fault": "e10-rectclip-radius"
+ },
+ "loadStart": "8.4/10.9/9.9",
+ "loadEnd": "8.0/10.7/9.8",
+ "verdict": "FAIL",
+ "cells": [
+  {
+   "name": "E-10 clipstale clip radius · keyboard",
+   "status": "FAIL",
+   "line": "keyboard engaged (promoted true) · scroller border-radius 40 px, the control's end in its corner, 6 px past the top edge · px² of the top corners outside the rounded padding box (562 px² read, the 1.5 px antialias band excluded) that differ ≥ 16 levels engaged against released: 128 (bound ≤ 16 px²)",
+   "load": "8.3/10.8/9.9"
+  },
+  {
+   "name": "E-10 clipstale clip radius · touch",
+   "status": "FAIL",
+   "line": "touch engaged (promoted true) · scroller border-radius 40 px, the control's end in its corner, 6 px past the top edge · px² of the top corners outside the rounded padding box (562 px² read, the 1.5 px antialias band excluded) that differ ≥ 16 levels engaged against released: 128 (bound ≤ 16 px²)",
+   "load": "8.0/10.7/9.8"
+  }
+ ]
+}

@@ -1,0 +1,10 @@
+# H8 plant-clipOnly-e10 chromium · 2026-10-29 06:52:16 · load { 10.28 10.36 9.90 } · 
+# E-10 · CK-20 no one-frame discontinuity on an engagement path
+# target /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p8/H8/wt/.h8out/builds/plant-clipOnly · engine chromium · lock wait 0.0 s · other headless processes: chromium 0, webkit 2 · load 10.3/10.4/9.9 at start
+# scene app: harness scenes/App.vue (sha1 310d45686fce)
+# chromium 149.0.7827.55
+# narrowed to scenes clipstale
+  FAIL       E-10 clipstale clip-vanish · keyboard · keyboard engaged (promoted on every step true) · px² of the strip above the scroller that differ from the released strip per 1 px step of the 20.0 px rest box past its top edge (hidden 14/15/16/17/18/19/20/21/22): 3191 / 3348 / 3505 / 3663 / 3820 / 3976 / 4130 / 4282 / 4433 · (a) painted outside its card: largest 4433 px² (bound ≤ 3 rows × the control's 358 px = 1074: the edge's antialiasing) · (b) largest change between adjacent steps 158 px² (bound ≤ 1074: a 1 px scroll moves ≤ 1 px of the control; a larger drop is the control leaving the paint in one step) · load 9.8/10.3/9.9
+  FAIL       E-10 clipstale clip-vanish · touch · touch engaged (promoted on every step true) · px² of the strip above the scroller that differ from the released strip per 1 px step of the 24.0 px rest box past its top edge (hidden 14/15/16/17/18/19/20/21/22): 1949 / 2104 / 2259 / 2414 / 2569 / 2722 / 2875 / 3026 / 3176 · (a) painted outside its card: largest 3176 px² (bound ≤ 3 rows × the control's 358 px = 1074: the edge's antialiasing) · (b) largest change between adjacent steps 155 px² (bound ≤ 1074: a 1 px scroll moves ≤ 1 px of the control; a larger drop is the control leaving the paint in one step) · load 9.5/10.2/9.8
+E-10 chromium FAIL · 0 pass, 2 fail, 0 unmeasured of 2 gating cells (0 reported) · load 10.3/10.4/9.9 at start, 9.5/10.2/9.8 at end
+# exit 1 · 06:52:27 · load { 9.47 10.19 9.84 }

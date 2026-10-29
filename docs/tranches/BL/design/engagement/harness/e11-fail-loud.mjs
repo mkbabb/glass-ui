@@ -86,10 +86,12 @@ await witness("E-11", "CK-21 no silent degradation", async ({ E, T, cell, guard,
     for (const pl of m.failLoud ?? []) {
       const nm = `E-11 ${sc} fail-loud ${pl.token}${pl.value === "nonsense" ? "" : `=${pl.value}`} (${pl.act})`;
       const run = (plant) => guard(`${nm}${plant ? " plant" : ""}`, async () => {
-        const P = await openPage(E, T, sc);
+        // H8 (C-A7's crestinput): an `html` plant is set on <html> before the first script (openPage `plant`), so a
+        // mount-time read meets it; otherwise on the row's element after the page is ready
+        const P = await openPage(E, T, sc, plant && pl.html ? { plant: [pl.token, pl.value] } : {});
         try {
-          await P.page.waitForTimeout(150); const e0 = P.errors.length;
-          if (plant) await P.page.evaluate(([on, tok, v]) => { const el = document.querySelector(on ?? '[data-e~="root"]') ?? document.querySelector('[data-e~="target"]'); el?.style.setProperty(tok, v); }, [pl.on ?? null, pl.token, pl.value]);
+          await P.page.waitForTimeout(150); const e0 = plant && pl.html ? 0 : P.errors.length;
+          if (plant && !pl.html) await P.page.evaluate(([on, tok, v]) => { const el = document.querySelector(on ?? '[data-e~="root"]') ?? document.querySelector('[data-e~="target"]'); el?.style.setProperty(tok, v); }, [pl.on ?? null, pl.token, pl.value]);
           let read;
           if (pl.act === "kbd") {
             await P.page.focus('[data-sentinel="before"]'); await P.page.keyboard.press(tabKey(engine)); await P.page.waitForTimeout(450);
@@ -101,7 +103,9 @@ await witness("E-11", "CK-21 no silent degradation", async ({ E, T, cell, guard,
             for (let k = 1; k <= 3; k++) { await P.page.mouse.move(c.x + 40 * k, c.y); await P.page.waitForTimeout(16); }
             await P.page.mouse.up(); read = await pr;
           } else {
-            const fl = await P.page.evaluate(async (o) => { const p = window.__film(o); window.__e.commit(); return p; }, { target: '[data-e~="target"]', face: '[data-e~="target"]', ms: 800 });
+            // H8: the painted face where the row names one; a stateless control is committed by its activation (E-2's
+            // element.click()), never by __e.commit (C-A7b: a stateless control driven by __e.commit read ×1.0000 "intact")
+            const fl = await P.page.evaluate(async (o) => { o.face = document.querySelector('[data-e~="face"]') ? '[data-e~="face"]' : o.target; const p = window.__film(o); if (o.stateless) document.querySelector(o.target).click(); else window.__e.commit(); return p; }, { target: '[data-e~="target"]', ms: 800, stateless: !!m.stateless });
             const s = fl.fr.filter((x) => x.f).map((x) => x.f.s); const L = fl.fr.map((x) => x.L).filter(Number.isFinite);
             read = { peak: Math.max(...s) - s.at(-1), rise: L.length ? Math.max(...L) - L.at(-1) : 0 };
           }
@@ -130,8 +134,10 @@ await witness("E-11", "CK-21 no silent degradation", async ({ E, T, cell, guard,
         degraded = !loud && M.some(([k, eps]) => { const s1 = side(cleans, b, k, eps); return s1 !== 0 && s1 === side(cleans, b2, k, eps); });
       }
       const errs = planted.flatMap((p) => p.errors);
+      // H8 (REGISTRY §P7-7 item 11): a commit act whose clean runs moved nothing drove nothing; its planted read cannot pass
+      const still = pl.act === "commit" && cleans.every((c) => !(c.read.peak > EPS_S) && !(c.read.rise > EPS_L));
       const line = `${pl.token}: ${JSON.stringify(pl.value)} on the root · clean ${cleans.map((c) => JSON.stringify(c.read)).join(" ")} · planted ${planted.map((p) => JSON.stringify(p.read)).join(" ")} (a metric degrades outside the clean envelope plus its epsilon, reproduced when first seen) · console errors on the planted run(s) ${errs.length}${errs.length ? `: ${errs[0].slice(0, 120)}` : ""}`;
-      cell(nm, loud ? "PASS" : degraded ? "FAIL" : "UNMEASURED", `${loud ? "fails loud" : degraded ? "SILENT DEGRADATION" : "no degradation, no error: the token is not read on this path"} · ${line}`);
+      cell(nm, still ? "UNMEASURED" : loud ? "PASS" : degraded ? "FAIL" : "UNMEASURED", `${still ? "NOT DRIVEN: the clean commit moved neither the face's scale nor its light · " : ""}${loud ? "fails loud" : degraded ? "SILENT DEGRADATION" : "no degradation, no error: the token is not read on this path"} · ${line.replace(" on the root · ", pl.html ? " on <html> before the first script · " : " on the root · ")}`);
     }
   }
 

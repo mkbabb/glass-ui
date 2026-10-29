@@ -1,0 +1,13 @@
+## 07:26:26 fx-E-10 chromium --scenes clipstale --part feather · load { 12.68 10.66 9.46 }
+  PASS       E-10 clipstale clip feather · touch · touch engaged (promoted false) · the scroller's feather: linear-gradient(rgba(0, 0, 0, 0) 0px, rgb(0, 0, 0) 40px, rgb(0, 0, 0)  · --fade-start — · the control 4 px inside its feathered top edge · visibility in the scroller's top 28 px, engaged over released: ×1.19 feathered, ×1.20 unfeathered (the grow's own gain) · ratio of ratios 0.99 · bound ≤ 1.1 × ×1.20 = ×1.32 (an in-place body reads 1) · load 17.1/11.7/9.9
+E-10 chromium PASS · 2 pass, 0 fail, 0 unmeasured of 2 gating cells (0 reported) · load 12.7/10.7/9.5 at start, 17.1/11.7/9.9 at end
+# exit 0 · 07:26:43 · load { 17.09 11.73 9.86 }
+## 07:26:43 st-E-10 chromium --faults e10-rectclip-feather · load { 17.09 11.73 9.86 }
+         first planted FAIL: FAIL       E-10 clipstale clip feather · keyboard · keyboard engaged (promoted true) · the scroller's feather: linear-gradient(rgba(0, 0, 0, 0) 0px, rgb(0, 0, 0) 40px, rgb(0, 0, 0)  · --fade-start — · the control 4 px inside its feathered t
+selftest: 1 runs, 0 N/A; every witness passes its fixture, fails each planted violation on the planted cell, and passes each control, in every engine with an input for it
+# selftest exit 0 · 07:26:59 · load { 17.11 12.07 10.03 }
+## 07:26:59 cand-e10 chromium  · load { 17.11 12.07 10.03 }
+  REPORT     E-10 clipstale clip film · smooth · released · 45 of 46 frames read (largest 0 px² at frame 0; frames over 100 px²: none), scrolled 90 px | 45 of 46 frames read (largest 0 px² at frame 0; frames over 100 px²: none), scrolled 90 px | 45 of 46 frames read (largest 0 px² at frame 0; frames over 100 px²: none), scrolled 90 px · load 12.1/11.6/10.0
+E-10 chromium FAIL · 7 pass, 7 fail, 0 unmeasured of 14 gating cells (2 reported) · load 17.1/12.1/10.0 at start, 12.1/11.6/10.0 at end
+# exit 1 · 07:28:22 · load { 12.10 11.61 10.03 }
+## 07:28:22 chain end · load { 12.10 11.61 10.03 }

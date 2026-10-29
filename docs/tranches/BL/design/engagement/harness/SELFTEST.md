@@ -10,6 +10,10 @@
 | load | 7-31 (1-minute) across the pass-3 runs; other seats shared the machine. Every cell line carries its own load |
 | verdict | **GREEN in both engines** (pass 3): 204 runs, 203 OK, 1 N/A (`e4-stripstop` in WebKit), 0 BROKEN, 0 UNREAD on each witness's last run on its final code |
 
+## Pass 8 (H8)
+
+H8 changed E-4, E-10, E-11, E-12 and E-13 (new), and `fixtures.mjs` and the scene app under every witness. Its self-test of record for those five, both engines, with loads and the superseded runs, is `../pass-8/H8.md` §2 (logs `../pass-8/H8/logs/st-*.log`, JSON `../pass-8/H8/json/selftest/`). The witnesses H8 did not change were re-read on the clean fixture in both engines (`clean` stage, CAP included). Pass 7's and pass 3's tables below stand for them.
+
 ## Pass 7 (H7)
 
 H7 changed E-4, E-5, E-9, E-10 and E-12 (and `fixtures.mjs`, `lib.mjs`, the scene app). Its self-test of record for those five witnesses, both engines, with loads and the superseded runs, is `../pass-7/H7.md` §2 (logs `../pass-7/H7/logs/st-*.log`). The unchanged witnesses were re-read on the clean fixture in both engines; CAP is unchanged. The tables below are pass 3's and stand for the witnesses H7 did not change.

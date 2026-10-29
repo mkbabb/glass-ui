@@ -77,23 +77,26 @@ const mounted = ref(qs.get("defer") !== "1");
 const COMMIT = ["E-2", "E-8", "E-9"];
 // scene → gates, the keyboard commit key and the selectors the tagger stamps. E-2's exemplars are the interactive
 // atoms at hand (round 0); H-2 replaces them with one exemplar per declared class once a family declares classes.
+// H8 (CK-25, CK-20): the slider's loupe, read by E-13 (its k max, registration, seam, line and run-on; painted whole at a
+// scroller's edge) and hidden by E-10's touch clip cells (the invariant exempts the loupe: it alone leaves its place)
+const LOUPE = { lens: ".glass-loupe", window: ".glass-loupe-window", clone: ".glass-loupe-clone", fill: ".glass-loupe-fill", track: ".slider-track" };
 const INDEX: Record<string, Record<string, unknown>> = {
   // CK-02: `face` is the painted face (arm ii's px, arm iii's light); `keys` the keyboard commit (a commit the state
   // precondition must see happen)
   // H5: `rebound` (E-10's C-A4 rebound: a commit reversed 60/200 ms later, its light seat filmed) on the members whose
   // programmatic commit toggles; `ladder` (capture.mjs's CK-25 ladder cell) on the disclosed exemplar
-  switch: { gates: [...COMMIT, "E-11", "E-10"], rebound: true, key: "Space", target: '[role="switch"]', body: ".switch__thumb", face: '[role="switch"] .control-bit__face', failLoud: [{ token: "--scale-commit-pop", value: "1", act: "commit", on: '[role="switch"]' }] },
-  checkbox: { gates: [...COMMIT, "E-10"], rebound: true, key: "Space", target: '[role="checkbox"]', face: '[role="checkbox"] .control-bit__face' },
+  switch: { gates: [...COMMIT, "E-11", "E-10"], rebound: true, key: "Space", target: '[role="switch"]', body: ".switch__thumb", face: '[role="switch"] .control-bit__face', failLoud: [{ token: "--scale-commit-pop", value: "1", act: "commit", on: '[role="switch"]' }, { token: "--scale-press", value: "nonsense", act: "commit", html: true }, { token: "--scale-engage", value: "nonsense", act: "commit", html: true }] },
+  checkbox: { gates: [...COMMIT, "E-10", "E-11"], failLoud: [{ token: "--scale-press", value: "nonsense", act: "commit", html: true }, { token: "--scale-engage", value: "nonsense", act: "commit", html: true }], rebound: true, key: "Space", target: '[role="checkbox"]', face: '[role="checkbox"] .control-bit__face' },
   radio: { gates: COMMIT, key: "ArrowDown", target: '[role="radio"]:nth-of-type(2)', face: '[role="radio"]:nth-of-type(2) .control-bit__face' },
   tabs: { gates: [...COMMIT, "E-5"], key: "ArrowRight", target: ".segmented-tab:nth-of-type(2)", body: ".segmented-indicator", touch: ".segmented-tab:nth-of-type(3)" },
   toggle: { gates: [...COMMIT, "E-5"], key: "ArrowRight", target: '[data-t="item-b"]', pf1: "webkit pointer entry closes the page (D4 PF-1)" },
-  chip: { gates: [...COMMIT, "E-5", "E-10"], rebound: true, key: "Space", target: ".glass-chip" },
+  chip: { gates: [...COMMIT, "E-5", "E-10", "E-11"], failLoud: [{ token: "--scale-press", value: "nonsense", act: "commit", html: true }, { token: "--scale-engage", value: "nonsense", act: "commit", html: true }], rebound: true, key: "Space", target: ".glass-chip" },
   // `stateless`: no model to set. H3 rules the programmatic commit of a stateless control as its activation,
   // `element.click()` on the target, driven by E-2 itself (not by __e.commit, which the pass-2 app wired to `clicks++`
   // around the component, C-A2 §0.2); CK-03's arrival does not apply (nothing arrives)
   chipaction: { gates: COMMIT, key: "Space", target: ".glass-chip", stateless: true },
   accordion: { gates: [...COMMIT, "E-5", "E-10"], rebound: true, ladder: true, region: '[role="region"]', key: "Enter", target: ".disclosure-trigger", pf1: "webkit pointer entry closes the page (PORTFOLIO §1.3 item 7)" },
-  button: { gates: [...COMMIT, "E-5"], key: "Space", target: ".button", stateless: true },
+  button: { gates: [...COMMIT, "E-5", "E-11"], failLoud: [{ token: "--scale-press", value: "nonsense", act: "commit", html: true }, { token: "--scale-engage", value: "nonsense", act: "commit", html: true }], key: "Space", target: ".button", stateless: true },
   press_switch: { gates: ["E-5"], target: '[role="switch"]' },
   press_checkbox: { gates: ["E-5"], target: '[role="checkbox"]' },
   // CK-05: E-4 reads the slider's VISIBLE value point (the range's leading edge, `point` + `edge: "lead"`), pressed at
@@ -101,14 +104,14 @@ const INDEX: Record<string, Record<string, unknown>> = {
   // H4: `engaged` is the selector a root matches while it is engaged (the door's one writer, `data-engaged`: CK-15's
   // count in E-10, the engagement precondition of E-12's MIGRATION cells); `floor` names the E-12 cells a scene carries
   // H6: `reads: 5` (CK-05: E-4's carry read five times, every read must pass; REGISTRY §P5-7 item 8)
-  slider: { gates: ["E-3", "E-4", "E-7", "E-9", "E-10", "E-11", "E-12"], key: "ArrowRight", target: ".glass-slider", root: ".glass-slider", thumb: '[role="slider"]', body: ".slider-range", point: ".slider-range", edge: "lead", veil: ".glass-focus-veil", engaged: "[data-engaged]", floor: ["wheel", "anchor"], reads: 5,
+  slider: { gates: ["E-3", "E-4", "E-7", "E-9", "E-10", "E-11", "E-12", "E-13"], loupe: LOUPE, key: "ArrowRight", target: ".glass-slider", root: ".glass-slider", thumb: '[role="slider"]', body: ".slider-range", point: ".slider-range", edge: "lead", veil: ".glass-focus-veil", engaged: "[data-engaged]", floor: ["wheel", "anchor"], reads: 5,
     failLoud: [{ token: "--space-section", value: "nonsense", act: "kbd" }, { token: "--scale-engage", value: "nonsense", act: "kbd" }, { token: "--spring-dock-settle", value: "nonsense", act: "fling" }] },
   // H5: C-E4's stale place (CK-20): a paragraph that rewraps, a spacer the witness grows by a style write, the slider,
   // a ticker below it the witness appends to (a childList mutation that moves nothing)
   restale: { gates: ["E-10"], stale: true, root: '[data-t="slider-a"] .glass-slider', thumb: '[data-t="slider-a"] [role="slider"]', target: '[data-t="slider-a"] .glass-slider', veil: ".glass-focus-veil", engaged: "[data-engaged]" },
   // H6 (CK-20): C-E5's clipped stale place moved into the harness's own app: the slider inside a 120 px clipping
   // scroller (`overflow-anchor: none`), a spacer above it the witness sets by style, a ticker below the scroller
-  clipstale: { gates: ["E-10"], clip: { box: '[data-t="box"]', rest: '[data-t="slider-a"]', spacer: 60 }, root: '[data-t="slider-a"] .glass-slider', thumb: '[data-t="slider-a"] [role="slider"]', target: '[data-t="slider-a"] .glass-slider', veil: ".glass-focus-veil", engaged: "[data-engaged]" },
+  clipstale: { gates: ["E-10", "E-13"], loupe: LOUPE, feather: { cls: ["fading-scroll", "fading-scroll--y"], attrs: ["data-fade-start", "data-fade-end"] }, clip: { box: '[data-t="box"]', rest: '[data-t="slider-a"]', spacer: 60 }, root: '[data-t="slider-a"] .glass-slider', thumb: '[data-t="slider-a"] [role="slider"]', target: '[data-t="slider-a"] .glass-slider', veil: ".glass-focus-veil", engaged: "[data-engaged]" },
   slider2: { gates: ["E-10"], pair: ['[data-t="slider-a"] .glass-slider', '[data-t="slider-b"] .glass-slider'], veil: ".glass-focus-veil", engaged: "[data-engaged]" },
   // CK-05's repeat-run detent reads every detented Q-4 (b) surface: the tabs drag lands on a tab, the sortable row on a
   // slot (pass-2/H2.md §2.3, HEAD read only the Sheet and the Carousel)

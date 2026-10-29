@@ -1,0 +1,115 @@
+{
+ "id": "E-11",
+ "engine": "webkit",
+ "version": "26.5",
+ "target": {
+  "build": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p8/H8/wt/.h8out/builds/cand7"
+ },
+ "loadStart": "10.3/11.2/11.1",
+ "loadEnd": "8.8/10.5/10.9",
+ "verdict": "PASS",
+ "cells": [
+  {
+   "name": "E-11 switch fail-loud --scale-commit-pop=1 (commit)",
+   "status": "UNMEASURED",
+   "line": "no degradation, no error: the token is not read on this path · --scale-commit-pop: \"1\" on the root · clean {\"peak\":0.059726715087890625,\"rise\":0} {\"peak\":0.05997258966619312,\"rise\":0} · planted {\"peak\":0.05958808552135131,\"rise\":0} (a metric degrades outside the clean envelope plus its epsilon, reproduced when first seen) · console errors on the planted run(s) 0",
+   "load": "9.8/11.1/11.1"
+  },
+  {
+   "name": "E-11 switch fail-loud --scale-press (commit)",
+   "status": "UNMEASURED",
+   "line": "no degradation, no error: the token is not read on this path · --scale-press: \"nonsense\" on <html> before the first script · clean {\"peak\":0.05983699451793334,\"rise\":0} {\"peak\":0.059726715087890625,\"rise\":0} · planted {\"peak\":0.05997258966619312,\"rise\":0} (a metric degrades outside the clean envelope plus its epsilon, reproduced when first seen) · console errors on the planted run(s) 0",
+   "load": "9.3/10.9/11.0"
+  },
+  {
+   "name": "E-11 switch fail-loud --scale-engage (commit)",
+   "status": "PASS",
+   "line": "fails loud · --scale-engage: \"nonsense\" on <html> before the first script · clean {\"peak\":0.05991892381147901,\"rise\":0} {\"peak\":0.05983699451793334,\"rise\":0} · planted {\"peak\":0,\"rise\":0} (a metric degrades outside the clean envelope plus its epsilon, reproduced when first seen) · console errors on the planted run(s) 1: [glass-ui] engage: --rung-crest is unreadable on the host; the engagement it drives paints nothing. Is the glass-ui styl",
+   "load": "8.8/10.8/11.0"
+  },
+  {
+   "name": "E-11 checkbox fail-loud --scale-press (commit)",
+   "status": "UNMEASURED",
+   "line": "no degradation, no error: the token is not read on this path · --scale-press: \"nonsense\" on <html> before the first script · clean {\"peak\":0.0599725723266602,\"rise\":0.851979237379204} {\"peak\":0.0599725723266602,\"rise\":0.851979237379204} · planted {\"peak\":0.059918975830078214,\"rise\":0.851979237379204} (a metric degrades outside the clean envelope plus its epsilon, reproduced when first seen) · console errors on the planted run(s) 0",
+   "load": "8.8/10.8/11.0"
+  },
+  {
+   "name": "E-11 checkbox fail-loud --scale-engage (commit)",
+   "status": "PASS",
+   "line": "fails loud · --scale-engage: \"nonsense\" on <html> before the first script · clean {\"peak\":0.059918975830078214,\"rise\":0.851979237379204} {\"peak\":0.059918975830078214,\"rise\":0.851979237379204} · planted {\"peak\":0,\"rise\":0.851979237379204} (a metric degrades outside the clean envelope plus its epsilon, reproduced when first seen) · console errors on the planted run(s) 1: [glass-ui] engage: --rung-crest is unreadable on the host; the engagement it drives paints nothing. Is the glass-ui styl",
+   "load": "8.8/10.8/11.0"
+  },
+  {
+   "name": "E-11 chip fail-loud --scale-press (commit)",
+   "status": "PASS",
+   "line": "fails loud · --scale-press: \"nonsense\" on <html> before the first script · clean {\"peak\":0.039998450376101946,\"rise\":0.12327203131148812} {\"peak\":0.039998450376101946,\"rise\":0.12327203131148812} · planted {\"peak\":0,\"rise\":0.12327203131148812} (a metric degrades outside the clean envelope plus its epsilon, reproduced when first seen) · console errors on the planted run(s) 1: [glass-ui] engage: --rung-crest is unreadable on the host; the engagement it drives paints nothing. Is the glass-ui styl",
+   "load": "8.4/10.7/10.9"
+  },
+  {
+   "name": "E-11 chip fail-loud --scale-engage (commit)",
+   "status": "UNMEASURED",
+   "line": "no degradation, no error: the token is not read on this path · --scale-engage: \"nonsense\" on <html> before the first script · clean {\"peak\":0.03972539466749714,\"rise\":0.12327203131148812} {\"peak\":0.0399460476355884,\"rise\":0.12327203131148812} · planted {\"peak\":0.03981775449765235,\"rise\":0.12327203131148812} (a metric degrades outside the clean envelope plus its epsilon, reproduced when first seen) · console errors on the planted run(s) 0",
+   "load": "8.0/10.5/10.9"
+  },
+  {
+   "name": "E-11 button fail-loud --scale-press (commit)",
+   "status": "UNMEASURED",
+   "line": "no degradation, no error: the token is not read on this path · --scale-press: \"nonsense\" on <html> before the first script · clean {\"peak\":0.0599189973550156,\"rise\":0} {\"peak\":0.05999481615726232,\"rise\":0} · planted {\"peak\":0.05983705590386634,\"rise\":0} (a metric degrades outside the clean envelope plus its epsilon, reproduced when first seen) · console errors on the planted run(s) 0",
+   "load": "9.6/10.8/11.0"
+  },
+  {
+   "name": "E-11 button fail-loud --scale-engage (commit)",
+   "status": "PASS",
+   "line": "fails loud · --scale-engage: \"nonsense\" on <html> before the first script · clean {\"peak\":0.05999787748171359,\"rise\":0} {\"peak\":0.0599189973550156,\"rise\":0} · planted {\"peak\":0,\"rise\":0} (a metric degrades outside the clean envelope plus its epsilon, reproduced when first seen) · console errors on the planted run(s) 1: [glass-ui] engage: --rung-crest is unreadable on the host; the engagement it drives paints nothing. Is the glass-ui styl",
+   "load": "10.3/11.0/11.0"
+  },
+  {
+   "name": "E-11 slider fail-loud --space-section (kbd)",
+   "status": "PASS",
+   "line": "fails loud · --space-section: \"nonsense\" on the root · clean {\"s\":1.0599999321831597,\"veil\":0,\"n\":1} {\"s\":1.0599999321831597,\"veil\":0,\"n\":1} · planted {\"s\":0,\"veil\":0,\"n\":1} (a metric degrades outside the clean envelope plus its epsilon, reproduced when first seen) · console errors on the planted run(s) 1: [glass-ui] engage stage: --stage-reach (from --space-section, --stage-room, --stage-w) is unreadable on the host; the en",
+   "load": "9.7/10.8/11.0"
+  },
+  {
+   "name": "E-11 slider fail-loud --scale-engage (kbd)",
+   "status": "PASS",
+   "line": "fails loud · --scale-engage: \"nonsense\" on the root · clean {\"s\":1.0599999321831597,\"veil\":0,\"n\":1} {\"s\":1.0599999321831597,\"veil\":0,\"n\":1} · planted {\"s\":1,\"veil\":0,\"n\":1} (a metric degrades outside the clean envelope plus its epsilon, reproduced when first seen) · console errors on the planted run(s) 2: [glass-ui] engage stage: --scale-engage is unreadable on the host; the engagement it drives paints nothing. Is the glass",
+   "load": "9.7/10.8/11.0"
+  },
+  {
+   "name": "E-11 slider fail-loud --spring-dock-settle (fling)",
+   "status": "PASS",
+   "line": "fails loud · --spring-dock-settle: \"nonsense\" on the root · clean {\"x\":293.93515396118164} {\"x\":293.79451751708984} · planted {\"x\":280.60327529907227} (a metric degrades outside the clean envelope plus its epsilon, reproduced when first seen) · console errors on the planted run(s) 1: [glass-ui] engage: --spring-dock-settle is unreadable on the host; the engagement it drives paints nothing. Is the glass",
+   "load": "10.0/10.8/11.0"
+  },
+  {
+   "name": "E-11 clock census",
+   "status": "REPORT",
+   "line": "4 --engage-* clock(s) read by a transition or animation declaration in the loaded stylesheets: --engage-control-engage-attack (8 rule(s), e.g. transition: scale var(--spring-press-duration) var(--transition-liquid-spatial), opacity var) · --engage-control-engage-release (10 rule(s), e.g. transition: scale var(--spring-press-duration) var(--transition-liquid-spatial), opacity var) · --engage-press-drain-attack (7 rule(s), e.g. transition-duration: var(--engage-press-drain-attack), var(--duration-fast), var(--duration-fast)) · --engage-press-drain-release (7 rule(s), e.g. transition: background-color var(--engage-press-drain-release) var(--ease-standard), border-)",
+   "load": "9.3/10.6/10.9"
+  },
+  {
+   "name": "E-11 clock --engage-control-engage-attack (enumerated)",
+   "status": "PASS",
+   "line": "--engage-control-engage-attack: nonsense on <html> before the first script · fails loud · checkbox: 7 consumer read(s), 7 reading the clock unreadable, 4 with its timing changed in the act (hover | .control-bit:not([data-state=\"unchecked\"]) .control-bit__mark #0: scale, opacity / 0.12s, 0.06s / 0s, 0s / none / 0s → all / 0s / 0s / none / 0s), console errors naming the clock 1 of 1 (\"[glass-ui] engage: --engage-control-engage-attack is unreadable on the host; the engagement it drives paints n\"), on the clean page 0",
+   "load": "9.3/10.6/10.9"
+  },
+  {
+   "name": "E-11 clock --engage-control-engage-release (enumerated)",
+   "status": "PASS",
+   "line": "--engage-control-engage-release: nonsense on <html> before the first script · fails loud · button: 10 consumer read(s), 10 reading the clock unreadable, 10 with its timing changed in the act (rest | .button #0: background-color, border-color, box-shadow, color, opacity, --rung-commit / 0.18s, 0.18s, 0.18s, 0.18s, 0.18s, 0.45s / 0s, 0s, 0s, 0s, 0s, 0s / none / 0s → all / 0s / 0s / none / 0s), console errors naming the clock 1 of 1 (\"[glass-ui] engage: --engage-control-engage-release is unreadable on the host; the engagement it drives paints \"), on the clean page 0 · checkbox: 5 consumer read(s), 5 reading the clock unreadable, 3 with its timing changed in the act (rest | .control-bit__mark #0: scale, opacity / 0.12s, 0.18s / 0s, 0s / none / 0s → all / 0s / 0s / none / 0s), console errors naming the clock 1 of 1 (\"[glass-ui] engage: --engage-control-engage-release is unreadable on the host; the engagement it drives paints \"), on the clean page 0",
+   "load": "9.1/10.6/10.9"
+  },
+  {
+   "name": "E-11 clock --engage-press-drain-attack (enumerated)",
+   "status": "UNMEASURED",
+   "line": "no scene renders an element a rule timing on --engage-press-drain-attack matches (7 rule(s): .control-bit:not(:disabled, [data-disabled])[data-press] .control-bit__face | .configurator-preset-chip[data-press] | .segmented-tab:not(.is-disabled)[data-press]): no consumer to plant on",
+   "load": "9.1/10.6/10.9"
+  },
+  {
+   "name": "E-11 clock --engage-press-drain-release (enumerated)",
+   "status": "PASS",
+   "line": "--engage-press-drain-release: nonsense on <html> before the first script · fails loud · switch: 10 consumer read(s), 10 reading the clock unreadable, 10 with its timing changed in the act (rest | .control-bit__face #0: background-color, border-color, outline-color / 0.12s, 0.2s, 0.2s / 0s, 0s, 0s / none / 0s → all / 0s / 0s / none / 0s), console errors naming the clock 1 of 1 (\"[glass-ui] engage: --engage-press-drain-release is unreadable on the host; the engagement it drives paints not\"), on the clean page 0",
+   "load": "8.8/10.5/10.9"
+  }
+ ]
+}

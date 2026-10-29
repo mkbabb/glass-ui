@@ -1,0 +1,38 @@
+{
+ "id": "E-10",
+ "engine": "webkit",
+ "version": "26.5",
+ "target": {
+  "fixture": true,
+  "fault": "e10-rectclip-film"
+ },
+ "loadStart": "6.6/10.2/9.7",
+ "loadEnd": "7.6/10.1/9.7",
+ "verdict": "FAIL",
+ "cells": [
+  {
+   "name": "E-10 clipstale clip film · wheel · engaged",
+   "status": "PASS",
+   "line": "keyboard engaged, the scroller moved by twelve 8 px wheel ticks · px² of the 24 px strip above the scroller differing ≥ 40 levels from the film's per-pixel median · engaged films: 62 of 62 frames read (largest 33 px² at frame 11; frames over 100 px²: none), scrolled 96 px | 62 of 62 frames read (largest 35 px² at frame 10; frames over 100 px²: none), scrolled 96 px | 61 of 61 frames read (largest 32 px² at frame 11; frames over 100 px²: none), scrolled 96 px · bound ≤ the released films' largest 0 + one row × 360 px = 360; 0 of 3 engaged films over it",
+   "load": "7.6/10.2/9.7"
+  },
+  {
+   "name": "E-10 clipstale clip film · wheel · released",
+   "status": "REPORT",
+   "line": "60 of 60 frames read (largest 0 px² at frame 0; frames over 100 px²: none), scrolled 96 px | 60 of 60 frames read (largest 0 px² at frame 0; frames over 100 px²: none), scrolled 96 px | 60 of 60 frames read (largest 0 px² at frame 0; frames over 100 px²: none), scrolled 96 px",
+   "load": "7.6/10.2/9.7"
+  },
+  {
+   "name": "E-10 clipstale clip film · smooth · engaged",
+   "status": "FAIL",
+   "line": "keyboard engaged, the scroller moved by a smooth 90 px scrollBy · px² of the 24 px strip above the scroller differing ≥ 40 levels from the film's per-pixel median · engaged films: 54 of 54 frames read (largest 1608 px² at frame 9; frames over 100 px²: 9:1608), scrolled 90 px | 55 of 55 frames read (largest 0 px² at frame 0; frames over 100 px²: none), scrolled 90 px | 54 of 54 frames read (largest 0 px² at frame 0; frames over 100 px²: none), scrolled 90 px · bound ≤ the released films' largest 0 + one row × 360 px = 360; 1 of 3 engaged films over it",
+   "load": "7.6/10.1/9.7"
+  },
+  {
+   "name": "E-10 clipstale clip film · smooth · released",
+   "status": "REPORT",
+   "line": "55 of 55 frames read (largest 0 px² at frame 0; frames over 100 px²: none), scrolled 90 px | 55 of 55 frames read (largest 0 px² at frame 0; frames over 100 px²: none), scrolled 90 px | 54 of 54 frames read (largest 0 px² at frame 0; frames over 100 px²: none), scrolled 90 px",
+   "load": "7.6/10.1/9.7"
+  }
+ ]
+}

@@ -1,0 +1,10 @@
+# H8 fx-E-4 chromium · 2026-10-29 04:25:15 · load { 6.15 7.99 8.53 } · --scenes slider
+# E-4 · CK-05 momentum on the visible body, without a teleport
+# target fixture · engine chromium · lock wait 0.0 s · other headless processes: chromium 0, webkit 4 · load 5.9/7.9/8.5 at start
+# chromium 149.0.7827.55
+# narrowed to scenes slider
+  PASS       E-4 slider fling carries velocity · axis x, page frame · 5 reads, every one must pass: [1: carry 94.04 / settle 96.21 px @ fling 1009 px/s pass · 2: carry 94.91 / settle 96.14 px @ fling 1164 px/s pass · 3: carry 95.49 / settle 96.18 px @ fling 1141 px/s pass · 4: carry 95.00 / settle 96.13 px @ fling 1210 px/s pass · 5: carry 94.49 / settle 96.16 px @ fling 1127 px/s pass] (5 of 5 pass) · read 1 in full: fling: carry 94.04 px, settles 91.17 px past release · still: carry 0.00 px, settles -5.04 px · difference: carry 94.04 px, settle 96.21 px (bound: either ≥ 4, both at rest, on every read whose fling the rule measured ≥ 100 px/s; such a fling carrying 0.00 px fails by name; a drive under 100 px/s is re-driven up to 2 times and, still under it, UNGRADED) · body opacity ≥ 1.000 · 266 frames, median 7.6 ms · load 4.9/7.5/8.3
+  PASS       E-4 slider release continuity · over 5 reads, each against its own drive (12.1/65.8, 14.7/65.8, 11.8/65.9, 13.4/65.8, 12.7/65.8 px; 0 over) · read 1: largest one-frame move on release: fling 12.1 px, still 0.4 px · during the drive: fling 42.5 px, still 42.5 px (bound ≤ drive × 1.5 + 2 = 65.8 px) · load 4.9/7.5/8.3
+  PASS       E-4 slider release PRM · reduce · moved 120.0 px · fling: carry 0.00 px, settles 0.00 px past release, overshoot past its rest 0.00 px, at rest true (bound: at rest within 2000 ms, overshoot ≤ 0.5 px) · largest one-frame jump 0.0 px · load 5.0/7.5/8.3
+E-4 chromium PASS · 3 pass, 0 fail, 0 unmeasured of 3 gating cells (0 reported) · load 5.9/7.9/8.5 at start, 5.0/7.5/8.3 at end
+# exit 0 · 04:25:52 · load { 4.99 7.45 8.31 }

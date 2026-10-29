@@ -1,0 +1,50 @@
+{
+ "id": "E-10",
+ "engine": "webkit",
+ "version": "26.5",
+ "target": {
+  "fixture": true,
+  "fault": "e10-layoutplace"
+ },
+ "loadStart": "16.4/13.9/11.5",
+ "loadEnd": "21.4/15.4/12.2",
+ "verdict": "FAIL",
+ "cells": [
+  {
+   "name": "E-10 clipstale clip place · translate · keyboard",
+   "status": "FAIL",
+   "line": "keyboard engaged (promoted true) · the scroller translate 0 30px · the control's centre at rest (249.0, 215.0), width 360.0 px → engaged (248.0, 184.0), width 381.6 px: the centre moves 31.0 px (bound ≤ 2) and the width ×1.060 (bound 0.99..1.07: the grow)",
+   "load": "17.0/14.0/11.6"
+  },
+  {
+   "name": "E-10 clipstale clip place · scale · keyboard",
+   "status": "FAIL",
+   "line": "keyboard engaged (promoted true) · the scroller scale 0.8 · the control's centre at rest (208.8, 183.6), width 288.0 px → engaged (248.0, 195.0), width 381.6 px: the centre moves 40.8 px (bound ≤ 2) and the width ×1.325 (bound 0.99..1.07: the grow)",
+   "load": "17.0/14.0/11.6"
+  },
+  {
+   "name": "E-10 clipstale clip place · none · keyboard",
+   "status": "PASS",
+   "line": "keyboard engaged (promoted true) · the scroller untransformed (the control) · the control's centre at rest (249.0, 185.0), width 360.0 px → engaged (249.0, 185.0), width 381.6 px: the centre moves 0.0 px (bound ≤ 2) and the width ×1.060 (bound 0.99..1.07: the grow)",
+   "load": "17.0/14.0/11.6"
+  },
+  {
+   "name": "E-10 clipstale clip place · translate · touch",
+   "status": "FAIL",
+   "line": "touch engaged (promoted true) · the scroller translate 0 30px · the control's centre at rest (249.0, 215.0), width 360.0 px → engaged (248.0, 184.0), width 381.6 px: the centre moves 31.0 px (bound ≤ 2) and the width ×1.060 (bound 0.99..1.07: the grow)",
+   "load": "23.6/15.6/12.2"
+  },
+  {
+   "name": "E-10 clipstale clip place · scale · touch",
+   "status": "FAIL",
+   "line": "touch engaged (promoted true) · the scroller scale 0.8 · the control's centre at rest (208.8, 183.6), width 288.0 px → engaged (248.0, 195.0), width 381.6 px: the centre moves 40.8 px (bound ≤ 2) and the width ×1.325 (bound 0.99..1.07: the grow)",
+   "load": "22.7/15.5/12.2"
+  },
+  {
+   "name": "E-10 clipstale clip place · none · touch",
+   "status": "PASS",
+   "line": "touch engaged (promoted true) · the scroller untransformed (the control) · the control's centre at rest (249.0, 185.0), width 360.0 px → engaged (249.0, 185.0), width 381.6 px: the centre moves 0.0 px (bound ≤ 2) and the width ×1.060 (bound 0.99..1.07: the grow)",
+   "load": "21.4/15.4/12.2"
+  }
+ ]
+}

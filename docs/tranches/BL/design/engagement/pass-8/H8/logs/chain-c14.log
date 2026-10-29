@@ -1,0 +1,17 @@
+## 08:31:05 fx-E-10 chromium --scenes clipstale --part film · load { 7.48 7.28 7.40 }
+  REPORT     E-10 clipstale clip film · smooth · released · 32 of 32 frames read (largest 0 px² at frame 0; frames over 100 px²: none), scrolled 90 px | 31 of 31 frames read (largest 0 px² at frame 0; frames over 100 px²: none), scrolled 90 px | 32 of 32 frames read (largest 0 px² at frame 0; frames over 100 px²: none), scrolled 90 px · load 9.3/7.7/7.6
+E-10 chromium PASS · 2 pass, 0 fail, 0 unmeasured of 2 gating cells (2 reported) · load 7.5/7.3/7.4 at start, 9.3/7.7/7.6 at end
+# exit 0 · 08:31:31 · load { 9.26 7.72 7.56 }
+## 08:31:31 st-E-10 chromium --faults e10-rectclip-feather,e10-rectclip-radius,e10-rectclip-scale,e10-rectclip-film · load { 9.26 7.72 7.56 }
+         first planted FAIL: FAIL       E-10 clipstale clip film · smooth · engaged · keyboard engaged, the scroller moved by a smooth 90 px scrollBy · px² of the 24 px strip above the scroller differing ≥ 40 levels from the film's per-pixel median · engaged films: 32 
+selftest: 4 runs, 0 N/A; every witness passes its fixture, fails each planted violation on the planted cell, and passes each control, in every engine with an input for it
+# selftest exit 0 · 08:32:41 · load { 7.34 7.40 7.45 }
+## 08:32:41 cand-e10 chromium --part film · load { 7.34 7.40 7.45 }
+  REPORT     E-10 clipstale clip film · smooth · released · 31 of 31 frames read (largest 0 px² at frame 0; frames over 100 px²: none), scrolled 90 px | 31 of 31 frames read (largest 0 px² at frame 0; frames over 100 px²: none), scrolled 90 px | 32 of 32 frames read (largest 0 px² at frame 0; frames over 100 px²: none), scrolled 90 px · load 6.7/7.3/7.4
+E-10 chromium FAIL · 1 pass, 1 fail, 0 unmeasured of 2 gating cells (2 reported) · load 7.3/7.4/7.4 at start, 6.7/7.3/7.4 at end
+# exit 1 · 08:33:10 · load { 6.70 7.27 7.40 }
+## 08:33:10 head-e10 chromium  · load { 6.70 7.27 7.40 }
+  REPORT     E-10 clipstale clip film · smooth · released · 31 of 31 frames read (largest 0 px² at frame 0; frames over 100 px²: none), scrolled 90 px | 31 of 31 frames read (largest 0 px² at frame 0; frames over 100 px²: none), scrolled 90 px | 31 of 31 frames read (largest 0 px² at frame 0; frames over 100 px²: none), scrolled 90 px · load 11.5/9.0/8.1
+E-10 chromium FAIL · 0 pass, 14 fail, 0 unmeasured of 14 gating cells (2 reported) · load 6.7/7.3/7.4 at start, 11.5/9.0/8.1 at end
+# exit 1 · 08:34:32 · load { 11.48 8.99 8.06 }
+## 08:34:32 chain end · load { 11.48 8.99 8.06 }

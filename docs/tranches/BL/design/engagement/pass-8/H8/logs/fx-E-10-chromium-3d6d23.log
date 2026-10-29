@@ -1,0 +1,9 @@
+# H8 fx-E-10 chromium · 2026-10-29 07:26:26 · load { 12.68 10.66 9.46 } · --scenes clipstale --part feather
+# E-10 · CK-20 no one-frame discontinuity on an engagement path
+# target fixture · engine chromium · lock wait 0.0 s · other headless processes: chromium 4, webkit 2 · load 12.7/10.7/9.5 at start
+# chromium 149.0.7827.55
+# narrowed to scenes clipstale
+  PASS       E-10 clipstale clip feather · keyboard · keyboard engaged (promoted false) · the scroller's feather: linear-gradient(rgba(0, 0, 0, 0) 0px, rgb(0, 0, 0) 40px, rgb(0, 0, 0)  · --fade-start — · the control 4 px inside its feathered top edge · visibility in the scroller's top 28 px, engaged over released: ×1.11 feathered, ×1.12 unfeathered (the grow's own gain) · ratio of ratios 1.00 · bound ≤ 1.1 × ×1.12 = ×1.23 (an in-place body reads 1) · load 15.2/11.2/9.7
+  PASS       E-10 clipstale clip feather · touch · touch engaged (promoted false) · the scroller's feather: linear-gradient(rgba(0, 0, 0, 0) 0px, rgb(0, 0, 0) 40px, rgb(0, 0, 0)  · --fade-start — · the control 4 px inside its feathered top edge · visibility in the scroller's top 28 px, engaged over released: ×1.19 feathered, ×1.20 unfeathered (the grow's own gain) · ratio of ratios 0.99 · bound ≤ 1.1 × ×1.20 = ×1.32 (an in-place body reads 1) · load 17.1/11.7/9.9
+E-10 chromium PASS · 2 pass, 0 fail, 0 unmeasured of 2 gating cells (0 reported) · load 12.7/10.7/9.5 at start, 17.1/11.7/9.9 at end
+# exit 0 · 07:26:43 · load { 17.09 11.73 9.86 }

@@ -1,0 +1,17 @@
+[guarded] waiting for the 'webkit' lock
+# 2026-10-29 08:41:46 WebKit lock acquired (w3) · load { 10.59 11.61 10.08 }
+# 08:41:46 ready: fx-E-10:--scenes+clipstale+--part+film st-E-10:--faults+e10-rectclip-feather,e10-rectclip-radius,e10-rectclip-scale,e10-rectclip-film cand-e10:--part+film 
+## 08:41:46 fx-E-10 webkit --scenes clipstale --part film · load { 10.59 11.61 10.08 }
+  REPORT     E-10 clipstale clip film · smooth · released · 54 of 54 frames read (largest 0 px² at frame 0; frames over 100 px²: none), scrolled 90 px | 54 of 54 frames read (largest 0 px² at frame 0; frames over 100 px²: none), scrolled 90 px | 55 of 55 frames read (largest 0 px² at frame 0; frames over 100 px²: none), scrolled 90 px · load 9.6/11.3/10.0
+E-10 webkit PASS · 2 pass, 0 fail, 0 unmeasured of 2 gating cells (2 reported) · load 10.6/11.6/10.1 at start, 9.6/11.3/10.0 at end
+# exit 0 · 08:42:14 · load { 9.60 11.29 10.00 }
+## 08:42:14 st-E-10 webkit --faults e10-rectclip-feather,e10-rectclip-radius,e10-rectclip-scale,e10-rectclip-film · load { 9.60 11.29 10.00 }
+         first planted FAIL: FAIL       E-10 clipstale clip film · smooth · engaged · keyboard engaged, the scroller moved by a smooth 90 px scrollBy · px² of the 24 px strip above the scroller differing ≥ 40 levels from the film's per-pixel median · engaged films: 54 
+selftest: 4 runs, 0 N/A; every witness passes its fixture, fails each planted violation on the planted cell, and passes each control, in every engine with an input for it
+# selftest exit 0 · 08:43:36 · load { 7.56 10.10 9.66 }
+## 08:43:36 cand-e10 webkit --part film · load { 7.56 10.10 9.66 }
+  REPORT     E-10 clipstale clip film · smooth · released · 54 of 54 frames read (largest 0 px² at frame 0; frames over 100 px²: none), scrolled 90 px | 54 of 54 frames read (largest 0 px² at frame 0; frames over 100 px²: none), scrolled 90 px | 54 of 54 frames read (largest 0 px² at frame 0; frames over 100 px²: none), scrolled 90 px · load 6.6/9.6/9.5
+E-10 webkit PASS · 2 pass, 0 fail, 0 unmeasured of 2 gating cells (2 reported) · load 7.6/10.1/9.7 at start, 6.6/9.6/9.5 at end
+# exit 0 · 08:44:06 · load { 6.62 9.64 9.51 }
+## 08:44:06 chain end · load { 6.62 9.64 9.51 }
+# 2026-10-29 08:44:06 WebKit acquisition (w3) end · load { 6.62 9.64 9.51 }

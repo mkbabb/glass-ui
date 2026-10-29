@@ -100,10 +100,10 @@ export const FAULTS = {
   "e9-scale": { why: "under reduced motion the press still squishes", witnesses: ["E-9"], cell: /press-spatial/ },
   "e9-dark": { why: "under reduced motion the press retires its scale and keeps no light answer (its press paints the hover value): E-9's press, E-1's exemplar under reduce and E-5's held touch under reduce all read it (H-9)", witnesses: ["E-9", "E-1", "E-5"], cell: /press-light/ },
   "e9-glide": { why: "under reduced motion the selection body still glides", witnesses: ["E-9"], cell: /commit-spatial/ },
-  "e10-snap": { why: "CK-20: Tab from slider A to slider B drops A to rest in one frame (C-E r32)", witnesses: ["E-10"], cell: /hand-off drop/ },
-  "e10-veildip": { why: "CK-20: the shared veil is torn down at A's release and re-ramps from 0 for B (C-E r32)", witnesses: ["E-10"], cell: /hand-off veil/ },
-  "e10-escsnap": { why: "CK-20: Escape releases the keyboard engagement in one frame", witnesses: ["E-10"], cell: /escape release/ },
-  "e10-rerender": { why: "CK-20: the held slider is pinned out of flow; a sibling inserted during the hold makes the release land in its new slot in one frame (P-E/rerender-probe.md)", witnesses: ["E-10"], cell: /re-render landing/ },
+  "e10-snap": { why: "CK-20: Tab from slider A to slider B drops A to rest in one frame (C-E r32)", witnesses: ["E-10"], cell: /hand-off drop/, args: ["--part", "old"] },
+  "e10-veildip": { why: "CK-20: the shared veil is torn down at A's release and re-ramps from 0 for B (C-E r32)", witnesses: ["E-10"], cell: /hand-off veil/, args: ["--part", "old"] },
+  "e10-escsnap": { why: "CK-20: Escape releases the keyboard engagement in one frame", witnesses: ["E-10"], cell: /escape release/, args: ["--part", "old"] },
+  "e10-rerender": { why: "CK-20: the held slider is pinned out of flow; a sibling inserted during the hold makes the release land in its new slot in one frame (P-E/rerender-probe.md)", witnesses: ["E-10"], cell: /re-render landing/, args: ["--part", "old"] },
   // ── H3 (pass 3): a plant per new cell (REGISTRY §P2-7 items 1-7) ──
   "e1-ownhandler": { why: "CK-01 (H3 handler rule): the static card (delta) carries a click handler its member binds, with no role and no tabindex: the library-internal exemption must not swallow it", witnesses: ["E-1"], cell: /static-inert delta/ },
   "e1-libhandler": { why: "CONTROL, must PASS (H3 handler rule): the static card carries only a handler a third-party component binds inside it (reka-ui's Label mousedown, C-A2 CK-01); pass 2's census counted it live", witnesses: ["E-1"], expect: "pass" },
@@ -115,11 +115,11 @@ export const FAULTS = {
   "e2-noground": { why: "CK-02 (H3 ground ruling): the page paints no ground behind the face; the light read must refuse to grade it rather than composite on an assumed white (CP §3.5)", witnesses: ["E-2"], cell: /pop commit·keyboard/ },
   "e2-dither": { why: "CONTROL, must PASS (H3 resolution): the committed face is near-white (#eef0f4) and rests on a one-quantum 8-bit dither; one quantum there is ≈ 0.008 of luminance, above pass 2's flat 0.004 rest bound", witnesses: ["E-2"], expect: "pass" },
   "e2-shimmer": { why: "CK-02 (H3 resolution): after the commit the face's fill keeps flickering by four 8-bit steps (≈ 0.013 on the accent): a light that never rests, above one quantum", witnesses: ["E-2"], cell: /pop commit·keyboard/ },
-  "e10-teleport": { why: "CK-20 (H3 position): on the hand-off the OUTGOING slider jumps onto the incoming one's place for 300 ms, then jumps home; its scale releases smoothly (C-E2 §0.1's 68 px teleport)", witnesses: ["E-10"], cell: /hand-off drop/ },
-  "e10-teleportin": { why: "CK-20 (H3 position): the INCOMING slider appears on the outgoing one's place for 200 ms, then jumps home (C-E2 §0.1, Shift+Tab B → A)", witnesses: ["E-10"], cell: /hand-off rev/ },
+  "e10-teleport": { why: "CK-20 (H3 position): on the hand-off the OUTGOING slider jumps onto the incoming one's place for 300 ms, then jumps home; its scale releases smoothly (C-E2 §0.1's 68 px teleport)", witnesses: ["E-10"], cell: /hand-off drop/, args: ["--part", "old"] },
+  "e10-teleportin": { why: "CK-20 (H3 position): the INCOMING slider appears on the outgoing one's place for 200 ms, then jumps home (C-E2 §0.1, Shift+Tab B → A)", witnesses: ["E-10"], cell: /hand-off rev/, args: ["--part", "old"] },
   "cap-nocommit": { why: "CK-25 (H3 capture): a touch tap does not commit the control: the coarse 'committed' frame must say NOT COMMITTED, never show a frame as a commit", witnesses: ["CAP"], cell: /coarse.*committed/ },
   // ── H4 (pass 4): a plant per new cell (REGISTRY §P3-8.3 wave 1) ──
-  "e10-twoengaged": { why: "CK-15 (H4): on the hand-off the outgoing slider keeps its engagement for 250 ms after the incoming one takes it: two engaged controls on the same frames (its scale and position stay lawful)", witnesses: ["E-10"], cell: /hand-off singleton fwd/ },
+  "e10-twoengaged": { why: "CK-15 (H4): on the hand-off the outgoing slider keeps its engagement for 250 ms after the incoming one takes it: two engaged controls on the same frames (its scale and position stay lawful)", witnesses: ["E-10"], cell: /hand-off singleton fwd/, args: ["--part", "old"] },
   "e1-ambientlimit": { why: "CONTROL, must read UNMEASURED (H4, CK-19): the ambient field states that it resolved a static ground in this engine (the Aurora's software-raster guard) and does not follow the pointer; the cell is the engine's limit, never a pass and never a fail", witnesses: ["E-1"], cell: /runtime ambient \(theta\) ·/, expect: "unmeasured" },
   "e5-flaky": { why: "CK-06 (H4 three-read rule): the held press light sags back toward rest on one touch hold in three (every third page load of the scene); a one-read rule passes it two times in three", witnesses: ["E-5"], cell: /pop sustain/ },
   "e12-fcslop": { why: "CK-14 (H4): the forced-colours arm hides every ::after, the coarse trigger's 44 px hit-slop included (C-A3 §0.2: engage.css:225-230 on the dock triggers)", witnesses: ["E-12"], cell: /slop fcslop/ },
@@ -134,9 +134,9 @@ export const FAULTS = {
   "e2-paintonly": { why: "CONTROL, must PASS (H5): an 8 px opaque dot sits on the face after the light layer; the composite stacks it as the whole face and reads no rise, while the light paints the face (the Switch thumb and the Radio dot, P-A4 §6.1). H7: E-2's alone", witnesses: ["E-2"], expect: "pass" },
   "e5-late": { why: "CK-06 (H5 onset): the press mark is written 190 ms after the touch begins, so the press lands after its +200 ms reference and its light still rises at +1200 ms (a one-reference sustain passes it, C-A4's P7 class)", witnesses: ["E-5"], cell: /pop sustain/ },
   "e5-active": { why: "CK-06 (H5 onset): the press keys on :active alone (C-A4's plant P7); Chromium's long-tap sets :active 175-200 ms after touch-down. WebKit's raw touch sets :active at touchStart, so the plant has no input there", witnesses: ["E-5"], cell: /pop sustain/, engines: ["chromium"] },
-  "e10-relayout": { why: "CK-20 (H5): the held slider is pinned over a placeholder that re-reads its place on a childList mutation only; a layout-only move during the hold makes the release land in its new slot in one frame (the insert landing passes it)", witnesses: ["E-10"], cell: /re-render landing \(layout-only\)/ },
-  "e10-stale": { why: "CK-20 (H5, C-E4 §0.1): the engaged slider's last-read place refreshes on a childList mutation only, and an unrelated append glides it from that stale place (a one-frame snap, then a slide back)", witnesses: ["E-10"], cell: /restale stale place · keyboard/ },
-  "e10-staleresize": { why: "CK-20 (H5): the place also refreshes on the spacer's style write, but not on a viewport resize: the resize cell alone must fail", witnesses: ["E-10"], cell: /stale place \(viewport resize\)/ },
+  "e10-relayout": { why: "CK-20 (H5): the held slider is pinned over a placeholder that re-reads its place on a childList mutation only; a layout-only move during the hold makes the release land in its new slot in one frame (the insert landing passes it)", witnesses: ["E-10"], cell: /re-render landing \(layout-only\)/, args: ["--part", "old"] },
+  "e10-stale": { why: "CK-20 (H5, C-E4 §0.1): the engaged slider's last-read place refreshes on a childList mutation only, and an unrelated append glides it from that stale place (a one-frame snap, then a slide back)", witnesses: ["E-10"], cell: /restale stale place · keyboard/, args: ["--part", "old"] },
+  "e10-staleresize": { why: "CK-20 (H5): the place also refreshes on the spacer's style write, but not on a viewport resize: the resize cell alone must fail", witnesses: ["E-10"], cell: /stale place \(viewport resize\)/, args: ["--part", "old"] },
   "cap-ladder": { why: "CK-25 (H5, C-A4's ca4-ladder): on a fine pointer the press paints lighter than the hover it follows (the press wash under the hover rung, C-A4 §0.3)", witnesses: ["CAP"], cell: /ladder fine/ },
   "e1-gpuambient": { why: "CONTROL, must PASS (H5, CK-19): the clean fixture under the named GPU arm (--gpu metal): the arm launches, states a hardware renderer, and the ambient cell is graded", witnesses: ["E-1"], expect: "pass", args: ["--gpu", "metal"], engines: ["chromium"] },
   "e1-gpuambientdead": { why: "CK-19 (H5): under the named GPU arm the ambient exemplar does not follow the pointer: the GPU-backed cell must FAIL, never pass", witnesses: ["E-1"], cell: /runtime ambient/, args: ["--gpu", "metal"], engines: ["chromium"] },
@@ -144,8 +144,8 @@ export const FAULTS = {
   "e11-unread": { why: "CONTROL: the grow spells its figure in place and reads no token, so an unreadable token degrades nothing: UNMEASURED, not a pass", witnesses: ["E-11"], cell: /fail-loud/, expect: "unmeasured" },
   "e11-noise": { why: "CONTROL (H2 §2.3): the grow spells its figure in place, reads no token, and varies run to run (1.060, 1.061, 1.066, 1.054, 1.060 on successive slider loads); one planted read outside a two-run spread is noise, not a degradation: UNMEASURED, never FAIL", witnesses: ["E-11"], cell: /fail-loud/, expect: "unmeasured" },
   // ── H6 (pass 6): a plant per new cell (REGISTRY §P5-8.3 wave 1) ──
-  "e10-ratio1": { why: "CK-20 (H6, C-A5 §0.1, REGISTRY §P5-7 item 1): the engaged slider's place is watched by an observer armed at ratio 1 (the box cut to its own rect): a move whose new rect lies inside the old one never changes the ratio, so the next unrelated append glides it from the stale place (the inward move and the centred shrink)", witnesses: ["E-10"], cell: /restale stale place \(inset\) · keyboard/ },
-  "e10-clipratio": { why: "CK-20 (H6, C-E5 §0.1): the same observer inside a clipping scroller, armed at the clipped ratio: a move toward the visible side keeps that ratio, so the next unrelated append glides the slider from the stale place", witnesses: ["E-10"], cell: /clipstale clipped stale place · keyboard · (top|bottom) · reveal/ },
+  "e10-ratio1": { why: "CK-20 (H6, C-A5 §0.1, REGISTRY §P5-7 item 1): the engaged slider's place is watched by an observer armed at ratio 1 (the box cut to its own rect): a move whose new rect lies inside the old one never changes the ratio, so the next unrelated append glides it from the stale place (the inward move and the centred shrink)", witnesses: ["E-10"], cell: /restale stale place \(inset\) · keyboard/, args: ["--part", "old"] },
+  "e10-clipratio": { why: "CK-20 (H6, C-E5 §0.1): the same observer inside a clipping scroller, armed at the clipped ratio: a move toward the visible side keeps that ratio, so the next unrelated append glides the slider from the stale place", witnesses: ["E-10"], cell: /clipstale clipped stale place · keyboard · (top|bottom) · reveal/, args: ["--part", "old"] },
   "e11-rename": { why: "CK-21 (H6, C-E5 §0.2, REGISTRY §P5-7 item 4): the fixture's loud clock read follows a hand-kept list that a rename left behind: it no longer names --engage-control-engage-*, which the stylesheet still transitions on, so planting it degrades the veil's and the dialog's fades with no console.error", witnesses: ["E-11"], cell: /clock --engage-control-engage-release/ },
   "e12-capsulelift": { why: "CK-11/CK-14/CK-27 (H6, C-A5 §0.2): the capsule composer keeps its hover lift (scale 1.015 on :hover, outside any (hover: hover) guard), so a hover writes geometry and a coarse tap latches it", witnesses: ["E-12"], cell: /capsule kappa hover fine/ },
   "e12-capsulesnap": { why: "CK-11 (H6): the capsule composer keeps its :active press snap (scale 0.97) with no door press mark: a class rung writes the press's geometry", witnesses: ["E-12"], cell: /capsule kappa press fine/ },
@@ -153,7 +153,7 @@ export const FAULTS = {
   "e12-capsuleunrendered": { why: "CK-27 (H6, REGISTRY §P5-7 item 2): the source tree has a second composer of .glass-capsule-hover (lambda) that the capsule scene does not render, so no cell can see it (the source-comment closure class)", witnesses: ["E-12"], cell: /capsule composers rendered/ },
   "e9-fadecut": { why: "CK-10 (H6, O-100 R-1 placed by O-103): under reduce the presented dialog's opacity fade is zeroed by the PRM fallback (no authorization row), so it cuts on open and on close", witnesses: ["E-9"], cell: /presented fade \(PRM\) open/ },
   "e9-fadespatial": { why: "CK-10 (H6): under reduce the presented dialog keeps its fade AND its 0.95 → 1 scale, a spatial leg the reduce arm must retire", witnesses: ["E-9"], cell: /presented fade \(PRM\) open/ },
-  "e4-carryflaky": { why: "CK-05 (H6, REGISTRY §P5-7 item 8): the slider drops its release velocity on one fling in five (the third), so its carry is bimodal; a one-read rule passes it four times in five", witnesses: ["E-4"], cell: /slider fling carries velocity/ },
+  "e4-carryflaky": { why: "CK-05 (H6, REGISTRY §P5-7 item 8): the slider drops its release velocity on one fling in five (the third), so its carry is bimodal; a one-read rule passes it four times in five. H8: the dropped fling is released at the drive's own velocity (≥ 100 px/s) and carries 0.00 px, so it must fail BY NAME", witnesses: ["E-4"], cell: /slider fling carries velocity · .*ZERO-CARRY FLING/ },
   // ── H7 (pass 7): a plant per new cell (REGISTRY §P6-8.3 wave 1) ──
   "e4-zerofling": { why: "CK-05 (H7, C-E6 s1): the third repeat run's release drops its velocity (the sheet lands where the hand let go): a fling that carries 0.00 px must fail by name", witnesses: ["E-4"], cell: /vsheet repeat landing · .*ZERO-CARRY FLING/ },
   "e4-velsplit": { why: "CONTROL, must PASS (H7): the sheet takes the next detent only above 500 px/s, and the witness paces every other repeat run's moves 250 ms apart (--repeat-gaps 16,250): unequal velocities on different detents are the drive's spread, not the rule's", witnesses: ["E-4"], expect: "pass", args: ["--repeat", "6", "--repeat-gaps", "16,250"] },
@@ -161,19 +161,35 @@ export const FAULTS = {
   "e9-illegible": { why: "CK-02/CK-10 (H7, O-103d (1)): under reduce the committed state paints nothing on the face (its fill held at rest): the commit is instant and illegible", witnesses: ["E-9"], cell: /pop commit-instant (light|dark)/ },
   "e9-prmplant": { why: "CK-27 (H7, REGISTRY §P6-7 item 6): the witness removes the page's reduce arm (lib.mjs PRM_PLANT): the travelling face (the tabs' class) must fail its commit-instant cell", witnesses: ["E-9"], cell: /travel commit-instant (light|dark)/, args: ["--prm-plant"] },
   "e10-noref": { why: "CK-20 (H7, P-E6 §6 item 4): the hand-off read without its reference scene (--scenes slider2) must FAIL LOUD, never print a NaN bound", witnesses: ["E-10"], cell: /slider2 hand-off drop · NO REFERENCE/, args: ["--scenes", "slider2"] },
-  "e10-clipratioptr": { why: "CK-20 (H7, C-E6 §0.1): the clipped-ratio observer, read on the POINTER path inside the scroller (C-E6's clip-pointer driver): the reveal glides from the stale place", witnesses: ["E-10"], cell: /clipstale clipped stale place · pointer · (top|bottom) · reveal/ },
-  "e10-clipvanish": { why: "CK-20 (H7, C-E6 §0.2): the keyboard-engaged slider is promoted into the top layer over its scroller's clip and hidden whole when its place leaves the scroller: it paints outside the card, then vanishes in one step", witnesses: ["E-10"], cell: /clipstale clip-vanish/ },
-  "e10-prmrebound": { why: "CK-02/CK-10 (H7, O-103d (1)): under reduce the commit and its reverse pop geometrically: not an instant state change", witnesses: ["E-10"], cell: /pop rebound reverse \(PRM\)/ },
+  "e10-clipratioptr": { why: "CK-20 (H7, C-E6 §0.1): the clipped-ratio observer, read on the POINTER path inside the scroller (C-E6's clip-pointer driver): the reveal glides from the stale place", witnesses: ["E-10"], cell: /clipstale clipped stale place · pointer · (top|bottom) · reveal/, args: ["--part", "old"] },
+  "e10-clipvanish": { why: "CK-20 (H7, C-E6 §0.2): the keyboard-engaged slider is promoted into the top layer over its scroller's clip and hidden whole when its place leaves the scroller: it paints outside the card, then vanishes in one step", witnesses: ["E-10"], cell: /clipstale clip-vanish/, args: ["--part", "vanish"] },
+  "e10-prmrebound": { why: "CK-02/CK-10 (H7, O-103d (1)): under reduce the commit and its reverse pop geometrically: not an instant state change", witnesses: ["E-10"], cell: /pop rebound reverse \(PRM\)/, args: ["--part", "old"] },
   "e12-openpop": { why: "CONTROL, must PASS (H7, C-E6 §5.2): the composer opens on pointerdown and pops ×1.02 as it opens (the commit's geometry, the SelectTrigger's class); its press is read with pointerdown withheld (the row's quiet), so the open's pop is not read as a press", witnesses: ["E-12"], expect: "pass" },
+  // ── H8 (pass 8): a plant per new cell (REGISTRY §P7-8.3 wave 1) ──
+  "e4-slowdrive": { why: "CONTROL, must PASS (H8, REGISTRY §P7-7 item 12): the slider's first fling page hides its drive from the page's capture listeners (the release rule reads 0 px/s, as a drive the event clock delivers late under load does) and carries 0.00 px: the read must be RE-DRIVEN inside the stage and reported, never graded as the rule's", witnesses: ["E-4"], cell: /slider fling carries velocity/, expect: "pass", args: ["--scenes", "slider"] },
+  "e10-clipouter": { why: "CK-20 (H8, C-E7's clipOnly): the engaged slider is promoted into the top layer, follows its place and is never clipped or hidden: it paints over its card (the two-bound cell's painted-outside clause), keyboard and touch", witnesses: ["E-10"], cell: /clipstale clip-vanish · (keyboard|touch)/, args: ["--part", "vanish"] },
+  "e10-rectclip-feather": { why: "CK-20 (H8, the pass-7 construction): promoted into the top layer and clipped to its scroller's overflow RECTANGLE, the clip written late (three frames; pass-7's was one): the library's feather (a mask on the scroller) never reaches it", witnesses: ["E-10"], cell: /clipstale clip feather · (keyboard|touch)/, args: ["--part", "feather"] },
+  "e10-rectclip-radius": { why: "CK-20 (H8, the pass-7 construction): the same rectangle clip paints the control into a rounded scroller's corners", witnesses: ["E-10"], cell: /clipstale clip radius · (keyboard|touch)/, args: ["--part", "radius"] },
+  "e10-rectclip-scale": { why: "CK-20 (H8, the pass-7 construction): the promoted control takes its layout width under a scaled ancestor, so it paints wider than its place", witnesses: ["E-10"], cell: /clipstale clip place · scale · (keyboard|touch)/, args: ["--part", "place"] },
+  "e10-rectclip-film": { why: "CK-20 (H8, the pass-7 construction): the place follows the scroll in its frame and the clip three frames late (pass-7's one-frame lag is not resolved by WebKit's film), so a moving scroller leaks the control above the card", witnesses: ["E-10"], cell: /clipstale clip film · (wheel|smooth) · engaged/, args: ["--part", "film"] },
+  "e10-layoutplace": { why: "CK-20 (H8): the promoted control is placed from layout offsets, which no ancestor transform moves: under a translated ancestor it paints off its place", witnesses: ["E-10"], cell: /clipstale clip place · translate · (keyboard|touch)/, args: ["--part", "place"] },
+  "e11-crestsilent": { why: "CK-21 (H8, C-A7's crestinput): the commit's crest input (--fx-commit-crest) planted unreadable on <html> before the first script degrades the commit to no light with no console.error", witnesses: ["E-11"], cell: /pop fail-loud --fx-commit-crest/ },
+  "e12-chipfaint": { why: "CK-27 (H8, C-A7's chipfaint): the chip's hover changes its background-color by a fraction of a level (a property changes, no pixel an eye sees): the hover clause must read paint", witnesses: ["E-12"], cell: /fx chip answers/ },
+  "e13-loupecut": { why: "CK-25 (H8, C-A7's cliploupe): the loupe rides inside the control's box, so its scroller clips it: at the scroller's top edge the lens is cut", witnesses: ["E-13"], cell: /clipstale loupe whole · edge/ },
+  "e13-loupemark": { why: "CK-25 (H8, P-E7's loupe6): a 2 px mark drawn across the window's centre and no end fade: a seam, a line over glass, a band that ends on the window's pill end", witnesses: ["E-13"], cell: /slider loupe k max/ },
   "e12-chipmute": { why: "CK-27 (H7, C-A6 §0): the chip that left the capsule answers neither hover nor press (0.0 % / 0.0 %): the elegant-reduction trap", witnesses: ["E-12"], cell: /fx chip answers/ },
   "e12-chipundeclared": { why: "CK-27 (H7): the chip paints its hover and press through literal rules and composes no declared engage-* class", witnesses: ["E-12"], cell: /fx chip answers/ },
   "cap-ladderhit": { why: "CK-25 (H6, REGISTRY §P5-7 item 10): a transparent layer sits over the control, so the ladder's pointer never reaches it; a hit test that misses must FAIL the ladder as unread, never pass it as a hover that paints no rung", witnesses: ["CAP"], cell: /pop ladder fine/ },
 };
 
 const CONTROL_GATES = ["E-2", "E-8", "E-9"];
+// H8 (CK-25): the fixture slider's loupe, shown while held (data-held): a housing, its window, the magnified band (the
+// track at k max, its ends dissolving), the fill to the window's centre
+const FX_LOUPE = { lens: ".fx-loupe", window: ".fx-loupe-window", clone: ".fx-loupe-clone", fill: ".fx-loupe-fill", track: ".fx-slider" };
 export const FIXTURE_INDEX = {
   // H5: pop carries C-A4's rebound (E-10, its light seat the .flash) and the ladder (CAP)
-  pop: { gates: [...CONTROL_GATES, "E-5", "E-10"], key: "Space", target: ".ctl", rebound: true, light: ".flash", ladder: true },
+  // H8: CK-21's crest input, planted on <html> before the first script (C-A7's crestinput)
+  pop: { gates: [...CONTROL_GATES, "E-5", "E-10", "E-11"], key: "Space", target: ".ctl", rebound: true, light: ".flash", ladder: true, failLoud: [{ token: "--fx-commit-crest", value: "nonsense", act: "commit", html: true }] },
   // H6: travel carries the ladder too (capture.mjs reads it as a ladder-only scene: the path the library's collapsible
   // and menu take)
   travel: { gates: CONTROL_GATES, key: "ArrowRight", target: '.seg[data-v="b"]', ladder: true },
@@ -181,13 +197,14 @@ export const FIXTURE_INDEX = {
   // H3: a stateless control (a counter, no model): E-2 drives its programmatic commit as element.click()
   act: { gates: CONTROL_GATES, key: "Space", target: ".ctl", stateless: true },
   // H6: `reads: 5` (CK-05: E-4's fling read five times, every read must pass)
-  slider: { gates: ["E-3", "E-4", "E-7", "E-9", "E-10", "E-11", "E-12"], key: "ArrowRight", veil: ".fx-veil", engaged: "[data-held], [data-kbd]", floor: ["wheel", "anchor"], reads: 5, failLoud: [{ token: "--fx-scale-engage", value: "nonsense", act: "kbd" }] },
+  slider: { gates: ["E-3", "E-4", "E-7", "E-9", "E-10", "E-11", "E-12", "E-13"], loupe: FX_LOUPE, key: "ArrowRight", veil: ".fx-veil", engaged: "[data-held], [data-kbd]", floor: ["wheel", "anchor"], reads: 5, failLoud: [{ token: "--fx-scale-engage", value: "nonsense", act: "kbd" }] },
   // H4: the fixture slider marks its engagement as data-held (the hand) or data-kbd (the keyboard)
   slider2: { gates: ["E-10"], veil: ".fx-veil", engaged: "[data-held], [data-kbd]", pair: ['.fx-slider[data-n="A"]', '.fx-slider[data-n="B"]'] },
   // H5: C-E4's stale place (a paragraph that rewraps, a spacer, the slider, a ticker below)
   restale: { gates: ["E-10"], stale: true, engaged: "[data-held], [data-kbd]" },
   // H6 (CK-20): C-E5's clipped stale place: the slider inside a 120 px clipping scroller
-  clipstale: { gates: ["E-10"], clip: { box: '[data-t="box"]', rest: '[data-t="slider-a"]', spacer: 60 }, engaged: "[data-held], [data-kbd]" },
+  // H8: the loupe (E-13's edge cell; E-10's touch clip cells hide it) and the feather (a mask on the scroller)
+  clipstale: { gates: ["E-10", "E-13"], veil: ".fx-veil", loupe: FX_LOUPE, feather: { cls: ["fx-feather"], attrs: [] }, clip: { box: '[data-t="box"]', rest: '[data-t="slider-a"]', spacer: 60 }, engaged: "[data-held], [data-kbd]" },
   // H6 (CK-10, O-100 R-1): a presented dialog whose opacity fade is its light leg
   presented: { gates: [], fade: { plate: ".fx-pdialog", scrim: ".fx-pscrim" } },
   // H6 (CK-11, CK-14, CK-27): every composer of the capsule class the source tree names, by directory
@@ -214,10 +231,14 @@ let e5n = 0;
 // e4-carryflaky (H6): E-4 loads the slider fling, still, fling, still, … (five reads, then PRM); the fifth load is the
 // third fling, which drops its velocity
 let e4n = 0;
+// e4-slowdrive (H8): the first slider page only
+let e4s = 0;
 export function fixturePage(params, fault = "") {
   const scene = params.get("scene") ?? "__index";
   const noise = fault === "e11-noise" && scene === "slider" ? E11_NOISE[e11n++ % E11_NOISE.length] : null;
   const carryDrop = fault === "e4-carryflaky" && scene === "slider" && e4n++ === 4;
+  // H8 e4-slowdrive: the first slider page (read 1's fling) hides its drive from the page's capture listeners and carries 0
+  const slowDrive = fault === "e4-slowdrive" && scene === "slider" && e4s++ === 0;
   const dark = params.get("theme") === "dark";
   const on = params.get("on") === "1";
   const defer = params.get("defer") === "1";
@@ -257,7 +278,7 @@ export function fixturePage(params, fault = "") {
 :root { --spring-press-duration: 350ms; --spring-press: ${SPRING};
   --engage-press-drain-attack: ${F("e8-drift") ? 56 : 55}ms; --engage-press-drain-release: 120ms;
   --engage-control-engage-attack: 60ms; --engage-control-engage-release: ${F("e8-units") ? ".18s" : "180ms"};
-  --fx-scale-engage: 1.06;
+  --fx-scale-engage: 1.06; --fx-commit-crest: 0.35;
   --bg: #f4f4f6; --ink: #111; --ctl: #d8dbe2; --ctl-hover: #cfd3dc; --ctl-press: #b9bfcc; --accent: #3b6cf0; }
 .dark { --bg: #15161a; --ink: #eee; --ctl: #33363f; --ctl-hover: #3b3f49; --ctl-press: #4b505c; }
 body { margin: 0; background: ${F("e2-noground") ? "transparent" : "var(--bg)"}; color: var(--ink); font: 15px system-ui; }
@@ -345,6 +366,15 @@ ${F("e12-fcreach") ? `.ctl::after { content: ""; position: absolute; inset: -6px
    composer, and cap-ladderhit's layer over the control */
 [data-t="wrap"] { width: 360px; } [data-t="wrap"] .fx-slider { width: 100%; }
 .fx-box { width: 400px; height: 120px; overflow: auto; overflow-anchor: none; border: 1px solid #8884; }
+/* H8: the feather (a mask on the scroller, FadingScroll's class); the loupe (fixed: it leaves its place, so no scroller
+   clips it; e13-loupecut rides inside the control's box) */
+.fx-feather { mask-image: linear-gradient(to bottom, transparent 0, #000 40px, #000 calc(100% - 40px), transparent 100%); }
+.fx-loupe { position: ${F("e13-loupecut") ? "absolute" : "fixed"}; z-index: 10; width: 120px; height: 60px; box-sizing: border-box; border-radius: 30px; border: 1px solid #9aa0ac; background: #fdfdfe; pointer-events: none; --loupe-k-max: 1.6; }
+.dark .fx-loupe { background: #24262c; border-color: #5a5f6b; }
+.fx-loupe-window { position: absolute; left: 6px; top: 6px; width: 106px; height: 46px; border-radius: 23px; overflow: hidden; }
+.fx-loupe-clone { position: absolute; left: 0; right: 0; top: 50%; translate: 0 -50%; background: var(--ctl);${F("e13-loupemark") ? "" : " mask-image: linear-gradient(to right, transparent 0, #000 36px, #000 calc(100% - 36px), transparent 100%);"} }
+.fx-loupe-fill { position: absolute; left: 0; top: 0; bottom: 0; width: 50%; background: var(--accent); }
+${F("e13-loupemark") ? ".fx-loupe-mark { position: absolute; left: calc(50% - 1px); top: 0; bottom: 0; width: 2px; background: #000; }" : ""}
 .fx-pscrim { position: fixed; inset: 0; background: #0003; pointer-events: none; }
 .fx-pdialog { position: fixed; left: 50%; top: 50%; translate: -50% -50%; width: 280px; padding: 24px; border-radius: 20px; background: var(--bg); opacity: 0; scale: 0.95;
   transition: opacity var(--engage-control-engage-release) linear, scale var(--spring-press-duration) var(--spring-press); }
@@ -357,7 +387,7 @@ ${F("e12-fcreach") ? `.ctl::after { content: ""; position: absolute; inset: -6px
 .capx:hover { background-color: var(--ctl-hover); }
 ${F("e12-capsulelift") ? ".capx:hover { scale: 1.015; }" : ""}
 .fxchip { display: inline-flex; align-items: center; height: 32px; padding: 0 14px; border: 0; border-radius: 16px; background-color: var(--ctl); font: inherit; color: inherit; }
-${F("e12-chipmute") ? "" : `.fxchip:hover { background-color: var(--ctl-hover); } .fxchip[data-press] { background-color: var(--ctl-press); }`}
+${F("e12-chipmute") ? "" : `.fxchip:hover { background-color: ${F("e12-chipfaint") ? "color-mix(in srgb, var(--ctl) 99.8%, #000)" : "var(--ctl-hover)"}; } .fxchip[data-press] { background-color: var(--ctl-press); }`}
 ${F("e12-capsulesnap") ? ".capx:active { scale: 0.97; }" : ""}
 .capx.lat { scale: 1.015; }
 ${F("cap-ladderhit") ? ".fx-cover { position: absolute; inset: -8px; z-index: 5; }" : ""}
@@ -391,7 +421,7 @@ ${F("cap-ladderhit") ? ".fx-cover { position: absolute; inset: -8px; z-index: 5;
   const CLOCKS = [...new Set([...css.matchAll(/(?:transition|animation)[\w-]*\s*:[^;{}]*/g)].flatMap((m) => [...m[0].matchAll(/var\((--engage-[\w-]+)\)/g)].map((x) => x[1])))].filter((t) => !(F("e11-rename") && t.startsWith("--engage-control-engage-")));
   const script = `
 const FAULT = ${JSON.stringify(fault)}; const SCENE = ${JSON.stringify(scene)}; const DEFER = ${defer}; const ON = ${on}; const RUN = ${run}; const PHONE = ${phone};
-const DROP = ${carryDrop}; const CLOCKS = ${JSON.stringify(CLOCKS)};
+const DROP = ${carryDrop || slowDrive}; const SLOWDRIVE = ${slowDrive}; const CLOCKS = ${JSON.stringify(CLOCKS)};
 // H6 (CK-21): every clock the stylesheet transitions on is read loudly at mount and on every act
 function checkClocks() {
   const cs = getComputedStyle(document.documentElement);
@@ -421,16 +451,26 @@ async function flash(el) {
   // control: 2 pulses at a 60 ms reverse), and a superseded commit's release never runs
   const g = (fl._g = (fl._g ?? 0) + 1); const cur = parseFloat(getComputedStyle(fl).opacity) || 0;
   for (const x of fl.getAnimations()) x.cancel();
-  const kf = cur > 0.01 ? [{ opacity: cur }, { opacity: cur * 0.5, offset: 0.4 }, { opacity: 0.35 }] : [{ opacity: 0 }, { opacity: 0.35 }];
+  const L = crestLevel();
+  const kf = cur > 0.01 ? [{ opacity: cur }, { opacity: cur * 0.5, offset: 0.4 }, { opacity: L }] : [{ opacity: 0 }, { opacity: L }];
   const up = fl.animate(kf, { duration: lit ? 300 : ms("--engage-control-engage-attack"), fill: "forwards" });
   try { await up.finished; } catch { return; }
   if (g !== fl._g) return;
-  fl.animate([{ opacity: 0.35 }, { opacity: 0 }], { duration: lit ? 300 : ms("--engage-control-engage-release"), fill: "forwards" }); up.cancel();
+  fl.animate([{ opacity: L }, { opacity: 0 }], { duration: lit ? 300 : ms("--engage-control-engage-release"), fill: "forwards" }); up.cancel();
 }
 function geom(el, crest, force = false) { if (!el || (prm() && !force)) return; el.animate([{ transform: "scale(1)" }, { transform: "scale(" + crest + ")", offset: 0.35 }, { transform: "scale(" + (2 - crest - (crest - 1) * 0.75) + ")", offset: 0.6 }, { transform: "scale(1.0005)", offset: 0.8 }, { transform: "scale(1)" }], { duration: tok("--spring-press-duration") }); }
 // e2-arrivalflush: the light is a CSS transition armed only by a before-change style. Reading the animations flushes
 // style: a seat styled before (a paint, or any style read) starts its transition and lights; a seat styled for the
 // first time now has no before-change style, starts none, and is put back dark with no transition
+// H8 (CK-21, C-A7's crestinput): the commit light's crest is a registered input read at the commit; unreadable, it fails
+// loud (one console.error) and keeps its level; e11-crestsilent degrades to no light with no error
+function crestLevel() {
+  const raw = getComputedStyle(document.documentElement).getPropertyValue("--fx-commit-crest").trim(); const v = parseFloat(raw);
+  if (/^[\\d.]+$/.test(raw) && v > 0 && v <= 1) return v;
+  if (FAULT === "e11-crestsilent") return 0;
+  console.error("[fixture] --fx-commit-crest is unreadable (" + JSON.stringify(raw) + "): the commit light cannot size its crest");
+  return 0.35;
+}
 function flashCss(el) {
   const fl = el?.querySelector(".flash"); if (!fl) return;
   fl.classList.add("lit");
@@ -474,6 +514,20 @@ addEventListener("pointerdown", pressOn, true); addEventListener("touchstart", p
 for (const k of ["pointerup", "pointercancel", "touchend", "touchcancel"]) addEventListener(k, pressOff, true);
 let veil = null; let veilRaf = 0;
 function engagedAny() { return [...document.querySelectorAll(".fx-slider")].some((r) => r.dataset.held !== undefined || r.dataset.kbd !== undefined); }
+// H8 (CK-25): the fixture's loupe. Fixed, so it leaves its place and no scroller clips it (e13-loupecut: absolute inside
+// the control's box, so its scroller does); the band is the track at k max (the held track's own height × 1.6), its ends
+// dissolving; the fill reaches the window's centre (e13-loupemark: a 2 px mark across the centre, no dissolve)
+function loupe(root, th, on) {
+  document.querySelectorAll(".fx-loupe").forEach((e) => e.remove());
+  if (!on) return;
+  const L = document.createElement("div"); L.className = "fx-loupe";
+  L.innerHTML = '<div class="fx-loupe-window"><div class="fx-loupe-clone"><div class="fx-loupe-fill"></div></div>' + (FAULT === "e13-loupemark" ? '<div class="fx-loupe-mark"></div>' : "") + "</div>";
+  const grow = prm() ? 1 : tok("--fx-scale-engage");
+  L.querySelector(".fx-loupe-clone").style.height = (1.6 * root.offsetHeight * grow) + "px";
+  if (FAULT === "e13-loupecut") { L.style.left = (th.offsetLeft - 60) + "px"; L.style.top = "-80px"; root.appendChild(L); return; }
+  const t = th.getBoundingClientRect(), r = root.getBoundingClientRect();
+  L.style.left = (t.left + t.width / 2 - 60) + "px"; L.style.top = (r.top - 80) + "px"; document.body.appendChild(L);
+}
 function settleVeil(now) {
   const want = engagedAny();
   if (FAULT === "e10-veildip" || now) { applyVeil(want); return; }
@@ -534,7 +588,11 @@ function wireSlider(root) {
       const mo = new MutationObserver((recs) => { if (recs.some((x) => x.type === "childList" && ![...x.addedNodes, ...x.removedNodes].includes(ph))) { const q = ph.getBoundingClientRect(); root.style.left = q.left + "px"; root.style.top = q.top + "px"; } });
       mo.observe(document.getElementById("stage"), { childList: true, subtree: true }); root._unpin = () => { mo.disconnect(); ph.remove(); root.classList.remove("pinned"); root.style.left = root.style.top = ""; }; }
     settleVeil(true); drag = { x0: x, cx: e.clientX, hist: [{ t: performance.now(), x }] }; });
-  th.addEventListener("pointermove", (e) => { if (!drag) return; x = Math.max(0, Math.min(W(), drag.x0 + e.clientX - drag.cx)); put(); drag.hist.push({ t: performance.now(), x }); if (drag.hist.length > 6) drag.hist.shift(); });
+  const move = (cx) => { if (!drag) return; x = Math.max(0, Math.min(W(), drag.x0 + cx - drag.cx)); put(); drag.hist.push({ t: performance.now(), x }); if (drag.hist.length > 6) drag.hist.shift(); };
+  th.addEventListener("pointermove", (e) => move(e.clientX));
+  // H8 e4-slowdrive: the drive's moves reach the slider from a window capture listener registered before any later one,
+  // which they never reach: the page's own record of the drive holds its press and its lift alone (0 px/s)
+  if (SLOWDRIVE) addEventListener("pointermove", (e) => { if (!drag) return; move(e.clientX); e.stopImmediatePropagation(); }, true);
   const release = () => { if (!drag) return; delete root.dataset.held; if (FAULT === "e3-latch") root.dataset.kbd = "";
     if (FAULT === "e10-rerender") { root.classList.remove("pinned"); root.style.left = root.style.top = ""; }
     if (root._unpin) { root._unpin(); root._unpin = null; }
@@ -564,6 +622,12 @@ function wireSlider(root) {
       if (Math.abs(v) > 1 || Math.abs(x - target) > 0.2) raf = requestAnimationFrame(step); else { x = target; put(); } };
     raf = requestAnimationFrame(step); };
   th.addEventListener("pointerup", release); th.addEventListener("pointercancel", release);
+  // H8: a touch engine that sends no pointer event (Playwright WebKit's raw driver) holds by touchstart … touchend
+  th.addEventListener("touchstart", (e) => { if (drag) return; const t = e.touches[0]; cancelAnimationFrame(raf); delete root.dataset.kbd; root.dataset.held = "touch"; settleVeil(true); drag = { x0: x, cx: t.clientX, hist: [{ t: performance.now(), x }] }; }, { passive: true });
+  th.addEventListener("touchmove", (e) => { const t = e.touches[0]; if (t) move(t.clientX); }, { passive: true });
+  th.addEventListener("touchend", release); th.addEventListener("touchcancel", release);
+  // H8 (CK-25): the loupe while held, on the scenes E-13 reads
+  if (SCENE === "slider" || SCENE === "clipstale") new MutationObserver(() => loupe(root, th, root.dataset.held !== undefined)).observe(root, { attributes: true, attributeFilter: ["data-held"] });
   return () => x;
 }
 // H6 plants e10-ratio1 / e10-clipratio (CK-20, REGISTRY §P5-7 item 1): a stage that watches the engaged slider's place
@@ -683,6 +747,33 @@ function mountScene() {
         if (k && !up) { up = true; wrap.style.height = wrap.offsetHeight + "px"; const w = root.offsetWidth, hh = root.offsetHeight; root.popover = "manual"; root.style.cssText += ";position:fixed;inset:auto;margin:0;padding:0;border:0;overflow:visible;width:" + w + "px;height:" + hh + "px;background:var(--ctl)"; root.showPopover(); place(); }
         else if (!k && up) { up = false; root.hidePopover(); root.removeAttribute("popover"); for (const q of ["position", "inset", "margin", "padding", "border", "overflow", "width", "height", "background", "top", "left", "visibility"]) root.style.removeProperty(q); wrap.style.height = ""; }
       }).observe(root, { attributes: true, attributeFilter: ["data-kbd"] });
+      box.addEventListener("scroll", place);
+    }
+    // H8 plants (CK-20, the place-paint invariant; REGISTRY §P7-8.1): the engaged slider (keyboard or touch) promoted into
+    // the top layer and placed over its place. e10-clipouter: never clipped, never hidden (C-E7's clipOnly). e10-rectclip-*:
+    // the pass-7 construction: clipped to its scroller's overflow RECTANGLE (no radius, no mask), the place written in the
+    // scroll's frame and the clip LAG frames late, the width its layout width (no ancestor scale). e10-layoutplace: placed
+    // from layout offsets, which no ancestor transform moves. LAG 3: a clip one frame late (pass-7's lag) is resolved by
+    // Chromium's film but not by WebKit's (H8 §2, the first WebKit self-test), so the plant writes it three frames late
+    // (≈ 50 ms, two of WebKit's 25 fps video frames) to show the film cell can fail in both engines
+    if (/^e10-(clipouter|rectclip|layoutplace)/.test(FAULT)) {
+      const box = stage.querySelector('[data-t="box"]'), wrap = stage.querySelector('[data-t="slider-a"]'); let up = false, lag = [], raf = 0; const LAG = 3;
+      const rect = FAULT.startsWith("e10-rectclip"), layout = FAULT === "e10-layoutplace";
+      const at = () => {
+        if (layout) { let x = 0, y = 0; for (let e = wrap; e; e = e.offsetParent) { x += e.offsetLeft; y += e.offsetTop; } return { left: x - box.scrollLeft - scrollX + 20, top: y - box.scrollTop - scrollY + (wrap.offsetHeight - root.offsetHeight) / 2 }; }
+        const r = wrap.getBoundingClientRect(), k = r.width / wrap.offsetWidth;
+        return { left: r.left + 20 * k, top: r.top + (r.height - root.offsetHeight * (rect ? 1 : k)) / 2 };
+      };
+      const clipNow = () => { if (FAULT === "e10-clipouter") return ""; const b = box.getBoundingClientRect(), e = root.getBoundingClientRect();
+        const t = b.top + box.clientTop, l = b.left + box.clientLeft, bt = t + box.clientHeight, br = l + box.clientWidth, sx = e.width / root.offsetWidth || 1;
+        return "inset(" + [Math.max(0, t - e.top), Math.max(0, e.right - br), Math.max(0, e.bottom - bt), Math.max(0, l - e.left)].map((v) => (v / sx).toFixed(2) + "px").join(" ") + ")"; };
+      const place = () => { if (!up) return; const p = at(); root.style.left = p.left + "px"; root.style.top = p.top + "px"; if (!rect) root.style.clipPath = clipNow(); };
+      const loop = () => { if (!up) return; place(); if (rect) { lag.push(clipNow()); if (lag.length > LAG) root.style.clipPath = lag.shift(); } raf = requestAnimationFrame(loop); };
+      const engagedNow = () => root.dataset.kbd !== undefined || root.dataset.held !== undefined;
+      new MutationObserver(() => { const k = engagedNow();
+        if (k && !up) { up = true; lag = []; wrap.style.height = wrap.offsetHeight + "px"; const w = root.offsetWidth, hh = root.offsetHeight; root.popover = "manual"; root.style.cssText += ";position:fixed;inset:auto;margin:0;padding:0;border:0;overflow:visible;width:" + w + "px;height:" + hh + "px;background:var(--ctl)"; root.showPopover(); place(); if (rect) root.style.clipPath = clipNow(); raf = requestAnimationFrame(loop); }
+        else if (!k && up) { up = false; cancelAnimationFrame(raf); root.hidePopover(); root.removeAttribute("popover"); for (const q of ["position", "inset", "margin", "padding", "border", "overflow", "width", "height", "background", "top", "left", "clip-path"]) root.style.removeProperty(q); wrap.style.height = ""; }
+      }).observe(root, { attributes: true, attributeFilter: ["data-kbd", "data-held"] });
       box.addEventListener("scroll", place);
     }
   }

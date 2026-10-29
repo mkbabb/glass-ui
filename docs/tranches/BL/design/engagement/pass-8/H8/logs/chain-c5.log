@@ -1,0 +1,13 @@
+## 06:40:51 fx-E-11 chromium  · load { 10.29 9.28 9.03 }
+  PASS       E-11 clock --engage-press-drain-attack (enumerated) · --engage-press-drain-attack: nonsense on <html> before the first script · fails loud · pop: 5 consumer read(s), 5 reading the clock unreadable, 5 with its timing changed in the act (rest | .ctl, .seg #0: scale, background-color / 0.35s, 0.055s / 0s, 0s / none / 0s → all / 0s / 0s / none / 0s), console errors naming the clock 4 of 4 ("[fixture] --engage-press-drain-attack is unreadable ("nonsense"): the clock it times cannot run"), on the clean page 0 · load 9.1/9.9/9.4
+E-11 chromium PASS · 4 pass, 0 fail, 0 unmeasured of 4 gating cells (1 reported) · load 10.3/9.3/9.0 at start, 9.1/9.9/9.4 at end
+# exit 0 · 06:45:06 · load { 9.08 9.92 9.43 }
+## 06:45:06 fx-E-10 chromium  · load { 9.08 9.92 9.43 }
+  PASS       E-10 pop rebound reverse (PRM) +200 dark · reduce · state "off" → "on" → back at +200 · instant: the face's scale range 0.0000 (bound < 0.002), in flight on 0 frame(s) (bound ≤ 1) over 80 frames · rests where it began: 300 ms after the reverse 0.0 % of the face's pixels differ by ≥ 16 levels from before the commit (bound < 5 %) · load 12.7/10.9/9.9
+E-10 chromium PASS · 47 pass, 0 fail, 0 unmeasured of 47 gating cells (9 reported) · load 9.1/9.9/9.4 at start, 12.7/10.9/9.9 at end
+# exit 0 · 06:47:46 · load { 12.72 10.92 9.90 }
+## 06:47:46 st-E-10 chromium --faults e10-clipvanish,e10-clipouter,e10-rectclip-feather,e10-rectclip-radius,e10-rectclip-scale,e10-rectclip-film,e10-layoutplace · load { 12.72 10.92 9.90 }
+         first planted FAIL: FAIL       E-10 clipstale clip place · translate · keyboard · keyboard engaged (promoted true) · the scroller translate 0 30px · the control's centre at rest (249.0, 216.0), width 360.0 px → engaged (248.0, 185.0), width 381.6 px: the centr
+selftest: 7 runs, 0 N/A; every witness passes its fixture, fails each planted violation on the planted cell, and passes each control, in every engine with an input for it
+# selftest exit 0 · 06:49:37 · load { 10.28 10.50 9.85 }
+## 06:49:37 chain end · load { 10.28 10.50 9.85 }

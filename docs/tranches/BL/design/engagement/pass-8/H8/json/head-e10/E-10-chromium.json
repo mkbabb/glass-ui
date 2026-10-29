@@ -1,0 +1,109 @@
+{
+ "id": "E-10",
+ "engine": "chromium",
+ "version": "149.0.7827.55",
+ "target": {
+  "build": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p8/H8/wt/.h8out/builds/head"
+ },
+ "loadStart": "6.7/7.3/7.4",
+ "loadEnd": "11.5/9.0/8.1",
+ "verdict": "FAIL",
+ "cells": [
+  {
+   "name": "E-10 clipstale clip-vanish · keyboard",
+   "status": "FAIL",
+   "line": "NOT DRIVEN: engaged on every step false, released after true, 9 of 9 steps · keyboard engaged (promoted on every step false) · px² of the strip above the scroller that differ from the released strip per 1 px step of the 20.0 px rest box past its top edge (hidden 14/15/16/17/18/19/20/21/22): 0 / 0 / 0 / 0 / 0 / 0 / 0 / 0 / 0 · (a) painted outside its card: largest 0 px² (bound ≤ 3 rows × the control's 358 px = 1074: the edge's antialiasing) · (b) largest change between adjacent steps 0 px² (bound ≤ 1074: a 1 px scroll moves ≤ 1 px of the control; a larger drop is the control leaving the paint in one step)",
+   "load": "6.9/7.3/7.4"
+  },
+  {
+   "name": "E-10 clipstale clip-vanish · touch",
+   "status": "FAIL",
+   "line": "NOT DRIVEN: engaged on every step false, released after true, 9 of 9 steps · touch engaged (promoted on every step false) · px² of the strip above the scroller that differ from the released strip per 1 px step of the 24.0 px rest box past its top edge (hidden 14/15/16/17/18/19/20/21/22): 0 / 0 / 0 / 0 / 0 / 0 / 0 / 0 / 0 · (a) painted outside its card: largest 0 px² (bound ≤ 3 rows × the control's 358 px = 1074: the edge's antialiasing) · (b) largest change between adjacent steps 0 px² (bound ≤ 1074: a 1 px scroll moves ≤ 1 px of the control; a larger drop is the control leaving the paint in one step)",
+   "load": "8.5/7.6/7.5"
+  },
+  {
+   "name": "E-10 clipstale clip feather · keyboard",
+   "status": "FAIL",
+   "line": "NOT DRIVEN (engaged false/false, released true/true, mask linear-gradient(rgba(0, 0, 0, 0) 0px, rgb(0, 0, 0) 16px, rgb(0, 0, 0)  · --fade-start 16px) · keyboard engaged (promoted false) · the scroller's feather: linear-gradient(rgba(0, 0, 0, 0) 0px, rgb(0, 0, 0) 16px, rgb(0, 0, 0)  · --fade-start 16px · the control 4 px inside its feathered top edge · visibility in the scroller's top 28 px, engaged over released: ×1.00 feathered, ×1.00 unfeathered (the grow's own gain) · ratio of ratios 1.00 · bound ≤ 1.1 × ×1.00 = ×1.10 (an in-place body reads 1)",
+   "load": "8.6/7.7/7.5"
+  },
+  {
+   "name": "E-10 clipstale clip feather · touch",
+   "status": "FAIL",
+   "line": "NOT DRIVEN (engaged false/false, released true/true, mask linear-gradient(rgba(0, 0, 0, 0) 0px, rgb(0, 0, 0) 16px, rgb(0, 0, 0)  · --fade-start 16px) · touch engaged (promoted false) · the scroller's feather: linear-gradient(rgba(0, 0, 0, 0) 0px, rgb(0, 0, 0) 16px, rgb(0, 0, 0)  · --fade-start 16px · the control 4 px inside its feathered top edge · visibility in the scroller's top 28 px, engaged over released: ×1.08 feathered, ×1.02 unfeathered (the grow's own gain) · ratio of ratios 1.06 · bound ≤ 1.1 × ×1.02 = ×1.12 (an in-place body reads 1)",
+   "load": "9.8/7.9/7.6"
+  },
+  {
+   "name": "E-10 clipstale clip radius · keyboard",
+   "status": "FAIL",
+   "line": "NOT DRIVEN (engaged false, released true) · keyboard engaged (promoted false) · scroller border-radius 40 px, the control's end in its corner, 6 px past the top edge · px² of the top corners outside the rounded padding box (562 px² read, the 1.5 px antialias band excluded) that differ ≥ 16 levels engaged against released: 0 (bound ≤ 16 px²)",
+   "load": "9.8/7.9/7.6"
+  },
+  {
+   "name": "E-10 clipstale clip radius · touch",
+   "status": "FAIL",
+   "line": "NOT DRIVEN (engaged false, released true) · touch engaged (promoted false) · scroller border-radius 40 px, the control's end in its corner, 6 px past the top edge · px² of the top corners outside the rounded padding box (562 px² read, the 1.5 px antialias band excluded) that differ ≥ 16 levels engaged against released: 0 (bound ≤ 16 px²)",
+   "load": "15.1/9.1/8.0"
+  },
+  {
+   "name": "E-10 clipstale clip place · translate · keyboard",
+   "status": "FAIL",
+   "line": "NOT DRIVEN (not engaged) · keyboard engaged (promoted false) · the scroller translate 0 30px · the control's centre at rest (248.0, 251.7), width 358.0 px → engaged (248.0, 251.7), width 358.0 px: the centre moves 0.0 px (bound ≤ 2) and the width ×1.000 (bound 0.99..1.07: the grow)",
+   "load": "15.0/9.2/8.1"
+  },
+  {
+   "name": "E-10 clipstale clip place · scale · keyboard",
+   "status": "FAIL",
+   "line": "NOT DRIVEN (not engaged) · keyboard engaged (promoted false) · the scroller scale 0.8 · the control's centre at rest (208.0, 219.5), width 286.4 px → engaged (208.0, 219.5), width 286.4 px: the centre moves 0.0 px (bound ≤ 2) and the width ×1.000 (bound 0.99..1.07: the grow)",
+   "load": "15.0/9.2/8.1"
+  },
+  {
+   "name": "E-10 clipstale clip place · none · keyboard",
+   "status": "FAIL",
+   "line": "NOT DRIVEN (not engaged) · keyboard engaged (promoted false) · the scroller untransformed (the control) · the control's centre at rest (248.0, 221.7), width 358.0 px → engaged (248.0, 221.7), width 358.0 px: the centre moves 0.0 px (bound ≤ 2) and the width ×1.000 (bound 0.99..1.07: the grow)",
+   "load": "14.1/9.1/8.0"
+  },
+  {
+   "name": "E-10 clipstale clip place · translate · touch",
+   "status": "FAIL",
+   "line": "NOT DRIVEN (not engaged) · touch engaged (promoted false) · the scroller translate 0 30px · the control's centre at rest (248.0, 253.7), width 358.0 px → engaged (248.0, 253.7), width 358.0 px: the centre moves 0.0 px (bound ≤ 2) and the width ×1.000 (bound 0.99..1.07: the grow)",
+   "load": "13.4/9.0/8.0"
+  },
+  {
+   "name": "E-10 clipstale clip place · scale · touch",
+   "status": "FAIL",
+   "line": "NOT DRIVEN (not engaged) · touch engaged (promoted false) · the scroller scale 0.8 · the control's centre at rest (208.0, 221.1), width 286.4 px → engaged (208.0, 221.1), width 286.4 px: the centre moves 0.0 px (bound ≤ 2) and the width ×1.000 (bound 0.99..1.07: the grow)",
+   "load": "13.2/9.0/8.0"
+  },
+  {
+   "name": "E-10 clipstale clip place · none · touch",
+   "status": "FAIL",
+   "line": "NOT DRIVEN (not engaged) · touch engaged (promoted false) · the scroller untransformed (the control) · the control's centre at rest (248.0, 223.7), width 358.0 px → engaged (248.0, 223.7), width 358.0 px: the centre moves 0.0 px (bound ≤ 2) and the width ×1.000 (bound 0.99..1.07: the grow)",
+   "load": "12.9/9.0/8.1"
+  },
+  {
+   "name": "E-10 clipstale clip film · wheel · engaged",
+   "status": "FAIL",
+   "line": "NOT DRIVEN (3 engaged and 3 released films; 3 not engaged as named or not scrolled > 20 px) · keyboard engaged, the scroller moved by twelve 8 px wheel ticks · px² of the 24 px strip above the scroller differing ≥ 40 levels from the film's per-pixel median · engaged films: 35 of 35 frames read (largest 0 px² at frame 0; frames over 100 px²: none), scrolled 96 px | 35 of 35 frames read (largest 0 px² at frame 0; frames over 100 px²: none), scrolled 96 px | 35 of 35 frames read (largest 0 px² at frame 0; frames over 100 px²: none), scrolled 96 px · bound ≤ the released films' largest 0 + one row × 358 px = 358; 0 of 3 engaged films over it",
+   "load": "10.9/8.8/8.0"
+  },
+  {
+   "name": "E-10 clipstale clip film · wheel · released",
+   "status": "REPORT",
+   "line": "34 of 34 frames read (largest 0 px² at frame 0; frames over 100 px²: none), scrolled 96 px | 34 of 34 frames read (largest 0 px² at frame 0; frames over 100 px²: none), scrolled 96 px | 35 of 35 frames read (largest 0 px² at frame 0; frames over 100 px²: none), scrolled 96 px",
+   "load": "10.9/8.8/8.0"
+  },
+  {
+   "name": "E-10 clipstale clip film · smooth · engaged",
+   "status": "FAIL",
+   "line": "NOT DRIVEN (3 engaged and 3 released films; 3 not engaged as named or not scrolled > 20 px) · keyboard engaged, the scroller moved by a smooth 90 px scrollBy · px² of the 24 px strip above the scroller differing ≥ 40 levels from the film's per-pixel median · engaged films: 32 of 32 frames read (largest 0 px² at frame 0; frames over 100 px²: none), scrolled 90 px | 32 of 32 frames read (largest 0 px² at frame 0; frames over 100 px²: none), scrolled 90 px | 32 of 32 frames read (largest 0 px² at frame 0; frames over 100 px²: none), scrolled 90 px · bound ≤ the released films' largest 0 + one row × 358 px = 358; 0 of 3 engaged films over it",
+   "load": "11.5/9.0/8.1"
+  },
+  {
+   "name": "E-10 clipstale clip film · smooth · released",
+   "status": "REPORT",
+   "line": "31 of 31 frames read (largest 0 px² at frame 0; frames over 100 px²: none), scrolled 90 px | 31 of 31 frames read (largest 0 px² at frame 0; frames over 100 px²: none), scrolled 90 px | 31 of 31 frames read (largest 0 px² at frame 0; frames over 100 px²: none), scrolled 90 px",
+   "load": "11.5/9.0/8.1"
+  }
+ ]
+}

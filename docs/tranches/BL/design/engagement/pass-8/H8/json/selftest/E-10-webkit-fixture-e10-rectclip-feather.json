@@ -1,0 +1,26 @@
+{
+ "id": "E-10",
+ "engine": "webkit",
+ "version": "26.5",
+ "target": {
+  "fixture": true,
+  "fault": "e10-rectclip-feather"
+ },
+ "loadStart": "9.2/11.2/10.0",
+ "loadEnd": "8.4/10.9/9.9",
+ "verdict": "FAIL",
+ "cells": [
+  {
+   "name": "E-10 clipstale clip feather · keyboard",
+   "status": "FAIL",
+   "line": "keyboard engaged (promoted true) · the scroller's feather: linear-gradient(rgba(0, 0, 0, 0) 0px, rgb(0, 0, 0) 40px, rgb(0, 0, 0)  · --fade-start — · the control 4 px inside its feathered top edge · visibility in the scroller's top 28 px, engaged over released: ×2.73 feathered, ×1.04 unfeathered (the grow's own gain) · ratio of ratios 2.63 · bound ≤ 1.1 × ×1.04 = ×1.14 (an in-place body reads 1)",
+   "load": "9.1/11.1/10.0"
+  },
+  {
+   "name": "E-10 clipstale clip feather · touch",
+   "status": "FAIL",
+   "line": "touch engaged (promoted true) · the scroller's feather: linear-gradient(rgba(0, 0, 0, 0) 0px, rgb(0, 0, 0) 40px, rgb(0, 0, 0)  · --fade-start — · the control 4 px inside its feathered top edge · visibility in the scroller's top 28 px, engaged over released: ×3.00 feathered, ×1.13 unfeathered (the grow's own gain) · ratio of ratios 2.65 · bound ≤ 1.1 × ×1.13 = ×1.24 (an in-place body reads 1)",
+   "load": "8.4/10.9/9.9"
+  }
+ ]
+}

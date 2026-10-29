@@ -1,0 +1,44 @@
+{
+ "id": "E-11",
+ "engine": "chromium",
+ "version": "149.0.7827.55",
+ "target": {
+  "fixture": true,
+  "fault": "e11-silent"
+ },
+ "loadStart": "12.1/10.4/10.0",
+ "loadEnd": "14.2/13.9/11.8",
+ "verdict": "FAIL",
+ "cells": [
+  {
+   "name": "E-11 pop fail-loud --fx-commit-crest (commit)",
+   "status": "PASS",
+   "line": "fails loud · --fx-commit-crest: \"nonsense\" on <html> before the first script · clean {\"peak\":0,\"rise\":0.18171218443130568} {\"peak\":0,\"rise\":0.18171218443130568} · planted {\"peak\":0,\"rise\":0.18171218443130568} (a metric degrades outside the clean envelope plus its epsilon, reproduced when first seen) · console errors on the planted run(s) 1: [fixture] --fx-commit-crest is unreadable (\"nonsense\"): the commit light cannot size its crest",
+   "load": "12.1/10.4/10.0"
+  },
+  {
+   "name": "E-11 slider fail-loud --fx-scale-engage (kbd)",
+   "status": "FAIL",
+   "line": "SILENT DEGRADATION · --fx-scale-engage: \"nonsense\" on the root · clean {\"s\":1.0599999321831597,\"veil\":1,\"n\":1} {\"s\":1.0599999321831597,\"veil\":1,\"n\":1} {\"s\":1.0599999321831597,\"veil\":1,\"n\":1} · planted {\"s\":1,\"veil\":1,\"n\":1} {\"s\":1,\"veil\":1,\"n\":1} (a metric degrades outside the clean envelope plus its epsilon, reproduced when first seen) · console errors on the planted run(s) 0",
+   "load": "11.7/10.4/10.0"
+  },
+  {
+   "name": "E-11 clock census",
+   "status": "REPORT",
+   "line": "2 --engage-* clock(s) read by a transition or animation declaration in the loaded stylesheets: --engage-control-engage-release (2 rule(s), e.g. transition: opacity var(--engage-control-engage-release) linear) · --engage-press-drain-attack (1 rule(s), e.g. transition: scale var(--spring-press-duration) var(--spring-press), background-color var(--e)",
+   "load": "13.7/13.8/11.7"
+  },
+  {
+   "name": "E-11 clock --engage-control-engage-release (enumerated)",
+   "status": "PASS",
+   "line": "--engage-control-engage-release: nonsense on <html> before the first script · fails loud · slider: 2 consumer read(s), 2 reading the clock unreadable, 2 with its timing changed in the act (tab | .fx-veil #0: opacity / 0.18s / 0s / none / 0s → all / 0s / 0s / none / 0s), console errors naming the clock 2 of 2 (\"[fixture] --engage-control-engage-release is unreadable (\"nonsense\"): the clock it times cannot run\"), on the clean page 0 · presented: 5 consumer read(s), 5 reading the clock unreadable, 5 with its timing changed in the act (rest | .fx-pdialog #0: opacity, scale / 0.18s, 0.35s / 0s, 0s / none / 0s → all / 0s / 0s / none / 0s), console errors naming the clock 3 of 3 (\"[fixture] --engage-control-engage-release is unreadable (\"nonsense\"): the clock it times cannot run\"), on the clean page 0",
+   "load": "13.7/13.8/11.7"
+  },
+  {
+   "name": "E-11 clock --engage-press-drain-attack (enumerated)",
+   "status": "PASS",
+   "line": "--engage-press-drain-attack: nonsense on <html> before the first script · fails loud · pop: 5 consumer read(s), 5 reading the clock unreadable, 5 with its timing changed in the act (rest | .ctl, .seg #0: scale, background-color / 0.35s, 0.055s / 0s, 0s / none / 0s → all / 0s / 0s / none / 0s), console errors naming the clock 4 of 4 (\"[fixture] --engage-press-drain-attack is unreadable (\"nonsense\"): the clock it times cannot run\"), on the clean page 0",
+   "load": "14.2/13.9/11.8"
+  }
+ ]
+}

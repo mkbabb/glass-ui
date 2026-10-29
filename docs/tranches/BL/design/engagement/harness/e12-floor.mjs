@@ -75,6 +75,10 @@ import path from "node:path";
 import { witness, openPage, tabKey, f, HERE, GLASS, paintDiff } from "./lib.mjs";
 const { PNG } = (await import(`${GLASS}/node_modules/pngjs/lib/png.js`)).default;
 const luma = (buf) => { const p = PNG.sync.read(buf); const o = new Float32Array(p.width * p.height); for (let i = 0, j = 0; i < p.data.length; i += 4, j++) o[j] = 0.2126 * p.data[i] + 0.7152 * p.data[i + 1] + 0.0722 * p.data[i + 2]; return { w: p.width, h: p.height, o }; };
+// H8 (CK-27, C-A7's chipfine): the fraction of pixels moving by ≥ k levels, and the mean |Δ|
+const movedPx = (a, b, k) => { if (!a || !b || a.w !== b.w || a.h !== b.h) return NaN; let n = 0; for (let i = 0; i < a.o.length; i++) if (Math.abs(a.o[i] - b.o[i]) >= k) n++; return n / a.o.length; };
+const meanD = (a, b) => { if (!a || !b || a.w !== b.w || a.h !== b.h) return NaN; let s = 0; for (let i = 0; i < a.o.length; i++) s += Math.abs(a.o[i] - b.o[i]); return s / a.o.length; };
+const HOVER_LEVELS = 4, HOVER_FRAC = 0.1;
 const changedPx = (a, b) => { if (!a || !b || a.w !== b.w || a.h !== b.h) return NaN; let n = 0; for (let i = 0; i < a.o.length; i++) if (Math.abs(a.o[i] - b.o[i]) >= 16) n++; return n / a.o.length; };
 
 const ENG = 1.03, TOL = 0.002;
@@ -387,8 +391,11 @@ await witness("E-12", "the floor's and MIGRATION's cells (CK-14, CK-16, CK-22, C
         if (r.none) { cell(name, "FAIL", `no target: ${selA} renders nothing`); continue; }
         const hov = paintDiff(r.r0.p, r.r1.p); const prs = paintDiff(r.r1.p, r.r2.p).filter((k) => r.r2.p[k] !== r.r0.p[k]); const ds = r.r2.s - r.r1.s;
         const pxH = changedPx(r.r0.px, r.r1.px), pxP = changedPx(r.r1.px, r.r2.px);
-        const okH = r.r1.hov && hov.length > 0, okP = prs.length > 0 || Math.abs(ds) >= 0.01, okD = r.cls.length > 0;
-        cell(name, okH && okP && okD ? "PASS" : "FAIL", `${selA} · hover 400 ms (:hover ${r.r1.hov}): ${okH ? "" : "NO ANSWER · "}paint changed [${hov.join(", ").slice(0, 120)}], ${f(pxH * 100, 1)} % of its pixels by ≥ 16 levels · held press 250 ms (door mark ${r.door}): ${okP ? "" : "NO ANSWER · "}press-only paint [${prs.join(", ").slice(0, 120)}], scale ×${f(r.r1.s, 4)} → ×${f(r.r2.s, 4)}, ${f(pxP * 100, 1)} % of its pixels · ${okD ? "" : "NO DECLARED CLASS · "}declared class [${r.cls.join(" ")}] (--rung-class "${r.rung}") (bound: the hover paints ≥ 1 property, the press ≥ 1 property its hover does not or Δscale ≥ 0.01, the element composes an engage-* class)`);
+        // H8: the hover clause reads PAINT (C-A7 §5.1: a property that changes by 0.001 ink passed the property read):
+        // ≥ HOVER_FRAC of the chip's pixels move by ≥ HOVER_LEVELS levels of luma
+        const p4H = movedPx(r.r0.px, r.r1.px, HOVER_LEVELS), mH = meanD(r.r0.px, r.r1.px);
+        const okH = r.r1.hov && p4H >= HOVER_FRAC, okP = prs.length > 0 || Math.abs(ds) >= 0.01, okD = r.cls.length > 0;
+        cell(name, okH && okP && okD ? "PASS" : "FAIL", `${selA} · hover 400 ms (:hover ${r.r1.hov}): ${okH ? "" : "NO ANSWER · "}${f(p4H * 100, 1)} % of its pixels moved by ≥ ${HOVER_LEVELS} levels (mean |Δ| ${f(mH, 2)} levels), ${f(pxH * 100, 1)} % by ≥ 16; properties changed [${hov.join(", ").slice(0, 120)}] · held press 250 ms (door mark ${r.door}): ${okP ? "" : "NO ANSWER · "}press-only paint [${prs.join(", ").slice(0, 120)}], scale ×${f(r.r1.s, 4)} → ×${f(r.r2.s, 4)}, ${f(pxP * 100, 1)} % of its pixels · ${okD ? "" : "NO DECLARED CLASS · "}declared class [${r.cls.join(" ")}] (--rung-class "${r.rung}") (bound: the hover moves ≥ ${HOVER_FRAC * 100} % of the chip's pixels by ≥ ${HOVER_LEVELS} levels, the press ≥ 1 property its hover does not or Δscale ≥ 0.01, the element composes an engage-* class)`);
       }
     }
   }

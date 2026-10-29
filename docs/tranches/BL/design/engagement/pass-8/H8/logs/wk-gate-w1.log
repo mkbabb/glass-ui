@@ -1,0 +1,65 @@
+[guarded] waiting for the 'webkit' lock
+# 2026-10-29 05:31:34 WebKit lock acquired (w1) · load { 10.26 10.56 10.55 }
+# 05:39:05 ready: st-E-13 st-E-12 st-E-4 st-E-11:--faults+e11-crestsilent fx-E-11 cand-e13 plant-loupe6-e13 cand-e12 plant-chipfaint-e12 cand-e11 cand-e4 head-e13 head-e12 head-e11 head-e4 
+## 05:39:05 st-E-13 webkit  · load { 11.84 10.29 10.32 }
+         first planted FAIL: FAIL       E-13 slider loupe k max fine light · sustained 1200 ms · band 33.9 px over the held track's 21.2 px = ×1.599 (k max 1.60; bound ±5 %) · the magnified tip 0.00 px from the window's centre (≤ 2) · seam: the band row's centre leaves
+selftest: 3 runs, 0 N/A; every witness passes its fixture, fails each planted violation on the planted cell, and passes each control, in every engine with an input for it
+# selftest exit 0 · 05:40:44 · load { 8.88 9.96 10.20 }
+## 05:40:44 st-E-12 webkit  · load { 8.88 9.96 10.20 }
+         first planted FAIL: FAIL       E-12 capsule fx chip answers light · [data-t="cap-chipx"] · hover 400 ms (:hover true): 58.6 % of its pixels moved by ≥ 4 levels (mean |Δ| 4.68 levels), 0.0 % by ≥ 16; properties changed [background-color] · held press 250 ms (do
+selftest: 16 runs, 1 N/A; every witness passes its fixture, fails each planted violation on the planted cell, and passes each control, in every engine with an input for it
+# selftest exit 0 · 05:51:25 · load { 9.78 9.60 9.93 }
+## 05:51:25 st-E-4 webkit  · load { 9.78 9.60 9.93 }
+OK     E-4 webkit   control e4-slowdrive (CONTROL, must PASS (H8, REGISTRY §P7-7 item 12): the slider's first fling page hides its drive from the page's capture listeners (the release rule reads 0 px/s, as a drive the event clock delivers late under load does) and carries 0.00 px: the read must be RE-DRIVEN inside the stage and reported, never graded as the rule's) exit 0
+selftest: 15 runs, 1 N/A; every witness passes its fixture, fails each planted violation on the planted cell, and passes each control, in every engine with an input for it
+# selftest exit 0 · 06:06:57 · load { 15.25 12.25 10.78 }
+## 06:06:57 st-E-11 webkit --faults e11-crestsilent · load { 15.25 12.25 10.78 }
+         first planted FAIL: FAIL       E-11 pop fail-loud --fx-commit-crest (commit) · SILENT DEGRADATION · --fx-commit-crest: "nonsense" on <html> before the first script · clean {"peak":0,"rise":0.18171218443130568} {"peak":0,"rise":0.18171218443130568} {"peak":0,"r
+selftest: 1 runs, 0 N/A; every witness passes its fixture, fails each planted violation on the planted cell, and passes each control, in every engine with an input for it
+# selftest exit 0 · 06:11:21 · load { 11.25 12.59 11.40 }
+## 06:11:21 fx-E-11 webkit  · load { 11.25 12.59 11.40 }
+  PASS       E-11 clock --engage-press-drain-attack (enumerated) · --engage-press-drain-attack: nonsense on <html> before the first script · fails loud · pop: 5 consumer read(s), 5 reading the clock unreadable, 5 with its timing changed in the act (rest | .ctl, .seg #0: scale, background-color / 0.35s, 0.055s / 0s, 0s / none / 0s → all / 0s / 0s / none / 0s), console errors naming the clock 4 of 4 ("[fixture] --engage-press-drain-attack is unreadable ("nonsense"): the clock it times cannot run"), on the clean page 0 · load 7.9/10.7/11.0
+E-11 webkit PASS · 4 pass, 0 fail, 0 unmeasured of 4 gating cells (1 reported) · load 11.2/12.6/11.4 at start, 7.9/10.7/11.0 at end
+# exit 0 · 06:15:40 · load { 7.85 10.72 10.97 }
+## 06:15:40 cand-e13 webkit  · load { 7.85 10.72 10.97 }
+  FAIL       E-13 clipstale loupe whole · mid · coarse · coarse hold, the rest box mid-box · 48 of 81 lens rows painted (59.3 %; a row is painted when ≥ 3 of its pixels differ ≥ 8 levels held against released) · bound ≥ the unclipped reference's 98.8 % − 5 = 93.8 %, opacity 1.00 (> 0.9) · geometry: the lens 139.6..220.1 px, the scroller's clip edge at 171.7 px: 32.2 of 80.6 px of the lens lie above it · load 7.7/10.4/10.8
+E-13 webkit FAIL · 4 pass, 4 fail, 0 unmeasured of 8 gating cells (2 reported) · load 7.9/10.7/11.0 at start, 7.7/10.4/10.8 at end
+# exit 1 · 06:16:13 · load { 7.68 10.40 10.85 }
+## 06:16:13 plant-loupe6-e13 webkit  · load { 7.68 10.40 10.85 }
+  FAIL       E-13 slider loupe k max coarse dark · sustained 1200 ms · band 33.9 px over the held track's 21.2 px = ×1.600 (k max 1.60; bound ±5 %) · the magnified tip 0.00 px from the window's centre (≤ 2) · seam: the band row's centre leaves its flanks' range by 35.7 levels (≤ 6) · line: the glass row's centre departs from its flanks by 52.9 levels (≤ 6) · runs on: the band's colour distance from the glass at the window's start 107.9 against 107.9 inside = 1.00 (≤ 0.35) · housing 148.4×80.6 px, window 135.7×67.8 px, opacity 1.00 · load 9.5/10.7/10.9
+E-13 webkit FAIL · 0 pass, 4 fail, 0 unmeasured of 4 gating cells (0 reported) · load 7.7/10.4/10.8 at start, 9.5/10.7/10.9 at end
+# exit 1 · 06:16:25 · load { 9.53 10.70 10.95 }
+## 06:16:25 cand-e12 webkit  · load { 9.53 10.70 10.95 }
+  PASS       E-12 capsule preset chip answers dark · [data-t="cap-configurator"] .configurator-preset-chip:not(.is-active) · hover 400 ms (:hover true): 51.5 % of its pixels moved by ≥ 4 levels (mean |Δ| 5.22 levels), 0.0 % by ≥ 16; properties changed [background-image] · held press 250 ms (door mark true): press-only paint [background-image], scale ×1.0000 → ×1.0000, 48.3 % of its pixels · declared class [engage-chosen] (--rung-class "chosen") (bound: the hover moves ≥ 10 % of the chip's pixels by ≥ 4 levels, the press ≥ 1 property its hover does not or Δscale ≥ 0.01, the element composes an engage-* class) · load 13.4/11.7/11.3
+E-12 webkit PASS · 31 pass, 0 fail, 0 unmeasured of 31 gating cells (10 reported) · load 9.5/10.7/10.9 at start, 13.4/11.7/11.3 at end
+# exit 0 · 06:17:17 · load { 13.40 11.65 11.29 }
+## 06:17:17 plant-chipfaint-e12 webkit  · load { 13.40 11.65 11.29 }
+  FAIL       E-12 capsule preset chip answers dark · [data-t="cap-configurator"] .configurator-preset-chip:not(.is-active) · hover 400 ms (:hover true): NO ANSWER · 0.0 % of its pixels moved by ≥ 4 levels (mean |Δ| 0.12 levels), 0.0 % by ≥ 16; properties changed [background-image] · held press 250 ms (door mark true): press-only paint [background-image], scale ×1.0000 → ×1.0000, 50.7 % of its pixels · declared class [engage-chosen] (--rung-class "chosen") (bound: the hover moves ≥ 10 % of the chip's pixels by ≥ 4 levels, the press ≥ 1 property its hover does not or Δscale ≥ 0.01, the element composes an engage-* class) · load 10.3/11.2/11.1
+E-12 webkit FAIL · 29 pass, 2 fail, 0 unmeasured of 31 gating cells (10 reported) · load 13.4/11.7/11.3 at start, 10.3/11.2/11.1 at end
+# exit 1 · 06:18:09 · load { 10.32 11.18 11.14 }
+## 06:18:09 cand-e11 webkit  · load { 10.32 11.18 11.14 }
+  PASS       E-11 clock --engage-press-drain-release (enumerated) · --engage-press-drain-release: nonsense on <html> before the first script · fails loud · switch: 10 consumer read(s), 10 reading the clock unreadable, 10 with its timing changed in the act (rest | .control-bit__face #0: background-color, border-color, outline-color / 0.12s, 0.2s, 0.2s / 0s, 0s, 0s / none / 0s → all / 0s / 0s / none / 0s), console errors naming the clock 1 of 1 ("[glass-ui] engage: --engage-press-drain-release is unreadable on the host; the engagement it drives paints not"), on the clean page 0 · load 8.8/10.5/10.9
+E-11 webkit PASS · 10 pass, 0 fail, 6 unmeasured of 16 gating cells (1 reported) · load 10.3/11.2/11.1 at start, 8.8/10.5/10.9 at end
+# exit 0 · 06:19:24 · load { 8.77 10.50 10.88 }
+## 06:19:24 cand-e4 webkit  · load { 8.77 10.50 10.88 }
+  PASS       E-4 sortable release PRM · reduce · moved 83.8 px · fling: carry 0.00 px, settles -0.50 px past release, overshoot past its rest 0.00 px, at rest true (bound: at rest within 2000 ms, overshoot ≤ 0.5 px) · largest one-frame jump 36.2 px · load 8.1/9.9/10.6
+E-4 webkit PASS · 7 pass, 0 fail, 0 unmeasured of 7 gating cells (0 reported) · load 8.8/10.5/10.9 at start, 8.1/9.9/10.6 at end
+# exit 0 · 06:20:21 · load { 8.09 9.90 10.62 }
+## 06:20:21 head-e13 webkit  · load { 8.09 9.90 10.62 }
+  PASS       E-13 clipstale loupe whole · mid · coarse · coarse hold, the rest box mid-box · 51 of 52 lens rows painted (98.1 %; a row is painted when ≥ 3 of its pixels differ ≥ 8 levels held against released) · bound ≥ the unclipped reference's 98.1 % − 5 = 93.1 %, opacity 1.00 (> 0.9) · geometry: the lens 168.7..220.7 px, the scroller's clip edge at 171.7 px: 3.0 of 52.0 px of the lens lie above it · load 10.8/10.5/10.8
+E-13 webkit FAIL · 4 pass, 4 fail, 0 unmeasured of 8 gating cells (2 reported) · load 8.1/9.9/10.6 at start, 10.8/10.5/10.8 at end
+# exit 1 · 06:20:55 · load { 10.75 10.52 10.83 }
+## 06:20:55 head-e12 webkit  · load { 10.75 10.52 10.83 }
+  FAIL       E-12 capsule preset chip answers dark · [data-t="cap-configurator"] .configurator-preset-chip:not(.is-active) · hover 400 ms (:hover true): 12.1 % of its pixels moved by ≥ 4 levels (mean |Δ| 8.99 levels), 9.1 % by ≥ 16; properties changed [] · held press 250 ms (door mark false): press-only paint [], scale ×1.0150 → ×0.9700, 10.3 % of its pixels · NO DECLARED CLASS · declared class [] (--rung-class "") (bound: the hover moves ≥ 10 % of the chip's pixels by ≥ 4 levels, the press ≥ 1 property its hover does not or Δscale ≥ 0.01, the element composes an engage-* class) · load 6.0/6.9/8.6
+E-12 webkit FAIL · 9 pass, 54 fail, 0 unmeasured of 63 gating cells (3 reported) · load 10.8/10.5/10.8 at start, 6.0/6.9/8.6 at end
+# exit 1 · 06:34:10 · load { 5.97 6.95 8.56 }
+## 06:34:10 head-e11 webkit  · load { 5.97 6.95 8.56 }
+  FAIL       E-11 clock --engage-control-engage-release (enumerated) · --engage-control-engage-release: nonsense on <html> before the first script · SILENT DEGRADATION: a consumer's timing changed in the act with no error naming the clock · button: 10 consumer read(s), 10 reading the clock unreadable, 10 with its timing changed in the act (rest | .tap-squish #0: background-color, border-color, box-shadow, color, opacity, scale / 0.18s, 0.18s, 0.18s, 0.18s, 0.18s, 0.12s / 0s, 0s, 0s, 0s, 0s, 0s / none / 0s → all / 0s / 0s / none / 0s), console errors naming the clock 0 of 0, on the clean page 0 · load 7.3/7.2/8.5
+E-11 webkit FAIL · 0 pass, 1 fail, 13 unmeasured of 14 gating cells (1 reported) · load 6.0/6.9/8.6 at start, 7.3/7.2/8.5 at end
+# exit 1 · 06:35:18 · load { 7.35 7.17 8.52 }
+## 06:35:18 head-e4 webkit  · load { 7.35 7.17 8.52 }
+  UNMEASURED E-4 carousel release PRM · the surface is not driven or not read in this engine (above) · load 7.6/7.2/8.4
+E-4 webkit FAIL · 6 pass, 5 fail, 8 unmeasured of 19 gating cells (0 reported) · load 7.3/7.2/8.5 at start, 7.6/7.2/8.4 at end
+# exit 1 · 06:36:46 · load { 7.61 7.23 8.41 }
+## 06:36:46 chain end · load { 7.61 7.23 8.41 }
+# 2026-10-29 06:36:46 WebKit acquisition (w1) end · load { 7.61 7.23 8.41 }
