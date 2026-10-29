@@ -160,6 +160,27 @@ or renamed, and a consumer has nothing to change.
   on the round-3 branch (Chromium: bottom 35.9 px, top 37.3 px; WebKit: 31.0, 29.6) and
   GREEN with the leg removed.
 
+- **Under an ancestor CSS `zoom`, each pane paints its box through the morph in WebKit
+  (critique-7 D-1).** `anchor` wrote `--dock-pane-shift` as a `px` length. WebKit 2287
+  zooms a registered length custom property where it computes and again where
+  `translate` uses it, so under `zoom: 1.25` a pane moved 1.25 times its shift (a probe:
+  `translate: var(--x)` with `--x: 100px` paints 156.25 px in WebKit and 125 px in
+  Chromium; a direct `100px`, an unregistered property and a percentage paint 125 px in
+  both). The leaving summary of a right-anchored expand at 390 jumped 60.9 px on the first
+  morph frame at full opacity, and the entering summary of a collapse arrived 62 px off
+  its rest and snapped at settle. The shift is now written as a percentage of the pane's
+  own box, as the origins already were, and `--dock-pane-shift` is registered as
+  `<length-percentage>`. The plate, the seats and the click were not affected. 10.1.2
+  jumped the same glyph 227 px in both engines, so this was not a regression.
+
+  Witness: `release-10-1-3.spec.ts`, scene `edge-anchor` with `?zoom=1.25` on the stage,
+  right-, left- and bottom-anchored at 390. The summary glyph is read per frame with its
+  painted opacity. On the expand the leaving glyph paints its rest on the first morph
+  frame. On the collapse the entering glyph's last morph frame is its rest. On both, no
+  visible frame steps more than 2 or 3 px. RED in WebKit 2287 on the round-6 branch (3/3:
+  60.9 px, 70.6 px, and 1.25 px at the left collapse's settle), GREEN in Chromium there,
+  and GREEN in both engines after the cure.
+
 ## 10.1.2 — 2026-10-27
 
 Two changes. Atlas G-4, arm (b-ii), the declared seat marker, by owner-delegate ruling

@@ -534,3 +534,71 @@ pass, with the replaced hover arm RED on the branch in WebKit), `pre2-*`, `red2-
 `typecheck*.log`, `build.log`, `demo-build.log`, `verify-package.log`, the chain scripts.
 
 Housekeeping: `fix5/` is removed.
+
+## Round 7 (critique-7)
+
+One defect: D-1 (minor, WebKit only). Under an ancestor CSS `zoom`, the summary pane
+paints off its box during the morph.
+
+### Root cause
+
+`anchor()` wrote each pane's `--dock-pane-shift` as `${(to.start - now.start) / k}px`, a
+local length, and `translate` used it through `var()`. `k` is right in both engines (1.25).
+The error is in how WebKit applies zoom. A probe (`_probe-zoom.spec.ts`: an element under
+`zoom: 1.25`, shifted 100 px) measured the painted offset in each engine:
+
+| form | Chromium | WebKit 2287 |
+|---|---|---|
+| `translate: 100px` | 125 | 125 |
+| `translate: var(--x)`, `--x` registered `<length>` or `<length-percentage>`, `100px` | 125 | **156.25** |
+| `transform: translateX(var(--x))`, registered | 125 | **156.25** |
+| `translate: var(--y)`, `--y` unregistered, `100px` | 125 | 125 |
+| `translate: var(--x)`, registered, `125%` of an 80 px box | 125 | 125 |
+
+WebKit zooms a registered length custom property at computed-value time
+(`getComputedStyle(el).translate` reads `125px`) and again when the transform is laid out.
+So a pane moved `k` times its shift: about 61 px too far for the right-anchored
+summary at 390.
+
+The origins never had this defect, because they are percentages of each element's own box.
+
+### Cure (`7777c312d`)
+
+The pane shift is written as a percentage of the pane's own box on the morph axis:
+`percent((to.start - now.start) / k, getSize(pane, axis))`. `translate` resolves the
+percentage against the pane's border box, which carries the zoom once, in every engine. A
+pane with no size paints nothing and gets no shift. `--dock-pane-shift` is registered as
+`<length-percentage>` (initial `0px`), like `--dock-morph-origin`. No public API changes:
+both properties are internal to the morph.
+
+### Witnesses
+
+- Unit `dockMorphMeasure.test.ts`: the five pane-shift expectations now read the
+  percentage form. For example, 250 px of a 24 px summary is `1041.67%`.
+- Engine `release-10-1-3.spec.ts`, `-g critique-7`. The harness gains `?zoom=`, a CSS
+  `zoom` on the stage. Right, left and bottom at 390, under `zoom: 1.25`:
+  - The summary glyph is read per frame with its painted opacity, the product up to the
+    dock.
+  - Expand by hover: the leaving glyph's first morph frame is its rest (< 1 px), and no
+    visible frame steps 2 px or more.
+  - `collapse()`: no visible frame steps 3 px or more, and the last morph frame is the
+    rest (< 1 px).
+
+### Round 7 gates
+
+| gate | result |
+|---|---|
+| critique-7 cells, round-6 `src` (`d6601c83c`), Chromium | 3/3 GREEN (as critique-7 found) |
+| the same, WebKit 2287 | 3/3 RED: right 60.9 px, bottom 70.6 px on the first expand frame, left 1.25 px at the collapse's settle |
+| `npm run typecheck` | exit 0 |
+| `npm run build`, `npm run demo:dist:build` | exit 0 |
+| `npx vitest run --maxWorkers=2` | 246 files, 2392 passed, 10 expected fail, 1 skipped |
+| `npm run verify:package` | the ratchet refused +35 B. Rebound 2939882 → 2939917 on the committed tree, then terminal CLEAN |
+| `release-10-1-1` + `release-10-1-2` + `release-10-1-3` specs, Chromium | 137/137 GREEN: the 77 release cells, including the O-101 no-overflow cells, plus the 10.1.3 cells and the 3 critique-7 cells |
+| the same, WebKit 2287 (`guarded --exclusive webkit`) | 135 passed, 2 skipped (the CDP swipe cells run only in Chromium) |
+
+Logs are beside the worktree in `fix-r7/`:
+- `probe.log`, with `_probe-zoom.spec.ts` and `probe.config.ts`
+- `pre-{chromium,webkit}.log` and `post-{chromium,webkit}.log`, with the `.json` reports
+- `typecheck.log`, `build.log`, `demo-build.log`, `vitest.log`, `verify-package{,2}.log`
+- `chain.sh`, `chain.status` and `cure.patch`
