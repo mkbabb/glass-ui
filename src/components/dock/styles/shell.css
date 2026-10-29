@@ -286,8 +286,8 @@
        `containerName` opt-in does not touch the clip. */
     /* AT REST `.glass-dock` clips nothing. The L0 `.dock-plate` owns the visible extent,
        and the L1 control run is `overflow: visible` on both axes, so a hover/press plate
-       at the settled dock's edge overhangs it. The vertical SCROLL port
-       (`overflow-y: auto`, below) keeps its cross axis `visible`. The box's one clip is
+       at the settled dock's edge overhangs it. The vertical SCROLL port is not the root
+       but `.dock-run` (`run.css`, `.glass-dock.vertical .dock-run`). The box's one clip is
        the morph clip in the next rule: on the morph axis only, only while
        `[data-morphing]` is set, and lifted under the press keepalive. */
     .glass-dock {

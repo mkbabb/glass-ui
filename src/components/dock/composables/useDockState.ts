@@ -178,8 +178,12 @@ export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
        no click and no cancel, and a hold kept past it would defer every later focus and
        hover. A tap then holds again for its own compatibility mouse dispatch: from the
        `mousedown` (no `pointerdown` precedes it, and it is what focuses) to its `click`,
-       or the end of its `mouseup` task. The touch press resolves at that click, at a
-       `pointercancel`, or, unresolved, at the next `pointerdown` anywhere. The deferred
+       or the end of its `mouseup` task. The touch press resolves at that click, or at a
+       `pointercancel`. A press of any pointer also ends where the engine ends it without
+       a release: at `dragstart` (WebKit drags a link with no `pointercancel`, `pointerup`
+       or click) and at `contextmenu` (the native menu takes the release); neither is
+       followed by a click. Unresolved, a press lapses at the next primary `pointerdown`
+       anywhere: a new press means the old one is over. The deferred
        expand runs as the press resolves, before the click reaches its target, which
        the engine has already hit-tested. A focus that has left the dock (`onFocusOut`)
        or a pointer that has left it (`onMouseLeave`) withdraws what it asked for. A
@@ -225,6 +229,8 @@ export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
     const pressListeners: ReadonlyArray<readonly [string, (e: Event) => void]> = [
         ["click", () => endPress()],
         ["pointercancel", () => endPress()],
+        ["dragstart", () => endPress()],
+        ["contextmenu", () => endPress()],
         [
             "pointerup",
             (e) => {
@@ -245,11 +251,13 @@ export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
                 if (press === "compat") endPressAtTaskEnd();
             },
         ],
-        // A new pointer goes down while a touch press waits for a tap that never came.
+        // A new press while this one is unresolved: a touch press whose tap never came,
+        // or a press whose release the engine never sent. A second finger of a
+        // multi-touch gesture is not primary and leaves the first press holding.
         [
             "pointerdown",
-            () => {
-                if (press === "tap") dropPress();
+            (e) => {
+                if (press === "tap" || (e as PointerEvent).isPrimary) dropPress();
             },
         ],
     ];
