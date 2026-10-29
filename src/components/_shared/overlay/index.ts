@@ -7,6 +7,7 @@
  * contracts, stated once, beside each other, with their readers.
  */
 export { overlayContentAttrs, type OverlayAttrs, type OverlayRole } from "./content";
+export { returnFocusQuietly } from "./focus-return";
 export { isTeleportedTarget } from "./isTeleportedTarget";
 export {
     useDockParticipation,

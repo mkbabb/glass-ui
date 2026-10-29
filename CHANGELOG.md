@@ -29,6 +29,16 @@ Merged on local branch `u/b7-glass` (off `release/10.1.1` bbf176f02) from `u/b7-
 - Witness: `tests/composables/useSpringMount.test.ts`, "releases present on the frame the
   exit reaches its dismissed edge" (37 frames late before, at most 1 after).
 
+### Quiet focus return (U/B7b L)
+
+- **A closing sheet or dialog returns focus without scrolling (O-11, O-19).** reka answers
+  close-auto-focus with a bare `triggerElement.focus()`. WebKit records the nearest focusable
+  ancestor as the trigger when a clicked button takes no focus, so the bare focus scrolled the page
+  to it: the served B7b census measured the phone "Source & method" sheet moving the page up 16 to
+  1,384 px in 36 of 156 closes. `SheetContent` and `DialogContent` now answer the event themselves
+  (`returnFocusQuietly` in `_shared/overlay`): the same element, with `preventScroll`. A consumer that
+  cancels the event keeps its say. Witness: `tests/components/sheet/sheet-return-focus.test.ts`.
+
 ### Shape, glide and the dropdown system (`u/b7-glass-shape`)
 
 Proposed by the atlas formation (U/B7, the owner's order of 2026-10-19 in sci-report `atlas/docs/tranches/U/owner-2026-10-19/ORDER.md`). Local branch `u/b7-glass-shape`; no version bump. Engine witnesses: `tests-visual/b7-shape.config.ts`, Chromium and Firefox.

@@ -13,7 +13,7 @@ import ModalOverlay from "../dialog/ModalOverlay.vue";
 import type { Motion, Surface } from "../_shared/axes";
 import { useMotionAxis } from "../_shared/useMotionAxis";
 import { surfaceClass } from "../_shared/surface/resolve";
-import { useModalShortcutBarrier } from "../_shared/overlay";
+import { returnFocusQuietly, useModalShortcutBarrier } from "../_shared/overlay";
 import {
     scrimDetentOpacity,
     scrimOpacity,
@@ -268,6 +268,7 @@ watch(
     },
     { flush: "sync" },
 );
+const onCloseAutoFocus = returnFocusQuietly(() => dialogRoot.triggerElement.value);
 
 const forwarded = useForwardPropsEmits(delegatedProps, emits);
 
@@ -308,6 +309,7 @@ const contentStyle = computed<CSSProperties>(() => ({
             :style="contentStyle"
             :data-surface="props.surface"
             data-slot="sheet-content"
+            @close-auto-focus="onCloseAutoFocus"
             :data-side="props.side"
             :data-modal="dialogRoot.modal.value ? undefined : 'false'"
             :data-detents="detented ? '' : undefined"
