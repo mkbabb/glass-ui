@@ -28,7 +28,7 @@ Merged on local branch `u/b7-glass` (off `release/10.1.1` bbf176f02, with the pu
   - </DropdownMenu>
   + </ContextMenu>
   ```
-- **A modal `Dialog`, `SheetContent` or `CommandDialog` no longer writes to `body`.**
+- **A modal `Dialog`, `SheetContent` or `CommandDialog` no longer locks `body`.**
   While its scrim is present, the root element (`html`) carries `overflow: hidden`, and
   `body` keeps its overflow and padding. reka's `--scrollbar-width` custom property on
   the root and the `padding-right` compensation on `body` are gone; the root's
@@ -36,7 +36,8 @@ Merged on local branch `u/b7-glass` (off `release/10.1.1` bbf176f02, with the pu
   `--scrollbar-width`, or tested `body.style.overflow` to detect an open modal, reads
   `document.documentElement.style.overflow` instead. reka's `ConfigProvider`
   `scrollBody` option no longer affects glass modals. The modal content's own
-  `pointer-events` guard on `body` (reka's dismissable layer) is unchanged.
+  `pointer-events: none` guard on `body` (reka's dismissable layer) is unchanged, and on
+  close `body` gets back the consumer's own inline `pointer-events`.
 - **A dock's live backdrop sampling follows events.** The observer samples when the field
   canvas announces a frame, which glass's canvas lifecycle (Aurora, Blob, every
   `useWebGLCanvas`, `useWebGPUCanvas` and `useCanvas2D` field) does on each draw. A

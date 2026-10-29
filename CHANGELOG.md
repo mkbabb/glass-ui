@@ -18,8 +18,12 @@ No version bump. Each row has a test that fails on 79a9e3eea and passes here.
   `DialogOverlayImpl` without the body lock) under reka's `Presence`, and the scrim holds
   the one counted root lock (`_shared/overlay/root-scroll-lock.ts`), which
   ExpandableContainer already used. The two compose when they close out of order. The
-  root's `scrollbar-gutter: stable` keeps the layout still. Witnesses:
-  `tests/components/dialog/modal-root-lock.test.ts` (3 of 3 fail before) and
+  root's `scrollbar-gutter: stable` keeps the layout still. One `body` write stays:
+  reka's `DismissableLayer` sets `body` `pointer-events: none` while a modal is open (the
+  page behind takes no pointer), and with the body lock gone the consumer's own inline
+  value comes back on close. Witnesses:
+  `tests/components/dialog/modal-root-lock.test.ts` (5 of 5 fail before; the two
+  pointer-events arms fail there on their overflow assertion, and pin the guard) and
   `tests-visual/CommandDialog.b7c.spec.ts` (Chromium and Firefox; red before in Chromium).
 - **A palette group keeps its content height (C3-2).** reka's `ComboboxContent` renders
   the `CommandList` as an inline flex column, and `.command__group { overflow: hidden }`
