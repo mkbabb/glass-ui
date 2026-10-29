@@ -500,8 +500,9 @@ describe("the morph's origins (O-110)", () => {
         expect(dock.origin(dock.seat)).toBe(`${((338 - 290) / 40) * 100}%`);
         // The layers scale about the root's origin, so the two cancel.
         expect(dock.origin(dock.content)).toBe(`${((338 - 8) / 258) * 100}%`);
-        // The leaving summary is shifted back to the box it painted.
-        expect(dock.summary.style.getPropertyValue("--dock-pane-shift")).toBe("250px");
+        // The leaving summary is shifted back to the box it painted: 250 px, written as a
+        // percentage of its own 24 px box (zoom-neutral, critique-7 D-1).
+        expect(dock.summary.style.getPropertyValue("--dock-pane-shift")).toBe(`${(250 / 24) * 100}%`);
 
         dock.result.release();
         expect(dock.origin(dock.root)).toBe("");
@@ -524,7 +525,7 @@ describe("the morph's origins (O-110)", () => {
         const s = 96 / 338;
         const held = (48 - 290) / (1 - s);
         expect(Number.parseFloat(dock.origin(dock.seat))).toBeCloseTo(((0 - held - 290) / 40) * 100, 6);
-        expect(dock.summary.style.getPropertyValue("--dock-pane-shift")).toBe("0px");
+        expect(dock.summary.style.getPropertyValue("--dock-pane-shift")).toBe("0%");
         dock.unmount();
     });
 
@@ -598,8 +599,8 @@ describe("the morph's origins (O-110)", () => {
         // its own box (start 290).
         expect(origin(seat)).toBe(`${((338 - 290) / 40) * 100}%`);
         // The entering summary paints at its rest; the leaving full pane where it was.
-        expect(summary.style.getPropertyValue("--dock-pane-shift")).toBe("250px");
-        expect(full.style.getPropertyValue("--dock-pane-shift")).toBe("0px");
+        expect(summary.style.getPropertyValue("--dock-pane-shift")).toBe(`${(250 / 24) * 100}%`);
+        expect(full.style.getPropertyValue("--dock-pane-shift")).toBe("0%");
         // The lifted reservation is restored.
         expect(root.style.getPropertyValue("--dock-expanded-px")).not.toBe("initial");
         unmount();
@@ -678,11 +679,12 @@ describe("the morph's origins (O-110)", () => {
 
         // The scaled start holds the right edge: (164 - 0) / (1 - 164/338) = 338.
         expect(Number.parseFloat(origin(root))).toBeCloseTo(100, 6);
-        // The entering summary paints at its rest on the last frame: 294 - 47.
-        expect(summary.style.getPropertyValue("--dock-pane-shift")).toBe("247px");
+        // The entering summary paints at its rest on the last frame: 294 - 47, of its
+        // own 24 px box.
+        expect(summary.style.getPropertyValue("--dock-pane-shift")).toBe(`${(247 / 24) * 100}%`);
         expect(root.style.getPropertyValue("--dock-morph-t")).toBe("0.4");
         // The leaving full pane where it painted.
-        expect(full.style.getPropertyValue("--dock-pane-shift")).toBe("0px");
+        expect(full.style.getPropertyValue("--dock-pane-shift")).toBe("0%");
         expect(root.style.getPropertyValue("--dock-expanded-px")).not.toBe("initial");
         unmount();
     });

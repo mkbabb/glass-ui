@@ -120,10 +120,11 @@
 }
 
 /* A pane's shift on the morph axis (O-110), written per pane by `anchor`: from where the
-   reserved layout puts the pane to the box it paints. Non-inheriting, `0px` where none is
-   written. */
+   reserved layout puts the pane to the box it paints, as a percentage of the pane's own
+   box (`translate` resolves it there, so it carries an ancestor `zoom` once in every
+   engine). Non-inheriting, `0px` where none is written. */
 @property --dock-pane-shift {
-    syntax: "<length>";
+    syntax: "<length-percentage>";
     inherits: false;
     initial-value: 0px;
 }

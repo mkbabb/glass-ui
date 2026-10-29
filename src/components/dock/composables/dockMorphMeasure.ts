@@ -424,16 +424,22 @@ export function useDockExpandedSize(
         // painted at the end scalar, with the origins now written. Its laid box is not used,
         // because the root's padding interpolates on the scalar and moves the layers
         // under their origin, so a pane's laid box at the start is not where it paints at
-        // the end.
+        // the end. The shift is written as a percentage of the pane's own box, as every
+        // origin is: a `px` length is not zoom-neutral. Under an ancestor CSS `zoom`,
+        // WebKit zooms a registered `<length>` custom property where it computes and
+        // again where `translate` uses it, so the pane moved `k` times its shift (critique-7
+        // D-1). A percentage resolves against the pane's laid box, which carries the zoom
+        // once, in every engine.
         for (const pane of panes()) {
             const leaving = pane.classList.contains("is-leaving");
             const to = leaving ? boxes.get(pane) : end?.get(pane);
-            if (!to) continue;
+            const size = getSize(pane, a);
+            if (!to || !(size > 0)) continue;
             const now = leaving
                 ? laid.get(pane)
                 : withOverrides([[root, "--dock-morph-t", "1"]], () => span(pane, a));
             if (!now) continue;
-            pane.style.setProperty(PANE_SHIFT, `${(to.start - now.start) / k}px`);
+            pane.style.setProperty(PANE_SHIFT, percent((to.start - now.start) / k, size));
         }
     }
 
