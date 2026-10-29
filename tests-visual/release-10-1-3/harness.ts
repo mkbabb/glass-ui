@@ -43,7 +43,8 @@ const scenes: Record<string, Component> = {
     // (and `left`), its anchored side the start. `?seat=open` seats "Edit
     // contour" on the open side instead, the side the expand grows toward. `?link=1`
     // seats a link (`<a href>`, natively draggable) beside "Edit contour" in the same
-    // slot. A click on "Edit contour" counts in `window.__edits`. The dock's component
+    // slot. `?zoom=1.25` sets a CSS `zoom` on the stage, an ancestor of the dock. A
+    // click on "Edit contour" counts in `window.__edits`. The dock's component
     // instance is `window.__dock`, so a witness can call its public `collapse()`. A
     // button below the stage takes focus outside the dock.
     "edge-anchor": defineComponent(() => {
@@ -61,6 +62,7 @@ const scenes: Record<string, Component> = {
                 ? `${edge}:0.5rem;left:0.5rem`
                 : `top:0.5rem;${edge}:0.5rem`;
         const link = params.get("link") === "1";
+        const zoom = params.get("zoom");
         const onEdit = () => {
             edits.value += 1;
             w.__edits = edits.value;
@@ -71,7 +73,7 @@ const scenes: Record<string, Component> = {
                     "div",
                     {
                         "data-witness": "stage",
-                        style: "position:relative;block-size:560px;border-radius:12px;background:color-mix(in srgb, var(--foreground) 6%, transparent)",
+                        style: `position:relative;block-size:560px;border-radius:12px;background:color-mix(in srgb, var(--foreground) 6%, transparent)${zoom ? `;zoom:${zoom}` : ""}`,
                     },
                     [
                         h(

@@ -35,9 +35,10 @@ async function open(
     page: Page,
     anchor: Anchor,
     seat: "anchored" | "open" = "anchored",
+    query = "",
 ): Promise<void> {
     await page.goto(
-        `/tests-visual/release-10-1-3/harness.html?scene=edge-anchor&anchor=${anchor}&seat=${seat}`,
+        `/tests-visual/release-10-1-3/harness.html?scene=edge-anchor&anchor=${anchor}&seat=${seat}${query}`,
     );
     await page.waitForFunction(() => (window as unknown as W).__ready);
     await page.locator(EDIT).waitFor();
@@ -914,3 +915,96 @@ test.describe("10.1.3 · 390 · a mouse press with no release, a press outside, 
         await expect(page.locator(".glass-dock")).toHaveClass(/expanded/);
     });
 });
+
+// ── critique-7 (round 7) ─────────────────────────────────────────────────────────────
+
+// D-1 (critique-7): under an ancestor CSS `zoom` (here 1.25 on the stage), each pane
+// paints the box it holds through the morph. The leaving summary of an expand holds its
+// rest from the first frame and fades there; the entering summary of a collapse arrives
+// at its rest without a jump. The glyph is read on every frame with its painted opacity
+// (the product over its ancestors up to the dock), and only where it is visible. RED on
+// the round-6 branch in WebKit 2287 (the pane shift, a `px` length, landed off its box
+// under `zoom`: a 61 px first-frame jump on the expand, 62 px on the collapse) and GREEN
+// in Chromium there; GREEN in both after the cure.
+type Glyph = { morphing: boolean; left: number; top: number; opacity: number };
+for (const anchor of ["right", "left", "bottom"] as const) {
+    test.describe(`10.1.3 · 390 · ${anchor}-anchored · ancestor zoom 1.25`, () => {
+        test.use({ viewport: { width: 390, height: 844 } });
+        test("D-1 (critique-7) · the summary glyph holds its box through the expand and the collapse", async ({
+            page,
+        }) => {
+            await open(page, anchor, "anchored", "&zoom=1.25");
+            const glyph = () =>
+                page.evaluate(() => {
+                    const w = window as unknown as { __glyph: Glyph[] };
+                    w.__glyph = [];
+                    const dock = document.querySelector(".glass-dock")!;
+                    const summary = document.querySelector('[data-witness="summary"]')!;
+                    const opacity = () => {
+                        let o = 1;
+                        for (let el: Element | null = summary; el && el !== dock; el = el.parentElement)
+                            o *= Number(getComputedStyle(el).opacity);
+                        return o;
+                    };
+                    const t0 = performance.now();
+                    const tick = () => {
+                        const r = summary.getBoundingClientRect();
+                        w.__glyph.push({
+                            morphing: dock.hasAttribute("data-morphing"),
+                            left: r.left,
+                            top: r.top,
+                            opacity: opacity(),
+                        });
+                        if (performance.now() - t0 < 1600) requestAnimationFrame(tick);
+                    };
+                    requestAnimationFrame(tick);
+                });
+            const read = () =>
+                page.evaluate(() => (window as unknown as { __glyph: Glyph[] }).__glyph);
+            const axis = (g: Glyph) => (anchor === "bottom" ? g.top : g.left);
+            const jump = (all: Glyph[]) => {
+                let most = 0;
+                for (let i = 1; i < all.length; i += 1) {
+                    if (Math.min(all[i].opacity, all[i - 1].opacity) <= 0.05) continue;
+                    most = Math.max(most, Math.abs(axis(all[i]) - axis(all[i - 1])));
+                }
+                return most;
+            };
+            const rest = await rect(page, '[data-witness="summary"]');
+            const restAt = anchor === "bottom" ? rest.top : rest.left;
+
+            // The expand: hover the anchored seat.
+            await glyph();
+            const { x, y } = mid(await rect(page, EDIT));
+            await page.mouse.move(x, y);
+            await page.waitForTimeout(1700);
+            await expect(page.locator(".glass-dock")).toHaveClass(/expanded/);
+            const expand = await read();
+            const firstMorph = expand.find((g) => g.morphing);
+            expect(firstMorph, "the expand morphed").toBeDefined();
+            expect(
+                Math.abs(axis(firstMorph!) - restAt),
+                "the leaving summary paints its rest on the first morph frame",
+            ).toBeLessThan(1);
+            expect(jump(expand), "the leaving summary's largest visible frame step").toBeLessThan(2);
+
+            // The collapse: the public `collapse()`, with the pointer off the dock.
+            await glyph();
+            await page.mouse.move(4, 700);
+            await page.evaluate(() =>
+                (window as unknown as { __dock: { collapse: () => void } }).__dock.collapse(),
+            );
+            await page.waitForTimeout(1700);
+            await expect(page.locator(".glass-dock")).toHaveClass(/collapsed/);
+            const collapse = await read();
+            const morph = collapse.filter((g) => g.morphing);
+            expect(morph.length, "the collapse morphed").toBeGreaterThan(3);
+            expect(collapse.at(-1)!.morphing, "the morph settled").toBe(false);
+            expect(jump(collapse), "the entering summary's largest visible frame step").toBeLessThan(3);
+            expect(
+                Math.abs(axis(morph.at(-1)!) - restAt),
+                "the entering summary's last morph frame is its rest",
+            ).toBeLessThan(1);
+        });
+    });
+}
