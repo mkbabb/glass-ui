@@ -7,7 +7,7 @@ rename or import re-point per call site.
 
 ## 10.2.0 (proposed by atlas U/B7)
 
-Merged on local branch `u/b7-glass` (off `release/10.1.1` bbf176f02) from `u/b7-glass-shape` (rows B7-G1 to B7-G6) and `u/b7-glass-perf` (rows B7-G7 to B7-G9). Row numbers follow the relay letter.
+Merged on local branch `u/b7-glass` (off `release/10.1.1` bbf176f02, with the published `v10.1.2` merged in) from `u/b7-glass-shape` (rows B7-G1 to B7-G6) and `u/b7-glass-perf` (rows B7-G7 to B7-G9). Row numbers follow the relay letter.
 
 ### Root items (`u/b7-glass`, U/B7c C3)
 
@@ -170,6 +170,51 @@ Proposed by the atlas formation on local branch `u/b7-glass-shape` off `release/
 - **`dist/components/_shared/field/control.css` is no longer published.** It was never
   loaded: its rules ship through the field components' `<style src>`, now in
   `dist/control.css`.
+
+## 10.1.2
+
+Two behaviour changes, no type change. **A custom dock seat must now carry
+`data-glass-dock-seat` to rove.**
+
+- **O-101: a morph reserves the size it settles at.** The dock no longer reserves an
+  old width on an expand or for the rest of a morph when its full pane changes (a
+  breakpoint that swaps its controls) or its host changes (a viewport or container that
+  resizes) while it is collapsed or morphing. So the page no longer scrolls sideways
+  for the length of the morph, and the box no longer snaps at settle. Both endpoints are
+  the root laid out at rest in their posture, read from the live layout on every
+  capture, under whatever constrains the dock, including while it morphs. A consumer
+  that clipped the page or the dock band, or overrode `--dock-expanded-px`, to hide that
+  overflow can delete the workaround. A dock whose pane and host are stable morphs as
+  before.
+
+- The dock run roves a direct child only when it carries `data-glass-dock-seat`.
+  `DockControl`, `DockTrigger` and `DockBackgroundToggle` set it. A consumer's own seat
+  that should share the run's one tab stop and answer its arrow keys (a `RouterLink`, a
+  bespoke button, a `[role=button]` element) adds the attribute itself:
+  `<RouterLink data-glass-dock-seat to="/a">`. A `DockControl as-child` already sets it
+  on the child.
+- A declared seat must stay focusable. A custom seat that is disabled carries
+  `aria-disabled="true"` and blocks its own activation, never the native `disabled`
+  attribute: `<button data-glass-dock-seat aria-disabled="true">`. A native-disabled seat
+  that holds the run's stop takes every seat out of the Tab order. A disabled
+  `DockTrigger` now renders `aria-disabled`, like `DockControl`, so it stays in the Tab
+  and arrow order as a disabled stop where 10.1.1 skipped it, and paints disabled from
+  `.dock-trigger[aria-disabled="true"]`. A rule of yours that dims or suppresses a dock
+  trigger on `:disabled` keys on `[aria-disabled="true"]` instead.
+- An undeclared child is left alone. It keeps its natural tab stop and its own keys, so a
+  filter trigger, a settings button, a handle, an input pair, a dark toggle or a composite
+  stays in the Tab order. A consumer that pulled such a control out of its dock run, or
+  restored its `tabindex`, to get it back into the Tab order can undo that.
+- `.dock-run` carries `role="toolbar"` and `aria-orientation` only when every child is a
+  declared seat, glass's `<DockSeparator>` and the native
+  `<select aria-hidden="true" tabindex="-1">` a named `Select` renders inside a `<form>`
+  aside. A consumer's own `role="separator"` splitter, or an `aria-hidden` wrapper around a
+  control that still takes Tab, is an undeclared child and voids the claim. A dock whose run mixes declared seats
+  with other controls no longer announces as a toolbar. To keep the role, declare every
+  seat, or move the undeclared controls to `#persistent` / `#persistent-end`.
+- A test or probe that read `role="toolbar"` off an empty run, or off a run of plain
+  buttons, now finds no role. Seat the run with declared controls.
+- Atlas and value.js: the contract and the build path are in `CHANGELOG.md` §10.1.2.
 
 ## 10.1.1
 

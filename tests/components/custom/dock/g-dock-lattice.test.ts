@@ -443,6 +443,7 @@ describe("G-DOCK-REACH — the anchor is closed-form, and its geometry ships wit
      * every focusable seat carried `tabIndex 0` across all five docks (13/13, 9/9, 7/7,
      * 5/5, 15/15) while `keydown` was bound 0/0. Tabbing a route dock cost one stop per
      * destination and arrow keys did nothing — neither the toolbar pattern nor any other.
+     * The seats are declared (`data-glass-dock-seat`, 10.1.2): the run roves nothing else.
      */
     function dockWithSeats(current = -1) {
         return mount(GlassDock, {
@@ -451,7 +452,7 @@ describe("G-DOCK-REACH — the anchor is closed-form, and its geometry ships wit
                 default: [0, 1, 2, 3]
                     .map(
                         (i) =>
-                            `<button data-seat="${i}"${i === current ? ' aria-current="page"' : ""}>s${i}</button>`,
+                            `<button data-glass-dock-seat data-seat="${i}"${i === current ? ' aria-current="page"' : ""}>s${i}</button>`,
                     )
                     .join(""),
             },
@@ -511,7 +512,9 @@ describe("G-DOCK-REACH — the anchor is closed-form, and its geometry ships wit
     it("a vertical dock answers the block-axis arrows", async () => {
         const w = mount(GlassDock, {
             props: { collapse: "open" as const, orientation: "vertical" as const },
-            slots: { default: `<button data-seat="0">a</button><button data-seat="1">b</button>` },
+            slots: {
+                default: `<button data-glass-dock-seat data-seat="0">a</button><button data-glass-dock-seat data-seat="1">b</button>`,
+            },
             attachTo: document.body,
         });
         await nextTick();
@@ -563,23 +566,24 @@ describe("G-DOCK-MORPH — a morph never starts against an unmeasured target", (
      * delivers an honest measurement: 186 of 311, ~350ms of hold, then +125px in one frame
      * at t≈657.
      *
-     * THE BITE. Make `capture()` unconditional again (delete the `if (source === "layout")`
-     * arm) and the root below publishes `--dock-expanded-px: 64px` — identical to
-     * `--dock-collapsed-px`, i.e. a dock whose expand travels nowhere and then jumps. With
-     * the guard, the fallback path reads the FULL PANE'S own rendered span (220 + chrome),
-     * which is real from mount because the inactive pane stays laid out under
-     * `visibility`. The guard is not masking a measurement — the flip write was strictly
-     * worse than the fallback it overrode.
+     * THE BITE, since 10.1.2 (O-101a). There is no posture ref and no flip capture: the
+     * measure reads the posture from the DOM (the full pane's `.is-active`) and reads an
+     * endpoint from the root laid out with that endpoint's pane in flow. Below, the DOM
+     * is collapsed and the root stays at its collapsed span unless the full pane is put
+     * in flow. Read the expanded endpoint off the root as it stands, without placing the
+     * full pane, and it publishes 64px, identical to `--dock-collapsed-px`: a dock whose
+     * expand travels nowhere and then jumps.
      */
-    it("a posture flip never seeds the expanded endpoint from the collapsed box", async () => {
+    it("the expanded endpoint is never read from the collapsed box", async () => {
         const COLLAPSED_SPAN = 64;
-        const expanded = ref(false);
-        // The root NEVER re-lays out: it stays at its collapsed span for the whole test,
-        // which is precisely the frame the flip watcher fires in.
-        const root = sized(() => COLLAPSED_SPAN);
-        const content = sized(() => 44);
+        const CHROME = 20;
         const full = sized(() => 220);
         const summary = sized(() => 44);
+        const fullInFlow = () =>
+            full.classList.contains("is-active") || full.style.getPropertyValue("position") === "relative";
+        const root = sized(() => (fullInFlow() ? CHROME + 220 : COLLAPSED_SPAN));
+        const content = sized(() => 44);
+        summary.classList.add("is-active");
         root.append(content);
 
         const { unmount } = mountComposable(() =>
@@ -589,31 +593,26 @@ describe("G-DOCK-MORPH — a morph never starts against an unmeasured target", (
                 expandedEl: ref(full),
                 collapsedEl: ref(summary),
                 axis: ref("horizontal" as const),
-                expanded,
             }),
         );
         await nextTick();
         expect(root.style.getPropertyValue("--dock-collapsed-px")).toBe(`${COLLAPSED_SPAN}px`);
 
-        expanded.value = true;
-        await nextTick();
-
         const expandedPx = Number.parseFloat(root.style.getPropertyValue("--dock-expanded-px"));
         expect(
             expandedPx,
-            "the expanded endpoint was seeded from the collapsed root — the morph will run to the wrong target and then jump",
+            "the expanded endpoint was read from the collapsed root — the morph will run to the wrong target and then jump",
         ).not.toBe(COLLAPSED_SPAN);
-        // It is the full pane's own span that survives, which is the honest number.
-        expect(expandedPx).toBeGreaterThanOrEqual(220);
+        expect(expandedPx).toBe(CHROME + 220);
         unmount();
     });
 
-    /** The source half: only a post-layout event may move an endpoint. */
-    it("only the ResizeObserver and the initial attach claim a layout capture", () => {
+    /** The source half: the posture is the DOM's, and chrome is read only at rest. */
+    it("the measure reads the posture from the DOM and chrome only at rest", () => {
         const src = read(`${DOCK}/composables/dockMorphMeasure.ts`);
-        expect(src).toMatch(/new ResizeObserver\(\(\) => capture\("layout"\)\)/);
-        expect(src).toMatch(/watch\(expanded, \(\) => capture\("flip"\)\)/);
-        expect(src).toMatch(/if \(source === "layout"\)/);
+        expect(src).toMatch(/const expanded = full\.classList\.contains\("is-active"\)/);
+        expect(src).toMatch(/if \(!root\.hasAttribute\("data-morphing"\)\) \{/);
+        expect(src).not.toMatch(/watch\(expanded/);
     });
 
     /**

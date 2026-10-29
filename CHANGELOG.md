@@ -2,7 +2,7 @@
 
 ## 10.2.0 (proposed by atlas U/B7)
 
-Merged on local branch `u/b7-glass` (off `release/10.1.1` bbf176f02) from `u/b7-glass-shape` (rows B7-G1 to B7-G6) and `u/b7-glass-perf` (rows B7-G7 to B7-G9). Row numbers follow the relay letter.
+Merged on local branch `u/b7-glass` (off `release/10.1.1` bbf176f02, with the published `v10.1.2` merged in) from `u/b7-glass-shape` (rows B7-G1 to B7-G6) and `u/b7-glass-perf` (rows B7-G7 to B7-G9). Row numbers follow the relay letter.
 
 ### Root items (`u/b7-glass`, U/B7c C3)
 
@@ -188,9 +188,12 @@ decline each row (relay rows B7-G7 to B7-G9).
   The first expand of a vertical dock took its expanded endpoint from the run while the
   run was squeezed to the collapsed box, so `[data-morphing]` reserved the collapsed box
   (58 px in the witness) and every seat below it hit-tested to the page until the spring
-  settled. `dockMorphMeasure` now takes the run's content span (`scrollHeight`), clamped at
-  the root's `max-block-size`. The cure sits in the measure, not in `layers.css`: the
+  settled. The cure sits in the measure, not in `layers.css`: the
   `block-size: var(--dock-expanded-px)` rule there was right and its input was wrong.
+  B7 cured it with a `scrollHeight` read clamped at `max-block-size`. With 10.1.2 merged
+  in, that read is gone: 10.1.2's measure lays the run out at rest in the expanded posture
+  (O-101), which yields the same capped span. The D-5 unit arms in `dockMorphMeasure.test.ts`
+  now run on 10.1.2's layout model, and `tests-visual/u-b7.spec.ts` D-5 is the engine witness.
 - **Click-integrity defers a mid-morph press only after a hover approach (B7-G9, atlas
   D-5).** The deferral exists for race (b): a fine pointer arrives, its arrival opens the
   dock, and the layer swaps under it. It now applies only to an expand opened that way.
@@ -279,6 +282,181 @@ version bump. Each row has a test that fails on b54f5e13d and passes here.
   imports its sheet, and the arm failed with `ERR_UNKNOWN_FILE_EXTENSION` on the root
   barrel. Resolution still runs, so a chunk that imports a sheet the package omits still
   fails. MIGRATION records the consumer side.
+
+## 10.1.2 — 2026-10-27
+
+Two changes. Atlas G-4, arm (b-ii), the declared seat marker, by owner-delegate ruling
+(records: `docs/tranches/BL/audit/INBOUND.md` O-102d;
+`docs/tranches/BK/coordination/ATLAS-TO-GLASS-2026-10-17-U-BATCH.md` G-3/G-4 and its
+addendum 1). And value.js O-101, the dock's stale expanded endpoint (records: INBOUND
+O-101, O-101a; `docs/tranches/BK/coordination/valuejs-outbound-2026-10-19-dock-stale-expanded-endpoint.md`).
+`MIGRATION.md` §10.1.2 says what a consumer with its own dock seats must do.
+
+- **A morph reserves the box it settles at, whenever the pane changes (O-101).** The
+  expanded endpoint (`--dock-expanded-px`, which `[data-morphing]` reserves as the dock's
+  inline size, or block size on a vertical dock) was latched while the dock was
+  expanded. A consumer breakpoint that changed the full pane while the dock was collapsed
+  left it at the old pane's span, and the next expand reserved that. value.js measured a
+  508px dock at a 390px viewport, with the document scrolling for 51 to 386 frames until
+  the morph settled and snapped to 188. A pane that changed while a morph was in flight
+  did the same: the measure skipped every capture under `[data-morphing]`.
+
+  Now neither endpoint is latched. Each is the root's box at rest in its posture, read
+  from the live layout on every capture: `useDockExpandedSize` lays the root out with
+  that posture's pane in flow and the other pane out of flow, with the morph's
+  reservation lifted (`--dock-expanded-px` made invalid inline, so the `[data-morphing]`
+  size rule computes to `auto`), reads it, and restores everything in the same task. So
+  whatever constrains or stretches the root at rest (the host's width, a consumer's
+  width) applies to the endpoint, mid-morph included. The one thing kept is each
+  posture's chrome (the root less its pane: padding, border, gaps, persistent regions),
+  read from a root at rest in that posture. Where the current DOM's chrome differs (the
+  padding interpolates mid-morph, and `.collapsed` rules apply while the expanded
+  endpoint is read from a collapsed dock), the difference goes on the pane's end margin
+  and the root is read again, so a content-sized root takes it and a host-bound one does
+  not. The expanded endpoint is read in both postures, since a morph reserves it in both
+  directions. The collapsed endpoint is read while collapsed and kept while expanded,
+  and every collapse re-reads it when it arms. The run's scroll offset is restored after
+  a read that moved it, since WebKit clamps it in the forced layout and keeps the clamped
+  value. At rest expanded the read changes no layout at all.
+
+  The capture runs on a ResizeObserver hit on the root, its parent (a morphing root is
+  held at its reservation, so only the host moves), the layers, both panes and every
+  pane's direct child; on a MutationObserver record in either pane; on a window resize,
+  in the resize step before the frame lays out; when fonts are ready; and when the morph
+  arms, after the patch. The posture is the DOM's (the full pane's `.is-active`), not the
+  posture ref, so the W7 guard holds by construction: no endpoint is read from a box laid
+  out in the other posture, and the pre-flush posture flip is not a capture. Nothing is
+  clipped, no overflow is hidden, and nothing is overridden.
+
+  Witnesses: unit `tests/components/custom/dock/dockMorphMeasure.test.ts`, on a layout
+  model that obeys the overrides the measure sets: "the morph reserves the expanded box
+  of the pane patched in with the expand", "re-reads the expanded endpoint when the pane
+  changes while collapsed", "retargets the reserved endpoint when the pane changes
+  mid-morph", "a reversed morph reserves the expanded box of the pane it opens onto",
+  "follows a host that narrows while the dock is {expanding, collapsing}", "reads the
+  expanded endpoint with the expanded posture's chrome while collapsed" and "a capture
+  keeps the run's scroll position". Engine:
+  `tests-visual/release-10-1-2.spec.ts` "O-101 · {horizontal, vertical} · {pinned,
+  collapsed, reversal, mid-expand}" (scene `stale-endpoint`: 12 seats at 768px and above,
+  3 below, the dock in flow; `?axis=vertical` for the vertical dock), each at 1440->390
+  and 390->1440, 16 cells per engine. `pinned` and `collapsed` change the pane while the
+  dock is collapsed and expand in the breakpoint's render or after it. They assert that
+  `--dock-expanded-px` on the first morphing frame equals the settled size (+-1 px).
+  `reversal` changes the pane 60 ms into a collapse and expands again. `mid-expand`
+  changes it 60 ms into an expand. They assert that every morphing frame after the change
+  reserves the settled size (+-1 px). Every cell asserts that no sampled frame has the
+  document scrolling on the morph axis. In Chromium and Playwright WebKit 2287 all 16 are
+  RED on 10.1.1: 592px reserved for a 160px dock at 1440->390, with the document at
+  `scrollWidth` 491 for `clientWidth` 390, 160 reserved for 592 at 390->1440, and 584
+  for 152 (and back) on the vertical dock. The `reversal` and `mid-expand` cells are RED
+  on the first 10.1.2 cure, which measured only when a morph armed with none in flight.
+
+  "O-101a · a host change during the morph · {collapsed, reversal, mid-expand}" (scene
+  `overflow`: a constant 20-seat pane with a natural span of 960px, so the run scrolls at
+  390 and fits at 1440) changes the HOST, not the pane, at 1440->390 and 390->1440: 6
+  cells per engine, the same assertions. All 6 are RED on 10.1.1 in Chromium, and the
+  4 `reversal` and `mid-expand` cells are RED on the round-1 cure (per-posture frames,
+  `74a679351`) in Chromium and WebKit 2287: 976 reserved for 390 with the document at
+  `scrollWidth` 683 for 390 (49 to 56 frames), and 390 reserved for 976, then a 586 px
+  snap at settle. A frame counts as reserving the settled size only when its reservation
+  is a length within 1px of it, so a missing reservation fails.
+  "O-101 · a capture keeps a scrolled run's scroll position (390, 1440)" (scene
+  `scroll`: an always-open dock whose run scrolls) scrolls the run to an interior rest,
+  then changes one seat's text and widens another: the offset stays, and the resize moves
+  it only by the engine's own re-snap. It is GREEN on 10.1.1 and RED on the round-1 cure
+  in WebKit 2287, whose `max-content` read reset the run from 312 to 72 at 390 and to 0
+  at 1440. On 10.1.2 all 22 O-101 and O-101a cells, both scroll cells and the 10.1.1
+  spec are GREEN in Chromium and WebKit 2287 (77 of 77 per engine, the two disabled
+  trigger cells and the four disabled-paint cells below included).
+
+- **The dock run roves only declared seats.** A direct child of the run is a seat when it
+  carries `data-glass-dock-seat`. `DockControl` and `DockTrigger` set it, and so does
+  `DockBackgroundToggle`, which renders a `DockControl`. The run writes `tabIndex` only
+  into declared seats and claims Arrow/Home/End only when they are pressed inside one.
+  Every other child keeps its natural tab stop and its own keys. 10.1.1 inferred a seat
+  from focusability (`isRovedSeat` in `useDockRun.ts`). That inference is deleted, with no
+  alias. It had written `-1` onto atlas's filter trigger, gear, provenance handle, year range
+  and dark toggle, which dropped them from the Tab order.
+- **A declared seat stays focusable.** A disabled `DockTrigger` (its own `disabled`, or a
+  disabled `Select` root's) renders `aria-disabled="true"` and blocks its own activation,
+  as `DockControl` always has, never the native `disabled` attribute. A native-disabled
+  seat cannot take focus, so one holding the run's stop took every declared seat out of
+  the Tab order, and one mid-run stopped the arrow keys at it. 10.1.1 skipped a
+  native-disabled trigger through the focusability inference this release deletes. On
+  10.1.2 a disabled trigger is a present-but-disabled stop, reachable by Tab and arrows
+  and announced as disabled, like a disabled `DockControl`. It paints disabled as one
+  too: the dock's disabled paint and the trigger hover and press rules key on
+  `.dock-trigger[aria-disabled="true"]`, so it reads `opacity: var(--opacity-disabled)`
+  and `cursor: not-allowed`, and a hover or press leaves its fill and scale at rest.
+- **`role="toolbar"` only over an all-declared run.** The run claims `role="toolbar"` and
+  `aria-orientation` only while every direct child is a declared seat. Glass's own
+  `<DockSeparator>` (class `dock-separator`) does not void the claim, since a toolbar may
+  hold separators (APG), and neither does reka's form `<select>`, by its exact shape
+  `select[aria-hidden="true"][tabindex="-1"]`, the native `<select>` reka renders beside a
+  `DockTrigger for="select"` whose `Select` has a `name` inside a `<form>`, which no user
+  reaches. Any other child is undeclared, a consumer's focusable `role="separator"`
+  splitter and an `aria-hidden` control or wrapper that still holds a Tab stop included. A
+  run with any undeclared child claims no role. Its declared seats still share one stop
+  and rove by arrow. The claim is re-derived when children, markers, `aria-current`, or a
+  direct undeclared child's `aria-hidden` or `tabindex` change.
+- **The contract**, for consumers that measure it (atlas: 8 routes x 390/1440 x 3 engines;
+  value.js and the other siblings marking their own seats):
+  1. A seat is a direct child of `.dock-run` with the attribute `data-glass-dock-seat`
+     (any value; glass writes `""`). It has no other test. A declared seat must stay
+     focusable: a disabled seat carries `aria-disabled="true"` and blocks its own
+     activation, never the native `disabled` attribute, which would leave the run's stop
+     on an element that cannot take focus.
+  2. Declared seats share one tab stop: the focused seat, else the `aria-current` seat,
+     else the first. Arrow keys (Left/Right horizontal, Up/Down vertical), Home and End
+     move between declared seats only, with no wrap.
+  3. The run writes nothing into an undeclared child and claims no key pressed inside
+     one. A plain button, a trigger, a `[role=button][tabindex]` handle, an input, a
+     composite (RadioGroup, ToggleGroup) seated directly, or a container holding any of
+     these keeps its own tab stop and its own arrows. A child that drops the attribute
+     while mounted gets back the `tabindex` it carried before the run first wrote to it
+     (none, or its authored value).
+  4. `.dock-run` carries `role="toolbar"` (and `aria-orientation`) when it has at least
+     one declared seat and every child is declared, except glass's `<DockSeparator>` (a
+     child with class `dock-separator`) and reka's form `<select>` (a child matching
+     `select[aria-hidden="true"][tabindex="-1"]`, beside a named `Select`'s trigger).
+     Otherwise it carries no role.
+- **Build path.** Branch `release/10.1.2` (worktree `.claude/worktrees/release-10.1.2`).
+  `npm ci && npm run build` writes `dist/`, and `npm pack` writes
+  `mkbabb-glass-ui-10.1.2.tgz` for a consumer install before the registry carries 10.1.2.
+- **Witnesses.** Unit: `tests/components/custom/dock/g-dock-seat-rule.test.ts` and
+  `crit-seat-cx.test.ts`, on the (b-ii) contract, 13 of 19 RED on 10.1.1 and 19 of 19 GREEN.
+  The 6 that pass on both are regression arms: the declared crit arm, the all-declared toolbar,
+  the form-seated select trigger (10.1.1 claimed the role over every run) and the three
+  composites. Seven more pin a disabled `DockTrigger` as a focusable seat (each arm:
+  a disabled `Select` root, a disabled select, dropdown and popover trigger; the arrows
+  passing a disabled trigger mid-run; a disabled popover trigger not opening; an enabled
+  trigger carrying neither state). 5 of the 7 are RED on the round-2 cut `53c68dab7`, which
+  rendered the native `disabled`; the last two are regression arms. Engine: `tests-visual/release-10-1-2.spec.ts` (harness
+  `tests-visual/release-10-1-2/`) at 1440 and 390, in Chromium (`chromium-headless-new`)
+  and Playwright WebKit 2287 (`tests-visual/webkit-2287.config.ts`): "the atlas shapes
+  seated in a run are all Tab-reachable", "arrows rove only the declared seats", "a run
+  with an undeclared child claims no toolbar role", "a focusable splitter is undeclared: its
+  own stop, no toolbar role", "an aria-hidden wrapper around a Tab stop voids the toolbar
+  claim", "a DockTrigger for=select in a form keeps an all-declared run's toolbar" (10.1.1
+  roved ArrowRight onto reka's hidden `<select>`), "the toolbar claim follows a child's
+  aria-hidden and tabindex in place", "a child that drops its declaration is Tab-reachable
+  again", and two regression arms, "an all-declared run is one toolbar stop" and "a
+  RadioGroup and a ToggleGroup seated directly keep their arrows". Two more pin the
+  focusable disabled seat: "a disabled DockTrigger holding the stop keeps the run in the
+  Tab order" (scene `disabled-first`: a disabled `Select`'s trigger ahead of two
+  `DockControl`s; the walk is `seat-0, after`, and ArrowRight reaches `seat-1`) and "the
+  arrows pass a disabled DockTrigger mid-run" (scene `disabled-mid`: a disabled dropdown
+  trigger between two `DockControl`s; `seat-0 -> seat-1 -> seat-2`). Both are RED on
+  `53c68dab7` in Chromium and WebKit 2287 at both widths: the walk skipped the dock
+  (`after`, then `BODY`) and the arrows stayed on `seat-0`. Four more read the disabled
+  trigger's paint, at 1440 and 390 in light and dark: "a disabled DockTrigger paints
+  disabled and takes no hover or press fill" (scene `disabled-paint`: a disabled select,
+  dropdown and popover trigger, and an enabled trigger whose hover fill shows the pointer
+  reaches the run). All four are RED on `abd829944` in Chromium and WebKit 2287, where the
+  paint keyed on `:disabled`: opacity 1 for 0.5, cursor `pointer`, and the enabled hover
+  and press fills. Every atlas shape, the year-range input
+  pair included, is seated directly in the run, the shape 10.1.1 broke. The lattice roving tests and the toolbar test now seat
+  declared controls.
 
 ## 10.1.1 — 2026-10-19
 
