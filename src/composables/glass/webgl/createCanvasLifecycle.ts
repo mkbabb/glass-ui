@@ -41,6 +41,7 @@ import { watch } from "vue";
 import { useReducedMotion } from "../../motion/core/useReducedMotion";
 import { sizeBacking, type BackingSize, type DprPolicy } from "./backingSize";
 import { createCanvasVisibility } from "./visibility";
+import { announceFieldPaint } from "../fieldPaint";
 export type { BackingSize, DprPolicy };
 
 /** The per-frame hooks a backend's `buildContext` returns to the lifecycle core. */
@@ -228,6 +229,7 @@ export function createCanvasLifecycle(
         const elapsed = (performance.now() - startTime) / 1000;
         const t = hooks.time ? hooks.time(elapsed) : elapsed;
         hooks.frame(t);
+        announceFieldPaint(canvas);
         raf =
             !reducedMotion && hooks.shouldContinue() ? requestAnimationFrame(tick) : 0;
     }
@@ -412,7 +414,9 @@ export function createCanvasLifecycle(
 
     function renderAt(timeSec: number): void {
         if (!armed) arm();
-        hooks?.frame(timeSec);
+        if (!hooks) return;
+        hooks.frame(timeSec);
+        announceFieldPaint(canvas);
     }
 
     function dispose(): void {

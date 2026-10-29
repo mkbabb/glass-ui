@@ -56,6 +56,8 @@ function makeCanvas(getCtx: (id: string) => unknown) {
         // laid-out border box for it to read.
         getBoundingClientRect: () => ({ width: 120, height: 60 }),
         parentElement: null,
+        // The lifecycle announces each drawn frame on the canvas (GLASS_FIELD_PAINT_EVENT).
+        dispatchEvent: vi.fn(() => true),
     } as unknown as HTMLCanvasElement;
 }
 

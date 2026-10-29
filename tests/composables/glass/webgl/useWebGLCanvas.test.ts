@@ -53,6 +53,8 @@ function makeCanvas(glStub: object | null) {
         // laid-out border box for it to read.
         getBoundingClientRect: () => ({ width: 100, height: 50 }),
         parentElement: null,
+        // The lifecycle announces each drawn frame on the canvas (GLASS_FIELD_PAINT_EVENT).
+        dispatchEvent: vi.fn(() => true),
     } as unknown as HTMLCanvasElement;
 }
 
@@ -78,6 +80,8 @@ function makeRestorableCanvas(makeGl: () => object) {
         // laid-out border box for it to read.
         getBoundingClientRect: () => ({ width: 100, height: 50 }),
         parentElement: null,
+        // The lifecycle announces each drawn frame on the canvas (GLASS_FIELD_PAINT_EVENT).
+        dispatchEvent: vi.fn(() => true),
     } as unknown as HTMLCanvasElement;
     function dispatch(type: string, e: any = {}) {
         for (const cb of canvasListeners[type] ?? []) cb(e);
