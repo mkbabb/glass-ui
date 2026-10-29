@@ -1,0 +1,19 @@
+2026-10-28 17:22:32 · load { 30.96 36.78 38.21 } · one pair run, failure block kept whole
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/styles/radius-role-canon.test.ts > 7. this wave's role bindings > the tile corner is one declaration on the field rung; the pill keeps the stadium
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ tests/styles/radius-role-canon.test.ts:583:5
+    581|      * is the stadium or `inherit`. The painted corner is pinned in bo…
+    582|      * harness (T-1, T-2, W-D, FACT, CORNER). */
+    583|     it("the tile corner is one declaration on the field rung; the pill…
+       |     ^
+    584|         const files = (dir: string): string[] =>
+    585|             readdirSync(dir, { withFileTypes: true }).flatMap((d) =>
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 1 passed (2)
+exit · 17:22:53 · load { 38.21 38.04 38.63 }
