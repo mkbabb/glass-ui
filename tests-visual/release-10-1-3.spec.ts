@@ -838,23 +838,58 @@ for (const anchor of ["right", "left"] as const) {
     }
 }
 
-for (const after of ["focus", "hover"] as const) {
-    test.describe(`10.1.3 · 390 · right-anchored · right-click a collapsed seat, then ${after}`, () => {
-        test.use({ viewport: { width: 390, height: 844 } });
-        test(`D-1 (critique-6) · after a right-click, a ${after} expands the collapsed dock`, async ({
-            page,
-        }) => {
-            await open(page, "right");
-            const e = mid(await rect(page, EDIT));
-            await page.mouse.move(e.x, e.y);
-            await page.mouse.down({ button: "right" });
-            await page.mouse.up({ button: "right" });
-            await page.keyboard.press("Escape");
-            await page.waitForTimeout(300);
-            await expandsAfter(page, after);
-        });
+// After a right-click, a keyboard focus expands the collapsed dock.
+test.describe("10.1.3 · 390 · right-anchored · right-click a collapsed seat, then focus", () => {
+    test.use({ viewport: { width: 390, height: 844 } });
+    test("D-1 (critique-6) · after a right-click, a focus expands the collapsed dock", async ({
+        page,
+    }) => {
+        await open(page, "right");
+        const e = mid(await rect(page, EDIT));
+        await page.mouse.move(e.x, e.y);
+        await page.mouse.down({ button: "right" });
+        await page.mouse.up({ button: "right" });
+        await page.keyboard.press("Escape");
+        await page.waitForTimeout(300);
+        await expandsAfter(page, "focus");
     });
-}
+});
+
+// The hover arm. Once WebKit 2287's context menu takes the release, Playwright's later
+// mouse moves never reach the page: a right-click outside the dock, then a hover over
+// it, expands nothing on 10.1.2 or here. (10.1.2 passed a move-away-and-back version of
+// this cell only because its morph slid the seat out from under the pointer, which had
+// not moved, and back: the spurious leave and enter that O-110 cures.) So the hover
+// lands during the gesture. The pointer enters the collapsed seat and right-clicks it
+// inside the hover-intent dwell, and the dwell completes after the press began. The
+// press ends at `contextmenu`, so the dwell expands the dock. While the press stayed
+// held, the expand waited on it forever.
+test.describe("10.1.3 · 390 · right-anchored · hover-intent dwell across a right-click", () => {
+    test.use({ viewport: { width: 390, height: 844 } });
+    test("D-1 (critique-6) · a hover dwell that completes after a right-click expands the collapsed dock", async ({
+        page,
+    }) => {
+        await open(page, "right");
+        await page.evaluate(() => {
+            const w = window as unknown as { __atMenu?: string };
+            window.addEventListener(
+                "contextmenu",
+                () => (w.__atMenu = document.querySelector(".glass-dock")!.className),
+                { capture: true, once: true },
+            );
+        });
+        const e = mid(await rect(page, EDIT));
+        await page.mouse.move(e.x, e.y);
+        await page.mouse.down({ button: "right" });
+        await page.mouse.up({ button: "right" });
+        expect(
+            await page.evaluate(() => (window as unknown as { __atMenu?: string }).__atMenu),
+            "the press began inside the dwell: the dock was collapsed at the contextmenu",
+        ).toMatch(/collapsed/);
+        await page.waitForTimeout(900);
+        await expect(page.locator(".glass-dock")).toHaveClass(/expanded/);
+    });
+});
 
 // The same state in any engine: a mouse `pointerdown` on a collapsed seat whose release
 // the dock never sees, then a `pointerdown` outside the dock. That second press supersedes
