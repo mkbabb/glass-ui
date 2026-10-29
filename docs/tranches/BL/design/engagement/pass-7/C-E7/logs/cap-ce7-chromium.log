@@ -1,0 +1,89 @@
+# 2026-10-28 19:03:53 start · load { 41.00 39.03 38.89 }
+# cmd: --timeout 60 -- node /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/harness/capture.mjs --build /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p7/C-E7/wt/.ce7out/builds/ce7 --label ce7 --engine chromium --frames /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-7/C-E7/glance/frames --sheets /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-7/C-E7/glance
+[guarded] waiting for headroom (load 41 > 36)
+# capture · ce7 · /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p7/C-E7/wt/.ce7out/builds/ce7 · scene app: harness scenes/App.vue (sha1 9e68012e9522) · lock wait 0.0 s · other headless processes: chromium 8, webkit 2 · load 33.9/38.4/39.0 at start
+# ladder-only scenes: collapsible, menu
+# chromium 149.0.7827.55
+  ce7-chromium-fine-light-button · rest ×1.000 · pressed ×1.033 · held ×1.033 · engaged ×1.000 · committed ×1.060 · released ×1.000 · load 33.2/38.2/38.9
+  PASS       CAP button fine light committed · chromium: pointer release after a 450 ms hold, state 0 → 1 · load 33.2/38.2/38.9
+  ce7-chromium-fine-light-switch · rest ×1.000 · pressed ×1.000 · held ×1.000 · engaged ×1.000 · committed ×1.060 · released ×1.000 · load 34.8/38.5/39.0
+  PASS       CAP switch fine light committed · chromium: pointer release after a 450 ms hold, state false → true · load 34.8/38.5/39.0
+  ce7-chromium-fine-light-slider · rest ×1.000 · pressed ×1.047 · held ×1.060 · engaged ×1.060 · committed ×1.006 · released ×1.000 · load 36.0/38.6/39.0
+  REPORT     CAP slider fine light committed · chromium: not a CK-02 commit member (pointer release after a 450 ms hold); the committed frame shows the gesture, not a commit · load 36.0/38.6/39.0
+  ce7-chromium-fine-light-sortable · rest ×1.000 · pressed ×1.000 · held ×1.000 · engaged ×1.000 · committed ×1.000 · released ×1.000 · load 36.0/38.6/39.0
+  REPORT     CAP sortable fine light committed · chromium: not a CK-02 commit member (pointer release after a 450 ms hold); the committed frame shows the gesture, not a commit · load 36.0/38.6/39.0
+  ce7-chromium-fine-light-accordion · rest ×1.000 · pressed ×1.000 · held ×1.000 · engaged ×1.000 · committed ×1.040 · released ×1.000 · load 38.5/39.1/39.2
+  PASS       CAP accordion fine light committed · chromium: pointer release after a 450 ms hold, state null → "one" · load 38.5/39.1/39.2
+  PASS       CAP accordion ladder fine light · chromium: inset paint L rest 0.9566 (rgba(0, 0, 0, 0)) · hover 0.8556 (oklab(0.216114 0.00343135 0.00508514 / 0.05); darker by 0.1010) · hover+press 0.7681 (oklab(0.216114 0.00343135 0.00508514 / 0.1), data-state closed) · released, still hovered 0.8556 · the press deepens the hover by 0.0874 (bound: no step back past 0.002) · load 37.7/38.9/39.2
+  ce7-chromium-fine-light-presented · rest ×1.000 · pressed ×1.030 · held ×1.033 · engaged ×1.000 · committed ×1.048 · released ×1.000 · load 38.4/39.1/39.2
+  REPORT     CAP presented fine light committed · chromium: not a CK-02 commit member (pointer release after a 450 ms hold); the committed frame shows the gesture, not a commit · load 38.4/39.1/39.2
+  ce7-chromium-fine-light-field · rest ×1.000 · pressed ×1.000 · held ×1.000 · engaged ×1.000 · committed ×1.000 · released ×1.000 · load 38.6/39.1/39.2
+  REPORT     CAP field fine light committed · chromium: not a CK-02 commit member (pointer release after a 450 ms hold); the committed frame shows the gesture, not a commit · load 38.6/39.1/39.2
+  ce7-chromium-fine-light-ambient · rest ×1.000 · pressed ×1.000 · held ×1.000 · engaged ×1.000 · committed ×1.000 · released ×1.000 · load 38.6/39.1/39.2
+  REPORT     CAP ambient fine light committed · chromium: not a CK-02 commit member (pointer release after a 450 ms hold); the committed frame shows the gesture, not a commit · load 38.6/39.1/39.2
+  ce7-chromium-fine-light-passive · rest ×1.000 · pressed ×1.000 · held ×1.000 · engaged ×1.000 · committed ×1.000 · released ×1.000 · load 38.1/39.0/39.2
+  REPORT     CAP passive fine light committed · chromium: not a CK-02 commit member (pointer release after a 450 ms hold); the committed frame shows the gesture, not a commit · load 38.1/39.0/39.2
+  ce7-chromium-fine-dark-button · rest ×1.000 · pressed ×1.033 · held ×1.033 · engaged ×1.000 · committed ×1.061 · released ×1.000 · load 40.3/39.4/39.3
+  PASS       CAP button fine dark committed · chromium: pointer release after a 450 ms hold, state 0 → 1 · load 40.3/39.4/39.3
+  ce7-chromium-fine-dark-switch · rest ×1.000 · pressed ×1.000 · held ×1.000 · engaged ×1.000 · committed ×1.060 · released ×1.000 · load 38.3/39.0/39.2
+  PASS       CAP switch fine dark committed · chromium: pointer release after a 450 ms hold, state false → true · load 38.3/39.0/39.2
+  ce7-chromium-fine-dark-slider · rest ×1.000 · pressed ×1.045 · held ×1.060 · engaged ×1.060 · committed ×1.006 · released ×1.000 · load 38.5/39.1/39.2
+  REPORT     CAP slider fine dark committed · chromium: not a CK-02 commit member (pointer release after a 450 ms hold); the committed frame shows the gesture, not a commit · load 38.5/39.1/39.2
+  ce7-chromium-fine-dark-sortable · rest ×1.000 · pressed ×1.000 · held ×1.000 · engaged ×1.000 · committed ×1.000 · released ×1.000 · load 38.5/39.0/39.2
+  REPORT     CAP sortable fine dark committed · chromium: not a CK-02 commit member (pointer release after a 450 ms hold); the committed frame shows the gesture, not a commit · load 38.5/39.0/39.2
+  ce7-chromium-fine-dark-accordion · rest ×1.000 · pressed ×1.000 · held ×1.000 · engaged ×1.000 · committed ×1.039 · released ×1.000 · load 38.5/39.0/39.2
+  PASS       CAP accordion fine dark committed · chromium: pointer release after a 450 ms hold, state null → "one" · load 38.5/39.0/39.2
+  PASS       CAP accordion ladder fine dark · chromium: inset paint L rest 0.0031 (rgba(0, 0, 0, 0)) · hover 0.0076 (oklab(0.926146 0.00162765 0.00610709 / 0.05); lighter by 0.0045) · hover+press 0.0140 (oklab(0.926146 0.00162765 0.00610709 / 0.1), data-state closed) · released, still hovered 0.0076 · the press deepens the hover by 0.0064 (bound: no step back past 0.002) · load 38.9/39.1/39.2
+  ce7-chromium-fine-dark-presented · rest ×1.000 · pressed ×1.032 · held ×1.033 · engaged ×1.000 · committed ×1.042 · released ×1.000 · load 39.7/39.3/39.3
+  REPORT     CAP presented fine dark committed · chromium: not a CK-02 commit member (pointer release after a 450 ms hold); the committed frame shows the gesture, not a commit · load 39.7/39.3/39.3
+  ce7-chromium-fine-dark-field · rest ×1.000 · pressed ×1.000 · held ×1.000 · engaged ×1.000 · committed ×1.000 · released ×1.000 · load 39.8/39.3/39.3
+  REPORT     CAP field fine dark committed · chromium: not a CK-02 commit member (pointer release after a 450 ms hold); the committed frame shows the gesture, not a commit · load 39.8/39.3/39.3
+  ce7-chromium-fine-dark-ambient · rest ×1.000 · pressed ×1.000 · held ×1.000 · engaged ×1.000 · committed ×1.000 · released ×1.000 · load 39.5/39.2/39.3
+  REPORT     CAP ambient fine dark committed · chromium: not a CK-02 commit member (pointer release after a 450 ms hold); the committed frame shows the gesture, not a commit · load 39.5/39.2/39.3
+  ce7-chromium-fine-dark-passive · rest ×1.000 · pressed ×1.000 · held ×1.000 · engaged ×1.000 · committed ×1.000 · released ×1.000 · load 39.5/39.2/39.3
+  REPORT     CAP passive fine dark committed · chromium: not a CK-02 commit member (pointer release after a 450 ms hold); the committed frame shows the gesture, not a commit · load 39.5/39.2/39.3
+  ce7-chromium-coarse-light-button · rest ×1.000 · pressed ×1.033 · held ×1.033 · engaged ×1.033 · committed ×1.060 · released ×1.000 · load 40.8/39.5/39.4
+  PASS       CAP button coarse light committed · chromium: short tap, state 0 → 1 · load 40.8/39.5/39.4
+  ce7-chromium-coarse-light-switch · rest ×1.000 · pressed ×1.000 · held ×1.000 · engaged ×1.000 · committed ×1.060 · released ×1.000 · load 42.1/39.8/39.5
+  PASS       CAP switch coarse light committed · chromium: short tap, state false → true · load 42.1/39.8/39.5
+  ce7-chromium-coarse-light-slider · rest ×1.000 · pressed ×1.044 · held ×1.060 · engaged ×1.060 · committed ×1.000 · released ×1.000 · load 42.7/40.0/39.5
+  REPORT     CAP slider coarse light committed · chromium: not a CK-02 commit member (short tap); the committed frame shows the gesture, not a commit · load 42.7/40.0/39.5
+  ce7-chromium-coarse-light-sortable · rest ×1.000 · pressed ×1.000 · held ×1.000 · engaged ×1.000 · committed ×1.000 · released ×1.000 · load 43.3/40.2/39.6
+  REPORT     CAP sortable coarse light committed · chromium: not a CK-02 commit member (short tap); the committed frame shows the gesture, not a commit · load 43.3/40.2/39.6
+  ce7-chromium-coarse-light-accordion · rest ×1.000 · pressed ×1.000 · held ×1.000 · engaged ×1.000 · committed ×1.040 · released ×1.000 · load 42.3/40.0/39.5
+  PASS       CAP accordion coarse light committed · chromium: short tap, state null → "one" · load 42.3/40.0/39.5
+  ce7-chromium-coarse-light-presented · rest ×1.000 · pressed ×1.030 · held ×1.033 · engaged ×1.033 · committed ×1.054 · released ×1.000 · load 44.1/40.4/39.7
+  REPORT     CAP presented coarse light committed · chromium: not a CK-02 commit member (short tap); the committed frame shows the gesture, not a commit · load 44.1/40.4/39.7
+  ce7-chromium-coarse-light-field · rest ×1.000 · pressed ×1.000 · held ×1.000 · engaged ×1.000 · committed ×1.000 · released ×1.000 · load 43.3/40.3/39.6
+  REPORT     CAP field coarse light committed · chromium: not a CK-02 commit member (short tap); the committed frame shows the gesture, not a commit · load 43.3/40.3/39.6
+  ce7-chromium-coarse-light-ambient · rest ×1.000 · pressed ×1.000 · held ×1.000 · engaged ×1.000 · committed ×1.000 · released ×1.000 · load 42.9/40.3/39.6
+  REPORT     CAP ambient coarse light committed · chromium: not a CK-02 commit member (short tap); the committed frame shows the gesture, not a commit · load 42.9/40.3/39.6
+  ce7-chromium-coarse-light-passive · rest ×1.000 · pressed ×1.000 · held ×1.000 · engaged ×1.000 · committed ×1.000 · released ×1.000 · load 44.2/40.6/39.8
+  REPORT     CAP passive coarse light committed · chromium: not a CK-02 commit member (short tap); the committed frame shows the gesture, not a commit · load 44.2/40.6/39.8
+  ce7-chromium-coarse-dark-button · rest ×1.000 · pressed ×1.032 · held ×1.033 · engaged ×1.033 · committed ×1.060 · released ×1.000 · load 44.2/40.6/39.8
+  PASS       CAP button coarse dark committed · chromium: short tap, state 0 → 1 · load 44.2/40.6/39.8
+  ce7-chromium-coarse-dark-switch · rest ×1.000 · pressed ×1.000 · held ×1.000 · engaged ×1.000 · committed ×1.060 · released ×1.000 · load 43.4/40.6/39.7
+  PASS       CAP switch coarse dark committed · chromium: short tap, state false → true · load 43.4/40.6/39.7
+  ce7-chromium-coarse-dark-slider · rest ×1.000 · pressed ×1.042 · held ×1.060 · engaged ×1.060 · committed ×1.000 · released ×1.000 · load 43.4/40.6/39.7
+  REPORT     CAP slider coarse dark committed · chromium: not a CK-02 commit member (short tap); the committed frame shows the gesture, not a commit · load 43.4/40.6/39.7
+  ce7-chromium-coarse-dark-sortable · rest ×1.000 · pressed ×1.000 · held ×1.000 · engaged ×1.000 · committed ×1.000 · released ×1.000 · load 44.2/40.8/39.8
+  REPORT     CAP sortable coarse dark committed · chromium: not a CK-02 commit member (short tap); the committed frame shows the gesture, not a commit · load 44.2/40.8/39.8
+  ce7-chromium-coarse-dark-accordion · rest ×1.000 · pressed ×1.000 · held ×1.000 · engaged ×1.000 · committed ×1.040 · released ×1.000 · load 42.9/40.5/39.8
+  PASS       CAP accordion coarse dark committed · chromium: short tap, state null → "one" · load 42.9/40.5/39.8
+  ce7-chromium-coarse-dark-presented · rest ×1.000 · pressed ×1.033 · held ×1.033 · engaged ×1.033 · committed ×1.059 · released ×1.000 · load 42.8/40.6/39.8
+  REPORT     CAP presented coarse dark committed · chromium: not a CK-02 commit member (short tap); the committed frame shows the gesture, not a commit · load 42.8/40.6/39.8
+  ce7-chromium-coarse-dark-field · rest ×1.000 · pressed ×1.000 · held ×1.000 · engaged ×1.000 · committed ×1.000 · released ×1.000 · load 43.3/40.8/39.8
+  REPORT     CAP field coarse dark committed · chromium: not a CK-02 commit member (short tap); the committed frame shows the gesture, not a commit · load 43.3/40.8/39.8
+  ce7-chromium-coarse-dark-ambient · rest ×1.000 · pressed ×1.000 · held ×1.000 · engaged ×1.000 · committed ×1.000 · released ×1.000 · load 43.3/40.8/39.8
+  REPORT     CAP ambient coarse dark committed · chromium: not a CK-02 commit member (short tap); the committed frame shows the gesture, not a commit · load 43.3/40.8/39.8
+  ce7-chromium-coarse-dark-passive · rest ×1.000 · pressed ×1.000 · held ×1.000 · engaged ×1.000 · committed ×1.000 · released ×1.000 · load 42.2/40.6/39.8
+  REPORT     CAP passive coarse dark committed · chromium: not a CK-02 commit member (short tap); the committed frame shows the gesture, not a commit · load 42.2/40.6/39.8
+  PASS       CAP collapsible ladder fine light · chromium: inset paint L rest 0.5392 (rgba(0, 0, 0, 0)) · hover 0.5392 (rgba(0, 0, 0, 0); the hover paints no rung by 0.0000) · hover+press 0.4348 (oklab(0.216114 0.00343135 0.00508514 / 0.1), data-state closed) · released, still hovered 0.5407 · the press holds the hover (bound: no step back past 0.002) · load 46.8/41.6/40.1
+  PASS       CAP collapsible ladder fine dark · chromium: inset paint L rest 0.2994 (rgba(0, 0, 0, 0)) · hover 0.2994 (rgba(0, 0, 0, 0); the hover paints no rung by 0.0000) · hover+press 0.3135 (oklab(0.926146 0.00162765 0.00610709 / 0.1), data-state closed) · released, still hovered 0.2995 · the press holds the hover (bound: no step back past 0.002) · load 46.8/41.6/40.1
+  PASS       CAP menu ladder fine light · chromium: inset paint L rest 0.5415 (rgba(0, 0, 0, 0)) · hover 0.5415 (rgba(0, 0, 0, 0); the hover paints no rung by 0.0000) · hover+press 0.4367 (oklab(0.216114 0.00343135 0.00508514 / 0.1), data-state closed) · released, still hovered 0.5416 · the press holds the hover (bound: no step back past 0.002) · load 46.1/41.5/40.1
+  PASS       CAP menu ladder fine dark · chromium: inset paint L rest 0.3045 (rgba(0, 0, 0, 0)) · hover 0.3045 (rgba(0, 0, 0, 0); the hover paints no rung by 0.0000) · hover+press 0.3175 (oklab(0.926146 0.00162765 0.00610709 / 0.1), data-state closed) · released, still hovered 0.3033 · the press holds the hover (bound: no step back past 0.002) · load 46.1/41.5/40.1
+# sheet /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-7/C-E7/glance/ce7-chromium-fine.png · 18 rows
+# sheet /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-7/C-E7/glance/ce7-chromium-coarse.png · 18 rows
+# capture done · load 47.3/41.8/40.2 at end
+CAP chromium PASS · 18 pass, 0 fail, 0 unmeasured of 18 gating cells (24 reported) · load 33.9/38.4/39.0 at start, 47.3/41.8/40.2 at end
+# 2026-10-28 19:14:11 end · exit 0 · load { 48.28 42.23 40.41 }

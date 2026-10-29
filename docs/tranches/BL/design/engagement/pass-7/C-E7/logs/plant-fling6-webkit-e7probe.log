@@ -1,0 +1,9 @@
+# 2026-10-28 21:06:38 start · load { 35.92 40.50 41.94 }
+# cmd: node /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-7/E7/probe/e7-probe.mjs --build /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p7/C-E7/wt/.ce7out/builds/plant-fling6 --engine webkit --out /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-7/C-E7/json/plant-fling6 --only carry
+# P-E7 probe · E's pass-7 cells: CK-05 carry with velocity, CK-25 loupe, CK-20 touch clip-vanish
+# target /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p7/C-E7/wt/.ce7out/builds/plant-fling6 · engine webkit · lock wait 0.0 s · other headless processes: chromium 8, webkit 0 · load 35.9/40.5/41.9 at start
+# scene app: harness scenes/App.vue (sha1 9e68012e9522)
+# webkit 26.5 (Playwright WebKit, not Safari; real Safari UNMEASURED (owner's safaridriver checkbox))
+  FAIL       carry slider (CK-05) · 10 reads (fling − still, the range's leading edge, page frame): 1: 6.49 px @ 1013 px/s · 2: 7.00 px @ 1081 px/s · 3: 6.73 px @ 976 px/s · 4: 6.60 px @ 920 px/s · 5: 6.37 px @ 879 px/s · 6: 6.74 px @ 1026 px/s · 7: 6.30 px @ 930 px/s · 8: 6.50 px @ 889 px/s · 9: 3.87 px @ 494 px/s · 10: 6.24 px @ 833 px/s · distribution min 3.87 · q1 6.32 · median 6.49 · q3 6.70 · max 7.00 px · release velocity min 494 · q1 882 · median 925 · q3 1003 · max 1081 px/s · 0 read(s) whose fling the rule measured under 100 px/s · (bound: every read whose fling measured ≥ 100 px/s carries ≥ 4 px) · load 35.4/39.1/41.3
+P-E7 probe webkit FAIL · 0 pass, 1 fail, 0 unmeasured of 1 gating cells (0 reported) · load 35.9/40.5/41.9 at start, 35.4/39.1/41.3 at end
+# 2026-10-28 21:08:01 end · exit 1 · load { 35.40 39.12 41.27 }

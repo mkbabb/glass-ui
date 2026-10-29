@@ -1,0 +1,39 @@
+# 2026-10-28 18:10:02 P-A7 consumer greps · glass-ui HEAD f985263be
+## atlas HEAD 069708a
+## bbnf-buddy HEAD 2857c2f
+## chicago HEAD 
+## keyframes.js HEAD 5c48e3da
+## slides HEAD 7dcbb3b
+## speedtest HEAD e2d9444d
+## value.js HEAD d98e6ae45
+## fourier-analysis HEAD 3a0e709
+## sci-report HEAD bbcbd503
+
+# per repo: M1 material-class lines (.vue) · M1b of them on a <button/@click/role=button line · M1c :active on a material class
+#           M2 --glass-btn-press-t · M3 commit tokens · M4 <Configurator · M4b its #presets slot · M4c preset-chip CSS
+#           M5 Aurora setCursor/clearCursor callers · M6 <Dialog/<DialogContent sites · M7 data-press readers
+#           M8 glass-capsule-hover · M9 SegmentedTabs sites · M10 transform/scale overrides on committing members
+atlas M1=3 M1b=0 M1c=0 M2=0 M3=0 M4=0 M4b=0 M4c=0 M5=0 M6=7 M7=0 M8=0 M9=0 M10=0
+bbnf-buddy M1=0 M1b=0 M1c=0 M2=0 M3=0 M4=0 M4b=0 M4c=0 M5=0 M6=0 M7=0 M8=0 M9=1 M10=0
+chicago M1=0 M1b=0 M1c=0 M2=0 M3=0 M4=0 M4b=0 M4c=0 M5=0 M6=2 M7=0 M8=0 M9=1 M10=0
+keyframes.js M1=1 M1b=0 M1c=0 M2=0 M3=0 M4=0 M4b=0 M4c=0 M5=2 M6=12 M7=0 M8=1 M9=1 M10=0
+slides M1=54 M1b=0 M1c=0 M2=0 M3=0 M4=0 M4b=0 M4c=0 M5=0 M6=2 M7=0 M8=0 M9=0 M10=0
+speedtest M1=5 M1b=0 M1c=0 M2=0 M3=0 M4=0 M4b=0 M4c=0 M5=0 M6=13 M7=0 M8=0 M9=9 M10=0
+value.js M1=3 M1b=0 M1c=0 M2=0 M3=0 M4=0 M4b=0 M4c=0 M5=2 M6=23 M7=0 M8=1 M9=2 M10=0
+fourier-analysis M1=22 M1b=0 M1c=0 M2=0 M3=0 M4=2 M4b=0 M4c=0 M5=0 M6=14 M7=0 M8=0 M9=3 M10=0
+sci-report M1=1 M1b=0 M1c=1 M2=1 M3=0 M4=0 M4b=0 M4c=1 M5=0 M6=0 M7=1 M8=1 M9=2 M10=1
+
+# listings
+## M1b material class on an interactive element (press now on [data-press]::before; the way back is usePressMark)
+## M1c, M2, M3, M4c, M7, M8, M10
+keyframes.js/demo/components/instrument/pane/channel-controls/EasingField.vue:40:                    class="control-surface glass-control-edge glass-capsule-hover tap-squish focus-ring transition-control flex h-(--contro
+value.js/demo/shared/ui/ColorSpaceSelector.vue:270:     * `.glass-capsule-hover`). The colour-space TITLE is not a picker plate (the
+sci-report/dist-ob11/assets/index-BPa7lE7v.css:1:@layer atlas,atlas.tokens,atlas.recipes,atlas.components;@layer atlas.tokens{@layer properties{@supports (((-webkit-hyphens: none)) and (not (margin-trim: inline))) or ((-
+## M5 cursor writers
+keyframes.js/demo/app/hero/HeroAurora.vue:223:    auroraRef.value?.setCursor(e.clientX / (width.value || 1), e.clientY / (height.value || 1));
+keyframes.js/demo/app/hero/HeroAurora.vue:227:    auroraRef.value?.clearCursor();
+value.js/demo/app/composables/boot/useAtmosphere.ts:315:                aurora.setCursor(x, y, ATMOSPHERE_POINTER_STRENGTH);
+value.js/demo/app/composables/boot/useAtmosphere.ts:320:            aurora.clearCursor(); // decay-to-rest, never a snap
+## M4 Configurator sites
+fourier-analysis/web/src/components/visualization/VisualizationView.vue:459:            <Configurator scroll-mode="auto" layout="detached" class="viz-configurator glass-opaque" :data-sidebar="sidebarP
+fourier-analysis/web/src/components/equation/EquationView.vue:495:        <Configurator scroll-mode="auto" layout="detached" class="eq-configurator glass-opaque">
