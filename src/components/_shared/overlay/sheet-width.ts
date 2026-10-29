@@ -10,7 +10,7 @@ import { onBeforeUnmount, shallowRef, watch, type ShallowRef } from "vue";
  * The query is held only while the overlay is open, so a closed overlay keeps no
  * listener; it is read synchronously on open, before the content renders.
  */
-export const SHEET_QUERY = "(width < 30rem)";
+const SHEET_QUERY = "(width < 30rem)";
 
 export function useSheetWidth(open: () => boolean): Readonly<ShallowRef<boolean>> {
     const sheet = shallowRef(false);

@@ -27,5 +27,5 @@ export {
     releaseRootScrollLock,
     useRootScrollLock,
 } from "./root-scroll-lock";
-export { SHEET_QUERY, useSheetWidth } from "./sheet-width";
+export { useSheetWidth } from "./sheet-width";
 export { useModalShortcutBarrier } from "./shortcuts";
