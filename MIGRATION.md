@@ -9,6 +9,40 @@ rename or import re-point per call site.
 
 Merged on local branch `u/b7-glass` (off `release/10.1.1` bbf176f02) from `u/b7-glass-shape` (rows B7-G1 to B7-G6) and `u/b7-glass-perf` (rows B7-G7 to B7-G9). Row numbers follow the relay letter.
 
+### Root items (`u/b7-glass`, U/B7c C3)
+
+- **`<DropdownMenu trigger="context">` becomes `<ContextMenu>`.** The region-anchored menu
+  is its own root, so a page that renders only `DropdownMenu` no longer bundles reka's
+  ContextMenu family. The parts (`DropdownMenuTrigger`, `DropdownMenuContent`,
+  `DropdownMenuItem` and the rest) are unchanged and serve both roots. `DropdownMenu`
+  loses its `trigger` prop; `DropdownMenuProps` is now the click root's props alone, and
+  `ContextMenuProps` has `dir` and `modal` only. The public `MenuTrigger` type is removed.
+  Known call sites: speedtest `AdminSessionsTable.vue` and `ResultsTable.vue`, bbnf-buddy
+  `ControlPointOverlay.vue`. Atlas and sci have none.
+
+  ```diff
+  - <DropdownMenu trigger="context">
+  + <ContextMenu>
+      <DropdownMenuTrigger as-child>…</DropdownMenuTrigger>
+      <DropdownMenuContent>…</DropdownMenuContent>
+  - </DropdownMenu>
+  + </ContextMenu>
+  ```
+- **A modal `Dialog`, `SheetContent` or `CommandDialog` no longer writes to `body`.**
+  While its scrim is present, the root element (`html`) carries `overflow: hidden`, and
+  `body` keeps its overflow and padding. reka's `--scrollbar-width` custom property on
+  the root and the `padding-right` compensation on `body` are gone; the root's
+  `scrollbar-gutter: stable` keeps the layout still. A consumer that read
+  `--scrollbar-width`, or tested `body.style.overflow` to detect an open modal, reads
+  `document.documentElement.style.overflow` instead. reka's `ConfigProvider`
+  `scrollBody` option no longer affects glass modals. The modal content's own
+  `pointer-events` guard on `body` (reka's dismissable layer) is unchanged.
+- **A dock's live backdrop sampling follows events.** The observer samples when the field
+  canvas announces a frame, which glass's canvas lifecycle (Aurora, Blob, every
+  `useWebGLCanvas`, `useWebGPUCanvas` and `useCanvas2D` field) does on each draw. A
+  `backgroundCanvas` drawn outside that lifecycle is sampled on mount, resize, scroll,
+  theme change and the end of a transition on it, not on its own frames.
+
 ### Shape, glide and the dropdown system (`u/b7-glass-shape`)
 
 Proposed by the atlas formation on local branch `u/b7-glass-shape` off `release/10.1.1`; glass takes, re-authors or declines each row. Clean breaks, no aliases. The browser witnesses are `tests-visual/b7-shape.config.ts` (harness `tests-visual/b7-shape/`), run in Chromium and Firefox; each fails on the `v10.1.1` tag (bbf176f02) unless the row says otherwise.

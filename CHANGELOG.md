@@ -4,6 +4,57 @@
 
 Merged on local branch `u/b7-glass` (off `release/10.1.1` bbf176f02) from `u/b7-glass-shape` (rows B7-G1 to B7-G6) and `u/b7-glass-perf` (rows B7-G7 to B7-G9). Row numbers follow the relay letter.
 
+### Root items (`u/b7-glass`, U/B7c C3)
+
+Built by the atlas formation's B7c pass on `u/b7-glass` after the B7b land (79a9e3eea).
+No version bump. Each row has a test that fails on 79a9e3eea and passes here.
+
+- **A modal holds the page through the root, never `body` (C3-1).** reka's
+  `DialogOverlay` takes `useBodyScrollLock`, which writes `overflow: hidden`, a padding
+  compensation and `pointer-events` onto `body`. Under a consumer root with
+  `overflow-x: clip`, that makes `body` the scroller while a modal is open: atlas's
+  homepage school finder (a modal `CommandDialog`) broke the body-free rule in 4 of 4
+  cells per engine. `ModalOverlay` now mounts its own scrim (`ModalScrim`: reka's
+  `DialogOverlayImpl` without the body lock) under reka's `Presence`, and the scrim holds
+  the one counted root lock (`_shared/overlay/root-scroll-lock.ts`), which
+  ExpandableContainer already used. The two compose when they close out of order. The
+  root's `scrollbar-gutter: stable` keeps the layout still. Witnesses:
+  `tests/components/dialog/modal-root-lock.test.ts` (3 of 3 fail before) and
+  `tests-visual/CommandDialog.b7c.spec.ts` (Chromium and Firefox; red before in Chromium).
+- **A palette group keeps its content height (C3-2).** reka's `ComboboxContent` renders
+  the `CommandList` as an inline flex column, and `.command__group { overflow: hidden }`
+  dropped each group's automatic minimum height to 0, so a long list shrank every group
+  to fit. The palette's short "Dashboards" group measured 46 px of its 341 px, with its
+  heading under "School units" and its rows unreachable. The group is now `flex: none`
+  and the list scrolls. Witnesses: `tests/components/command/group-flex.test.ts` and the
+  browser spec above.
+- **`ContextMenu` is its own root (C3-3).** The menu parts dispatched through one table
+  that imported all 28 reka menu primitives, so every `DropdownMenu` consumer bundled the
+  ContextMenu family. Each root now provides its own family table; the parts import
+  neither. Measured in a minimal Vite consumer built against `dist`: the four-part
+  `/menu` import is 228,799 → 219,566 B of JS (brotli 66,983 → 66,112), and a
+  dock-plus-menu import is 278,801 → 269,007 B (brotli 80,853 → 79,840). Witness:
+  `tests/components/menu/click-family-graph.test.ts` (14 of 15 fail before).
+- **The live backdrop observer runs no frame loop (C3-4).** `useGlassBackdropLuminance`
+  requested an animation frame every frame for as long as a field canvas existed, in
+  order to take a 4 Hz sample. The shared canvas lifecycle now announces each frame it
+  draws (`GLASS_FIELD_PAINT_EVENT` on the canvas, internal). The observer samples,
+  throttled to 4 Hz with a trailing sample, on a paint of its own field, a scroll, a root
+  class or `data-theme` change, a colour-scheme change, or a transition or animation
+  that ends on the field. It does nothing while the field is still. Witnesses:
+  `tests/composables/glass/useGlassBackdropLuminance.live.test.ts` (3 of 4 fail before;
+  126 frame requests in 2 s at rest before, 0 after) and the announcement case in
+  `tests/composables/glass/canvas2d/useCanvas2D.test.ts`.
+- **A press control at rest reads no computed style (C3-5).** Z0's /sci phone profile put
+  248 ms of load on `effectiveCap`'s `getComputedStyle`, one read per `Button` after its
+  template ref bound, plus a second render. At rest the stretch is 1 whatever the cap, so
+  the cap getter returns 1 without touching the element until a press moves the spring.
+  Every spring also read `--motion-tempo` off `:root` at construction; that read is now
+  shared by every construction in one task. Witness: `tests/composables/motion/press.test.ts`
+  (2 cases fail before: the element read, and 12 root reads for 12 controls, now 1).
+- **`SHEET_QUERY` is module-private.** 87494c6d4 exported it with no reader, which left
+  G-OVERFIT's export-reach arm red at 79a9e3eea.
+
 ### Opaque sheets (`u/b7b-glass-dock`, U/B7b M1)
 
 - **Select sheet form is opaque (D-6).** Below 30rem the Select listbox opens as a
