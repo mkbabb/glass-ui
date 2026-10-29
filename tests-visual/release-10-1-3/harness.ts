@@ -41,9 +41,11 @@ const scenes: Record<string, Component> = {
     // `#persistent`, again on the anchored side. `?anchor=bottom` pins a vertical dock
     // by `bottom` (and `left`), its anchored side the end; `?anchor=top` pins it by `top`
     // (and `left`), its anchored side the start. `?seat=open` seats "Edit
-    // contour" on the open side instead, the side the expand grows toward. A click on
-    // "Edit contour" counts in `window.__edits`. The dock's component instance is
-    // `window.__dock`, so a witness can call its public `collapse()`.
+    // contour" on the open side instead, the side the expand grows toward. `?link=1`
+    // seats a link (`<a href>`, natively draggable) beside "Edit contour" in the same
+    // slot. A click on "Edit contour" counts in `window.__edits`. The dock's component
+    // instance is `window.__dock`, so a witness can call its public `collapse()`. A
+    // button below the stage takes focus outside the dock.
     "edge-anchor": defineComponent(() => {
         const edits = ref(0);
         w.__edits = 0;
@@ -58,6 +60,7 @@ const scenes: Record<string, Component> = {
             edge === "bottom" || edge === "top"
                 ? `${edge}:0.5rem;left:0.5rem`
                 : `top:0.5rem;${edge}:0.5rem`;
+        const link = params.get("link") === "1";
         const onEdit = () => {
             edits.value += 1;
             w.__edits = edits.value;
@@ -102,12 +105,27 @@ const scenes: Record<string, Component> = {
                                             { "data-witness": "summary" },
                                             glyph(),
                                         ),
-                                    [slot]: () => seat("Edit contour", onEdit),
+                                    [slot]: () => [
+                                        seat("Edit contour", onEdit),
+                                        link
+                                            ? h(
+                                                  "a",
+                                                  {
+                                                      href: "#link",
+                                                      "data-witness": "Link",
+                                                      style: "display:inline-grid;place-items:center;inline-size:40px;block-size:40px",
+                                                      onClick: (e: Event) => e.preventDefault(),
+                                                  },
+                                                  "L",
+                                              )
+                                            : null,
+                                    ],
                                 },
                             ),
                         ),
                     ],
                 ),
+                h("button", { "data-witness": "outside", style: "margin:8px" }, "outside"),
             ]);
     }),
 };

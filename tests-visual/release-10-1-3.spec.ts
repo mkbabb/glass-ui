@@ -780,3 +780,102 @@ for (const [leg, travel] of [
         });
     });
 }
+
+// ── critique-6 (round 6) ─────────────────────────────────────────────────────────────
+
+// D-1: a mouse press can end with no `pointerup`, `pointercancel` or `click`. In WebKit a
+// native drag of a dock link dispatches `pointerdown`, `mousedown`, `dragstart`,
+// `dragend`, and a right-click `pointerdown`, `mousedown`, `contextmenu`. The press must
+// still end there, or every later hover and keyboard focus waits on it and the collapsed
+// dock no longer expands. RED in WebKit on the round-5 branch (the press held until the
+// next click); GREEN on 10.1.2 and here. Chromium cancels the pointer at `dragstart` and
+// was GREEN on both; its right-click ends at the `pointerup` it still sends.
+
+/** Collapse the dock, park the pointer, then expand it by a keyboard focus or a hover. */
+async function expandsAfter(page: Page, after: "focus" | "hover"): Promise<void> {
+    const dock = page.locator(".glass-dock");
+    await page.evaluate(() =>
+        (window as unknown as { __dock: { collapse: () => void } }).__dock.collapse(),
+    );
+    await page.mouse.move(4, 700);
+    await page.waitForTimeout(600);
+    await expect(dock, "collapse() collapsed the dock").toHaveClass(/collapsed/);
+    if (after === "focus") {
+        // A fresh focus-in: focus leaves the dock first.
+        await page.locator('[data-witness="outside"]').focus();
+        await page.locator(EDIT).focus();
+    } else {
+        const s = mid(await rect(page, '[data-witness="summary"]'));
+        await page.mouse.move(s.x, s.y, { steps: 3 });
+    }
+    await page.waitForTimeout(900);
+    await expect(dock, `the ${after} expands the collapsed dock`).toHaveClass(/expanded/);
+}
+
+for (const anchor of ["right", "left"] as const) {
+    for (const after of ["focus", "hover"] as const) {
+        test.describe(`10.1.3 · 390 · ${anchor}-anchored · drag a dock link out, then ${after}`, () => {
+            test.use({ viewport: { width: 390, height: 844 } });
+            test(`D-1 (critique-6) · after a press that became a native drag, a ${after} expands the collapsed dock`, async ({
+                page,
+            }) => {
+                await page.goto(
+                    `/tests-visual/release-10-1-3/harness.html?scene=edge-anchor&anchor=${anchor}&link=1`,
+                );
+                await page.waitForFunction(() => (window as unknown as W).__ready);
+                await page.mouse.move(4, 700);
+                await page.waitForTimeout(300);
+                const l = mid(await rect(page, '[data-witness="Link"]'));
+                await page.mouse.move(l.x, l.y);
+                await page.mouse.down();
+                await page.mouse.move(l.x + (anchor === "right" ? -20 : 20), l.y + 10, { steps: 4 });
+                await page.mouse.move(195, 600, { steps: 8 });
+                await page.mouse.up();
+                await page.waitForTimeout(400);
+                await expandsAfter(page, after);
+            });
+        });
+    }
+}
+
+for (const after of ["focus", "hover"] as const) {
+    test.describe(`10.1.3 · 390 · right-anchored · right-click a collapsed seat, then ${after}`, () => {
+        test.use({ viewport: { width: 390, height: 844 } });
+        test(`D-1 (critique-6) · after a right-click, a ${after} expands the collapsed dock`, async ({
+            page,
+        }) => {
+            await open(page, "right");
+            const e = mid(await rect(page, EDIT));
+            await page.mouse.move(e.x, e.y);
+            await page.mouse.down({ button: "right" });
+            await page.mouse.up({ button: "right" });
+            await page.keyboard.press("Escape");
+            await page.waitForTimeout(300);
+            await expandsAfter(page, after);
+        });
+    });
+}
+
+// The same state in any engine: a mouse `pointerdown` on a collapsed seat whose release
+// the dock never sees, then a `pointerdown` outside the dock. That second press supersedes
+// the first, whatever its pointer type, and a keyboard focus then expands the dock. RED
+// on the round-5 branch in both engines (only a touch press lapsed there).
+test.describe("10.1.3 · 390 · a mouse press with no release, a press outside, then focus", () => {
+    test.use({ viewport: { width: 390, height: 844 } });
+    test("D-1 (critique-6) · a press outside the dock supersedes an unreleased mouse press", async ({
+        page,
+    }) => {
+        await open(page, "right");
+        await page.evaluate((sel) => {
+            const init = { bubbles: true, composed: true, pointerType: "mouse", pointerId: 1, isPrimary: true };
+            document.querySelector(sel)!.dispatchEvent(new PointerEvent("pointerdown", init));
+            document
+                .querySelector('[data-witness="outside"]')!
+                .dispatchEvent(new PointerEvent("pointerdown", init));
+        }, EDIT);
+        await page.waitForTimeout(200);
+        await page.locator(EDIT).focus();
+        await page.waitForTimeout(1000);
+        await expect(page.locator(".glass-dock")).toHaveClass(/expanded/);
+    });
+});
