@@ -1,0 +1,63 @@
+# static · HEAD 9efc5784a · 2026-10-30 12:17:28 · load { 18.16 29.16 38.53 }
+cand9 198 files +5072/-1648  src 153 files +3088/-1359
+probe9 198 files +5445/-1647  src 153 files +3450/-1358
+cand8 198 files +5375/-1644  src 153 files +3380/-1355
+E over P-E8 (E9/numstat-E9-over-PE8.txt) src  files +/-
+ 179 files changed, 1819 insertions(+), 1648 deletions(-)
+engage-footprint: 0
+writePaint: 0
+worldOf: 0
+held-scale: 0
+position-visibility: 0
+--veil-x: 0
+byTouch: 4
+anchor-name: 2
+position-anchor: 2
+promot: 31
+popover: 122
+--- byTouch
+src/composables/motion/engage/hold.ts:116:    let byTouch = false;
+src/composables/motion/engage/hold.ts:126:        byTouch = false;
+src/composables/motion/engage/hold.ts:132:        if (!byTouch) onWindowRelease();
+src/composables/motion/engage/hold.ts:138:        byTouch ||= event.type === "touchstart" || ("pointerType" in event && event.pointerType === "touch");
+--- anchor
+src/components/tabs/SegmentedTabs.vue:71:// underline drawn as a `::before` pseudo position-anchored to `[aria-selected]` —
+src/components/tabs/SegmentedTabs.vue:73:// (no `anchor-name` is minted, `anchor()` is invalid at computed-value time, and the
+src/components/sheet/styles.css:354:        anchor-name: --glass-sheet-edge;
+src/components/sheet/styles.css:363:        position-anchor: --glass-sheet-edge;
+--- promot
+src/composables/dom/useIdleReady.ts:57: * hand-rolled at 5 consumer sites — the ≥2-consumer substrate-promotion gate
+src/composables/dom/useBreakpoint.ts:31: * Why this exists (promoted from a consumer): the survey
+src/styles/track-well.css:91:           black-premultiply hole. (This spelling is the Timeline's, promoted
+src/styles/glass/liquid-enter.css:5:   promoted from an overlay-only `data-state` TRANSITION to a mount `@keyframes` so a
+src/styles/tokens/color-radius.css:236:       The legibility intelligence promoted from the slides deck to
+src/components/tabs/styles/drag.css:12:   lift + the `will-change: transform` compositor hint that promotes the lozenge
+src/components/sortable-list/styles.css:148:    /* The keyboard lift is IN PLACE: same material promotion, one copy, no clone. A
+src/components/sortable-list/styles.css:218:       thing MOTION-CANON §4:334 forbids). The ROW inside owns the promotion (swell +
+src/components/sortable-list/README.md:41:The lifted row promotes from a flush cell to a floating glass plate and follows the finger 1:1 —
+src/components/sortable-list/ghost.ts:2: * The drag ghost — the lifted row, promoted from cell to floating glass plate.
+src/components/sortable-list/ghost.ts:8: * element would force the follow to share the promotion's transition — the lag the
+src/components/sortable-list/ghost.ts:31:    /** Release the promotion (radius, frost, swell) — the landing half of the flight. */
+src/components/sortable-list/ghost.ts:75:    // The promotion runs on the NEXT frame so the transition has a start value to
+src/components/constellation/README.md:478:`gravityWell` promotes the host to a named, focusable button whose pointer and Enter/Space paths use
+src/components/alert/index.ts:51:   was harmless while the tinted wash still carried the tone; removing the wash promoted
+src/components/popover/popoverContext.ts:19:     * PopoverRoot branch (click / coarse-pointer-promoted hover). A
+src/components/popover/popoverContext.ts:21:     * leaves the hover root structurally dead on touch, so the union promotes it
+src/components/configurator/styles.css:616:     * The studio promoted out of its page rect and into the window. The mechanism is
+src/components/configurator/Configurator.vue:143:         * promotes the whole instrument to a full-window ROOM and back. The
+src/components/configurator/Configurator.vue:148:         * stage in the `#stage` slot survives the promotion instead of being torn
+src/components/timeline/Timeline.vue:521:       promoted OUT of. Both clip boxes qualify as hosts (`.tl__span` is
+src/components/blob/constants.ts:86:        // plain hover (which auto-promotes to `curious`, arousal 0.5) scale the pointer
+src/components/dock/DockSeparator.vue:29: * `anchor` promotes this separator to THE HAIRLINE — the line ARCHAEOLOGY E29
+src/components/expandable-container/styles.css:20:/* THE BIRTH. The expanded panel grows out of the rect it was promoted from: scale
+src/components/expandable-container/styles.css:25: * mount, moved — which is what lets a live GPU stage survive the promotion instead
+src/components/dock/styles/layer-group.css:32:       …each `--dock-separator-height` long. `anchor` promotes the same element to
+src/components/dock/styles/shell.css:416:       gesture). NEVER a resting `will-change` (a permanent promotion pins a wasted
+src/components/dock/styles/shell.css:417:       compositor layer at rest — the motion-canon P5 no-resting-promotion floor):
+src/components/dock/styles/shell.css:421:       non-animating dock needs no promotion. */
+src/fonts/fira-code/OFL.txt:69:Software shall not be used to promote, endorse or advertise any
+src/fonts/plus-jakarta-sans/OFL.txt:69:Software shall not be used to promote, endorse or advertise any
+--- ancestry
+release/10.1.1 ancestor exit 1
+release/10.1.2 ancestor exit 1
+release/10.1.3 ancestor exit 1
