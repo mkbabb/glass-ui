@@ -9,7 +9,7 @@ import { onBeforeUnmount, shallowRef, watch, type Ref } from "vue";
  * it is wider than 20rem. The element carries `data-shape="bar"` while that holds;
  * the component's own CSS maps the attribute to the corner. A ResizeObserver keeps
  * it live, so a label that wraps at a narrow viewport and unwraps at a wide one
- * changes shape with it. */
+ * changes shape with it, and takes the first reading too. */
 
 /** The inline size past which a control reads as a bar, in rem. */
 const BAR_INLINE_REM = 20;
@@ -40,9 +40,11 @@ export function useBarShape(target: Ref<HTMLElement | null>): Readonly<Ref<"bar"
             observer?.disconnect();
             observer = null;
             if (!el || typeof ResizeObserver === "undefined") return;
+            // The observer's first delivery comes for every element it starts to observe,
+            // after layout and before paint, and that is where the first read happens. A read
+            // here, in the mount's post-flush, forced a layout per control (U/B7d M1).
             observer = new ResizeObserver(() => measure(el));
             observer.observe(el);
-            measure(el);
         },
         { flush: "post", immediate: true },
     );
