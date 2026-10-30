@@ -11,6 +11,7 @@
 <script setup lang="ts">
 import { computed, nextTick, onBeforeUnmount, onMounted, ref, useId, watch } from "vue";
 import { FRAME_MS } from "../../composables/motion/core/constants";
+import { useIntersectionPause } from "../../composables/motion/core/useIntersectionPause";
 import {
     BAND_HEIGHT,
     type Frame,
@@ -324,6 +325,33 @@ function onScroll(): void {
     }, 90);
 }
 
+const SCROLL_LISTEN = { capture: true, passive: true } as const;
+
+/**
+ * The ink-lag listens only while the mark is in the viewport (U/B7d M1). Every mark read
+ * its own rect on every scroll event, so a page of marks laid itself out once per mark
+ * per event, and a write between two listeners made each read a forced layout. A mark off
+ * screen has no lag to show. Coming back into view, it takes its position afresh, so the
+ * first event measures the scroll since it entered, not since it left.
+ */
+useIntersectionPause(root, {
+    resume: () => {
+        if (root.value) lastY = root.value.getBoundingClientRect().top;
+        // A scroll event DOES NOT BUBBLE — it is dispatched at the scroller and stops
+        // there — but every scroller in the document lies on the capture path from the
+        // document down. One capture listener therefore hears every pane on the page,
+        // including the document's own, with no ancestor to guess at.
+        document.addEventListener("scroll", onScroll, SCROLL_LISTEN);
+    },
+    pause: () => {
+        document.removeEventListener("scroll", onScroll, { capture: true });
+        if (quiet !== null) window.clearTimeout(quiet);
+        quiet = null;
+        settling.value = true;
+        lag.value = 0;
+    },
+});
+
 let ro: ResizeObserver | null = null;
 
 onMounted(() => {
@@ -341,11 +369,6 @@ onMounted(() => {
         ro.observe(root.value);
     }
     lastY = root.value?.getBoundingClientRect().top ?? 0;
-    // A scroll event DOES NOT BUBBLE — it is dispatched at the scroller and stops
-    // there — but every scroller in the document lies on the capture path from the
-    // document down. One capture listener therefore hears every pane on the page,
-    // including the document's own, with no ancestor to guess at.
-    document.addEventListener("scroll", onScroll, { capture: true, passive: true });
 });
 
 onBeforeUnmount(() => {

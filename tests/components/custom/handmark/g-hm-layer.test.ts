@@ -16,7 +16,7 @@ import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { mount } from "@vue/test-utils";
 import { nextTick } from "vue";
-import { afterEach, describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import HandMark from "@glass/components/handmark/HandMark.vue";
 import {
     BAND_HEIGHT,
@@ -380,5 +380,48 @@ describe("G-HM-LAYER 4 · TRACKING — the mark hears the scroller that moves it
 
         w.unmount();
         scroller.remove();
+    });
+
+    // U/B7d M1 · O-7. Every mark read its own rect on every scroll event, on screen or
+    // not: on sci's /demand phone scroll walk the marks' reads were 28 ms of forced
+    // layout. A mark off screen has no lag to show, so it does not listen.
+    it("a mark outside the viewport reads no layout on scroll, and reads again in view", async () => {
+        installMeasure([{ x: 40, y: 60, w: 240, h: 40 }]);
+        let report: ((isIntersecting: boolean) => void) | null = null;
+        class ManualIntersectionObserver {
+            constructor(private readonly callback: IntersectionObserverCallback) {}
+            observe(target: Element) {
+                report = (isIntersecting) =>
+                    this.callback(
+                        [{ target, isIntersecting, intersectionRatio: isIntersecting ? 1 : 0 } as IntersectionObserverEntry],
+                        this as unknown as IntersectionObserver,
+                    );
+            }
+            unobserve() {}
+            disconnect() {}
+        }
+        vi.stubGlobal("IntersectionObserver", ManualIntersectionObserver);
+        const w = mount(HandMark, {
+            props: { shape: "underline", seed: 5 } as Record<string, unknown>,
+            slots: { default: "Hpqjy" },
+            attachTo: document.body,
+        });
+        await nextTick();
+        const el = w.element as HTMLElement;
+        let reads = 0;
+        const own = el.getBoundingClientRect.bind(el);
+        el.getBoundingClientRect = () => (reads++, own());
+
+        report!(false);
+        document.dispatchEvent(new Event("scroll"));
+        expect(reads, "an off-screen mark measured itself on scroll").toBe(0);
+
+        report!(true);
+        reads = 0;
+        document.dispatchEvent(new Event("scroll"));
+        expect(reads, "a mark in view keeps its ink-lag").toBeGreaterThan(0);
+
+        w.unmount();
+        vi.unstubAllGlobals();
     });
 });
