@@ -137,3 +137,61 @@ test("hover on an inactive tab changes its colour and nothing else", async ({ pa
     expect(after.rect.top).toBeCloseTo(before.rect.top, 1);
     expect(after.color).not.toBe(before.color);
 });
+
+// U/B7d M3 repair 1. The active tab forwards a press to the grabbable indicator. Measured
+// on /sci: re-clicking it threw the indicator 635 px right in one frame, past the strip's
+// end, and in Chromium it stayed there.
+function startTrace(page: Page, ms: number): Promise<void> {
+    return page.evaluate((ms) => {
+        const ind = document.querySelector<HTMLElement>(".segmented-indicator")!;
+        const xs: number[] = [];
+        const t0 = performance.now();
+        (window as unknown as { __xs: Promise<number[]> }).__xs = new Promise((resolve) => {
+            const sample = () => {
+                xs.push(ind.getBoundingClientRect().left);
+                if (performance.now() - t0 < ms) requestAnimationFrame(sample);
+                else resolve(xs);
+            };
+            requestAnimationFrame(sample);
+        });
+    }, ms);
+}
+
+for (const [label, off] of [
+    ["on its centre", 0],
+    ["off its centre", 30],
+] as const) {
+    test(`re-clicking the active tab ${label} moves nothing`, async ({ page }) => {
+        await open(page);
+        const box = await page.locator(".segmented-tab[data-active]").boundingBox();
+        const restX = await page.locator(".segmented-indicator").evaluate((el) => el.getBoundingClientRect().left);
+        await startTrace(page, 900);
+        await page.mouse.click(box!.x + box!.width / 2 + off, box!.y + box!.height / 2);
+        const frames = await page.evaluate(() => (window as unknown as { __xs: Promise<number[]> }).__xs);
+        expect(frames.length).toBeGreaterThan(10);
+        for (const x of frames) expect(Math.abs(x - restX), `indicator at ${x}, rest ${restX}`).toBeLessThanOrEqual(0.5);
+        const style = await page.locator(".segmented-indicator").getAttribute("style");
+        expect(style ?? "", "gesture residue on the indicator").not.toMatch(/transform:\s*translate/);
+        await expect(page.locator(".segmented-tab[data-active]")).toHaveCount(1);
+    });
+}
+
+test("the indicator can be dragged to the next tab, and stays under the label it commits", async ({ page }) => {
+    await open(page);
+    const a = await page.locator(".segmented-tab").nth(0).boundingBox();
+    const b = await page.locator(".segmented-tab").nth(1).boundingBox();
+    const y = a!.y + a!.height / 2;
+    await page.mouse.move(a!.x + a!.width / 2 + 10, y);
+    await page.mouse.down();
+    await page.mouse.move(b!.x + b!.width / 2 + 10, y, { steps: 8 });
+    await page.waitForTimeout(250);
+    const mid = await page.locator(".segmented-indicator").evaluate((el) => el.getBoundingClientRect().left);
+    expect(Math.abs(mid - b!.x), `mid-drag indicator at ${mid}, next tab at ${b!.x}`).toBeLessThanOrEqual(12);
+    await page.mouse.up();
+    await page.waitForTimeout(700);
+    const rest = await page.locator(".segmented-indicator").evaluate((el) => el.getBoundingClientRect().left);
+    const active = page.locator(".segmented-tab[data-active]");
+    const activeBox = await active.boundingBox();
+    expect(Math.abs(rest - activeBox!.x)).toBeLessThanOrEqual(1);
+    expect(Math.abs(activeBox!.x - b!.x)).toBeLessThanOrEqual(1);
+});

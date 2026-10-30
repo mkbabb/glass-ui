@@ -12,6 +12,17 @@ Merged on local branch `u/b7-glass` (off `release/10.1.1` bbf176f02, with the pu
   vertical track measured 3 x 0 px and the collapsed rail painted no progress while
   `aria-valuenow` ran. The rim now stretches: 44 x 44 box, 3 x 28 px track. Witness:
   `tests/components/dock/collapsed-rim-fills-pill.test.ts`.
+- **A press on the grabbable indicator moves nothing (O-4).** `useDragMorph` read its origin
+  from the spring before the `Draggable` seated the spring at the pointer, so the first follow
+  delta was the pointer's whole client coordinate. Re-clicking the active tab threw the
+  indicator 635 px right in one frame on atlas's /sci strip, past the strip's end, and a drag
+  ran one client coordinate ahead of the pointer. The spring and the snap centres now share
+  one space, the surface's centre. A release already on its centre had no frame after it, so
+  the gesture never finished and in Chromium the offset stayed; the release now commits
+  itself. The snap centres are read at each press, so a re-flow cannot pull a click to where
+  the tab used to be. `DockLayerGroup` shares the fix. Witnesses:
+  `tests/composables/motion/useDragMorph.grab.test.ts`,
+  `tests-visual/SegmentedTabs.glide.spec.ts`.
 
 ### Root items (`u/b7-glass`, U/B7c C3)
 
