@@ -1,0 +1,51 @@
+2026-10-29 10:00:24 · load { 6.25 8.53 8.84 } · harness H9 932637d53662 (45 files)
+STATE git diff HEAD 80ab066d67f8 · status 9a89e9747069 · new files guard.ts 53c233af, shape.ts 9455d073 · harness H9 932637d53662
+── toggle-group/styles.css: every rule whose selector names a selected state, with its declarations
+.toggle-group__item[data-state="on"]::before { opacity: var(--selection-perimeter, 0); transition-duration: var(--engage-control-engage-attack); }
+.toggle-group__item[data-commit] { animation: toggle-group-commit 450ms linear( 0, 0.4703 4.17%, 0.7811 8.33%, 0.9497 12.5%, 1 16.67%, 0.9589 20.83%, 0.8535 25%, 0.7087 29.17%, 0.5463 33.33%, 0.3835 37.5%, 0.2331 41.67%, 0.1037 45.83%, 0 50%, -0.0767 54.17%, -0.1274 58.33%, -0.1548 62.5%, -0.163 66.67%, -0.1563 70.83%, -0.1391 75%, -0.1155 79.17%, -0.0891 83.33%, -0.0625 87.5%, -0.038 91.67%, -0.0169 95.83%, 0 ); }
+.toggle-group__item[data-commit] { animation: none; }
+.toggle-group__item[data-state="on"] { --selection-ink: var(--selection-edge); }
+.toggle-group__item[data-state="on"] { background-color: color-mix( in oklab, var(--selection-tone, var(--foreground)) 12%, transparent ); }
+.toggle-group__item[data-state="on"]:hover:not(:disabled) { background-color: color-mix( in oklab, var(--selection-tone, var(--foreground)) 16%, transparent ); }
+.toggle-group__item[data-state="on"] { border-color: Highlight; background: Highlight; color: HighlightText; }
+── src: selected-state selectors that also write font-, letter-/word-spacing, padding, margin, border-width, gap, width/height (want none reaching .toggle-group__item)
+src/components/dock/styles/controls/touch-floor.css:105:            [aria-pressed="true"]
+src/components/dock/styles/controls/touch-floor.css:106:        )::before {
+src/components/dock/styles/controls/touch-floor.css:107:        content: "";
+src/components/dock/styles/controls/touch-floor.css:108:        position: absolute;
+src/components/dock/styles/controls/touch-floor.css:109:        inset-block: var(--dock-vertical-accent-inset, 18%);
+src/components/dock/styles/controls/touch-floor.css:110:        inset-inline-start: calc(
+src/components/dock/styles/controls/touch-floor.css:111:            -1 * var(--dock-vertical-accent-width, 3px) - var(--dock-vertical-accent-gap, 2px)
+src/components/dock/styles/controls/touch-floor.css:112:        );
+src/components/dock/styles/controls/touch-floor.css:113:        width: var(--dock-vertical-accent-width, 3px);
+src/components/status-dot/StatusDot.vue:218:    .feedback-mark[data-state="online"]::after {
+src/components/status-dot/StatusDot.vue:219:        inset: 29%;
+src/components/status-dot/StatusDot.vue:220:        inline-size: auto;
+src/components/status-dot/StatusDot.vue:221:        block-size: auto;
+src/styles/accessibility.css:17:            [aria-pressed="true"],
+src/styles/accessibility.css:18:            [aria-checked="true"],
+src/styles/accessibility.css:19:            [data-state="checked"],
+src/styles/accessibility.css:20:            [data-state="on"]
+src/styles/accessibility.css:21:        ):not(.toggle-group__item) {
+src/styles/accessibility.css:22:            border-color: currentColor !important;
+src/styles/accessibility.css:23:            border-style: solid !important;
+src/styles/accessibility.css:24:            border-width: 2px !important;
+src/styles/accessibility.css:38:            [aria-pressed="true"],
+src/styles/accessibility.css:39:            [aria-checked="true"],
+src/styles/accessibility.css:40:            [data-state="checked"],
+src/styles/accessibility.css:41:            [data-state="on"]
+src/styles/accessibility.css:42:        ):not(.toggle-group__item) {
+src/styles/accessibility.css:43:            border-color: Highlight !important;
+src/styles/accessibility.css:44:            border-style: solid !important;
+src/styles/accessibility.css:45:            border-width: 2px !important;
+── accessibility.css arms: the item's exemption
+21:        ):not(.toggle-group__item) {
+42:        ):not(.toggle-group__item) {
+── ToggleGroupItem.vue: what selection stamps (attributes, classes)
+33: * `role` is dropped there too. Class, style, `data-*`, `aria-label` and listeners
+82:const ENGINE_OWNED = ["role", "tabindex", "aria-checked", "aria-pressed", "aria-selected"];
+93: * `selected` from false to true and stamp `data-commit` for the kick's one run. Mount
+204:        :class="
+210:        :data-state="selected ? 'on' : 'off'"
+211:        :data-commit="committed ? '' : undefined"
+exit 0 · 2026-10-29 10:00:25 · load { 6.23 8.48 8.82 }

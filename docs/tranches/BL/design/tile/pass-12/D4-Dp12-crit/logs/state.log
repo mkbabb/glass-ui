@@ -1,0 +1,48 @@
+2026-10-29 10:00:21 · load { 6.25 8.53 8.84 } · harness H9 932637d53662 (45 files)
+HEAD 8acb7e0b0 · floor-v6.patch 09e74243 · D4-Dp10.patch 538b034c
+floor v6: 39 files, +1452 / -272
+D4-Dp10: 8 files, +495 / -81
+STATE git diff HEAD 80ab066d67f8 · status 9a89e9747069 · new files guard.ts 53c233af, shape.ts 9455d073 · harness H9 932637d53662 · src dirty paths 27
+── every --selection-tile / --selection-paint line in src (comments included)
+src/styles/utilities/base.css:51:   THE TILE FACT — `--selection-tile`, one value read by every rule that differs
+src/styles/utilities/base.css:65:@property --selection-tile {
+src/styles/utilities/base.css:89:       second row (ToggleGroupItem.vue). A tile (`--selection-tile` other than
+src/styles/utilities/base.css:91:    @container style(--selection-tile: none) {
+src/styles/glass/control-surfaces.css:95:       (`--selection-tile: flush`, utilities/base.css) paints no plate, no floor and no
+src/styles/glass/control-surfaces.css:103:    @container style(--selection-tile: flush) {
+src/components/tabs/styles/segmented.css:64:        --selection-tile: none;
+src/components/toggle-group/ToggleGroupItem.vue:148:        const tile = getComputedStyle(b).getPropertyValue("--selection-tile").trim();
+src/components/toggle-group/shape.ts:4: * tile fact (`--selection-tile: flush`, styles.css), and the floor derives the tile's
+src/components/toggle-group/styles.css:1:/* THE SELECTION PAINT — `--selection-paint` (`auto` | `bare`, inherited), the tile
+src/components/toggle-group/styles.css:10:@property --selection-paint {
+src/components/toggle-group/styles.css:54:        --selection-tile: none;
+src/components/toggle-group/styles.css:56:        --selection-paint: auto;
+src/components/toggle-group/styles.css:75:        --selection-tile: flush;
+src/components/toggle-group/styles.css:79:       reads `--selection-tile` by a style query on the option, which reads the
+src/components/toggle-group/styles.css:90:            --selection-tile: inherit !important;
+src/components/toggle-group/styles.css:91:            --selection-paint: inherit !important;
+src/components/toggle-group/styles.css:156:    @container not style(--selection-paint: bare) {
+src/components/toggle-group/styles.css:166:    /* THE PILL IS ONE ROW (`--selection-tile: none`, base.css). A stadium whose
+src/components/toggle-group/styles.css:178:       A tile is none of these: the route that sets `--selection-tile` owns its
+src/components/toggle-group/styles.css:180:    @container style(--selection-tile: none) {
+src/components/toggle-group/styles.css:227:    /* THE TILE (`--selection-tile` other than `none`, base.css). Whatever writes the
+src/components/toggle-group/styles.css:245:    @container not style(--selection-tile: none) {
+src/components/toggle-group/styles.css:371:    @container not style(--selection-paint: bare) {
+── every font-weight in the lane sheet (want the item's rest 500 only)
+132:        font-weight: 500;
+── every 'weight' in the lane sheet, the L-3 unit comment and MIGRATION's selection bullets (records, E-3)
+132:        font-weight: 500;
+349:       SELECTION CHANGES NO WEIGHT. A heavier label is wider, and a label at a wrap
+351:       its rest weight.
+120-  element between the group and its options, turns off both and nothing else: the
+121:  options keep their state, their keys and roving focus, and their selected ink, and a
+122-  tile keeps its field corner and its selected perimeter. A `bare` pill has no corner of
+--
+135-  an item is overwritten while the pop runs.
+136:- A selected `ToggleGroup` item keeps its rest weight (it was 600), and its label ink,
+137-  tint and perimeter follow `--selection-tone` (the label ink and the perimeter are the
+── writer spellings no static reader sees, in src (want none): @apply of the fact, a CSS-escaped name, a built name
+(none)
+── sites.mjs c1 (the transcription of record, L-4)
+77:      group: `<ToggleGroup type="single"${shape} orientation="vertical" data-group aria-label="Status" class="min-w-48" v-model="model">
+exit 0 · 2026-10-29 10:00:22 · load { 6.25 8.53 8.84 }
