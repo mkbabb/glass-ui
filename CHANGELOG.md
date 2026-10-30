@@ -4,6 +4,15 @@
 
 Merged on local branch `u/b7-glass` (off `release/10.1.1` bbf176f02, with the published `v10.1.2` merged in) from `u/b7-glass-shape` (rows B7-G1 to B7-G6) and `u/b7-glass-perf` (rows B7-G7 to B7-G9). Row numbers follow the relay letter.
 
+### Root items (`u/b7d-glass-register`, U/B7d M3)
+
+- **A collapsed dock's progress rim has length (D-08).** The rule that centres the
+  collapsed pill's one glyph (`.dock-persistent > *`) also caught the out-of-flow
+  `ScrollProgressRim`. `place-self: center` shrank it to 0 x 0 at the pill's centre, so the
+  vertical track measured 3 x 0 px and the collapsed rail painted no progress while
+  `aria-valuenow` ran. The rim now stretches: 44 x 44 box, 3 x 28 px track. Witness:
+  `tests/components/dock/collapsed-rim-fills-pill.test.ts`.
+
 ### Root items (`u/b7-glass`, U/B7c C3)
 
 Built by the atlas formation's B7c pass on `u/b7-glass` after the B7b land (79a9e3eea).
