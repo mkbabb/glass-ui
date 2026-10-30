@@ -1,0 +1,7 @@
+# H10 st-E-10 webkit · 2026-10-30 17:01:37 · load { 10.72 10.74 11.42 } · --faults e10-lenszero,e10-rectclip-film
+OK     E-10 webkit   fault   e10-rectclip-film (CK-20 (H8, the pass-7 construction): the place follows the scroll in its frame and the clip three frames late (pass-7's one-frame lag is not resolved by WebKit's film), so a moving scroller leaks the control above the card) exit 1
+         first planted FAIL: FAIL       E-10 clipstale clip film · smooth · engaged · keyboard engaged, the scroller moved by a smooth 90 px scrollBy · px² of the 24 px strip above the scroller differing ≥ 40 levels from the film's per-pixel median · engaged films: 55 
+OK     E-10 webkit   fault   e10-lenszero (CK-20 (H10, REGISTRY §P9-7 item 2): the side travels on its row, but the correction is zeroed on the change's frame: one frame off. Its anchor leaves a 40 px gap the correction closes, so the zero reads in both engines) exit 1
+         first planted FAIL: FAIL       E-10 slider loupe side · page · scale · a fine hold, the track carried 3 px a frame 261 px, 177 frames · 3 side change(s), the lens's centre against the track's -32.5 → 32.5 px · largest one-frame move against the track 40.0 px p
+selftest: 2 runs, 0 N/A; every witness passes its fixture, fails each planted violation on the planted cell, and passes each control, in every engine with an input for it
+# selftest exit 0 · 17:02:53 · load { 10.12 10.62 11.32 }

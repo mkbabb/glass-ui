@@ -1,0 +1,14 @@
+# H10 e7-cand9 chromium · 2026-10-30 18:02:01 · load { 8.65 8.60 9.43 } · 
+# E-7 · one writer of data-engaged, meaning held
+# target /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p10/H10/wt/.h10out/builds/cand9 · engine chromium · lock wait 0.0 s · other headless processes: chromium 0, webkit 2 · load 8.7/8.6/9.4 at start
+# scene app: harness scenes/App.vue (sha1 9e34ffa5714e)
+# chromium 149.0.7827.55
+  FAIL       E-7 writers data-engaged (static) · 2 writer file(s): src/components/dialog/ModalOverlay.vue, src/components/slider/Slider.vue · bound ≤ 1, under src/composables/motion/engage/ · tree /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p10/H10/wt · load 8.6/8.6/9.4
+  FAIL       E-7 writers data-held (static) · 2 writer file(s): src/components/dock/GlassDock.vue, src/components/slider/Slider.vue · bound ≤ 1, under src/composables/motion/engage/ · tree /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p10/H10/wt · load 8.6/8.6/9.4
+  FAIL       E-7 writers data-press (static) · 1 writer file(s): src/components/pager-dots/PagerDots.vue · bound ≤ 1, under src/composables/motion/engage/ · tree /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p10/H10/wt · load 8.6/8.6/9.4
+  PASS       E-7 writers data-commit (static) · 0 writer file(s): none · bound ≤ 1, under src/composables/motion/engage/ · tree /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p10/H10/wt · load 8.6/8.6/9.4
+  PASS       E-7 slider held · [data-engaged] nodes while pointer-held 1 · bound ≥ 1 · load 8.6/8.6/9.4
+  PASS       E-7 slider held PRM · reduce · [data-engaged] nodes while pointer-held 1 · bound ≥ 1 · load 8.6/8.6/9.4
+  PASS       E-7 modal open, nothing held · dialog open true · veil nodes 1 · [data-engaged] nodes 0 · bound 0 · load 8.6/8.6/9.4
+E-7 chromium FAIL · 4 pass, 3 fail, 0 unmeasured of 7 gating cells (0 reported) · load 8.7/8.6/9.4 at start, 8.6/8.6/9.4 at end
+# exit 1 · 18:02:05 · load { 8.60 8.59 9.42 }

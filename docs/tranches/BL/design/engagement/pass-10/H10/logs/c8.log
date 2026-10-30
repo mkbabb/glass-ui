@@ -1,0 +1,14 @@
+## 18:10:00 fx10 chromium --scenes slider2 · load { 9.55 9.42 9.48 }
+E-10 chromium FAIL · 0 pass, 2 fail, 0 unmeasured of 2 gating cells (0 reported) · load 9.6/9.4/9.5 at start, 9.6/9.4/9.5 at end
+# exit 1 · 18:10:01 · load { 9.55 9.42 9.48 }
+## 18:10:01 fx10 chromium --scenes slider2 --deadline 3000 · load { 9.55 9.42 9.48 }
+E-10 chromium FAIL · 0 pass, 2 fail, 0 unmeasured of 2 gating cells (0 reported) · load 9.6/9.4/9.5 at start, 9.6/9.4/9.5 at end
+# exit 1 · 18:10:01 · load { 9.55 9.42 9.48 }
+## 18:10:01 fx10 chromium --deadline 3000 · load { 9.55 9.42 9.48 }
+E-10 chromium PASS · 75 pass, 0 fail, 0 unmeasured of 75 gating cells (21 reported) · load 9.6/9.4/9.5 at start, 8.7/9.1/9.3 at end
+# exit 0 · 18:15:04 · load { 8.71 9.15 9.31 }
+## 18:15:04 e7-cand9 chromium --deadline 3000 · load { 8.71 9.15 9.31 }
+E-7 chromium FAIL · 6 pass, 1 fail, 0 unmeasured of 7 gating cells (0 reported) · load 8.7/9.1/9.3 at start, 9.2/9.2/9.3 at end
+# exit 1 · 18:15:08 · load { 9.21 9.24 9.34 }
+## 18:15:08 chain end · load { 9.21 9.24 9.34 }
+reverted: diff lines 0 untracked src 0

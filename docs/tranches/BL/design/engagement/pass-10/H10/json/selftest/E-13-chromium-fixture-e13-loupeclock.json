@@ -1,0 +1,206 @@
+{
+ "id": "E-13",
+ "engine": "chromium",
+ "version": "149.0.7827.55",
+ "target": {
+  "fixture": true,
+  "fault": "e13-loupeclock"
+ },
+ "loadStart": "10.1/10.9/11.4",
+ "loadEnd": "13.1/11.8/11.7",
+ "verdict": "FAIL",
+ "cells": [
+  {
+   "name": "E-13 slider loupe k max fine light",
+   "status": "PASS",
+   "line": "sustained 1200 ms · band 33.9 px over the held track's 21.2 px = ×1.599 (k max 1.60; bound ±5 %) · the magnified tip 0.00 px from the window's centre (≤ 2) · seam: the band row's centre leaves its flanks' range by 0.0 levels (≤ 6) · line: the glass row's centre departs from its flanks by 0.0 levels (≤ 6) · runs on: the band's colour distance from the glass at the window's start 23.1 against 242.6 inside = 0.10 (≤ 0.35) · housing 120.0×60.0 px, window 106.0×46.0 px, opacity 1.00",
+   "load": "11.0/11.1/11.5"
+  },
+  {
+   "name": "E-13 slider loupe k max fine dark",
+   "status": "PASS",
+   "line": "sustained 1200 ms · band 33.9 px over the held track's 21.2 px = ×1.599 (k max 1.60; bound ±5 %) · the magnified tip 0.00 px from the window's centre (≤ 2) · seam: the band row's centre leaves its flanks' range by 0.0 levels (≤ 6) · line: the glass row's centre departs from its flanks by 0.0 levels (≤ 6) · runs on: the band's colour distance from the glass at the window's start 54.2 against 209.4 inside = 0.26 (≤ 0.35) · housing 120.0×60.0 px, window 106.0×46.0 px, opacity 1.00",
+   "load": "11.0/11.1/11.5"
+  },
+  {
+   "name": "E-13 slider loupe k max coarse light",
+   "status": "PASS",
+   "line": "sustained 1200 ms · band 33.9 px over the held track's 21.2 px = ×1.599 (k max 1.60; bound ±5 %) · the magnified tip 0.00 px from the window's centre (≤ 2) · seam: the band row's centre leaves its flanks' range by 0.0 levels (≤ 6) · line: the glass row's centre departs from its flanks by 0.0 levels (≤ 6) · runs on: the band's colour distance from the glass at the window's start 23.1 against 242.6 inside = 0.10 (≤ 0.35) · housing 120.0×60.0 px, window 106.0×46.0 px, opacity 1.00",
+   "load": "13.3/11.6/11.7"
+  },
+  {
+   "name": "E-13 slider loupe k max coarse dark",
+   "status": "PASS",
+   "line": "sustained 1200 ms · band 33.9 px over the held track's 21.2 px = ×1.599 (k max 1.60; bound ±5 %) · the magnified tip 0.00 px from the window's centre (≤ 2) · seam: the band row's centre leaves its flanks' range by 0.0 levels (≤ 6) · line: the glass row's centre departs from its flanks by 0.0 levels (≤ 6) · runs on: the band's colour distance from the glass at the window's start 54.2 against 209.4 inside = 0.26 (≤ 0.35) · housing 120.0×60.0 px, window 106.0×46.0 px, opacity 1.00",
+   "load": "13.3/11.6/11.7"
+  },
+  {
+   "name": "E-13 clipstale loupe clock · enter · none · fine",
+   "status": "FAIL",
+   "line": "fine from before the press, the card none · the lens shows on 97 frames, 29 in flight · worst pinned edge -30.4 px at frame 4 (opacity 0.12, scale 0.239743), worst across -0.0 px (each ≤ 2) · at the first frame with opacity ≥ 0.5: -14.0 px · 4:-30.4@0.12 5:-28.0@0.18 6:-25.4@0.25 7:-23.6@0.30 8:-21.4@0.35 9:-18.7@0.43 10:-16.2@0.49 11:-14.0@0.56",
+   "load": "13.3/11.6/11.7"
+  },
+  {
+   "name": "E-13 clipstale loupe clock · enter · translate · fine",
+   "status": "FAIL",
+   "line": "fine from before the press, the card translate · the lens shows on 90 frames, 27 in flight · worst pinned edge -32.0 px at frame 3 (opacity 0.07, scale 0.200308), worst across 0.0 px (each ≤ 2) · at the first frame with opacity ≥ 0.5: -14.7 px · 3:-32.0@0.07 4:-29.2@0.15 5:-25.7@0.24 6:-22.8@0.32 7:-20.5@0.38 8:-17.2@0.47 9:-14.7@0.53 10:-13.4@0.58",
+   "load": "13.2/11.6/11.7"
+  },
+  {
+   "name": "E-13 clipstale loupe clock · enter · scale · fine",
+   "status": "FAIL",
+   "line": "fine from before the press, the card scale · the lens shows on 98 frames, 30 in flight · worst pinned edge -64.5 px at frame 3 (opacity 0.06, scale 0.187131), worst across 0.0 px (each ≤ 2) · at the first frame with opacity ≥ 0.5: -29.8 px · 3:-64.5@0.06 4:-59.3@0.13 5:-53.7@0.20 6:-49.2@0.26 7:-42.9@0.35 8:-39.6@0.39 9:-34.7@0.46 10:-29.8@0.52",
+   "load": "13.2/11.6/11.7"
+  },
+  {
+   "name": "E-13 clipstale loupe clock · exit · none · fine",
+   "status": "FAIL",
+   "line": "fine from before the release, the card none · the lens shows on 23 frames, 22 in flight · worst pinned edge -33.0 px at frame 23 (opacity 0.05, scale 0.174549), worst across -0.0 px (each ≤ 2) · at the first frame with opacity ≥ 0.5: 0.0 px · 2:-1.5@0.96 3:-2.5@0.93 4:-4.4@0.87 5:-5.7@0.84 6:-7.3@0.79 7:-8.7@0.75 8:-10.0@0.71 9:-11.5@0.67",
+   "load": "12.7/11.5/11.6"
+  },
+  {
+   "name": "E-13 clipstale loupe clock · exit · translate · fine",
+   "status": "FAIL",
+   "line": "fine from before the release, the card translate · the lens shows on 22 frames, 21 in flight · worst pinned edge -32.9 px at frame 22 (opacity 0.06, scale 0.17856), worst across 0.0 px (each ≤ 2) · at the first frame with opacity ≥ 0.5: 0.0 px · 2:-1.6@0.95 3:-2.5@0.93 4:-4.5@0.87 5:-5.8@0.83 6:-7.3@0.79 7:-8.9@0.74 8:-9.9@0.72 9:-11.7@0.66",
+   "load": "12.7/11.5/11.6"
+  },
+  {
+   "name": "E-13 clipstale loupe clock · exit · scale · fine",
+   "status": "FAIL",
+   "line": "fine from before the release, the card scale · the lens shows on 21 frames, 20 in flight · worst pinned edge -65.5 px at frame 21 (opacity 0.05, scale 0.175341), worst across 0.0 px (each ≤ 2) · at the first frame with opacity ≥ 0.5: 0.0 px · 2:-3.3@0.95 3:-5.5@0.92 4:-9.0@0.87 5:-11.6@0.83 6:-14.6@0.79 7:-18.5@0.73 8:-22.2@0.68 9:-25.5@0.63",
+   "load": "13.2/11.6/11.7"
+  },
+  {
+   "name": "E-13 clipstale loupe exit scroll · none",
+   "status": "REPORT",
+   "line": "a fine hold, the scroller scrolled 2 px a frame across the release, the card none · the lens shows on 21 frames, 20 in flight · worst pinned edge -32.1 px at frame 21 (opacity 0.08); on the exit's own frames -32.1 px at opacity 0.08 · 2:-1.9@0.95 3:-3.4@0.90 4:-4.6@0.87 5:-6.1@0.82 6:-7.7@0.78 7:-9.2@0.74 8:-11.3@0.68 9:-13.0@0.63 10:-14.5@0.58 11:-16.3@0.53",
+   "load": "13.2/11.6/11.7"
+  },
+  {
+   "name": "E-13 clipstale loupe exit scroll · scale",
+   "status": "REPORT",
+   "line": "a fine hold, the scroller scrolled 2 px a frame across the release, the card scale · the lens shows on 22 frames, 21 in flight · worst pinned edge -72.5 px at frame 22 (opacity 0.06); on the exit's own frames -72.5 px at opacity 0.06 · 2:-3.3@0.95 3:-7.1@0.90 4:-10.3@0.85 5:-13.1@0.81 6:-17.2@0.76 7:-20.5@0.71 8:-22.9@0.68 9:-26.5@0.63 10:-29.5@0.59 11:-31.8@0.56",
+   "load": "14.1/11.9/11.8"
+  },
+  {
+   "name": "E-13 slider loupe whole reference · fine",
+   "status": "REPORT",
+   "line": "unclipped: 60 of 60 lens rows painted (100.0 %), opacity 1.00",
+   "load": "14.1/11.9/11.8"
+  },
+  {
+   "name": "E-13 clipstale loupe whole · edge · fine",
+   "status": "PASS",
+   "line": "fine hold, the rest box 4 px below its scroller's top edge · 60 of 60 lens rows painted (100.0 %; a row is painted when ≥ 3 of its pixels differ ≥ 8 levels held against released) · bound ≥ the unclipped reference's 100.0 % − 5 = 95.0 %, opacity 1.00 (> 0.9) · geometry: the lens 79.4..139.4 px, the scroller's clip edge at 136.0 px: 56.6 of 60.0 px of the lens lie above it",
+   "load": "13.2/11.7/11.7"
+  },
+  {
+   "name": "E-13 clipstale loupe whole · mid · fine",
+   "status": "PASS",
+   "line": "fine hold, the rest box mid-box · 60 of 60 lens rows painted (100.0 %; a row is painted when ≥ 3 of its pixels differ ≥ 8 levels held against released) · bound ≥ the unclipped reference's 100.0 % − 5 = 95.0 %, opacity 1.00 (> 0.9) · geometry: the lens 125.4..185.4 px, the scroller's clip edge at 136.0 px: 10.6 of 60.0 px of the lens lie above it",
+   "load": "13.2/11.7/11.7"
+  },
+  {
+   "name": "E-13 clipstale loupe viewport · fine",
+   "status": "PASS",
+   "line": "fine hold, the scroller's top edge at 2.0 px (the viewport's top), the rest box 4 px below it · 60 of 60 lens rows painted (100.0 %; a row above the viewport is unpainted) · bound ≥ the unclipped reference's 100.0 % − 5 = 95.0 %, opacity 1.00 (> 0.9) · the lens 27.6..87.6 px: 0.0 px above the viewport",
+   "load": "13.0/11.7/11.7"
+  },
+  {
+   "name": "E-13 clipstale loupe place · none · fine",
+   "status": "PASS",
+   "line": "fine hold sustained 1200 ms · the scroller untransformed (the reference) · band 33.9 px over the held track's painted 21.2 px = ×1.599 (k max 1.60 ± 5 %) · the lens's centre at 50.0 % along the painted track (Δ against untransformed 0.0 px, ≤ 2) · its bottom 0.0 px from the track's painted top (Δ 0.0 px, ≤ 2) · lens 60.0 px tall, opacity 1.00",
+   "load": "13.0/11.7/11.7"
+  },
+  {
+   "name": "E-13 clipstale loupe place · translate · fine",
+   "status": "PASS",
+   "line": "fine hold sustained 1200 ms · the scroller translate 0 30px · band 33.9 px over the held track's painted 21.2 px = ×1.599 (k max 1.60 ± 5 %) · the lens's centre at 50.0 % along the painted track (Δ against untransformed 0.0 px, ≤ 2) · its bottom 0.0 px from the track's painted top (Δ 0.0 px, ≤ 2) · lens 60.0 px tall, opacity 1.00",
+   "load": "13.0/11.7/11.7"
+  },
+  {
+   "name": "E-13 clipstale loupe place · scale · fine",
+   "status": "PASS",
+   "line": "fine hold sustained 1200 ms · the scroller scale 0.8, transformOrigin 0 0 · band 27.1 px over the held track's painted 17.0 px = ×1.599 (k max 1.60 ± 5 %) · the lens's centre at 50.0 % along the painted track (Δ against untransformed 0.0 px, ≤ 2) · its bottom 0.0 px from the track's painted top (Δ 0.0 px, ≤ 2) · lens 48.0 px tall, opacity 1.00",
+   "load": "12.3/11.6/11.6"
+  },
+  {
+   "name": "E-13 clipstale loupe clock · enter · none · coarse",
+   "status": "FAIL",
+   "line": "coarse from before the press, the card none · the lens shows on 86 frames, 27 in flight · worst pinned edge -32.3 px at frame 6 (opacity 0.07, scale 0.193727), worst across -0.0 px (each ≤ 2) · at the first frame with opacity ≥ 0.5: -15.8 px · 6:-32.3@0.07 7:-29.8@0.13 8:-26.5@0.22 9:-23.6@0.30 10:-20.9@0.37 11:-18.5@0.43 12:-15.8@0.50 13:-13.9@0.56",
+   "load": "12.3/11.6/11.6"
+  },
+  {
+   "name": "E-13 clipstale loupe clock · enter · translate · coarse",
+   "status": "FAIL",
+   "line": "coarse from before the press, the card translate · the lens shows on 89 frames, 27 in flight · worst pinned edge -32.9 px at frame 7 (opacity 0.05, scale 0.177693), worst across 0.0 px (each ≤ 2) · at the first frame with opacity ≥ 0.5: -13.8 px · 7:-32.9@0.05 8:-29.9@0.13 9:-27.8@0.19 10:-25.2@0.25 11:-23.5@0.30 12:-20.7@0.37 13:-18.6@0.43 14:-16.1@0.50",
+   "load": "12.2/11.6/11.6"
+  },
+  {
+   "name": "E-13 clipstale loupe clock · enter · scale · coarse",
+   "status": "FAIL",
+   "line": "coarse from before the press, the card scale · the lens shows on 89 frames, 27 in flight · worst pinned edge -64.3 px at frame 6 (opacity 0.06, scale 0.190319), worst across 0.0 px (each ≤ 2) · at the first frame with opacity ≥ 0.5: -28.1 px · 6:-64.3@0.06 7:-57.5@0.15 8:-51.9@0.23 9:-46.4@0.30 10:-42.8@0.35 11:-37.0@0.43 12:-32.7@0.48 13:-28.1@0.55",
+   "load": "12.2/11.6/11.6"
+  },
+  {
+   "name": "E-13 clipstale loupe clock · exit · none · coarse",
+   "status": "FAIL",
+   "line": "coarse from before the release, the card none · the lens shows on 92 frames, 22 in flight · worst pinned edge -31.5 px at frame 92 (opacity 0.09, scale 0.211355), worst across 0.0 px (each ≤ 2) · at the first frame with opacity ≥ 0.5: 0.0 px · 71:-1.9@0.95 72:-3.1@0.91 73:-4.3@0.88 74:-6.0@0.83 75:-7.2@0.79 76:-8.8@0.75 77:-10.2@0.71 78:-12.0@0.66",
+   "load": "12.7/11.7/11.7"
+  },
+  {
+   "name": "E-13 clipstale loupe clock · exit · translate · coarse",
+   "status": "FAIL",
+   "line": "coarse from before the release, the card translate · the lens shows on 92 frames, 21 in flight · worst pinned edge -32.8 px at frame 92 (opacity 0.06, scale 0.180059), worst across 0.0 px (each ≤ 2) · at the first frame with opacity ≥ 0.5: 0.0 px · 72:-1.3@0.96 73:-2.7@0.92 74:-4.3@0.88 75:-6.5@0.81 76:-8.2@0.76 77:-10.0@0.71 78:-11.4@0.67 79:-12.7@0.64",
+   "load": "12.7/11.7/11.7"
+  },
+  {
+   "name": "E-13 clipstale loupe clock · exit · scale · coarse",
+   "status": "FAIL",
+   "line": "coarse from before the release, the card scale · the lens shows on 97 frames, 23 in flight · worst pinned edge -65.6 px at frame 97 (opacity 0.05, scale 0.174032), worst across 0.0 px (each ≤ 2) · at the first frame with opacity ≥ 0.5: 0.0 px · 75:-3.1@0.95 76:-5.3@0.92 77:-8.2@0.88 78:-11.3@0.84 79:-14.4@0.79 80:-16.5@0.76 81:-19.5@0.72 82:-22.4@0.68",
+   "load": "12.4/11.6/11.7"
+  },
+  {
+   "name": "E-13 slider loupe whole reference · coarse",
+   "status": "REPORT",
+   "line": "unclipped: 60 of 60 lens rows painted (100.0 %), opacity 1.00",
+   "load": "11.9/11.5/11.6"
+  },
+  {
+   "name": "E-13 clipstale loupe whole · edge · coarse",
+   "status": "PASS",
+   "line": "coarse hold, the rest box 4 px below its scroller's top edge · 60 of 60 lens rows painted (100.0 %; a row is painted when ≥ 3 of its pixels differ ≥ 8 levels held against released) · bound ≥ the unclipped reference's 100.0 % − 5 = 95.0 %, opacity 1.00 (> 0.9) · geometry: the lens 79.4..139.4 px, the scroller's clip edge at 136.0 px: 56.6 of 60.0 px of the lens lie above it",
+   "load": "11.9/11.5/11.6"
+  },
+  {
+   "name": "E-13 clipstale loupe whole · mid · coarse",
+   "status": "PASS",
+   "line": "coarse hold, the rest box mid-box · 60 of 60 lens rows painted (100.0 %; a row is painted when ≥ 3 of its pixels differ ≥ 8 levels held against released) · bound ≥ the unclipped reference's 100.0 % − 5 = 95.0 %, opacity 1.00 (> 0.9) · geometry: the lens 125.4..185.4 px, the scroller's clip edge at 136.0 px: 10.6 of 60.0 px of the lens lie above it",
+   "load": "11.7/11.5/11.6"
+  },
+  {
+   "name": "E-13 clipstale loupe viewport · coarse",
+   "status": "PASS",
+   "line": "coarse hold, the scroller's top edge at 2.0 px (the viewport's top), the rest box 4 px below it · 60 of 60 lens rows painted (100.0 %; a row above the viewport is unpainted) · bound ≥ the unclipped reference's 100.0 % − 5 = 95.0 %, opacity 1.00 (> 0.9) · the lens 27.6..87.6 px: 0.0 px above the viewport",
+   "load": "12.2/11.6/11.7"
+  },
+  {
+   "name": "E-13 clipstale loupe place · none · coarse",
+   "status": "PASS",
+   "line": "coarse hold sustained 1200 ms · the scroller untransformed (the reference) · band 33.9 px over the held track's painted 21.2 px = ×1.599 (k max 1.60 ± 5 %) · the lens's centre at 50.0 % along the painted track (Δ against untransformed 0.0 px, ≤ 2) · its bottom 0.0 px from the track's painted top (Δ 0.0 px, ≤ 2) · lens 60.0 px tall, opacity 1.00",
+   "load": "12.2/11.6/11.7"
+  },
+  {
+   "name": "E-13 clipstale loupe place · translate · coarse",
+   "status": "PASS",
+   "line": "coarse hold sustained 1200 ms · the scroller translate 0 30px · band 33.9 px over the held track's painted 21.2 px = ×1.599 (k max 1.60 ± 5 %) · the lens's centre at 50.0 % along the painted track (Δ against untransformed 0.0 px, ≤ 2) · its bottom 0.0 px from the track's painted top (Δ 0.0 px, ≤ 2) · lens 60.0 px tall, opacity 1.00",
+   "load": "12.2/11.6/11.7"
+  },
+  {
+   "name": "E-13 clipstale loupe place · scale · coarse",
+   "status": "PASS",
+   "line": "coarse hold sustained 1200 ms · the scroller scale 0.8, transformOrigin 0 0 · band 27.1 px over the held track's painted 17.0 px = ×1.599 (k max 1.60 ± 5 %) · the lens's centre at 50.0 % along the painted track (Δ against untransformed 0.0 px, ≤ 2) · its bottom 0.0 px from the track's painted top (Δ 0.0 px, ≤ 2) · lens 48.0 px tall, opacity 1.00",
+   "load": "13.1/11.8/11.7"
+  }
+ ]
+}

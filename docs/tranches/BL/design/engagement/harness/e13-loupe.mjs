@@ -32,6 +32,17 @@
 //                    the scroller's edge: the lens's painted rows (inside the viewport; a row above it is unpainted) over
 //                    all its rows ≥ the unclipped reference's fraction − 0.05, opacity > 0.9; the lens's extent above the
 //                    viewport printed. Plant `e13-loupeviewport` (no fallback at the root scroller's edge)
+//   H10 (pass 10; REGISTRY §P9-7 items 3-5; C-E9 §1.3 "E-13's 1200 ms hold passed it"; CK-25 "within 2 px of its track on every
+//                    frame it shows"), on loupe rows WITH a `clip`:
+//   loupe clock · enter|exit · none|translate|scale · <pointer>   the card as `loupe place`, nothing scrolled: per frame (a task posted
+//                    from requestAnimationFrame, after that frame's paint) from before the press (enter) or the release (exit):
+//                    the lens's pinned edge (bottom on the track's painted top; top on its bottom when it hangs below) and its
+//                    centre across the track's; on every frame the lens shows (opacity > 0.05) both ≤ 2 px; NOT DRIVEN unless a
+//                    frame reads opacity or scale in flight. Plant `e13-loupeclock` (the correction inside the animated
+//                    transform, both engines); the pass-9 candidate in Chromium (`../pass-10/H10.md`)
+//   loupe exit scroll · none|scale   REPORT (§P9-7 item 5): a fine hold, the scroller scrolled 2 px a frame across the release; the
+//                    pinned edge on each frame the lens shows. Control `e13-exitfrozen` (prints the separation)
+//   `--part clock` runs H10's cells alone.
 // Light theme for the whole cells; the k max cells light and dark. Real Safari: UNMEASURED (owner's safaridriver checkbox).
 //   node e13-loupe.mjs --build <dir> | --fixture [--fault e13-loupecut] [--engine webkit] [--frames <dir>]
 import fs from "node:fs";
@@ -47,6 +58,7 @@ const HOLD = 1200, KTOL = 0.05, REG = 2, SEAM = 6, LINE = 6, RUNS = 0.35, ROW_PX
 
 await witness("E-13", "CK-25 the loupe: k max, registration, seam, line, run-on; painted whole at a scroller's edge", async ({ a, E, T, cell, guard, idx, engine }) => {
   const frames = typeof a.frames === "string" ? a.frames : null; if (frames) fs.mkdirSync(frames, { recursive: true });
+  const part = typeof a.part === "string" ? new Set(a.part.split(",")) : null; const old = !part || part.has("old"); const wantClock = !part || part.has("clock");
   const rows = scenesFor(idx, "E-13").filter(([, m]) => m.loupe);
   const shotOf = (P, clip) => (P.shot ? P.shot(clip) : P.page.screenshot({ clip, animations: "allow" }));
   const thumbOf = (m) => m.thumb ?? '[data-e~="thumb"]';
@@ -59,7 +71,7 @@ await witness("E-13", "CK-25 the loupe: k max, registration, seam, line, run-on;
   const open = (sc, pointer, theme) => (pointer === "fine" ? openPage(E, T, sc, { theme }) : openTouchPage(E, T, sc, { theme }));
 
   // ── k max, registration, seam, line, run-on ──
-  for (const [sc, m] of rows.filter(([, m]) => !m.clip)) for (const pointer of ["fine", "coarse"]) for (const theme of ["light", "dark"]) {
+  for (const [sc, m] of old ? rows.filter(([, m]) => !m.clip) : []) for (const pointer of ["fine", "coarse"]) for (const theme of ["light", "dark"]) {
     const name = `E-13 ${sc} loupe k max ${pointer} ${theme}`;
     const L = m.loupe;
     const r = await guard(name, async () => {
@@ -126,6 +138,70 @@ await witness("E-13", "CK-25 the loupe: k max, registration, seam, line, run-on;
   const clipRows = rows.filter(([, m]) => m.clip);
   for (const pointer of ["fine", "coarse"]) {
     if (!clipRows.length) break;
+    // ── H10: the lens on its own clocks: the pinned edge per frame, raise and exit (REGISTRY §P9-7 items 3, 4) ──
+    if (wantClock) for (const [sc, m] of clipRows) {
+      const place = (P, css) => P.page.evaluate(([B, Q, css]) => { const b = document.querySelector(B); Object.assign(b.style, css); const q = document.querySelector(Q); const br = b.getBoundingClientRect(), k = br.height / b.offsetHeight, rr = q.getBoundingClientRect(); b.scrollTop += (rr.top - (br.top + b.clientTop * k + 50)) / k; }, [m.clip.box, m.clip.rest, css]);
+      // the sampler: requestAnimationFrame posts a task, which runs after that frame's paint and reads the lens; `sc` scrolls the box
+      const arm = (P, ms, scroll) => P.page.evaluate(([L, ms, B]) => { window.__lc = []; const ch = new MessageChannel(); const t0 = performance.now(); let n = 0; const b = B ? document.querySelector(B) : null;
+        ch.port1.onmessage = () => { const l = document.querySelector(L.lens), t = document.querySelector(L.track); if (!l || !t) return; const a1 = l.getBoundingClientRect(), d = t.getBoundingClientRect(); if (!(a1.width > 0)) return; const cs = getComputedStyle(l); const rel = a1.top + a1.height / 2 - (d.top + d.height / 2); window.__lc.push({ n, t: performance.now() - t0, op: +cs.opacity, sc: cs.scale, pin: rel < 0 ? a1.bottom - d.top : a1.top - d.bottom, dx: a1.left + a1.width / 2 - (d.left + d.width / 2) }); };
+        const tick = () => { n++; if (b && n <= 25) b.scrollTop += 2; ch.port2.postMessage(0); if (performance.now() - t0 < ms) requestAnimationFrame(tick); }; requestAnimationFrame(tick); }, [m.loupe, ms, scroll ? m.clip.box : null]);
+      const inFlight = (x) => (x.op > 0.05 && x.op < 0.95) || (x.sc !== "none" && Math.abs(Number.parseFloat(x.sc) - 1) > 0.01);
+      for (const phase of ["enter", "exit"]) for (const [tf, css] of [["none", {}], ["translate", { translate: "0 30px" }], ["scale", { scale: "0.8", transformOrigin: "0 0" }]]) {
+        const name = `E-13 ${sc} loupe clock · ${phase} · ${tf} · ${pointer}`;
+        const r = await guard(name, async () => {
+          const P = await open(sc, pointer, "light");
+          try {
+            if (pointer === "coarse" && !P.modeOk) return { mode: P.modeLine };
+            if (m.veil) await P.page.evaluate((v) => { const st = document.createElement("style"); st.textContent = `${v} { visibility: hidden !important; }`; document.head.appendChild(st); }, m.veil);
+            await place(P, css); await P.page.waitForTimeout(200);
+            const c = await center(P.page, thumbOf(m));
+            if (pointer === "fine") {
+              await P.page.mouse.move(c.x, c.y);
+              if (phase === "enter") await arm(P, 750);
+              await P.page.mouse.down();
+              try { await P.page.waitForTimeout(phase === "enter" ? 800 : HOLD); if (phase === "exit") await arm(P, 1000); } finally { await P.page.mouse.up(); }
+              await P.page.waitForTimeout(phase === "enter" ? 400 : 900);
+            } else {
+              if (phase === "enter") await arm(P, 750);
+              await P.holdAt(c.x, c.y, [phase === "enter" ? 800 : HOLD], async () => { if (phase === "exit") await arm(P, 1800); });
+              await P.page.waitForTimeout(900);
+            }
+            return { s: await P.page.evaluate(() => window.__lc) };
+          } finally { await P.close(); }
+        }, 90000);
+        if (r.crashed) { cell(name, "FAIL", r.line); continue; }
+        if (r.mode) { cell(name, "FAIL", `MODE NOT APPLIED ${r.mode}`); continue; }
+        const S = (r.s ?? []).filter((x) => x.op > 0.05); const mids = S.filter(inFlight);
+        if (!S.length) { cell(name, "FAIL", `NO LOUPE: the lens shows on no frame (${(r.s ?? []).length} read)`); continue; }
+        if (!mids.length) { cell(name, "FAIL", `NOT DRIVEN: no frame reads the lens's opacity or scale in flight (${S.length} shown frames)`); continue; }
+        const worst = S.reduce((p, x) => (Math.abs(x.pin) > Math.abs(p.pin) ? x : p), S[0]); const wdx = S.reduce((p, x) => (Math.abs(x.dx) > Math.abs(p.dx) ? x : p), S[0]);
+        const half = S.find((x) => x.op >= 0.5) ?? S[0];
+        const ok = Math.abs(worst.pin) <= PLACE && Math.abs(wdx.dx) <= PLACE;
+        cell(name, ok ? "PASS" : "FAIL", `${pointer} ${phase === "enter" ? "from before the press" : "from before the release"}, the card ${tf} · the lens shows on ${S.length} frames, ${mids.length} in flight · worst pinned edge ${f(worst.pin, 1)} px at frame ${worst.n} (opacity ${f(worst.op, 2)}, scale ${worst.sc}), worst across ${f(wdx.dx, 1)} px (each ≤ ${PLACE}) · at the first frame with opacity ≥ 0.5: ${f(half.pin, 1)} px · ${mids.slice(0, 8).map((x) => `${x.n}:${f(x.pin, 1)}@${f(x.op, 2)}`).join(" ")}`);
+      }
+      // ── the exit while the page moves: REPORT (§P9-7 item 5) ──
+      if (pointer === "fine") for (const [tf, css] of [["none", {}], ["scale", { scale: "0.8", transformOrigin: "0 0" }]]) {
+        const name = `E-13 ${sc} loupe exit scroll · ${tf}`;
+        const r = await guard(name, async () => {
+          const P = await open(sc, "fine", "light");
+          try {
+            if (m.veil) await P.page.evaluate((v) => { const st = document.createElement("style"); st.textContent = `${v} { visibility: hidden !important; }`; document.head.appendChild(st); }, m.veil);
+            await place(P, css); await P.page.waitForTimeout(200);
+            const c = await center(P.page, thumbOf(m)); await P.page.mouse.move(c.x, c.y); await P.page.mouse.down();
+            try { await P.page.waitForTimeout(HOLD); await arm(P, 1000, true); } finally { await P.page.mouse.up(); }
+            await P.page.waitForTimeout(900);
+            return { s: await P.page.evaluate(() => window.__lc) };
+          } finally { await P.close(); }
+        }, 90000);
+        if (r.crashed) { cell(name, "REPORT", r.line); continue; }
+        const S = (r.s ?? []).filter((x) => x.op > 0.05); const mids = S.filter(inFlight);
+        if (!S.length) { cell(name, "REPORT", "the lens shows on no frame"); continue; }
+        const worst = S.reduce((p, x) => (Math.abs(x.pin) > Math.abs(p.pin) ? x : p), S[0]);
+        const wm = mids.length ? mids.reduce((p, x) => (Math.abs(x.pin) > Math.abs(p.pin) ? x : p), mids[0]) : null;
+        cell(name, "REPORT", `a fine hold, the scroller scrolled 2 px a frame across the release, the card ${tf} · the lens shows on ${S.length} frames, ${mids.length} in flight · worst pinned edge ${f(worst.pin, 1)} px at frame ${worst.n} (opacity ${f(worst.op, 2)}); on the exit's own frames ${wm ? `${f(wm.pin, 1)} px at opacity ${f(wm.op, 2)}` : "none read"} · ${mids.slice(0, 10).map((x) => `${x.n}:${f(x.pin, 1)}@${f(x.op, 2)}`).join(" ")}`);
+      }
+    }
+    if (!old) continue;
     let refR = null;
     if (ref) { refR = await guard(`E-13 ${ref[0]} loupe whole reference · ${pointer}`, () => whole(ref[0], ref[1], pointer, null), 90000); }
     const refOk = refR && !refR.crashed && !refR.none && !refR.mode;

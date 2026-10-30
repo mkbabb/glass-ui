@@ -1,0 +1,10 @@
+# H10 fx10 chromium · 2026-10-30 18:10:01 · load { 9.55 9.42 9.48 } · --scenes slider2 --deadline 3000
+# E-10 · CK-20 no one-frame discontinuity on an engagement path
+# target fixture · engine chromium · lock wait 0.0 s · other headless processes: chromium 8, webkit 2 · load 9.6/9.4/9.5 at start
+# chromium 149.0.7827.55
+# narrowed to scenes slider2
+[E-10] NO REFERENCE: the hand-off is graded against the single slider scene's own release, and this run read none (no single scene in the run: --scenes slider2); run it with the slider scene (--scenes slider,slider2)
+  FAIL       E-10 slider2 hand-off drop · NO REFERENCE: the hand-off is graded against the single slider scene's own release, and this run read none (no single scene in the run: --scenes slider2); run it with the slider scene (--scenes slider,slider2) · load 9.6/9.4/9.5
+  FAIL       E-10 slider2 hand-off rev · NO REFERENCE: the hand-off is graded against the single slider scene's own release, and this run read none (no single scene in the run: --scenes slider2); run it with the slider scene (--scenes slider,slider2) · load 9.6/9.4/9.5
+E-10 chromium FAIL · 0 pass, 2 fail, 0 unmeasured of 2 gating cells (0 reported) · load 9.6/9.4/9.5 at start, 9.6/9.4/9.5 at end
+# exit 1 · 18:10:01 · load { 9.55 9.42 9.48 }

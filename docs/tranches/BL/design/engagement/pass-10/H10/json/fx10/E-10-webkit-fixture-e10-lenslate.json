@@ -1,0 +1,32 @@
+{
+ "id": "E-10",
+ "engine": "webkit",
+ "version": "26.5",
+ "target": {
+  "fixture": true,
+  "fault": "e10-lenslate"
+ },
+ "loadStart": "12.8/13.0/14.4",
+ "loadEnd": "13.4/13.1/14.4",
+ "verdict": "FAIL",
+ "cells": [
+  {
+   "name": "E-10 clipstale lensfilm · marker",
+   "status": "REPORT",
+   "line": "a fine hold, twelve 8 px wheel ticks over the thumb, the card untransformed; a blue block in the scroller (the control), the track red, one column · per film 39/39 frames read, 9 moving, scrolled -96 px, median 6 px, worst off 0 px, 0 frames > 2 px off | 40/40 frames read, 8 moving, scrolled -96 px, median 6 px, worst off 0 px, 0 frames > 2 px off | 40/40 frames read, 9 moving, scrolled -96 px, median 6 px, worst off 0 px, 0 frames > 2 px off",
+   "load": "13.3/13.1/14.4"
+  },
+  {
+   "name": "E-10 clipstale lensfilm · none",
+   "status": "FAIL",
+   "line": "a fine hold, twelve 8 px wheel ticks over the thumb, the card untransformed; the lens blue, the track red, one column · per film 40/40 frames read, 9 moving, scrolled -96 px, median 2 px, worst off 8 px, 8 frames > 2 px off [6:8 7:8 8:8 9:8 10:8 11:8 13:8 14:8] | 41/41 frames read, 9 moving, scrolled -96 px, median 2 px, worst off 8 px, 9 frames > 2 px off [6:8 7:8 8:8 9:8 11:8 12:8 13:8 14:8 15:8] | 40/40 frames read, 9 moving, scrolled -96 px, median 2 px, worst off 8 px, 8 frames > 2 px off [5:8 6:8 9:8 10:8 11:8 12:8 13:8 14:8] · bound: each film's frames > 2 px off ≤ half its moving frames, the marker's worst 0 ≤ 1 px (WebKit's film is no one-frame witness)",
+   "load": "12.5/13.0/14.3"
+  },
+  {
+   "name": "E-10 clipstale lensfilm · scale",
+   "status": "FAIL",
+   "line": "a fine hold, twelve 8 px wheel ticks over the thumb, the card under scale 0.8; the lens blue, the track red, one column · per film 39/39 frames read, 9 moving, scrolled -96 px, median 1 px, worst off 8 px, 8 frames > 2 px off [0:2 1:2 2:2 3:2 4:2 5:8 6:8 7:6 8:7 9:8 10:8 12:7] | 39/39 frames read, 9 moving, scrolled -96 px, median 1 px, worst off 8 px, 8 frames > 2 px off [0:2 1:2 2:2 3:2 4:2 5:2 6:6 7:7 8:7 9:8 10:8 11:6] | 40/40 frames read, 9 moving, scrolled -96 px, median 1 px, worst off 8 px, 9 frames > 2 px off [0:2 1:2 2:2 3:2 4:2 5:8 6:8 8:7 9:7 10:8 11:6 12:7] · bound: each film's frames > 2 px off ≤ half its moving frames, the marker's worst 0 ≤ 1 px (WebKit's film is no one-frame witness)",
+   "load": "13.4/13.1/14.4"
+  }
+ ]
+}

@@ -1,0 +1,26 @@
+{
+ "id": "E-10",
+ "engine": "chromium",
+ "version": "149.0.7827.55",
+ "target": {
+  "fixture": true,
+  "fault": "e10-clipouter"
+ },
+ "loadStart": "9.5/9.8/10.7",
+ "loadEnd": "9.2/9.7/10.7",
+ "verdict": "FAIL",
+ "cells": [
+  {
+   "name": "E-10 clipstale clip-vanish · keyboard",
+   "status": "FAIL",
+   "line": "keyboard engaged (promoted on every step true) · px² of the strip above the scroller that differ from the released strip per 1 px step of the 20.0 px rest box past its top edge (hidden 14/15/16/17/18/19/20/21/22): 4321 / 4676 / 5165 / 5534 / 5801 / 6132 / 6474 / 6791 / 7193 · (a) painted outside its card: largest 7193 px² (bound ≤ 3 rows × the control's 360 px = 1080: the edge's antialiasing) · (b) largest change between adjacent steps 489 px² (bound ≤ 1080: a 1 px scroll moves ≤ 1 px of the control; a larger drop is the control leaving the paint in one step)",
+   "load": "9.2/9.7/10.7"
+  },
+  {
+   "name": "E-10 clipstale clip-vanish · touch",
+   "status": "FAIL",
+   "line": "touch engaged (promoted on every step true) · px² of the strip above the scroller that differ from the released strip per 1 px step of the 20.0 px rest box past its top edge (hidden 14/15/16/17/18/19/20/21/22): 4442 / 4802 / 5281 / 5635 / 5897 / 6217 / 6544 / 6836 / 7222 · (a) painted outside its card: largest 7222 px² (bound ≤ 3 rows × the control's 360 px = 1080: the edge's antialiasing) · (b) largest change between adjacent steps 479 px² (bound ≤ 1080: a 1 px scroll moves ≤ 1 px of the control; a larger drop is the control leaving the paint in one step)",
+   "load": "9.2/9.7/10.7"
+  }
+ ]
+}

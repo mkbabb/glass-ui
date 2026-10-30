@@ -185,11 +185,22 @@ export const FAULTS = {
   "e10-glidescale": { why: "CK-20 (H9, C-A8's glidescale, REGISTRY §P8-7 item 8): the re-render glide's translate is written in painted px, not in the root's parent's units, so under a scale 0.8 scroller the glide starts 20 % short of where the control was painted", witnesses: ["E-10"], cell: /clipstale glidescale · scale/, args: ["--part", "glide"] },
   "e13-loupeplace": { why: "CK-25 (H9, C-E8's loupe place, REGISTRY §P8-7 item 5): the lens leaves its place without its ancestors' scale: under a scale 0.8 card the band magnifies ×2.0, not k max", witnesses: ["E-13"], cell: /clipstale loupe place · scale/ },
   "e13-loupeviewport": { why: "CK-25 (H9, C-E8's loupe viewport, REGISTRY §P8-7 item 5): the lens hangs above its track with no fallback, so with the card at the viewport's top it is drawn above the viewport, unpainted", witnesses: ["E-13"], cell: /clipstale loupe viewport/ },
+  // H10 (pass 10; REGISTRY §P9-7 items 1-6, §P9-8.3 wave 1): the lens's clocks, its side change, its exit under a scroll, its film
+  "e13-loupeclock": { why: "CK-25 (H10, REGISTRY §P9-7 item 3; C-E9 §1.3): the lens's placement correction sits inside its `transform`, so the raise's and the exit's own `scale` property multiplies it. WebKit's anchor already carries the ancestors' transform, so its correction is 0 and the plant would have nothing to multiply; the plant's anchor leaves a 40 px gap the correction closes, the gap Chromium's leaves under a scaled card, so the pinned edge leaves its track on both clocks in both engines", witnesses: ["E-13"], cell: /clipstale loupe clock · (enter|exit) · scale/ },
+  "e13-exitfrozen": { why: "CK-25 (H10, REGISTRY §P9-7 item 5): the lens is not laid once the hold ends, so a scroll inside its exit leaves it behind. The cell is REPORT, so this is a control: it must not fail, and the line prints the separation H10.md cites", witnesses: ["E-13"], cell: /clipstale loupe exit scroll/, expect: "pass" },
+  "e10-lensswap": { why: "CK-20 (H10, REGISTRY §P9-7 item 1; the pass-9 candidate's shape): the side is a boolean on the track's position each frame, with no travel and no hysteresis: the lens moves its whole span against the track in one frame and flips on any wobble at the line", witnesses: ["E-10"], cell: /loupe (side · (page|carry) · (none|scale)|wobble)/, args: ["--part", "lensside"] },
+  "e10-lenszero": { why: "CK-20 (H10, REGISTRY §P9-7 item 2): the side travels on its row, but the correction is zeroed on the change's frame: one frame off. Its anchor leaves a 40 px gap the correction closes, so the zero reads in both engines", witnesses: ["E-10"], cell: /loupe side · (page|carry) · scale/, args: ["--part", "lensside"] },
+  "e10-lensfast": { why: "CK-20 (H10): the side travels on the row's curve at a third of its clock, so its one-frame move passes what the row allows", witnesses: ["E-10"], cell: /loupe side · (page|carry) · (none|scale)/, args: ["--part", "lensside"] },
+  "e10-lensnohyst": { why: "CK-20 (H10, REGISTRY §P9-7 item 1): the side travels on its row with no hysteresis: a ±3 px wobble about the line changes side on every crossing", witnesses: ["E-10"], cell: /loupe wobble/, args: ["--part", "lensside"] },
+  "e10-lensfixed": { why: "CK-20 (H10, REGISTRY §P9-8.1): the side is fixed at the press: a hold that reaches the line mid-hold carries the lens out of the viewport", witnesses: ["E-10"], cell: /loupe side · (page|carry) · (none|scale)/, args: ["--part", "lensside"] },
+  "e10-lensreducetravel": { why: "CK-10 × CK-20 (H10, REGISTRY §P9-8.1): under reduce the side change still travels", witnesses: ["E-10"], cell: /loupe side · reduce/, args: ["--part", "lensside"] },
+  "e10-lenslate": { why: "CK-20 (H10, REGISTRY §P9-7 item 6): the lens is placed one frame late, from the place read in the frame before, so on a scroll it trails its track by a tick. A film cell, graded in Chromium; WebKit's is REPORT (the plain anchored lens reads the same 8 px)", witnesses: ["E-10"], cell: /clipstale lensfilm · (none|scale)/, args: ["--part", "lensfilm"], engines: ["chromium"] },
   "e12-chipmute": { why: "CK-27 (H7, C-A6 §0): the chip that left the capsule answers neither hover nor press (0.0 % / 0.0 %): the elegant-reduction trap", witnesses: ["E-12"], cell: /fx chip answers/ },
   "e12-chipundeclared": { why: "CK-27 (H7): the chip paints its hover and press through literal rules and composes no declared engage-* class", witnesses: ["E-12"], cell: /fx chip answers/ },
   "cap-ladderhit": { why: "CK-25 (H6, REGISTRY §P5-7 item 10): a transparent layer sits over the control, so the ladder's pointer never reaches it; a hit test that misses must FAIL the ladder as unread, never pass it as a hover that paints no rung", witnesses: ["CAP"], cell: /pop ladder fine/ },
 };
 
+const LENS_PLANT_GAP = 40; // e13-loupeclock, e10-lenszero: the gap their anchor leaves, so a correction exists in WebKit too (its anchor carries the ancestors' transform)
 const CONTROL_GATES = ["E-2", "E-8", "E-9"];
 // H8 (CK-25): the fixture slider's loupe, shown while held (data-held): a housing, its window, the magnified band (the
 // track at k max, its ends dissolving), the fill to the window's centre
@@ -380,7 +391,16 @@ ${F("e12-fcreach") ? `.ctl::after { content: ""; position: absolute; inset: -6px
 /* H8: the feather (a mask on the scroller, FadingScroll's class); the loupe (fixed: it leaves its place, so no scroller
    clips it; e13-loupecut rides inside the control's box) */
 .fx-feather { mask-image: linear-gradient(to bottom, transparent 0, #000 40px, #000 calc(100% - 40px), transparent 100%); }
-.fx-loupe { position: ${F("e13-loupecut") ? "absolute" : "fixed"}; z-index: 10; width: 120px; height: 60px; box-sizing: border-box; border-radius: 30px; border: 1px solid #9aa0ac; background: #fdfdfe; pointer-events: none; --loupe-k-max: 1.6; }
+.fx-loupe { position: ${F("e13-loupecut") ? "absolute" : "fixed"}; z-index: 10; width: 120px; height: 60px; box-sizing: border-box; border-radius: 30px; border: 1px solid #9aa0ac; background: #fdfdfe; pointer-events: none; --loupe-k-max: 1.6;
+  scale: 0.13; opacity: 0; transition: scale var(--spring-press-duration) var(--spring-press), opacity var(--engage-press-drain-release) linear; }
+.fx-loupe.anch { position-anchor: --fx-lens; left: anchor(center); margin-left: -60px; bottom: anchor(top); }
+.fx-loupe.anch.below { bottom: auto; top: anchor(bottom); }
+${F("e13-loupeclock") || F("e10-lenszero") ? ".fx-loupe.anch { margin-bottom: " + LENS_PLANT_GAP + "px; } .fx-loupe.anch.below { margin-bottom: 0; margin-top: " + LENS_PLANT_GAP + "px; }" : ""}
+.fx-lensprobe { position: fixed; width: 0; height: 0; pointer-events: none; position-anchor: --fx-lens; left: anchor(center); top: anchor(top); }
+.fx-lensprobe.b { top: anchor(bottom); }
+.fx-loupe.on { scale: 1; opacity: 1; }
+.fx-loupe.exit { scale: 0.13; opacity: 0; transition: scale var(--engage-control-engage-release) linear, opacity var(--engage-control-engage-release) linear; }
+@media (prefers-reduced-motion: reduce) { .fx-loupe, .fx-loupe.exit { transition: none; } }
 .dark .fx-loupe { background: #24262c; border-color: #5a5f6b; }
 .fx-loupe-window { position: absolute; left: 6px; top: 6px; width: 106px; height: 46px; border-radius: 23px; overflow: hidden; }
 .fx-loupe-clone { position: absolute; left: 0; right: 0; top: 50%; translate: 0 -50%; background: var(--ctl);${F("e13-loupemark") ? "" : " mask-image: linear-gradient(to right, transparent 0, #000 36px, #000 calc(100% - 36px), transparent 100%);"} }
@@ -532,23 +552,69 @@ function engagedAny() { return [...document.querySelectorAll(".fx-slider")].some
 // the control's box, so its scroller does); the band is the track at k max (the held track's own height × 1.6), its ends
 // dissolving; the fill reaches the window's centre (e13-loupemark: a 2 px mark across the centre, no dissolve)
 function loupe(root, th, on) {
+  if (!on) { lensExit(); return; }
   document.querySelectorAll(".fx-loupe").forEach((e) => e.remove());
-  if (!on) return;
   const L = document.createElement("div"); L.className = "fx-loupe";
   L.innerHTML = '<div class="fx-loupe-window"><div class="fx-loupe-clone"><div class="fx-loupe-fill"></div></div>' + (FAULT === "e13-loupemark" ? '<div class="fx-loupe-mark"></div>' : "") + "</div>";
   const grow = prm() ? 1 : tok("--fx-scale-engage");
   L.querySelector(".fx-loupe-clone").style.height = (1.6 * root.offsetHeight * grow) + "px";
-  if (FAULT === "e13-loupecut") { L.style.left = (th.offsetLeft - 60) + "px"; L.style.top = "-80px"; root.appendChild(L); return; }
-  // H9 (CK-25): the lens carries its track's painted transform (the ancestors' scale: the root's parent painted over its
-  // layout width; e13-loupeplace drops it) and hangs flush on the track's painted top, scaled about its bottom centre; where
-  // that would leave the viewport (the root scroller's top edge) it hangs below the track instead, the position-try
-  // fallback (e13-loupeviewport never flips)
+  if (FAULT === "e13-loupecut") { L.classList.add("on"); L.style.left = (th.offsetLeft - 60) + "px"; L.style.top = "-80px"; root.appendChild(L); return; }
+  root.style.anchorName = "--fx-lens"; L.classList.add("anch");
+  if (!lensProbeA) { lensProbeA = document.createElement("span"); lensProbeA.className = "fx-lensprobe"; lensProbeB = document.createElement("span"); lensProbeB.className = "fx-lensprobe b"; document.body.append(lensProbeA, lensProbeB); }
+  lens = { L, root, below: null, prev: null, exiting: false }; document.body.appendChild(L);
+  layLens(); L.getBoundingClientRect(); L.classList.add("on");
+  if (!lensRO) { lensRO = new ResizeObserver(layLens); document.body.appendChild(lensBeat); }
+  cancelAnimationFrame(lensFrame); lensFrame = requestAnimationFrame(lensTick);
+}
+// H10 (CK-25, CK-20): the cured lens, the library lens's shape. Hung by CSS anchor from its track (so a scroll carries it on the
+// clock it carries the track, and an ancestor's transform leaves a gap, in Chromium); two empty probes on the same anchor read where
+// the anchor puts each edge. Each frame's resize step reads the track as painted and closes the gap with translate, which composes outside the lens's own scale (e13-loupeclock: inside its transform, which
+// the raise's and the exit's scale multiply); transform carries the ancestors' scale (e13-loupeplace drops it). The lens hangs on
+// the track's painted top, scaled about its pinned edge, and below the track where its top would leave the viewport
+// (e13-loupeviewport never changes). The side has hysteresis: below at the line, above again LENS_BAND past it, wider than any
+// ±3 px wobble (e10-lensnohyst: no band; e10-lensswap: no band, no travel; e10-lensfixed: fixed at the press). The change travels
+// on the spring row's clock and curve from the place it was painted (translate, composite add), and is instant under reduce.
+const LENS_BAND = 12;
+let lens = null, lensRO = null, lensFrame = 0, lensProbeA = null, lensProbeB = null; const lensBeat = document.createElement("span");
+lensBeat.style.cssText = "position:fixed;left:0;top:0;width:1px;height:1px;pointer-events:none";
+function lensTick() { lensFrame = requestAnimationFrame(lensTick); if (!lens) return; if (lens.exiting && FAULT === "e13-exitfrozen") return; lensRO.unobserve(lensBeat); lensRO.observe(lensBeat); }
+function lensExit() {
+  if (!lens) { document.querySelectorAll(".fx-loupe").forEach((e) => e.remove()); return; }
+  const h = lens; h.exiting = true; h.L.classList.add("exit");
+  setTimeout(() => { h.L.remove(); if (lens === h) { lens = null; cancelAnimationFrame(lensFrame); } }, prm() ? 0 : 260);
+}
+function layLens() {
+  if (!lens) return; const h = lens, L = h.L, root = h.root;
   const par = root.parentElement; const anc = FAULT === "e13-loupeplace" ? 1 : (par.getBoundingClientRect().width / par.offsetWidth || 1);
-  const t = th.getBoundingClientRect(), r = root.getBoundingClientRect();
-  const up = r.top - 60 * anc >= 0 || FAULT === "e13-loupeviewport";
-  L.style.left = (t.left + t.width / 2 - 60) + "px"; L.style.top = (up ? r.top - 60 : r.bottom) + "px";
-  L.style.transformOrigin = up ? "50% 100%" : "50% 0"; if (anc !== 1) L.style.scale = String(anc);
-  document.body.appendChild(L);
+  const r0 = root.getBoundingClientRect(), read = { top: r0.top, bottom: r0.bottom, cx: r0.left + r0.width / 2 };
+  const was = h.prev ?? read; h.prev = read;
+  const H = 60 * anc, line = read.top - H;
+  let below = h.below;
+  if (below === null) below = line < 0 && FAULT !== "e13-loupeviewport";
+  else if (FAULT === "e13-loupeviewport" || FAULT === "e10-lensfixed") below = h.below;
+  else if (FAULT === "e10-lensswap" || FAULT === "e10-lensnohyst") below = line < 0;
+  else if (!below && line < 0) below = true;
+  else if (below && line > LENS_BAND) below = false;
+  const changed = h.below !== null && below !== h.below;
+  L.classList.toggle("below", below); L.style.transformOrigin = below ? "50% 0" : "50% 100%";
+  // e10-lenslate: no anchor: placed each frame from the frame before's read, so on a scroll it trails its track by a tick
+  if (FAULT === "e10-lenslate") { L.classList.remove("anch"); L.style.left = (was.cx - 60) + "px"; L.style.top = (below ? was.bottom : was.top - 60) + "px"; }
+  const a0 = lensProbeA.getBoundingClientRect(), b0 = lensProbeB.getBoundingClientRect(); const lensGap = FAULT === "e13-loupeclock" || FAULT === "e10-lenszero";
+  const cx = FAULT === "e10-lenslate" ? 0 : read.cx - a0.left, cy = FAULT === "e10-lenslate" ? 0 : below ? read.bottom - b0.top - (lensGap ? 40 : 0) : read.top - a0.top + (lensGap ? 40 : 0);
+  const zero = changed && FAULT === "e10-lenszero";
+  const tx = zero ? 0 : cx, ty = zero ? 0 : cy;
+  const sc = anc !== 1 ? " scale(" + anc + ")" : "";
+  if (FAULT === "e13-loupeclock") { L.style.translate = "none"; L.style.transform = "translate(" + tx + "px, " + ty + "px)" + sc; }
+  else { L.style.translate = tx + "px " + ty + "px"; L.style.transform = sc ? sc.trim() : "none"; }
+  if (changed) {
+    h.below = below;
+    if ((!prm() || FAULT === "e10-lensreducetravel") && FAULT !== "e10-lensswap") {
+      const delta = (below ? 1 : -1) * (read.bottom - read.top + H);
+      const clock = (Number.parseFloat(getComputedStyle(L).getPropertyValue("--spring-press-duration")) || 350) / (FAULT === "e10-lensfast" ? 3 : 1);
+      L.animate([{ translate: "0 " + (-delta) + "px" }, { translate: "0 0" }], { duration: clock, easing: getComputedStyle(L).getPropertyValue("--spring-press").trim(), composite: "add" });
+    }
+  }
+  h.below = below;
 }
 function settleVeil(now) {
   const want = engagedAny();

@@ -1,0 +1,5 @@
+# H10 st-E-13 webkit · 2026-10-30 17:02:53 · load { 10.12 10.62 11.32 } · --faults e13-loupeclock
+OK     E-13 webkit   fault   e13-loupeclock (CK-25 (H10, REGISTRY §P9-7 item 3; C-E9 §1.3): the lens's placement correction sits inside its `transform`, so the raise's and the exit's own `scale` property multiplies it. WebKit's anchor already carries the ancestors' transform, so its correction is 0 and the plant would have nothing to multiply; the plant's anchor leaves a 40 px gap the correction closes, the gap Chromium's leaves under a scaled card, so the pinned edge leaves its track on both clocks in both engines) exit 1
+         first planted FAIL: FAIL       E-13 clipstale loupe clock · enter · scale · fine · fine from before the press, the card scale · the lens shows on 74 frames, 21 in flight · worst pinned edge -31.7 px at frame 1 (opacity 0.08, scale 0.208714), worst across -0.0 
+selftest: 1 runs, 0 N/A; every witness passes its fixture, fails each planted violation on the planted cell, and passes each control, in every engine with an input for it
+# selftest exit 0 · 17:04:35 · load { 14.53 11.47 11.54 }

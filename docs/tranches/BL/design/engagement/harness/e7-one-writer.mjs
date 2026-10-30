@@ -14,10 +14,11 @@
 //   held (runtime)    the slider pointer-held 450 ms: ≥ 1 [data-engaged] node (the held meaning survives the split).
 //   held PRM          H-9: the same under reduced motion. Held is a state, not a motion: reduce does not retire it.
 // Light only: the reads are attributes, not paint.
+//   --wt is required with --build (H10: refused, exit 2, before any browser starts).
 //   node e7-one-writer.mjs --build <dir> --wt <worktree> [--unowned data-press] | --fixture [--fault e7-veil|e7-two|e7-spread|e7-held] [--engine webkit]
 import fs from "node:fs";
 import path from "node:path";
-import { witness, openPage, scenesFor, center, HERE } from "./lib.mjs";
+import { witness, openPage, scenesFor, center, HERE, parseArgs } from "./lib.mjs";
 
 const OWNER = "src/composables/motion/engage/";
 export const ATTRS = ["engaged", "held", "press", "commit"];
@@ -46,11 +47,14 @@ export function writers(wt) {
   return found;
 }
 
+// H10 (REGISTRY §P9-7 item 12): a build read without its source tree is refused before any browser starts. It used to read
+// UNMEASURED on the static arm, and C-A9's first WebKit E-7 was lost that way
+const argv0 = parseArgs();
+if (!argv0.fixture && typeof argv0.wt !== "string") { console.log("E-7 HARNESS ERROR: REFUSED, no --wt given: the static arm reads the build's source tree (`--build <dir> --wt <worktree>`)"); process.exit(2); }
 await witness("E-7", "one writer of data-engaged, meaning held", async ({ a, E, T, cell, guard, idx }) => {
-  const wt = a.fixture ? path.join(HERE, "fixtures", "e7", TREES[a.fault] ?? "clean") : typeof a.wt === "string" ? path.resolve(a.wt) : null;
+  const wt = a.fixture ? path.join(HERE, "fixtures", "e7", TREES[a.fault] ?? "clean") : path.resolve(a.wt);
   const unowned = new Set(typeof a.unowned === "string" ? a.unowned.split(",") : []);
-  if (!wt) for (const x of ATTRS) cell(`E-7 writers data-${x} (static)`, "UNMEASURED", "no --wt given: the static arm reads a source tree");
-  else {
+  {
     const W = writers(wt);
     for (const x of ATTRS) {
       const files = W[x]; const ok = files.length <= 1 && files.every((p) => p.startsWith(OWNER));

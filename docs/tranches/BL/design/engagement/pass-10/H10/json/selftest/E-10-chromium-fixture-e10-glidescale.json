@@ -1,0 +1,26 @@
+{
+ "id": "E-10",
+ "engine": "chromium",
+ "version": "149.0.7827.55",
+ "target": {
+  "fixture": true,
+  "fault": "e10-glidescale"
+ },
+ "loadStart": "9.6/9.5/10.4",
+ "loadEnd": "9.6/9.5/10.4",
+ "verdict": "FAIL",
+ "cells": [
+  {
+   "name": "E-10 clipstale glidescale · none",
+   "status": "REPORT",
+   "line": "keyboard engaged (promoted false), the scroller untransformed (the reference) · a 40 px block inserted before the rest box: the root's painted centre moved 2.70 px in the insertion's frame, then at most 4.80 px per 16.7 ms; the place moved 40.0 px",
+   "load": "9.6/9.5/10.4"
+  },
+  {
+   "name": "E-10 clipstale glidescale · scale",
+   "status": "FAIL",
+   "line": "keyboard engaged (promoted false), the scroller under scale 0.8 (origin 0 0) · a 40 px block inserted before the rest box (a re-render): the root's painted centre moved 8.83 px in the insertion's frame (bound ≤ the unscaled reference's 2.70 + 1 px: the glide starts where the control was painted), then at most 2.30 px per 16.7 ms; the place moved 32.0 px",
+   "load": "9.6/9.5/10.4"
+  }
+ ]
+}

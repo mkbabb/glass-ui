@@ -1,0 +1,15 @@
+# H10 st-E-7 webkit · 2026-10-30 16:01:52 · load { 13.00 13.12 14.28 } · 
+OK     E-7 webkit   clean exit 0 · E-7 webkit PASS · 7 pass, 0 fail, 0 unmeasured of 7 gating cells (0 reported) · load 13.0/13.1/14.3 at start, 13.9/13.3/14.3 at end
+OK     E-7 webkit   fault   e7-veil (the modal's scrim carries a bare data-engaged (presence) beside the held meaning) exit 1
+         first planted FAIL: FAIL       E-7 modal open, nothing held · dialog open true · veil nodes 1 · [data-engaged] nodes 1 (fx-scrim) · bound 0 · load 13.9/13.3/14.3
+OK     E-7 webkit   fault   e7-two (two source files write data-engaged, one outside the register's owner) exit 1
+         first planted FAIL: FAIL       E-7 writers data-engaged (static) · 2 writer file(s): src/components/dialog/ModalOverlay.vue, src/composables/motion/engage/useEngage.ts · bound ≤ 1, under src/composables/motion/engage/ · tree fixtures/e7/two-writers · load 13.8
+OK     E-7 webkit   fault   e7-spread (CK-08 (X-6): a second writer of data-engaged hides in a v-bind object spread) exit 1
+         first planted FAIL: FAIL       E-7 writers data-engaged (static) · 2 writer file(s): src/components/dock/Dock.vue, src/composables/motion/engage/useEngage.ts · bound ≤ 1, under src/composables/motion/engage/ · tree fixtures/e7/spread · load 13.8/13.3/14.3
+OK     E-7 webkit   fault   e7-held (CK-08: a component writes data-held outside the register's owner (GlassDock.vue:346 at HEAD)) exit 1
+         first planted FAIL: FAIL       E-7 writers data-held (static) · 2 writer file(s): src/components/pager-dots/PagerDots.vue, src/composables/motion/engage/useEngage.ts · bound ≤ 1, under src/composables/motion/engage/ · tree fixtures/e7/held-two · load 13.8/13.3
+OK     E-7 webkit   fault   e7-prm (under reduced motion the held slider writes no data-engaged: held is gated on motion (H-9)) exit 1
+         first planted FAIL: FAIL       E-7 slider held PRM · reduce · [data-engaged] nodes while pointer-held 0 · bound ≥ 1 · load 13.3/13.2/14.3
+OK     E-7 refusal, --build with no --wt: exit 2 · E-7 HARNESS ERROR: REFUSED, no --wt given: the static arm reads the build's source tree (`--build <dir> --wt <worktree>`)
+selftest: 7 runs, 0 N/A; every witness passes its fixture, fails each planted violation on the planted cell, and passes each control, in every engine with an input for it
+# selftest exit 0 · 16:02:15 · load { 13.28 13.20 14.28 }

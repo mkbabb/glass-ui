@@ -10,6 +10,10 @@
 | load | 7-31 (1-minute) across the pass-3 runs; other seats shared the machine. Every cell line carries its own load |
 | verdict | **GREEN in both engines** (pass 3): 204 runs, 203 OK, 1 N/A (`e4-stripstop` in WebKit), 0 BROKEN, 0 UNREAD on each witness's last run on its final code |
 
+## Pass 10 (H10)
+
+H10 changed E-7 (it refuses a build with no `--wt`), E-10 (`loupe side`, `loupe wobble`, `lensfilm`, the pointer stale cells' inset), E-13 (`loupe clock`, `loupe exit scroll`), `fixtures.mjs` (the cured lens, nine plants), `selftest.mjs` (the refusal's check). Its self-test of record, both engines, is `../pass-10/H10.md` §2 (logs `../pass-10/H10/logs/st-E-*.log`, JSON `../pass-10/H10/json/selftest/`): E-7 7 of 7 per engine; E-13 7 of 7 per engine; E-10 35 runs, 34 plants OK in Chromium; 35 runs, 2 N/A in WebKit (`e10-traillate`, `e10-lenslate`, Chromium's by declaration). Every other witness and CAP re-read on the clean fixture in both engines (`../pass-10/H10/logs/clean-*.log`). The clean E-10 read in Chromium failed once in that self-test, on `hand-off rev` (0.0091 against 0.0073, load 11.9), a load-only scatter the harness before H10 shows too (§2.1 there): 75/75 at load 9.6.
+
 ## Pass 9 (H9)
 
 H9 changed E-10 and E-13, `fixtures.mjs` (the presented plate's `&slider=1`, the clip row's glide, the loupe's transform and viewport fallback, seven plants) and the scene app (the presented Dialog's `&slider=1` Slider). Its self-test of record, both engines, is `../pass-9/H9.md` §2 (logs `../pass-9/H9/logs/st-E-10-*.log`, `st-E-13-*.log`, JSON `../pass-9/H9/json/selftest/`): E-10 28 runs, 28 OK in Chromium; 28 runs, 27 OK and 1 N/A (`e10-traillate`, Chromium's by declaration) in WebKit; E-13 5 of 5 OK per engine. Every other witness and CAP re-read on the clean fixture in both engines (`../pass-9/H9/logs/clean-*.log`).

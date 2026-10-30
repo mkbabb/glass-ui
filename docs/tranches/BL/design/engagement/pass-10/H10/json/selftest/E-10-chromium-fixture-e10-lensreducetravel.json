@@ -1,0 +1,86 @@
+{
+ "id": "E-10",
+ "engine": "chromium",
+ "version": "149.0.7827.55",
+ "target": {
+  "fixture": true,
+  "fault": "e10-lensreducetravel"
+ },
+ "loadStart": "12.5/11.2/10.9",
+ "loadEnd": "12.0/11.2/10.9",
+ "verdict": "FAIL",
+ "cells": [
+  {
+   "name": "E-10 slider loupe side · page · none",
+   "status": "PASS",
+   "line": "a fine hold, the track carried 3 px a frame 254 px, 208 frames · 1 side change(s), the lens's centre against the track's -40.6 → 40.6 px · largest one-frame move against the track 6.2 px per 16.7 ms at +571 ms; bound 13.2 px = the span 81.2 × row press's 0.151 (clock 350 ms, overshoot 0.060) + 1 · off its edge by > 2 px on 27 frames over 207 ms (bound one window ≤ 675 ms), worst 38.2 px, 0 frames outside the span · across 0.0 px (≤ 2) · ends flush true (0.0 px), whole at the end true (lens 40.6..100.6 px; at most 1.6 px above the viewport on any frame)",
+   "load": "12.1/11.1/10.9"
+  },
+  {
+   "name": "E-10 slider loupe side · reduce · page · none",
+   "status": "FAIL",
+   "line": "reduce · 1 side change(s) · off its edge by > 2 px on 25 frames (bound 0: instant, no travel, the correction kept), worst 38.2 px · largest one-frame move 6.6 px · whole at the end true (lens 40.0..100.0 px)",
+   "load": "12.1/11.1/10.9"
+  },
+  {
+   "name": "E-10 slider loupe side · page · scale",
+   "status": "PASS",
+   "line": "a fine hold, the track carried 3 px a frame 262 px, 200 frames · 1 side change(s), the lens's centre against the track's -32.5 → 32.5 px · largest one-frame move against the track 6.3 px per 16.7 ms at +646 ms; bound 10.8 px = the span 65.0 × row press's 0.151 (clock 350 ms, overshoot 0.060) + 1 · off its edge by > 2 px on 23 frames over 200 ms (bound one window ≤ 675 ms), worst 30.3 px, 0 frames outside the span · across 0.0 px (≤ 2) · ends flush true (0.0 px), whole at the end true (lens 22.7..70.7 px; at most 0.3 px above the viewport on any frame)",
+   "load": "12.3/11.2/10.9"
+  },
+  {
+   "name": "E-10 slider loupe side · reduce · page · scale",
+   "status": "FAIL",
+   "line": "reduce · 1 side change(s) · off its edge by > 2 px on 22 frames (bound 0: instant, no travel, the correction kept), worst 30.2 px · largest one-frame move 6.5 px · whole at the end true (lens 22.2..70.2 px)",
+   "load": "11.7/11.1/10.9"
+  },
+  {
+   "name": "E-10 clipstale loupe side · carry · none",
+   "status": "PASS",
+   "line": "a fine hold, the track carried 2 px a frame 156 px, 202 frames · 1 side change(s), the lens's centre against the track's -40.6 → 40.6 px · largest one-frame move against the track 6.4 px per 16.7 ms at +490 ms; bound 13.2 px = the span 81.2 × row press's 0.151 (clock 350 ms, overshoot 0.060) + 1 · off its edge by > 2 px on 26 frames over 207 ms (bound one window ≤ 675 ms), worst 38.9 px, 0 frames outside the span · across 0.0 px (≤ 2) · ends flush true (0.0 px), whole at the end true (lens 39.6..99.6 px; at most 1.6 px above the viewport on any frame)",
+   "load": "11.7/11.1/10.9"
+  },
+  {
+   "name": "E-10 clipstale loupe side · reduce · carry · none",
+   "status": "FAIL",
+   "line": "reduce · 1 side change(s) · off its edge by > 2 px on 26 frames (bound 0: instant, no travel, the correction kept), worst 37.4 px · largest one-frame move 6.7 px · whole at the end true (lens 39.0..99.0 px)",
+   "load": "12.6/11.3/10.9"
+  },
+  {
+   "name": "E-10 clipstale loupe wobble · at-change · none",
+   "status": "PASS",
+   "line": "a fine hold, carried to the lens's side change, then ±3 px: 40 frames toggling every 2, 6 toggles every 30 · 1 side change(s) in 348 frames (bound ≤ 1) · largest one-frame move against the track 8.2 px",
+   "load": "12.3/11.2/10.9"
+  },
+  {
+   "name": "E-10 clipstale loupe wobble · at-line · none",
+   "status": "PASS",
+   "line": "a fine hold, carried to the line, then ±3 px: 40 frames toggling every 2, 6 toggles every 30 · 1 side change(s) in 341 frames (bound ≤ 1) · largest one-frame move against the track 6.5 px",
+   "load": "12.2/11.2/10.9"
+  },
+  {
+   "name": "E-10 clipstale loupe side · carry · scale",
+   "status": "PASS",
+   "line": "a fine hold, the track carried 2 px a frame 169 px, 197 frames · 1 side change(s), the lens's centre against the track's -32.5 → 32.5 px · largest one-frame move against the track 5.7 px per 16.7 ms at +534 ms; bound 10.8 px = the span 65.0 × row press's 0.151 (clock 350 ms, overshoot 0.060) + 1 · off its edge by > 2 px on 21 frames over 195 ms (bound one window ≤ 675 ms), worst 31.3 px, 0 frames outside the span · across 0.0 px (≤ 2) · ends flush true (0.0 px), whole at the end true (lens 23.7..71.7 px; at most 1.3 px above the viewport on any frame)",
+   "load": "12.2/11.2/10.9"
+  },
+  {
+   "name": "E-10 clipstale loupe side · reduce · carry · scale",
+   "status": "FAIL",
+   "line": "reduce · 1 side change(s) · off its edge by > 2 px on 20 frames (bound 0: instant, no travel, the correction kept), worst 31.7 px · largest one-frame move 6.5 px · whole at the end true (lens 23.2..71.2 px)",
+   "load": "12.6/11.3/10.9"
+  },
+  {
+   "name": "E-10 clipstale loupe wobble · at-change · scale",
+   "status": "PASS",
+   "line": "a fine hold, carried to the lens's side change, then ±3 px: 40 frames toggling every 2, 6 toggles every 30 · 1 side change(s) in 362 frames (bound ≤ 1) · largest one-frame move against the track 5.5 px",
+   "load": "12.0/11.2/10.9"
+  },
+  {
+   "name": "E-10 clipstale loupe wobble · at-line · scale",
+   "status": "PASS",
+   "line": "a fine hold, carried to the line, then ±3 px: 40 frames toggling every 2, 6 toggles every 30 · 1 side change(s) in 355 frames (bound ≤ 1) · largest one-frame move against the track 5.6 px",
+   "load": "12.0/11.2/10.9"
+  }
+ ]
+}

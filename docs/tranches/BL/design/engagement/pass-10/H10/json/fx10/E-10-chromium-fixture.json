@@ -1,0 +1,92 @@
+{
+ "id": "E-10",
+ "engine": "chromium",
+ "version": "149.0.7827.55",
+ "target": {
+  "fixture": true,
+  "fault": null
+ },
+ "loadStart": "10.1/9.4/9.4",
+ "loadEnd": "12.7/10.1/9.7",
+ "verdict": "FAIL",
+ "cells": [
+  {
+   "name": "E-10 slider own release",
+   "status": "REPORT",
+   "line": "Tab in: largest one-frame centre move 0.0 px · Tab out of the engaged slider on 3 fresh pages: largest one-frame drop per 16.7 ms 0.0044 / 0.0060 / 0.0049 (reference: the largest, 0.0060), largest centre move 0.0 / 0.0 / 0.0 px (reference 0.0), ×1.060 → ×1.000 (the references for the hand-off and Escape bounds: the engine's own release scatter, the margin + 0.002 the scale read's resolution)",
+   "load": "10.4/9.5/9.4"
+  },
+  {
+   "name": "E-10 slider escape release",
+   "status": "PASS",
+   "line": "Escape: ×1.060 → ×1.000, largest one-frame drop per 16.7 ms 0.0058 (bound ≤ own release 0.0060 + 0.002), largest centre move 0.0 px (bound ≤ own release 0.0 + 1 px)",
+   "load": "10.4/9.5/9.4"
+  },
+  {
+   "name": "E-10 slider re-render landing",
+   "status": "PASS",
+   "line": "a sibling inserted during the hold, then release: the root's largest one-frame move per 16.7 ms 0.9 px (without the insert 1.0 px; bound ≤ that + 1 px)",
+   "load": "11.0/9.6/9.5"
+  },
+  {
+   "name": "E-10 slider re-render landing (layout-only)",
+   "status": "PASS",
+   "line": "a spacer before the slider grown 40 px by a style write during the hold (no childList mutation; the root's top read 92.4 → 132.4 px during the hold, 133.0 px at the film's end), then release: the root's largest one-frame move per 16.7 ms 1.0 px (without the move 0.9 px; bound ≤ that + 1 px)",
+   "load": "11.0/9.6/9.5"
+  },
+  {
+   "name": "E-10 slider2 hand-off drop",
+   "status": "FAIL",
+   "line": "Tab A → B (focus on ProbeB) · outgoing A ×1.060 → ×1.000, largest one-frame drop per 16.7 ms 0.0082 (bound ≤ own release 0.0060, the largest of 3 reads [0.0044, 0.0060, 0.0049], + 0.002), largest centre move 0.0 px at 63 ms (bound ≤ own release 0.0 + 1 px) · incoming B ×1.000 → ×1.060, largest centre move 0.0 px at 314 ms (bound ≤ own engage 0.0 + 1 px)",
+   "load": "11.6/9.8/9.5"
+  },
+  {
+   "name": "E-10 slider2 hand-off singleton fwd",
+   "status": "PASS",
+   "line": "109 frames: engaged roots per frame max 1, 0 frame(s) with none · first frame A engaged true, B false · last frame B engaged true, A false (bound: at most one engaged on every frame, the incoming one at the end; selector [data-held], [data-kbd])",
+   "load": "11.6/9.8/9.5"
+  },
+  {
+   "name": "E-10 slider2 hand-off veil",
+   "status": "PASS",
+   "line": "veil 1.00 before the Tab, minimum 1.00 across the hand-off, 1.00 at the end (bound ≥ 0.1× its level: it does not re-ramp from 0)",
+   "load": "11.6/9.8/9.5"
+  },
+  {
+   "name": "E-10 slider2 hand-off rev",
+   "status": "PASS",
+   "line": "Shift+Tab B → A (focus on ProbeA) · outgoing B ×1.060 → ×1.000, largest one-frame drop per 16.7 ms 0.0078 (bound ≤ own release 0.0060, the largest of 3 reads [0.0044, 0.0060, 0.0049], + 0.002), largest centre move 0.0 px at 102 ms (bound ≤ own release 0.0 + 1 px) · incoming A ×1.000 → ×1.060, largest centre move 0.0 px at 174 ms (bound ≤ own engage 0.0 + 1 px)",
+   "load": "11.6/9.8/9.5"
+  },
+  {
+   "name": "E-10 slider2 hand-off singleton rev",
+   "status": "PASS",
+   "line": "109 frames: engaged roots per frame max 1, 0 frame(s) with none · first frame B engaged true, A false · last frame A engaged true, B false (bound: at most one engaged on every frame, the incoming one at the end; selector [data-held], [data-kbd])",
+   "load": "11.6/9.8/9.5"
+  },
+  {
+   "name": "E-10 slider loupe side · page · none",
+   "status": "PASS",
+   "line": "a fine hold, the track carried 3 px a frame 254 px, 193 frames · 1 side change(s), the lens's centre against the track's -40.6 → 40.6 px · largest one-frame move against the track 6.8 px per 16.7 ms at +606 ms; bound 13.2 px = the span 81.2 × row press's 0.151 (clock 350 ms, overshoot 0.060) + 1 · off its edge by > 2 px on 24 frames over 204 ms (bound one window ≤ 675 ms), worst 38.2 px, 0 frames outside the span · across 0.0 px (≤ 2) · ends flush true (0.0 px), whole at the end true (lens 40.6..100.6 px; at most 1.6 px above the viewport on any frame)",
+   "load": "12.3/10.0/9.6"
+  },
+  {
+   "name": "E-10 slider loupe side · reduce · page · none",
+   "status": "PASS",
+   "line": "reduce · 1 side change(s) · off its edge by > 2 px on 0 frames (bound 0: instant, no travel, the correction kept) · largest one-frame move 80.0 px · whole at the end true (lens 40.0..100.0 px)",
+   "load": "12.3/10.0/9.6"
+  },
+  {
+   "name": "E-10 slider loupe side · page · scale",
+   "status": "PASS",
+   "line": "a fine hold, the track carried 3 px a frame 262 px, 197 frames · 1 side change(s), the lens's centre against the track's -32.5 → 32.5 px · largest one-frame move against the track 5.8 px per 16.7 ms at +641 ms; bound 10.8 px = the span 65.0 × row press's 0.151 (clock 350 ms, overshoot 0.060) + 1 · off its edge by > 2 px on 22 frames over 199 ms (bound one window ≤ 675 ms), worst 30.6 px, 0 frames outside the span · across 0.0 px (≤ 2) · ends flush true (0.0 px), whole at the end true (lens 22.7..70.7 px; at most 0.3 px above the viewport on any frame)",
+   "load": "12.6/10.1/9.6"
+  },
+  {
+   "name": "E-10 slider loupe side · reduce · page · scale",
+   "status": "PASS",
+   "line": "reduce · 1 side change(s) · off its edge by > 2 px on 0 frames (bound 0: instant, no travel, the correction kept) · largest one-frame move 64.0 px · whole at the end true (lens 22.2..70.2 px)",
+   "load": "12.7/10.1/9.7"
+  }
+ ]
+}

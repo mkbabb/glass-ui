@@ -1,0 +1,52 @@
+## 15:34:06 e10-cand9 chromium --part lensside · load { 16.77 19.49 18.92 }
+E-10 chromium FAIL · 3 pass, 9 fail, 0 unmeasured of 12 gating cells (0 reported) · load 16.8/19.5/18.9 at start, 19.0/19.7/19.0 at end
+# exit 1 · 15:34:52 · load { 19.00 19.71 19.03 }
+## 15:34:52 e13-cand9 chromium --part clock · load { 19.00 19.71 19.03 }
+E-13 chromium FAIL · 8 pass, 4 fail, 0 unmeasured of 12 gating cells (2 reported) · load 19.0/19.7/19.0 at start, 17.6/19.2/18.9 at end
+# exit 1 · 15:35:32 · load { 17.63 19.22 18.88 }
+## 15:35:32 e13-plant-cause chromium --part clock · load { 17.63 19.22 18.88 }
+E-13 chromium PASS · 12 pass, 0 fail, 0 unmeasured of 12 gating cells (2 reported) · load 17.6/19.2/18.9 at start, 18.3/19.0/18.8 at end
+# exit 0 · 15:36:12 · load { 18.32 19.03 18.81 }
+## 15:36:12 fx10 chromium --part lensfilm · load { 18.32 19.03 18.81 }
+E-10 chromium UNMEASURED · 0 pass, 0 fail, 0 unmeasured of 0 gating cells (3 reported) · load 18.3/19.0/18.8 at start, 18.1/18.9/18.8 at end
+# exit 3 · 15:36:37 · load { 18.06 18.94 18.78 }
+## 15:36:37 fx10 chromium --part lensfilm --fault e10-lenslate · load { 18.06 18.94 18.78 }
+E-10 chromium UNMEASURED · 0 pass, 0 fail, 0 unmeasured of 0 gating cells (3 reported) · load 18.1/18.9/18.8 at start, 17.0/18.6/18.7 at end
+# exit 3 · 15:37:02 · load { 17.02 18.61 18.67 }
+## 15:37:02 e10-cand9 chromium --part lensfilm · load { 17.02 18.61 18.67 }
+E-10 chromium UNMEASURED · 0 pass, 0 fail, 0 unmeasured of 0 gating cells (3 reported) · load 17.0/18.6/18.7 at start, 15.0/18.0/18.5 at end
+# exit 3 · 15:37:29 · load { 15.03 18.01 18.45 }
+## 15:37:29 fx10 chromium --part lensside --fault e10-lensswap · load { 15.03 18.01 18.45 }
+E-10 chromium FAIL · 4 pass, 8 fail, 0 unmeasured of 12 gating cells (0 reported) · load 15.0/18.0/18.5 at start, 15.6/17.7/18.3 at end
+# exit 1 · 15:38:13 · load { 15.56 17.74 18.33 }
+## 15:38:13 fx10 chromium --part lensside --fault e10-lenszero · load { 15.56 17.74 18.33 }
+E-10 chromium FAIL · 8 pass, 4 fail, 0 unmeasured of 12 gating cells (0 reported) · load 15.6/17.7/18.3 at start, 14.3/17.1/18.0 at end
+# exit 1 · 15:38:56 · load { 14.32 17.07 18.05 }
+## 15:38:56 fx10 chromium --part lensside --fault e10-lensfast · load { 14.32 17.07 18.05 }
+E-10 chromium FAIL · 8 pass, 4 fail, 0 unmeasured of 12 gating cells (0 reported) · load 14.3/17.1/18.0 at start, 12.7/16.4/17.7 at end
+# exit 1 · 15:39:39 · load { 12.72 16.37 17.75 }
+## 15:39:39 fx10 chromium --part lensside --fault e10-lensnohyst · load { 12.72 16.37 17.75 }
+E-10 chromium FAIL · 10 pass, 2 fail, 0 unmeasured of 12 gating cells (0 reported) · load 12.7/16.4/17.7 at start, 12.3/15.7/17.4 at end
+# exit 1 · 15:40:22 · load { 12.32 15.72 17.43 }
+## 15:40:22 fx10 chromium --part lensside --fault e10-lensfixed · load { 12.32 15.72 17.43 }
+E-10 chromium FAIL · 4 pass, 8 fail, 0 unmeasured of 12 gating cells (0 reported) · load 12.3/15.7/17.4 at start, 12.9/15.4/17.2 at end
+# exit 1 · 15:41:05 · load { 12.92 15.42 17.24 }
+## 15:41:05 fx10 chromium --part lensside --fault e10-lensreducetravel · load { 12.92 15.42 17.24 }
+E-10 chromium FAIL · 8 pass, 4 fail, 0 unmeasured of 12 gating cells (0 reported) · load 14.0/15.6/17.3 at start, 12.4/15.0/17.0 at end
+# exit 1 · 15:41:48 · load { 12.42 14.97 16.98 }
+## 15:41:48 fx13 chromium --part clock --fault e13-loupeclock · load { 12.42 14.97 16.98 }
+E-13 chromium FAIL · 4 pass, 8 fail, 0 unmeasured of 12 gating cells (2 reported) · load 12.4/15.0/17.0 at start, 11.3/14.5/16.7 at end
+# exit 1 · 15:42:24 · load { 11.32 14.46 16.72 }
+## 15:42:24 fx13 chromium --part clock --fault e13-exitfrozen · load { 11.32 14.46 16.72 }
+E-13 chromium PASS · 12 pass, 0 fail, 0 unmeasured of 12 gating cells (2 reported) · load 11.3/14.5/16.7 at start, 10.3/13.8/16.4 at end
+# exit 0 · 15:43:00 · load { 10.29 13.75 16.35 }
+## 15:43:01 fx10 chromium --part old --scenes clipstale · load { 10.29 13.75 16.35 }
+E-10 chromium PASS · 12 pass, 0 fail, 0 unmeasured of 12 gating cells (0 reported) · load 10.3/13.8/16.4 at start, 10.9/13.6/16.2 at end
+# exit 0 · 15:43:34 · load { 10.91 13.57 16.19 }
+## 15:43:34 e10-cand9 chromium --part old --scenes clipstale · load { 10.91 13.57 16.19 }
+E-10 chromium PASS · 12 pass, 0 fail, 0 unmeasured of 12 gating cells (0 reported) · load 10.9/13.6/16.2 at start, 10.9/13.3/16.0 at end
+# exit 0 · 15:44:09 · load { 10.91 13.29 15.99 }
+## 15:44:09 e10-plant-noread chromium --part old --scenes clipstale · load { 10.91 13.29 15.99 }
+E-10 chromium FAIL · 2 pass, 10 fail, 0 unmeasured of 12 gating cells (0 reported) · load 10.9/13.3/16.0 at start, 9.9/12.8/15.7 at end
+# exit 1 · 15:44:44 · load { 9.88 12.81 15.70 }
+## 15:44:44 chain end · load { 9.88 12.81 15.70 }

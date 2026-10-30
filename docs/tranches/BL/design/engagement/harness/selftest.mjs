@@ -7,7 +7,9 @@
 // Exit 1 if any run is BROKEN: a witness that fails its clean fixture, passes a planted FAIL, fails a control, or
 // fails a plant on some other cell than the planted one, or UNREAD: a plant whose planted cell failed only as an engine
 // close in three runs.
-import { parseArgs, isClosed } from "./lib.mjs";
+import path from "node:path";
+import { spawnSync } from "node:child_process";
+import { parseArgs, isClosed, HERE } from "./lib.mjs";
 import { WITNESSES, runOne } from "./run.mjs";
 import { FAULTS } from "./fixtures.mjs";
 
@@ -71,6 +73,13 @@ for (const [id, file] of [...WITNESSES, ["CAP", "capture.mjs"]]) {
       else if (!expectPass) console.log(`         first planted FAIL: ${fails.find((l) => !fl.cell || fl.cell.test(l))?.trim().slice(0, 240)}`);
     }
   }
+}
+// H10 (REGISTRY §P9-7 item 12): E-7 refuses a build with no --wt before any browser starts
+if (!only || only.has("E-7")) {
+  const r = spawnSync(process.execPath, [path.join(HERE, "e7-one-writer.mjs"), "--build", "/nonexistent"], { encoding: "utf8" }); runs++;
+  const ok = r.status === 2 && /REFUSED/.test(r.stdout);
+  if (!ok) broken++;
+  console.log(`${ok ? "OK    " : "BROKEN"} E-7 refusal, --build with no --wt: exit ${r.status} · ${(r.stdout ?? "").trim().slice(0, 140)}`);
 }
 if (retried.length) console.log(`engine-closed re-runs (${retried.length}): ${retried.join("; ")}`);
 console.log(broken ? `selftest: ${broken} of ${runs} runs BROKEN or UNREAD (${na} N/A)` : `selftest: ${runs} runs, ${na} N/A; every witness passes its fixture, fails each planted violation on the planted cell, and passes each control, in every engine with an input for it`);

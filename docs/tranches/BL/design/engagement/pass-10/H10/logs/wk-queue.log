@@ -1,0 +1,76 @@
+# queued 2026-10-30 15:48:37 load { 10.92 12.92 15.16 }
+[guarded] waiting for the 'webkit' lock
+# 2026-10-30 15:51:31 WebKit lock acquired (w1) · load { 10.51 12.09 14.40 }
+# 15:57:51 waited 380 s for this seat's running Chromium stage
+## 15:57:51 [1] fx10 webkit --part lensfilm · load { 9.04 14.34 15.10 }
+E-10 webkit UNMEASURED · 0 pass, 0 fail, 0 unmeasured of 0 gating cells (3 reported) · load 9.0/14.3/15.1 at start, 8.0/13.6/14.8 at end
+# exit 3 · 15:58:21 · load { 8.02 13.58 14.79 }
+## 15:58:21 [2] fx10 webkit --part lensfilm --fault e10-lenslate · load { 8.02 13.58 14.79 }
+E-10 webkit UNMEASURED · 0 pass, 0 fail, 0 unmeasured of 0 gating cells (3 reported) · load 8.0/13.6/14.8 at start, 7.3/13.0/14.5 at end
+# exit 3 · 15:58:48 · load { 7.25 12.97 14.54 }
+## 15:58:48 [3] e10-cand9 webkit --part lensfilm · load { 7.25 12.97 14.54 }
+E-10 webkit UNMEASURED · 0 pass, 0 fail, 0 unmeasured of 0 gating cells (3 reported) · load 7.3/13.0/14.5 at start, 8.1/12.6/14.4 at end
+# exit 3 · 15:59:17 · load { 8.06 12.62 14.36 }
+## 15:59:57 [4] fx10 webkit --part lensfilm --deadline 3000 · load { 10.00 12.55 14.25 }
+E-10 webkit FAIL · 0 pass, 2 fail, 0 unmeasured of 2 gating cells (1 reported) · load 10.0/12.6/14.3 at start, 12.8/13.0/14.4 at end
+# exit 1 · 16:00:25 · load { 12.78 13.02 14.37 }
+## 16:00:25 [5] fx10 webkit --part lensfilm --fault e10-lenslate --deadline 3000 · load { 12.78 13.02 14.37 }
+E-10 webkit FAIL · 0 pass, 2 fail, 0 unmeasured of 2 gating cells (1 reported) · load 12.8/13.0/14.4 at start, 13.4/13.1/14.4 at end
+# exit 1 · 16:00:52 · load { 13.41 13.13 14.36 }
+## 16:00:52 [6] e10-cand9 webkit --part lensfilm --deadline 3000 · load { 13.41 13.13 14.36 }
+E-10 webkit FAIL · 0 pass, 2 fail, 0 unmeasured of 2 gating cells (1 reported) · load 13.4/13.1/14.4 at start, 14.1/13.3/14.4 at end
+# exit 1 · 16:01:22 · load { 14.10 13.32 14.39 }
+## 16:01:52 [7] st-E-7 webkit  · load { 13.00 13.12 14.28 }
+selftest: 7 runs, 0 N/A; every witness passes its fixture, fails each planted violation on the planted cell, and passes each control, in every engine with an input for it
+# selftest exit 0 · 16:02:15 · load { 13.28 13.20 14.28 }
+## 16:02:15 [8] st-E-13 webkit  · load { 13.28 13.20 14.28 }
+selftest: 1 of 7 runs BROKEN or UNREAD (0 N/A)
+# selftest exit 1 · 16:14:04 · load { 7.44 9.35 11.64 }
+## 16:14:04 [9] st-E-10 webkit  · load { 7.44 9.35 11.64 }
+selftest: 2 of 35 runs BROKEN or UNREAD (2 N/A)
+# selftest exit 1 · 16:50:25 · load { 10.91 14.89 12.64 }
+## 16:50:25 [10] clean webkit  · load { 10.91 14.89 12.64 }
+CAP webkit PASS · 4 pass, 0 fail, 0 unmeasured of 4 gating cells (0 reported) · load 9.7/10.6/11.4 at start, 10.7/10.7/11.4 at end
+# exit 0 · 17:01:37 · load { 10.72 10.74 11.42 }
+## 17:01:37 [11] st-E-10 webkit --faults e10-lenszero,e10-rectclip-film · load { 10.72 10.74 11.42 }
+selftest: 2 runs, 0 N/A; every witness passes its fixture, fails each planted violation on the planted cell, and passes each control, in every engine with an input for it
+# selftest exit 0 · 17:02:53 · load { 10.12 10.62 11.32 }
+## 17:02:53 [12] st-E-13 webkit --faults e13-loupeclock · load { 10.12 10.62 11.32 }
+selftest: 1 runs, 0 N/A; every witness passes its fixture, fails each planted violation on the planted cell, and passes each control, in every engine with an input for it
+# selftest exit 0 · 17:04:35 · load { 14.53 11.47 11.54 }
+## 17:04:35 [13] fx13 webkit --part clock --fault e13-exitfrozen · load { 14.53 11.47 11.54 }
+E-13 webkit PASS · 12 pass, 0 fail, 0 unmeasured of 12 gating cells (2 reported) · load 14.5/11.5/11.5 at start, 16.1/12.3/11.8 at end
+# exit 0 · 17:05:23 · load { 16.12 12.32 11.84 }
+## 17:05:23 [14] fx13 webkit --part clock · load { 16.12 12.32 11.84 }
+E-13 webkit PASS · 12 pass, 0 fail, 0 unmeasured of 12 gating cells (2 reported) · load 16.1/12.3/11.8 at start, 17.4/13.3/12.2 at end
+# exit 0 · 17:06:10 · load { 17.41 13.25 12.21 }
+## 17:06:10 [15] e10-cand9 webkit --part lensside,lensfilm · load { 17.41 13.25 12.21 }
+E-10 webkit FAIL · 4 pass, 8 fail, 0 unmeasured of 12 gating cells (3 reported) · load 17.4/13.3/12.2 at start, 15.1/13.6/12.4 at end
+# exit 1 · 17:07:29 · load { 15.13 13.56 12.43 }
+## 17:07:29 [16] e13-cand9 webkit  · load { 15.13 13.56 12.43 }
+E-13 webkit PASS · 28 pass, 0 fail, 0 unmeasured of 28 gating cells (4 reported) · load 15.1/13.6/12.4 at start, 9.6/12.4/12.1 at end
+# exit 0 · 17:09:16 · load { 9.62 12.44 12.14 }
+## 17:09:16 [17] e7-cand9 webkit  · load { 9.62 12.44 12.14 }
+E-7 webkit FAIL · 4 pass, 3 fail, 0 unmeasured of 7 gating cells (0 reported) · load 10.4/12.5/12.2 at start, 10.4/12.5/12.2 at end
+# exit 1 · 17:09:21 · load { 10.37 12.55 12.18 }
+## 17:09:21 [18] e10-plant-noread webkit --part old --scenes clipstale,restale · load { 10.37 12.55 12.18 }
+E-10 webkit FAIL · 5 pass, 16 fail, 0 unmeasured of 21 gating cells (0 reported) · load 9.9/12.4/12.1 at start, 7.3/11.3/11.7 at end
+# exit 1 · 17:10:19 · load { 7.25 11.26 11.72 }
+## 17:10:19 [19] e10-cand9 webkit --part old --scenes clipstale,restale · load { 7.25 11.26 11.72 }
+E-10 webkit PASS · 21 pass, 0 fail, 0 unmeasured of 21 gating cells (0 reported) · load 7.3/11.3/11.7 at start, 9.1/11.0/11.6 at end
+# exit 0 · 17:11:19 · load { 9.08 10.95 11.56 }
+## 17:11:19 [20] e13-plant-cause webkit --part clock · load { 9.08 10.95 11.56 }
+E-13 webkit PASS · 12 pass, 0 fail, 0 unmeasured of 12 gating cells (2 reported) · load 9.1/11.0/11.6 at start, 8.8/10.7/11.4 at end
+# exit 0 · 17:12:07 · load { 8.84 10.69 11.44 }
+## 17:12:07 [21] e10-head webkit --part lensside,lensfilm · load { 8.84 10.69 11.44 }
+E-10 webkit FAIL · 2 pass, 10 fail, 0 unmeasured of 12 gating cells (3 reported) · load 8.8/10.7/11.4 at start, 11.8/11.3/11.6 at end
+# exit 1 · 17:13:23 · load { 11.84 11.29 11.61 }
+## 17:13:23 [22] e13-head webkit  · load { 11.84 11.29 11.61 }
+E-13 webkit FAIL · 14 pass, 14 fail, 0 unmeasured of 28 gating cells (4 reported) · load 11.8/11.3/11.6 at start, 9.5/10.9/11.4 at end
+# exit 1 · 17:15:09 · load { 9.48 10.86 11.42 }
+## 17:15:09 [23] e7-head webkit  · load { 9.48 10.86 11.42 }
+E-7 webkit FAIL · 3 pass, 4 fail, 0 unmeasured of 7 gating cells (0 reported) · load 9.5/10.9/11.4 at start, 9.1/10.8/11.4 at end
+# exit 1 · 17:15:15 · load { 9.13 10.76 11.38 }
+# 17:15:15 END after 23 stages
+# 2026-10-30 17:15:15 WebKit acquisition (w1) end · load { 9.13 10.76 11.38 }
+# guarded exit 0 2026-10-30 17:15:20
