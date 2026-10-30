@@ -2234,3 +2234,257 @@ Unchanged (`§3.5`, `§P1-9.4`, `§P2-8.4` .. `§P7-8.4`): at least three full p
 - passes 9 and 10 both clean.
 
 If the owner rules Q-3′ "in place", the in-place construction is the candidate from pass 9 and the count starts on it at 0. Since the count is 0 now, that ruling moves the earliest convergence by nothing. If the owner rules it after P-E9 has started, it is folded in at pass 10's first seat boundary and the earliest convergence moves to the end of pass 11.
+
+---
+
+# D5 · pass 9 · REGISTRY: the candidate A+E after pass 9
+
+| field | value |
+|---|---|
+| seat | D5 pass-9 agglomeration (`§P8-8.3` wave 4). It closes pass 9: the candidate's status as its two critics scored it, ruled where they differ, the clean-pass count, whether the loop has reached its fixed point, what D2 and D3 hold, Q-3′ and F-5 folded in, every next-pass defect class placed, and the pass-10 plan on the unchanged CK-01..CK-27 |
+| model | `claude-opus-5-5`, asserted from own system identity |
+| HEAD | `55dc732a7`, docs only past P-E9's base `32668853e`. `git diff --stat v10.1.0 HEAD -- src` prints nothing. `release/10.1.1`, `10.1.2` and `10.1.3` are **not** ancestors of HEAD (`git merge-base --is-ancestor`, exit 1), so the base did not move and F5‴ carried (`§P8-8.2`). No P-A9 ran: D3's lean lane has not reached the base |
+| inputs, read in full | every report under `pass-9/`: `H9.md`, `P-E9.md`, `C-A9.md`, `C-E9.md` (the completion seat's); this file's earlier parts, in ranges; `../../CHARTER.md` design-loop section; `../../audit/INBOUND.md` (mtime 2026-10-30 14:16, re-read at this seat's start; last rows O-103f and O-113, O-110 discharged); `../../FORMATION-PROGRESS.md` to its 2026-10-30 10.1.3 correction line; `docs/tranches/BK/coordination/ATLAS-TO-GLASS-2026-10-29-U-B7.md` rows B7-G1..G3, M1-2, L-G2, G-L-1 and question 7 |
+| critics' completeness | **Both critiques are complete.** C-A9 ran its whole battery, one WebKit acquisition, 33 stages (`C-A9.md` header). C-E9's first seat returned with no WebKit cell measured, and its BLOCK 0/27 is a non-score (FORMATION-PROGRESS 2026-10-29). A second seat finished Chromium and was lost at the restart with no report. The completion seat ran the whole battery in both engines, one WebKit acquisition, 34 stages, took no number from either earlier seat (`C-E9.md` header), and scored all 27 rows. Two reading gaps, both its own statement and neither a row's: it read §P1-6 and the pass-8 part of this file rather than the whole, and it did not open `cand9-webkit-coarse.png` or the probe's CAP sheets (CAP reads 18/0 on all). No row below rests on an unrun cell |
+| instruments | none that measure. This seat ran `shasum` on `P-E9.patch` (`0cbe2b6d…`) and `P-E9-probe.patch` (`4c735aa7…`), the harness hash (`c2ce48c39f82…`, H9's), the ancestry check above, `test -e` on every frame in §P9-5, a re-read of C-E9's clock, flip, jitter and film log lines and C-A9's flip lines, the arithmetic in §P9-4, and `grep` over `../../waves/W-0.1.md` and `W-0.8.md` (§P9-6). Every number cites the seat that measured it (P-3) |
+| fences | no source edit, no git write; this part is the only write. Nothing under `~/.claude` was read |
+| engines | Chromium 149.0.7827.55 and Playwright WebKit 26.5 (playwright 1.61.1), headless shell, no GPU arguments. Playwright WebKit is not Safari. Under O-103d (3) every Safari cell is read against the seat's guarded WebKit run of record. Real Safari: **UNMEASURED (owner's safaridriver checkbox)** |
+| rulings in force | O-103d (1)-(4); **O-103f: Q-3′ (i), in place under every modality, the loupe alone promoted, superseding O-103d (5)'s promote arm; F-5 (a)**; Q-1 (c) and Q-4 (b) as defaults; O-87 binds every rung's paint. O-103f arrived during H9, before P-E9 started, so the candidate and both critics ran under it. O-113 arrived during P-E9 and is placed here at this seat's boundary (§P9-6) |
+
+Short citations: `C-A9 §0.2` is that critic's in-brief item 2; `C-E9 §1.3` likewise; `C-A9 §1 CK-n` and `C-E9 §3 CK-n` their per-row tables; `H9 §n`, `P-E9 §n` the seats' sections.
+
+## P9-0 · In brief
+
+| candidate | built as | critics | rows closed / applicable | pass 8 | status |
+|---|---|---|---:|---:|---|
+| **A+E** (A's pop, press and chip; E's stage in place under every modality, the loupe alone promoted) | `P-E9.patch` `0cbe2b6d…` = F5‴ + P-A7 + E9 | C-A9 **22/27**, C-E9 **22/27**, the same 22 rows; ruled **22/27 = 81 %** (§P9-4) | 21/27 = 78 % | **ADVANCE** (not converged) |
+
+Closed on the candidate: **CK-02..16, 18, 21, 22, 23, 24, 26, 27.** Open: **CK-01, 17, 19** (held by D2 and D3) and **CK-20, 25** (D5 can build).
+
+**Pass 9 is not a clean pass. The clean-pass count stays 0**, counted on the in-place candidate from this pass. **The loop has not reached its fixed point:** CK-20 and CK-25 each hold a lens counterexample D5 can remove. Convergence moves to the end of pass 11 at the earliest (§P9-8.4).
+
+The score ran 52 % (pass 4), 37 %, 67 %, 78 %, 78 %, 81 %. Six findings shape pass 10.
+
+1. **The in-place construction holds every pass-8 counterexample, in both engines, on both critics.** E-10 72/0 Chromium, 69/0 WebKit; E-13 16/0 per engine, on P-E9 and both critics. Ancestor opacity 1.009 / 1.032 and 1.001 / 0.989, `clip-path` 1.003 / 1.024 and 1.010 / 0.980, rotation and filter on their graded modes inside 0.90..1.10, the Dialog's step equal to the plate's within its 0.05 bound, the Chromium place film 0 px, the glide under scale 0.46-0.48 px Chromium, the feather two-sided at 0.991-1.005 (C-A9 §0.3, C-E9 §5). C-E9 also read skew, mask, zoom, perspective and `mix-blend-mode` (§4): all inside the bound but WebKit's blend at 1.102, an in-place body's scatter. The promotion's six-pass run of place counterexamples has ended, because nothing leaves its place but the loupe. The cost fell: `src` +3088/−1359 against pass 8's +3380/−1355, reproduced to the line by both critics.
+2. **O-103f's conditions, read by non-builders.** (1) The idle cost sits at the bar on two independent re-measures: one rAF and one ResizeObserver callback per frame on both builds, 0 layouts, 0 recalcs (C-A9 §0.5; C-E9 §2). (3) The loop stops at release: 0.0/s from the release on, 5/5 release paths per engine (C-A9), the plant red at 98.9-106.7 per s (C-A9) and 52-105 per s (C-E9). (4) Real Safari stays UNMEASURED. (2) Both loupe cures land on the settled lens (×1.600, 0.0 px, 81 of 81 rows, both engines), and finding 4 is what they left behind.
+3. **CK-22 closes.** One table, C-1..C-30, from pass 1; `pass-1/P-A.md` §7, `P-B.md` §7, `P-E.md` §7 and `F5.md`'s lines each carried or retired by name, checked source by source by C-A9 (§1.1); the consumer counts reproduced at HEAD by two independently written `grep -e` scripts (C-A9 `ck22-greps.txt`, C-E9 `ck22-greps-*.txt`). Two wording items go to P-E10 (§P9-4).
+4. **Every open D5 item is in the lens, each with one named cause, and each is small.**
+   - **The side swap (CK-20).** `placeLens` decides the side from the track's position each frame (`below = t.top − lens.offsetHeight × s.y < 0`, P-E9 patch line 8133) and flips it with no travel. A held lens crossing the line moves 101.8 px (Chromium) and 101.7 px (WebKit) against its track in one frame (C-A9 §0.2, C-E9 §1.2). ±3 px about the line flips it 20 times in 41 samples, both engines (C-E9 `flipjitter`).
+   - **The lens off its track on its own clocks (CK-25).** Under a scaled card in Chromium the lens's `scale` property composes outside its `transform`, so the raise's and the exit's own scale multiply the correction `--lens-dx/-dy`: up to 10.9 px off on the raise and up to 34.3 px on the frozen exit, with 16.9 px at opacity 0.51 in one exit (C-E9 §1.3). `plant-cause` moves the correction into the `translate` property and reads 0.0 px on every clock cell. E-13 could not see this: it reads a hold sustained 1200 ms.
+5. **All of finding 4 is shared with the probe, so none of it bears on Q-3′.** C-A9 §0.2 and §2, C-E9 §1.2 and §5.
+6. **The rows D2 and D3 hold have no wave that builds them.** `../../waves/W-0.1.md` and `W-0.8.md` name none of CK-01, CK-17, CK-19, `touchstart`, the lean or D5 (0 hits at this seat). D2 is at its confirmation pass and D3 has converged. Unless formation adds them, D5 reaches its fixed point and stops there (§P9-6).
+
+## P9-1 · Registry
+
+| id | family | status after pass 9 | centre | carries into pass 10 |
+|---|---|---|---|---|
+| **A+E** | the declared register with the engaged stage | ADVANCE, the one convergence candidate | A: P-A7's bytes. E: every held control grows where it stands, with no top layer, footprint, clip write or anchor; a frame read runs only while engaged, for the re-render glide and the lens; the glide composes outside the grow; the loupe its own popover, laid each engaged frame on its track as painted, hung below at the viewport's top | E's part on P-E9: the correction outside the lens's own animation; the side change carries weight and has hysteresis. A's bytes unchanged unless D3's lane arrives |
+| **(c), the promoted construction** | the probe of pass 9 | **RETIRED by O-103f, no further seat.** Measured against the candidate by all three seats on H9's family, red where pass 8's critics read it red (E-10 60/12 and 60/9) | — | none. `P-E8.patch` stays as the plant `cand8` for E-10's cells. Re-trigger: only an owner's reversal of O-103f |
+| D5-B | the WAAPI commit path | RETIRED (O-103d (1), `§P6-2`) | — | none |
+| D5-B (door) | the door's parts | in the floor (F5‴) | hand (primary button only), modality, writer, release rule, stateless edge, press mark, one-frame arming | F5‴ unchanged unless the base moves or D2's or D3's hunk is published (§P9-8.2) |
+| D5-C, D5-D | — | RETIRED at pass 1 | — | unchanged |
+| D5-X1..X3 | — | not minted | — | unchanged |
+
+## P9-2 · The candidate
+
+### A+E · ADVANCE, 81 %
+
+**What held**, both critics reproducing each item in both engines unless marked:
+- CK-02, CK-03, CK-04, CK-10: E-2 164/0, E-3 22/0, E-9 85/0 per engine; H7's PRM plant 32 FAIL per engine; `prmY` 28 FAIL per engine (C-A9).
+- CK-05 on F-5 (a): every slider read printed its release velocity and carried 10.98-13.71 px at 855-1356 px/s across both critics and engines; the margin ≥ 6.98 px (C-E9 §3). Tabs, Sheet and sortable carry on both; the WebKit Carousel is the engine fact.
+- CK-06 (E-5 56/0), CK-07 (S6 RETIRED), CK-08 (`data-held` writers `GlassDock.vue`, D2's named clause, and `useEngage.ts`), CK-09 (E-8 19/0), CK-11 (E-12 102/0 Chromium, 101/0/1 WebKit; `tap-squish` and `interactive-item` comments only in `src`), CK-13, CK-14, CK-15 (hand-off and singleton inside E-10).
+- CK-12: the crest paints the register's rows: Button ×1.0600 / ×1.0598-1.0599, Chip ×1.0400 / ×1.0399 (both critics); C-A9's `crest` plant ×1.0200, 2/2 FAIL per engine.
+- CK-16: rest 0; engaged idle at the bar and bounded to the engagement (finding 2). `§P6-7` item 11 is now bounded, by O-103f (3).
+- CK-18: `RELEASE_RULE` on all four surfaces. CK-21: E-11 11/0/5 per engine, the five UNMEASURED the tokens a control does not read on that commit path.
+- CK-22: finding 3. CK-23: **198 files +5072/−1648; `src` 153 files +3088/−1359**, to the line by both critics. CK-24. CK-26: the lens's change is a placement transform; no lighting layer, blur token or radius.
+- CK-27: every P-E9 item and H9 cell has a plant red in both engines: `cand8`, `noread`, `nolens`, `ancscale`, `nobelow`, `loop`, `glidepx`, `crest`, `prmY`, H7's PRM plant. The two-sided feather's Chromium red is H9's fixture plants only (P-E9 §8 item 3, both critics).
+- Gates: build, typecheck, `demo:dist:build` exit 0; vitest 247 files, 2427 passed, 10 expected fail, 1 skipped (P-E9 §2). Neither critic's log directory holds a gate re-run.
+
+**Open rows, each with its counterexample.** Rows marked ◇ cannot close inside D5. Unmarked rows can.
+
+1. **CK-01.** ◇ The `dock` latch, 54/55 (D2). ◇ The ambient runtime cell: WebKit 1.71-1.72 levels against 1.23-1.24 at rest, not ≥ 2× (D3's amplitude); Chromium headless is the engine limit. ◇ The ambient reduce leg reads 0.00: A's write waits on D3's lean lane.
+2. **CK-17.** ◇ D2: the dock's `:active` presses name no `touchstart` listener.
+3. **CK-19.** ◇ D3: the amplitude, and the lean's own scalar.
+4. **CK-20.** The side swap and its missing hysteresis (finding 4), both engines, both critics on the swap, C-E9 on the wobble. Under `scale: 0.8` the swap reads 81.4 px on a page scroll in both engines (C-A9), 81.4 px in WebKit and a 50.4 px frame with the pinned edge off in Chromium on a scroller carry (C-E9); the wobble's worst step under scale reads 81.4-131.8 px. The path is narrow: a held lens whose track crosses the line while held, by a wheel during a mouse hold, a programmatic scroll or a re-render. A hold that starts near the top hangs below from its first frame (C-A9 §0.2).
+5. **CK-25.** The lens's clocks under a scaled card in Chromium (finding 4), against `§P8-8.1`'s "within 2 px of its track". WebKit reads 0.0 px on the same cells (C-E9 `cand9-ce9-webkit`), consistent with the correction itself being 0 there: its anchor left no gap under scale in pass 8 or on `plant-nolens`. ◇ The ambient exemplar is static (D3).
+
+**What now reads at grade or better**, both critics from their own frames: a flat, coherent, restrained set, which is what O-87 asks; the committed Button ×1.059-1.061, the Switch's commit with its thumb's travel, the accordion's ×1.037-1.040 pop, the held slider ×1.060 in place, the sortable lift; the lens a ruler under glass, a square cut with dissolved ends and its own hairline, flush under `scale: 0.8` and `zoom: 0.8`, whole at the viewport's top. Below grade and D5's: only the side swap (counted under CK-20) and the lens coming apart under scale.
+
+**The pass-8 counterexamples this pass removed** (P-3: each cited where it was measured):
+- ancestor opacity, `clip-path`, rotation and filter; the Dialog's dismissal step; the Chromium scroll trail; the glide under scale; the WebKit keyboard feather (CK-20; P-E9 §3, both critics);
+- the loupe over a scaled card and at the viewport's top, settled (CK-25; E-13 16/0, both critics);
+- pass 1's unretired rows, C-2's and C-9's overclaims, the census line that could not count (CK-22; P-E9 §6, C-A9 §1.1);
+- the engaged loop running on past release (O-103f (3); `e9-probe`, C-A9 `loop`).
+
+## P9-3 · The floor (F5‴) as pass 9 left it
+
+No floor seat ran. The base did not move; D3 has not published the lean lane; D2 has not landed its dock adoption or a dock scene with its leave (`§P8-8.2`'s three triggers, none fired). F5‴ carried byte for byte inside P-A7, and P-A7 inside P-E9: of P-A7's 187 files the 16 that differ are the same 16 that differed on P-E8, all E-owned (P-E9 §1).
+
+| item | state | evidence | row |
+|---|---|---|---|
+| F-1..F-4, F-7, F-9..F-12 | **hold** | both critics' replays | as `§P6-3` |
+| F-13 · the slider carry | **holds** | §P9-2, CK-05's distribution | CK-05 |
+| F-14 · the Skeleton shimmer | **merge-time hunk, unchanged** | the base carries no 10.1.x | CK-16 |
+| F-5 · the carry's margin | **RULED (a)** (O-103f); velocity recorded, never gated | margin ≥ 6.98 px | CK-05 |
+
+## P9-4 · Where the critics differ, and the ruling
+
+Both critics scored the same bytes (`0cbe2b6d…`, src tree `82c3f35a7110`) on the harness's own app under harness `c2ce48c3…` in both engines, and closed the same 22 rows. The rule is the plan's: a row they disagree on is OPEN unless one critic's measurement refutes the other's on the same path; a counterexample one critic reproduced stands whichever critic read it.
+
+| item | C-A9 | C-E9 | ruling |
+|---|---|---|---|
+| CK-25 | OPEN ◇, held by D3 alone: "D5's lens items close" | OPEN, D5-buildable: the raise and exit under scale in Chromium | **OPEN, D5 can build.** C-A9 drove no raise or exit clock, and says so (§4 item 2), so it neither refutes nor reads them. C-E9 read them three times at loads 14.5-18.9, its `plant-cause` reads 0.0 px, and the arithmetic holds at this seat: 39.4 px × (1 − 0.13) = 34.3 px and 39.4 × (1 − 0.325) = 26.6 px, the two frozen reads. These are REPORT lines in a probe, not gated cells; H10 makes them cells |
+| CK-20 · the side swap | OPEN | OPEN | **OPEN.** Same cause, same figure to 0.1 px |
+| CK-20 · under scale in Chromium | 81.4 px, gap 0.0 on every frame (page scroll, 3 px/frame) | a 50.4 px frame with the pinned edge off (scroller carry, 2 px/frame, `stage.ts:123-125`) | **Different drives, neither refutes the other; the union stands.** P-E10 cures the swap, and H10 reads both drives |
+| CK-20 · the wobble | not driven | 20 flips in 41 samples, both engines | **Stands.** No refutation exists. Adversarial as driven; any wobble at that line is the same path |
+| CK-20 · the WebKit lens film | not driven | the lens 8 px (one tick) off its track on several frames, 3 films, main thread 0.00 px; a scroller marker reads 0 px; Chromium 0-1 px | **Recorded, not scored.** C-E9 flags the read itself for this seat to weigh. `§P8-7` item 9 requires a plant the instrument separates for a top-layer body filmed in WebKit, and H8 §5 says WebKit's 25 fps film is no one-frame witness. The marker is new and is a good control, but it lies in the scroller, not the top layer, no plant fails the cell, and every read ran at load 14.3-21.6. CK-20 is open on the swap regardless. H10 builds the cell with its plant |
+| CK-22 | CLOSED: C-9's sentence "turns under the track" is true; it does not say the turn is instant | CLOSED, one wording note: C-2's "The library writes only `--stage-room` and `--stage-w`" where a held Slider also carries `--atom-drag-v` and `--flex-vel` from HEAD's velocity writer; C-9's "flush on its track" false during the raise under scale in Chromium | **CLOSED; both critics agree.** The wording items change nothing a consumer sees (C-2), or are the lens defect counted once under CK-25 (C-9). `§P8-8.1` asks that C-2 and C-9 state only what the bytes paint, so P-E10 corrects both as its cure rewrites C-9 ("The stage writes …"), and both pass-10 critics re-read them. If C-9 is false on the cured bytes the row reopens |
+| CK-16 · WebKit's rate | 98.4 + 98.4 per s; probe 98.0, same run | 60.0 + 60.0 per s; probe 60.0, same run | **CLOSED; no refutation.** Each critic read the bar beside the candidate in one session, and each found them equal, which is what O-103f (1) asks. Why WebKit's frame rate differs between sessions is unread (§P9-7 item 7) |
+| CK-27 | CLOSED | CLOSED, "the raise-clock gap is H10's, not a failed gate" | **CLOSED,** as `§P7-4` and `§P8-4` placed the same form: every new cell has a plant that fails it, which is the row's text. The settled-state blind spot is H10's (§P9-7 item 4) |
+
+The closures both critics share stand. C-A9 §1.1 records one records slip: P-E9 §4's E-4 row swaps the engines' slider figures; its §4.1 is right, and both critics' reads agree with §4.1.
+
+## P9-5 · The owner-glance packet, refreshed
+
+Every path is under `docs/tranches/BL/design/engagement/pass-9/` and was checked to exist at this seat. Chromium unless marked. Playwright WebKit paints no `backdrop-filter`.
+
+### What pass 9 cured, as it paints
+
+| what | frame | figures |
+|---|---|---|
+| the whole candidate | `E9/glance/cand9/cand9-chromium-fine.png`; the critics' `C-A9/frames/cap/cand9/cand9-chromium-fine.png`, `…-coarse.png`, `C-E9/c/frames/cap-cand9/cand9-chromium-fine.png` | E-2 164/0 |
+| the lens under `scale: 0.8`, flush, against the lens not laid | `E9/glance/loupe/cand9/e13-chromium-clipstale-place-scale-fine-loupe.png` · `E9/glance/loupe/plant-nolens/e13-chromium-clipstale-place-scale-fine-loupe.png` | ×1.600, 0.0 px against ×1.887, 39.4 px |
+| the lens at the viewport's top, hung below | `E9/glance/loupe/cand9/e13-chromium-clipstale-viewport-fine-loupe.png` | 81 of 81 rows |
+
+### Below grade, D5's to build
+
+| what | frame |
+|---|---|
+| the side swap: 6 px of scroll apart, above then below, nothing between | `C-A9/frames/ca9/cand9-chromium-flipstill-track-at-84.png` · `…-at-78.png` (WebKit `cand9-webkit-flipstill-track-at-84.png` · `…-at-78.png`) |
+| the lens leaving its track on the exit under scale, against untransformed and against the cure | `C-E9/c/frames/clock/cand9-chromium-lens-exit-frozen-scale-60ms.png` · `…-exit-frozen-none-60ms.png` · `plant-cause-chromium-lens-exit-frozen-scale-60ms.png` |
+
+### What O-103f gave up, in frames
+
+| what | frame | figures |
+|---|---|---|
+| a later positioned sibling over the engaged control, candidate against (c) | `C-E9/c/frames/ce9/cand9-webkit-stack-keyboard-engaged.png` · `probe9-chromium-stack-keyboard-engaged.png`; `C-A9/frames/ca9/cand9-chromium-stack-keyboard-engaged.png` | red over the thumb unchanged at rest and engaged on the candidate; 0.000 on (c) (C-A9 §0.7). C-2 states it |
+| a slider filling its scroller's content box, its grow cut by the scroller | `C-E9/c/frames/ce9/cand9-chromium-narrow-keyboard-engaged.png` | cut 11.9 / 11.9 px, ends flat, both engines. It paints what its place paints, as ruled. Under (i) this now holds on touch and keyboard, as it already did on a fine hold; `§P4-0` finding 5 named one such consumer site, speedtest `DashboardMapControls.vue:97` |
+
+### Not D5's, or a reading only, in view of the owner
+
+- **On a coarse pointer at the viewport's top the lens hangs below the track**, where a finger on the thumb covers it (C-E9 §6). A reading, not a measurement; no cell can read a finger; no row.
+- **Under a rotated card the lens stays level** at the track's scale (C-9 says so; `C-E9/c/frames/ce9/cand9-chromium-lens-rotate-fine.png`).
+- **The ambient exemplar is static** (D3).
+- **The dark housing barely separates from a dark track, and the dark Button's warm halo remains** (W-0.1, both critics).
+
+## P9-6 · What the owner has ruled, what is asked, and what D2 and D3 hold
+
+INBOUND was re-read at this seat's start (mtime 2026-10-30 14:16).
+
+**Folded in: Q-3′ and F-5, O-103f.** The in-place construction is the candidate; (c) leaves (§P9-1). F-5 is (a), and every read clears it. Neither is asked again. O-103f's conditions: (1) met, twice, by non-builders; (2) the cures land on the settled lens, with CK-25's clock item open; (3) met; (4) held. The registry's plain reading of the record, for the owner: on every cell that separates the two constructions in pass 9, the ruled one holds, at the cost the ruling named and no other measured.
+
+**Placed here: O-113's D5 rows** (INBOUND placed them in W-J.2 by owner of the object; none adds a CK row, since only the owner adds rows):
+
+| row | what it asks | D5's standing |
+|---|---|---|
+| B7-G3, the `.tap-squish` half of G-L-1 | no capsule hover or ToggleGroup scale; `.tap-squish` gone | the candidate already deletes `.tap-squish` (C-1) and takes the capsule off every non-dock composer (CK-11); the dock's use stays D2's. Checked against the converged spec at W-J.2's landing |
+| B7-G1, B7-G2 | SegmentedTabs and DockLayerGroup glide at their own size, the deform and `--stretch` laws removed, with no alias | re-authored or declined at W-J.2 against D-1 (inertia, weight, bounce); the dock half meets D2's B′. No measured cell on the candidate yet; not a pass-10 item |
+| M1-2, L-G2, with O-99a R-K1-b and R-K1-c | a closed Sheet lets go at the dismissed edge; focus returns without a scroll or a drop to `BODY` | D5's by placement, in W-J.2, outside CK-01..CK-27. **The vehicle moves with this registry:** FORMATION-PROGRESS 2026-10-29 told sci-report "earliest after pass 10"; it is now after pass 11 at the earliest, and atlas keeps M-7 |
+
+**Asked: O-113 Q7, the owner's.** Whether Button, Switch and Checkbox stop scaling on press, as atlas's PLAN §4.2 asks, against the liquid-weight and breath-of-life edicts and the ruled register. What D5 adds: O-103d (1) ruled the commit's geometric pop, not the press; `.tap-squish`'s half is already gone on the candidate. **Default until answered: the register as ruled; the press stays.** No CK row waits on it.
+
+| id | question | default | blocks |
+|---|---|---|---|
+| **Q7** (O-113) | as above | keep the press | nothing in CK; atlas's MO-03 |
+| **Q-1**, **Q-4** | unchanged | (c), (b) | nothing |
+| **next-pass classes** | admit any as a CK row, or leave it with its owner | — | §P9-7 |
+
+**No open row waits on the owner.**
+
+**What D2 holds** (D2 closed pass 8 clean, 38/38, and its pass 9 is the confirmation; FORMATION-PROGRESS 2026-10-29):
+- CK-01's `dock` latch: a D2 adoption of the dock into the register, or a harness scene that renders the dock with D2's leave.
+- CK-17: the dock's `:active` presses (`material.css:346-349`, `dock/styles/**`, the dock-only capsule `glass-capsule.css:128-135`) name their `touchstart` listener or move to the door's mark.
+- CK-08's named clause: `GlassDock.vue`'s `data-held`.
+- When D2 retires `.glass-capsule-hover`: the MIGRATION row for `keyframes.js/demo/components/instrument/pane/channel-controls/EasingField.vue:40` and chicago's three `.tap-squish` sites on `DockControl` (C-1).
+
+**What D3 holds** (converged at pass 13):
+- CK-19 and CK-01's ambient runtime cell: the Aurora's pointer response at 2× its rest drift (WebKit 1.71-1.72 against 1.23-1.24).
+- The lean on its own scalar, separate from the swirl's `uCursorStrength` (`§P7-6`), so A can write the ambient reduce leg.
+
+**Formation owes three things, and the first decides when D5 can converge.**
+1. **A wave that builds the held cells.** `§P8-6` says formation "routes both into W-0.1". At this seat, `W-0.1.md` and `W-0.8.md` name none of them, and FORMATION-PROGRESS records no such routing beyond the asks. D3 converged before the lean ask existed (pass 13 on 2026-10-20; the ask at `§P7-6`), and D2 is converging on a list without them. **Ask: an addendum to W-0.8 (the latch or dock scene, and the `:active` presses) and to W-0.1 (the amplitude and the lean's scalar), or the owner's word that CK-01, CK-17 and CK-19 are to be met some other way.** Without one, D5 stops at its fixed point with no route to a clean pass.
+2. The master merge of `release/10.1.1`/`10.1.2`/`10.1.3` and F5‴'s rebase, unchanged. 10.2.0 follows D2's convergence and W-0.8 (O-113, Q6), so the base will move, and §P9-8.2's floor seat fires then.
+3. Two records items: sci-report's owed 10.1.3 notice now also carries the later vehicle above; the empty `.claude/worktrees/bl/D5/p9/` directory (the kept `C-E9b/out-lost-seat` and pass 8's empty `p8/E8/` are no longer there at this seat).
+
+**Rows that cannot close inside D5:** CK-01 (D2 latch; D3 amplitude and lane), CK-17 (D2), CK-19 (D3).
+
+**Rows building can still close, which is why this is not the fixed point:** CK-20 (the side swap, its hysteresis), CK-25 (the lens's clocks under scale).
+
+## P9-7 · Next-pass defect classes (recorded; no CK row added), each placed
+
+From `§P8-7`:
+- Items 1, 2 (a one-sided bound; a film that reads escape) were cured by H9. Item 2's WebKit half stays REPORT.
+- Items 3, 4, 8, 10 (a paint copy that enumerates kinds, a scale from a bounding box, a glide composed with an inline transform, the feather's hypothesis) dissolved with the promotion: O-103f; the glide now composes outside the grow; the WebKit feather reads 0.991.
+- Item 5 (a lens without its place's transform, no fallback at the viewport) was cured on the settled lens and recurs as items 1 and 3 below.
+- Items 6, 7, 11 (a census that cannot count, the supersede list, the probe's modalities) were cured by P-E9 §6.
+- Item 9 (a paint instrument confounded in one engine) was applied here (§P9-4, the WebKit lens film).
+- Item 12 (process) recurs as item 12 below. Item 13: the stacking difference was read in frames by both critics; the rest stay stated.
+- `§P7-7` item 7 stays W-0.1's. `§P6-7` item 11 is bounded (O-103f (3)).
+
+New in pass 9:
+
+| # | class | source | placed at | owner of the cure |
+|---|---|---|---|---|
+| 1 | **A placement decided per frame, with no travel and no hysteresis.** A boolean on the track's position moves the visible lens 80-100 px in one frame, and flips on any wobble at the line. Any fallback of that shape does the same, `position-try` included | C-A9 §4 item 1, C-E9 §7 item 2 | CK-20 | P-E10; H10's cells, the candidate its plant |
+| 2 | **The correction zeroed on the flip frame** (`stage.ts:123-125`): one Chromium frame under scale with the pinned edge 50.4 px off | C-E9 §1.2 | CK-20, with item 1 | P-E10 |
+| 3 | **A placement correction composed inside its own animation**: `scale` outside `transform` multiplies `--lens-dx/-dy`; `plant-cause` measures the cure in Chromium only | C-E9 §1.3, §7 item 1 | CK-25 | P-E10, read in both engines; H10's cell |
+| 4 | **A witness that reads only the settled state**: E-13's 1200 ms hold passed item 3 | C-E9 §7 item 4 | CK-25's witness, CK-27 | H10 |
+| 5 | **The lens on its exit clock while the page moves.** The loop stops at release, as O-103f (3) requires, and the lens fades on for up to about 12 samples with its correction frozen. Unread | C-A9 §4 item 2 | CK-25 | H10: a REPORT cell (a scroll inside the exit, under scale); it becomes a counterexample only if it reads off the track on the cured bytes |
+| 6 | **The WebKit lens against its track on a wheel film** (§P9-4) | C-E9 §1.2, §7 item 3 | CK-20's witness | H10: `lensfilm` and its marker as a cell with a plant (the lens placed one frame late), read at the lowest load the seat can get. If the plant does not separate, it stays REPORT and is stated |
+| 7 | **A rate read as a fixed bar**: WebKit's idle read 98 per s in earlier seats and 60 in C-E9's, in both builds; cause unread | C-E9 §2, §7 item 5 | records | any idle read: the bar in the same run as the candidate |
+| 8 | **Two stale-place cells that pass without the frame read**: `plant-noread` reds 14 of 21; the two `clipstale … pointer · reveal` cells pass, cause unread; the five controls pass by design | P-E9 §8 item 4, C-A9 §1 CK-20 | CK-27, stated | H10 reads the two cells' cause or states it |
+| 9 | **A consumer site past the census's window**: C-2's census looks 20 lines up from a `<Slider>`; `§P4-0`'s speedtest Card is 37 lines up. Not re-read in pass 9, and it now holds on touch and keyboard too | this seat, from `§P4-0` finding 5 and P-E9 C-2 | CK-22 | P-E10: re-grep the site at HEAD and name it, or state it is gone; both critics read it |
+| 10 | **A REPORT cell with no graded form**: WebKit's filter on every mode, Chromium's rotation on a pointer | H9 §2.1, §5 | records | none under O-103f: the body is its place by construction; a geometry read only if a later seat wants one |
+| 11 | **O-113's rows** (§P9-6) | INBOUND O-113 | W-J.2 | W-J.2's landing; Q7 the owner's |
+| 12 | **Process.** A seat lost at the restart, and a first critic that returned before its battery; the completion seat's pattern held, with no number carried over. C-E9's completion seat read this file in part. C-A9 edited its runner while an instance ran (`parse error` on summary lines, no result lost), the class H9 §2.2 also saw; C-E9 replaced its runner by atomic rename. C-A9's first WebKit E-7 had no `--wt` and read UNMEASURED; re-read inside the acquisition. P-E9's WebKit wait reached 140 min and it kept queuing. P-E9 §4's swapped E-4 figures. No seat read `~/.claude`; no WebKit stage was skipped; no log prints an engine close or crash | the seats' process notes | records | every seat: runners replaced by rename, never edited in flight; E-7 refuses to run without `--wt` (H10) |
+
+## P9-8 · Pass-10 plan
+
+The checklist stays **CK-01..CK-27, unchanged**. Critics may not add rows. Rulings in force: O-103d (1)-(4); O-103f; Q-1 (c) and Q-4 (b) as defaults; Q7 on its default. A ruling that arrives mid-pass is folded in at the next seat boundary, never inside a running battery. Each seat re-reads `../../audit/INBOUND.md` and `../../FORMATION-PROGRESS.md` at its start. The candidate is the in-place construction; there is no second construction to carry.
+
+**What pass 10 can be.** It is clean only if D2's and D3's held cells reach the base before its critics run, which needs §P9-6's addendum first. Otherwise its job is the fixed point: CK-20 and CK-25's lens items closed, so that only CK-01, CK-17 and CK-19 stay open, each held by D2 or D3.
+
+### P9-8.1 · The candidate's parts
+
+| part | built as | must prove in pass 10 |
+|---|---|---|
+| **A's part** | P-A7's bytes, unchanged. **No A build seat** unless D3's lane reaches the base first (§P9-8.2); then P-A10 writes the ambient reduce leg on it | nothing else |
+| **E's part** | P-E10 on P-E9, one arm, in place | **CK-25:** the lens's pinned edge stays within 2 px of its track on every frame it shows, raise and exit, untransformed, translated and under `scale: 0.8`, both engines. `plant-cause`'s shape (the correction in the `translate` property, which composes outside the lens's own `scale`) is the measured cure, Chromium only so far; WebKit reads it too. **CK-20:** the side change carries weight and cannot chatter. The lens stays whole at the viewport's top on a hold that reaches the line mid-hold, so a side fixed at the press does not meet the row. Its largest one-frame move against its track is bounded by the spring row it rides (H10 prints the bound), never a figure sized to the witness; ±3 px about the line changes side at most once; the hysteresis band and the clock carry a reason (CK-12); under reduce the change is instant, with no travel (CK-10). The correction is never zeroed for a frame. If P-E10 finds a construction with no side change that keeps the lens whole, it may build that instead; the cells stay. No lighting layer, no blur change (O-87, CK-26). **CK-22:** C-2's sentence reads "The stage writes …"; C-9 restated on the cured bytes; §P9-7 item 9's site re-grepped and named; consumer greps re-run at the pass-10 HEAD with `grep -e`. **P-1, CK-23:** the cost measured; the cure no larger than it needs to be. **The gates:** build, typecheck, `demo:dist:build`, vitest |
+
+### P9-8.2 · The floor
+
+No floor seat unless one of three things happens before P-E10 starts: the base moves (F5⁗ = F5‴ rebased as `§P6-3` lays out, its battery on HEAD's scenes in both engines and F-14's browser cell; the 10.1.3 lines rebase with it); D3 publishes the lean lane (F-16 carries the hunk, and P-A10 runs); D2 lands its dock adoption, or publishes a dock scene with its leave (F-17, which D2's patch can supply without waiting for master once D2 converges). Otherwise F5‴ carries unchanged. If the base moves mid-pass, it is folded in at the next seat boundary.
+
+### P9-8.3 · Seats and order
+
+Every seat is Opus, declared explicitly. D5 runs at most three seats at a time, counted against every live workflow. Browser runs follow the 2026-10-16 note: no `--light`, one browser per battery with a context per cell, `guarded --exclusive webkit` as the one WebKit lock. Each seat takes **one** WebKit acquisition for all its WebKit stages, after its Chromium phases, never skipped, with re-read stages queued inside it, and one waiter per chain. Films take no mid-film screenshot. Runners are replaced by rename, never edited in flight.
+
+| wave | seat | charter |
+|---|---|---|
+| 0 | — | re-read INBOUND and FORMATION-PROGRESS; record the base; formation takes §P9-6's first item to the owner and tells D2 and D3 what they hold; D5 edits none of their bytes |
+| 1 | **H10** (harness; the one owner of `../harness/`) | Each item inside the row it serves, with a plant, and the clean fixture carrying the cured lens. **CK-25, E-13:** `loupe clock · enter|exit · none|translate|scale · fine|coarse`, the pinned edge per frame while opacity > 0.05, ≤ 2 px, both engines; the candidate of pass 9 its plant in Chromium, a fixture plant (the correction inside the animated transform) in both. **CK-20, E-10:** `loupe side` on both drives (a page scroll, a scroller carry; untransformed and under scale), the largest one-frame move against the track ≤ the bound derived from the row the travel rides, printed, the pinned edge ≤ 2 px throughout; `loupe wobble`, ±3 px about the line, at most one change; `loupe side · reduce`, instant. The candidate of pass 9 is the plant for each. **REPORT:** the exit under a scroll (§P9-7 item 5); `lensfilm` with its marker and a late-lens plant (§P9-7 item 6), graded if the plant separates. **CK-27:** the two `reveal` cells' cause (§P9-7 item 8). E-7 refuses to run without `--wt`. Self-test green in both engines; HEAD re-read only on changed witnesses |
+| 1b | **F5⁗ / F-16 / F-17** (only per §P9-8.2) | one patch at HEAD, its battery in both engines after H10's self-test |
+| 2 | **P-A10** (only if F-16 runs) | §P9-8.1, A's row |
+| 2 | **P-E10** | §P9-8.1, E's row. Starts after H10's self-test, and on P-A10's patch if it runs |
+| 3 | **C-A10, C-E10** | two critics. Neither may have authored any D5 seat in passes 2-10, and neither may have been a critic in passes 3-9. **Both read this file in full, in ranges, and both score CK-01..CK-27 in both engines on the one candidate** on the harness's own app, with the gestalt read from frames (CK-25). Each drives every path either pass-9 critic found: the swap on both drives, the wobble, the raise and exit under scale, the WebKit lens film, `zoom`, the Dialog, the anc kinds, the stacking frame, E-4 with velocity printed, C-2 and C-9 against the bytes, §P9-7 item 9's site. The idle bar is read in the same run as the candidate: the pass-8 construction, `cand8`, as O-103f (1) names it. A critic whose WebKit cells are not admitted returns those rows open |
+| 4 | agglomeration | the pass-10 registry: the candidate's status, the clean-pass count, whether only D2- and D3-held cells remain (the fixed point), what D2 and D3 hold, Q7 folded in if answered |
+
+### P9-8.4 · Convergence criterion
+
+Unchanged (`§3.5`, `§P1-9.4`, `§P2-8.4` .. `§P8-8.4`): at least three full passes (met at pass 3); zero open rows against CK-01..CK-27; a fresh adversarial audit by seats that did not author the winning spec; two consecutive clean passes. The clean-pass count after pass 9 is **0**, counted for the one candidate A+E, in place. Convergence comes at the end of pass 11 at the earliest, and needs:
+- P-E10's lens items closed on both critics;
+- D2's `dock` adoption and the dock's presses, or a dock scene with D2's leave and its presses naming their listener, in D5's base;
+- D3's amplitude and the lean's own lane in D5's base (through master or F-16), with A's reduce write on them;
+- passes 10 and 11 both clean.
+
+If the held cells reach the base after pass 10's critics run, each pass of delay moves that date by one pass. The count cannot start until they land.
