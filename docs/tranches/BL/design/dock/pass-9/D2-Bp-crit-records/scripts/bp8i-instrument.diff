@@ -1,0 +1,2 @@
+1040a1041
+>             { const L = ((u: Mover) => (u.el.getAttribute("aria-label") || u.el.querySelector("[aria-label]")?.getAttribute("aria-label") || (u.el.textContent || "").trim() || u.el.className.toString()).slice(0, 28)); const dk = (m.el.closest("[data-testid]") as HTMLElement | null)?.dataset.testid ?? ""; console.log("CRIT-ARM " + JSON.stringify({ dk, t: L(m), heir: heir ? L(heir) : null, ds: +ds.toFixed(1), de: +de.toFixed(1), w: +w.toFixed(1), gated: !!heir && de > 0 })); }

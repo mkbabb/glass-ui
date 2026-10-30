@@ -190,6 +190,78 @@ await witness("CE9-probe", "C-E9's cells: stacking, the lens under unread kinds 
     cell(name, "REPORT", `fine hold; the scroller carried up 2 px per frame for 60 frames${tf === "scale" ? " under scale 0.8" : ""} · ${s.length} post-frame samples · the lens flips side at sample ${flips.join(",") || "none"} · the largest one-frame step of the lens's centre against the track's: ${f(worst.d, 1)} px at sample ${worst.i} (steady steps ${f(Math.max(0, ...steps.filter((x) => !x.flip).map((x) => x.d)), 2)} px) · frames whose pinned edge is off by > ${PIN} px: ${badPin.length ? badPin.join(" ") : "none"} · lens top ranges ${f(Math.min(...s.map((x) => x.lt)), 1)}..${f(Math.max(...s.map((x) => x.lt)), 1)} px`);
   }
 
+  // ── C-E9b: the lens on its entry and exit clocks (C-A9 §4 item 2 was unmeasured). The card none, `translate: 0 30px` or
+  // `scale: 0.8` (origin 0 0), nothing scrolled. enter: per frame from the press (post-paint task) the lens's opacity and its
+  // pinned edge (bottom centre) against the track's painted top centre; exit: the same from the release. Read: the worst
+  // |pinned-edge Δ| over the frames the lens shows (opacity > 0.05), and the Δ at the first frame with opacity ≥ 0.5.
+  // Stills at about 110 ms into each clock. REPORT (a main-thread read, §P8-7 item 9; the frames are the paint) ──
+  const TFS = { none: null, translate: { translate: "0 30px" }, scale: { scale: "0.8", transformOrigin: "0 0" } };
+  if (want("lensclock")) for (const phase of ["enter", "exit"]) for (const [tf, css] of Object.entries(TFS)) {
+    const name = `CE9b lens ${phase} · ${tf}`;
+    const r = await guard(name, async () => {
+      const P = await openPage(E, T, "clipstale");
+      try {
+        const { page } = P;
+        await page.evaluate(([B, Q, css]) => { const b = document.querySelector(B); if (css) Object.assign(b.style, css); const q = document.querySelector(Q); const br = b.getBoundingClientRect(), k = br.height / b.offsetHeight, rr = q.getBoundingClientRect(); b.scrollTop += (rr.top - (br.top + b.clientTop * k + 50)) / k; }, [BOX, REST, css]);
+        await page.waitForTimeout(250);
+        const c = await center(page, CTHUMB);
+        const arm = () => page.evaluate((sel) => { window.__lc = []; const ch = new MessageChannel(); let n = 0; window.__lcOn = true;
+          ch.port1.onmessage = () => { const l = document.querySelector(sel.lens), t = document.querySelector(`${sel.root} ${sel.track}`); if (l && t) { const a1 = l.getBoundingClientRect(), d = t.getBoundingClientRect(); const below = l.hasAttribute("data-engage-lens-below"); window.__lc.push({ n, sc: getComputedStyle(l).scale, op: +getComputedStyle(l).opacity, pin: below ? a1.top - d.bottom : a1.bottom - d.top, dx: a1.left + a1.width / 2 - (d.left + d.width / 2) }); } };
+          const tick = () => { n++; ch.port2.postMessage(0); if (n < 45 && window.__lcOn) requestAnimationFrame(tick); }; requestAnimationFrame(tick); }, { ...L, root: CROOT });
+        const clipOf = () => page.evaluate((sel) => { const t = document.querySelector(`${sel.root} ${sel.track}`).getBoundingClientRect(); return { x: Math.max(0, Math.floor(t.left + t.width / 2 - 130)), y: Math.max(0, Math.floor(t.top - 140)), width: 260, height: 180 }; }, { ...L, root: CROOT });
+        let buf = null;
+        await page.mouse.move(c.x, c.y);
+        if (phase === "enter") {
+          await arm(); await page.mouse.down();
+          try { await page.waitForTimeout(110); buf = await shot(P, await clipOf()); await page.waitForTimeout(700); } finally { await page.mouse.up(); }
+        } else {
+          await page.mouse.down(); try { await page.waitForTimeout(1200); } finally { await arm(); await page.mouse.up(); }
+          await page.waitForTimeout(110); buf = await shot(P, await clipOf()); await page.waitForTimeout(700);
+        }
+        const s2 = await page.evaluate(() => { window.__lcOn = false; return window.__lc; });
+        return { s: s2, buf };
+      } finally { await P.close(); }
+    });
+    if (r.crashed) { cell(name, "REPORT", r.line); continue; }
+    save(`lens-${phase}-${tf}-110ms`, r.buf);
+    const s = (r.s ?? []).filter((x) => x.op > 0.05);
+    if (!s.length) { cell(name, "REPORT", "the lens shows on no frame"); continue; }
+    const worst = s.reduce((p, x) => (Math.abs(x.pin) > Math.abs(p.pin) ? x : p), s[0]);
+    const half = s.find((x) => x.op >= 0.5) ?? s[0];
+    cell(name, "REPORT", `fine hold, the card ${css ? Object.entries(css).map(([k2, v]) => `${k2} ${v}`).join(" ") : "untransformed"}, nothing scrolled · ${phase === "enter" ? "from the press" : "from the release"} the lens shows (opacity > 0.05) on ${s.length} post-frame samples · worst pinned-edge Δ ${f(worst.pin, 1)} px at sample ${worst.n} (opacity ${f(worst.op, 2)}, its scale ${worst.sc}) · at the first sample with opacity ≥ 0.5 (sample ${half.n}): Δ ${f(half.pin, 1)} px, Δx ${f(half.dx, 1)} px · samples ${s.slice(0, 8).map((x) => `${x.n}:${f(x.pin, 1)}@${f(x.op, 2)}`).join(" ")} · still ${label}-${engine}-lens-${phase}-${tf}-110ms.png`);
+  }
+
+  // ── C-E9b: the lens's exit frozen part-way (a paint witness for the clock read above). Fine hold 1200 ms, release; in the
+  // next animation frame every animation on the lens is paused at currentTime = <t> ms (its own CSS transitions: scale and
+  // opacity), then its rect is read and the frame screenshotted. none | scale card. REPORT ──
+  if (want("lensfreeze")) for (const [tf, css] of Object.entries({ none: null, scale: { scale: "0.8", transformOrigin: "0 0" } })) for (const t of [60, 120]) {
+    const name = `CE9b lens exit frozen · ${tf} · +${t} ms`;
+    const r = await guard(name, async () => {
+      const P = await openPage(E, T, "clipstale");
+      try {
+        const { page } = P;
+        await page.evaluate(([B, Q, css]) => { const b = document.querySelector(B); if (css) Object.assign(b.style, css); const q = document.querySelector(Q); const br = b.getBoundingClientRect(), k = br.height / b.offsetHeight, rr = q.getBoundingClientRect(); b.scrollTop += (rr.top - (br.top + b.clientTop * k + 50)) / k; }, [BOX, REST, css]);
+        await page.waitForTimeout(250);
+        const c = await center(page, CTHUMB);
+        await page.mouse.move(c.x, c.y); await page.mouse.down();
+        try { await page.waitForTimeout(1200); } finally { await page.mouse.up(); }
+        const g = await page.evaluate(([sel, t]) => new Promise((ok) => requestAnimationFrame(() => {
+          const l = document.querySelector(sel.lens), tr = document.querySelector(`${sel.root} ${sel.track}`);
+          const an = l.getAnimations(); for (const a of an) { a.pause(); a.currentTime = t; }
+          const a1 = l.getBoundingClientRect(), d = tr.getBoundingClientRect(); const below = l.hasAttribute("data-engage-lens-below");
+          ok({ n: an.length, props: an.map((a) => a.transitionProperty ?? a.animationName ?? "?").join(","), op: +getComputedStyle(l).opacity, sc: getComputedStyle(l).scale, pin: below ? a1.top - d.bottom : a1.bottom - d.top, lb: a1.bottom, lt: a1.top, tt: d.top, tx: d.left + d.width / 2 });
+        })), [{ ...L, root: CROOT }, t]);
+        await page.waitForTimeout(80);
+        const buf = await shot(P, { x: Math.max(0, Math.floor(g.tx - 130)), y: Math.max(0, Math.floor(Math.min(g.lt, g.tt) - 30)), width: 260, height: Math.ceil(Math.max(g.tt + 40, g.lb + 10) - Math.min(g.lt, g.tt)) + 40 });
+        return { g, buf };
+      } finally { await P.close(); }
+    });
+    if (r.crashed) { cell(name, "REPORT", r.line); continue; }
+    save(`lens-exit-frozen-${tf}-${t}ms`, r.buf);
+    const g = r.g;
+    cell(name, "REPORT", `release, then the lens's ${g.n} animation(s) [${g.props}] paused at +${t} ms · opacity ${f(g.op, 2)}, its scale ${g.sc} · the lens's pinned edge ${f(g.pin, 1)} px from the track's painted top (negative: above it) · frame ${label}-${engine}-lens-exit-frozen-${tf}-${t}ms.png`);
+  }
+
   // ── ancestor kinds H9 does not drive (H9's anc method, keyboard) ──
   if (want("anc")) {
     const KX = { none: {}, skew: { transform: "skewX(10deg)" }, mask: { "mask-image": "linear-gradient(to right, black 40%, transparent 95%)", "-webkit-mask-image": "linear-gradient(to right, black 40%, transparent 95%)" }, zoom: { zoom: "0.8" }, persp: { transform: "perspective(500px) rotateY(25deg)" }, blend: { "mix-blend-mode": "difference" } };
@@ -262,7 +334,9 @@ await witness("CE9-probe", "C-E9's cells: stacking, the lens under unread kinds 
         try {
           await page.waitForTimeout(1200);
           const g = await page.evaluate(lensRead, { ...L, root: '[data-t="dlg-slider"]' });
-          const top = g ? await page.evaluate(([x, y]) => { const e = document.elementFromPoint(x, y); return e ? !!e.closest(".glass-loupe") : false; }, [g.lx, g.lt + g.lh / 2]) : null;
+          // the loupe is `pointer-events: none`, which elementFromPoint skips: lifted for this one read and restored
+          // (C-E9b's fix: the first form read every loupe as "not topmost", an instrument defect)
+          const top = g ? await page.evaluate(([x, y]) => { const l = document.querySelector(".glass-loupe"); const pe = l.style.pointerEvents; l.style.pointerEvents = "auto"; const e = document.elementFromPoint(x, y); l.style.pointerEvents = pe; return e ? !!e.closest(".glass-loupe") : false; }, [g.lx, g.lt + g.lh / 2]) : null;
           const buf = g ? await shot(P, { x: Math.max(0, Math.floor(g.tx - g.tw / 2) - 20), y: Math.max(0, Math.floor(g.lt) - 10), width: Math.ceil(g.tw) + 40, height: Math.ceil(g.tb - g.lt) + 30 }) : null;
           return { g, top, buf };
         } finally { await page.mouse.up(); }
