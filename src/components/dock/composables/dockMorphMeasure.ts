@@ -157,19 +157,27 @@ export function useDockExpandedSize(
 
         const a = axis.value;
         const expanded = full.classList.contains("is-active");
-        if (!root.hasAttribute("data-morphing")) {
-            const chrome = getSize(root, a) - getSize(expanded ? full : summary, a);
+        // At rest the root is laid out in its own posture, so that posture's endpoint is
+        // the root's box as it stands: `restSize` would set overrides that change nothing
+        // and force the page through two more layouts to read the same number. A capture
+        // runs on every content change in either pane (a dashboard's section label as it
+        // scrolls), so only the other posture's endpoint pays for the overrides (U/B7d M1).
+        const resting = !root.hasAttribute("data-morphing");
+        const rootNow = resting ? getSize(root, a) : 0;
+        if (resting) {
+            const chrome = rootNow - getSize(expanded ? full : summary, a);
             if (expanded) expandedChrome = chrome;
             else collapsedChrome = chrome;
         }
 
-        const expandedPx = keepScroll(full, () =>
-            restSize(root, full, summary, a, expandedChrome),
-        );
+        const expandedPx =
+            resting && expanded
+                ? rootNow
+                : keepScroll(full, () => restSize(root, full, summary, a, expandedChrome));
         if (!expanded) {
-            collapsedPx = keepScroll(full, () =>
-                restSize(root, summary, full, a, collapsedChrome),
-            );
+            collapsedPx = resting
+                ? rootNow
+                : keepScroll(full, () => restSize(root, summary, full, a, collapsedChrome));
         }
         if (expandedPx <= 0) return;
 
