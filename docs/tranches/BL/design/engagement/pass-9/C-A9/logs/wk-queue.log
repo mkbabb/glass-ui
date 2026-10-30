@@ -1,0 +1,75 @@
+# 2026-10-29 22:55:15 queued guarded --exclusive webkit --timeout 90 · load { 8.41 9.49 10.20 }
+[guarded] waiting for the 'webkit' lock
+# 2026-10-29 23:02:48 WebKit lock acquired · load { 11.58 11.93 11.30 }
+# 23:03:53 waited 65 s for an in-flight Chromium stage
+## 23:03:53 [1] cand9-E-10 webkit · load { 11.48 11.85 11.31 }
+cand9-E-10 webkit · E-10 webkit PASS · 69 pass, 0 fail, 0 unmeasured of 69 gating cells (42 reported) · load 11.5/11.8/11.3 at start, 12.7/13.4/12.3 at end · # exit 0 · 2026-10-29 23:09:37 · load { 12.71 13.36 12.28 }
+## 23:09:37 [2] cand9-E-13 webkit · load { 12.71 13.36 12.28 }
+cand9-E-13 webkit · E-13 webkit PASS · 16 pass, 0 fail, 0 unmeasured of 16 gating cells (2 reported) · load 12.7/13.4/12.3 at start, 11.6/13.0/12.2 at end · # exit 0 · 2026-10-29 23:10:35 · load { 11.64 13.00 12.22 }
+## 23:10:35 [3] cand9-ca9 webkit · load { 11.64 13.00 12.22 }
+cand9-ca9 webkit · C-A9 probe webkit PASS · 8 pass, 0 fail, 0 unmeasured of 8 gating cells (5 reported) · load 11.6/13.0/12.2 at start, 10.0/12.4/12.1 at end · # exit 0 · 2026-10-29 23:11:34 · load { 10.01 12.44 12.07 }
+## 23:11:34 [4] cand9-e9loop webkit · load { 10.01 12.44 12.07 }
+cand9-e9loop webkit · E9-probe webkit PASS · 2 pass, 0 fail, 0 unmeasured of 2 gating cells (10 reported) · load 10.0/12.4/12.1 at start, 9.9/12.2/12.0 at end · # exit 0 · 2026-10-29 23:12:01 · load { 9.89 12.20 11.99 }
+## 23:12:01 [5] cand9-idle webkit · load { 9.89 12.20 11.99 }
+cand9-idle webkit · CA6-probe webkit UNMEASURED · 0 pass, 0 fail, 0 unmeasured of 0 gating cells (4 reported) · load 9.9/12.2/12.0 at start, 8.6/11.8/11.8 at end · # exit 3 · 2026-10-29 23:12:19 · load { 8.65 11.77 11.84 }
+## 23:12:19 [6] cand9-tip webkit · load { 8.65 11.77 11.84 }
+cand9-tip webkit · E8-probe webkit PASS · 4 pass, 0 fail, 0 unmeasured of 4 gating cells (0 reported) · load 8.6/11.8/11.8 at start, 7.8/11.5/11.7 at end · # exit 0 · 2026-10-29 23:12:31 · load { 7.85 11.49 11.74 }
+## 23:12:31 [7] cand9-crest webkit · load { 7.85 11.49 11.74 }
+cand9-crest webkit · C-A8 probe webkit PASS · 2 pass, 0 fail, 0 unmeasured of 2 gating cells (0 reported) · load 7.8/11.5/11.7 at start, 7.9/11.4/11.7 at end · # exit 0 · 2026-10-29 23:12:34 · load { 7.86 11.43 11.72 }
+## 23:12:34 [8] probe9-E-10 webkit · load { 7.86 11.43 11.72 }
+probe9-E-10 webkit · E-10 webkit FAIL · 60 pass, 9 fail, 0 unmeasured of 69 gating cells (42 reported) · load 7.9/11.4/11.7 at start, 7.9/9.2/10.5 at end · # exit 1 · 2026-10-29 23:18:12 · load { 7.94 9.20 10.54 }
+scripts/run-ca9.sh:37: parse error near `;;'
+## 23:18:12 [9] probe9-E-13 webkit · load { 7.94 9.20 10.54 }
+probe9-E-13 webkit · E-13 webkit PASS · 16 pass, 0 fail, 0 unmeasured of 16 gating cells (2 reported) · load 7.9/9.2/10.5 at start, 9.3/9.2/10.5 at end · # exit 0 · 2026-10-29 23:19:09 · load { 9.28 9.23 10.45 }
+## 23:19:09 [10] probe9-ca9 webkit · load { 9.28 9.23 10.45 }
+probe9-ca9 webkit · C-A9 probe webkit FAIL · 3 pass, 5 fail, 0 unmeasured of 8 gating cells (6 reported) · load 9.3/9.2/10.5 at start, 8.9/9.2/10.4 at end · # exit 1 · 2026-10-29 23:20:11 · load { 8.93 9.24 10.38 }
+## 23:20:11 [11] noread-E-10 webkit · load { 8.93 9.24 10.38 }
+noread-E-10 webkit · E-10 webkit FAIL · 30 pass, 14 fail, 0 unmeasured of 44 gating cells (26 reported) · load 8.9/9.2/10.4 at start, 10.1/9.7/10.4 at end · # exit 1 · 2026-10-29 23:22:39 · load { 10.09 9.67 10.37 }
+## 23:22:39 [12] glidepx-E-10 webkit · load { 10.09 9.67 10.37 }
+glidepx-E-10 webkit · E-10 webkit FAIL · 0 pass, 1 fail, 0 unmeasured of 1 gating cells (1 reported) · load 10.1/9.7/10.4 at start, 9.8/9.6/10.3 at end · # exit 1 · 2026-10-29 23:22:45 · load { 9.84 9.63 10.35 }
+## 23:22:45 [13] ancscale-E-13 webkit · load { 9.84 9.63 10.35 }
+ancscale-E-13 webkit · E-13 webkit FAIL · 14 pass, 2 fail, 0 unmeasured of 16 gating cells (2 reported) · load 9.8/9.6/10.3 at start, 10.9/10.0/10.4 at end · # exit 1 · 2026-10-29 23:23:43 · load { 10.87 9.95 10.42 }
+## 23:23:43 [14] nobelow-E-13 webkit · load { 10.87 9.95 10.42 }
+nobelow-E-13 webkit · E-13 webkit FAIL · 14 pass, 2 fail, 0 unmeasured of 16 gating cells (2 reported) · load 10.9/10.0/10.4 at start, 10.0/9.9/10.4 at end · # exit 1 · 2026-10-29 23:24:41 · load { 9.97 9.90 10.37 }
+## 23:24:41 [15] loop-ca9 webkit · load { 9.97 9.90 10.37 }
+loop-ca9 webkit · C-A9 probe webkit FAIL · 0 pass, 5 fail, 0 unmeasured of 5 gating cells (0 reported) · load 10.0/9.9/10.4 at start, 8.8/9.6/10.2 at end · # exit 1 · 2026-10-29 23:25:19 · load { 8.82 9.61 10.24 }
+## 23:25:19 [16] crest-crest webkit · load { 8.82 9.61 10.24 }
+crest-crest webkit · C-A8 probe webkit FAIL · 0 pass, 2 fail, 0 unmeasured of 2 gating cells (0 reported) · load 8.8/9.6/10.2 at start, 8.8/9.6/10.2 at end · # exit 1 · 2026-10-29 23:25:22 · load { 8.82 9.61 10.24 }
+## 23:25:22 [17] prmY-E-9 webkit · load { 8.82 9.61 10.24 }
+prmY-E-9 webkit · E-9 webkit FAIL · 57 pass, 28 fail, 0 unmeasured of 85 gating cells (8 reported) · load 8.8/9.6/10.2 at start, 8.8/9.5/10.1 at end · # exit 1 · 2026-10-29 23:26:50 · load { 8.79 9.52 10.15 }
+## 23:26:50 [18] cand9-E-1 webkit · load { 8.79 9.52 10.15 }
+cand9-E-1 webkit · E-1 webkit FAIL · 93 pass, 3 fail, 0 unmeasured of 96 gating cells (0 reported) · load 8.8/9.5/10.1 at start, 9.2/9.5/10.1 at end · # exit 1 · 2026-10-29 23:27:34 · load { 9.21 9.49 10.10 }
+## 23:27:34 [19] cand9-E-2 webkit · load { 9.21 9.49 10.10 }
+cand9-E-2 webkit · E-2 webkit PASS · 164 pass, 0 fail, 0 unmeasured of 164 gating cells (16 reported) · load 9.2/9.5/10.1 at start, 9.2/9.3/9.9 at end · # exit 0 · 2026-10-29 23:31:04 · load { 9.16 9.29 9.89 }
+## 23:31:04 [20] cand9-E-3 webkit · load { 9.16 9.29 9.89 }
+cand9-E-3 webkit · E-3 webkit PASS · 22 pass, 0 fail, 0 unmeasured of 22 gating cells (0 reported) · load 9.2/9.3/9.9 at start, 7.5/8.9/9.7 at end · # exit 0 · 2026-10-29 23:31:33 · load { 7.51 8.90 9.73 }
+## 23:31:33 [21] cand9-E-4 webkit · load { 7.51 8.90 9.73 }
+cand9-E-4 webkit · E-4 webkit PASS · 15 pass, 0 fail, 4 unmeasured of 19 gating cells (0 reported) · load 7.4/8.9/9.7 at start, 13.7/10.2/10.1 at end · # exit 0 · 2026-10-29 23:33:35 · load { 13.74 10.20 10.09 }
+## 23:33:35 [22] cand9-E-5 webkit · load { 13.74 10.20 10.09 }
+cand9-E-5 webkit · E-5 webkit PASS · 56 pass, 0 fail, 0 unmeasured of 56 gating cells (0 reported) · load 13.7/10.2/10.1 at start, 8.2/9.9/10.1 at end · # exit 0 · 2026-10-29 23:39:05 · load { 8.23 9.86 10.07 }
+## 23:39:05 [23] cand9-E-6 webkit · load { 8.23 9.86 10.07 }
+cand9-E-6 webkit · E-6 webkit FAIL · 2 pass, 2 fail, 8 unmeasured of 12 gating cells (2 reported) · load 8.2/9.9/10.1 at start, 8.5/9.9/10.1 at end · # exit 1 · 2026-10-29 23:39:10 · load { 8.54 9.89 10.08 }
+## 23:39:10 [24] cand9-E-7 webkit · load { 8.54 9.89 10.08 }
+cand9-E-7 webkit · E-7 webkit PASS · 3 pass, 0 fail, 4 unmeasured of 7 gating cells (0 reported) · load 8.5/9.9/10.1 at start, 8.7/9.9/10.1 at end · # exit 0 · 2026-10-29 23:39:15 · load { 8.73 9.91 10.08 }
+## 23:39:15 [25] cand9-E-8 webkit · load { 8.73 9.91 10.08 }
+cand9-E-8 webkit · E-8 webkit PASS · 19 pass, 0 fail, 0 unmeasured of 19 gating cells (0 reported) · load 8.7/9.9/10.1 at start, 10.4/10.2/10.2 at end · # exit 0 · 2026-10-29 23:39:57 · load { 10.36 10.17 10.17 }
+## 23:39:57 [26] cand9-E-9 webkit · load { 10.36 10.17 10.17 }
+cand9-E-9 webkit · E-9 webkit PASS · 85 pass, 0 fail, 0 unmeasured of 85 gating cells (8 reported) · load 10.4/10.2/10.2 at start, 12.0/10.9/10.5 at end · # exit 0 · 2026-10-29 23:41:25 · load { 11.98 10.90 10.46 }
+## 23:41:25 [27] cand9-prmplant webkit · load { 11.98 10.90 10.46 }
+cand9-prmplant webkit · E-9 webkit FAIL · 40 pass, 32 fail, 0 unmeasured of 72 gating cells (7 reported) · load 12.0/10.9/10.5 at start, 11.6/11.1/10.6 at end · # exit 1 · 2026-10-29 23:42:35 · load { 11.59 11.13 10.58 }
+## 23:42:35 [28] cand9-E-11 webkit · load { 11.59 11.13 10.58 }
+cand9-E-11 webkit · E-11 webkit PASS · 11 pass, 0 fail, 5 unmeasured of 16 gating cells (1 reported) · load 11.6/11.1/10.6 at start, 9.9/9.9/10.1 at end · # exit 0 · 2026-10-29 23:49:27 · load { 9.92 9.85 10.06 }
+scripts/run-ca9.sh:38: parse error near `)'
+## 23:49:27 [29] cand9-E-12 webkit · load { 9.92 9.85 10.06 }
+cand9-E-12 webkit · E-12 webkit PASS · 101 pass, 0 fail, 1 unmeasured of 102 gating cells (10 reported) · load 9.9/9.9/10.1 at start, 11.6/11.3/10.7 at end · # exit 0 · 2026-10-29 23:51:16 · load { 11.59 11.32 10.67 }
+## 23:51:16 [30] cand9-cap webkit · load { 11.59 11.32 10.67 }
+cand9-cap webkit · CAP webkit PASS · 18 pass, 0 fail, 0 unmeasured of 18 gating cells (24 reported) · load 11.6/11.3/10.7 at start, 11.3/10.9/10.5 at end · # exit 0 · 2026-10-29 23:54:21 · load { 11.30 10.85 10.55 }
+## 23:54:21 [31] probe9-cap webkit · load { 11.30 10.85 10.55 }
+probe9-cap webkit · CAP webkit PASS · 18 pass, 0 fail, 0 unmeasured of 18 gating cells (24 reported) · load 11.3/10.9/10.5 at start, 10.7/10.3/10.3 at end · # exit 0 · 2026-10-29 23:57:27 · load { 10.69 10.32 10.35 }
+## 23:57:27 [32] cand9-flipstill webkit · load { 10.69 10.32 10.35 }
+cand9-flipstill webkit · C-A9 probe webkit UNMEASURED · 0 pass, 0 fail, 0 unmeasured of 0 gating cells (1 reported) · load 10.7/10.3/10.3 at start, 10.7/10.3/10.3 at end · # exit 3 · 2026-10-29 23:57:32 · load { 10.71 10.33 10.35 }
+## 23:57:32 [33] cand9-E-7 webkit · load { 10.71 10.33 10.35 }
+cand9-E-7 webkit · E-7 webkit FAIL · 6 pass, 1 fail, 0 unmeasured of 7 gating cells (0 reported) · load 10.7/10.3/10.3 at start, 10.3/10.3/10.3 at end · # exit 1 · 2026-10-29 23:57:37 · load { 10.33 10.26 10.32 }
+# 23:57:37 END after 33 stages
+# 2026-10-29 23:57:37 WebKit acquisition end · load { 10.33 10.26 10.32 }
+# guarded exit 0 · 2026-10-29 23:57:42

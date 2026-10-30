@@ -1,0 +1,10 @@
+# C-A9 glidepx-E-10 webkit · 2026-10-29 23:22:40 · load { 10.09 9.67 10.37 }
+# E-10 · CK-20 no one-frame discontinuity on an engagement path
+# target /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p9/C-A9/wt/.ca9out/builds/plant-glidepx · engine webkit · lock wait 0.0 s · other headless processes: chromium 8, webkit 0 · load 10.1/9.7/10.4 at start
+# scene app: harness scenes/App.vue (sha1 9e34ffa5714e)
+# webkit 26.5 (Playwright WebKit, not Safari; real Safari UNMEASURED (owner's safaridriver checkbox))
+# narrowed to scenes clipstale
+  REPORT     E-10 clipstale glidescale · none · keyboard engaged (promoted false), the scroller untransformed (the reference) · a 40 px block inserted before the rest box: the root's painted centre moved 1.18 px in the insertion's frame, then at most 4.28 px per 16.7 ms; the place moved 40.0 px · load 10.1/9.7/10.4
+  FAIL       E-10 clipstale glidescale · scale · keyboard engaged (promoted false), the scroller under scale 0.8 (origin 0 0) · a 40 px block inserted before the rest box (a re-render): the root's painted centre moved 7.16 px in the insertion's frame (bound ≤ the unscaled reference's 1.18 + 1 px: the glide starts where the control was painted), then at most 2.33 px per 16.7 ms; the place moved 32.0 px · load 9.8/9.6/10.3
+E-10 webkit FAIL · 0 pass, 1 fail, 0 unmeasured of 1 gating cells (1 reported) · load 10.1/9.7/10.4 at start, 9.8/9.6/10.3 at end
+# exit 1 · 2026-10-29 23:22:45 · load { 9.84 9.63 10.35 }
