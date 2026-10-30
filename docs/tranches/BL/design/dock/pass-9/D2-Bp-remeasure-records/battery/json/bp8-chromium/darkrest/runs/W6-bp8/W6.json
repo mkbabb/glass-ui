@@ -1,0 +1,274 @@
+{
+ "witness": "W6",
+ "target": "bp8@cff357cb",
+ "when": "2026-10-29T17:24:39.653Z",
+ "load": 24.31,
+ "cells": [
+  {
+   "engine": "chromium",
+   "cell": "form·collapsed-rest",
+   "pass": true,
+   "failed": [],
+   "wraps": {
+    "plate": {
+     "l": 625,
+     "t": 40,
+     "r": 816,
+     "b": 96
+    },
+    "faceInk": 1671,
+    "outsidePx": 0,
+    "outside": 0
+   },
+   "structure": {
+    "present": [
+     {
+      "sel": "[data-testid=form-face]",
+      "ok": true
+     },
+     {
+      "sel": "[data-testid=form-track]",
+      "ok": true
+     },
+     {
+      "sel": "[data-testid=form-count]",
+      "ok": true
+     },
+     {
+      "sel": "[data-testid=form-dismiss]",
+      "ok": true
+     }
+    ],
+    "isSeat": true,
+    "plates": [
+     {
+      "who": "div.dock-plate",
+      "isPlate": true
+     }
+    ],
+    "plateId": "div.dock-plate",
+    "marked": true
+   },
+   "summary": "form ink beyond the plate 0 px (bound 1); present 4/4; dismiss is a seat: true; backdrop plates 1 [div.dock-plate]",
+   "load": 25.28
+  },
+  {
+   "engine": "chromium",
+   "cell": "form·expanded-rest",
+   "pass": true,
+   "failed": [],
+   "wraps": {
+    "plate": {
+     "l": 553,
+     "t": 40,
+     "r": 886,
+     "b": 96
+    },
+    "faceInk": 1336,
+    "outsidePx": 0,
+    "outside": 0
+   },
+   "structure": {
+    "present": [
+     {
+      "sel": "[data-testid=form-face]",
+      "ok": false
+     },
+     {
+      "sel": "[data-testid=form-track]",
+      "ok": true
+     },
+     {
+      "sel": "[data-testid=form-count]",
+      "ok": true
+     },
+     {
+      "sel": "[data-testid=form-dismiss]",
+      "ok": true
+     }
+    ],
+    "isSeat": true,
+    "plates": [
+     {
+      "who": "div.dock-plate",
+      "isPlate": true
+     }
+    ],
+    "plateId": "div.dock-plate",
+    "marked": true
+   },
+   "summary": "form ink beyond the plate 0 px (bound 1); present 3/4 (missing [data-testid=form-face]); dismiss is a seat: true; backdrop plates 1 [div.dock-plate]; plate div.dock-plate (collapsed div.dock-plate); the same element: true",
+   "load": 24.77
+  },
+  {
+   "engine": "chromium",
+   "cell": "form·expand",
+   "pass": false,
+   "unmeasured": false,
+   "unjudged": [],
+   "failed": [
+    "window"
+   ],
+   "ownerBlocked": "Q-4",
+   "D": 142.19,
+   "start": 190.88,
+   "target": 333.06,
+   "frames": 127,
+   "travelMs": 239.8,
+   "continuity": {
+    "ok": true,
+    "ratio": 0.64,
+    "step": 9.14,
+    "bound": 14.25,
+    "atMs": 133.4,
+    "dt": 7.7
+   },
+   "landing": {
+    "ok": true,
+    "why": "dead",
+    "overshoot": 0,
+    "reversals": 0
+   },
+   "window": {
+    "ok": false,
+    "why": "window 258.2 ms > clock 214.2 + 2×16.7 + stall 10.2 = 257.8 ms (O-64 R-4, H-3d)",
+    "open": 92.69999999999982,
+    "close": 350.89999999999986,
+    "land": 332.5,
+    "motionStart": 92.69999999999982,
+    "clockMs": 214.2,
+    "frameMs": 16.7,
+    "duration": 258.2,
+    "allowMs": 257.8,
+    "q4": true,
+    "q4AllowMs": 313.6,
+    "q4a": {
+     "ok": false,
+     "allowMs": 257.8,
+     "why": "258.2 ms > 257.8"
+    },
+    "q4c": {
+     "ok": true,
+     "allowMs": 313.6,
+     "why": "258.2 ms ≤ 313.6"
+    }
+   },
+   "owners": {
+    "ok": true,
+    "frames": 0
+   },
+   "trajectory": {
+    "ok": true,
+    "dev": 0.48,
+    "tol": 6.69,
+    "frac": 0,
+    "atMs": 332.5,
+    "why": "worst 0.48 px (0.34 % of D) from the rung's analytic spring (tol 6.69)"
+   },
+   "terminal": {
+    "ok": true,
+    "last": 0.83,
+    "prev": 0.44,
+    "bound": 1.14,
+    "why": "last step 0.83 px after 0.44 px (bound 1.14)"
+   },
+   "spec": {
+    "vmaxNorm": 8.37,
+    "M": 0.002966,
+    "band": 0.02,
+    "clockMs": 214.2
+   },
+   "faces": {
+    "ok": true,
+    "why": "0 px of form ink beyond the plate over 11 screenshot sample(s) (6 in flight) (bound 1)"
+   },
+   "summary": "D 142.19 px (190.88→333.06); step ×0.64; dead; window 258.2 ms (allow 257.8, clock 214.2) — window 258.2 ms > clock 214.2 + 2×16.7 + stall 10.2 = 257.8 ms (O-64 R-4, H-3d); trajectory worst 0.48 px (0.34 % of D) from the rung's analytic spring (tol 6.69); terminal last step 0.83 px after 0.44 px (bound 1.14); owners 0; Q-4 lenient window holds (allow 313.6 ms); Q-4 (a) flag at the 2 % band fails (258.2 ms > 257.8); Q-4 (c) 270 ms dock clock holds (258.2 ms ≤ 313.6); faces 0 px of form ink beyond the plate over 11 screenshot sample(s) (6 in flight) (bound 1)  ⟶ OWNER-BLOCKED (Q-4): window",
+   "load": 24.31
+  },
+  {
+   "engine": "chromium",
+   "cell": "form·collapse",
+   "pass": false,
+   "unmeasured": false,
+   "unjudged": [],
+   "failed": [
+    "window"
+   ],
+   "ownerBlocked": "Q-4",
+   "D": 142.19,
+   "start": 333.06,
+   "target": 190.88,
+   "frames": 551,
+   "travelMs": 242.7,
+   "continuity": {
+    "ok": true,
+    "ratio": 0.64,
+    "step": 11.36,
+    "bound": 17.64,
+    "atMs": 3666.9,
+    "dt": 9.6
+   },
+   "landing": {
+    "ok": true,
+    "why": "dead",
+    "overshoot": 0,
+    "reversals": 0
+   },
+   "window": {
+    "ok": false,
+    "why": "window 267.2 ms > clock 214.2 + 2×16.7 + stall 10.3 = 257.9 ms (O-64 R-4, H-3d)",
+    "open": 3607.1000000000004,
+    "close": 3874.3,
+    "land": 3857.8999999999996,
+    "motionStart": 3615.2,
+    "clockMs": 214.2,
+    "frameMs": 16.7,
+    "duration": 267.2,
+    "allowMs": 257.9,
+    "q4": true,
+    "q4AllowMs": 313.7,
+    "q4a": {
+     "ok": false,
+     "allowMs": 257.9,
+     "why": "267.2 ms > 257.9"
+    },
+    "q4c": {
+     "ok": true,
+     "allowMs": 313.7,
+     "why": "267.2 ms ≤ 313.7"
+    }
+   },
+   "owners": {
+    "ok": true,
+    "frames": 0
+   },
+   "trajectory": {
+    "ok": true,
+    "dev": 0.44,
+    "tol": 6.69,
+    "frac": 0,
+    "atMs": 3857.9,
+    "why": "worst 0.44 px (0.31 % of D) from the rung's analytic spring (tol 6.69)"
+   },
+   "terminal": {
+    "ok": true,
+    "last": 0.83,
+    "prev": 0.37,
+    "bound": 1.29,
+    "why": "last step 0.83 px after 0.37 px (bound 1.29)"
+   },
+   "spec": {
+    "vmaxNorm": 8.37,
+    "M": 0.002966,
+    "band": 0.02,
+    "clockMs": 214.2
+   },
+   "faces": {
+    "ok": true,
+    "why": "0 px of form ink beyond the plate over 44 screenshot sample(s) (0 in flight) (bound 1)"
+   },
+   "summary": "D 142.19 px (333.06→190.88); step ×0.64; dead; window 267.2 ms (allow 257.9, clock 214.2) — window 267.2 ms > clock 214.2 + 2×16.7 + stall 10.3 = 257.9 ms (O-64 R-4, H-3d); trajectory worst 0.44 px (0.31 % of D) from the rung's analytic spring (tol 6.69); terminal last step 0.83 px after 0.37 px (bound 1.29); owners 0; Q-4 lenient window holds (allow 313.7 ms); Q-4 (a) flag at the 2 % band fails (267.2 ms > 257.9); Q-4 (c) 270 ms dock clock holds (267.2 ms ≤ 313.7); faces 0 px of form ink beyond the plate over 44 screenshot sample(s) (0 in flight) (bound 1)  ⟶ OWNER-BLOCKED (Q-4): window",
+   "load": 24.31
+  }
+ ]
+}

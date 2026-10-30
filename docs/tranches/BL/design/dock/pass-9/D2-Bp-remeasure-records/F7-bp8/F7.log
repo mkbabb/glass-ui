@@ -1,0 +1,21 @@
+12:27  up 1 day, 15:48, 4 users, load averages: 13.18 10.43 9.92
+STEP  F7  lib  exit 0  9 s  [load 13.18-14.42]
+STEP  F7  demo  exit 0  2 s  [load 14.42-14.42]
+STEP  F7  typecheck  exit 0  19 s  [load 14.42-17.71]
+STEP  F7  units  exit 0  76 s  [load 17.71-25.7]
+PASS  F7  source  f7·typecheck  typecheck exit 0  [load 25.7]
+PASS  F7  source  f7·build  lib build exit 0, demo dist build exit 0  [load 25.7]
+PASS  F7  source  f7·units  232 test file(s) outside tests/gates/, 2241 test(s); 0 file(s) failing  [load 25.7]
+PASS  F7  source  f7·gate·boot-graph  14 assertion(s), 14 ran, 0 failing; build arm 3/3 ran  [load 25.7]
+PASS  F7  source  f7·gate·comment-ratio  15 assertion(s), 15 ran, 0 failing  [load 25.7]
+PASS  F7  source  f7·gate·feedback-tint-seam  3 assertion(s), 3 ran, 0 failing  [load 25.7]
+PASS  F7  source  f7·gate·gate-register  21 assertion(s), 21 ran, 0 failing  [load 25.7]
+PASS  F7  source  f7·gate·orphan-css-partial  9 assertion(s), 9 ran, 0 failing  [load 25.7]
+PASS  F7  source  f7·gate·overfit-structure  15 assertion(s), 15 ran, 0 failing  [load 25.7]
+PASS  F7  source  f7·gate·tabs-seam  26 assertion(s), 26 ran, 0 failing  [load 25.7]
+PASS  F7  source  f7·gate·token-hygiene  4 assertion(s), 4 ran, 0 failing  [load 25.7]
+PASS  F7  source  f7·gate·trap-gates  6 assertion(s), 6 ran, 0 failing  [load 25.7]
+PASS  F7  source  f7·gate·type-hygiene  7 assertion(s), 7 ran, 0 failing  [load 25.7]
+PASS  F7  wt  13/13 cells pass  (json: /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D2/p9/Bp-remeasure/out/f7/runs/F7-wt/F7.json)
+exit 0
+12:29  up 1 day, 15:50, 4 users, load averages: 25.56 15.81 12.09
