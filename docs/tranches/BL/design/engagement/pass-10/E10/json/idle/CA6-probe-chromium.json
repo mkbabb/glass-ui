@@ -1,0 +1,37 @@
+{
+ "id": "CA6-probe",
+ "engine": "chromium",
+ "version": "149.0.7827.55",
+ "target": {
+  "build": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p10/E10/wt/.e10out/builds/cand10"
+ },
+ "loadStart": "10.3/12.5/12.8",
+ "loadEnd": "9.3/12.1/12.7",
+ "verdict": "UNMEASURED",
+ "cells": [
+  {
+   "name": "idle slider keyboard-engaged · rest",
+   "status": "REPORT",
+   "line": "rAF calls 0.0/s · ResizeObserver callbacks 0.0/s · layouts 0.0/s · style recalcs 0.0/s · [data-engaged] 0",
+   "load": "9.3/12.1/12.7"
+  },
+  {
+   "name": "idle slider keyboard-engaged · engaged idle",
+   "status": "REPORT",
+   "line": "rAF calls 130.3/s · ResizeObserver callbacks 130.3/s · layouts 0.0/s · style recalcs 0.0/s · [data-engaged] 1",
+   "load": "9.3/12.1/12.7"
+  },
+  {
+   "name": "idle slider keyboard-engaged · engaged idle, scrolled off-screen",
+   "status": "REPORT",
+   "line": "rAF calls 130.0/s · ResizeObserver callbacks 130.0/s · layouts 0.0/s · style recalcs 0.0/s · [data-engaged] 1 · engaged box -2904..-2882 of 500",
+   "load": "9.3/12.1/12.7"
+  },
+  {
+   "name": "idle slider keyboard-engaged · after Escape",
+   "status": "REPORT",
+   "line": "rAF calls 0.0/s · ResizeObserver callbacks 0.0/s · layouts 0.0/s · style recalcs 0.0/s · [data-engaged] 0",
+   "load": "9.3/12.1/12.7"
+  }
+ ]
+}

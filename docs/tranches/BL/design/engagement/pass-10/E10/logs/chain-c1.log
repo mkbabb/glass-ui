@@ -1,0 +1,72 @@
+## 2026-10-30 18:36:38 chain start · load { 15.71 13.12 11.23 }
+build: # exit 0 · 2026-10-30 18:36:48 · load { 15.99 13.27 11.31 }
+typecheck: # exit 0 · 2026-10-30 18:37:06 · load { 14.69 13.13 11.29 }
+demo-dist: # exit 0 · 2026-10-30 18:37:12 · load { 14.39 13.09 11.29 }
+vitest: # exit 0 · 2026-10-30 18:38:14 · load { 14.32 13.33 11.51 }
+## 18:38:14 plant-swap-e10 chromium --scenes clipstale,slider --part lensside · load { 14.32 13.33 11.51 }
+plant-swap-e10 chromium · E-10 chromium FAIL · 8 pass, 4 fail, 0 unmeasured of 12 gating cells (0 reported) · load 15.3/14.3/12.3 at start, 14.3/14.2/12.4 at end · # exit 1 · 2026-10-30 18:42:27 · load { 14.26 14.20 12.40 }
+## 18:42:32 plant-owed-e10 chromium --scenes clipstale,slider --part lensside · load { 13.76 14.10 12.38 }
+plant-owed-e10 chromium · E-10 chromium FAIL · 8 pass, 4 fail, 0 unmeasured of 12 gating cells (0 reported) · load 13.8/14.1/12.4 at start, 16.1/14.6/12.6 at end · # exit 1 · 2026-10-30 18:43:17 · load { 16.14 14.59 12.64 }
+## 18:43:22 plant-nohyst-e10 chromium --scenes clipstale,slider --part lensside · load { 18.05 15.01 12.80 }
+plant-nohyst-e10 chromium · E-10 chromium FAIL · 10 pass, 2 fail, 0 unmeasured of 12 gating cells (0 reported) · load 20.3/15.5/13.0 at start, 17.9/15.7/13.2 at end · # exit 1 · 2026-10-30 18:44:08 · load { 17.86 15.65 13.18 }
+## 18:44:12 plant-fixed-e10 chromium --scenes clipstale,slider --part lensside · load { 17.86 15.65 13.18 }
+plant-fixed-e10 chromium · E-10 chromium FAIL · 4 pass, 8 fail, 0 unmeasured of 12 gating cells (0 reported) · load 17.9/15.7/13.2 at start, 14.2/15.0/13.1 at end · # exit 1 · 2026-10-30 18:44:57 · load { 14.19 15.03 13.08 }
+## 18:45:02 plant-fast-e10 chromium --scenes clipstale,slider --part lensside · load { 14.98 15.18 13.14 }
+plant-fast-e10 chromium · E-10 chromium FAIL · 8 pass, 4 fail, 0 unmeasured of 12 gating cells (0 reported) · load 15.0/15.2/13.1 at start, 15.8/15.4/13.3 at end · # exit 1 · 2026-10-30 18:45:46 · load { 15.78 15.41 13.33 }
+## 18:45:52 plant-zero-e10 chromium --scenes clipstale,slider --part lensside · load { 15.79 15.42 13.35 }
+plant-zero-e10 chromium · E-10 chromium FAIL · 4 pass, 8 fail, 0 unmeasured of 12 gating cells (0 reported) · load 15.8/15.4/13.3 at start, 16.8/15.6/13.5 at end · # exit 1 · 2026-10-30 18:46:36 · load { 16.79 15.62 13.52 }
+## 18:46:41 plant-reducetravel-e10 chromium --scenes clipstale,slider --part lensside · load { 16.89 15.66 13.55 }
+plant-reducetravel-e10 chromium · E-10 chromium FAIL · 8 pass, 4 fail, 0 unmeasured of 12 gating cells (0 reported) · load 16.9/15.7/13.5 at start, 16.0/15.6/13.6 at end · # exit 1 · 2026-10-30 18:47:26 · load { 15.98 15.62 13.64 }
+## 18:47:31 plant-clock-e13 chromium --part clock · load { 15.82 15.59 13.64 }
+plant-clock-e13 chromium · E-13 chromium FAIL · 0 pass, 12 fail, 0 unmeasured of 12 gating cells (2 reported) · load 15.8/15.6/13.6 at start, 16.0/15.8/13.8 at end · # exit 1 · 2026-10-30 18:48:10 · load { 15.97 15.76 13.80 }
+## 18:48:15 plant-exitfrozen-e13 chromium --part clock · load { 15.01 15.56 13.74 }
+plant-exitfrozen-e13 chromium · E-13 chromium PASS · 12 pass, 0 fail, 0 unmeasured of 12 gating cells (2 reported) · load 15.0/15.6/13.7 at start, 11.9/14.6/13.5 at end · # exit 0 · 2026-10-30 18:48:54 · load { 11.94 14.60 13.47 }
+## 18:48:59 plant-noread-e10 chromium --part old --scenes clipstale,restale · load { 11.31 14.43 13.41 }
+plant-noread-e10 chromium · E-10 chromium FAIL · 5 pass, 16 fail, 0 unmeasured of 21 gating cells (0 reported) · load 11.3/14.4/13.4 at start, 12.0/14.2/13.4 at end · # exit 1 · 2026-10-30 18:49:55 · load { 12.03 14.18 13.39 }
+## 18:50:01 plant-nolens-e13 chromium  · load { 12.67 14.28 13.42 }
+plant-nolens-e13 chromium · E-13 chromium FAIL · 12 pass, 16 fail, 0 unmeasured of 28 gating cells (4 reported) · load 12.7/14.3/13.4 at start, 8.3/12.4/12.8 at end · # exit 1 · 2026-10-30 18:51:24 · load { 8.29 12.45 12.80 }
+## 18:51:28 plant-loop-loop chromium  · load { 9.71 12.67 12.88 }
+plant-loop-loop chromium · E9-probe chromium FAIL · 0 pass, 2 fail, 0 unmeasured of 2 gating cells (10 reported) · load 9.7/12.7/12.9 at start, 12.1/13.0/13.0 at end · # exit 1 · 2026-10-30 18:51:54 · load { 12.05 13.01 13.00 }
+## 18:51:59 cand10-loop chromium  · load { 12.45 13.08 13.02 }
+cand10-loop chromium · E9-probe chromium PASS · 2 pass, 0 fail, 0 unmeasured of 2 gating cells (10 reported) · load 12.4/13.1/13.0 at start, 10.8/12.6/12.9 at end · # exit 0 · 2026-10-30 18:52:25 · load { 10.80 12.62 12.85 }
+## 18:52:30 cand10-idle chromium  · load { 10.33 12.50 12.81 }
+cand10-idle chromium · CA6-probe chromium UNMEASURED · 0 pass, 0 fail, 0 unmeasured of 0 gating cells (4 reported) · load 10.3/12.5/12.8 at start, 9.3/12.1/12.7 at end · # exit 3 · 2026-10-30 18:52:48 · load { 9.33 12.13 12.67 }
+## 18:52:53 cand10-tip chromium  · load { 9.33 12.13 12.67 }
+cand10-tip chromium · E8-probe chromium PASS · 4 pass, 0 fail, 0 unmeasured of 4 gating cells (0 reported) · load 9.2/12.1/12.6 at start, 8.6/11.9/12.6 at end · # exit 0 · 2026-10-30 18:53:01 · load { 8.65 11.89 12.58 }
+## 18:53:05 cand10-E-10 chromium  · load { 9.40 11.99 12.61 }
+cand10-E-10 chromium · E-10 chromium PASS · 86 pass, 0 fail, 0 unmeasured of 86 gating cells (40 reported) · load 9.4/12.0/12.6 at start, 8.0/8.4/10.5 at end · # exit 0 · 2026-10-30 18:59:19 · load { 8.02 8.39 10.54 }
+## 18:59:23 cand10-E-13 chromium  · load { 7.78 8.34 10.51 }
+cand10-E-13 chromium · E-13 chromium PASS · 28 pass, 0 fail, 0 unmeasured of 28 gating cells (4 reported) · load 7.8/8.3/10.5 at start, 6.8/7.9/10.1 at end · # exit 0 · 2026-10-30 19:00:47 · load { 6.81 7.92 10.15 }
+## 19:00:51 cand10-E-1 chromium  · load { 7.23 7.98 10.16 }
+cand10-E-1 chromium · E-1 chromium FAIL · 93 pass, 1 fail, 2 unmeasured of 96 gating cells (0 reported) · load 7.2/8.0/10.2 at start, 6.5/7.7/9.9 at end · # exit 1 · 2026-10-30 19:01:28 · load { 6.50 7.67 9.95 }
+## 19:01:34 cand10-E-2 chromium  · load { 6.30 7.61 9.91 }
+cand10-E-2 chromium · E-2 chromium PASS · 164 pass, 0 fail, 0 unmeasured of 164 gating cells (16 reported) · load 6.3/7.6/9.9 at start, 6.3/6.9/9.1 at end · # exit 0 · 2026-10-30 19:04:46 · load { 6.33 6.88 9.12 }
+## 19:04:50 cand10-E-3 chromium  · load { 6.14 6.83 9.09 }
+cand10-E-3 chromium · E-3 chromium PASS · 22 pass, 0 fail, 0 unmeasured of 22 gating cells (0 reported) · load 6.1/6.8/9.1 at start, 6.8/6.9/9.1 at end · # exit 0 · 2026-10-30 19:05:13 · load { 6.77 6.93 9.05 }
+## 19:05:17 cand10-E-4 chromium  · load { 6.77 6.93 9.05 }
+cand10-E-4 chromium · E-4 chromium PASS · 18 pass, 0 fail, 0 unmeasured of 18 gating cells (1 reported) · load 6.8/6.9/9.1 at start, 9.1/7.7/9.1 at end · # exit 0 · 2026-10-30 19:07:21 · load { 9.07 7.73 9.08 }
+## 19:07:25 cand10-E-5 chromium  · load { 8.74 7.69 9.05 }
+cand10-E-5 chromium · E-5 chromium PASS · 56 pass, 0 fail, 0 unmeasured of 56 gating cells (0 reported) · load 8.7/7.7/9.1 at start, 9.6/9.2/9.4 at end · # exit 0 · 2026-10-30 19:11:11 · load { 9.64 9.16 9.40 }
+## 19:11:15 cand10-E-6 chromium  · load { 9.34 9.11 9.38 }
+cand10-E-6 chromium · E-6 chromium FAIL · 4 pass, 2 fail, 8 unmeasured of 14 gating cells (0 reported) · load 9.3/9.1/9.4 at start, 10.3/9.3/9.5 at end · # exit 1 · 2026-10-30 19:11:25 · load { 10.34 9.32 9.46 }
+## 19:11:31 cand10-E-7 chromium  · load { 10.23 9.32 9.45 }
+cand10-E-7 chromium · E-7 chromium FAIL · 6 pass, 1 fail, 0 unmeasured of 7 gating cells (0 reported) · load 10.2/9.3/9.5 at start, 10.2/9.3/9.5 at end · # exit 1 · 2026-10-30 19:11:35 · load { 10.21 9.33 9.46 }
+## 19:11:39 cand10-E-8 chromium  · load { 10.52 9.41 9.48 }
+cand10-E-8 chromium · E-8 chromium PASS · 19 pass, 0 fail, 0 unmeasured of 19 gating cells (0 reported) · load 10.5/9.4/9.5 at start, 8.8/9.1/9.4 at end · # exit 0 · 2026-10-30 19:12:18 · load { 8.79 9.14 9.38 }
+## 19:12:23 cand10-E-9 chromium  · load { 8.79 9.14 9.38 }
+cand10-E-9 chromium · E-9 chromium PASS · 85 pass, 0 fail, 0 unmeasured of 85 gating cells (8 reported) · load 8.8/9.1/9.4 at start, 9.0/9.2/9.4 at end · # exit 0 · 2026-10-30 19:13:45 · load { 9.03 9.24 9.41 }
+## 19:13:50 cand10-prmplant chromium  · load { 8.55 9.14 9.37 }
+cand10-prmplant chromium · E-9 chromium FAIL · 40 pass, 32 fail, 0 unmeasured of 72 gating cells (7 reported) · load 8.5/9.1/9.4 at start, 10.2/9.3/9.4 at end · # exit 1 · 2026-10-30 19:14:54 · load { 10.19 9.34 9.42 }
+## 19:14:59 cand10-E-11 chromium  · load { 11.30 9.59 9.50 }
+cand10-E-11 chromium · E-11 chromium PASS · 11 pass, 0 fail, 5 unmeasured of 16 gating cells (1 reported) · load 11.3/9.6/9.5 at start, 9.1/10.6/10.3 at end · # exit 0 · 2026-10-30 19:21:46 · load { 9.12 10.56 10.30 }
+## 19:21:51 cand10-E-12 chromium  · load { 9.35 10.58 10.31 }
+cand10-E-12 chromium · E-12 chromium PASS · 102 pass, 0 fail, 0 unmeasured of 102 gating cells (10 reported) · load 9.3/10.6/10.3 at start, 11.1/10.9/10.5 at end · # exit 0 · 2026-10-30 19:23:29 · load { 11.06 10.88 10.46 }
+## 19:23:35 cand10-cap chromium  · load { 11.14 10.89 10.46 }
+cand10-cap chromium · CAP chromium PASS · 18 pass, 0 fail, 0 unmeasured of 18 gating cells (24 reported) · load 11.1/10.9/10.5 at start, 8.6/10.0/10.1 at end · # exit 0 · 2026-10-30 19:26:12 · load { 8.60 9.95 10.14 }
+## 19:26:18 cand10-glance chromium  · load { 8.48 9.90 10.13 }
+cand10-glance chromium · GLANCE chromium UNMEASURED · 0 pass, 0 fail, 0 unmeasured of 0 gating cells (4 reported) · load 8.4/9.9/10.1 at start, 9.0/10.0/10.1 at end · # exit 3 · 2026-10-30 19:26:28 · load { 9.04 9.97 10.15 }
+## 19:26:31 plant-swap-glance chromium  · load { 8.64 9.88 10.11 }
+plant-swap-glance chromium · GLANCE chromium UNMEASURED · 0 pass, 0 fail, 0 unmeasured of 0 gating cells (4 reported) · load 8.6/9.9/10.1 at start, 8.6/9.8/10.1 at end · # exit 3 · 2026-10-30 19:26:46 · load { 8.55 9.80 10.08 }
+## 19:26:51 plant-clock-glance chromium  · load { 8.19 9.70 10.04 }
+plant-clock-glance chromium · GLANCE chromium UNMEASURED · 0 pass, 0 fail, 0 unmeasured of 0 gating cells (4 reported) · load 8.2/9.7/10.0 at start, 7.9/9.6/10.0 at end · # exit 3 · 2026-10-30 19:27:01 · load { 7.93 9.60 10.00 }
+## 2026-10-30 19:27:05 chain end · load { 7.86 9.55 9.98 }
