@@ -265,6 +265,11 @@
     .glass-dock.collapsed:has(.dock-layer--summary:empty) .dock-persistent > * {
         place-self: center;
     }
+    /* The progress rim is out of flow and fills the pill (`inset: 0`). Centring it shrinks it to a
+       0 x 0 box, and the track inside it has no length, so the collapsed dock paints no progress. */
+    .glass-dock.collapsed:has(.dock-layer--summary:empty) .dock-persistent > .scroll-progress-rim {
+        place-self: stretch;
+    }
     /* Floor the collapsed glyph at the 16px-min the switcher glyph
        carries (never a sliver inside an inline-flex column). */
     .glass-dock.collapsed .dock-persistent svg,

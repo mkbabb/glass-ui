@@ -98,9 +98,9 @@ export function useTabDragMorph(
     // stays dead. Watching the indicator ELEMENT itself (`indicatorRef.value`) with
     // `{ immediate: true }` gives `reattach` its first LIVE call the tick the element
     // resolves (the immediate run is a null-guarded no-op; the null→element transition
-    // fires the real arm), and re-resolves the snap centers on every option/orientation
-    // change (a resize re-resolves via the same `refresh` on the next re-arm). `refresh`
-    // is a no-op mid-gesture + a no-op on a null node, so the immediate arm is safe.
+    // fires the real arm), and re-arms on every option/orientation change (the snap
+    // centers themselves are re-read at each press). `refresh` is a no-op mid-gesture +
+    // a no-op on a null node, so the immediate arm is safe.
     watch(
         () =>
             [

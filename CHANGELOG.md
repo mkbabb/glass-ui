@@ -4,6 +4,34 @@
 
 Merged on local branch `u/b7-glass` (off `release/10.1.1` bbf176f02, with the published `v10.1.2` merged in) from `u/b7-glass-shape` (rows B7-G1 to B7-G6) and `u/b7-glass-perf` (rows B7-G7 to B7-G9). Row numbers follow the relay letter.
 
+### Root items (`u/b7d-glass-register`, U/B7d M3)
+
+- **A collapsed dock's progress rim has length (D-08).** The rule that centres the
+  collapsed pill's one glyph (`.dock-persistent > *`) also caught the out-of-flow
+  `ScrollProgressRim`. `place-self: center` shrank it to 0 x 0 at the pill's centre, so the
+  vertical track measured 3 x 0 px and the collapsed rail painted no progress while
+  `aria-valuenow` ran. The rim now stretches: 44 x 44 box, 3 x 28 px track. Witness:
+  `tests/components/dock/collapsed-rim-fills-pill.test.ts`.
+- **A press on the grabbable indicator moves nothing (O-4).** `useDragMorph` read its origin
+  from the spring before the `Draggable` seated the spring at the pointer, so the first follow
+  delta was the pointer's whole client coordinate. Re-clicking the active tab threw the
+  indicator 635 px right in one frame on atlas's /sci strip, past the strip's end, and a drag
+  ran one client coordinate ahead of the pointer. The spring and the snap centres now share
+  one space, the surface's centre. A release already on its centre had no frame after it, so
+  the gesture never finished and in Chromium the offset stayed; the release now commits
+  itself. The snap centres are read at each press, so a re-flow cannot pull a click to where
+  the tab used to be. `DockLayerGroup` shares the fix. Witnesses:
+  `tests/composables/motion/useDragMorph.grab.test.ts`,
+  `tests-visual/SegmentedTabs.glide.spec.ts`.
+- **A drag out and back, released on its start, finishes the gesture (O-4).** The pointer is
+  still moving at such a release, so the `Draggable` re-seats the spring there with the release
+  velocity and aims it at the snap centre it already sits on. keyframes.js reads that as an
+  unchanged target, so the spring stayed unsettled and never ticked: the indicator kept
+  `transition-property: none`, and on atlas /vft-germination the next tab click landed with no
+  glide (1 frame in Firefox). `useDragMorph` now settles such a release in place. Witnesses:
+  `tests/composables/motion/useDragMorph.grab.test.ts` (1 new, red before) and
+  `tests-visual/SegmentedTabs.glide.spec.ts` (2 new, 8 of 8 red before in C and F).
+
 ### Root items (`u/b7-glass`, U/B7c C3)
 
 Built by the atlas formation's B7c pass on `u/b7-glass` after the B7b land (79a9e3eea).
