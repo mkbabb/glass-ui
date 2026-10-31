@@ -1,0 +1,157 @@
+# 2026-10-30 20:41:43 P-E10 consumer greps · glass-ui HEAD 7a24abade
+## atlas HEAD 069708a
+## bbnf-buddy HEAD 2857c2f
+## chicago HEAD 
+## keyframes.js HEAD 5c48e3da
+## slides HEAD 7dcbb3b
+## speedtest HEAD e2d9444d
+## value.js HEAD c2ccf6a4e
+## fourier-analysis HEAD 3bb9da5
+## sci-report HEAD bbcbd503
+
+# self-check: the summary counts its own patterns (a pattern that cannot count would print 0 here):
+#   glass-ui src --stage-reach 0 · glass-ui src --veil-x/y 22 (HEAD v10.1.0 src)
+
+# S1 <Slider · S2 <NumberField · L glass-loupe · V glass-focus-veil · VX --veil-x/-y · ST engage-footprint|data-engage-stage|data-engaged
+# PA position-anchor|clip-path|mask-image|transform|anchor-name on a slider/number-field/slider-track rule · HS --held-scale-|--stage-*|--lens-*
+# AU <Aurora|<GlassAurora · SC setCursor|clearCursor · TQ tap-squish|interactive-item · AC :active on .glass-slider · DH data-held
+# DC data-commit|data-press · PT --glass-btn-press-t|--press-t · UH useDockHold · LP useLiquidPress · UE useEngage · ES engageStage|releaseStage|useEngageStage|flingStage
+# FV data-focus-veil|--loupe-left|--loupe-top · ED ENGAGE_DECLARATION|--rung-class|--rung-commit|--rung-grow|--scale-engage|--scale-commit-pop
+atlas · S1 2 · S2 0 · L 0 · V 0 · VX 4 · ST 0 · PA 0 · HS 0 · AU 13 · SC 0 · TQ 0 · AC 0 · DH 0 · DC 0 · PT 0 · UH 0 · LP 0 · UE 0 · ES 2 · FV 0 · ED 0
+bbnf-buddy · S1 1 · S2 0 · L 0 · V 0 · VX 0 · ST 0 · PA 0 · HS 0 · AU 0 · SC 0 · TQ 0 · AC 0 · DH 0 · DC 0 · PT 0 · UH 0 · LP 0 · UE 0 · ES 0 · FV 0 · ED 0
+chicago · S1 0 · S2 0 · L 0 · V 0 · VX 0 · ST 0 · PA 0 · HS 0 · AU 0 · SC 0 · TQ 3 · AC 0 · DH 0 · DC 0 · PT 0 · UH 0 · LP 0 · UE 0 · ES 0 · FV 0 · ED 0
+keyframes.js · S1 4 · S2 1 · L 0 · V 0 · VX 0 · ST 0 · PA 0 · HS 0 · AU 1 · SC 6 · TQ 2 · AC 0 · DH 0 · DC 0 · PT 0 · UH 0 · LP 3 · UE 0 · ES 0 · FV 0 · ED 0
+slides · S1 0 · S2 0 · L 0 · V 0 · VX 0 · ST 0 · PA 0 · HS 0 · AU 0 · SC 0 · TQ 0 · AC 0 · DH 0 · DC 0 · PT 0 · UH 0 · LP 0 · UE 0 · ES 0 · FV 0 · ED 0
+speedtest · S1 2 · S2 6 · L 0 · V 0 · VX 0 · ST 0 · PA 0 · HS 0 · AU 8 · SC 0 · TQ 5 · AC 0 · DH 0 · DC 0 · PT 0 · UH 0 · LP 9 · UE 0 · ES 0 · FV 0 · ED 0
+value.js · S1 6 · S2 1 · L 0 · V 0 · VX 0 · ST 0 · PA 0 · HS 0 · AU 1 · SC 4 · TQ 0 · AC 0 · DH 2 · DC 0 · PT 0 · UH 0 · LP 5 · UE 0 · ES 0 · FV 0 · ED 0
+fourier-analysis · S1 5 · S2 1 · L 0 · V 0 · VX 0 · ST 0 · PA 0 · HS 0 · AU 0 · SC 0 · TQ 1 · AC 0 · DH 0 · DC 0 · PT 0 · UH 0 · LP 0 · UE 0 · ES 0 · FV 0 · ED 0
+sci-report · S1 5 · S2 0 · L 0 · V 0 · VX 0 · ST 0 · PA 0 · HS 0 · AU 1 · SC 0 · TQ 0 · AC 0 · DH 0 · DC 0 · PT 0 · UH 0 · LP 0 · UE 0 · ES 0 · FV 0 · ED 0
+
+# every nonzero column's lines in full (S1/S2/AU/SC listed below)
+atlas/types/platform/chrome/background/composables/useAuroraVeil.d.ts:21:        fallback-floor `--veil-*` pair + the `--veil-x`/`--veil-y` bloom-centroid). */
+atlas/src/platform/chrome/background/composables/useAuroraVeil.ts:51:        fallback-floor `--veil-*` pair + the `--veil-x`/`--veil-y` bloom-centroid). */
+atlas/src/platform/chrome/background/composables/useAuroraVeil.ts:116:        "--veil-x": centroid.value?.x ?? CORNER_X,
+atlas/src/platform/chrome/background/composables/useAuroraVeil.ts:117:        "--veil-y": centroid.value?.y ?? CORNER_Y,
+atlas/src/charts/composables/useEChart.ts:124:    const releaseStageMorph = stageMorph?.bind({ chart, host: opts.host, option: opts.option });
+atlas/src/charts/composables/useEChart.ts:125:    if (releaseStageMorph) onScopeDispose(releaseStageMorph);
+chicago/src/TempApp.vue:298:                    class="tap-squish"
+chicago/src/TempApp.vue:310:                    <DockControl shape="tab" class="tap-squish" :active="status !== 'any'" :aria-label="'Status: ' + statusLabel">
+chicago/src/TempApp.vue:336:            <DockControl class="tap-squish" aria-label="Add a listing" title="Add a listing" @click="edit(null)">
+keyframes.js/demo/app/dock/menu/MbabbMenu.vue:45:                 align-items:center` (unlayered) and `.interactive-item` carries
+keyframes.js/demo/styles/playback-idiom.css:80:   Button already presses with its own spring scale (useLiquidPress), so the
+keyframes.js/demo/components/instrument/pane/channel-controls/EasingField.vue:40:                    class="control-surface glass-control-edge glass-capsule-hover tap-squish focus-ring transition-control flex h-(--control-h-md) w-full min-w-0 cursor-pointer items-center justify-between gap-1.5 rounded-pill ps-3 pe-10 text-dropdown"
+keyframes.js/demo/components/instrument/transport/composables/usePlayActuation.ts:38: *    `useLiquidPress` releases on blur/pointerleave for the same reason.
+keyframes.js/test/demo/instrument/channel-options-render-edge.test.ts:27: * (`useDragMorph`), and `number-field` (its stepper `Button` → `useLiquidPress`
+speedtest/src/features/speedtest/ui/PhaseTimeline.vue:34:            class="timeline-region tap-squish"
+speedtest/src/components/admin/AdminDataSourceToggle.vue:110:            class="text-small tap-squish pointer-coarse:min-h-11 pointer-coarse:min-w-11"
+speedtest/src/components/survey/SurveyReview.vue:57:                     bound via pre-allocated Map (R5: NEVER call useLiquidPress
+speedtest/src/components/survey/SurveyReview.vue:108:import { useLiquidPress } from "@mkbabb/glass-ui/motion";
+speedtest/src/components/survey/SurveyReview.vue:125:// R5 — NEVER call useLiquidPress inside v-for. Pre-allocate one instance
+speedtest/src/components/survey/SurveyReview.vue:131:// `useSpringPress` into `useLiquidPress`); the pill's 5% scale is bound below.
+speedtest/src/components/survey/SurveyReview.vue:132:const pressMap = new Map<string, ReturnType<typeof useLiquidPress>>();
+speedtest/src/components/survey/SurveyReview.vue:135:        pressMap.set(step.id, useLiquidPress({ squish: false }));
+speedtest/src/components/survey/SurveyResultDock.vue:113:                    class="result-dock-pill tap-squish"
+speedtest/src/components/survey/AddressAutocomplete.vue:74:                        class="tap-squish w-full cursor-pointer rounded-xl px-3 py-2 text-left text-prose transition-colors hover:bg-accent/10 data-[highlighted]:bg-accent/10 data-[highlighted]:text-prose"
+speedtest/src/layouts/AdminDashboardLayout.vue:69:                     glass-ui's `useLiquidPress({ squish: false })` (the 7.0.0
+speedtest/src/layouts/AdminDashboardLayout.vue:72:                     (0..1) drives a `scale(1 - value * 0.05)` tap-squish —
+speedtest/src/layouts/AdminDashboardLayout.vue:163:import { useLiquidPress } from "@mkbabb/glass-ui/motion";
+speedtest/src/layouts/AdminDashboardLayout.vue:177:const logoutPress = useLiquidPress({ squish: false });
+value.js/demo/test/palettes/ss8-b12-cures.test.ts:13: * `useLiquidPress`, wrapped only to observe its keyboard leg.
+value.js/demo/test/palettes/ss8-b12-cures.test.ts:25:        useLiquidPress: (...args: Parameters<typeof actual.useLiquidPress>) => {
+value.js/demo/test/palettes/ss8-b12-cures.test.ts:26:            const r = actual.useLiquidPress(...args);
+value.js/demo/picker/controls/ComponentSliders/ComponentSliders.vue:428:.channel-slider[data-held] .slider-thumb,
+value.js/demo/picker/controls/ComponentSliders/ComponentSliders.vue:430:.channel-slider[data-held] .slider-track {
+value.js/demo/palettes/inspector/PaletteInspector.vue:184:import { useLiquidPress } from "@mkbabb/glass-ui/motion";
+value.js/demo/palettes/inspector/PaletteInspector.vue:285:const press = useLiquidPress({
+fourier-analysis/web/e2e/f-w14v-c3.spec.ts:156:                bare.className = "menu__item interactive-item glass-menu-row";
+
+# S1/S2: every <Slider>/<NumberField> site
+atlas/src/filter/ui/PercentileRangeSlider.vue:3:// the K-G-CONTROLS fold). A dual-thumb glass `<Slider>` over a range dim's LIVE data distribution
+atlas/src/filter/ui/PercentileRangeSlider.vue:72:        <Slider
+bbnf-buddy/src/components/EditableSlider.vue:124:            <Slider
+keyframes.js/demo/components/instrument/pane/channel-controls/LayerConfigPanel.vue:116:        <NumberField
+keyframes.js/demo/components/instrument/pane/channel-controls/LayerConfigPanel.vue:155:            <Slider
+keyframes.js/demo/components/playback/PlaybackRibbon.vue:55:                            <Slider
+keyframes.js/demo/components/playback/PlaybackRibbon.vue:283:// stays where it lives — the reka `<Slider>`'s own `@update:model-value` →
+keyframes.js/demo/components/playback/AnimationVisualizer.vue:12:         The STAGE stays a decorative visual twin of the real reka <Slider>
+speedtest/src/components/AppSettingsButton.vue:69:                            <NumberField :model-value="devConfig.downloadDuration / 1000" @update:model-value="v => updateConfig('downloadDuration', v * 1000)" :min="1" :max="60" size="sm" class="text-prose"><NumberFieldInput /></NumberField>
+speedtest/src/components/AppSettingsButton.vue:71:                            <NumberField :model-value="devConfig.uploadDuration / 1000" @update:model-value="v => updateConfig('uploadDuration', v * 1000)" :min="1" :max="60" size="sm" class="text-prose"><NumberFieldInput /></NumberField>
+speedtest/src/components/AppSettingsButton.vue:73:                            <NumberField :model-value="devConfig.downloadStreams" @update:model-value="v => updateConfig('downloadStreams', v)" :min="1" :max="16" size="sm" class="text-prose"><NumberFieldInput /></NumberField>
+speedtest/src/components/AppSettingsButton.vue:75:                            <NumberField :model-value="devConfig.chunkSizeMB" @update:model-value="v => updateConfig('chunkSizeMB', v)" :min="1" :max="500" size="sm" class="text-prose"><NumberFieldInput /></NumberField>
+speedtest/src/components/AppSettingsButton.vue:77:                            <NumberField :model-value="devConfig.pingCount" @update:model-value="v => updateConfig('pingCount', v)" :min="1" :max="50" size="sm" class="text-prose"><NumberFieldInput /></NumberField>
+speedtest/src/components/dashboard/SubnetAddDialog.vue:19:                        <NumberField v-model="newSubnet.prefixLength" :min="0" :max="32">
+speedtest/src/components/dashboard/DashboardMapControls.vue:65:                    <Slider
+speedtest/src/components/dashboard/DashboardMapControls.vue:134:                        <Slider
+value.js/demo/workbenches/gradient/GradientVisualizer/GradientStopInspector.vue:63:                    <NumberField
+value.js/demo/workbenches/gradient/GradientVisualizer/GradientVisualizer.vue:260:                <Slider
+value.js/demo/workbenches/generate/GenerateControls.vue:322:            <Slider
+value.js/demo/workbenches/extract/ExtractControls.vue:48:                <Slider
+value.js/demo/workbenches/extract/ExtractControls.vue:74:            <Slider
+value.js/demo/scenes/ConfigSliderPane.vue:220:                            <Slider
+value.js/demo/picker/controls/ComponentSliders/ComponentSliders.vue:66:                        <Slider
+fourier-analysis/web/src/components/ui/SliderControl.vue:5: * P.W5 Lane B.4 + B.1 — migrated from the 221 LOC shadow recipe to `<Slider>`
+fourier-analysis/web/src/components/ui/SliderControl.vue:19: *     producer fact that matters here is a CONTRACT (`<Slider>` acquires the
+fourier-analysis/web/src/components/ui/SliderControl.vue:199:                <NumberField
+fourier-analysis/web/src/components/ui/SliderControl.vue:227:        <Slider
+fourier-analysis/web/src/components/shared/FourierTimeline.vue:27: * producer's own `<Slider>`.
+fourier-analysis/web/src/components/shared/FourierTimeline.vue:275:        <Slider
+sci-report/dashboards/usf/features/filter/UsfFilter.vue:125:                <Slider
+sci-report/dashboards/sci/features/filter/SciFilter.vue:203:                <Slider
+sci-report/dashboards/ecf/features/filter/EcfFilter.vue:321:                <Slider
+sci-report/dashboards/ecf/features/filter/EcfFilter.vue:341:                <Slider
+sci-report/dashboards/demand/features/filter/DemandFilter.vue:83:                <Slider
+
+# a <Slider>/<NumberField> within 20 lines below an ancestor-paint declaration (opacity, filter, clip-path, rotate, transform, scale) in the same file
+sci-report/dashboards/ecf/features/filter/EcfFilter.vue:321+7:                    data-testid="filter-cost-slider"
+
+# AU: every <Aurora>/<GlassAurora> mount, and the pointer-events lines of the same file
+atlas/types/platform/chrome/background/composables/useAuroraConfig.d.ts:25:    /** The reactive pole-derived config — hand straight to `<Aurora :config>`. */
+atlas/types/platform/chrome/background/composables/useAuroraConfig.d.ts:29:    /** The theme-aware outer compositing envelope (→ `<Aurora :opacity-ceiling>`), pinned at the
+atlas/src/platform/chrome/background/Atmosphere.vue:44:// THE FIELDS. <Aurora> is the platform's thin glass-ui consumer (it keeps the oklab
+atlas/src/platform/chrome/background/Atmosphere.vue:137:        <Aurora v-if="field === 'aurora'" class="atmosphere__field" />
+   atlas/src/platform/chrome/background/Atmosphere.vue:166:    pointer-events: none;
+   atlas/src/platform/chrome/background/Atmosphere.vue:179:    pointer-events: none;
+   atlas/src/platform/chrome/background/Atmosphere.vue:188:    pointer-events: none;
+atlas/src/platform/chrome/background/composables/useAuroraConfig.ts:197:    /** The reactive pole-derived config — hand straight to `<Aurora :config>`. */
+atlas/src/platform/chrome/background/composables/useAuroraConfig.ts:201:    /** The theme-aware outer compositing envelope (→ `<Aurora :opacity-ceiling>`), pinned at the
+atlas/src/platform/chrome/background/composables/useAtmosphereActivity.ts:10:// `<Aurora>`'s exposed `pause()`/`resume()` (the substrate's "manual" suspend reason), `<Constellation
+atlas/src/platform/chrome/background/Aurora.vue:2:// Aurora — a THIN glass-ui <Aurora> consumer (C.W6.a Scope 2; fd-atmosphere-suffusion §3
+atlas/src/platform/chrome/background/Aurora.vue:12:// derives from and hand glass-ui's <Aurora> the pole-derived reactive AuroraConfig.
+atlas/src/platform/chrome/background/Aurora.vue:97:// is a reactive AuroraConfig glass-ui deep-watches; we hand it straight to <Aurora :config>. The
+atlas/src/platform/chrome/background/Aurora.vue:114:// THE O-F4 ACTIVITY BELT (motion-arch §2.1 MOVE 4). glass-ui's <Aurora> exposes imperative
+atlas/src/platform/chrome/background/Aurora.vue:150:        <GlassAurora
+atlas/src/platform/chrome/background/Aurora.vue:163:   <Aurora> fills this wrapper (its own canvas + CSS placeholder size to the container via
+   atlas/src/platform/chrome/background/Aurora.vue:162:   backdrop, never an overlay. pointer-events:none so it never eats a click. The glass-ui
+   atlas/src/platform/chrome/background/Aurora.vue:170:    pointer-events: none;
+keyframes.js/demo/app/hero/HeroAurora.vue:25:    <Aurora
+   keyframes.js/demo/app/hero/HeroAurora.vue:27:        class="hero-aurora pointer-events-none fixed inset-0"
+   keyframes.js/demo/app/hero/HeroAurora.vue:256:   renders a single root, so `fixed inset-0`, `pointer-events-none` and
+speedtest/tests/e2e/aj-w1-p0-smoke.spec.ts:477:        // init failure surfaces through `<Aurora>`'s `@init-error`
+speedtest/src/App.vue:48:            <Aurora
+speedtest/src/App.vue:307:// `0.5` muted ceiling is reversed (see the `<Aurora>` mount comment), so the
+speedtest/src/App.vue:363:// `<Aurora>` adapts its substrate via `renderMode` ("webgl" | "css" | "auto").
+speedtest/src/App.vue:404:// AH.W3-C: rIC hydration gate for Aurora. Holding the `<Aurora>` mount off
+speedtest/src/App.vue:420:// catches synchronous reactivity/lifecycle errors) cannot see it. `<Aurora>`'s
+   speedtest/src/App.vue:44:                class="aurora-placeholder z-behind pointer-events-none fixed
+   speedtest/src/App.vue:51:                class="z-behind pointer-events-none fixed inset-0 h-full w-full"
+   speedtest/src/App.vue:183:                 inner host carries `pointer-events-none` on the column
+   speedtest/src/App.vue:184:                 with the pill itself sitting in `pointer-events-auto`. -->
+   speedtest/src/App.vue:241:// (`aurora-placeholder` — `pointer-events-none fixed inset-0 z-behind`) keeps
+speedtest/src/composables/useRouteTransition.ts:116:     *  carrying it. The glass-ui `<Aurora>` exposes `:opacity-ceiling` as the
+speedtest/src/config/auroraConfig.ts:85://   matches. The aurora-generalization seam (App.vue `<Aurora>` mount / WebGL) is
+value.js/demo/app/composables/boot/useAtmosphere.ts:176:    // linear gradient (the `<Aurora>` placeholder idiom, glass-ui's
+sci-report/dashboards/home/DashboardView.vue:196:             <Aurora> field beneath the content plates, with the paper grain at the floor
+   sci-report/dashboards/home/DashboardView.vue:274:    pointer-events: none;
+   sci-report/dashboards/home/DashboardView.vue:277:    pointer-events: auto;
+
+# SC: setCursor/clearCursor callers
+keyframes.js/demo/app/hero/HeroAurora.vue:182:// ── Cursor wiring — the exposed setCursor API, ZERO element-geometry reads ───
+keyframes.js/demo/app/hero/HeroAurora.vue:185:// full-document layout ~1,100-2,000× the isolated cost). setCursor mutates JS
+keyframes.js/demo/app/hero/HeroAurora.vue:193:// `setCursor` API … so the consumer controls pointer policy"), so this is a
+keyframes.js/demo/app/hero/HeroAurora.vue:221:    // exposed (`setCursorRadius`) and calling it would spend an invented
+keyframes.js/demo/app/hero/HeroAurora.vue:223:    auroraRef.value?.setCursor(e.clientX / (width.value || 1), e.clientY / (height.value || 1));
+keyframes.js/demo/app/hero/HeroAurora.vue:227:    auroraRef.value?.clearCursor();
+value.js/demo/app/composables/boot/useAtmosphere.ts:302:    // half of the producer's SHIPPED pointer door. `setCursor` feeds the eased
+value.js/demo/app/composables/boot/useAtmosphere.ts:322:                // burst from consecutive `setCursor` position deltas internally,
+value.js/demo/app/composables/boot/useAtmosphere.ts:324:                aurora.setCursor(x, y, ATMOSPHERE_POINTER_STRENGTH);
+value.js/demo/app/composables/boot/useAtmosphere.ts:329:            aurora.clearCursor(); // decay-to-rest, never a snap

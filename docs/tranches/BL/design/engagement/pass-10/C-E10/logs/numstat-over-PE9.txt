@@ -1,0 +1,17 @@
+7	5	{a => b}/src/components/slider/styles.css
+55	31	{a => b}/src/composables/motion/engage/stage.ts
+162	1	{a => b}/tests/composables/motion/engage-stage.test.ts
+--- a/private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/nd/a/src/components/slider/s
++++ b/private/tmp/claude-504/-Users-mkbabb-Programming-glass-ui/f7246310-06bc-4dbe-ba5d-5b9bbe793e21/scratchpad/nd/b/src/components/slider/s
+-       the track as the person sees it, at k max under any scale. Where its top would leave
+-       the viewport it hangs below the track (`data-engage-lens-below`). The popover's UA
+-       box is neutralized here; the plate is the housing's. */
++       the track as the person sees it, at k max under any scale. The correction sits in
++       `translate`, outside the raise's `scale`, which therefore never multiplies it. Where
++       its top would leave the viewport it travels below the track
++       (`data-engage-lens-below`). The popover's UA box is neutralized here; the plate is
++       the housing's. */
+-    translate: -50% 0;
++    translate: calc(-50% + var(--lens-dx, 0px)) var(--lens-dy, 0px);
+-    transform: translate(var(--lens-dx, 0px), var(--lens-dy, 0px)) scale(var(--lens-sx, 1), var(--lens-sy, 1));
++    transform: scale(var(--lens-sx, 1), var(--lens-sy, 1));

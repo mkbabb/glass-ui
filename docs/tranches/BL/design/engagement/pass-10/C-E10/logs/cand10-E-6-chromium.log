@@ -1,0 +1,21 @@
+# C-E10 cand10-E-6 chromium · 2026-10-30 21:49:50 · load { 11.90 10.84 10.41 } · 
+# E-6 · the idle rung under the compositor-only bound
+# target /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p10/C-E10/wt/.ce10out/builds/cand10 · engine chromium · lock wait 49.2 s · other headless processes: chromium 3, webkit 2 · load 9.8/10.4/10.3 at start
+# scene app: harness scenes/App.vue (sha1 9e34ffa5714e)
+# chromium 149.0.7827.55
+  FAIL       E-6 s6 present light · 0 running infinite animation(s) at rest · load 9.6/10.4/10.3
+  UNMEASURED E-6 s6 channel light · no idle animation to read · load 9.6/10.4/10.3
+  UNMEASURED E-6 s6 shape light · no idle animation to read · load 9.6/10.4/10.3
+  UNMEASURED E-6 s6 amplitude light · no idle animation to read · load 9.6/10.4/10.3
+  UNMEASURED E-6 s6 period light · no idle animation to read · load 9.6/10.4/10.3
+  PASS       E-6 s6 layouts/s light · layouts/s 0.0 · style recalcs/s 0.0 over 3 s at rest (bound 0 layouts/s) · load 9.6/10.4/10.3
+  PASS       E-6 s6 PRM light · 0 idle animation(s) under reduced motion, 0 spatial · load 9.6/10.4/10.3
+  FAIL       E-6 s6 present dark · 0 running infinite animation(s) at rest · load 9.6/10.4/10.3
+  UNMEASURED E-6 s6 channel dark · no idle animation to read · load 9.6/10.4/10.3
+  UNMEASURED E-6 s6 shape dark · no idle animation to read · load 9.6/10.4/10.3
+  UNMEASURED E-6 s6 amplitude dark · no idle animation to read · load 9.6/10.4/10.3
+  UNMEASURED E-6 s6 period dark · no idle animation to read · load 9.6/10.4/10.3
+  PASS       E-6 s6 layouts/s dark · layouts/s 0.0 · style recalcs/s 0.0 over 3 s at rest (bound 0 layouts/s) · load 9.6/10.4/10.3
+  PASS       E-6 s6 PRM dark · 0 idle animation(s) under reduced motion, 0 spatial · load 9.6/10.4/10.3
+E-6 chromium FAIL · 4 pass, 2 fail, 8 unmeasured of 14 gating cells (0 reported) · load 9.8/10.4/10.3 at start, 9.6/10.4/10.3 at end
+# exit 1 · 2026-10-30 21:50:49 · load { 9.63 10.38 10.27 }

@@ -1,0 +1,10 @@
+# 2026-10-30 20:43:43 · glass-ui HEAD 7a24abade · speedtest e2d9444d
+## every .vue with a <Slider>/<NumberField> and a clip anywhere in the file (my pattern: overflow in class or style, any clip keyword)
+bbnf-buddy/src/components/EditableSlider.vue :: <Slider|NumberField> at 124, :: 178: overflow: hidden;|
+speedtest/src/components/dashboard/DashboardMapControls.vue :: <Slider|NumberField> at 65,134, :: 97: class="absolute right-3 top-3 z-controls w-44 overflow-hidden p-0 transition-shadow sm:w-56"|
+value.js/demo/workbenches/generate/GenerateControls.vue :: <Slider|NumberField> at 322, :: 128: card. NO card-level overflow clip (S.W5-10 / T-45 class): the|
+value.js/demo/workbenches/extract/ExtractControls.vue :: <Slider|NumberField> at 48,74, :: 45: class="absolute inset-x-0 top-1/2 -translate-y-1/2 h-6 rounded-full overflow-hidden"|
+
+## speedtest DashboardMapControls.vue, the lines
+        class="absolute right-3 top-3 z-controls w-44 overflow-hidden p-0 transition-shadow sm:w-56"
+                        <Slider

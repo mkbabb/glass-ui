@@ -1,0 +1,14 @@
+# C-A10 cand10-E-7 chromium · 2026-10-30 21:04:33 · load { 13.18 11.95 11.28 } · 
+# E-7 · one writer of data-engaged, meaning held
+# target /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p10/C-A10/wt/.ca10out/builds/cand10 · engine chromium · lock wait 38.1 s · other headless processes: chromium 14, webkit 2 · load 13.9/12.2/11.4 at start
+# scene app: harness scenes/App.vue (sha1 9e34ffa5714e)
+# chromium 149.0.7827.55
+  PASS       E-7 writers data-engaged (static) · 1 writer file(s): src/composables/motion/engage/stage.ts · bound ≤ 1, under src/composables/motion/engage/ · tree /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p10/C-A10/wt · load 13.9/12.2/11.4
+  FAIL       E-7 writers data-held (static) · 2 writer file(s): src/components/dock/GlassDock.vue, src/composables/motion/engage/useEngage.ts · bound ≤ 1, under src/composables/motion/engage/ · tree /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p10/C-A10/wt · load 13.9/12.2/11.4
+  PASS       E-7 writers data-press (static) · 1 writer file(s): src/composables/motion/engage/press.ts · bound ≤ 1, under src/composables/motion/engage/ · tree /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p10/C-A10/wt · load 13.9/12.2/11.4
+  PASS       E-7 writers data-commit (static) · 1 writer file(s): src/composables/motion/engage/useEngage.ts · bound ≤ 1, under src/composables/motion/engage/ · tree /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p10/C-A10/wt · load 13.9/12.2/11.4
+  PASS       E-7 slider held · [data-engaged] nodes while pointer-held 1 · bound ≥ 1 · load 13.9/12.2/11.4
+  PASS       E-7 slider held PRM · reduce · [data-engaged] nodes while pointer-held 1 · bound ≥ 1 · load 13.9/12.2/11.4
+  PASS       E-7 modal open, nothing held · dialog open true · veil nodes 1 · [data-engaged] nodes 0 · bound 0 · load 13.5/12.2/11.4
+E-7 chromium FAIL · 6 pass, 1 fail, 0 unmeasured of 7 gating cells (0 reported) · load 13.9/12.2/11.4 at start, 13.5/12.2/11.4 at end
+# exit 1 · 2026-10-30 21:05:16 · load { 13.52 12.16 11.38 }

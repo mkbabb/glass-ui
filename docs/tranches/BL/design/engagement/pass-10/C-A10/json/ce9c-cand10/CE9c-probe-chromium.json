@@ -1,0 +1,79 @@
+{
+ "id": "CE9c-probe",
+ "engine": "chromium",
+ "version": "149.0.7827.55",
+ "target": {
+  "build": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p10/C-A10/wt/.ca10out/builds/cand10"
+ },
+ "loadStart": "8.4/9.8/10.1",
+ "loadEnd": "7.8/9.4/9.9",
+ "verdict": "UNMEASURED",
+ "cells": [
+  {
+   "name": "CE9c lensfilm · none",
+   "status": "REPORT",
+   "line": "fine hold, twelve 8 px wheel ticks over the thumb; lens blue, track red, one column; per film: 33/33 frames read, 8 moving, scrolled -96 px, lens-to-track median 2 px, worst off 0 px (main-thread gap at the start -0.0 px) | 33/33 frames read, 8 moving, scrolled -96 px, lens-to-track median 2 px, worst off 0 px (main-thread gap at the start -0.0 px) | 32/32 frames read, 7 moving, scrolled -96 px, lens-to-track median 2 px, worst off 0 px (main-thread gap at the start -0.0 px)",
+   "load": "7.9/9.7/10.0"
+  },
+  {
+   "name": "CE9c lensfilm · scale",
+   "status": "REPORT",
+   "line": "fine hold, twelve 8 px wheel ticks over the thumb, the card under scale 0.8; lens blue, track red, one column; per film: 33/33 frames read, 8 moving, scrolled -96 px, lens-to-track median 2 px, worst off 1 px (main-thread gap at the start -0.0 px) | 33/33 frames read, 8 moving, scrolled -96 px, lens-to-track median 2 px, worst off 1 px (main-thread gap at the start -0.0 px) | 32/32 frames read, 7 moving, scrolled -96 px, lens-to-track median 2 px, worst off 1 px (main-thread gap at the start -0.0 px)",
+   "load": "7.5/9.6/10.0"
+  },
+  {
+   "name": "CE9c lensfilm · marker",
+   "status": "REPORT",
+   "line": "fine hold, twelve 8 px wheel ticks over the thumb; a blue block in the scroller (the control), track red, one column; per film: 31/31 frames read, 6 moving, scrolled -96 px, lens-to-track median 6 px, worst off 0 px (main-thread gap at the start -0.0 px) | 32/32 frames read, 7 moving, scrolled -96 px, lens-to-track median 6 px, worst off 0 px (main-thread gap at the start -0.0 px) | 32/32 frames read, 7 moving, scrolled -96 px, lens-to-track median 6 px, worst off 0 px (main-thread gap at the start -0.0 px)",
+   "load": "8.3/9.7/10.0"
+  },
+  {
+   "name": "CE9c glidezoom · none",
+   "status": "REPORT",
+   "line": "engaged true; the scroller unzoomed (the control); a 40 px block inserted before the row · the root's painted centre moved 0.43 px in the insertion's frame, then at most 2.86 px per frame; the place moved 40.0 px in all",
+   "load": "8.1/9.6/10.0"
+  },
+  {
+   "name": "CE9c glidezoom · 0.8",
+   "status": "REPORT",
+   "line": "engaged true; the scroller zoom 0.8; a 40 px block inserted before the row · the root's painted centre moved 0.39 px in the insertion's frame (the control 0.43), then at most 2.16 px per frame; the place moved 32.0 px in all",
+   "load": "8.1/9.6/10.0"
+  },
+  {
+   "name": "CE9c glidezoom · 1.25",
+   "status": "REPORT",
+   "line": "engaged true; the scroller zoom 1.25; a 40 px block inserted before the row · the root's painted centre moved 0.60 px in the insertion's frame (the control 0.43), then at most 3.89 px per frame; the place moved 50.0 px in all",
+   "load": "8.1/9.6/10.0"
+  },
+  {
+   "name": "CE9c flipjitter · none",
+   "status": "REPORT",
+   "line": "fine hold; the card carried to the flip (frame 19), then ±3 px about it every 2 frames for 40 frames · the lens changed side 0 times in 41 post-frame samples · worst one-frame step of its centre against the track's 6.6 px",
+   "load": "8.1/9.6/10.0"
+  },
+  {
+   "name": "CE9c flipjitter · scale",
+   "status": "REPORT",
+   "line": "fine hold under scale 0.8; the card carried to the flip (frame 28), then ±3 px about it every 2 frames for 40 frames · the lens changed side 0 times in 41 post-frame samples · worst one-frame step of its centre against the track's 6.2 px",
+   "load": "8.1/9.6/10.0"
+  },
+  {
+   "name": "CE9c dlgloop · esc2",
+   "status": "REPORT",
+   "line": "keyboard-engaged in the presented Dialog (engaged true), dismissed by esc2; the slider gone true · page-wide rAF/s engaged 132.0; after the dismissal 0-150 ms 98.0, 150-450 ms 115.5, 1.5-3 s 0.0",
+   "load": "8.3/9.6/9.9"
+  },
+  {
+   "name": "CE9c dlgloop · scrim",
+   "status": "REPORT",
+   "line": "keyboard-engaged in the presented Dialog (engaged true), dismissed by scrim; the slider gone true · page-wide rAF/s engaged 132.0; after the dismissal 0-150 ms 98.0, 150-450 ms 105.6, 1.5-3 s 0.0",
+   "load": "8.2/9.5/9.9"
+  },
+  {
+   "name": "CE9c dlgloop · esc1-unengaged",
+   "status": "REPORT",
+   "line": "the control: nothing engaged in the presented Dialog (engaged false), dismissed by esc1-unengaged; the slider gone true · page-wide rAF/s engaged 0.0; after the dismissal 0-150 ms 91.5, 150-450 ms 118.8, 1.5-3 s 0.0",
+   "load": "7.8/9.4/9.9"
+  }
+ ]
+}

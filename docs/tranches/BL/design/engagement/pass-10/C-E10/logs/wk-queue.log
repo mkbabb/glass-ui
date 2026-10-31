@@ -1,0 +1,84 @@
+# 2026-10-30 22:24:16 queued for the WebKit lock · load { 8.56 9.77 9.94 }
+[guarded] waiting for the 'webkit' lock
+# 2026-10-30 22:29:59 WebKit lock acquired (w1.txt) · load { 7.08 8.77 9.47 }
+## 22:29:59 [1] cand10-E-10 webkit  · load { 7.08 8.77 9.47 }
+cand10-E-10 webkit · E-10 webkit PASS · 81 pass, 0 fail, 0 unmeasured of 81 gating cells (45 reported) · load 7.1/8.8/9.5 at start, 7.1/8.0/8.8 at end · # exit 0 · 2026-10-30 22:36:59 · load { 7.08 8.00 8.83 }
+## 22:36:59 [2] cand10-E-13 webkit  · load { 7.08 8.00 8.83 }
+cand10-E-13 webkit · E-13 webkit PASS · 28 pass, 0 fail, 0 unmeasured of 28 gating cells (4 reported) · load 7.1/8.0/8.8 at start, 7.8/7.9/8.7 at end · # exit 0 · 2026-10-30 22:38:43 · load { 7.77 7.91 8.69 }
+## 22:38:43 [3] cand10-ce10 webkit  · load { 7.77 7.91 8.69 }
+cand10-ce10 webkit · CE10-probe webkit UNMEASURED · 0 pass, 0 fail, 0 unmeasured of 0 gating cells (79 reported) · load 7.8/7.9/8.7 at start, 8.5/7.9/8.5 at end · # exit 3 · 2026-10-30 22:42:48 · load { 8.45 7.93 8.48 }
+## 22:42:48 [4] plant-swap-e10 webkit --scenes clipstale,slider --part lensside · load { 8.45 7.93 8.48 }
+plant-swap-e10 webkit · E-10 webkit FAIL · 8 pass, 4 fail, 0 unmeasured of 12 gating cells (0 reported) · load 8.5/7.9/8.5 at start, 8.3/7.9/8.4 at end · # exit 1 · 2026-10-30 22:43:38 · load { 8.31 7.92 8.44 }
+## 22:43:38 [5] plant-owed-e10 webkit --scenes clipstale,slider --part lensside · load { 8.31 7.92 8.44 }
+plant-owed-e10 webkit · E-10 webkit FAIL · 8 pass, 4 fail, 0 unmeasured of 12 gating cells (0 reported) · load 8.3/7.9/8.4 at start, 8.6/8.0/8.4 at end · # exit 1 · 2026-10-30 22:44:27 · load { 8.57 8.02 8.44 }
+## 22:44:27 [6] plant-nohyst-e10 webkit --scenes clipstale,slider --part lensside · load { 8.57 8.02 8.44 }
+plant-nohyst-e10 webkit · E-10 webkit FAIL · 10 pass, 2 fail, 0 unmeasured of 12 gating cells (0 reported) · load 8.6/8.0/8.4 at start, 7.9/7.9/8.4 at end · # exit 1 · 2026-10-30 22:45:16 · load { 7.87 7.89 8.37 }
+## 22:45:16 [7] plant-fixed-e10 webkit --scenes clipstale,slider --part lensside · load { 7.87 7.89 8.37 }
+plant-fixed-e10 webkit · E-10 webkit FAIL · 4 pass, 8 fail, 0 unmeasured of 12 gating cells (0 reported) · load 7.9/7.9/8.4 at start, 7.3/7.8/8.3 at end · # exit 1 · 2026-10-30 22:46:06 · load { 7.33 7.77 8.30 }
+## 22:46:06 [8] plant-fast-e10 webkit --scenes clipstale,slider --part lensside · load { 8.26 7.96 8.37 }
+plant-fast-e10 webkit · E-10 webkit FAIL · 8 pass, 4 fail, 0 unmeasured of 12 gating cells (0 reported) · load 8.3/8.0/8.4 at start, 8.9/8.1/8.4 at end · # exit 1 · 2026-10-30 22:46:55 · load { 8.87 8.14 8.41 }
+## 22:46:55 [9] plant-zero-e10 webkit --scenes clipstale,slider --part lensside · load { 8.87 8.14 8.41 }
+plant-zero-e10 webkit · E-10 webkit FAIL · 4 pass, 8 fail, 0 unmeasured of 12 gating cells (0 reported) · load 8.9/8.1/8.4 at start, 11.2/8.9/8.7 at end · # exit 1 · 2026-10-30 22:47:46 · load { 11.25 8.86 8.66 }
+## 22:47:46 [10] plant-reducetravel-e10 webkit --scenes clipstale,slider --part lensside · load { 11.25 8.86 8.66 }
+plant-reducetravel-e10 webkit · E-10 webkit FAIL · 8 pass, 4 fail, 0 unmeasured of 12 gating cells (0 reported) · load 10.9/8.8/8.6 at start, 9.1/8.6/8.6 at end · # exit 1 · 2026-10-30 22:48:35 · load { 9.10 8.63 8.58 }
+## 22:48:35 [11] plant-clock-e13 webkit --part clock · load { 9.10 8.63 8.58 }
+plant-clock-e13 webkit · E-13 webkit FAIL · 0 pass, 12 fail, 0 unmeasured of 12 gating cells (2 reported) · load 9.1/8.6/8.6 at start, 7.4/8.3/8.5 at end · # exit 1 · 2026-10-30 22:49:23 · load { 7.44 8.27 8.45 }
+## 22:49:23 [12] plant-exitfrozen-e13 webkit --part clock · load { 7.44 8.27 8.45 }
+plant-exitfrozen-e13 webkit · E-13 webkit PASS · 12 pass, 0 fail, 0 unmeasured of 12 gating cells (2 reported) · load 7.4/8.3/8.5 at start, 8.5/8.5/8.5 at end · # exit 0 · 2026-10-30 22:50:11 · load { 8.55 8.46 8.51 }
+## 22:50:11 [13] plant-noread-e10 webkit --part old --scenes clipstale,restale · load { 8.55 8.46 8.51 }
+plant-noread-e10 webkit · E-10 webkit FAIL · 5 pass, 16 fail, 0 unmeasured of 21 gating cells (0 reported) · load 8.5/8.5/8.5 at start, 8.2/8.4/8.5 at end · # exit 1 · 2026-10-30 22:51:09 · load { 8.22 8.39 8.48 }
+## 22:51:09 [14] plant-nolens-e13 webkit  · load { 8.22 8.39 8.48 }
+plant-nolens-e13 webkit · E-13 webkit FAIL · 16 pass, 12 fail, 0 unmeasured of 28 gating cells (4 reported) · load 8.2/8.4/8.5 at start, 11.2/9.5/8.9 at end · # exit 1 · 2026-10-30 22:52:53 · load { 11.22 9.53 8.92 }
+## 22:52:53 [15] plant-loop-loop webkit  · load { 11.22 9.53 8.92 }
+plant-loop-loop webkit · E9-probe webkit FAIL · 0 pass, 2 fail, 0 unmeasured of 2 gating cells (10 reported) · load 11.2/9.5/8.9 at start, 10.9/9.6/9.0 at end · # exit 1 · 2026-10-30 22:53:20 · load { 10.92 9.59 8.96 }
+## 22:53:20 [16] cand10-loop webkit  · load { 10.92 9.59 8.96 }
+cand10-loop webkit · E9-probe webkit PASS · 2 pass, 0 fail, 0 unmeasured of 2 gating cells (10 reported) · load 10.9/9.6/9.0 at start, 10.7/9.6/9.0 at end · # exit 0 · 2026-10-30 22:53:47 · load { 10.73 9.62 8.99 }
+## 22:53:47 [17] idle-bar webkit  · load { 10.73 9.62 8.99 }
+idle-bar webkit · CA6-probe webkit UNMEASURED · 0 pass, 0 fail, 0 unmeasured of 0 gating cells (4 reported) · load 9.5/9.4/8.9 at start, 10.4/9.6/9.0 at end · # exit 3 · 2026-10-30 22:54:40 · load { 10.42 9.60 9.01 }
+## 22:54:40 [18] cand10-tip webkit  · load { 10.42 9.60 9.01 }
+cand10-tip webkit · E8-probe webkit PASS · 4 pass, 0 fail, 0 unmeasured of 4 gating cells (0 reported) · load 10.4/9.6/9.0 at start, 9.3/9.4/8.9 at end · # exit 0 · 2026-10-30 22:54:52 · load { 9.29 9.39 8.94 }
+## 22:54:52 [19] cand10-E-1 webkit  · load { 9.29 9.39 8.94 }
+cand10-E-1 webkit · E-1 webkit FAIL · 93 pass, 3 fail, 0 unmeasured of 96 gating cells (0 reported) · load 9.3/9.4/8.9 at start, 9.4/9.4/9.0 at end · # exit 1 · 2026-10-30 22:55:36 · load { 9.37 9.41 8.97 }
+## 22:55:36 [20] cand10-E-2 webkit  · load { 9.37 9.41 8.97 }
+cand10-E-2 webkit · E-2 webkit PASS · 164 pass, 0 fail, 0 unmeasured of 164 gating cells (16 reported) · load 9.3/9.4/9.0 at start, 6.4/7.9/8.4 at end · # exit 0 · 2026-10-30 22:59:06 · load { 6.44 7.92 8.42 }
+## 22:59:06 [21] cand10-E-3 webkit  · load { 6.44 7.92 8.42 }
+cand10-E-3 webkit · E-3 webkit PASS · 22 pass, 0 fail, 0 unmeasured of 22 gating cells (0 reported) · load 6.4/7.9/8.4 at start, 6.3/7.7/8.3 at end · # exit 0 · 2026-10-30 22:59:36 · load { 6.26 7.74 8.34 }
+## 22:59:36 [22] cand10-E-4 webkit  · load { 6.26 7.74 8.34 }
+cand10-E-4 webkit · E-4 webkit PASS · 15 pass, 0 fail, 4 unmeasured of 19 gating cells (0 reported) · load 6.3/7.7/8.3 at start, 6.9/7.8/8.3 at end · # exit 0 · 2026-10-30 23:01:38 · load { 6.93 7.75 8.27 }
+## 23:01:38 [23] cand10-E-5 webkit  · load { 6.93 7.75 8.27 }
+cand10-E-5 webkit · E-5 webkit PASS · 56 pass, 0 fail, 0 unmeasured of 56 gating cells (0 reported) · load 6.9/7.8/8.3 at start, 7.4/7.1/7.7 at end · # exit 0 · 2026-10-30 23:07:07 · load { 7.37 7.10 7.75 }
+## 23:07:07 [24] cand10-E-6 webkit  · load { 7.37 7.10 7.75 }
+cand10-E-6 webkit · E-6 webkit FAIL · 2 pass, 2 fail, 8 unmeasured of 12 gating cells (2 reported) · load 7.4/7.1/7.7 at start, 6.9/7.0/7.7 at end · # exit 1 · 2026-10-30 23:07:12 · load { 6.94 7.02 7.71 }
+## 23:07:12 [25] cand10-E-7 webkit  · load { 6.94 7.02 7.71 }
+cand10-E-7 webkit · E-7 webkit FAIL · 6 pass, 1 fail, 0 unmeasured of 7 gating cells (0 reported) · load 6.9/7.0/7.7 at start, 6.9/7.0/7.7 at end · # exit 1 · 2026-10-30 23:07:17 · load { 6.87 7.00 7.70 }
+## 23:07:17 [26] cand10-E-8 webkit  · load { 6.87 7.00 7.70 }
+cand10-E-8 webkit · E-8 webkit PASS · 19 pass, 0 fail, 0 unmeasured of 19 gating cells (0 reported) · load 6.9/7.0/7.7 at start, 6.9/7.0/7.7 at end · # exit 0 · 2026-10-30 23:07:59 · load { 6.93 7.02 7.68 }
+## 23:07:59 [27] cand10-E-9 webkit  · load { 6.93 7.02 7.68 }
+cand10-E-9 webkit · E-9 webkit PASS · 85 pass, 0 fail, 0 unmeasured of 85 gating cells (8 reported) · load 6.9/7.0/7.7 at start, 6.3/6.7/7.5 at end · # exit 0 · 2026-10-30 23:09:27 · load { 6.25 6.75 7.50 }
+## 23:09:27 [28] cand10-prmplant webkit  · load { 6.25 6.75 7.50 }
+cand10-prmplant webkit · E-9 webkit FAIL · 40 pass, 32 fail, 0 unmeasured of 72 gating cells (7 reported) · load 6.3/6.7/7.5 at start, 6.2/6.6/7.4 at end · # exit 1 · 2026-10-30 23:10:37 · load { 6.20 6.61 7.39 }
+## 23:10:37 [29] cand10-E-11 webkit  · load { 6.20 6.61 7.39 }
+cand10-E-11 webkit · E-11 webkit PASS · 11 pass, 0 fail, 5 unmeasured of 16 gating cells (1 reported) · load 6.2/6.6/7.4 at start, 5.8/6.0/6.8 at end · # exit 0 · 2026-10-30 23:17:29 · load { 5.85 6.04 6.84 }
+## 23:17:29 [30] cand10-E-12 webkit  · load { 5.85 6.04 6.84 }
+cand10-E-12 webkit · E-12 webkit PASS · 101 pass, 0 fail, 1 unmeasured of 102 gating cells (10 reported) · load 5.8/6.0/6.8 at start, 8.4/7.5/7.4 at end · # exit 0 · 2026-10-30 23:19:16 · load { 8.41 7.52 7.36 }
+## 23:19:16 [31] cand10-crest webkit  · load { 8.41 7.52 7.36 }
+cand10-crest webkit · C-A8 probe webkit PASS · 2 pass, 0 fail, 0 unmeasured of 2 gating cells (0 reported) · load 8.4/7.5/7.4 at start, 8.3/7.5/7.4 at end · # exit 0 · 2026-10-30 23:19:20 · load { 8.30 7.51 7.35 }
+## 23:19:20 [32] cand10-ce9 webkit --only stack,lens,anc,dom,lensdlg,narrow · load { 8.30 7.51 7.35 }
+cand10-ce9 webkit · CE9-probe webkit PASS · 6 pass, 0 fail, 0 unmeasured of 6 gating cells (13 reported) · load 8.3/7.5/7.4 at start, 8.4/7.6/7.4 at end · # exit 0 · 2026-10-30 23:20:09 · load { 8.42 7.61 7.40 }
+## 23:20:09 [33] cand10-ce9c webkit --only lensfilm,glidezoom,flipjitter · load { 8.42 7.61 7.40 }
+cand10-ce9c webkit · CE9c-probe webkit UNMEASURED · 0 pass, 0 fail, 0 unmeasured of 0 gating cells (8 reported) · load 8.4/7.6/7.4 at start, 7.1/7.4/7.3 at end · # exit 3 · 2026-10-30 23:20:48 · load { 7.12 7.37 7.31 }
+## 23:20:48 [34] cand10-ca9 webkit  · load { 7.12 7.37 7.31 }
+cand10-ca9 webkit · C-A9 probe webkit PASS · 8 pass, 0 fail, 0 unmeasured of 8 gating cells (6 reported) · load 7.1/7.4/7.3 at start, 7.4/7.3/7.3 at end · # exit 0 · 2026-10-30 23:21:49 · load { 7.38 7.32 7.29 }
+## 23:21:49 [35] plant-swap-ce10 webkit --only sidefilm · load { 7.38 7.32 7.29 }
+plant-swap-ce10 webkit · CE10-probe webkit UNMEASURED · 0 pass, 0 fail, 0 unmeasured of 0 gating cells (6 reported) · load 7.4/7.3/7.3 at start, 7.6/7.4/7.3 at end · # exit 3 · 2026-10-30 23:22:10 · load { 7.59 7.38 7.31 }
+## 23:22:10 [36] plant-cure-zoom-ce10 webkit --only sidexf,sidepage --tfs zoom08,zoom125 · load { 7.59 7.38 7.31 }
+plant-cure-zoom-ce10 webkit · CE10-probe webkit UNMEASURED · 0 pass, 0 fail, 0 unmeasured of 0 gating cells (4 reported) · load 7.6/7.4/7.3 at start, 7.7/7.4/7.3 at end · # exit 3 · 2026-10-30 23:22:24 · load { 7.69 7.42 7.33 }
+## 23:22:24 [37] cand10-cap webkit  · load { 7.69 7.42 7.33 }
+cand10-cap webkit · CAP webkit PASS · 18 pass, 0 fail, 0 unmeasured of 18 gating cells (24 reported) · load 7.7/7.4/7.3 at start, 8.1/7.7/7.5 at end · # exit 0 · 2026-10-30 23:25:30 · load { 8.12 7.74 7.49 }
+## 23:25:30 [38] cand10-glance webkit  · load { 8.12 7.74 7.49 }
+cand10-glance webkit · GLANCE webkit UNMEASURED · 0 pass, 0 fail, 0 unmeasured of 0 gating cells (4 reported) · load 8.1/7.7/7.5 at start, 8.7/7.9/7.5 at end · # exit 3 · 2026-10-30 23:25:40 · load { 8.66 7.87 7.54 }
+## 23:25:40 [39] plant-swap-glance webkit  · load { 8.66 7.87 7.54 }
+plant-swap-glance webkit · GLANCE webkit UNMEASURED · 0 pass, 0 fail, 0 unmeasured of 0 gating cells (4 reported) · load 8.7/7.9/7.5 at start, 8.0/7.8/7.5 at end · # exit 3 · 2026-10-30 23:25:58 · load { 7.99 7.77 7.51 }
+# 23:25:58 END after 39 stages
+# 2026-10-30 23:25:58 WebKit acquisition (w1.txt) end · load { 7.99 7.77 7.51 }
+# 2026-10-30 23:26:03 guard exit 0 · load { 7.83 7.74 7.50 }

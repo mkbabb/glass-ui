@@ -1,0 +1,211 @@
+{
+ "id": "CE9-probe",
+ "engine": "chromium",
+ "version": "149.0.7827.55",
+ "target": {
+  "build": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p10/C-A10/wt/.ca10out/builds/cand10"
+ },
+ "loadStart": "9.6/10.4/10.3",
+ "loadEnd": "8.7/9.9/10.1",
+ "verdict": "PASS",
+ "cells": [
+  {
+   "name": "CE9 stack · keyboard",
+   "status": "REPORT",
+   "line": "engaged true, promoted false, lens shown false · a later positioned red sibling over the track's right part: its inner region red 100.0 % at rest, 100.0 % engaged (the sibling paints OVER the engaged body) · frames cand10-chromium-stack-keyboard-{rest,engaged}.png",
+   "load": "9.4/10.3/10.2"
+  },
+  {
+   "name": "CE9 stack · fine",
+   "status": "REPORT",
+   "line": "engaged true, promoted false, lens shown true · a later positioned red sibling over the track's right part: its inner region red 100.0 % at rest, 100.0 % engaged (the sibling paints OVER the engaged body) · frames cand10-chromium-stack-fine-{rest,engaged}.png",
+   "load": "9.4/10.3/10.2"
+  },
+  {
+   "name": "CE9 lens zoom · fine",
+   "status": "PASS",
+   "line": "the scroller zoom 0.8 · band over painted track ×1.600 (k max 1.6, ±5 %) · lens above (bottom on the track's top): pinned edge Δ 0.0 px (≤ 2), centre Δx 0.0 px · 100.0 % of its rows inside the viewport · popover-open true · --lens-sx/-sy 1.0503/1.06 · opacity 1.00",
+   "load": "9.4/10.3/10.2"
+  },
+  {
+   "name": "CE9 lens zoom · coarse",
+   "status": "PASS",
+   "line": "the scroller zoom 0.8 · band over painted track ×1.600 (k max 1.6, ±5 %) · lens above (bottom on the track's top): pinned edge Δ -0.0 px (≤ 2), centre Δx 0.0 px · 100.0 % of its rows inside the viewport · popover-open true · --lens-sx/-sy 1.0503/1.06 · opacity 1.00",
+   "load": "8.9/10.2/10.2"
+  },
+  {
+   "name": "CE9 lens nested · fine",
+   "status": "PASS",
+   "line": "the scroller scale 0.9 transformOrigin 0 0 and its parent scale 0.9 transformOrigin 0 0 · band over painted track ×1.600 (k max 1.6, ±5 %) · lens above (bottom on the track's top): pinned edge Δ -0.0 px (≤ 2), centre Δx -0.0 px · 100.0 % of its rows inside the viewport · popover-open true · --lens-sx/-sy 0.8586/0.8586 · opacity 1.00",
+   "load": "8.9/10.2/10.2"
+  },
+  {
+   "name": "CE9 lens up · fine",
+   "status": "PASS",
+   "line": "the scroller scale 1.25 transformOrigin 0 0 · band over painted track ×1.600 (k max 1.6, ±5 %) · lens above (bottom on the track's top): pinned edge Δ 0.0 px (≤ 2), centre Δx 0.0 px · 100.0 % of its rows inside the viewport · popover-open true · --lens-sx/-sy 1.325/1.325 · opacity 1.00",
+   "load": "8.8/10.2/10.2"
+  },
+  {
+   "name": "CE9 lens viewport+scale · fine",
+   "status": "PASS",
+   "line": "the scroller scale 0.8 transformOrigin 0 0, its top 2 px below the viewport's · band over painted track ×1.600 (k max 1.6, ±5 %) · lens below (top on the track's bottom): pinned edge Δ 0.0 px (≤ 2), centre Δx -0.0 px · 100.0 % of its rows inside the viewport · popover-open true · --lens-sx/-sy 0.8402/0.848 · opacity 1.00",
+   "load": "8.8/10.2/10.2"
+  },
+  {
+   "name": "CE9 lens rotate · fine",
+   "status": "REPORT",
+   "line": "the scroller rotate 6deg · band over painted track ×0.558 (k max 1.6, ±5 %) · lens above (bottom on the track's top): pinned edge Δ 0.0 px (≤ 2), centre Δx -0.0 px · 100.0 % of its rows inside the viewport · popover-open true · --lens-sx/-sy 1.06/1.06 · opacity 1.00",
+   "load": "8.8/10.2/10.2"
+  },
+  {
+   "name": "CE9 lens scroll · none",
+   "status": "REPORT",
+   "line": "fine hold, twelve 8 px wheel ticks over the thumb · the scroller scrolled 96 px (track moved -96.0 px on screen) · 131 post-frame samples · the lens's bottom centre to the track's top centre against its pre-scroll value: worst 0.00 px, 0 samples over 1 px (main-thread read, not paint; §P8-7 item 9)",
+   "load": "8.5/10.1/10.2"
+  },
+  {
+   "name": "CE9 lens scroll · scale",
+   "status": "REPORT",
+   "line": "fine hold, twelve 8 px wheel ticks over the thumb · the scroller scrolled 96 px (track moved -76.8 px on screen) · 132 post-frame samples · the lens's bottom centre to the track's top centre against its pre-scroll value: worst 0.00 px, 0 samples over 1 px (main-thread read, not paint; §P8-7 item 9)",
+   "load": "8.5/10.1/10.2"
+  },
+  {
+   "name": "CE9 lens flip · none",
+   "status": "REPORT",
+   "line": "fine hold; the scroller carried up 2 px per frame for 60 frames · 80 post-frame samples · the lens flips side at sample 17 · the largest one-frame step of the lens's centre against the track's: 8.4 px at sample 22 (steady steps 8.45 px) · frames whose pinned edge is off by > 2 px: 18:-101.8 19:-101.0 20:-97.8 21:-93.9 22:-88.4 23:-79.9 24:-72.8 25:-65.5 26:-57.6 27:-51.2 28:-46.8 29:-40.5 30:-36.1 31:-32.8 32:-27.8 33:-24.5 34:-21.0 35:-18.2 36:-14.8 37:-13.2 38:-10.7 39:-9.1 40:-8.0 41:-6.5 42:-5.2 43:-4.2 44:-3.3 · lens top ranges -1.4..50.9 px",
+   "load": "8.1/10.0/10.1"
+  },
+  {
+   "name": "CE9 lens flip · scale",
+   "status": "REPORT",
+   "line": "fine hold; the scroller carried up 2 px per frame for 60 frames under scale 0.8 · 80 post-frame samples · the lens flips side at sample 26 · the largest one-frame step of the lens's centre against the track's: 6.0 px at sample 32 (steady steps 6.05 px) · frames whose pinned edge is off by > 2 px: 27:-81.4 28:-80.2 29:-76.3 30:-71.3 31:-66.0 32:-60.5 33:-54.4 34:-50.7 35:-45.5 36:-40.6 37:-34.8 38:-30.1 39:-25.3 40:-21.7 41:-18.6 42:-16.5 43:-14.5 44:-11.8 45:-9.9 46:-8.3 47:-6.3 48:-5.0 49:-4.0 50:-3.2 51:-2.6 · lens top ranges -2.5..50.3 px",
+   "load": "8.1/10.0/10.1"
+  },
+  {
+   "name": "CE9b lens enter · none",
+   "status": "REPORT",
+   "line": "fine hold, the card untransformed, nothing scrolled · from the press the lens shows (opacity > 0.05) on 40 post-frame samples · worst pinned-edge Δ -0.0 px at sample 10 (opacity 0.33, its scale 0.550568) · at the first sample with opacity ≥ 0.5 (sample 12): Δ 0.0 px, Δx 0.0 px · samples 6:-0.0@0.06 7:-0.0@0.11 8:0.0@0.14 9:-0.0@0.23 10:-0.0@0.33 11:0.0@0.44 12:0.0@0.55 13:-0.0@0.63 · still cand10-chromium-lens-enter-none-110ms.png",
+   "load": "8.6/10.0/10.1"
+  },
+  {
+   "name": "CE9b lens enter · translate",
+   "status": "REPORT",
+   "line": "fine hold, the card translate 0 30px, nothing scrolled · from the press the lens shows (opacity > 0.05) on 40 post-frame samples · worst pinned-edge Δ 0.0 px at sample 23 (opacity 0.98, its scale 0.953882) · at the first sample with opacity ≥ 0.5 (sample 12): Δ 0.0 px, Δx 0.0 px · samples 6:0.0@0.05 7:-0.0@0.08 8:0.0@0.14 9:-0.0@0.22 10:0.0@0.32 11:-0.0@0.44 12:0.0@0.54 13:-0.0@0.63 · still cand10-chromium-lens-enter-translate-110ms.png",
+   "load": "8.6/10.0/10.1"
+  },
+  {
+   "name": "CE9b lens enter · scale",
+   "status": "REPORT",
+   "line": "fine hold, the card scale 0.8 transformOrigin 0 0, nothing scrolled · from the press the lens shows (opacity > 0.05) on 41 post-frame samples · worst pinned-edge Δ 0.0 px at sample 7 (opacity 0.27, its scale 0.516572) · at the first sample with opacity ≥ 0.5 (sample 10): Δ 0.0 px, Δx 0.0 px · samples 5:-0.0@0.12 6:-0.0@0.19 7:0.0@0.27 8:0.0@0.37 9:-0.0@0.49 10:0.0@0.57 11:-0.0@0.65 12:-0.0@0.72 · still cand10-chromium-lens-enter-scale-110ms.png",
+   "load": "8.6/10.0/10.1"
+  },
+  {
+   "name": "CE9b lens exit · none",
+   "status": "REPORT",
+   "line": "fine hold, the card untransformed, nothing scrolled · from the release the lens shows (opacity > 0.05) on 12 post-frame samples · worst pinned-edge Δ 0.0 px at sample 7 (opacity 0.47, its scale 0.538348) · at the first sample with opacity ≥ 0.5 (sample 2): Δ 0.0 px, Δx 0.0 px · samples 2:0.0@1.00 2:0.0@1.00 3:-0.0@0.98 4:0.0@0.93 5:0.0@0.78 6:0.0@0.60 7:0.0@0.47 8:0.0@0.35 · still cand10-chromium-lens-exit-none-110ms.png",
+   "load": "9.6/10.2/10.2"
+  },
+  {
+   "name": "CE9b lens exit · translate",
+   "status": "REPORT",
+   "line": "fine hold, the card translate 0 30px, nothing scrolled · from the release the lens shows (opacity > 0.05) on 13 post-frame samples · worst pinned-edge Δ 0.0 px at sample 5 (opacity 0.89, its scale 0.902986) · at the first sample with opacity ≥ 0.5 (sample 1): Δ 0.0 px, Δx 0.0 px · samples 1:0.0@1.00 2:0.0@1.00 3:-0.0@0.99 4:-0.0@0.97 5:0.0@0.89 6:-0.0@0.78 7:-0.0@0.60 8:-0.0@0.48 · still cand10-chromium-lens-exit-translate-110ms.png",
+   "load": "9.6/10.2/10.2"
+  },
+  {
+   "name": "CE9b lens exit · scale",
+   "status": "REPORT",
+   "line": "fine hold, the card scale 0.8 transformOrigin 0 0, nothing scrolled · from the release the lens shows (opacity > 0.05) on 11 post-frame samples · worst pinned-edge Δ 0.0 px at sample 9 (opacity 0.18, its scale 0.289326) · at the first sample with opacity ≥ 0.5 (sample 1): Δ 0.0 px, Δx -0.0 px · samples 1:0.0@1.00 2:0.0@0.99 3:0.0@0.96 4:-0.0@0.88 5:-0.0@0.76 6:-0.0@0.60 7:-0.0@0.44 8:-0.0@0.27 · still cand10-chromium-lens-exit-scale-110ms.png",
+   "load": "9.6/10.2/10.2"
+  },
+  {
+   "name": "CE9b lens exit frozen · none · +60 ms",
+   "status": "REPORT",
+   "line": "release, then the lens's 2 animation(s) [opacity,scale] paused at +60 ms · opacity 0.22, its scale 0.325262 · the lens's pinned edge 0.0 px from the track's painted top (negative: above it) · frame cand10-chromium-lens-exit-frozen-none-60ms.png",
+   "load": "9.6/10.2/10.2"
+  },
+  {
+   "name": "CE9b lens exit frozen · none · +120 ms",
+   "status": "REPORT",
+   "line": "release, then the lens's 2 animation(s) [opacity,scale] paused at +120 ms · opacity 0.00, its scale 0.13 · the lens's pinned edge 0.0 px from the track's painted top (negative: above it) · frame cand10-chromium-lens-exit-frozen-none-120ms.png",
+   "load": "9.2/10.1/10.2"
+  },
+  {
+   "name": "CE9b lens exit frozen · scale · +60 ms",
+   "status": "REPORT",
+   "line": "release, then the lens's 2 animation(s) [opacity,scale] paused at +60 ms · opacity 0.22, its scale 0.325262 · the lens's pinned edge 0.0 px from the track's painted top (negative: above it) · frame cand10-chromium-lens-exit-frozen-scale-60ms.png",
+   "load": "9.2/10.1/10.2"
+  },
+  {
+   "name": "CE9b lens exit frozen · scale · +120 ms",
+   "status": "REPORT",
+   "line": "release, then the lens's 2 animation(s) [opacity,scale] paused at +120 ms · opacity 0.00, its scale 0.13 · the lens's pinned edge 0.0 px from the track's painted top (negative: above it) · frame cand10-chromium-lens-exit-frozen-scale-120ms.png",
+   "load": "9.2/10.1/10.2"
+  },
+  {
+   "name": "CE9 anc none · keyboard",
+   "status": "REPORT",
+   "line": "reference ×1.069 (promoted false)",
+   "load": "9.2/10.1/10.2"
+  },
+  {
+   "name": "CE9 anc skew · keyboard",
+   "status": "REPORT",
+   "line": "promoted false · the scroller transform: skewX(10deg) · engaged over released ×1.108 against ×1.069 · ratio of ratios 1.036 (inside 0.90..1.10)",
+   "load": "8.6/10.0/10.1"
+  },
+  {
+   "name": "CE9 anc mask · keyboard",
+   "status": "REPORT",
+   "line": "promoted false · the scroller mask-image: linear-gradient(to right, black 40%, transparent 95%); -webkit-mask-image: linear-gradient(to right, black 40%, transparent 95%) · engaged over released ×1.078 against ×1.069 · ratio of ratios 1.008 (inside 0.90..1.10)",
+   "load": "8.6/10.0/10.1"
+  },
+  {
+   "name": "CE9 anc zoom · keyboard",
+   "status": "REPORT",
+   "line": "promoted false · the scroller zoom: 0.8 · engaged over released ×1.036 against ×1.069 · ratio of ratios 0.968 (inside 0.90..1.10)",
+   "load": "9.1/10.1/10.1"
+  },
+  {
+   "name": "CE9 anc persp · keyboard",
+   "status": "REPORT",
+   "line": "promoted false · the scroller transform: perspective(500px) rotateY(25deg) · engaged over released ×1.116 against ×1.069 · ratio of ratios 1.044 (inside 0.90..1.10)",
+   "load": "9.1/10.1/10.1"
+  },
+  {
+   "name": "CE9 anc blend · keyboard",
+   "status": "REPORT",
+   "line": "promoted false · the scroller mix-blend-mode: difference · engaged over released ×1.113 against ×1.069 · ratio of ratios 1.041 (inside 0.90..1.10)",
+   "load": "8.6/9.9/10.1"
+  },
+  {
+   "name": "CE9 dom · keyboard",
+   "status": "REPORT",
+   "line": "engaged: attributes [data-slider-impl data-orientation data-slot data-control-target data-variant data-size style data-e data-engage-stage data-engaged] · inline style [--reka-slider-thumb-transform --stage-room --stage-w] · :popover-open false · same parent true · .engage-footprint 0 · lens false (popover-open false; inline []) · host animations [] · 1.2 s after release: attributes [data-slider-impl data-orientation data-slot data-control-target data-variant data-size style data-e] style [--reka-slider-thumb-transform] lens false",
+   "load": "8.6/9.9/10.1"
+  },
+  {
+   "name": "CE9 dom · fine",
+   "status": "REPORT",
+   "line": "engaged: attributes [data-slider-impl data-orientation data-slot data-control-target data-variant data-size style data-e data-engage-stage data-engaged data-held] · inline style [--reka-slider-thumb-transform --stage-room --stage-w --atom-drag-v --flex-vel] · :popover-open false · same parent true · .engage-footprint 0 · lens true (popover-open true; inline [position-anchor --loupe-track-w --loupe-x --loupe-fill-w --lens-dx --lens-dy --lens-sx --lens-sy]) · host animations [] · 1.2 s after release: attributes [data-slider-impl data-orientation data-slot data-control-target data-variant data-size style data-e] style [--reka-slider-thumb-transform --atom-drag-v --flex-vel] lens false",
+   "load": "8.4/9.9/10.1"
+  },
+  {
+   "name": "CE9 dom · touch",
+   "status": "REPORT",
+   "line": "engaged: attributes [data-slider-impl data-orientation data-slot data-control-target data-variant data-size style data-e data-engage-stage data-engaged data-held] · inline style [--reka-slider-thumb-transform --stage-room --stage-w --atom-drag-v --flex-vel] · :popover-open false · same parent true · .engage-footprint 0 · lens true (popover-open true; inline [position-anchor --loupe-track-w --loupe-x --loupe-fill-w --lens-dx --lens-dy --lens-sx --lens-sy]) · host animations [] · 1.2 s after release: attributes [data-slider-impl data-orientation data-slot data-control-target data-variant data-size style data-e] style [--reka-slider-thumb-transform --atom-drag-v --flex-vel] lens false",
+   "load": "8.4/9.9/10.1"
+  },
+  {
+   "name": "CE9 lens dialog · fine",
+   "status": "PASS",
+   "line": "the Dialog's slider held · band ×1.600 (k max 1.6) · pinned edge Δ 0.0 px · the lens is the topmost element at its centre true · popover-open true",
+   "load": "8.7/9.9/10.1"
+  },
+  {
+   "name": "CE9 narrow · keyboard",
+   "status": "REPORT",
+   "line": "the slider row unpadded: rest 398.0 px wide, cut 0.0 / 0.0 px (left / right) by the scroller's clip · engaged true (promoted false) 421.9 px wide (×1.060), cut 11.9 / 11.9 px · frames cand10-chromium-narrow-keyboard-{rest,engaged}.png",
+   "load": "8.7/9.9/10.1"
+  }
+ ]
+}
