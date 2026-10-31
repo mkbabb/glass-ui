@@ -1,0 +1,11 @@
+22:38  up 3 days,  1:59, 3 users, load averages: 7.94 7.94 8.71
+PASS  CASES  Chromium  case·capped·seat-transition  cap 150 px, run overflowing true; grow and shrink a seat's own width transition: page errors 0, window error events 0; plate travel 0 px, largest one-frame step 0 px; flag at rest closed; chromium-case_capped_seat-transition.json  [load 7.94]
+PASS  CASES  Chromium  case·capped·morph  cap 300 px: expand (run overflowing true), add a seat, collapse: page errors 0, window error events 0; plate travel 198 px, largest one-frame step 17.53 px; flag at rest closed; chromium-case_capped_morph.json  [load 8.1]
+PASS  CASES  Chromium  case·consumer-margin  unlayered ".glass-dock { margin-inline: 20px; }" (computed margin-left at rest 20px): expand, collapse; plate end edge past the neighbour by at most -31.98 px (bound 0.5); neighbour travel 379.66 px, largest one-frame step 32.75 px against the plate edge's 32.84 px (+1); chromium-case_consumer-margin.json  [load 8.1]
+PASS  CASES  Chromium  case·consumer-margin·control  no consumer rule (computed margin-left at rest 8px): expand, collapse; plate end edge past the neighbour by at most -19.98 px (bound 0.5); neighbour travel 379.66 px, largest one-frame step 29.89 px against the plate edge's 29.89 px (+1); chromium-case_consumer-margin_control.json  [load 7.77]
+PASS  CASES  Chromium  case·rotated·control  host rotate(0deg): expand, collapse; seats' largest second difference 5.09 px/frame²; largest one-frame seat move after the window closed 0.25 px (bound 0.5); chromium-case_rotated_control.json  [load 7.77]
+FAIL  CASES  Chromium  case·rotated  host rotate(2deg): expand, collapse; seats' largest second difference 6.42 px/frame² (control 5.09, bound +1); largest one-frame seat move after the window closed 0.25 px (bound 0.5); chromium-case_rotated.json  ⟶ FAILED: jerk  [load 7.87]
+FAIL  CASES  bp10@ebbf5bc7  5/6 cells pass  (json: /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D2/p10/Bp-crit/out/chromium/bp10/main/runs/CASES-bp10/CASES.json)
+exit 1
+22:38  up 3 days, 2 hrs, 3 users, load averages: 7.87 7.93 8.70
+reds: ^(case·rotated(·control)?)$
