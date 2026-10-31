@@ -1,0 +1,91 @@
+{
+ "id": "C-A9 probe",
+ "engine": "webkit",
+ "version": "26.5",
+ "target": {
+  "build": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p10/C-A10/wt/.ca10out/builds/cand10"
+ },
+ "loadStart": "11.9/11.4/9.9",
+ "loadEnd": "10.4/11.1/9.9",
+ "verdict": "PASS",
+ "cells": [
+  {
+   "name": "C-A9 stack · keyboard",
+   "status": "REPORT",
+   "line": "a later positioned sibling (red bar) across the thumb · red fraction of the bar's box: rest 0.900, engaged 0.900 (engaged true, promoted false) · the sibling stays OVER the engaged control (in place: its own stacking context, DOM order)",
+   "load": "11.4/11.4/9.9"
+  },
+  {
+   "name": "C-A9 stack · fine",
+   "status": "REPORT",
+   "line": "a later positioned sibling (red bar) across the thumb · red fraction of the bar's box: rest 0.900, engaged 0.900 (engaged true, promoted false) · the sibling stays OVER the engaged control (in place: its own stacking context, DOM order)",
+   "load": "11.4/11.4/9.9"
+  },
+  {
+   "name": "C-A9 loop · keyboard·escape · stops at release",
+   "status": "PASS",
+   "line": "rAF+RO per s: rest 0.0+0.0 · engaged 97.9+97.9 · after release 0-150 ms 0.0+0.0, 150-450 0.0+0.0, 450-1500 0.0+0.0, 1.5-3 s 0.0+0.0 · engaged nodes before/at/after release 1/0/0 (st2 counts data-engage-stage too) · bound engaged > 30/s, every window from the release on ≤ 2/s: 0 over",
+   "load": "12.1/11.5/10.0"
+  },
+  {
+   "name": "C-A9 loop · keyboard·tabout · stops at release",
+   "status": "PASS",
+   "line": "rAF+RO per s: rest 0.0+0.0 · engaged 97.9+97.9 · after release 0-150 ms 0.0+0.0, 150-450 0.0+0.0, 450-1500 0.0+0.0, 1.5-3 s 0.0+0.0 · engaged nodes before/at/after release 1/0/0 (st2 counts data-engage-stage too) · bound engaged > 30/s, every window from the release on ≤ 2/s: 0 over",
+   "load": "11.7/11.4/9.9"
+  },
+  {
+   "name": "C-A9 loop · keyboard·clickaway · stops at release",
+   "status": "PASS",
+   "line": "rAF+RO per s: rest 0.0+0.0 · engaged 98.0+98.0 · after release 0-150 ms 0.0+0.0, 150-450 0.0+0.0, 450-1500 0.0+0.0, 1.5-3 s 0.0+0.0 · engaged nodes before/at/after release 1/0/0 (st2 counts data-engage-stage too) · bound engaged > 30/s, every window from the release on ≤ 2/s: 0 over",
+   "load": "10.8/11.3/9.9"
+  },
+  {
+   "name": "C-A9 loop · fine·mouseup · stops at release",
+   "status": "PASS",
+   "line": "rAF+RO per s: rest 0.0+0.0 · engaged 195.7+97.9 · after release 0-150 ms 0.0+0.0, 150-450 0.0+0.0, 450-1500 0.0+0.0, 1.5-3 s 0.0+0.0 · engaged nodes before/at/after release 1/0/0 (st2 counts data-engage-stage too) · bound engaged > 30/s, every window from the release on ≤ 2/s: 0 over",
+   "load": "10.3/11.2/9.9"
+  },
+  {
+   "name": "C-A9 loop · handoff·tabout · stops at release",
+   "status": "PASS",
+   "line": "rAF+RO per s: rest 0.0+0.0 · engaged 97.9+97.9 · after release 0-150 ms 0.0+0.0, 150-450 0.0+0.0, 450-1500 0.0+0.0, 1.5-3 s 0.0+0.0 · engaged nodes before/at/after release 1/0/0 (st2 counts data-engage-stage too) · bound engaged > 30/s, every window from the release on ≤ 2/s: 0 over",
+   "load": "9.6/11.0/9.8"
+  },
+  {
+   "name": "C-A9 flip · none · fine",
+   "status": "REPORT",
+   "line": "a fine hold, the loupe shown (opacity 1.00, k 1.600 of 1.6), then the page scrolled 3 px per frame for 91 read frames · flip at frame 65 (track top 80.3 px): the lens moves 0.0 px against its track in that one frame; gap there -101.8 px (next frame -98.9 px) · worst gap any frame -101.8 px; worst one-frame lens move against its track outside the flip 9.0 px · gaps per frame [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -101.8 -98.9 -93.5 -86.3 -77.3 -68.8 -60.4 -52.4 -45 -36.9 -31.5 -26.2 -21.5 -17.5 -13.8 -11 -8.7 -6.7 -5.1 -3.8 -2.5 0 0 0 0 0]",
+   "load": "9.6/11.0/9.8"
+  },
+  {
+   "name": "C-A9 flip · scale · fine",
+   "status": "REPORT",
+   "line": "a fine hold, the loupe shown (opacity 1.00, k 1.600 of 1.6), then the page scrolled 3 px per frame for 91 read frames, the wrapper under scale 0.8 · flip at frame 71 (track top 62.4 px): the lens moves 0.0 px against its track in that one frame; gap there -81.4 px (next frame -79.2 px) · worst gap any frame -81.4 px; worst one-frame lens move against its track outside the flip 8.7 px · gaps per frame [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -81.4 -79.2 -75.3 -69.7 -63.2 -55.7 -47 -42.6 -36 -31.6 -25.2 -20.9 -17.2 -14 -11.3 -9.2 -6.9 -5.4 -4.3 -3.1]",
+   "load": "9.5/10.9/9.8"
+  },
+  {
+   "name": "C-A9 flipstill · none · fine",
+   "status": "REPORT",
+   "line": "stills with the track's top at 140 px: lens above, top 59.7 px, gap -0.0 px · 84 px: lens above, top 3.7 px, gap -0.0 px · 78 px: lens below, top 76.6 px, gap -22.9 px · 40 px: lens below, top 61.5 px, gap -0.0 px",
+   "load": "9.5/10.9/9.8"
+  },
+  {
+   "name": "C-A9 zoom · none · fine",
+   "status": "PASS",
+   "line": "the wrapper under nothing · k = clone 33.92 / held track 21.20 = ×1.600 (k max 1.6, ±5 %) · lens edge to the track's near edge -0.0 px · centre offset 0.0 px · below false · opacity 1.00",
+   "load": "9.5/10.9/9.8"
+  },
+  {
+   "name": "C-A9 zoom · scale · fine",
+   "status": "PASS",
+   "line": "the wrapper under scale 0.8 (H9's cell, the control) · k = clone 27.14 / held track 16.96 = ×1.600 (k max 1.6, ±5 %) · lens edge to the track's near edge 0.0 px · centre offset 0.0 px · below false · opacity 1.00",
+   "load": "9.5/10.9/9.8"
+  },
+  {
+   "name": "C-A9 zoom · zoom · fine",
+   "status": "PASS",
+   "line": "the wrapper under zoom 0.8 · k = clone 27.14 / held track 16.96 = ×1.600 (k max 1.6, ±5 %) · lens edge to the track's near edge 0.0 px · centre offset 0.0 px · below false · opacity 1.00",
+   "load": "10.4/11.1/9.9"
+  }
+ ]
+}
