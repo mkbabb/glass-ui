@@ -1,0 +1,25 @@
+# 2026-10-31 05:59:33 C-A11 census · glass-ui HEAD fc970e1e1 (lighthouse dumps and .vite* dep caches excluded)
+# self-check: the candidate's own tree (worktree) --stage-room writes 4, currentCSSZoom 2
+atlas @069708a · Slider 2 (tags 1) · NumberField 0 · tap-squish 0 · interactive-item 0 · data-held 0 · --veil-x/y 4 · loupe/lens/stage names 0 · anchor-name 0 · CSS zoom 0 · --spring-* written 0
+bbnf-buddy @2857c2f · Slider 1 (tags 1) · NumberField 0 · tap-squish 0 · interactive-item 0 · data-held 0 · --veil-x/y 0 · loupe/lens/stage names 0 · anchor-name 0 · CSS zoom 0 · --spring-* written 0
+chicago @ · Slider 0 (tags 0) · NumberField 0 · tap-squish 3 · interactive-item 0 · data-held 0 · --veil-x/y 0 · loupe/lens/stage names 0 · anchor-name 0 · CSS zoom 0 · --spring-* written 0
+keyframes.js @5c48e3da · Slider 5 (tags 2) · NumberField 1 · tap-squish 1 · interactive-item 1 · data-held 0 · --veil-x/y 0 · loupe/lens/stage names 0 · anchor-name 6 · CSS zoom 0 · --spring-* written 0
+slides @7dcbb3b · Slider 0 (tags 0) · NumberField 0 · tap-squish 0 · interactive-item 0 · data-held 0 · --veil-x/y 0 · loupe/lens/stage names 0 · anchor-name 0 · CSS zoom 0 · --spring-* written 2
+speedtest @e2d9444d · Slider 2 (tags 2) · NumberField 6 · tap-squish 5 · interactive-item 0 · data-held 0 · --veil-x/y 0 · loupe/lens/stage names 0 · anchor-name 0 · CSS zoom 0 · --spring-* written 1
+value.js @04a08cd62 · Slider 7 (tags 6) · NumberField 1 · tap-squish 0 · interactive-item 0 · data-held 2 · --veil-x/y 0 · loupe/lens/stage names 0 · anchor-name 0 · CSS zoom 3 · --spring-* written 0
+fourier-analysis @3bb9da5 · Slider 5 (tags 2) · NumberField 1 · tap-squish 0 · interactive-item 1 · data-held 0 · --veil-x/y 0 · loupe/lens/stage names 0 · anchor-name 0 · CSS zoom 0 · --spring-* written 0
+sci-report @bbcbd503 · Slider 5 (tags 5) · NumberField 0 · tap-squish 0 · interactive-item 0 · data-held 0 · --veil-x/y 0 · loupe/lens/stage names 0 · anchor-name 0 · CSS zoom 0 · --spring-* written 0
+## CSS zoom hits
+value.js/demo/test/extract/image-sampler.test.ts:48:            getTransform: () => ({ panX: 0, panY: 0, zoom: 1 }),
+value.js/demo/shell/dock/ActionBarToggle.vue:96:                     aperture (< sm), never by a desktop zoom: 200 % of a 1440 desktop
+value.js/test/image-sampler-v4.test.ts:11:        getTransform: () => ({ panX: 0, panY: 0, zoom: 1 }),
+## --spring-* token writes
+slides/src/styles/deck.css:279:    --spring-deck: var(--ease-out-expo);
+slides/src/styles/deck.css:725:   off-screen+tilted+dipped state TO this flat resting state on --spring-deck: a page
+speedtest/src/design/animations.css:156:        --spring-crisp: linear(
+## C-2's overflow ancestor: speedtest DashboardMapControls.vue lines 94-97 and 134
+    <Card
+        v-else
+        tier="wash"
+        class="absolute right-3 top-3 z-controls w-44 overflow-hidden p-0 transition-shadow sm:w-56"
+                        <Slider

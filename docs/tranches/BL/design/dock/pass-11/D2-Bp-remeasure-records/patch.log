@@ -1,0 +1,24 @@
+HEAD 93a03923dcfcbb11941cc7f4084e87962e00a909
+git apply --check: clean on HEAD + floor v5
+applied tree equals the worktree tree
+files: 62
++2504 -2411
+== the pass-11 patch against 09aa6b3b (diff of the two patch files)
+1790c1790
+< index 0000000000000000000000000000000000000000..83f3a216b098022cb13a5791911532750f161e3b
+---
+> index 0000000000000000000000000000000000000000..5d4fbf7f0ecbc0983a8ec2c030e65b3cf4fa1221
+1793c1793
+< @@ -0,0 +1,1508 @@
+---
+> @@ -0,0 +1,1509 @@
+1839c1839,1840
+< +// the unit coming in giving way. Two faces never meet inside a glyph run, so no frame paints
+---
+> +// the unit coming in giving way. Two units going out keep no seam between them: their
+> +// fronts are the exchange's. Two faces never meet inside a glyph run, so no frame paints
+3083c3084
+< +        // opens, and the write below lands the episode in this frame (Q-18 (a)).
+---
+> +        // opens, and the write below lands the episode in this frame.
+b5d5c9db632f4e97baed2f3e3d906568e122f6a9c0d3f141d5f4ff067ea97aa5  /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/dock/pass-11/D2-Bp-p11.patch

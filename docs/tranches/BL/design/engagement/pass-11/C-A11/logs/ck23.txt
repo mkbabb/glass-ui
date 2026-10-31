@@ -1,0 +1,12 @@
+# 2026-10-31 06:00:44 CK-23 · HEAD fc970e1e1
+P-E11: 198 files +5450/-1648; src 153 files +3161/-1359
+P-E10: 198 files +5259/-1648; src 153 files +3114/-1359
+## E over P-E10 (HEAD+P-E10 archive against the worktree), per file
+2	1	src/components/slider/styles.css
+14	1	tests/setup.ts
+87	41	src/composables/motion/engage/stage.ts
+137	6	tests/composables/motion/engage-stage.test.ts
+## the lens CSS change over P-E10
+-       track's painted scale (its ancestors' and the host's grow), so the band magnifies
++       track's painted scale (its ancestors' and the host's grow), each in the lens's own
++       px, which carry an ancestor's `zoom` into the top layer, so the band magnifies

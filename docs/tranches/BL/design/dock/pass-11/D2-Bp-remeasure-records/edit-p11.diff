@@ -1,0 +1,21 @@
+--- /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D2/p11/Bp-remeasure/out/useDockScene.bp10ref.ts	2026-10-31 05:01:36
++++ /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D2/p11/Bp-remeasure/wt/src/components/dock/composables/useDockScene.ts	2026-10-31 05:01:36
+@@ -43,7 +43,8 @@
+ // The seam. A unit going out wipes from each side a unit arrives from: its front. The
+ // unit coming in stops one seam short of that front: `--dock-seam`, one glyph advance
+ // (`1ch`) of the wider of the two, and any two cut edges that face each other keep it too,
+-// the unit coming in giving way. Two faces never meet inside a glyph run, so no frame paints
++// the unit coming in giving way. Two units going out keep no seam between them: their
++// fronts are the exchange's. Two faces never meet inside a glyph run, so no frame paints
+ // a false glyph ("Bools"). A unit cut inside the plate to less than its own seam paints nothing:
+ // a sliver of a glyph reads as a stray mark, not as a face leaving. The plate's own edge
+ // is not such a cut: there the glass takes what it passes. The front leads in as far as
+@@ -1287,7 +1288,7 @@
+         }
+         episode = true;
+         // Under reduced motion every lane has seated already: nothing moves, so no window
+-        // opens, and the write below lands the episode in this frame (Q-18 (a)).
++        // opens, and the write below lands the episode in this frame.
+         if (!morphing && reach > LAND_PX && anyMoving()) setWindow(true);
+         write();
+     }

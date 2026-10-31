@@ -1,0 +1,13 @@
+added src/ lines read: 2226
+hits in src/components/dock: 10
+   src/components/dock/GlassDock.vue | N-2 | /* THE CONTENT OBSERVER [D2 floor v2 · N-2]. One MutationObserver on the root; the run
+   src/components/dock/composables/useDockBody.ts | O-64 | // (O-64 R-3), so it never paints. A step that crosses its target and ends inside the band
+   src/components/dock/composables/useDockRun.ts | N-2 | // the dock's one content observer [N-2].
+   src/components/dock/composables/useDockScene.ts | N-2 | //     dock's one content observer (useDockContent, N-2), in its own microtask;
+   src/components/dock/composables/useDockScene.ts | N-3 | //     (dockSizeHandoff, N-3) at `transitionrun` / `animationstart` and at every check.
+   src/components/dock/composables/useDockScene.ts | N-2 | /** The dock's one content observer (N-2). */
+   src/components/dock/composables/useDockScene.ts | N-3 | // A seat's own size transition or animation (N-3). "take" has finished it, and the
+   src/components/dock/composables/useDockScene.ts | N-3 | decides, before its first moved frame paints (N-3). */
+   src/components/dock/styles/controls.css | O-67 | *   5. controls/seat-badge.css       DockControl's `#badge` slot: the reserved padding-corner cell (O-67)
+   src/components/dock/styles/morph.css | F-77 | F-77] Hover paint exists only where hover does: on a coarse pointer a tap
+hits elsewhere in src/: 0
