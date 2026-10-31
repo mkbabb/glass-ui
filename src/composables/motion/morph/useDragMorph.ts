@@ -380,7 +380,13 @@ export function useDragMorph<V = string>(
         // so the settle watcher arms the single COMMIT-side `onSnap` (off the value
         // the spring settles at — the nearest center the engine snapped to).
         dragging.value = false;
-        if (spring) commitIfSettled(spring);
+        if (!spring) return;
+        // A release on the snap centre it already sits on has no travel left. The
+        // Draggable re-seats the spring there with the release velocity and aims it at
+        // that same centre, which kf treats as an unchanged target: the spring is left
+        // unsettled and never ticks, so the gesture would never finish. Settle it in place.
+        if (!spring.settled && spring.value === spring.target) spring.snap();
+        commitIfSettled(spring);
     }
 
     // The kf Draggable owns the per-gesture pointermove/up; we mirror dragging

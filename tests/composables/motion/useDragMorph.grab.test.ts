@@ -36,8 +36,11 @@ function fixture(
     return { el, onSnap, drag, stop: () => scope.stop() };
 }
 
-const event = (type: string, clientX: number) =>
-    new PointerEvent(type, { bubbles: true, clientX, clientY: 17, pointerId: 1 });
+const event = (type: string, clientX: number, timeStamp?: number) => {
+    const e = new PointerEvent(type, { bubbles: true, clientX, clientY: 17, pointerId: 1 });
+    if (timeStamp !== undefined) Object.defineProperty(e, "timeStamp", { value: timeStamp });
+    return e;
+};
 
 const settle = async (ms = 700) => {
     await new Promise((r) => setTimeout(r, ms));
@@ -116,6 +119,29 @@ describe("useDragMorph: the grab", () => {
         await settle();
         expect(onSnap.mock.calls).toEqual([["a"]]);
         expect(el.style.transform).toBe("");
+        stop();
+    });
+
+    // U/B7d M3 repair 2. A press, a small drag out and back, and a release on the start
+    // point. The pointer is still moving at the release, so the Draggable re-seats the
+    // spring at the release point with that velocity and aims it at the snap centre it
+    // already sits on. The spring then never ticks: measured on /vft, the indicator kept
+    // `transition-property: none` and the next tab click lost its glide.
+    it("finishes the gesture after a drag out and back released on its start", async () => {
+        const { el, onSnap, drag, stop } = fixture();
+        const x0 = CENTERS.a;
+        let t = 1000;
+        el.dispatchEvent(event("pointerdown", x0, t));
+        for (const dx of [2, 4, 6, 8, 6, 4, 2, 0]) {
+            t += 16;
+            el.dispatchEvent(event("pointermove", x0 + dx, t));
+        }
+        el.dispatchEvent(event("pointerup", x0, t + 8));
+        await settle();
+        expect(drag.dragging.value).toBe(false);
+        expect(onSnap.mock.calls).toEqual([["a"]]);
+        expect(el.style.transform).toBe("");
+        expect(el.style.transitionProperty).toBe("");
         stop();
     });
 });

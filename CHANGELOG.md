@@ -23,6 +23,14 @@ Merged on local branch `u/b7-glass` (off `release/10.1.1` bbf176f02, with the pu
   the tab used to be. `DockLayerGroup` shares the fix. Witnesses:
   `tests/composables/motion/useDragMorph.grab.test.ts`,
   `tests-visual/SegmentedTabs.glide.spec.ts`.
+- **A drag out and back, released on its start, finishes the gesture (O-4).** The pointer is
+  still moving at such a release, so the `Draggable` re-seats the spring there with the release
+  velocity and aims it at the snap centre it already sits on. keyframes.js reads that as an
+  unchanged target, so the spring stayed unsettled and never ticked: the indicator kept
+  `transition-property: none`, and on atlas /vft-germination the next tab click landed with no
+  glide (1 frame in Firefox). `useDragMorph` now settles such a release in place. Witnesses:
+  `tests/composables/motion/useDragMorph.grab.test.ts` (1 new, red before) and
+  `tests-visual/SegmentedTabs.glide.spec.ts` (2 new, 8 of 8 red before in C and F).
 
 ### Root items (`u/b7-glass`, U/B7c C3)
 

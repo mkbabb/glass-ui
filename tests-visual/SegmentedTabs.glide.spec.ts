@@ -195,3 +195,43 @@ test("the indicator can be dragged to the next tab, and stays under the label it
     expect(Math.abs(rest - activeBox!.x)).toBeLessThanOrEqual(1);
     expect(Math.abs(activeBox!.x - b!.x)).toBeLessThanOrEqual(1);
 });
+
+// U/B7d M3 repair 2. A press on the active tab, a drag out and back, and a release on the
+// start point. Measured on atlas /vft-germination: the indicator kept
+// `transition-property: none`, and the next click landed with no glide in Chromium and
+// in one frame in Firefox. The press lands on a whole pixel, as a mouse reports it, and the
+// pointer is still moving when it is released.
+for (const dx of [8, 24]) {
+    test(`a ${dx} px drag out and back, released on its start, leaves the next hop gliding`, async ({ page }) => {
+        await open(page);
+        const a = await page.locator(".segmented-tab[data-active]").boundingBox();
+        const x0 = Math.round(a!.x + a!.width / 2);
+        const y = Math.round(a!.y + a!.height / 2);
+        await page.mouse.move(x0, y);
+        await page.mouse.down();
+        await page.mouse.move(x0 + dx, y, { steps: 4 });
+        // Hold past the Draggable's 100 ms velocity window, so the release still carries
+        // the return's speed.
+        await page.waitForTimeout(150);
+        await page.mouse.move(x0, y, { steps: 4 });
+        await page.mouse.up();
+        await page.waitForTimeout(300);
+        const style = (await page.locator(".segmented-indicator").getAttribute("style")) ?? "";
+
+        const target = await page.locator(".segmented-tab").nth(1).evaluate((el) => el.getBoundingClientRect().left);
+        const from = await page.locator(".segmented-indicator").evaluate((el) => el.getBoundingClientRect().left);
+        const frames = await hop(page, 1);
+        const travel = target - from;
+        expect(Math.abs(travel)).toBeGreaterThan(20);
+        // A glide crosses the hop in several frames; no single frame carries more than half.
+        const moving = frames.filter((f, i) => Math.abs(f.x - (i > 0 ? frames[i - 1]!.x : from)) > 0.25).length;
+        let maxStep = Math.abs(frames[0]!.x - from);
+        for (let i = 1; i < frames.length; i++) maxStep = Math.max(maxStep, Math.abs(frames[i]!.x - frames[i - 1]!.x));
+        const settled = frames.find((f) => Math.abs(f.x - target) <= 0.5);
+        expect(settled, "never reached the next tab").toBeDefined();
+        expect(settled!.t).toBeLessThan(400);
+        expect(moving, `moving frames ${moving}`).toBeGreaterThanOrEqual(4);
+        expect(maxStep, `largest frame step ${maxStep} of ${travel}`).toBeLessThanOrEqual(Math.abs(travel) / 2);
+        expect(style, "gesture residue on the indicator").not.toMatch(/transition-property:\s*none|transform:\s*translate/);
+    });
+}
