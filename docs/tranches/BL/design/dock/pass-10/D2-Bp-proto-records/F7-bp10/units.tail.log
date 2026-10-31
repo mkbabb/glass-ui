@@ -1,0 +1,40 @@
+    at write (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D2/p10/Bp-build/wt/src/composables/dom/useClipboard.ts:88:25)
+    at Object.copy (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D2/p10/Bp-build/wt/src/composables/dom/useClipboard.ts:105:30)
+    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D2/p10/Bp-build/wt/tests/composables/dom/useClipboard.test.ts:70:32
+    at file:///Users/mkbabb/Programming/glass-ui/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:20
+
+stderr | tests/composables/dom/useClipboard.test.ts > useClipboard > recovers from a failed attempt on retry
+[useClipboard] clipboard writeText rejected: Error: denied
+    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D2/p10/Bp-build/wt/tests/composables/dom/useClipboard.test.ts:138:36
+    at file:///Users/mkbabb/Programming/glass-ui/node_modules/@vitest/runner/dist/chunk-artifact.js:302:11
+    at file:///Users/mkbabb/Programming/glass-ui/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:26
+    at file:///Users/mkbabb/Programming/glass-ui/node_modules/@vitest/runner/dist/chunk-artifact.js:2326:20
+    at new Promise (<anonymous>)
+    at runWithCancel (file:///Users/mkbabb/Programming/glass-ui/node_modules/@vitest/runner/dist/chunk-artifact.js:2323:10)
+    at file:///Users/mkbabb/Programming/glass-ui/node_modules/@vitest/runner/dist/chunk-artifact.js:2305:20
+    at new Promise (<anonymous>)
+    at runWithTimeout (file:///Users/mkbabb/Programming/glass-ui/node_modules/@vitest/runner/dist/chunk-artifact.js:2272:10)
+    at file:///Users/mkbabb/Programming/glass-ui/node_modules/@vitest/runner/dist/chunk-artifact.js:2955:64
+
+stderr | tests/composables/dom/useClipboard.test.ts > useClipboard > lets only the latest active attempt publish feedback
+[useClipboard] clipboard writeText rejected: Error: stale rejection
+    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D2/p10/Bp-build/wt/tests/composables/dom/useClipboard.test.ts:182:22
+    at file:///Users/mkbabb/Programming/glass-ui/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:20
+
+stderr | tests/components/custom/dock/useDockContent.test.ts > useDockContent — the dock's one content observer (N-2) > fails loud when the dock root is not mounted
+[Vue warn]: Unhandled error during execution of mounted hook 
+  at <App>
+
+stderr | tests/composables/dom/useClipboard.test.ts > useClipboard > invalidates pending state, callbacks, and timers on scope disposal
+[useClipboard] clipboard writeText rejected: Error: after disposal
+    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D2/p10/Bp-build/wt/tests/composables/dom/useClipboard.test.ts:223:24
+    at file:///Users/mkbabb/Programming/glass-ui/node_modules/@vitest/runner/dist/chunk-artifact.js:302:11
+    at file:///Users/mkbabb/Programming/glass-ui/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:26
+    at file:///Users/mkbabb/Programming/glass-ui/node_modules/@vitest/runner/dist/chunk-artifact.js:2326:20
+    at new Promise (<anonymous>)
+    at runWithCancel (file:///Users/mkbabb/Programming/glass-ui/node_modules/@vitest/runner/dist/chunk-artifact.js:2323:10)
+    at file:///Users/mkbabb/Programming/glass-ui/node_modules/@vitest/runner/dist/chunk-artifact.js:2305:20
+    at new Promise (<anonymous>)
+    at runWithTimeout (file:///Users/mkbabb/Programming/glass-ui/node_modules/@vitest/runner/dist/chunk-artifact.js:2272:10)
+    at file:///Users/mkbabb/Programming/glass-ui/node_modules/@vitest/runner/dist/chunk-artifact.js:2955:64
+

@@ -1,0 +1,106 @@
+--- bp8/src/components/dock/composables/useDockScene.ts	2026-10-30 18:49:39
++++ bp10/src/components/dock/composables/useDockScene.ts	2026-10-30 20:12:00
+@@ -23,7 +23,7 @@
+ // inside their face changes (a content change, compaction), so a posture morph writes no
+ // cell translate.
+ //
+-// Content travels with the glass [F-9; REGISTRY P2-4 §4.3]. A unit (a cell with no units
++// Content travels with the glass. A unit (a cell with no units
+ // inside it, or a crossfade unit) is clipped to the plate's painted silhouette on every
+ // frame of an episode, so the closing edge takes what it passes and the opening edge
+ // reveals what it reaches. No unit fades by coverage, and a cell that holds units is a
+@@ -42,9 +42,9 @@
+ //
+ // The seam. A unit going out wipes from each side a unit arrives from: its front. The
+ // unit coming in stops one seam short of that front: `--dock-seam`, one glyph advance
+-// (`1ch`) of the wider of the two, and two units arriving side by side keep it between
+-// their cut edges too. Two faces never meet inside a glyph run, so no frame paints a false
+-// glyph ("Bools"). A unit cut inside the plate to less than its own seam paints nothing:
++// (`1ch`) of the wider of the two, and any two cut edges that face each other keep it too,
++// the unit coming in giving way. Two faces never meet inside a glyph run, so no frame paints
++// a false glyph ("Bools"). A unit cut inside the plate to less than its own seam paints nothing:
+ // a sliver of a glyph reads as a stray mark, not as a face leaving. The plate's own edge
+ // is not such a cut: there the glass takes what it passes. The front leads in as far as
+ // the units arriving on its side need to paint, at least two seams, and keeps the unit
+@@ -563,7 +563,7 @@
+     function sliver(m: Mover, box: Span, v: [number, number], P: Span): boolean {
+         const len = v[1] - v[0];
+         if (len <= 0 || len >= m.seam || box.hi - box.lo < m.seam) return false;
+-        return (v[0] > box.lo + TOUCH_PX && v[0] > P.lo + TOUCH_PX) || (v[1] < box.hi - TOUCH_PX && v[1] < P.hi - TOUCH_PX);
++        return (v[0] > box.lo + TOUCH_PX && v[0] > P.lo) || (v[1] < box.hi - TOUCH_PX && v[1] < P.hi);
+     }
+ 
+     function isUnit(m: Mover, parents: Set<Mover>): boolean {
+@@ -706,25 +706,6 @@
+             visOf.set(m, [Math.max(a, P.lo), Math.min(b, P.hi)]);
+             ownOf.set(m, [a, Math.max(a, b)]);
+         }
+-        // Two units arriving side by side, each cut by a different front, keep the seam
+-        // between their cut edges too: the later one gives way.
+-        const cutLive = units
+-            .filter(({ m }) => (m.enter || m.joined) && painting(m))
+-            .map((u) => ({ ...u, v: visOf.get(u.m)! }))
+-            .filter((u) => u.v[1] - u.v[0] > TOUCH_PX)
+-            .sort((a, b) => a.v[0] - b.v[0]);
+-        for (let i = 0; i + 1 < cutLive.length; i++) {
+-            const u = cutLive[i];
+-            const w = cutLive[i + 1];
+-            if (Math.min(u.box.chi, w.box.chi) - Math.max(u.box.clo, w.box.clo) <= TOUCH_PX) continue;
+-            if (!(u.v[1] < u.box.hi - TOUCH_PX && w.v[0] > w.box.lo + TOUCH_PX)) continue;
+-            const seam = Math.max(u.m.seam, w.m.seam) + SEAM_SLACK_PX;
+-            if (w.v[0] - u.v[1] >= seam) continue;
+-            w.v = [u.v[1] + seam, Math.max(w.v[1], u.v[1] + seam)];
+-            visOf.set(w.m, w.v);
+-            const wo = ownOf.get(w.m);
+-            if (wo) ownOf.set(w.m, [Math.max(wo[0], w.v[0]), Math.max(wo[1], w.v[0])]);
+-        }
+         // A unit coming in uncovers with weight: each edge, a seam's or the opening plate's,
+         // gives way at most twice as far as it did the frame before (half its cut on the
+         // first frame), so an edge that a neighbour or a long frame releases eases back
+@@ -754,6 +735,37 @@
+             // Its own span keeps what only the plate cuts: a retarget's front starts there.
+             ownOf.set(m, [cs > cs0 + 0.01 ? a : o[0], ce > ce0 + 0.01 ? b : o[1]]);
+             visOf.set(m, [Math.max(a, P.lo), Math.min(b, P.hi)]);
++        }
++        // Two cut edges that face each other keep the seam, whatever cut them and whichever
++        // way each unit goes. The fronts hold the side a unit arrives from; this holds the rest:
++        // an edge still easing back, an edge a retarget left on a side nothing arrives from.
++        // The unit coming in gives way, the later of two; a unit going out is never held by it.
++        const live = units
++            .filter(({ m }) => painting(m))
++            .map((u) => ({ ...u, v: visOf.get(u.m)! }))
++            .filter((u) => u.v[1] - u.v[0] > TOUCH_PX && !sliver(u.m, u.box, u.v, P))
++            .sort((a, b) => a.v[0] - b.v[0]);
++        for (const [i, u] of live.entries()) {
++            for (const w of live.slice(i + 1)) {
++                const seam = Math.max(u.m.seam, w.m.seam) + SEAM_SLACK_PX;
++                if (
++                    (u.m.exit && w.m.exit) ||
++                    Math.min(u.box.chi, w.box.chi) - Math.max(u.box.clo, w.box.clo) <= TOUCH_PX ||
++                    u.v[1] >= u.box.hi - TOUCH_PX ||
++                    w.v[0] <= w.box.lo + TOUCH_PX ||
++                    w.v[0] - u.v[1] >= seam
++                )
++                    continue;
++                const g = w.m.exit ? u : w;
++                g.v = w.m.exit ? [u.v[0], Math.max(u.v[0], w.v[0] - seam)] : [u.v[1] + seam, Math.max(w.v[1], u.v[1] + seam)];
++                visOf.set(g.m, g.v);
++                ownOf.set(g.m, g.v);
++                const r = g.m.reveal;
++                if (r) {
++                    r.s = Math.max(r.s, g.v[0] - g.box.lo);
++                    r.e = Math.max(r.e, g.box.hi - g.v[1]);
++                }
++            }
+         }
+         // A unit cut inside the plate to less than its seam paints nothing.
+         for (const { m, box } of units) {
+@@ -981,7 +993,7 @@
+                 if (Math.abs(end) <= TOUCH_PX) {
+                     const theirs = o.vis ?? [now.lo, now.hi];
+                     end = (theirs[0] + theirs[1]) / 2 - (mine[0] + mine[1]) / 2;
+-                    if (Math.abs(end) <= TOUCH_PX) heir = o;
++                    if (Math.abs(end) <= TOUCH_PX && o.enter) heir = o;
+                 }
+                 const S2 = 2 * (Math.max(m.seam, o.seam) + SEAM_SLACK_PX);
+                 if (end > TOUCH_PX) {

@@ -1,0 +1,11 @@
+--- c2.ts	2026-10-30 19:43:56
++++ wt/src/components/dock/composables/useDockScene.ts	2026-10-30 20:12:00
+@@ -563,7 +563,7 @@
+     function sliver(m: Mover, box: Span, v: [number, number], P: Span): boolean {
+         const len = v[1] - v[0];
+         if (len <= 0 || len >= m.seam || box.hi - box.lo < m.seam) return false;
+-        return (v[0] > box.lo + TOUCH_PX && v[0] > P.lo + TOUCH_PX) || (v[1] < box.hi - TOUCH_PX && v[1] < P.hi - TOUCH_PX);
++        return (v[0] > box.lo + TOUCH_PX && v[0] > P.lo) || (v[1] < box.hi - TOUCH_PX && v[1] < P.hi);
+     }
+ 
+     function isUnit(m: Mover, parents: Set<Mover>): boolean {

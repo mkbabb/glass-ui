@@ -1,0 +1,351 @@
+--- bp8 built useDockScene-hY1v177J.js	2026-10-30 21:11:26
++++ bp10 built useDockScene-CA6dYrPn.js	2026-10-30 21:11:26
+@@ -23,7 +23,7 @@
+ for(
+ i&&i!==t
+ ){if(!(i instanceof HTMLElement))return null
+-n+=i.offsetLeft,r+=i.offsetTop,i=i.offsetParent}return i===t?{x:n,y:r}:null}function M(e){return e<0?0:e>1?1:e}var ee=class{el
++n+=i.offsetLeft,r+=i.offsetTop,i=i.offsetParent}return i===t?{x:n,y:r}:null}function ee(e){return e<0?0:e>1?1:e}var te=class{el
+ parent
+ lx
+ ly
+@@ -42,18 +42,18 @@
+ ghost=!1
+ seam=0
+ constructor(e,t,n,r){this.el=e,this.parent=t,this.lx=n,this.ly=r}}
+-function N(t){let{root:n,plate:u,layers:d,full:f,summary:p,outerActiveLayer:m,isCompact:h,body:D,content:O}=t,N=l(m.value),P=l(null),te=!1,F=()=>D.lane({eps:_}),I={l:F(),t:F(),r:F(),b:F(),radius:F()},L=null,R=D.lane({eps:v}),z=!1
+-R.seat(+(m.value===`full`))
+-let B=new Map,V=new Map,H=new Set,U=new Map,W=!1,ne=!1,re=!1,ie=.5,G=!1,ae={},K={}
+-function oe(e,t){let n=B.get(e)
+-return(!n||n.parent!==t)&&(n&&se(n),n=new ee(e,t,F(),F()),B.set(e,n)),n}function se(e){e.lx.release(),e.ly.release(),_e(e),B.delete(e.el)}function q(e){if(e.hold){let t=ce(e)
++function M(t){let{root:n,plate:u,layers:d,full:f,summary:p,outerActiveLayer:m,isCompact:h,body:D,content:O}=t,M=l(m.value),N=l(null),ne=!1,P=()=>D.lane({eps:_}),F={l:P(),t:P(),r:P(),b:P(),radius:P()},I=null,L=D.lane({eps:v}),R=!1
++L.seat(+(m.value===`full`))
++let z=new Map,B=new Map,V=new Set,H=new Map,U=!1,re=!1,ie=!1,ae=.5,W=!1,G={},K={}
++function oe(e,t){let n=z.get(e)
++return(!n||n.parent!==t)&&(n&&se(n),n=new te(e,t,P(),P()),z.set(e,n)),n}function se(e){e.lx.release(),e.ly.release(),_e(e),z.delete(e.el)}function q(e){if(e.hold){let t=ce(e)
+ return{x:e.hold.x-t.x-e.pos.x,y:e.hold.y-t.y-e.pos.y}}return{x:e.lx.value,y:e.ly.value}}function ce(e){return e.parent?J(e.parent):{x:0,y:0}}function J(e){let t=ce(e),n=q(e)
+ return{x:t.x+e.pos.x+n.x,y:t.y+e.pos.y+n.y}}function Y(e){if(e.hold)return e.hold
+ let t=e.parent?Y(e.parent):{x:0,y:0}
+ return{x:t.x+e.pos.x,y:t.y+e.pos.y}}function le(e){if(e.hold)return{x:0,y:0}
+ let t=e.parent?le(e.parent):{x:0,y:0}
+-return{x:t.x+e.lx.velocity,y:t.y+e.ly.velocity}}function ue(){let e=L?.w??0,t=L?.h??0
+-return{l:I.l.value,t:I.t.value,r:e+I.r.value,b:t+I.b.value}}function de(){return n.value?.classList.contains(`vertical`)??!1}function X(e,t,n){return n?{lo:e.y,hi:e.y+t.size.y,clo:e.x,chi:e.x+t.size.x}:{lo:e.x,hi:e.x+t.size.x,clo:e.y,chi:e.y+t.size.y}}function fe(e){let t=Array.from(e.querySelectorAll(`:scope > .dock-controls > .dock-persistent`))
++return{x:t.x+e.lx.velocity,y:t.y+e.ly.velocity}}function ue(){let e=I?.w??0,t=I?.h??0
++return{l:F.l.value,t:F.t.value,r:e+F.r.value,b:t+F.b.value}}function de(){return n.value?.classList.contains(`vertical`)??!1}function X(e,t,n){return n?{lo:e.y,hi:e.y+t.size.y,clo:e.x,chi:e.x+t.size.x}:{lo:e.x,hi:e.x+t.size.x,clo:e.y,chi:e.y+t.size.y}}function fe(e){let t=Array.from(e.querySelectorAll(`:scope > .dock-controls > .dock-persistent`))
+ return d.value&&t.push(d.value),t}function Z(e){return e===`full`?f.value:p.value}function pe(e){let t=[]
+ for(let n of k(e)){let e=me(n)
+ e.length?t.push(...e):t.push(n)}return t}function me(e){let t=[]
+@@ -70,22 +70,22 @@
+ Q(e,`inset(${s(u)} ${s(d)} ${s(f)} ${s(p)} round ${s(m)} ${s(h)} ${s(g)} ${s(_)})`)
+ let v=n>t.lo+b&&n>i.lo+b,y=r<t.hi-b&&r<i.hi-b
+ if(!v&&!y){$(e,null)
+-return}let x=n-t.lo,S=r-t.lo,C=(x+S)/2,w=[x,Math.min(x+e.seam,C),Math.max(S-e.seam,C),S],T=t=>M(Math.min(v?(t-x)/e.seam:1,y?(S-t)/e.seam:1)),E=w.map(e=>`rgb(0 0 0 / ${Math.round(T(e)*1e3)/1e3}) ${s(e)}`)
++return}let x=n-t.lo,S=r-t.lo,C=(x+S)/2,w=[x,Math.min(x+e.seam,C),Math.max(S-e.seam,C),S],T=t=>ee(Math.min(v?(t-x)/e.seam:1,y?(S-t)/e.seam:1)),E=w.map(e=>`rgb(0 0 0 / ${Math.round(T(e)*1e3)/1e3}) ${s(e)}`)
+ $(e,`linear-gradient(${o?`to bottom`:`to right`}, ${E.join(`, `)})`)}function xe(e,t,n,r){let i=n[1]-n[0]
+-return i<=0||i>=e.seam||t.hi-t.lo<e.seam?!1:n[0]>t.lo+b&&n[0]>r.lo+b||n[1]<t.hi-b&&n[1]<r.hi-b}function Se(e,t){return e.parent!==null&&e.parent.parent!==null&&!t.has(e)}function Ce(e=!1){let t=n.value,r=u.value
+-if(!t||!r||!L||!W)return
++return i<=0||i>=e.seam||t.hi-t.lo<e.seam?!1:n[0]>t.lo+b&&n[0]>r.lo||n[1]<t.hi-b&&n[1]<r.hi}function Se(e,t){return e.parent!==null&&e.parent.parent!==null&&!t.has(e)}function Ce(e=!1){let t=n.value,r=u.value
++if(!t||!r||!I||!U)return
+ let i=de(),a=ue()
+-r.style.inset=`${I.t.value}px ${-I.r.value}px ${-I.b.value}px ${I.l.value}px`
+-let o=Math.max(0,Math.min(L.radius+I.radius.value,(a.r-a.l)/2,(a.b-a.t)/2))
+-r.style.borderRadius=`${o}px`,z&&r.style.setProperty(`--dock-expand-t`,`${M(R.value)}`)
+-let s=i?{lo:a.t,hi:a.b,clo:a.l,chi:a.r}:{lo:a.l,hi:a.r,clo:a.t,chi:a.b},c=s.hi-s.lo-(i?L.h:L.w)
+-t.style.setProperty(`--dock-flow-start`,`${L.margin[0]+ie*c}px`),t.style.setProperty(`--dock-flow-end`,`${L.margin[1]+(1-ie)*c}px`),G||=(L.hold!==null&&(t.style.setProperty(`--dock-hold`,`${L.hold}px`),t.setAttribute(`data-dock-hold`,``)),t.setAttribute(`data-dock-flow`,``),!0)
++r.style.inset=`${F.t.value}px ${-F.r.value}px ${-F.b.value}px ${F.l.value}px`
++let o=Math.max(0,Math.min(I.radius+F.radius.value,(a.r-a.l)/2,(a.b-a.t)/2))
++r.style.borderRadius=`${o}px`,R&&r.style.setProperty(`--dock-expand-t`,`${ee(L.value)}`)
++let s=i?{lo:a.t,hi:a.b,clo:a.l,chi:a.r}:{lo:a.l,hi:a.r,clo:a.t,chi:a.b},c=s.hi-s.lo-(i?I.h:I.w)
++t.style.setProperty(`--dock-flow-start`,`${I.margin[0]+ae*c}px`),t.style.setProperty(`--dock-flow-end`,`${I.margin[1]+(1-ae)*c}px`),W||=(I.hold!==null&&(t.style.setProperty(`--dock-hold`,`${I.hold}px`),t.setAttribute(`data-dock-hold`,``)),t.setAttribute(`data-dock-flow`,``),!0)
+ let l=new Set
+-for(let e of B.values())e.parent&&l.add(e.parent)
++for(let e of z.values())e.parent&&l.add(e.parent)
+ let d=f.value?.hasAttribute(`data-overflowing`)??!1,p=[]
+-for(let e of B.values())ve(e),Se(e,l)&&p.push({m:e,box:X(J(e),e,i)})
++for(let e of z.values())ve(e),Se(e,l)&&p.push({m:e,box:X(J(e),e,i)})
+ let m=e=>d&&!!f.value&&f.value.contains(e.el)&&!e.hold,h=new Set
+-for(let e of[N.value,P.value]){let t=e?Z(e):null
++for(let e of[M.value,N.value]){let t=e?Z(e):null
+ t&&h.add(t)}let g=e=>{let t=e
+ for(
+ t.parent?.parent
+@@ -95,11 +95,11 @@
+ continue}if(t.enter||t.joined)continue
+ let[r,i]=[n.lo,n.hi]
+ if(t.exit){let a=t.exit,o=D.omega*(n.hi-n.lo),c=a.path?a.path.lead[0]+a.path.lead[1]:0
+-e&&a.path&&a.r<1&&(a.r=c>0?Math.min(1,a.r+o*C/c):1),e&&a.path&&(a.d+=o*Math.min(D.dt,C)*M(a.ex.lane.value)**2),[r,i]=ye(t,n)
++e&&a.path&&a.r<1&&(a.r=c>0?Math.min(1,a.r+o*C/c):1),e&&a.path&&(a.d+=o*Math.min(D.dt,C)*ee(a.ex.lane.value)**2),[r,i]=ye(t,n)
+ let l=[Math.max(r,s.lo),Math.min(i,s.hi)],u=i>r&&xe(t,n,l,s)
+ u&&a.heir?(x.set(a.heir,l),i=r):i>r&&!u&&y.set(t,[r,i]),i<r&&(i=r)}_.set(t,[Math.max(r,s.lo),Math.min(i,s.hi)]),v.set(t,[r,i])}for(let{m:e,box:t}of p){if(!e.enter&&!e.joined||!g(e))continue
+ let[n,r]=[t.lo,t.hi],a=e.enter?.from
+-if(a&&e.enter){let i=M(e.enter.ex.lane.value)
++if(a&&e.enter){let i=ee(e.enter.ex.lane.value)
+ n=t.lo+a[0]*(1-i),r=t.lo+a[1]+(t.hi-t.lo-a[1])*i}let o=(t.lo+t.hi)/2,c=X(Y(e),e,i)
+ for(let[a,s]of _){if(a===e)continue
+ let l=y.get(a),u=l&&a.exit?.path?.cut||[!1,!1],d=s[1]-s[0]>b
+@@ -107,67 +107,64 @@
+ let f=Math.max(e.seam,a.seam)+S,p=X(J(a),a,i),[m,h]=l?[p.lo-f,p.hi+f]:s
+ if(Math.min(h,r)-Math.max(m,n)<=b||Math.min(p.chi,t.chi)-Math.max(p.clo,t.clo)<=b)continue
+ let g=X(Y(a),a,i),_=(g.lo+g.hi)/2-(c.lo+c.hi)/2
+-Math.abs(_)<=b&&(_=l&&u[0]!==u[1]?u[0]?1:-1:(l?(l[0]+l[1])/2:(s[0]+s[1])/2)-o),_>=0?u[0]?r=Math.min(r,l[0]-f):d&&(r=Math.min(r,s[0])):u[1]?n=Math.max(n,l[1]+f):d&&(n=Math.max(n,s[1]))}_.set(e,[Math.max(n,s.lo),Math.min(r,s.hi)]),v.set(e,[n,Math.max(n,r)])}let T=p.filter(({m:e})=>(e.enter||e.joined)&&g(e)).map(e=>({...e,v:_.get(e.m)})).filter(e=>e.v[1]-e.v[0]>b).sort((e,t)=>e.v[0]-t.v[0])
+-for(let e=0
+-e+1<T.length
+-e++){let t=T[e],n=T[e+1]
+-if(Math.min(t.box.chi,n.box.chi)-Math.max(t.box.clo,n.box.clo)<=b||!(t.v[1]<t.box.hi-b&&n.v[0]>n.box.lo+b))continue
+-let r=Math.max(t.m.seam,n.m.seam)+S
+-if(n.v[0]-t.v[1]>=r)continue
+-n.v=[t.v[1]+r,Math.max(n.v[1],t.v[1]+r)],_.set(n.m,n.v)
+-let i=v.get(n.m)
+-i&&v.set(n.m,[Math.max(i[0],n.v[0]),Math.max(i[1],n.v[0])])}for(let{m:e,box:t}of p){if(!(e.enter||e.joined)||!g(e)){e.reveal=null
++Math.abs(_)<=b&&(_=l&&u[0]!==u[1]?u[0]?1:-1:(l?(l[0]+l[1])/2:(s[0]+s[1])/2)-o),_>=0?u[0]?r=Math.min(r,l[0]-f):d&&(r=Math.min(r,s[0])):u[1]?n=Math.max(n,l[1]+f):d&&(n=Math.max(n,s[1]))}_.set(e,[Math.max(n,s.lo),Math.min(r,s.hi)]),v.set(e,[n,Math.max(n,r)])}for(let{m:e,box:t}of p){if(!(e.enter||e.joined)||!g(e)){e.reveal=null
+ continue}let n=v.get(e)
+ if(!n)continue
+ let r=Math.max(0,Math.max(n[0],s.lo)-t.lo),i=Math.max(0,t.hi-Math.min(n[1],s.hi)),a=r,o=i,c=e.reveal
+ if(c){let[n,r]=x.get(e)??[1/0,-1/0]
+ a=Math.max(a,Math.min(c.s-(c.ds>.05?w*c.ds:c.s/2),n-t.lo)),o=Math.max(o,Math.min(c.e-(c.de>.05?w*c.de:c.e/2),t.hi-r))}e.reveal={s:a,e:o,ds:c?Math.max(0,c.s-a):0,de:c?Math.max(0,c.e-o):0}
+ let l=t.lo+a,u=Math.max(l,t.hi-o)
+-v.set(e,[a>r+.01?l:n[0],o>i+.01?u:n[1]]),_.set(e,[Math.max(l,s.lo),Math.min(u,s.hi)])}for(let{m:e,box:t}of p)xe(e,t,_.get(e),s)&&(_.set(e,[t.lo,t.lo]),v.set(e,[t.lo,t.lo]))
++v.set(e,[a>r+.01?l:n[0],o>i+.01?u:n[1]]),_.set(e,[Math.max(l,s.lo),Math.min(u,s.hi)])}let T=p.filter(({m:e})=>g(e)).map(e=>({...e,v:_.get(e.m)})).filter(e=>e.v[1]-e.v[0]>b&&!xe(e.m,e.box,e.v,s)).sort((e,t)=>e.v[0]-t.v[0])
++for(let[e,t]of T.entries())for(let n of T.slice(e+1)){let e=Math.max(t.m.seam,n.m.seam)+S
++if(t.m.exit&&n.m.exit||Math.min(t.box.chi,n.box.chi)-Math.max(t.box.clo,n.box.clo)<=b||t.v[1]>=t.box.hi-b||n.v[0]<=n.box.lo+b||n.v[0]-t.v[1]>=e)continue
++let r=n.m.exit?t:n
++r.v=n.m.exit?[t.v[0],Math.max(t.v[0],n.v[0]-e)]:[t.v[1]+e,Math.max(n.v[1],t.v[1]+e)],_.set(r.m,r.v),v.set(r.m,r.v)
++let i=r.m.reveal
++i&&(i.s=Math.max(i.s,r.v[0]-r.box.lo),i.e=Math.max(i.e,r.box.hi-r.v[1]))}for(let{m:e,box:t}of p)xe(e,t,_.get(e),s)&&(_.set(e,[t.lo,t.lo]),v.set(e,[t.lo,t.lo]))
+ for(let{m:e,box:t}of p){if(!g(e)){e.vis=null,e.own=null,Q(e,null),$(e,null)
+ continue}let n=_.get(e)
+ if(e.vis=n[1]>n[0]?n:[t.lo,t.lo],e.own=n[1]>n[0]?v.get(e)??n:[t.lo,t.lo],m(e)){Q(e,null),$(e,null)
+-continue}be(e,t,n[0],n[1],s,o,i)}we()}function we(){Ne()||(Oe(),te&&Ee(!1))}function Te(){if(R.moving)return!0
+-for(let e of V.values())if(e.lane.moving)return!0
+-return!1}function Ee(e){te=e,n.value?.toggleAttribute(`data-morphing`,e),t.onWindow?.(e)}function De(){let e=n.value
+-if(!(!e||!G)){e.removeAttribute(`data-dock-flow`),e.removeAttribute(`data-dock-hold`)
++continue}be(e,t,n[0],n[1],s,o,i)}we()}function we(){Ne()||(Oe(),ne&&Ee(!1))}function Te(){if(L.moving)return!0
++for(let e of B.values())if(e.lane.moving)return!0
++return!1}function Ee(e){ne=e,n.value?.toggleAttribute(`data-morphing`,e),t.onWindow?.(e)}function De(){let e=n.value
++if(!(!e||!W)){e.removeAttribute(`data-dock-flow`),e.removeAttribute(`data-dock-hold`)
+ for(let t of[`--dock-flow-start`,`--dock-flow-end`,`--dock-hold`])e.style.removeProperty(t)
+-G=!1}}function Oe(){W=!1,z=!1
++W=!1}}function Oe(){U=!1,R=!1
+ let e=u.value
+ e?.style.removeProperty(`inset`),e?.style.removeProperty(`border-radius`),e?.style.removeProperty(`--dock-expand-t`),De()
+-for(let e of U.keys())e.remove()
+-U.clear()
+-for(let e of[...B.values()]){if(e.ghost){se(e)
+-continue}e.hold=null,e.exit=null,e.enter=null,e.joined=!1,e.vis=null,e.own=null,_e(e)}for(let e of H)e.removeAttribute(`data-dock-leaving`)
++for(let e of H.keys())e.remove()
+ H.clear()
+-for(let e of n.value?.querySelectorAll(`[data-dock-entering]`)??[])e.removeAttribute(`data-dock-entering`)
+-let t=[...V.values()]
++for(let e of[...z.values()]){if(e.ghost){se(e)
++continue}e.hold=null,e.exit=null,e.enter=null,e.joined=!1,e.vis=null,e.own=null,_e(e)}for(let e of V)e.removeAttribute(`data-dock-leaving`)
+ V.clear()
++for(let e of n.value?.querySelectorAll(`[data-dock-entering]`)??[])e.removeAttribute(`data-dock-entering`)
++let t=[...B.values()]
++B.clear()
+ for(let e of t)e.lane.release(),e.done?.()
+-P.value=null}D.onFrame(()=>Ce(!0))
++N.value=null}D.onFrame(()=>Ce(!0))
+ function ke(e,t){if(!e)return null
+ let n=t?e.size.y:e.size.x,r=e.own??e.vis
+ if(!r)return[0,n]
+ let i=t?J(e).y:J(e).x
+-return[Math.max(0,r[0]-i),Math.min(n,r[1]-i)]}function Ae(e,t,n,r){if(!L){r?.()
+-return}let i=de(),a=V.get(e),o=new Set
++return[Math.max(0,r[0]-i),Math.min(n,r[1]-i)]}function Ae(e,t,n,r){if(!I){r?.()
++return}let i=de(),a=B.get(e),o=new Set
+ if(a){a.lane.release()
+-for(let e of B.values())(e.exit?.ex===a||e.enter?.ex===a)&&o.add(e)
+-for(let e of B.values())e.exit?.ex===a&&(e.exit=null),e.enter?.ex===a&&(e.enter=null)
++for(let e of z.values())(e.exit?.ex===a||e.enter?.ex===a)&&o.add(e)
++for(let e of z.values())e.exit?.ex===a&&(e.exit=null),e.enter?.ex===a&&(e.enter=null)
+ a.done&&a.done!==r&&a.done()}let s=1
+-for(let e of[...t,...n]){let t=B.get(e)
++for(let e of[...t,...n]){let t=z.get(e)
+ t&&(s=Math.max(s,i?t.size.y:t.size.x))}let c={key:e,lane:D.lane({eps:_/2/s}),out:new Set(t),in:new Set(n),done:r}
+-V.set(e,c)
+-for(let e of t){let t=B.get(e),n=ke(t,i)
+-t&&n&&(t.exit={ex:c,s0:n[0],e0:n[1],to:void 0,moving:o.has(t),r:0,d:0})}for(let e of n){let t=B.get(e)
++B.set(e,c)
++for(let e of t){let t=z.get(e),n=ke(t,i)
++t&&n&&(t.exit={ex:c,s0:n[0],e0:n[1],to:void 0,moving:o.has(t),r:0,d:0})}for(let e of n){let t=z.get(e)
+ if(!t)continue
+ let n=ke(t,i),r=i?t.size.y:t.size.x
+-t.enter={ex:c,from:t.vis!==null&&n!==null&&(n[0]>.01||n[1]<r-.01)?n:null},t.exit=null}c.lane.from(0,0,1),W=!0}function je(e){if(!L)return
+-let t=e?{lo:0,hi:L.h,clo:0,chi:L.w}:{lo:0,hi:L.w,clo:0,chi:L.h},n=new Set
+-for(let e of B.values())e.parent&&n.add(e.parent)
+-let r=[...B.values()].filter(e=>Se(e,n))
+-for(let t of V.values()){for(let n of t.out){let r=B.get(n)
+-r&&!r.exit&&(r.exit={ex:t,s0:0,e0:e?r.size.y:r.size.x,to:void 0,r:0,d:0})}for(let e of t.in){let n=B.get(e)
++t.enter={ex:c,from:t.vis!==null&&n!==null&&(n[0]>.01||n[1]<r-.01)?n:null},t.exit=null}c.lane.from(0,0,1),U=!0}function je(e){if(!I)return
++let t=e?{lo:0,hi:I.h,clo:0,chi:I.w}:{lo:0,hi:I.w,clo:0,chi:I.h},n=new Set
++for(let e of z.values())e.parent&&n.add(e.parent)
++let r=[...z.values()].filter(e=>Se(e,n))
++for(let t of B.values()){for(let n of t.out){let r=z.get(n)
++r&&!r.exit&&(r.exit={ex:t,s0:0,e0:e?r.size.y:r.size.x,to:void 0,r:0,d:0})}for(let e of t.in){let n=z.get(e)
+ n&&!n.enter&&(n.enter={ex:t,from:null})}}for(let n of r){let i=n.exit
+ if(!i||i.to!==void 0)continue
+ let a=X(Y(n),n,e)
+@@ -181,64 +178,64 @@
+ if(i<=b)continue
+ let g=X(J(t),t,e),_=(g.lo+g.hi)/2-(o.lo+o.hi)/2
+ if(Math.abs(_)<=b){let e=t.vis??[g.lo,g.hi]
+-_=(e[0]+e[1])/2-(s[0]+s[1])/2,Math.abs(_)<=b&&(m=t)}let v=2*(Math.max(n.seam,t.seam)+S)
++_=(e[0]+e[1])/2-(s[0]+s[1])/2,Math.abs(_)<=b&&t.enter&&(m=t)}let v=2*(Math.max(n.seam,t.seam)+S)
+ _>b?(l=Math.max(l,i),d=Math.max(d,a.hi-r.hi+v),p=Math.min(p,a.hi-r.hi+v)):(c=Math.max(c,i),u=Math.max(u,r.lo-a.lo+v),f=Math.min(f,r.lo-a.lo+v)),h=Math.max(h,t.seam)}let g=e?n.size.y:n.size.x,_=Math.min(g,Math.max(0,t.lo-a.lo)),v=Math.min(g,Math.max(0,t.hi-a.lo)),y,x
+ if(c+l>0){let e=_+(v-_)*c/(c+l)
+ y=c>0?e:i.s0,x=l>0?e:i.e0}else _>.01?[y,x]=[i.s0,_]:v<g-.01?[y,x]=[v,i.e0]:[y,x]=[i.s0,i.s0]
+ i.to=[Math.max(i.s0,y),Math.min(i.e0,x)]
+ let C=h+S,w=i.e0-i.s0,T=i.moving||i.s0>.01||i.e0<g-.01,E=Math.max(0,w-(T?1.25:2)*n.seam),D=c>0?Math.max(2*C,u-i.s0):0,O=l>0?Math.max(2*C,d-(g-i.e0)):0,k=D+O>E?E/(D+O):1,A=l>0?void 0:m,j=Math.min(i.e0,Math.max(i.s0,g/2))
+ i.heir=A,i.path={from:[i.s0,i.e0],lead:A?[0,0]:[D*k<f-i.s0?0:D*k,O*k<p-(g-i.e0)?0:O*k],to:A?[j,j]:[c>0?Math.max(i.to[0],c)+2*C:i.to[0],l>0?Math.min(i.to[1],g-l)-2*C:i.to[1]],cut:[c>0,l>0]}}}function Me(){let e=n.value,t=d.value
+-if(!e||!t||re)return
++if(!e||!t||ie)return
+ Ve(),De()
+ let r=he(e)
+ if(!(r.w>0&&r.h>0))return
+-let i=de(),a=getComputedStyle(e).boxSizing===`border-box`,o=i?a?r.h:r.ch:a?r.w:r.cw,s=g(e,i?`vertical`:`horizontal`),c=s===`hold`||s===`follow`,l=L?ue():null,u=L?L.radius+I.radius.value:0,p=new Map
+-for(let e of B.values())p.set(e,{p:J(e),v:le(e)})
+-let h={x:e.offsetLeft,y:e.offsetTop},v=!L||Math.abs(L.w-r.w)>.01||Math.abs(L.h-r.h)>.01,y=L&&v?{x:h.x-L.pos.x,y:h.y-L.pos.y}:{x:0,y:0},b=e.getBoundingClientRect(),S=e.parentElement?.getBoundingClientRect(),C=i?{lo:b.top-(S?.top??0),hi:b.bottom-(S?.top??0),clo:0,chi:0}:{lo:b.left-(S?.left??0),hi:b.right-(S?.left??0),clo:0,chi:0}
+-if(L&&v){let e=C.hi-C.lo-(L.box.hi-L.box.lo)
+-Math.abs(e)>.5&&(ie=M(-(C.lo-L.box.lo)/e))}let w=ge(e,r.w,r.h),T=!L||ne
+-ne=!1
++let i=de(),a=getComputedStyle(e).boxSizing===`border-box`,o=i?a?r.h:r.ch:a?r.w:r.cw,s=g(e,i?`vertical`:`horizontal`),c=s===`hold`||s===`follow`,l=I?ue():null,u=I?I.radius+F.radius.value:0,p=new Map
++for(let e of z.values())p.set(e,{p:J(e),v:le(e)})
++let h={x:e.offsetLeft,y:e.offsetTop},v=!I||Math.abs(I.w-r.w)>.01||Math.abs(I.h-r.h)>.01,y=I&&v?{x:h.x-I.pos.x,y:h.y-I.pos.y}:{x:0,y:0},b=e.getBoundingClientRect(),S=e.parentElement?.getBoundingClientRect(),C=i?{lo:b.top-(S?.top??0),hi:b.bottom-(S?.top??0),clo:0,chi:0}:{lo:b.left-(S?.left??0),hi:b.right-(S?.left??0),clo:0,chi:0}
++if(I&&v){let e=C.hi-C.lo-(I.box.hi-I.box.lo)
++Math.abs(e)>.5&&(ae=ee(-(C.lo-I.box.lo)/e))}let w=ge(e,r.w,r.h),T=!I||re
++re=!1
+ let E=getComputedStyle(e),D=i?[Number.parseFloat(E.marginTop)||0,Number.parseFloat(E.marginBottom)||0]:[Number.parseFloat(E.marginLeft)||0,Number.parseFloat(E.marginRight)||0],O={w:r.w,h:r.h,radius:w,pos:h,box:C,hold:null,margin:D}
+-L=O
+-let A=r.w>0?b.width/r.w:1,ee=r.h>0?b.height/r.h:1,N=new Map([[e,b]]),P=e=>{let t=N.get(e)
+-return t||N.set(e,t=e.getBoundingClientRect()),t},F=(e,t,n,r)=>{let i=P(e),a=P(t),o=B.get(e)?.wrote,s=(i.left-a.left)/A-(o?.x??0)-(r?t.clientLeft:0)-n.x,c=(i.top-a.top)/ee-(o?.y??0)-(r?t.clientTop:0)-n.y
+-return{x:Math.abs(s)<=x?n.x+s:n.x,y:Math.abs(c)<=x?n.y+c:n.y}},z=new Set,G=(e,t,n,r,i)=>{let a=oe(e,t)
+-a.pos=F(e,n,r,i)
++I=O
++let A=r.w>0?b.width/r.w:1,te=r.h>0?b.height/r.h:1,M=new Map([[e,b]]),N=e=>{let t=M.get(e)
++return t||M.set(e,t=e.getBoundingClientRect()),t},P=(e,t,n,r)=>{let i=N(e),a=N(t),o=z.get(e)?.wrote,s=(i.left-a.left)/A-(o?.x??0)-(r?t.clientLeft:0)-n.x,c=(i.top-a.top)/te-(o?.y??0)-(r?t.clientTop:0)-n.y
++return{x:Math.abs(s)<=x?n.x+s:n.x,y:Math.abs(c)<=x?n.y+c:n.y}},R=new Set,W=(e,t,n,r,i)=>{let a=oe(e,t)
++a.pos=P(e,n,r,i)
+ let o=he(e)
+-return a.size={x:o.w,y:o.h},a.seam=o.seam,z.add(a),a},ae=null
++return a.size={x:o.w,y:o.h},a.seam=o.seam,R.add(a),a},G=null
+ for(let n of fe(e)){let r=j(n,e)
+ if(!r)continue
+-let i=G(n,null,e,r,!0)
+-n===t&&(ae=i)}for(let e of[`full`,`summary`]){let n=Z(e),r=n&&ae?j(n,t):null
++let i=W(n,null,e,r,!0)
++n===t&&(G=i)}for(let e of[`full`,`summary`]){let n=Z(e),r=n&&G?j(n,t):null
+ if(!n||!r)continue
+-let i=G(n,ae,t,r,!0),a=new Set(k(n))
+-for(let e of[...H,...U.keys()])n.contains(e)&&a.add(e)
++let i=W(n,G,t,r,!0),a=new Set(k(n))
++for(let e of[...V,...H.keys()])n.contains(e)&&a.add(e)
+ for(let e of a){let t=j(e,n)
+ if(!t)continue
+-let r=G(e,i,n,t,!0)
+-U.has(e)&&(r.ghost=!0)
++let r=W(e,i,n,t,!0)
++H.has(e)&&(r.ghost=!0)
+ for(let i of me(e)){let a=j(i,n)
+-a&&G(i,r,e,{x:a.x-t.x,y:a.y-t.y},!1)}}}for(let e of[...B.values()])z.has(e)||se(e)
+-if(Fe(),f.value?.hasAttribute(`data-overflowing`)&&(O.hold=o),T){for(let e of Object.values(I))e.seat(0)
+-for(let e of B.values())e.ghost||(e.hold=null,e.lx.seat(0),e.ly.seat(0))
+-if(W){R.seat(+(m.value===`full`))
+-for(let e of V.values())e.lane.seat(1)
+-Oe(),Ee(!1)}return}if(c){W&&Ce()
++a&&W(i,r,e,{x:a.x-t.x,y:a.y-t.y},!1)}}}for(let e of[...z.values()])R.has(e)||se(e)
++if(Fe(),f.value?.hasAttribute(`data-overflowing`)&&(O.hold=o),T){for(let e of Object.values(F))e.seat(0)
++for(let e of z.values())e.ghost||(e.hold=null,e.lx.seat(0),e.ly.seat(0))
++if(U){L.seat(+(m.value===`full`))
++for(let e of B.values())e.lane.seat(1)
++Oe(),Ee(!1)}return}if(c){U&&Ce()
+ return}let K=0,q={l:0,t:0,r:r.w,b:r.h}
+ if(l){let e=l.l-y.x-q.l,t=l.t-y.y-q.t,n=l.r-y.x-q.r,r=l.b-y.y-q.b
+-I.l.from(e,I.l.velocity,0),I.t.from(t,I.t.velocity,0),I.r.from(n,I.r.velocity,0),I.b.from(r,I.b.velocity,0),I.radius.from(u-w,I.radius.velocity,0),K=Math.max(K,Math.abs(e),Math.abs(t),Math.abs(n),Math.abs(r),Math.abs(u-w))}let Y=[...z].sort((e,t)=>Pe(e)-Pe(t))
++F.l.from(e,F.l.velocity,0),F.t.from(t,F.t.velocity,0),F.r.from(n,F.r.velocity,0),F.b.from(r,F.b.velocity,0),F.radius.from(u-w,F.radius.velocity,0),K=Math.max(K,Math.abs(e),Math.abs(t),Math.abs(n),Math.abs(r),Math.abs(u-w))}let Y=[...R].sort((e,t)=>Pe(e)-Pe(t))
+ for(let e of Y){let t=p.get(e)
+-if(e.ghost){let n=t?t.p:U.get(e.el)
+-e.hold={x:n.x-y.x,y:n.y-y.y},U.set(e.el,e.hold),e.lx.seat(0),e.ly.seat(0)
++if(e.ghost){let n=t?t.p:H.get(e.el)
++e.hold={x:n.x-y.x,y:n.y-y.y},H.set(e.el,e.hold),e.lx.seat(0),e.ly.seat(0)
+ continue}if(!t){Pe(e)===2&&e.parent&&p.has(e.parent)&&!e.enter&&(e.joined=!0),e.hold=null,e.lx.seat(0),e.ly.seat(0)
+ continue}let n={x:t.p.x-y.x,y:t.p.y-y.y}
+-if(H.has(e.el)){e.hold=n,e.lx.seat(0),e.ly.seat(0)
++if(V.has(e.el)){e.hold=n,e.lx.seat(0),e.ly.seat(0)
+ continue}e.hold=null
+ let r=ce(e),i=n.x-r.x-e.pos.x,a=n.y-r.y-e.pos.y,o=e.parent?le(e.parent):{x:0,y:0}
+-e.lx.from(i,t.v.x-o.x,0),e.ly.from(a,t.v.y-o.y,0),K=Math.max(K,Math.abs(i),Math.abs(a))}if(je(i),K<=_&&!Te()&&!W){for(let e of Object.values(I))e.seat(0)
+-for(let e of B.values())e.lx.seat(0),e.ly.seat(0),e.joined=!1
+-return}W=!0,!te&&K>_&&Ne()&&Ee(!0),Ce()}function Ne(){if(Object.values(I).some(e=>e.moving))return!0
+-for(let e of B.values())if(e.lx.moving||e.ly.moving)return!0
++e.lx.from(i,t.v.x-o.x,0),e.ly.from(a,t.v.y-o.y,0),K=Math.max(K,Math.abs(i),Math.abs(a))}if(je(i),K<=_&&!Te()&&!U){for(let e of Object.values(F))e.seat(0)
++for(let e of z.values())e.lx.seat(0),e.ly.seat(0),e.joined=!1
++return}U=!0,!ne&&K>_&&Ne()&&Ee(!0),Ce()}function Ne(){if(Object.values(F).some(e=>e.moving))return!0
++for(let e of z.values())if(e.lx.moving||e.ly.moving)return!0
+ return Te()}function Pe(e){return e.parent?1+Pe(e.parent):0}function Fe(){let e=f.value,t=n.value
+ if(!e||!t)return
+ let r=t.classList.contains(`vertical`),i=he(e),a=r?i.ch:i.cw
+@@ -249,23 +246,23 @@
+ let n=he(t)
+ o+=(r?n.h:n.w)+(r?Number.parseFloat(e.marginTop)+Number.parseFloat(e.marginBottom):Number.parseFloat(e.marginLeft)+Number.parseFloat(e.marginRight)),s++}let c=getComputedStyle(e)
+ o+=(Number.parseFloat(r?c.rowGap:c.columnGap)||0)*Math.max(0,s-1),e.toggleAttribute(`data-overflowing`,o>a+y)}e(m,(e,t)=>{if(e===t)return
+-N.value=e,P.value=t
++M.value=e,N.value=t
+ let n=Z(t),r=Z(e)
+-Ae(K,n?pe(n):[],r?pe(r):[],null),R.from(R.value,R.velocity,+(e===`full`)),z=!0},{flush:`pre`}),e(m,()=>Me(),{flush:`post`}),e(h,e=>{let t=f.value
++Ae(K,n?pe(n):[],r?pe(r):[],null),L.from(L.value,L.velocity,+(e===`full`)),R=!0},{flush:`pre`}),e(m,()=>Me(),{flush:`post`}),e(h,e=>{let t=f.value
+ if(!t)return
+ let n=[...t.querySelectorAll(`[data-dock-seat], .dock-separator`)].filter(e=>(e.classList.contains(`dock-separator`)||!e.matches(T))&&!e.parentElement?.closest(`[data-dock-seat]`))
+-if(e){let e=B.get(t)
+-for(let r of n){r.setAttribute(`data-dock-leaving`,``),H.add(r)
+-let n=e&&!B.has(r)?j(r,t):null
++if(e){let e=z.get(t)
++for(let r of n){r.setAttribute(`data-dock-leaving`,``),V.add(r)
++let n=e&&!z.has(r)?j(r,t):null
+ if(e&&n){let t=oe(r,e)
+-t.pos=n,t.size={x:r.offsetWidth,y:r.offsetHeight}}}Ae(ae,n,[],null)}else{let e=H.size?[...H]:n
++t.pos=n,t.size={x:r.offsetWidth,y:r.offsetHeight}}}Ae(G,n,[],null)}else{let e=V.size?[...V]:n
+ for(let t of e)t.removeAttribute(`data-dock-leaving`),t.setAttribute(`data-dock-entering`,``)
+-H.clear(),Ae(ae,[],e,null)}},{flush:`pre`}),e(h,()=>Me(),{flush:`post`})
++V.clear(),Ae(G,[],e,null)}},{flush:`pre`}),e(h,()=>Me(),{flush:`post`})
+ function Ie(e,t,n,r){Ae(e,t.flatMap(A),A(n),r),c(Me)}function Le(e){let t=n.value
+-if(!t||re||!L||!t.contains(e)||e.closest(`[data-dock-ghost]`))return
++if(!t||ie||!I||!t.contains(e)||e.closest(`[data-dock-ghost]`))return
+ let r=e.parentElement
+ if(!r||!(e.offsetWidth>0||e.offsetHeight>0))return
+-let i=B.get(e),a=r.closest(`.dock-layer, .dock-persistent`),o=a?B.get(a):void 0,s=i?J(i):(()=>{let n=a?j(e,a):j(e,t)
++let i=z.get(e),a=r.closest(`.dock-layer, .dock-persistent`),o=a?z.get(a):void 0,s=i?J(i):(()=>{let n=a?j(e,a):j(e,t)
+ if(!n)return null
+ let r=o?J(o):{x:0,y:0}
+ return{x:r.x+n.x,y:r.y+n.y}})()
+@@ -283,7 +280,7 @@
+ top:${e.offsetTop}px
+ width:${e.offsetWidth}px
+ height:${e.offsetHeight}px
+-pointer-events:none`,r.insertBefore(c,e.nextSibling),U.set(c,s),Ae(c,[c],[],null)}a(E,{swap:Ie,retire:Le})
++pointer-events:none`,r.insertBefore(c,e.nextSibling),H.set(c,s),Ae(c,[c],[],null)}a(E,{swap:Ie,retire:Le})
+ let Re=null,ze=null,Be=new Set
+ function Ve(){let e=n.value
+ if(!e||!Re)return
+@@ -291,13 +288,13 @@
+ for(let n of fe(e))t.add(n)
+ for(let e of[`full`,`summary`]){let n=Z(e)
+ if(n){t.add(n)
+-for(let e of k(n))U.has(e)||t.add(e)}}for(let e of Be)t.has(e)||(Re.unobserve(e),Be.delete(e))
+-for(let e of t)Be.has(e)||(Re.observe(e,{box:`border-box`}),Be.add(e))}function He(){ne=!0}function Ue(e){let t=n.value
++for(let e of k(n))H.has(e)||t.add(e)}}for(let e of Be)t.has(e)||(Re.unobserve(e),Be.delete(e))
++for(let e of t)Be.has(e)||(Re.observe(e,{box:`border-box`}),Be.add(e))}function He(){re=!0}function Ue(e){let t=n.value
+ !t||e.target===t||g(t,de()?`vertical`:`horizontal`)}return i(()=>{let e=n.value
+-!e||typeof ResizeObserver>`u`||(Re=new ResizeObserver(Me),ze=O.subscribe(Me),Ve(),window.addEventListener(`resize`,He),e.addEventListener(`transitionrun`,Ue,{capture:!0}),e.addEventListener(`animationstart`,Ue,{capture:!0}))}),o(()=>{re=!0}),s(()=>{re=!0,Re?.disconnect(),ze?.(),window.removeEventListener(`resize`,He),n.value?.removeEventListener(`transitionrun`,Ue,{capture:!0}),n.value?.removeEventListener(`animationstart`,Ue,{capture:!0})
+-for(let e of U.keys())e.remove()
+-U.clear()
+-for(let e of B.values())e.lx.release(),e.ly.release()
+-B.clear()
+-for(let e of V.values())e.lane.release()
+-V.clear()}),{outerCurrentLayer:r(N),outerLeavingLayer:r(P)}}export{O as n,D as r,N as t}
++!e||typeof ResizeObserver>`u`||(Re=new ResizeObserver(Me),ze=O.subscribe(Me),Ve(),window.addEventListener(`resize`,He),e.addEventListener(`transitionrun`,Ue,{capture:!0}),e.addEventListener(`animationstart`,Ue,{capture:!0}))}),o(()=>{ie=!0}),s(()=>{ie=!0,Re?.disconnect(),ze?.(),window.removeEventListener(`resize`,He),n.value?.removeEventListener(`transitionrun`,Ue,{capture:!0}),n.value?.removeEventListener(`animationstart`,Ue,{capture:!0})
++for(let e of H.keys())e.remove()
++H.clear()
++for(let e of z.values())e.lx.release(),e.ly.release()
++z.clear()
++for(let e of B.values())e.lane.release()
++B.clear()}),{outerCurrentLayer:r(M),outerLeavingLayer:r(N)}}export{O as n,D as r,M as t}

@@ -1,0 +1,63 @@
+--- hold-bp8.ts	2026-10-30 18:49:39
++++ c1.ts	2026-10-30 18:53:21
+@@ -706,25 +706,6 @@
+             visOf.set(m, [Math.max(a, P.lo), Math.min(b, P.hi)]);
+             ownOf.set(m, [a, Math.max(a, b)]);
+         }
+-        // Two units arriving side by side, each cut by a different front, keep the seam
+-        // between their cut edges too: the later one gives way.
+-        const cutLive = units
+-            .filter(({ m }) => (m.enter || m.joined) && painting(m))
+-            .map((u) => ({ ...u, v: visOf.get(u.m)! }))
+-            .filter((u) => u.v[1] - u.v[0] > TOUCH_PX)
+-            .sort((a, b) => a.v[0] - b.v[0]);
+-        for (let i = 0; i + 1 < cutLive.length; i++) {
+-            const u = cutLive[i];
+-            const w = cutLive[i + 1];
+-            if (Math.min(u.box.chi, w.box.chi) - Math.max(u.box.clo, w.box.clo) <= TOUCH_PX) continue;
+-            if (!(u.v[1] < u.box.hi - TOUCH_PX && w.v[0] > w.box.lo + TOUCH_PX)) continue;
+-            const seam = Math.max(u.m.seam, w.m.seam) + SEAM_SLACK_PX;
+-            if (w.v[0] - u.v[1] >= seam) continue;
+-            w.v = [u.v[1] + seam, Math.max(w.v[1], u.v[1] + seam)];
+-            visOf.set(w.m, w.v);
+-            const wo = ownOf.get(w.m);
+-            if (wo) ownOf.set(w.m, [Math.max(wo[0], w.v[0]), Math.max(wo[1], w.v[0])]);
+-        }
+         // A unit coming in uncovers with weight: each edge, a seam's or the opening plate's,
+         // gives way at most twice as far as it did the frame before (half its cut on the
+         // first frame), so an edge that a neighbour or a long frame releases eases back
+@@ -755,6 +736,34 @@
+             ownOf.set(m, [cs > cs0 + 0.01 ? a : o[0], ce > ce0 + 0.01 ? b : o[1]]);
+             visOf.set(m, [Math.max(a, P.lo), Math.min(b, P.hi)]);
+         }
++        // Two cut edges that face each other keep the seam, whatever cut them and whichever
++        // way each unit goes. The fronts hold the side a unit arrives from; this holds the rest:
++        // an edge still easing back, an edge a retarget left on a side nothing arrives from.
++        // The unit coming in gives way, the later of two; a unit going out is never held by it.
++        const live = units
++            .filter(({ m }) => painting(m))
++            .map((u) => ({ ...u, v: visOf.get(u.m)! }))
++            .filter((u) => u.v[1] - u.v[0] > TOUCH_PX && !sliver(u.m, u.box, u.v, P))
++            .sort((a, b) => a.v[0] - b.v[0]);
++        for (const [i, u] of live.entries()) {
++            for (const w of live.slice(i + 1)) {
++                if (u.m.exit && w.m.exit) continue;
++                if (Math.min(u.box.chi, w.box.chi) - Math.max(u.box.clo, w.box.clo) <= TOUCH_PX) continue;
++                if (!(u.v[1] < u.box.hi - TOUCH_PX && w.v[0] > w.box.lo + TOUCH_PX)) continue;
++                const seam = Math.max(u.m.seam, w.m.seam) + SEAM_SLACK_PX;
++                if (w.v[0] - u.v[1] >= seam) continue;
++                const g = w.m.exit ? u : w;
++                g.v = g === w ? [u.v[1] + seam, Math.max(w.v[1], u.v[1] + seam)] : [u.v[0], Math.max(u.v[0], w.v[0] - seam)];
++                visOf.set(g.m, g.v);
++                const o = ownOf.get(g.m);
++                if (o) ownOf.set(g.m, g === w ? [Math.max(o[0], g.v[0]), Math.max(o[1], g.v[0])] : [o[0], Math.min(o[1], g.v[1])]);
++                const r = g.m.reveal;
++                if (r) {
++                    r.s = Math.max(r.s, g.v[0] - g.box.lo);
++                    r.e = Math.max(r.e, g.box.hi - g.v[1]);
++                }
++            }
++        }
+         // A unit cut inside the plate to less than its seam paints nothing.
+         for (const { m, box } of units) {
+             if (sliver(m, box, visOf.get(m)!, P)) {
