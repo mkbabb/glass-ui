@@ -1,0 +1,402 @@
+#!/usr/bin/env node
+// E-12 · the floor's and MIGRATION's harness cells (pass 4, H4; REGISTRY §P3-8.3 wave 1). Each cell sits inside the
+// CK row it serves and has a plant in fixtures.mjs that fails it. Pass 3's critics read these by hand in their own
+// probes (C-A3 `ca3-probe.mjs fcslop`, `ck16.mjs`; C-E3 `ce3-scroll.mjs`, `ce3-probe.mjs consumer anchor restored`);
+// here they are harness cells, read on the harness's own app.
+//   fcslop (CK-14 × CK-13)   scenes with floor "slop", coarse pointer, light and dark: each trigger (`slop` selector)
+//                            read without forced colours (its `::after` hit-slop, and a point between the face's top
+//                            edge and the slop's, which must hit the trigger) and again, on the same page, with
+//                            `forced-colors: active` emulated. PASS when the slop still renders and the same point
+//                            still hits the trigger. NOT DRIVEN (FAIL) when the scene renders no slop beyond the face
+//                            without forced colours; UNMEASURED when the engine does not apply forced colours
+//   fc-reach (CK-27 × CK-13) EVERY scene, fine and coarse, light: every element with a rendered `::after` is read
+//                            without forced colours, with four probe points 3 px outside its border box (the edge
+//                            midpoints) and whether each hits the element; then forced colours on the same page.
+//                            The arm may remove paint: an `::after` it removes must take no hit area with it. FAIL
+//                            when a probe point that hit the element no longer does under forced colours (the arm
+//                            reached a pseudo-element that was a hit-slop, C-A3 §0.2's class); the line lists every
+//                            `::after` the arm removes, so the reach is read on all of them, not on member seats only
+//   rest-running (CK-16)     scenes with floor "rest": every infinite animation running at rest (getAnimations over
+//                            the document) and, in Chromium, the page's layouts per second over 2 s at rest (CDP
+//                            LayoutCount; W-F.6's bound 0; WebKit has no counter: UNMEASURED). Then the scene is put
+//                            off-screen (a 4000 px block before the app, scrolled to the top); every such animation
+//                            whose target is off-screen must stop: not running, or its currentTime advancing < 1 ms over
+//                            1 s. A target still on-screen (a fixed portal) is named and not graded. Nothing running at
+//                            rest: REPORT
+//   wheel (CK-22)            scenes with floor "wheel": the scene's root moved into a 64 px `overflow: auto` box (200 px
+//                            of content each side) on a page taller than the viewport. Control: with nothing engaged a
+//                            30 px wheel over the root scrolls the box (else NOT DRIVEN). Then the root is keyboard-
+//                            engaged (Tab; the row's `engaged` selector or ×1.03) and the same wheel is sent over its
+//                            centre: PASS when the box scrolls and the page does not. A route whose MIGRATION row
+//                            states the chaining instead passes `--migration wheel` and the cell REPORTs (the critic
+//                            scores the row, with this line as its evidence; as `--unowned` in E-7)
+//   consumer anchor (CK-22)  scenes with floor "anchor": a consumer's inline `position-anchor: --consumer-own` on the
+//                            root (UNMEASURED if the engine does not parse it); Tab engages; the release (Escape, or
+//                            Tab away) is driven to its END: polled until the root is not engaged, not in the top
+//                            layer and back at ×1 ± 0.002, then +300 ms (FAIL when it never ends within 4 s). PASS when
+//                            the consumer's value is the root's inline value after the release
+//   capsule (CK-11, CK-14, CK-27; H6, REGISTRY §P5-7 item 2, C-A5 §0.2)   scenes with floor "capsule": the row's
+//                            `caps` names, per composer directory, the element the scene renders for it (the library's
+//                            capsule scene renders the Configurator's preset strip beside every other composer).
+//     composers rendered     the source tree's composers of .glass-capsule-hover outside the dock (every non-comment
+//                            line of a .vue/.ts/.tsx file under src/components/<dir>/ that names the class; dock/ is D2's
+//                            fence) must each be a key of `caps` whose element the scene renders: FAIL names a composer
+//                            no cell can see (a row closed on a source comment). The tree is --wt; under --fixture it is
+//                            fixtures/capsule/clean, or the tree a fault names; UNMEASURED with no tree
+//     hover fine <theme>     each composer's element (and any other element in the scene composing the class) at rest,
+//                            then hovered 400 ms: FAIL when the hover writes geometry (its painted/layout scale or its
+//                            computed `scale` moves > 0.002): the lift is not retired
+//     press fine <theme>     hovered, then the primary button held 250 ms: FAIL when the press writes geometry while the
+//                            element carries no door press mark ([data-press] / [data-press-armed]): a class rung (the
+//                            :active snap) writes the press. A door's press is REPORT (E-2/E-5 grade it)
+//     tap coarse <theme>     a coarse page (hasTouch; isMobile in Chromium), a tap on the element, +900 ms with no pointer:
+//                            FAIL when it is off ×1 by > 0.002 (the hover latch; FL-4's "the Button's coarse tap settling
+//                            at 1.015 fails"); UNMEASURED when the engine applies no coarse, hover-less pointer
+//                            Plants `e12-capsulelift`, `e12-capsulesnap`, `e12-capsulelatch`, `e12-capsuleunrendered`
+//     H7 (pass 7; CK-11, REGISTRY §P6-7 item 14, C-E6 §5.2): a composer the row names in `quiet` (the SelectTrigger, which
+//                            opens on pointerdown) is pressed with pointerdown WITHHELD from the page's handlers (a
+//                            window capture listener stops it before the element's own): the browser's `:active` still
+//                            applies, the element does not open, and no door marks it, so the cell reads the class rung
+//                            alone. Pass 6 read the open's pop as a press in Chromium (×0.9978) and NOT DRIVEN in WebKit (the
+//                            open took the press). The line says the open did not happen (`data-state`, `aria-expanded`),
+//                            else NOT DRIVEN. Control `e12-openpop` (the fixture composer pops on its pointerdown open)
+//   answers (CK-27, CK-25; H7, C-A6's `chip` cell, REGISTRY §P6-7 item 1)   on scenes whose row names `answers` (the
+//                            Configurator preset chip, an aria-pressed toggle), light and dark, fine pointer:
+//     <name> answers <theme> PASS when (a) a 400 ms hover changes ≥ 1 paint property (lib `__paint`), (b) a 250 ms held
+//                            press changes ≥ 1 property its hover does not paint, or its scale by ≥ 0.01, and (c) the
+//                            element composes a declared class (an `engage-*` class in its own classList). The line
+//                            prints the pixel fractions C-A6 read (≥ 16 levels: 0.0 % / 0.0 % on the pass-6 candidate).
+//                            Plants `e12-chipmute` (no hover, no press paint), `e12-chipundeclared` (paints both through a
+//                            literal rule, no declared class)
+// Real Safari: UNMEASURED (owner's safaridriver checkbox).
+//   node e12-floor.mjs --build <dir> | --fixture [--fault e12-fcslop] [--engine webkit] [--migration wheel]
+import fs from "node:fs";
+import path from "node:path";
+import { witness, openPage, tabKey, f, HERE, GLASS, paintDiff } from "./lib.mjs";
+const { PNG } = (await import(`${GLASS}/node_modules/pngjs/lib/png.js`)).default;
+const luma = (buf) => { const p = PNG.sync.read(buf); const o = new Float32Array(p.width * p.height); for (let i = 0, j = 0; i < p.data.length; i += 4, j++) o[j] = 0.2126 * p.data[i] + 0.7152 * p.data[i + 1] + 0.0722 * p.data[i + 2]; return { w: p.width, h: p.height, o }; };
+// H8 (CK-27, C-A7's chipfine): the fraction of pixels moving by ≥ k levels, and the mean |Δ|
+const movedPx = (a, b, k) => { if (!a || !b || a.w !== b.w || a.h !== b.h) return NaN; let n = 0; for (let i = 0; i < a.o.length; i++) if (Math.abs(a.o[i] - b.o[i]) >= k) n++; return n / a.o.length; };
+const meanD = (a, b) => { if (!a || !b || a.w !== b.w || a.h !== b.h) return NaN; let s = 0; for (let i = 0; i < a.o.length; i++) s += Math.abs(a.o[i] - b.o[i]); return s / a.o.length; };
+const HOVER_LEVELS = 4, HOVER_FRAC = 0.1;
+const changedPx = (a, b) => { if (!a || !b || a.w !== b.w || a.h !== b.h) return NaN; let n = 0; for (let i = 0; i < a.o.length; i++) if (Math.abs(a.o[i] - b.o[i]) >= 16) n++; return n / a.o.length; };
+
+const ENG = 1.03, TOL = 0.002;
+const raf2 = (page) => page.evaluate(() => new Promise((ok) => requestAnimationFrame(() => requestAnimationFrame(ok))));
+
+await witness("E-12", "the floor's and MIGRATION's cells (CK-14, CK-16, CK-22, CK-27)", async ({ a, E, T, cell, guard, idx, engine }) => {
+  const migrated = new Set(typeof a.migration === "string" ? a.migration.split(",") : []);
+  const floor = (k) => Object.entries(idx).filter(([, m]) => (m.gates ?? []).includes("E-12") && (m.floor ?? []).includes(k));
+
+  // ── fcslop ──
+  for (const [sc, m] of floor("slop")) for (const theme of ["light", "dark"]) {
+    const r = await guard(`${sc} fcslop ${theme}`, async () => {
+      const P = await openPage(E, T, sc, { theme, coarse: true });
+      try {
+        if (!P.modeOk) return { mode: P.modeLine };
+        await P.page.waitForTimeout(150);
+        const read = (pts) => P.page.evaluate(([sel, pts]) => [...document.querySelectorAll(sel)].map((e, i) => {
+          const s = getComputedStyle(e, "::after"); const b = e.getBoundingClientRect();
+          const w = s.display === "none" || s.content === "none" ? 0 : parseFloat(s.width) || 0, h = s.display === "none" || s.content === "none" ? 0 : parseFloat(s.height) || 0;
+          // the probe point: halfway between the face's top edge and the slop's, on the face's centre line
+          const pt = pts?.[i] ?? { x: b.left + b.width / 2, y: b.top - Math.max(0, (h - b.height) / 4) };
+          const hit = document.elementFromPoint(pt.x, pt.y);
+          return { t: e.getAttribute("data-t") ?? e.className.slice(0, 40), fc: matchMedia("(forced-colors: active)").matches, display: s.display, content: s.content, w, h, face: [b.width, b.height], pt, beyond: Math.max(0, (h - b.height) / 2), hits: !!hit && e.contains(hit), hitDesc: hit ? `${hit.tagName.toLowerCase()}${hit.getAttribute("data-t") ? `[${hit.getAttribute("data-t")}]` : ""}` : "none" };
+        }), [m.slop, pts]);
+        const off = await read(null);
+        await P.page.emulateMedia({ forcedColors: "active" }); await raf2(P.page);
+        const on = await read(off.map((x) => x.pt));
+        return { off, on };
+      } finally { await P.close(); }
+    });
+    if (r.crashed) { cell(`E-12 ${sc} fcslop coarse ${theme}`, "FAIL", r.line); continue; }
+    if (r.mode) { cell(`E-12 ${sc} fcslop coarse ${theme}`, "UNMEASURED", `MODE NOT APPLIED ${r.mode}`); continue; }
+    if (!r.off.length) { cell(`E-12 ${sc} fcslop coarse ${theme}`, "FAIL", `no target: ${m.slop} renders nothing`); continue; }
+    r.off.forEach((x, i) => {
+      const y = r.on[i]; const nm = `E-12 ${sc} fcslop ${x.t} coarse ${theme}`;
+      if (!y?.fc) { cell(nm, "UNMEASURED", "the engine does not apply (forced-colors: active) (engine limit)"); return; }
+      if (!(x.beyond >= 2) || !x.hits) { cell(nm, "FAIL", `NOT DRIVEN: without forced colours the slop extends ${f(x.beyond, 1)} px past a ${x.face.map((v) => f(v, 1)).join("×")} px face and the probe point hits ${x.hitDesc} (no hit-slop to read)`); return; }
+      const ok = y.display !== "none" && y.content !== "none" && y.w >= x.w - 0.5 && y.h >= x.h - 0.5 && y.hits;
+      cell(nm, ok ? "PASS" : "FAIL", `slop ${f(x.w, 1)}×${f(x.h, 1)} px on a ${x.face.map((v) => f(v, 1)).join("×")} px face; a tap ${f(x.beyond / 2, 1)} px above the face hits the trigger · forced colours: ::after display ${y.display}, content ${y.content}, ${f(y.w, 1)}×${f(y.h, 1)} px, the same tap hits ${y.hits ? "the trigger" : y.hitDesc} (bound: the slop and its hit unchanged)`);
+    });
+  }
+
+  // ── fc-reach ──
+  const scenes = Object.keys(idx).filter((s) => s !== "__index");
+  for (const sc of scenes) for (const coarse of [false, true]) {
+    const ptr = coarse ? "coarse" : "fine"; const nm = `E-12 ${sc} fc-reach ${ptr}`;
+    const r = await guard(`${sc} fc-reach ${ptr}`, async () => {
+      const P = await openPage(E, T, sc, { coarse });
+      try {
+        if (!P.modeOk) return { mode: P.modeLine };
+        await P.page.waitForTimeout(200);
+        await P.page.evaluate(() => {
+          const desc = (e) => `${e.tagName.toLowerCase()}${e.getAttribute("data-t") ? `[${e.getAttribute("data-t")}]` : ""}${[...e.classList].slice(0, 3).map((c) => "." + c).join("")}`.slice(0, 70);
+          const rec = [];
+          for (const e of document.querySelectorAll("body *")) {
+            const s = getComputedStyle(e, "::after"); if (s.content === "none" || s.display === "none") continue;
+            const b = e.getBoundingClientRect(); if (!b.width || !b.height) continue;
+            const pts = [[b.left + b.width / 2, b.top - 3], [b.left + b.width / 2, b.bottom + 3], [b.left - 3, b.top + b.height / 2], [b.right + 3, b.top + b.height / 2]].filter(([x, y]) => x >= 0 && y >= 0 && x < innerWidth && y < innerHeight);
+            const hits = pts.map(([x, y]) => { const h = document.elementFromPoint(x, y); return !!h && e.contains(h); });
+            rec.push({ e, d: desc(e), pe: s.pointerEvents, pts, hits });
+          }
+          window.__fcRec = rec;
+        });
+        await P.page.emulateMedia({ forcedColors: "active" }); await raf2(P.page);
+        return await P.page.evaluate(() => {
+          const fc = matchMedia("(forced-colors: active)").matches;
+          const removed = [], lost = [];
+          for (const x of window.__fcRec) {
+            const s = getComputedStyle(x.e, "::after"); const gone = s.content === "none" || s.display === "none";
+            if (gone) removed.push(`${x.d}${x.pe === "none" ? "" : ` (pointer-events ${x.pe})`}`);
+            const l = x.pts.filter(([px, py], i) => { if (!x.hits[i]) return false; const h = document.elementFromPoint(px, py); return !(h && x.e.contains(h)); });
+            if (l.length) lost.push(`${x.d}: ${l.length} of ${x.hits.filter(Boolean).length} out-of-box hit point(s) lost${gone ? " with its ::after" : ""}`);
+          }
+          return { fc, n: window.__fcRec.length, removed, lost };
+        });
+      } finally { await P.close(); }
+    }, 60000);
+    if (r.crashed) { cell(nm, "FAIL", r.line); continue; }
+    if (r.mode) { cell(nm, "UNMEASURED", `MODE NOT APPLIED ${r.mode}`); continue; }
+    if (!r.fc) { cell(nm, "UNMEASURED", "the engine does not apply (forced-colors: active) (engine limit)"); continue; }
+    cell(nm, r.lost.length ? "FAIL" : "PASS", `${r.n} element(s) render an ::after; forced colours removes ${r.removed.length}${r.removed.length ? `: ${[...new Set(r.removed)].slice(0, 8).join(", ")}` : ""} · hit area lost under forced colours: ${r.lost.length ? r.lost.slice(0, 4).join(" · ") : "none"} (bound: the arm removes paint, never a hit area)`.slice(0, 900));
+  }
+
+  // ── rest-running ──
+  for (const [sc] of floor("rest")) {
+    const r = await guard(`${sc} rest-running`, async () => {
+      const P = await openPage(E, T, sc);
+      try {
+        await P.page.waitForTimeout(800);
+        const at = await P.page.evaluate(() => {
+          const desc = (e) => e ? `${e.tagName.toLowerCase()}${e.getAttribute("data-t") ? `[${e.getAttribute("data-t")}]` : ""}${[...e.classList].slice(0, 2).map((c) => "." + c).join("")}`.slice(0, 60) : "?";
+          const run = document.getAnimations().filter((x) => x.playState === "running" && x.effect?.getTiming().iterations === Infinity);
+          window.__rest = run;
+          return run.map((x) => `${desc(x.effect?.target)} ${x.animationName ?? x.constructor.name}`);
+        });
+        let layouts = null;
+        if (engine === "chromium") {
+          const s = await P.ctx.newCDPSession(P.page); await s.send("Performance.enable");
+          const g = async () => (await s.send("Performance.getMetrics")).metrics.find((x) => x.name === "LayoutCount").value;
+          const l0 = await g(); const t0 = Date.now(); await P.page.waitForTimeout(2000); const l1 = await g(); layouts = (l1 - l0) / ((Date.now() - t0) / 1000);
+        }
+        const off = await P.page.evaluate(async () => {
+          const sp = document.createElement("div"); sp.style.height = "4000px"; sp.setAttribute("data-t", "offscreen-block"); document.body.prepend(sp); window.scrollTo(0, 0);
+          await new Promise((ok) => setTimeout(ok, 600));
+          const desc = (e) => e ? `${e.tagName.toLowerCase()}${e.getAttribute("data-t") ? `[${e.getAttribute("data-t")}]` : ""}${[...e.classList].slice(0, 2).map((c) => "." + c).join("")}`.slice(0, 60) : "?";
+          const rows = window.__rest.map((x) => { const t = x.effect?.target; const b = t?.getBoundingClientRect?.(); return { x, d: `${desc(t)} ${x.animationName ?? x.constructor.name}`, offs: !!b && (b.top >= innerHeight || b.bottom <= 0), top: b ? Math.round(b.top) : null, c0: x.currentTime }; });
+          await new Promise((ok) => setTimeout(ok, 1000));
+          return rows.map((r) => ({ d: r.d, offs: r.offs, top: r.top, ps: r.x.playState, adv: r.x.playState === "running" && r.c0 != null && r.x.currentTime != null ? +r.x.currentTime - +r.c0 : 0 }));
+        });
+        return { at, layouts, off, vh: await P.page.evaluate(() => innerHeight) };
+      } finally { await P.close(); }
+    }, 60000);
+    if (r.crashed) { cell(`E-12 ${sc} rest-running off-screen`, "FAIL", r.line); continue; }
+    if (engine === "chromium") cell(`E-12 ${sc} rest layouts`, r.layouts === 0 ? "PASS" : "FAIL", `${f(r.layouts, 1)} layouts/s over 2 s at rest (W-F.6 bound 0) · running at rest: ${r.at.join(", ") || "none"}`);
+    else cell(`E-12 ${sc} rest layouts`, "UNMEASURED", "no layout counter in this engine (CDP Performance is Chromium's)");
+    if (!r.at.length) { cell(`E-12 ${sc} rest-running off-screen`, "REPORT", "nothing runs at rest (no infinite animation)"); continue; }
+    const graded = r.off.filter((x) => x.offs), still = graded.filter((x) => x.adv >= 1), onscr = r.off.filter((x) => !x.offs);
+    if (!graded.length) { cell(`E-12 ${sc} rest-running off-screen`, "FAIL", `NOT DRIVEN: no running target left the ${r.vh} px viewport (${onscr.map((x) => `${x.d} top ${x.top}`).join(", ")})`); continue; }
+    cell(`E-12 ${sc} rest-running off-screen`, still.length ? "FAIL" : "PASS", `${graded.length} animation(s) running at rest, their targets moved off-screen (top ${graded.map((x) => x.top).join("/")} px against a ${r.vh} px viewport): ${still.length ? `still running: ${still.map((x) => `${x.d} (+${f(x.adv, 0)} ms over 1 s)`).join(", ")}` : `all stopped (${graded.map((x) => `${x.d} ${x.ps}`).join(", ")})`}${onscr.length ? ` · not graded, still on-screen: ${onscr.map((x) => x.d).join(", ")}` : ""} (bound: stops off-screen)`.slice(0, 900));
+  }
+
+  // ── wheel ──
+  const engagedFn = ([root, sel, ENG]) => { const e = document.querySelector(root); if (!e) return { none: true }; return { eng: (sel ? e.matches(sel) : false) || window.__eff(e).s >= ENG, s: window.__eff(e).s, pop: e.matches(":popover-open"), attr: sel ? e.matches(sel) : null }; };
+  for (const [sc, m] of floor("wheel")) {
+    const root = '[data-e~="root"]';
+    const r = await guard(`${sc} wheel`, async () => {
+      const P = await openPage(E, T, sc);
+      try {
+        const { page } = P;
+        const ok = await page.evaluate((root) => {
+          const e = document.querySelector(root); if (!e) return false;
+          document.body.style.minHeight = "2400px";
+          const box = document.createElement("div"); box.setAttribute("data-t", "e12-scroller"); box.style.cssText = "height:64px;overflow:auto;overscroll-behavior:auto";
+          const pad = () => { const d = document.createElement("div"); d.style.height = "200px"; return d; };
+          e.before(box); box.append(pad(), e, pad());
+          const eh = e.getBoundingClientRect().height; box.scrollTop = 200 - Math.max(0, (64 - eh) / 2); window.scrollTo(0, 0);
+          return true;
+        }, root);
+        if (!ok) return { none: true };
+        const st = () => page.evaluate(() => [document.querySelector('[data-t="e12-scroller"]').scrollTop, window.scrollY]);
+        const put = (s) => page.evaluate((s) => { document.querySelector('[data-t="e12-scroller"]').scrollTop = s[0]; window.scrollTo(0, s[1]); }, s);
+        const ctr = () => page.evaluate((root) => { const b = document.querySelector(root).getBoundingClientRect(); return { x: b.left + b.width / 2, y: b.top + b.height / 2 }; }, root);
+        const wheelAt = async () => { const s0 = await st(); const c = await ctr(); await page.mouse.move(c.x, c.y); await page.mouse.wheel(0, 30); await page.waitForTimeout(300); const s1 = await st(); await put(s0); await page.waitForTimeout(100); return { box: s1[0] - s0[0], page: s1[1] - s0[1] }; };
+        const ctl = await wheelAt();
+        await page.mouse.move(2, 2);
+        await page.focus('[data-sentinel="before"]'); await page.keyboard.press(tabKey(engine)); await page.waitForTimeout(600);
+        const e0 = await page.evaluate(engagedFn, [root, m.engaged ?? "[data-engaged]", ENG]);
+        const eng = await wheelAt();
+        return { ctl, e0, eng };
+      } finally { await P.close(); }
+    });
+    const nm = `E-12 ${sc} wheel over engaged control`;
+    if (r.crashed) { cell(nm, "FAIL", r.line); continue; }
+    if (r.none) { cell(nm, "FAIL", "no target: the scene renders no root"); continue; }
+    if (!(r.ctl.box > 0)) { cell(nm, "FAIL", `NOT DRIVEN: with nothing engaged a 30 px wheel over the root scrolls the box +${r.ctl.box} and the page +${r.ctl.page} (the scroller does not take the wheel here)`); continue; }
+    if (!r.e0.eng) { cell(nm, "FAIL", `NOT DRIVEN: Tab did not engage the root (×${f(r.e0.s)}, engaged attribute ${r.e0.attr})`); continue; }
+    const pass = r.eng.box > 0 && r.eng.page === 0;
+    const line = `nothing engaged: box +${r.ctl.box}, page +${r.ctl.page} · keyboard-engaged (×${f(r.e0.s)}, top layer ${r.e0.pop}): a 30 px wheel over the control scrolls the box +${r.eng.box}, the page +${r.eng.page} (bound: the box scrolls, the page does not)`;
+    if (!pass && migrated.has("wheel")) cell(nm, "REPORT", `${line} · the route's MIGRATION row states the chaining (--migration wheel): CK-22 is scored on that row`);
+    else cell(nm, pass ? "PASS" : "FAIL", line);
+  }
+
+  // ── consumer anchor ──
+  for (const [sc, m] of floor("anchor")) for (const how of ["escape", "blur"]) {
+    const root = '[data-e~="root"]'; const nm = `E-12 ${sc} consumer anchor · ${how}`;
+    const r = await guard(`${sc} anchor ${how}`, async () => {
+      const P = await openPage(E, T, sc);
+      try {
+        const { page } = P;
+        const parsed = await page.evaluate((root) => { const e = document.querySelector(root); if (!e) return null; e.style.setProperty("position-anchor", "--consumer-own"); return e.style.getPropertyValue("position-anchor"); }, root);
+        if (parsed === null) return { none: true };
+        if (parsed !== "--consumer-own") return { unparsed: parsed };
+        await page.focus('[data-sentinel="before"]'); await page.keyboard.press(tabKey(engine)); await page.waitForTimeout(500);
+        const e0 = await page.evaluate(engagedFn, [root, m.engaged ?? "[data-engaged]", ENG]);
+        const during = await page.evaluate((root) => document.querySelector(root).style.getPropertyValue("position-anchor"), root);
+        await page.keyboard.press(how === "escape" ? "Escape" : tabKey(engine));
+        const t0 = Date.now(); let end = null;
+        while (Date.now() - t0 < 4000) {
+          const x = await page.evaluate(engagedFn, [root, m.engaged ?? "[data-engaged]", ENG]);
+          if (!x.attr && !x.pop && Math.abs(x.s - 1) <= TOL) { end = Date.now() - t0; break; }
+          await page.waitForTimeout(50);
+        }
+        await page.waitForTimeout(300);
+        const after = await page.evaluate((root) => document.querySelector(root).style.getPropertyValue("position-anchor"), root);
+        return { e0, during, end, after };
+      } finally { await P.close(); }
+    });
+    if (r.crashed) { cell(nm, "FAIL", r.line); continue; }
+    if (r.none) { cell(nm, "FAIL", "no target: the scene renders no root"); continue; }
+    if (r.unparsed !== undefined) { cell(nm, "UNMEASURED", `the engine does not parse an inline position-anchor (read back "${r.unparsed}") (engine limit)`); continue; }
+    if (!r.e0.eng) { cell(nm, "FAIL", `NOT DRIVEN: Tab did not engage the root (×${f(r.e0.s)}, engaged attribute ${r.e0.attr})`); continue; }
+    if (r.end === null) { cell(nm, "FAIL", `the release never ended within 4 s (still engaged, in the top layer or off ×1) · consumer value while engaged "${r.during}"`); continue; }
+    cell(nm, r.after === "--consumer-own" ? "PASS" : "FAIL", `a consumer's inline position-anchor --consumer-own · while engaged (×${f(r.e0.s)}, top layer ${r.e0.pop}) "${r.during || "(removed)"}" · ${how === "escape" ? "Escape" : "Tab away"}: the release ended at ${r.end} ms, then +300 ms: "${r.after || "(removed)"}" (bound: the consumer's own value)`);
+  }
+
+  // ── H6: the capsule's hover lift, press snap and coarse latch, on every composer (CK-11, CK-14, CK-27) ──
+  const capScenes = floor("capsule");
+  if (capScenes.length) {
+    const tree = a.fixture ? path.join(HERE, "fixtures", "capsule", a.fault === "e12-capsuleunrendered" ? "missing" : "clean") : typeof a.wt === "string" ? path.resolve(a.wt) : null;
+    const composers = () => {
+      const C = path.join(tree, "src", "components"); const found = {};
+      const walk = (d) => { for (const e of fs.readdirSync(d, { withFileTypes: true })) { const p = path.join(d, e.name); if (e.isDirectory()) walk(p); else if (/\.(vue|ts|tsx)$/.test(e.name)) fs.readFileSync(p, "utf8").split("\n").forEach((l, i) => { const t = l.trim(); if (!t.includes("glass-capsule-hover") || /^(\/\/|\*|\/\*|<!--)/.test(t)) return; const dir = path.relative(C, p).split(path.sep)[0]; (found[dir] ??= []).push(`${path.relative(tree, p)}:${i + 1}`); }); } };
+      if (fs.existsSync(C)) walk(C);
+      return found;
+    };
+    const capRead = ([sel]) => { const e = document.querySelector(sel); if (!e) return null; const cs = getComputedStyle(e); const q = window.__eff(e); return { s: q.s, scale: cs.scale, hover: e.matches(":hover"), active: e.matches(":active"), door: !!e.closest("[data-press], [data-press-armed]"), cls: [...e.classList].filter((c) => /capsule|engage/.test(c)).join(" ") }; };
+    const num = (s) => (s === "none" ? 1 : Number.parseFloat(s));
+    const geo = (x, y) => Math.max(Math.abs(x.s - y.s), Math.abs(num(x.scale) - num(y.scale)));
+    for (const [sc, m] of capScenes) {
+      const caps = m.caps ?? {};
+      // every element the scene renders composing the class, beside the named ones (a composer the row does not name)
+      const extra = await guard(`${sc} capsule census`, async () => { const P = await openPage(E, T, sc); try { await P.page.waitForTimeout(300); return await P.page.evaluate((named) => { const els = [...document.querySelectorAll(".glass-capsule-hover")].filter((e) => !e.closest(".glass-dock") && !named.some((s) => document.querySelector(s) === e)); return els.map((e, i) => ({ key: `extra${i}`, sel: `extra #${i}`, d: `${e.tagName.toLowerCase()}.${[...e.classList].slice(0, 2).join(".")}` })); }, Object.values(caps)); } finally { await P.close(); } });
+      const rendered = await guard(`${sc} capsule rendered`, async () => { const P = await openPage(E, T, sc); try { await P.page.waitForTimeout(300); return await P.page.evaluate((c) => Object.fromEntries(Object.entries(c).map(([k, s]) => [k, !!document.querySelector(s)])), caps); } finally { await P.close(); } });
+      const cn = `E-12 ${sc} composers rendered`;
+      if (!tree) cell(cn, "UNMEASURED", "no --wt given: the composer census reads a source tree");
+      else {
+        const found = composers(); const dirs = Object.keys(found).filter((d) => d !== "dock").sort();
+        const missing = dirs.filter((d) => !(d in caps) || !(rendered.crashed ? false : rendered[d]));
+        cell(cn, missing.length ? "FAIL" : "PASS", `${dirs.length} composer director${dirs.length === 1 ? "y" : "ies"} of .glass-capsule-hover outside dock/ in ${a.fixture ? path.relative(HERE, tree) : tree}: ${dirs.map((d) => `${d} (${found[d][0]}${found[d].length > 1 ? ` +${found[d].length - 1}` : ""})`).join(", ") || "none"}${found.dock ? ` · dock/ (D2's fence, not read): ${found.dock.length} line(s)` : ""} · the scene renders: ${Object.entries(caps).map(([k, s]) => `${k} ${rendered[k] ? "yes" : "NO"} (${s})`).join(", ")}${missing.length ? ` · NOT RENDERED by any cell: ${missing.join(", ")}` : ""}`);
+      }
+      const targets = [...Object.entries(caps).map(([k, s]) => ({ key: k, sel: s })), ...(extra.crashed ? [] : extra)];
+      if (extra.crashed) cell(`E-12 ${sc} composer census`, "FAIL", extra.line);
+      else if (extra.length) cell(`E-12 ${sc} composer census`, "REPORT", `${extra.length} element(s) compose .glass-capsule-hover beyond the row's named composers, each read below: ${extra.map((x) => x.d).join(", ")}`);
+      for (const tg of targets) for (const theme of ["light", "dark"]) {
+        const isExtra = tg.key.startsWith("extra");
+        // the element is pinned when the page opens ([data-capsel]), so a tap that moves the selector's match (the
+        // preset strip's :not(.is-active)) still reads the element it tapped
+        const named = Object.values(caps);
+        const tag = (page) => page.evaluate(([sel, extraIdx, named]) => { const el = extraIdx == null ? document.querySelector(sel) : [...document.querySelectorAll(".glass-capsule-hover")].filter((e) => !e.closest(".glass-dock") && !named.some((s) => document.querySelector(s) === e))[extraIdx]; el?.setAttribute("data-capsel", ""); }, [tg.sel, isExtra ? Number(tg.key.slice(5)) : null, named]);
+        const SEL = "[data-capsel]";
+        const fine = await guard(`${sc} capsule ${tg.key} fine ${theme}`, async () => {
+          const P = await openPage(E, T, sc, { theme });
+          try {
+            const { page } = P; await page.waitForTimeout(250); await tag(page);
+            await page.mouse.move(2, 2); await page.waitForTimeout(200);
+            const r0 = await page.evaluate(capRead, [SEL]); if (!r0) return { none: true };
+            const c = await page.evaluate((s) => { const e = document.querySelector(s); e.scrollIntoView({ block: "center" }); const r = e.getBoundingClientRect(); return { x: r.left + r.width / 2, y: r.top + r.height / 2 }; }, SEL);
+            await page.waitForTimeout(100); const rr = await page.evaluate(capRead, [SEL]);
+            await page.mouse.move(c.x, c.y); await page.waitForTimeout(400);
+            const r1 = await page.evaluate(capRead, [SEL]);
+            // H7: a composer that opens on pointerdown is pressed with pointerdown withheld from the page's handlers
+            const quiet = (m.quiet ?? []).includes(tg.key);
+            const openOf = () => page.evaluate((s) => { const e = document.querySelector(s); return `${e?.getAttribute("data-state") ?? "-"}/${e?.getAttribute("aria-expanded") ?? "-"}`; }, SEL);
+            const o0 = quiet ? await openOf() : null;
+            if (quiet) await page.evaluate((s) => { window.__quiet = (e) => { if (e.target instanceof Element && e.target.closest(s)) e.stopImmediatePropagation(); }; addEventListener("pointerdown", window.__quiet, true); }, SEL);
+            await page.mouse.down(); await page.waitForTimeout(250);
+            const r2 = await page.evaluate(capRead, [SEL]);
+            const o1 = quiet ? await openOf() : null;
+            await page.mouse.up();
+            if (quiet) await page.evaluate(() => removeEventListener("pointerdown", window.__quiet, true));
+            return { r0: rr, r1, r2, quiet: quiet ? { o0, o1 } : null };
+          } finally { await P.close(); }
+        });
+        const hn = `E-12 ${sc} ${tg.key} hover fine ${theme}`, pn = `E-12 ${sc} ${tg.key} press fine ${theme}`;
+        if (fine.crashed) { cell(hn, "FAIL", fine.line); cell(pn, "FAIL", fine.line); }
+        else if (fine.none) { cell(hn, "FAIL", `no target: ${tg.sel} renders nothing`); cell(pn, "FAIL", `no target: ${tg.sel}`); }
+        else {
+          const { r0, r1, r2 } = fine; const dh = geo(r1, r0), dp = geo(r2, r1);
+          cell(hn, r1.hover && dh <= TOL ? "PASS" : "FAIL", `${tg.sel} (${r0.cls || "no capsule class"}) · rest ×${f(r0.s, 4)} (scale ${r0.scale}) → hovered 400 ms (:hover ${r1.hover}) ×${f(r1.s, 4)} (scale ${r1.scale}) · geometry moved ${f(dh, 4)} (bound ≤ ${TOL}: the hover writes no geometry)${r1.hover ? "" : " · NOT DRIVEN: the pointer did not hover it"}`);
+          const qt = fine.quiet ? ` · pointerdown withheld from the page's handlers (the element opens on pointerdown): open state ${fine.quiet.o0} → ${fine.quiet.o1}` : "";
+          if (fine.quiet && fine.quiet.o1 !== fine.quiet.o0) cell(pn, "FAIL", `NOT DRIVEN: the element opened under the press${qt}`);
+          else if (!r2.active && !r2.door) cell(pn, "FAIL", `NOT DRIVEN: held 250 ms, the element is neither :active nor marked by a door (${tg.sel})${qt}`);
+          else if (r2.door) cell(pn, "REPORT", `the press carries the door's mark ([data-press]/[data-press-armed]): ×${f(r1.s, 4)} → ×${f(r2.s, 4)} (scale ${r2.scale}); the door's press is E-2/E-5's to grade`);
+          else cell(pn, dp <= TOL ? "PASS" : "FAIL", `held 250 ms (:active ${r2.active}, no door mark) · hovered ×${f(r1.s, 4)} (scale ${r1.scale}) → pressed ×${f(r2.s, 4)} (scale ${r2.scale}) · geometry moved ${f(dp, 4)} (bound ≤ ${TOL}: no class rung writes the press's geometry)${qt}`);
+        }
+        const tn = `E-12 ${sc} ${tg.key} tap coarse ${theme}`;
+        const tap = await guard(tn, async () => {
+          const P = await openPage(E, T, sc, { theme, coarse: true });
+          try {
+            const { page } = P; if (!P.modeOk) return { mode: P.modeLine };
+            await page.waitForTimeout(250); await tag(page);
+            const c = await page.evaluate((s) => { const e = document.querySelector(s); if (!e) return null; e.scrollIntoView({ block: "center" }); const r = e.getBoundingClientRect(); return { x: r.left + r.width / 2, y: r.top + r.height / 2 }; }, SEL);
+            if (!c) return { none: true };
+            await page.waitForTimeout(100); const r0 = await page.evaluate(capRead, [SEL]);
+            await page.touchscreen.tap(c.x, c.y); await page.waitForTimeout(900);
+            return { r0, r1: await page.evaluate(capRead, [SEL]), line: P.modeLine };
+          } finally { await P.close(); }
+        });
+        if (tap.crashed) cell(tn, "FAIL", tap.line);
+        else if (tap.mode) cell(tn, "UNMEASURED", `the engine applies no coarse, hover-less pointer (${tap.mode}): engine emulation limit`);
+        else if (tap.none || !tap.r1) cell(tn, "FAIL", `no target after the tap: ${tg.sel}`);
+        else { const d = Math.max(Math.abs(tap.r1.s - 1), Math.abs(num(tap.r1.scale) - 1)); cell(tn, d <= TOL ? "PASS" : "FAIL", `${tap.line} · rest ×${f(tap.r0.s, 4)} → a tap, +900 ms with no pointer: ×${f(tap.r1.s, 4)} (scale ${tap.r1.scale}), :hover ${tap.r1.hover} (bound: ×1 ± ${TOL}, no hover latch)`); }
+      }
+      // ── H7: the answer of a composer the capsule left (CK-27 × D-2; C-A6's `chip` cell) ──
+      for (const [nmA, selA] of Object.entries(m.answers ?? {})) for (const theme of ["light", "dark"]) {
+        const name = `E-12 ${sc} ${nmA} answers ${theme}`;
+        const r = await guard(name, async () => {
+          const P = await openPage(E, T, sc, { theme });
+          try {
+            const { page } = P; await page.waitForTimeout(300);
+            const ok = await page.evaluate((s) => { const e = document.querySelector(s); if (!e) return false; e.setAttribute("data-anssel", ""); e.scrollIntoView({ block: "center" }); return true; }, selA);
+            if (!ok) return { none: true };
+            const S = "[data-anssel]";
+            await page.mouse.move(2, 2); await page.waitForTimeout(250);
+            const bb = await page.evaluate((s) => { const r = document.querySelector(s).getBoundingClientRect(); return { x: r.x, y: r.y, w: r.width, h: r.height }; }, S);
+            const clip = { x: Math.max(0, Math.floor(bb.x) - 4), y: Math.max(0, Math.floor(bb.y) - 4), width: Math.ceil(bb.w) + 8, height: Math.ceil(bb.h) + 8 };
+            const snap = async () => ({ p: await page.evaluate((s) => window.__paint(s), S), s: await page.evaluate((s) => window.__eff(document.querySelector(s)).s, S), px: luma(await page.screenshot({ clip, animations: "allow", caret: "initial" })), hov: await page.evaluate((s) => document.querySelector(s).matches(":hover"), S) });
+            const r0 = await snap();
+            await page.mouse.move(bb.x + bb.w / 2, bb.y + bb.h / 2); await page.waitForTimeout(400);
+            const r1 = await snap();
+            await page.mouse.down(); await page.waitForTimeout(250);
+            const r2 = await snap(); const door = await page.evaluate((s) => !!document.querySelector(s).closest("[data-press], [data-press-armed]"), S);
+            await page.mouse.up();
+            const cls = await page.evaluate((s) => [...document.querySelector(s).classList].filter((c) => c.startsWith("engage-")), S);
+            const rung = await page.evaluate((s) => getComputedStyle(document.querySelector(s)).getPropertyValue("--rung-class").trim(), S);
+            return { r0, r1, r2, door, cls, rung };
+          } finally { await P.close(); }
+        });
+        if (r.crashed) { cell(name, "FAIL", r.line); continue; }
+        if (r.none) { cell(name, "FAIL", `no target: ${selA} renders nothing`); continue; }
+        const hov = paintDiff(r.r0.p, r.r1.p); const prs = paintDiff(r.r1.p, r.r2.p).filter((k) => r.r2.p[k] !== r.r0.p[k]); const ds = r.r2.s - r.r1.s;
+        const pxH = changedPx(r.r0.px, r.r1.px), pxP = changedPx(r.r1.px, r.r2.px);
+        // H8: the hover clause reads PAINT (C-A7 §5.1: a property that changes by 0.001 ink passed the property read):
+        // ≥ HOVER_FRAC of the chip's pixels move by ≥ HOVER_LEVELS levels of luma
+        const p4H = movedPx(r.r0.px, r.r1.px, HOVER_LEVELS), mH = meanD(r.r0.px, r.r1.px);
+        const okH = r.r1.hov && p4H >= HOVER_FRAC, okP = prs.length > 0 || Math.abs(ds) >= 0.01, okD = r.cls.length > 0;
+        cell(name, okH && okP && okD ? "PASS" : "FAIL", `${selA} · hover 400 ms (:hover ${r.r1.hov}): ${okH ? "" : "NO ANSWER · "}${f(p4H * 100, 1)} % of its pixels moved by ≥ ${HOVER_LEVELS} levels (mean |Δ| ${f(mH, 2)} levels), ${f(pxH * 100, 1)} % by ≥ 16; properties changed [${hov.join(", ").slice(0, 120)}] · held press 250 ms (door mark ${r.door}): ${okP ? "" : "NO ANSWER · "}press-only paint [${prs.join(", ").slice(0, 120)}], scale ×${f(r.r1.s, 4)} → ×${f(r.r2.s, 4)}, ${f(pxP * 100, 1)} % of its pixels · ${okD ? "" : "NO DECLARED CLASS · "}declared class [${r.cls.join(" ")}] (--rung-class "${r.rung}") (bound: the hover moves ≥ ${HOVER_FRAC * 100} % of the chip's pixels by ≥ ${HOVER_LEVELS} levels, the press ≥ 1 property its hover does not or Δscale ≥ 0.01, the element composes an engage-* class)`);
+      }
+    }
+  }
+});

@@ -723,3 +723,60 @@ export async function touchHold(P, sel, readAtMs, read) {
   const { x, y } = await center(P.page, sel);
   return P.hold(x, y, readAtMs, read);
 }
+
+// ── H11 (pass 11): the lens's travel helpers, one source for E-10's side cells and E-11's travel cells (moved here from
+// e10-continuity.mjs, where H10 wrote them; REGISTRY §P10-7 items 1-5). ──
+// The cards a lens cell carries: none, scale 0.8 (origin 0 0), and an ancestor CSS zoom (REGISTRY §P10-7 item 4: zoom is a
+// property any consumer can set; the lens inherits it, top layer or not, and its own CSS px are zoomed)
+export const LENS_TF = { none: null, scale: { scale: "0.8", transformOrigin: "0 0" }, zoom08: { zoom: "0.8" }, zoom125: { zoom: "1.25" }, zoom2: { zoom: "2" }, zoom25: { zoom: "2.5" } };
+// The rows the library declares: every `--spring-<row>-duration` in the CSSOM, resolved on a probe (inline !important, as E-8).
+export const rowsOf = () => { const names = new Set(); const walk = (rules) => { for (const r of rules) { if (r.style) for (let i = 0; i < r.style.length; i++) { const m = r.style[i].match(/^--spring-([a-z]+)-duration$/); if (m) names.add(m[1]); } if (r.cssRules) walk(r.cssRules); } };
+  for (const sh of document.styleSheets) { try { walk(sh.cssRules); } catch {} }
+  const p = document.createElement("div"); document.body.appendChild(p); const out = [];
+  for (const n of names) { p.style.cssText = `transition-duration: var(--spring-${n}-duration) !important; transition-timing-function: var(--spring-${n}) !important`; const cs = getComputedStyle(p); const d = Number.parseFloat(cs.transitionDuration); out.push({ n, ms: /ms/.test(cs.transitionDuration) ? d : d * 1000, ease: cs.transitionTimingFunction }); }
+  p.remove(); return out; };
+// A `linear()` curve as a function of the clock's fraction; what one nominal frame of it can move, and its overshoot.
+export const curveOf = (ease) => { const m = /^linear\((.*)\)$/.exec(ease.trim()); if (!m) return null; const stops = m[1].split(",").map((x) => { const [v, ...ps] = x.trim().split(/\s+/); return { v: Number.parseFloat(v), p: ps.length ? Number.parseFloat(ps[0]) / 100 : null }; });
+  if (stops[0].p == null) stops[0].p = 0; if (stops.at(-1).p == null) stops.at(-1).p = 1; for (let i = 1; i < stops.length - 1; i++) if (stops[i].p == null) { let j = i; while (stops[j].p == null) j++; for (let k = i; k < j; k++) stops[k].p = stops[i - 1].p + ((stops[j].p - stops[i - 1].p) * (k - i + 1)) / (j - i + 1); }
+  return (t) => { if (t <= 0) return stops[0].v; if (t >= 1) return stops.at(-1).v; for (let i = 1; i < stops.length; i++) if (t <= stops[i].p) { const a = stops[i - 1], b = stops[i]; return b.p === a.p ? b.v : a.v + ((b.v - a.v) * (t - a.p)) / (b.p - a.p); } return stops.at(-1).v; }; };
+const NOM_MS = 1000 / 60;
+export const rowFacts = (row) => { const c = curveOf(row.ease); if (!c || !(row.ms > 0)) return { ...row, peak: NaN, over: NaN }; const fr = NOM_MS / row.ms; let peak = 0, over = 0; for (let t = 0; t < 1; t += fr / 8) { peak = Math.max(peak, Math.abs(c(t + fr) - c(t))); over = Math.max(over, c(t) - 1); } return { ...row, peak, over }; };
+// The row a lens travel rides: the one whose clock a running non-opacity animation on the lens carries (within 2 ms)
+export const rodeRow = (ams, rows) => { const facts = rows.map(rowFacts).filter((x) => Number.isFinite(x.peak)); return ams.map((ms) => facts.find((x) => Math.abs(x.ms - ms) <= 2)).find(Boolean) ?? null; };
+// The film: a hold's lens against its track, per frame (a task posted from requestAnimationFrame, after that frame's paint), while the
+// track is carried to the line, the row where the lens's top would leave the viewport. Drive `page` (scrollBy) or `carry` (the scroller's
+// `top`, written in the scroller's own CSS px: a step of `rate` painted px under its zoom). `side`: on past the line by 40 px, then 900 ms.
+// `at-change`: on until the lens changes side (else 40 px past the line), then a wobble of ±3 px. `at-line`: on to the line, then the
+// wobble. The wobble: 40 frames toggling every 2, then 6 toggles every 30 frames, so neither a band under 6 px nor a dwell clock passes it.
+export const sideFilm = ([L, drive, B, mode, rate]) => new Promise((ok) => {
+  const q = (x) => document.querySelector(x); const b = B ? q(B) : null; let top = b ? Number.parseFloat(b.style.top) || 0 : 0; const zb = b ? b.currentCSSZoom ?? 1 : 1;
+  const move = (dy) => { if (drive === "page") scrollBy(0, -dy); else { top += dy / zb; b.style.top = `${top}px`; } };
+  // H11: each sample is stamped with the document timeline's time, the time every animation on the page was sampled at for the
+  // geometry the read sees (it advances only at a rendering update), not with performance.now() in the posted task, whose lag behind
+  // the frame (0-3 ms headless at load 12) let a lawful travel read 10 % past its row over a 16.7 ms window
+  const out = []; const ch = new MessageChannel(); let n = 0; const T = () => document.timeline.currentTime; const t0 = T();
+  ch.port1.onmessage = () => { const l = q(L.lens), t = q(L.track); if (!l || !t) return; const a1 = l.getBoundingClientRect(), d = t.getBoundingClientRect(); if (!(a1.width > 0)) return; const rel = a1.top + a1.height / 2 - (d.top + d.height / 2);
+    const an = l.getAnimations().filter((x) => x.playState === "running").map((x) => ({ ms: x.effect.getTiming().duration, p: x.transitionProperty ?? Object.keys(x.effect.getKeyframes()[0] ?? {}).filter((k) => !["offset", "easing", "composite", "computedOffset"].includes(k)).join(",") }));
+    out.push({ n, t: T() - t0, rel, pin: rel < 0 ? a1.bottom - d.top : a1.top - d.bottom, dx: a1.left + a1.width / 2 - (d.left + d.width / 2), lt: a1.top, lb: a1.bottom, tt: d.top, tb: d.bottom, H: a1.height, an }); };
+  const l0 = q(L.lens), t1 = q(L.track); if (!l0 || !t1) { ok({ out, none: true }); return; }
+  const H0 = l0.getBoundingClientRect().height, lineDist = t1.getBoundingClientRect().top - H0; const total = Math.ceil((Math.max(0, lineDist) + 40) / rate);
+  let i = 0, phase = "in", k = 0, o = 0, tEnd = 0, side0 = null;
+  const wobble = () => { const want = k < 40 ? (Math.floor(k / 2) % 2 ? 3 : -3) : (Math.floor((k - 40) / 30) % 2 ? 3 : -3); if (want !== o) { move(want - o); o = want; } k++; return k >= 40 + 6 * 30; };
+  const tick = () => { n++; const last = out.at(-1); if (side0 == null && last) side0 = last.rel > 0;
+    if (phase === "in") { const arrived = mode === "side" ? i >= total : mode === "at-line" ? i * rate >= lineDist : (last && side0 != null && last.rel > 0 !== side0) || i >= total;
+      // at-change: back one carry step, the last place before the change was read, so ±3 px straddles the line whichever frame the change was read on
+      if (arrived) { if (mode === "at-change") move(rate); phase = mode === "side" ? "dwell" : "wobble"; tEnd = performance.now() + 900; } else { move(-rate); i++; } }
+    else if (phase === "wobble") { if (wobble()) { phase = "dwell"; tEnd = performance.now() + 500; } }
+    ch.port2.postMessage(0);
+    if (phase === "dwell" && performance.now() >= tEnd) setTimeout(() => ok({ out, H0, lineDist, total, vh: innerHeight, zb }), 50); else requestAnimationFrame(tick); };
+  requestAnimationFrame(tick);
+});
+// The card under a lens cell: `page` puts the row without a clip 230 px down a tall page, the card (tf) on the root's parent; `carry`
+// sets the card on the row's scroller, scrolls its rest box 6 px under its top and sets the scroller 170 px down the viewport, the
+// `top` written in the scroller's own (zoomed) CSS px. The row's page-wide veil is hidden, so only the lens is read
+export const sideSetup = (m, tf) => async (page, drive) => {
+  const css = LENS_TF[tf] ?? null;
+  if (drive === "page") await page.evaluate(([root, css]) => { const mn = document.querySelector("main") ?? document.body; mn.style.paddingTop = "230px"; mn.style.paddingBottom = "1600px"; if (css) Object.assign(document.querySelector(root).parentElement.style, css); }, [m.root ?? '[data-e~="root"]', css]);
+  else await page.evaluate(([B, Q, css]) => { const b = document.querySelector(B); if (css) Object.assign(b.style, css); b.style.position = "relative"; const q = document.querySelector(Q); const br = b.getBoundingClientRect(), k = br.height / b.offsetHeight, rr = q.getBoundingClientRect(); b.scrollTop += (rr.top - (br.top + b.clientTop * k + 6)) / k; const y = b.getBoundingClientRect().top; b.style.top = `${(170 - y) / (b.currentCSSZoom ?? 1)}px`; }, [m.clip.box, m.clip.rest, css]);
+  if (m.veil) await page.evaluate((v) => { const st = document.createElement("style"); st.textContent = `${v} { visibility: hidden !important; }`; document.head.appendChild(st); }, m.veil);
+};

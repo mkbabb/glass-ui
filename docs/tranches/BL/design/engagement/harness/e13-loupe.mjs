@@ -42,7 +42,10 @@
 //                    transform, both engines); the pass-9 candidate in Chromium (`../pass-10/H10.md`)
 //   loupe exit scroll · none|scale   REPORT (§P9-7 item 5): a fine hold, the scroller scrolled 2 px a frame across the release; the
 //                    pinned edge on each frame the lens shows. Control `e13-exitfrozen` (prints the separation)
-//   `--part clock` runs H10's cells alone.
+//   H11 (pass 11; REGISTRY §P10-7 items 1, 4): `loupe clock · enter|exit · zoom 0.8|1.25|2|2.5 · fine`, the scroller under an ancestor
+//                    CSS zoom, the same read. Plant `e13-loupeclockzoom` (the lens's writes in painted px, not its own zoomed CSS px);
+//                    the pass-10 candidate (`../pass-11/H11.md`)
+//   `--part clock` runs H10's cells alone. (with H11's)
 // Light theme for the whole cells; the k max cells light and dark. Real Safari: UNMEASURED (owner's safaridriver checkbox).
 //   node e13-loupe.mjs --build <dir> | --fixture [--fault e13-loupecut] [--engine webkit] [--frames <dir>]
 import fs from "node:fs";
@@ -146,7 +149,10 @@ await witness("E-13", "CK-25 the loupe: k max, registration, seam, line, run-on;
         ch.port1.onmessage = () => { const l = document.querySelector(L.lens), t = document.querySelector(L.track); if (!l || !t) return; const a1 = l.getBoundingClientRect(), d = t.getBoundingClientRect(); if (!(a1.width > 0)) return; const cs = getComputedStyle(l); const rel = a1.top + a1.height / 2 - (d.top + d.height / 2); window.__lc.push({ n, t: performance.now() - t0, op: +cs.opacity, sc: cs.scale, pin: rel < 0 ? a1.bottom - d.top : a1.top - d.bottom, dx: a1.left + a1.width / 2 - (d.left + d.width / 2) }); };
         const tick = () => { n++; if (b && n <= 25) b.scrollTop += 2; ch.port2.postMessage(0); if (performance.now() - t0 < ms) requestAnimationFrame(tick); }; requestAnimationFrame(tick); }, [m.loupe, ms, scroll ? m.clip.box : null]);
       const inFlight = (x) => (x.op > 0.05 && x.op < 0.95) || (x.sc !== "none" && Math.abs(Number.parseFloat(x.sc) - 1) > 0.01);
-      for (const phase of ["enter", "exit"]) for (const [tf, css] of [["none", {}], ["translate", { translate: "0 30px" }], ["scale", { scale: "0.8", transformOrigin: "0 0" }]]) {
+      // H11 (REGISTRY §P10-7 items 1, 4; §P10-8.3 wave 1): the clocks under an ancestor CSS zoom, fine (the card's scroller zoomed; the
+      // lens inherits it, top layer or not): 0.8, 1.25, 2 and 2.5, where the pass-10 candidate's per-frame correction diverges
+      const ZOOMS = pointer === "fine" ? [["zoom 0.8", { zoom: "0.8" }], ["zoom 1.25", { zoom: "1.25" }], ["zoom 2", { zoom: "2" }], ["zoom 2.5", { zoom: "2.5" }]] : [];
+      for (const phase of ["enter", "exit"]) for (const [tf, css] of [["none", {}], ["translate", { translate: "0 30px" }], ["scale", { scale: "0.8", transformOrigin: "0 0" }], ...ZOOMS]) {
         const name = `E-13 ${sc} loupe clock · ${phase} · ${tf} · ${pointer}`;
         const r = await guard(name, async () => {
           const P = await open(sc, pointer, "light");

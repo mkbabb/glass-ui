@@ -194,6 +194,10 @@ export const FAULTS = {
   "e10-lensnohyst": { why: "CK-20 (H10, REGISTRY §P9-7 item 1): the side travels on its row with no hysteresis: a ±3 px wobble about the line changes side on every crossing", witnesses: ["E-10"], cell: /loupe wobble/, args: ["--part", "lensside"] },
   "e10-lensfixed": { why: "CK-20 (H10, REGISTRY §P9-8.1): the side is fixed at the press: a hold that reaches the line mid-hold carries the lens out of the viewport", witnesses: ["E-10"], cell: /loupe side · (page|carry) · (none|scale)/, args: ["--part", "lensside"] },
   "e10-lensreducetravel": { why: "CK-10 × CK-20 (H10, REGISTRY §P9-8.1): under reduce the side change still travels", witnesses: ["E-10"], cell: /loupe side · reduce/, args: ["--part", "lensside"] },
+  // H11 (pass 11; REGISTRY §P10-7 items 1, 2, 4, 5; §P10-8.3 wave 1): the lens under an ancestor zoom; the travel's tokens by parse
+  "e10-lenszoom": { why: "CK-20 (H11, REGISTRY §P10-7 item 1; the pass-10 candidate's shape): the lens inherits its card's zoom, but its writes (the correction, the travel's span) are painted px written into its own zoomed CSS px, and its side test reads its unzoomed height against painted px; its anchor leaves a 40 painted px gap the correction closes, so the correction exists in both engines. Under zoom the travel moves span × zoom and the pinned edge lands 40 × (zoom − 1) px off", witnesses: ["E-10"], cell: /loupe side · (page|carry) · zoom/, args: ["--part", "lensside", "--cards", "zoom08,zoom125,zoom2"] },
+  "e13-loupeclockzoom": { why: "CK-25 (H11, REGISTRY §P10-7 item 1): the same lens as e10-lenszoom on its own clocks: its correction written in painted px into its zoomed CSS px, so under a zoomed card the pinned edge sits 40 × (zoom − 1) px off its track on the raise and the exit", witnesses: ["E-13"], cell: /loupe clock · (enter|exit) · zoom/, args: ["--part", "clock"] },
+  "e11-travelthrow": { why: "CK-21 (H11, REGISTRY §P10-7 items 2, 5; C-A10 §0.6): the travel (the lens's side change and the host's re-render glide) checks its easing token for presence, not parse, and hands any string to animate(): `nonsense` throws an uncaught TypeError out of the observer callback with no error naming the token", witnesses: ["E-11"], cell: /travel loud · --spring-press nonsense/, args: ["--part", "travel"] },
   "e10-lenslate": { why: "CK-20 (H10, REGISTRY §P9-7 item 6): the lens is placed one frame late, from the place read in the frame before, so on a scroll it trails its track by a tick. A film cell, graded in Chromium; WebKit's is REPORT (the plain anchored lens reads the same 8 px)", witnesses: ["E-10"], cell: /clipstale lensfilm · (none|scale)/, args: ["--part", "lensfilm"], engines: ["chromium"] },
   "e12-chipmute": { why: "CK-27 (H7, C-A6 §0): the chip that left the capsule answers neither hover nor press (0.0 % / 0.0 %): the elegant-reduction trap", witnesses: ["E-12"], cell: /fx chip answers/ },
   "e12-chipundeclared": { why: "CK-27 (H7): the chip paints its hover and press through literal rules and composes no declared engage-* class", witnesses: ["E-12"], cell: /fx chip answers/ },
@@ -297,7 +301,7 @@ export function fixturePage(params, fault = "") {
 @property --rung-class { syntax: "<custom-ident>"; inherits: false; initial-value: unclassed; }
 .engage-pressed { --rung-class: pressed; } .engage-chosen { --rung-class: chosen; } .engage-held { --rung-class: held; }
 .engage-static { --rung-class: static; } .engage-field { --rung-class: field; } .engage-ambient { --rung-class: ambient; }
-:root { --spring-press-duration: 350ms; --spring-press: ${SPRING};
+:root { --spring-press-duration: 350ms; --spring-press: ${SPRING}; --spring-press-settle: 0.35s;
   --engage-press-drain-attack: ${F("e8-drift") ? 56 : 55}ms; --engage-press-drain-release: 120ms;
   --engage-control-engage-attack: 60ms; --engage-control-engage-release: ${F("e8-units") ? ".18s" : "180ms"};
   --fx-scale-engage: 1.06; --fx-commit-crest: 0.35;
@@ -574,7 +578,22 @@ function loupe(root, th, on) {
 // (e13-loupeviewport never changes). The side has hysteresis: below at the line, above again LENS_BAND past it, wider than any
 // ±3 px wobble (e10-lensnohyst: no band; e10-lensswap: no band, no travel; e10-lensfixed: fixed at the press). The change travels
 // on the spring row's clock and curve from the place it was painted (translate, composite add), and is instant under reduce.
+// H11 (REGISTRY §P10-7 items 1, 2): the lens inherits its card's CSS zoom, as the library's DOM-child lens does in the top layer or
+// not (here written: the lens hangs from <body>), so its own CSS px are the card's zoomed px. Every write is a painted distance over
+// the lens's zoom: the correction, the travel's span; the side test reads the lens's painted height (its CSS height × the ancestors'
+// scale × its zoom), and the ancestors' scale is read without the zoom (a painted width over the unzoomed offsetWidth × zoom).
+// e10-lenszoom / e13-loupeclockzoom: the writes in painted px, the side test on the unzoomed height, an anchor gap of 40 painted px.
+// The travel (the lens's side change; the clip row's re-render glide of its host) reads its row's tokens, --spring-press (the
+// easing) and --spring-press-settle (the clock), and is loud by name on either unreadable or refused (CSS.supports), with no throw
+// and no travel; e11-travelthrow checks the easing for presence only and hands any string to animate()
 const LENS_BAND = 12;
+const ZOOMPLANT = FAULT === "e10-lenszoom" || FAULT === "e13-loupeclockzoom";
+function travelOf(el) {
+  const cs = getComputedStyle(el); const e = cs.getPropertyValue("--spring-press").trim(), raw = cs.getPropertyValue("--spring-press-settle").trim(), s = Number.parseFloat(raw);
+  if (!e || (FAULT !== "e11-travelthrow" && !CSS.supports("animation-timing-function", e))) { console.error("[fixture] --spring-press is unreadable (" + JSON.stringify(e) + "): the travel cannot run on it"); return null; }
+  if (!(s > 0) || !/^[\\d.]+m?s$/.test(raw)) { console.error("[fixture] --spring-press-settle is unreadable (" + JSON.stringify(raw) + "): the travel has no clock"); return null; }
+  return { ms: /ms$/.test(raw) ? s : s * 1000, easing: e };
+}
 let lens = null, lensRO = null, lensFrame = 0, lensProbeA = null, lensProbeB = null; const lensBeat = document.createElement("span");
 lensBeat.style.cssText = "position:fixed;left:0;top:0;width:1px;height:1px;pointer-events:none";
 function lensTick() { lensFrame = requestAnimationFrame(lensTick); if (!lens) return; if (lens.exiting && FAULT === "e13-exitfrozen") return; lensRO.unobserve(lensBeat); lensRO.observe(lensBeat); }
@@ -585,10 +604,11 @@ function lensExit() {
 }
 function layLens() {
   if (!lens) return; const h = lens, L = h.L, root = h.root;
-  const par = root.parentElement; const anc = FAULT === "e13-loupeplace" ? 1 : (par.getBoundingClientRect().width / par.offsetWidth || 1);
+  const par = root.parentElement; const z = root.currentCSSZoom ?? 1; L.style.zoom = String(z); const zw = ZOOMPLANT ? 1 : z;
+  const anc = FAULT === "e13-loupeplace" ? 1 : (par.getBoundingClientRect().width / (par.offsetWidth * (par.currentCSSZoom ?? 1)) || 1);
   const r0 = root.getBoundingClientRect(), read = { top: r0.top, bottom: r0.bottom, cx: r0.left + r0.width / 2 };
   const was = h.prev ?? read; h.prev = read;
-  const H = 60 * anc, line = read.top - H;
+  const H = 60 * anc * zw, line = read.top - H;
   let below = h.below;
   if (below === null) below = line < 0 && FAULT !== "e13-loupeviewport";
   else if (FAULT === "e13-loupeviewport" || FAULT === "e10-lensfixed") below = h.below;
@@ -599,8 +619,9 @@ function layLens() {
   L.classList.toggle("below", below); L.style.transformOrigin = below ? "50% 0" : "50% 100%";
   // e10-lenslate: no anchor: placed each frame from the frame before's read, so on a scroll it trails its track by a tick
   if (FAULT === "e10-lenslate") { L.classList.remove("anch"); L.style.left = (was.cx - 60) + "px"; L.style.top = (below ? was.bottom : was.top - 60) + "px"; }
-  const a0 = lensProbeA.getBoundingClientRect(), b0 = lensProbeB.getBoundingClientRect(); const lensGap = FAULT === "e13-loupeclock" || FAULT === "e10-lenszero";
-  const cx = FAULT === "e10-lenslate" ? 0 : read.cx - a0.left, cy = FAULT === "e10-lenslate" ? 0 : below ? read.bottom - b0.top - (lensGap ? 40 : 0) : read.top - a0.top + (lensGap ? 40 : 0);
+  const a0 = lensProbeA.getBoundingClientRect(), b0 = lensProbeB.getBoundingClientRect(); const lensGap = FAULT === "e13-loupeclock" || FAULT === "e10-lenszero" || ZOOMPLANT;
+  if (ZOOMPLANT) { L.style.marginBottom = below ? "0px" : (40 / z) + "px"; L.style.marginTop = below ? (40 / z) + "px" : "0px"; }
+  const cx = FAULT === "e10-lenslate" ? 0 : (read.cx - a0.left) / zw, cy = FAULT === "e10-lenslate" ? 0 : (below ? read.bottom - b0.top - (lensGap ? 40 : 0) : read.top - a0.top + (lensGap ? 40 : 0)) / zw;
   const zero = changed && FAULT === "e10-lenszero";
   const tx = zero ? 0 : cx, ty = zero ? 0 : cy;
   const sc = anc !== 1 ? " scale(" + anc + ")" : "";
@@ -609,9 +630,9 @@ function layLens() {
   if (changed) {
     h.below = below;
     if ((!prm() || FAULT === "e10-lensreducetravel") && FAULT !== "e10-lensswap") {
-      const delta = (below ? 1 : -1) * (read.bottom - read.top + H);
-      const clock = (Number.parseFloat(getComputedStyle(L).getPropertyValue("--spring-press-duration")) || 350) / (FAULT === "e10-lensfast" ? 3 : 1);
-      L.animate([{ translate: "0 " + (-delta) + "px" }, { translate: "0 0" }], { duration: clock, easing: getComputedStyle(L).getPropertyValue("--spring-press").trim(), composite: "add" });
+      const delta = (below ? 1 : -1) * (read.bottom - read.top + H) / zw;
+      const tv = travelOf(L);
+      if (tv) L.animate([{ translate: "0 " + (-delta) + "px" }, { translate: "0 0" }], { duration: tv.ms / (FAULT === "e10-lensfast" ? 3 : 1), easing: tv.easing, composite: "add" });
     }
   }
   h.below = below;
@@ -882,7 +903,7 @@ function mountScene() {
       anim?.cancel(); const now = painted(); const par = root.parentElement;
       const k = FAULT === "e10-glidescale" ? 1 : (par.getBoundingClientRect().width / par.offsetWidth || 1);
       const dx = (last.x - now.x) / k, dy = (last.y - now.y) / k;
-      if (Math.hypot(dx, dy) > 0.5) anim = root.animate([{ translate: dx + "px " + dy + "px" }, { translate: "0 0" }], { duration: 300, easing: SPRING });
+      if (Math.hypot(dx, dy) > 0.5) { const tv = travelOf(root); if (tv) anim = root.animate([{ translate: dx + "px " + dy + "px" }, { translate: "0 0" }], { duration: tv.ms, easing: tv.easing }); }
     }).observe(box, { childList: true, subtree: true });
   }
   if (SCENE === "presented") {

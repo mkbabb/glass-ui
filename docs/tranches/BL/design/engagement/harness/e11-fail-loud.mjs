@@ -30,8 +30,27 @@
 //                    the act did not enter); UNMEASURED when planting reached no consumer and raised nothing, or no scene
 //                    renders a consumer. `clock census` REPORTs the clocks and their rules. Plant `e11-rename` (the
 //                    fixture's loud read keeps a list a rename left behind)
+// H11 (pass 11; REGISTRY §P10-7 items 2, 5; §P10-8.3 wave 1): THE TRAVEL'S TOKENS. The census above reads only --engage-* clocks a
+// CSS declaration times, so a token the lens's travel reads by SCRIPT was outside it, and `--spring-dock: nonsense` threw an uncaught
+// TypeError out of the stage's observer callback with no error naming it (C-A10 §0.6). On loupe rows with a `clip`:
+//   travel loud · clean · side|rerender   a clean page: a fine hold, then `side` carries the track 2 px a frame 40 px past the line
+//                    (a side change) or `rerender` inserts a 40 px block before the rest box inside the scroller (the host's
+//                    re-render glide); release; then a LATER HOLD on the same page. PASS when no console or page error was raised,
+//                    the path was driven (side: a running animation on the lens carries a declared row's clock; rerender: a running
+//                    animation on the root starts within 3 frames of the insert), and the later hold engages (the row's `engaged`)
+//                    with its lens shown (opacity > 0.9) and pinned (≤ 2 px). Not driven: UNMEASURED, with the planted cells
+//   travel loud · <token> nonsense|initial · side|rerender   the row the travel rides is read from the clean side page (the
+//                    row whose clock its running animation carries, `--spring-<row>-duration` in the CSSOM), and its two tokens,
+//                    `--spring-<row>` (the easing) and `--spring-<row>-settle` (the clock), are each set on <html> before the
+//                    first script to `nonsense` and to `initial`. PASS when ≥ 1 console.error names the token, no page error
+//                    (uncaught) was raised, and the later hold engages, shown and pinned: loud by name, no throw, the loop alive,
+//                    on both the lens's travel and the host's glide. No masking fallback is asked of the travel: an unreadable
+//                    token may leave the change instant, which E-10 reads. Plant `e11-travelthrow` (the travel checks its easing
+//                    for presence, not parse: `nonsense` reaches animate(), which throws); the pass-10 candidate; control the
+//                    pass-10 candidate with C-A10's `loudcure` (`../pass-11/H11.md`)
+//   `--part travel` runs these alone, `--part old` the rest.
 //   node e11-fail-loud.mjs --build <dir> | --fixture [--fault e11-silent] [--engine webkit]
-import { witness, openPage, scenesFor, center, tabKey, f } from "./lib.mjs";
+import { witness, openPage, scenesFor, center, tabKey, f, rowsOf, rodeRow, sideFilm, sideSetup } from "./lib.mjs";
 
 const EPS_S = 0.003, EPS_PX = 1, EPS_L = 0.005;
 // ── H6: the clock census, in page ─────────────────────────────────────────────────────────────────────────────
@@ -81,8 +100,59 @@ const consumersFn = (clocks) => {
   }
   return out;
 };
-await witness("E-11", "CK-21 no silent degradation", async ({ E, T, cell, guard, idx, engine }) => {
-  for (const [sc, m] of scenesFor(idx, "E-11")) {
+await witness("E-11", "CK-21 no silent degradation", async ({ a, E, T, cell, guard, idx, engine }) => {
+  const part = typeof a.part === "string" ? new Set(a.part.split(",")) : null; const old = !part || part.has("old"); const wantTravel = !part || part.has("travel");
+  // ── H11: the travel's tokens (lens and host), loud by name, no throw, the loop alive ──
+  for (const [sc, m] of wantTravel ? Object.entries(idx).filter(([s, x]) => s !== "__index" && x.loupe && x.clip) : []) {
+    const L = m.loupe, thumb = m.thumb ?? '[data-e~="thumb"]', B = m.clip.box, REST = m.clip.rest, ROOT = m.root ?? '[data-e~="root"]', ENG = m.engaged ?? "[data-engaged]";
+    const page1 = (path, plant) => guard(`travel ${path} ${plant ? plant.join(" ") : "clean"}`, async () => {
+      const P = await openPage(E, T, sc, plant ? { plant } : {});
+      try {
+        await sideSetup(m, "none")(P.page, "carry"); await P.page.waitForTimeout(250);
+        const rows = await P.page.evaluate(rowsOf);
+        const c = await center(P.page, thumb); await P.page.mouse.move(c.x, c.y); await P.page.mouse.down();
+        let film = null, glide = null;
+        try {
+          await P.page.waitForTimeout(900);
+          if (path === "side") film = await P.page.evaluate(sideFilm, [L, "carry", B, "side", 2]);
+          else glide = await P.page.evaluate(([R, Q]) => new Promise((ok) => { const root = document.querySelector(R); let k = 0, seen = 0; const ins = () => { const d = document.createElement("div"); d.style.height = "40px"; d.setAttribute("data-t", "h11-inserted"); document.querySelector(Q).before(d); };
+            const tick = () => { k++; if (k === 3) ins(); if (k > 3 && k <= 6) seen = Math.max(seen, root.getAnimations().filter((x) => !x.transitionProperty && x.playState === "running").length); if (k < 40) requestAnimationFrame(tick); else ok({ seen }); }; requestAnimationFrame(tick); }), [ROOT, REST]);
+        } finally { await P.page.mouse.up(); }
+        await P.page.waitForTimeout(700);
+        // the later holder: a new hold on the same page, +700 ms
+        const c2 = await center(P.page, thumb); await P.page.mouse.move(c2.x, c2.y); await P.page.mouse.down();
+        let later;
+        try { await P.page.waitForTimeout(700); later = await P.page.evaluate(([L, R, EN]) => { const l = document.querySelector(L.lens), t = document.querySelector(L.track), r = document.querySelector(R); const eng = !!r && (r.matches(EN) || !!r.closest(EN) || !!r.querySelector(EN)); if (!l || !t) return { eng, shown: false };
+          const a1 = l.getBoundingClientRect(), d = t.getBoundingClientRect(); const rel = a1.top + a1.height / 2 - (d.top + d.height / 2); return { eng, shown: a1.width > 0 && +getComputedStyle(l).opacity > 0.9, pin: rel < 0 ? a1.bottom - d.top : a1.top - d.bottom, op: +getComputedStyle(l).opacity }; }, [L, ROOT, ENG]); } finally { await P.page.mouse.up(); }
+        return { rows, film, glide, later, errs: [...P.errors] };
+      } finally { await P.close(); }
+    }, 60000);
+    const laterOk = (r) => r.later?.eng && r.later?.shown && Math.abs(r.later?.pin ?? 99) <= 2;
+    const laterLine = (r) => `the later hold: engaged ${r.later?.eng}, lens shown ${r.later?.shown} (opacity ${f(r.later?.op, 2)}), pinned ${f(r.later?.pin, 1)} px`;
+    const changesOf = (fl) => { const S = fl?.out ?? []; let n = 0; for (let i = 1; i < S.length; i++) if (S[i].rel > 0 !== S[i - 1].rel > 0) n++; return n; };
+    const amsOf = (fl) => [...new Set((fl?.out ?? []).flatMap((x) => x.an.filter((y) => y.p !== "opacity").map((y) => y.ms)))];
+    const clean = {}; let row = null;
+    for (const path of ["side", "rerender"]) {
+      const nm = `E-11 ${sc} travel loud · clean · ${path}`; const r = await page1(path, null);
+      if (r.crashed) { cell(nm, "FAIL", r.line); continue; }
+      const rode = path === "side" ? rodeRow(amsOf(r.film), r.rows) : null; if (rode) row = rode;
+      const driven = path === "side" ? !!rode && changesOf(r.film) >= 1 : (r.glide?.seen ?? 0) >= 1; clean[path] = driven;
+      const what = path === "side" ? `side changes ${changesOf(r.film)}, running animations on the lens [${amsOf(r.film).map((x) => f(x, 0)).join(",")}] ms, the row ${rode ? `${rode.n} (${f(rode.ms, 0)} ms)` : "none"}` : `a 40 px block inserted before the rest box: ${r.glide?.seen ?? 0} running animation(s) on the root within 3 frames`;
+      cell(nm, !driven ? "UNMEASURED" : !r.errs.length && laterOk(r) ? "PASS" : "FAIL", `${driven ? "" : "NOT DRIVEN · "}clean page · ${what} · console/page errors ${r.errs.length}${r.errs[0] ? ` (${r.errs[0].slice(0, 120)})` : ""} · ${laterLine(r)}`);
+    }
+    const toks = row ? [`--spring-${row.n}`, `--spring-${row.n}-settle`] : [];
+    if (!row) cell(`E-11 ${sc} travel loud · tokens`, "UNMEASURED", "NOT DRIVEN: the clean side page shows no running animation on the lens on a declared row's clock, so the travel's tokens cannot be read from it");
+    for (const tok of toks) for (const val of ["nonsense", "initial"]) for (const path of ["side", "rerender"]) {
+      const nm = `E-11 ${sc} travel loud · ${tok} ${val} · ${path}`;
+      if (!clean[path]) { cell(nm, "UNMEASURED", `NOT DRIVEN: the clean ${path} page drove no ${path === "side" ? "travel" : "host glide"}`); continue; }
+      const r = await page1(path, [tok, val]);
+      if (r.crashed) { cell(nm, "FAIL", r.line); continue; }
+      const named = r.errs.filter((e) => !e.startsWith("pageerror") && e.includes(tok)), uncaught = r.errs.filter((e) => e.startsWith("pageerror"));
+      const ok = named.length >= 1 && !uncaught.length && laterOk(r);
+      cell(nm, ok ? "PASS" : "FAIL", `${tok}: ${val} on <html> before the first script (the row ${row.n}, read from the clean travel) · ${path === "side" ? `side changes ${changesOf(r.film)}` : `${r.glide?.seen ?? 0} running animation(s) on the root after the insert`} · console errors naming the token ${named.length}${named[0] ? ` ("${named[0].slice(0, 110)}")` : ""}, uncaught page errors ${uncaught.length}${uncaught[0] ? ` ("${uncaught[0].slice(0, 130)}")` : ""}, all errors ${r.errs.length} · ${laterLine(r)} (bound: ≥ 1 named, 0 uncaught, the later hold engaged, shown, pinned ≤ 2 px)`);
+    }
+  }
+  for (const [sc, m] of old ? scenesFor(idx, "E-11") : []) {
     for (const pl of m.failLoud ?? []) {
       const nm = `E-11 ${sc} fail-loud ${pl.token}${pl.value === "nonsense" ? "" : `=${pl.value}`} (${pl.act})`;
       const run = (plant) => guard(`${nm}${plant ? " plant" : ""}`, async () => {
@@ -171,7 +241,7 @@ await witness("E-11", "CK-21 no silent degradation", async ({ E, T, cell, guard,
       return { clocks, reads, errors: [...P.errors] };
     } finally { await P.close(); }
   };
-  const scenes = Object.entries(idx).filter(([s]) => s !== "__index");
+  const scenes = old ? Object.entries(idx).filter(([s]) => s !== "__index") : [];
   const survey = {}; let clocks = {};
   for (const [sc, m] of scenes) {
     const r = await guard(`clock census survey ${sc}`, () => runAct(sc, m, null), 60000);
@@ -180,8 +250,8 @@ await witness("E-11", "CK-21 no silent degradation", async ({ E, T, cell, guard,
     for (const [t, c] of Object.entries(r.clocks)) { const x = (clocks[t] ??= { rules: new Set(), decls: new Set() }); c.rules.forEach((y) => x.rules.add(y)); c.decls.forEach((y) => x.decls.add(y)); }
   }
   const names = Object.keys(clocks).sort();
-  cell("E-11 clock census", "REPORT", `${names.length} --engage-* clock(s) read by a transition or animation declaration in the loaded stylesheets: ${names.map((t) => `${t} (${clocks[t].rules.size} rule(s), e.g. ${[...clocks[t].decls][0]})`).join(" · ").slice(0, 1400)}`);
-  if (!names.length) cell("E-11 clock census", "UNMEASURED", "the loaded stylesheets time no transition or animation on an --engage-* clock: nothing to plant");
+  if (old) cell("E-11 clock census", "REPORT", `${names.length} --engage-* clock(s) read by a transition or animation declaration in the loaded stylesheets: ${names.map((t) => `${t} (${clocks[t].rules.size} rule(s), e.g. ${[...clocks[t].decls][0]})`).join(" · ").slice(0, 1400)}`);
+  if (old && !names.length) cell("E-11 clock census", "UNMEASURED", "the loaded stylesheets time no transition or animation on an --engage-* clock: nothing to plant");
   const commitFirst = (a, b) => Number((idx[b]?.gates ?? []).includes("E-2")) - Number((idx[a]?.gates ?? []).includes("E-2"));
   for (const t of names) {
     const nm = `E-11 clock ${t} (enumerated)`;

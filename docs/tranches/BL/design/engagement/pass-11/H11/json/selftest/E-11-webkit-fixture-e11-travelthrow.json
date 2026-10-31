@@ -1,0 +1,74 @@
+{
+ "id": "E-11",
+ "engine": "webkit",
+ "version": "26.5",
+ "target": {
+  "fixture": true,
+  "fault": "e11-travelthrow"
+ },
+ "loadStart": "4.9/5.9/6.8",
+ "loadEnd": "4.9/5.8/6.7",
+ "verdict": "FAIL",
+ "cells": [
+  {
+   "name": "E-11 clipstale travel loud · clean · side",
+   "status": "PASS",
+   "line": "clean page · side changes 1, running animations on the lens [350] ms, the row press (350 ms) · console/page errors 0 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px",
+   "load": "5.0/5.9/6.8"
+  },
+  {
+   "name": "E-11 clipstale travel loud · clean · rerender",
+   "status": "PASS",
+   "line": "clean page · a 40 px block inserted before the rest box: 1 running animation(s) on the root within 3 frames · console/page errors 0 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px",
+   "load": "5.0/5.9/6.8"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press nonsense · side",
+   "status": "FAIL",
+   "line": "--spring-press: nonsense on <html> before the first script (the row press, read from the clean travel) · side changes 1 · console errors naming the token 0, uncaught page errors 1 (\"pageerror: Type error\"), all errors 1 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: ≥ 1 named, 0 uncaught, the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "4.8/5.9/6.8"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press nonsense · rerender",
+   "status": "FAIL",
+   "line": "--spring-press: nonsense on <html> before the first script (the row press, read from the clean travel) · 0 running animation(s) on the root after the insert · console errors naming the token 0, uncaught page errors 1 (\"pageerror: Type error\"), all errors 1 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: ≥ 1 named, 0 uncaught, the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "4.8/5.8/6.7"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press initial · side",
+   "status": "PASS",
+   "line": "--spring-press: initial on <html> before the first script (the row press, read from the clean travel) · side changes 1 · console errors naming the token 1 (\"[fixture] --spring-press is unreadable (\"\"): the travel cannot run on it\"), uncaught page errors 0, all errors 1 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: ≥ 1 named, 0 uncaught, the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "4.8/5.8/6.7"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press initial · rerender",
+   "status": "PASS",
+   "line": "--spring-press: initial on <html> before the first script (the row press, read from the clean travel) · 0 running animation(s) on the root after the insert · console errors naming the token 1 (\"[fixture] --spring-press is unreadable (\"\"): the travel cannot run on it\"), uncaught page errors 0, all errors 1 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: ≥ 1 named, 0 uncaught, the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "4.8/5.8/6.7"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press-settle nonsense · side",
+   "status": "PASS",
+   "line": "--spring-press-settle: nonsense on <html> before the first script (the row press, read from the clean travel) · side changes 1 · console errors naming the token 1 (\"[fixture] --spring-press-settle is unreadable (\"nonsense\"): the travel has no clock\"), uncaught page errors 0, all errors 1 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: ≥ 1 named, 0 uncaught, the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "4.8/5.8/6.7"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press-settle nonsense · rerender",
+   "status": "PASS",
+   "line": "--spring-press-settle: nonsense on <html> before the first script (the row press, read from the clean travel) · 0 running animation(s) on the root after the insert · console errors naming the token 1 (\"[fixture] --spring-press-settle is unreadable (\"nonsense\"): the travel has no clock\"), uncaught page errors 0, all errors 1 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: ≥ 1 named, 0 uncaught, the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "4.8/5.8/6.7"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press-settle initial · side",
+   "status": "PASS",
+   "line": "--spring-press-settle: initial on <html> before the first script (the row press, read from the clean travel) · side changes 1 · console errors naming the token 1 (\"[fixture] --spring-press-settle is unreadable (\"\"): the travel has no clock\"), uncaught page errors 0, all errors 1 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: ≥ 1 named, 0 uncaught, the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "4.7/5.8/6.7"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press-settle initial · rerender",
+   "status": "PASS",
+   "line": "--spring-press-settle: initial on <html> before the first script (the row press, read from the clean travel) · 0 running animation(s) on the root after the insert · console errors naming the token 1 (\"[fixture] --spring-press-settle is unreadable (\"\"): the travel has no clock\"), uncaught page errors 0, all errors 1 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: ≥ 1 named, 0 uncaught, the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "4.9/5.8/6.7"
+  }
+ ]
+}

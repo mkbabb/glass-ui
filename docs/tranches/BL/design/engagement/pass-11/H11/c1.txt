@@ -1,0 +1,17 @@
+# H11 Chromium chain: the self-test of record (every witness H11 changed, whole), the unchanged witnesses on the clean fixture, then the
+# library builds on the new and changed cells
+st-E-10 chromium
+st-E-13 chromium
+st-E-11 chromium
+clean chromium
+e10-cand10 chromium --part lensside
+e10-zoomcure chromium --part lensside
+e13-cand10 chromium --part clock
+e13-zoomcure chromium --part clock
+e11-cand10 chromium --part travel
+e11-loudcure chromium --part travel
+e10-head chromium --part lensside
+e13-head chromium --part clock
+e11-head chromium --part travel
+st-E-10 chromium --faults e10-rectclip-film
+st-E-10 chromium --faults e10-rectclip-film --reread 2

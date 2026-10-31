@@ -156,7 +156,7 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import { execFileSync } from "node:child_process";
-import { witness, openPage, openTouchPage, scenesFor, center, tabKey, f, GLASS, INIT } from "./lib.mjs";
+import { witness, openPage, openTouchPage, scenesFor, center, tabKey, f, GLASS, INIT, rowsOf, rowFacts, rodeRow, sideFilm, sideSetup } from "./lib.mjs";
 const { PNG } = (await import(`${GLASS}/node_modules/pngjs/lib/png.js`)).default;
 const luma = (buf) => { const p = PNG.sync.read(buf); const o = new Float32Array(p.width * p.height); for (let i = 0, j = 0; i < p.data.length; i += 4, j++) o[j] = 0.2126 * p.data[i] + 0.7152 * p.data[i + 1] + 0.0722 * p.data[i + 2]; return { w: p.width, h: p.height, o }; };
 const FILM_LEAD = 300; // ms of the film kept before the drive (the clip film cell)
@@ -204,66 +204,37 @@ const filmFn = ([roots, veilSel, ms, engSel]) => new Promise((ok) => {
 const NOM = 1000 / 60;
 const perFrame = (d, dt) => (d * NOM) / Math.max(NOM, dt);
 const PTR_INSET = 12;
-// ── H10: the lens's side (CK-20; REGISTRY §P9-7 items 1, 2, 6; §P9-8.1). ──
-// The rows the library declares: every `--spring-<row>-duration` in the CSSOM, resolved on a probe (inline !important, as E-8).
-const rowsOf = () => { const names = new Set(); const walk = (rules) => { for (const r of rules) { if (r.style) for (let i = 0; i < r.style.length; i++) { const m = r.style[i].match(/^--spring-([a-z]+)-duration$/); if (m) names.add(m[1]); } if (r.cssRules) walk(r.cssRules); } };
-  for (const sh of document.styleSheets) { try { walk(sh.cssRules); } catch {} }
-  const p = document.createElement("div"); document.body.appendChild(p); const out = [];
-  for (const n of names) { p.style.cssText = `transition-duration: var(--spring-${n}-duration) !important; transition-timing-function: var(--spring-${n}) !important`; const cs = getComputedStyle(p); const d = Number.parseFloat(cs.transitionDuration); out.push({ n, ms: /ms/.test(cs.transitionDuration) ? d : d * 1000, ease: cs.transitionTimingFunction }); }
-  p.remove(); return out; };
-// A `linear()` curve as a function of the clock's fraction; what one nominal frame of it can move, and its overshoot.
-const curveOf = (ease) => { const m = /^linear\((.*)\)$/.exec(ease.trim()); if (!m) return null; const stops = m[1].split(",").map((x) => { const [v, ...ps] = x.trim().split(/\s+/); return { v: Number.parseFloat(v), p: ps.length ? Number.parseFloat(ps[0]) / 100 : null }; });
-  if (stops[0].p == null) stops[0].p = 0; if (stops.at(-1).p == null) stops.at(-1).p = 1; for (let i = 1; i < stops.length - 1; i++) if (stops[i].p == null) { let j = i; while (stops[j].p == null) j++; for (let k = i; k < j; k++) stops[k].p = stops[i - 1].p + ((stops[j].p - stops[i - 1].p) * (k - i + 1)) / (j - i + 1); }
-  return (t) => { if (t <= 0) return stops[0].v; if (t >= 1) return stops.at(-1).v; for (let i = 1; i < stops.length; i++) if (t <= stops[i].p) { const a = stops[i - 1], b = stops[i]; return b.p === a.p ? b.v : a.v + ((b.v - a.v) * (t - a.p)) / (b.p - a.p); } return stops.at(-1).v; }; };
-const rowFacts = (row) => { const c = curveOf(row.ease); if (!c || !(row.ms > 0)) return { ...row, peak: NaN, over: NaN }; const fr = NOM / row.ms; let peak = 0, over = 0; for (let t = 0; t < 1; t += fr / 8) { peak = Math.max(peak, Math.abs(c(t + fr) - c(t))); over = Math.max(over, c(t) - 1); } return { ...row, peak, over }; };
-// The film: a hold's lens against its track, per frame (a task posted from requestAnimationFrame, after that frame's paint), while the
-// track is carried to the line, the row where the lens's top would leave the viewport. Drive `page` (scrollBy) or `carry` (the scroller's
-// `top`). `side`: on past the line by 40 px, then 900 ms. `at-change`: on until the lens changes side (else 40 px past the line), then a
-// wobble of ±3 px. `at-line`: on to the line, then the wobble. The wobble: 40 frames toggling every 2, then 6 toggles every 30 frames, so
-// neither a band under 6 px nor a dwell clock passes it.
-const sideFilm = ([L, drive, B, mode, rate]) => new Promise((ok) => {
-  const q = (x) => document.querySelector(x); const b = B ? q(B) : null; let top = b ? Number.parseFloat(b.style.top) || 0 : 0;
-  const move = (dy) => { if (drive === "page") scrollBy(0, -dy); else { top += dy; b.style.top = `${top}px`; } };
-  const out = []; const ch = new MessageChannel(); let n = 0; const t0 = performance.now();
-  ch.port1.onmessage = () => { const l = q(L.lens), t = q(L.track); if (!l || !t) return; const a1 = l.getBoundingClientRect(), d = t.getBoundingClientRect(); if (!(a1.width > 0)) return; const rel = a1.top + a1.height / 2 - (d.top + d.height / 2);
-    const an = l.getAnimations().filter((x) => x.playState === "running").map((x) => ({ ms: x.effect.getTiming().duration, p: x.transitionProperty ?? Object.keys(x.effect.getKeyframes()[0] ?? {}).filter((k) => !["offset", "easing", "composite", "computedOffset"].includes(k)).join(",") }));
-    out.push({ n, t: performance.now() - t0, rel, pin: rel < 0 ? a1.bottom - d.top : a1.top - d.bottom, dx: a1.left + a1.width / 2 - (d.left + d.width / 2), lt: a1.top, lb: a1.bottom, tt: d.top, H: a1.height, an }); };
-  const l0 = q(L.lens), t1 = q(L.track); if (!l0 || !t1) { ok({ out, none: true }); return; }
-  const H0 = l0.getBoundingClientRect().height, lineDist = t1.getBoundingClientRect().top - H0; const total = Math.ceil((Math.max(0, lineDist) + 40) / rate);
-  let i = 0, phase = "in", k = 0, o = 0, tEnd = 0, side0 = null;
-  const wobble = () => { const want = k < 40 ? (Math.floor(k / 2) % 2 ? 3 : -3) : (Math.floor((k - 40) / 30) % 2 ? 3 : -3); if (want !== o) { move(want - o); o = want; } k++; return k >= 40 + 6 * 30; };
-  const tick = () => { n++; const last = out.at(-1); if (side0 == null && last) side0 = last.rel > 0;
-    if (phase === "in") { const arrived = mode === "side" ? i >= total : mode === "at-line" ? i * rate >= lineDist : (last && side0 != null && last.rel > 0 !== side0) || i >= total;
-      // at-change: back one carry step, the last place before the change was read, so ±3 px straddles the line whichever frame the change was read on
-      if (arrived) { if (mode === "at-change") move(rate); phase = mode === "side" ? "dwell" : "wobble"; tEnd = performance.now() + 900; } else { move(-rate); i++; } }
-    else if (phase === "wobble") { if (wobble()) { phase = "dwell"; tEnd = performance.now() + 500; } }
-    ch.port2.postMessage(0);
-    if (phase === "dwell" && performance.now() >= tEnd) setTimeout(() => ok({ out, H0, lineDist, total, vh: innerHeight }), 50); else requestAnimationFrame(tick); };
-  requestAnimationFrame(tick);
-});
-// The film's verdict. A side change: the rel sign flips. The bound: the span the lens travels × the row's largest one-frame fraction + 1 px
-// (the read's resolution), the row the one whose clock a running animation on the lens carries, else the library's fastest (printed). Off
-// its edge (|pin| > 2): only inside one window of a change, no longer than the row's clock × 1.5 + 150 ms, inside the span (the row's
-// overshoot + 2 px), and the film ends pinned.
-const sideRead = (r, rows) => { const S = r.out; const facts = rows.map(rowFacts).filter((x) => Number.isFinite(x.peak)); const fastest = facts.reduce((p, x) => (!p || x.peak > p.peak ? x : p), null);
+// ── H10: the lens's side (CK-20; REGISTRY §P9-7 items 1, 2, 6; §P9-8.1). rowsOf, curveOf, rowFacts, sideFilm, sideSetup: lib.mjs (H11) ──
+// The film's verdict. A side change: the rel sign flips.
+// H11 (REGISTRY §P10-7 items 1, 3): THE STEP is the largest move of the lens's centre against its track's over any 16.7 ms of REAL
+// time, rel interpolated between samples (C-E10's `ce10` form). H10 read it per sample (7.6-10 ms apart in the headless engines)
+// against a bound per 16.7 ms frame, about 2× lenient: `plant-fast` at 3× its clock read only 17.1-25.8 px against 12.3-15.1 (C-E10
+// §1.5). THE SPAN is read in one frame, the film's last: the lens's painted height plus its track's (pinned edge to pinned edge, the
+// distance a side change carries the centre), so a lens whose travel ends off its edge still meets the span it owed; the
+// first-to-last rel distance is printed beside it. THE BOUND: that span × the row's largest one-frame fraction + 1 px (the read's
+// resolution), the row the one whose clock a running animation on the lens carries, else the library's fastest (printed). Off its
+// edge (|pin| > 2): only inside one window of a change, no longer than the row's clock × 1.5 + 150 ms, inside the span (the row's
+// overshoot + 2 px), and the film ends pinned. WHOLE (H11, REGISTRY §P10-8.1 "whole at the viewport's top during and after the
+// change"): at most two drive steps + 2 px above the viewport on any frame, and whole at the end. The two steps are the read's
+// resolution on this drive: the side is decided from the place laid in one frame while the drive moves the track a step in each
+// (C-A10 §4 item 4 read 2.0-3.9 px on a 3 px page step, H11 4.7 px on zoomcure's page · zoom 1.25); the pass-10 candidate under
+// zoom 1.25 and 2 reads 40-52 px
+const sideRead = (r, rows, rate) => { const S = r.out; const facts = rows.map(rowFacts).filter((x) => Number.isFinite(x.peak)); const fastest = facts.reduce((p, x) => (!p || x.peak > p.peak ? x : p), null);
   let changes = 0; for (let i = 1; i < S.length; i++) if (S[i].rel > 0 !== S[i - 1].rel > 0) changes++;
-  const relA = S[0].rel, relZ = S.at(-1).rel, span = changes ? Math.abs(relZ - relA) : 0;
+  const relA = S[0].rel, relZ = S.at(-1).rel, spanRel = changes ? Math.abs(relZ - relA) : 0; const end = S.at(-1);
+  const span = changes ? end.H + (end.tb - end.tt) : 0;
   const ams = [...new Set(S.flatMap((x) => x.an.filter((y) => y.p !== "opacity").map((y) => y.ms)))];
-  const rode = ams.map((ms) => facts.find((x) => Math.abs(x.ms - ms) <= 2)).find(Boolean) ?? null; const row = rode ?? fastest;
+  const rode = rodeRow(ams, rows); const row = rode ?? fastest;
   const bound = span * (row?.peak ?? 0) + 1;
-  let step = 0, at = 0; for (let i = 1; i < S.length; i++) { const d = perFrame(Math.abs(S[i].rel - S[i - 1].rel), S[i].t - S[i - 1].t); if (d > step) { step = d; at = i; } }
+  const relAt = (t) => { for (let i = 1; i < S.length; i++) if (S[i].t >= t) { const a = S[i - 1], b = S[i]; return a.rel + ((b.rel - a.rel) * (t - a.t)) / Math.max(1e-6, b.t - a.t); } return S.at(-1).rel; };
+  let step = 0, atT = NaN; for (const x of S) if (x.t - S[0].t >= NOM) { const d = Math.abs(x.rel - relAt(x.t - NOM)); if (d > step) { step = d; atT = x.t; } }
+  const dts = S.slice(1).map((x, i) => x.t - S[i].t).sort((p, q) => p - q); const mdt = dts.length ? dts[dts.length >> 1] : NaN;
   const off = S.map((x, i) => ({ i, x })).filter((y) => Math.abs(y.x.pin) > 2);
   const win = off.length ? S[off.at(-1).i].t - S[off[0].i].t : 0; const winMax = (row?.ms ?? 0) * 1.5 + 150;
-  const lo = Math.min(relA, relZ) - span * (row?.over ?? 0) - 2, hi = Math.max(relA, relZ) + span * (row?.over ?? 0) + 2; const outside = S.filter((x) => x.rel < lo || x.rel > hi).length;
-  const dxMax = Math.max(...S.map((x) => Math.abs(x.dx))); const reached = Math.min(...S.map((x) => x.tt - x.H)); const end = S.at(-1);
-  const whole = end.lt >= -0.5 && end.lb <= (r.vh ?? 500) + 0.5; const above = Math.max(0, ...S.map((x) => -x.lt));
-  return { changes, relA, relZ, span, ams, rode, row, fastest, bound, step, atT: S[at]?.t, off, win, winMax, outside, dxMax, reached, end, whole, above, n: S.length, pinEnd: Math.abs(end.pin) <= 2 };
-};
-const sideSetup = (m, L, tf) => async (page, drive) => {
-  const css = tf === "scale" ? { scale: "0.8", transformOrigin: "0 0" } : null;
-  if (drive === "page") await page.evaluate(([root, css]) => { const mn = document.querySelector("main") ?? document.body; mn.style.paddingTop = "230px"; mn.style.paddingBottom = "1600px"; if (css) Object.assign(document.querySelector(root).parentElement.style, css); }, [m.root ?? '[data-e~="root"]', css]);
-  else await page.evaluate(([B, Q, css]) => { const b = document.querySelector(B); if (css) Object.assign(b.style, css); b.style.position = "relative"; const q = document.querySelector(Q); const br = b.getBoundingClientRect(), k = br.height / b.offsetHeight, rr = q.getBoundingClientRect(); b.scrollTop += (rr.top - (br.top + b.clientTop * k + 6)) / k; const y = b.getBoundingClientRect().top; b.style.top = `${170 - y}px`; }, [m.clip.box, m.clip.rest, css]);
-  if (m.veil) await page.evaluate((v) => { const st = document.createElement("style"); st.textContent = `${v} { visibility: hidden !important; }`; document.head.appendChild(st); }, m.veil);
+  const lo = Math.min(relA, relZ) - spanRel * (row?.over ?? 0) - 2, hi = Math.max(relA, relZ) + spanRel * (row?.over ?? 0) + 2; const outside = S.filter((x) => x.rel < lo || x.rel > hi).length;
+  const dxMax = Math.max(...S.map((x) => Math.abs(x.dx))); const reached = Math.min(...S.map((x) => x.tt - x.H));
+  const whole = end.lt >= -0.5 && end.lb <= (r.vh ?? 500) + 0.5; const above = Math.max(0, ...S.map((x) => -x.lt)); const aboveMax = 2 * (rate ?? 0) + 2;
+  return { changes, relA, relZ, span, spanRel, ams, rode, row, fastest, bound, step, atT, mdt, off, win, winMax, outside, dxMax, reached, end, whole, above, aboveMax, n: S.length, pinEnd: Math.abs(end.pin) <= 2 };
 };
 // `lensfilm` (§P9-7 item 6), graded where `e10-lenslate` separates (`../pass-10/H10.md` §5). Chromium's film does: the clean anchored fixture 0-2 px, the
 // plant one tick, 8 px. WebKit's does not: the plain anchored fixture reads the same 8 px as the plant, and its count of off frames overlaps on the scale
@@ -895,44 +866,76 @@ await witness("E-10", "CK-20 no one-frame discontinuity on an engagement path", 
     requestAnimationFrame(tick);
   });
   // ── H10: the lens's side (CK-20; REGISTRY §P9-8.1, §P9-8.3 wave 1): `--part lensside`, `--part lensfilm` ──
+  // H11 (REGISTRY §P10-7 items 1, 3, 4, 6; §P10-8.3 wave 1): the cards carry an ancestor CSS `zoom` (0.8, 1.25, 2) beside none and
+  // scale 0.8; the wobble and the reduce cell on one zoomed card (1.25); the step over any 16.7 ms of real time, on the span read in
+  // one frame (sideRead); `loupe repress · moved` REPORT. `--cards a,b` narrows the cards (none, scale, zoom08, zoom125, zoom2)
   const lensRows = all.filter(([, x]) => x.loupe);
+  const CARD = { none: "none", scale: "scale", zoom08: "zoom 0.8", zoom125: "zoom 1.25", zoom2: "zoom 2" };
+  const cardSel = typeof a.cards === "string" ? new Set(a.cards.split(",")) : null; const cards = (...x) => x.filter((k) => !cardSel || cardSel.has(k));
   if (want("lensside")) for (const [drive, rate] of [["page", 3], ["carry", 2]]) for (const [sc, m] of lensRows.filter(([, x]) => (drive === "page" ? !x.clip : !!x.clip))) {
     const L = m.loupe; const thumb = m.thumb ?? '[data-e~="thumb"]'; const B = drive === "carry" ? m.clip.box : null;
     const film = async (tf, mode, prm) => {
       const P = await openPage(E, T, sc, { prm });
       try {
         if (prm && !P.modeOk) return { mode: P.modeLine };
-        await sideSetup(m, L, tf)(P.page, drive); await P.page.waitForTimeout(250);
+        await sideSetup(m, tf)(P.page, drive); await P.page.waitForTimeout(250);
         const rows = await P.page.evaluate(rowsOf);
         const c = await center(P.page, thumb); await P.page.mouse.move(c.x, c.y); await P.page.mouse.down();
         try { await P.page.waitForTimeout(900); return { ...(await P.page.evaluate(sideFilm, [L, drive, B, mode, rate])), rows }; } finally { await P.page.mouse.up(); }
       } finally { await P.close(); }
     };
     const fails = (name, r) => { if (r.crashed) { cell(name, "FAIL", r.line); return true; } if (r.mode) { cell(name, "FAIL", `MODE NOT APPLIED ${r.mode}`); return true; } if (r.none || !r.out?.length) { cell(name, "FAIL", `NO LOUPE: the held slider renders no ${L.lens} on its ${L.track}`); return true; } return false; };
-    for (const tf of ["none", "scale"]) {
+    for (const tf of cards("none", "scale", "zoom08", "zoom125", "zoom2")) {
       // the side change: carries weight, on the row it rides
-      const name = `E-10 ${sc} loupe side · ${drive} · ${tf}`;
+      const name = `E-10 ${sc} loupe side · ${drive} · ${CARD[tf]}`;
       const r = await guard(name, () => film(tf, "side", false), 60000);
       if (!fails(name, r)) {
-        const v = sideRead(r, r.rows);
-        const driven = v.reached <= 2; const windowOk = !v.off.length || (v.changes === 1 && v.win <= v.winMax); const ok = driven && v.changes <= 1 && v.step <= v.bound && windowOk && !v.outside && v.dxMax <= 2 && v.whole && v.pinEnd;
-        cell(name, ok ? "PASS" : "FAIL", `${driven ? "" : `NOT DRIVEN: the track's distance to the line never under 2 px (${f(v.reached, 1)}) · `}a fine hold, the track carried ${rate} px a frame ${f(r.lineDist + 40, 0)} px, ${v.n} frames · ${v.changes} side change(s), the lens's centre against the track's ${f(v.relA, 1)} → ${f(v.relZ, 1)} px · largest one-frame move against the track ${f(v.step, 1)} px per 16.7 ms at +${f(v.atT, 0)} ms; bound ${f(v.bound, 1)} px = the span ${f(v.span, 1)} × row ${v.row ? `${v.row.n}'s ${f(v.row.peak, 3)} (clock ${f(v.row.ms, 0)} ms, overshoot ${f(v.row.over, 3)})` : "none"} + 1${v.rode ? "" : ` (no running animation on the lens carries a row's clock [${v.ams.map((x) => f(x, 0)).join(",")}]: the library's fastest row)`} · off its edge by > 2 px on ${v.off.length} frames over ${f(v.win, 0)} ms (bound one window ≤ ${f(v.winMax, 0)} ms)${v.off.length ? `, worst ${f(Math.max(...v.off.map((y) => Math.abs(y.x.pin))), 1)} px` : ""}, ${v.outside} frames outside the span · across ${f(v.dxMax, 1)} px (≤ 2) · ends flush ${v.pinEnd} (${f(v.end.pin, 1)} px), whole at the end ${v.whole} (lens ${f(v.end.lt, 1)}..${f(v.end.lb, 1)} px; at most ${f(v.above, 1)} px above the viewport on any frame)`);
+        const v = sideRead(r, r.rows, rate);
+        const driven = v.reached <= 2; const windowOk = !v.off.length || (v.changes === 1 && v.win <= v.winMax); const ok = driven && v.changes <= 1 && v.step <= v.bound && windowOk && !v.outside && v.dxMax <= 2 && v.whole && v.above <= v.aboveMax && v.pinEnd;
+        cell(name, ok ? "PASS" : "FAIL", `${driven ? "" : `NOT DRIVEN: the track's distance to the line never under 2 px (${f(v.reached, 1)}) · `}a fine hold, the card ${CARD[tf]}, the track carried ${rate} px a frame ${f(r.lineDist + 40, 0)} px, ${v.n} frames (median sample ${f(v.mdt, 1)} ms) · ${v.changes} side change(s), the lens's centre against the track's ${f(v.relA, 1)} → ${f(v.relZ, 1)} px · largest move against the track over any 16.7 ms of real time ${f(v.step, 1)} px at +${f(v.atT, 0)} ms; bound ${f(v.bound, 1)} px = the span ${f(v.span, 1)} (read in the last frame: lens ${f(v.end.H, 1)} + track ${f(v.end.tb - v.end.tt, 1)} px; first-to-last ${f(v.spanRel, 1)}) × row ${v.row ? `${v.row.n}'s ${f(v.row.peak, 3)} (clock ${f(v.row.ms, 0)} ms, overshoot ${f(v.row.over, 3)})` : "none"} + 1${v.rode ? "" : ` (no running animation on the lens carries a row's clock [${v.ams.map((x) => f(x, 0)).join(",")}]: the library's fastest row)`} · off its edge by > 2 px on ${v.off.length} frames over ${f(v.win, 0)} ms (bound one window ≤ ${f(v.winMax, 0)} ms)${v.off.length ? `, worst ${f(Math.max(...v.off.map((y) => Math.abs(y.x.pin))), 1)} px` : ""}, ${v.outside} frames outside the span · across ${f(v.dxMax, 1)} px (≤ 2) · ends flush ${v.pinEnd} (${f(v.end.pin, 1)} px), whole at the end ${v.whole} (lens ${f(v.end.lt, 1)}..${f(v.end.lb, 1)} px), at most ${f(v.above, 1)} px above the viewport on any frame (bound ≤ two ${rate} px steps + 2 = ${f(v.aboveMax, 0)})`);
       }
       // under reduce: instant, no travel, the correction never off
-      const nameR = `E-10 ${sc} loupe side · reduce · ${drive} · ${tf}`;
-      const rr = await guard(nameR, () => film(tf, "side", true), 60000);
-      if (!fails(nameR, rr)) {
-        const v = sideRead(rr, rr.rows); const driven = v.reached <= 2; const ok = driven && v.changes <= 1 && !v.off.length && v.whole && v.dxMax <= 2;
-        cell(nameR, ok ? "PASS" : "FAIL", `${driven ? "" : `NOT DRIVEN: the track's distance to the line never under 2 px (${f(v.reached, 1)}) · `}reduce · ${v.changes} side change(s) · off its edge by > 2 px on ${v.off.length} frames (bound 0: instant, no travel, the correction kept)${v.off.length ? `, worst ${f(Math.max(...v.off.map((y) => Math.abs(y.x.pin))), 1)} px` : ""} · largest one-frame move ${f(v.step, 1)} px · whole at the end ${v.whole} (lens ${f(v.end.lt, 1)}..${f(v.end.lb, 1)} px)`);
+      if (["none", "scale", "zoom125"].includes(tf)) {
+        const nameR = `E-10 ${sc} loupe side · reduce · ${drive} · ${CARD[tf]}`;
+        const rr = await guard(nameR, () => film(tf, "side", true), 60000);
+        if (!fails(nameR, rr)) {
+          const v = sideRead(rr, rr.rows, rate); const driven = v.reached <= 2; const ok = driven && v.changes <= 1 && !v.off.length && v.whole && v.dxMax <= 2;
+          cell(nameR, ok ? "PASS" : "FAIL", `${driven ? "" : `NOT DRIVEN: the track's distance to the line never under 2 px (${f(v.reached, 1)}) · `}reduce, the card ${CARD[tf]} · ${v.changes} side change(s) · off its edge by > 2 px on ${v.off.length} frames (bound 0: instant, no travel, the correction kept)${v.off.length ? `, worst ${f(Math.max(...v.off.map((y) => Math.abs(y.x.pin))), 1)} px` : ""} · largest move over any 16.7 ms ${f(v.step, 1)} px · whole at the end ${v.whole} (lens ${f(v.end.lt, 1)}..${f(v.end.lb, 1)} px)`);
+        }
       }
       // the wobble: at most one change, about the place it changed and about the line itself
-      if (drive === "carry") for (const mode of ["at-change", "at-line"]) {
-        const nameW = `E-10 ${sc} loupe wobble · ${mode} · ${tf}`;
+      if (drive === "carry" && ["none", "scale", "zoom125"].includes(tf)) for (const mode of ["at-change", "at-line"]) {
+        const nameW = `E-10 ${sc} loupe wobble · ${mode} · ${CARD[tf]}`;
         const rw = await guard(nameW, () => film(tf, mode, false), 60000);
         if (fails(nameW, rw)) continue;
-        const v = sideRead(rw, rw.rows); const driven = v.reached <= 5;
-        cell(nameW, driven && v.changes <= 1 ? "PASS" : "FAIL", `${driven ? "" : `NOT DRIVEN: the track's distance to the line never under 5 px (${f(v.reached, 1)}) · `}a fine hold, carried ${mode === "at-line" ? "to the line" : "to the lens's side change"}, then ±3 px: 40 frames toggling every 2, 6 toggles every 30 · ${v.changes} side change(s) in ${v.n} frames (bound ≤ 1) · largest one-frame move against the track ${f(v.step, 1)} px`);
+        const v = sideRead(rw, rw.rows, rate); const driven = v.reached <= 5;
+        cell(nameW, driven && v.changes <= 1 ? "PASS" : "FAIL", `${driven ? "" : `NOT DRIVEN: the track's distance to the line never under 5 px (${f(v.reached, 1)}) · `}a fine hold, the card ${CARD[tf]}, carried ${mode === "at-line" ? "to the line" : "to the lens's side change"}, then ±3 px: 40 frames toggling every 2, 6 toggles every 30 · ${v.changes} side change(s) in ${v.n} frames (bound ≤ 1) · largest move over any 16.7 ms ${f(v.step, 1)} px`);
       }
+    }
+    // H11, REPORT (REGISTRY §P10-7 item 6; C-E10 §1.3 `repress · moved`): the side carried across holds. A hold carries the track past
+    // the line (the lens below); release; inside the exit the track is carried back 70 px above in 4 frames; then a new press. On each
+    // frame from the press while the lens shows (opacity > 0.05): its pinned edge. Not a gating cell: it passes the one-travel rule
+    if (drive === "carry") for (const tf of cards("none", "scale")) {
+      const nameP = `E-10 ${sc} loupe repress · moved · ${CARD[tf]}`;
+      const rp = await guard(nameP, async () => {
+        const P = await openPage(E, T, sc);
+        try {
+          await sideSetup(m, tf)(P.page, "carry"); await P.page.waitForTimeout(250);
+          const c = await center(P.page, thumb); await P.page.mouse.move(c.x, c.y); await P.page.mouse.down();
+          let f1; try { await P.page.waitForTimeout(900); f1 = await P.page.evaluate(sideFilm, [L, "carry", B, "side", 2]); } finally { await P.page.mouse.up(); }
+          await P.page.evaluate(([L, B]) => new Promise((ok) => { const q = (x) => document.querySelector(x); const b = q(B); const zb = b.currentCSSZoom ?? 1; let top = Number.parseFloat(b.style.top) || 0, k = 0; window.__rp = []; window.__rpStop = false; const t0 = performance.now(); window.__rpT0 = t0; const ch = new MessageChannel();
+            ch.port1.onmessage = () => { const l = q(L.lens), t = q(L.track); if (!l || !t) return; const a1 = l.getBoundingClientRect(), d = t.getBoundingClientRect(); if (!(a1.width > 0)) return; const rel = a1.top + a1.height / 2 - (d.top + d.height / 2); window.__rp.push({ t: performance.now() - t0, rel, pin: rel < 0 ? a1.bottom - d.top : a1.top - d.bottom, op: +getComputedStyle(l).opacity, lt: a1.top }); };
+            const tick = () => { if (k < 4) { top += 17.5 / zb; b.style.top = `${top}px`; k++; if (k === 4) ok(); } ch.port2.postMessage(0); if (!window.__rpStop) requestAnimationFrame(tick); }; requestAnimationFrame(tick); }), [L, B]);
+          const c2 = await center(P.page, thumb); await P.page.mouse.move(c2.x, c2.y); const tp = await P.page.evaluate(() => performance.now() - window.__rpT0); await P.page.mouse.down();
+          try { await P.page.waitForTimeout(800); } finally { await P.page.mouse.up(); }
+          const s2 = await P.page.evaluate(() => { window.__rpStop = true; return window.__rp; });
+          return { f1, s2, tp };
+        } finally { await P.close(); }
+      }, 60000);
+      if (rp.crashed) { cell(nameP, "REPORT", rp.line); continue; }
+      const before = (rp.s2 ?? []).filter((x) => x.t < rp.tp && x.op > 0.05).at(-1); const after = (rp.s2 ?? []).filter((x) => x.t >= rp.tp && x.op > 0.05); const off = after.filter((x) => Math.abs(x.pin) > 2);
+      const worst = off.reduce((p, x) => (Math.abs(x.pin) > Math.abs(p?.pin ?? 0) ? x : p), null);
+      cell(nameP, "REPORT", `the card ${CARD[tf]} · first hold: ${(rp.f1?.out ?? []).length} frames, the lens's last rel ${f(rp.f1?.out?.at(-1)?.rel, 1)} px · released, the track carried back 70 px above in 4 frames inside the exit (the lens's last shown frame before the press: rel ${f(before?.rel, 1)} px at opacity ${f(before?.op, 2)}) · re-pressed: ${after.length} shown frames, ${off.length} off its edge by > 2 px${off.length ? ` over ${f(off.at(-1).t - off[0].t, 0)} ms from opacity ${f(off[0].op, 2)}, worst ${f(worst.pin, 1)} px at opacity ${f(worst.op, 2)}` : ""} · ends ${f(after.at(-1)?.pin, 1)} px, rel ${f(after.at(-1)?.rel, 1)} px · REPORT (REGISTRY §P10-7 item 6: passes the one-travel rule)`);
     }
   }
   if (want("lensfilm")) for (const [sc, m] of lensRows.filter(([, x]) => !!x.clip)) {

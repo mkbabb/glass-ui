@@ -1,0 +1,68 @@
+# wk queued 2026-10-31 02:41:17 · load { 6.45 6.70 8.37 }
+# wk acquisition admitted 2026-10-31 02:41:17 · load { 6.45 6.70 8.37 }
+# 02:41:17 start (0 min): zf webkit · load { 6.45 6.70 8.37 }
+H11 zoomfacts webkit UNMEASURED · 0 pass, 0 fail, 0 unmeasured of 0 gating cells (3 reported) · load 6.5/6.7/8.4 at start, 6.4/6.7/8.4 at end
+# exit 3 · 02:41:19 · load { 6.42 6.69 8.35 }
+# 02:41:19 end (0): zf webkit · load { 6.42 6.69 8.35 }
+# 02:41:19 start (0 min): st-E-13 webkit · load { 6.42 6.69 8.35 }
+selftest: 8 runs, 0 N/A; every witness passes its fixture, fails each planted violation on the planted cell, and passes each control, in every engine with an input for it
+# selftest exit 0 · 02:56:07 · load { 5.81 6.66 7.29 }
+# 02:56:07 end (0): st-E-13 webkit · load { 5.81 6.66 7.29 }
+# 02:56:07 start (14 min): fx11 webkit · load { 5.81 6.66 7.29 }
+E-11 webkit PASS · 14 pass, 0 fail, 1 unmeasured of 15 gating cells (1 reported) · load 5.8/6.7/7.3 at start, 4.9/5.9/6.8 at end
+# exit 0 · 03:01:05 · load { 4.87 5.90 6.78 }
+# 03:01:05 end (0): fx11 webkit · load { 4.87 5.90 6.78 }
+# 03:01:05 start (19 min): st-E-11 webkit --faults e11-travelthrow · load { 4.87 5.90 6.78 }
+selftest: 1 runs, 0 N/A; every witness passes its fixture, fails each planted violation on the planted cell, and passes each control, in every engine with an input for it
+# selftest exit 0 · 03:01:46 · load { 4.90 5.77 6.69 }
+# 03:01:46 end (0): st-E-11 webkit --faults e11-travelthrow · load { 4.90 5.77 6.69 }
+# 03:01:46 start (20 min): fx10 webkit · load { 4.90 5.77 6.69 }
+E-10 webkit PASS · 80 pass, 0 fail, 0 unmeasured of 80 gating cells (28 reported) · load 4.9/5.8/6.7 at start, 5.5/6.1/6.5 at end
+# exit 0 · 03:08:05 · load { 5.46 6.10 6.52 }
+# 03:08:05 end (0): fx10 webkit · load { 5.46 6.10 6.52 }
+# 03:08:05 start (26 min): st-E-10 webkit --faults e10-lensswap,e10-lenszero,e10-lensfast,e10-lensnohyst,e10-lensfixed,e10-lensreducetravel,e10-lenszoom,e10-glidescale · load { 5.46 6.10 6.52 }
+selftest: 8 runs, 0 N/A; every witness passes its fixture, fails each planted violation on the planted cell, and passes each control, in every engine with an input for it
+# selftest exit 0 · 03:17:51 · load { 11.21 7.78 7.07 }
+# 03:17:51 end (0): st-E-10 webkit --faults e10-lensswap,e10-lenszero,e10-lensfast,e10-lensnohyst,e10-lensfixed,e10-lensreducetravel,e10-lenszoom,e10-glidescale · load { 11.21 7.78 7.07 }
+# 03:17:51 start (36 min): e10-cand10 webkit --part lensside · load { 11.21 7.78 7.07 }
+E-10 webkit FAIL · 16 pass, 6 fail, 0 unmeasured of 22 gating cells (2 reported) · load 11.2/7.8/7.1 at start, 6.8/7.3/7.0 at end
+# exit 1 · 03:19:25 · load { 6.75 7.29 6.96 }
+# 03:19:25 end (0): e10-cand10 webkit --part lensside · load { 6.75 7.29 6.96 }
+# 03:19:25 start (38 min): e13-cand10 webkit --part clock · load { 6.75 7.29 6.96 }
+E-13 webkit FAIL · 18 pass, 2 fail, 0 unmeasured of 20 gating cells (2 reported) · load 6.8/7.3/7.0 at start, 5.0/6.7/6.7 at end
+# exit 1 · 03:20:32 · load { 4.99 6.66 6.74 }
+# 03:20:32 end (0): e13-cand10 webkit --part clock · load { 4.99 6.66 6.74 }
+# 03:20:32 start (39 min): e11-cand10 webkit --part travel · load { 4.99 6.66 6.74 }
+E-11 webkit FAIL · 8 pass, 2 fail, 0 unmeasured of 10 gating cells (0 reported) · load 5.0/6.7/6.7 at start, 5.9/6.7/6.8 at end
+# exit 1 · 03:21:15 · load { 5.95 6.70 6.75 }
+# 03:21:15 end (0): e11-cand10 webkit --part travel · load { 5.95 6.70 6.75 }
+# 03:21:15 start (39 min): e10-zoomcure webkit --part lensside · load { 5.95 6.70 6.75 }
+E-10 webkit PASS · 22 pass, 0 fail, 0 unmeasured of 22 gating cells (2 reported) · load 5.8/6.7/6.7 at start, 4.8/6.2/6.6 at end
+# exit 0 · 03:22:49 · load { 4.75 6.19 6.56 }
+# 03:22:49 end (0): e10-zoomcure webkit --part lensside · load { 4.75 6.19 6.56 }
+# 03:22:49 start (41 min): e13-zoomcure webkit --part clock · load { 4.75 6.19 6.56 }
+E-13 webkit PASS · 20 pass, 0 fail, 0 unmeasured of 20 gating cells (2 reported) · load 4.8/6.2/6.6 at start, 4.8/6.0/6.5 at end
+# exit 0 · 03:23:56 · load { 4.79 6.04 6.48 }
+# 03:23:56 end (0): e13-zoomcure webkit --part clock · load { 4.79 6.04 6.48 }
+# 03:23:56 start (42 min): e11-loudcure webkit --part travel · load { 4.79 6.04 6.48 }
+E-11 webkit PASS · 10 pass, 0 fail, 0 unmeasured of 10 gating cells (0 reported) · load 4.8/6.0/6.5 at start, 4.7/5.9/6.4 at end
+# exit 0 · 03:24:39 · load { 4.70 5.87 6.39 }
+# 03:24:39 end (0): e11-loudcure webkit --part travel · load { 4.70 5.87 6.39 }
+# 03:24:39 start (43 min): clean webkit · load { 4.70 5.87 6.39 }
+CAP webkit PASS · 4 pass, 0 fail, 0 unmeasured of 4 gating cells (0 reported) · load 4.3/5.9/6.3 at start, 4.8/5.9/6.3 at end
+# exit 0 · 03:31:17 · load { 4.76 5.86 6.33 }
+# 03:31:17 end (0): clean webkit · load { 4.76 5.86 6.33 }
+# 03:31:17 start (50 min): e10-head webkit --part lensside · load { 4.76 5.86 6.33 }
+E-10 webkit FAIL · 3 pass, 19 fail, 0 unmeasured of 22 gating cells (2 reported) · load 4.8/5.9/6.3 at start, 3.6/5.1/6.0 at end
+# exit 1 · 03:32:54 · load { 3.58 5.07 5.97 }
+# 03:32:54 end (0): e10-head webkit --part lensside · load { 3.58 5.07 5.97 }
+# 03:32:54 start (51 min): e13-head webkit --part clock · load { 3.58 5.07 5.97 }
+E-13 webkit FAIL · 10 pass, 10 fail, 0 unmeasured of 20 gating cells (2 reported) · load 3.6/5.1/6.0 at start, 4.4/5.0/5.9 at end
+# exit 1 · 03:34:00 · load { 4.43 5.02 5.88 }
+# 03:34:00 end (0): e13-head webkit --part clock · load { 4.43 5.02 5.88 }
+# 03:34:00 start (52 min): e11-head webkit --part travel · load { 4.43 5.02 5.88 }
+E-11 webkit UNMEASURED · 0 pass, 0 fail, 3 unmeasured of 3 gating cells (0 reported) · load 4.4/5.0/5.9 at start, 4.4/5.0/5.9 at end
+# exit 3 · 03:34:10 · load { 4.40 5.00 5.87 }
+# 03:34:10 end (0): e11-head webkit --part travel · load { 4.40 5.00 5.87 }
+# wk acquisition end 2026-10-31 03:34:10 · load { 4.40 5.00 5.87 }
+# wk guard exit 0 2026-10-31 03:34:14 · load { 4.21 4.95 5.85 }

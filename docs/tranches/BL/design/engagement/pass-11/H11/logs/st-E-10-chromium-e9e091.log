@@ -1,0 +1,5 @@
+# H11 st-E-10 chromium · 2026-10-31 02:40:46 · load { 4.88 6.48 8.35 } · harness 50bee4444a65 · --faults e10-rectclip-film --reread 2
+OK     E-10 chromium fault   e10-rectclip-film (CK-20 (H8, the pass-7 construction): the place follows the scroll in its frame and the clip three frames late (pass-7's one-frame lag is not resolved by WebKit's film), so a moving scroller leaks the control above the card) exit 1
+         first planted FAIL: FAIL       E-10 clipstale clip film · smooth · engaged · keyboard engaged, the scroller moved by a smooth 90 px scrollBy · px² of the 24 px strip above the scroller differing ≥ 40 levels from the film's per-pixel median · engaged films: 33 
+selftest: 1 runs, 0 N/A; every witness passes its fixture, fails each planted violation on the planted cell, and passes each control, in every engine with an input for it
+# selftest exit 0 · 02:41:13 · load { 6.49 6.71 8.38 }

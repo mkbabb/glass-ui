@@ -1,0 +1,62 @@
+# chain c1 start 2026-10-31 01:05:31 · load { 12.36 11.83 12.08 }
+# 01:05:31 start: st-E-10 chromium · load { 12.36 11.83 12.08 }
+selftest: 1 of 36 runs BROKEN or UNREAD (0 N/A)
+# selftest exit 1 · 01:43:11 · load { 11.83 10.71 10.83 }
+# 01:43:16 end (0): st-E-10 chromium · load { 11.61 10.68 10.82 }
+# 01:43:16 start: st-E-13 chromium · load { 11.61 10.68 10.82 }
+selftest: 8 runs, 0 N/A; every witness passes its fixture, fails each planted violation on the planted cell, and passes each control, in every engine with an input for it
+# selftest exit 0 · 01:55:02 · load { 13.54 12.74 11.81 }
+# 01:55:06 end (0): st-E-13 chromium · load { 13.09 12.66 11.79 }
+# 01:55:06 start: st-E-11 chromium · load { 13.09 12.66 11.79 }
+selftest: 7 runs, 0 N/A; every witness passes its fixture, fails each planted violation on the planted cell, and passes each control, in every engine with an input for it
+# selftest exit 0 · 02:25:03 · load { 9.19 10.35 11.81 }
+# 02:25:08 end (0): st-E-11 chromium · load { 8.78 10.25 11.77 }
+# 02:25:08 start: clean chromium · load { 8.78 10.25 11.77 }
+CAP chromium PASS · 4 pass, 0 fail, 0 unmeasured of 4 gating cells (0 reported) · load 6.1/8.3/10.4 at start, 5.8/8.1/10.4 at end
+# exit 0 · 02:30:57 · load { 5.80 8.14 10.35 }
+# 02:31:01 end (0): clean chromium · load { 5.66 8.07 10.31 }
+# 02:31:01 start: e10-cand10 chromium --part lensside · load { 5.66 8.07 10.31 }
+E-10 chromium FAIL · 16 pass, 6 fail, 0 unmeasured of 22 gating cells (2 reported) · load 5.7/8.1/10.3 at start, 6.1/7.7/10.0 at end
+# exit 1 · 02:32:26 · load { 6.08 7.68 9.95 }
+# 02:32:31 end (0): e10-cand10 chromium --part lensside · load { 6.55 7.75 9.97 }
+# 02:32:31 start: e10-zoomcure chromium --part lensside · load { 6.55 7.75 9.97 }
+E-10 chromium PASS · 22 pass, 0 fail, 0 unmeasured of 22 gating cells (2 reported) · load 6.6/7.8/10.0 at start, 5.8/7.3/9.6 at end
+# exit 0 · 02:33:55 · load { 5.77 7.26 9.57 }
+# 02:33:59 end (0): e10-zoomcure chromium --part lensside · load { 6.19 7.32 9.58 }
+# 02:33:59 start: e13-cand10 chromium --part clock · load { 6.19 7.32 9.58 }
+E-13 chromium FAIL · 18 pass, 2 fail, 0 unmeasured of 20 gating cells (2 reported) · load 6.2/7.3/9.6 at start, 5.4/6.9/9.3 at end
+# exit 1 · 02:34:56 · load { 5.39 6.91 9.28 }
+# 02:34:59 end (0): e13-cand10 chromium --part clock · load { 5.84 6.98 9.29 }
+# 02:34:59 start: e13-zoomcure chromium --part clock · load { 5.84 6.98 9.29 }
+E-13 chromium PASS · 20 pass, 0 fail, 0 unmeasured of 20 gating cells (2 reported) · load 5.8/7.0/9.3 at start, 5.6/6.7/9.0 at end
+# exit 0 · 02:35:56 · load { 5.58 6.69 9.04 }
+# 02:36:02 end (0): e13-zoomcure chromium --part clock · load { 5.38 6.63 9.00 }
+# 02:36:02 start: e11-cand10 chromium --part travel · load { 5.38 6.63 9.00 }
+E-11 chromium FAIL · 8 pass, 2 fail, 0 unmeasured of 10 gating cells (0 reported) · load 5.4/6.6/9.0 at start, 7.3/6.9/9.0 at end
+# exit 1 · 02:36:41 · load { 7.29 6.95 9.01 }
+# 02:36:47 end (0): e11-cand10 chromium --part travel · load { 7.99 7.10 9.05 }
+# 02:36:47 start: e11-loudcure chromium --part travel · load { 7.99 7.10 9.05 }
+E-11 chromium PASS · 10 pass, 0 fail, 0 unmeasured of 10 gating cells (0 reported) · load 8.0/7.1/9.0 at start, 7.9/7.2/9.0 at end
+# exit 0 · 02:37:27 · load { 7.87 7.21 9.00 }
+# 02:37:32 end (0): e11-loudcure chromium --part travel · load { 7.80 7.21 8.99 }
+# 02:37:32 start: e10-head chromium --part lensside · load { 7.80 7.21 8.99 }
+E-10 chromium FAIL · 3 pass, 19 fail, 0 unmeasured of 22 gating cells (2 reported) · load 7.8/7.2/9.0 at start, 7.1/7.3/8.8 at end
+# exit 1 · 02:38:59 · load { 7.06 7.28 8.85 }
+# 02:39:03 end (0): e10-head chromium --part lensside · load { 7.06 7.28 8.85 }
+# 02:39:03 start: e13-head chromium --part clock · load { 7.06 7.28 8.85 }
+E-13 chromium FAIL · 10 pass, 10 fail, 0 unmeasured of 20 gating cells (2 reported) · load 7.1/7.3/8.8 at start, 5.5/6.8/8.6 at end
+# exit 1 · 02:40:00 · load { 5.50 6.80 8.56 }
+# 02:40:03 end (0): e13-head chromium --part clock · load { 5.50 6.80 8.56 }
+# 02:40:03 start: e11-head chromium --part travel · load { 5.50 6.80 8.56 }
+E-11 chromium UNMEASURED · 0 pass, 0 fail, 3 unmeasured of 3 gating cells (0 reported) · load 5.5/6.8/8.6 at start, 5.6/6.8/8.5 at end
+# exit 3 · 02:40:12 · load { 5.64 6.79 8.53 }
+# 02:40:16 end (0): e11-head chromium --part travel · load { 5.75 6.79 8.52 }
+# 02:40:16 start: st-E-10 chromium --faults e10-rectclip-film · load { 5.75 6.79 8.52 }
+selftest: 1 runs, 0 N/A; every witness passes its fixture, fails each planted violation on the planted cell, and passes each control, in every engine with an input for it
+# selftest exit 0 · 02:40:42 · load { 4.87 6.50 8.37 }
+# 02:40:46 end (0): st-E-10 chromium --faults e10-rectclip-film · load { 4.88 6.48 8.35 }
+# 02:40:46 start: st-E-10 chromium --faults e10-rectclip-film --reread 2 · load { 4.88 6.48 8.35 }
+selftest: 1 runs, 0 N/A; every witness passes its fixture, fails each planted violation on the planted cell, and passes each control, in every engine with an input for it
+# selftest exit 0 · 02:41:13 · load { 6.49 6.71 8.38 }
+# 02:41:17 end (0): st-E-10 chromium --faults e10-rectclip-film --reread 2 · load { 6.45 6.70 8.37 }
+# chain c1 end 2026-10-31 02:41:17 · load { 6.45 6.70 8.37 }

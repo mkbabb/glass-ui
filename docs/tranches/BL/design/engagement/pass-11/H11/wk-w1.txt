@@ -1,0 +1,20 @@
+# H11 WebKit stages, in priority order (one acquisition). E-10's self-test in WebKit: the clean fixture whole (fx10) and every plant whose
+# path H11 touched (the lens and its travel, the clip row's host glide); the rest of E-10's plants are unchanged code on unchanged paths,
+# self-tested whole in Chromium here and in WebKit by H10. E-11 likewise: the clean fixture whole (fx11) and the travel plant; its
+# other plants are unchanged code (now under --part old), self-tested whole in Chromium here
+zf webkit
+st-E-13 webkit
+fx11 webkit
+st-E-11 webkit --faults e11-travelthrow
+fx10 webkit
+st-E-10 webkit --faults e10-lensswap,e10-lenszero,e10-lensfast,e10-lensnohyst,e10-lensfixed,e10-lensreducetravel,e10-lenszoom,e10-glidescale
+e10-cand10 webkit --part lensside
+e13-cand10 webkit --part clock
+e11-cand10 webkit --part travel
+e10-zoomcure webkit --part lensside
+e13-zoomcure webkit --part clock
+e11-loudcure webkit --part travel
+clean webkit
+e10-head webkit --part lensside
+e13-head webkit --part clock
+e11-head webkit --part travel
