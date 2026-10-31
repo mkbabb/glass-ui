@@ -414,6 +414,59 @@ describe("useDockExpandedSize", () => {
     });
 });
 
+// U/B7d M1 · O-7. A capture runs on every content change in either pane, and a dashboard's
+// dock changes its section label as the page scrolls. At rest the root is laid out in its own
+// posture, so that posture's endpoint is the root as it stands: the capture reads it without
+// setting an override, which would force the page through two more layouts for the same number.
+// RED on u/b7-glass 01ec9e998, whose rest capture laid the root out again under overrides.
+describe("useDockExpandedSize — a capture at rest", () => {
+    const overrideWrites = (dock: ReturnType<typeof dockModel>) => {
+        const writes: string[] = [];
+        for (const [name, el] of [["root", dock.root], ["full", dock.full], ["summary", dock.summary]] as const) {
+            const set = el.style.setProperty.bind(el.style);
+            el.style.setProperty = (property: string, value: string | null, priority?: string) => {
+                const publish = el === dock.root && /^--dock-(expanded|collapsed)-px$/.test(property) && value !== "initial";
+                if (!publish) writes.push(`${name} ${property}`);
+                return set(property, value, priority);
+            };
+        }
+        return writes;
+    };
+
+    it("reads the expanded endpoint of an expanded dock without an override", async () => {
+        const dock = dockModel();
+        const { unmount } = mountMeasure(dock);
+        const writes = overrideWrites(dock);
+
+        dock.repane(600);
+        await mutationsSettle();
+
+        expect(dock.px("expanded")).toBe("624px");
+        expect(writes).toEqual([]);
+        unmount();
+    });
+
+    it("reads the collapsed endpoint of a collapsed dock without moving its summary pane", async () => {
+        const dock = dockModel();
+        dock.model.summary = 32;
+        dock.posture("collapsed");
+        const { unmount } = mountMeasure(dock);
+        const writes = overrideWrites(dock);
+
+        dock.model.summary = 40;
+        dock.summary.append(document.createElement("span"));
+        await mutationsSettle();
+
+        expect(dock.px("collapsed")).toBe("56px");
+        // Never at rest expanded: the expanded endpoint carries the collapsed chrome (16).
+        expect(dock.px("expanded")).toBe("584px");
+        // The expanded endpoint of a collapsed dock still lays the full pane out in flow.
+        expect(writes.filter((w) => w.startsWith("summary position"))).toEqual(["summary position"]);
+        expect(writes.filter((w) => w.startsWith("full position"))).toEqual(["full position"]);
+        unmount();
+    });
+});
+
 // atlas U/B7 D-5. A vertical dock's full pane is the run, a block-axis scroller squeezed
 // to the collapsed box until the dock seats. Its first expand reserved the squeezed pane,
 // so the box held during `[data-morphing]` was the collapsed box and the seats below it

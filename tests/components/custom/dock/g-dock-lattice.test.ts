@@ -611,7 +611,9 @@ describe("G-DOCK-MORPH — a morph never starts against an unmeasured target", (
     it("the measure reads the posture from the DOM and chrome only at rest", () => {
         const src = read(`${DOCK}/composables/dockMorphMeasure.ts`);
         expect(src).toMatch(/const expanded = full\.classList\.contains\("is-active"\)/);
-        expect(src).toMatch(/if \(!root\.hasAttribute\("data-morphing"\)\) \{/);
+        // U/B7d M1: the rest test is named once and gates the chrome latch.
+        expect(src).toMatch(/const resting = !root\.hasAttribute\("data-morphing"\);/);
+        expect(src).toMatch(/if \(resting\) \{\s*const chrome = /);
         expect(src).not.toMatch(/watch\(expanded/);
     });
 
