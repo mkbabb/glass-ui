@@ -1,5 +1,39 @@
 # Changelog
 
+## 10.1.4 — unreleased
+
+A patch for two defects sci-report reported live from the Gregg Museum dashboard on
+10.1.3 (records: `docs/tranches/BL/audit/INBOUND.md` O-119, items (g) and the `@page`
+half of (f); `docs/release-10.1.4/implement.md`). Each cure is in one file. No public
+API is removed or renamed, no token value moves, and a consumer has nothing to change.
+Gregg can delete both workarounds.
+
+- **`useResizeObserver` dispatches the platform's first observation, so a responsive
+  `DataTable` learns its width on mount (O-119 g).** `observe()` seeded the last
+  width and height from a synchronous `getBoundingClientRect()` right after
+  `ResizeObserver.observe`. The platform's initial observation, delivered after
+  layout, then read the same size and fell under the threshold, so it was dropped. A
+  caller heard nothing until the element's size changed. `DataTable` took its card
+  projection from that callback, so a phone loaded the wide table. Gregg nudged its
+  table's width by 1 px after mount to force a second observation. The seed is
+  deleted. The last width and height start at `NaN`, which no reading equals, and
+  return to it on `disconnect`, so the first observation of each element always
+  dispatches, through the rAF batch as before. `DataTable` keeps its `width > 0`
+  guard, so an unlaid-out root still projects nothing. The other callers (the glass
+  backdrop sampler, the fading-scroll measure, the pager worm's seat, the dock
+  crossfade's peak, the demo's virtual window) recompute idempotently, and each
+  already measures on mount, so the extra dispatch repeats that measure.
+
+- **Only a deck prints at slide geometry (O-119 f, the `@page` half).** The deck's
+  print block in `capture.css` declared an unnamed `@page { size: 1280px 720px;
+  margin: 0 }` and reset `html`, `body` and `#app` with `print-color-adjust: exact`.
+  That stylesheet reaches every importer of the library's styles, so any page that
+  printed came out on 1280x720 sheets with its margins zeroed. The page is now named,
+  `@page deck`, and `[data-slot="deck-stage"]` takes it with `page: deck`. The
+  document resets apply only under `:root:has([data-slot="deck-stage"])`. A page
+  without a deck prints on the reader's own paper with its own margins. The glass
+  print arm (F-80) is not in this patch; it is W-E.13 (11.0.0).
+
 ## 10.1.3 — 2026-10-29
 
 A patch for value.js O-110 (records: `docs/tranches/BL/audit/INBOUND.md` O-110;
