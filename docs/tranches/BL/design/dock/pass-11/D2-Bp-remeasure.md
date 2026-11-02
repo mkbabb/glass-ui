@@ -223,3 +223,192 @@ The paint reading §P10-7.3 asks for (both engines and themes, three runs each) 
   - Nothing under `~/.claude` was read; the guard's refusal is quoted from this seat's own slot log. Sibling repos were untouched, and value.js was not built or run.
 - **Harness at the end:** equal to `pass-8/H8-records/harness.sha256` line for line, hash `9d12810b…` (`harness-at-end.sha256`).
 - **Cleanup:** `git worktree remove --force` on the seat worktree (`git worktree list` shows no `p11/Bp-remeasure` entry), then `rm -rf .claude/worktrees/bl/D2/p11/Bp-remeasure/`. The directory is gone. The empty parent `.claude/worktrees/bl/D2/p11/` remains; removing it was refused by the permission system.
+
+---
+
+## Item 3 (completion)
+
+| field | value |
+|---|---|
+| seat | D2 pass 11, the RE-MEASURE COMPLETION seat for §P10-7.3 item 3. It authored nothing in D2's passes 9 and 10 · model `claude-opus-5-5`, asserted from own system identity · one entry, 2026-11-01 20:04 → 2026-11-02 04:25 |
+| machine | The owner rebooted at 19:35 (`FORMATION-PROGRESS.md`, 20:05 line: zone 1.5k). This seat did not read `~/.claude`; the guard enforced the zone gate itself, and it refused no run. Every build, browser run and cost run went through `guarded`. No browser run used `--light`. Every Playwright WebKit run used `--exclusive webkit`. One heavy run at a time. No headed run, no GPU launch args, no browser MCP |
+| HEAD | `a8b94dccd`. `git diff --name-only 387c11285 HEAD -- src demo tests package.json docs/design` is empty |
+| inputs | REGISTRY §P10-0 to §P10-8 (lines 2802-3075) in full; this file §0-§6; the first seat's scripts; `audit/INBOUND.md` (last row O-117) and `FORMATION-PROGRESS.md` to its last line (2026-11-01 20:05). No ruling touching D2's 38 rows arrived before or during the seat |
+| patches, re-hashed | `pass-11/D2-Bp-p11.patch` **`b5d5c9db632f4e97…`** at the start and at the end; `pass-6/floor-v5.patch` `cba6bdc2…`; `pass-9/D2-Bp-p9.patch` `dd5d9f5f…` (`item3/apply.log`). Each applied after `git apply --check` on the seat worktree |
+| harness | H8 as landed. The per-file list equals `pass-8/H8-records/harness.sha256` line for line at the start and at the end (`item3/harness-at-start.sha256`, `harness-at-end.sha256`; list hash `9d12810bc24d91d2`, also printed by every chain start in `item3/chain.log`) |
+| builds | In the seat worktree `.claude/worktrees/bl/D2/p11/Bp-remeasure-c/wt` (`item3/scripts/build3.sh`; every build exit 0, load 14.74-19.85): `fv5` = HEAD + floor v5; `bp8` = fv5 + `D2-Bp-p9.patch`; `bp10` = fv5 + `D2-Bp-p11.patch`; then the bp10 tree's `vite build` + `demo:dist:build` for the boot graph |
+| engines | Chromium (Playwright's default headless shell) and **Playwright WebKit**. Real Safari: **UNMEASURED (owner's safaridriver checkbox)** |
+| scope | Steps 1 and 2 were not redone. This seat scores no row. Records: `pass-11/D2-Bp-remeasure-records/item3/` (no video) |
+
+Load is the 1-minute load average. "C" is Chromium, "W" Playwright WebKit, "·l / ·d" light / dark.
+
+### I3.0 · In brief
+
+- **Retarget A/B: bp10 reads 0 splice in 96 of 96 reads. bp8 reads 2 of 96 in the same slots.** No bp10 read shows a sliver. Machine load ran high (other sessions), and three columns ran above the §P10-7.3 band (C·l 14.28-29.6, W·l 10.7-23.01, W·d 14.96-29.59). So the seat ran those three columns again, starting each slot only at load ≤ 11. **In-band, bp10 reads 0 of 72 and bp8 reads 3 of 72, at 7.56-11.77.** Both readings are kept. Over both A/Bs, bp10 reads **0 splice in 168 reads** and bp8 reads 5 in 168. **§P10-7.1 rule (a) does not fire on either A/B**: no bp10 column holds even one splice read.
+- **Two bp10 red reads in the A/B, both NOT-REPRODUCED:**
+  - W·l `retarget·120` r6 [stub], 1 frame at 11.91. Both re-runs PASS at 7.75 and 9.17.
+  - W·d `retarget·80` r3 [vanish], a drop of 0.57 at 26.25. Both re-runs PASS at 8.02 and 9.46. This red was seen only under load.
+
+  Neither is a splice. The in-band A/B has no bp10 red.
+- **`vmorph` collapse in paint: no ink cut at the leaving pair, by eye, in any of 12 runs** (3 runs in each of the four columns). `spliceRow` fires on `s2|s3` in 8 of 12 runs, with gaps of 9.57-10.22 px at 45-52.1 ms. Sliver 0 and stub 0 in all 12. On the splice frame, the pair's painted edges sit 0.52-1.48 px inside their 40 px boxes.
+- **Display-frame probe: bp10 0 of 72 runs with an empty frame, bp8 0 of 72.** The lowest `minInk` is bp10 0.234 and bp8 0.207.
+- **Cost (bp10 → bp8 → fv5, three rounds, load ≤ 15 at each start):** frames over 25 ms over the four 4× rows are **bp10 12, bp8 12, fv5 0**.
+- **Boot graph: 503,737 B against 503,808 B, margin 71 B.** This equals step 1.
+- **R2 and stub per column:** the battery's readings (§3.1, §3.2) stand as this pass's R2 and stub of record. The A/B's own W3 reads add a WebKit reading: the in-band W·d worst drop is **0.468 on bp10 (margin 0.032, load 9.52)** against 0.458 on bp8 (0.042, 8.3). All of these reads come from the A/B's `retarget·*` cells, not the battery's W3 cells.
+- **WebKit lock waits:** 74.8 min (`vm` W·l) and **102.3 min (`vm` W·d), over 90 min.** Both were waited out, never cancelled.
+
+### I3.1 · How it ran
+
+`item3/scripts/chain3.sh` holds the stages of the first seat's `chain.sh` `rd` and `cost` in unchanged form. They are split so that each guarded slot holds one reading. Each slot starts at load ≤ 20, and each cost run at ≤ 15. Each A/B read starts at load ≤ 11 after a wait of at most 180 s (Chromium) or 60 s (WebKit). `chain3-inband.sh` is the `ab` stage again, with each slot started at load ≤ 11 (made from `chain3.sh` by `sed`). `rerun3.sh` and `rerun3-inband.sh` re-run every red A/B read twice in the same form. Summaries were made with the pass-10 builder's `absum.py`, `sisum.mjs`, `costtab.mjs` and `bootsize.py`, the first seat's `vmsum.mjs`, and this seat's `abstub.py` (stub, and the worst vanish drop per column).
+
+| slot | admitted (load) | readings' load | note |
+|---|---|---|---|
+| `ab` C·l | 20:07:33 (17.70) | 14.28-29.6 | |
+| `ab` C·d | 20:57:35 (14.70) | 9.69-14.48 | |
+| `ab` W·l | 21:22:12 (17.08) | 10.41-23.01 | lock wait 7 min |
+| `ab` W·d | 21:42:55 (18.38) | 14.96-29.59 | lock wait 4 min |
+| `si` C·l / C·d | 22:25:36 (24.50) / 22:31:29 (18.48) | 21.23-30.31 / 15.51-18.56 | the slot gate waited 1,381 s for load ≤ 20 |
+| `si` W·l / W·d | 22:42:36 (15.74) / 22:50:27 (17.78) | 10.31-15.83 / 14.38-21.88 | |
+| `vm` C·l / C·d | 22:56:23 (14.19) / 22:56:41 (15.69) | 13.4-14.19 / 14.91-16.44 | |
+| `vm` W·l | 00:11:48 (12.11) | 11.54-12.11 | **lock wait 74.8 min** |
+| `vm` W·d | 01:54:23 (16.29) | 15.69-16.59 | **lock wait 102.3 min (> 90), waited out** |
+| `cost` ×9 | 01:56:43 → 02:10:16 | starts 9.01-14.24 | one cell read 15.57 in-run (bp10 r2) |
+| `rr` (four bp10/bp8 reds) | 02:11:28 → 02:46:30 | 7.75-10.67 | |
+| `ab-inband` C·l / W·l / W·d | 02:48:06 (9.80) / 03:06:45 (10.63) / 03:37:21 (11.76) | 9.01-12.42 / 8.05-11.77 / 7.44-10.72 | slot gate ≤ 11 |
+| `rr-inband` (three bp8 reds) | 03:39:50 → 04:23:00 | 9.10-16.63 | |
+
+Every stage exited 0, and no slot was split. No WebKit page closed: each witness launches one browser per invocation and opens a fresh context per cell, well under H3-1's 60-load restart. No stage was cancelled or withdrawn.
+
+### I3.2 · The retarget·40/80/120 A/B (§P10-7.1 rule (a))
+
+`item3/ab/summary.txt`, `ab-inband/summary.txt` (`absum.py`). There are 8 rounds, with bp10 and bp8 alternating, and 3 cells per read per column.
+
+| column | A/B | bp10 splice | bp10 load | bp8 splice | bp8 splice reads (cell, round, frame, gap, load) | bp8 load |
+|---|---|---:|---|---:|---|---|
+| C·l | first | **0/24** | 14.28-29.6 | 2/24 | `retarget·40` r5 frame 7, 8.07 px, 21.44; `retarget·80` r1 frame 11, 9.43 px, 14.65 | 14.62-21.44 |
+| C·d | first | **0/24** | 9.69-14.09 | 0/24 | — | 9.75-14.48 |
+| W·l | first | **0/24** | 10.7-23.01 | 0/24 | — | 10.41-21.57 |
+| W·d | first | **0/24** | 14.96-29.59 | 0/24 | — | 15.4-28.26 |
+| **all** | **first** | **0/96** | | **2/96** | | |
+| C·l | in-band | **0/24** | 9.1-11.53 | 1/24 | `retarget·40` r8 frame 7, 7.41 px, 9.62 | 9.01-12.42 |
+| W·l | in-band | **0/24** | 8.05-11.77 | 1/24 | `retarget·80` r3 frame 6, 10.19 px, 11.06 | 8.05-11.06 |
+| W·d | in-band | **0/24** | 7.56-10.72 | 1/24 | `retarget·80` r1 frame 7, 9.62 px, 9.91 | 7.44-10.25 |
+| **all** | **in-band** | **0/72** | | **3/72** | | |
+
+- **Rule (a):** across both A/Bs, no bp10 cell in any column reads even one splice. No bp8 cell reads two in one column of one A/B either. Sliver is 0 in every bp10 read.
+- **What the first A/B can separate:** in the first A/B, bp8's control shows the class only in C·l, and reads 0 of 48 in WebKit at 10.4-28.3. The in-band A/B shows it in both WebKit columns (W·l and W·d `retarget·80`, frames 6-7), as passes 9 and 10 read it.
+
+**Red reads, each re-run twice** (`ab-rerun/`, `ab-rerun-inband/`):
+
+| build | column, cell, round | main (load) | re-run 1 | re-run 2 | reading |
+|---|---|---|---|---|---|
+| **bp10** | W·l `retarget·120` r6 | FAIL [stub] (11.91) | PASS (7.75) | PASS (9.17) | **NOT-REPRODUCED** |
+| **bp10** | W·d `retarget·80` r3 | FAIL [vanish] 0.57 (26.25) | PASS (8.02) | PASS (9.46) | **NOT-REPRODUCED**, red under load only |
+| bp8 | C·l `retarget·40` r5 | FAIL [splice] (21.44) | PASS (10.67) | FAIL [sliver: `s8` paints 2.61 px of 87.14, 29.6 ms] (10.02) | control |
+| bp8 | C·l `retarget·80` r1 | FAIL [splice] (14.65) | PASS (10.09) | PASS (9.76) | control |
+| bp8 | C·l `retarget·40` r8 (in-band) | FAIL [splice] (9.62) | PASS (9.10) | PASS (10.51) | control |
+| bp8 | W·l `retarget·80` r3 (in-band) | FAIL [splice] (11.06) | PASS (14.32) | FAIL [stub] (16.63) | control |
+| bp8 | W·d `retarget·80` r1 (in-band) | FAIL [splice] (9.91) | PASS (9.18) | PASS (9.31) | control |
+
+- **The bp10 stub read:** at 60 ms, the "s" in `button.dock-tab-button.glass-specular-track` is painted 74 % at opacity 1, with a hard edge (10→90 % alpha in 0.25 px) at x = 804.3 px. The W3 record carries no plate extent, so this seat cannot say whether that edge is the plate's.
+- **The bp10 vanish read:** seat 1 drops 0.91 → 0.34 at +45 ms after the retarget. Splice and stub are both 0 on that read.
+
+### I3.3 · `vmorph` collapse in paint
+
+`item3/vm/` holds 12 strips (14 tiles of 40 ms, from one frame before the trigger marker), 12 zooms of the first splice pair (4×), 12 whole-plate zooms (3×; the marker frame and the four after it: +0, +40, +80, +120 and +160 ms), and `vmsum.txt`.
+
+| column | run | `spliceRow` (pair, gap, at) | sliver | stub | the pair's paint inside its boxes (s2 far end, s3 near end) | load |
+|---|---|---|---:|---:|---|---|
+| C·l | r1 | 1 (`s2\|s3`, 10.12 px, 52.1 ms) | 0 | 0 | 0.71 / 1.41 px | 14.19 |
+| C·l | r2 | 0 | 0 | 0 | 0.18 / 0.37 px | 13.61 |
+| C·l | r3 | 1 (10.01 px, 51.2 ms) | 0 | 0 | 0.67 / 1.34 px | 13.4 |
+| C·d | r1 | 1 (9.97 px, 50.9 ms) | 0 | 0 | 0.66 / 1.31 px | 15.69 |
+| C·d | r2 | 1 (10.01 px, 51.2 ms) | 0 | 0 | 0.67 / 1.34 px | 14.91 |
+| C·d | r3 | 0 | 0 | 0 | 0.20 / 0.39 px | 16.44 |
+| W·l | r1 | 1 (9.88 px, 47 ms) | 0 | 0 | 0.63 / 1.25 px | 12.11 |
+| W·l | r2 | 0 | 0 | 0 | 2.88 / 4.00 px (frame 5 of the log; no splice frame) | 11.94 |
+| W·l | r3 | 1 (9.59 px, 45 ms) | 0 | 0 | 0.53 / 1.06 px | 11.54 |
+| W·d | r1 | 1 (10.22 px, 49 ms) | 0 | 0 | 0.74 / 1.48 px | 16.18 |
+| W·d | r2 | 0 | 0 | 0 | 3.86 / 4.00 px (frame 5 of the log; no splice frame) | 15.69 |
+| W·d | r3 | 1 (9.57 px, 45 ms) | 0 | 0 | 0.52 / 1.05 px | 16.59 |
+
+(The one-advance is 10.86 px in every run. On a run with no splice, the pair is read on the log's frame 5, as `vmstrip.mjs` does.)
+
+**By eye, all 12 whole-plate zooms, with the pair zooms beside them.**
+- **At +40 ms, every run shows "H 1 2 3" whole.** In WebKit, +40 is often the marker frame held (the two-tile paint hold).
+- **At +80 ms,** "2" is whole in every run. "3" is either whole or being taken by the plate's own closing bottom edge (C·l r3, C·d r3, W·d r3), never at its edge facing "2". "1" fades in place.
+- **The `s2|s3` frame (45-52 ms) lies between these two tiles** and is not itself a tile at 25 fps. Neither bracketing tile shows ink cut at the pair's shared edge. Both glyphs sit centred in 40 px boxes whose cut edges lie at most 1.48 px inside the box. **No ink is cut at the leaving pair in any run.**
+- **Later in the collapse (+120 to +160 ms):** "2" is cut by the plate's closing edge, which the law exempts. "P" arrives top-first, with its lower part faint for one tile (C·l r1, C·d r2, W·d r3). That is the arriving unit's reveal, B2's soft partial-glyph class, after the pair's frame. It is the same as the first seat's smoke run (§3.4).
+
+### I3.4 · The display-frame probe
+
+`item3/si/sisum.txt` (pass-8 critic's `slotink-crit.mjs`; bp10 and bp8 alternating, three runs per engine and theme, six sequences per run). **Runs with any empty frame: bp10 0/72, bp8 0/72.**
+
+| column | bp10 lowest `minInk` (seq, load) | bp8 lowest `minInk` (seq, load) | load |
+|---|---|---|---|
+| C·l | 0.251 (`warm-expand`, 29.03) | 0.379 (`first-expand`, 29.17) | 21.23-30.31 |
+| C·d | 0.309 (`warm-expand`, 16.33) | 0.36 (`warm-expand`, 17.98) | 15.51-18.56 |
+| W·l | **0.234** (`first-expand`, 10.82) | 0.367 (`first-expand`, 10.86) | 10.31-15.83 |
+| W·d | 0.274 (`first-expand`, 17.78) | **0.207** (`warm-expand`, 15.08) | 14.38-21.88 |
+
+Pass 10 read the lowest values as bp10 0.251 and bp8 0.218 (critic), and 0.263 and 0.238 (builder). The Chromium columns ran at 15.5-30.3, above any band; no run there showed an empty frame.
+
+### I3.5 · R2's margin and `stub`, per column
+
+The battery's W3 cells and FM reads, from step 2, are this pass's R2 and stub readings of record: §3.2 (R2 margin C·l 0.127, C·d 0.127, W·l 0.101, **W·d 0.062** at 8.67, `warm-expand` seat 8, +205 ms) and §3.1 (stub 0 in every column, FM and W3). This seat adds the A/B's `retarget·*` reads beside them (`ab/stub-summary.txt`, `ab-inband/stub-summary.txt`; bound 0.5). They are a reading on different cells, not R2's witness.
+
+| column | A/B | bp10 worst drop from the retarget (cell, round, seat, offset, load) | margin | bp8 worst | margin | bp10 `stub` reads (slot, offset, edge) |
+|---|---|---|---:|---|---:|---|
+| C·l | first | 0.37 (`retarget·40` r5, seat 1, +127.6 ms, 17.81) | 0.13 | 0.37 | 0.13 | 0 |
+| C·l | in-band | 0.37 (`retarget·40` r2, seat 1, +129 ms, 11.53) | 0.13 | 0.36 | 0.14 | 0 |
+| C·d | first | 0.36 (`retarget·40` r6, seat 1, +125.6 ms, 10.72) | 0.14 | 0.37 | 0.13 | 0 |
+| W·l | first | 0.42 (`retarget·80` r1, seat 8, +109 ms, 15.88) | 0.08 | 0.46 | 0.04 | **1**: `retarget·120` r6, "s" at +60 ms, edge x = 804.3 px (plate extent not recorded), 11.91; NR (I3.2) |
+| W·l | in-band | 0.45 (`retarget·120` r5, seat 8, +114 ms, 8.4) | 0.05 | 0.44 | 0.06 | 0 |
+| W·d | first | **0.57** (`retarget·80` r3, seat 1, +45 ms, 26.25) | **−0.07** (the red read, NR) | 0.46 | 0.04 | 0 |
+| W·d | in-band | **0.47** (`retarget·80` r2, seat 1, +113 ms, 9.52) | **0.03** | 0.46 | 0.04 | 0 |
+
+- **On the A/B's retarget cells, the WebKit margin sits at bp8's level, 0.03-0.08 in-band.** Pass 10's registry wrote that the cure cannot spend R2's margin "by construction". These cells are not R2's witness cells, and the row's battery reads stand. Still, the in-band W·d drop is bp10 0.468 against bp8 0.458, so the margin here does not separate bp10 from bp8.
+- No `stub` read at one slot repeats in any column, so §P8-7.1's rule (b) shape is not met by these reads either.
+
+### I3.6 · Cost (Q-15 (a); not a row)
+
+`item3/cost/costtab.txt` (the pass-2 `D2-Bp-probes.mjs` `pcost,plead`, Chromium traced, `--cpu-cores 0`). Each cell reads frames over 25 ms / worst frame in ms (main-thread ms per frame; load).
+
+| row | bp10 r1 · r2 · r3 | bp8 r1 · r2 · r3 | fv5 r1 · r2 · r3 |
+|---|---|---|---|
+| 4×20 expand | 1/39.1 (1.149; 10.01) · 1/29.1 (0.975; 8.56) · 1/30.8 (1.094; 12.54) | 1/29.5 (1.035; 12.14) · 1/27.5 (1.092; 11.25) · 1/43.5 (1.444; 10.99) | 0/16.8 (1.705; 10.03) · 0/15.3 (1.944; 9.41) · 0/21.5 (2.078; 12.4) |
+| 4×40 expand | 1/53.1 (1.67; 11.77) · 1/38.1 (1.513; 8.76) · 1/39.7 (1.648; 12.54) | 1/36.9 (1.405; 11.33) · 1/38.8 (1.454; 10.99) · 2/37.6 (1.608; 11.95) | 0/15.1 (1.837; 10.03) · 0/22.1 (2.432; 9.62) · 0/16.3 (2.554; 11.89) |
+| 4×20 lead | 0/22.4 (1.307; 13.08) · 2/36.9 (1.745; 15.57) · 1/26.5 (1.71; 11.11) | 0/21.5 (1.618; 9.73) · 1/29.7 (1.737; 10.9) · 1/31 (1.604; 13.09) | 0/11.4 (0.248; 11.44) · 0/15.8 (0.284; 10.31) · 0/15.3 (0.311; 11.78) |
+| 4×40 lead | 1/34.9 (1.705; 12.51) · 1/48.2 (2.089; 15.57) · 1/38.2 (1.91; 11.11) | 1/31.3 (1.669; 9.36) · 1/34.8 (2.01; 10.9) · 1/42.8 (1.899; 12.68) | 0/12.1 (0.154; 11.44) · 0/11.5 (0.215; 9.97) · 0/11.4 (0.223; 11.88) |
+| **frames over 25 ms, four rows** | **12** | **12** | **0** |
+
+- **bp10 and bp8 do not separate.** Pass 10's builder read 8 and 7.
+- On these rows fv5 has no frame over 25 ms, and its lead rows run at about a tenth of B′'s main-thread time. That is the floor v5 lead that Q-15 (a) prices.
+- The run starts were at 9.01-14.24. bp10 r2's cells read 15.57 in-run.
+
+### I3.7 · Boot graph
+
+`item3/boot-graph.txt` (the bp10 tree's own `vite build` + `demo:dist:build`, pass-10 `bootsize.py`): **64 files, 503,737 B against 503,808 B, margin 71 B.** This equals step 1 and pass 10.
+
+### I3.8 · For the critic and the agglomeration (recorded; no row minted, none scored)
+
+| item | reading | where |
+|---|---|---|
+| §P10-7.1 rule (a) | bp10 0 splice: **0/96** (first A/B, load 9.69-29.6) and **0/72** (in-band, three columns, 7.56-11.77). bp8 2/96 and 3/72 | I3.2 |
+| A/B bp10 reds | W·l `retarget·120` [stub] (11.91) and W·d `retarget·80` [vanish 0.57] (26.25): both NR on two re-runs at 7.75-9.46 | I3.2 |
+| `vmorph` collapse in paint | no ink cut at the leaving pair in 12 of 12 runs, by eye on the tiles that bracket the 45-52 ms frame. `spliceRow` 8/12 (9.57-10.22 px), sliver 0, stub 0 | I3.3 |
+| display-frame probe | bp10 0/72, bp8 0/72 runs with an empty frame. Lowest `minInk` bp10 0.234, bp8 0.207 | I3.4 |
+| WebKit drop on the A/B retarget cells | in-band W·d bp10 0.47 (margin 0.03, 9.52) against bp8 0.46. Not R2's witness; R2's battery margin is §3.2's | I3.5 |
+| cost | over 25 ms: bp10 12, bp8 12, fv5 0 | I3.6 |
+| boot graph | margin 71 B | I3.7 |
+| WebKit lock waits | 74.8 min and **102.3 min (> 90)**, both waited out | I3.1 |
+| load | the first A/B and the probe ran mostly above the band (other sessions' load to 30). The in-band A/B is the band reading for three columns. C·d's first A/B ran at 9.69-14.48 | I3.1 |
+| real Safari | **UNMEASURED (owner's safaridriver checkbox)** | — |
+
+### I3.9 · Fences, as kept
+
+- **Worktree:** `.claude/worktrees/bl/D2/p11/Bp-remeasure-c/wt`, detached at `a8b94dccd`. Its `node_modules` was a directory of per-package symlinks to the checkout's (`.vite`, `.vite-temp` and `.cache` not linked), so vite's caches stayed inside the worktree. The harness builds and outputs went to `…/Bp-remeasure-c/out`, and the dist builds into the worktree. The checkout has no `tests-visual/node_modules` to link.
+- **Git writes:** `git worktree add` and `git worktree remove --force` only. Patch checks used `git apply --check` on the worktree; no archive was extracted.
+- **Writes to the checkout:** this section and `pass-11/D2-Bp-remeasure-records/item3/` only. No source edit. The modified `engagement/harness/*.mjs` and untracked `engagement/pass-12/` in `git status` belong to another seat, not this one.
+- **Machine law:** as in the field table above. No whole-volume walk; the only `find` ran over `harness/`. No `pkill`. Nothing under `~/.claude` was read. Sibling repos were untouched.
+- **Cleanup:** `git worktree remove --force` on the seat worktree, then `rm -rf .claude/worktrees/bl/D2/p11/Bp-remeasure-c/`. `git worktree list` shows no `p11` entry. The scratch symlink and stacked images were removed. No process of this seat remains.
