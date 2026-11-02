@@ -1,0 +1,35 @@
+# 2026-11-02 02:33:44 glass-ui HEAD a376c701c
+atlas head 069708a · Slider 2 · NumberField 0 · tap-squish 0 · interactive-item 0 · lens/stage names 0 · veil-xy 4 · data-held 0 · useDockHold 0 · press-t 0
+bbnf-buddy head 2857c2f · Slider 1 · NumberField 0 · tap-squish 0 · interactive-item 0 · lens/stage names 0 · veil-xy 0 · data-held 0 · useDockHold 0 · press-t 0
+chicago head  · Slider 0 · NumberField 0 · tap-squish 3 · interactive-item 0 · lens/stage names 0 · veil-xy 0 · data-held 0 · useDockHold 0 · press-t 0
+keyframes.js head 5c48e3da · Slider 4 · NumberField 1 · tap-squish 1 · interactive-item 1 · lens/stage names 0 · veil-xy 0 · data-held 0 · useDockHold 0 · press-t 0
+slides head 7dcbb3b · Slider 0 · NumberField 0 · tap-squish 0 · interactive-item 0 · lens/stage names 0 · veil-xy 0 · data-held 0 · useDockHold 0 · press-t 0
+speedtest head e2d9444d · Slider 2 · NumberField 6 · tap-squish 5 · interactive-item 0 · lens/stage names 0 · veil-xy 0 · data-held 0 · useDockHold 0 · press-t 0
+value.js head 350011fea · Slider 6 · NumberField 1 · tap-squish 0 · interactive-item 0 · lens/stage names 0 · veil-xy 0 · data-held 2 · useDockHold 0 · press-t 0
+fourier-analysis head 3bb9da5 · Slider 5 · NumberField 1 · tap-squish 0 · interactive-item 1 · lens/stage names 0 · veil-xy 0 · data-held 0 · useDockHold 0 · press-t 0
+sci-report head bbcbd503 · Slider 5 · NumberField 0 · tap-squish 0 · interactive-item 0 · lens/stage names 0 · veil-xy 0 · data-held 0 · useDockHold 0 · press-t 0
+--- self-check on the candidate's own tree: glass-ui src --stage-reach 7
+--- item 9: speedtest
+65:                    <Slider
+94:    <Card
+97:        class="absolute right-3 top-3 z-controls w-44 overflow-hidden p-0 transition-shadow sm:w-56"
+134:                        <Slider
+e2d9444d
+--- every Slider/NumberField file with an overflow clip, whole file
+bbnf-buddy/src/components/EditableSlider.vue :: sliders 124, :: 178:    overflow: hidden;|
+speedtest/src/components/dashboard/DashboardMapControls.vue :: sliders 65,134, :: 97:        class="absolute right-3 top-3 z-controls w-44 overflow-hidden p-0 transition-sh|
+value.js/demo/workbenches/extract/ExtractControls.vue :: sliders 48,74, :: 45:                    class="absolute inset-x-0 top-1/2 -translate-y-1/2 h-6 rounded-full|
+--- CSS zoom a consumer could set on a slider's ancestor (my pattern: a declaration 'zoom:' with a value, a script .style.zoom, a Tailwind [zoom:], or a 'zoom-' utility)
+atlas ZM 0
+bbnf-buddy ZM 0
+chicago ZM 0
+keyframes.js ZM 0
+slides ZM 0
+speedtest ZM 0
+value.js ZM 3
+   value.js/demo/test/extract/image-sampler.test.ts:48:            getTransform: () => ({ panX: 0, panY: 0, zoom: 1 }),
+   value.js/demo/shell/dock/ActionBarToggle.vue:96:                     aperture (< sm), never by a desktop zoom: 200 % of a 1440 desktop
+   value.js/test/image-sampler-v4.test.ts:11:        getTransform: () => ({ panX: 0, panY: 0, zoom: 1 }),
+fourier-analysis ZM 0
+sci-report ZM 0
+--- self-check: the pattern counts glass-ui harness lib.mjs zoom writes: 0

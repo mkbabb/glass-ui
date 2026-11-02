@@ -1,0 +1,22 @@
+# C-E11 cand11-E-6 webkit · 2026-11-02 02:21:30 · load { 13.81 11.63 11.25 } · harness 63157e6b5679 · 
+# E-6 · the idle rung under the compositor-only bound
+# target /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p11/C-E11/wt/.ce11out/builds/cand11 · engine webkit · lock wait 0.0 s · other headless processes: chromium 4, webkit 0 · load 13.8/11.6/11.3 at start
+# scene app: harness scenes/App.vue (sha1 9e34ffa5714e)
+# webkit 26.5 (Playwright WebKit, not Safari; real Safari UNMEASURED (owner's safaridriver checkbox))
+  FAIL       E-6 s6 present light · 0 running infinite animation(s) at rest · load 13.8/11.6/11.3
+  UNMEASURED E-6 s6 channel light · no idle animation to read · load 13.8/11.6/11.3
+  UNMEASURED E-6 s6 shape light · no idle animation to read · load 13.8/11.6/11.3
+  UNMEASURED E-6 s6 amplitude light · no idle animation to read · load 13.8/11.6/11.3
+  UNMEASURED E-6 s6 period light · no idle animation to read · load 13.8/11.6/11.3
+  REPORT     E-6 s6 layouts/s light · n/a: Playwright WebKit exposes no layout counter · load 13.8/11.6/11.3
+  PASS       E-6 s6 PRM light · 0 idle animation(s) under reduced motion, 0 spatial · load 13.8/11.6/11.3
+  FAIL       E-6 s6 present dark · 0 running infinite animation(s) at rest · load 13.9/11.7/11.3
+  UNMEASURED E-6 s6 channel dark · no idle animation to read · load 13.9/11.7/11.3
+  UNMEASURED E-6 s6 shape dark · no idle animation to read · load 13.9/11.7/11.3
+  UNMEASURED E-6 s6 amplitude dark · no idle animation to read · load 13.9/11.7/11.3
+  UNMEASURED E-6 s6 period dark · no idle animation to read · load 13.9/11.7/11.3
+  REPORT     E-6 s6 layouts/s dark · n/a: Playwright WebKit exposes no layout counter · load 13.9/11.7/11.3
+  PASS       E-6 s6 PRM dark · 0 idle animation(s) under reduced motion, 0 spatial · load 13.9/11.7/11.3
+E-6 webkit FAIL · 2 pass, 2 fail, 8 unmeasured of 12 gating cells (2 reported) · load 13.8/11.6/11.3 at start, 13.9/11.7/11.3 at end
+# exit 1 · 2026-11-02 02:21:35 · load { 13.90 11.69 11.27 }
+# end · 2026-11-02 02:21:35 · load { 13.90 11.69 11.27 } · harness 63157e6b5679

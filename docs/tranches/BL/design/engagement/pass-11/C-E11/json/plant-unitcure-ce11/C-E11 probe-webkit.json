@@ -1,0 +1,145 @@
+{
+ "id": "C-E11 probe",
+ "engine": "webkit",
+ "version": "26.5",
+ "target": {
+  "build": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p11/C-E11/wt/.ce11out/builds/plant-unitcure"
+ },
+ "loadStart": "6.9/8.0/10.5",
+ "loadEnd": "11.0/8.8/10.5",
+ "verdict": "FAIL",
+ "cells": [
+  {
+   "name": "CE11 loudx · clean · side",
+   "status": "PASS",
+   "line": "[clean] CSS.supports animation-timing-function -, transition -, animate() - · errors 0 (0 name the token, 0 uncaught) · lens travel clock(s) 210 ms · side changes 1, end pin -0.0 px; over the 194 frames read: largest 16.7 ms move of the lens against its track 12.6 px, 13 frames off its edge > 2 px (worst 49.4), host moved 134.0 px · later hold: engaged true, lens true, opacity 1.00, pin -0.0 px · first [-]",
+   "load": "6.4/7.8/10.4"
+  },
+  {
+   "name": "CE11 loudx · clean · rerender",
+   "status": "PASS",
+   "line": "[clean] CSS.supports animation-timing-function -, transition -, animate() - · errors 0 (0 name the token, 0 uncaught) · host travel clock(s) 210 ms · side changes 0, end pin 0.0 px; over the 41 frames read: largest 16.7 ms move of the host 7.7 px, 0 frames off its edge > 2 px (worst 0.0), host moved 60.0 px · later hold: engaged true, lens true, opacity 1.00, pin 0.0 px · first [-]",
+   "load": "6.4/7.8/10.4"
+  },
+  {
+   "name": "CE11 loudx · --spring-dock-settle 0.21s · side",
+   "status": "PASS",
+   "line": "[clean] CSS.supports animation-timing-function -, transition -, animate() - · errors 0 (0 name the token, 0 uncaught) · lens travel clock(s) 210 ms · side changes 1, end pin -0.0 px; over the 195 frames read: largest 16.7 ms move of the lens against its track 13.6 px, 13 frames off its edge > 2 px (worst 50.1), host moved 134.0 px · later hold: engaged true, lens true, opacity 1.00, pin -0.0 px · first [-]",
+   "load": "6.1/7.7/10.3"
+  },
+  {
+   "name": "CE11 loudx · --spring-dock-settle 0.21s · rerender",
+   "status": "PASS",
+   "line": "[clean] CSS.supports animation-timing-function -, transition -, animate() - · errors 0 (0 name the token, 0 uncaught) · host travel clock(s) 210 ms · side changes 0, end pin 0.0 px; over the 41 frames read: largest 16.7 ms move of the host 8.1 px, 0 frames off its edge > 2 px (worst 0.0), host moved 60.0 px · later hold: engaged true, lens true, opacity 1.00, pin 0.0 px · first [-]",
+   "load": "6.1/7.7/10.3"
+  },
+  {
+   "name": "CE11 loudx · --spring-dock steps(4) · side",
+   "status": "PASS",
+   "line": "[valid] CSS.supports animation-timing-function true, transition true, animate() true · errors 0 (0 name the token, 0 uncaught) · lens travel clock(s) 210 ms · side changes 1, end pin -0.0 px; over the 194 frames read: largest 16.7 ms move of the lens against its track 25.4 px, 10 frames off its edge > 2 px (worst 50.9), host moved 134.0 px · later hold: engaged true, lens true, opacity 1.00, pin -0.0 px · first [-]",
+   "load": "6.8/7.8/10.3"
+  },
+  {
+   "name": "CE11 loudx · --spring-dock steps(4) · rerender",
+   "status": "PASS",
+   "line": "[valid] CSS.supports animation-timing-function true, transition true, animate() true · errors 0 (0 name the token, 0 uncaught) · host travel clock(s) 210 ms · side changes 0, end pin 0.0 px; over the 41 frames read: largest 16.7 ms move of the host 15.0 px, 0 frames off its edge > 2 px (worst 0.0), host moved 60.0 px · later hold: engaged true, lens true, opacity 1.00, pin 0.0 px · first [-]",
+   "load": "6.8/7.8/10.3"
+  },
+  {
+   "name": "CE11 loudx · --spring-dock nonsense · side",
+   "status": "PASS",
+   "line": "[refused] CSS.supports animation-timing-function false, transition false, animate() TypeError · errors 1 (1 name the token, 0 uncaught) · lens travel clock(s) none ms · side changes 1, end pin -0.0 px; over the 195 frames read: largest 16.7 ms move of the lens against its track 101.8 px, 0 frames off its edge > 2 px (worst 0.0), host moved 134.0 px · later hold: engaged true, lens true, opacity 1.00, pin -0.0 px · first [[glass-ui] engage: --spring-dock is unreadable on the host; the engagement it drives paints nothing. Is the glass-ui stylesheet loaded?]",
+   "load": "6.8/7.8/10.3"
+  },
+  {
+   "name": "CE11 loudx · --spring-dock nonsense · rerender",
+   "status": "PASS",
+   "line": "[refused] CSS.supports animation-timing-function false, transition false, animate() TypeError · errors 1 (1 name the token, 0 uncaught) · host travel clock(s) none ms · side changes 0, end pin 0.0 px; over the 41 frames read: largest 16.7 ms move of the host 60.0 px, 0 frames off its edge > 2 px (worst 0.0), host moved 60.0 px · later hold: engaged true, lens true, opacity 1.00, pin 0.0 px · first [[glass-ui] engage: --spring-dock is unreadable on the host; the engagement it drives paints nothing. Is the glass-ui stylesheet loaded?]",
+   "load": "6.8/7.8/10.3"
+  },
+  {
+   "name": "CE11 loudx · --spring-dock ease, linear · side",
+   "status": "FAIL",
+   "line": "[refused] CSS.supports animation-timing-function true, transition true, animate() TypeError · errors 1 (0 name the token, 1 uncaught) · lens travel clock(s) none ms · side changes 1, end pin -0.0 px; over the 195 frames read: largest 16.7 ms move of the lens against its track 101.7 px, 0 frames off its edge > 2 px (worst 0.0), host moved 134.0 px · later hold: engaged true, lens true, opacity 1.00, pin -0.0 px · first [pageerror: Type error]",
+   "load": "9.1/8.3/10.4"
+  },
+  {
+   "name": "CE11 loudx · --spring-dock ease, linear · rerender",
+   "status": "FAIL",
+   "line": "[refused] CSS.supports animation-timing-function true, transition true, animate() TypeError · errors 1 (0 name the token, 1 uncaught) · host travel clock(s) none ms · side changes 0, end pin 0.0 px; over the 40 frames read: largest 16.7 ms move of the host 60.0 px, 0 frames off its edge > 2 px (worst 0.0), host moved 60.0 px · later hold: engaged true, lens true, opacity 1.00, pin 0.0 px · first [pageerror: Type error]",
+   "load": "9.1/8.3/10.4"
+  },
+  {
+   "name": "CE11 loudx · --spring-dock linear(0, 1), ease-in · side",
+   "status": "FAIL",
+   "line": "[refused] CSS.supports animation-timing-function true, transition true, animate() TypeError · errors 1 (0 name the token, 1 uncaught) · lens travel clock(s) none ms · side changes 1, end pin -0.0 px; over the 195 frames read: largest 16.7 ms move of the lens against its track 101.7 px, 0 frames off its edge > 2 px (worst 0.0), host moved 134.0 px · later hold: engaged true, lens true, opacity 1.00, pin -0.0 px · first [pageerror: Type error]",
+   "load": "8.6/8.2/10.4"
+  },
+  {
+   "name": "CE11 loudx · --spring-dock linear(0, 1), ease-in · rerender",
+   "status": "FAIL",
+   "line": "[refused] CSS.supports animation-timing-function true, transition true, animate() TypeError · errors 1 (0 name the token, 1 uncaught) · host travel clock(s) none ms · side changes 0, end pin 0.0 px; over the 40 frames read: largest 16.7 ms move of the host 60.0 px, 0 frames off its edge > 2 px (worst 0.0), host moved 60.0 px · later hold: engaged true, lens true, opacity 1.00, pin 0.0 px · first [pageerror: Type error]",
+   "load": "8.6/8.2/10.4"
+  },
+  {
+   "name": "CE11 loudx · --spring-dock-settle 210ms · side",
+   "status": "PASS",
+   "line": "[unit] CSS.supports animation-timing-function -, transition -, animate() - · errors 0 (0 name the token, 0 uncaught) · lens travel clock(s) 210 ms · side changes 1, end pin -0.0 px; over the 195 frames read: largest 16.7 ms move of the lens against its track 13.6 px, 13 frames off its edge > 2 px (worst 50.1), host moved 134.0 px · later hold: engaged true, lens true, opacity 1.00, pin -0.0 px · first [-]",
+   "load": "8.1/8.1/10.3"
+  },
+  {
+   "name": "CE11 loudx · --spring-dock-settle 210ms · rerender",
+   "status": "PASS",
+   "line": "[unit] CSS.supports animation-timing-function -, transition -, animate() - · errors 0 (0 name the token, 0 uncaught) · host travel clock(s) 210 ms · side changes 0, end pin 0.0 px; over the 41 frames read: largest 16.7 ms move of the host 7.6 px, 0 frames off its edge > 2 px (worst 0.0), host moved 60.0 px · later hold: engaged true, lens true, opacity 1.00, pin 0.0 px · first [-]",
+   "load": "8.1/8.1/10.3"
+  },
+  {
+   "name": "CE11 loudx · --spring-dock var(--ce11-undefined) · side",
+   "status": "PASS",
+   "line": "[refused] CSS.supports animation-timing-function true, transition true, animate() TypeError · errors 1 (1 name the token, 0 uncaught) · lens travel clock(s) none ms · side changes 1, end pin -0.0 px; over the 194 frames read: largest 16.7 ms move of the lens against its track 0.0 px, 0 frames off its edge > 2 px (worst 0.0), host moved 134.0 px · later hold: engaged true, lens true, opacity 1.00, pin -0.0 px · first [[glass-ui] engage: --spring-dock is unreadable on the host; the engagement it drives paints nothing. Is the glass-ui stylesheet loaded?]",
+   "load": "8.2/8.1/10.3"
+  },
+  {
+   "name": "CE11 loudx · --spring-dock var(--ce11-undefined) · rerender",
+   "status": "PASS",
+   "line": "[refused] CSS.supports animation-timing-function true, transition true, animate() TypeError · errors 1 (1 name the token, 0 uncaught) · host travel clock(s) none ms · side changes 0, end pin 0.0 px; over the 41 frames read: largest 16.7 ms move of the host 60.0 px, 0 frames off its edge > 2 px (worst 0.0), host moved 60.0 px · later hold: engaged true, lens true, opacity 1.00, pin 0.0 px · first [[glass-ui] engage: --spring-dock is unreadable on the host; the engagement it drives paints nothing. Is the glass-ui stylesheet loaded?]",
+   "load": "8.2/8.1/10.3"
+  },
+  {
+   "name": "CE11 loudx · --spring-dock ease-in-out · side",
+   "status": "PASS",
+   "line": "[valid] CSS.supports animation-timing-function true, transition true, animate() true · errors 0 (0 name the token, 0 uncaught) · lens travel clock(s) 210 ms · side changes 1, end pin -0.0 px; over the 193 frames read: largest 16.7 ms move of the lens against its track 12.4 px, 11 frames off its edge > 2 px (worst 50.0), host moved 134.0 px · later hold: engaged true, lens true, opacity 1.00, pin -0.0 px · first [-]",
+   "load": "10.7/8.7/10.4"
+  },
+  {
+   "name": "CE11 loudx · --spring-dock ease-in-out · rerender",
+   "status": "PASS",
+   "line": "[valid] CSS.supports animation-timing-function true, transition true, animate() true · errors 0 (0 name the token, 0 uncaught) · host travel clock(s) 210 ms · side changes 0, end pin 0.0 px; over the 38 frames read: largest 16.7 ms move of the host 7.6 px, 0 frames off its edge > 2 px (worst 0.0), host moved 60.0 px · later hold: engaged true, lens true, opacity 1.00, pin 0.0 px · first [-]",
+   "load": "11.1/8.8/10.5"
+  },
+  {
+   "name": "CE11 relclock · clean",
+   "status": "PASS",
+   "line": "a fling of the held slider 112 px left over 8 moves, released: WAAPI animations 40 ms after the release scale 210 ms · errors 0 (0 name the token) · first [-] · pass rule: the carry rides a clock <= 1000 ms, or the token is named",
+   "load": "11.1/8.8/10.5"
+  },
+  {
+   "name": "CE11 relclock · --spring-dock-settle 0.21s",
+   "status": "PASS",
+   "line": "a fling of the held slider 112 px left over 8 moves, released: WAAPI animations 40 ms after the release scale 210 ms · errors 0 (0 name the token) · first [-] · pass rule: the carry rides a clock <= 1000 ms, or the token is named",
+   "load": "11.1/8.8/10.5"
+  },
+  {
+   "name": "CE11 relclock · --spring-dock-settle 210ms",
+   "status": "PASS",
+   "line": "a fling of the held slider 112 px left over 8 moves, released: WAAPI animations 40 ms after the release scale 210 ms · errors 0 (0 name the token) · first [-] · pass rule: the carry rides a clock <= 1000 ms, or the token is named",
+   "load": "11.1/8.8/10.5"
+  },
+  {
+   "name": "CE11 relclock · --spring-dock-settle nonsense",
+   "status": "PASS",
+   "line": "a fling of the held slider 112 px left over 8 moves, released: WAAPI animations 40 ms after the release none · errors 1 (1 name the token) · first [[glass-ui] engage: --spring-dock-settle is unreadable on the host; the engagement it drives paints nothing. Is the glass-ui stylesheet loade] · pass rule: the carry rides a clock <= 1000 ms, or the token is named",
+   "load": "11.0/8.8/10.5"
+  }
+ ]
+}

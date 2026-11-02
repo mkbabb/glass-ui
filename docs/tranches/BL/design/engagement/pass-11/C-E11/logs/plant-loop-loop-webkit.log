@@ -1,0 +1,20 @@
+# C-E11 plant-loop-loop webkit · 2026-11-02 01:10:39 · load { 9.65 10.43 10.96 } · harness 63157e6b5679 · 
+# E9-probe · P-E9's loop cells (O-103f (3): the engaged frame loop stops at release)
+# target /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p11/C-E11/wt/.ce11out/builds/plant-loop · engine webkit · lock wait 0.0 s · other headless processes: chromium 4, webkit 0 · load 9.6/10.4/11.0 at start
+# scene app: harness scenes/App.vue (sha1 9e34ffa5714e)
+# webkit 26.5 (Playwright WebKit, not Safari; real Safari UNMEASURED (owner's safaridriver checkbox))
+  REPORT     E9 loop keyboard · rest · rAF 0.0/s · RO callbacks 0.0/s · layouts n/a/s · style recalcs n/a/s · [data-engaged] 0→0 · [data-engage-stage] 0→0 · loupe 0→0 · window 3004 ms · load 13.0/11.1/11.2
+  REPORT     E9 loop keyboard · engaged idle · rAF 67.3/s · RO callbacks 67.3/s · layouts n/a/s · style recalcs n/a/s · [data-engaged] 1→1 · [data-engage-stage] 1→1 · loupe 0→0 · window 3003 ms · load 13.0/11.1/11.2
+  REPORT     E9 loop keyboard · release +0..150 ms · rAF 58.4/s · RO callbacks 0.0/s · layouts n/a/s · style recalcs n/a/s · [data-engaged] 0→0 · [data-engage-stage] 1→0 · loupe 0→0 · window 154 ms · load 13.0/11.1/11.2
+  REPORT     E9 loop keyboard · release +150..450 ms (exit clock) · rAF 0.0/s · RO callbacks 0.0/s · layouts n/a/s · style recalcs n/a/s · [data-engaged] 0→0 · [data-engage-stage] 0→0 · loupe 0→0 · window 302 ms · load 13.0/11.1/11.2
+  REPORT     E9 loop keyboard · release +1.5..4.5 s · rAF 0.0/s · RO callbacks 0.0/s · layouts n/a/s · style recalcs n/a/s · [data-engaged] 0→0 · [data-engage-stage] 0→0 · loupe 0→0 · window 3003 ms · load 13.0/11.1/11.2
+  FAIL       E9 loop keyboard · stops at release · engaged 134.5/s (> 30: the loop runs); after release +0..150 ms 58.4/s, +150..450 ms (exit clock) 0.0/s, +1.5..4.5 s 0.0/s (each ≤ 2) · [data-engage-stage] across the first window 1→0 · load 13.0/11.1/11.2
+  REPORT     E9 loop fine-hold · rest · rAF 0.0/s · RO callbacks 0.0/s · layouts n/a/s · style recalcs n/a/s · [data-engaged] 0→0 · [data-engage-stage] 0→0 · loupe 0→0 · window 3003 ms · load 12.4/11.0/11.2
+  REPORT     E9 loop fine-hold · held still, loupe shown · rAF 131.2/s · RO callbacks 65.6/s · layouts n/a/s · style recalcs n/a/s · [data-engaged] 1→1 · [data-engage-stage] 1→1 · loupe 1→1 · window 3003 ms · load 12.4/11.0/11.2
+  REPORT     E9 loop fine-hold · release +0..150 ms · rAF 58.8/s · RO callbacks 0.0/s · layouts n/a/s · style recalcs n/a/s · [data-engaged] 0→0 · [data-engage-stage] 1→0 · loupe 1→1 · window 153 ms · load 12.4/11.0/11.2
+  REPORT     E9 loop fine-hold · release +150..450 ms (exit clock) · rAF 0.0/s · RO callbacks 0.0/s · layouts n/a/s · style recalcs n/a/s · [data-engaged] 0→0 · [data-engage-stage] 0→0 · loupe 1→0 · window 303 ms · load 12.4/11.0/11.2
+  REPORT     E9 loop fine-hold · release +1.5..4.5 s · rAF 0.0/s · RO callbacks 0.0/s · layouts n/a/s · style recalcs n/a/s · [data-engaged] 0→0 · [data-engage-stage] 0→0 · loupe 0→0 · window 3004 ms · load 12.4/11.0/11.2
+  FAIL       E9 loop fine-hold · stops at release · engaged 196.8/s (> 30: the loop runs); after release +0..150 ms 58.8/s, +150..450 ms (exit clock) 0.0/s, +1.5..4.5 s 0.0/s (each ≤ 2) · [data-engage-stage] across the first window 1→0 · load 12.4/11.0/11.2
+E9-probe webkit FAIL · 0 pass, 2 fail, 0 unmeasured of 2 gating cells (10 reported) · load 9.6/10.4/11.0 at start, 12.4/11.0/11.2 at end
+# exit 1 · 2026-11-02 01:11:06 · load { 12.36 11.04 11.17 }
+# end · 2026-11-02 01:11:06 · load { 12.36 11.04 11.17 } · harness 63157e6b5679
