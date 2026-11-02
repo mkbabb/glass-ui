@@ -237,7 +237,14 @@ export function useDockExpandedSize(
                 }
             }
         }
-        capture();
+        // The first capture rides the observer's initial delivery, which runs after the
+        // frame's layout and before its paint, so the endpoints are on the root for the
+        // first paint without a layout forced inside Vue's flush. On a dashboard every
+        // figure's corner dock attaches during the scroll that brings it in, and the
+        // in-flush capture was one forced layout per dock (about 80 ms on /sci phone
+        // scroll, U/B7d M1; G-M1-6). Without an observer there is no later frame to wait
+        // for, so the capture runs now.
+        if (!observer) capture();
     }
 
     watch([rootEl, contentEl, expandedEl, collapsedEl, axis], attach, {
