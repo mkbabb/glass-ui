@@ -1,0 +1,15 @@
+# C-A11 cand11-E-7 webkit · 2026-11-01 23:58:59 · load { 12.54 14.09 14.59 } · harness 63157e6b5679 · 
+# E-7 · one writer of data-engaged, meaning held
+# target /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p11/C-A11/wt/.ca11out/builds/cand11 · engine webkit · lock wait 0.0 s · other headless processes: chromium 3, webkit 0 · load 12.5/14.1/14.6 at start
+# scene app: harness scenes/App.vue (sha1 9e34ffa5714e)
+# webkit 26.5 (Playwright WebKit, not Safari; real Safari UNMEASURED (owner's safaridriver checkbox))
+  PASS       E-7 writers data-engaged (static) · 1 writer file(s): src/composables/motion/engage/stage.ts · bound ≤ 1, under src/composables/motion/engage/ · tree /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p11/C-A11/wt · load 12.9/14.1/14.6
+  FAIL       E-7 writers data-held (static) · 2 writer file(s): src/components/dock/GlassDock.vue, src/composables/motion/engage/useEngage.ts · bound ≤ 1, under src/composables/motion/engage/ · tree /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p11/C-A11/wt · load 12.9/14.1/14.6
+  PASS       E-7 writers data-press (static) · 1 writer file(s): src/composables/motion/engage/press.ts · bound ≤ 1, under src/composables/motion/engage/ · tree /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p11/C-A11/wt · load 12.9/14.1/14.6
+  PASS       E-7 writers data-commit (static) · 1 writer file(s): src/composables/motion/engage/useEngage.ts · bound ≤ 1, under src/composables/motion/engage/ · tree /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p11/C-A11/wt · load 12.9/14.1/14.6
+  PASS       E-7 slider held · [data-engaged] nodes while pointer-held 1 · bound ≥ 1 · load 12.9/14.1/14.6
+  PASS       E-7 slider held PRM · reduce · [data-engaged] nodes while pointer-held 1 · bound ≥ 1 · load 12.9/14.1/14.6
+  PASS       E-7 modal open, nothing held · dialog open true · veil nodes 1 · [data-engaged] nodes 0 · bound 0 · load 12.9/14.1/14.6
+E-7 webkit FAIL · 6 pass, 1 fail, 0 unmeasured of 7 gating cells (0 reported) · load 12.5/14.1/14.6 at start, 12.9/14.1/14.6 at end
+# exit 1 · 2026-11-01 23:59:04 · load { 12.90 14.14 14.60 }
+# end · 2026-11-01 23:59:04 · load { 12.90 14.14 14.60 } · harness 63157e6b5679

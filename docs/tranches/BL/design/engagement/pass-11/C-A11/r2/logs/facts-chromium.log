@@ -1,0 +1,16 @@
+# C-A11 facts chromium · 2026-11-01 20:49:36 · load { 19.63 18.50 18.24 } · harness 63157e6b5679 · 
+# easing-facts chromium 149.0.7827.55 · load 19.6/18.5/18.2
+"nonsense"                   supports(animation)=false supports(transition)=false animate THROWS: Failed to execute 'animate' on 'Element': 'nonsense' is not a valid value for easing
+"initial"                    supports(animation)=true supports(transition)=true animate THROWS: Failed to execute 'animate' on 'Element': 'initial' is not a valid value for easing
+"ease, linear"               supports(animation)=true supports(transition)=true animate THROWS: Failed to execute 'animate' on 'Element': Easing may not be set to a list of values
+"linear, ease-in"            supports(animation)=true supports(transition)=true animate THROWS: Failed to execute 'animate' on 'Element': Easing may not be set to a list of values
+"linear(0, 1), ease"         supports(animation)=true supports(transition)=true animate THROWS: Failed to execute 'animate' on 'Element': Easing may not be set to a list of values
+"steps(0)"                   supports(animation)=false supports(transition)=false animate THROWS: Failed to execute 'animate' on 'Element': 'steps(0)' is not a valid value for easing
+"cubic-bezier(2, 0, 1, 1)"   supports(animation)=false supports(transition)=false animate THROWS: Failed to execute 'animate' on 'Element': 'cubic-bezier(2, 0, 1, 1)' is not a valid value 
+"ease"                       supports(animation)=true supports(transition)=true animate ok
+"linear(0, 0.5 50%, 1)"      supports(animation)=true supports(transition)=true animate ok
+"steps(2, jump-none)"        supports(animation)=true supports(transition)=true animate ok
+"steps(1, jump-none)"        supports(animation)=false supports(transition)=false animate THROWS: Failed to execute 'animate' on 'Element': 'steps(1, jump-none)' is not a valid value for e
+"inherit"                    supports(animation)=true supports(transition)=true animate THROWS: Failed to execute 'animate' on 'Element': 'inherit' is not a valid value for easing
+# exit 0 · 2026-11-01 20:49:37 · load { 19.63 18.50 18.24 }
+# end · 2026-11-01 20:49:37 · load { 19.63 18.50 18.24 } · harness 63157e6b5679

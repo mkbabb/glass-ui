@@ -1,0 +1,35 @@
+# C-A11 ck22 · 2026-11-01 20:23:36 · glass-ui HEAD 024f945d5
+# self-check: the candidate's own tree (worktree) must count the stage's writes
+  candidate src '--stage-room' 4 · 'currentCSSZoom' 2 · 'CSS.supports' in stage.ts 1
+repo              HEAD       Slider NumFld squish  iitem  dheld   veil   zoom engage
+atlas             069708a         2      0      0      0      0      4      0      0
+bbnf-buddy        2857c2f         1      0      0      0      0      0      2      0
+chicago                           0      0      3      0      0      0      0      0
+keyframes.js      5c48e3da        5      1      1      1      0      0      0      0
+slides            7dcbb3b         0      0      0      0      0      0      0      0
+speedtest         e2d9444d        2      6      5      0      0      0      1      0
+value.js          8dceeb3d9       7      1      0      0      2      0      7      0
+fourier-analysis  3bb9da5         5      1      0      1      0      0      0      0
+sci-report        bbcbd503        5      0      0      0      0      0      0      0
+
+# zoom hits, each (C-9 names zoom; a consumer that sets CSS zoom on a slider's ancestor)
+  bbnf-buddy/src/editor/components/dock/tools/ToolsLayer.vue:27:    zoom: number;
+  bbnf-buddy/src/editor/components/dock/LeftToolsDock.vue:28:    zoom: number;
+  speedtest/src/components/dashboard/composables/maplibre/composable.ts:326:            zoom: options?.zoom ?? DEFAULT_ZOOM,
+  value.js/demo/workbenches/extract/ImageEyedropper/composables/useImageSampler.ts:32:    getTransform: () => { panX: number; panY: number; zoom: number };
+  value.js/demo/workbenches/extract/ImageEyedropper/ImageEyedropper.vue:163:        zoom: gesture.zoom.value,
+  value.js/demo/test/extract/ss8-b25-cures.test.ts:35:    zoom: null as null | { value: number },
+  value.js/demo/test/extract/ss8-b25-cures.test.ts:54:        useImageSampler: (deps: { getTransform: () => { panX: number; panY: number; zoom: number } }) => {
+  value.js/demo/test/extract/image-sampler.test.ts:48:            getTransform: () => ({ panX: 0, panY: 0, zoom: 1 }),
+  value.js/demo/shell/dock/ActionBarToggle.vue:96:                     aperture (< sm), never by a desktop zoom: 200 % of a 1440 desktop
+  value.js/test/image-sampler-v4.test.ts:11:        getTransform: () => ({ panX: 0, panY: 0, zoom: 1 }),
+
+# §P9-7 item 9's site (speedtest): the Slider and its overflow ancestor
+36:                <SlidersHorizontal class="size-icon-sm" />
+65:                    <Slider
+94:    <Card
+97:        class="absolute right-3 top-3 z-controls w-44 overflow-hidden p-0 transition-shadow sm:w-56"
+134:                        <Slider
+
+# --spring-dock written by a consumer (a value the stage's glide would read)
+  (end)

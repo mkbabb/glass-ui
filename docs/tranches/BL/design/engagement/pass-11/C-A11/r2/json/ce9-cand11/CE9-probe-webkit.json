@@ -1,0 +1,85 @@
+{
+ "id": "CE9-probe",
+ "engine": "webkit",
+ "version": "26.5",
+ "target": {
+  "build": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p11/C-A11/wt/.ca11out/builds/cand11"
+ },
+ "loadStart": "11.2/14.7/14.7",
+ "loadEnd": "11.7/14.4/14.6",
+ "verdict": "PASS",
+ "cells": [
+  {
+   "name": "CE9 stack · keyboard",
+   "status": "REPORT",
+   "line": "engaged true, promoted false, lens shown false · a later positioned red sibling over the track's right part: its inner region red 100.0 % at rest, 100.0 % engaged (the sibling paints OVER the engaged body) · frames cand11-webkit-stack-keyboard-{rest,engaged}.png",
+   "load": "11.4/14.7/14.7"
+  },
+  {
+   "name": "CE9 stack · fine",
+   "status": "REPORT",
+   "line": "engaged true, promoted false, lens shown true · a later positioned red sibling over the track's right part: its inner region red 100.0 % at rest, 100.0 % engaged (the sibling paints OVER the engaged body) · frames cand11-webkit-stack-fine-{rest,engaged}.png",
+   "load": "11.4/14.7/14.7"
+  },
+  {
+   "name": "CE9 anc none · keyboard",
+   "status": "REPORT",
+   "line": "reference ×1.014 (promoted false)",
+   "load": "11.3/14.7/14.7"
+  },
+  {
+   "name": "CE9 anc skew · keyboard",
+   "status": "REPORT",
+   "line": "promoted false · the scroller transform: skewX(10deg) · engaged over released ×1.015 against ×1.014 · ratio of ratios 1.001 (inside 0.90..1.10)",
+   "load": "11.3/14.7/14.7"
+  },
+  {
+   "name": "CE9 anc mask · keyboard",
+   "status": "REPORT",
+   "line": "promoted false · the scroller mask-image: linear-gradient(to right, black 40%, transparent 95%); -webkit-mask-image: linear-gradient(to right, black 40%, transparent 95%) · engaged over released ×1.012 against ×1.014 · ratio of ratios 0.998 (inside 0.90..1.10)",
+   "load": "10.7/14.5/14.6"
+  },
+  {
+   "name": "CE9 anc zoom · keyboard",
+   "status": "REPORT",
+   "line": "promoted false · the scroller zoom: 0.8 · engaged over released ×0.977 against ×1.014 · ratio of ratios 0.963 (inside 0.90..1.10)",
+   "load": "10.7/14.5/14.6"
+  },
+  {
+   "name": "CE9 anc persp · keyboard",
+   "status": "REPORT",
+   "line": "promoted false · the scroller transform: perspective(500px) rotateY(25deg) · engaged over released ×1.106 against ×1.014 · ratio of ratios 1.091 (inside 0.90..1.10)",
+   "load": "10.5/14.4/14.6"
+  },
+  {
+   "name": "CE9 anc blend · keyboard",
+   "status": "REPORT",
+   "line": "promoted false · the scroller mix-blend-mode: difference · engaged over released ×1.117 against ×1.014 · ratio of ratios 1.102 (OUTSIDE 0.90..1.10)",
+   "load": "10.5/14.4/14.6"
+  },
+  {
+   "name": "CE9 dom · keyboard",
+   "status": "REPORT",
+   "line": "engaged: attributes [data-slider-impl data-orientation data-slot data-control-target data-variant data-size style data-e data-engage-stage data-engaged] · inline style [--reka-slider-thumb-transform --stage-room --stage-w] · :popover-open false · same parent true · .engage-footprint 0 · lens false (popover-open false; inline []) · host animations [] · 1.2 s after release: attributes [data-slider-impl data-orientation data-slot data-control-target data-variant data-size style data-e] style [--reka-slider-thumb-transform] lens false",
+   "load": "10.7/14.3/14.6"
+  },
+  {
+   "name": "CE9 dom · fine",
+   "status": "REPORT",
+   "line": "engaged: attributes [data-slider-impl data-orientation data-slot data-control-target data-variant data-size style data-e data-engage-stage data-engaged data-held] · inline style [--reka-slider-thumb-transform --stage-room --stage-w --atom-drag-v --flex-vel] · :popover-open false · same parent true · .engage-footprint 0 · lens true (popover-open true; inline [position-anchor --loupe-track-w --loupe-x --loupe-fill-w --lens-dx --lens-dy --lens-sx --lens-sy]) · host animations [] · 1.2 s after release: attributes [data-slider-impl data-orientation data-slot data-control-target data-variant data-size style data-e] style [--reka-slider-thumb-transform --atom-drag-v --flex-vel] lens false",
+   "load": "10.7/14.3/14.6"
+  },
+  {
+   "name": "CE9 dom · touch",
+   "status": "REPORT",
+   "line": "engaged: attributes [data-slider-impl data-orientation data-slot data-control-target data-variant data-size style data-e data-engage-stage data-engaged data-held] · inline style [--reka-slider-thumb-transform --stage-room --stage-w --atom-drag-v --flex-vel] · :popover-open false · same parent true · .engage-footprint 0 · lens true (popover-open true; inline [position-anchor --loupe-track-w --loupe-x --loupe-fill-w --lens-dx --lens-dy --lens-sx --lens-sy]) · host animations [] · 1.2 s after release: attributes [data-slider-impl data-orientation data-slot data-control-target data-variant data-size style data-e] style [--reka-slider-thumb-transform --atom-drag-v --flex-vel] lens false",
+   "load": "11.7/14.4/14.6"
+  },
+  {
+   "name": "CE9 lens dialog · fine",
+   "status": "PASS",
+   "line": "the Dialog's slider held · band ×1.600 (k max 1.6) · pinned edge Δ 0.0 px · the lens is the topmost element at its centre true · popover-open true",
+   "load": "11.7/14.4/14.6"
+  }
+ ]
+}

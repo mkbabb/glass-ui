@@ -6,7 +6,7 @@ G=/Users/mkbabb/Programming/glass-ui; P=$G/docs/tranches/BL/design/engagement; R
 WT=$G/.claude/worktrees/bl/D5/p11/C-E11/wt; O=$WT/.ce11out; cd $WT; mkdir -p $O
 th() { { git diff --binary HEAD -- src; git ls-files -o --exclude-standard src | LC_ALL=C sort | xargs cat 2>/dev/null; } | shasum | cut -c1-12; }
 b() { $HOME/.claude/guard/guarded --timeout 30 -- node $H/build.mjs $WT --label $1 --out $O > $R/logs/build-$1.log 2>&1; echo "$1 build exit $? · src tree $(th) · $(date '+%T') load $(sysctl -n vm.loadavg)"; }
-ST=src/composables/motion/engage/stage.ts; CSS=src/components/slider/styles.css
+ST=src/composables/motion/engage/stage.ts; CSS=src/components/slider/styles.css; SE=src/composables/motion/engage/settle.ts
 E11P=$P/pass-11/P-E11.patch
 echo "# $(date '+%F %T') builds start · load $(sysctl -n vm.loadavg) · base $(git rev-parse --short HEAD)"
 C=$(th); echo "candidate src tree $C (P-E11 recorded 6317ad295579)"
@@ -14,10 +14,11 @@ for x in "$@"; do
  case $x in
   cand11) b cand11 ;;
   crest|prmY) python3 -I $P/pass-9/C-A9/scripts/plants.py $x apply $WT && b plant-$x; python3 -I $P/pass-9/C-A9/scripts/plants.py $x revert $WT ;;
-  sidezoom|spanframe|hostzoom|roomframe) cp $ST $O/stage.ts; python3 $R/scripts/ce11-plants.py $WT $x && b plant-$x; cp $O/stage.ts $ST ;;
+  sidezoom|spanframe|hostzoom|roomframe|waapicure|unitcure) cp $ST $O/stage.ts; cp $SE $O/settle.ts; python3 -I $R/scripts/ce11-plants.py $WT $x && b plant-$x; cp $O/stage.ts $ST; cp $O/settle.ts $SE ;;
+  nohyst|fixed|reducetravel|noread|nolens|exitfrozen) cp $ST $O/stage.ts; cp $CSS $O/styles.css; python3 -I $P/pass-10/E10/plants.py $WT $x && b plant-$x; cp $O/stage.ts $ST; cp $O/styles.css $CSS ;;
   cand10|cand8) PP=$P/pass-10/P-E10.patch; [[ $x == cand8 ]] && PP=$P/pass-8/P-E8.patch
      git apply -R $E11P && git apply $PP && echo "$x src tree $(th)"; b $x; git apply -R $PP && git apply $E11P ;;
-  *) cp $ST $O/stage.ts; cp $CSS $O/styles.css; python3 $P/pass-11/E11/plants.py $WT $x && b plant-$x; cp $O/stage.ts $ST; cp $O/styles.css $CSS ;;
+  *) cp $ST $O/stage.ts; cp $CSS $O/styles.css; python3 -I $P/pass-11/E11/plants.py $WT $x && b plant-$x; cp $O/stage.ts $ST; cp $O/styles.css $CSS ;;
  esac
  [[ $(th) == $C ]] || { echo "TREE DRIFT after $x: $(th)"; exit 3; }
 done

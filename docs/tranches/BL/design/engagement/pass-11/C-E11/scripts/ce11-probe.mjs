@@ -13,6 +13,7 @@
 //                               (its first frame after the mutation, its largest 16.7 ms move against its row's bound) beside the lens
 //   loudx <token> <value> . side|rerender   CK-21 on values the bytes' check may pass: an easing list, a unit the clock parse ignores; both paths; a later hold
 //   reach <tf>                  a phone-width held slider sized to clear the gutter by 10 painted px: its painted inline and block grow and its margins
+//   relclock <token value>      CK-21 on the release carry's settle clock: a fling released on a page whose settle token is in ms, or unreadable
 //   cost <tf>                   Chromium only: CDP Performance metrics over a 3 s still hold (script and task time per frame), the frame walk priced
 //   noroom, repress, press-line, film <tf>, still <tf>   as C-A10's
 const H = "/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/harness";
@@ -318,7 +319,7 @@ await witness("C-E11 probe", "C-E11's adversarial cells on the candidate's lens 
   // ── CK-21 on the travel's tokens: values the bytes' check may pass, both paths, a later hold ──
   const laterHold = async (P, th) => { await P.page.mouse.up(); await P.page.waitForTimeout(900); const c = await center(P.page, th); await P.page.mouse.move(c.x, c.y); await P.page.mouse.down(); await P.page.waitForTimeout(600);
     const x = await P.page.evaluate((L) => { const l = document.querySelector(L.lens), t = document.querySelector(L.track); const eng = !!document.querySelector("[data-engaged]"); if (!l || !t) return { eng, lens: false }; const a = l.getBoundingClientRect(), d = t.getBoundingClientRect(); const below = l.hasAttribute("data-engage-lens-below"); return { eng, lens: true, op: +getComputedStyle(l).opacity, pin: below ? a.top - d.bottom : a.bottom - d.top }; }, L); await P.page.mouse.up(); return x; };
-  if (want("loudx")) for (const [tok, val, kind] of [[null, null, "clean"], ["--spring-dock-settle", "0.21s", "clean"], ["--spring-dock", "steps(4)", "valid"], ["--spring-dock", "nonsense", "refused"], ["--spring-dock", "ease, linear", "refused"], ["--spring-dock", "linear(0, 1), ease-in", "refused"], ["--spring-dock-settle", "210ms", "unit"]]) for (const pk of ["side", "rerender"]) {
+  if (want("loudx")) for (const [tok, val, kind] of [[null, null, "clean"], ["--spring-dock-settle", "0.21s", "clean"], ["--spring-dock", "steps(4)", "valid"], ["--spring-dock", "nonsense", "refused"], ["--spring-dock", "ease, linear", "refused"], ["--spring-dock", "linear(0, 1), ease-in", "refused"], ["--spring-dock-settle", "210ms", "unit"], ["--spring-dock", "var(--ce11-undefined)", "refused"], ["--spring-dock", "ease-in-out", "valid"]]) for (const pk of ["side", "rerender"]) {
     const name = `CE11 loudx · ${tok ?? "clean"}${val ? ` ${val}` : ""} · ${pk}`;
     const r = await guard(name, async () => {
       const side = pk === "side"; const P = await openPage(E, T, side ? sc : scP, tok ? { plant: [tok, val] } : {});
@@ -340,6 +341,27 @@ await witness("C-E11 probe", "C-E11's adversarial cells on the candidate's lens 
     const maxClock = r.clocks.length ? Math.max(...r.clocks) : 0;
     const ok = kind === "clean" ? r.errs.length === 0 && laterOk && (maxClock === 0 || maxClock <= 260) : kind === "valid" ? r.errs.length === 0 && laterOk && maxClock > 0 : kind === "refused" ? named >= 1 && uncaught === 0 && laterOk : (named >= 1 || (maxClock > 0 && maxClock <= 1000)) && uncaught === 0 && laterOk;
     cell(name, ok ? "PASS" : "FAIL", `[${kind}] CSS.supports animation-timing-function ${r.supports?.anim ?? "-"}, transition ${r.supports?.trans ?? "-"}, animate() ${r.supports?.waapi ?? "-"} · errors ${r.errs.length} (${named} name the token, ${uncaught} uncaught) · ${pk === "side" ? "lens" : "host"} travel clock(s) ${r.clocks.join(",") || "none"} ms · side changes ${r.ch}, end pin ${f(r.end?.pin, 1)} px; over the ${r.nS} frames read: largest 16.7 ms move of the ${pk === "side" ? "lens against its track" : "host"} ${f(r.w16, 1)} px, ${r.off} frames off its edge > 2 px (worst ${f(r.offWorst, 1)}), host moved ${f(r.hmove, 1)} px · later hold: engaged ${r.later?.eng}, lens ${r.later?.lens}, opacity ${f(r.later?.op, 2)}, pin ${f(r.later?.pin, 1)} px · first [${(r.errs[0] ?? "-").slice(0, 160)}]`);
+  }
+
+  // ── CK-21 on the release carry's clock (A's and the floor's bytes: useEngage carry() reads RELEASE_RULE.row "dock"'s settle through rowClockMs,
+  //    the same read the lens's travel makes): a fling of the held slider on a page whose <html> carries the settle token in another unit ──
+  if (want("relclock")) for (const [tok, val] of [[null, null], ["--spring-dock-settle", "0.21s"], ["--spring-dock-settle", "210ms"], ["--spring-dock-settle", "nonsense"]]) {
+    const name = `CE11 relclock · ${tok ? `${tok} ${val}` : "clean"}`;
+    const r = await guard(name, async () => {
+      const P = await openPage(E, T, scP, tok ? { plant: [tok, val] } : {});
+      try {
+        await setupPage(P.page, null, 200); await P.page.waitForTimeout(250);
+        const c = await center(P.page, thumbP); await P.page.mouse.move(c.x, c.y); await P.page.mouse.down(); await P.page.waitForTimeout(500);
+        for (let i = 1; i <= 8; i++) { await P.page.mouse.move(c.x - 14 * i, c.y); await P.page.waitForTimeout(8); }
+        await P.page.mouse.up();
+        const durs = await P.page.evaluate(() => new Promise((ok) => setTimeout(() => ok(document.getAnimations().filter((x) => !x.transitionProperty && !x.animationName).map((x) => ({ d: Math.round(x.effect.getTiming().duration), tag: x.effect.target?.className?.toString().slice(0, 40) ?? "?", p: Object.keys(x.effect.getKeyframes()[0] ?? {}).filter((k) => !["offset", "easing", "composite", "computedOffset"].includes(k)).join("+") }))), 40)));
+        return { durs, errs: [...P.errors] };
+      } finally { await P.close(); }
+    }, 60000);
+    if (r.crashed) { cell(name, "FAIL", r.line); continue; }
+    const named = tok ? r.errs.filter((e) => e.includes(tok)).length : 0; const maxD = r.durs.length ? Math.max(...r.durs.map((x) => x.d)) : 0;
+    const ok = r.errs.filter((e) => e.startsWith("pageerror")).length === 0 && (named >= 1 || (r.durs.length > 0 && maxD <= 1000));
+    cell(name, !tok || val === "0.21s" ? (r.durs.length && maxD <= 1000 && r.errs.length === 0 ? "PASS" : r.durs.length ? "FAIL" : "UNMEASURED") : ok ? "PASS" : "FAIL", `a fling of the held slider 112 px left over 8 moves, released: WAAPI animations 40 ms after the release ${r.durs.map((x) => `${x.p || "?"} ${x.d} ms`).join(", ") || "none"} · errors ${r.errs.length} (${named} name the token) · first [${(r.errs[0] ?? "-").slice(0, 140)}] · pass rule: the carry rides a clock <= 1000 ms, or the token is named`);
   }
 
   // ── the reach under a transform (P-E11 §8 item 2: the room is now written in the host's px; no cell reads it under a transform) ──

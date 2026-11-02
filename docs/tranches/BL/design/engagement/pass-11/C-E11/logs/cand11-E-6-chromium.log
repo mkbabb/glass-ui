@@ -1,0 +1,22 @@
+# C-E11 cand11-E-6 chromium · 2026-11-01 23:00:35 · load { 10.24 12.97 15.48 } · harness 63157e6b5679 · 
+# E-6 · the idle rung under the compositor-only bound
+# target /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p11/C-E11/wt/.ce11out/builds/cand11 · engine chromium · lock wait 66.8 s · other headless processes: chromium 0, webkit 0 · load 11.7/12.8/15.2 at start
+# scene app: harness scenes/App.vue (sha1 9e34ffa5714e)
+# chromium 149.0.7827.55
+  FAIL       E-6 s6 present light · 0 running infinite animation(s) at rest · load 11.4/12.7/15.2
+  UNMEASURED E-6 s6 channel light · no idle animation to read · load 11.4/12.7/15.2
+  UNMEASURED E-6 s6 shape light · no idle animation to read · load 11.4/12.7/15.2
+  UNMEASURED E-6 s6 amplitude light · no idle animation to read · load 11.4/12.7/15.2
+  UNMEASURED E-6 s6 period light · no idle animation to read · load 11.4/12.7/15.2
+  PASS       E-6 s6 layouts/s light · layouts/s 0.0 · style recalcs/s 0.0 over 3 s at rest (bound 0 layouts/s) · load 11.4/12.7/15.2
+  PASS       E-6 s6 PRM light · 0 idle animation(s) under reduced motion, 0 spatial · load 11.4/12.7/15.2
+  FAIL       E-6 s6 present dark · 0 running infinite animation(s) at rest · load 11.2/12.6/15.1
+  UNMEASURED E-6 s6 channel dark · no idle animation to read · load 11.2/12.6/15.1
+  UNMEASURED E-6 s6 shape dark · no idle animation to read · load 11.2/12.6/15.1
+  UNMEASURED E-6 s6 amplitude dark · no idle animation to read · load 11.2/12.6/15.1
+  UNMEASURED E-6 s6 period dark · no idle animation to read · load 11.2/12.6/15.1
+  PASS       E-6 s6 layouts/s dark · layouts/s 0.0 · style recalcs/s 0.0 over 3 s at rest (bound 0 layouts/s) · load 11.2/12.6/15.1
+  PASS       E-6 s6 PRM dark · 0 idle animation(s) under reduced motion, 0 spatial · load 11.2/12.6/15.1
+E-6 chromium FAIL · 4 pass, 2 fail, 8 unmeasured of 14 gating cells (0 reported) · load 11.7/12.8/15.2 at start, 11.2/12.6/15.1 at end
+# exit 1 · 2026-11-01 23:01:53 · load { 11.16 12.62 15.12 }
+# end · 2026-11-01 23:01:53 · load { 11.16 12.62 15.12 } · harness 63157e6b5679

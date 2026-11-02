@@ -1,0 +1,13 @@
+# C-A11 plant-flowone-ca11 chromium · 2026-11-01 21:38:42 · load { 20.80 17.71 16.51 } · harness 63157e6b5679 · --only hostglide
+# C-A11 probe · C-A11's adversarial cells on the candidate's lens, host glide and travel tokens: off H11's cards, inside the travel, on the exit, on a wheel, across a re-render, and fail-loud on both paths
+# target /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p11/C-A11/wt/.ca11out/builds/plant-flowone · engine chromium · lock wait 17.1 s · other headless processes: chromium 12, webkit 2 · load 19.2/17.5/16.5 at start
+# scene app: harness scenes/App.vue (sha1 9e34ffa5714e)
+# chromium 149.0.7827.55
+  PASS       CA11 hostglide · none · a 40 px block inserted above the card mid-hold · the host's painted centre moved 40.0 px · its first frame after the insert 0.0 px from where it was painted (≤ 2) · largest move over any 16.7 ms 5.5 px (bound 6.5 = 40.0 × dock 0.139 + 1) · glide running true · errors 0 · load 18.1/17.3/16.4
+  PASS       CA11 hostglide · zoom125 · a 40 px block inserted above the card mid-hold · the host's painted centre moved 40.0 px · its first frame after the insert 0.0 px from where it was painted (≤ 2) · largest move over any 16.7 ms 5.5 px (bound 6.5 = 40.0 × dock 0.139 + 1) · glide running true · errors 0 · load 18.1/17.3/16.4
+  PASS       CA11 hostglide · zoom08 · a 40 px block inserted above the card mid-hold · the host's painted centre moved 40.0 px · its first frame after the insert 0.0 px from where it was painted (≤ 2) · largest move over any 16.7 ms 5.5 px (bound 6.5 = 40.0 × dock 0.139 + 1) · glide running true · errors 0 · load 18.2/17.3/16.4
+  FAIL       CA11 hostglide · scale · a 40 px block inserted above the card mid-hold · the host's painted centre moved 40.0 px · its first frame after the insert 8.0 px from where it was painted (≤ 2) · largest move over any 16.7 ms 8.4 px (bound 6.5 = 40.0 × dock 0.139 + 1) · glide running true · errors 0 · load 18.2/17.3/16.4
+  FAIL       CA11 hostglide · nested · a 40 px block inserted above the card mid-hold · the host's painted centre moved 40.0 px · its first frame after the insert 8.0 px from where it was painted (≤ 2) · largest move over any 16.7 ms 8.0 px (bound 6.5 = 40.0 × dock 0.139 + 1) · glide running true · errors 0 · load 19.2/17.6/16.5
+C-A11 probe chromium FAIL · 3 pass, 2 fail, 0 unmeasured of 5 gating cells (0 reported) · load 19.2/17.5/16.5 at start, 19.2/17.6/16.5 at end
+# exit 1 · 2026-11-01 21:39:11 · load { 19.18 17.56 16.50 }
+# end · 2026-11-01 21:39:11 · load { 19.18 17.56 16.50 } · harness 63157e6b5679

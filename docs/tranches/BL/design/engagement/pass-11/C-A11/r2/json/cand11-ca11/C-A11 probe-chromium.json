@@ -1,0 +1,31 @@
+{
+ "id": "C-A11 probe",
+ "engine": "chromium",
+ "version": "149.0.7827.55",
+ "target": {
+  "build": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p11/C-A11/wt/.ca11out/builds/cand11"
+ },
+ "loadStart": "17.2/16.0/17.6",
+ "loadEnd": "15.8/15.8/17.5",
+ "verdict": "FAIL",
+ "cells": [
+  {
+   "name": "CA11 hostglide · none",
+   "status": "PASS",
+   "line": "a 40 px block inserted above the card mid-hold · the host's painted centre moved 40.0 px · its first frame after the insert 0.0 px from where it was painted (≤ 2) · largest move over any 16.7 ms 5.5 px (bound 6.5 = 40.0 × dock 0.139 + 1) · glide running true · errors 0",
+   "load": "16.5/15.9/17.6"
+  },
+  {
+   "name": "CA11 hostglide · scale",
+   "status": "FAIL",
+   "line": "a 40 px block inserted above the card mid-hold · the host's painted centre moved 40.0 px · its first frame after the insert 8.0 px from where it was painted (≤ 2) · largest move over any 16.7 ms 8.3 px (bound 6.5 = 40.0 × dock 0.139 + 1) · glide running true · errors 0",
+   "load": "16.5/15.9/17.6"
+  },
+  {
+   "name": "CA11 hostglide · nested",
+   "status": "FAIL",
+   "line": "a 40 px block inserted above the card mid-hold · the host's painted centre moved 40.0 px · its first frame after the insert 8.0 px from where it was painted (≤ 2) · largest move over any 16.7 ms 8.3 px (bound 6.5 = 40.0 × dock 0.139 + 1) · glide running true · errors 0",
+   "load": "15.8/15.8/17.5"
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+# C-A11 cand11-E-6 chromium · 2026-11-01 22:19:52 · load { 25.13 26.53 25.90 } · harness 63157e6b5679 · 
+# E-6 · the idle rung under the compositor-only bound
+# target /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p11/C-A11/wt/.ca11out/builds/cand11 · engine chromium · lock wait 0.0 s · other headless processes: chromium 8, webkit 2 · load 25.1/26.5/25.9 at start
+# scene app: harness scenes/App.vue (sha1 9e34ffa5714e)
+# chromium 149.0.7827.55
+  FAIL       E-6 s6 present light · 0 running infinite animation(s) at rest · load 25.1/26.5/25.9
+  UNMEASURED E-6 s6 channel light · no idle animation to read · load 25.1/26.5/25.9
+  UNMEASURED E-6 s6 shape light · no idle animation to read · load 25.1/26.5/25.9
+  UNMEASURED E-6 s6 amplitude light · no idle animation to read · load 25.1/26.5/25.9
+  UNMEASURED E-6 s6 period light · no idle animation to read · load 25.1/26.5/25.9
+  PASS       E-6 s6 layouts/s light · layouts/s 0.0 · style recalcs/s 0.0 over 3 s at rest (bound 0 layouts/s) · load 25.1/26.5/25.9
+  PASS       E-6 s6 PRM light · 0 idle animation(s) under reduced motion, 0 spatial · load 25.1/26.5/25.9
+  FAIL       E-6 s6 present dark · 0 running infinite animation(s) at rest · load 24.0/26.2/25.8
+  UNMEASURED E-6 s6 channel dark · no idle animation to read · load 24.0/26.2/25.8
+  UNMEASURED E-6 s6 shape dark · no idle animation to read · load 24.0/26.2/25.8
+  UNMEASURED E-6 s6 amplitude dark · no idle animation to read · load 24.0/26.2/25.8
+  UNMEASURED E-6 s6 period dark · no idle animation to read · load 24.0/26.2/25.8
+  PASS       E-6 s6 layouts/s dark · layouts/s 0.0 · style recalcs/s 0.0 over 3 s at rest (bound 0 layouts/s) · load 24.0/26.2/25.8
+  PASS       E-6 s6 PRM dark · 0 idle animation(s) under reduced motion, 0 spatial · load 24.0/26.2/25.8
+E-6 chromium FAIL · 4 pass, 2 fail, 8 unmeasured of 14 gating cells (0 reported) · load 25.1/26.5/25.9 at start, 24.0/26.2/25.8 at end
+# exit 1 · 2026-11-01 22:20:03 · load { 23.98 26.25 25.81 }
+# end · 2026-11-01 22:20:03 · load { 23.98 26.25 25.81 } · harness 63157e6b5679

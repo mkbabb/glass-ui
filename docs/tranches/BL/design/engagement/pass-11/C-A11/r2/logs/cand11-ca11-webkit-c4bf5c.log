@@ -1,0 +1,11 @@
+# C-A11 cand11-ca11 webkit · 2026-11-02 00:08:31 · load { 13.45 13.98 14.15 } · harness 63157e6b5679 · --only hostglide --cards none,scale,nested
+# C-A11 probe · C-A11's adversarial cells on the candidate's lens, host glide and travel tokens: off H11's cards, inside the travel, on the exit, on a wheel, across a re-render, and fail-loud on both paths
+# target /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p11/C-A11/wt/.ca11out/builds/cand11 · engine webkit · lock wait 0.0 s · other headless processes: chromium 0, webkit 0 · load 13.4/14.0/14.2 at start
+# scene app: harness scenes/App.vue (sha1 9e34ffa5714e)
+# webkit 26.5 (Playwright WebKit, not Safari; real Safari UNMEASURED (owner's safaridriver checkbox))
+  PASS       CA11 hostglide · none · a 40 px block inserted above the card mid-hold · the host's painted centre moved 40.0 px · its first frame after the insert 0.0 px from where it was painted (≤ 2) · largest move over any 16.7 ms 5.5 px (bound 6.5 = 40.0 × dock 0.139 + 1) · glide running true · errors 0 · load 13.6/14.0/14.2
+  FAIL       CA11 hostglide · scale · a 40 px block inserted above the card mid-hold · the host's painted centre moved 40.0 px · its first frame after the insert 8.0 px from where it was painted (≤ 2) · largest move over any 16.7 ms 8.0 px (bound 6.5 = 40.0 × dock 0.139 + 1) · glide running true · errors 0 · load 13.6/14.0/14.2
+  FAIL       CA11 hostglide · nested · a 40 px block inserted above the card mid-hold · the host's painted centre moved 40.0 px · its first frame after the insert 8.0 px from where it was painted (≤ 2) · largest move over any 16.7 ms 8.0 px (bound 6.5 = 40.0 × dock 0.139 + 1) · glide running true · errors 0 · load 14.8/14.2/14.2
+C-A11 probe webkit FAIL · 1 pass, 2 fail, 0 unmeasured of 3 gating cells (0 reported) · load 13.4/14.0/14.2 at start, 14.8/14.2/14.2 at end
+# exit 1 · 2026-11-02 00:08:41 · load { 14.81 14.25 14.25 }
+# end · 2026-11-02 00:08:41 · load { 14.81 14.25 14.25 } · harness 63157e6b5679

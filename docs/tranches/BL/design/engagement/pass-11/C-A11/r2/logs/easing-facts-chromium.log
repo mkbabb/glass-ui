@@ -1,0 +1,13 @@
+# easing-facts chromium 149.0.7827.55 · load 20.1/13.3/14.6
+"nonsense"                   supports(animation)=false supports(transition)=false animate THROWS: Failed to execute 'animate' on 'Element': 'nonsense' is not a valid value for easing
+"initial"                    supports(animation)=true supports(transition)=true animate THROWS: Failed to execute 'animate' on 'Element': 'initial' is not a valid value for easing
+"ease, linear"               supports(animation)=true supports(transition)=true animate THROWS: Failed to execute 'animate' on 'Element': Easing may not be set to a list of values
+"linear, ease-in"            supports(animation)=true supports(transition)=true animate THROWS: Failed to execute 'animate' on 'Element': Easing may not be set to a list of values
+"linear(0, 1), ease"         supports(animation)=true supports(transition)=true animate THROWS: Failed to execute 'animate' on 'Element': Easing may not be set to a list of values
+"steps(0)"                   supports(animation)=false supports(transition)=false animate THROWS: Failed to execute 'animate' on 'Element': 'steps(0)' is not a valid value for easing
+"cubic-bezier(2, 0, 1, 1)"   supports(animation)=false supports(transition)=false animate THROWS: Failed to execute 'animate' on 'Element': 'cubic-bezier(2, 0, 1, 1)' is not a valid value 
+"ease"                       supports(animation)=true supports(transition)=true animate ok
+"linear(0, 0.5 50%, 1)"      supports(animation)=true supports(transition)=true animate ok
+"steps(2, jump-none)"        supports(animation)=true supports(transition)=true animate ok
+"steps(1, jump-none)"        supports(animation)=false supports(transition)=false animate THROWS: Failed to execute 'animate' on 'Element': 'steps(1, jump-none)' is not a valid value for e
+"inherit"                    supports(animation)=true supports(transition)=true animate THROWS: Failed to execute 'animate' on 'Element': 'inherit' is not a valid value for easing
