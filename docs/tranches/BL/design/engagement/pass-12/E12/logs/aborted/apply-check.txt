@@ -1,0 +1,36 @@
+# 2026-11-02 07:59:26 · load { 6.60 8.40 9.33 } · worktree base d94e413dde5530ee426e3136842621a2ba09b223 · checkout HEAD d94e413dde5530ee426e3136842621a2ba09b223 · src/tests/demo diff base..HEAD lines 0
+bad6658afaeb662d898c4e69ad99868a6028e17b  /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-12/P-E12.patch
+20721fc134cbfbdb0460f00b33c03ba42a3bbc07  /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-11/P-E11.patch
+cb12ef64a4875ea5b27ce6fa43813ef6ffe65878  /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-10/P-E10.patch
+0cbe2b6de1184f4ba35cb03ce43d8c4ab7f246d0  /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-9/P-E9.patch
+e6e42ba3cf37c47a67811aa7dec1fc1216448816  /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-7/P-A7.patch
+apply --check on a git archive of d94e413dde5530ee426e3136842621a2ba09b223: exit 0
+candidate: 198 files +5755/-1648; src 153 files +3287/-1359
+P-E11: 198 files +5450/-1648; src 153 files +3161/-1359
+# E's change over P-E11 (two-tree numstat)
+43	0	tests/setup.ts
+62	6	src/composables/motion/engage/settle.ts
+122	53	src/composables/motion/engage/stage.ts
+12	14	src/composables/motion/engage/useEngage.ts
+10	7	src/styles/glass/engage-stage.css
+182	46	tests/composables/motion/engage-stage.test.ts
+differs: src/components/dialog/ModalOverlay.vue
+differs: src/components/dock/composables/useDockHold.ts
+differs: src/components/slider/Slider.vue
+differs: src/components/slider/styles.css
+differs: src/components/sortable-list/drag.ts
+differs: src/components/sortable-list/motion.ts
+differs: src/styles/glass/focus-veil.css
+differs: src/styles/tokens/property-regs.css
+differs: src/styles/tokens/scale-paper.css
+differs: tests/styles/focus-veil.test.ts
+differs: tests/styles/glass-subtlety.test.ts
+differs: src/composables/motion/engage/hold.ts
+differs: src/composables/motion/engage/useEngage.ts
+differs: src/styles/utilities/engage.css
+differs: tests/components/ui/slider/release-carry.test.ts
+differs: tests/composables/motion/engage-door.test.ts
+P-A7: 187 files, 16 differ in HEAD + P-E12
+fresh archive of d94e413dde5530ee426e3136842621a2ba09b223 + P-E12 against the worktree, diff -rq lines: 0
+src tree in the worktree: 61f7b80ac552
+# 2026-11-02 08:02:41 · load { 20.65 13.66 11.33 }

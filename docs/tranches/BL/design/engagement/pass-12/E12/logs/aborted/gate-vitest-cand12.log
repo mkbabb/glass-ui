@@ -1,0 +1,44 @@
+# vitest · 2026-11-02 07:59:39 · load { 8.85 8.79 9.46 }
+
+ RUN  v4.1.10 /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p12/E12/wt
+
+(node:2300) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+stderr | tests/styles/focus-veil.test.ts > G-RUNG-ONLY · GRADIENT-BLUR arm — applied at its named consumers > a scroll under a live grasp re-reads the rest box and raises nothing
+[glass-ui] engage stage: --scale-engage is unreadable on the host; the engagement it drives paints nothing. Is the glass-ui stylesheet loaded?
+[glass-ui] engage stage: --space-section is unreadable on the host; the engagement it drives paints nothing. Is the glass-ui stylesheet loaded?
+
+ ❯ tests/styles/focus-veil.test.ts (18 tests | 1 failed) 48ms
+     × a scroll under a live grasp re-reads the rest box and raises nothing 9ms
+(node:3116) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:3297) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/styles/focus-veil.test.ts > G-RUNG-ONLY · GRADIENT-BLUR arm — applied at its named consumers > a scroll under a live grasp re-reads the rest box and raises nothing
+AssertionError: expected '' to be '200px' // Object.is equality
+
+- Expected
++ Received
+
+- 200px
+
+ ❯ tests/styles/focus-veil.test.ts:263:58
+    261|         expect(document.querySelector(".glass-focus-veil")).toBeNull();
+    262|         // the stage still re-reads the rest box on the scroll: the re…
+    263|         expect(root.style.getPropertyValue("--stage-w")).toBe("200px");
+       |                                                          ^
+    264|         wrapper.unmount();
+    265|     });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 246 passed (247)
+      Tests  1 failed | 2443 passed | 10 expected fail | 1 skipped (2455)
+   Start at  07:59:40
+   Duration  71.38s (transform 4.80s, setup 9.30s, import 32.66s, tests 25.18s, environment 42.33s)
+
+# exit 1 · 2026-11-02 08:00:57 · load { 14.54 10.73 10.14 }
