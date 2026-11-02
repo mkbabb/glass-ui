@@ -122,6 +122,12 @@
         [data-slot="deck-stage"] {
             page: deck;
         }
+        /* A stage in the top layer (a modal dialog, an open popover) is out of flow, so
+           its own page never starts a sheet: the document takes the deck's page. */
+        :root:has(:modal [data-slot="deck-stage"], :popover-open [data-slot="deck-stage"])
+            body {
+            page: deck;
+        }
         :root:has([data-slot="deck-stage"]),
         :root:has([data-slot="deck-stage"]) body {
             overflow: visible !important;

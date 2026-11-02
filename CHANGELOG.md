@@ -31,8 +31,13 @@ Gregg can delete both workarounds.
   printed came out on 1280x720 sheets with its margins zeroed. The page is now named,
   `@page deck`, and `[data-slot="deck-stage"]` takes it with `page: deck`. The
   document resets apply only under `:root:has([data-slot="deck-stage"])`. A page
-  without a deck prints on the reader's own paper with its own margins. The glass
-  print arm (F-80) is not in this patch; it is W-E.13 (11.0.0).
+  without a deck prints on the reader's own paper with its own margins. A named page
+  starts a sheet only from a box in normal flow, and a stage in the top layer (a
+  modal `<dialog>`, an open popover) is not one. In that case `<body>` takes
+  `page: deck` instead, under `:root:has(:modal [data-slot="deck-stage"],
+  :popover-open [data-slot="deck-stage"])`, so a modal deck still prints at slide
+  geometry. As at 10.1.3, a top-layer deck prints only its first sheet. That is the
+  glass print arm's (F-80) work. The arm is not in this patch; it is W-E.13 (11.0.0).
 
 ## 10.1.3 — 2026-10-29
 
