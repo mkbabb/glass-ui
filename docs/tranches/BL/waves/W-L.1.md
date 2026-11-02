@@ -274,3 +274,29 @@ Output at HEAD: `{"rest":{…"bgImage":"none","bgColor":"rgba(0, 0, 0, 0)","back
 ```
 
 At HEAD: exit 2, `(7,63) TS2353 … 'reference' does not exist`, `(8,80) TS2353 … 'reference' does not exist`.
+
+## Addendum (2026-11-02): INBOUND O-120 G-11 and G-14, the DataTable column contract
+
+Two Gregg asks (`sci-report-82`, live 2026-11-02; `~/Programming/gregg/docs/ROOT-FIXES.md:32,35`), verified at source on master. Both are cured here as §3.21 and §3.22, in the wave that owns API asks. Neither is a design-loop row.
+
+### 3.21 Row headers: `rowHeader` on a column (BUILT)
+
+At HEAD every body cell is a `<td>`, and there is no way to render a column's cells as `<th scope="row">`. A screen reader reading row by row has no row name. The cure: `DataTableColumn.rowHeader?: boolean`. That column's body cells render `<th scope="row">`, and at most one column may set it (a second throws in dev). In the card projection (`responsive`), the row-header cell becomes the card's heading, the element that labels the card region. The type is additive. Gate **L1-G21**: a vitest mount with `rowHeader` on the first column reads `th[scope=row]` in every body row and 0 such cells without it; an axe pass on the demo table reads no `th-has-data-cells` or `scope-attr-valid` violation.
+
+### 3.22 Column keys are literal; nested values via `value` (BUILT, breaking)
+
+At HEAD `DataTableColumn.key` is documented as a "Unique key matching a property on the row object" (`src/components/data-table/types.ts:4`). The code reads it as a dotted path instead: `getNestedValue` (`DataTable.vue:111-116`) and `nestedValue` (`composables/useDataTableRowIdentity.ts:23-28`, for `rowKey`). A key such as `"Other U.S. states"` is read as `row["Other U"]["S"]…`, and the cell renders `—`. Gregg reports a crash at its call site, and its workaround is to avoid dots in keys (`gregg/docs/closed/shell.md:60`, item 134). The code contradicts its own contract, so the contract wins:
+- `key` is the literal property name, and the column's sort identity. Both path readers are deleted.
+- `DataTableColumn.value?: (row: T) => unknown` reads a derived or nested value. When it is present, the cell, `formatter` and sort read it. `rowKey` is literal too; a nested row identity uses the existing `getRowId`.
+- There is no fallback ladder (own-property first, then path): one reading of `key`, always.
+
+Gate **L1-G22**: vitest, a row `{ "Other U.S. states": 4 }` with that key renders `4`; `{ a: { b: 1 } }` with `key: "a.b"` renders `—` and with `value: r => r.a.b` renders `1`; a sort through `value` orders by it.
+
+**MIGRATION (11.0.0, §7):**
+
+| removed or changed | replacement |
+|---|---|
+| `key: "a.b"` reading a nested property | `key: "b"` (any literal id) plus `value: (row) => row.a.b` |
+| `rowKey: "a.id"` reading a nested id | `getRowId: (row) => row.a.id` |
+
+Consumer census (read-only, `src/` of each sibling): speedtest uses four dotted keys (`src/components/admin/AdminSessionsTable.vue:57,62`, `src/components/dashboard/ResultsTable.vue:69,74`), and migrates through a marked addendum in its own tranche (the consumer-updates ruling). gregg, atlas: no dotted key. Gregg's retirement on 11.0.0: G-11 needs nothing local; G-14 lets Gregg use its source labels as keys.

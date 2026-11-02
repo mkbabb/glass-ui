@@ -155,3 +155,20 @@ grep -o 'music-staff' /tmp/b-all.css | wc -l; grep -oE '\.(deck|carousel)[-_a-z]
 ```
 
 HEAD output: `440746`, `65961`, `180` (music-staff), `109` (deck and carousel selectors), and 5 `@font-face` rules. Pass: gzip ≤ 32,768 and both counts 0.
+
+## 11 · Addendum (2026-11-02): INBOUND O-120 G-10, and §3 item 2 reconciled with O-118 (2)
+
+**Inbound.** Gregg's G-10 (`sci-report-82`, live 2026-11-02; `~/Programming/gregg/docs/ROOT-FIXES.md:31`) is L07-06 read again in a second consumer: `./styles` ships the deck, music-staff and configurator CSS to every importer, and Gregg's index CSS is 523 kB (168 kB gzip). It folds here as a consumer witness. It mints no gate; G7-G8 is the gate, and Gregg's figure is quoted beside appendix B's.
+
+**The conflict.** §3 item 2 cures the payload by having each JS entry import its own stylesheet (`import "./<entry>.css"`), and G7-G5 gates that. O-118 (2), ratified later (2026-11-02), rules the opposite for O-113 Q2: no dist chunk imports CSS, so plain Node and SSR need no CSS loader, and a wave that adds a CSS import to a JS chunk is a defect. The ruling is the later record and binds this wave.
+
+**The reconciled cure (supersedes §3 item 2 and G7-G5; items 1, 3 and 4 stand).**
+- The build emits one stylesheet per component entry, `dist/styles/<entry>.css`: the entry's SFC styles, its colocated `styles.css` and its compiled component utilities, in `@layer components` and `@layer utilities`. Each is exported as `./styles/<entry>` beside `./styles` (the foundation, item 3) and `./styles/fonts`.
+- No JS chunk imports CSS (O-118 (2) holds). The consumer imports the foundation once and each entry's stylesheet it renders, in CSS: `@import "@mkbabb/glass-ui/styles"; @import "@mkbabb/glass-ui/styles/dock";`. `sideEffects` stays `["*.css"]`.
+- An entry rendered without its stylesheet paints unstyled. That is loud and visible, not masked (E-2), and the README recipe and the MIGRATION row name the pairing.
+- G7-G5 now reads: **every component entry with a stylesheet has a `./styles/<entry>` export, and 0 JS chunks import a `.css` file.** At HEAD: FAIL (0 per-entry exports; 0 JS CSS imports, which already holds).
+- G7-G8 is unchanged: the one-Button consumer imports `./styles` and `./styles/button` and holds ≤ 32,768 B gzip with 0 `music-staff` and 0 deck or carousel selectors.
+- §7's row "each component's CSS arrives with its JS import" is replaced by: `./styles` delivers the foundation only; **each rendered component's stylesheet is imported from `./styles/<entry>`**. Consumers (gregg, speedtest, atlas, slides, keyframes.js, value.js) add their entries' imports in their own tranches. The `@source` row stands.
+- §6's paint-parity obligation stands, read with the consumer importing every entry's stylesheet the route renders.
+
+Gregg's retirement: on 11.0.0 Gregg imports only the entries it renders, and drops nothing local (it has no override for G-10).
