@@ -18,6 +18,9 @@ Merged on local branch `u/b7-glass` (off `release/10.1.1` bbf176f02, with the pu
 - **`Surface` and `Card` take `backdropMode`.** `"static"` keeps the plate's rung, fill,
   edge and rim and withholds the backdrop-filter (`[data-backdrop-mode="static"]`). Use it
   for in-flow plates over a still field. The default, `"live"`, is unchanged.
+- **`STILL_FIELD` (`./aurora`, A7).** A preset partial that zeroes the four drift axes
+  and both grains. Spread it last over a field config; the loop parks after the first
+  frame. Additive.
 
 ### Root items (`u/b7-glass`, U/B7c C3)
 

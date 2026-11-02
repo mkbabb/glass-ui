@@ -549,3 +549,24 @@ export const PAPER_WASH_GROUND = {
     // A felt paper-tooth floor that co-tunes with the page's bare-paper grain.
     paperGrain: 0.008,
 } as const satisfies Partial<AuroraConfig>;
+
+/**
+ * `STILL_FIELD` — a field that draws once and asks for no further frame (A7, P-G2).
+ * A PRESET PARTIAL over the consumer's own palette and nuclei, spread LAST:
+ * `const cfg = { ...consumerBase, ...STILL_FIELD }`.
+ *
+ * Every drift axis is 0, so `isAuroraDriftLive` parks the loop after the first frame,
+ * and both grains are 0, because the shader reseeds grain on every drawn frame, which
+ * reads as flicker over a full page whenever something else asks for one. A pointer
+ * still wakes the loop only while it moves (the shared field's own rest gate), and the
+ * field settles back to the same still frame. Use it behind data: the page's motion
+ * budget belongs to the marks, not the ground.
+ */
+export const STILL_FIELD = {
+    nucleiDrift: 0,
+    paletteDrift: 0,
+    warpDrift: 0,
+    breathDepth: 0,
+    paperGrain: 0,
+    canvasGrain: 0,
+} as const satisfies Partial<AuroraConfig>;
