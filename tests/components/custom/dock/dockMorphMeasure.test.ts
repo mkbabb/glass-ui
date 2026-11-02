@@ -129,7 +129,8 @@ function mountMeasure(dock: ReturnType<typeof dockModel>, axis: Axis = "horizont
 }
 
 /** Let a MutationObserver's microtask run. */
-const mutationsSettle = () => new Promise<void>((resolve) => setTimeout(resolve, 0));
+const mutationsSettle = () =>
+    new Promise<void>((resolve) => setTimeout(resolve, 0)).then(() => TestResizeObserver.deliverInitial());
 
 /**
  * A dock whose posture follows `expanded` through the morph orchestrator: the render
@@ -549,5 +550,27 @@ describe("G-M1-6 — the attach capture rides the observer's first delivery (U/B
         expect(dock.px("expanded")).not.toBe("");
         unmount();
         vi.unstubAllGlobals();
+    });
+});
+
+describe("a pane mutation captures on the observer's delivery, not in the microtask (U/B8 PF)", () => {
+    /* RED before: the MutationObserver called capture() in its microtask, reading a layout the
+       patch had just dirtied: a forced layout per Sections-cell change on a phone scroll (glass
+       getSize, 107 ms self time on the /sci walk). Mutation: restore the capture and the first
+       expectation reds. */
+    it("re-observes in the microtask and publishes on the next delivery", async () => {
+        const dock = dockModel();
+        dock.model.chrome.collapsed = 24;
+        dock.model.summary = 32;
+        dock.posture("collapsed");
+        const { unmount } = mountMeasure(dock);
+        expect(dock.px("collapsed")).toBe("56px");
+        dock.model.summary = 48;
+        dock.summary.append(document.createElement("span"));
+        await new Promise<void>((resolve) => setTimeout(resolve, 0));
+        expect(dock.px("collapsed")).toBe("56px");
+        TestResizeObserver.deliverInitial();
+        expect(dock.px("collapsed")).toBe("72px");
+        unmount();
     });
 });
