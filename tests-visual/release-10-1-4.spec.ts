@@ -65,6 +65,25 @@ async function printReads(page: Page) {
                     );
                 return walk(sheet.cssRules);
             }),
+            // The priority of `@page deck`'s size and margin: a normal declaration loses
+            // to a consumer's unlayered `@page` (the deck's page sits in a layer), and
+            // Chromium lets a later sheet's `@page` size beat the named page.
+            deckPage: [...document.styleSheets].flatMap((sheet) => {
+                const walk = (rules: CSSRuleList): object[] =>
+                    [...rules].flatMap((r) =>
+                        r instanceof CSSPageRule && r.selectorText === "deck"
+                            ? [
+                                  {
+                                      size: r.style.getPropertyPriority("size"),
+                                      margin: r.style.getPropertyPriority("margin-top"),
+                                  },
+                              ]
+                            : "cssRules" in r
+                              ? walk((r as CSSGroupingRule).cssRules)
+                              : [],
+                    );
+                return walk(sheet.cssRules);
+            }),
             supportsPage: CSS.supports("page", "deck"),
             pageRules: [...document.styleSheets].flatMap((sheet) => {
                 const walk = (rules: CSSRuleList): string[] =>
@@ -145,10 +164,82 @@ test.describe("O-119 (f), the @page half: only a deck prints at slide geometry",
         if (browserName === "chromium") expect(reads.bodyPage).toBe("deck");
     });
 
-    test("a deck page in flow leaves <body> on its own page", async ({ page }) => {
+    test("a deck page in flow: the document takes the deck's page too", async ({ page }) => {
         await open(page, "scene=print-deck");
         const reads = await printReads(page);
-        expect(reads.bodyTakesDeckPage).toBe(false);
+        expect(reads.bodyTakesDeckPage).toBe(true);
+    });
+
+    // critique-2 F-2: an overlay that is not the top layer still takes its stage out of
+    // flow, so the document must carry the deck's page whatever wraps the stage.
+    for (const [scene, what] of [
+        ["print-deck-glass-dialog", "the library's own Dialog (a fixed plate)"],
+        ["print-deck-fixed", "a fixed overlay"],
+        ["print-deck-nonmodal", "a non-modal <dialog open> (absolute)"],
+    ] as const) {
+        test(`a deck in ${what} hands its named page to the document`, async ({
+            page,
+            browserName,
+        }) => {
+            await open(page, `scene=${scene}`);
+            await expect(page.locator('[data-slot="deck-stage"]')).toHaveCount(1);
+            const reads = await printReads(page);
+            expect(reads.htmlAdjust).toBe("exact");
+            expect(reads.bodyTakesDeckPage).toBe(true);
+            if (browserName === "chromium") expect(reads.bodyPage).toBe("deck");
+        });
+
+        test(`page.pdf: a deck in ${what} prints at slide geometry`, async ({
+            page,
+            browserName,
+        }) => {
+            test.skip(browserName !== "chromium", "page.pdf is Chromium's");
+            await open(page, `scene=${scene}`);
+            await page.emulateMedia({ media: "print" });
+            const boxes = mediaBoxes(await page.pdf({ preferCSSPageSize: true }));
+            // An out-of-flow deck prints a truncated run of its slides at 10.1.3 and here
+            // alike (W-E.13's print arm); every sheet is the slide's, not the paper's.
+            expect(boxes.length).toBeGreaterThan(0);
+            for (const box of boxes) expect(box).toEqual([960, 540]);
+        });
+    }
+
+    // critique-2 F-3: a consumer's own `@page`, unlayered and in a later sheet, does not
+    // reach the deck's sheets: the deck page's size and margin are important.
+    test("the deck's named page outranks a consumer's own @page", async ({ page }) => {
+        await open(page, "scene=print-deck-consumer-page");
+        const reads = await printReads(page);
+        expect(reads.pageRules).toEqual(["@page deck", "@page"]);
+        expect(reads.deckPage).toEqual([
+            { size: "important", margin: "important" },
+        ]);
+    });
+
+    test("page.pdf: a consumer's own @page does not resize the deck's sheets", async ({
+        page,
+        browserName,
+    }) => {
+        test.skip(browserName !== "chromium", "page.pdf is Chromium's");
+        await open(page, "scene=print-deck-consumer-page");
+        await page.emulateMedia({ media: "print" });
+        const boxes = mediaBoxes(await page.pdf({ preferCSSPageSize: true }));
+        expect(boxes).toEqual([
+            [960, 540],
+            [960, 540],
+        ]);
+    });
+
+    test("page.pdf: a consumer's own @page still sets the paper of a page with no deck", async ({
+        page,
+        browserName,
+    }) => {
+        test.skip(browserName !== "chromium", "page.pdf is Chromium's");
+        await open(page, "scene=print-plain-consumer-page");
+        await page.emulateMedia({ media: "print" });
+        const boxes = mediaBoxes(await page.pdf({ preferCSSPageSize: true }));
+        expect(boxes.length).toBeGreaterThan(0);
+        // A4 = 595 x 842 pt.
+        for (const box of boxes) expect(box).toEqual([595, 842]);
     });
 
     test("page.pdf: a page without a deck prints on the default paper (Letter)", async ({

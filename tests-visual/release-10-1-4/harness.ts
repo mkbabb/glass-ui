@@ -9,6 +9,7 @@ import { createApp, defineComponent, h, nextTick, type Component } from "vue";
 
 import DataTable from "../../src/components/data-table/DataTable.vue";
 import { DeckSlide, DeckStage, useDeck } from "../../src/components/deck";
+import { Dialog, DialogContent } from "../../src/components/dialog";
 
 const params = new URLSearchParams(location.search);
 const scene = params.get("scene") ?? "";
@@ -24,6 +25,26 @@ const rows = [
     { _id: "2", name: "Grace", kind: "compiler", year: 1952 },
     { _id: "3", name: "Edsger", kind: "semaphore", year: 1965 },
 ];
+
+const CONSUMER_PAGE = "@media print { @page { size: A4; margin: 14mm 12mm } }";
+
+function witnessDeck(deck: ReturnType<typeof useDeck>) {
+    return h(DeckStage, { deck, ariaLabel: "witness deck" }, () =>
+        [0, 1].map((index) => h(DeckSlide, { index }, () => h("h2", `Slide ${index + 1}`))),
+    );
+}
+
+/** Prose, then a two-slide deck inside the overlay `wrap` builds around it. */
+function overlay(wrap: (deck: ReturnType<typeof witnessDeck>) => ReturnType<typeof h>): Component {
+    return defineComponent(() => {
+        const deck = useDeck(2);
+        return () =>
+            h("div", [
+                h("article", { style: "padding:24px" }, [h("h1", "Records")]),
+                wrap(witnessDeck(deck)),
+            ]);
+    });
+}
 
 const scenes: Record<string, Component> = {
     // Gregg's FindingsTable shape: a responsive DataTable (card breakpoint 640) in a box
@@ -47,29 +68,38 @@ const scenes: Record<string, Component> = {
     // A two-slide deck, the stage the page's only content (a presentation route).
     "print-deck": defineComponent(() => {
         const deck = useDeck(2);
-        return () =>
-            h(DeckStage, { deck, ariaLabel: "witness deck" }, () =>
-                [0, 1].map((index) =>
-                    h(DeckSlide, { index }, () => h("h2", `Slide ${index + 1}`)),
-                ),
-            );
+        return () => witnessDeck(deck);
     }),
     // The same deck inside a modal <dialog> beside prose: the stage is in the top layer,
     // out of flow, so its own `page` cannot start a sheet (critique-1 F-1).
-    "print-deck-dialog": defineComponent(() => {
+    "print-deck-dialog": overlay((deck) => h("dialog", { "data-witness": "dialog" }, [deck])),
+    // The library's own Dialog: a reka portal whose plate is `position: fixed`, not a
+    // native <dialog>, so it never matches `:modal` (critique-2 F-2).
+    "print-deck-glass-dialog": overlay((deck) =>
+        h(Dialog, { open: true }, () =>
+            h(DialogContent, { "aria-describedby": undefined }, () => [h("h2", "Deck"), deck]),
+        ),
+    ),
+    // A consumer's fixed full-viewport presenter layer (critique-2 F-2).
+    "print-deck-fixed": overlay((deck) =>
+        h("div", { style: "position:fixed;inset:0;z-index:10" }, [deck]),
+    ),
+    // A non-modal <dialog open>: the UA positions it absolute (critique-2 F-2).
+    "print-deck-nonmodal": overlay((deck) => h("dialog", { open: true }, [deck])),
+    // A consumer's own unlayered paper, as Gregg keeps its print margin, beside a deck:
+    // the deck's sheets stay the deck's (critique-2 F-3).
+    "print-deck-consumer-page": defineComponent(() => {
         const deck = useDeck(2);
-        return () =>
-            h("div", [
-                h("article", { style: "padding:24px" }, [h("h1", "Records")]),
-                h("dialog", { "data-witness": "dialog" }, [
-                    h(DeckStage, { deck, ariaLabel: "witness deck" }, () =>
-                        [0, 1].map((index) =>
-                            h(DeckSlide, { index }, () => h("h2", `Slide ${index + 1}`)),
-                        ),
-                    ),
-                ]),
-            ]);
+        return () => h("div", [h("style", CONSUMER_PAGE), witnessDeck(deck)]);
     }),
+    // The same consumer paper on a page with no deck: the reader's paper is theirs.
+    "print-plain-consumer-page": defineComponent(
+        () => () =>
+            h("div", [
+                h("style", CONSUMER_PAGE),
+                h("article", { style: "padding:24px" }, [h("h1", "Records")]),
+            ]),
+    ),
 };
 
 const Scene = scenes[scene];
