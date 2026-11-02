@@ -29,15 +29,21 @@ Gregg can delete both workarounds.
   margin: 0 }` and reset `html`, `body` and `#app` with `print-color-adjust: exact`.
   That stylesheet reaches every importer of the library's styles, so any page that
   printed came out on 1280x720 sheets with its margins zeroed. The page is now named,
-  `@page deck`, and `[data-slot="deck-stage"]` takes it with `page: deck`. The
-  document resets apply only under `:root:has([data-slot="deck-stage"])`. A page
-  without a deck prints on the reader's own paper with its own margins. A named page
-  starts a sheet only from a box in normal flow, and a stage in the top layer (a
-  modal `<dialog>`, an open popover) is not one. In that case `<body>` takes
-  `page: deck` instead, under `:root:has(:modal [data-slot="deck-stage"],
-  :popover-open [data-slot="deck-stage"])`, so a modal deck still prints at slide
-  geometry. As at 10.1.3, a top-layer deck prints only its first sheet. That is the
-  glass print arm's (F-80) work. The arm is not in this patch; it is W-E.13 (11.0.0).
+  `@page deck`, and only a page with a deck takes it: `[data-slot="deck-stage"]`,
+  `html` and `<body>` take `page: deck`, and the document resets apply, only under
+  `:root:has([data-slot="deck-stage"])`. A page without a deck prints on the reader's
+  own paper with its own margins. The document takes the page as well as the stage
+  because a named page starts a sheet only from a box in normal flow. A stage inside
+  a modal `<dialog>`, the library's own `Dialog` (a fixed plate), or any fixed or
+  absolute overlay is not one, and it still prints at slide geometry. As at 10.1.3,
+  every sheet of a deck page is a slide sheet, prose before the deck included. A
+  consumer's own `@page` (Gregg's print margin) sets the paper of its pages without a
+  deck and no longer reaches a deck's sheets. At 10.1.3 it resized and re-margined them.
+  The `size` and `margin` of `@page deck` are `!important`. A normal declaration
+  there would lose to an unlayered `@page`, because the rule sits in a cascade layer,
+  and Chromium lets a later sheet's `@page` size beat the named page's specificity. As at 10.1.3, an
+  out-of-flow deck prints only the slides on its first sheet. That is the glass print
+  arm's (F-80) work. The arm is not in this patch; it is W-E.13 (11.0.0).
 
 ## 10.1.3 — 2026-10-29
 
