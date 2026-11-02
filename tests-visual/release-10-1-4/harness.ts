@@ -5,7 +5,7 @@
 // mounts unchanged on a 10.1.3 tree: that is how each witness is shown RED on 10.1.3
 // and GREEN on 10.1.4.
 import "../../demo/demo.css";
-import { createApp, defineComponent, h, type Component } from "vue";
+import { createApp, defineComponent, h, nextTick, type Component } from "vue";
 
 import DataTable from "../../src/components/data-table/DataTable.vue";
 import { DeckSlide, DeckStage, useDeck } from "../../src/components/deck";
@@ -54,6 +54,22 @@ const scenes: Record<string, Component> = {
                 ),
             );
     }),
+    // The same deck inside a modal <dialog> beside prose: the stage is in the top layer,
+    // out of flow, so its own `page` cannot start a sheet (critique-1 F-1).
+    "print-deck-dialog": defineComponent(() => {
+        const deck = useDeck(2);
+        return () =>
+            h("div", [
+                h("article", { style: "padding:24px" }, [h("h1", "Records")]),
+                h("dialog", { "data-witness": "dialog" }, [
+                    h(DeckStage, { deck, ariaLabel: "witness deck" }, () =>
+                        [0, 1].map((index) =>
+                            h(DeckSlide, { index }, () => h("h2", `Slide ${index + 1}`)),
+                        ),
+                    ),
+                ]),
+            ]);
+    }),
 };
 
 const Scene = scenes[scene];
@@ -62,4 +78,6 @@ if (!Scene) throw new Error(`unknown scene "${scene}"`);
 // (`!important`), and a page without a deck keeps it.
 document.getElementById("app")!.style.minBlockSize = "50px";
 createApp(Scene).mount("#app");
+await nextTick();
+document.querySelector<HTMLDialogElement>('[data-witness="dialog"]')?.showModal();
 w.__ready = true;

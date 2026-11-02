@@ -52,6 +52,19 @@ async function printReads(page: Page) {
             bodyAdjust: adjust(document.body),
             appBlock: getComputedStyle(document.getElementById("app")!).minBlockSize,
             stagePage: stage ? getComputedStyle(stage).getPropertyValue("page") : null,
+            bodyPage: getComputedStyle(document.body).getPropertyValue("page"),
+            // Whether a print rule declaring `page: deck` matches <body>: the cascade's
+            // own answer, readable in WebKit, which does not serialize computed `page`.
+            bodyTakesDeckPage: [...document.styleSheets].some((sheet) => {
+                const walk = (rules: CSSRuleList): boolean =>
+                    [...rules].some((r) =>
+                        r instanceof CSSStyleRule
+                            ? r.style.getPropertyValue("page") === "deck" &&
+                              document.body.matches(r.selectorText)
+                            : "cssRules" in r && walk((r as CSSGroupingRule).cssRules),
+                    );
+                return walk(sheet.cssRules);
+            }),
             supportsPage: CSS.supports("page", "deck"),
             pageRules: [...document.styleSheets].flatMap((sheet) => {
                 const walk = (rules: CSSRuleList): string[] =>
@@ -120,6 +133,24 @@ test.describe("O-119 (f), the @page half: only a deck prints at slide geometry",
         if (browserName === "chromium") expect(reads.stagePage).toBe("deck");
     });
 
+    test("a deck in a modal dialog (top layer, out of flow) hands its named page to the document", async ({
+        page,
+        browserName,
+    }) => {
+        await open(page, "scene=print-deck-dialog");
+        expect(await page.locator('[data-witness="dialog"]').evaluate((d) => d.matches(":modal"))).toBe(true);
+        const reads = await printReads(page);
+        expect(reads.htmlAdjust).toBe("exact");
+        expect(reads.bodyTakesDeckPage).toBe(true);
+        if (browserName === "chromium") expect(reads.bodyPage).toBe("deck");
+    });
+
+    test("a deck page in flow leaves <body> on its own page", async ({ page }) => {
+        await open(page, "scene=print-deck");
+        const reads = await printReads(page);
+        expect(reads.bodyTakesDeckPage).toBe(false);
+    });
+
     test("page.pdf: a page without a deck prints on the default paper (Letter)", async ({
         page,
         browserName,
@@ -145,5 +176,19 @@ test.describe("O-119 (f), the @page half: only a deck prints at slide geometry",
             [960, 540],
             [960, 540],
         ]);
+    });
+
+    test("page.pdf: a deck in a modal dialog prints at slide geometry", async ({
+        page,
+        browserName,
+    }) => {
+        test.skip(browserName !== "chromium", "page.pdf is Chromium's");
+        await open(page, "scene=print-deck-dialog");
+        await page.emulateMedia({ media: "print" });
+        const boxes = mediaBoxes(await page.pdf({ preferCSSPageSize: true }));
+        // A top-layer dialog prints one sheet of its slides at 10.1.3 and here alike (the
+        // truncation is W-E.13's print arm); the sheet is the slide's, not the paper's.
+        expect(boxes.length).toBeGreaterThan(0);
+        for (const box of boxes) expect(box).toEqual([960, 540]);
     });
 });
