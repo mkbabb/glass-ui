@@ -10,7 +10,7 @@ import {
 } from "./vite.library";
 import { publishStyleAssets } from "./vite.style-assets";
 import { componentSheets } from "./vite.component-sheets";
-import { glassCssTarget } from "./vite.targets";
+import { glassCssTarget, glassLightningcss } from "./vite.targets";
 
 export default defineConfig({
     // BH.B2.0 — the `@glass` source alias (`@glass/*` → `src/*`). Decouples the
@@ -51,6 +51,9 @@ export default defineConfig({
     // The `fs.allow` widening that the `development` condition once required
     // (to reach a sibling's `src/` over the `/@fs/` channel) is gone with it —
     // `dist/` resolves inside `node_modules`, no widening needed.
+    // The SFC sheets are lowered to `glassCssTarget` by lightningcss, which must never lower
+    // `light-dark()` (vite.targets.ts, U/B8 N-1).
+    css: { lightningcss: glassLightningcss },
     build: {
         cssTarget: glassCssTarget,
         // U/B7b X3 — each chunk keeps its own SFC sheet, and `componentSheets`

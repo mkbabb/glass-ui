@@ -8,7 +8,7 @@ import {
 } from "./vite.library";
 import { publishStyleAssets } from "./vite.style-assets";
 import { componentSheets } from "./vite.component-sheets";
-import { glassCssTarget } from "./vite.targets";
+import { glassCssTarget, glassLightningcss } from "./vite.targets";
 
 export default defineConfig({
     plugins: [
@@ -17,6 +17,7 @@ export default defineConfig({
         componentSheets(),
         publishStyleAssets(),
     ],
+    css: { lightningcss: glassLightningcss },
     build: {
         cssTarget: glassCssTarget,
         // U/B7b X3 — each chunk keeps its own SFC sheet, and `componentSheets`
