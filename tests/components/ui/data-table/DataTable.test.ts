@@ -211,6 +211,32 @@ describe("DataTable interaction semantics", () => {
         expect(wrapper.emitted("update:selectedRowId")).toBeUndefined();
     });
 
+    it("projects cards on the first observation when the laid-out box already reads narrow (O-119 g)", async () => {
+        // The platform delivers its first observation after `observe` returns, at the
+        // next rendering update, never inside the call.
+        class LaterNarrowResizeObserver extends NarrowResizeObserver {
+            observe(target: Element) {
+                queueMicrotask(() => super.observe(target));
+            }
+        }
+        vi.stubGlobal("ResizeObserver", LaterNarrowResizeObserver);
+        // The engine has laid the root out at the width its first observation carries.
+        vi.spyOn(HTMLElement.prototype, "getBoundingClientRect").mockReturnValue({
+            width: 320,
+            height: 240,
+        } as DOMRect);
+        const wrapper = mountTable(
+            [
+                { _id: "1", name: "Ada" },
+                { _id: "2", name: "Grace" },
+            ],
+            { responsive: true },
+        );
+
+        await vi.waitFor(() => expect(wrapper.find(".data-table-cards").exists()).toBe(true));
+        expect(wrapper.find("table").exists()).toBe(false);
+    });
+
     it("projects the same controlled selection contract onto responsive cards", async () => {
         vi.stubGlobal("ResizeObserver", NarrowResizeObserver);
         const wrapper = mountTable(
