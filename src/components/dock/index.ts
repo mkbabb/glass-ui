@@ -4,7 +4,6 @@ export { default as GlassDock } from "./GlassDock.vue";
    takes its place on the surface as the folded collapse member's union. */
 export type {
     DockAnchor,
-    DockBackdropMode,
     DockCollapse,
     DockExpandOn,
     DockProps,

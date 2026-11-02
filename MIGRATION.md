@@ -9,6 +9,16 @@ rename or import re-point per call site.
 
 Merged on local branch `u/b7-glass` (off `release/10.1.1` bbf176f02, with the published `v10.1.2` merged in) from `u/b7-glass-shape` (rows B7-G1 to B7-G6) and `u/b7-glass-perf` (rows B7-G7 to B7-G9). Row numbers follow the relay letter.
 
+### Load time and frame rate (`u/b8-perf-glass`, U/B8 PF)
+
+- **`DockBackdropMode` is removed; the axis is `BackdropMode` in `./axes`.** The same
+  `"live" | "static"` union now also types `Surface` and `Card`'s new `backdropMode` prop.
+  Breaking for a consumer that imported the type by name: import `BackdropMode` from
+  `@mkbabb/glass-ui/axes`. No alias.
+- **`Surface` and `Card` take `backdropMode`.** `"static"` keeps the plate's rung, fill,
+  edge and rim and withholds the backdrop-filter (`[data-backdrop-mode="static"]`). Use it
+  for in-flow plates over a still field. The default, `"live"`, is unchanged.
+
 ### Root items (`u/b7-glass`, U/B7c C3)
 
 - **`<DropdownMenu trigger="context">` becomes `<ContextMenu>`.** The region-anchored menu
