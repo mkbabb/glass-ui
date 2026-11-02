@@ -1,0 +1,11 @@
+ 6:00  up 10:25, 3 users, load averages: 9.10 10.88 10.84
+PASS  CASES  Playwright WebKit  case·capped·seat-transition  cap 150 px, run overflowing true; grow and shrink a seat's own width transition: page errors 0, window error events 0; plate travel 0 px, largest one-frame step 0 px; flag at rest closed; webkit-case_capped_seat-transition.json  [load 8.69]
+PASS  CASES  Playwright WebKit  case·capped·morph  cap 300 px: expand (run overflowing true), add a seat, collapse: page errors 0, window error events 0; plate travel 198 px, largest one-frame step 24.56 px; flag at rest closed; webkit-case_capped_morph.json  [load 8.69]
+PASS  CASES  Playwright WebKit  case·consumer-margin  unlayered ".glass-dock { margin-inline: 20px; }" (computed margin-left at rest 20px): expand, collapse; plate end edge past the neighbour by at most -31.98 px (bound 0.5); neighbour travel 379.72 px, largest one-frame step 56.84 px against the plate edge's 56.84 px (+1); webkit-case_consumer-margin.json  [load 8.56]
+PASS  CASES  Playwright WebKit  case·consumer-margin·control  no consumer rule (computed margin-left at rest 8px): expand, collapse; plate end edge past the neighbour by at most -19.98 px (bound 0.5); neighbour travel 379.72 px, largest one-frame step 59.7 px against the plate edge's 59.7 px (+1); webkit-case_consumer-margin_control.json  [load 8.56]
+PASS  CASES  Playwright WebKit  case·rotated·control  host rotate(0deg): expand, collapse; seats' largest second difference 11.81 px/frame²; largest one-frame seat move after the window closed 0.16 px (bound 0.5); webkit-case_rotated_control.json  [load 8.83]
+PASS  CASES  Playwright WebKit  case·rotated  host rotate(2deg): expand, collapse; seats' largest second difference 12.63 px/frame² (control 11.81, bound +1); largest one-frame seat move after the window closed 0.1 px (bound 0.5); webkit-case_rotated.json  [load 8.83]
+PASS  CASES  bp10@d00eaa3b  6/6 cells pass  (json: /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D2/p11/Bp-crit/out/webkit/bp10/main/runs/CASES-bp10/CASES.json)
+exit 0
+ 6:00  up 10:25, 3 users, load averages: 8.83 10.72 10.79
+reds: none
