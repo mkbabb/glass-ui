@@ -15,10 +15,15 @@ import { createFrameLoop } from "@glass/components/aurora/composables/frameLoop"
 describe("STILL_FIELD — a field that draws once", () => {
     const still: AuroraConfig = { ...DEFAULT_AURORA_CONFIG, ...PAPER_WASH_GROUND, ...STILL_FIELD };
 
-    it("zeroes every drift axis and both grains over any base", () => {
-        for (const k of ["nucleiDrift", "paletteDrift", "warpDrift", "breathDepth", "paperGrain", "canvasGrain"] as const) {
+    it("zeroes every drift axis and the clocked film grain over any base", () => {
+        for (const k of ["nucleiDrift", "paletteDrift", "warpDrift", "breathDepth", "paperGrain"] as const) {
             expect(still[k], k).toBe(0);
         }
+    });
+
+    it("keeps the spatial canvas tooth: a still field keeps its texture", () => {
+        expect(STILL_FIELD).not.toHaveProperty("canvasGrain");
+        expect(still.canvasGrain).toBe(PAPER_WASH_GROUND.canvasGrain);
     });
 
     it("the frame loop asks for no second frame over the still field at rest", () => {

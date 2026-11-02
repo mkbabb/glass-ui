@@ -556,8 +556,10 @@ export const PAPER_WASH_GROUND = {
  * `const cfg = { ...consumerBase, ...STILL_FIELD }`.
  *
  * Every drift axis is 0, so `isAuroraDriftLive` parks the loop after the first frame,
- * and both grains are 0, because the shader reseeds grain on every drawn frame, which
- * reads as flicker over a full page whenever something else asks for one. A pointer
+ * and the film grain (`paperGrain`) is 0, because the shader reseeds it from the clock on
+ * every drawn frame, which reads as flicker over a full page whenever something else asks
+ * for one. The canvas tooth (`canvasGrain`) is spatial, not clocked, so it stays: a still
+ * field keeps its texture. A pointer
  * still wakes the loop only while it moves (the shared field's own rest gate), and the
  * field settles back to the same still frame. Use it behind data: the page's motion
  * budget belongs to the marks, not the ground.
@@ -568,5 +570,4 @@ export const STILL_FIELD = {
     warpDrift: 0,
     breathDepth: 0,
     paperGrain: 0,
-    canvasGrain: 0,
 } as const satisfies Partial<AuroraConfig>;

@@ -19,7 +19,7 @@ Merged on local branch `u/b7-glass` (off `release/10.1.1` bbf176f02, with the pu
   edge and rim and withholds the backdrop-filter (`[data-backdrop-mode="static"]`). Use it
   for in-flow plates over a still field. The default, `"live"`, is unchanged.
 - **`STILL_FIELD` (`./aurora`, A7).** A preset partial that zeroes the four drift axes
-  and both grains. Spread it last over a field config; the loop parks after the first
+  and the clocked film grain (`paperGrain`); the spatial canvas tooth stays. Spread it last over a field config; the loop parks after the first
   frame. Additive.
 - **`DockTrigger` moves from `./dock` to `./dock-trigger` (G-M1-3b).** Import it as
   `import { DockTrigger } from "@mkbabb/glass-ui/dock-trigger"`. `dist/dock.js` no longer
