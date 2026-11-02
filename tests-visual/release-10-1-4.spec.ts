@@ -206,13 +206,20 @@ test.describe("O-119 (f), the @page half: only a deck prints at slide geometry",
 
     // critique-2 F-3: a consumer's own `@page`, unlayered and in a later sheet, does not
     // reach the deck's sheets: the deck page's size and margin are important.
-    test("the deck's named page outranks a consumer's own @page", async ({ page }) => {
+    test("the deck's named page outranks a consumer's own @page", async ({
+        page,
+        browserName,
+    }) => {
         await open(page, "scene=print-deck-consumer-page");
         const reads = await printReads(page);
         expect(reads.pageRules).toEqual(["@page deck", "@page"]);
-        expect(reads.deckPage).toEqual([
-            { size: "important", margin: "important" },
-        ]);
+        expect(reads.deckPage).toHaveLength(1);
+        const [deckPage] = reads.deckPage as { size: string; margin: string }[];
+        expect(deckPage.margin).toBe("important");
+        // WebKit 2287 parses `size` but reports no priority for it (it serializes
+        // `size: 1280px 720px` without `!important`); the size is read in Chromium, and
+        // its printed sheets in the page.pdf cell below.
+        if (browserName === "chromium") expect(deckPage.size).toBe("important");
     });
 
     test("page.pdf: a consumer's own @page does not resize the deck's sheets", async ({
