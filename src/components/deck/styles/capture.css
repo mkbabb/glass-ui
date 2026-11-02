@@ -112,12 +112,18 @@
 
 @layer components {
     @media print {
-        @page {
+        /* The slide page is NAMED and only the stage takes it: this stylesheet reaches
+           every importer of the library's styles, and a page with no deck prints on the
+           reader's own paper. The document resets are gated on a stage being present. */
+        @page deck {
             size: 1280px 720px;
             margin: 0;
         }
-        html,
-        body {
+        [data-slot="deck-stage"] {
+            page: deck;
+        }
+        :root:has([data-slot="deck-stage"]),
+        :root:has([data-slot="deck-stage"]) body {
             overflow: visible !important;
             margin: 0 !important;
             padding: 0 !important;
@@ -125,9 +131,9 @@
             -webkit-print-color-adjust: exact;
         }
         /* the SPA wrapper's full height spills one blank sheet per document */
-        html,
-        body,
-        #app {
+        :root:has([data-slot="deck-stage"]),
+        :root:has([data-slot="deck-stage"]) body,
+        :root:has([data-slot="deck-stage"]) #app {
             block-size: auto !important;
             min-block-size: 0 !important;
         }
