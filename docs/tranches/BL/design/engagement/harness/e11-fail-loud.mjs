@@ -48,11 +48,54 @@
 //                    token may leave the change instant, which E-10 reads. Plant `e11-travelthrow` (the travel checks its easing
 //                    for presence, not parse: `nonsense` reaches animate(), which throws); the pass-10 candidate; control the
 //                    pass-10 candidate with C-A10's `loudcure` (`../pass-11/H11.md`)
+//   H12 (REGISTRY §P11-7 items 1, 3, 4; §P11-8.3 wave 1), the value family on three paths:
+//   travel loud · clean · side|rerender|carry   as above, plus `carry`: 8 moves of −14 px 8 ms apart, released; driven when a WAAPI
+//                    animation (no CSS transition or animation) starts on the lens, the root or under it after the mark. Every clean
+//                    travel is exact: its duration equals CSS's clock for its row, `calc(var(--spring-<row>-settle) *
+//                    var(--motion-tempo, 1))` read on a probe, to 1 ms.
+//   travel loud · --spring-<row> <v> · side|rerender|carry   v ∈ `ease, linear`, `linear(0, 1), ease-in`, `nonsense`, `initial`,
+//                    `var(--undefined)`, `steps(4)`, `cubic-bezier(0, 2, 1, -1)`; and `--spring-<row>-settle` v ∈ `210ms`, `0.21s`,
+//                    `-1`, `0`, `nonsense`, each on <html> before the first script. The grammar decides the expectation: a settle
+//                    CSS reads as a positive <time> is TAKEN, else REFUSED; an easing `new KeyframeEffect(null, null, {easing})`
+//                    takes is TAKEN with its normal form, else REFUSED; on the carry an easing is either (the carry may take its shape
+//                    from its own curve). TAKEN: every travel on CSS's clock to 1 ms, the easing the parser's, no error naming the
+//                    token. REFUSED: ≥ 1 console.error naming the token and no travel. Always: 0 uncaught, the later hold engaged,
+//                    shown, pinned. Verdicts name the miss: THROWS, MISREAD CLOCK, NOT EXACT, NOT TAKEN, TRAVELS ON A REFUSED TOKEN,
+//                    SILENT. Plants `e11-travellist` (CSS.supports on a list-valued property), `e11-travelunit` (parseFloat × 1000);
+//                    `e11-travelthrow` narrowed to `nonsense`; the pass-11 candidate (red on the lists, side and rerender, and on
+//                    `210ms`, all three paths); controls C-E11's `waapicure` and `unitcure` (`../pass-12/H12.md`)
 //   `--part travel` runs these alone, `--part old` the rest.
 //   node e11-fail-loud.mjs --build <dir> | --fixture [--fault e11-silent] [--engine webkit]
 import { witness, openPage, scenesFor, center, tabKey, f, rowsOf, rodeRow, sideFilm, sideSetup } from "./lib.mjs";
 
 const EPS_S = 0.003, EPS_PX = 1, EPS_L = 0.005;
+// ── H12: the travel's value family (REGISTRY §P11-7 items 1, 3, 4; §P11-8.3 wave 1) ──
+// Every form the travel row's easing token can hold, and its settle token: lists (CSS.supports on a list-valued property takes them;
+// animate() does not), a nonsense string, initial and an undefined var() (a custom property computes to nothing), steps() and a
+// cubic-bezier with y past [0, 1] (both valid easings); a <time> in ms and in s, a negative and a unitless number, a nonsense string
+const TRAVEL_EASINGS = ["ease, linear", "linear(0, 1), ease-in", "nonsense", "initial", "var(--undefined)", "steps(4)", "cubic-bezier(0, 2, 1, -1)"];
+const TRAVEL_SETTLES = ["210ms", "0.21s", "-1", "0", "nonsense"];
+// the recorder: every WAAPI animation (no CSS transition or animation) on the lens, on the root, or under the root, seen once per frame
+// from before the hold to the end of the page's act, with its clock, its easing and the properties it animates
+const TRAVEL_REC = ([LS, RS]) => {
+  const seen = new Set(), out = []; let on = true; const isCss = (a) => (typeof CSSTransition !== "undefined" && a instanceof CSSTransition) || (typeof CSSAnimation !== "undefined" && a instanceof CSSAnimation);
+  const poll = () => { if (!on) return; const lens = document.querySelector(LS), root = document.querySelector(RS);
+    for (const a of document.getAnimations()) { if (seen.has(a) || isCss(a)) continue; const t = a.effect?.target; if (!t) continue;
+      const where = t === lens ? "lens" : t === root ? "root" : root?.contains(t) ? "under" : null; if (!where) continue; seen.add(a);
+      const tm = a.effect.getTiming(); const kf = a.effect.getKeyframes(); out.push({ where, ms: tm.duration, easing: tm.easing, props: Object.keys(kf[0] ?? {}).filter((k) => !["offset", "easing", "composite", "computedOffset"].includes(k)).join(","), at: performance.now() }); }
+    requestAnimationFrame(poll); };
+  requestAnimationFrame(poll); window.__h12rec = { stop: () => { on = false; return out; } };
+};
+// the consumers' own grammars, on the page as planted: CSS's reading of every row's settle as a <time>, in the row duration token's
+// own form (calc(settle × tempo)); and whether animate() takes the planted easing (a KeyframeEffect built in a try), with its normal form
+const TRAVEL_FACTS = ([names, tok]) => {
+  const p = document.createElement("div"); document.body.appendChild(p); const css = {};
+  for (const n of names) { const t = `--spring-${n}-settle`; p.style.cssText = ""; p.style.setProperty("transition-duration", `calc(var(${t}) * var(--motion-tempo, 1))`, "important"); const d = getComputedStyle(p).transitionDuration; const v = Number.parseFloat(d); css[t] = /ms/.test(d) ? v : v * 1000; }
+  p.remove();
+  let takes = null, norm = null, why = null;
+  if (tok && !/-settle$/.test(tok)) { const v = getComputedStyle(document.documentElement).getPropertyValue(tok).trim(); if (!v) { takes = false; why = "the token computes to nothing"; } else { try { norm = new KeyframeEffect(null, null, { easing: v }).getTiming().easing; takes = true; } catch (e) { takes = false; why = String(e?.message ?? e); } } }
+  return { css, takes, norm, why };
+};
 // ── H6: the clock census, in page ─────────────────────────────────────────────────────────────────────────────
 // every style rule of every loaded sheet, nested rules resolved against their parent (`&` replaced by :is(parent), a
 // relative nested selector prefixed by it), with its declarations (the shorthands that hold a var() are read from the
@@ -102,7 +145,7 @@ const consumersFn = (clocks) => {
 };
 await witness("E-11", "CK-21 no silent degradation", async ({ a, E, T, cell, guard, idx, engine }) => {
   const part = typeof a.part === "string" ? new Set(a.part.split(",")) : null; const old = !part || part.has("old"); const wantTravel = !part || part.has("travel");
-  // ── H11: the travel's tokens (lens and host), loud by name, no throw, the loop alive ──
+  // ── H11: the travel's tokens (lens and host), loud by name, no throw, the loop alive. H12: the value family, three paths ──
   for (const [sc, m] of wantTravel ? Object.entries(idx).filter(([s, x]) => s !== "__index" && x.loupe && x.clip) : []) {
     const L = m.loupe, thumb = m.thumb ?? '[data-e~="thumb"]', B = m.clip.box, REST = m.clip.rest, ROOT = m.root ?? '[data-e~="root"]', ENG = m.engaged ?? "[data-engaged]";
     const page1 = (path, plant) => guard(`travel ${path} ${plant ? plant.join(" ") : "clean"}`, async () => {
@@ -110,46 +153,78 @@ await witness("E-11", "CK-21 no silent degradation", async ({ a, E, T, cell, gua
       try {
         await sideSetup(m, "none")(P.page, "carry"); await P.page.waitForTimeout(250);
         const rows = await P.page.evaluate(rowsOf);
+        await P.page.evaluate(TRAVEL_REC, [L.lens, ROOT]);
         const c = await center(P.page, thumb); await P.page.mouse.move(c.x, c.y); await P.page.mouse.down();
-        let film = null, glide = null;
+        let film = null, mark = null, up = false;
         try {
           await P.page.waitForTimeout(900);
           if (path === "side") film = await P.page.evaluate(sideFilm, [L, "carry", B, "side", 2]);
-          else glide = await P.page.evaluate(([R, Q]) => new Promise((ok) => { const root = document.querySelector(R); let k = 0, seen = 0; const ins = () => { const d = document.createElement("div"); d.style.height = "40px"; d.setAttribute("data-t", "h11-inserted"); document.querySelector(Q).before(d); };
-            const tick = () => { k++; if (k === 3) ins(); if (k > 3 && k <= 6) seen = Math.max(seen, root.getAnimations().filter((x) => !x.transitionProperty && x.playState === "running").length); if (k < 40) requestAnimationFrame(tick); else ok({ seen }); }; requestAnimationFrame(tick); }), [ROOT, REST]);
-        } finally { await P.page.mouse.up(); }
+          else if (path === "rerender") mark = await P.page.evaluate(([Q]) => new Promise((ok) => { let k = 0, at = 0; const tick = () => { k++; if (k === 3) { const d = document.createElement("div"); d.style.height = "40px"; d.setAttribute("data-t", "h11-inserted"); document.querySelector(Q).before(d); at = performance.now(); } if (k < 40) requestAnimationFrame(tick); else ok(at); }; requestAnimationFrame(tick); }), [REST]);
+          else {
+            // the release carry: a fling of the held thumb, 8 moves of 14 px left 8 ms apart, released at once
+            for (let i = 1; i <= 8; i++) { await P.page.mouse.move(c.x - 14 * i, c.y); await P.page.waitForTimeout(8); }
+            mark = await P.page.evaluate(() => performance.now()); await P.page.mouse.up(); up = true; await P.page.waitForTimeout(400);
+          }
+        } finally { if (!up) await P.page.mouse.up(); }
         await P.page.waitForTimeout(700);
         // the later holder: a new hold on the same page, +700 ms
         const c2 = await center(P.page, thumb); await P.page.mouse.move(c2.x, c2.y); await P.page.mouse.down();
         let later;
         try { await P.page.waitForTimeout(700); later = await P.page.evaluate(([L, R, EN]) => { const l = document.querySelector(L.lens), t = document.querySelector(L.track), r = document.querySelector(R); const eng = !!r && (r.matches(EN) || !!r.closest(EN) || !!r.querySelector(EN)); if (!l || !t) return { eng, shown: false };
           const a1 = l.getBoundingClientRect(), d = t.getBoundingClientRect(); const rel = a1.top + a1.height / 2 - (d.top + d.height / 2); return { eng, shown: a1.width > 0 && +getComputedStyle(l).opacity > 0.9, pin: rel < 0 ? a1.bottom - d.top : a1.top - d.bottom, op: +getComputedStyle(l).opacity }; }, [L, ROOT, ENG]); } finally { await P.page.mouse.up(); }
-        return { rows, film, glide, later, errs: [...P.errors] };
+        const rec = await P.page.evaluate(() => window.__h12rec.stop());
+        // what the consumers' own grammars say of the planted value: CSS reads the settle as a <time> (through the row's duration
+        // token's own form, × the tempo); animate() takes the easing or throws
+        const facts = await P.page.evaluate(TRAVEL_FACTS, [rows.map((x) => x.n), plant?.[0] ?? null]);
+        return { rows, film, mark, rec, later, facts, errs: [...P.errors] };
       } finally { await P.close(); }
     }, 60000);
     const laterOk = (r) => r.later?.eng && r.later?.shown && Math.abs(r.later?.pin ?? 99) <= 2;
     const laterLine = (r) => `the later hold: engaged ${r.later?.eng}, lens shown ${r.later?.shown} (opacity ${f(r.later?.op, 2)}), pinned ${f(r.later?.pin, 1)} px`;
     const changesOf = (fl) => { const S = fl?.out ?? []; let n = 0; for (let i = 1; i < S.length; i++) if (S[i].rel > 0 !== S[i - 1].rel > 0) n++; return n; };
     const amsOf = (fl) => [...new Set((fl?.out ?? []).flatMap((x) => x.an.filter((y) => y.p !== "opacity").map((y) => y.ms)))];
+    // the path's travel: a WAAPI animation (no CSS transition or animation) the recorder saw: on the lens, translating (side); on the
+    // root, translating, from the insert on (rerender); under the root, from the release on (carry)
+    const travelsOf = (r, path) => (r.rec ?? []).filter((x) => (path === "side" ? x.where === "lens" && /translate/.test(x.props) : path === "rerender" ? x.where === "root" && /translate/.test(x.props) && x.at >= (r.mark ?? 0) - 1 : x.where === "under" && x.at >= (r.mark ?? 0) - 1));
+    const tline = (tv) => (tv.length ? tv.map((x) => `${x.where} ${x.props} ${f(x.ms, 0)} ms "${String(x.easing).slice(0, 60)}"`).join("; ") : "none");
     const clean = {}; let row = null;
-    for (const path of ["side", "rerender"]) {
+    const settleOf = (rw) => (rw ? `--spring-${rw.n}-settle` : null);
+    for (const path of ["side", "rerender", "carry"]) {
       const nm = `E-11 ${sc} travel loud · clean · ${path}`; const r = await page1(path, null);
       if (r.crashed) { cell(nm, "FAIL", r.line); continue; }
       const rode = path === "side" ? rodeRow(amsOf(r.film), r.rows) : null; if (rode) row = rode;
-      const driven = path === "side" ? !!rode && changesOf(r.film) >= 1 : (r.glide?.seen ?? 0) >= 1; clean[path] = driven;
-      const what = path === "side" ? `side changes ${changesOf(r.film)}, running animations on the lens [${amsOf(r.film).map((x) => f(x, 0)).join(",")}] ms, the row ${rode ? `${rode.n} (${f(rode.ms, 0)} ms)` : "none"}` : `a 40 px block inserted before the rest box: ${r.glide?.seen ?? 0} running animation(s) on the root within 3 frames`;
-      cell(nm, !driven ? "UNMEASURED" : !r.errs.length && laterOk(r) ? "PASS" : "FAIL", `${driven ? "" : "NOT DRIVEN · "}clean page · ${what} · console/page errors ${r.errs.length}${r.errs[0] ? ` (${r.errs[0].slice(0, 120)})` : ""} · ${laterLine(r)}`);
+      // CSS's clock on the row the side page names (every row's settle is read on every page)
+      const cssMs = row ? r.facts.css[settleOf(row)] : NaN;
+      const tv = travelsOf(r, path);
+      const driven = path === "side" ? !!rode && changesOf(r.film) >= 1 && tv.length >= 1 : tv.length >= 1; clean[path] = driven;
+      const exact = driven && Number.isFinite(cssMs) && tv.every((x) => Math.abs(x.ms - cssMs) <= 1);
+      const what = path === "side" ? `side changes ${changesOf(r.film)}, the row ${rode ? `${rode.n} (${f(rode.ms, 0)} ms)` : "none"}` : path === "rerender" ? "a 40 px block inserted before the rest box" : "a fling released";
+      cell(nm, !driven ? "UNMEASURED" : !r.errs.length && laterOk(r) && exact ? "PASS" : "FAIL", `${driven ? "" : "NOT DRIVEN · "}clean page · ${what} · travel ${tline(tv)} against CSS's clock ${f(cssMs, 1)} ms (to the ms: ${exact}) · console/page errors ${r.errs.length}${r.errs[0] ? ` (${r.errs[0].slice(0, 120)})` : ""} · ${laterLine(r)}`);
     }
-    const toks = row ? [`--spring-${row.n}`, `--spring-${row.n}-settle`] : [];
     if (!row) cell(`E-11 ${sc} travel loud · tokens`, "UNMEASURED", "NOT DRIVEN: the clean side page shows no running animation on the lens on a declared row's clock, so the travel's tokens cannot be read from it");
-    for (const tok of toks) for (const val of ["nonsense", "initial"]) for (const path of ["side", "rerender"]) {
+    // H12 (REGISTRY §P11-7 items 1, 3, 4; §P11-8.3 wave 1): the value family. The easing token takes every form the travel row can hold:
+    // lists, a nonsense string, initial, an undefined var(), steps(), a cubic-bezier past [0, 1] on its y; the settle token a <time> in
+    // ms, in s, a negative and a unitless number, a nonsense string
+    const VALS = row ? [...TRAVEL_EASINGS.map((v) => [`--spring-${row.n}`, v, "easing"]), ...TRAVEL_SETTLES.map((v) => [`--spring-${row.n}-settle`, v, "settle"])] : [];
+    for (const [tok, val, kind] of VALS) for (const path of ["side", "rerender", "carry"]) {
       const nm = `E-11 ${sc} travel loud · ${tok} ${val} · ${path}`;
-      if (!clean[path]) { cell(nm, "UNMEASURED", `NOT DRIVEN: the clean ${path} page drove no ${path === "side" ? "travel" : "host glide"}`); continue; }
+      if (!clean[path]) { cell(nm, "UNMEASURED", `NOT DRIVEN: the clean ${path} page drove no ${path === "side" ? "travel" : path === "rerender" ? "host glide" : "release carry"}`); continue; }
       const r = await page1(path, [tok, val]);
       if (r.crashed) { cell(nm, "FAIL", r.line); continue; }
       const named = r.errs.filter((e) => !e.startsWith("pageerror") && e.includes(tok)), uncaught = r.errs.filter((e) => e.startsWith("pageerror"));
-      const ok = named.length >= 1 && !uncaught.length && laterOk(r);
-      cell(nm, ok ? "PASS" : "FAIL", `${tok}: ${val} on <html> before the first script (the row ${row.n}, read from the clean travel) · ${path === "side" ? `side changes ${changesOf(r.film)}` : `${r.glide?.seen ?? 0} running animation(s) on the root after the insert`} · console errors naming the token ${named.length}${named[0] ? ` ("${named[0].slice(0, 110)}")` : ""}, uncaught page errors ${uncaught.length}${uncaught[0] ? ` ("${uncaught[0].slice(0, 130)}")` : ""}, all errors ${r.errs.length} · ${laterLine(r)} (bound: ≥ 1 named, 0 uncaught, the later hold engaged, shown, pinned ≤ 2 px)`);
+      const tv = travelsOf(r, path); const cssMs = r.facts.css[settleOf(row)];
+      // what the consumer's grammar says: a settle CSS reads as a positive <time> is TAKEN on that clock, else REFUSED; an easing
+      // animate() takes is TAKEN with that easing, else REFUSED; the carry takes its shape from its own curve and may not read the
+      // easing at all, so on the carry an easing is either taken on the clock or refused
+      const expect = kind === "settle" ? (cssMs > 0 ? "taken" : "refused") : path === "carry" ? "either" : r.facts.takes ? "taken" : "refused";
+      // driven: the painted side flips, or the lens's travel started (a travel on a misread clock, 210 s, holds the paint on the old
+      // side for the whole film, so the flip alone would call a misread clock NOT DRIVEN; the same drive flipped the clean page)
+      const sideOk = path !== "side" || changesOf(r.film) >= 1 || tv.length >= 1;
+      const takenOk = tv.length >= 1 && !named.length && tv.every((x) => Math.abs(x.ms - cssMs) <= 1) && (kind !== "easing" || path === "carry" || tv.every((x) => x.easing === r.facts.norm));
+      const refusedOk = named.length >= 1 && !tv.length;
+      const ok = sideOk && !uncaught.length && laterOk(r) && (expect === "taken" ? takenOk : expect === "refused" ? refusedOk : takenOk || refusedOk);
+      const verdictWhy = !sideOk ? "NOT DRIVEN: no side change · " : uncaught.length ? "THROWS · " : expect === "taken" && !takenOk ? (tv.length && tv.some((x) => Math.abs(x.ms - cssMs) > 1) ? "MISREAD CLOCK · " : tv.length ? "NOT EXACT · " : "NOT TAKEN · ") : expect === "refused" && !refusedOk ? (tv.length ? "TRAVELS ON A REFUSED TOKEN · " : "SILENT · ") : "";
+      cell(nm, !sideOk ? "UNMEASURED" : ok ? "PASS" : "FAIL", `${verdictWhy}${tok}: ${val} on <html> before the first script (the row ${row.n}, read from the clean travel) · the grammar: CSS reads the settle ${f(cssMs, 1)} ms${kind === "easing" ? `; animate() ${r.facts.takes ? `takes "${String(r.facts.norm).slice(0, 50)}"` : `refuses it (${String(r.facts.why).slice(0, 80)})`}` : ""} → expect ${expect} · ${path === "side" ? `side changes ${changesOf(r.film)} · ` : ""}travel ${tline(tv)} · console errors naming the token ${named.length}${named[0] ? ` ("${named[0].slice(0, 100)}")` : ""}, uncaught page errors ${uncaught.length}${uncaught[0] ? ` ("${uncaught[0].slice(0, 120)}")` : ""}, all errors ${r.errs.length} · ${laterLine(r)} (bound: taken on CSS's clock to 1 ms with the easing animate() parses and no error, or refused with ≥ 1 console.error naming the token and no travel; 0 uncaught; the later hold engaged, shown, pinned ≤ 2 px)`);
     }
   }
   for (const [sc, m] of old ? scenesFor(idx, "E-11") : []) {

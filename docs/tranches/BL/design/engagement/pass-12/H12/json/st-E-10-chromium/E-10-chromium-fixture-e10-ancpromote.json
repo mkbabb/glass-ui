@@ -1,0 +1,104 @@
+{
+ "id": "E-10",
+ "engine": "chromium",
+ "version": "149.0.7827.55",
+ "target": {
+  "fixture": true,
+  "fault": "e10-ancpromote"
+ },
+ "loadStart": "11.9/9.2/9.3",
+ "loadEnd": "10.4/9.1/9.3",
+ "verdict": "FAIL",
+ "cells": [
+  {
+   "name": "E-10 clipstale anc none · keyboard",
+   "status": "REPORT",
+   "line": "keyboard engaged (promoted true) · the reference: visibility over the scroller's region engaged over released ×1.012 (the grow's own gain)",
+   "load": "11.9/9.2/9.3"
+  },
+  {
+   "name": "E-10 clipstale anc opacity · keyboard",
+   "status": "FAIL",
+   "line": "keyboard engaged (promoted true) · the scroller opacity 0.5 · visibility engaged over released ×1.982 against ×1.012 with nothing set · ratio of ratios 1.959 (two-sided bound 0.9..1.1: an in-place body reads 1)",
+   "load": "11.9/9.2/9.3"
+  },
+  {
+   "name": "E-10 clipstale anc filter · keyboard",
+   "status": "FAIL",
+   "line": "keyboard engaged (promoted true) · the scroller filter invert(1) · visibility engaged over released ×0.131 against ×1.012 with nothing set · ratio of ratios 0.130 (two-sided bound 0.9..1.1: an in-place body reads 1)",
+   "load": "11.5/9.2/9.3"
+  },
+  {
+   "name": "E-10 clipstale anc clippath · keyboard",
+   "status": "FAIL",
+   "line": "keyboard engaged (promoted true) · the scroller clipPath inset(0 45% 0 0) · visibility engaged over released ×1.690 against ×1.012 with nothing set · ratio of ratios 1.670 (two-sided bound 0.9..1.1: an in-place body reads 1)",
+   "load": "11.5/9.2/9.3"
+  },
+  {
+   "name": "E-10 clipstale anc rotate · keyboard",
+   "status": "PASS",
+   "line": "keyboard engaged (promoted true) · the scroller rotate 3deg · visibility engaged over released ×1.020 against ×1.012 with nothing set · ratio of ratios 1.008 (two-sided bound 0.9..1.1: an in-place body reads 1)",
+   "load": "11.1/9.1/9.3"
+  },
+  {
+   "name": "E-10 clipstale anc none · touch",
+   "status": "REPORT",
+   "line": "touch engaged (promoted true) · the pointer aimed at the thumb's painted centre hit the slider · the reference: visibility over the scroller's region engaged over released ×1.118 (the grow's own gain)",
+   "load": "11.1/9.1/9.3"
+  },
+  {
+   "name": "E-10 clipstale anc opacity · touch",
+   "status": "FAIL",
+   "line": "touch engaged (promoted true) · the pointer aimed at the thumb's painted centre hit the slider · the scroller opacity 0.5 · visibility engaged over released ×2.186 against ×1.118 with nothing set · ratio of ratios 1.956 (two-sided bound 0.9..1.1: an in-place body reads 1)",
+   "load": "10.7/9.0/9.3"
+  },
+  {
+   "name": "E-10 clipstale anc filter · touch",
+   "status": "REPORT",
+   "line": "touch engaged (promoted true) · the pointer aimed at the thumb's painted centre hit the slider · the scroller filter invert(1) · visibility engaged over released ×0.130 against ×1.118 with nothing set · ratio of ratios 0.116 (two-sided bound 0.9..1.1: an in-place body reads 1) · REPORT in chromium touch: an in-place body's filter read scatters past the bound here (ANC_REPORT, ../pass-9/H9.md §2); this read is outside it",
+   "load": "10.7/9.0/9.3"
+  },
+  {
+   "name": "E-10 clipstale anc clippath · touch",
+   "status": "FAIL",
+   "line": "touch engaged (promoted true) · the pointer aimed at the thumb's painted centre hit the slider · the scroller clipPath inset(0 45% 0 0) · visibility engaged over released ×2.023 against ×1.118 with nothing set · ratio of ratios 1.810 (two-sided bound 0.9..1.1: an in-place body reads 1)",
+   "load": "10.4/9.0/9.2"
+  },
+  {
+   "name": "E-10 clipstale anc rotate · touch",
+   "status": "REPORT",
+   "line": "touch engaged (promoted true) · the pointer aimed at the thumb's painted centre hit the slider · the scroller rotate 3deg · visibility engaged over released ×1.121 against ×1.118 with nothing set · ratio of ratios 1.003 (two-sided bound 0.9..1.1: an in-place body reads 1) · REPORT in chromium touch: an in-place body's rotate read scatters past the bound here (ANC_REPORT, ../pass-9/H9.md §2); this read is inside it",
+   "load": "10.4/9.0/9.2"
+  },
+  {
+   "name": "E-10 clipstale anc none · fine",
+   "status": "REPORT",
+   "line": "fine engaged (promoted true) · the pointer aimed at the thumb's painted centre hit the slider · the reference: visibility over the scroller's region engaged over released ×1.118 (the grow's own gain)",
+   "load": "11.0/9.2/9.3"
+  },
+  {
+   "name": "E-10 clipstale anc opacity · fine",
+   "status": "FAIL",
+   "line": "fine engaged (promoted true) · the pointer aimed at the thumb's painted centre hit the slider · the scroller opacity 0.5 · visibility engaged over released ×2.186 against ×1.118 with nothing set · ratio of ratios 1.956 (two-sided bound 0.9..1.1: an in-place body reads 1)",
+   "load": "11.0/9.2/9.3"
+  },
+  {
+   "name": "E-10 clipstale anc filter · fine",
+   "status": "REPORT",
+   "line": "fine engaged (promoted true) · the pointer aimed at the thumb's painted centre hit the slider · the scroller filter invert(1) · visibility engaged over released ×0.130 against ×1.118 with nothing set · ratio of ratios 0.116 (two-sided bound 0.9..1.1: an in-place body reads 1) · REPORT in chromium fine: an in-place body's filter read scatters past the bound here (ANC_REPORT, ../pass-9/H9.md §2); this read is outside it",
+   "load": "11.2/9.2/9.3"
+  },
+  {
+   "name": "E-10 clipstale anc clippath · fine",
+   "status": "FAIL",
+   "line": "fine engaged (promoted true) · the pointer aimed at the thumb's painted centre hit the slider · the scroller clipPath inset(0 45% 0 0) · visibility engaged over released ×2.023 against ×1.118 with nothing set · ratio of ratios 1.810 (two-sided bound 0.9..1.1: an in-place body reads 1)",
+   "load": "11.2/9.2/9.3"
+  },
+  {
+   "name": "E-10 clipstale anc rotate · fine",
+   "status": "REPORT",
+   "line": "fine engaged (promoted true) · the pointer aimed at the thumb's painted centre hit the slider · the scroller rotate 3deg · visibility engaged over released ×1.121 against ×1.118 with nothing set · ratio of ratios 1.003 (two-sided bound 0.9..1.1: an in-place body reads 1) · REPORT in chromium fine: an in-place body's rotate read scatters past the bound here (ANC_REPORT, ../pass-9/H9.md §2); this read is inside it",
+   "load": "10.4/9.1/9.3"
+  }
+ ]
+}

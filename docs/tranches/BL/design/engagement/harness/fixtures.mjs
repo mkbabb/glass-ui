@@ -197,7 +197,14 @@ export const FAULTS = {
   // H11 (pass 11; REGISTRY §P10-7 items 1, 2, 4, 5; §P10-8.3 wave 1): the lens under an ancestor zoom; the travel's tokens by parse
   "e10-lenszoom": { why: "CK-20 (H11, REGISTRY §P10-7 item 1; the pass-10 candidate's shape): the lens inherits its card's zoom, but its writes (the correction, the travel's span) are painted px written into its own zoomed CSS px, and its side test reads its unzoomed height against painted px; its anchor leaves a 40 painted px gap the correction closes, so the correction exists in both engines. Under zoom the travel moves span × zoom and the pinned edge lands 40 × (zoom − 1) px off", witnesses: ["E-10"], cell: /loupe side · (page|carry) · zoom/, args: ["--part", "lensside", "--cards", "zoom08,zoom125,zoom2"] },
   "e13-loupeclockzoom": { why: "CK-25 (H11, REGISTRY §P10-7 item 1): the same lens as e10-lenszoom on its own clocks: its correction written in painted px into its zoomed CSS px, so under a zoomed card the pinned edge sits 40 × (zoom − 1) px off its track on the raise and the exit", witnesses: ["E-13"], cell: /loupe clock · (enter|exit) · zoom/, args: ["--part", "clock"] },
-  "e11-travelthrow": { why: "CK-21 (H11, REGISTRY §P10-7 items 2, 5; C-A10 §0.6): the travel (the lens's side change and the host's re-render glide) checks its easing token for presence, not parse, and hands any string to animate(): `nonsense` throws an uncaught TypeError out of the observer callback with no error naming the token", witnesses: ["E-11"], cell: /travel loud · --spring-press nonsense/, args: ["--part", "travel"] },
+  "e11-travelthrow": { why: "CK-21 (H11, REGISTRY §P10-7 items 2, 5; C-A10 §0.6): the travel (the lens's side change and the host's re-render glide) checks its easing token for presence, not parse, and hands any string to animate(): `nonsense` throws an uncaught TypeError out of the observer callback with no error naming the token", witnesses: ["E-11"], cell: /travel loud · --spring-press nonsense · (side|rerender)/, args: ["--part", "travel"] },
+  // H12 (pass 12; REGISTRY §P11-7 items 1-5; §P11-8.3 wave 1): the travel's value family (CK-21) and the host glide's frame family (CK-20)
+  "e11-travellist": { why: "CK-21 (H12, REGISTRY §P11-7 item 1; the pass-11 candidate's check): the travel asks CSS.supports on animation-timing-function, a list-valued property, so an easing list passes the check and animate(), which takes one easing, throws an uncaught TypeError with no error naming the token, on the lens's side change and on the host's re-render glide", witnesses: ["E-11"], cell: /travel loud · --spring-press (ease, linear|linear\(0, 1\), ease-in) · (side|rerender)/, args: ["--part", "travel"] },
+  "e11-travelunit": { why: "CK-21 (H12, REGISTRY §P11-7 item 3; the pass-11 candidate's rowClockMs): the settle token is read as parseFloat × 1000 whatever its unit, so 210ms is read as 210 000 ms, silently, on the lens's travel, the host's glide and the release carry, while CSS reads it as 210 ms", witnesses: ["E-11"], cell: /travel loud · --spring-press-settle 210ms · (side|rerender|carry)/, args: ["--part", "travel"] },
+  "e10-hostglideratio": { why: "CK-20 (H12, REGISTRY §P11-7 item 2; the pass-11 candidate's flowBox): the re-render glide brings each offset into the root's px through the zoom ratio alone, never through the transforms between the box and the root: a move outside a scaled ancestor lands (1 − scale) of the move off where the root was painted", witnesses: ["E-10"], cell: /hostglide · (outside|nested) · (scale 0\.8|zoom 1\.25 \+ scale 0\.8)/, args: ["--part", "hostglide"] },
+  "e10-hostglideone": { why: "CK-20 (H12, REGISTRY §P11-7 item 5; C-A11's flowone, C-E11's hostzoom): the re-render glide sums the offsets with no ratio at all, so a positioned box in the offset chain outside a zoomed box carries its offset in the wrong px: the glide lands 40 × (zoom − 1) px off", witnesses: ["E-10"], cell: /hostglide · chain · zoom/, args: ["--part", "hostglide"] },
+  "e10-hostglideframe": { why: "CK-20 (H12, REGISTRY §P11-7 item 2, P-E11 §1's risk; C-A11's glideframe as written): the glide reads the accumulated flow through each box's whole frame every frame, so an ancestor's running scale animation reads as a moved place and an unrelated mutation glides it", witnesses: ["E-10"], cell: /hostglide · animating/, args: ["--part", "hostglide"] },
+  "e10-reachframe": { why: "CK-20 (H12, REGISTRY §P11-7 item 5; C-E11's roomframe): the reach's room is read as the pass-10 stage read it, the painted centre against the unzoomed width and not over the frame, so under a scale or a zoom the inline grow is not the gutter-capped figure", witnesses: ["E-10"], cell: /reach · (scale 0\.8|zoom 0\.8|zoom 1\.25|zoom 2|zoom 1\.25 \+ scale 0\.8)/, args: ["--part", "reach"] },
   "e10-lenslate": { why: "CK-20 (H10, REGISTRY §P9-7 item 6): the lens is placed one frame late, from the place read in the frame before, so on a scroll it trails its track by a tick. A film cell, graded in Chromium; WebKit's is REPORT (the plain anchored lens reads the same 8 px)", witnesses: ["E-10"], cell: /clipstale lensfilm · (none|scale)/, args: ["--part", "lensfilm"], engines: ["chromium"] },
   "e12-chipmute": { why: "CK-27 (H7, C-A6 §0): the chip that left the capsule answers neither hover nor press (0.0 % / 0.0 %): the elegant-reduction trap", witnesses: ["E-12"], cell: /fx chip answers/ },
   "e12-chipundeclared": { why: "CK-27 (H7): the chip paints its hover and press through literal rules and composes no declared engage-* class", witnesses: ["E-12"], cell: /fx chip answers/ },
@@ -220,7 +227,8 @@ export const FIXTURE_INDEX = {
   // H3: a stateless control (a counter, no model): E-2 drives its programmatic commit as element.click()
   act: { gates: CONTROL_GATES, key: "Space", target: ".ctl", stateless: true },
   // H6: `reads: 5` (CK-05: E-4's fling read five times, every read must pass)
-  slider: { gates: ["E-3", "E-4", "E-7", "E-9", "E-10", "E-11", "E-12", "E-13"], loupe: FX_LOUPE, key: "ArrowRight", veil: ".fx-veil", engaged: "[data-held], [data-kbd]", floor: ["wheel", "anchor"], reads: 5, failLoud: [{ token: "--fx-scale-engage", value: "nonsense", act: "kbd" }] },
+  // H12: `gutter` (E-10's reach cell: the token the reach's gutter is read from; the library's is --space-section, the default)
+  slider: { gates: ["E-3", "E-4", "E-7", "E-9", "E-10", "E-11", "E-12", "E-13"], loupe: FX_LOUPE, gutter: "--fx-gutter", key: "ArrowRight", veil: ".fx-veil", engaged: "[data-held], [data-kbd]", floor: ["wheel", "anchor"], reads: 5, failLoud: [{ token: "--fx-scale-engage", value: "nonsense", act: "kbd" }] },
   // H4: the fixture slider marks its engagement as data-held (the hand) or data-kbd (the keyboard)
   slider2: { gates: ["E-10"], veil: ".fx-veil", engaged: "[data-held], [data-kbd]", pair: ['.fx-slider[data-n="A"]', '.fx-slider[data-n="B"]'] },
   // H5: C-E4's stale place (a paragraph that rewraps, a spacer, the slider, a ticker below)
@@ -304,7 +312,7 @@ export function fixturePage(params, fault = "") {
 :root { --spring-press-duration: 350ms; --spring-press: ${SPRING}; --spring-press-settle: 0.35s;
   --engage-press-drain-attack: ${F("e8-drift") ? 56 : 55}ms; --engage-press-drain-release: 120ms;
   --engage-control-engage-attack: 60ms; --engage-control-engage-release: ${F("e8-units") ? ".18s" : "180ms"};
-  --fx-scale-engage: 1.06; --fx-commit-crest: 0.35;
+  --fx-scale-engage: 1.06; --fx-commit-crest: 0.35; --fx-gutter: 16px;
   --bg: #f4f4f6; --ink: #111; --ctl: #d8dbe2; --ctl-hover: #cfd3dc; --ctl-press: #b9bfcc; --accent: #3b6cf0; }
 .dark { --bg: #15161a; --ink: #eee; --ctl: #33363f; --ctl-hover: #3b3f49; --ctl-press: #4b505c; }
 body { margin: 0; background: ${F("e2-noground") ? "transparent" : "var(--bg)"}; color: var(--ink); font: 15px system-ui; }
@@ -344,7 +352,7 @@ ${F("e2-shimmer") ? `.ctl { transition: scale var(--spring-press-duration) var(-
 .fx-slider { position: relative; height: 20px; width: ${phone ? (F("e3-gutter") ? "100%" : "300px") : "360px"}; ${phone ? "margin: 0 auto;" : ""} border-radius: 10px; background: var(--ctl);
   transition: scale var(--spring-press-duration) var(--spring-press); }
 .fx-slider + .fx-slider { margin-top: 40px; }
-.fx-slider${F("e3-still") ? ".never" : F("e3-kbd") ? ":where(:active, [data-held])" : ":where(:active, [data-held], [data-kbd])"} { scale: ${noise ? String(noise) : F("e11-unread") ? "1.06" : F("e3-blockgrow") && phone ? "1 1.06" : "var(--fx-scale-engage)"}; }
+.fx-slider${F("e3-still") ? ".never" : F("e3-kbd") ? ":where(:active, [data-held])" : ":where(:active, [data-held], [data-kbd])"} { scale: ${noise ? String(noise) : F("e11-unread") ? "1.06" : F("e3-blockgrow") && phone ? "1 1.06" : "min(var(--fx-scale-engage), var(--fx-reach, 99)) var(--fx-scale-engage)"}; }
 .fx-slider[data-held] { cursor: grabbing; }
 .fx-slider.snap { transition: none; }
 .fx-slider.pinned { position: fixed; }
@@ -583,17 +591,37 @@ function loupe(root, th, on) {
 // the lens's zoom: the correction, the travel's span; the side test reads the lens's painted height (its CSS height × the ancestors'
 // scale × its zoom), and the ancestors' scale is read without the zoom (a painted width over the unzoomed offsetWidth × zoom).
 // e10-lenszoom / e13-loupeclockzoom: the writes in painted px, the side test on the unzoomed height, an anchor gap of 40 painted px.
-// The travel (the lens's side change; the clip row's re-render glide of its host) reads its row's tokens, --spring-press (the
-// easing) and --spring-press-settle (the clock), and is loud by name on either unreadable or refused (CSS.supports), with no throw
-// and no travel; e11-travelthrow checks the easing for presence only and hands any string to animate()
+// The travel (the lens's side change; the host's re-render glide) reads its row's tokens, --spring-press (the easing) and
+// --spring-press-settle (the clock); the release carry on the clip row reads the clock alone (its shape is its own curve, as the
+// library's carry takes its shape from the spring table). H12 (REGISTRY §P11-7 items 1, 3): each token is read as its consumer reads
+// it. The clock is a <time> in its own unit (s or ms) and positive, else one console.error by name and no travel. The easing is
+// asked of the parser animate() itself uses (a KeyframeEffect built in a try), else one console.error by name and no travel: no
+// masking fallback, nothing throws. Plants: e11-travelthrow (the easing checked for presence only: nonsense reaches animate(),
+// which throws), e11-travellist (the easing checked with CSS.supports on animation-timing-function, a list-valued property: a list
+// passes and throws in animate(); the pass-11 candidate's check), e11-travelunit (the clock read as parseFloat × 1000 whatever its
+// unit: 210ms read as 210 000 ms, silently; the pass-11 candidate's rowClockMs)
 const LENS_BAND = 12;
 const ZOOMPLANT = FAULT === "e10-lenszoom" || FAULT === "e13-loupeclockzoom";
-function travelOf(el) {
-  const cs = getComputedStyle(el); const e = cs.getPropertyValue("--spring-press").trim(), raw = cs.getPropertyValue("--spring-press-settle").trim(), s = Number.parseFloat(raw);
-  if (!e || (FAULT !== "e11-travelthrow" && !CSS.supports("animation-timing-function", e))) { console.error("[fixture] --spring-press is unreadable (" + JSON.stringify(e) + "): the travel cannot run on it"); return null; }
-  if (!(s > 0) || !/^[\\d.]+m?s$/.test(raw)) { console.error("[fixture] --spring-press-settle is unreadable (" + JSON.stringify(raw) + "): the travel has no clock"); return null; }
-  return { ms: /ms$/.test(raw) ? s : s * 1000, easing: e };
+function clockOf(el) {
+  const raw = getComputedStyle(el).getPropertyValue("--spring-press-settle").trim();
+  let ms = NaN;
+  if (FAULT === "e11-travelunit") ms = Number.parseFloat(raw) * 1000;
+  else { const m = /^(\\d*\\.?\\d+)(ms|s)$/.exec(raw); if (m) ms = Number.parseFloat(m[1]) * (m[2] === "ms" ? 1 : 1000); }
+  if (ms > 0) return ms;
+  console.error("[fixture] --spring-press-settle is unreadable (" + JSON.stringify(raw) + "): the travel has no clock"); return 0;
 }
+function easingOf(el) {
+  const e = getComputedStyle(el).getPropertyValue("--spring-press").trim();
+  let ok = e !== "";
+  if (ok && FAULT === "e11-travellist") ok = CSS.supports("animation-timing-function", e);
+  else if (ok && FAULT !== "e11-travelthrow") { try { new KeyframeEffect(null, null, { easing: e }); } catch (x) { ok = false; } }
+  if (!ok) console.error("[fixture] --spring-press is unreadable (" + JSON.stringify(e) + "): the travel cannot run on it");
+  return ok ? e : null;
+}
+function travelOf(el) { const easing = easingOf(el); if (!easing) return null; const ms = clockOf(el); return ms ? { ms, easing } : null; }
+// H12: painted px per CSS px of what is written on el: its parent's painted width over its layout width (the ancestors' transforms
+// and the zoom el inherits; a fixture page carries no rotation)
+function fxFrame(el) { const p = el.parentElement; return p && p.offsetWidth ? p.getBoundingClientRect().width / p.offsetWidth : 1; }
 let lens = null, lensRO = null, lensFrame = 0, lensProbeA = null, lensProbeB = null; const lensBeat = document.createElement("span");
 lensBeat.style.cssText = "position:fixed;left:0;top:0;width:1px;height:1px;pointer-events:none";
 function lensTick() { lensFrame = requestAnimationFrame(lensTick); if (!lens) return; if (lens.exiting && FAULT === "e13-exitfrozen") return; lensRO.unobserve(lensBeat); lensRO.observe(lensBeat); }
@@ -657,8 +685,22 @@ function promote(root, on) {
   if (on && !root.matches(":popover-open")) { const b = root.getBoundingClientRect(); root.popover = "manual"; root.style.cssText += ";position:fixed;inset:auto;left:" + b.left + "px;top:" + b.top + "px;margin:0;padding:0;border:0;overflow:visible;width:" + b.width + "px;height:" + b.height + "px;background:var(--ctl)"; root.showPopover(); }
   else if (!on && root.matches(":popover-open")) { root.hidePopover(); root.removeAttribute("popover"); for (const k of ["position", "inset", "left", "top", "margin", "padding", "border", "overflow", "width", "height", "background"]) root.style.removeProperty(k); }
 }
+// H12 (REGISTRY §P11-7 item 5; P-E11 §8 item 2): the reach the grow may spend inline, the library's rule (glass/engage-stage.css):
+// 1 + 2·max(0, room − gutter)/width, at most the grow (the CSS min()). The room is read painted (the centre, the viewport) and written in
+// the root's own px (over its frame); the gutter (--fx-gutter) and the width are the root's own px. Written on every engagement, before
+// the grow lands. e10-reachframe: the room read as the pass-10 stage read it, the painted centre against the unzoomed width, not over
+// the frame (C-E11's roomframe). e3-gutter grows past the gutter, so it writes no reach
+function writeReach(root) {
+  if (FAULT === "e3-gutter") return;
+  const r = root.getBoundingClientRect(), w = root.offsetWidth, cx = r.left + r.width / 2, vw = innerWidth;
+  const k = FAULT === "e10-reachframe" ? 1 : fxFrame(root);
+  const room = Math.max(0, Math.min(cx - (w * k) / 2, vw - (cx + (w * k) / 2))) / k;
+  const g = Number.parseFloat(getComputedStyle(root).getPropertyValue("--fx-gutter"));
+  if (!(g >= 0) || !(w > 0)) { console.error("[fixture] --fx-gutter is unreadable: the reach cannot be read"); return; }
+  root.style.setProperty("--fx-reach", String(1 + (2 * Math.max(0, room - g)) / w));
+}
 function kbd(root, on) {
-  if (on) { if (root.dataset.kbd === undefined) { checkToken(root); checkClocks(); } root.dataset.kbd = ""; if (FAULT === "e3-tabhand") root.dataset.held = "key"; }
+  if (on) { if (root.dataset.kbd === undefined) { checkToken(root); checkClocks(); writeReach(root); } root.dataset.kbd = ""; if (FAULT === "e3-tabhand") root.dataset.held = "key"; }
   else { delete root.dataset.kbd; if (FAULT === "e3-tabhand") delete root.dataset.held; }
   if (FAULT === "e12-wheelchain" || FAULT === "e12-wheelrow") promote(root, on);
   if (FAULT === "e12-anchorlost") { if (on) root.style.setProperty("position-anchor", "--fx-footprint"); else root.style.removeProperty("position-anchor"); }
@@ -690,7 +732,7 @@ function wireSlider(root) {
     if (acts || FAULT === "e3-modifier" || (FAULT === "e3-charkey" && e.key.length === 1)) kbd(root, true);
     if (e.key === "ArrowRight") { x = Math.min(W(), x + W() / 100); put(); }
   });
-  th.addEventListener("pointerdown", (e) => { cancelAnimationFrame(raf); th.setPointerCapture(e.pointerId); delete root.dataset.kbd; root.dataset.held = "pointer";
+  th.addEventListener("pointerdown", (e) => { cancelAnimationFrame(raf); th.setPointerCapture(e.pointerId); delete root.dataset.kbd; writeReach(root); root.dataset.held = "pointer";
     if (FAULT === "e10-rerender") { const r = root.getBoundingClientRect(); root.style.left = r.left + "px"; root.style.top = r.top + "px"; root.classList.add("pinned"); }
     // H5 e10-relayout: pinned over a placeholder whose place is re-read on a childList mutation only
     if (FAULT === "e10-relayout") { const r = root.getBoundingClientRect(); const ph = document.createElement("div"); ph.style.cssText = "width:" + r.width + "px;height:" + r.height + "px"; root.before(ph); root.style.left = r.left + "px"; root.style.top = r.top + "px"; root.classList.add("pinned");
@@ -726,13 +768,16 @@ function wireSlider(root) {
     const n = Math.round(x / D);
     const target = FAULT === "e4-snap" ? Math.max(0, Math.min(W(), (v > 50 ? n + 1 : v < -50 ? n - 1 : n) * D)) : Math.max(0, Math.min(W(), x + v * 0.15));
     if (prm() && FAULT !== "e4-prmbounce") { x = target; put(); return; } // reduce: the release lands, it does not bounce
+    // H12 (CK-21's carry path): on the clip row the release carry is a WAAPI translate of the thumb on the row's settle clock, read in
+    // its unit (clockOf), as the library's carry rides its row's settle; an unreadable clock is loud by name and the release lands at once
+    if (SCENE === "clipstale") { const ms = clockOf(root), d = target - x; x = target; put(); if (ms && Math.abs(d) > 0.5) th.animate([{ translate: -d + "px 0" }, { translate: "0 0" }], { duration: ms, easing: SPRING, composite: "add" }); return; }
     const k = 322, c = 2 * 0.75 * Math.sqrt(k); let t0 = performance.now();
     const step = (t) => { const dt = Math.min(0.032, (t - t0) / 1000); t0 = t; v += (-k * (x - target) - c * v) * dt; x += v * dt; put();
       if (Math.abs(v) > 1 || Math.abs(x - target) > 0.2) raf = requestAnimationFrame(step); else { x = target; put(); } };
     raf = requestAnimationFrame(step); };
   th.addEventListener("pointerup", release); th.addEventListener("pointercancel", release);
   // H8: a touch engine that sends no pointer event (Playwright WebKit's raw driver) holds by touchstart … touchend
-  th.addEventListener("touchstart", (e) => { if (drag) return; const t = e.touches[0]; cancelAnimationFrame(raf); delete root.dataset.kbd; root.dataset.held = "touch"; settleVeil(true); drag = { x0: x, cx: t.clientX, hist: [{ t: performance.now(), x }] }; }, { passive: true });
+  th.addEventListener("touchstart", (e) => { if (drag) return; const t = e.touches[0]; cancelAnimationFrame(raf); delete root.dataset.kbd; writeReach(root); root.dataset.held = "touch"; settleVeil(true); drag = { x0: x, cx: t.clientX, hist: [{ t: performance.now(), x }] }; }, { passive: true });
   th.addEventListener("touchmove", (e) => { const t = e.touches[0]; if (t) move(t.clientX); }, { passive: true });
   th.addEventListener("touchend", release); th.addEventListener("touchcancel", release);
   // H8 (CK-25): the loupe while held, on the scenes E-13 reads
@@ -890,21 +935,32 @@ function mountScene() {
       if (late) root.addEventListener("wheel", (e) => { if (!up) return; e.preventDefault(); box.scrollTop += e.deltaY; }, { passive: false });
     }
   }
-  if (SCENE === "clipstale") {
-    // H9 (CK-20, glidescale): the re-render glide. While engaged, a childList change inside the scroller glides the slider
-    // from where it was last painted (read every frame) to its new place; the glide's translate is in the root's parent's
-    // units (the painted move over the ancestors' scale). e10-glidescale writes it in painted px: 20 % short under 0.8
-    const root = stage.querySelector(".fx-slider"), box = stage.querySelector('[data-t="box"]'); let last = null, anim = null;
+  if (SCENE === "slider" || SCENE === "clipstale") {
+    // H9 (CK-20, glidescale): the re-render glide. H12 (REGISTRY §P11-7 items 2, 5; §P11-8.1, CK-20's frame family): while engaged,
+    // a childList change anywhere in the document glides the slider from where it was painted to its new place, on the travel's row
+    // (travelOf), instant under reduce. Its offset chain is read every frame while engaged, so a layout move with no mutation is never
+    // glided by a later one (H5's stale place). On a mutation each box's offset change is brought into painted px through that box's
+    // own frame read NOW (its ancestors' transforms and its zoom: an offset is in its box's own CSS px), and the sum over the root's
+    // frame is the translate, in the root's own px: a move inside, outside or nested outside a transformed or zoomed ancestor, or
+    // across a positioned box in the chain, starts where the root was painted. An ancestor's running scale moves no offset, so an
+    // unrelated mutation glides nothing. Plants: e10-glidescale (the translate in painted px, not over the root's frame: 20 % short
+    // under 0.8), e10-hostglideratio (each offset over the zoom ratio alone, no transform: the pass-11 candidate's flowBox),
+    // e10-hostglideone (no ratio at all: C-A11's flowone, C-E11's hostzoom), e10-hostglideframe (the accumulated flow, each
+    // box's offset through its whole painted frame, its own transform with it, cached a frame behind the read: C-A11's glideframe as
+    // written, which reads an ancestor's running scale as a move)
+    const root = stage.querySelector(".fx-slider"); let chain = null, flowWas = null;
     const engaged = () => root.dataset.held !== undefined || root.dataset.kbd !== undefined;
-    const painted = () => { const q = root.getBoundingClientRect(); return { x: q.left + q.width / 2, y: q.top + q.height / 2 }; };
-    const loop = () => { last = engaged() ? painted() : null; requestAnimationFrame(loop); }; requestAnimationFrame(loop);
+    const read = () => { const c = []; for (let e = root; e; e = e.offsetParent) c.push({ e, x: e.offsetLeft, y: e.offsetTop }); return c; };
+    const weight = (e) => { if (FAULT === "e10-hostglideone") return 1; if (FAULT === "e10-hostglideratio") return e.currentCSSZoom; if (FAULT === "e10-hostglideframe") return e.offsetWidth ? e.getBoundingClientRect().width / e.offsetWidth : 1; const p = e.parentElement; return fxFrame(e) * e.currentCSSZoom / (p ? p.currentCSSZoom : 1); };
+    const unit = () => (FAULT === "e10-hostglideone" || FAULT === "e10-glidescale" ? 1 : FAULT === "e10-hostglideratio" ? root.currentCSSZoom : fxFrame(root));
+    const flow = (c) => c.reduce((s, b) => { const w = weight(b.e); return { x: s.x + b.x * w, y: s.y + b.y * w }; }, { x: 0, y: 0 });
+    let flowCur = null; const loop = () => { chain = engaged() ? read() : null; if (FAULT === "e10-hostglideframe") { flowWas = flowCur; flowCur = chain ? flow(chain) : null; } requestAnimationFrame(loop); }; requestAnimationFrame(loop);
     new MutationObserver((recs) => {
-      if (!engaged() || !last || !recs.some((x) => x.type === "childList")) return;
-      anim?.cancel(); const now = painted(); const par = root.parentElement;
-      const k = FAULT === "e10-glidescale" ? 1 : (par.getBoundingClientRect().width / par.offsetWidth || 1);
-      const dx = (last.x - now.x) / k, dy = (last.y - now.y) / k;
-      if (Math.hypot(dx, dy) > 0.5) { const tv = travelOf(root); if (tv) anim = root.animate([{ translate: dx + "px " + dy + "px" }, { translate: "0 0" }], { duration: tv.ms, easing: tv.easing }); }
-    }).observe(box, { childList: true, subtree: true });
+      if (!engaged() || !chain || !recs.some((x) => x.type === "childList")) return;
+      const now = read(); const was = FAULT === "e10-hostglideframe" ? (flowWas ?? flow(chain)) : flow(chain); const is = flow(now); chain = now; if (FAULT === "e10-hostglideframe") flowWas = is;
+      const u = unit(); const dx = (was.x - is.x) / u, dy = (was.y - is.y) / u;
+      if (Math.hypot(dx, dy) > 0.5 && !prm()) { const tv = travelOf(root); if (tv) root.animate([{ translate: dx + "px " + dy + "px" }, { translate: "0 0" }], { duration: tv.ms, easing: tv.easing, composite: "add" }); }
+    }).observe(document.body, { childList: true, subtree: true });
   }
   if (SCENE === "presented") {
     // H6 (CK-10): the dialog presents and dismisses on its class; its clock is read loudly like every act's

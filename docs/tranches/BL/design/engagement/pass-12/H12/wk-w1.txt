@@ -1,0 +1,31 @@
+# H12 WebKit stages, in priority order, ONE acquisition (planned split: wk-run stops starting stages at 80 min; any stage left is written
+# to logs/wk-left.txt and run in a second acquisition, recorded). A self-test with --faults runs no clean fixture, so the clean fixture
+# runs whole as its own fx stage. E-10: the clean fixture whole and every plant on a path H12 touched (the frame family, the reach, the fixture's
+# glide that now serves the slider and clipstale scenes: glidescale, rerender, relayout); E-11: the clean fixture whole and the travel
+# plants; E-3's gutter plant (writeReach). Then the library reads, the glance, the other witnesses' clean fixture, HEAD
+facts webkit
+fx-E-11 webkit
+st-E-11 webkit --faults e11-travellist,e11-travelunit,e11-travelthrow
+fx-E-10 webkit
+st-E-10 webkit --faults e10-hostglideratio,e10-hostglideone,e10-hostglideframe,e10-reachframe,e10-glidescale,e10-rerender,e10-relayout
+cand11-E-10 webkit --part hostglide,reach
+cand11-E-11 webkit --part travel
+plant-glideframe-E-10 webkit --part hostglide
+plant-flowone-E-10 webkit --part hostglide
+plant-roomframe-E-10 webkit --part reach
+plant-waapicure-E-11 webkit --part travel
+plant-unitcure-E-11 webkit --part travel
+# added in flight (06:55-07:05, lines not yet started): the candidate read the reach red under zoom in WebKit only; two re-reads and
+# the stage facts on it
+rf-cand11 webkit
+cand11-E-10 webkit --part reach
+cand11-E-10 webkit --part reach --reread 2
+glance-cand11 webkit
+glance-plant-glideframe webkit
+clean webkit --only E-1,E-2,E-3,E-4,E-5,E-6,E-7,E-8,E-9,E-12,E-13
+cap webkit
+head-E-10 webkit --part hostglide,reach
+head-E-11 webkit --part travel
+st-E-3 webkit --faults e3-gutter
+plant-bothcure-E-11 webkit --part travel
+plant-roomnoframe-E-10 webkit --part reach

@@ -1,0 +1,14 @@
+# H12 cap chromium · 2026-11-02 06:04:51 · load { 9.91 10.45 10.68 } · harness 734e19688120 · 
+# capture · fixture · fixture · lock wait 0.0 s · other headless processes: chromium 7, webkit 2 · load 9.9/10.4/10.7 at start
+# ladder-only scenes: travel
+# chromium 149.0.7827.55
+  fixture-chromium-fine-light-pop · rest ×1.000 · pressed ×0.966 · held ×0.960 · engaged ×1.000 · committed ×0.985 · released ×1.000 · load 9.5/10.4/10.6
+  PASS       CAP pop fine light committed · chromium: pointer release after a 450 ms hold, state "off" → "on" · load 9.5/10.4/10.6
+  PASS       CAP pop ladder fine light · chromium: inset paint L rest 0.5979 (rgb(216, 219, 226)) · hover 0.5496 (rgb(207, 211, 220); darker by 0.0483) · hover+press 0.4455 (rgb(185, 191, 204), data-state off) · released, still hovered 0.2973 · the press deepens the hover by 0.1041 (bound: no step back past 0.002) · load 9.5/10.4/10.6
+  fixture-chromium-coarse-light-pop · rest ×1.000 · pressed ×0.962 · held ×0.960 · engaged ×0.960 · committed ×1.000 · released ×1.000 · load 9.6/10.4/10.6
+  PASS       CAP pop coarse light committed · chromium: short tap, state "off" → "on" · load 9.6/10.4/10.6
+  PASS       CAP travel ladder fine light · chromium: inset paint L rest 0.6734 (rgba(0, 0, 0, 0)) · hover 0.6189 (rgb(207, 211, 220); darker by 0.0545) · hover+press 0.4965 (rgb(185, 191, 204)) · released, still hovered 0.6189 · the press deepens the hover by 0.1224 (bound: no step back past 0.002) · load 9.6/10.4/10.6
+# capture done · load 9.6/10.4/10.6 at end
+CAP chromium PASS · 4 pass, 0 fail, 0 unmeasured of 4 gating cells (0 reported) · load 9.9/10.4/10.7 at start, 9.6/10.4/10.6 at end
+# exit 0 · 2026-11-02 06:05:03 · load { 9.64 10.37 10.64 }
+# end · 2026-11-02 06:05:03 · load { 9.64 10.37 10.64 } · harness 734e19688120

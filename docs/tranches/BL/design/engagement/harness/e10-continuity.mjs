@@ -938,6 +938,108 @@ await witness("E-10", "CK-20 no one-frame discontinuity on an engagement path", 
       cell(nameP, "REPORT", `the card ${CARD[tf]} · first hold: ${(rp.f1?.out ?? []).length} frames, the lens's last rel ${f(rp.f1?.out?.at(-1)?.rel, 1)} px · released, the track carried back 70 px above in 4 frames inside the exit (the lens's last shown frame before the press: rel ${f(before?.rel, 1)} px at opacity ${f(before?.op, 2)}) · re-pressed: ${after.length} shown frames, ${off.length} off its edge by > 2 px${off.length ? ` over ${f(off.at(-1).t - off[0].t, 0)} ms from opacity ${f(off[0].op, 2)}, worst ${f(worst.pin, 1)} px at opacity ${f(worst.op, 2)}` : ""} · ends ${f(after.at(-1)?.pin, 1)} px, rel ${f(after.at(-1)?.rel, 1)} px · REPORT (REGISTRY §P10-7 item 6: passes the one-travel rule)`);
     }
   }
+  // ── H12: THE FRAME FAMILY of the host's re-render glide (CK-20; REGISTRY §P11-7 items 2, 4, 5; §P11-8.1; §P11-8.3 wave 1): `--part
+  // hostglide`. On the loupe row without a clip (the page drive's row), the card C is the root's parent and G the card's parent. A fine
+  // hold, +900 ms, then filmed per frame (a task posted from requestAnimationFrame, after that frame's paint, stamped with the document
+  // timeline): on frame 8 a 40 px block is inserted, and the root's painted centre is read on every frame.
+  //   hostglide · inside|outside|nested · <card>   the card none, translate, scale 0.8 (origin 0 0), zoom 0.8 / 1.25 / 2, or zoom 1.25 with
+  //                    scale 0.8 on one box: on C for inside (the block C's first child, a move INSIDE the transformed box) and outside (the
+  //                    block before C, a move outside it), on G for nested (the block before G: the transform one box further out, the
+  //                    move outside it). PASS when the root's painted centre on the mutation's frame is ≤ 0.5 px from where it was painted
+  //                    the frame before, its largest move over any 16.7 ms of the timeline ≤ the bound printed on the glide's row (the move
+  //                    × the row's largest one-frame fraction + 1 px, the row the one whose clock the root's running translate carries,
+  //                    else the library's fastest, said so), and a glide ran. NOT DRIVEN under a 5 px move
+  //   hostglide · chain · zoom 0.8|1.25|2   a positioned zoomed box in the offset chain: C `position: relative; zoom: z`, G
+  //                    `position: relative` (unzoomed), the block before G. The chain then crosses a positioned box whose zoom is not
+  //                    the root's, so an offset read with no zoom ratio is in the wrong px (C-A11's flowone, C-E11's hostzoom pass every
+  //                    other cell: a zoom alone puts no box in the chain). Same clauses
+  //   hostglide · animating · scale · out|in   C runs a WAAPI `scale` 0.8 → 1 (origin 0 0, 600 ms, linear) from frame 2; on frame 14 a
+  //                    block that moves nothing is appended after C (out) or after the root inside C (in). PASS when C's scale is in
+  //                    flight across the mutation, no translate starts on the root, and the root's place in C's frame ((its centre − C's
+  //                    top) over C's painted scale) moves ≤ 0.5 px across the mutation's frame: P-E11 §1's risk, a running ancestor scale
+  //                    read as a moved place and glided by an unrelated mutation (C-A11's glideframe as written)
+  // Plants e10-hostglideratio (outside, nested under scale and zoom + scale), e10-hostglideone (chain), e10-hostglideframe
+  // (animating); the pass-11 candidate (outside, nested under scale and zoom + scale); controls C-A11's glideframe and flowone
+  const HG_TF = { none: null, translate: { translate: "13px 7px" }, scale: { scale: "0.8", transformOrigin: "0 0" }, zoom08: { zoom: "0.8" }, zoom125: { zoom: "1.25" }, zoom2: { zoom: "2" }, zs: { zoom: "1.25", scale: "0.8", transformOrigin: "0 0" } };
+  const HG_NAME = { none: "none", translate: "translate", scale: "scale 0.8", zoom08: "zoom 0.8", zoom125: "zoom 1.25", zoom2: "zoom 2", zs: "zoom 1.25 + scale 0.8" };
+  const pageRows = all.filter(([, x]) => x.loupe && !x.clip);
+  const hgSetup = ([R, place, css, z]) => { const root = document.querySelector(R), C = root.parentElement, G = C.parentElement; document.documentElement.style.overflowAnchor = "none";
+    const mn = document.querySelector("main") ?? document.body; mn.style.paddingTop = "230px"; mn.style.paddingBottom = "1600px";
+    if (place === "chain") { C.style.position = "relative"; C.style.zoom = z; G.style.position = "relative"; } else if (place === "animating") C.style.transformOrigin = "0 0"; else if (css) Object.assign((place === "nested" ? G : C).style, css);
+    // a zoom 2 on G carries the thumb under the 500 px fold, where the hold lands on nothing: the root is brought to mid-viewport first
+    const b = root.getBoundingClientRect(); scrollBy(0, b.top + b.height / 2 - innerHeight / 2 + 60); };
+  const hgFilm = ([R, place, sub]) => new Promise((ok) => {
+    const root = document.querySelector(R), C = root.parentElement, G = C.parentElement; const isCss = (a) => (typeof CSSTransition !== "undefined" && a instanceof CSSTransition) || (typeof CSSAnimation !== "undefined" && a instanceof CSSAnimation);
+    const T = () => document.timeline.currentTime; const t0 = T(); const out = []; const ch = new MessageChannel(); let n = 0, anim = null; const AT = place === "animating" ? 14 : 8;
+    ch.port1.onmessage = () => { const r = root.getBoundingClientRect(), c = C.getBoundingClientRect();
+      const an = root.getAnimations().filter((a) => !isCss(a) && a.playState === "running" && Object.keys(a.effect.getKeyframes()[0] ?? {}).includes("translate")).map((a) => a.effect.getTiming().duration);
+      out.push({ n, t: T() - t0, x: r.left + r.width / 2, y: r.top + r.height / 2, ct: c.top, cs: c.height / (C.offsetHeight || 1), an, held: root.dataset.held !== undefined, oc: (() => { const q = []; for (let e = root; e; e = e.offsetParent) q.push(`${e.tagName.toLowerCase()}:${e.offsetTop}`); return q.join(">"); })() }); };
+    const blk = () => { const b = document.createElement("div"); b.style.height = "40px"; b.setAttribute("data-t", "h12-block"); return b; };
+    const act = () => { if (place === "animating") { if (sub === "in") C.appendChild(blk()); else G.insertBefore(blk(), C.nextSibling); return; }
+      if (place === "inside") C.insertBefore(blk(), C.firstChild); else if (place === "outside") G.insertBefore(blk(), C); else G.parentElement.insertBefore(blk(), G); };
+    const tick = () => { n++; if (place === "animating" && n === 2) anim = C.animate({ scale: ["0.8", "1"] }, { duration: 600, easing: "linear" }); if (n === AT) act(); ch.port2.postMessage(0); if (n < 60) requestAnimationFrame(tick); else setTimeout(() => { anim?.cancel(); ok({ out, AT }); }, 40); };
+    requestAnimationFrame(tick);
+  });
+  const hgCells = [...["inside", "outside", "nested"].flatMap((p) => Object.keys(HG_TF).map((tf) => [p, tf])), ...["zoom08", "zoom125", "zoom2"].map((tf) => ["chain", tf]), ["animating", "out"], ["animating", "in"]];
+  if (want("hostglide")) for (const [sc, m] of pageRows) for (const [place, tf] of hgCells) {
+    const R = m.root ?? '[data-e~="root"]', thumb = m.thumb ?? '[data-e~="thumb"]';
+    const name = place === "animating" ? `E-10 ${sc} hostglide · animating · scale · ${tf}` : `E-10 ${sc} hostglide · ${place} · ${HG_NAME[tf]}`;
+    const r = await guard(name, async () => {
+      const P = await openPage(E, T, sc);
+      try {
+        await P.page.evaluate(hgSetup, [R, place, HG_TF[tf] ?? null, HG_TF[tf]?.zoom ?? "1"]); await P.page.waitForTimeout(250);
+        const rows = await P.page.evaluate(rowsOf);
+        const c = await center(P.page, thumb); await P.page.mouse.move(c.x, c.y); await P.page.mouse.down();
+        try { await P.page.waitForTimeout(900); return { ...(await P.page.evaluate(hgFilm, [R, place, tf])), rows, errs: [...P.errors] }; } finally { await P.page.mouse.up(); }
+      } finally { await P.close(); }
+    }, 60000);
+    if (r.crashed) { cell(name, "FAIL", r.line); continue; }
+    const S = r.out; const i0 = S.findIndex((x) => x.n >= r.AT); const pre = S[i0 - 1], first = S[i0];
+    if (!pre || !first) { cell(name, "FAIL", `the film holds no frame before or on the mutation's (${S.length} frames)`); continue; }
+    const after = S.slice(i0); const durs = [...new Set(after.flatMap((x) => x.an))];
+    if (place === "animating") {
+      const rel = (x) => (x.y - x.ct) / x.cs; const drift = Math.abs(rel(first) - rel(pre)); const inFlight = Math.abs(first.cs - pre.cs) > 1e-4; const glides = after.slice(0, 6).filter((x) => x.an.length).length;
+      cell(name, !inFlight ? "UNMEASURED" : !glides && drift <= 0.5 ? "PASS" : "FAIL", `${inFlight ? "" : "NOT DRIVEN: the card's scale was not in flight across the mutation · "}the card C runs scale 0.8 → 1 over 600 ms (${f(pre.cs, 4)} → ${f(first.cs, 4)} across the mutation's frame); a block that moves nothing appended ${tf === "in" ? "after the root inside C" : "after C"} on frame ${r.AT} · translate glides on the root over the next 6 frames ${glides}${durs.length ? ` (clock ${durs.map((x) => f(x, 0)).join(",")} ms)` : ""} (bound 0) · the root's place in C's frame moved ${f(drift, 2)} px across the mutation's frame (bound ≤ 0.5) · offset chain ${pre.oc} → ${first.oc} · errors ${r.errs.length}`);
+      continue;
+    }
+    const end = S.at(-1); const moved = Math.hypot(end.x - pre.x, end.y - pre.y), jump = Math.hypot(first.x - pre.x, first.y - pre.y);
+    const facts = r.rows.map(rowFacts).filter((x) => Number.isFinite(x.peak)); const fastest = facts.reduce((p, x) => (!p || x.peak > p.peak ? x : p), null); const rode = rodeRow(durs, r.rows); const row = rode ?? fastest;
+    const bound = moved * (row?.peak ?? 0) + 1;
+    const W = S.slice(i0 - 1); const at = (t, k) => { for (let i = 1; i < W.length; i++) if (W[i].t >= t) { const a = W[i - 1], b = W[i]; return a[k] + ((b[k] - a[k]) * (t - a.t)) / Math.max(1e-6, b.t - a.t); } return W.at(-1)[k]; };
+    let step = 0, stepAt = NaN; for (const x of W) if (x.t - W[0].t >= NOM) { const d = Math.hypot(x.x - at(x.t - NOM, "x"), x.y - at(x.t - NOM, "y")); if (d > step) { step = d; stepAt = x.t - pre.t; } }
+    const driven = moved >= 5; const glided = durs.length > 0;
+    cell(name, !driven ? "UNMEASURED" : jump <= 0.5 && step <= bound && glided ? "PASS" : "FAIL", `${driven ? "" : "NOT DRIVEN: the root moved under 5 px · "}${place === "chain" ? `a positioned zoomed box C (zoom ${HG_TF[tf].zoom}) in a positioned card G, ` : `the card ${HG_NAME[tf]} on ${place === "nested" ? "G (one box further out)" : "C"}, `}a 40 px block ${place === "inside" ? "inside C above the root" : place === "outside" ? "before C" : "before G"} on frame ${r.AT} · the root's painted centre moved ${f(end.x - pre.x, 1)}, ${f(end.y - pre.y, 1)} px; on the mutation's frame ${f(jump, 2)} px from where it was painted (bound ≤ 0.5) · largest move over any 16.7 ms ${f(step, 1)} px at +${f(stepAt, 0)} ms (bound ${f(bound, 1)} = ${f(moved, 1)} × ${row ? `${row.n} ${f(row.peak, 3)} (clock ${f(row.ms, 0)} ms)` : "?"}${rode ? "" : ` (no running translate on the root carries a row's clock [${durs.map((x) => f(x, 0)).join(",")}]: the fastest row)`} + 1) · glide ${glided ? `running (${durs.map((x) => f(x, 0)).join(",")} ms)` : `none (held before/on the mutation ${pre.held}/${first.held}; offset chain ${pre.oc} → ${first.oc})`} · errors ${r.errs.length}`);
+  }
+  // ── H12: THE REACH under a transform (CK-20 × CK-04; REGISTRY §P11-7 item 5; P-E11 §8 item 2): `--part reach`. On the page row in a 390 ×
+  // 700 viewport, the card C (the root's parent) carries the card; the root is sized so its painted rest box clears the gutter as the
+  // card paints it (the row's `gutter` token, default --space-section, read on a probe inside C) by 6 painted px each side, and centred.
+  //   reach · <card>   a fine hold, +1100 ms: the painted inline grow against the library's rule read in paint, min(the block grow,
+  //                    1 + 2·max(0, room − gutter)/width), each term painted (room: the rest box's distance to the viewport's nearer
+  //                    edge; the block grow the engaged box's painted height over its rest's). PASS when the engaged painted width is
+  //                    within 1 px of that figure and the engaged box no nearer the edge than the painted gutter − 1 px; UNMEASURED when
+  //                    the figure is not gutter-limited (it could not separate). Plant e10-reachframe; the pass-11 candidate passes;
+  //                    controls C-E11's roomframe and C-A11's roomnoframe (`../pass-12/H12.md`)
+  if (want("reach")) for (const [sc, m] of pageRows) for (const tf of ["none", "scale", "zoom08", "zoom125", "zoom2", "zs"]) {
+    const R = m.root ?? '[data-e~="root"]', thumb = m.thumb ?? '[data-e~="thumb"]', GT = m.gutter ?? "--space-section";
+    const name = `E-10 ${sc} reach · ${HG_NAME[tf]}`;
+    const r = await guard(name, async () => {
+      const P = await openPage(E, T, sc, { vp: { width: 390, height: 700 } });
+      try {
+        const rest = await P.page.evaluate(([R, css, GT]) => { const root = document.querySelector(R), C = root.parentElement; const mn = document.querySelector("main") ?? document.body; mn.style.paddingTop = "200px"; document.documentElement.style.overflowAnchor = "none"; if (css) Object.assign(C.style, css);
+          const pr = document.createElement("div"); pr.style.cssText = `position:absolute;height:1px;width:var(${GT})`; C.appendChild(pr); const gP = pr.getBoundingClientRect().width; pr.remove();
+          const vw = innerWidth; root.style.boxSizing = "border-box"; root.style.position = "relative"; root.style.left = "0px"; let k = root.getBoundingClientRect().width / root.offsetWidth; root.style.width = `${(vw - 2 * (gP + 6)) / k}px`;
+          for (let i = 0; i < 3; i++) { const q = root.getBoundingClientRect(); k = q.width / root.offsetWidth; root.style.left = `${Number.parseFloat(root.style.left) + (vw / 2 - (q.left + q.width / 2)) / k}px`; }
+          const q = root.getBoundingClientRect(); return { gP, vw, l: q.left, r: q.right, w: q.width, h: q.height, k }; }, [R, HG_TF[tf], GT]);
+        await P.page.waitForTimeout(250);
+        const c = await center(P.page, thumb); await P.page.mouse.move(c.x, c.y); await P.page.mouse.down();
+        try { await P.page.waitForTimeout(1100); const eng = await P.page.evaluate((R) => { const q = document.querySelector(R).getBoundingClientRect(); return { l: q.left, r: q.right, w: q.width, h: q.height }; }, R); return { rest, eng, errs: [...P.errors] }; } finally { await P.page.mouse.up(); }
+      } finally { await P.close(); }
+    }, 60000);
+    if (r.crashed) { cell(name, "FAIL", r.line); continue; }
+    const { rest, eng } = r; const se = eng.h / rest.h; const room = Math.min(rest.l, rest.vw - rest.r); const fig = Math.min(se, 1 + (2 * Math.max(0, room - rest.gP)) / rest.w);
+    const off = eng.w - fig * rest.w; const margin = Math.min(eng.l, rest.vw - eng.r); const limited = fig < se - 0.003;
+    cell(name, !limited ? "UNMEASURED" : Math.abs(off) <= 1 && margin >= rest.gP - 1 ? "PASS" : "FAIL", `${limited ? "" : "NOT GUTTER-LIMITED: the figure cannot separate · "}the card ${HG_NAME[tf]} · the gutter ${GT} painted ${f(rest.gP, 2)} px (frame ${f(rest.k, 3)}) · rest ${f(rest.l, 1)}..${f(rest.r, 1)} of ${rest.vw} (room ${f(room, 1)}, width ${f(rest.w, 1)}) · the rule in paint: min(block ×${f(se, 4)}, 1 + 2·(${f(room, 1)} − ${f(rest.gP, 1)})/${f(rest.w, 1)}) = ×${f(fig, 4)} · engaged ×${f(eng.w / rest.w, 4)} inline (${f(eng.w, 1)} px, ${f(off, 2)} px off the figure; bound ≤ 1), ${f(eng.l, 1)}..${f(eng.r, 1)}: margin ${f(margin, 1)} against the gutter ${f(rest.gP, 1)} − 1 · errors ${r.errs.length}`);
+  }
   if (want("lensfilm")) for (const [sc, m] of lensRows.filter(([, x]) => !!x.clip)) {
     const L = m.loupe; const thumb = m.thumb ?? '[data-e~="thumb"]'; const reads = {};
     for (const [tf, css, marker] of [["marker", null, true], ["none", null, false], ["scale", { scale: "0.8", transformOrigin: "0 0" }, false]]) {

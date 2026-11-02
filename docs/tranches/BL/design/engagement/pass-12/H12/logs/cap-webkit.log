@@ -1,0 +1,14 @@
+# H12 cap webkit · 2026-11-02 07:14:48 · load { 10.50 9.23 8.95 } · harness 734e19688120 · 
+# capture · fixture · fixture · lock wait 0.0 s · other headless processes: chromium 0, webkit 0 · load 10.5/9.2/8.9 at start
+# ladder-only scenes: travel
+# webkit 26.5 (Playwright WebKit, not Safari; real Safari UNMEASURED (owner's safaridriver checkbox))
+  fixture-webkit-fine-light-pop · rest ×1.000 · pressed ×0.965 · held ×0.960 · engaged ×1.000 · committed ×0.989 · released ×1.000 · load 10.7/9.3/9.0
+  PASS       CAP pop fine light committed · webkit: pointer release after a 450 ms hold, state "off" → "on" · load 10.7/9.3/9.0
+  PASS       CAP pop ladder fine light · webkit: inset paint L rest 0.5959 (rgb(216, 219, 226)) · hover 0.5478 (rgb(207, 211, 220); darker by 0.0481) · hover+press 0.4434 (rgb(185, 191, 204), data-state off) · released, still hovered 0.2969 · the press deepens the hover by 0.1044 (bound: no step back past 0.002) · load 10.7/9.3/9.0
+  fixture-webkit-coarse-light-pop · rest ×1.000 · pressed ×0.962 · held ×0.960 · engaged ×0.960 · committed ×1.000 · released ×1.000 · load 10.5/9.3/9.0
+  PASS       CAP pop coarse light committed · webkit: short tap, state "off" → "on" · load 10.5/9.3/9.0
+  PASS       CAP travel ladder fine light · webkit: inset paint L rest 0.6724 (rgba(0, 0, 0, 0)) · hover 0.6180 (rgb(207, 211, 220); darker by 0.0544) · hover+press 0.4960 (rgb(185, 191, 204)) · released, still hovered 0.6180 · the press deepens the hover by 0.1219 (bound: no step back past 0.002) · load 10.4/9.3/9.0
+# capture done · load 10.4/9.3/9.0 at end
+CAP webkit PASS · 4 pass, 0 fail, 0 unmeasured of 4 gating cells (0 reported) · load 10.5/9.2/8.9 at start, 10.4/9.3/9.0 at end
+# exit 0 · 2026-11-02 07:15:02 · load { 10.44 9.28 8.97 }
+# end · 2026-11-02 07:15:02 · load { 10.44 9.28 8.97 } · harness 734e19688120

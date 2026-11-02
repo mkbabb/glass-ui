@@ -1,0 +1,74 @@
+{
+ "id": "E-10",
+ "engine": "chromium",
+ "version": "149.0.7827.55",
+ "target": {
+  "fixture": true,
+  "fault": "e10-lenszoom"
+ },
+ "loadStart": "13.2/12.3/10.9",
+ "loadEnd": "11.7/12.0/10.8",
+ "verdict": "FAIL",
+ "cells": [
+  {
+   "name": "E-10 slider loupe side · page · zoom 0.8",
+   "status": "FAIL",
+   "line": "a fine hold, the card zoom 0.8, the track carried 3 px a frame 262 px, 210 frames (median sample 7.9 ms) · 1 side change(s), the lens's centre against the track's -40.5 → 40.5 px · largest move against the track over any 16.7 ms of real time 23.2 px at +542 ms; bound 10.8 px = the span 65.0 (read in the last frame: lens 48.0 + track 17.0 px; first-to-last 81.0) × row press's 0.151 (clock 350 ms, overshoot 0.060) + 1 · off its edge by > 2 px on 209 frames over 1574 ms (bound one window ≤ 675 ms), worst 32.2 px, 0 frames outside the span · across 0.0 px (≤ 2) · ends flush false (8.0 px), whole at the end true (lens 30.7..78.7 px), at most 0.0 px above the viewport on any frame (bound ≤ two 3 px steps + 2 = 8)",
+   "load": "13.2/12.3/10.9"
+  },
+  {
+   "name": "E-10 slider loupe side · page · zoom 1.25",
+   "status": "FAIL",
+   "line": "a fine hold, the card zoom 1.25, the track carried 3 px a frame 245 px, 201 frames (median sample 7.8 ms) · 1 side change(s), the lens's centre against the track's -40.8 → 40.8 px · largest move against the track over any 16.7 ms of real time 26.6 px at +555 ms; bound 16.3 px = the span 101.5 (read in the last frame: lens 75.0 + track 26.5 px; first-to-last 81.5) × row press's 0.151 (clock 350 ms, overshoot 0.060) + 1 · off its edge by > 2 px on 200 frames over 1514 ms (bound one window ≤ 675 ms), worst 48.2 px, 3 frames outside the span · across 0.0 px (≤ 2) · ends flush false (-10.0 px), whole at the end true (lens 50.8..125.8 px), at most 33.4 px above the viewport on any frame (bound ≤ two 3 px steps + 2 = 8)",
+   "load": "13.0/12.2/10.8"
+  },
+  {
+   "name": "E-10 slider loupe side · reduce · page · zoom 1.25",
+   "status": "FAIL",
+   "line": "reduce, the card zoom 1.25 · 1 side change(s) · off its edge by > 2 px on 204 frames (bound 0: instant, no travel, the correction kept), worst 10.0 px · largest move over any 16.7 ms 80.0 px · whole at the end true (lens 50.0..125.0 px)",
+   "load": "13.0/12.2/10.8"
+  },
+  {
+   "name": "E-10 slider loupe side · page · zoom 2",
+   "status": "FAIL",
+   "line": "a fine hold, the card zoom 2, the track carried 3 px a frame 218 px, 195 frames (median sample 7.7 ms) · 0 side change(s), the lens's centre against the track's -41.2 → -41.2 px · largest move against the track over any 16.7 ms of real time 0.0 px at +104 ms; bound 1.0 px = the span 0.0 (read in the last frame: lens 120.0 + track 42.4 px; first-to-last 0.0) × row press's 0.151 (clock 350 ms, overshoot 0.060) + 1 (no running animation on the lens carries a row's clock []: the library's fastest row) · off its edge by > 2 px on 195 frames over 1448 ms (bound one window ≤ 675 ms), worst 40.0 px, 0 frames outside the span · across 0.0 px (≤ 2) · ends flush false (40.0 px), whole at the end false (lens -1.2..118.8 px), at most 1.2 px above the viewport on any frame (bound ≤ two 3 px steps + 2 = 8)",
+   "load": "12.6/12.2/10.8"
+  },
+  {
+   "name": "E-10 clipstale loupe side · carry · zoom 0.8",
+   "status": "FAIL",
+   "line": "a fine hold, the card zoom 0.8, the track carried 2 px a frame 168 px, 205 frames (median sample 7.8 ms) · 1 side change(s), the lens's centre against the track's -40.5 → 40.5 px · largest move against the track over any 16.7 ms of real time 23.5 px at +438 ms; bound 10.8 px = the span 65.0 (read in the last frame: lens 48.0 + track 17.0 px; first-to-last 81.0) × row press's 0.151 (clock 350 ms, overshoot 0.060) + 1 · off its edge by > 2 px on 204 frames over 1522 ms (bound one window ≤ 675 ms), worst 32.0 px, 0 frames outside the span · across 0.0 px (≤ 2) · ends flush false (8.0 px), whole at the end true (lens 32.5..80.5 px), at most 0.0 px above the viewport on any frame (bound ≤ two 2 px steps + 2 = 6)",
+   "load": "11.8/12.0/10.8"
+  },
+  {
+   "name": "E-10 clipstale loupe side · carry · zoom 1.25",
+   "status": "FAIL",
+   "line": "a fine hold, the card zoom 1.25, the track carried 2 px a frame 140 px, 194 frames (median sample 7.7 ms) · 1 side change(s), the lens's centre against the track's -40.8 → 40.8 px · largest move against the track over any 16.7 ms of real time 26.6 px at +430 ms; bound 16.3 px = the span 101.5 (read in the last frame: lens 75.0 + track 26.5 px; first-to-last 81.5) × row press's 0.151 (clock 350 ms, overshoot 0.060) + 1 · off its edge by > 2 px on 193 frames over 1429 ms (bound one window ≤ 675 ms), worst 47.9 px, 3 frames outside the span · across 0.0 px (≤ 2) · ends flush false (-10.0 px), whole at the end true (lens 49.8..124.8 px), at most 32.4 px above the viewport on any frame (bound ≤ two 2 px steps + 2 = 6)",
+   "load": "11.8/12.0/10.8"
+  },
+  {
+   "name": "E-10 clipstale loupe side · reduce · carry · zoom 1.25",
+   "status": "FAIL",
+   "line": "reduce, the card zoom 1.25 · 1 side change(s) · off its edge by > 2 px on 193 frames (bound 0: instant, no travel, the correction kept), worst 10.0 px · largest move over any 16.7 ms 80.0 px · whole at the end true (lens 49.0..124.0 px)",
+   "load": "11.6/12.0/10.8"
+  },
+  {
+   "name": "E-10 clipstale loupe wobble · at-change · zoom 1.25",
+   "status": "PASS",
+   "line": "a fine hold, the card zoom 1.25, carried to the lens's side change, then ±3 px: 40 frames toggling every 2, 6 toggles every 30 · 1 side change(s) in 357 frames (bound ≤ 1) · largest move over any 16.7 ms 26.6 px",
+   "load": "12.5/12.2/10.8"
+  },
+  {
+   "name": "E-10 clipstale loupe wobble · at-line · zoom 1.25",
+   "status": "PASS",
+   "line": "a fine hold, the card zoom 1.25, carried to the line, then ±3 px: 40 frames toggling every 2, 6 toggles every 30 · 0 side change(s) in 340 frames (bound ≤ 1) · largest move over any 16.7 ms 0.0 px",
+   "load": "12.5/12.2/10.8"
+  },
+  {
+   "name": "E-10 clipstale loupe side · carry · zoom 2",
+   "status": "FAIL",
+   "line": "a fine hold, the card zoom 2, the track carried 2 px a frame 97 px, 170 frames (median sample 7.8 ms) · 0 side change(s), the lens's centre against the track's -41.2 → -41.2 px · largest move against the track over any 16.7 ms of real time 0.0 px at +NaN ms; bound 1.0 px = the span 0.0 (read in the last frame: lens 120.0 + track 42.4 px; first-to-last 0.0) × row press's 0.151 (clock 350 ms, overshoot 0.060) + 1 (no running animation on the lens carries a row's clock []: the library's fastest row) · off its edge by > 2 px on 170 frames over 1262 ms (bound one window ≤ 675 ms), worst 40.0 px, 0 frames outside the span · across 0.0 px (≤ 2) · ends flush false (40.0 px), whole at the end false (lens -1.2..118.8 px), at most 1.2 px above the viewport on any frame (bound ≤ two 2 px steps + 2 = 6)",
+   "load": "11.7/12.0/10.8"
+  }
+ ]
+}
