@@ -1,0 +1,53 @@
+# C-A12 WebKit stages, in priority order, run inside ONE guarded --exclusive webkit acquisition (WK-1). Planned split: no stage starts
+# after 80 min of an acquisition (wk-run.sh); whatever WK-1 leaves goes to WK-2, a second named acquisition queued at once, recorded.
+facts webkit
+cand12-E-11 webkit
+cand12-e11v webkit
+plant-listcheck-E-11 webkit --part travel
+plant-unitread-E-11 webkit --part travel
+cand12-ca11 webkit --only loud
+cand12-ce11 webkit --only loudx,relclock
+cand12-ca12 webkit --only errs
+cand11-ca12 webkit --only errs
+cand12-E-10 webkit
+cand12-ca12 webkit --only xf,kind,anchor
+cand11-ca12 webkit --only xf,kind,anchor
+plant-allkinds-ca12 webkit --only kind
+cand12-origin webkit
+plant-nopivot-origin webkit
+plant-noframe-E-10 webkit --part hostglide
+plant-glideframe-E-10 webkit --part hostglide
+plant-roomframe-E-10 webkit --part reach
+cand12-E-13 webkit
+plant-nozoom-E-10 webkit --part lensside
+plant-fast-E-10 webkit --part lensside
+cand12-ca11 webkit --only side,clock,reverse,wheel,release-mid,exit-side,rerender,hostglide,repress,reach
+cand12-ce11 webkit --only side,clock --tfs trackzoom,htmlzoom,zoom25
+cand12-ce11 webkit --only rerender,press-line,noroom,reach
+cand12-ca11 webkit --only exit-side --r 1
+cand12-ca11 webkit --only exit-side --r 2
+cand8-ca9idle webkit
+cand12-ca9idle webkit
+cand12-loop webkit
+plant-loop-loop webkit
+cand12-E-9 webkit
+cand12-prmplant webkit
+cand12-E-1 webkit
+cand12-E-2 webkit
+cand12-E-3 webkit
+cand12-E-4 webkit
+cand12-E-5 webkit
+cand12-E-6 webkit
+cand12-E-7 webkit
+cand12-E-8 webkit
+cand12-E-12 webkit
+cand12-ce9 webkit --only stack,lensdlg,anc
+cand12-ce9c webkit --only lensfilm
+cand12-tip webkit
+cand12-cap webkit
+cand12-ca12 webkit --only still
+cand12-glance webkit
+# trimmed 11:48 by rename (budget): plant-owedframe-E-10, crest
+# added 14:5x by rename: cand12-ca12 webkit --only errs (the library's default calc() token refused by WebKit's Typed OM, facts-webkit.log)
+# added by rename after the errs read: cand11-ca12 webkit --only errs (control; it starts only if not yet passed)
+# added by rename 15:44: two re-reads of exit-side (a 104.7 px WebKit step at load 11-14, CA11 exit-side zoom125)

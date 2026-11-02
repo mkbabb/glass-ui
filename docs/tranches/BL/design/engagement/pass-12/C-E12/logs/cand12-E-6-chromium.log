@@ -1,0 +1,22 @@
+# C-E12 cand12-E-6 chromium · 2026-11-02 12:53:38 · load { 9.18 11.06 10.94 } · harness d28f97975274 · 
+# E-6 · the idle rung under the compositor-only bound
+# target /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p12/C-E12/wt/.ce12out/builds/cand12 · engine chromium · lock wait 5.5 s · other headless processes: chromium 7, webkit 2 · load 8.8/10.9/10.9 at start
+# scene app: harness scenes/App.vue (sha1 9e34ffa5714e)
+# chromium 149.0.7827.55
+  FAIL       E-6 s6 present light · 0 running infinite animation(s) at rest · load 8.9/10.9/10.9
+  UNMEASURED E-6 s6 channel light · no idle animation to read · load 8.9/10.9/10.9
+  UNMEASURED E-6 s6 shape light · no idle animation to read · load 8.9/10.9/10.9
+  UNMEASURED E-6 s6 amplitude light · no idle animation to read · load 8.9/10.9/10.9
+  UNMEASURED E-6 s6 period light · no idle animation to read · load 8.9/10.9/10.9
+  PASS       E-6 s6 layouts/s light · layouts/s 0.0 · style recalcs/s 0.0 over 3 s at rest (bound 0 layouts/s) · load 8.9/10.9/10.9
+  PASS       E-6 s6 PRM light · 0 idle animation(s) under reduced motion, 0 spatial · load 8.9/10.9/10.9
+  FAIL       E-6 s6 present dark · 0 running infinite animation(s) at rest · load 9.9/11.1/11.0
+  UNMEASURED E-6 s6 channel dark · no idle animation to read · load 9.9/11.1/11.0
+  UNMEASURED E-6 s6 shape dark · no idle animation to read · load 9.9/11.1/11.0
+  UNMEASURED E-6 s6 amplitude dark · no idle animation to read · load 9.9/11.1/11.0
+  UNMEASURED E-6 s6 period dark · no idle animation to read · load 9.9/11.1/11.0
+  PASS       E-6 s6 layouts/s dark · layouts/s 0.0 · style recalcs/s 0.0 over 3 s at rest (bound 0 layouts/s) · load 9.9/11.1/11.0
+  PASS       E-6 s6 PRM dark · 0 idle animation(s) under reduced motion, 0 spatial · load 9.9/11.1/11.0
+E-6 chromium FAIL · 4 pass, 2 fail, 8 unmeasured of 14 gating cells (0 reported) · load 8.8/10.9/10.9 at start, 9.9/11.1/11.0 at end
+# exit 1 · 2026-11-02 12:53:54 · load { 9.91 11.11 10.96 }
+# end · 2026-11-02 12:53:54 · load { 9.91 11.11 10.96 } · harness d28f97975274

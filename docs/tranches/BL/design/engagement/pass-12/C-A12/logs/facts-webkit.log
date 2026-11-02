@@ -1,0 +1,36 @@
+# C-A12 facts webkit · 2026-11-02 14:48:55 · load { 9.65 8.32 8.87 } · harness d28f97975274 · 
+# webkit 26.5 · Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.5 Safari/605.1.15
+typed OM (CSSNumericValue.parse) present: true
+settle "210ms" · computed --t "210ms" · CSS transition-duration 0.21s · tokenOf's read (parse(--t).to("ms")) 210
+settle "0.21s" · computed --t "0.21s" · CSS transition-duration 0.21s · tokenOf's read (parse(--t).to("ms")) 210
+settle "210MS" · computed --t "210MS" · CSS transition-duration 0.21s · tokenOf's read (parse(--t).to("ms")) 210
+settle "2.1e2ms" · computed --t "2.1e2ms" · CSS transition-duration 0.21s · tokenOf's read (parse(--t).to("ms")) 210
+settle "+0.21s" · computed --t "+0.21s" · CSS transition-duration 0.21s · tokenOf's read (parse(--t).to("ms")) 210
+settle "calc(0.1s + 110ms)" · computed --t "calc(0.1s + 110ms)" · CSS transition-duration 0.21s · tokenOf's read (parse(--t).to("ms")) throws SyntaxError: Failed to parse CSS text
+settle "calc(105ms * 2)" · computed --t "calc(105ms * 2)" · CSS transition-duration 0.21s · tokenOf's read (parse(--t).to("ms")) throws SyntaxError: Failed to parse CSS text
+settle "max(210ms, 0.1s)" · computed --t "max(210ms, 0.1s)" · CSS transition-duration 0.21s · tokenOf's read (parse(--t).to("ms")) throws SyntaxError: Failed to parse CSS text
+settle "min(210ms, 1s)" · computed --t "min(210ms, 1s)" · CSS transition-duration 0.21s · tokenOf's read (parse(--t).to("ms")) throws SyntaxError: Failed to parse CSS text
+settle "clamp(100ms, 210ms, 1s)" · computed --t "clamp(100ms, 210ms, 1s)" · CSS transition-duration 0.21s · tokenOf's read (parse(--t).to("ms")) throws SyntaxError: Failed to parse CSS text
+settle "calc(infinity * 1s)" · computed --t "calc(infinity * 1s)" · CSS transition-duration 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368s · tokenOf's read (parse(--t).to("ms")) throws SyntaxError: Failed to parse CSS text
+settle "/* c */ 210ms" · computed --t "210ms" · CSS transition-duration 0.21s · tokenOf's read (parse(--t).to("ms")) 210
+settle "0.21s 0.1s" · computed --t "0.21s 0.1s" · CSS transition-duration 0s · tokenOf's read (parse(--t).to("ms")) throws SyntaxError: Failed to parse CSS text
+settle "-0s" · computed --t "-0s" · CSS transition-duration 0s · tokenOf's read (parse(--t).to("ms")) 0
+settle "1e-3s" · computed --t "1e-3s" · CSS transition-duration 0.001s · tokenOf's read (parse(--t).to("ms")) 1
+settle "0.21" · computed --t "0.21" · CSS transition-duration 0s · tokenOf's read (parse(--t).to("ms")) throws TypeError: Type error
+settle "210" · computed --t "210" · CSS transition-duration 0s · tokenOf's read (parse(--t).to("ms")) throws TypeError: Type error
+easing "ease, linear" · computed "ease, linear" · KeyframeEffect throws: Type error · CSS.supports(animation-timing-function) true
+easing "EASE-IN-OUT" · computed "EASE-IN-OUT" · KeyframeEffect ease-in-out · CSS.supports(animation-timing-function) true
+easing "linear(0, 0.4 30%, 1)" · computed "linear(0, 0.4 30%, 1)" · KeyframeEffect linear(0.00 0%, 0.40 30%, 1.00 100%) · CSS.supports(animation-timing-function) true
+easing "steps(2, jump-none)" · computed "steps(2, jump-none)" · KeyframeEffect steps(2, jump-none) · CSS.supports(animation-timing-function) true
+easing "step-end" · computed "step-end" · KeyframeEffect steps(1) · CSS.supports(animation-timing-function) true
+easing "cubic-bezier(1.5, 0, 0, 1)" · computed "cubic-bezier(1.5, 0, 0, 1)" · KeyframeEffect throws: Type error · CSS.supports(animation-timing-function) false
+easing "steps(0)" · computed "steps(0)" · KeyframeEffect throws: Type error · CSS.supports(animation-timing-function) false
+easing "ease /* c */" · computed "ease" · KeyframeEffect ease · CSS.supports(animation-timing-function) true
+easing "linear" · computed "linear" · KeyframeEffect linear · CSS.supports(animation-timing-function) true
+easing "var(--u, ease-out)" · computed "ease-out" · KeyframeEffect ease-out · CSS.supports(animation-timing-function) true
+number "1.06" · computed "1.06" · CSS scale 1.06 · parse(--t).to("number") 1.06
+number "106%" · computed "106%" · CSS scale 1.06 · parse(--t).to("number") throws TypeError: Type error
+number "calc(1 + 0.06)" · computed "calc(1 + 0.06)" · CSS scale 1.06 · parse(--t).to("number") throws SyntaxError: Failed to parse CSS text
+number "max(1.06, 1)" · computed "max(1.06, 1)" · CSS scale 1.06 · parse(--t).to("number") throws SyntaxError: Failed to parse CSS text
+# exit 0 · 2026-11-02 14:48:57 · load { 9.65 8.32 8.87 }
+# end · 2026-11-02 14:48:57 · load { 9.65 8.32 8.87 } · harness d28f97975274

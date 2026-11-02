@@ -1,0 +1,62 @@
+# C-A12 CK-22 greps · 2026-11-02 10:53:28 · glass-ui HEAD 97352c0e8
+# self-check on the candidate's own src (counts, each pattern must be countable)
+#   SL '<Slider\b': 9
+#   NF '<NumberField\b': 0
+#   SD '--spring-dock *:': 1
+#   SS '--spring-[a-z-]*-settle *:': 6
+#   GS '--space-section *:': 2
+#   GE '--scale-engage *:': 1
+#   ST '--stage-(reach|room|w)\b': 8
+#   SM 'shape-margin': 3
+#   ZM '(^|[^-a-z])zoom *:': 0
+#   RT '(rotate|skew|perspective)\(|(^|[^-a-z])rotate *:': 9
+#   OA 'overflow-anchor': 0
+atlas @ 069708a · SL 2 NF 0 SD 0 SS 0 GS 0 GE 0 ST 0 SM 0 ZM 0 RT 9 OA 0
+bbnf-buddy @ 2857c2f · SL 1 NF 0 SD 0 SS 0 GS 0 GE 0 ST 0 SM 0 ZM 2 RT 9 OA 0
+   ZM bbnf-buddy/src/editor/components/dock/tools/ToolsLayer.vue:27:    zoom: number;
+   ZM bbnf-buddy/src/editor/components/dock/LeftToolsDock.vue:28:    zoom: number;
+chicago @  · SL 0 NF 0 SD 0 SS 0 GS 0 GE 0 ST 0 SM 0 ZM 0 RT 0 OA 0
+keyframes.js @ fb87dbcd · SL 5 NF 1 SD 0 SS 0 GS 0 GE 0 ST 0 SM 0 ZM 0 RT 96 OA 0
+slides @ 7dcbb3b · SL 0 NF 0 SD 0 SS 0 GS 0 GE 0 ST 0 SM 0 ZM 0 RT 16 OA 0
+speedtest @ e2d9444d · SL 2 NF 6 SD 0 SS 0 GS 0 GE 0 ST 0 SM 0 ZM 1 RT 14 OA 0
+   ZM speedtest/src/components/dashboard/composables/maplibre/composable.ts:326:            zoom: options?.zoom ?? DEFAULT_ZOOM,
+value.js @ ab57f5743 · SL 7 NF 1 SD 0 SS 0 GS 0 GE 0 ST 0 SM 1 ZM 8 RT 67 OA 3
+   SM value.js/demo/app/.vite-critic-9216/deps/highlight__js_lib_languages_css.js:692:	"shape-margin",
+   ZM value.js/demo/workbenches/extract/ImageEyedropper/composables/useImageSampler.ts:32:    getTransform: () => { panX: number; panY: number; zoom: number };
+   ZM value.js/demo/workbenches/extract/ImageEyedropper/ImageEyedropper.vue:163:        zoom: gesture.zoom.value,
+   ZM value.js/demo/app/.vite-critic-9216/deps/tailwind-merge.js:2873:			zoom: [{ zoom: [
+   ZM value.js/demo/test/extract/ss8-b25-cures.test.ts:35:    zoom: null as null | { value: number },
+   ZM value.js/demo/test/extract/ss8-b25-cures.test.ts:54:        useImageSampler: (deps: { getTransform: () => { panX: number; panY: number; zoom: number } }) => {
+   ZM value.js/demo/test/extract/image-sampler.test.ts:48:            getTransform: () => ({ panX: 0, panY: 0, zoom: 1 }),
+   ZM value.js/demo/shell/dock/ActionBarToggle.vue:96:                     aperture (< sm), never by a desktop zoom: 200 % of a 1440 desktop
+   ZM value.js/test/image-sampler-v4.test.ts:11:        getTransform: () => ({ panX: 0, panY: 0, zoom: 1 }),
+fourier-analysis @ 3bb9da5 · SL 5 NF 1 SD 0 SS 0 GS 0 GE 0 ST 0 SM 0 ZM 0 RT 5 OA 0
+sci-report @ bbcbd503 · SL 5 NF 0 SD 1 SS 1 GS 0 GE 0 ST 0 SM 0 ZM 4 RT 42 OA 0
+   SD sci-report/dist-ob11/assets/index-BPa7lE7v.css:1:@layer atlas,atlas.tokens,atlas.recipes,atlas.components;@layer atlas.tokens{@layer properties{@supports (((-webkit-hyphens: none))
+   SS sci-report/dist-ob11/assets/index-BPa7lE7v.css:1:@layer atlas,atlas.tokens,atlas.recipes,atlas.components;@layer atlas.tokens{@layer properties{@supports (((-webkit-hyphens: none))
+   ZM sci-report/dist-ob11/assets/VendorChord-Bw0cwedV.js:1:import{_ as rt}from"./RankedBar.vue-BY2acsR8.js";import{C as ot}from"./ChartLegend.vue-BxM9SjqO.js";import{S as nt}from"./Sele
+   ZM sci-report/dist-ob11/assets/useEChart-DWO343_5.js:8:`){u&&(s+=u,f+=l),a.push(s),o.push(f),s="",u="",l=0,f=0;continue}var d=Nd(h,c.charCodeAt(0)),m=n?!1:!o1(c);if(a.length?f+d>r:i+f
+   ZM sci-report/dist-ob11/assets/Point-xjh7QLYF.js:18:*`,"g")),r={series:[]};return m(e,function(i,a){if(va(i)){var o=da(i),s=t[a],u=s.axisDim+"Axis";s&&(r[u]=r[u]||[],r[u][s.axisIndex]
+   ZM sci-report/dist-ob11/assets/install-B-sLkqPD.js:1:import{t as Y,e as B,h as u,_ as mt,S as jt,m as tt,b as _,c as Z,d as et,f as Et,i as V,T as W,k as H,j as Ot,l as X,D as kt,P as
+atlas/src/filter/ui/PercentileRangeSlider.vue · v-show/v-if lines 0 · v-show 0
+bbnf-buddy/src/components/EditableSlider.vue · v-show/v-if lines 7 · v-show 0
+keyframes.js/demo/components/instrument/pane/channel-controls/LayerConfigPanel.vue · v-show/v-if lines 3 · v-show 0
+keyframes.js/demo/components/playback/PlaybackRibbon.vue · v-show/v-if lines 2 · v-show 0
+keyframes.js/demo/components/playback/AnimationVisualizer.vue · v-show/v-if lines 0 · v-show 0
+speedtest/src/components/AppSettingsButton.vue · v-show/v-if lines 7 · v-show 0
+speedtest/src/components/dashboard/SubnetAddDialog.vue · v-show/v-if lines 1 · v-show 0
+speedtest/src/components/dashboard/DashboardMapControls.vue · v-show/v-if lines 1 · v-show 0
+value.js/demo/workbenches/gradient/GradientVisualizer/GradientStopInspector.vue · v-show/v-if lines 2 · v-show 0
+value.js/demo/workbenches/gradient/GradientVisualizer/GradientVisualizer.vue · v-show/v-if lines 3 · v-show 0
+value.js/demo/workbenches/generate/GenerateControls.vue · v-show/v-if lines 0 · v-show 0
+value.js/demo/workbenches/extract/ExtractControls.vue · v-show/v-if lines 1 · v-show 0
+value.js/demo/scenes/ConfigSliderPane.vue · v-show/v-if lines 3 · v-show 0
+value.js/demo/picker/controls/ComponentSliders/ComponentSliders.vue · v-show/v-if lines 0 · v-show 0
+fourier-analysis/web/src/components/ui/SliderControl.vue · v-show/v-if lines 2 · v-show 0
+fourier-analysis/web/src/components/shared/FourierTimeline.vue · v-show/v-if lines 1 · v-show 0
+sci-report/dashboards/usf/features/filter/UsfFilter.vue · v-show/v-if lines 1 · v-show 0
+sci-report/dashboards/sci/features/filter/SciFilter.vue · v-show/v-if lines 1 · v-show 0
+sci-report/dashboards/ecf/features/filter/EcfFilter.vue · v-show/v-if lines 1 · v-show 0
+sci-report/dashboards/demand/features/filter/DemandFilter.vue · v-show/v-if lines 2 · v-show 0
+sci-report/atlas/docs/tranches/I/prototypes/glowing-veil-stage.vue · v-show/v-if lines 2 · v-show 0
+sci-report/atlas/docs/tranches/I/prototypes/geo-glyph-pipeline.vue · v-show/v-if lines 2 · v-show 0

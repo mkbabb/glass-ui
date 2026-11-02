@@ -1,0 +1,57 @@
+# C-E12 ck22 · 2026-11-02 10:50:18 · glass-ui HEAD 97352c0e8
+# self-check on the candidate's own src (the patterns must find the library's own sites)
+  src '--spring-dock *:' 1
+  src '--spring-[a-z]+-settle *:' 6
+  src '--space-section *:' 2
+  src 'shape-margin' 3
+  src '--stage-reach' 8
+  src '--scale-engage *:' 1
+  src '<Slider[ >/]|<Slider$' 10
+  src 'translate: *-50% -50%' 2
+
+repo              HEAD       Slider NumFld  dock: settle:  sect: shapem stage* sceng:   zoom
+atlas             069708a         2      0      0      0      0      0      0      0      0
+bbnf-buddy        2857c2f         1      0      0      0      0      0      0      0      2
+chicago                           0      0      0      0      0      0      0      0      0
+keyframes.js      fb87dbcd        5      1      0      0      0      0      0      0      0
+slides            7dcbb3b         0      0      0      0      0      0      0      0      0
+speedtest         e2d9444d        2      6      0      0      0      0      0      0      1
+value.js          ab57f5743       7      1      2      2      1      0      0      0      8
+fourier-analysis  3bb9da5         5      1      0      0      0      0      0      0      0
+sci-report        bbcbd503        5      0      1      1      0      0      0      0      0
+
+# every hit of the token-write patterns, each (a consumer value the candidate's one read would meet)
+  [--spring-dock *:] value.js/bench/paired/sheets/keyframes-js-index.css:1:.ppmycota-cube{background-color:var(--secondary);opacity:.75}.ppmycota-logo-lg{filter:var(--filter-brand-color);back
+  [--spring-dock *:] value.js/bench/paired/sheets/value-js-index.css:1:.space-trigger[data-v-7c25c6e0]{color:color-mix(in srgb, var(--space-title-ink) 86%, transparent);transition:color var(-
+  [--spring-[a-z]+-settle *:] value.js/bench/paired/sheets/keyframes-js-index.css:1:.ppmycota-cube{background-color:var(--secondary);opacity:.75}.ppmycota-logo-lg{filter:var(--filter-brand-color);back
+  [--spring-[a-z]+-settle *:] value.js/bench/paired/sheets/value-js-index.css:1:.space-trigger[data-v-7c25c6e0]{color:color-mix(in srgb, var(--space-title-ink) 86%, transparent);transition:color var(-
+  [--space-section *:] value.js/bench/paired/sheets/keyframes-js-index.css:1:.ppmycota-cube{background-color:var(--secondary);opacity:.75}.ppmycota-logo-lg{filter:var(--filter-brand-color);back
+  [--spring-dock *:] sci-report/dist-ob11/assets/index-BPa7lE7v.css:1:@layer atlas,atlas.tokens,atlas.recipes,atlas.components;@layer atlas.tokens{@layer properties{@supports (((-webkit-hyphe
+  [--spring-[a-z]+-settle *:] sci-report/dist-ob11/assets/index-BPa7lE7v.css:1:@layer atlas,atlas.tokens,atlas.recipes,atlas.components;@layer atlas.tokens{@layer properties{@supports (((-webkit-hyphe
+
+# CSS zoom hits, each
+  bbnf-buddy/src/editor/components/dock/tools/ToolsLayer.vue:27:    zoom: number;
+  bbnf-buddy/src/editor/components/dock/LeftToolsDock.vue:28:    zoom: number;
+  speedtest/src/components/dashboard/composables/maplibre/composable.ts:326:            zoom: options?.zoom ?? DEFAULT_ZOOM,
+  value.js/demo/workbenches/extract/ImageEyedropper/composables/useImageSampler.ts:32:    getTransform: () => { panX: number; panY: number; zoom: number };
+  value.js/demo/workbenches/extract/ImageEyedropper/ImageEyedropper.vue:163:        zoom: gesture.zoom.value,
+  value.js/demo/test/extract/ss8-b25-cures.test.ts:35:    zoom: null as null | { value: number },
+  value.js/demo/test/extract/ss8-b25-cures.test.ts:54:        useImageSampler: (deps: { getTransform: () => { panX: number; panY: number; zoom: number } }) => {
+  value.js/demo/test/extract/image-sampler.test.ts:48:            getTransform: () => ({ panX: 0, panY: 0, zoom: 1 }),
+  value.js/demo/shell/dock/ActionBarToggle.vue:96:                     aperture (< sm), never by a desktop zoom: 200 % of a 1440 desktop
+  value.js/bench/paired/sheets/value-js-index.css:1:.space-trigger[data-v-7c25c6e0]{color:color-mix(in srgb, var(--space-title-ink) 86%, transparent);transition:color var(-
+  value.js/test/image-sampler-v4.test.ts:11:        getTransform: () => ({ panX: 0, panY: 0, zoom: 1 }),
+
+# a Slider or NumberField in the same file as a glass-ui Dialog or Sheet (the centred plate: translate -50% -50%), each file
+  speedtest/src/components/dashboard/SubnetAddDialog.vue
+  speedtest/src/components/dashboard/DashboardMapControls.vue
+
+# a Slider or NumberField in the same file as a rotate/skew transform (a card transform the glide does not carry), each file
+
+# the overflow site (speedtest): the Slider and its overflow ancestor
+36:                <SlidersHorizontal class="size-icon-sm" />
+65:                    <Slider
+94:    <Card
+97:        class="absolute right-3 top-3 z-controls w-44 overflow-hidden p-0 transition-shadow sm:w-56"
+134:                        <Slider
+# end 2026-11-02 10:51:06

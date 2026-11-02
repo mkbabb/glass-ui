@@ -1,0 +1,22 @@
+# C-A12 cand12-E-6 chromium · 2026-11-02 13:41:03 · load { 6.21 7.83 8.83 } · harness d28f97975274 · 
+# E-6 · the idle rung under the compositor-only bound
+# target /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p12/C-A12/wt/.ca12out/builds/cand12 · engine chromium · lock wait 238.9 s · other headless processes: chromium 0, webkit 0 · load 6.0/7.2/8.4 at start
+# scene app: harness scenes/App.vue (sha1 9e34ffa5714e)
+# chromium 149.0.7827.55
+  FAIL       E-6 s6 present light · 0 running infinite animation(s) at rest · load 6.1/7.2/8.3
+  UNMEASURED E-6 s6 channel light · no idle animation to read · load 6.1/7.2/8.3
+  UNMEASURED E-6 s6 shape light · no idle animation to read · load 6.1/7.2/8.3
+  UNMEASURED E-6 s6 amplitude light · no idle animation to read · load 6.1/7.2/8.3
+  UNMEASURED E-6 s6 period light · no idle animation to read · load 6.1/7.2/8.3
+  PASS       E-6 s6 layouts/s light · layouts/s 0.0 · style recalcs/s 0.0 over 3 s at rest (bound 0 layouts/s) · load 6.1/7.2/8.3
+  PASS       E-6 s6 PRM light · 0 idle animation(s) under reduced motion, 0 spatial · load 6.1/7.2/8.3
+  FAIL       E-6 s6 present dark · 0 running infinite animation(s) at rest · load 6.4/7.3/8.4
+  UNMEASURED E-6 s6 channel dark · no idle animation to read · load 6.4/7.3/8.4
+  UNMEASURED E-6 s6 shape dark · no idle animation to read · load 6.4/7.3/8.4
+  UNMEASURED E-6 s6 amplitude dark · no idle animation to read · load 6.4/7.3/8.4
+  UNMEASURED E-6 s6 period dark · no idle animation to read · load 6.4/7.3/8.4
+  PASS       E-6 s6 layouts/s dark · layouts/s 0.0 · style recalcs/s 0.0 over 3 s at rest (bound 0 layouts/s) · load 6.4/7.3/8.4
+  PASS       E-6 s6 PRM dark · 0 idle animation(s) under reduced motion, 0 spatial · load 6.4/7.3/8.4
+E-6 chromium FAIL · 4 pass, 2 fail, 8 unmeasured of 14 gating cells (0 reported) · load 6.0/7.2/8.4 at start, 6.4/7.3/8.4 at end
+# exit 1 · 2026-11-02 13:45:12 · load { 6.42 7.28 8.36 }
+# end · 2026-11-02 13:45:12 · load { 6.42 7.28 8.36 } · harness d28f97975274

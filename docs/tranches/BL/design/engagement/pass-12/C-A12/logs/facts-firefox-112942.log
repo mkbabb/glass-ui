@@ -1,0 +1,36 @@
+# C-A12 facts firefox · 2026-11-02 11:29:42 · load { 11.35 11.71 11.35 } · harness d28f97975274 · 
+# firefox 151.0 · Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:151.0) Gecko/20100101 Firefox/151.0
+typed OM (CSSNumericValue.parse) present: false
+settle "210ms" · computed --t "210ms" · CSS transition-duration 0.21s · tokenOf's read (parse(--t).to("ms")) throws ReferenceError: CSSNumericValue is not defined
+settle "0.21s" · computed --t "0.21s" · CSS transition-duration 0.21s · tokenOf's read (parse(--t).to("ms")) throws ReferenceError: CSSNumericValue is not defined
+settle "210MS" · computed --t "210MS" · CSS transition-duration 0.21s · tokenOf's read (parse(--t).to("ms")) throws ReferenceError: CSSNumericValue is not defined
+settle "2.1e2ms" · computed --t "2.1e2ms" · CSS transition-duration 0.21s · tokenOf's read (parse(--t).to("ms")) throws ReferenceError: CSSNumericValue is not defined
+settle "+0.21s" · computed --t "+0.21s" · CSS transition-duration 0.21s · tokenOf's read (parse(--t).to("ms")) throws ReferenceError: CSSNumericValue is not defined
+settle "calc(0.1s + 110ms)" · computed --t "calc(0.1s + 110ms)" · CSS transition-duration 0.21s · tokenOf's read (parse(--t).to("ms")) throws ReferenceError: CSSNumericValue is not defined
+settle "calc(105ms * 2)" · computed --t "calc(105ms * 2)" · CSS transition-duration 0.21s · tokenOf's read (parse(--t).to("ms")) throws ReferenceError: CSSNumericValue is not defined
+settle "max(210ms, 0.1s)" · computed --t "max(210ms, 0.1s)" · CSS transition-duration 0.21s · tokenOf's read (parse(--t).to("ms")) throws ReferenceError: CSSNumericValue is not defined
+settle "min(210ms, 1s)" · computed --t "min(210ms, 1s)" · CSS transition-duration 0.21s · tokenOf's read (parse(--t).to("ms")) throws ReferenceError: CSSNumericValue is not defined
+settle "clamp(100ms, 210ms, 1s)" · computed --t "clamp(100ms, 210ms, 1s)" · CSS transition-duration 0.21s · tokenOf's read (parse(--t).to("ms")) throws ReferenceError: CSSNumericValue is not defined
+settle "calc(infinity * 1s)" · computed --t "calc(infinity * 1s)" · CSS transition-duration 3.40282e38s · tokenOf's read (parse(--t).to("ms")) throws ReferenceError: CSSNumericValue is not defined
+settle "/* c */ 210ms" · computed --t "210ms" · CSS transition-duration 0.21s · tokenOf's read (parse(--t).to("ms")) throws ReferenceError: CSSNumericValue is not defined
+settle "0.21s 0.1s" · computed --t "0.21s 0.1s" · CSS transition-duration 0s · tokenOf's read (parse(--t).to("ms")) throws ReferenceError: CSSNumericValue is not defined
+settle "-0s" · computed --t "-0s" · CSS transition-duration 0s · tokenOf's read (parse(--t).to("ms")) throws ReferenceError: CSSNumericValue is not defined
+settle "1e-3s" · computed --t "1e-3s" · CSS transition-duration 0.001s · tokenOf's read (parse(--t).to("ms")) throws ReferenceError: CSSNumericValue is not defined
+settle "0.21" · computed --t "0.21" · CSS transition-duration 0s · tokenOf's read (parse(--t).to("ms")) throws ReferenceError: CSSNumericValue is not defined
+settle "210" · computed --t "210" · CSS transition-duration 0s · tokenOf's read (parse(--t).to("ms")) throws ReferenceError: CSSNumericValue is not defined
+easing "ease, linear" · computed "ease, linear" · KeyframeEffect throws: KeyframeEffect constructor: Invalid easing 'ease, linear'. · CSS.supports(animation-timing-function) true
+easing "EASE-IN-OUT" · computed "EASE-IN-OUT" · KeyframeEffect ease-in-out · CSS.supports(animation-timing-function) true
+easing "linear(0, 0.4 30%, 1)" · computed "linear(0, 0.4 30%, 1)" · KeyframeEffect linear(0 0%, 0.4 30%, 1 100%) · CSS.supports(animation-timing-function) true
+easing "steps(2, jump-none)" · computed "steps(2, jump-none)" · KeyframeEffect steps(2, jump-none) · CSS.supports(animation-timing-function) true
+easing "step-end" · computed "step-end" · KeyframeEffect steps(1) · CSS.supports(animation-timing-function) true
+easing "cubic-bezier(1.5, 0, 0, 1)" · computed "cubic-bezier(1.5, 0, 0, 1)" · KeyframeEffect throws: KeyframeEffect constructor: Invalid easing 'cubic-bezier(1.5 · CSS.supports(animation-timing-function) false
+easing "steps(0)" · computed "steps(0)" · KeyframeEffect throws: KeyframeEffect constructor: Invalid easing 'steps(0)'. · CSS.supports(animation-timing-function) false
+easing "ease /* c */" · computed "ease /* c */" · KeyframeEffect ease · CSS.supports(animation-timing-function) true
+easing "linear" · computed "linear" · KeyframeEffect linear · CSS.supports(animation-timing-function) true
+easing "var(--u, ease-out)" · computed "ease-out" · KeyframeEffect ease-out · CSS.supports(animation-timing-function) true
+number "1.06" · computed "1.06" · CSS scale 1.06 · parse(--t).to("number") throws ReferenceError: CSSNumericValue is not defined
+number "106%" · computed "106%" · CSS scale 1.06 · parse(--t).to("number") throws ReferenceError: CSSNumericValue is not defined
+number "calc(1 + 0.06)" · computed "calc(1 + 0.06)" · CSS scale 1.06 · parse(--t).to("number") throws ReferenceError: CSSNumericValue is not defined
+number "max(1.06, 1)" · computed "max(1.06, 1)" · CSS scale 1.06 · parse(--t).to("number") throws ReferenceError: CSSNumericValue is not defined
+# exit 0 · 2026-11-02 11:29:44 · load { 11.35 11.71 11.35 }
+# end · 2026-11-02 11:29:44 · load { 11.35 11.71 11.35 } · harness d28f97975274
