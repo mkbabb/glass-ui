@@ -2725,3 +2725,241 @@ Unchanged (`§3.5`, `§P1-9.4`, `§P2-8.4` .. `§P9-8.4`): at least three full p
 - passes 11 and 12 both clean.
 
 On the present record pass 11 cannot be clean (§P10-8), so the realistic earliest is two confirmation passes after the held cells land, which follows D2's convergence (end of its pass 11 at the earliest) and the 10.2.0 landings of W-0.8 and W-0.1. Each pass of delay moves that date by one pass. The count cannot start until the held cells land.
+
+---
+
+# D5 · pass 11 · REGISTRY: the candidate A+E after pass 11
+
+| field | value |
+|---|---|
+| seat | D5 pass-11 agglomeration (`§P10-8.3` wave 4). It closes pass 11: the candidate's status as its two critics scored it, ruled where they differ, the clean-pass count, whether the loop has reached its fixed point, what D2 and D3 hold, Q7, every next-pass defect class placed, and the pass-12 plan on the unchanged CK-01..CK-27 |
+| model | `claude-opus-5-5`, asserted from own system identity |
+| HEAD | `3fe62e668`, docs only past P-E11's build base `27806b46b` (`git diff --stat a376c701c HEAD -- src tests demo` empty; P-E11 §0 for `27806b46b`..`93a03923d`). `git diff --stat v10.1.0 HEAD -- src` prints nothing. `release/10.1.1`, `10.1.2` and `10.1.3` are **not** ancestors of HEAD (`git merge-base --is-ancestor`, exit 1 each), so the base did not move and F5‴ carried (`§P10-8.2`). No P-A11 ran: D3's lean lane has not reached the base |
+| the candidate's bytes | `P-E11.patch` **`20721fc134cb…`** (src tree `6317ad295579`), this seat's `shasum` and both critics'. The computed task text names it "cb12ef64"; that is `P-E10.patch` (`cb12ef64a487…`), and C-E11's header says so. A records slip in the driver text, not a different candidate: both critics, P-E11 and this seat read `20721fc1…` |
+| inputs, read in full | every report under `pass-11/`: `H11.md`, `P-E11.md`, `C-A11.md`, `C-E11.md`; this file's pass-10 part (§P10-0..§P10-8) and pass-9 part (§P9-0..§P9-8), §P1-6 and O-87's section, and the section index; `../../audit/INBOUND.md` (mtime 2026-10-30 23:46, re-read at this seat's start, last row O-117, nothing new); `../../FORMATION-PROGRESS.md` to its 2026-11-02 C-A11 line; `../../waves/W-0.8.md` §10 and `../../waves/W-0.1.md`'s addendum (mtimes 2026-10-30, unchanged since §P10-6 read them) |
+| left unread, stated | this file's round 0 body and passes 1-8 beyond §P1-6 and O-87; `../../CHARTER.md`'s design-loop section beyond what earlier parts cite of it; the C-A11 halted seat's records (`pass-11/C-A11/{logs,json,scripts,frames}`) and C-E11's `prior-seat/`, which no number of record cites; the pass-11 JSON and frames beyond the paths in §P11-5. No ruling below rests on an unread part |
+| critics' completeness | **Both critiques are complete; neither stopped before its battery ended.** C-A11 (the rerun after the 2026-10-31 halt, no number from the halted seat): one WebKit acquisition, 37 stages, guard exit 0, nothing left. C-E11 (the rerun after the 2026-11-01 reboot, no number from `prior-seat/`): two WebKit acquisitions, 44 + 12 stages, 56/56 run, guard exit 0 both; the second was forced by its runner's 80-minute rule under the 90-minute cap and is recorded (§P11-7 item 7). Each scored all 27 rows in both engines and states its own reading gaps (C-A11 §7, C-E11 §7); neither reading gap carries a row |
+| instruments | none that measure. This seat ran `shasum` on both patches; the ancestry check above; `test -e` on every frame in §P11-5; `git log` on the hashes cited; reads of `P-E11.patch` at `glide` (line 8261: `easing !== "" && CSS.supports("animation-timing-function", easing)`), `flowBox` (lines 8129-8139: each offset × `e.currentCSSZoom / el.currentCSSZoom`), `settle.ts`'s `rowClockMs` (lines 7991-7998: `Number.parseFloat(...) × 1000`) and the release carry's import of it (line 8522); `scheme-spring.css:104,110` at HEAD (`--spring-dock-settle: 0.21s`, read by CSS as a `<time>` inside `calc`, no `@property`); `P-A7.patch:7157` (the same `rowClockMs` in A's `useEngage.ts`); and the critics' plant files `C-A11/r2/scripts/ca11-plants.py` and `C-E11/scripts/ce11-plants.py`. Every number cites the seat that measured it (P-3) |
+| fences | no source edit, no git write; this part is the only write. Nothing under `~/.claude` was read |
+| engines | Chromium 149.0.7827.55 and Playwright WebKit 26.5 (playwright 1.61.1), headless shell, no GPU arguments. Playwright WebKit is not Safari. Under O-103d (3) every Safari cell is read against the seat's guarded WebKit run of record. Real Safari: **UNMEASURED (owner's safaridriver checkbox)** |
+| rulings in force | O-103d (1)-(4); O-103f (Q-3′ (i), in place under every modality, the loupe alone promoted; F-5 (a)); Q-1 (c) and Q-4 (b) as defaults; O-113 Q7 on its default (the press stays; unanswered); O-87 binds every rung's paint. No INBOUND row arrived during the pass (H11, P-E11, C-A11, C-E11 headers; this seat's re-read) |
+
+Short citations: `C-A11 §0.2` is that critic's in-brief item 2; `C-E11 §0.5` likewise; `C-A11 §1 CK-n` and `C-E11 §1 CK-n` their per-row tables; `H11 §n`, `P-E11 §n` the seats' sections.
+
+## P11-0 · In brief
+
+| candidate | built as | critics | rows closed / applicable | pass 10 | status |
+|---|---|---|---:|---:|---|
+| **A+E** (A's pop, press and chip; E's stage in place under every modality, the loupe alone promoted) | `P-E11.patch` `20721fc1…` = F5‴ + P-A7 + E11, src tree `6317ad295579` | C-A11 **21/27**, C-E11 **21/27**, the same 21 rows; ruled **21/27 = 78 %** (§P11-4) | 21/27 = 78 % | **ADVANCE** (not converged) |
+
+Closed on the candidate: **CK-02..16, 18, 22, 23, 24, 26, 27.** Open: **CK-01, 17, 19, 25** (◇, held by D2 and D3; CK-25 by D3's ambient clause alone) and **CK-20, 21** (D5 can build).
+
+**Pass 11 is not a clean pass. The clean-pass count stays 0. The loop has not reached its fixed point:** CK-20 and CK-21 each hold a counterexample D5 can remove, read by both critics in both engines, each with one named cause confirmed in the bytes at this seat. Convergence moves to the end of pass 13 at the earliest (§P11-8.4).
+
+The score ran 52 % (pass 4), 37 %, 67 %, 78 %, 78 %, 81 %, 78 %, 78 %. No pass-10 cell regressed. **Every item §P10-8.1 sent P-E11 to prove holds on both critics' replays, in both engines.** The open D5 counterexamples are on paths no earlier seat drove, and none of them is new to P-E11's bytes: the list easing threw on cand10 too (its `glide` passed any non-empty string), the settle misread is in P-A7's `rowClockMs`, and the host glide under scale reads the same on cand10 (both engines) and on cand8 (Chromium) (C-E11 §0.6). Seven findings shape pass 12.
+
+1. **CK-20 under `zoom` is cured, in both engines, on both critics, to the decimal.**
+   - E-10 96/0/0 Chromium, 91/0/0 WebKit on P-E11 and both critics. The six zoom side cells read 11.3 / 12.3 (zoom 0.8), 17.6 / 18.6 (1.25) and 28.2 / 29.2 (2) px over any 16.7 ms against H11's bound, on both drives, both engines (C-A11 §0.3, C-E11 §0.1). The highest the lens rises above the viewport in a change: 0.2-4.6 px against two drive steps + 2.
+   - E-13 36/0/0 per engine on all three; the eight zoom clock cells 0.0-0.2 px; at zoom 2.5, where cand10 diverged to −33 554 428 px, 0.0 px.
+   - Off H11's cards, both critics: `zoom` 0.5 and 2.5, zoom with scale on one box, zoom outside scale, a zoom on the track alone (between host and track), `zoom` on `<html>`, `scale: 1.25`, `translate`. Every driven side and clock cell passes in both engines (C-A11 §0.3, C-E11 §0.1). The zoom 2.5 carry drive drives no change (the card starts below the line); both critics state it and neither counts it.
+   - On the paths pass-10 critics found, both critics, both engines: the reverse inside the travel, a release inside it, a change on the exit clock, a re-render carrying the track across the line, a press at the line, the re-press, a real wheel, the side film in paint, the Dialog, the anc kinds, the stacking frame. All hold (C-A11 §2, C-E11 §2).
+   - The plants separate: `nozoom` E-10 6 and E-13 2, `owedframe` E-10 6, `fast` 10, `swap` 10, `clock` 20/20, on P-E11 and both critics, both engines.
+2. **CK-21 stays open on one shared counterexample: an easing list passes the check and throws.** `glide` asks `CSS.supports("animation-timing-function", easing)`, a property that takes a list of timing functions; `animate()`'s `easing` takes one. `--spring-dock: ease, linear` (and `linear(0, 1), ease` / `linear(0, 1), ease-in`) reads `supports = true` and throws uncaught from `animate()` on **both** the lens's side change and the host's re-render glide in `onMutation`, with 0 errors naming the token, both engines, both critics (C-A11 §0.1, C-E11 §0.5 (a)); library-free first (C-A11 `easing-facts.mjs`). The loop survives: a later hold engages at 1.00 and lays its lens at 0.0 px (both). Each critic's control asks the parser `animate()` uses (`new KeyframeEffect(null, null, { easing })` in a `try`): C-A11's `listcure` 14/14 per engine, C-E11's `waapicure` all four list cells green per engine. The cells P-E11 was sent to cure hold: `nonsense` on either path, `initial`, `--spring-dock-settle: nonsense` and `-1`, `var(--undefined)`, loud by name, no throw (both).
+3. **CK-21's second counterexample, C-E11's: a settle token written in `ms` is read as seconds.** `--spring-dock-settle: 210ms` is a valid `<time>`. `rowClockMs` does `parseFloat(…) × 1000` and reads 210 000 ms, so the lens's travel, the host's glide and the slider's release carry (`useEngage.ts` `carry()`, `RELEASE_RULE.row` `dock`) all run 210 s with **0 errors**, both engines (C-E11 §0.5 (b)). The stylesheet reads the same token correctly through `calc(var(--spring-dock-settle) × tempo)` (`scheme-spring.css:110`), so CSS and script disagree 1000× on one clock, silently. That is E-2's silent degradation and CK-21's text ("every token … fails loud when unreadable", and a misread is worse than unreadable). C-E11's `unitcure` reads the unit and turns the three cells green per engine. C-A11 did not drive a unit-bearing value; nothing refutes it (§P11-4). The function is one: it came from P-A7's `useEngage.ts` (`P-A7.patch:7157`) and lives in the candidate in `settle.ts`, which E's patch introduced, imported by the stage and the carry (`P-E11.patch:8522`), so one E edit cures all three paths; no A seat is needed.
+4. **CK-20 stays open on one shared counterexample: the host's re-render glide under an ancestor `scale`, for a move outside the scaled box.** Both critics insert or remove a block above a `scale: 0.8` card while its slider is held. The host's painted place jumps on the mutation's frame by the move × (1 − 0.8): **8.0 px for C-A11's 40 px move, 12.0 px for C-E11's 60 px**, then glides the rest; the move over 16.7 ms reads 7.0-8.5 px against 6.5 (C-A11) and 12.0-12.5 against 9.3 (C-E11). Both engines, both critics, at every load they read it; also with the scale one box further out (C-A11 `nested`). Untransformed, under `zoom` 0.8, 1.25 and 2, and for a move inside the scaled card: 0.0 px (both). **One cause, read by both critics and confirmed in the bytes at this seat:** `flowBox` brings each offset into the host's px by the zoom ratio alone (`P-E11.patch:8137`); an offset of a box outside the scaled card is in page px, while the glide's `translate` paints at the host's scale. P-E11 §1's argument ("a transform maps an offset and a `translate` alike") holds for an offset inside the transformed box, not above it. C-A11's `glideframe` (each offset through `frameOf(e).y / frameOf(host).y`) reads 5/5 per engine at 0.0 px. P-E11 §1 names the risk a full-frame read carries: a running ancestor scale animation read as a moved place, glided by the next unrelated mutation. `glideframe` reads `frameOf`, which reads the computed transform, so that risk applies to it as written; the cure must answer it with a cell (C-E11 §4 item 3, C-A11 §0.2).
+5. **CK-12 and CK-22 close on both critics, with each overclaim counted once.** CK-12: P-E11's band paragraph (the band and `HOLD_SLOP_PX` are the same quantity, hand and world parting in viewport px) answers C-A10's remark; no figure minted; both accept it. CK-22: C-2 reads "The stage writes only `--stage-room` and `--stage-w`", reka's var named as reka's, true against the bytes and the DOM in both critics' reads; C-9's zoom clauses true. Two sentences are false on these bytes, each the open defect's and counted there (P-3): C-9's "an easing … the engine refuses is loud by name … nothing throws" (CK-21; C-E11 §3), and the header's and C-2's "the re-render glide … exact under an ancestor's `zoom` as under its `scale`" (CK-20; C-A11 §3). Consumer counts reproduced at the pass-11 HEAD by two independently written `grep -e` scripts (C-A11 `r2/scripts/ck22.sh`, C-E11 running C-E10's); no consumer writes `--spring-dock` or sets CSS `zoom`.
+6. **O-103f's conditions hold, read by non-builders in the same run as the bar.** (1) Idle, C-A9's cell, consecutive stages: Chromium `cand8` 123.8 against `cand11` 121.3 rAF + RO per s (C-A11), 128.2 / 130.3 against 131.2 / 132.9 (C-E11); WebKit 65.4 against 66.7 (C-A11), 65.9 / 66.4 against 67.3 / 65.9 (C-E11); 0 layouts, 0 recalcs. One callback per frame per counter on both builds: at the bar. C-E11 also prices P-E11 §8 item 1's CPU per frame: script 0.078-0.082 ms against cand10's 0.076-0.079 and cand8's 0.054-0.057; 0.107-0.111 ms at a 40-deep chain against cand8's 0.051-0.054 (C-E11 §0.4). (3) The loop stops at release: 0.0/s on both paths, both engines, both critics; `plant-loop` red 2/2 per engine. (4) Real Safari UNMEASURED.
+7. **The witness had three gaps, the same class as pass 10's item 4: a family of inputs driven on a subset.** E-11's travel cell plants `nonsense` and `initial` only, so neither a list nor a unit-bearing time reaches it, and E-11 reads 21/0/5 on a candidate that throws or misreads (both critics). No gating cell moves a box above a transformed card (H10's `glidescale` moves one inside it). Two P-E11 terms have no browser cell that separates them: `flowBox`'s zoom ratio (C-A11 `flowone`, C-E11 `hostzoom`: both pass every cell) and `writeGeometry`'s room in the host's frame (C-E11 `roomframe`, 5/5 PASS). Pass 12's harness drives each family whole (§P11-8.3), which is what can make pass 12 the fixed point rather than another instance (§P11-7 item 8).
+
+## P11-1 · Registry
+
+| id | family | status after pass 11 | centre | carries into pass 12 |
+|---|---|---|---|---|
+| **A+E** | the declared register with the engaged stage | ADVANCE, the one convergence candidate | A: P-A7's bytes. E: every held control grows where it stands, with no top layer, footprint, clip write or anchor; a frame read only while engaged; the loupe its own popover, laid each engaged frame on its track as painted, its correction in `translate` outside its own `scale`; every painted read written through `frameOf` (ancestors' transforms × `currentCSSZoom`); the side change travels on the `dock` row with the `HOLD_SLOP_PX` band, instant under reduce; the released lens re-laid on scroll and re-render with no frame run | E's part on P-E11: `glide` validated by the consumer's own parser; `rowClockMs` reading a `<time>` in its unit; the host's re-render glide in the host's whole frame for a move outside a transformed ancestor, without reading a running ancestor animation as a move. A's bytes unchanged unless D3's lane arrives |
+| (c), the promoted construction | — | RETIRED by O-103f | — | none. `P-E8.patch` stays as `cand8`, the idle bar's plant and H9's family's |
+| D5-B | the WAAPI commit path | RETIRED (O-103d (1), `§P6-2`) | — | none |
+| D5-B (door) | the door's parts | in the floor (F5‴) | hand (primary button only), modality, writer, release rule, stateless edge, press mark, one-frame arming | F5‴ unchanged unless §P11-8.2 fires |
+| D5-C, D5-D | — | RETIRED at pass 1 | — | unchanged |
+| D5-X1..X3 | — | not minted | — | unchanged |
+
+## P11-2 · The candidate
+
+### A+E · ADVANCE, 78 %
+
+**What held**, both critics reproducing each item in both engines unless marked:
+- CK-02 E-2 164/0; CK-03, CK-04 E-3 22/0; CK-09 E-8 19/0 (the travel reads `--spring-dock` and its settle; the unit misread counted once, under CK-21); CK-10 E-9 85/0, H7's PRM plant 32 red, `loupe side · reduce` 6/6 incl. zoom 1.25 with 0 frames off; C-E11's `prmY` 28 and `reducetravel` 6 red.
+- CK-05 on F-5 (a): slider carry 11.01-12.36 px at 857-1055 px/s (C-A11) and 10.64-12.14 px at 812-1020 px/s (C-E11) in Chromium; 13.12-13.71 px at 1212-1356 px/s in WebKit; margin ≥ 6.64 px; velocity printed beside every read, never gated. Tabs, Sheet and sortable carry with repeat landings identical (C-E11). The WebKit Carousel is the engine fact (O-103d (4)).
+- CK-06 E-5 56/0; CK-07 S6 RETIRED; CK-08 `data-held` writers `GlassDock.vue` (D2's named clause) and `useEngage.ts`, `data-engaged` one writer, `stage.ts`; CK-11, 13, 14 E-12 102/0 Chromium, 101/0/1 WebKit; CK-15 hand-off drop 0.0066-0.0072 against own release 0.0070-0.0085 (Chromium), 0.0121-0.0127 against 0.0129 (WebKit, C-E11), singleton max 1.
+- CK-12: §P11-0 finding 5; crest ×1.0598-1.0600 Button, ×1.0399-1.0400 Chip; `crest` plant 2/2 red per engine (C-E11).
+- CK-16: rest 0; engaged idle at the `cand8` bar in the same run; stops at release (§P11-0 finding 6).
+- CK-18 `RELEASE_RULE` on E-4's four surfaces. CK-24 E-1's `static` cells.
+- CK-22: §P11-0 finding 5. The overflow census still names one real site: speedtest `DashboardMapControls.vue`, the `<Slider>` at `:134` under the `overflow-hidden` `<Card>` at `:97`, speedtest `e2d9444d` (P-E11 §5, both critics).
+- CK-23: **198 files +5450/−1648; `src` 153 files +3161/−1359**; E over P-E10 `src` 2 files **+89/−42** (`stage.ts` +87/−41, `slider/styles.css` +2/−1), reproduced to the line by both critics. Runtime CPU priced by C-E11 (§P11-0 finding 6).
+- CK-26: the CSS change over P-E10 is two comment lines; no lighting layer, no blur token, no radius (O-87), both critics from the diff.
+- CK-27: every P-E11 item and H11 cell has a plant red in both engines with the same counts per engine (`nozoom`, `owedframe`, `loudthrow`, `swap`, `fast`, `clock`, `loop`; C-E11 also rebuilt `nohyst` 3, `fixed` 16, `reducetravel` 6, `noread` 16, `nolens` 16 | 12, its `sidezoom` 4 and `spanframe` 5); `cand8` red on H9's family (C-E11: 12 of 16 Chromium, 9 of 13 WebKit). Stated exceptions, unchanged: `plant-exitfrozen` separates in Chromium only (−4.4 against −0.4 px; C-E11); the WebKit `lensfilm` stays REPORT (H10 §5.1); `e10-rectclip-film` reads red 1 time in 3 in Chromium (H11 §2), never one green film as proof. The unseparated terms (§P11-0 finding 7) are witness classes for H12, not gates that cannot fail: each gate that exists fails on its plant (both critics).
+- Gates, re-run by both critics: build, typecheck, `demo:dist:build` exit 0; vitest 247 files, **2439 passed, 10 expected fail, 1 skipped**, exit 0 (C-A11 header, C-E11 §7), matching P-E11 §3.
+
+**Open rows, each with its counterexample.** Rows marked ◇ cannot close inside D5. Unmarked rows can.
+
+1. **CK-01.** ◇ The `dock` latch, 54/55 (D2). ◇ The ambient runtime cell: WebKit 1.71-1.75 levels against 1.20-1.25 at rest, not ≥ 2× (D3's amplitude); Chromium headless is the engine limit. ◇ The ambient reduce leg reads 0.00: A's write waits on D3's lane.
+2. **CK-17.** ◇ D2: the dock's `:active` presses name no `touchstart` listener.
+3. **CK-19.** ◇ D3: the amplitude, and the lean's own scalar.
+4. **CK-25.** ◇ D3: the ambient exemplar is static in every column of both CAP sheets, light and dark (both critics). D5's lens items close, under every zoom both critics drove.
+5. **CK-20.** The host's re-render glide under an ancestor `scale` for a move outside the scaled box (§P11-0 finding 4), both engines, both critics. Every zoom, side, wobble, reduce, clock, reverse, release, exit, re-render-across-the-line, re-press, wheel, `anc`, `dlg` and stacking cell holds.
+6. **CK-21.** An easing list on `--spring-dock` throws uncaught on both paths (§P11-0 finding 2), both engines, both critics; a settle token in `ms` read ×1000 with no error on the travel, the host glide and the release carry (§P11-0 finding 3), both engines, C-E11.
+
+**What now reads at grade or better**, both critics from their own frames: flat, coherent and restrained, as O-87 asks, with no glow, stacked shadow or added lighting layer; the Button ×1.032-1.033 pressed and ×1.059-1.061 committed, the Switch's commit ×1.059-1.060 with its thumb's travel, the accordion ×1.038-1.039, the held slider ×1.060 in place, the sortable's quiet lift, one hairline ring; the lens a square-cut ruler under glass with dissolved ends and its own hairline. **Under a zoomed card the side change now reads as one object moving**: at 0.15 of its travel under `zoom: 1.25` the same glass lens sits part-way across, 18.4..119.1 px against a track at 100.3..126.8, whole, inside the viewport, in both engines' stills; under `zoom: 2` it crosses at twice the size, whole; under the nested and zoom-with-scale cards it lands flush (C-A11 §4, C-E11 §5, P-E11 §6). **Below grade and D5's:** the held control under a scaled card hops 8-12 px when content above the card re-renders, then glides (C-E11 §5; C-A11 §4 reads it as a one-frame read with no still). Counted under CK-20.
+
+**Readings, not counterexamples, both critics agreeing:** the `dock` row lands dead (overshoot 0.000), which both read as deft under O-87 and would leave; its painted speed scales with the zoomed span on the same 210 ms clock, and the bound follows it (P-E11 §8 item 3). The lens's ~190 ms transit over the thumb reads as glass passing over. Under zoom the reach stops at the gutter as the card paints it, so a zoom-2 slider grows on its block axis only (C-E11 §2): no row breaks. `repress · moved` stays one ~190 ms travel off the edge from a visible lens, P-E11's declined "May", with its reason (a fresh side would swap a visible lens 100 px in one frame); REPORT, the one-travel rule passes it.
+
+**The pass-10 counterexamples this pass removed** (P-3: each cited where it was measured):
+- the side change under an ancestor `zoom` (0.8, 1.25, 2) on both drives, the lens out of the viewport mid-change, the zoom-2 lens that never changed side (CK-20; P-E11 §2.1, both critics);
+- the clock's divergence at `zoom: 2.5` (CK-25's lens items; P-E11 §2.2, both critics);
+- `--spring-dock: nonsense` throwing on the lens's path and the host's (CK-21's pass-10 instance; P-E11 §2.3, both critics);
+- C-2's "Nothing else is written on it" and C-9 under zoom (CK-22; P-E11 §5, both critics).
+
+## P11-3 · The floor (F5‴) as pass 11 left it
+
+No floor seat ran. The base did not move; D3 has not published the lean lane; D2 has not converged, so F-17 is not published (`§P10-8.2`'s three triggers, none fired; H11 wave 0, P-E11 header, both critics' close reads of FORMATION-PROGRESS). F5‴ carried byte for byte inside P-A7, and P-A7 inside P-E11: of P-A7's 187 files the 16 that differ are the same 16 as on P-E10 and P-E9, all E-owned (P-E11 header).
+
+| item | state | evidence | row |
+|---|---|---|---|
+| F-1..F-4, F-7, F-9..F-12 | **hold** | both critics' replays | as `§P6-3` |
+| F-13 · the slider carry | **holds** | §P11-2, CK-05's distribution | CK-05 |
+| F-14 · the Skeleton shimmer | **merge-time hunk, unchanged** | the base carries no 10.1.x | CK-16 |
+| F-5 · the carry's margin | **RULED (a)** (O-103f); velocity recorded, never gated | margin ≥ 6.64 px | CK-05 |
+
+## P11-4 · Where the critics differ, and the ruling
+
+Both critics scored the same bytes (`20721fc1…`, src tree `6317ad295579`) on the harness's own app under harness `63157e6b…` in both engines, and closed the same 21 rows. The rule is the plan's: a row they disagree on is OPEN unless one critic's measurement refutes the other's on the same path; a counterexample one critic reproduced stands whichever critic read it.
+
+| item | C-A11 | C-E11 | ruling |
+|---|---|---|---|
+| CK-21 · the list easing | OPEN: `ease, linear`, `linear(0, 1), ease`; 0 named, 1 uncaught, both paths, both engines; `listcure` 14/14 | OPEN: `ease, linear`, `linear(0, 1), ease-in`; the same, both paths, both engines; `waapicure` green | **OPEN, D5 can build. Both agree,** to the error text. This seat confirmed the cause in the bytes (`P-E11.patch:8261`: the check asks a list-valued property) |
+| CK-21 · the settle unit | not driven (`nonsense` and `-1` on the settle, both loud) | OPEN: `210ms` read as 210 000 ms on the travel, the host glide and the release carry, 0 errors, both engines; `unitcure` green | **Stands.** C-A11 drove different values on the same token, so it does not refute. This seat confirmed the cause in the bytes (`rowClockMs`, `parseFloat × 1000`) and that CSS reads the same token as a `<time>` (`scheme-spring.css:104,110`). A `<time>` the stylesheet honours and the script misreads 1000× is the silent degradation E-2 and CK-21 forbid. The function is E's file in the candidate (§P11-0 finding 3) |
+| CK-20 · the host glide under scale | 8.0 px on the first frame for a 40 px move; 7.0-8.5 px over 16.7 ms against 6.5; `scale` and `nested`; `glideframe` 5/5 | 12.0 px for a 60 px move; 12.0-12.5 against 9.3; also on cand10 both engines and cand8 Chromium; no cure control built | **OPEN, D5 can build. Both agree:** each figure is the move × (1 − 0.8), so the two drives read one cause. `glideframe` proves it on C-A11's drive; it does not yet answer P-E11 §1's running-animation risk, which C-E11 names, so it is the measured cause and not the cure's shape (§P11-8.1) |
+| CK-22 · the two overclaims | the header/C-2 glide clause false under scale above the box, counted under CK-20 | C-9's "nothing throws" false for a list, counted under CK-21 | **CLOSED; both agree,** each overclaim counted once under the defect it states (P-3). P-E12 restates C-2, C-9 and the header on its cured bytes; if any reads false there, the row reopens |
+| CK-27 · the unseparated terms | `flowone` passes every cell: the zoom ratio has no separating cell | `hostzoom` 8/8 PASS, `roomframe` 5/5 PASS | **CLOSED; both agree,** as `§P10-4` placed the same form: the gates fail on their plants; the undriven terms are H12's (§P11-7 items 4, 5) |
+| CK-12 | CLOSED | CLOSED | **CLOSED; both agree** |
+| C-A11's stricter clause | one wheel frame 6.5 px above the viewport under zoom 1.25, inside one tick | 6.5 px above on the same path, against 18 | **Not a counterexample,** as both read it: inside H11's graded "two drive steps + 2" clause |
+
+The closures both critics share stand.
+
+## P11-5 · The owner-glance packet, refreshed
+
+Every path is under `docs/tranches/BL/design/engagement/pass-11/` and was checked to exist at this seat. Chromium unless marked. Playwright WebKit paints no `backdrop-filter`.
+
+### What pass 11 cured, as it paints
+
+| what | frame | figures |
+|---|---|---|
+| the whole candidate | `E11/glance/cand11/cand11-chromium-fine.png`; the critics' `C-A11/r2/frames/cap/cand11/cand11-chromium-fine.png`, `C-E11/frames/cap/cand11-chromium-fine.png` | CAP 18/0 |
+| the side change under `zoom: 1.25`, before, during, after, against the frame without zoom | `E11/glance/cand11-chromium-side-zoom125-above.png` · `…-mid.png` · `…-below.png` against `E11/glance/plant-nozoom-chromium-side-zoom125-mid.png`; WebKit `C-E11/frames/glance/cand11-webkit-side-zoom125-mid.png` | mid: lens 18.4..119.1 against track 100.3..126.8, whole, against −1.6..99.1, its top out of the viewport (cand10's figures to the decimal) |
+| the change at `zoom: 2`, and on a nested-scale card | `C-E11/frames/ce11/cand11-chromium-side-zoom2-mid.png`; `C-A11/r2/frames/ca11/cand11-chromium-side-nested-below.png` (and `…-zs-*`, zoom with scale) | whole at twice the size; flush under the track (99.8 against 99.8) |
+
+### Below grade, D5's to build
+
+| what | frame |
+|---|---|
+| the held control's 8-12 px hop under a scaled card when content above re-renders | **no frame exists**; the figures are main-thread reads (C-A11 `hostglide`, C-E11 `rerender · scale · out`). H12 captures a still pair (§P11-8.3) |
+
+### Not D5's, or a reading only, in view of the owner
+
+- **The `dock` row's dead landing** (§P11-2): weight, no bounce; every critic since pass 10 would leave it. An owner preference, if any, is one row's figure.
+- **Room on neither side** (150 px: 20.1 px cut; 90 px: 80.1 px; 60 px: no lens; C-E11 §2): no construction can be whole there; no row reads it.
+- **On a coarse pointer at the viewport's top the lens hangs below the track**, under the finger (C-E9 §6, unchanged). No cell can read a finger.
+- **The ambient exemplar is static** (D3). **The dark housing barely separates from a dark track, and the dark Button's warm halo remains** (W-0.1; C-A11 §4, C-E11 §5).
+
+## P11-6 · What the owner has ruled, what is asked, and what D2 and D3 hold
+
+INBOUND was re-read at this seat's start (mtime 2026-10-30 23:46, last row O-117). No row arrived during pass 11 and nothing in it changes this part.
+
+**Q7 (O-113) is unanswered.** Its default stands: the register as ruled, the press stays. No CK row waits on it. One new letter carries it: `docs/tranches/BK/coordination/ATLAS-TO-GLASS-2026-10-31-U-B7D-ADDENDUM.md` (untracked, not an INBOUND row) lists G-L-1 as "carried: Button's liquid press and `.tap-squish` still scale on press, against PLAN §4.2 (holds MO-03; question 7)". It asks nothing new of D5; formation places the letter. O-113's D5 rows (B7-G1..G3, G-L-1's `.tap-squish` half, M1-2, L-G2 with O-99a R-K1-b and R-K1-c) stay placed in W-J.2 as `§P9-6` gives them. **The R-K1-c vehicle moves with this registry again:** it was "after pass 12 at the earliest"; it is now after pass 13 at the earliest (§P11-8.4).
+
+| id | question | default | blocks |
+|---|---|---|---|
+| **Q7** (O-113) | whether Button, Switch, Checkbox (and the Select trigger) stop scaling on press | keep the press | nothing in CK; atlas's MO-03 |
+| **Q-1**, **Q-4** | unchanged | (c), (b) | nothing |
+| the `dock` row's landing | a reading for the owner's eye (§P11-5), not a question the loop asks | the row as it stands | nothing |
+| next-pass classes | admit any as a CK row, or leave it with its owner | — | §P11-7 |
+
+**No open row waits on the owner.**
+
+**What D2 holds** (`waves/W-0.8.md` §10, unchanged since `df66576fc`; outside D2's 38 rows, built at W-0.8's landing):
+- CK-01's `dock` latch: the dock adopts the register, or the harness gains a dock scene with D2's leave. D2's patch may supply the scene as D5's floor hunk F-17 once D2 converges, without waiting for master. Witness: CK-01's latch cell 55/55, both engines.
+- CK-17: the dock's `:active` presses (`material.css:346-349`, `dock/styles/**`, the dock-only capsule `glass-capsule.css:128-135`) name their `touchstart` listener or move to the door's mark. Real Safari stays UNMEASURED.
+- CK-08's named clause: `GlassDock.vue`'s `data-held`.
+- On retiring `.glass-capsule-hover`: MIGRATION rows for keyframes.js `EasingField.vue:40` and chicago's three `.tap-squish` sites on `DockControl` (W-0.7 carries them).
+- **D2's state:** pass 10 CLOSED CLEAN 38/38, count 1 of 2 (REGISTRY `e9e09cc27`). Pass 11, the confirmation, was halted at the 2026-10-31 zone halt and resumed after the 2026-11-01 reboot (`wf_e8616273-941`; re-measure banked, the completion seat for item 3 added at `1fb80d81a`, critic and agglomerate live). **If D2's pass 11 closes clean, D2 converges, and F-17 can be published before P-E12 starts**, which fires §P11-8.2's floor seat for it.
+
+**What D3 holds** (`waves/W-0.1.md` addendum, unchanged; D3 converged at pass 13 and is not reopened):
+- CK-19, CK-01's ambient runtime cell and CK-25's ambient clause: the Aurora's pointer response at 2× its rest drift (WebKit 1.71-1.75 against 1.20-1.25 today), both engines.
+- The lean on its own scalar, apart from the swirl's `uCursorStrength`, published as a hunk D5's floor can carry (F-16), so A can write the ambient reduce leg (a light answer under reduce with the swirl at 0, and a plant that removes it fails). G5's minor-lawful reading is re-checked at landing. No D3 hunk is recorded at this seat.
+
+**Formation still owes:** the master merge of `release/10.1.1`/`10.1.2`/`10.1.3` and F5‴'s rebase (unchanged); the F-16 and F-17 hunks as their owners publish them; three records items: the pass-11 critic records still uncommitted at this seat (C-E11's modified `logs/all.log`, `logs/wk-queue.log`, `frames/cap/cand11-index.json` and its untracked `json/` reads, and `C-E11.md` itself), the halted C-A11 seat's records kept beside `r2/` and C-E11's `prior-seat/` (both unread by number, kept as committed), and the driver text's `cb12ef64` for P-E11's hash (§ header).
+
+**Rows that cannot close inside D5:** CK-01 (D2 latch; D3 amplitude and lane, then A's reduce leg), CK-17 (D2), CK-19 (D3), CK-25's ambient clause (D3).
+
+**Rows building can still close, which is why this is not the fixed point:** CK-20 (the host glide under a scaled ancestor), CK-21 (the list easing; the settle unit).
+
+## P11-7 · Next-pass defect classes (recorded; no CK row added), each placed
+
+From `§P10-7`:
+- Item 1 (a placement written in one unit frame and read in another) was cured by P-E11 for every lens write under `zoom`, both critics, both engines. It recurs on one layout read as item 2 below.
+- Item 2 (a token validated for presence, not for parse) was cured for an unparsable string and recurs one level down as item 1 below.
+- Item 3 (a per-frame bound read per sample) was cured by H11's timeline-stamped 16.7 ms window (H11 §0.2): both critics' own windows agree with it on the candidate. Item 4 (a transform list that omits `zoom`) was cured by H11's zoom cells and recurs as item 4 below (a family driven on a subset). Item 5 (a census bounded to CSS) was cured for the travel's row by derivation (H11 §0.5); its value set is item 3 below.
+- Item 6 (a side carried across holds) was declined by P-E11 with its reason and stays a REPORT cell (`repress · moved`). Item 7 (no answer where neither side has room) stays stated. Item 8 (the fixed-point list) was applied: CK-25's ambient clause is listed. Item 9 (plants that separate one time in two) was applied by both critics (no single green film read as proof). Item 10 (process) recurs as item 7 below.
+
+New in pass 11:
+
+| # | class | source | placed at | owner of the cure |
+|---|---|---|---|---|
+| 1 | **A token checked against a grammar wider than its consumer's.** `CSS.supports("animation-timing-function", …)` accepts a list; `animate()`'s `easing` takes one. The check answers a different question from the call it guards | C-A11 §5 item 1, C-E11 §4 item 1 | CK-21 | P-E12: ask the consumer's own parser (`listcure`/`waapicure`'s shape, `KeyframeEffect` in a `try`) or parse the single-function grammar; no masking fallback |
+| 2 | **A layout read brought into the host's frame through part of the frame.** `flowBox` scales each offset by the zoom ratio, never by the transforms between the moved box and the host: right inside a transformed box, wrong above it | C-A11 §5 item 2, C-E11 §4 item 3 | CK-20 | P-E12, answering P-E11 §1's running-animation risk with a cell; `glideframe` the measured cause |
+| 3 | **A `<time>` token read as a bare number of seconds.** `rowClockMs` reads `210ms` as 210 s; CSS reads the same token right. Any script read of a `<time>` or `<length>` token by `parseFloat` alone is this class | C-E11 §4 item 2 | CK-21 | P-E12 (one function in `settle.ts`, all three paths); `unitcure` the measured shape; every other script read of a dimensioned token in `engage/` audited by the same seat |
+| 4 | **A witness that drives a family of inputs on a subset.** E-11 plants `nonsense` and `initial` only; no gating cell moves a box above a transformed card; H10's `glidescale` moves one inside it. Pass 10's item 4 was the same class on the transform list | C-A11 §5 items 1-2, C-E11 §4 item 4 | CK-21's and CK-20's witnesses, CK-27 | H12: each family whole (§P11-8.3) |
+| 5 | **Terms no browser cell separates.** `flowBox`'s zoom ratio (`flowone`, `hostzoom`) and `writeGeometry`'s room in the host's frame (`roomframe`) pass every cell; no positioned zoomed box sits in a driven offset chain, and no cell reads the reach under a transform | C-A11 §5 item 2, C-E11 §4 item 5, P-E11 §8 item 2 | CK-27, CK-20's witness | H12: a positioned zoomed scroller in the offset chain; the reach figure under zoom and scale, each with these plants |
+| 6 | **A claim of exactness stated for a family and proved on a subset.** P-E11's ONE FRAME paragraph claims zoom and scale alike for the glide; its cells drive the lens under both and the glide under neither in a browser | C-A11 §5 item 3 | CK-22, records | P-E12: every header or MIGRATION claim that names a transform family or a value family names the cell that drives each member |
+| 7 | **Process.** C-E11 took two WebKit acquisitions, the second forced by the 80/90-minute rule (waits 28.6 and 45.6 min), recorded, no stage skipped; the plan's "one acquisition" assumed a battery that fits one cap. C-A11 added stages to running lists by rename after the running stage (lawful) and wrote `/tmp/x` for one command, removed in it. P-E11's host saved one tool-results file under `~/.claude`, unread. Both critics reran fresh after a halt and a reboot and cited no number from the lost seats. The driver text carried P-E10's hash for P-E11 (pass 10's driver also carried a typo, FORMATION-PROGRESS 2026-10-31). No seat read this file in full; each stated its gap. No log prints an engine close or crash; the zone never gated a run | the seats' process notes | records | every seat: a battery larger than one 90-minute acquisition is split into named acquisitions in its plan before it starts, each recorded; drivers print the patch hash from `shasum`, never from memory; runners and queues replaced by rename; the orchestrator commits a seat's records after it returns |
+| 8 | **Instances found one pass at a time.** Pass 9 found the side swap, pass 10 the zoom frame and the presence check, pass 11 the list grammar, the settle unit and the glide's frame: each on a path no earlier seat drove, none a regression. CK-20 and CK-21 are written to take new instances (§P1-6), so the fixed point comes only when a pass's critics drive each family whole and find none | this seat, from §P11-0 | CK-20, CK-21, CK-27 | H12 enumerates the families (§P11-8.3); P-E12 cures the class in each, not the instance; C-A12 and C-E12 drive past H12's enumeration as every critic must |
+
+## P11-8 · Pass-12 plan
+
+The checklist stays **CK-01..CK-27, unchanged**. Critics may not add rows. Rulings in force: O-103d (1)-(4); O-103f; Q-1 (c) and Q-4 (b) as defaults; Q7 on its default. A ruling that arrives mid-pass is folded in at the next seat boundary, never inside a running battery. Each seat re-reads `../../audit/INBOUND.md` and `../../FORMATION-PROGRESS.md` at its start. The candidate is the in-place construction; there is no second construction and no probe.
+
+**What pass 12 can be.** It is clean only if every held cell reaches D5's base before its critics run: F-17 (D2 converged, which its running pass 11 may give) and F-16 (D3's hunk, not published). On the present record F-16 will not land in time, so pass 12's job is **the fixed point**: CK-20 and CK-21 closed on both critics as classes, each family driven whole (§P11-7 item 8), so that only CK-01, CK-17, CK-19 and CK-25's ambient clause stay open, each held by D2 or D3 (or fewer, if F-17 lands and closes CK-01's latch and CK-17). If pass 12 reaches it, **D5 runs no further build pass until the held cells land**; its next pass is then the first confirmation pass on the base that carries them.
+
+### P11-8.1 · The candidate's parts
+
+| part | built as | must prove in pass 12 |
+|---|---|---|
+| **A's part** | P-A7's bytes, unchanged. **No A build seat** unless D3's lane reaches the base first (§P11-8.2); then P-A12 writes the ambient reduce leg on it | nothing else. The settle unit is cured in `settle.ts`, E's file, not in A's bytes |
+| **E's part** | P-E12 on P-E11, one arm, in place | **CK-21, the class:** every easing `--spring-dock` (and any row the travel rides) can hold is either taken by `animate()` or refused loud by name, one `console.error`, no throw, the change instant: lists, `nonsense`, `initial`, `var(--undefined)`, `steps()`, `linear(…)`, `cubic-bezier` out of range, on the lens's travel and the host's re-render glide, the loop alive for a later holder; validated by the consumer's own parser, no masking fallback (E-2). Every settle token is read in its unit (`s` and `ms`) so script and stylesheet agree on the clock to the ms, and a token that is not a positive `<time>` is loud by name, on the lens's travel, the host's glide and the release carry; one function. Every other script read of a dimensioned token under `engage/` checked the same way and listed. **CK-20, the class:** the host's re-render glide lands where the host was painted on its first frame (0.0 px) and moves ≤ H12's bound over any 16.7 ms, for a move inside, outside and nested outside a transformed ancestor, under `none`, `translate`, `scale: 0.8`, `zoom` 0.8 / 1.25 / 2, zoom with scale, and a positioned zoomed box in the offset chain; **a mutation during an ancestor's running scale animation glides nothing** (P-E11 §1's risk, now a cell); every pass-11 cell stays green; one frame source for every write (P-1). **CK-22:** the header, C-2 and C-9 restated on the cured bytes, each family claim naming its cell (§P11-7 item 6); consumer greps re-run at the pass-12 HEAD with `grep -e`. **P-1, CK-23:** the cost measured, CPU per frame beside cand11 and cand8 (C-E11's form); the cure no larger than it needs to be. **CK-26:** no lighting layer, no blur change (O-87). **The gates:** build, typecheck, `demo:dist:build`, vitest |
+
+### P11-8.2 · The floor
+
+No floor seat unless one of three things happens before P-E12 starts: the base moves (F5⁗ = F5‴ rebased as `§P6-3` lays out, its battery on HEAD's scenes in both engines and F-14's browser cell; the 10.1.x lines rebase with it); D3 publishes the lean lane (F-16 carries the hunk, and P-A12 runs); D2 converges and publishes F-17 (its dock adoption, or a dock scene with its leave and its presses naming their listener). **The third is now live:** D2's confirmation pass 11 is running, and if it closes clean before P-E12 starts, wave 0 records it and F-17 runs at wave 1b. Otherwise F5‴ carries unchanged. If the base moves mid-pass, it is folded in at the next seat boundary.
+
+### P11-8.3 · Seats and order
+
+Every seat is Opus, declared explicitly. D5 runs at most three seats at a time, counted against every live workflow. Browser runs follow the 2026-10-16 note: no `--light`, one browser per battery with a context per cell, `guarded --exclusive webkit` as the one WebKit lock. Each seat takes its WebKit stages after its Chromium phases, never skipped, with re-read stages queued inside the acquisition and one waiter per chain; **a battery that cannot fit one 90-minute acquisition is split in its plan, before it starts, into named acquisitions** (§P11-7 item 7). Films take no mid-film screenshot. Runners and queues are replaced by rename, never edited in flight. The orchestrator commits a seat's records after the seat returns. Drivers print every patch hash from `shasum`.
+
+| wave | seat | charter |
+|---|---|---|
+| 0 | — | re-read INBOUND and FORMATION-PROGRESS; record the base; check whether D2 has converged (F-17) or D3 has published (F-16); D5 edits none of D2's or D3's bytes |
+| 1 | **H12** (harness; the one owner of `../harness/`) | Each item inside the row it serves, with a plant; the clean fixture carrying the cured forms. **CK-21, E-11, the value family:** the travel row's easing token set to `ease, linear`, `linear(0, 1), ease-in`, `nonsense`, `initial`, `var(--undefined)`, `steps(4)`, `cubic-bezier(0, 2, 1, -1)`; its settle token to `210ms`, `0.21s`, `-1`, `0`, `nonsense`; each on the lens's side change, the host's re-render glide and the release carry: taken and exact (the clock read equals CSS's to the ms), or one named `console.error`, no uncaught error, a later holder engaging. The candidate of pass 11 the plant (lists and `210ms`); `listcure`/`waapicure` and `unitcure` the controls. **CK-20, E-10, the frame family:** `hostglide · inside|outside|nested · none|translate|scale|zoom 0.8|zoom 1.25|zoom 2|zoom+scale`, the host's painted place on the mutation's frame (≤ 0.5 px) and the move over any 16.7 ms against a printed bound on the glide's row; a positioned zoomed scroller in the offset chain, which `flowone`/`hostzoom` must fail; a mutation during an ancestor's running `scale` animation, which must glide nothing (the plant `glideframe` as written, if it glides); the reach figure under zoom and scale, which `roomframe` must fail. The candidate of pass 11 the plant for `outside`/`nested` under scale; `glideframe` the control on those cells. **Glance:** a still pair for the host glide under scale (before the mutation and its frame) for §P11-5. Self-test green in both engines; HEAD re-read only on changed witnesses |
+| 1b | **F5⁗ / F-16 / F-17** (only per §P11-8.2) | one patch at HEAD, its battery in both engines after H12's self-test |
+| 2 | **P-A12** (only if F-16 runs) | §P11-8.1, A's row |
+| 2 | **P-E12** | §P11-8.1, E's row. Starts after H12's self-test, and on P-A12's or F-17's patch if either runs |
+| 3 | **C-A12, C-E12** | two critics. Neither may have authored any D5 seat in passes 2-12, and neither may have been a critic in passes 3-11. **Both read the pass-11 and pass-10 parts of this file in full and §P1-6, and state any other part they leave unread; both score CK-01..CK-27 in both engines on the one candidate** on the harness's own app, with the gestalt read from frames (CK-25). Each drives every path either pass-11 critic found (the list easing and the settle unit on all three paths; the host glide outside, nested and inside a scaled card; zoom 0.5..2.5, track zoom, `<html>` zoom, zoom with scale; the reverse, release, exit-side, re-render across the line, press at the line, re-press, wheel, side film in paint, WebKit lens film, Dialog, anc kinds, stacking frame; E-4 with velocity printed; C-2 and C-9 against the bytes) **and drives each family past H12's enumeration** (other value forms, other transform kinds and move places), since a pass at the fixed point must find none. The idle bar is read in the same run as the candidate: `cand8`, as O-103f (1) names it. A critic whose WebKit cells are not admitted returns those rows open |
+| 4 | agglomeration | the pass-12 registry: the candidate's status, the clean-pass count, whether only D2- and D3-held cells remain (the fixed point), what D2 and D3 hold, Q7 folded in if answered; at the fixed point, what D5 waits for |
+
+### P11-8.4 · Convergence criterion
+
+Unchanged (`§3.5`, `§P1-9.4`, `§P2-8.4` .. `§P10-8.4`): at least three full passes (met at pass 3); zero open rows against CK-01..CK-27; a fresh adversarial audit by seats that did not author the winning spec; two consecutive clean passes. The clean-pass count after pass 11 is **0**, counted for the one candidate A+E, in place. Convergence comes at the end of pass 13 at the earliest, and needs:
+- P-E12's CK-20 and CK-21 classes closed on both critics;
+- D2's `dock` adoption and the dock's presses, or a dock scene with D2's leave and its presses naming their listener, in D5's base (W-0.8 §10, F-17);
+- D3's amplitude and the lean's own lane in D5's base (through master or F-16), with A's reduce write on them (W-0.1 addendum);
+- passes 12 and 13 both clean.
+
+On the present record pass 12 cannot be clean (F-16 is not published), so the realistic earliest is two confirmation passes after the held cells land. F-17 follows D2's convergence, possibly at the close of its running pass 11; F-16 follows D3's hunk or W-0.1's 10.2.0 landing, which follows D2's convergence (O-88). Each pass of delay moves that date by one pass. The count cannot start until the held cells land.
