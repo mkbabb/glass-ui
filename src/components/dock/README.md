@@ -19,7 +19,7 @@ state machine, and one motion spine. Import the family from `@mkbabb/glass-ui/do
 
 - `GlassDock` owns the plate, orientation, collapse state, overflow, and backdrop mode.
 - `DockControl` is the button face. Use `shape="icon"` or `shape="tab"`.
-- `DockTrigger` applies the same face to select, dropdown, or popover triggers.
+- `DockTrigger` (from `@mkbabb/glass-ui/dock-trigger`) applies the same face to select, dropdown, or popover triggers.
 - `DockSeparator` follows the dock's orientation and layout.
 - `DockLayerGroup` and `DockLayer` compose consumer-owned selectable panes.
 - `DockCrossfade` is the thin controlled face-swap primitive.

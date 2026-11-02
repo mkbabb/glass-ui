@@ -28,7 +28,9 @@ export type {
 // onto the shared `.dock-trigger` recipe). The five legacy SFCs are DEFINITION-ABSENT
 // (clean break, no alias — G10 census; every consumer re-points by name, MIGRATION.md).
 export { default as DockControl } from "./DockControl.vue";
-export { default as DockTrigger } from "./DockTrigger.vue";
+// `DockTrigger` publishes on its own `./dock-trigger` subpath (U/B8 PF, G-M1-3b): it carries
+// reka's Select, Popover and DropdownMenu triggers, and a dock that renders no trigger at first
+// paint should not pull them into its consumer's entry. Clean break, no alias.
 // WCAG 2.2.2 pause/play toggle for animated backgrounds
 // (Aurora/Blob), bound by the consumer to the renderer's pause()/resume().
 export { default as DockBackgroundToggle } from "./DockBackgroundToggle.vue";

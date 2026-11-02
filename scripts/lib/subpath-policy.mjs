@@ -187,6 +187,10 @@ export const CURATED = {
     // the `BlobConfig` shape + hero preset WITHOUT Blob.vue's value.js `/color` eager
     // weight (~−33 KiB), the established dynamic color-leaf discipline.
     "blob-config": "src/components/blob/config.ts",
+    // U/B8 PF (G-M1-3b) — `DockTrigger` on its own door, out of `./dock`. It carries reka's
+    // Select/Popover/DropdownMenu triggers; a consumer that renders `GlassDock` in its shell
+    // and triggers only in lazy menus kept them in its entry while `dist/dock.js` was one module.
+    "dock-trigger": "src/components/dock/trigger.ts",
 };
 
 // Additional composable entries whose source is not a curated root barrel.
