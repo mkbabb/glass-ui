@@ -1,0 +1,68 @@
+# C-E13 · the battery this seat did not start (ZONE-ARMED at 00:23 and 00:32), planned for its
+# completion seat. Nothing below ran. Each stage runs through ~/.claude/guard/guarded, Chromium
+# first, then ONE `guarded --exclusive webkit --timeout 90` acquisition (WK-1; WK-2 queued at once
+# for any stage left after 80 minutes, recorded). One browser per battery, a fresh context per
+# cell, every page, context and browser closed in a finally; WebKit restarted every 60 page loads.
+# Load average printed beside every timing; a defect seen only under load is NOT-REPRODUCED until
+# re-read twice.
+
+## 0 · builds (own worktree .claude/worktrees/bl/D5/p13/C-E13/wt at HEAD, node_modules symlinked)
+cand13 = HEAD + pass-13/P-E13.patch (ffa64fc4…, src tree 30f51077c3ec, H13's th())
+cand12 = HEAD + pass-12/P-E12.patch (028c1807…, src tree 61f7b80ac552)
+cand11 = HEAD + pass-11/P-E11.patch (20721fc1…), cand8 = HEAD + P-E8.patch (the idle bar)
+plants = pass-13/E13/plants.py level|child|stale|noown|typedom|reachzero, each alone, tree read back
+gates  = build, typecheck, demo:dist:build, vitest --maxWorkers=2 on cand13
+
+## 1 · engine facts, library-free (both engines; the WebKit half is the cell P-E13 rests on)
+F1 registered <time>/<number>/<length> computed text for every (b) form: calc, min, max, clamp,
+   round, mod, rem, abs, sign, pi, e, infinity, var() with fallback, case, exponent, sign, comment,
+   inherit, initial, unset, rem, em, vw, % (refused), a list, a bare number
+F2 a paused composite:"add" WAAPI `translate` on an element: getBoundingClientRect moves by it in
+   the same task (no frame), under none, scale, rotate, perspective
+F3 scroll anchoring and the scrollTop clamp: applied before a MutationObserver callback reads a
+   forced layout (insert above the viewport; removal below that shrinks the overflow)
+F4 document.timeline.currentTime and a running CSS transition's sampled value: equal in a rAF
+   callback of frame N and in a separate task posted after it, before frame N+1
+F5 `transition: all 150ms` on an element: does writing --engage-read-time inline and reading it
+   back start a transition (computed value -1s at the read)?
+
+## 2 · the library's own cells on cand13 (H13's harness a09eb8c7…, the scene app)
+E-10 --part hg13 (xf, kind, scroll, anim, dialog, reentry) and whole; E-11 --part
+forms,tokens,census,reachin and whole; E-2, E-3, E-4 (velocity printed), E-5, E-8, E-9, E-12, E-13,
+E-1, CAP; pass-12 critics' ca12/ce12 probes (rotate, skewX, perspective, percent translate, the
+library Dialog insert/remove, style/class/hidden/text, anchoring page/scroller); pass-11 critics'
+paths (list easing, settle unit, host glide under scale outside/nested/inside, zoom 0.5..2.5,
+track zoom, html zoom, reverse, release, exit-side, re-render across the line, press at the line,
+re-press, wheel, side film, Dialog lens, anc kinds, stacking frame); WebKit exit-side re-reads
+below load 8, cand13 beside cand12 and cand11, three each; every plant on its cells.
+
+## 3 · past H13's enumeration (this seat's own cells; each a member §2 of C-E13.md derives)
+D1 a script-animated ancestor: a held (keyboard-engaged) slider in a card whose inline `translate`
+   is written every rAF (0 -> 80 px over 500 ms) by a loop started before the hold; the same written
+   from a scroll listener (translateY = 0.3·scrollY) under a wheel; the library Carousel member
+   with --member-scale written on deck position. PASS: the host's painted offset from its card stays
+   at rest ±0.5 px every frame, and no glide runs. cand12 the control (it hears childList only)
+D2 the early animation-frame callback: a rAF loop started before the hold writes one text node
+   elsewhere every frame; then a 40 px insert above the held slider, and separately a 600 ms CSS
+   scale transition on the card. PASS: the glide ends within the dock clock + 1 frame, the frame
+   step stays within H13's bound, and the card-transition cell glides nothing
+D3 a released host on its exit clock: release, start a 600 ms scale transition on the card, append
+   an unrelated node at +60 ms. PASS: no glide (getAnimations on the host shows only its exit)
+D4 a projective map past the 40 px cell: perspective(400px) rotateX(40deg) and perspective(600px)
+   rotateX(25deg), host at y0 -200 / 0 / 150 from the perspective origin, inserts of 40, 120, 200 px
+   above. PASS: first frame <= 0.5 px (the model in newton-residual.py predicts 1.3-100 px at 120-200)
+D5 the host's own content resize: a scrubbing NumberField whose value text goes 9 -> 10 inside a
+   centred flex row, and inside a left-aligned row. PASS: the leading edge does not move
+D6 `transition: all 150ms` on a committing Button and on the held slider's host, default tokens.
+   PASS: zero engage errors in the console, every commit pops
+D7 --motion-tempo 0 and -1 on :root. PASS: the stage's travel and the release carry run the clock
+   CSS runs (0 ms) or are loud by name; FAIL: 210 ms travel with 0 errors
+D8 --space-section: 2em with the slider host at 14 px and the page container at 16 px; and 4cqi
+   under a container. PASS: the reach caps at the gutter the padding consumer lays out (±1 px)
+D9 a card scale transition 1 -> 1.25 about the held slider's centre (class toggle), then a scroll.
+   PASS: the held box stays inside the page gutter on the inline axis (CK-04's phone clause)
+D10 cost: CPU per frame (C-E11's cell) and rAF + RO per s held still, cand13 beside cand12, cand11,
+   cand8 in one run; per-scroll and per-record work by a trace of forced layouts during a slider
+   drag (thumb style writes) with a vSpecular card behind it
+D11 CK-25 frames: rest, pressed, held, engaged, committed, released, light and dark, fine and
+   coarse, both engines; still pairs for D1, D2, D4, the Dialog insert, the rotated card, anchoring

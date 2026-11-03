@@ -156,7 +156,7 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import { execFileSync } from "node:child_process";
-import { witness, openPage, openTouchPage, scenesFor, center, tabKey, f, GLASS, INIT, rowsOf, rowFacts, rodeRow, sideFilm, sideSetup } from "./lib.mjs";
+import { witness, openPage, openTouchPage, scenesFor, center, tabKey, f, GLASS, INIT, rowsOf, rowFacts, rodeRow, sideFilm, sideSetup, MO_TALLY } from "./lib.mjs";
 const { PNG } = (await import(`${GLASS}/node_modules/pngjs/lib/png.js`)).default;
 const luma = (buf) => { const p = PNG.sync.read(buf); const o = new Float32Array(p.width * p.height); for (let i = 0, j = 0; i < p.data.length; i += 4, j++) o[j] = 0.2126 * p.data[i] + 0.7152 * p.data[i + 1] + 0.0722 * p.data[i + 2]; return { w: p.width, h: p.height, o }; };
 const FILM_LEAD = 300; // ms of the film kept before the drive (the clip film cell)
@@ -1009,6 +1009,250 @@ await witness("E-10", "CK-20 no one-frame discontinuity on an engagement path", 
     let step = 0, stepAt = NaN; for (const x of W) if (x.t - W[0].t >= NOM) { const d = Math.hypot(x.x - at(x.t - NOM, "x"), x.y - at(x.t - NOM, "y")); if (d > step) { step = d; stepAt = x.t - pre.t; } }
     const driven = moved >= 5; const glided = durs.length > 0;
     cell(name, !driven ? "UNMEASURED" : jump <= 0.5 && step <= bound && glided ? "PASS" : "FAIL", `${driven ? "" : "NOT DRIVEN: the root moved under 5 px · "}${place === "chain" ? `a positioned zoomed box C (zoom ${HG_TF[tf].zoom}) in a positioned card G, ` : `the card ${HG_NAME[tf]} on ${place === "nested" ? "G (one box further out)" : "C"}, `}a 40 px block ${place === "inside" ? "inside C above the root" : place === "outside" ? "before C" : "before G"} on frame ${r.AT} · the root's painted centre moved ${f(end.x - pre.x, 1)}, ${f(end.y - pre.y, 1)} px; on the mutation's frame ${f(jump, 2)} px from where it was painted (bound ≤ 0.5) · largest move over any 16.7 ms ${f(step, 1)} px at +${f(stepAt, 0)} ms (bound ${f(bound, 1)} = ${f(moved, 1)} × ${row ? `${row.n} ${f(row.peak, 3)} (clock ${f(row.ms, 0)} ms)` : "?"}${rode ? "" : ` (no running translate on the root carries a row's clock [${durs.map((x) => f(x, 0)).join(",")}]: the fastest row)`} + 1) · glide ${glided ? `running (${durs.map((x) => f(x, 0)).join(",")} ms)` : `none (held before/on the mutation ${pre.held}/${first.held}; offset chain ${pre.oc} → ${first.oc})`} · errors ${r.errs.length}`);
+  }
+  // ── H13: THE MEMBER SETS of the host's re-render glide, DERIVED (CK-20; REGISTRY §P12-7 items 2-5, 8; §P12-8.1 (a); §P12-8.3 wave 1;
+  // `../pass-13/H13.md` §1 states the derivation). A held host's painted place is the layout of every box from the host to the root
+  // carried through every paint map between them. Between two frames it moves by (i) a layout change, which only a DOM mutation (the
+  // three record types MutationObserver has: childList, attributes, characterData), a CSSOM edit (no record) or a viewport change can
+  // cause; (ii) a paint map that depends on layout (a percent translate, a transform-origin or perspective-origin resolved against a
+  // box's size), moved by (i) with no offset moving; (iii) the engine's own scroll adjustment after (i) (scroll anchoring; the clamp of a
+  // scroll offset when the overflow shrinks); (iv) an ancestor's running animation, which is time, not a move. The glide must land where
+  // the host was painted for (i)-(iii) and glide nothing for (iv). `--part hg13` (the cells below; `--hg13 a,b` narrows to families
+  // xf, kind, scroll, anim, dialog, reentry, cssom). On the loupe row without a clip, C the root's parent, G C's parent, a fine hold,
+  // +900 ms, then filmed per frame (a task posted from requestAnimationFrame, after that frame's paint, stamped with the document
+  // timeline); the act on frame 8 (frame 14 under a running animation).
+  //   xf · <place> · <card>   the paint map family: a 40 px block inside C (its first child), outside (before C), nested (before G, the
+  //                    card on G), or below (after the root inside C: C grows under the root, which moves in paint only through a
+  //                    size-dependent map). Cards: every 2D transform function's kind (rotate, about 0 0 and about the centre; rotate
+  //                    with scale; skewX; skewY; matrix() with a rotation and without), perspective (C's parent `perspective` with C
+  //                    translateZ; perspective() rotateX() on C), percent translate (one axis, both, the Dialog's -50% -50%), a
+  //                    centred scale, and every pass-12 critic's card (zoom 0.5, zoom 2.5, scale 1.25, zoom 0.5 + scale 0.8, zoom 1.25
+  //                    on <html>)
+  //   kind · <kind> · <card>  the mutation family, outside C, cards none, scale 0.8, rotate 10deg: childList insert and remove, style
+  //                    (v-show: display none → block), class (a class rule's height 0 → 40 px), hidden (the attribute removed), text
+  //                    (a paragraph's text node data grown two lines: characterData)
+  //   cssom · <card>          REPORT: a CSSOM rule's height 0 → 40 px (no mutation record exists for it: a layout move the record
+  //                    grammar cannot carry, stated in the derivation)
+  //   scroll · anchor page|scroller · insert|remove above   the engine's DEFAULT overflow-anchor (nothing set), a 40 px block inserted
+  //                    at, or removed from, the top of main (the page) or of the scroller G, wholly above the viewport (the page: an
+  //                    800 px spacer under it; the scroller: G 300 px tall, scrolled so C shows): the engine anchors, the host stays in
+  //                    paint, so a glide is itself the jump
+  //   scroll · clamp page|scroller · remove below   scrolled to the end (the page with no bottom padding, or G), a 40 px block at the end
+  //                    removed: the scroll offset clamps 40 px and the host moves in paint with no layout move
+  //   anim · <kind>           an ancestor animation in flight across an unrelated append after C on frame 14: a CSS transition of C's
+  //                    scale 0.8 → 1, a WAAPI translate of C 0 → 60 px, a WAAPI rotate of C 0 → 8deg (600 ms, linear, from frame
+  //                    2). PASS when the animation is in flight (C's painted box moves across the mutation's frame), no translate
+  //                    starts on the root in 6 frames, and the root's painted step on the mutation's frame is within 0.5 px of the
+  //                    step the frame before (the animation's own motion, unbroken)
+  //   dialog · insert|remove above   the dlg rows (the library's DialogContent, centred by translate: -50% -50%; the fixture's plate
+  //                    the same): keyboard-engaged slider in the plate, on frame 8 a 40 px block inserted before the slider's wrap, or
+  //                    the plate's paragraph above it removed
+  //   reentry · still|re-render   the observer tally (lib.mjs MO_TALLY, before any page script): every MutationObserver delivery
+  //                    and record, per observer. `still`: a fine hold, +900 ms, then 1000 ms with no harness mutation; `re-render`: a
+  //                    40 px block inserted before C, then 40 frames. PASS when no observer was handed a record the harness did not
+  //                    make (the stage's own writes never re-enter its observer)
+  // PASS for xf, kind, scroll, dialog: the root's painted centre on the act's frame ≤ 0.5 px from where it was painted the frame
+  // before, its largest move over any 16.7 ms ≤ the painted move × the glide's row peak + 1 px, and a glide ran when the paint moved
+  // ≥ 5 px (H12's clauses, the NOT DRIVEN floor lifted so a paint that should stay still is graded). Plants e10-hostglidelayout (the
+  // pass-12 shape: the layout model, H12's fixture), e10-hostglidelevel (the frame read as axis lengths: rotation and skew laid
+  // level), e10-hostglidechild (childList only), e10-hostglidestale (the before read a frame behind), e10-reenter (the stage's own
+  // writes delivered to its observer); the pass-12 candidate (cand12); C-A12's allkinds the control on the mutation kinds
+  const S08 = { scale: "0.8", transformOrigin: "0 0" }, R10 = { rotate: "10deg", transformOrigin: "0 0" };
+  const H13_CARDS = {
+    "rotate 10deg": { css: R10 }, "rotate 10deg centre": { css: { rotate: "10deg" }, below: true }, "rotate 10deg + scale 0.8": { css: { rotate: "10deg", scale: "0.8", transformOrigin: "0 0" } },
+    "skewX 15deg": { css: { transform: "skewX(15deg)", transformOrigin: "0 0" } }, "skewY 8deg": { css: { transform: "skewY(8deg)", transformOrigin: "0 0" } },
+    "matrix rotate + scale": { css: { transform: "matrix(0.788, 0.139, -0.139, 0.788, 0, 0)", transformOrigin: "0 0" } }, "matrix 0.8": { css: { transform: "matrix(0.8, 0, 0, 0.8, 0, 0)", transformOrigin: "0 0" } },
+    "perspective translateZ": { pcss: { perspective: "400px" }, css: { transform: "translateZ(-50px)" }, below: true }, "perspective rotateX 25deg": { css: { transform: "perspective(600px) rotateX(25deg)" }, below: true },
+    "translate 0 20%": { css: { translate: "0 20%" }, below: true }, "translate 10% 20%": { css: { translate: "10% 20%" }, below: true }, "translate -50% -50% (Dialog)": { css: { translate: "-50% -50%", position: "relative", left: "50%" }, only: ["inside", "outside", "below"] },
+    "scale 0.8 centre": { css: { scale: "0.8" }, below: true }, "zoom 0.5": { css: { zoom: "0.5" } }, "zoom 2.5": { css: { zoom: "2.5" } }, "scale 1.25": { css: { scale: "1.25", transformOrigin: "0 0" } },
+    "zoom 0.5 + scale 0.8": { css: { zoom: "0.5", scale: "0.8", transformOrigin: "0 0" } }, "html zoom 1.25": { html: "1.25", only: ["outside"] },
+  };
+  const H13_KINDS = ["insert", "remove", "style", "class", "hidden", "text"];
+  const H13_KCARDS = { none: null, "scale 0.8": S08, "rotate 10deg": R10 };
+  const hgFam = typeof a.hg13 === "string" ? new Set(a.hg13.split(",")) : null; const fam = (k) => !hgFam || hgFam.has(k);
+  const h13Cases = [];
+  if (fam("xf")) for (const [card, c] of Object.entries(H13_CARDS)) for (const place of c.only ?? ["inside", "outside", "nested", ...(c.below ? ["below"] : [])]) h13Cases.push({ fam: "xf", name: `xf · ${place} · ${card}`, place, css: c.css ?? null, pcss: c.pcss ?? null, html: c.html ?? null, kind: "insert" });
+  if (fam("kind")) for (const kind of H13_KINDS) for (const [card, css] of Object.entries(H13_KCARDS)) h13Cases.push({ fam: "kind", name: `kind · ${kind} · ${card}`, place: "outside", css, kind });
+  if (fam("cssom")) for (const [card, css] of Object.entries(H13_KCARDS)) h13Cases.push({ fam: "cssom", name: `cssom · ${card}`, place: "outside", css, kind: "cssom" });
+  if (fam("scroll")) for (const [nm, sc] of [["anchor page · insert above", { scroll: "anchor-page", kind: "insert" }], ["anchor page · remove above", { scroll: "anchor-page", kind: "remove" }], ["anchor scroller · insert above", { scroll: "anchor-box", kind: "insert" }], ["anchor scroller · remove above", { scroll: "anchor-box", kind: "remove" }], ["clamp page · remove below", { scroll: "clamp-page", kind: "remove" }], ["clamp scroller · remove below", { scroll: "clamp-box", kind: "remove" }]])
+    for (const [card, css] of nm.startsWith("anchor page · insert") ? [["none", null], ["scale 0.8", S08]] : [["none", null]]) h13Cases.push({ fam: "scroll", name: `scroll · ${nm} · ${card}`, place: "scroll", css, ...sc });
+  if (fam("anim")) for (const an of ["css-transition scale", "waapi translate", "waapi rotate"]) h13Cases.push({ fam: "anim", name: `anim · ${an}`, place: "none", anim: an, kind: "insert" });
+  const h13Setup = ([R, c]) => {
+    const root = document.querySelector(R), C = root.parentElement, G = C.parentElement; const mn = document.querySelector("main") ?? document.body;
+    if (!c.scroll?.startsWith("anchor")) document.documentElement.style.overflowAnchor = "none";
+    if (c.html) document.documentElement.style.zoom = c.html;
+    mn.style.paddingTop = "230px"; mn.style.paddingBottom = c.scroll === "clamp-page" ? "0px" : "1600px";
+    const X = c.place === "nested" ? G : C; if (c.css) Object.assign(X.style, c.css); if (c.pcss) Object.assign(X.parentElement.style, c.pcss);
+    if (c.anim === "css-transition scale") { C.style.transformOrigin = "0 0"; C.style.scale = "0.8"; C.style.transition = "scale 600ms linear"; }
+    if (c.anim === "waapi rotate") C.style.transformOrigin = "0 0";
+    const blk = (h, t) => { const b = document.createElement("div"); b.style.height = `${h}px`; b.setAttribute("data-t", t); return b; };
+    // the act's subject, laid before the hold so the act is one record of its kind
+    let subj = null; const before = (b) => (c.place === "nested" ? G.parentElement.insertBefore(b, G) : G.insertBefore(b, C));
+    if (c.fam === "kind" || c.fam === "cssom") {
+      if (c.kind === "remove") subj = blk(40, "h13-subject");
+      else if (c.kind === "style") { subj = blk(40, "h13-subject"); subj.style.display = "none"; }
+      else if (c.kind === "class") { const st = document.createElement("style"); st.textContent = ".h13k { height: 0; overflow: hidden } .h13k.on { height: 40px }"; document.head.appendChild(st); subj = blk(0, "h13-subject"); subj.style.height = ""; subj.className = "h13k"; }
+      else if (c.kind === "hidden") { subj = blk(40, "h13-subject"); subj.hidden = true; }
+      else if (c.kind === "text") { subj = document.createElement("p"); subj.setAttribute("data-t", "h13-subject"); subj.style.cssText = "margin:0;padding:0;width:120px;font:16px/20px monospace;overflow-wrap:anywhere"; subj.appendChild(document.createTextNode("x")); }
+      else if (c.kind === "cssom") { const st = document.createElement("style"); st.textContent = ".h13c { height: 0 }"; document.head.appendChild(st); subj = blk(0, "h13-subject"); subj.style.height = ""; subj.className = "h13c"; }
+      if (subj) before(subj);
+    }
+    if (c.scroll === "anchor-page") { const sp = blk(800, "h13-spacer"); mn.insertBefore(sp, mn.firstChild); if (c.kind === "remove") mn.insertBefore(blk(40, "h13-subject"), sp); }
+    if (c.scroll === "clamp-page") { mn.insertBefore(blk(800, "h13-spacer"), mn.firstChild); mn.appendChild(blk(40, "h13-subject")); }
+    if (c.scroll === "anchor-box" || c.scroll === "clamp-box") {
+      G.style.overflow = "auto"; G.style.height = "300px"; const sp = blk(600, "h13-spacer"); G.insertBefore(sp, G.firstChild);
+      if (c.scroll === "anchor-box") { if (c.kind === "remove") G.insertBefore(blk(40, "h13-subject"), sp); G.appendChild(blk(600, "h13-tail")); } else G.appendChild(blk(40, "h13-subject"));
+    }
+    const b = root.getBoundingClientRect(); scrollBy(0, b.top + b.height / 2 - innerHeight / 2 + 60);
+    if (c.scroll === "anchor-box") { G.scrollTop += C.getBoundingClientRect().top - G.getBoundingClientRect().top - 60; const g = G.getBoundingClientRect(); scrollBy(0, g.top - 120); }
+    if (c.scroll === "clamp-box") { G.scrollTop = G.scrollHeight; const g = G.getBoundingClientRect(); scrollBy(0, g.top - 120); }
+    if (c.scroll === "clamp-page") scrollTo(0, document.scrollingElement.scrollHeight);
+    const q = root.getBoundingClientRect(); return { y: q.top + q.height / 2, vis: q.bottom > 0 && q.top < innerHeight, sy: scrollY, gst: G.scrollTop, anchor: getComputedStyle(document.documentElement).overflowAnchor };
+  };
+  // the act, by name (page side); every harness-made node carries data-t="h13-…" so the tally can tell the harness's records apart
+  const h13Act = ([R, c]) => { const root = document.querySelector(R), C = root.parentElement, G = C.parentElement; const mn = document.querySelector("main") ?? document.body;
+    const s = document.querySelector('[data-t="h13-subject"]'); const blk = () => { const b = document.createElement("div"); b.style.height = "40px"; b.setAttribute("data-t", "h13-block"); return b; };
+    if (c.anim) { G.insertBefore(blk(), C.nextSibling); return; }
+    if (c.scroll === "anchor-page") { if (c.kind === "insert") mn.insertBefore(blk(), mn.firstChild); else s.remove(); return; }
+    if (c.scroll === "anchor-box") { if (c.kind === "insert") G.insertBefore(blk(), G.firstChild); else s.remove(); return; }
+    if (c.scroll?.startsWith("clamp")) { s.remove(); return; }
+    if (c.fam === "kind" || c.fam === "cssom") { if (c.kind === "insert") { if (c.place === "nested") G.parentElement.insertBefore(blk(), G); else G.insertBefore(blk(), C); } else if (c.kind === "remove") s.remove(); else if (c.kind === "style") s.style.display = ""; else if (c.kind === "class") s.classList.add("on"); else if (c.kind === "hidden") s.hidden = false; else if (c.kind === "text") s.firstChild.data = "x".repeat(36); else if (c.kind === "cssom") { for (const sh of document.styleSheets) { try { for (const r of sh.cssRules) if (r.selectorText === ".h13c") r.style.height = "40px"; } catch {} } } return; }
+    if (c.place === "inside") C.insertBefore(blk(), C.firstChild); else if (c.place === "outside") G.insertBefore(blk(), C); else if (c.place === "nested") G.parentElement.insertBefore(blk(), G); else if (c.place === "below") root.after(blk()); };
+  const h13Film = ([R, c, AT, actSrc]) => new Promise((ok) => {
+    const act = new Function(`return (${actSrc})`)();
+    const root = document.querySelector(R), C = root.parentElement, G = C.parentElement; const isCss = (x) => (typeof CSSTransition !== "undefined" && x instanceof CSSTransition) || (typeof CSSAnimation !== "undefined" && x instanceof CSSAnimation);
+    const T = () => document.timeline.currentTime; const t0 = T(); const out = []; const ch = new MessageChannel(); let n = 0, anim = null;
+    ch.port1.onmessage = () => { const r = root.getBoundingClientRect(), cr = C.getBoundingClientRect();
+      const an = root.getAnimations().filter((x) => !isCss(x) && x.playState === "running" && Object.keys(x.effect.getKeyframes()[0] ?? {}).includes("translate")).map((x) => x.effect.getTiming().duration);
+      out.push({ n, t: T() - t0, x: r.left + r.width / 2, y: r.top + r.height / 2, cx: cr.left + cr.width / 2, cy: cr.top + cr.height / 2, an, sy: scrollY, gst: G.scrollTop, held: root.dataset.held !== undefined || root.hasAttribute("data-engaged") }); };
+    const tick = () => { n++;
+      if (n === 2 && c.anim === "css-transition scale") C.style.scale = "1";
+      if (n === 2 && c.anim === "waapi translate") anim = C.animate({ translate: ["0 0", "0 60px"] }, { duration: 600, easing: "linear" });
+      if (n === 2 && c.anim === "waapi rotate") anim = C.animate({ rotate: ["0deg", "8deg"] }, { duration: 600, easing: "linear" });
+      if (n === AT) act([R, c]); ch.port2.postMessage(0); if (n < 60) requestAnimationFrame(tick); else setTimeout(() => { anim?.cancel(); ok({ out, AT }); }, 40); };
+    requestAnimationFrame(tick);
+  });
+  // the grade every glide family shares (H12's clauses, the NOT DRIVEN floor lifted: a paint that must stay still is graded)
+  const h13Grade = (r, extra = "") => {
+    const S = r.out; const i0 = S.findIndex((x) => x.n >= r.AT); const pre = S[i0 - 1], first = S[i0];
+    if (!pre || !first) return ["FAIL", `the film holds no frame before or on the act's (${S.length} frames)`];
+    const durs = [...new Set(S.slice(i0).flatMap((x) => x.an))]; const end = S.at(-1);
+    const moved = Math.hypot(end.x - pre.x, end.y - pre.y), jump = Math.hypot(first.x - pre.x, first.y - pre.y);
+    const facts = r.rows.map(rowFacts).filter((x) => Number.isFinite(x.peak)); const fastest = facts.reduce((p, x) => (!p || x.peak > p.peak ? x : p), null); const rode = rodeRow(durs, r.rows); const row = rode ?? fastest;
+    const bound = moved * (row?.peak ?? 0) + 1;
+    const W = S.slice(i0 - 1); const at = (t, k) => { for (let i = 1; i < W.length; i++) if (W[i].t >= t) { const p = W[i - 1], q = W[i]; return p[k] + ((q[k] - p[k]) * (t - p.t)) / Math.max(1e-6, q.t - p.t); } return W.at(-1)[k]; };
+    let step = 0, stepAt = NaN; for (const x of W) if (x.t - W[0].t >= NOM) { const d = Math.hypot(x.x - at(x.t - NOM, "x"), x.y - at(x.t - NOM, "y")); if (d > step) { step = d; stepAt = x.t - pre.t; } }
+    const glided = durs.length > 0; const need = moved >= 5; const ok = pre.held && jump <= 0.5 && step <= bound && (!need || glided);
+    const path = S.slice(Math.max(0, i0 - 1), i0 + 4).map((x) => `${f(x.x - pre.x, 1)},${f(x.y - pre.y, 1)}`).join(" ");
+    return [!pre.held ? "UNMEASURED" : ok ? "PASS" : "FAIL", `${pre.held ? "" : "NOT DRIVEN: the root was not held before the act · "}${extra}the act on frame ${r.AT} · the root's paint moved ${f(end.x - pre.x, 1)}, ${f(end.y - pre.y, 1)} px in all (${f(moved, 2)}); on the act's frame ${f(first.x - pre.x, 2)}, ${f(first.y - pre.y, 2)} = ${f(jump, 2)} px from where it was painted (bound ≤ 0.5) · largest move over any 16.7 ms ${f(step, 1)} px at +${f(stepAt, 0)} ms (bound ${f(bound, 1)} = ${f(moved, 1)} × ${row ? `${row.n} ${f(row.peak, 3)} (clock ${f(row.ms, 0)} ms)` : "?"}${rode ? "" : " (no running translate on the root carries a row's clock: the fastest row)"} + 1) · glide ${glided ? `ran (${durs.map((x) => f(x, 0)).join(",")} ms)` : "none"}${need && !glided ? " (the paint moved ≥ 5 px with no glide)" : ""} · path from the frame before [${path}] · scrollY ${f(pre.sy, 1)} → ${f(first.sy, 1)} → ${f(end.sy, 1)}, G.scrollTop ${f(pre.gst, 1)} → ${f(end.gst, 1)} · errors ${r.errs.length}${r.errs[0] ? ` (${r.errs[0].slice(0, 100)})` : ""}`];
+  };
+  if (want("hg13")) for (const [sc, m] of pageRows) for (const c of h13Cases) {
+    const R = m.root ?? '[data-e~="root"]', thumb = m.thumb ?? '[data-e~="thumb"]'; const name = `E-10 ${sc} ${c.name}`;
+    const r = await guard(name, async () => {
+      const P = await openPage(E, T, sc);
+      try {
+        const st = await P.page.evaluate(h13Setup, [R, c]); await P.page.waitForTimeout(250);
+        const rows = await P.page.evaluate(rowsOf);
+        const k = await center(P.page, thumb); await P.page.mouse.move(k.x, k.y); await P.page.mouse.down();
+        try { await P.page.waitForTimeout(900); return { ...(await P.page.evaluate(h13Film, [R, c, c.anim ? 14 : 8, h13Act.toString()])), rows, st, errs: [...P.errors] }; } finally { await P.page.mouse.up(); }
+      } finally { await P.close(); }
+    }, 60000);
+    if (r.crashed) { cell(name, "FAIL", r.line); continue; }
+    if (c.anim) {
+      const S = r.out; const i0 = S.findIndex((x) => x.n >= r.AT); const pp = S[i0 - 2], pre = S[i0 - 1], first = S[i0];
+      if (!pp || !pre || !first) { cell(name, "FAIL", `the film holds no frames around the mutation's (${S.length})`); continue; }
+      const glides = S.slice(i0, i0 + 6).filter((x) => x.an.length).length; const durs = [...new Set(S.slice(i0, i0 + 6).flatMap((x) => x.an))];
+      const inFlight = Math.hypot(first.cx - pre.cx, first.cy - pre.cy) > 0.05;
+      const v0 = [pre.x - pp.x, pre.y - pp.y], v1 = [first.x - pre.x, first.y - pre.y]; const brk = Math.hypot(v1[0] - v0[0], v1[1] - v0[1]);
+      cell(name, !pre.held ? "UNMEASURED" : !inFlight ? "UNMEASURED" : !glides && brk <= 0.5 ? "PASS" : "FAIL", `${pre.held ? "" : "NOT DRIVEN: the root was not held · "}${inFlight ? "" : "NOT DRIVEN: the ancestor's animation was not in flight across the mutation · "}C runs ${c.anim} from frame 2 (C's painted centre moved ${f(first.cx - pre.cx, 2)}, ${f(first.cy - pre.cy, 2)} px across the mutation's frame); an unrelated 40 px block appended after C on frame ${r.AT} · translate glides on the root in the next 6 frames ${glides}${durs.length ? ` (clock ${durs.map((x) => f(x, 0)).join(",")} ms)` : ""} (bound 0) · the root's painted step on the mutation's frame ${f(v1[0], 2)}, ${f(v1[1], 2)} against the frame before ${f(v0[0], 2)}, ${f(v0[1], 2)}: ${f(brk, 2)} px off its own motion (bound ≤ 0.5) · errors ${r.errs.length}`);
+      continue;
+    }
+    if (c.fam === "cssom") { const [v, line] = h13Grade(r); cell(name, "REPORT", `${v === "PASS" ? "would pass" : v === "FAIL" ? "would fail" : v} · no mutation record exists for a CSSOM rule edit (the derivation, H13 §1.1): a layout move a record-heard glide cannot carry · ${line}`); continue; }
+    if (c.fam === "scroll" && !r.st.vis) { cell(name, "UNMEASURED", `NOT DRIVEN: the root is not in the viewport after the setup (${JSON.stringify(r.st)})`); continue; }
+    const [v, line] = h13Grade(r, c.fam === "scroll" ? `overflow-anchor ${r.st.anchor} · ` : "");
+    cell(name, v, line);
+  }
+  // dialog · insert|remove above: the dlg rows, keyboard-engaged in the plate (Tab from D.from, +700 ms), the act on frame 8
+  if (want("hg13") && fam("dialog")) for (const [sc, m] of Object.entries(idx).filter(([, x]) => x.dlg)) for (const kind of ["insert", "remove"]) {
+    const D = m.dlg; const name = `E-10 ${sc} dialog · ${kind === "insert" ? "a 40 px block inserted above the slider" : "the paragraph above the slider removed"}`;
+    const r = await guard(name, async () => {
+      const P = await openPage(E, T, sc, { q: D.q ?? {} });
+      try {
+        const { page } = P; if (!(await page.$(D.root))) return { absent: true };
+        const rows = await page.evaluate(rowsOf);
+        await page.focus(D.from); await page.keyboard.press(tabKey(engine)); await page.waitForTimeout(700);
+        const eng = await page.evaluate(([R, e]) => { const r = document.querySelector(R); return r.matches(e) || !!r.closest(e) || !!r.querySelector(e); }, [D.root, D.engaged ?? "[data-engaged]"]);
+        const film = await page.evaluate(([R, P0, kind]) => new Promise((ok) => {
+          const root = document.querySelector(R); const plate = root.closest(P0) ?? document.querySelector(P0); const wrap = root.closest('[data-t="dlg-slider"]') ?? root;
+          const isCss = (x) => (typeof CSSTransition !== "undefined" && x instanceof CSSTransition) || (typeof CSSAnimation !== "undefined" && x instanceof CSSAnimation);
+          const T = () => document.timeline.currentTime; const t0 = T(); const out = []; const ch = new MessageChannel(); let n = 0; const AT = 8; let para = null;
+          ch.port1.onmessage = () => { const q = root.getBoundingClientRect(), pr = plate.getBoundingClientRect(); const an = root.getAnimations().filter((x) => !isCss(x) && x.playState === "running" && Object.keys(x.effect.getKeyframes()[0] ?? {}).includes("translate")).map((x) => x.effect.getTiming().duration); out.push({ n, t: T() - t0, x: q.left + q.width / 2, y: q.top + q.height / 2, pt: pr.top, ph: pr.height, an, sy: scrollY, gst: 0, held: true }); };
+          const act = () => { if (kind === "insert") { const b = document.createElement("div"); b.style.height = "40px"; b.setAttribute("data-t", "h13-block"); wrap.before(b); } else { para = [...plate.querySelectorAll("p")].find((p) => p.compareDocumentPosition(wrap) & Node.DOCUMENT_POSITION_FOLLOWING) ?? null; para?.remove(); } };
+          const tick = () => { n++; if (n === AT) act(); ch.port2.postMessage(0); if (n < 60) requestAnimationFrame(tick); else setTimeout(() => ok({ out, AT, tr: getComputedStyle(plate).translate, para: kind === "remove" ? !!para : null }), 40); };
+          requestAnimationFrame(tick); }), [D.root, D.plate, kind]);
+        return { ...film, rows, eng, errs: [...P.errors] };
+      } finally { await P.close(); }
+    }, 60000);
+    if (r.crashed) { cell(name, "FAIL", r.line); continue; }
+    if (r.absent) { cell(name, "FAIL", `NOT DRIVEN: no ${D.root}`); continue; }
+    if (!r.eng) { cell(name, "UNMEASURED", "NOT DRIVEN: the slider in the plate was not engaged by Tab"); continue; }
+    if (kind === "remove" && !r.para) { cell(name, "UNMEASURED", "NOT DRIVEN: the plate holds no paragraph above the slider"); continue; }
+    const pre = r.out[r.out.findIndex((x) => x.n >= r.AT) - 1], end = r.out.at(-1);
+    const [v, line] = h13Grade(r, `the plate's translate "${r.tr}", its top ${f(pre?.pt, 1)} → ${f(end?.pt, 1)}, height ${f(pre?.ph, 1)} → ${f(end?.ph, 1)} · `);
+    cell(name, v, line);
+  }
+  // reentry · still|re-render: the observer tally (lib.mjs MO_TALLY) from before the first page script
+  if (want("hg13") && fam("reentry")) for (const [sc, m] of pageRows) for (const mode of ["still", "re-render"]) {
+    const R = m.root ?? '[data-e~="root"]', thumb = m.thumb ?? '[data-e~="thumb"]'; const name = `E-10 ${sc} reentry · ${mode === "still" ? "a still hold, 1000 ms, no harness mutation" : "a 40 px block inserted before C, then 40 frames"}`;
+    const r = await guard(name, async () => {
+      const P = await openPage(E, T, sc, { init: [MO_TALLY, null] });
+      try {
+        await P.page.evaluate(h13Setup, [R, { place: "outside", fam: "xf" }]); await P.page.evaluate((R) => { window.__h13mo.host = R; }, R); await P.page.waitForTimeout(250);
+        const k = await center(P.page, thumb); await P.page.mouse.move(k.x, k.y); await P.page.mouse.down();
+        try {
+          await P.page.waitForTimeout(900); const held = await P.page.evaluate((R) => { const r = document.querySelector(R); return r.dataset.held !== undefined || r.hasAttribute("data-engaged"); }, R);
+          const t0 = await P.page.evaluate(() => window.__h13mo.mark());
+          if (mode === "still") await P.page.waitForTimeout(1000);
+          else await P.page.evaluate((R) => new Promise((ok) => { const root = document.querySelector(R), C = root.parentElement, G = C.parentElement; let n = 0; const tick = () => { n++; if (n === 2) { const b = document.createElement("div"); b.style.height = "40px"; b.setAttribute("data-t", "h13-block"); G.insertBefore(b, C); } if (n < 42) requestAnimationFrame(tick); else ok(); }; requestAnimationFrame(tick); }), R);
+          const tally = await P.page.evaluate((t0) => ({ all: window.__h13mo.since(t0, null), foreign: window.__h13mo.since(t0, "h13-") }), t0);
+          return { held, tally, errs: [...P.errors] };
+        } finally { await P.page.mouse.up(); }
+      } finally { await P.close(); }
+    }, 60000);
+    if (r.crashed) { cell(name, "FAIL", r.line); continue; }
+    const fo = r.tally.foreign; const desc = (t) => t.byObs.map((b) => `observer [${b.opts.slice(0, 90)}] ${b.n} deliveries, ${b.recs} records: ${Object.entries(b.kinds).slice(0, 4).map(([k, v]) => `${v}× ${k.slice(0, 70)}`).join("; ")}`).join(" | ") || "none";
+    cell(name, !r.held ? "UNMEASURED" : fo.recs === 0 ? "PASS" : "FAIL", `${r.held ? "" : "NOT DRIVEN: the root was not held · "}records delivered to any MutationObserver in the window that the harness did not make: ${fo.recs} in ${fo.n} deliveries (bound 0) · ${desc(fo)} · all deliveries ${r.tally.all.n} (${r.tally.all.recs} records) · errors ${r.errs.length}`);
+  }
+  // glance (REPORT, `--part hg13still --frames <dir> --label <l>`): still pairs for the owner's eye, held 900 ms (before), then the act
+  // and the next frame with the root's glides paused where they stood: the Dialog insert, the rotated card (outside), the anchoring insert
+  if (part?.has("hg13still")) {
+    const FR = a.frames ?? null; const LBL = a.label ?? "build"; if (FR) fs.mkdirSync(FR, { recursive: true });
+    const stills = [["rotate10-outside", pageRows[0], { fam: "xf", place: "outside", css: R10, kind: "insert" }], ["anchor-page-insert", pageRows[0], { fam: "scroll", place: "scroll", scroll: "anchor-page", kind: "insert" }], ["dialog-insert", Object.entries(idx).find(([, x]) => x.dlg), { fam: "dialog" }]];
+    for (const [tag, row, c] of stills) {
+      if (!row) continue; const [sc, m] = row; const name = `E-10 ${sc} glance · ${tag}`;
+      const r = await guard(name, async () => {
+        const dlg = c.fam === "dialog"; const D = m.dlg; const R = dlg ? D.root : m.root ?? '[data-e~="root"]';
+        const P = await openPage(E, T, sc, dlg ? { q: D.q ?? {} } : {});
+        try {
+          let up = null;
+          if (dlg) { await P.page.focus(D.from); await P.page.keyboard.press(tabKey(engine)); await P.page.waitForTimeout(700); }
+          else { await P.page.evaluate(h13Setup, [R, c]); await P.page.waitForTimeout(250); const k = await center(P.page, m.thumb ?? '[data-e~="thumb"]'); await P.page.mouse.move(k.x, k.y); await P.page.mouse.down(); up = () => P.page.mouse.up(); await P.page.waitForTimeout(900); }
+          try {
+            const y0 = await P.page.evaluate((R) => { const q = document.querySelector(R).getBoundingClientRect(); return { x: q.left + q.width / 2, y: q.top + q.height / 2 }; }, R);
+            if (FR) await P.page.screenshot({ path: `${FR}/${LBL}-${engine}-${tag}-before.png` });
+            const y1 = await P.page.evaluate(async ([R, c, dlg, actSrc]) => { const root = document.querySelector(R);
+              if (dlg) { const wrap = root.closest('[data-t="dlg-slider"]') ?? root; const b = document.createElement("div"); b.style.height = "40px"; b.setAttribute("data-t", "h13-block"); wrap.before(b); } else new Function(`return (${actSrc})`)()([R, c]);
+              await new Promise((ok) => requestAnimationFrame(() => setTimeout(ok, 0)));
+              for (const x of root.getAnimations()) if (Object.keys(x.effect.getKeyframes()[0] ?? {}).includes("translate")) x.pause();
+              const q = root.getBoundingClientRect(); return { x: q.left + q.width / 2, y: q.top + q.height / 2, sy: scrollY }; }, [R, c, dlg, h13Act.toString()]);
+            if (FR) await P.page.screenshot({ path: `${FR}/${LBL}-${engine}-${tag}-act.png` });
+            return { y0, y1 };
+          } finally { if (up) await up(); }
+        } finally { await P.close(); }
+      }, 60000);
+      if (r.crashed) { cell(name, "FAIL", r.line); continue; }
+      cell(name, "REPORT", `the root's painted centre ${f(r.y0.x, 1)}, ${f(r.y0.y, 1)} before; ${f(r.y1.x, 1)}, ${f(r.y1.y, 1)} on the frame after the act with its glides paused where they stood: ${f(Math.hypot(r.y1.x - r.y0.x, r.y1.y - r.y0.y), 2)} px off (scrollY then ${f(r.y1.sy, 1)}) · ${FR ? `${LBL}-${engine}-${tag}-{before,act}.png` : "no --frames: no stills written"}`);
+    }
   }
   // ── H12: THE REACH under a transform (CK-20 × CK-04; REGISTRY §P11-7 item 5; P-E11 §8 item 2): `--part reach`. On the page row in a 390 ×
   // 700 viewport, the card C (the root's parent) carries the card; the root is sized so its painted rest box clears the gutter as the

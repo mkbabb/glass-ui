@@ -1,0 +1,10 @@
+# H13 st-E-11 chromium · 2026-11-02 22:49:13 · load { 12.62 8.79 7.66 } · harness 013f6f2d2e34 · --faults e11-crestsilent,e11-unread,e11-noise
+OK     E-11 chromium unmeas  e11-unread (CONTROL: the grow spells its figure in place and reads no token, so an unreadable token degrades nothing: UNMEASURED, not a pass) exit 0
+         planted UNMEASURED: UNMEASURED E-11 slider fail-loud --fx-scale-engage (kbd) · no degradation, no error: the token is not read on this path · --fx-scale-engage: "nonsense" on the root · clean {"s":1.0599999321831597,"veil":1,"n":1} {"s":1.0599999321831597,"vei
+OK     E-11 chromium unmeas  e11-noise (CONTROL (H2 §2.3): the grow spells its figure in place, reads no token, and varies run to run (1.060, 1.061, 1.066, 1.054, 1.060 on successive slider loads); one planted read outside a two-run spread is noise, not a degradation: UNMEASURED, never FAIL) exit 0
+         planted UNMEASURED: UNMEASURED E-11 slider fail-loud --fx-scale-engage (kbd) · no degradation, no error: the token is not read on this path · --fx-scale-engage: "nonsense" on the root · clean {"s":1.054000006781684,"veil":1,"n":1} {"s":1.0599999321831597,"veil
+OK     E-11 chromium fault   e11-crestsilent (CK-21 (H8, C-A7's crestinput): the commit's crest input (--fx-commit-crest) planted unreadable on <html> before the first script degrades the commit to no light with no console.error) exit 1
+         first planted FAIL: FAIL       E-11 pop fail-loud --fx-commit-crest (commit) · SILENT DEGRADATION · --fx-commit-crest: "nonsense" on <html> before the first script · clean {"peak":0,"rise":0.18171218443130568} {"peak":0,"rise":0.18171218443130568} {"peak":0,"r
+selftest: 3 runs, 0 N/A; every witness passes its fixture, fails each planted violation on the planted cell, and passes each control, in every engine with an input for it
+# exit 0 · 2026-11-02 23:39:09 · load { 5.94 5.28 5.72 }
+# end · 2026-11-02 23:39:09 · load { 5.94 5.28 5.72 } · harness 013f6f2d2e34

@@ -1,0 +1,22 @@
+# chain c1 start 2026-11-02 18:43:30 · load { 5.97 7.12 9.22 }
+# 18:43:30 start: facts chromium · load { 5.97 7.12 9.22 }
+facts chromium · # exit 0 · 2026-11-02 18:43:31 · load { 5.97 7.12 9.22 }  · /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-13/H13/logs/facts-chromium.log
+# 18:43:34 end (0): facts chromium · load { 5.81 7.07 9.19 }
+# 18:43:34 start: st-E-10 chromium · load { 5.81 7.07 9.19 }
+st-E-10 chromium · selftest: 1 of 45 runs BROKEN or UNREAD (0 N/A) # exit 1 · 2026-11-02 19:33:44 · load { 12.17 11.51 11.69 }  · /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-13/H13/logs/st-E-10-chromium.log
+# 19:33:48 end (0): st-E-10 chromium · load { 13.12 11.71 11.76 }
+# 19:33:48 start: st-E-11 chromium · load { 13.12 11.71 11.76 }
+# 19:37:55 chain stopped by the seat after st-E-10 (e10-lensreducetravel BROKEN: the fixture's probe read under the reduce arm's transition-duration !important; cured, probe writes !important); st-E-11 stopped at 34 s; restarted from st-E-10
+# chain c1 start 2026-11-02 19:37:55 · load { 12.53 12.39 12.03 }
+# 19:37:55 start: st-E-10 chromium · load { 12.53 12.39 12.03 }
+st-E-10 chromium · selftest: 45 runs, 0 N/A; every witness passes its fixture, fails each planted violation on the planted cell, and passes each control, in every engine with an input for it # exit 0 · 2026-11-02 20:32:59 · load { 7.38 9.6 · /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-13/H13/logs/st-E-10-chromium.log
+# 20:33:03 end (0): st-E-10 chromium · load { 7.11 9.58 10.12 }
+# 20:33:03 start: st-E-11 chromium · load { 7.11 9.58 10.12 }
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1793669332 slope=30.2/s inuse=36211 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. Finish what you are doing and report it; the owner decides on the reboot.
+# 20:33:26 guarded printed ARMED (zone leak) at the st-E-11 start; the seat holds every later stage (c1.txt replaced by rename, the full list kept as c1.full) and stops all.sh, so no WebKit acquisition starts; st-E-11 runs to its end
+[guarded] KILLED: timeout after 90 min
+# 22:03:08 end (0): st-E-11 chromium · load { 5.46 6.86 8.60 }
+# chain c1 end 2026-11-02 22:03:08 · load { 5.46 6.86 8.60 }
+# 22:26:38 st-E-11 was killed by guarded at its 90-min cap after 5 of 12 runs (clean, e11-silent OK, e11-unread and e11-noise BROKEN on the new tokens/reachin cells, e11-rename OK). The witness was cured (asClean; the unread reach input UNMEASURED); the seat finishes the stage in two named parts, st-E-11a and st-E-11b, each its own guarded call · load { 7.35 6.74 6.69 }
+# 22:49:10 st-E-11a (logs/st-E-11-chromium-a14540.log): 6 of 6 OK · load { 12.62 8.79 7.66 }; st-E-11b (e11-crestsilent, e11-unread, e11-noise) next
+# 23:39:24 st-E-11b (logs/st-E-11-chromium-77093b.log): 3 of 3 OK. ZONE-ARMED still present (read at the st-E-11 start, before st-E-11a, before st-E-11b, during st-E-11b and after it): the seat starts no further battery; held: st-E-13, st-E-3, clean, the library reads, glance, fxglance, cap (c1.full), and the whole WebKit list (wk-w1.txt, never queued) · load { 6.08 5.35 5.74 }

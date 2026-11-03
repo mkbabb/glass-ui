@@ -1,0 +1,32 @@
+{
+ "id": "E-10",
+ "engine": "chromium",
+ "version": "149.0.7827.55",
+ "target": {
+  "fixture": true,
+  "fault": "e10-hostglidestale"
+ },
+ "loadStart": "7.2/10.0/10.3",
+ "loadEnd": "6.9/9.9/10.2",
+ "verdict": "FAIL",
+ "cells": [
+  {
+   "name": "E-10 slider anim · css-transition scale",
+   "status": "FAIL",
+   "line": "C runs css-transition scale from frame 2 (C's painted centre moved 0.85, 0.10 px across the mutation's frame); an unrelated 40 px block appended after C on frame 14 · translate glides on the root in the next 6 frames 6 (clock 350 ms) (bound 0) · the root's painted step on the mutation's frame -0.00, -0.00 against the frame before 0.49, 0.09: 0.50 px off its own motion (bound ≤ 0.5) · errors 0",
+   "load": "6.9/9.9/10.2"
+  },
+  {
+   "name": "E-10 slider anim · waapi translate",
+   "status": "FAIL",
+   "line": "C runs waapi translate from frame 2 (C's painted centre moved 0.00, 0.84 px across the mutation's frame); an unrelated 40 px block appended after C on frame 14 · translate glides on the root in the next 6 frames 6 (clock 350 ms) (bound 0) · the root's painted step on the mutation's frame 0.00, 0.00 against the frame before 0.00, 0.80: 0.80 px off its own motion (bound ≤ 0.5) · errors 0",
+   "load": "6.9/9.9/10.2"
+  },
+  {
+   "name": "E-10 slider anim · waapi rotate",
+   "status": "PASS",
+   "line": "C runs waapi rotate from frame 2 (C's painted centre moved -0.08, 0.59 px across the mutation's frame); an unrelated 40 px block appended after C on frame 14 · translate glides on the root in the next 6 frames 0 (bound 0) · the root's painted step on the mutation's frame -0.07, 0.35 against the frame before -0.07, 0.35: 0.00 px off its own motion (bound ≤ 0.5) · errors 0",
+   "load": "6.9/9.9/10.2"
+  }
+ ]
+}

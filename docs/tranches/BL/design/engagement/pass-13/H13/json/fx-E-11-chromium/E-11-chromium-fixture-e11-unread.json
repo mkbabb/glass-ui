@@ -1,0 +1,224 @@
+{
+ "id": "E-11",
+ "engine": "chromium",
+ "version": "149.0.7827.55",
+ "target": {
+  "fixture": true,
+  "fault": "e11-unread"
+ },
+ "loadStart": "7.0/5.6/6.3",
+ "loadEnd": "7.9/6.2/6.5",
+ "verdict": "PASS",
+ "cells": [
+  {
+   "name": "E-11 pop token forms · --engage-control-engage-release calc(90ms + 90ms) · commit",
+   "status": "PASS",
+   "line": "--engage-control-engage-release: calc(90ms + 90ms) on <html> before the first script (the default \"calc(90ms * 2)\" = 0.18s) · CSS reads the form 0.18s · console errors naming the token 0 (clean page 0), uncaught 0",
+   "load": "8.1/5.9/6.4"
+  },
+  {
+   "name": "E-11 pop token forms · --engage-control-engage-release calc(90ms * 2) · commit",
+   "status": "PASS",
+   "line": "--engage-control-engage-release: calc(90ms * 2) on <html> before the first script (the default \"calc(90ms * 2)\" = 0.18s) · CSS reads the form 0.18s · console errors naming the token 0 (clean page 0), uncaught 0",
+   "load": "8.1/5.9/6.4"
+  },
+  {
+   "name": "E-11 pop token forms · --engage-control-engage-release min(180ms, 100s) · commit",
+   "status": "PASS",
+   "line": "--engage-control-engage-release: min(180ms, 100s) on <html> before the first script (the default \"calc(90ms * 2)\" = 0.18s) · CSS reads the form 0.18s · console errors naming the token 0 (clean page 0), uncaught 0",
+   "load": "8.1/5.9/6.4"
+  },
+  {
+   "name": "E-11 pop token forms · --engage-control-engage-release max(180ms, 1ms) · commit",
+   "status": "PASS",
+   "line": "--engage-control-engage-release: max(180ms, 1ms) on <html> before the first script (the default \"calc(90ms * 2)\" = 0.18s) · CSS reads the form 0.18s · console errors naming the token 0 (clean page 0), uncaught 0",
+   "load": "8.1/5.9/6.4"
+  },
+  {
+   "name": "E-11 pop token forms · --engage-control-engage-release clamp(1ms, 180ms, 100s) · commit",
+   "status": "PASS",
+   "line": "--engage-control-engage-release: clamp(1ms, 180ms, 100s) on <html> before the first script (the default \"calc(90ms * 2)\" = 0.18s) · CSS reads the form 0.18s · console errors naming the token 0 (clean page 0), uncaught 0",
+   "load": "8.1/5.9/6.4"
+  },
+  {
+   "name": "E-11 pop token forms · --engage-control-engage-release calc(var(--h13-undefined, 180ms)) · commit",
+   "status": "PASS",
+   "line": "--engage-control-engage-release: calc(var(--h13-undefined, 180ms)) on <html> before the first script (the default \"calc(90ms * 2)\" = 0.18s) · CSS reads the form 0.18s · console errors naming the token 0 (clean page 0), uncaught 0",
+   "load": "8.1/5.9/6.4"
+  },
+  {
+   "name": "E-11 pop token forms · --engage-control-engage-release round(nearest, 180ms, 1ms) · commit",
+   "status": "PASS",
+   "line": "--engage-control-engage-release: round(nearest, 180ms, 1ms) on <html> before the first script (the default \"calc(90ms * 2)\" = 0.18s) · CSS reads the form 0.18s · console errors naming the token 0 (clean page 0), uncaught 0",
+   "load": "8.1/5.9/6.4"
+  },
+  {
+   "name": "E-11 pop token forms · --engage-control-engage-release abs(-180ms) · commit",
+   "status": "PASS",
+   "line": "--engage-control-engage-release: abs(-180ms) on <html> before the first script (the default \"calc(90ms * 2)\" = 0.18s) · CSS reads the form 0.18s · console errors naming the token 0 (clean page 0), uncaught 0",
+   "load": "8.1/5.9/6.4"
+  },
+  {
+   "name": "E-11 pop token forms · --engage-control-engage-release 0.18S · commit",
+   "status": "PASS",
+   "line": "--engage-control-engage-release: 0.18S on <html> before the first script (the default \"calc(90ms * 2)\" = 0.18s) · CSS reads the form 0.18s · console errors naming the token 0 (clean page 0), uncaught 0",
+   "load": "8.2/6.0/6.5"
+  },
+  {
+   "name": "E-11 pop token forms · --engage-control-engage-attack calc(30ms + 30ms) · commit",
+   "status": "PASS",
+   "line": "--engage-control-engage-attack: calc(30ms + 30ms) on <html> before the first script (the default \"60ms\" = 0.06s) · CSS reads the form 0.06s · console errors naming the token 0 (clean page 0), uncaught 0",
+   "load": "8.2/6.0/6.5"
+  },
+  {
+   "name": "E-11 pop token forms · --engage-control-engage-attack calc(30ms * 2) · commit",
+   "status": "PASS",
+   "line": "--engage-control-engage-attack: calc(30ms * 2) on <html> before the first script (the default \"60ms\" = 0.06s) · CSS reads the form 0.06s · console errors naming the token 0 (clean page 0), uncaught 0",
+   "load": "8.2/6.0/6.5"
+  },
+  {
+   "name": "E-11 pop token forms · --engage-control-engage-attack min(60ms, 100s) · commit",
+   "status": "PASS",
+   "line": "--engage-control-engage-attack: min(60ms, 100s) on <html> before the first script (the default \"60ms\" = 0.06s) · CSS reads the form 0.06s · console errors naming the token 0 (clean page 0), uncaught 0",
+   "load": "8.1/6.0/6.5"
+  },
+  {
+   "name": "E-11 pop token forms · --engage-control-engage-attack max(60ms, 1ms) · commit",
+   "status": "PASS",
+   "line": "--engage-control-engage-attack: max(60ms, 1ms) on <html> before the first script (the default \"60ms\" = 0.06s) · CSS reads the form 0.06s · console errors naming the token 0 (clean page 0), uncaught 0",
+   "load": "8.1/6.0/6.5"
+  },
+  {
+   "name": "E-11 pop token forms · --engage-control-engage-attack clamp(1ms, 60ms, 100s) · commit",
+   "status": "PASS",
+   "line": "--engage-control-engage-attack: clamp(1ms, 60ms, 100s) on <html> before the first script (the default \"60ms\" = 0.06s) · CSS reads the form 0.06s · console errors naming the token 0 (clean page 0), uncaught 0",
+   "load": "8.1/6.0/6.5"
+  },
+  {
+   "name": "E-11 pop token forms · --engage-control-engage-attack calc(var(--h13-undefined, 60ms)) · commit",
+   "status": "PASS",
+   "line": "--engage-control-engage-attack: calc(var(--h13-undefined, 60ms)) on <html> before the first script (the default \"60ms\" = 0.06s) · CSS reads the form 0.06s · console errors naming the token 0 (clean page 0), uncaught 0",
+   "load": "8.1/6.0/6.5"
+  },
+  {
+   "name": "E-11 pop token forms · --engage-control-engage-attack round(nearest, 60ms, 1ms) · commit",
+   "status": "PASS",
+   "line": "--engage-control-engage-attack: round(nearest, 60ms, 1ms) on <html> before the first script (the default \"60ms\" = 0.06s) · CSS reads the form 0.06s · console errors naming the token 0 (clean page 0), uncaught 0",
+   "load": "8.2/6.0/6.5"
+  },
+  {
+   "name": "E-11 pop token forms · --engage-control-engage-attack abs(-60ms) · commit",
+   "status": "PASS",
+   "line": "--engage-control-engage-attack: abs(-60ms) on <html> before the first script (the default \"60ms\" = 0.06s) · CSS reads the form 0.06s · console errors naming the token 0 (clean page 0), uncaught 0",
+   "load": "8.2/6.0/6.5"
+  },
+  {
+   "name": "E-11 pop token forms · --engage-control-engage-attack 0.06S · commit",
+   "status": "PASS",
+   "line": "--engage-control-engage-attack: 0.06S on <html> before the first script (the default \"60ms\" = 0.06s) · CSS reads the form 0.06s · console errors naming the token 0 (clean page 0), uncaught 0",
+   "load": "8.2/6.0/6.5"
+  },
+  {
+   "name": "E-11 slider token forms · --fx-scale-engage calc(1.06 + 0) · hold",
+   "status": "PASS",
+   "line": "--fx-scale-engage: calc(1.06 + 0) on <html> before the first script (the default \"1.06\" = 1.06) · CSS reads the form 1.06 · console errors naming the token 0 (clean page 0), uncaught 0 · engaged 381.6 × 21.2 against clean 381.6 × 21.2 (bound max(1 px, 1.5 %))",
+   "load": "7.9/6.0/6.5"
+  },
+  {
+   "name": "E-11 slider token forms · --fx-scale-engage min(1.06, 100) · hold",
+   "status": "PASS",
+   "line": "--fx-scale-engage: min(1.06, 100) on <html> before the first script (the default \"1.06\" = 1.06) · CSS reads the form 1.06 · console errors naming the token 0 (clean page 0), uncaught 0 · engaged 381.6 × 21.2 against clean 381.6 × 21.2 (bound max(1 px, 1.5 %))",
+   "load": "7.9/6.0/6.5"
+  },
+  {
+   "name": "E-11 slider token forms · --fx-scale-engage max(1.06, 0) · hold",
+   "status": "PASS",
+   "line": "--fx-scale-engage: max(1.06, 0) on <html> before the first script (the default \"1.06\" = 1.06) · CSS reads the form 1.06 · console errors naming the token 0 (clean page 0), uncaught 0 · engaged 381.6 × 21.2 against clean 381.6 × 21.2 (bound max(1 px, 1.5 %))",
+   "load": "7.9/6.0/6.5"
+  },
+  {
+   "name": "E-11 slider token forms · --fx-scale-engage clamp(0, 1.06, 100) · hold",
+   "status": "PASS",
+   "line": "--fx-scale-engage: clamp(0, 1.06, 100) on <html> before the first script (the default \"1.06\" = 1.06) · CSS reads the form 1.06 · console errors naming the token 0 (clean page 0), uncaught 0 · engaged 381.6 × 21.2 against clean 381.6 × 21.2 (bound max(1 px, 1.5 %))",
+   "load": "7.8/6.0/6.5"
+  },
+  {
+   "name": "E-11 slider token forms · --fx-scale-engage calc(var(--h13-undefined, 1.06)) · hold",
+   "status": "PASS",
+   "line": "--fx-scale-engage: calc(var(--h13-undefined, 1.06)) on <html> before the first script (the default \"1.06\" = 1.06) · CSS reads the form 1.06 · console errors naming the token 0 (clean page 0), uncaught 0 · engaged 381.6 × 21.2 against clean 381.6 × 21.2 (bound max(1 px, 1.5 %))",
+   "load": "7.8/6.0/6.5"
+  },
+  {
+   "name": "E-11 slider token forms · --fx-scale-engage abs(-1.06) · hold",
+   "status": "PASS",
+   "line": "--fx-scale-engage: abs(-1.06) on <html> before the first script (the default \"1.06\" = 1.06) · CSS reads the form 1.06 · console errors naming the token 0 (clean page 0), uncaught 0 · engaged 381.6 × 21.2 against clean 381.6 × 21.2 (bound max(1 px, 1.5 %))",
+   "load": "7.8/6.0/6.5"
+  },
+  {
+   "name": "E-11 slider token forms · --fx-scale-engage 1.06E0 · hold",
+   "status": "PASS",
+   "line": "--fx-scale-engage: 1.06E0 on <html> before the first script (the default \"1.06\" = 1.06) · CSS reads the form 1.06 · console errors naming the token 0 (clean page 0), uncaught 0 · engaged 381.6 × 21.2 against clean 381.6 × 21.2 (bound max(1 px, 1.5 %))",
+   "load": "7.8/6.0/6.5"
+  },
+  {
+   "name": "E-11 slider token forms · --fx-gutter calc(8px + 8px) · hold",
+   "status": "PASS",
+   "line": "--fx-gutter: calc(8px + 8px) on <html> before the first script (the default \"16px\" = 16px) · CSS reads the form 16px · console errors naming the token 0 (clean page 0), uncaught 0 · engaged 381.6 × 21.2 against clean 381.6 × 21.2 (bound max(1 px, 1.5 %))",
+   "load": "8.2/6.1/6.5"
+  },
+  {
+   "name": "E-11 slider token forms · --fx-gutter max(16px, 0px) · hold",
+   "status": "PASS",
+   "line": "--fx-gutter: max(16px, 0px) on <html> before the first script (the default \"16px\" = 16px) · CSS reads the form 16px · console errors naming the token 0 (clean page 0), uncaught 0 · engaged 381.6 × 21.2 against clean 381.6 × 21.2 (bound max(1 px, 1.5 %))",
+   "load": "8.2/6.1/6.5"
+  },
+  {
+   "name": "E-11 slider token forms · --fx-gutter clamp(0px, 16px, 9999px) · hold",
+   "status": "PASS",
+   "line": "--fx-gutter: clamp(0px, 16px, 9999px) on <html> before the first script (the default \"16px\" = 16px) · CSS reads the form 16px · console errors naming the token 0 (clean page 0), uncaught 0 · engaged 381.6 × 21.2 against clean 381.6 × 21.2 (bound max(1 px, 1.5 %))",
+   "load": "8.2/6.1/6.5"
+  },
+  {
+   "name": "E-11 slider token forms · --fx-gutter min(16px, 9999px) · hold",
+   "status": "PASS",
+   "line": "--fx-gutter: min(16px, 9999px) on <html> before the first script (the default \"16px\" = 16px) · CSS reads the form 16px · console errors naming the token 0 (clean page 0), uncaught 0 · engaged 381.6 × 21.2 against clean 381.6 × 21.2 (bound max(1 px, 1.5 %))",
+   "load": "8.3/6.2/6.5"
+  },
+  {
+   "name": "E-11 slider token forms · --fx-gutter calc(var(--h13-undefined, 16px)) · hold",
+   "status": "PASS",
+   "line": "--fx-gutter: calc(var(--h13-undefined, 16px)) on <html> before the first script (the default \"16px\" = 16px) · CSS reads the form 16px · console errors naming the token 0 (clean page 0), uncaught 0 · engaged 381.6 × 21.2 against clean 381.6 × 21.2 (bound max(1 px, 1.5 %))",
+   "load": "8.3/6.2/6.5"
+  },
+  {
+   "name": "E-11 slider token forms · --fx-gutter calc(1rem) · hold",
+   "status": "PASS",
+   "line": "--fx-gutter: calc(1rem) on <html> before the first script (the default \"16px\" = 16px) · CSS reads the form 16px · console errors naming the token 0 (clean page 0), uncaught 0 · engaged 381.6 × 21.2 against clean 381.6 × 21.2 (bound max(1 px, 1.5 %))",
+   "load": "8.3/6.2/6.5"
+  },
+  {
+   "name": "E-11 slider reach input · --fx-scale-engage nonsense",
+   "status": "UNMEASURED",
+   "line": "NOT READ ON THIS PATH (no error, no degradation) · --fx-scale-engage: nonsense on <html> before the first script (expect refused) · held inline ×1.0600, block ×1.0600 (366.8 × 21.2 of rest 346.0 × 20.0; clean 366.8 × 21.2) · console errors naming the token 0, uncaught 0",
+   "load": "8.0/6.2/6.5"
+  },
+  {
+   "name": "E-11 slider reach input · --fx-gutter nonsense",
+   "status": "PASS",
+   "line": "--fx-gutter: nonsense on <html> before the first script (expect refused) · held inline ×1.0600, block ×1.0600 (400.7 × 21.2 of rest 378.0 × 20.0; clean 366.8 × 21.2) · console errors naming the token 1 (\"[fixture] --fx-gutter is unreadable: the reach paints nothing (no inline grow)\"), uncaught 0",
+   "load": "8.0/6.2/6.5"
+  },
+  {
+   "name": "E-11 slider reach input · --fx-scale-engage calc(1.06 * 1)",
+   "status": "PASS",
+   "line": "--fx-scale-engage: calc(1.06 * 1) on <html> before the first script (expect taken) · held inline ×1.0600, block ×1.0600 (366.8 × 21.2 of rest 346.0 × 20.0; clean 366.8 × 21.2) · console errors naming the token 0, uncaught 0",
+   "load": "7.9/6.2/6.5"
+  },
+  {
+   "name": "E-11 slider reach input · --fx-gutter calc(8px + 8px)",
+   "status": "PASS",
+   "line": "--fx-gutter: calc(8px + 8px) on <html> before the first script (expect taken) · held inline ×1.0600, block ×1.0600 (366.8 × 21.2 of rest 346.0 × 20.0; clean 366.8 × 21.2) · console errors naming the token 0, uncaught 0",
+   "load": "7.9/6.2/6.5"
+  }
+ ]
+}

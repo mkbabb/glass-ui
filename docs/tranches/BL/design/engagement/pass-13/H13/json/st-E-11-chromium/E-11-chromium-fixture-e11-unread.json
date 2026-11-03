@@ -1,0 +1,1112 @@
+{
+ "id": "E-11",
+ "engine": "chromium",
+ "version": "149.0.7827.55",
+ "target": {
+  "fixture": true,
+  "fault": "e11-unread"
+ },
+ "loadStart": "12.6/8.8/7.7",
+ "loadEnd": "6.4/7.8/8.0",
+ "verdict": "PASS",
+ "cells": [
+  {
+   "name": "E-11 clipstale travel loud · clean · side",
+   "status": "PASS",
+   "line": "clean page · side changes 1, the row press (350 ms) · travel lens translate 350 ms \"linear(0 0%, 0.57 18%, 0.94 32%, 1.06 45%, 1.03 60%, 0.99 75\" against CSS's clock 350.0 ms (to the ms: true) · console/page errors 0 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px",
+   "load": "12.4/8.8/7.7"
+  },
+  {
+   "name": "E-11 clipstale travel loud · clean · rerender",
+   "status": "PASS",
+   "line": "clean page · a 40 px block inserted before the rest box · travel root translate 350 ms \"linear(0 0%, 0.57 18%, 0.94 32%, 1.06 45%, 1.03 60%, 0.99 75\" against CSS's clock 350.0 ms (to the ms: true) · console/page errors 0 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px",
+   "load": "12.5/8.9/7.7"
+  },
+  {
+   "name": "E-11 clipstale travel loud · clean · carry",
+   "status": "PASS",
+   "line": "clean page · a fling released · travel under translate 350 ms \"linear(0 0%, 0.57 18%, 0.94 32%, 1.06 45%, 1.03 60%, 0.99 75\" against CSS's clock 350.0 ms (to the ms: true) · console/page errors 0 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px",
+   "load": "12.4/8.9/7.7"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press ease, linear · side",
+   "status": "PASS",
+   "line": "--spring-press: ease, linear on <html> before the first script (the row press, read from the clean travel) · the grammar: CSS reads the settle 350.0 ms; animate() refuses it (Failed to construct 'KeyframeEffect': Easing may not be set to a list of values) → expect refused · side changes 1 · travel none · console errors naming the token 80 (\"[fixture] --spring-press is unreadable (\"ease, linear\"): the travel cannot run on it\"), uncaught page errors 0, all errors 80 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: taken on CSS's clock to 1 ms with the easing animate() parses and no error, or refused with ≥ 1 console.error naming the token and no travel; 0 uncaught; the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "12.4/8.9/7.7"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press ease, linear · rerender",
+   "status": "PASS",
+   "line": "--spring-press: ease, linear on <html> before the first script (the row press, read from the clean travel) · the grammar: CSS reads the settle 350.0 ms; animate() refuses it (Failed to construct 'KeyframeEffect': Easing may not be set to a list of values) → expect refused · travel none · console errors naming the token 1 (\"[fixture] --spring-press is unreadable (\"ease, linear\"): the travel cannot run on it\"), uncaught page errors 0, all errors 1 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: taken on CSS's clock to 1 ms with the easing animate() parses and no error, or refused with ≥ 1 console.error naming the token and no travel; 0 uncaught; the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "12.2/9.0/7.7"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press ease, linear · carry",
+   "status": "PASS",
+   "line": "--spring-press: ease, linear on <html> before the first script (the row press, read from the clean travel) · the grammar: CSS reads the settle 350.0 ms; animate() refuses it (Failed to construct 'KeyframeEffect': Easing may not be set to a list of values) → expect either · travel under translate 350 ms \"linear(0 0%, 0.57 18%, 0.94 32%, 1.06 45%, 1.03 60%, 0.99 75\" · console errors naming the token 0, uncaught page errors 0, all errors 0 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: taken on CSS's clock to 1 ms with the easing animate() parses and no error, or refused with ≥ 1 console.error naming the token and no travel; 0 uncaught; the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "12.1/9.0/7.8"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press linear(0, 1), ease-in · side",
+   "status": "PASS",
+   "line": "--spring-press: linear(0, 1), ease-in on <html> before the first script (the row press, read from the clean travel) · the grammar: CSS reads the settle 350.0 ms; animate() refuses it (Failed to construct 'KeyframeEffect': Easing may not be set to a list of values) → expect refused · side changes 1 · travel none · console errors naming the token 80 (\"[fixture] --spring-press is unreadable (\"linear(0, 1), ease-in\"): the travel cannot run on it\"), uncaught page errors 0, all errors 80 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: taken on CSS's clock to 1 ms with the easing animate() parses and no error, or refused with ≥ 1 console.error naming the token and no travel; 0 uncaught; the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "12.1/9.0/7.8"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press linear(0, 1), ease-in · rerender",
+   "status": "PASS",
+   "line": "--spring-press: linear(0, 1), ease-in on <html> before the first script (the row press, read from the clean travel) · the grammar: CSS reads the settle 350.0 ms; animate() refuses it (Failed to construct 'KeyframeEffect': Easing may not be set to a list of values) → expect refused · travel none · console errors naming the token 1 (\"[fixture] --spring-press is unreadable (\"linear(0, 1), ease-in\"): the travel cannot run on it\"), uncaught page errors 0, all errors 1 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: taken on CSS's clock to 1 ms with the easing animate() parses and no error, or refused with ≥ 1 console.error naming the token and no travel; 0 uncaught; the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "12.1/9.0/7.8"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press linear(0, 1), ease-in · carry",
+   "status": "PASS",
+   "line": "--spring-press: linear(0, 1), ease-in on <html> before the first script (the row press, read from the clean travel) · the grammar: CSS reads the settle 350.0 ms; animate() refuses it (Failed to construct 'KeyframeEffect': Easing may not be set to a list of values) → expect either · travel under translate 350 ms \"linear(0 0%, 0.57 18%, 0.94 32%, 1.06 45%, 1.03 60%, 0.99 75\" · console errors naming the token 0, uncaught page errors 0, all errors 0 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: taken on CSS's clock to 1 ms with the easing animate() parses and no error, or refused with ≥ 1 console.error naming the token and no travel; 0 uncaught; the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "11.9/9.1/7.8"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press nonsense · side",
+   "status": "PASS",
+   "line": "--spring-press: nonsense on <html> before the first script (the row press, read from the clean travel) · the grammar: CSS reads the settle 350.0 ms; animate() refuses it (Failed to construct 'KeyframeEffect': 'nonsense' is not a valid value for easing) → expect refused · side changes 1 · travel none · console errors naming the token 80 (\"[fixture] --spring-press is unreadable (\"nonsense\"): the travel cannot run on it\"), uncaught page errors 0, all errors 80 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: taken on CSS's clock to 1 ms with the easing animate() parses and no error, or refused with ≥ 1 console.error naming the token and no travel; 0 uncaught; the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "11.2/9.0/7.8"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press nonsense · rerender",
+   "status": "PASS",
+   "line": "--spring-press: nonsense on <html> before the first script (the row press, read from the clean travel) · the grammar: CSS reads the settle 350.0 ms; animate() refuses it (Failed to construct 'KeyframeEffect': 'nonsense' is not a valid value for easing) → expect refused · travel none · console errors naming the token 1 (\"[fixture] --spring-press is unreadable (\"nonsense\"): the travel cannot run on it\"), uncaught page errors 0, all errors 1 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: taken on CSS's clock to 1 ms with the easing animate() parses and no error, or refused with ≥ 1 console.error naming the token and no travel; 0 uncaught; the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "11.2/9.0/7.8"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press nonsense · carry",
+   "status": "PASS",
+   "line": "--spring-press: nonsense on <html> before the first script (the row press, read from the clean travel) · the grammar: CSS reads the settle 350.0 ms; animate() refuses it (Failed to construct 'KeyframeEffect': 'nonsense' is not a valid value for easing) → expect either · travel under translate 350 ms \"linear(0 0%, 0.57 18%, 0.94 32%, 1.06 45%, 1.03 60%, 0.99 75\" · console errors naming the token 0, uncaught page errors 0, all errors 0 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: taken on CSS's clock to 1 ms with the easing animate() parses and no error, or refused with ≥ 1 console.error naming the token and no travel; 0 uncaught; the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "10.8/8.9/7.8"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press initial · side",
+   "status": "PASS",
+   "line": "--spring-press: initial on <html> before the first script (the row press, read from the clean travel) · the grammar: CSS reads the settle 350.0 ms; animate() refuses it (the token computes to nothing) → expect refused · side changes 1 · travel none · console errors naming the token 80 (\"[fixture] --spring-press is unreadable (\"\"): the travel cannot run on it\"), uncaught page errors 0, all errors 80 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: taken on CSS's clock to 1 ms with the easing animate() parses and no error, or refused with ≥ 1 console.error naming the token and no travel; 0 uncaught; the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "10.4/8.9/7.7"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press initial · rerender",
+   "status": "PASS",
+   "line": "--spring-press: initial on <html> before the first script (the row press, read from the clean travel) · the grammar: CSS reads the settle 350.0 ms; animate() refuses it (the token computes to nothing) → expect refused · travel none · console errors naming the token 1 (\"[fixture] --spring-press is unreadable (\"\"): the travel cannot run on it\"), uncaught page errors 0, all errors 1 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: taken on CSS's clock to 1 ms with the easing animate() parses and no error, or refused with ≥ 1 console.error naming the token and no travel; 0 uncaught; the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "10.4/8.9/7.8"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press initial · carry",
+   "status": "PASS",
+   "line": "--spring-press: initial on <html> before the first script (the row press, read from the clean travel) · the grammar: CSS reads the settle 350.0 ms; animate() refuses it (the token computes to nothing) → expect either · travel under translate 350 ms \"linear(0 0%, 0.57 18%, 0.94 32%, 1.06 45%, 1.03 60%, 0.99 75\" · console errors naming the token 0, uncaught page errors 0, all errors 0 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: taken on CSS's clock to 1 ms with the easing animate() parses and no error, or refused with ≥ 1 console.error naming the token and no travel; 0 uncaught; the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "10.4/8.9/7.8"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press var(--undefined) · side",
+   "status": "PASS",
+   "line": "--spring-press: var(--undefined) on <html> before the first script (the row press, read from the clean travel) · the grammar: CSS reads the settle 350.0 ms; animate() refuses it (the token computes to nothing) → expect refused · side changes 1 · travel none · console errors naming the token 80 (\"[fixture] --spring-press is unreadable (\"\"): the travel cannot run on it\"), uncaught page errors 0, all errors 80 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: taken on CSS's clock to 1 ms with the easing animate() parses and no error, or refused with ≥ 1 console.error naming the token and no travel; 0 uncaught; the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "9.9/8.8/7.7"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press var(--undefined) · rerender",
+   "status": "PASS",
+   "line": "--spring-press: var(--undefined) on <html> before the first script (the row press, read from the clean travel) · the grammar: CSS reads the settle 350.0 ms; animate() refuses it (the token computes to nothing) → expect refused · travel none · console errors naming the token 1 (\"[fixture] --spring-press is unreadable (\"\"): the travel cannot run on it\"), uncaught page errors 0, all errors 1 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: taken on CSS's clock to 1 ms with the easing animate() parses and no error, or refused with ≥ 1 console.error naming the token and no travel; 0 uncaught; the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "9.6/8.8/7.7"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press var(--undefined) · carry",
+   "status": "PASS",
+   "line": "--spring-press: var(--undefined) on <html> before the first script (the row press, read from the clean travel) · the grammar: CSS reads the settle 350.0 ms; animate() refuses it (the token computes to nothing) → expect either · travel under translate 350 ms \"linear(0 0%, 0.57 18%, 0.94 32%, 1.06 45%, 1.03 60%, 0.99 75\" · console errors naming the token 0, uncaught page errors 0, all errors 0 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: taken on CSS's clock to 1 ms with the easing animate() parses and no error, or refused with ≥ 1 console.error naming the token and no travel; 0 uncaught; the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "9.6/8.8/7.7"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press steps(4) · side",
+   "status": "PASS",
+   "line": "--spring-press: steps(4) on <html> before the first script (the row press, read from the clean travel) · the grammar: CSS reads the settle 350.0 ms; animate() takes \"steps(4)\" → expect taken · side changes 1 · travel lens translate 350 ms \"steps(4)\" · console errors naming the token 0, uncaught page errors 0, all errors 0 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: taken on CSS's clock to 1 ms with the easing animate() parses and no error, or refused with ≥ 1 console.error naming the token and no travel; 0 uncaught; the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "9.3/8.7/7.7"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press steps(4) · rerender",
+   "status": "PASS",
+   "line": "--spring-press: steps(4) on <html> before the first script (the row press, read from the clean travel) · the grammar: CSS reads the settle 350.0 ms; animate() takes \"steps(4)\" → expect taken · travel root translate 350 ms \"steps(4)\" · console errors naming the token 0, uncaught page errors 0, all errors 0 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: taken on CSS's clock to 1 ms with the easing animate() parses and no error, or refused with ≥ 1 console.error naming the token and no travel; 0 uncaught; the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "8.9/8.6/7.7"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press steps(4) · carry",
+   "status": "PASS",
+   "line": "--spring-press: steps(4) on <html> before the first script (the row press, read from the clean travel) · the grammar: CSS reads the settle 350.0 ms; animate() takes \"steps(4)\" → expect either · travel under translate 350 ms \"linear(0 0%, 0.57 18%, 0.94 32%, 1.06 45%, 1.03 60%, 0.99 75\" · console errors naming the token 0, uncaught page errors 0, all errors 0 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: taken on CSS's clock to 1 ms with the easing animate() parses and no error, or refused with ≥ 1 console.error naming the token and no travel; 0 uncaught; the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "9.0/8.7/7.7"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press cubic-bezier(0, 2, 1, -1) · side",
+   "status": "PASS",
+   "line": "--spring-press: cubic-bezier(0, 2, 1, -1) on <html> before the first script (the row press, read from the clean travel) · the grammar: CSS reads the settle 350.0 ms; animate() takes \"cubic-bezier(0, 2, 1, -1)\" → expect taken · side changes 3 · travel lens translate 350 ms \"cubic-bezier(0, 2, 1, -1)\" · console errors naming the token 0, uncaught page errors 0, all errors 0 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: taken on CSS's clock to 1 ms with the easing animate() parses and no error, or refused with ≥ 1 console.error naming the token and no travel; 0 uncaught; the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "9.0/8.7/7.7"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press cubic-bezier(0, 2, 1, -1) · rerender",
+   "status": "PASS",
+   "line": "--spring-press: cubic-bezier(0, 2, 1, -1) on <html> before the first script (the row press, read from the clean travel) · the grammar: CSS reads the settle 350.0 ms; animate() takes \"cubic-bezier(0, 2, 1, -1)\" → expect taken · travel root translate 350 ms \"cubic-bezier(0, 2, 1, -1)\" · console errors naming the token 0, uncaught page errors 0, all errors 0 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: taken on CSS's clock to 1 ms with the easing animate() parses and no error, or refused with ≥ 1 console.error naming the token and no travel; 0 uncaught; the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "9.1/8.7/7.7"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press cubic-bezier(0, 2, 1, -1) · carry",
+   "status": "PASS",
+   "line": "--spring-press: cubic-bezier(0, 2, 1, -1) on <html> before the first script (the row press, read from the clean travel) · the grammar: CSS reads the settle 350.0 ms; animate() takes \"cubic-bezier(0, 2, 1, -1)\" → expect either · travel under translate 350 ms \"linear(0 0%, 0.57 18%, 0.94 32%, 1.06 45%, 1.03 60%, 0.99 75\" · console errors naming the token 0, uncaught page errors 0, all errors 0 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: taken on CSS's clock to 1 ms with the easing animate() parses and no error, or refused with ≥ 1 console.error naming the token and no travel; 0 uncaught; the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "8.8/8.6/7.7"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press-settle 210ms · side",
+   "status": "PASS",
+   "line": "--spring-press-settle: 210ms on <html> before the first script (the row press, read from the clean travel) · the grammar: CSS reads the settle 210.0 ms → expect taken · side changes 1 · travel lens translate 210 ms \"linear(0 0%, 0.57 18%, 0.94 32%, 1.06 45%, 1.03 60%, 0.99 75\" · console errors naming the token 0, uncaught page errors 0, all errors 0 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: taken on CSS's clock to 1 ms with the easing animate() parses and no error, or refused with ≥ 1 console.error naming the token and no travel; 0 uncaught; the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "8.5/8.6/7.7"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press-settle 210ms · rerender",
+   "status": "PASS",
+   "line": "--spring-press-settle: 210ms on <html> before the first script (the row press, read from the clean travel) · the grammar: CSS reads the settle 210.0 ms → expect taken · travel root translate 210 ms \"linear(0 0%, 0.57 18%, 0.94 32%, 1.06 45%, 1.03 60%, 0.99 75\" · console errors naming the token 0, uncaught page errors 0, all errors 0 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: taken on CSS's clock to 1 ms with the easing animate() parses and no error, or refused with ≥ 1 console.error naming the token and no travel; 0 uncaught; the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "8.5/8.6/7.7"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press-settle 210ms · carry",
+   "status": "PASS",
+   "line": "--spring-press-settle: 210ms on <html> before the first script (the row press, read from the clean travel) · the grammar: CSS reads the settle 210.0 ms → expect taken · travel under translate 210 ms \"linear(0 0%, 0.57 18%, 0.94 32%, 1.06 45%, 1.03 60%, 0.99 75\" · console errors naming the token 0, uncaught page errors 0, all errors 0 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: taken on CSS's clock to 1 ms with the easing animate() parses and no error, or refused with ≥ 1 console.error naming the token and no travel; 0 uncaught; the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "8.3/8.5/7.7"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press-settle 0.21s · side",
+   "status": "PASS",
+   "line": "--spring-press-settle: 0.21s on <html> before the first script (the row press, read from the clean travel) · the grammar: CSS reads the settle 210.0 ms → expect taken · side changes 1 · travel lens translate 210 ms \"linear(0 0%, 0.57 18%, 0.94 32%, 1.06 45%, 1.03 60%, 0.99 75\" · console errors naming the token 0, uncaught page errors 0, all errors 0 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: taken on CSS's clock to 1 ms with the easing animate() parses and no error, or refused with ≥ 1 console.error naming the token and no travel; 0 uncaught; the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "7.9/8.4/7.7"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press-settle 0.21s · rerender",
+   "status": "PASS",
+   "line": "--spring-press-settle: 0.21s on <html> before the first script (the row press, read from the clean travel) · the grammar: CSS reads the settle 210.0 ms → expect taken · travel root translate 210 ms \"linear(0 0%, 0.57 18%, 0.94 32%, 1.06 45%, 1.03 60%, 0.99 75\" · console errors naming the token 0, uncaught page errors 0, all errors 0 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: taken on CSS's clock to 1 ms with the easing animate() parses and no error, or refused with ≥ 1 console.error naming the token and no travel; 0 uncaught; the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "7.9/8.4/7.7"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press-settle 0.21s · carry",
+   "status": "PASS",
+   "line": "--spring-press-settle: 0.21s on <html> before the first script (the row press, read from the clean travel) · the grammar: CSS reads the settle 210.0 ms → expect taken · travel under translate 210 ms \"linear(0 0%, 0.57 18%, 0.94 32%, 1.06 45%, 1.03 60%, 0.99 75\" · console errors naming the token 0, uncaught page errors 0, all errors 0 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: taken on CSS's clock to 1 ms with the easing animate() parses and no error, or refused with ≥ 1 console.error naming the token and no travel; 0 uncaught; the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "9.0/8.6/7.7"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press-settle -1 · side",
+   "status": "PASS",
+   "line": "--spring-press-settle: -1 on <html> before the first script (the row press, read from the clean travel) · the grammar: CSS reads the settle 0.0 ms → expect refused · side changes 1 · travel none · console errors naming the token 80 (\"[fixture] --spring-press-settle is unreadable (\"-1\"): the travel has no clock\"), uncaught page errors 0, all errors 80 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: taken on CSS's clock to 1 ms with the easing animate() parses and no error, or refused with ≥ 1 console.error naming the token and no travel; 0 uncaught; the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "8.7/8.6/7.7"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press-settle -1 · rerender",
+   "status": "PASS",
+   "line": "--spring-press-settle: -1 on <html> before the first script (the row press, read from the clean travel) · the grammar: CSS reads the settle 0.0 ms → expect refused · travel none · console errors naming the token 1 (\"[fixture] --spring-press-settle is unreadable (\"-1\"): the travel has no clock\"), uncaught page errors 0, all errors 1 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: taken on CSS's clock to 1 ms with the easing animate() parses and no error, or refused with ≥ 1 console.error naming the token and no travel; 0 uncaught; the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "8.8/8.6/7.7"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press-settle -1 · carry",
+   "status": "PASS",
+   "line": "--spring-press-settle: -1 on <html> before the first script (the row press, read from the clean travel) · the grammar: CSS reads the settle 0.0 ms → expect refused · travel none · console errors naming the token 1 (\"[fixture] --spring-press-settle is unreadable (\"-1\"): the travel has no clock\"), uncaught page errors 0, all errors 1 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: taken on CSS's clock to 1 ms with the easing animate() parses and no error, or refused with ≥ 1 console.error naming the token and no travel; 0 uncaught; the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "8.8/8.6/7.7"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press-settle 0 · side",
+   "status": "PASS",
+   "line": "--spring-press-settle: 0 on <html> before the first script (the row press, read from the clean travel) · the grammar: CSS reads the settle 0.0 ms → expect refused · side changes 1 · travel none · console errors naming the token 80 (\"[fixture] --spring-press-settle is unreadable (\"0\"): the travel has no clock\"), uncaught page errors 0, all errors 80 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: taken on CSS's clock to 1 ms with the easing animate() parses and no error, or refused with ≥ 1 console.error naming the token and no travel; 0 uncaught; the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "9.0/8.7/7.8"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press-settle 0 · rerender",
+   "status": "PASS",
+   "line": "--spring-press-settle: 0 on <html> before the first script (the row press, read from the clean travel) · the grammar: CSS reads the settle 0.0 ms → expect refused · travel none · console errors naming the token 1 (\"[fixture] --spring-press-settle is unreadable (\"0\"): the travel has no clock\"), uncaught page errors 0, all errors 1 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: taken on CSS's clock to 1 ms with the easing animate() parses and no error, or refused with ≥ 1 console.error naming the token and no travel; 0 uncaught; the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "9.1/8.7/7.8"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press-settle 0 · carry",
+   "status": "PASS",
+   "line": "--spring-press-settle: 0 on <html> before the first script (the row press, read from the clean travel) · the grammar: CSS reads the settle 0.0 ms → expect refused · travel none · console errors naming the token 1 (\"[fixture] --spring-press-settle is unreadable (\"0\"): the travel has no clock\"), uncaught page errors 0, all errors 1 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: taken on CSS's clock to 1 ms with the easing animate() parses and no error, or refused with ≥ 1 console.error naming the token and no travel; 0 uncaught; the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "9.1/8.7/7.8"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press-settle nonsense · side",
+   "status": "PASS",
+   "line": "--spring-press-settle: nonsense on <html> before the first script (the row press, read from the clean travel) · the grammar: CSS reads the settle 0.0 ms → expect refused · side changes 1 · travel none · console errors naming the token 80 (\"[fixture] --spring-press-settle is unreadable (\"nonsense\"): the travel has no clock\"), uncaught page errors 0, all errors 80 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: taken on CSS's clock to 1 ms with the easing animate() parses and no error, or refused with ≥ 1 console.error naming the token and no travel; 0 uncaught; the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "8.9/8.7/7.8"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press-settle nonsense · rerender",
+   "status": "PASS",
+   "line": "--spring-press-settle: nonsense on <html> before the first script (the row press, read from the clean travel) · the grammar: CSS reads the settle 0.0 ms → expect refused · travel none · console errors naming the token 1 (\"[fixture] --spring-press-settle is unreadable (\"nonsense\"): the travel has no clock\"), uncaught page errors 0, all errors 1 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: taken on CSS's clock to 1 ms with the easing animate() parses and no error, or refused with ≥ 1 console.error naming the token and no travel; 0 uncaught; the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "8.6/8.6/7.8"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press-settle nonsense · carry",
+   "status": "PASS",
+   "line": "--spring-press-settle: nonsense on <html> before the first script (the row press, read from the clean travel) · the grammar: CSS reads the settle 0.0 ms → expect refused · travel none · console errors naming the token 1 (\"[fixture] --spring-press-settle is unreadable (\"nonsense\"): the travel has no clock\"), uncaught page errors 0, all errors 1 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: taken on CSS's clock to 1 ms with the easing animate() parses and no error, or refused with ≥ 1 console.error naming the token and no travel; 0 uncaught; the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "8.3/8.5/7.7"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press EASE-IN-OUT · side",
+   "status": "PASS",
+   "line": "--spring-press: EASE-IN-OUT on <html> before the first script (the row press, read from the clean travel) · the grammar: CSS reads the settle 350.0 ms; animate() takes \"ease-in-out\" → expect taken · side changes 1 · travel lens translate 350 ms \"ease-in-out\" · console errors naming the token 0, uncaught page errors 0, all errors 0 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: taken on CSS's clock to 1 ms with the easing animate() parses and no error, or refused with ≥ 1 console.error naming the token and no travel; 0 uncaught; the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "8.3/8.5/7.7"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press EASE-IN-OUT · rerender",
+   "status": "PASS",
+   "line": "--spring-press: EASE-IN-OUT on <html> before the first script (the row press, read from the clean travel) · the grammar: CSS reads the settle 350.0 ms; animate() takes \"ease-in-out\" → expect taken · travel root translate 350 ms \"ease-in-out\" · console errors naming the token 0, uncaught page errors 0, all errors 0 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: taken on CSS's clock to 1 ms with the easing animate() parses and no error, or refused with ≥ 1 console.error naming the token and no travel; 0 uncaught; the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "8.0/8.5/7.7"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press linear(0, 0.5 50%, 1) · side",
+   "status": "PASS",
+   "line": "--spring-press: linear(0, 0.5 50%, 1) on <html> before the first script (the row press, read from the clean travel) · the grammar: CSS reads the settle 350.0 ms; animate() takes \"linear(0 0%, 0.5 50%, 1 100%)\" → expect taken · side changes 1 · travel lens translate 350 ms \"linear(0 0%, 0.5 50%, 1 100%)\" · console errors naming the token 0, uncaught page errors 0, all errors 0 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: taken on CSS's clock to 1 ms with the easing animate() parses and no error, or refused with ≥ 1 console.error naming the token and no travel; 0 uncaught; the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "8.2/8.5/7.7"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press linear(0, 0.5 50%, 1) · rerender",
+   "status": "PASS",
+   "line": "--spring-press: linear(0, 0.5 50%, 1) on <html> before the first script (the row press, read from the clean travel) · the grammar: CSS reads the settle 350.0 ms; animate() takes \"linear(0 0%, 0.5 50%, 1 100%)\" → expect taken · travel root translate 350 ms \"linear(0 0%, 0.5 50%, 1 100%)\" · console errors naming the token 0, uncaught page errors 0, all errors 0 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: taken on CSS's clock to 1 ms with the easing animate() parses and no error, or refused with ≥ 1 console.error naming the token and no travel; 0 uncaught; the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "8.0/8.4/7.7"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press steps(2, jump-none) · side",
+   "status": "PASS",
+   "line": "--spring-press: steps(2, jump-none) on <html> before the first script (the row press, read from the clean travel) · the grammar: CSS reads the settle 350.0 ms; animate() takes \"steps(2, jump-none)\" → expect taken · side changes 1 · travel lens translate 350 ms \"steps(2, jump-none)\" · console errors naming the token 0, uncaught page errors 0, all errors 0 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: taken on CSS's clock to 1 ms with the easing animate() parses and no error, or refused with ≥ 1 console.error naming the token and no travel; 0 uncaught; the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "8.0/8.4/7.7"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press steps(2, jump-none) · rerender",
+   "status": "PASS",
+   "line": "--spring-press: steps(2, jump-none) on <html> before the first script (the row press, read from the clean travel) · the grammar: CSS reads the settle 350.0 ms; animate() takes \"steps(2, jump-none)\" → expect taken · travel root translate 350 ms \"steps(2, jump-none)\" · console errors naming the token 0, uncaught page errors 0, all errors 0 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: taken on CSS's clock to 1 ms with the easing animate() parses and no error, or refused with ≥ 1 console.error naming the token and no travel; 0 uncaught; the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "8.4/8.5/7.8"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press step-end · side",
+   "status": "PASS",
+   "line": "--spring-press: step-end on <html> before the first script (the row press, read from the clean travel) · the grammar: CSS reads the settle 350.0 ms; animate() takes \"steps(1)\" → expect taken · side changes 1 · travel lens translate 350 ms \"steps(1)\" · console errors naming the token 0, uncaught page errors 0, all errors 0 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: taken on CSS's clock to 1 ms with the easing animate() parses and no error, or refused with ≥ 1 console.error naming the token and no travel; 0 uncaught; the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "8.4/8.5/7.8"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press step-end · rerender",
+   "status": "PASS",
+   "line": "--spring-press: step-end on <html> before the first script (the row press, read from the clean travel) · the grammar: CSS reads the settle 350.0 ms; animate() takes \"steps(1)\" → expect taken · travel root translate 350 ms \"steps(1)\" · console errors naming the token 0, uncaught page errors 0, all errors 0 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: taken on CSS's clock to 1 ms with the easing animate() parses and no error, or refused with ≥ 1 console.error naming the token and no travel; 0 uncaught; the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "9.3/8.7/7.8"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press /* c */ ease-in · side",
+   "status": "PASS",
+   "line": "--spring-press: /* c */ ease-in on <html> before the first script (the row press, read from the clean travel) · the grammar: CSS reads the settle 350.0 ms; animate() takes \"ease-in\" → expect taken · side changes 1 · travel lens translate 350 ms \"ease-in\" · console errors naming the token 0, uncaught page errors 0, all errors 0 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: taken on CSS's clock to 1 ms with the easing animate() parses and no error, or refused with ≥ 1 console.error naming the token and no travel; 0 uncaught; the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "9.3/8.7/7.8"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press /* c */ ease-in · rerender",
+   "status": "PASS",
+   "line": "--spring-press: /* c */ ease-in on <html> before the first script (the row press, read from the clean travel) · the grammar: CSS reads the settle 350.0 ms; animate() takes \"ease-in\" → expect taken · travel root translate 350 ms \"ease-in\" · console errors naming the token 0, uncaught page errors 0, all errors 0 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: taken on CSS's clock to 1 ms with the easing animate() parses and no error, or refused with ≥ 1 console.error naming the token and no travel; 0 uncaught; the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "9.2/8.7/7.8"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press var(--h13-undefined, ease-in) · side",
+   "status": "PASS",
+   "line": "--spring-press: var(--h13-undefined, ease-in) on <html> before the first script (the row press, read from the clean travel) · the grammar: CSS reads the settle 350.0 ms; animate() takes \"ease-in\" → expect taken · side changes 1 · travel lens translate 350 ms \"ease-in\" · console errors naming the token 0, uncaught page errors 0, all errors 0 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: taken on CSS's clock to 1 ms with the easing animate() parses and no error, or refused with ≥ 1 console.error naming the token and no travel; 0 uncaught; the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "10.8/9.0/8.0"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press var(--h13-undefined, ease-in) · rerender",
+   "status": "PASS",
+   "line": "--spring-press: var(--h13-undefined, ease-in) on <html> before the first script (the row press, read from the clean travel) · the grammar: CSS reads the settle 350.0 ms; animate() takes \"ease-in\" → expect taken · travel root translate 350 ms \"ease-in\" · console errors naming the token 0, uncaught page errors 0, all errors 0 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: taken on CSS's clock to 1 ms with the easing animate() parses and no error, or refused with ≥ 1 console.error naming the token and no travel; 0 uncaught; the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "10.8/9.1/8.0"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press inherit · side",
+   "status": "PASS",
+   "line": "--spring-press: inherit on <html> before the first script (the row press, read from the clean travel) · the grammar: CSS reads the settle 350.0 ms; animate() refuses it (the token computes to nothing) → expect refused · side changes 1 · travel none · console errors naming the token 80 (\"[fixture] --spring-press is unreadable (\"\"): the travel cannot run on it\"), uncaught page errors 0, all errors 80 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: taken on CSS's clock to 1 ms with the easing animate() parses and no error, or refused with ≥ 1 console.error naming the token and no travel; 0 uncaught; the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "10.8/9.1/8.0"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press inherit · rerender",
+   "status": "PASS",
+   "line": "--spring-press: inherit on <html> before the first script (the row press, read from the clean travel) · the grammar: CSS reads the settle 350.0 ms; animate() refuses it (the token computes to nothing) → expect refused · travel none · console errors naming the token 1 (\"[fixture] --spring-press is unreadable (\"\"): the travel cannot run on it\"), uncaught page errors 0, all errors 1 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: taken on CSS's clock to 1 ms with the easing animate() parses and no error, or refused with ≥ 1 console.error naming the token and no travel; 0 uncaught; the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "10.3/9.0/7.9"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press cubic-bezier(1.5, 0, 0, 1) · side",
+   "status": "PASS",
+   "line": "--spring-press: cubic-bezier(1.5, 0, 0, 1) on <html> before the first script (the row press, read from the clean travel) · the grammar: CSS reads the settle 350.0 ms; animate() refuses it (Failed to construct 'KeyframeEffect': 'cubic-bezier(1.5, 0, 0, 1)' is not a vali) → expect refused · side changes 1 · travel none · console errors naming the token 80 (\"[fixture] --spring-press is unreadable (\"cubic-bezier(1.5, 0, 0, 1)\"): the travel cannot run on it\"), uncaught page errors 0, all errors 80 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: taken on CSS's clock to 1 ms with the easing animate() parses and no error, or refused with ≥ 1 console.error naming the token and no travel; 0 uncaught; the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "10.5/9.1/8.0"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press cubic-bezier(1.5, 0, 0, 1) · rerender",
+   "status": "PASS",
+   "line": "--spring-press: cubic-bezier(1.5, 0, 0, 1) on <html> before the first script (the row press, read from the clean travel) · the grammar: CSS reads the settle 350.0 ms; animate() refuses it (Failed to construct 'KeyframeEffect': 'cubic-bezier(1.5, 0, 0, 1)' is not a vali) → expect refused · travel none · console errors naming the token 1 (\"[fixture] --spring-press is unreadable (\"cubic-bezier(1.5, 0, 0, 1)\"): the travel cannot run on it\"), uncaught page errors 0, all errors 1 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: taken on CSS's clock to 1 ms with the easing animate() parses and no error, or refused with ≥ 1 console.error naming the token and no travel; 0 uncaught; the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "10.6/9.1/8.0"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press steps(0) · side",
+   "status": "PASS",
+   "line": "--spring-press: steps(0) on <html> before the first script (the row press, read from the clean travel) · the grammar: CSS reads the settle 350.0 ms; animate() refuses it (Failed to construct 'KeyframeEffect': 'steps(0)' is not a valid value for easing) → expect refused · side changes 1 · travel none · console errors naming the token 80 (\"[fixture] --spring-press is unreadable (\"steps(0)\"): the travel cannot run on it\"), uncaught page errors 0, all errors 80 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: taken on CSS's clock to 1 ms with the easing animate() parses and no error, or refused with ≥ 1 console.error naming the token and no travel; 0 uncaught; the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "10.6/9.1/8.0"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press steps(0) · rerender",
+   "status": "PASS",
+   "line": "--spring-press: steps(0) on <html> before the first script (the row press, read from the clean travel) · the grammar: CSS reads the settle 350.0 ms; animate() refuses it (Failed to construct 'KeyframeEffect': 'steps(0)' is not a valid value for easing) → expect refused · travel none · console errors naming the token 1 (\"[fixture] --spring-press is unreadable (\"steps(0)\"): the travel cannot run on it\"), uncaught page errors 0, all errors 1 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: taken on CSS's clock to 1 ms with the easing animate() parses and no error, or refused with ≥ 1 console.error naming the token and no travel; 0 uncaught; the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "10.6/9.1/8.0"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press-settle 210MS · side",
+   "status": "PASS",
+   "line": "--spring-press-settle: 210MS on <html> before the first script (the row press, read from the clean travel) · the grammar: CSS reads the settle 210.0 ms → expect taken · side changes 1 · travel lens translate 210 ms \"linear(0 0%, 0.57 18%, 0.94 32%, 1.06 45%, 1.03 60%, 0.99 75\" · console errors naming the token 0, uncaught page errors 0, all errors 0 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: taken on CSS's clock to 1 ms with the easing animate() parses and no error, or refused with ≥ 1 console.error naming the token and no travel; 0 uncaught; the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "10.2/9.1/8.0"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press-settle 210MS · rerender",
+   "status": "PASS",
+   "line": "--spring-press-settle: 210MS on <html> before the first script (the row press, read from the clean travel) · the grammar: CSS reads the settle 210.0 ms → expect taken · travel root translate 210 ms \"linear(0 0%, 0.57 18%, 0.94 32%, 1.06 45%, 1.03 60%, 0.99 75\" · console errors naming the token 0, uncaught page errors 0, all errors 0 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: taken on CSS's clock to 1 ms with the easing animate() parses and no error, or refused with ≥ 1 console.error naming the token and no travel; 0 uncaught; the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "9.7/9.0/8.0"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press-settle 210MS · carry",
+   "status": "PASS",
+   "line": "--spring-press-settle: 210MS on <html> before the first script (the row press, read from the clean travel) · the grammar: CSS reads the settle 210.0 ms → expect taken · travel under translate 210 ms \"linear(0 0%, 0.57 18%, 0.94 32%, 1.06 45%, 1.03 60%, 0.99 75\" · console errors naming the token 0, uncaught page errors 0, all errors 0 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: taken on CSS's clock to 1 ms with the easing animate() parses and no error, or refused with ≥ 1 console.error naming the token and no travel; 0 uncaught; the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "9.7/9.0/8.0"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press-settle 0.21S · side",
+   "status": "PASS",
+   "line": "--spring-press-settle: 0.21S on <html> before the first script (the row press, read from the clean travel) · the grammar: CSS reads the settle 210.0 ms → expect taken · side changes 1 · travel lens translate 210 ms \"linear(0 0%, 0.57 18%, 0.94 32%, 1.06 45%, 1.03 60%, 0.99 75\" · console errors naming the token 0, uncaught page errors 0, all errors 0 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: taken on CSS's clock to 1 ms with the easing animate() parses and no error, or refused with ≥ 1 console.error naming the token and no travel; 0 uncaught; the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "9.8/9.0/8.0"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press-settle 0.21S · rerender",
+   "status": "PASS",
+   "line": "--spring-press-settle: 0.21S on <html> before the first script (the row press, read from the clean travel) · the grammar: CSS reads the settle 210.0 ms → expect taken · travel root translate 210 ms \"linear(0 0%, 0.57 18%, 0.94 32%, 1.06 45%, 1.03 60%, 0.99 75\" · console errors naming the token 0, uncaught page errors 0, all errors 0 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: taken on CSS's clock to 1 ms with the easing animate() parses and no error, or refused with ≥ 1 console.error naming the token and no travel; 0 uncaught; the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "10.1/9.1/8.0"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press-settle 0.21S · carry",
+   "status": "PASS",
+   "line": "--spring-press-settle: 0.21S on <html> before the first script (the row press, read from the clean travel) · the grammar: CSS reads the settle 210.0 ms → expect taken · travel under translate 210 ms \"linear(0 0%, 0.57 18%, 0.94 32%, 1.06 45%, 1.03 60%, 0.99 75\" · console errors naming the token 0, uncaught page errors 0, all errors 0 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: taken on CSS's clock to 1 ms with the easing animate() parses and no error, or refused with ≥ 1 console.error naming the token and no travel; 0 uncaught; the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "10.1/9.1/8.0"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press-settle 2.1e2ms · side",
+   "status": "PASS",
+   "line": "--spring-press-settle: 2.1e2ms on <html> before the first script (the row press, read from the clean travel) · the grammar: CSS reads the settle 210.0 ms → expect taken · side changes 1 · travel lens translate 210 ms \"linear(0 0%, 0.57 18%, 0.94 32%, 1.06 45%, 1.03 60%, 0.99 75\" · console errors naming the token 0, uncaught page errors 0, all errors 0 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: taken on CSS's clock to 1 ms with the easing animate() parses and no error, or refused with ≥ 1 console.error naming the token and no travel; 0 uncaught; the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "10.5/9.2/8.1"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press-settle 2.1e2ms · rerender",
+   "status": "PASS",
+   "line": "--spring-press-settle: 2.1e2ms on <html> before the first script (the row press, read from the clean travel) · the grammar: CSS reads the settle 210.0 ms → expect taken · travel root translate 210 ms \"linear(0 0%, 0.57 18%, 0.94 32%, 1.06 45%, 1.03 60%, 0.99 75\" · console errors naming the token 0, uncaught page errors 0, all errors 0 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: taken on CSS's clock to 1 ms with the easing animate() parses and no error, or refused with ≥ 1 console.error naming the token and no travel; 0 uncaught; the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "10.4/9.2/8.1"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press-settle 2.1e2ms · carry",
+   "status": "PASS",
+   "line": "--spring-press-settle: 2.1e2ms on <html> before the first script (the row press, read from the clean travel) · the grammar: CSS reads the settle 210.0 ms → expect taken · travel under translate 210 ms \"linear(0 0%, 0.57 18%, 0.94 32%, 1.06 45%, 1.03 60%, 0.99 75\" · console errors naming the token 0, uncaught page errors 0, all errors 0 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: taken on CSS's clock to 1 ms with the easing animate() parses and no error, or refused with ≥ 1 console.error naming the token and no travel; 0 uncaught; the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "10.2/9.2/8.1"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press-settle +0.21s · side",
+   "status": "PASS",
+   "line": "--spring-press-settle: +0.21s on <html> before the first script (the row press, read from the clean travel) · the grammar: CSS reads the settle 210.0 ms → expect taken · side changes 1 · travel lens translate 210 ms \"linear(0 0%, 0.57 18%, 0.94 32%, 1.06 45%, 1.03 60%, 0.99 75\" · console errors naming the token 0, uncaught page errors 0, all errors 0 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: taken on CSS's clock to 1 ms with the easing animate() parses and no error, or refused with ≥ 1 console.error naming the token and no travel; 0 uncaught; the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "10.2/9.2/8.1"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press-settle +0.21s · rerender",
+   "status": "PASS",
+   "line": "--spring-press-settle: +0.21s on <html> before the first script (the row press, read from the clean travel) · the grammar: CSS reads the settle 210.0 ms → expect taken · travel root translate 210 ms \"linear(0 0%, 0.57 18%, 0.94 32%, 1.06 45%, 1.03 60%, 0.99 75\" · console errors naming the token 0, uncaught page errors 0, all errors 0 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: taken on CSS's clock to 1 ms with the easing animate() parses and no error, or refused with ≥ 1 console.error naming the token and no travel; 0 uncaught; the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "10.0/9.1/8.1"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press-settle +0.21s · carry",
+   "status": "PASS",
+   "line": "--spring-press-settle: +0.21s on <html> before the first script (the row press, read from the clean travel) · the grammar: CSS reads the settle 210.0 ms → expect taken · travel under translate 210 ms \"linear(0 0%, 0.57 18%, 0.94 32%, 1.06 45%, 1.03 60%, 0.99 75\" · console errors naming the token 0, uncaught page errors 0, all errors 0 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: taken on CSS's clock to 1 ms with the easing animate() parses and no error, or refused with ≥ 1 console.error naming the token and no travel; 0 uncaught; the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "10.1/9.2/8.1"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press-settle /* c */ 210ms · side",
+   "status": "PASS",
+   "line": "--spring-press-settle: /* c */ 210ms on <html> before the first script (the row press, read from the clean travel) · the grammar: CSS reads the settle 210.0 ms → expect taken · side changes 1 · travel lens translate 210 ms \"linear(0 0%, 0.57 18%, 0.94 32%, 1.06 45%, 1.03 60%, 0.99 75\" · console errors naming the token 0, uncaught page errors 0, all errors 0 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: taken on CSS's clock to 1 ms with the easing animate() parses and no error, or refused with ≥ 1 console.error naming the token and no travel; 0 uncaught; the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "10.9/9.4/8.2"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press-settle /* c */ 210ms · rerender",
+   "status": "PASS",
+   "line": "--spring-press-settle: /* c */ 210ms on <html> before the first script (the row press, read from the clean travel) · the grammar: CSS reads the settle 210.0 ms → expect taken · travel root translate 210 ms \"linear(0 0%, 0.57 18%, 0.94 32%, 1.06 45%, 1.03 60%, 0.99 75\" · console errors naming the token 0, uncaught page errors 0, all errors 0 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: taken on CSS's clock to 1 ms with the easing animate() parses and no error, or refused with ≥ 1 console.error naming the token and no travel; 0 uncaught; the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "10.9/9.4/8.2"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press-settle /* c */ 210ms · carry",
+   "status": "PASS",
+   "line": "--spring-press-settle: /* c */ 210ms on <html> before the first script (the row press, read from the clean travel) · the grammar: CSS reads the settle 210.0 ms → expect taken · travel under translate 210 ms \"linear(0 0%, 0.57 18%, 0.94 32%, 1.06 45%, 1.03 60%, 0.99 75\" · console errors naming the token 0, uncaught page errors 0, all errors 0 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: taken on CSS's clock to 1 ms with the easing animate() parses and no error, or refused with ≥ 1 console.error naming the token and no travel; 0 uncaught; the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "10.9/9.4/8.2"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press-settle -0s · side",
+   "status": "PASS",
+   "line": "--spring-press-settle: -0s on <html> before the first script (the row press, read from the clean travel) · the grammar: CSS reads the settle 0.0 ms → expect refused · side changes 1 · travel none · console errors naming the token 80 (\"[fixture] --spring-press-settle is unreadable (\"-0s\"): the travel has no clock\"), uncaught page errors 0, all errors 80 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: taken on CSS's clock to 1 ms with the easing animate() parses and no error, or refused with ≥ 1 console.error naming the token and no travel; 0 uncaught; the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "11.0/9.4/8.2"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press-settle -0s · rerender",
+   "status": "PASS",
+   "line": "--spring-press-settle: -0s on <html> before the first script (the row press, read from the clean travel) · the grammar: CSS reads the settle 0.0 ms → expect refused · travel none · console errors naming the token 1 (\"[fixture] --spring-press-settle is unreadable (\"-0s\"): the travel has no clock\"), uncaught page errors 0, all errors 1 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: taken on CSS's clock to 1 ms with the easing animate() parses and no error, or refused with ≥ 1 console.error naming the token and no travel; 0 uncaught; the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "11.0/9.4/8.2"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press-settle -0s · carry",
+   "status": "PASS",
+   "line": "--spring-press-settle: -0s on <html> before the first script (the row press, read from the clean travel) · the grammar: CSS reads the settle 0.0 ms → expect refused · travel none · console errors naming the token 1 (\"[fixture] --spring-press-settle is unreadable (\"-0s\"): the travel has no clock\"), uncaught page errors 0, all errors 1 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: taken on CSS's clock to 1 ms with the easing animate() parses and no error, or refused with ≥ 1 console.error naming the token and no travel; 0 uncaught; the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "10.5/9.3/8.2"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press-settle 210 · side",
+   "status": "PASS",
+   "line": "--spring-press-settle: 210 on <html> before the first script (the row press, read from the clean travel) · the grammar: CSS reads the settle 0.0 ms → expect refused · side changes 1 · travel none · console errors naming the token 80 (\"[fixture] --spring-press-settle is unreadable (\"210\"): the travel has no clock\"), uncaught page errors 0, all errors 80 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: taken on CSS's clock to 1 ms with the easing animate() parses and no error, or refused with ≥ 1 console.error naming the token and no travel; 0 uncaught; the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "10.0/9.3/8.2"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press-settle 210 · rerender",
+   "status": "PASS",
+   "line": "--spring-press-settle: 210 on <html> before the first script (the row press, read from the clean travel) · the grammar: CSS reads the settle 0.0 ms → expect refused · travel none · console errors naming the token 1 (\"[fixture] --spring-press-settle is unreadable (\"210\"): the travel has no clock\"), uncaught page errors 0, all errors 1 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: taken on CSS's clock to 1 ms with the easing animate() parses and no error, or refused with ≥ 1 console.error naming the token and no travel; 0 uncaught; the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "10.7/9.4/8.2"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press-settle 210 · carry",
+   "status": "PASS",
+   "line": "--spring-press-settle: 210 on <html> before the first script (the row press, read from the clean travel) · the grammar: CSS reads the settle 0.0 ms → expect refused · travel none · console errors naming the token 1 (\"[fixture] --spring-press-settle is unreadable (\"210\"): the travel has no clock\"), uncaught page errors 0, all errors 1 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: taken on CSS's clock to 1 ms with the easing animate() parses and no error, or refused with ≥ 1 console.error naming the token and no travel; 0 uncaught; the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "10.7/9.4/8.2"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press-settle 210ms, 0.3s · side",
+   "status": "PASS",
+   "line": "--spring-press-settle: 210ms, 0.3s on <html> before the first script (the row press, read from the clean travel) · the grammar: CSS reads the settle 0.0 ms → expect refused · side changes 1 · travel none · console errors naming the token 80 (\"[fixture] --spring-press-settle is unreadable (\"210ms, 0.3s\"): the travel has no clock\"), uncaught page errors 0, all errors 80 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: taken on CSS's clock to 1 ms with the easing animate() parses and no error, or refused with ≥ 1 console.error naming the token and no travel; 0 uncaught; the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "11.3/9.6/8.3"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press-settle 210ms, 0.3s · rerender",
+   "status": "PASS",
+   "line": "--spring-press-settle: 210ms, 0.3s on <html> before the first script (the row press, read from the clean travel) · the grammar: CSS reads the settle 0.0 ms → expect refused · travel none · console errors naming the token 1 (\"[fixture] --spring-press-settle is unreadable (\"210ms, 0.3s\"): the travel has no clock\"), uncaught page errors 0, all errors 1 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: taken on CSS's clock to 1 ms with the easing animate() parses and no error, or refused with ≥ 1 console.error naming the token and no travel; 0 uncaught; the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "11.6/9.7/8.3"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press-settle 210ms, 0.3s · carry",
+   "status": "PASS",
+   "line": "--spring-press-settle: 210ms, 0.3s on <html> before the first script (the row press, read from the clean travel) · the grammar: CSS reads the settle 0.0 ms → expect refused · travel none · console errors naming the token 1 (\"[fixture] --spring-press-settle is unreadable (\"210ms, 0.3s\"): the travel has no clock\"), uncaught page errors 0, all errors 1 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: taken on CSS's clock to 1 ms with the easing animate() parses and no error, or refused with ≥ 1 console.error naming the token and no travel; 0 uncaught; the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "11.6/9.7/8.3"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press-settle inherit · side",
+   "status": "PASS",
+   "line": "--spring-press-settle: inherit on <html> before the first script (the row press, read from the clean travel) · the grammar: CSS reads the settle 0.0 ms → expect refused · side changes 1 · travel none · console errors naming the token 80 (\"[fixture] --spring-press-settle is unreadable (\"\"): the travel has no clock\"), uncaught page errors 0, all errors 80 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: taken on CSS's clock to 1 ms with the easing animate() parses and no error, or refused with ≥ 1 console.error naming the token and no travel; 0 uncaught; the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "11.1/9.6/8.3"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press-settle inherit · rerender",
+   "status": "PASS",
+   "line": "--spring-press-settle: inherit on <html> before the first script (the row press, read from the clean travel) · the grammar: CSS reads the settle 0.0 ms → expect refused · travel none · console errors naming the token 1 (\"[fixture] --spring-press-settle is unreadable (\"\"): the travel has no clock\"), uncaught page errors 0, all errors 1 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: taken on CSS's clock to 1 ms with the easing animate() parses and no error, or refused with ≥ 1 console.error naming the token and no travel; 0 uncaught; the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "10.9/9.6/8.3"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press-settle inherit · carry",
+   "status": "PASS",
+   "line": "--spring-press-settle: inherit on <html> before the first script (the row press, read from the clean travel) · the grammar: CSS reads the settle 0.0 ms → expect refused · travel none · console errors naming the token 1 (\"[fixture] --spring-press-settle is unreadable (\"\"): the travel has no clock\"), uncaught page errors 0, all errors 1 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: taken on CSS's clock to 1 ms with the easing animate() parses and no error, or refused with ≥ 1 console.error naming the token and no travel; 0 uncaught; the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "14.3/10.3/8.6"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press-settle calc(0.1s + 110ms) · side",
+   "status": "PASS",
+   "line": "--spring-press-settle: calc(0.1s + 110ms) on <html> before the first script (the row press, read from the clean travel) · the grammar: CSS reads the settle 210.0 ms → expect taken · side changes 1 · travel lens translate 210 ms \"linear(0 0%, 0.57 18%, 0.94 32%, 1.06 45%, 1.03 60%, 0.99 75\" · console errors naming the token 0, uncaught page errors 0, all errors 0 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: taken on CSS's clock to 1 ms with the easing animate() parses and no error, or refused with ≥ 1 console.error naming the token and no travel; 0 uncaught; the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "14.3/10.3/8.6"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press-settle calc(0.1s + 110ms) · rerender",
+   "status": "PASS",
+   "line": "--spring-press-settle: calc(0.1s + 110ms) on <html> before the first script (the row press, read from the clean travel) · the grammar: CSS reads the settle 210.0 ms → expect taken · travel root translate 210 ms \"linear(0 0%, 0.57 18%, 0.94 32%, 1.06 45%, 1.03 60%, 0.99 75\" · console errors naming the token 0, uncaught page errors 0, all errors 0 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: taken on CSS's clock to 1 ms with the easing animate() parses and no error, or refused with ≥ 1 console.error naming the token and no travel; 0 uncaught; the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "14.0/10.3/8.6"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press-settle calc(0.1s + 110ms) · carry",
+   "status": "PASS",
+   "line": "--spring-press-settle: calc(0.1s + 110ms) on <html> before the first script (the row press, read from the clean travel) · the grammar: CSS reads the settle 210.0 ms → expect taken · travel under translate 210 ms \"linear(0 0%, 0.57 18%, 0.94 32%, 1.06 45%, 1.03 60%, 0.99 75\" · console errors naming the token 0, uncaught page errors 0, all errors 0 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: taken on CSS's clock to 1 ms with the easing animate() parses and no error, or refused with ≥ 1 console.error naming the token and no travel; 0 uncaught; the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "13.6/10.3/8.6"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press-settle calc(105ms * 2) · side",
+   "status": "PASS",
+   "line": "--spring-press-settle: calc(105ms * 2) on <html> before the first script (the row press, read from the clean travel) · the grammar: CSS reads the settle 210.0 ms → expect taken · side changes 1 · travel lens translate 210 ms \"linear(0 0%, 0.57 18%, 0.94 32%, 1.06 45%, 1.03 60%, 0.99 75\" · console errors naming the token 0, uncaught page errors 0, all errors 0 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: taken on CSS's clock to 1 ms with the easing animate() parses and no error, or refused with ≥ 1 console.error naming the token and no travel; 0 uncaught; the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "13.4/10.3/8.6"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press-settle calc(105ms * 2) · rerender",
+   "status": "PASS",
+   "line": "--spring-press-settle: calc(105ms * 2) on <html> before the first script (the row press, read from the clean travel) · the grammar: CSS reads the settle 210.0 ms → expect taken · travel root translate 210 ms \"linear(0 0%, 0.57 18%, 0.94 32%, 1.06 45%, 1.03 60%, 0.99 75\" · console errors naming the token 0, uncaught page errors 0, all errors 0 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: taken on CSS's clock to 1 ms with the easing animate() parses and no error, or refused with ≥ 1 console.error naming the token and no travel; 0 uncaught; the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "13.4/10.3/8.6"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press-settle calc(105ms * 2) · carry",
+   "status": "PASS",
+   "line": "--spring-press-settle: calc(105ms * 2) on <html> before the first script (the row press, read from the clean travel) · the grammar: CSS reads the settle 210.0 ms → expect taken · travel under translate 210 ms \"linear(0 0%, 0.57 18%, 0.94 32%, 1.06 45%, 1.03 60%, 0.99 75\" · console errors naming the token 0, uncaught page errors 0, all errors 0 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: taken on CSS's clock to 1 ms with the easing animate() parses and no error, or refused with ≥ 1 console.error naming the token and no travel; 0 uncaught; the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "12.8/10.2/8.6"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press-settle min(210ms, 1s) · side",
+   "status": "PASS",
+   "line": "--spring-press-settle: min(210ms, 1s) on <html> before the first script (the row press, read from the clean travel) · the grammar: CSS reads the settle 210.0 ms → expect taken · side changes 1 · travel lens translate 210 ms \"linear(0 0%, 0.57 18%, 0.94 32%, 1.06 45%, 1.03 60%, 0.99 75\" · console errors naming the token 0, uncaught page errors 0, all errors 0 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: taken on CSS's clock to 1 ms with the easing animate() parses and no error, or refused with ≥ 1 console.error naming the token and no travel; 0 uncaught; the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "12.0/10.1/8.5"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press-settle min(210ms, 1s) · rerender",
+   "status": "PASS",
+   "line": "--spring-press-settle: min(210ms, 1s) on <html> before the first script (the row press, read from the clean travel) · the grammar: CSS reads the settle 210.0 ms → expect taken · travel root translate 210 ms \"linear(0 0%, 0.57 18%, 0.94 32%, 1.06 45%, 1.03 60%, 0.99 75\" · console errors naming the token 0, uncaught page errors 0, all errors 0 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: taken on CSS's clock to 1 ms with the easing animate() parses and no error, or refused with ≥ 1 console.error naming the token and no travel; 0 uncaught; the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "12.0/10.1/8.5"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press-settle min(210ms, 1s) · carry",
+   "status": "PASS",
+   "line": "--spring-press-settle: min(210ms, 1s) on <html> before the first script (the row press, read from the clean travel) · the grammar: CSS reads the settle 210.0 ms → expect taken · travel under translate 210 ms \"linear(0 0%, 0.57 18%, 0.94 32%, 1.06 45%, 1.03 60%, 0.99 75\" · console errors naming the token 0, uncaught page errors 0, all errors 0 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: taken on CSS's clock to 1 ms with the easing animate() parses and no error, or refused with ≥ 1 console.error naming the token and no travel; 0 uncaught; the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "12.8/10.3/8.6"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press-settle max(210ms, 0.1s) · side",
+   "status": "PASS",
+   "line": "--spring-press-settle: max(210ms, 0.1s) on <html> before the first script (the row press, read from the clean travel) · the grammar: CSS reads the settle 210.0 ms → expect taken · side changes 1 · travel lens translate 210 ms \"linear(0 0%, 0.57 18%, 0.94 32%, 1.06 45%, 1.03 60%, 0.99 75\" · console errors naming the token 0, uncaught page errors 0, all errors 0 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: taken on CSS's clock to 1 ms with the easing animate() parses and no error, or refused with ≥ 1 console.error naming the token and no travel; 0 uncaught; the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "12.2/10.2/8.6"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press-settle max(210ms, 0.1s) · rerender",
+   "status": "PASS",
+   "line": "--spring-press-settle: max(210ms, 0.1s) on <html> before the first script (the row press, read from the clean travel) · the grammar: CSS reads the settle 210.0 ms → expect taken · travel root translate 210 ms \"linear(0 0%, 0.57 18%, 0.94 32%, 1.06 45%, 1.03 60%, 0.99 75\" · console errors naming the token 0, uncaught page errors 0, all errors 0 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: taken on CSS's clock to 1 ms with the easing animate() parses and no error, or refused with ≥ 1 console.error naming the token and no travel; 0 uncaught; the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "11.6/10.1/8.6"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press-settle max(210ms, 0.1s) · carry",
+   "status": "PASS",
+   "line": "--spring-press-settle: max(210ms, 0.1s) on <html> before the first script (the row press, read from the clean travel) · the grammar: CSS reads the settle 210.0 ms → expect taken · travel under translate 210 ms \"linear(0 0%, 0.57 18%, 0.94 32%, 1.06 45%, 1.03 60%, 0.99 75\" · console errors naming the token 0, uncaught page errors 0, all errors 0 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: taken on CSS's clock to 1 ms with the easing animate() parses and no error, or refused with ≥ 1 console.error naming the token and no travel; 0 uncaught; the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "11.6/10.1/8.6"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press-settle clamp(100ms, 210ms, 1s) · side",
+   "status": "PASS",
+   "line": "--spring-press-settle: clamp(100ms, 210ms, 1s) on <html> before the first script (the row press, read from the clean travel) · the grammar: CSS reads the settle 210.0 ms → expect taken · side changes 1 · travel lens translate 210 ms \"linear(0 0%, 0.57 18%, 0.94 32%, 1.06 45%, 1.03 60%, 0.99 75\" · console errors naming the token 0, uncaught page errors 0, all errors 0 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: taken on CSS's clock to 1 ms with the easing animate() parses and no error, or refused with ≥ 1 console.error naming the token and no travel; 0 uncaught; the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "11.1/10.0/8.6"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press-settle clamp(100ms, 210ms, 1s) · rerender",
+   "status": "PASS",
+   "line": "--spring-press-settle: clamp(100ms, 210ms, 1s) on <html> before the first script (the row press, read from the clean travel) · the grammar: CSS reads the settle 210.0 ms → expect taken · travel root translate 210 ms \"linear(0 0%, 0.57 18%, 0.94 32%, 1.06 45%, 1.03 60%, 0.99 75\" · console errors naming the token 0, uncaught page errors 0, all errors 0 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: taken on CSS's clock to 1 ms with the easing animate() parses and no error, or refused with ≥ 1 console.error naming the token and no travel; 0 uncaught; the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "10.7/10.0/8.5"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press-settle clamp(100ms, 210ms, 1s) · carry",
+   "status": "PASS",
+   "line": "--spring-press-settle: clamp(100ms, 210ms, 1s) on <html> before the first script (the row press, read from the clean travel) · the grammar: CSS reads the settle 210.0 ms → expect taken · travel under translate 210 ms \"linear(0 0%, 0.57 18%, 0.94 32%, 1.06 45%, 1.03 60%, 0.99 75\" · console errors naming the token 0, uncaught page errors 0, all errors 0 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: taken on CSS's clock to 1 ms with the easing animate() parses and no error, or refused with ≥ 1 console.error naming the token and no travel; 0 uncaught; the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "10.7/10.0/8.5"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press-settle calc(var(--h13-undefined, 210ms)) · side",
+   "status": "PASS",
+   "line": "--spring-press-settle: calc(var(--h13-undefined, 210ms)) on <html> before the first script (the row press, read from the clean travel) · the grammar: CSS reads the settle 210.0 ms → expect taken · side changes 1 · travel lens translate 210 ms \"linear(0 0%, 0.57 18%, 0.94 32%, 1.06 45%, 1.03 60%, 0.99 75\" · console errors naming the token 0, uncaught page errors 0, all errors 0 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: taken on CSS's clock to 1 ms with the easing animate() parses and no error, or refused with ≥ 1 console.error naming the token and no travel; 0 uncaught; the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "10.3/9.9/8.5"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press-settle calc(var(--h13-undefined, 210ms)) · rerender",
+   "status": "PASS",
+   "line": "--spring-press-settle: calc(var(--h13-undefined, 210ms)) on <html> before the first script (the row press, read from the clean travel) · the grammar: CSS reads the settle 210.0 ms → expect taken · travel root translate 210 ms \"linear(0 0%, 0.57 18%, 0.94 32%, 1.06 45%, 1.03 60%, 0.99 75\" · console errors naming the token 0, uncaught page errors 0, all errors 0 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: taken on CSS's clock to 1 ms with the easing animate() parses and no error, or refused with ≥ 1 console.error naming the token and no travel; 0 uncaught; the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "10.3/9.9/8.5"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press-settle calc(var(--h13-undefined, 210ms)) · carry",
+   "status": "PASS",
+   "line": "--spring-press-settle: calc(var(--h13-undefined, 210ms)) on <html> before the first script (the row press, read from the clean travel) · the grammar: CSS reads the settle 210.0 ms → expect taken · travel under translate 210 ms \"linear(0 0%, 0.57 18%, 0.94 32%, 1.06 45%, 1.03 60%, 0.99 75\" · console errors naming the token 0, uncaught page errors 0, all errors 0 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: taken on CSS's clock to 1 ms with the easing animate() parses and no error, or refused with ≥ 1 console.error naming the token and no travel; 0 uncaught; the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "10.1/9.9/8.5"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press-settle var(--h13-undefined, 210ms) · side",
+   "status": "PASS",
+   "line": "--spring-press-settle: var(--h13-undefined, 210ms) on <html> before the first script (the row press, read from the clean travel) · the grammar: CSS reads the settle 210.0 ms → expect taken · side changes 1 · travel lens translate 210 ms \"linear(0 0%, 0.57 18%, 0.94 32%, 1.06 45%, 1.03 60%, 0.99 75\" · console errors naming the token 0, uncaught page errors 0, all errors 0 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: taken on CSS's clock to 1 ms with the easing animate() parses and no error, or refused with ≥ 1 console.error naming the token and no travel; 0 uncaught; the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "10.1/9.9/8.5"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press-settle var(--h13-undefined, 210ms) · rerender",
+   "status": "PASS",
+   "line": "--spring-press-settle: var(--h13-undefined, 210ms) on <html> before the first script (the row press, read from the clean travel) · the grammar: CSS reads the settle 210.0 ms → expect taken · travel root translate 210 ms \"linear(0 0%, 0.57 18%, 0.94 32%, 1.06 45%, 1.03 60%, 0.99 75\" · console errors naming the token 0, uncaught page errors 0, all errors 0 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: taken on CSS's clock to 1 ms with the easing animate() parses and no error, or refused with ≥ 1 console.error naming the token and no travel; 0 uncaught; the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "9.8/9.8/8.5"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press-settle var(--h13-undefined, 210ms) · carry",
+   "status": "PASS",
+   "line": "--spring-press-settle: var(--h13-undefined, 210ms) on <html> before the first script (the row press, read from the clean travel) · the grammar: CSS reads the settle 210.0 ms → expect taken · travel under translate 210 ms \"linear(0 0%, 0.57 18%, 0.94 32%, 1.06 45%, 1.03 60%, 0.99 75\" · console errors naming the token 0, uncaught page errors 0, all errors 0 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: taken on CSS's clock to 1 ms with the easing animate() parses and no error, or refused with ≥ 1 console.error naming the token and no travel; 0 uncaught; the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "9.8/9.8/8.5"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press-settle calc(calc(105ms) * 2) · side",
+   "status": "PASS",
+   "line": "--spring-press-settle: calc(calc(105ms) * 2) on <html> before the first script (the row press, read from the clean travel) · the grammar: CSS reads the settle 210.0 ms → expect taken · side changes 1 · travel lens translate 210 ms \"linear(0 0%, 0.57 18%, 0.94 32%, 1.06 45%, 1.03 60%, 0.99 75\" · console errors naming the token 0, uncaught page errors 0, all errors 0 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: taken on CSS's clock to 1 ms with the easing animate() parses and no error, or refused with ≥ 1 console.error naming the token and no travel; 0 uncaught; the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "9.8/9.8/8.5"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press-settle calc(calc(105ms) * 2) · rerender",
+   "status": "PASS",
+   "line": "--spring-press-settle: calc(calc(105ms) * 2) on <html> before the first script (the row press, read from the clean travel) · the grammar: CSS reads the settle 210.0 ms → expect taken · travel root translate 210 ms \"linear(0 0%, 0.57 18%, 0.94 32%, 1.06 45%, 1.03 60%, 0.99 75\" · console errors naming the token 0, uncaught page errors 0, all errors 0 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: taken on CSS's clock to 1 ms with the easing animate() parses and no error, or refused with ≥ 1 console.error naming the token and no travel; 0 uncaught; the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "9.8/9.8/8.5"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press-settle calc(calc(105ms) * 2) · carry",
+   "status": "PASS",
+   "line": "--spring-press-settle: calc(calc(105ms) * 2) on <html> before the first script (the row press, read from the clean travel) · the grammar: CSS reads the settle 210.0 ms → expect taken · travel under translate 210 ms \"linear(0 0%, 0.57 18%, 0.94 32%, 1.06 45%, 1.03 60%, 0.99 75\" · console errors naming the token 0, uncaught page errors 0, all errors 0 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: taken on CSS's clock to 1 ms with the easing animate() parses and no error, or refused with ≥ 1 console.error naming the token and no travel; 0 uncaught; the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "9.8/9.8/8.5"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press-settle round(nearest, 214ms, 10ms) · side",
+   "status": "PASS",
+   "line": "--spring-press-settle: round(nearest, 214ms, 10ms) on <html> before the first script (the row press, read from the clean travel) · the grammar: CSS reads the settle 210.0 ms → expect taken · side changes 1 · travel lens translate 210 ms \"linear(0 0%, 0.57 18%, 0.94 32%, 1.06 45%, 1.03 60%, 0.99 75\" · console errors naming the token 0, uncaught page errors 0, all errors 0 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: taken on CSS's clock to 1 ms with the easing animate() parses and no error, or refused with ≥ 1 console.error naming the token and no travel; 0 uncaught; the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "9.4/9.7/8.5"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press-settle round(nearest, 214ms, 10ms) · rerender",
+   "status": "PASS",
+   "line": "--spring-press-settle: round(nearest, 214ms, 10ms) on <html> before the first script (the row press, read from the clean travel) · the grammar: CSS reads the settle 210.0 ms → expect taken · travel root translate 210 ms \"linear(0 0%, 0.57 18%, 0.94 32%, 1.06 45%, 1.03 60%, 0.99 75\" · console errors naming the token 0, uncaught page errors 0, all errors 0 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: taken on CSS's clock to 1 ms with the easing animate() parses and no error, or refused with ≥ 1 console.error naming the token and no travel; 0 uncaught; the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "9.4/9.7/8.5"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press-settle round(nearest, 214ms, 10ms) · carry",
+   "status": "PASS",
+   "line": "--spring-press-settle: round(nearest, 214ms, 10ms) on <html> before the first script (the row press, read from the clean travel) · the grammar: CSS reads the settle 210.0 ms → expect taken · travel under translate 210 ms \"linear(0 0%, 0.57 18%, 0.94 32%, 1.06 45%, 1.03 60%, 0.99 75\" · console errors naming the token 0, uncaught page errors 0, all errors 0 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: taken on CSS's clock to 1 ms with the easing animate() parses and no error, or refused with ≥ 1 console.error naming the token and no travel; 0 uncaught; the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "9.1/9.7/8.5"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press-settle abs(-210ms) · side",
+   "status": "PASS",
+   "line": "--spring-press-settle: abs(-210ms) on <html> before the first script (the row press, read from the clean travel) · the grammar: CSS reads the settle 210.0 ms → expect taken · side changes 1 · travel lens translate 210 ms \"linear(0 0%, 0.57 18%, 0.94 32%, 1.06 45%, 1.03 60%, 0.99 75\" · console errors naming the token 0, uncaught page errors 0, all errors 0 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: taken on CSS's clock to 1 ms with the easing animate() parses and no error, or refused with ≥ 1 console.error naming the token and no travel; 0 uncaught; the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "8.6/9.6/8.5"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press-settle abs(-210ms) · rerender",
+   "status": "PASS",
+   "line": "--spring-press-settle: abs(-210ms) on <html> before the first script (the row press, read from the clean travel) · the grammar: CSS reads the settle 210.0 ms → expect taken · travel root translate 210 ms \"linear(0 0%, 0.57 18%, 0.94 32%, 1.06 45%, 1.03 60%, 0.99 75\" · console errors naming the token 0, uncaught page errors 0, all errors 0 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: taken on CSS's clock to 1 ms with the easing animate() parses and no error, or refused with ≥ 1 console.error naming the token and no travel; 0 uncaught; the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "8.6/9.5/8.5"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press-settle abs(-210ms) · carry",
+   "status": "PASS",
+   "line": "--spring-press-settle: abs(-210ms) on <html> before the first script (the row press, read from the clean travel) · the grammar: CSS reads the settle 210.0 ms → expect taken · travel under translate 210 ms \"linear(0 0%, 0.57 18%, 0.94 32%, 1.06 45%, 1.03 60%, 0.99 75\" · console errors naming the token 0, uncaught page errors 0, all errors 0 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: taken on CSS's clock to 1 ms with the easing animate() parses and no error, or refused with ≥ 1 console.error naming the token and no travel; 0 uncaught; the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "8.6/9.5/8.5"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press-settle calc(1s * 0.21) · side",
+   "status": "PASS",
+   "line": "--spring-press-settle: calc(1s * 0.21) on <html> before the first script (the row press, read from the clean travel) · the grammar: CSS reads the settle 210.0 ms → expect taken · side changes 1 · travel lens translate 210 ms \"linear(0 0%, 0.57 18%, 0.94 32%, 1.06 45%, 1.03 60%, 0.99 75\" · console errors naming the token 0, uncaught page errors 0, all errors 0 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: taken on CSS's clock to 1 ms with the easing animate() parses and no error, or refused with ≥ 1 console.error naming the token and no travel; 0 uncaught; the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "8.4/9.5/8.5"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press-settle calc(1s * 0.21) · rerender",
+   "status": "PASS",
+   "line": "--spring-press-settle: calc(1s * 0.21) on <html> before the first script (the row press, read from the clean travel) · the grammar: CSS reads the settle 210.0 ms → expect taken · travel root translate 210 ms \"linear(0 0%, 0.57 18%, 0.94 32%, 1.06 45%, 1.03 60%, 0.99 75\" · console errors naming the token 0, uncaught page errors 0, all errors 0 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: taken on CSS's clock to 1 ms with the easing animate() parses and no error, or refused with ≥ 1 console.error naming the token and no travel; 0 uncaught; the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "8.4/9.4/8.4"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press-settle calc(1s * 0.21) · carry",
+   "status": "PASS",
+   "line": "--spring-press-settle: calc(1s * 0.21) on <html> before the first script (the row press, read from the clean travel) · the grammar: CSS reads the settle 210.0 ms → expect taken · travel under translate 210 ms \"linear(0 0%, 0.57 18%, 0.94 32%, 1.06 45%, 1.03 60%, 0.99 75\" · console errors naming the token 0, uncaught page errors 0, all errors 0 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: taken on CSS's clock to 1 ms with the easing animate() parses and no error, or refused with ≥ 1 console.error naming the token and no travel; 0 uncaught; the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "8.4/9.4/8.4"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press-settle calc(infinity * 1s) · side",
+   "status": "REPORT",
+   "line": "REPORT (an endless clock has no exactness to test; would fail) · NOT TAKEN · --spring-press-settle: calc(infinity * 1s) on <html> before the first script (the row press, read from the clean travel) · the grammar: CSS reads the settle Infinity ms → expect taken · side changes 1 · travel none · console errors naming the token 80 (\"[fixture] --spring-press-settle is unreadable (\"calc(infinity * 1s)\"): the travel has no clock\"), uncaught page errors 0, all errors 80 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: taken on CSS's clock to 1 ms with the easing animate() parses and no error, or refused with ≥ 1 console.error naming the token and no travel; 0 uncaught; the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "8.2/9.4/8.4"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press-settle calc(infinity * 1s) · rerender",
+   "status": "REPORT",
+   "line": "REPORT (an endless clock has no exactness to test; would fail) · NOT TAKEN · --spring-press-settle: calc(infinity * 1s) on <html> before the first script (the row press, read from the clean travel) · the grammar: CSS reads the settle Infinity ms → expect taken · travel none · console errors naming the token 1 (\"[fixture] --spring-press-settle is unreadable (\"calc(infinity * 1s)\"): the travel has no clock\"), uncaught page errors 0, all errors 1 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: taken on CSS's clock to 1 ms with the easing animate() parses and no error, or refused with ≥ 1 console.error naming the token and no travel; 0 uncaught; the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "8.0/9.3/8.4"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press-settle calc(infinity * 1s) · carry",
+   "status": "REPORT",
+   "line": "REPORT (an endless clock has no exactness to test; would fail) · NOT TAKEN · --spring-press-settle: calc(infinity * 1s) on <html> before the first script (the row press, read from the clean travel) · the grammar: CSS reads the settle Infinity ms → expect taken · travel none · console errors naming the token 1 (\"[fixture] --spring-press-settle is unreadable (\"calc(infinity * 1s)\"): the travel has no clock\"), uncaught page errors 0, all errors 1 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: taken on CSS's clock to 1 ms with the easing animate() parses and no error, or refused with ≥ 1 console.error naming the token and no travel; 0 uncaught; the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "8.0/9.3/8.4"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press-settle 1e-3s · side",
+   "status": "REPORT",
+   "line": "REPORT (a 1 ms travel a once-per-frame recorder cannot see on this path; graded on the carry; would fail) · NOT TAKEN · --spring-press-settle: 1e-3s on <html> before the first script (the row press, read from the clean travel) · the grammar: CSS reads the settle 1.0 ms → expect taken · side changes 1 · travel none · console errors naming the token 0, uncaught page errors 0, all errors 0 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: taken on CSS's clock to 1 ms with the easing animate() parses and no error, or refused with ≥ 1 console.error naming the token and no travel; 0 uncaught; the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "8.8/9.5/8.5"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press-settle 1e-3s · rerender",
+   "status": "REPORT",
+   "line": "REPORT (a 1 ms travel a once-per-frame recorder cannot see on this path; graded on the carry; would fail) · NOT TAKEN · --spring-press-settle: 1e-3s on <html> before the first script (the row press, read from the clean travel) · the grammar: CSS reads the settle 1.0 ms → expect taken · travel none · console errors naming the token 0, uncaught page errors 0, all errors 0 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: taken on CSS's clock to 1 ms with the easing animate() parses and no error, or refused with ≥ 1 console.error naming the token and no travel; 0 uncaught; the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "8.5/9.4/8.5"
+  },
+  {
+   "name": "E-11 clipstale travel loud · --spring-press-settle 1e-3s · carry",
+   "status": "PASS",
+   "line": "--spring-press-settle: 1e-3s on <html> before the first script (the row press, read from the clean travel) · the grammar: CSS reads the settle 1.0 ms → expect taken · travel under translate 1 ms \"linear(0 0%, 0.57 18%, 0.94 32%, 1.06 45%, 1.03 60%, 0.99 75\" · console errors naming the token 0, uncaught page errors 0, all errors 0 · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px (bound: taken on CSS's clock to 1 ms with the easing animate() parses and no error, or refused with ≥ 1 console.error naming the token and no travel; 0 uncaught; the later hold engaged, shown, pinned ≤ 2 px)",
+   "load": "8.0/9.3/8.4"
+  },
+  {
+   "name": "E-11 pop token forms · --engage-control-engage-release calc(90ms + 90ms) · commit",
+   "status": "PASS",
+   "line": "--engage-control-engage-release: calc(90ms + 90ms) on <html> before the first script (the default \"calc(90ms * 2)\" = 0.18s) · CSS reads the form 0.18s · console errors naming the token 0 (clean page 0), uncaught 0",
+   "load": "8.0/9.3/8.4"
+  },
+  {
+   "name": "E-11 pop token forms · --engage-control-engage-release calc(90ms * 2) · commit",
+   "status": "PASS",
+   "line": "--engage-control-engage-release: calc(90ms * 2) on <html> before the first script (the default \"calc(90ms * 2)\" = 0.18s) · CSS reads the form 0.18s · console errors naming the token 0 (clean page 0), uncaught 0",
+   "load": "8.0/9.3/8.4"
+  },
+  {
+   "name": "E-11 pop token forms · --engage-control-engage-release min(180ms, 100s) · commit",
+   "status": "PASS",
+   "line": "--engage-control-engage-release: min(180ms, 100s) on <html> before the first script (the default \"calc(90ms * 2)\" = 0.18s) · CSS reads the form 0.18s · console errors naming the token 0 (clean page 0), uncaught 0",
+   "load": "7.8/9.2/8.4"
+  },
+  {
+   "name": "E-11 pop token forms · --engage-control-engage-release max(180ms, 1ms) · commit",
+   "status": "PASS",
+   "line": "--engage-control-engage-release: max(180ms, 1ms) on <html> before the first script (the default \"calc(90ms * 2)\" = 0.18s) · CSS reads the form 0.18s · console errors naming the token 0 (clean page 0), uncaught 0",
+   "load": "7.8/9.2/8.4"
+  },
+  {
+   "name": "E-11 pop token forms · --engage-control-engage-release clamp(1ms, 180ms, 100s) · commit",
+   "status": "PASS",
+   "line": "--engage-control-engage-release: clamp(1ms, 180ms, 100s) on <html> before the first script (the default \"calc(90ms * 2)\" = 0.18s) · CSS reads the form 0.18s · console errors naming the token 0 (clean page 0), uncaught 0",
+   "load": "7.8/9.2/8.4"
+  },
+  {
+   "name": "E-11 pop token forms · --engage-control-engage-release calc(var(--h13-undefined, 180ms)) · commit",
+   "status": "PASS",
+   "line": "--engage-control-engage-release: calc(var(--h13-undefined, 180ms)) on <html> before the first script (the default \"calc(90ms * 2)\" = 0.18s) · CSS reads the form 0.18s · console errors naming the token 0 (clean page 0), uncaught 0",
+   "load": "7.9/9.2/8.4"
+  },
+  {
+   "name": "E-11 pop token forms · --engage-control-engage-release round(nearest, 180ms, 1ms) · commit",
+   "status": "PASS",
+   "line": "--engage-control-engage-release: round(nearest, 180ms, 1ms) on <html> before the first script (the default \"calc(90ms * 2)\" = 0.18s) · CSS reads the form 0.18s · console errors naming the token 0 (clean page 0), uncaught 0",
+   "load": "7.9/9.2/8.4"
+  },
+  {
+   "name": "E-11 pop token forms · --engage-control-engage-release abs(-180ms) · commit",
+   "status": "PASS",
+   "line": "--engage-control-engage-release: abs(-180ms) on <html> before the first script (the default \"calc(90ms * 2)\" = 0.18s) · CSS reads the form 0.18s · console errors naming the token 0 (clean page 0), uncaught 0",
+   "load": "7.9/9.2/8.4"
+  },
+  {
+   "name": "E-11 pop token forms · --engage-control-engage-release 0.18S · commit",
+   "status": "PASS",
+   "line": "--engage-control-engage-release: 0.18S on <html> before the first script (the default \"calc(90ms * 2)\" = 0.18s) · CSS reads the form 0.18s · console errors naming the token 0 (clean page 0), uncaught 0",
+   "load": "7.9/9.2/8.4"
+  },
+  {
+   "name": "E-11 pop token forms · --engage-control-engage-attack calc(30ms + 30ms) · commit",
+   "status": "PASS",
+   "line": "--engage-control-engage-attack: calc(30ms + 30ms) on <html> before the first script (the default \"60ms\" = 0.06s) · CSS reads the form 0.06s · console errors naming the token 0 (clean page 0), uncaught 0",
+   "load": "8.5/9.3/8.4"
+  },
+  {
+   "name": "E-11 pop token forms · --engage-control-engage-attack calc(30ms * 2) · commit",
+   "status": "PASS",
+   "line": "--engage-control-engage-attack: calc(30ms * 2) on <html> before the first script (the default \"60ms\" = 0.06s) · CSS reads the form 0.06s · console errors naming the token 0 (clean page 0), uncaught 0",
+   "load": "8.5/9.3/8.4"
+  },
+  {
+   "name": "E-11 pop token forms · --engage-control-engage-attack min(60ms, 100s) · commit",
+   "status": "PASS",
+   "line": "--engage-control-engage-attack: min(60ms, 100s) on <html> before the first script (the default \"60ms\" = 0.06s) · CSS reads the form 0.06s · console errors naming the token 0 (clean page 0), uncaught 0",
+   "load": "8.5/9.3/8.4"
+  },
+  {
+   "name": "E-11 pop token forms · --engage-control-engage-attack max(60ms, 1ms) · commit",
+   "status": "PASS",
+   "line": "--engage-control-engage-attack: max(60ms, 1ms) on <html> before the first script (the default \"60ms\" = 0.06s) · CSS reads the form 0.06s · console errors naming the token 0 (clean page 0), uncaught 0",
+   "load": "8.5/9.3/8.4"
+  },
+  {
+   "name": "E-11 pop token forms · --engage-control-engage-attack clamp(1ms, 60ms, 100s) · commit",
+   "status": "PASS",
+   "line": "--engage-control-engage-attack: clamp(1ms, 60ms, 100s) on <html> before the first script (the default \"60ms\" = 0.06s) · CSS reads the form 0.06s · console errors naming the token 0 (clean page 0), uncaught 0",
+   "load": "8.4/9.3/8.4"
+  },
+  {
+   "name": "E-11 pop token forms · --engage-control-engage-attack calc(var(--h13-undefined, 60ms)) · commit",
+   "status": "PASS",
+   "line": "--engage-control-engage-attack: calc(var(--h13-undefined, 60ms)) on <html> before the first script (the default \"60ms\" = 0.06s) · CSS reads the form 0.06s · console errors naming the token 0 (clean page 0), uncaught 0",
+   "load": "8.4/9.3/8.4"
+  },
+  {
+   "name": "E-11 pop token forms · --engage-control-engage-attack round(nearest, 60ms, 1ms) · commit",
+   "status": "PASS",
+   "line": "--engage-control-engage-attack: round(nearest, 60ms, 1ms) on <html> before the first script (the default \"60ms\" = 0.06s) · CSS reads the form 0.06s · console errors naming the token 0 (clean page 0), uncaught 0",
+   "load": "8.4/9.3/8.4"
+  },
+  {
+   "name": "E-11 pop token forms · --engage-control-engage-attack abs(-60ms) · commit",
+   "status": "PASS",
+   "line": "--engage-control-engage-attack: abs(-60ms) on <html> before the first script (the default \"60ms\" = 0.06s) · CSS reads the form 0.06s · console errors naming the token 0 (clean page 0), uncaught 0",
+   "load": "8.4/9.3/8.4"
+  },
+  {
+   "name": "E-11 pop token forms · --engage-control-engage-attack 0.06S · commit",
+   "status": "PASS",
+   "line": "--engage-control-engage-attack: 0.06S on <html> before the first script (the default \"60ms\" = 0.06s) · CSS reads the form 0.06s · console errors naming the token 0 (clean page 0), uncaught 0",
+   "load": "8.1/9.2/8.4"
+  },
+  {
+   "name": "E-11 slider token forms · --fx-scale-engage calc(1.06 + 0) · hold",
+   "status": "PASS",
+   "line": "--fx-scale-engage: calc(1.06 + 0) on <html> before the first script (the default \"1.06\" = 1.06) · CSS reads the form 1.06 · console errors naming the token 0 (clean page 0), uncaught 0 · engaged 381.6 × 21.2 against clean 381.6 × 21.2 (bound max(1 px, 1.5 %))",
+   "load": "8.1/9.2/8.4"
+  },
+  {
+   "name": "E-11 slider token forms · --fx-scale-engage min(1.06, 100) · hold",
+   "status": "PASS",
+   "line": "--fx-scale-engage: min(1.06, 100) on <html> before the first script (the default \"1.06\" = 1.06) · CSS reads the form 1.06 · console errors naming the token 0 (clean page 0), uncaught 0 · engaged 381.6 × 21.2 against clean 381.6 × 21.2 (bound max(1 px, 1.5 %))",
+   "load": "7.8/9.1/8.4"
+  },
+  {
+   "name": "E-11 slider token forms · --fx-scale-engage max(1.06, 0) · hold",
+   "status": "PASS",
+   "line": "--fx-scale-engage: max(1.06, 0) on <html> before the first script (the default \"1.06\" = 1.06) · CSS reads the form 1.06 · console errors naming the token 0 (clean page 0), uncaught 0 · engaged 381.6 × 21.2 against clean 381.6 × 21.2 (bound max(1 px, 1.5 %))",
+   "load": "7.8/9.1/8.4"
+  },
+  {
+   "name": "E-11 slider token forms · --fx-scale-engage clamp(0, 1.06, 100) · hold",
+   "status": "PASS",
+   "line": "--fx-scale-engage: clamp(0, 1.06, 100) on <html> before the first script (the default \"1.06\" = 1.06) · CSS reads the form 1.06 · console errors naming the token 0 (clean page 0), uncaught 0 · engaged 381.6 × 21.2 against clean 381.6 × 21.2 (bound max(1 px, 1.5 %))",
+   "load": "7.8/9.1/8.4"
+  },
+  {
+   "name": "E-11 slider token forms · --fx-scale-engage calc(var(--h13-undefined, 1.06)) · hold",
+   "status": "PASS",
+   "line": "--fx-scale-engage: calc(var(--h13-undefined, 1.06)) on <html> before the first script (the default \"1.06\" = 1.06) · CSS reads the form 1.06 · console errors naming the token 0 (clean page 0), uncaught 0 · engaged 381.6 × 21.2 against clean 381.6 × 21.2 (bound max(1 px, 1.5 %))",
+   "load": "7.8/9.1/8.4"
+  },
+  {
+   "name": "E-11 slider token forms · --fx-scale-engage abs(-1.06) · hold",
+   "status": "PASS",
+   "line": "--fx-scale-engage: abs(-1.06) on <html> before the first script (the default \"1.06\" = 1.06) · CSS reads the form 1.06 · console errors naming the token 0 (clean page 0), uncaught 0 · engaged 381.6 × 21.2 against clean 381.6 × 21.2 (bound max(1 px, 1.5 %))",
+   "load": "7.7/9.1/8.4"
+  },
+  {
+   "name": "E-11 slider token forms · --fx-scale-engage 1.06E0 · hold",
+   "status": "PASS",
+   "line": "--fx-scale-engage: 1.06E0 on <html> before the first script (the default \"1.06\" = 1.06) · CSS reads the form 1.06 · console errors naming the token 0 (clean page 0), uncaught 0 · engaged 381.6 × 21.2 against clean 381.6 × 21.2 (bound max(1 px, 1.5 %))",
+   "load": "7.7/9.1/8.4"
+  },
+  {
+   "name": "E-11 slider token forms · --fx-gutter calc(8px + 8px) · hold",
+   "status": "PASS",
+   "line": "--fx-gutter: calc(8px + 8px) on <html> before the first script (the default \"16px\" = 16px) · CSS reads the form 16px · console errors naming the token 0 (clean page 0), uncaught 0 · engaged 381.6 × 21.2 against clean 381.6 × 21.2 (bound max(1 px, 1.5 %))",
+   "load": "7.7/9.1/8.4"
+  },
+  {
+   "name": "E-11 slider token forms · --fx-gutter max(16px, 0px) · hold",
+   "status": "PASS",
+   "line": "--fx-gutter: max(16px, 0px) on <html> before the first script (the default \"16px\" = 16px) · CSS reads the form 16px · console errors naming the token 0 (clean page 0), uncaught 0 · engaged 381.6 × 21.2 against clean 381.6 × 21.2 (bound max(1 px, 1.5 %))",
+   "load": "7.5/9.0/8.4"
+  },
+  {
+   "name": "E-11 slider token forms · --fx-gutter clamp(0px, 16px, 9999px) · hold",
+   "status": "PASS",
+   "line": "--fx-gutter: clamp(0px, 16px, 9999px) on <html> before the first script (the default \"16px\" = 16px) · CSS reads the form 16px · console errors naming the token 0 (clean page 0), uncaught 0 · engaged 381.6 × 21.2 against clean 381.6 × 21.2 (bound max(1 px, 1.5 %))",
+   "load": "7.5/9.0/8.4"
+  },
+  {
+   "name": "E-11 slider token forms · --fx-gutter min(16px, 9999px) · hold",
+   "status": "PASS",
+   "line": "--fx-gutter: min(16px, 9999px) on <html> before the first script (the default \"16px\" = 16px) · CSS reads the form 16px · console errors naming the token 0 (clean page 0), uncaught 0 · engaged 381.6 × 21.2 against clean 381.6 × 21.2 (bound max(1 px, 1.5 %))",
+   "load": "7.5/9.0/8.4"
+  },
+  {
+   "name": "E-11 slider token forms · --fx-gutter calc(var(--h13-undefined, 16px)) · hold",
+   "status": "PASS",
+   "line": "--fx-gutter: calc(var(--h13-undefined, 16px)) on <html> before the first script (the default \"16px\" = 16px) · CSS reads the form 16px · console errors naming the token 0 (clean page 0), uncaught 0 · engaged 381.6 × 21.2 against clean 381.6 × 21.2 (bound max(1 px, 1.5 %))",
+   "load": "7.7/9.0/8.4"
+  },
+  {
+   "name": "E-11 slider token forms · --fx-gutter calc(1rem) · hold",
+   "status": "PASS",
+   "line": "--fx-gutter: calc(1rem) on <html> before the first script (the default \"16px\" = 16px) · CSS reads the form 16px · console errors naming the token 0 (clean page 0), uncaught 0 · engaged 381.6 × 21.2 against clean 381.6 × 21.2 (bound max(1 px, 1.5 %))",
+   "load": "7.7/9.0/8.4"
+  },
+  {
+   "name": "E-11 census · pop",
+   "status": "PASS",
+   "line": "default tokens, the act (rest, Tab, commit, hover, press) · engagement errors 0 · other console errors 0",
+   "load": "7.7/9.0/8.4"
+  },
+  {
+   "name": "E-11 census · travel",
+   "status": "PASS",
+   "line": "default tokens, the act (rest, Tab, commit, hover, press) · engagement errors 0 · other console errors 0",
+   "load": "7.7/9.0/8.4"
+  },
+  {
+   "name": "E-11 census · rest",
+   "status": "PASS",
+   "line": "default tokens, the act (rest, Tab, commit, hover, press) · engagement errors 0 · other console errors 0",
+   "load": "8.0/9.1/8.4"
+  },
+  {
+   "name": "E-11 census · act",
+   "status": "PASS",
+   "line": "default tokens, the act (rest, Tab, commit, hover, press) · engagement errors 0 · other console errors 0",
+   "load": "8.0/9.1/8.4"
+  },
+  {
+   "name": "E-11 census · slider",
+   "status": "PASS",
+   "line": "default tokens, the act (rest, Tab, commit, hover, press, a hold) · engagement errors 0 · other console errors 0",
+   "load": "7.9/9.0/8.4"
+  },
+  {
+   "name": "E-11 census · slider2",
+   "status": "PASS",
+   "line": "default tokens, the act (rest, Tab, commit, hover, press) · engagement errors 0 · other console errors 0",
+   "load": "7.5/8.8/8.3"
+  },
+  {
+   "name": "E-11 census · restale",
+   "status": "PASS",
+   "line": "default tokens, the act (rest, Tab, commit, hover, press) · engagement errors 0 · other console errors 0",
+   "load": "7.5/8.8/8.3"
+  },
+  {
+   "name": "E-11 census · clipstale",
+   "status": "PASS",
+   "line": "default tokens, the act (rest, Tab, commit, hover, press, a hold) · engagement errors 0 · other console errors 0",
+   "load": "7.3/8.8/8.3"
+  },
+  {
+   "name": "E-11 census · presented",
+   "status": "PASS",
+   "line": "default tokens, the act (rest, Tab, commit, hover, press, the plate) · engagement errors 0 · other console errors 0",
+   "load": "7.3/8.8/8.3"
+  },
+  {
+   "name": "E-11 census · capsule",
+   "status": "PASS",
+   "line": "default tokens, the act (rest, Tab, commit, hover, press) · engagement errors 0 · other console errors 0",
+   "load": "6.5/8.4/8.2"
+  },
+  {
+   "name": "E-11 census · vsheet",
+   "status": "PASS",
+   "line": "default tokens, the act (rest, Tab, commit, hover, press) · engagement errors 0 · other console errors 0",
+   "load": "6.2/8.2/8.1"
+  },
+  {
+   "name": "E-11 census · strip",
+   "status": "PASS",
+   "line": "default tokens, the act (rest, Tab, commit, hover, press) · engagement errors 0 · other console errors 0",
+   "load": "6.1/8.0/8.0"
+  },
+  {
+   "name": "E-11 census · modal",
+   "status": "PASS",
+   "line": "default tokens, the act (rest, Tab, commit, hover, press) · engagement errors 0 · other console errors 0",
+   "load": "5.2/7.6/7.9"
+  },
+  {
+   "name": "E-11 census · s6",
+   "status": "PASS",
+   "line": "default tokens, the act (rest, Tab, commit, hover, press) · engagement errors 0 · other console errors 0",
+   "load": "5.1/7.5/7.9"
+  },
+  {
+   "name": "E-11 census · passive",
+   "status": "PASS",
+   "line": "default tokens, the act (rest, Tab, commit, hover, press) · engagement errors 0 · other console errors 0",
+   "load": "5.1/7.5/7.9"
+  },
+  {
+   "name": "E-11 census · field",
+   "status": "PASS",
+   "line": "default tokens, the act (rest, Tab, commit, hover, press) · engagement errors 0 · other console errors 0",
+   "load": "5.1/7.5/7.9"
+  },
+  {
+   "name": "E-11 census · ambient",
+   "status": "PASS",
+   "line": "default tokens, the act (rest, Tab, commit, hover, press) · engagement errors 0 · other console errors 0",
+   "load": "4.9/7.4/7.8"
+  },
+  {
+   "name": "E-11 census · slop",
+   "status": "PASS",
+   "line": "default tokens, the act (rest, Tab, commit, hover, press) · engagement errors 0 · other console errors 0",
+   "load": "12.1/8.9/8.4"
+  },
+  {
+   "name": "E-11 census · restloop",
+   "status": "PASS",
+   "line": "default tokens, the act (rest, Tab, commit, hover, press) · engagement errors 0 · other console errors 0",
+   "load": "10.9/8.9/8.4"
+  },
+  {
+   "name": "E-11 slider reach input · --fx-scale-engage nonsense",
+   "status": "UNMEASURED",
+   "line": "NOT READ ON THIS PATH (no error, no degradation) · --fx-scale-engage: nonsense on <html> before the first script (expect refused) · held inline ×1.0600, block ×1.0600 (366.8 × 21.2 of rest 346.0 × 20.0; clean 366.8 × 21.2) · console errors naming the token 0, uncaught 0",
+   "load": "10.5/8.9/8.4"
+  },
+  {
+   "name": "E-11 slider reach input · --fx-gutter nonsense",
+   "status": "PASS",
+   "line": "--fx-gutter: nonsense on <html> before the first script (expect refused) · held inline ×1.0600, block ×1.0600 (400.7 × 21.2 of rest 378.0 × 20.0; clean 366.8 × 21.2) · console errors naming the token 1 (\"[fixture] --fx-gutter is unreadable: the reach paints nothing (no inline grow)\"), uncaught 0",
+   "load": "10.5/8.9/8.4"
+  },
+  {
+   "name": "E-11 slider reach input · --fx-scale-engage calc(1.06 * 1)",
+   "status": "PASS",
+   "line": "--fx-scale-engage: calc(1.06 * 1) on <html> before the first script (expect taken) · held inline ×1.0600, block ×1.0600 (366.8 × 21.2 of rest 346.0 × 20.0; clean 366.8 × 21.2) · console errors naming the token 0, uncaught 0",
+   "load": "10.5/8.9/8.4"
+  },
+  {
+   "name": "E-11 slider reach input · --fx-gutter calc(8px + 8px)",
+   "status": "PASS",
+   "line": "--fx-gutter: calc(8px + 8px) on <html> before the first script (expect taken) · held inline ×1.0600, block ×1.0600 (366.8 × 21.2 of rest 346.0 × 20.0; clean 366.8 × 21.2) · console errors naming the token 0, uncaught 0",
+   "load": "9.8/8.8/8.3"
+  },
+  {
+   "name": "E-11 pop fail-loud --fx-commit-crest (commit)",
+   "status": "PASS",
+   "line": "fails loud · --fx-commit-crest: \"nonsense\" on <html> before the first script · clean {\"peak\":0,\"rise\":0.18171218443130568} {\"peak\":0,\"rise\":0.18171218443130568} · planted {\"peak\":0,\"rise\":0.18171218443130568} (a metric degrades outside the clean envelope plus its epsilon, reproduced when first seen) · console errors on the planted run(s) 1: [fixture] --fx-commit-crest is unreadable (\"nonsense\"): the commit light cannot size its crest",
+   "load": "9.8/8.8/8.3"
+  },
+  {
+   "name": "E-11 slider fail-loud --fx-scale-engage (kbd)",
+   "status": "UNMEASURED",
+   "line": "no degradation, no error: the token is not read on this path · --fx-scale-engage: \"nonsense\" on the root · clean {\"s\":1.0599999321831597,\"veil\":1,\"n\":1} {\"s\":1.0599999321831597,\"veil\":1,\"n\":1} · planted {\"s\":1.0599999321831597,\"veil\":1,\"n\":1} (a metric degrades outside the clean envelope plus its epsilon, reproduced when first seen) · console errors on the planted run(s) 0",
+   "load": "11.1/9.0/8.4"
+  },
+  {
+   "name": "E-11 clock census",
+   "status": "REPORT",
+   "line": "3 --engage-* clock(s) read by a transition or animation declaration in the loaded stylesheets: --engage-control-engage-release (3 rule(s), e.g. transition: opacity var(--engage-control-engage-release) linear) · --engage-press-drain-attack (1 rule(s), e.g. transition: scale var(--spring-press-duration) var(--spring-press), background-color var(--e) · --engage-press-drain-release (1 rule(s), e.g. transition: scale var(--spring-press-duration) var(--spring-press), opacity var(--engage-pre)",
+   "load": "6.3/7.8/8.0"
+  },
+  {
+   "name": "E-11 clock --engage-control-engage-release (enumerated)",
+   "status": "PASS",
+   "line": "--engage-control-engage-release: nonsense on <html> before the first script · fails loud · slider: 2 consumer read(s), 2 reading the clock unreadable, 2 with its timing changed in the act (tab | .fx-veil #0: opacity / 0.18s / 0s / none / 0s → all / 0s / 0s / none / 0s), console errors naming the clock 2 of 2 (\"[fixture] --engage-control-engage-release is unreadable (\"nonsense\"): the clock it times cannot run\"), on the clean page 0 · presented: 5 consumer read(s), 5 reading the clock unreadable, 5 with its timing changed in the act (rest | .fx-pdialog #0: opacity, scale / 0.18s, 0.35s / 0s, 0s / none / 0s → all / 0s / 0s / none / 0s), console errors naming the clock 3 of 3 (\"[fixture] --engage-control-engage-release is unreadable (\"nonsense\"): the clock it times cannot run\"), on the clean page 0",
+   "load": "6.4/7.8/8.0"
+  },
+  {
+   "name": "E-11 clock --engage-press-drain-attack (enumerated)",
+   "status": "PASS",
+   "line": "--engage-press-drain-attack: nonsense on <html> before the first script · fails loud · pop: 5 consumer read(s), 5 reading the clock unreadable, 5 with its timing changed in the act (rest | .ctl, .seg #0: scale, background-color / 0.35s, 0.055s / 0s, 0s / none / 0s → all / 0s / 0s / none / 0s), console errors naming the clock 4 of 4 (\"[fixture] --engage-press-drain-attack is unreadable (\"nonsense\"): the clock it times cannot run\"), on the clean page 0",
+   "load": "6.4/7.8/8.0"
+  },
+  {
+   "name": "E-11 clock --engage-press-drain-release (enumerated)",
+   "status": "UNMEASURED",
+   "line": "no scene renders an element a rule timing on --engage-press-drain-release matches (1 rule(s): .fx-loupe): no consumer to plant on",
+   "load": "6.4/7.8/8.0"
+  }
+ ]
+}

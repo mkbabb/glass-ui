@@ -1,0 +1,38 @@
+{
+ "id": "E-11",
+ "engine": "chromium",
+ "version": "149.0.7827.55",
+ "target": {
+  "fixture": true,
+  "fault": "e11-reachzero"
+ },
+ "loadStart": "10.4/8.1/7.4",
+ "loadEnd": "12.3/8.5/7.5",
+ "verdict": "FAIL",
+ "cells": [
+  {
+   "name": "E-11 slider reach input · --fx-scale-engage nonsense",
+   "status": "PASS",
+   "line": "--fx-scale-engage: nonsense on <html> before the first script (expect refused) · held inline ×1.0000, block ×1.0000 (346.0 × 20.0 of rest 346.0 × 20.0; clean 358.0 × 21.2) · console errors naming the token 1 (\"[fixture] --fx-scale-engage is unreadable (\"nonsense\"): the engagement cannot size its grow\"), uncaught 0",
+   "load": "11.5/8.3/7.5"
+  },
+  {
+   "name": "E-11 slider reach input · --fx-gutter nonsense",
+   "status": "FAIL",
+   "line": "THE PAINT CONTRADICTS THE MESSAGE (a collapse) · --fx-gutter: nonsense on <html> before the first script (expect refused) · held inline ×0.0000, block ×1.0600 (0.0 × 21.2 of rest 378.0 × 20.0; clean 358.0 × 21.2) · console errors naming the token 1 (\"[fixture] --fx-gutter is unreadable: the reach paints nothing (no inline grow)\"), uncaught 0",
+   "load": "12.3/8.5/7.5"
+  },
+  {
+   "name": "E-11 slider reach input · --fx-scale-engage calc(1.06 * 1)",
+   "status": "PASS",
+   "line": "--fx-scale-engage: calc(1.06 * 1) on <html> before the first script (expect taken) · held inline ×1.0347, block ×1.0600 (358.0 × 21.2 of rest 346.0 × 20.0; clean 358.0 × 21.2) · console errors naming the token 0, uncaught 0",
+   "load": "12.3/8.5/7.5"
+  },
+  {
+   "name": "E-11 slider reach input · --fx-gutter calc(8px + 8px)",
+   "status": "PASS",
+   "line": "--fx-gutter: calc(8px + 8px) on <html> before the first script (expect taken) · held inline ×1.0347, block ×1.0600 (358.0 × 21.2 of rest 346.0 × 20.0; clean 358.0 × 21.2) · console errors naming the token 0, uncaught 0",
+   "load": "12.3/8.5/7.5"
+  }
+ ]
+}

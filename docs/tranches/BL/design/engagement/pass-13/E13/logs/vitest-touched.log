@@ -1,0 +1,37 @@
+# 2026-11-02 23:58:58 load { 15.47 13.49 10.07 }
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1793669332 slope=30.2/s inuse=36211 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. Finish what you are doing and report it; the owner decides on the reboot.
+
+ RUN  v4.1.10 /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p13/E13/wt
+
+ ❯ tests/composables/motion/engage-stage.test.ts (58 tests | 1 failed) 320ms
+     × the settle is read by its type's parser (CK-21): 210ms and 0.21s are one clock; a bare number, 0, -1 or a word is loud and nothing travels 27ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/composables/motion/engage-stage.test.ts > a re-render glides the painted move, and nothing else (CK-20, P-E13 §1.2) > the settle is read by its type's parser (CK-21): 210ms and 0.21s are one clock; a bare number, 0, -1 or a word is loud and nothing travels
+AssertionError: -1s []: expected +0 to be 1 // Object.is equality
+
+- Expected
++ Received
+
+- 1
++ 0
+
+ ❯ tests/composables/motion/engage-stage.test.ts:507:121
+    505|             const r = await glideUnder({ "--spring-dock-settle": t });
+    506|             expect(r.timing, t).toEqual([]);
+    507|             expect(r.named.filter((m) => m.includes("--spring-dock-set…
+       |                                                                                                                         ^
+    508|         }
+    509|     });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 4 passed (5)
+      Tests  1 failed | 122 passed | 1 expected fail (124)
+   Start at  23:58:59
+   Duration  1.38s (transform 464ms, setup 175ms, import 873ms, tests 473ms, environment 563ms)
+
+exit 1
+# 2026-11-02 23:59:04 load { 15.99 13.63 10.14 }

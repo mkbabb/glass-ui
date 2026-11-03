@@ -75,6 +75,35 @@ const EPS_S = 0.003, EPS_PX = 1, EPS_L = 0.005;
 // cubic-bezier with y past [0, 1] (both valid easings); a <time> in ms and in s, a negative and a unitless number, a nonsense string
 const TRAVEL_EASINGS = ["ease, linear", "linear(0, 1), ease-in", "nonsense", "initial", "var(--undefined)", "steps(4)", "cubic-bezier(0, 2, 1, -1)"];
 const TRAVEL_SETTLES = ["210ms", "0.21s", "-1", "0", "nonsense"];
+// ── H13 (REGISTRY §P12-7 items 1, 5, 10; §P12-8.1 (b); `../pass-13/H13.md` §1.2): the value family DERIVED from the <time> grammar
+// (CSS Values 4: a dimension, its unit's case, an exponent, a sign, a comment, the CSS-wide keyword, a zero, a bare number, a list, and
+// every math function CSS takes in a <time> context: calc(), min(), max(), clamp(), round(), abs(), calc() of a time and a number, nested,
+// with a var() fallback) and from the single-easing grammar animate() takes. `calc(infinity * 1s)` is REPORT (an endless clock has no
+// exactness to test); `1e-3s` is graded on the carry alone (a once-per-frame recorder cannot see a 1 ms travel on the lens or the root)
+const H13_SETTLES = ["210MS", "0.21S", "2.1e2ms", "+0.21s", "/* c */ 210ms", "-0s", "210", "210ms, 0.3s", "inherit", "calc(0.1s + 110ms)", "calc(105ms * 2)", "min(210ms, 1s)", "max(210ms, 0.1s)", "clamp(100ms, 210ms, 1s)", "calc(var(--h13-undefined, 210ms))", "var(--h13-undefined, 210ms)", "calc(calc(105ms) * 2)", "round(nearest, 214ms, 10ms)", "abs(-210ms)", "calc(1s * 0.21)", "calc(infinity * 1s)", "1e-3s"];
+// a held box "as clean": within max(1 px, 1.5 % of the clean box) on each axis. The grow's run-to-run spread is 1.1 % of the box (e11-noise,
+// H2 §2.3: 1.054-1.066); a misread grow (×1 for ×1.06) moves it 5.7 %, a misread gutter by its whole width
+const asClean = (b, c) => !!b && !!c && Math.abs(b.w - c.w) <= Math.max(1, 0.015 * c.w) && Math.abs(b.h - c.h) <= Math.max(1, 0.015 * c.h);
+const H13_EASINGS = ["EASE-IN-OUT", "linear(0, 0.5 50%, 1)", "steps(2, jump-none)", "step-end", "/* c */ ease-in", "var(--h13-undefined, ease-in)", "inherit", "cubic-bezier(1.5, 0, 0, 1)", "steps(0)"];
+// the tokens P-E12 §1.2 lists, at their consumers, on the scene app (a fixture row names its own in `forms`): the commit path's
+// (useEngage readInputs: the envelope clocks, enumerated from the CSSOM, the panel row's clock and easing) and the reach's. The crest
+// (--rung-crest) and the pitch (--scrub-pitch) are registered: their computed value is canonical, so no form reaches the script (facts13 B)
+const LIB_FORMS = { switch: [{ token: "--spring-panel-duration", kind: "time", act: "commit" }, { token: "--spring-panel", kind: "easing", act: "commit" }, { token: "@engage-clocks", kind: "time", act: "commit" }], slider: [{ token: "--scale-engage", kind: "number", act: "hold" }, { token: "--space-section", kind: "length", act: "hold" }] };
+// equal-valued forms of a token's default, by its kind (the default read on a probe that computes the consumer property)
+const formsOf = (kind, v) => kind === "time" ? [`calc(${v / 2}ms + ${v / 2}ms)`, `calc(${v / 2}ms * 2)`, `min(${v}ms, 100s)`, `max(${v}ms, 1ms)`, `clamp(1ms, ${v}ms, 100s)`, `calc(var(--h13-undefined, ${v}ms))`, `round(nearest, ${v}ms, 1ms)`, `abs(-${v}ms)`, `${v / 1000}S`]
+  : kind === "number" ? [`calc(${v} + 0)`, `min(${v}, 100)`, `max(${v}, 0)`, `clamp(0, ${v}, 100)`, `calc(var(--h13-undefined, ${v}))`, `abs(${-v})`, `${v}E0`]
+  : kind === "length" ? [`calc(${v / 2}px + ${v / 2}px)`, `max(${v}px, 0px)`, `clamp(0px, ${v}px, 9999px)`, `min(${v}px, 9999px)`, `calc(var(--h13-undefined, ${v}px))`, `calc(${v / 16}rem)`]
+  : [String(v).toUpperCase(), `/* c */ ${v}`, `var(--h13-undefined, ${v})`];
+// a token's default and what CSS makes of a planted form, on probes under <body> computing the consumer property
+const TOKEN_FACTS = ([tok, kind]) => { const p = document.createElement("div"); p.style.cssText = "position:absolute;width:0;height:0;visibility:hidden"; document.body.appendChild(p);
+  const prop = { time: "transition-duration", number: "scale", length: "padding-left", easing: "transition-timing-function" }[kind];
+  p.style.setProperty(prop, kind === "time" || kind === "number" ? `calc((var(${tok})) * 1)` : `var(${tok})`); const v = getComputedStyle(p).getPropertyValue(prop).trim(); const raw = getComputedStyle(document.documentElement).getPropertyValue(tok).trim(); p.remove();
+  const num = kind === "time" ? Number.parseFloat(v) * (/ms$/.test(v) ? 1 : 1000) : kind === "easing" ? null : Number.parseFloat(v);
+  const ok = kind === "easing" ? !!raw && CSS.supports("transition-timing-function", raw) : raw !== "" && Number.isFinite(num) && CSS.supports(prop, kind === "length" ? raw : `calc((${raw}) * 1)`);
+  return { v, raw, num, ok }; };
+// the envelope clocks the stylesheet declares (no list kept)
+const ENGAGE_CLOCKS_FN = () => { const out = new Set(); const walk = (rules) => { for (const r of rules) { if (r.style) for (let i = 0; i < r.style.length; i++) { const n = r.style[i]; if (/^--engage-[\w-]+-(attack|release)$/.test(n)) out.add(n); } if (r.cssRules) walk(r.cssRules); } }; for (const sh of document.styleSheets) { try { walk(sh.cssRules); } catch {} } return [...out].sort(); };
+const ENGAGE_ERR = /unreadable|\[glass-ui\]|\[fixture\]/i;
 // the recorder: every WAAPI animation (no CSS transition or animation) on the lens, on the root, or under the root, seen once per frame
 // from before the hold to the end of the page's act, with its clock, its easing and the properties it animates
 const TRAVEL_REC = ([LS, RS]) => {
@@ -144,9 +173,9 @@ const consumersFn = (clocks) => {
   return out;
 };
 await witness("E-11", "CK-21 no silent degradation", async ({ a, E, T, cell, guard, idx, engine }) => {
-  const part = typeof a.part === "string" ? new Set(a.part.split(",")) : null; const old = !part || part.has("old"); const wantTravel = !part || part.has("travel");
+  const part = typeof a.part === "string" ? new Set(a.part.split(",")) : null; const old = !part || part.has("old"); const wantTravel = !part || part.has("travel"); const wantForms = !part || part.has("forms"); const want = (k) => !part || part.has(k);
   // ── H11: the travel's tokens (lens and host), loud by name, no throw, the loop alive. H12: the value family, three paths ──
-  for (const [sc, m] of wantTravel ? Object.entries(idx).filter(([s, x]) => s !== "__index" && x.loupe && x.clip) : []) {
+  for (const [sc, m] of wantTravel || wantForms ? Object.entries(idx).filter(([s, x]) => s !== "__index" && x.loupe && x.clip) : []) {
     const L = m.loupe, thumb = m.thumb ?? '[data-e~="thumb"]', B = m.clip.box, REST = m.clip.rest, ROOT = m.root ?? '[data-e~="root"]', ENG = m.engaged ?? "[data-engaged]";
     const page1 = (path, plant) => guard(`travel ${path} ${plant ? plant.join(" ") : "clean"}`, async () => {
       const P = await openPage(E, T, sc, plant ? { plant } : {});
@@ -205,8 +234,8 @@ await witness("E-11", "CK-21 no silent degradation", async ({ a, E, T, cell, gua
     // H12 (REGISTRY §P11-7 items 1, 3, 4; §P11-8.3 wave 1): the value family. The easing token takes every form the travel row can hold:
     // lists, a nonsense string, initial, an undefined var(), steps(), a cubic-bezier past [0, 1] on its y; the settle token a <time> in
     // ms, in s, a negative and a unitless number, a nonsense string
-    const VALS = row ? [...TRAVEL_EASINGS.map((v) => [`--spring-${row.n}`, v, "easing"]), ...TRAVEL_SETTLES.map((v) => [`--spring-${row.n}-settle`, v, "settle"])] : [];
-    for (const [tok, val, kind] of VALS) for (const path of ["side", "rerender", "carry"]) {
+    const VALS = row ? [...(wantTravel ? [...TRAVEL_EASINGS.map((v) => [`--spring-${row.n}`, v, "easing", ["side", "rerender", "carry"]]), ...TRAVEL_SETTLES.map((v) => [`--spring-${row.n}-settle`, v, "settle", ["side", "rerender", "carry"]])] : []), ...(wantForms ? [...H13_EASINGS.map((v) => [`--spring-${row.n}`, v, "easing", ["side", "rerender"]]), ...H13_SETTLES.map((v) => [`--spring-${row.n}-settle`, v, "settle", ["side", "rerender", "carry"]])] : [])] : [];
+    for (const [tok, val, kind, paths] of VALS) for (const path of paths) {
       const nm = `E-11 ${sc} travel loud · ${tok} ${val} · ${path}`;
       if (!clean[path]) { cell(nm, "UNMEASURED", `NOT DRIVEN: the clean ${path} page drove no ${path === "side" ? "travel" : path === "rerender" ? "host glide" : "release carry"}`); continue; }
       const r = await page1(path, [tok, val]);
@@ -224,7 +253,115 @@ await witness("E-11", "CK-21 no silent degradation", async ({ a, E, T, cell, gua
       const refusedOk = named.length >= 1 && !tv.length;
       const ok = sideOk && !uncaught.length && laterOk(r) && (expect === "taken" ? takenOk : expect === "refused" ? refusedOk : takenOk || refusedOk);
       const verdictWhy = !sideOk ? "NOT DRIVEN: no side change · " : uncaught.length ? "THROWS · " : expect === "taken" && !takenOk ? (tv.length && tv.some((x) => Math.abs(x.ms - cssMs) > 1) ? "MISREAD CLOCK · " : tv.length ? "NOT EXACT · " : "NOT TAKEN · ") : expect === "refused" && !refusedOk ? (tv.length ? "TRAVELS ON A REFUSED TOKEN · " : "SILENT · ") : "";
-      cell(nm, !sideOk ? "UNMEASURED" : ok ? "PASS" : "FAIL", `${verdictWhy}${tok}: ${val} on <html> before the first script (the row ${row.n}, read from the clean travel) · the grammar: CSS reads the settle ${f(cssMs, 1)} ms${kind === "easing" ? `; animate() ${r.facts.takes ? `takes "${String(r.facts.norm).slice(0, 50)}"` : `refuses it (${String(r.facts.why).slice(0, 80)})`}` : ""} → expect ${expect} · ${path === "side" ? `side changes ${changesOf(r.film)} · ` : ""}travel ${tline(tv)} · console errors naming the token ${named.length}${named[0] ? ` ("${named[0].slice(0, 100)}")` : ""}, uncaught page errors ${uncaught.length}${uncaught[0] ? ` ("${uncaught[0].slice(0, 120)}")` : ""}, all errors ${r.errs.length} · ${laterLine(r)} (bound: taken on CSS's clock to 1 ms with the easing animate() parses and no error, or refused with ≥ 1 console.error naming the token and no travel; 0 uncaught; the later hold engaged, shown, pinned ≤ 2 px)`);
+      const report = val === "calc(infinity * 1s)" || (val === "1e-3s" && path !== "carry");
+      cell(nm, report ? "REPORT" : !sideOk ? "UNMEASURED" : ok ? "PASS" : "FAIL", `${report ? `REPORT (${val === "1e-3s" ? "a 1 ms travel a once-per-frame recorder cannot see on this path; graded on the carry" : "an endless clock has no exactness to test"}; would ${ok ? "pass" : "fail"}) · ` : ""}${verdictWhy}${tok}: ${val} on <html> before the first script (the row ${row.n}, read from the clean travel) · the grammar: CSS reads the settle ${f(cssMs, 1)} ms${kind === "easing" ? `; animate() ${r.facts.takes ? `takes "${String(r.facts.norm).slice(0, 50)}"` : `refuses it (${String(r.facts.why).slice(0, 80)})`}` : ""} → expect ${expect} · ${path === "side" ? `side changes ${changesOf(r.film)} · ` : ""}travel ${tline(tv)} · console errors naming the token ${named.length}${named[0] ? ` ("${named[0].slice(0, 100)}")` : ""}, uncaught page errors ${uncaught.length}${uncaught[0] ? ` ("${uncaught[0].slice(0, 120)}")` : ""}, all errors ${r.errs.length} · ${laterLine(r)} (bound: taken on CSS's clock to 1 ms with the easing animate() parses and no error, or refused with ≥ 1 console.error naming the token and no travel; 0 uncaught; the later hold engaged, shown, pinned ≤ 2 px)`);
+    }
+  }
+  // ── H13: TOKEN FORMS at their consumers (CK-21; REGISTRY §P12-8.1 (b)): `--part tokens`. Per token P-E12 §1.2 lists (the scene app,
+  // LIB_FORMS; a fixture row's `forms`), its default read on a probe computing the consumer property, then each equal-valued form of it
+  // (formsOf: math functions, case, exponent, a var() fallback) set on <html> before the first script. The act: `commit` (Tab in, the
+  // commit or a stateless click, +600 ms) or `hold` (a fine hold on the thumb, +1000 ms, the root's painted box read). CSS takes each form
+  // (read on the same probe, printed); so the script must too.
+  //   token forms · <token> <form> · <scene>   PASS when no console.error names the token, nothing is uncaught, and on `hold` the
+  //                    engaged painted box is as clean (asClean: max(1 px, 1.5 %)) on both axes; FAIL names the miss: REFUSED A FORM ITS
+  //                    CONSUMER TAKES, MISREAD (paint differs), THROWS. REPORT when CSS itself refuses the form in this engine.
+  //                    Plants e11-narrowread, e11-typedom; the pass-12 candidate (cand12)
+  const tokAct = async (sc, m, act, plant) => {
+    const P = await openPage(E, T, sc, plant ? { plant } : {});
+    try {
+      const { page } = P; await page.waitForTimeout(200); let box = null;
+      if (act === "commit") { await page.focus('[data-sentinel="before"]').catch(() => {}); await page.keyboard.press(tabKey(engine)); await page.waitForTimeout(300); await page.evaluate((st) => { const t = document.querySelector('[data-e~="target"]'); if (st) t?.click(); else window.__e.commit?.(); }, !!m.stateless).catch(() => {}); await page.waitForTimeout(600); }
+      else { const R = m.root ?? '[data-e~="root"]'; const c = await center(page, m.thumb ?? '[data-e~="thumb"]'); await page.mouse.move(c.x, c.y); await page.mouse.down(); try { await page.waitForTimeout(1000); box = await page.evaluate((R) => { const q = document.querySelector(R).getBoundingClientRect(); return { w: q.width, h: q.height }; }, R); } finally { await page.mouse.up(); } }
+      const facts = plant ? await page.evaluate(TOKEN_FACTS, [plant[0], plant[2]]) : null;
+      const clocks = await page.evaluate(ENGAGE_CLOCKS_FN);
+      return { box, facts, clocks, errs: [...P.errors] };
+    } finally { await P.close(); }
+  };
+  for (const [sc, m] of want("tokens") ? Object.entries(idx).filter(([s]) => s !== "__index") : []) {
+    const list = m.forms ?? LIB_FORMS[sc];
+    if (!list) continue;
+    const acts = [...new Set(list.map((x) => x.act))]; const clean = {};
+    for (const act of acts) { const r = await guard(`tokens clean ${sc} ${act}`, () => tokAct(sc, m, act, null), 60000); clean[act] = r; }
+    for (const spec of list) {
+      const base = clean[spec.act]; if (!base || base.crashed) { cell(`E-11 ${sc} token forms · ${spec.token}`, "FAIL", base?.line ?? "the clean page did not run"); continue; }
+      const toks = spec.token === "@engage-clocks" ? base.clocks : [spec.token];
+      for (const tok of toks) {
+        const d = await guard(`tokens default ${sc} ${tok}`, async () => { const P = await openPage(E, T, sc); try { return await P.page.evaluate(TOKEN_FACTS, [tok, spec.kind]); } finally { await P.close(); } }, 60000);
+        if (d.crashed || !d.ok) { cell(`E-11 ${sc} token forms · ${tok}`, "UNMEASURED", `NOT DRIVEN: the default does not read as one ${spec.kind} on a probe (${JSON.stringify(d.raw ?? d.line)} → ${d.v})`); continue; }
+        const def = spec.kind === "easing" ? d.raw : Math.round(d.num * 10000) / 10000; const cleanNamed = base.errs.filter((e) => e.includes(tok));
+        for (const form of formsOf(spec.kind, def)) {
+          const nm = `E-11 ${sc} token forms · ${tok} ${form} · ${spec.act}`;
+          const r = await guard(nm, () => tokAct(sc, m, spec.act, [tok, form, spec.kind]), 60000);
+          if (r.crashed) { cell(nm, "FAIL", r.line); continue; }
+          const named = r.errs.filter((e) => !e.startsWith("pageerror") && e.includes(tok)), uncaught = r.errs.filter((e) => e.startsWith("pageerror"));
+          const cssTakes = r.facts.ok && (spec.kind === "easing" || Math.abs(r.facts.num - d.num) <= (spec.kind === "time" ? 1 : 0.0015));
+          const paintOk = spec.act !== "hold" || asClean(r.box, base.box);
+          const why = uncaught.length ? "THROWS · " : named.length ? "REFUSED A FORM ITS CONSUMER TAKES · " : !paintOk ? "MISREAD (paint differs) · " : "";
+          cell(nm, !cssTakes ? "REPORT" : !why ? "PASS" : "FAIL", `${cssTakes ? why : "CSS itself does not read the form as the default here: not graded · "}${tok}: ${form} on <html> before the first script (the default ${JSON.stringify(d.raw)} = ${d.v}) · CSS reads the form ${r.facts.v} · console errors naming the token ${named.length}${named[0] ? ` ("${named[0].slice(0, 120)}")` : ""} (clean page ${cleanNamed.length}), uncaught ${uncaught.length}${spec.act === "hold" ? ` · engaged ${f(r.box?.w, 1)} × ${f(r.box?.h, 1)} against clean ${f(base.box?.w, 1)} × ${f(base.box?.h, 1)} (bound max(1 px, 1.5 %))` : ""}`);
+        }
+      }
+    }
+  }
+  // ── H13: THE CONSOLE CENSUS ON DEFAULT TOKENS (CK-21; REGISTRY §P12-0 finding 1, §P12-8.1 (b)): `--part census`. Every scene in the
+  // index, nothing planted: rest, Tab in from the sentinel, the commit (a stateless scene's click), a hover and a press on the target, a
+  // dismiss and a present where the scene has one, and on a loupe row a fine hold on the thumb (the stage's reads).
+  //   census · <scene>   PASS when no console.error names an engagement read (unreadable, [glass-ui], [fixture]): one FAILs. Other
+  //                    errors are printed. Plants e11-narrowread, e11-typedom (WebKit); the pass-12 candidate (WebKit)
+  for (const [sc, m] of want("census") ? Object.entries(idx).filter(([s]) => s !== "__index") : []) {
+    const nm = `E-11 census · ${sc}`;
+    const r = await guard(nm, async () => {
+      const P = await openPage(E, T, sc, m.dlg ? { q: m.dlg.q ?? {} } : {});
+      try {
+        const { page } = P; await page.waitForTimeout(300);
+        await page.focus('[data-sentinel="before"]').catch(() => {}); await page.keyboard.press(tabKey(engine)); await page.waitForTimeout(300);
+        await page.evaluate(() => { const x = window.__e; const t = document.querySelector('[data-e~="target"]'); if (x.index?.[x.scene]?.stateless) t?.click(); else x.commit?.(); }).catch(() => {}); await page.waitForTimeout(300);
+        try { const c = await center(page, '[data-e~="target"]'); if (c.x > 0 && c.y > 0 && c.x < 700 && c.y < 500) { await page.mouse.move(c.x, c.y); await page.waitForTimeout(200); await page.mouse.down(); await page.waitForTimeout(150); await page.mouse.up(); await page.waitForTimeout(250); } } catch {}
+        if (m.loupe) { try { const c = await center(page, m.thumb ?? '[data-e~="thumb"]'); await page.mouse.move(c.x, c.y); await page.mouse.down(); await page.waitForTimeout(700); await page.mouse.up(); await page.waitForTimeout(300); } catch {} }
+        if (await page.evaluate(() => typeof window.__e.open === "function")) { await page.evaluate(() => window.__e.open(false)); await page.waitForTimeout(300); await page.evaluate(() => window.__e.open(true)); await page.waitForTimeout(300); }
+        return { errs: [...P.errors] };
+      } finally { await P.close(); }
+    }, 60000);
+    if (r.crashed) { cell(nm, "FAIL", r.line); continue; }
+    const eng = r.errs.filter((e) => ENGAGE_ERR.test(e)), other = r.errs.filter((e) => !ENGAGE_ERR.test(e));
+    cell(nm, eng.length ? "FAIL" : "PASS", `default tokens, the act (rest, Tab, commit, hover, press${m.loupe ? ", a hold" : ""}${m.dlg ? ", the plate" : ""}) · engagement errors ${eng.length}${eng.length ? `: ${[...new Set(eng)].map((x) => x.slice(0, 130)).join(" | ")}` : ""} · other console errors ${other.length}${other.length ? ` (${[...new Set(other)].map((x) => x.slice(0, 80)).join(" | ")})` : ""}`);
+  }
+  // ── H13: A REFUSED REACH INPUT'S PAINT (CK-21 × CK-04; REGISTRY §P12-7 item 6): `--part reachin`. On the loupe row without a clip, in a
+  // 390 × 700 viewport with the root sized to clear the painted gutter by 6 px a side (H12's reach setup), a fine hold, +1100 ms. The grow
+  // token (the row's `grow`, default --scale-engage) and the gutter token (the row's `gutter`, default --space-section) each set on
+  // <html> before the first script to `nonsense` (refused) and to an equal calc() of its default (taken).
+  //   reach input · <token> <value>   refused: PASS when ≥ 1 console.error names the token, nothing is uncaught, and the held box paints
+  //                    no less than at rest on either axis (×0.997 or more: the engagement paints nothing, never a collapse to the
+  //                    registered 0); taken: PASS when no error names it and the engaged box is as clean (asClean). Refused with nothing
+  //                    named and the paint as clean: UNMEASURED (the token is not read on this path: e11-unread, e11-noise).
+  //                    Plant e11-reachzero; the pass-12 candidate (×0 in both engines on a refused input; WebKit on the calc())
+  for (const [sc, m] of want("reachin") ? Object.entries(idx).filter(([s, x]) => s !== "__index" && x.loupe && !x.clip) : []) {
+    const R = m.root ?? '[data-e~="root"]', thumb = m.thumb ?? '[data-e~="thumb"]', GT = m.gutter ?? "--space-section", GR = m.grow ?? "--scale-engage";
+    const run = (plant) => guard(`reachin ${sc} ${plant ? plant.join(" ") : "clean"}`, async () => {
+      const P = await openPage(E, T, sc, { vp: { width: 390, height: 700 }, ...(plant ? { plant } : {}) });
+      try {
+        const rest = await P.page.evaluate(([R, GT]) => { const root = document.querySelector(R), C = root.parentElement; const mn = document.querySelector("main") ?? document.body; mn.style.paddingTop = "200px"; document.documentElement.style.overflowAnchor = "none";
+          const pr = document.createElement("div"); pr.style.cssText = "position:absolute;height:1px;width:0;padding-left:var(" + GT + ", 16px)"; C.appendChild(pr); const gP = pr.getBoundingClientRect().width; pr.remove();
+          const vw = innerWidth; root.style.boxSizing = "border-box"; root.style.position = "relative"; root.style.left = "0px"; root.style.width = `${vw - 2 * (gP + 6)}px`;
+          for (let i = 0; i < 3; i++) { const q = root.getBoundingClientRect(); root.style.left = `${Number.parseFloat(root.style.left) + (vw / 2 - (q.left + q.width / 2))}px`; }
+          const q = root.getBoundingClientRect(); return { w: q.width, h: q.height, gP }; }, [R, GT]);
+        await P.page.waitForTimeout(250);
+        const c = await center(P.page, thumb); await P.page.mouse.move(c.x, c.y); await P.page.mouse.down();
+        try { await P.page.waitForTimeout(1100); const eng = await P.page.evaluate((R) => { const q = document.querySelector(R).getBoundingClientRect(); return { w: q.width, h: q.height }; }, R); return { rest, eng, errs: [...P.errors] }; } finally { await P.page.mouse.up(); }
+      } finally { await P.close(); }
+    }, 60000);
+    const base = await run(null); if (base.crashed) { cell(`E-11 ${sc} reach input · clean`, "FAIL", base.line); continue; }
+    const dflt = await guard(`reachin defaults ${sc}`, async () => { const P = await openPage(E, T, sc); try { return { g: await P.page.evaluate(TOKEN_FACTS, [GT, "length"]), n: await P.page.evaluate(TOKEN_FACTS, [GR, "number"]) }; } finally { await P.close(); } }, 60000);
+    const cases = [[GR, "nonsense", "refused"], [GT, "nonsense", "refused"], [GR, `calc(${dflt.n?.num ?? 1.06} * 1)`, "taken"], [GT, `calc(${(dflt.g?.num ?? 16) / 2}px + ${(dflt.g?.num ?? 16) / 2}px)`, "taken"]];
+    for (const [tok, val, exp] of cases) {
+      const nm = `E-11 ${sc} reach input · ${tok} ${val}`; const r = await run([tok, val]);
+      if (r.crashed) { cell(nm, "FAIL", r.line); continue; }
+      const named = r.errs.filter((e) => !e.startsWith("pageerror") && e.includes(tok)), uncaught = r.errs.filter((e) => e.startsWith("pageerror"));
+      const xi = r.eng.w / r.rest.w, xb = r.eng.h / r.rest.h;
+      // refused, nothing named and the paint as clean: the token is not read on this path (the fail-loud cells' rule): UNMEASURED
+      const unread = exp === "refused" && !uncaught.length && !named.length && asClean(r.eng, base.eng);
+      const ok = !uncaught.length && (exp === "refused" ? named.length >= 1 && xi >= 0.997 && xb >= 0.997 : !named.length && asClean(r.eng, base.eng));
+      const why = uncaught.length ? "THROWS · " : exp === "refused" ? (!named.length ? "SILENT · " : xi < 0.997 || xb < 0.997 ? "THE PAINT CONTRADICTS THE MESSAGE (a collapse) · " : "") : named.length ? "REFUSED A FORM ITS CONSUMER TAKES · " : !ok ? "MISREAD (paint differs) · " : "";
+      cell(nm, unread ? "UNMEASURED" : ok ? "PASS" : "FAIL", `${unread ? "NOT READ ON THIS PATH (no error, no degradation) · " : why}${tok}: ${val} on <html> before the first script (expect ${exp}) · held inline ×${f(xi, 4)}, block ×${f(xb, 4)} (${f(r.eng.w, 1)} × ${f(r.eng.h, 1)} of rest ${f(r.rest.w, 1)} × ${f(r.rest.h, 1)}; clean ${f(base.eng.w, 1)} × ${f(base.eng.h, 1)}) · console errors naming the token ${named.length}${named[0] ? ` ("${named[0].slice(0, 120)}")` : ""}, uncaught ${uncaught.length}`);
     }
   }
   for (const [sc, m] of old ? scenesFor(idx, "E-11") : []) {

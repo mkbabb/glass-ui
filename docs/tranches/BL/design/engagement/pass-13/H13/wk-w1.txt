@@ -1,0 +1,36 @@
+# H13 WebKit stages, ONE acquisition planned as two NAMED parts before it starts (REGISTRY §P11-7 item 7, §P12-8.3): WK-1 runs this
+# list in priority order and starts no stage after 80 min of its acquisition; any stage left is written to logs/wk-left.txt and run in
+# WK-2, a second `guarded --exclusive webkit` acquisition queued at once by wk-queue.sh, recorded. Priority: the engine facts; the
+# clean fixture on the new cells and every new plant (the self-test of the changed paths); the candidate on every new cell; the
+# exit-side re-reads (each waits for a 1-minute load below 8, at most 15 min, and prints its wait); the control; the glance; the
+# clean fixture's other cells and witnesses; HEAD
+facts webkit
+fx-E-10 webkit --part hg13,hostglide
+st-E-10 webkit --faults e10-hostglidelayout,e10-hostglidelevel,e10-hostglidechild,e10-hostglidestale,e10-reenter
+fx-E-11 webkit --part forms,tokens,census,reachin,travel
+st-E-11 webkit --faults e11-narrowread,e11-typedom,e11-reachzero,e11-travellist,e11-travelunit,e11-travelthrow
+cand12-E-10 webkit --part hg13
+cand12-E-11 webkit --part forms,tokens,census,reachin
+rr-cand12-ce11 webkit --only exit-side --round 1
+rr-cand11-ce11 webkit --only exit-side --round 1
+rr-cand12-ca11 webkit --only exit-side --r 1
+rr-cand11-ca11 webkit --only exit-side --r 1
+rr-cand12-ce11 webkit --only exit-side --round 2
+rr-cand11-ce11 webkit --only exit-side --round 2
+rr-cand12-ca11 webkit --only exit-side --r 2
+rr-cand11-ca11 webkit --only exit-side --r 2
+rr-cand12-ce11 webkit --only exit-side --round 3
+rr-cand11-ce11 webkit --only exit-side --round 3
+rr-cand12-ca11 webkit --only exit-side --r 3
+rr-cand11-ca11 webkit --only exit-side --r 3
+plant-allkinds-E-10 webkit --part hg13 --hg13 kind,reentry
+glance-cand12 webkit
+fxglance webkit
+st-E-10 webkit --faults e10-hostglideratio,e10-hostglideone,e10-hostglideframe,e10-glidescale,e10-rerender,e10-relayout,e10-reachframe
+fx-E-10 webkit --part old,anc,dlg,trail,glide,vanish,feather,radius,place,film,lensside,lensfilm,reach
+clean webkit --only E-1,E-2,E-3,E-4,E-5,E-6,E-7,E-8,E-9,E-12,E-13
+fx-E-11 webkit --part old
+st-E-3 webkit --faults e3-gutter
+cap webkit
+head-E-10 webkit --part hg13
+head-E-11 webkit --part forms,tokens,census,reachin

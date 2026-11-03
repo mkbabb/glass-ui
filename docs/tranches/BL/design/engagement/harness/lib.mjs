@@ -345,6 +345,8 @@ export async function openPage(E, T, scene, o = {}) {
     const set = () => { if (!document.documentElement) return false; document.documentElement.style.setProperty(t, v); return true; };
     if (!set()) new MutationObserver((_, ob) => { if (set()) ob.disconnect(); }).observe(document, { childList: true });
   }, o.plant);
+  // H13: `init` [fn, arg] is one more init script, run before any page script (E-10's observer tally, MO_TALLY)
+  if (o.init) await page.addInitScript(o.init[0], o.init[1]);
   const q = new URLSearchParams({ scene, theme: o.theme ?? "light", ...(o.q ?? {}) });
   await page.goto(`${T.url}?${q}`);
   await page.waitForFunction(() => window.__e && window.__e.ready === true, null, { timeout: 60000 });
@@ -779,4 +781,24 @@ export const sideSetup = (m, tf) => async (page, drive) => {
   if (drive === "page") await page.evaluate(([root, css]) => { const mn = document.querySelector("main") ?? document.body; mn.style.paddingTop = "230px"; mn.style.paddingBottom = "1600px"; if (css) Object.assign(document.querySelector(root).parentElement.style, css); }, [m.root ?? '[data-e~="root"]', css]);
   else await page.evaluate(([B, Q, css]) => { const b = document.querySelector(B); if (css) Object.assign(b.style, css); b.style.position = "relative"; const q = document.querySelector(Q); const br = b.getBoundingClientRect(), k = br.height / b.offsetHeight, rr = q.getBoundingClientRect(); b.scrollTop += (rr.top - (br.top + b.clientTop * k + 6)) / k; const y = b.getBoundingClientRect().top; b.style.top = `${(170 - y) / (b.currentCSSZoom ?? 1)}px`; }, [m.clip.box, m.clip.rest, css]);
   if (m.veil) await page.evaluate((v) => { const st = document.createElement("style"); st.textContent = `${v} { visibility: hidden !important; }`; document.head.appendChild(st); }, m.veil);
+};
+
+// ── H13 (pass 13): the observer tally (REGISTRY §P12-8.1: "the stage's own writes never re-enter its observer"). An init script, run
+// before any page script, that replaces MutationObserver with a subclass counting every callback delivery and every record it hands
+// over, per observer, with the observe() options and the record's type, attribute and target. `window.__h13mo.mark()` opens a window;
+// `window.__h13mo.since(t)` returns the deliveries since it: { n, recs, byObs: [{ opts, n, recs, kinds }], targets }. A record's target
+// is named by tag, class and data-t, and whether it lies inside the element `window.__h13mo.host` names (set by the witness).
+export const MO_TALLY = () => {
+  const Native = window.MutationObserver; if (!Native || window.__h13mo) return; const log = []; let seq = 0;
+  const name = (n) => { if (!n || n.nodeType !== 1) return n?.nodeType === 3 ? "#text" : String(n?.nodeName ?? "?"); const e = n; return `${e.tagName.toLowerCase()}${e.getAttribute("data-t") ? `[data-t=${e.getAttribute("data-t")}]` : ""}${typeof e.className === "string" && e.className ? `.${e.className.trim().split(/\s+/).slice(0, 2).join(".")}` : ""}`; };
+  class Tally extends Native {
+    constructor(cb) { const id = ++seq; const me = { id, opts: [] }; super((recs, ob) => { const h = window.__h13mo.host ? document.querySelector(window.__h13mo.host) : null;
+      log.push({ t: performance.now(), id, opts: me.opts.join(" | "), recs: recs.map((r) => ({ type: r.type, attr: r.attributeName, target: name(r.target), inHost: !!(h && (h === r.target || h.contains(r.target))), added: [...r.addedNodes].map(name).join(","), removed: [...r.removedNodes].map(name).join(",") })) }); return cb(recs, ob); });
+      this.__me = me; }
+    observe(target, o) { this.__me.opts.push(`${name(target)} ${Object.entries(o ?? {}).filter(([, v]) => v).map(([k, v]) => (v === true ? k : `${k}=${JSON.stringify(v)}`)).join(",")}`); return super.observe(target, o); }
+  }
+  window.MutationObserver = Tally;
+  window.__h13mo = { host: null, mark: () => performance.now(), since: (t, skip) => { const d = log.filter((x) => x.t >= t).map((x) => ({ ...x, recs: x.recs.filter((r) => !(skip && (r.added.includes(skip) || r.removed.includes(skip) || r.target.includes(skip)))) })).filter((x) => x.recs.length);
+    const byObs = {}; for (const x of d) { const b = (byObs[x.id] ??= { opts: x.opts, n: 0, recs: 0, kinds: {} }); b.n++; b.recs += x.recs.length; for (const r of x.recs) { const k = `${r.type}${r.attr ? `:${r.attr}` : ""} on ${r.target}${r.inHost ? " (in host)" : ""}`; b.kinds[k] = (b.kinds[k] ?? 0) + 1; } }
+    return { n: d.length, recs: d.reduce((s, x) => s + x.recs.length, 0), byObs: Object.values(byObs) }; } };
 };

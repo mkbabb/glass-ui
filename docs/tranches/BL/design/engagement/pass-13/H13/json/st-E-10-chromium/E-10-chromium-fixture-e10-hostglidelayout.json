@@ -1,0 +1,416 @@
+{
+ "id": "E-10",
+ "engine": "chromium",
+ "version": "149.0.7827.55",
+ "target": {
+  "fixture": true,
+  "fault": "e10-hostglidelayout"
+ },
+ "loadStart": "13.3/11.4/10.6",
+ "loadEnd": "12.1/11.7/10.9",
+ "verdict": "FAIL",
+ "cells": [
+  {
+   "name": "E-10 slider xf · inside · rotate 10deg",
+   "status": "PASS",
+   "line": "the act on frame 8 · the root's paint moved -6.9, 39.4 px in all (40.00); on the act's frame 0.00, 0.00 = 0.00 px from where it was painted (bound ≤ 0.5) · largest move over any 16.7 ms 6.0 px at +25 ms (bound 7.0 = 40.0 × press 0.151 (clock 350 ms) + 1) · glide ran (350 ms) · path from the frame before [0.0,0.0 0.0,0.0 -0.6,3.3 -1.1,6.3 -1.6,9.2] · scrollY 126.0 → 126.0 → 126.0, G.scrollTop 0.0 → 0.0 · errors 0",
+   "load": "14.2/11.6/10.7"
+  },
+  {
+   "name": "E-10 slider xf · outside · rotate 10deg",
+   "status": "FAIL",
+   "line": "the act on frame 8 · the root's paint moved 0.0, 40.0 px in all (40.00); on the act's frame 6.92, 0.78 = 6.96 px from where it was painted (bound ≤ 0.5) · largest move over any 16.7 ms 7.4 px at +17 ms (bound 7.0 = 40.0 × press 0.151 (clock 350 ms) + 1) · glide ran (350 ms) · path from the frame before [0.0,0.0 6.9,0.8 6.4,3.8 5.9,6.7 5.3,9.7] · scrollY 126.0 → 126.0 → 126.0, G.scrollTop 0.0 → 0.0 · errors 0",
+   "load": "14.2/11.6/10.7"
+  },
+  {
+   "name": "E-10 slider xf · nested · rotate 10deg",
+   "status": "FAIL",
+   "line": "the act on frame 8 · the root's paint moved 0.0, 40.0 px in all (40.00); on the act's frame 6.92, 0.78 = 6.96 px from where it was painted (bound ≤ 0.5) · largest move over any 16.7 ms 7.4 px at +17 ms (bound 7.0 = 40.0 × press 0.151 (clock 350 ms) + 1) · glide ran (350 ms) · path from the frame before [0.0,0.0 6.9,0.8 6.4,3.8 5.9,6.7 5.3,9.7] · scrollY 130.0 → 130.0 → 130.0, G.scrollTop 0.0 → 0.0 · errors 0",
+   "load": "16.5/12.1/10.9"
+  },
+  {
+   "name": "E-10 slider xf · inside · rotate 10deg centre",
+   "status": "FAIL",
+   "line": "the act on frame 8 · the root's paint moved -3.5, 39.7 px in all (39.85); on the act's frame 3.47, 0.30 = 3.49 px from where it was painted (bound ≤ 0.5) · largest move over any 16.7 ms 6.0 px at +58 ms (bound 7.0 = 39.8 × press 0.151 (clock 350 ms) + 1) · glide ran (350 ms) · path from the frame before [0.0,0.0 3.5,0.3 2.9,3.3 2.4,6.3 1.9,9.2] · scrollY 74.0 → 74.0 → 74.0, G.scrollTop 0.0 → 0.0 · errors 0",
+   "load": "16.5/12.1/10.9"
+  },
+  {
+   "name": "E-10 slider xf · outside · rotate 10deg centre",
+   "status": "FAIL",
+   "line": "the act on frame 8 · the root's paint moved 0.0, 40.0 px in all (40.00); on the act's frame 6.92, 0.78 = 6.96 px from where it was painted (bound ≤ 0.5) · largest move over any 16.7 ms 7.4 px at +17 ms (bound 7.0 = 40.0 × press 0.151 (clock 350 ms) + 1) · glide ran (350 ms) · path from the frame before [0.0,0.0 6.9,0.8 6.4,3.7 5.9,6.7 5.4,9.3] · scrollY 74.0 → 74.0 → 74.0, G.scrollTop 0.0 → 0.0 · errors 0",
+   "load": "15.9/12.1/10.8"
+  },
+  {
+   "name": "E-10 slider xf · nested · rotate 10deg centre",
+   "status": "FAIL",
+   "line": "the act on frame 8 · the root's paint moved 0.0, 40.0 px in all (40.00); on the act's frame 6.92, 0.78 = 6.96 px from where it was painted (bound ≤ 0.5) · largest move over any 16.7 ms 7.4 px at +17 ms (bound 7.0 = 40.0 × press 0.151 (clock 350 ms) + 1) · glide ran (350 ms) · path from the frame before [0.0,0.0 6.9,0.8 6.4,3.8 5.7,7.4 5.3,10.2] · scrollY 84.0 → 84.0 → 84.0, G.scrollTop 0.0 → 0.0 · errors 0",
+   "load": "15.9/12.1/10.8"
+  },
+  {
+   "name": "E-10 slider xf · below · rotate 10deg centre",
+   "status": "FAIL",
+   "line": "the act on frame 8 · the root's paint moved 3.5, 0.3 px in all (3.49); on the act's frame 3.47, 0.30 = 3.49 px from where it was painted (bound ≤ 0.5) · largest move over any 16.7 ms 3.4 px at +17 ms (bound 1.5 = 3.5 × press 0.151 (clock 350 ms) (no running translate on the root carries a row's clock: the fastest row) + 1) · glide none · path from the frame before [0.0,0.0 3.5,0.3 3.5,0.3 3.5,0.3 3.5,0.3] · scrollY 74.0 → 74.0 → 74.0, G.scrollTop 0.0 → 0.0 · errors 0",
+   "load": "15.9/12.1/10.8"
+  },
+  {
+   "name": "E-10 slider xf · inside · rotate 10deg + scale 0.8",
+   "status": "PASS",
+   "line": "the act on frame 8 · the root's paint moved -5.6, 31.5 px in all (32.00); on the act's frame 0.00, 0.00 = 0.00 px from where it was painted (bound ≤ 0.5) · largest move over any 16.7 ms 4.8 px at +34 ms (bound 5.8 = 32.0 × press 0.151 (clock 350 ms) + 1) · glide ran (350 ms) · path from the frame before [0.0,0.0 0.0,0.0 -0.5,2.7 -0.8,4.7 -1.3,7.5] · scrollY 113.0 → 113.0 → 113.0, G.scrollTop 0.0 → 0.0 · errors 0",
+   "load": "16.0/12.2/10.9"
+  },
+  {
+   "name": "E-10 slider xf · outside · rotate 10deg + scale 0.8",
+   "status": "FAIL",
+   "line": "the act on frame 8 · the root's paint moved 0.0, 40.0 px in all (40.00); on the act's frame 6.92, 0.78 = 6.96 px from where it was painted (bound ≤ 0.5) · largest move over any 16.7 ms 6.0 px at +33 ms (bound 7.0 = 40.0 × press 0.151 (clock 350 ms) + 1) · glide ran (350 ms) · path from the frame before [0.0,0.0 6.9,0.8 6.4,3.7 5.9,6.7 5.3,9.7] · scrollY 113.0 → 113.0 → 113.0, G.scrollTop 0.0 → 0.0 · errors 0",
+   "load": "16.0/12.2/10.9"
+  },
+  {
+   "name": "E-10 slider xf · nested · rotate 10deg + scale 0.8",
+   "status": "FAIL",
+   "line": "the act on frame 8 · the root's paint moved 0.0, 40.0 px in all (40.00); on the act's frame 6.92, 0.78 = 6.96 px from where it was painted (bound ≤ 0.5) · largest move over any 16.7 ms 7.4 px at +17 ms (bound 7.0 = 40.0 × press 0.151 (clock 350 ms) + 1) · glide ran (350 ms) · path from the frame before [0.0,0.0 6.9,0.8 6.4,3.7 5.9,6.7 5.4,9.7] · scrollY 66.0 → 66.0 → 66.0, G.scrollTop 0.0 → 0.0 · errors 0",
+   "load": "16.0/12.2/10.9"
+  },
+  {
+   "name": "E-10 slider xf · inside · skewX 15deg",
+   "status": "PASS",
+   "line": "the act on frame 8 · the root's paint moved 10.7, 40.0 px in all (41.41); on the act's frame 0.00, 0.00 = 0.00 px from where it was painted (bound ≤ 0.5) · largest move over any 16.7 ms 6.2 px at +57 ms (bound 7.2 = 41.4 × press 0.151 (clock 350 ms) + 1) · glide ran (350 ms) · path from the frame before [0.0,0.0 0.0,0.0 0.8,3.0 1.6,6.0 2.4,9.0] · scrollY 95.0 → 95.0 → 95.0, G.scrollTop 0.0 → 0.0 · errors 0",
+   "load": "15.6/12.1/10.9"
+  },
+  {
+   "name": "E-10 slider xf · outside · skewX 15deg",
+   "status": "FAIL",
+   "line": "the act on frame 8 · the root's paint moved 0.0, 40.0 px in all (40.00); on the act's frame -10.40, 1.17 = 10.47 px from where it was painted (bound ≤ 0.5) · largest move over any 16.7 ms 6.1 px at +50 ms (bound 7.0 = 40.0 × press 0.151 (clock 350 ms) + 1) · glide ran (350 ms) · path from the frame before [0.0,0.0 -10.4,1.2 -9.7,3.9 -8.8,7.1 -8.1,10.0] · scrollY 95.0 → 95.0 → 95.0, G.scrollTop 0.0 → 0.0 · errors 0",
+   "load": "15.6/12.1/10.9"
+  },
+  {
+   "name": "E-10 slider xf · nested · skewX 15deg",
+   "status": "FAIL",
+   "line": "the act on frame 8 · the root's paint moved 0.0, 40.0 px in all (40.00); on the act's frame -10.40, 1.17 = 10.47 px from where it was painted (bound ≤ 0.5) · largest move over any 16.7 ms 6.1 px at +58 ms (bound 7.0 = 40.0 × press 0.151 (clock 350 ms) + 1) · glide ran (350 ms) · path from the frame before [0.0,0.0 -10.4,1.2 -9.5,4.4 -8.8,7.2 -8.0,10.2] · scrollY 95.0 → 95.0 → 95.0, G.scrollTop 0.0 → 0.0 · errors 0",
+   "load": "16.5/12.4/11.0"
+  },
+  {
+   "name": "E-10 slider xf · inside · skewY 8deg",
+   "status": "PASS",
+   "line": "the act on frame 8 · the root's paint moved 0.0, 40.0 px in all (40.00); on the act's frame 0.00, 0.00 = 0.00 px from where it was painted (bound ≤ 0.5) · largest move over any 16.7 ms 6.0 px at +33 ms (bound 7.0 = 40.0 × press 0.151 (clock 350 ms) + 1) · glide ran (350 ms) · path from the frame before [0.0,0.0 0.0,0.0 0.0,3.7 0.0,6.6 0.0,9.4] · scrollY 120.0 → 120.0 → 120.0, G.scrollTop 0.0 → 0.0 · errors 0",
+   "load": "16.5/12.4/11.0"
+  },
+  {
+   "name": "E-10 slider xf · outside · skewY 8deg",
+   "status": "PASS",
+   "line": "the act on frame 8 · the root's paint moved 0.0, 40.0 px in all (40.00); on the act's frame 0.00, 0.00 = 0.00 px from where it was painted (bound ≤ 0.5) · largest move over any 16.7 ms 6.0 px at +50 ms (bound 7.0 = 40.0 × press 0.151 (clock 350 ms) + 1) · glide ran (350 ms) · path from the frame before [0.0,0.0 0.0,0.0 0.0,3.0 0.0,6.0 0.0,8.9] · scrollY 120.0 → 120.0 → 120.0, G.scrollTop 0.0 → 0.0 · errors 0",
+   "load": "16.5/12.4/11.0"
+  },
+  {
+   "name": "E-10 slider xf · nested · skewY 8deg",
+   "status": "PASS",
+   "line": "the act on frame 8 · the root's paint moved 0.0, 40.0 px in all (40.00); on the act's frame 0.00, 0.00 = 0.00 px from where it was painted (bound ≤ 0.5) · largest move over any 16.7 ms 6.0 px at +41 ms (bound 7.0 = 40.0 × press 0.151 (clock 350 ms) + 1) · glide ran (350 ms) · path from the frame before [0.0,0.0 0.0,0.0 0.0,3.0 0.0,6.0 0.0,9.0] · scrollY 127.0 → 127.0 → 127.0, G.scrollTop 0.0 → 0.0 · errors 0",
+   "load": "15.9/12.3/11.0"
+  },
+  {
+   "name": "E-10 slider xf · inside · matrix rotate + scale",
+   "status": "PASS",
+   "line": "the act on frame 8 · the root's paint moved -5.6, 31.5 px in all (32.01); on the act's frame 0.00, 0.00 = 0.00 px from where it was painted (bound ≤ 0.5) · largest move over any 16.7 ms 4.8 px at +59 ms (bound 5.8 = 32.0 × press 0.151 (clock 350 ms) + 1) · glide ran (350 ms) · path from the frame before [0.0,0.0 0.0,0.0 -0.5,2.7 -0.9,5.1 -1.3,7.1] · scrollY 113.0 → 113.0 → 113.0, G.scrollTop 0.0 → 0.0 · errors 0",
+   "load": "15.9/12.3/11.0"
+  },
+  {
+   "name": "E-10 slider xf · outside · matrix rotate + scale",
+   "status": "FAIL",
+   "line": "the act on frame 8 · the root's paint moved 0.0, 40.0 px in all (40.00); on the act's frame 6.92, 0.78 = 6.96 px from where it was painted (bound ≤ 0.5) · largest move over any 16.7 ms 7.4 px at +17 ms (bound 7.0 = 40.0 × press 0.151 (clock 350 ms) + 1) · glide ran (350 ms) · path from the frame before [0.0,0.0 6.9,0.8 6.4,3.7 5.9,6.6 5.4,9.6] · scrollY 113.0 → 113.0 → 113.0, G.scrollTop 0.0 → 0.0 · errors 0",
+   "load": "14.8/12.1/10.9"
+  },
+  {
+   "name": "E-10 slider xf · nested · matrix rotate + scale",
+   "status": "FAIL",
+   "line": "the act on frame 8 · the root's paint moved 0.0, 40.0 px in all (40.00); on the act's frame 6.92, 0.78 = 6.96 px from where it was painted (bound ≤ 0.5) · largest move over any 16.7 ms 7.4 px at +17 ms (bound 7.0 = 40.0 × press 0.151 (clock 350 ms) + 1) · glide ran (350 ms) · path from the frame before [0.0,0.0 6.9,0.8 6.4,3.7 5.8,7.0 5.3,9.9] · scrollY 66.0 → 66.0 → 66.0, G.scrollTop 0.0 → 0.0 · errors 0",
+   "load": "14.8/12.1/10.9"
+  },
+  {
+   "name": "E-10 slider xf · inside · matrix 0.8",
+   "status": "PASS",
+   "line": "the act on frame 8 · the root's paint moved 0.0, 32.0 px in all (32.00); on the act's frame 0.00, 0.00 = 0.00 px from where it was painted (bound ≤ 0.5) · largest move over any 16.7 ms 4.8 px at +58 ms (bound 5.8 = 32.0 × press 0.151 (clock 350 ms) + 1) · glide ran (350 ms) · path from the frame before [0.0,0.0 0.0,0.0 0.0,2.5 0.0,4.9 0.0,7.1] · scrollY 88.0 → 88.0 → 88.0, G.scrollTop 0.0 → 0.0 · errors 0",
+   "load": "14.8/12.1/10.9"
+  },
+  {
+   "name": "E-10 slider xf · outside · matrix 0.8",
+   "status": "PASS",
+   "line": "the act on frame 8 · the root's paint moved 0.0, 40.0 px in all (40.00); on the act's frame 0.00, 0.00 = 0.00 px from where it was painted (bound ≤ 0.5) · largest move over any 16.7 ms 6.0 px at +25 ms (bound 7.0 = 40.0 × press 0.151 (clock 350 ms) + 1) · glide ran (350 ms) · path from the frame before [0.0,0.0 0.0,0.0 0.0,3.0 0.0,6.0 0.0,9.1] · scrollY 88.0 → 88.0 → 88.0, G.scrollTop 0.0 → 0.0 · errors 0",
+   "load": "14.3/12.1/10.9"
+  },
+  {
+   "name": "E-10 slider xf · nested · matrix 0.8",
+   "status": "PASS",
+   "line": "the act on frame 8 · the root's paint moved 0.0, 40.0 px in all (40.00); on the act's frame 0.00, 0.00 = 0.00 px from where it was painted (bound ≤ 0.5) · largest move over any 16.7 ms 6.0 px at +43 ms (bound 7.0 = 40.0 × press 0.151 (clock 350 ms) + 1) · glide ran (350 ms) · path from the frame before [0.0,0.0 0.0,0.0 0.0,3.0 0.0,6.1 0.0,9.1] · scrollY 38.0 → 38.0 → 38.0, G.scrollTop 0.0 → 0.0 · errors 0",
+   "load": "14.3/12.1/10.9"
+  },
+  {
+   "name": "E-10 slider xf · inside · perspective translateZ",
+   "status": "FAIL",
+   "line": "the act on frame 8 · the root's paint moved 0.0, 37.8 px in all (37.78); on the act's frame 0.00, 2.22 = 2.22 px from where it was painted (bound ≤ 0.5) · largest move over any 16.7 ms 5.4 px at +41 ms (bound 6.7 = 37.8 × press 0.151 (clock 350 ms) + 1) · glide ran (350 ms) · path from the frame before [0.0,0.0 0.0,2.2 0.0,4.5 0.0,7.5 0.0,10.3] · scrollY 171.0 → 171.0 → 171.0, G.scrollTop 0.0 → 0.0 · errors 0",
+   "load": "13.5/12.0/10.8"
+  },
+  {
+   "name": "E-10 slider xf · outside · perspective translateZ",
+   "status": "FAIL",
+   "line": "the act on frame 8 · the root's paint moved 0.0, 37.8 px in all (37.78); on the act's frame 0.00, -2.22 = 2.22 px from where it was painted (bound ≤ 0.5) · largest move over any 16.7 ms 6.0 px at +42 ms (bound 6.7 = 37.8 × press 0.151 (clock 350 ms) + 1) · glide ran (350 ms) · path from the frame before [0.0,0.0 0.0,-2.2 0.0,0.6 0.0,3.8 0.0,6.8] · scrollY 171.0 → 171.0 → 171.0, G.scrollTop 0.0 → 0.0 · errors 0",
+   "load": "13.5/12.0/10.8"
+  },
+  {
+   "name": "E-10 slider xf · nested · perspective translateZ",
+   "status": "FAIL",
+   "line": "the act on frame 8 · the root's paint moved 0.0, 37.8 px in all (37.78); on the act's frame 0.00, -2.22 = 2.22 px from where it was painted (bound ≤ 0.5) · largest move over any 16.7 ms 6.0 px at +52 ms (bound 6.7 = 37.8 × press 0.151 (clock 350 ms) + 1) · glide ran (350 ms) · path from the frame before [0.0,0.0 0.0,-2.2 0.0,0.3 0.0,3.7 0.0,6.7] · scrollY 171.0 → 171.0 → 171.0, G.scrollTop 0.0 → 0.0 · errors 0",
+   "load": "13.5/12.0/10.8"
+  },
+  {
+   "name": "E-10 slider xf · below · perspective translateZ",
+   "status": "FAIL",
+   "line": "the act on frame 8 · the root's paint moved 0.0, 2.2 px in all (2.22); on the act's frame 0.00, 2.22 = 2.22 px from where it was painted (bound ≤ 0.5) · largest move over any 16.7 ms 1.9 px at +18 ms (bound 1.3 = 2.2 × press 0.151 (clock 350 ms) (no running translate on the root carries a row's clock: the fastest row) + 1) · glide none · path from the frame before [0.0,0.0 0.0,2.2 0.0,2.2 0.0,2.2 0.0,2.2] · scrollY 171.0 → 171.0 → 171.0, G.scrollTop 0.0 → 0.0 · errors 0",
+   "load": "13.3/11.9/10.8"
+  },
+  {
+   "name": "E-10 slider xf · inside · perspective rotateX 25deg",
+   "status": "FAIL",
+   "line": "the act on frame 8 · the root's paint moved -1.8, 38.4 px in all (38.43); on the act's frame 1.72, 2.12 = 2.73 px from where it was painted (bound ≤ 0.5) · largest move over any 16.7 ms 5.5 px at +66 ms (bound 6.8 = 38.4 × press 0.151 (clock 350 ms) + 1) · glide ran (350 ms) · path from the frame before [0.0,0.0 1.7,2.1 1.5,4.8 1.2,7.5 1.0,9.8] · scrollY 95.0 → 95.0 → 95.0, G.scrollTop 0.0 → 0.0 · errors 0",
+   "load": "13.3/11.9/10.8"
+  },
+  {
+   "name": "E-10 slider xf · outside · perspective rotateX 25deg",
+   "status": "FAIL",
+   "line": "the act on frame 8 · the root's paint moved 0.0, 40.0 px in all (40.00); on the act's frame 3.31, 5.56 = 6.47 px from where it was painted (bound ≤ 0.5) · largest move over any 16.7 ms 8.3 px at +17 ms (bound 7.0 = 40.0 × press 0.151 (clock 350 ms) + 1) · glide ran (350 ms) · path from the frame before [0.0,0.0 3.3,5.6 3.1,8.1 2.9,10.1 2.6,13.1] · scrollY 95.0 → 95.0 → 95.0, G.scrollTop 0.0 → 0.0 · errors 0",
+   "load": "13.3/11.9/10.8"
+  },
+  {
+   "name": "E-10 slider xf · nested · perspective rotateX 25deg",
+   "status": "FAIL",
+   "line": "the act on frame 8 · the root's paint moved 0.0, 40.0 px in all (40.00); on the act's frame 2.24, 16.59 = 16.74 px from where it was painted (bound ≤ 0.5) · largest move over any 16.7 ms 18.4 px at +17 ms (bound 7.0 = 40.0 × press 0.151 (clock 350 ms) + 1) · glide ran (350 ms) · path from the frame before [0.0,0.0 2.2,16.6 2.1,18.3 1.9,20.0 1.8,21.7] · scrollY 361.0 → 361.0 → 361.0, G.scrollTop 0.0 → 0.0 · errors 0",
+   "load": "12.9/11.9/10.8"
+  },
+  {
+   "name": "E-10 slider xf · below · perspective rotateX 25deg",
+   "status": "FAIL",
+   "line": "the act on frame 8 · the root's paint moved 1.7, 2.1 px in all (2.73); on the act's frame 1.72, 2.12 = 2.73 px from where it was painted (bound ≤ 0.5) · largest move over any 16.7 ms 2.7 px at +17 ms (bound 1.4 = 2.7 × press 0.151 (clock 350 ms) (no running translate on the root carries a row's clock: the fastest row) + 1) · glide none · path from the frame before [0.0,0.0 1.7,2.1 1.7,2.1 1.7,2.1 1.7,2.1] · scrollY 95.0 → 95.0 → 95.0, G.scrollTop 0.0 → 0.0 · errors 0",
+   "load": "12.9/11.9/10.8"
+  },
+  {
+   "name": "E-10 slider xf · inside · translate 0 20%",
+   "status": "FAIL",
+   "line": "the act on frame 8 · the root's paint moved 0.0, 48.0 px in all (48.00); on the act's frame 0.00, 8.00 = 8.00 px from where it was painted (bound ≤ 0.5) · largest move over any 16.7 ms 11.0 px at +17 ms (bound 8.2 = 48.0 × press 0.151 (clock 350 ms) + 1) · glide ran (350 ms) · path from the frame before [0.0,0.0 0.0,8.0 0.0,11.0 0.0,13.6 0.0,16.5] · scrollY 109.0 → 109.0 → 109.0, G.scrollTop 0.0 → 0.0 · errors 0",
+   "load": "12.8/11.9/10.8"
+  },
+  {
+   "name": "E-10 slider xf · outside · translate 0 20%",
+   "status": "PASS",
+   "line": "the act on frame 8 · the root's paint moved 0.0, 40.0 px in all (40.00); on the act's frame 0.00, 0.00 = 0.00 px from where it was painted (bound ≤ 0.5) · largest move over any 16.7 ms 6.0 px at +48 ms (bound 7.0 = 40.0 × press 0.151 (clock 350 ms) + 1) · glide ran (350 ms) · path from the frame before [0.0,0.0 0.0,0.0 0.0,2.4 0.0,5.5 0.0,8.5] · scrollY 109.0 → 109.0 → 109.0, G.scrollTop 0.0 → 0.0 · errors 0",
+   "load": "12.8/11.9/10.8"
+  },
+  {
+   "name": "E-10 slider xf · nested · translate 0 20%",
+   "status": "PASS",
+   "line": "the act on frame 8 · the root's paint moved 0.0, 40.0 px in all (40.00); on the act's frame 0.00, 0.00 = 0.00 px from where it was painted (bound ≤ 0.5) · largest move over any 16.7 ms 6.0 px at +26 ms (bound 7.0 = 40.0 × press 0.151 (clock 350 ms) + 1) · glide ran (350 ms) · path from the frame before [0.0,0.0 0.0,0.0 0.0,2.6 0.0,6.1 0.0,8.6] · scrollY 483.0 → 483.0 → 483.0, G.scrollTop 0.0 → 0.0 · errors 0",
+   "load": "12.8/11.9/10.8"
+  },
+  {
+   "name": "E-10 slider xf · below · translate 0 20%",
+   "status": "FAIL",
+   "line": "the act on frame 8 · the root's paint moved 0.0, 8.0 px in all (8.00); on the act's frame 0.00, 8.00 = 8.00 px from where it was painted (bound ≤ 0.5) · largest move over any 16.7 ms 8.0 px at +17 ms (bound 2.2 = 8.0 × press 0.151 (clock 350 ms) (no running translate on the root carries a row's clock: the fastest row) + 1) · glide none (the paint moved ≥ 5 px with no glide) · path from the frame before [0.0,0.0 0.0,8.0 0.0,8.0 0.0,8.0 0.0,8.0] · scrollY 109.0 → 109.0 → 109.0, G.scrollTop 0.0 → 0.0 · errors 0",
+   "load": "12.3/11.8/10.8"
+  },
+  {
+   "name": "E-10 slider xf · inside · translate 10% 20%",
+   "status": "FAIL",
+   "line": "the act on frame 8 · the root's paint moved 0.0, 48.0 px in all (48.00); on the act's frame 0.00, 8.00 = 8.00 px from where it was painted (bound ≤ 0.5) · largest move over any 16.7 ms 9.7 px at +18 ms (bound 8.2 = 48.0 × press 0.151 (clock 350 ms) + 1) · glide ran (350 ms) · path from the frame before [0.0,0.0 0.0,8.0 0.0,11.0 0.0,13.6 0.0,17.1] · scrollY 109.0 → 109.0 → 109.0, G.scrollTop 0.0 → 0.0 · errors 0",
+   "load": "12.3/11.8/10.8"
+  },
+  {
+   "name": "E-10 slider xf · outside · translate 10% 20%",
+   "status": "PASS",
+   "line": "the act on frame 8 · the root's paint moved 0.0, 40.0 px in all (40.00); on the act's frame 0.00, 0.00 = 0.00 px from where it was painted (bound ≤ 0.5) · largest move over any 16.7 ms 6.0 px at +42 ms (bound 7.0 = 40.0 × press 0.151 (clock 350 ms) + 1) · glide ran (350 ms) · path from the frame before [0.0,0.0 0.0,0.0 0.0,3.0 0.0,6.0 0.0,9.0] · scrollY 109.0 → 109.0 → 109.0, G.scrollTop 0.0 → 0.0 · errors 0",
+   "load": "11.7/11.7/10.8"
+  },
+  {
+   "name": "E-10 slider xf · nested · translate 10% 20%",
+   "status": "PASS",
+   "line": "the act on frame 8 · the root's paint moved 0.0, 40.0 px in all (40.00); on the act's frame 0.00, 0.00 = 0.00 px from where it was painted (bound ≤ 0.5) · largest move over any 16.7 ms 6.0 px at +25 ms (bound 7.0 = 40.0 × press 0.151 (clock 350 ms) + 1) · glide ran (350 ms) · path from the frame before [0.0,0.0 0.0,0.0 0.0,2.9 0.0,6.1 0.0,9.0] · scrollY 483.0 → 483.0 → 483.0, G.scrollTop 0.0 → 0.0 · errors 0",
+   "load": "11.7/11.7/10.8"
+  },
+  {
+   "name": "E-10 slider xf · below · translate 10% 20%",
+   "status": "FAIL",
+   "line": "the act on frame 8 · the root's paint moved 0.0, 8.0 px in all (8.00); on the act's frame 0.00, 8.00 = 8.00 px from where it was painted (bound ≤ 0.5) · largest move over any 16.7 ms 0.0 px at +NaN ms (bound 2.2 = 8.0 × press 0.151 (clock 350 ms) (no running translate on the root carries a row's clock: the fastest row) + 1) · glide none (the paint moved ≥ 5 px with no glide) · path from the frame before [0.0,0.0 0.0,8.0 0.0,8.0 0.0,8.0 0.0,8.0] · scrollY 109.0 → 109.0 → 109.0, G.scrollTop 0.0 → 0.0 · errors 0",
+   "load": "11.7/11.7/10.8"
+  },
+  {
+   "name": "E-10 slider xf · inside · translate -50% -50% (Dialog)",
+   "status": "FAIL",
+   "line": "the act on frame 8 · the root's paint moved 0.0, 20.0 px in all (20.00); on the act's frame 0.00, -20.00 = 20.00 px from where it was painted (bound ≤ 0.5) · largest move over any 16.7 ms 16.4 px at +17 ms (bound 4.0 = 20.0 × press 0.151 (clock 350 ms) + 1) · glide ran (350 ms) · path from the frame before [0.0,0.0 0.0,-20.0 0.0,-16.7 0.0,-13.8 0.0,-10.7] · scrollY 61.0 → 61.0 → 61.0, G.scrollTop 0.0 → 0.0 · errors 0",
+   "load": "10.9/11.5/10.7"
+  },
+  {
+   "name": "E-10 slider xf · outside · translate -50% -50% (Dialog)",
+   "status": "PASS",
+   "line": "the act on frame 8 · the root's paint moved 0.0, 40.0 px in all (40.00); on the act's frame 0.00, 0.00 = 0.00 px from where it was painted (bound ≤ 0.5) · largest move over any 16.7 ms 6.0 px at +67 ms (bound 7.0 = 40.0 × press 0.151 (clock 350 ms) + 1) · glide ran (350 ms) · path from the frame before [0.0,0.0 0.0,0.0 0.0,3.0 0.0,6.0 0.0,9.0] · scrollY 61.0 → 61.0 → 61.0, G.scrollTop 0.0 → 0.0 · errors 0",
+   "load": "10.9/11.5/10.7"
+  },
+  {
+   "name": "E-10 slider xf · below · translate -50% -50% (Dialog)",
+   "status": "FAIL",
+   "line": "the act on frame 8 · the root's paint moved 0.0, -20.0 px in all (20.00); on the act's frame 0.00, -20.00 = 20.00 px from where it was painted (bound ≤ 0.5) · largest move over any 16.7 ms 18.3 px at +17 ms (bound 4.0 = 20.0 × press 0.151 (clock 350 ms) (no running translate on the root carries a row's clock: the fastest row) + 1) · glide none (the paint moved ≥ 5 px with no glide) · path from the frame before [0.0,0.0 0.0,-20.0 0.0,-20.0 0.0,-20.0 0.0,-20.0] · scrollY 61.0 → 61.0 → 61.0, G.scrollTop 0.0 → 0.0 · errors 0",
+   "load": "10.9/11.5/10.7"
+  },
+  {
+   "name": "E-10 slider xf · inside · scale 0.8 centre",
+   "status": "FAIL",
+   "line": "the act on frame 8 · the root's paint moved 0.0, 36.0 px in all (36.00); on the act's frame 0.00, 4.00 = 4.00 px from where it was painted (bound ≤ 0.5) · largest move over any 16.7 ms 4.8 px at +25 ms (bound 6.4 = 36.0 × press 0.151 (clock 350 ms) + 1) · glide ran (350 ms) · path from the frame before [0.0,0.0 0.0,4.0 0.0,6.4 0.0,8.8 0.0,11.2] · scrollY 95.0 → 95.0 → 95.0, G.scrollTop 0.0 → 0.0 · errors 0",
+   "load": "10.5/11.4/10.7"
+  },
+  {
+   "name": "E-10 slider xf · outside · scale 0.8 centre",
+   "status": "PASS",
+   "line": "the act on frame 8 · the root's paint moved 0.0, 40.0 px in all (40.00); on the act's frame 0.00, 0.00 = 0.00 px from where it was painted (bound ≤ 0.5) · largest move over any 16.7 ms 6.0 px at +58 ms (bound 7.0 = 40.0 × press 0.151 (clock 350 ms) + 1) · glide ran (350 ms) · path from the frame before [0.0,0.0 0.0,0.0 0.0,3.0 0.0,6.0 0.0,9.0] · scrollY 95.0 → 95.0 → 95.0, G.scrollTop 0.0 → 0.0 · errors 0",
+   "load": "10.5/11.4/10.7"
+  },
+  {
+   "name": "E-10 slider xf · nested · scale 0.8 centre",
+   "status": "PASS",
+   "line": "the act on frame 8 · the root's paint moved 0.0, 40.0 px in all (40.00); on the act's frame 0.00, 0.00 = 0.00 px from where it was painted (bound ≤ 0.5) · largest move over any 16.7 ms 6.0 px at +58 ms (bound 7.0 = 40.0 × press 0.151 (clock 350 ms) + 1) · glide ran (350 ms) · path from the frame before [0.0,0.0 0.0,0.0 0.0,2.9 0.0,6.0 0.0,8.7] · scrollY 232.0 → 232.0 → 232.0, G.scrollTop 0.0 → 0.0 · errors 0",
+   "load": "10.0/11.3/10.7"
+  },
+  {
+   "name": "E-10 slider xf · below · scale 0.8 centre",
+   "status": "FAIL",
+   "line": "the act on frame 8 · the root's paint moved 0.0, 4.0 px in all (4.00); on the act's frame 0.00, 4.00 = 4.00 px from where it was painted (bound ≤ 0.5) · largest move over any 16.7 ms 0.5 px at +24 ms (bound 1.6 = 4.0 × press 0.151 (clock 350 ms) (no running translate on the root carries a row's clock: the fastest row) + 1) · glide none · path from the frame before [0.0,0.0 0.0,4.0 0.0,4.0 0.0,4.0 0.0,4.0] · scrollY 95.0 → 95.0 → 95.0, G.scrollTop 0.0 → 0.0 · errors 0",
+   "load": "10.0/11.3/10.7"
+  },
+  {
+   "name": "E-10 slider xf · inside · zoom 0.5",
+   "status": "PASS",
+   "line": "the act on frame 8 · the root's paint moved 0.0, 20.0 px in all (20.00); on the act's frame 0.00, 0.00 = 0.00 px from where it was painted (bound ≤ 0.5) · largest move over any 16.7 ms 3.0 px at +59 ms (bound 4.0 = 20.0 × press 0.151 (clock 350 ms) + 1) · glide ran (350 ms) · path from the frame before [0.0,0.0 0.0,0.0 0.0,1.5 0.0,2.8 0.0,4.6] · scrollY 78.0 → 78.0 → 78.0, G.scrollTop 0.0 → 0.0 · errors 0",
+   "load": "10.0/11.3/10.7"
+  },
+  {
+   "name": "E-10 slider xf · outside · zoom 0.5",
+   "status": "PASS",
+   "line": "the act on frame 8 · the root's paint moved 0.0, 40.0 px in all (40.00); on the act's frame 0.00, 0.00 = 0.00 px from where it was painted (bound ≤ 0.5) · largest move over any 16.7 ms 6.0 px at +25 ms (bound 7.0 = 40.0 × press 0.151 (clock 350 ms) + 1) · glide ran (350 ms) · path from the frame before [0.0,0.0 0.0,0.0 0.0,2.5 0.0,6.1 0.0,9.0] · scrollY 78.0 → 78.0 → 78.0, G.scrollTop 0.0 → 0.0 · errors 0",
+   "load": "9.7/11.2/10.6"
+  },
+  {
+   "name": "E-10 slider xf · nested · zoom 0.5",
+   "status": "PASS",
+   "line": "the act on frame 8 · the root's paint moved 0.0, 40.0 px in all (40.00); on the act's frame 0.00, 0.00 = 0.00 px from where it was painted (bound ≤ 0.5) · largest move over any 16.7 ms 6.0 px at +50 ms (bound 7.0 = 40.0 × press 0.151 (clock 350 ms) + 1) · glide ran (350 ms) · path from the frame before [0.0,0.0 0.0,0.0 0.0,3.7 0.0,6.6 0.0,9.6] · scrollY 0.0 → 0.0 → 0.0, G.scrollTop 0.0 → 0.0 · errors 0",
+   "load": "9.7/11.2/10.6"
+  },
+  {
+   "name": "E-10 slider xf · inside · zoom 2.5",
+   "status": "PASS",
+   "line": "the act on frame 8 · the root's paint moved 0.0, 100.0 px in all (100.00); on the act's frame 0.00, 0.00 = 0.00 px from where it was painted (bound ≤ 0.5) · largest move over any 16.7 ms 15.1 px at +66 ms (bound 16.1 = 100.0 × press 0.151 (clock 350 ms) + 1) · glide ran (350 ms) · path from the frame before [0.0,0.0 0.0,0.0 0.0,7.7 0.0,15.1 0.0,22.7] · scrollY 146.0 → 146.0 → 146.0, G.scrollTop 0.0 → 0.0 · errors 0",
+   "load": "10.5/11.4/10.7"
+  },
+  {
+   "name": "E-10 slider xf · outside · zoom 2.5",
+   "status": "PASS",
+   "line": "the act on frame 8 · the root's paint moved 0.0, 40.0 px in all (40.00); on the act's frame 0.00, 0.00 = 0.00 px from where it was painted (bound ≤ 0.5) · largest move over any 16.7 ms 6.0 px at +58 ms (bound 7.0 = 40.0 × press 0.151 (clock 350 ms) + 1) · glide ran (350 ms) · path from the frame before [0.0,0.0 0.0,0.0 0.0,3.0 0.0,6.0 0.0,9.0] · scrollY 146.0 → 146.0 → 146.0, G.scrollTop 0.0 → 0.0 · errors 0",
+   "load": "10.5/11.4/10.7"
+  },
+  {
+   "name": "E-10 slider xf · nested · zoom 2.5",
+   "status": "PASS",
+   "line": "the act on frame 8 · the root's paint moved 0.0, 40.0 px in all (40.00); on the act's frame 0.00, 0.00 = 0.00 px from where it was painted (bound ≤ 0.5) · largest move over any 16.7 ms 6.0 px at +42 ms (bound 7.0 = 40.0 × press 0.151 (clock 350 ms) + 1) · glide ran (350 ms) · path from the frame before [0.0,0.0 0.0,0.0 0.0,2.5 0.0,6.2 0.0,8.6] · scrollY 523.0 → 523.0 → 523.0, G.scrollTop 0.0 → 0.0 · errors 0",
+   "load": "10.5/11.4/10.7"
+  },
+  {
+   "name": "E-10 slider xf · inside · scale 1.25",
+   "status": "PASS",
+   "line": "the act on frame 8 · the root's paint moved 0.0, 50.0 px in all (50.00); on the act's frame 0.00, 0.00 = 0.00 px from where it was painted (bound ≤ 0.5) · largest move over any 16.7 ms 7.5 px at +43 ms (bound 8.5 = 50.0 × press 0.151 (clock 350 ms) + 1) · glide ran (350 ms) · path from the frame before [0.0,0.0 0.0,0.0 0.0,3.1 0.0,7.6 0.0,10.5] · scrollY 104.0 → 104.0 → 104.0, G.scrollTop 0.0 → 0.0 · errors 0",
+   "load": "12.5/11.8/10.8"
+  },
+  {
+   "name": "E-10 slider xf · outside · scale 1.25",
+   "status": "PASS",
+   "line": "the act on frame 8 · the root's paint moved 0.0, 40.0 px in all (40.00); on the act's frame 0.00, 0.00 = 0.00 px from where it was painted (bound ≤ 0.5) · largest move over any 16.7 ms 6.0 px at +67 ms (bound 7.0 = 40.0 × press 0.151 (clock 350 ms) + 1) · glide ran (350 ms) · path from the frame before [0.0,0.0 0.0,0.0 0.0,3.0 0.0,6.0 0.0,9.0] · scrollY 104.0 → 104.0 → 104.0, G.scrollTop 0.0 → 0.0 · errors 0",
+   "load": "12.5/11.8/10.8"
+  },
+  {
+   "name": "E-10 slider xf · nested · scale 1.25",
+   "status": "PASS",
+   "line": "the act on frame 8 · the root's paint moved 0.0, 40.0 px in all (40.00); on the act's frame 0.00, 0.00 = 0.00 px from where it was painted (bound ≤ 0.5) · largest move over any 16.7 ms 6.0 px at +50 ms (bound 7.0 = 40.0 × press 0.151 (clock 350 ms) + 1) · glide ran (350 ms) · path from the frame before [0.0,0.0 0.0,0.0 0.0,3.0 0.0,6.0 0.0,9.1] · scrollY 166.0 → 166.0 → 166.0, G.scrollTop 0.0 → 0.0 · errors 0",
+   "load": "12.5/11.8/10.8"
+  },
+  {
+   "name": "E-10 slider xf · inside · zoom 0.5 + scale 0.8",
+   "status": "PASS",
+   "line": "the act on frame 8 · the root's paint moved 0.0, 16.0 px in all (16.00); on the act's frame 0.00, 0.00 = 0.00 px from where it was painted (bound ≤ 0.5) · largest move over any 16.7 ms 2.4 px at +50 ms (bound 3.4 = 16.0 × press 0.151 (clock 350 ms) + 1) · glide ran (350 ms) · path from the frame before [0.0,0.0 0.0,0.0 0.0,1.2 0.0,2.4 0.0,3.6] · scrollY 75.0 → 75.0 → 75.0, G.scrollTop 0.0 → 0.0 · errors 0",
+   "load": "12.1/11.7/10.8"
+  },
+  {
+   "name": "E-10 slider xf · outside · zoom 0.5 + scale 0.8",
+   "status": "PASS",
+   "line": "the act on frame 8 · the root's paint moved 0.0, 40.0 px in all (40.00); on the act's frame 0.00, 0.00 = 0.00 px from where it was painted (bound ≤ 0.5) · largest move over any 16.7 ms 6.0 px at +25 ms (bound 7.0 = 40.0 × press 0.151 (clock 350 ms) + 1) · glide ran (350 ms) · path from the frame before [0.0,0.0 0.0,0.0 0.0,3.0 0.0,6.0 0.0,9.0] · scrollY 75.0 → 75.0 → 75.0, G.scrollTop 0.0 → 0.0 · errors 0",
+   "load": "12.1/11.7/10.8"
+  },
+  {
+   "name": "E-10 slider xf · nested · zoom 0.5 + scale 0.8",
+   "status": "PASS",
+   "line": "the act on frame 8 · the root's paint moved 0.0, 40.0 px in all (40.00); on the act's frame 0.00, -0.00 = 0.00 px from where it was painted (bound ≤ 0.5) · largest move over any 16.7 ms 6.0 px at +66 ms (bound 7.0 = 40.0 × press 0.151 (clock 350 ms) + 1) · glide ran (350 ms) · path from the frame before [0.0,0.0 0.0,-0.0 0.0,3.0 0.0,6.0 0.0,9.0] · scrollY 0.0 → 0.0 → 0.0, G.scrollTop 0.0 → 0.0 · errors 0",
+   "load": "11.4/11.6/10.8"
+  },
+  {
+   "name": "E-10 slider xf · outside · html zoom 1.25",
+   "status": "PASS",
+   "line": "the act on frame 8 · the root's paint moved 0.0, 50.0 px in all (50.00); on the act's frame 0.00, 0.00 = 0.00 px from where it was painted (bound ≤ 0.5) · largest move over any 16.7 ms 7.5 px at +50 ms (bound 8.5 = 50.0 × press 0.151 (clock 350 ms) + 1) · glide ran (350 ms) · path from the frame before [0.0,0.0 0.0,0.0 0.0,3.8 0.0,7.6 0.0,11.3] · scrollY 167.0 → 167.0 → 167.0, G.scrollTop 0.0 → 0.0 · errors 0",
+   "load": "11.4/11.6/10.8"
+  },
+  {
+   "name": "E-10 slider scroll · anchor page · insert above · none",
+   "status": "FAIL",
+   "line": "overflow-anchor auto · the act on frame 8 · the root's paint moved 0.0, 0.0 px in all (0.00); on the act's frame 0.00, -40.00 = 40.00 px from where it was painted (bound ≤ 0.5) · largest move over any 16.7 ms 6.0 px at +67 ms (bound 1.0 = 0.0 × press 0.151 (clock 350 ms) + 1) · glide ran (350 ms) · path from the frame before [0.0,0.0 0.0,-40.0 0.0,-37.0 0.0,-34.0 0.0,-31.0] · scrollY 895.0 → 935.0 → 935.0, G.scrollTop 0.0 → 0.0 · errors 0",
+   "load": "11.4/11.6/10.8"
+  },
+  {
+   "name": "E-10 slider scroll · anchor page · insert above · scale 0.8",
+   "status": "FAIL",
+   "line": "overflow-anchor auto · the act on frame 8 · the root's paint moved 0.0, 0.0 px in all (0.00); on the act's frame 0.00, -40.00 = 40.00 px from where it was painted (bound ≤ 0.5) · largest move over any 16.7 ms 36.8 px at +17 ms (bound 1.0 = 0.0 × press 0.151 (clock 350 ms) + 1) · glide ran (350 ms) · path from the frame before [0.0,0.0 0.0,-40.0 0.0,-37.0 0.0,-34.0 0.0,-31.0] · scrollY 888.0 → 928.0 → 928.0, G.scrollTop 0.0 → 0.0 · errors 0",
+   "load": "13.5/12.0/10.9"
+  },
+  {
+   "name": "E-10 slider scroll · anchor page · remove above · none",
+   "status": "FAIL",
+   "line": "overflow-anchor auto · the act on frame 8 · the root's paint moved 0.0, 0.0 px in all (0.00); on the act's frame 0.00, 40.00 = 40.00 px from where it was painted (bound ≤ 0.5) · largest move over any 16.7 ms 37.5 px at +17 ms (bound 1.0 = 0.0 × press 0.151 (clock 350 ms) + 1) · glide ran (350 ms) · path from the frame before [0.0,0.0 0.0,40.0 0.0,37.6 0.0,34.0 0.0,31.1] · scrollY 935.0 → 895.0 → 895.0, G.scrollTop 0.0 → 0.0 · errors 0",
+   "load": "13.5/12.0/10.9"
+  },
+  {
+   "name": "E-10 slider scroll · anchor scroller · insert above · none",
+   "status": "FAIL",
+   "line": "overflow-anchor auto · the act on frame 8 · the root's paint moved 0.0, 0.0 px in all (0.00); on the act's frame 0.00, -40.00 = 40.00 px from where it was painted (bound ≤ 0.5) · largest move over any 16.7 ms 29.5 px at +18 ms (bound 1.0 = 0.0 × press 0.151 (clock 350 ms) + 1) · glide ran (350 ms) · path from the frame before [0.0,0.0 0.0,-40.0 0.0,-36.8 0.0,-34.2 0.0,-30.7] · scrollY 0.0 → 0.0 → 0.0, G.scrollTop 791.0 → 831.0 · errors 0",
+   "load": "13.0/11.9/10.9"
+  },
+  {
+   "name": "E-10 slider scroll · anchor scroller · remove above · none",
+   "status": "FAIL",
+   "line": "overflow-anchor auto · the act on frame 8 · the root's paint moved 0.0, 0.0 px in all (0.00); on the act's frame 0.00, 40.00 = 40.00 px from where it was painted (bound ≤ 0.5) · largest move over any 16.7 ms 6.0 px at +50 ms (bound 1.0 = 0.0 × press 0.151 (clock 350 ms) + 1) · glide ran (350 ms) · path from the frame before [0.0,0.0 0.0,40.0 0.0,36.9 0.0,33.9 0.0,30.7] · scrollY 0.0 → 0.0 → 0.0, G.scrollTop 831.0 → 791.0 · errors 0",
+   "load": "13.0/11.9/10.9"
+  },
+  {
+   "name": "E-10 slider scroll · clamp page · remove below · none",
+   "status": "FAIL",
+   "line": "overflow-anchor none · the act on frame 8 · the root's paint moved 0.0, 40.0 px in all (40.00); on the act's frame 0.00, 40.00 = 40.00 px from where it was painted (bound ≤ 0.5) · largest move over any 16.7 ms 39.8 px at +17 ms (bound 7.0 = 40.0 × press 0.151 (clock 350 ms) (no running translate on the root carries a row's clock: the fastest row) + 1) · glide none (the paint moved ≥ 5 px with no glide) · path from the frame before [0.0,0.0 0.0,40.0 0.0,40.0 0.0,40.0 0.0,40.0] · scrollY 680.0 → 640.0 → 640.0, G.scrollTop 0.0 → 0.0 · errors 0",
+   "load": "13.0/11.9/10.9"
+  },
+  {
+   "name": "E-10 slider scroll · clamp scroller · remove below · none",
+   "status": "FAIL",
+   "line": "overflow-anchor none · the act on frame 8 · the root's paint moved 0.0, 40.0 px in all (40.00); on the act's frame 0.00, 40.00 = 40.00 px from where it was painted (bound ≤ 0.5) · largest move over any 16.7 ms 39.8 px at +17 ms (bound 7.0 = 40.0 × press 0.151 (clock 350 ms) (no running translate on the root carries a row's clock: the fastest row) + 1) · glide none (the paint moved ≥ 5 px with no glide) · path from the frame before [0.0,0.0 0.0,40.0 0.0,40.0 0.0,40.0 0.0,40.0] · scrollY 0.0 → 0.0 → 0.0, G.scrollTop 750.0 → 710.0 · errors 0",
+   "load": "12.1/11.7/10.9"
+  },
+  {
+   "name": "E-10 presented dialog · a 40 px block inserted above the slider",
+   "status": "FAIL",
+   "line": "the plate's translate \"-50% -50%\", its top 161.5 → 141.5, height 177.0 → 217.0 · the act on frame 8 · the root's paint moved 0.0, 20.0 px in all (20.00); on the act's frame 0.00, -20.00 = 20.00 px from where it was painted (bound ≤ 0.5) · largest move over any 16.7 ms 6.0 px at +58 ms (bound 4.0 = 20.0 × press 0.151 (clock 350 ms) + 1) · glide ran (350 ms) · path from the frame before [0.0,0.0 0.0,-20.0 0.0,-17.2 0.0,-13.9 0.0,-11.0] · scrollY 0.0 → 0.0 → 0.0, G.scrollTop 0.0 → 0.0 · errors 0",
+   "load": "12.1/11.7/10.9"
+  },
+  {
+   "name": "E-10 presented dialog · the paragraph above the slider removed",
+   "status": "FAIL",
+   "line": "the plate's translate \"-50% -50%\", its top 161.5 → 189.5, height 177.0 → 121.0 · the act on frame 8 · the root's paint moved 0.0, -28.0 px in all (28.00); on the act's frame 0.00, 28.00 = 28.00 px from where it was painted (bound ≤ 0.5) · largest move over any 16.7 ms 8.4 px at +50 ms (bound 5.2 = 28.0 × press 0.151 (clock 350 ms) + 1) · glide ran (350 ms) · path from the frame before [0.0,0.0 0.0,28.0 0.0,24.4 0.0,19.4 0.0,15.3] · scrollY 0.0 → 0.0 → 0.0, G.scrollTop 0.0 → 0.0 · errors 0",
+   "load": "12.1/11.7/10.9"
+  }
+ ]
+}

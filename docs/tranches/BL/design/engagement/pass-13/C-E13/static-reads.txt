@@ -1,0 +1,55 @@
+# C-E13 · static reads (no build, no browser). Every line below is a command this seat ran
+# in /Users/mkbabb/Programming/glass-ui at HEAD 57d51bc81, and what it printed.
+
+## the flag and the load
+00:23  test -e ~/.claude/guard/ZONE-ARMED            -> ARMED
+00:23  uptime                                        -> load averages: 9.01 13.59 16.75
+00:32  test -e ~/.claude/guard/ZONE-ARMED            -> ARMED
+00:32  uptime                                        -> load averages: 11.18 12.05 14.56
+
+## the candidate's bytes
+shasum pass-13/P-E13.patch   -> ffa64fc4054bf5368000f29bd3930b47743f115f
+shasum pass-12/P-E12.patch   -> 028c180777ff2409009377810fca729976d710e4
+git apply --check pass-13/P-E13.patch (against the checkout's HEAD 57d51bc81; src, tests, demo clean) -> exit 0
+git status --short src tests demo -> (nothing)
+
+## where the claims and the bytes sit (line numbers in P-E13.patch; file lines in brackets)
+own.ts                 P-E13.patch 7889-7934
+settle.ts              P-E13.patch 8103-8269   tokenOf 8194-8221, rowClockMs 8241-8244
+stage.ts               P-E13.patch 8270-8763   [header 1-81]; probe 8419, frameOf 8441, translateFor 8460;
+                                                 readInputs 8538, writeReach 8554, onMutation 8588, onMove 8609, hear 8621, heard 8636;
+                                                 leave 8687
+engage-stage.css       P-E13.patch 9225-9258   [13] "stage.ts `writeGeometry`" (no such function in P-E13's stage.ts);
+                                                 [15-16] "one whose inputs were unreadable, reads 0" (P-E13 writes 1, stage.ts writeReach)
+utilities/engage.css   P-E13.patch 9352-9374   --engage-read-time/-number/-length: inherits false, initial -1s/-1/-1px
+useEngage.ts           P-E13.patch 8764-9224   readInputs 8963: 8 clocks + crest + panel-duration
+                                                 through tokenOf; called at the arming frame, on every data-state edge
+                                                 (edges MutationObserver), on every stateless commit
+
+grep -n -e "never glided" P-E13.patch           -> 8327: stage.ts [52] "moves both alike and is never glided"
+grep -n -e writeGeometry -e ownScale ... (added lines only) -> 9242 (engage-stage.css [13]); 10750 (a test name, a plant)
+
+## motionTempo at HEAD (src/composables/motion/core/motionTempo.ts:33-41)
+const t = Number.parseFloat(raw); return Number.isFinite(t) && t > 0 ? t : MOTION_TEMPO_IDENTITY;
+src/styles/tokens/property-regs.css:240-244   @property --motion-tempo { syntax: "<number>"; inherits: true; initial-value: 1; }
+src/styles/tokens/scheme-spring.css:110       --spring-dock-duration: calc(var(--spring-dock-settle) * var(--motion-tempo));
+src/styles/tokens/scheme-spring.css:116       --spring-dock-exit-duration: calc(clamp(0.12s, var(--spring-dock-settle) * 0.6, 0.25s) * var(--motion-tempo));
+settle.ts rowClockMs: s * motionTempo(el)      (P-E13.patch 8241-8244)
+
+## library writers of inline style that run per frame or per pointer move (a member of (a)(i) ∩ (a)(v))
+grep -rln -e 'style\.transform\s*=' -e 'style\.translate\s*=' -e 'style\.setProperty("--' -e "style\.setProperty('--" src/components src/composables
+  -> 19 files, among them:
+src/components/carousel/CarouselContent.vue:65-66   --member-scale, --member-lag on every member, on every deck position change (watch at :71-74)
+src/composables/motion/scroll/useScrollChrome.ts:165 --chrome-collapse-t on every scroll step
+src/composables/glass/vSpecular.ts:59-60            --mouse-x, --mouse-y on every pointer move
+src/composables/motion/reveal/vReveal.ts:22         --d
+
+## transition-property: all, in the library and its siblings (the registered read's transition member)
+grep -rn -e transition-all -e 'transition: all' -e 'transition-property: all' src -> 0 lines
+grep -rl -e transition-all <sibling>/src: speedtest 1 file, bbnf-buddy 1 file, atlas/slides/chicago/keyframes.js/value.js/fourier-analysis/sci-report 0
+grep for a glass-ui control tag carrying transition-all in those siblings -> 0 lines
+
+## C-A12's WebKit facts, re-read (pass-12/C-A12/logs/facts-webkit.log, WebKit 26.5)
+Typed OM throws on calc/min/max/clamp; CSS transition-duration reads each as 0.21s.
+No line reads a registered custom property's computed value, a paused WAAPI translate in getBoundingClientRect,
+the timing of scroll anchoring against a forced layout, or document.timeline.currentTime across tasks.

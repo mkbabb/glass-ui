@@ -205,6 +205,15 @@ export const FAULTS = {
   "e10-hostglideone": { why: "CK-20 (H12, REGISTRY §P11-7 item 5; C-A11's flowone, C-E11's hostzoom): the re-render glide sums the offsets with no ratio at all, so a positioned box in the offset chain outside a zoomed box carries its offset in the wrong px: the glide lands 40 × (zoom − 1) px off", witnesses: ["E-10"], cell: /hostglide · chain · zoom/, args: ["--part", "hostglide"] },
   "e10-hostglideframe": { why: "CK-20 (H12, REGISTRY §P11-7 item 2, P-E11 §1's risk; C-A11's glideframe as written): the glide reads the accumulated flow through each box's whole frame every frame, so an ancestor's running scale animation reads as a moved place and an unrelated mutation glides it", witnesses: ["E-10"], cell: /hostglide · animating/, args: ["--part", "hostglide"] },
   "e10-reachframe": { why: "CK-20 (H12, REGISTRY §P11-7 item 5; C-E11's roomframe): the reach's room is read as the pass-10 stage read it, the painted centre against the unzoomed width and not over the frame, so under a scale or a zoom the inline grow is not the gutter-capped figure", witnesses: ["E-10"], cell: /reach · (scale 0\.8|zoom 0\.8|zoom 1\.25|zoom 2|zoom 1\.25 \+ scale 0\.8)/, args: ["--part", "reach"] },
+  // ── H13 (pass 13; REGISTRY §P12-7 items 1-6, §P12-8.3 wave 1): one or more per new cell, each a shape a candidate has had ──
+  "e10-hostglidelayout": { why: "CK-20 (H13, REGISTRY §P12-7 items 2, 4; the pass-12 shape): the re-render glide from a layout model, each offset change through its box's frame (H12's clean fixture): a size-dependent paint map (a percent translate, a centred origin, the Dialog's -50% -50%), the engine's scroll anchoring and the scroll clamp are not in it", witnesses: ["E-10"], cell: /xf · (inside|below) · (translate|rotate 10deg centre)|dialog ·|scroll · (anchor|clamp)/, args: ["--part", "hg13", "--hg13", "xf,scroll,dialog"] },
+  "e10-hostglidelevel": { why: "CK-20 (H13, REGISTRY §P12-7 item 2; the pass-12 ownScale): the map from a translate to its paint read as its axis lengths alone, so under a rotation, a skew or a rotating matrix the glide is laid level and starts off where the root was painted", witnesses: ["E-10"], cell: /xf · (outside|nested) · (rotate 10deg|skewX 15deg|matrix rotate)/, args: ["--part", "hg13", "--hg13", "xf"] },
+  "e10-hostglidechild": { why: "CK-20 (H13, REGISTRY §P12-7 item 3; the pass-12 watchWorld): the glide hears childList records only, so a v-show, a class, a hidden attribute or a text node moving the host is an unglided cut", witnesses: ["E-10"], cell: /kind · (style|class|hidden|text)/, args: ["--part", "hg13", "--hg13", "kind"] },
+  "e10-hostglidestale": { why: "CK-20 (H13; C-A11's glideframe class on the painted read): the place the glide starts from is read a frame behind, so an ancestor's running animation reads as a move and an unrelated mutation glides it", witnesses: ["E-10"], cell: /anim · (css-transition scale|waapi translate)/, args: ["--part", "hg13", "--hg13", "anim"] },
+  "e10-reenter": { why: "CK-20 (H13, REGISTRY §P12-8.1: the stage's own writes never re-enter its observer; C-A12's allkinds, read as a cure, delivers its own style writes): the glide's observer hears every kind and is handed the fixture's own writes (the lens laid each frame, the reach, the engagement attributes)", witnesses: ["E-10"], cell: /reentry ·/, args: ["--part", "hg13", "--hg13", "reentry"] },
+  "e11-narrowread": { why: "CK-21 (H13, REGISTRY §P12-7 item 1; H12's own fixture readers): every loud read takes only a plain dimension (a regex), narrower than its consumer's grammar: a math function, a case, an exponent, a sign or a comment CSS takes is refused by name, on default tokens too (the fixture's own calc() defaults)", witnesses: ["E-11"], cell: /travel loud · --spring-press-settle (calc|min|max|clamp|round|abs|2\.1e2ms|\+0\.21s|210MS)|census ·|token forms ·/, args: ["--part", "forms,census,tokens"] },
+  "e11-typedom": { why: "CK-21 (H13, REGISTRY §P12-7 item 1; the pass-12 tokenOf): every loud read asks the Typed OM (CSSNumericValue.parse of the computed text), which WebKit 26.5 implements without math functions and Chromium 149 without round() and abs(): a form CSS takes is refused by name", witnesses: ["E-11"], cell: /travel loud · --spring-press-settle (calc|min|max|clamp|round|abs)|census ·|token forms ·/, args: ["--part", "forms,census,tokens"] },
+  "e11-reachzero": { why: "CK-21 (H13, REGISTRY §P12-7 item 6; the pass-12 registered reach): a refused reach input leaves the registered reach at its initial 0, so the held slider paints inline ×0 while its message says the engagement paints nothing", witnesses: ["E-11"], cell: /reach input · .* nonsense/, args: ["--part", "reachin"] },
   "e10-lenslate": { why: "CK-20 (H10, REGISTRY §P9-7 item 6): the lens is placed one frame late, from the place read in the frame before, so on a scroll it trails its track by a tick. A film cell, graded in Chromium; WebKit's is REPORT (the plain anchored lens reads the same 8 px)", witnesses: ["E-10"], cell: /clipstale lensfilm · (none|scale)/, args: ["--part", "lensfilm"], engines: ["chromium"] },
   "e12-chipmute": { why: "CK-27 (H7, C-A6 §0): the chip that left the capsule answers neither hover nor press (0.0 % / 0.0 %): the elegant-reduction trap", witnesses: ["E-12"], cell: /fx chip answers/ },
   "e12-chipundeclared": { why: "CK-27 (H7): the chip paints its hover and press through literal rules and composes no declared engage-* class", witnesses: ["E-12"], cell: /fx chip answers/ },
@@ -219,7 +228,7 @@ const FX_LOUPE = { lens: ".fx-loupe", window: ".fx-loupe-window", clone: ".fx-lo
 export const FIXTURE_INDEX = {
   // H5: pop carries C-A4's rebound (E-10, its light seat the .flash) and the ladder (CAP)
   // H8: CK-21's crest input, planted on <html> before the first script (C-A7's crestinput)
-  pop: { gates: [...CONTROL_GATES, "E-5", "E-10", "E-11"], key: "Space", target: ".ctl", rebound: true, light: ".flash", ladder: true, failLoud: [{ token: "--fx-commit-crest", value: "nonsense", act: "commit", html: true }] },
+  pop: { gates: [...CONTROL_GATES, "E-5", "E-10", "E-11"], key: "Space", target: ".ctl", rebound: true, light: ".flash", ladder: true, failLoud: [{ token: "--fx-commit-crest", value: "nonsense", act: "commit", html: true }], forms: [{ token: "--engage-control-engage-release", kind: "time", act: "commit" }, { token: "--engage-control-engage-attack", kind: "time", act: "commit" }] },
   // H6: travel carries the ladder too (capture.mjs reads it as a ladder-only scene: the path the library's collapsible
   // and menu take)
   travel: { gates: CONTROL_GATES, key: "ArrowRight", target: '.seg[data-v="b"]', ladder: true },
@@ -228,7 +237,7 @@ export const FIXTURE_INDEX = {
   act: { gates: CONTROL_GATES, key: "Space", target: ".ctl", stateless: true },
   // H6: `reads: 5` (CK-05: E-4's fling read five times, every read must pass)
   // H12: `gutter` (E-10's reach cell: the token the reach's gutter is read from; the library's is --space-section, the default)
-  slider: { gates: ["E-3", "E-4", "E-7", "E-9", "E-10", "E-11", "E-12", "E-13"], loupe: FX_LOUPE, gutter: "--fx-gutter", key: "ArrowRight", veil: ".fx-veil", engaged: "[data-held], [data-kbd]", floor: ["wheel", "anchor"], reads: 5, failLoud: [{ token: "--fx-scale-engage", value: "nonsense", act: "kbd" }] },
+  slider: { gates: ["E-3", "E-4", "E-7", "E-9", "E-10", "E-11", "E-12", "E-13"], loupe: FX_LOUPE, gutter: "--fx-gutter", key: "ArrowRight", veil: ".fx-veil", engaged: "[data-held], [data-kbd]", floor: ["wheel", "anchor"], reads: 5, failLoud: [{ token: "--fx-scale-engage", value: "nonsense", act: "kbd" }], grow: "--fx-scale-engage", forms: [{ token: "--fx-scale-engage", kind: "number", act: "hold" }, { token: "--fx-gutter", kind: "length", act: "hold" }] },
   // H4: the fixture slider marks its engagement as data-held (the hand) or data-kbd (the keyboard)
   slider2: { gates: ["E-10"], veil: ".fx-veil", engaged: "[data-held], [data-kbd]", pair: ['.fx-slider[data-n="A"]', '.fx-slider[data-n="B"]'] },
   // H5: C-E4's stale place (a paragraph that rewraps, a spacer, the slider, a ticker below)
@@ -307,11 +316,12 @@ export function fixturePage(params, fault = "") {
   const SPRING = "linear(0, 0.57 18%, 0.94 32%, 1.06 45%, 1.03 60%, 0.99 75%, 1)";
   const css = `
 @property --rung-class { syntax: "<custom-ident>"; inherits: false; initial-value: unclassed; }
+${F("e11-reachzero") ? '@property --fx-reach { syntax: "<number>"; inherits: false; initial-value: 0; }' : ""}
 .engage-pressed { --rung-class: pressed; } .engage-chosen { --rung-class: chosen; } .engage-held { --rung-class: held; }
 .engage-static { --rung-class: static; } .engage-field { --rung-class: field; } .engage-ambient { --rung-class: ambient; }
-:root { --spring-press-duration: 350ms; --spring-press: ${SPRING}; --spring-press-settle: 0.35s;
+:root { --spring-press-duration: 350ms; --spring-press: ${SPRING}; --spring-press-settle: calc(0.175s * 2);
   --engage-press-drain-attack: ${F("e8-drift") ? 56 : 55}ms; --engage-press-drain-release: 120ms;
-  --engage-control-engage-attack: 60ms; --engage-control-engage-release: ${F("e8-units") ? ".18s" : "180ms"};
+  --engage-control-engage-attack: 60ms; --engage-control-engage-release: ${F("e8-units") ? ".18s" : "calc(90ms * 2)"};
   --fx-scale-engage: 1.06; --fx-commit-crest: 0.35; --fx-gutter: 16px;
   --bg: #f4f4f6; --ink: #111; --ctl: #d8dbe2; --ctl-hover: #cfd3dc; --ctl-press: #b9bfcc; --accent: #3b6cf0; }
 .dark { --bg: #15161a; --ink: #eee; --ctl: #33363f; --ctl-hover: #3b3f49; --ctl-press: #4b505c; }
@@ -352,7 +362,7 @@ ${F("e2-shimmer") ? `.ctl { transition: scale var(--spring-press-duration) var(-
 .fx-slider { position: relative; height: 20px; width: ${phone ? (F("e3-gutter") ? "100%" : "300px") : "360px"}; ${phone ? "margin: 0 auto;" : ""} border-radius: 10px; background: var(--ctl);
   transition: scale var(--spring-press-duration) var(--spring-press); }
 .fx-slider + .fx-slider { margin-top: 40px; }
-.fx-slider${F("e3-still") ? ".never" : F("e3-kbd") ? ":where(:active, [data-held])" : ":where(:active, [data-held], [data-kbd])"} { scale: ${noise ? String(noise) : F("e11-unread") ? "1.06" : F("e3-blockgrow") && phone ? "1 1.06" : "min(var(--fx-scale-engage), var(--fx-reach, 99)) var(--fx-scale-engage)"}; }
+.fx-slider${F("e3-still") ? ".never" : F("e3-kbd") ? ":where(:active, [data-held])" : ":where(:active, [data-held], [data-kbd])"} { scale: ${noise ? String(noise) : F("e11-unread") ? "1.06" : F("e3-blockgrow") && phone ? "1 1.06" : F("e11-reachzero") ? "min(var(--fx-scale-engage), var(--fx-reach)) var(--fx-scale-engage)" : "min(var(--fx-scale-engage), var(--fx-reach, 99)) var(--fx-scale-engage)"}; }
 .fx-slider[data-held] { cursor: grabbing; }
 .fx-slider.snap { transition: none; }
 .fx-slider.pinned { position: fixed; }
@@ -448,7 +458,7 @@ ${F("cap-ladderhit") ? ".fx-cover { position: absolute; inset: -8px; z-index: 5;
   else if (scene === "slider") body = `<div id="spacer"></div><div id="slot"></div>${slider()}`;
   else if (scene === "restale") body = `<p class="fx-para">The world above the engaged control: a paragraph long enough to rewrap when the viewport narrows, so that a resize moves the control below it with no mutation of the document at all.</p><div id="spacer"></div><div data-t="wrap">${slider()}</div><div class="fx-ticker" id="ticker"></div>`;
   else if (scene === "clipstale") body = `<p class="fx-para">A scrolling card holds the control; the card's edge clips it.</p><div class="fx-box" data-t="box"><div style="height:200px"></div><div id="spacer" data-t="spacer" style="height:60px"></div><div data-t="slider-a" style="padding:0 20px">${slider()}</div><div style="height:400px"></div></div><div class="fx-ticker" id="ticker"></div>`;
-  else if (scene === "presented") body = `<div class="fx-pscrim" data-t="scrim"></div><div class="fx-pdialog open" role="dialog" aria-label="Probe" data-e="target">Body${dlgSlider ? `<button type="button" data-t="dlg-from">Act</button><div data-t="dlg-slider" style="padding:16px 0">${slider("D")}</div>` : ""}</div>`;
+  else if (scene === "presented") body = `<div class="fx-pscrim" data-t="scrim"></div><div class="fx-pdialog open" role="dialog" aria-label="Probe" data-e="target">Body${dlgSlider ? `<button type="button" data-t="dlg-from">Act</button><p data-t="dlg-para" style="margin:8px 0;font:14px/20px system-ui">A paragraph above the slider, inside the plate.</p><div data-t="dlg-slider" style="padding:16px 0">${slider("D")}</div>` : ""}</div>`;
   else if (scene === "capsule") body = `<div role="group" aria-label="Presets" style="display:flex;gap:12px"><button class="capx glass-capsule-hover" type="button" data-t="cap-kappa" aria-pressed="false"${F("e12-openpop") ? ' data-state="closed" aria-expanded="false"' : ""}>Kappa</button><button class="fxchip${F("e12-chipundeclared") ? "" : " engage-chosen"}" type="button" data-t="cap-chipx" aria-pressed="false">Chip</button></div>`;
   else if (scene === "slider2") body = `${slider("A")}${slider("B")}`;
   else if (scene === "modal") body = `<div class="fx-scrim" data-state="open" data-e="veil"${F("e7-veil") ? " data-engaged" : ""}></div><div class="fx-dialog" role="dialog" aria-label="Probe" data-e="modal">Body</div>`;
@@ -466,12 +476,27 @@ ${F("cap-ladderhit") ? ".fx-cover { position: absolute; inset: -8px; z-index: 5;
   // dropped, C-E5 §0.2's class)
   const CLOCKS = [...new Set([...css.matchAll(/(?:transition|animation)[\w-]*\s*:[^;{}]*/g)].flatMap((m) => [...m[0].matchAll(/var\((--engage-[\w-]+)\)/g)].map((x) => x[1])))].filter((t) => !(F("e11-rename") && t.startsWith("--engage-control-engage-")));
   const script = `
-const FAULT = ${JSON.stringify(fault)}; const SCENE = ${JSON.stringify(scene)}; const DLGS = ${dlgSlider}; const DEFER = ${defer}; const ON = ${on}; const RUN = ${run}; const PHONE = ${phone};
+let OWN = () => {}; const FAULT = ${JSON.stringify(fault)}; const SCENE = ${JSON.stringify(scene)}; const DLGS = ${dlgSlider}; const DEFER = ${defer}; const ON = ${on}; const RUN = ${run}; const PHONE = ${phone};
 const DROP = ${carryDrop || slowDrive}; const SLOWDRIVE = ${slowDrive}; const CLOCKS = ${JSON.stringify(CLOCKS)};
 // H6 (CK-21): every clock the stylesheet transitions on is read loudly at mount and on every act
+// H13 (REGISTRY §P12-7 item 1; §P12-8.1 (b)): every token is read as its consumer computes it. Its computed text is checked against the
+// consumer property's own grammar (CSS.supports of the property on calc((text) * 1) for a single <time> or <number>, of the property
+// itself for a <length>) and its value is read from a probe that computes that property: one <time> (a list, a word, a bare number refused),
+// math functions, case, exponent, sign and comments taken exactly as CSS takes them. Plants: e11-narrowread (a plain dimension only:
+// H12's regexes), e11-typedom (CSSNumericValue.parse of the computed text: the pass-12 tokenOf)
+function probeOf(el) { if (!el._fxProbe) { const p = document.createElement("span"); p.setAttribute("data-fx-own", ""); p.style.cssText = "position:absolute;width:0;height:0;overflow:hidden;visibility:hidden;pointer-events:none"; el.appendChild(p); el._fxProbe = p; OWN(); } return el._fxProbe; }
+const PROP = { time: "transition-duration", number: "scale", length: "padding-left" }; // the probe writes !important: the reduce arm's * { transition-duration: 0s !important } would read every clock as 0 (the H13 self-test, e10-lensreducetravel)
+function readTok(el, token, kind) {
+  const raw = getComputedStyle(el).getPropertyValue(token).trim();
+  if (FAULT === "e11-narrowread") { const m = kind === "number" ? /^(\\d*\\.?\\d+)$/.exec(raw) : kind === "length" ? /^(\\d*\\.?\\d+)px$/.exec(raw) : /^(\\d*\\.?\\d+)(ms|s)$/.exec(raw); return m ? Number.parseFloat(m[1]) * (m[2] === "s" ? 1000 : 1) : NaN; }
+  if (FAULT === "e11-typedom") { try { return CSSNumericValue.parse(raw).to(kind === "time" ? "ms" : kind === "length" ? "px" : "number").value; } catch { return NaN; } }
+  const prop = PROP[kind]; const text = kind === "length" ? raw : "calc((" + raw + ") * 1)";
+  if (raw === "" || !CSS.supports(prop, text)) return NaN;
+  const p = el === document.documentElement ? probeOf(document.body) : probeOf(el); p.style.setProperty(prop, kind === "length" ? "var(" + token + ")" : "calc((var(" + token + ")) * 1)", "important"); const v = getComputedStyle(p).getPropertyValue(prop).trim(); p.style.removeProperty(prop); OWN();
+  return kind === "time" ? Number.parseFloat(v) * (/ms$/.test(v) ? 1 : 1000) : Number.parseFloat(v);
+}
 function checkClocks() {
-  const cs = getComputedStyle(document.documentElement);
-  for (const t of CLOCKS) { const raw = cs.getPropertyValue(t).trim(); if (!/^[\\d.]+m?s$/.test(raw)) console.error("[fixture] " + t + " is unreadable (" + JSON.stringify(raw) + "): the clock it times cannot run"); }
+  for (const t of CLOCKS) { const v = readTok(document.documentElement, t, "time"); if (!(v >= 0) || !Number.isFinite(v)) console.error("[fixture] " + t + " is unreadable (" + JSON.stringify(getComputedStyle(document.documentElement).getPropertyValue(t).trim()) + "): the clock it times cannot run"); }
 }
 const E = ${JSON.stringify(E)};
 const prm = () => matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -483,7 +508,7 @@ const stale = (hist, now) => now - hist.at(-1).t > 700;
 // the scene's model, readable before the deferred mount renders (CK-03's arrival reads the state across it)
 let model = ON, selIdx = ON ? 1 : 0, count = 0;
 const tok = (n) => parseFloat(getComputedStyle(document.documentElement).getPropertyValue(n));
-const ms = (n) => { const m = getComputedStyle(document.documentElement).getPropertyValue(n).trim().match(/^([\\d.]+)(m?s)$/); return m ? +m[1] * (m[2] === "s" ? 1000 : 1) : NaN; };
+const ms = (n) => readTok(document.documentElement, n, "time");
 const SPRING = ${JSON.stringify(SPRING)};
 // the commit, in LIGHT (CK-02 arm iii): the overlay rises on the control-engage envelope's attack and decays on its
 // release, two animations each on its row's clock
@@ -576,7 +601,7 @@ function loupe(root, th, on) {
   lens = { L, root, below: null, prev: null, exiting: false }; document.body.appendChild(L);
   layLens(); L.getBoundingClientRect(); L.classList.add("on");
   if (!lensRO) { lensRO = new ResizeObserver(layLens); document.body.appendChild(lensBeat); }
-  cancelAnimationFrame(lensFrame); lensFrame = requestAnimationFrame(lensTick);
+  cancelAnimationFrame(lensFrame); lensFrame = requestAnimationFrame(lensTick); OWN();
 }
 // H10 (CK-25, CK-20): the cured lens, the library lens's shape. Hung by CSS anchor from its track (so a scroll carries it on the
 // clock it carries the track, and an ancestor's transform leaves a gap, in Chromium); two empty probes on the same anchor read where
@@ -605,9 +630,9 @@ const ZOOMPLANT = FAULT === "e10-lenszoom" || FAULT === "e13-loupeclockzoom";
 function clockOf(el) {
   const raw = getComputedStyle(el).getPropertyValue("--spring-press-settle").trim();
   let ms = NaN;
-  if (FAULT === "e11-travelunit") ms = Number.parseFloat(raw) * 1000;
-  else { const m = /^(\\d*\\.?\\d+)(ms|s)$/.exec(raw); if (m) ms = Number.parseFloat(m[1]) * (m[2] === "ms" ? 1 : 1000); }
-  if (ms > 0) return ms;
+  if (FAULT === "e11-travelunit" && /^[\\d.]+m?s$/.test(raw)) ms = Number.parseFloat(raw) * 1000; // the plant misreads a plain <time> (210ms) as seconds; its calc() default is read as the clean fixture reads it
+  else ms = readTok(el, "--spring-press-settle", "time");
+  if (ms > 0 && Number.isFinite(ms)) return ms;
   console.error("[fixture] --spring-press-settle is unreadable (" + JSON.stringify(raw) + "): the travel has no clock"); return 0;
 }
 function easingOf(el) {
@@ -627,7 +652,7 @@ lensBeat.style.cssText = "position:fixed;left:0;top:0;width:1px;height:1px;point
 function lensTick() { lensFrame = requestAnimationFrame(lensTick); if (!lens) return; if (lens.exiting && FAULT === "e13-exitfrozen") return; lensRO.unobserve(lensBeat); lensRO.observe(lensBeat); }
 function lensExit() {
   if (!lens) { document.querySelectorAll(".fx-loupe").forEach((e) => e.remove()); return; }
-  const h = lens; h.exiting = true; h.L.classList.add("exit");
+  const h = lens; h.exiting = true; h.L.classList.add("exit"); OWN();
   setTimeout(() => { h.L.remove(); if (lens === h) { lens = null; cancelAnimationFrame(lensFrame); } }, prm() ? 0 : 260);
 }
 function layLens() {
@@ -663,7 +688,7 @@ function layLens() {
       if (tv) L.animate([{ translate: "0 " + (-delta) + "px" }, { translate: "0 0" }], { duration: tv.ms / (FAULT === "e10-lensfast" ? 3 : 1), easing: tv.easing, composite: "add" });
     }
   }
-  h.below = below;
+  h.below = below; OWN();
 }
 function settleVeil(now) {
   const want = engagedAny();
@@ -673,11 +698,12 @@ function settleVeil(now) {
 function applyVeil(want) {
   if (want && !veil) { veil = document.createElement("span"); veil.className = "fx-veil"; veil.setAttribute("data-e", "veil"); if (!(FAULT === "e7-prm" && prm())) veil.setAttribute("data-engaged", ""); document.body.appendChild(veil); veil.getBoundingClientRect(); veil.classList.add("on"); }
   else if (!want && veil) { const v = veil; veil = null; v.remove(); }
+  OWN();
 }
 function checkToken(root) {
   if (FAULT === "e11-silent" || FAULT === "e11-unread" || FAULT === "e11-noise") return;
   const raw = getComputedStyle(root).getPropertyValue("--fx-scale-engage").trim();
-  if (!(parseFloat(raw) > 1) || !/^[\\d.]+$/.test(raw)) console.error("[fixture] --fx-scale-engage is unreadable (" + JSON.stringify(raw) + "): the engagement cannot size its grow");
+  if (!(readTok(root, "--fx-scale-engage", "number") > 1)) console.error("[fixture] --fx-scale-engage is unreadable (" + JSON.stringify(raw) + "): the engagement cannot size its grow");
 }
 // H4 plants: e12-wheelchain promotes the engaged root into the top layer where it painted (a wheel over it chains to
 // the viewport); e12-anchorlost writes the engagement's own position-anchor and removes the property on release
@@ -695,20 +721,20 @@ function writeReach(root) {
   const r = root.getBoundingClientRect(), w = root.offsetWidth, cx = r.left + r.width / 2, vw = innerWidth;
   const k = FAULT === "e10-reachframe" ? 1 : fxFrame(root);
   const room = Math.max(0, Math.min(cx - (w * k) / 2, vw - (cx + (w * k) / 2))) / k;
-  const g = Number.parseFloat(getComputedStyle(root).getPropertyValue("--fx-gutter"));
-  if (!(g >= 0) || !(w > 0)) { console.error("[fixture] --fx-gutter is unreadable: the reach cannot be read"); return; }
-  root.style.setProperty("--fx-reach", String(1 + (2 * Math.max(0, room - g)) / w));
+  const g = readTok(root, "--fx-gutter", "length");
+  if (!(g >= 0) || !(w > 0)) { console.error("[fixture] --fx-gutter is unreadable: the reach paints nothing (no inline grow)"); if (FAULT === "e11-reachzero") root.style.removeProperty("--fx-reach"); else root.style.setProperty("--fx-reach", "1"); OWN(); return; }
+  root.style.setProperty("--fx-reach", String(1 + (2 * Math.max(0, room - g)) / w)); OWN();
 }
 function kbd(root, on) {
   if (on) { if (root.dataset.kbd === undefined) { checkToken(root); checkClocks(); writeReach(root); } root.dataset.kbd = ""; if (FAULT === "e3-tabhand") root.dataset.held = "key"; }
   else { delete root.dataset.kbd; if (FAULT === "e3-tabhand") delete root.dataset.held; }
   if (FAULT === "e12-wheelchain" || FAULT === "e12-wheelrow") promote(root, on);
   if (FAULT === "e12-anchorlost") { if (on) root.style.setProperty("position-anchor", "--fx-footprint"); else root.style.removeProperty("position-anchor"); }
-  settleVeil();
+  settleVeil(); OWN();
 }
 function wireSlider(root) {
   const th = root.querySelector(".fx-thumb");
-  const W = () => root.offsetWidth; let x = 0.4 * W(); const put = () => { th.style.left = x + "px"; th.setAttribute("aria-valuenow", String(Math.round(100 * x / W()))); }; put();
+  const W = () => root.offsetWidth; let x = 0.4 * W(); const put = () => { th.style.left = x + "px"; th.setAttribute("aria-valuenow", String(Math.round(100 * x / W()))); OWN(); }; put();
   let drag = null, raf = 0;
   // H3 plants: a root pinned for ms on another root's place by a translate, then put back, each jump one frame
   const teleport = (other, ms) => { const dy = other.getBoundingClientRect().top - root.getBoundingClientRect().top; root.style.translate = "0 " + dy + "px"; setTimeout(() => { root.style.translate = ""; }, ms); };
@@ -732,19 +758,19 @@ function wireSlider(root) {
     if (acts || FAULT === "e3-modifier" || (FAULT === "e3-charkey" && e.key.length === 1)) kbd(root, true);
     if (e.key === "ArrowRight") { x = Math.min(W(), x + W() / 100); put(); }
   });
-  th.addEventListener("pointerdown", (e) => { cancelAnimationFrame(raf); th.setPointerCapture(e.pointerId); delete root.dataset.kbd; writeReach(root); root.dataset.held = "pointer";
+  th.addEventListener("pointerdown", (e) => { cancelAnimationFrame(raf); th.setPointerCapture(e.pointerId); delete root.dataset.kbd; checkToken(root); writeReach(root); root.dataset.held = "pointer";
     if (FAULT === "e10-rerender") { const r = root.getBoundingClientRect(); root.style.left = r.left + "px"; root.style.top = r.top + "px"; root.classList.add("pinned"); }
     // H5 e10-relayout: pinned over a placeholder whose place is re-read on a childList mutation only
     if (FAULT === "e10-relayout") { const r = root.getBoundingClientRect(); const ph = document.createElement("div"); ph.style.cssText = "width:" + r.width + "px;height:" + r.height + "px"; root.before(ph); root.style.left = r.left + "px"; root.style.top = r.top + "px"; root.classList.add("pinned");
       const mo = new MutationObserver((recs) => { if (recs.some((x) => x.type === "childList" && ![...x.addedNodes, ...x.removedNodes].includes(ph))) { const q = ph.getBoundingClientRect(); root.style.left = q.left + "px"; root.style.top = q.top + "px"; } });
       mo.observe(document.getElementById("stage"), { childList: true, subtree: true }); root._unpin = () => { mo.disconnect(); ph.remove(); root.classList.remove("pinned"); root.style.left = root.style.top = ""; }; }
-    settleVeil(true); drag = { x0: x, cx: e.clientX, hist: [{ t: performance.now(), x }] }; });
+    settleVeil(true); drag = { x0: x, cx: e.clientX, hist: [{ t: performance.now(), x }] }; OWN(); });
   const move = (cx) => { if (!drag) return; x = Math.max(0, Math.min(W(), drag.x0 + cx - drag.cx)); put(); drag.hist.push({ t: performance.now(), x }); if (drag.hist.length > 6) drag.hist.shift(); };
   th.addEventListener("pointermove", (e) => move(e.clientX));
   // H8 e4-slowdrive: the drive's moves reach the slider from a window capture listener registered before any later one,
   // which they never reach: the page's own record of the drive holds its press and its lift alone (0 px/s)
   if (SLOWDRIVE) addEventListener("pointermove", (e) => { if (!drag) return; move(e.clientX); e.stopImmediatePropagation(); }, true);
-  const release = () => { if (!drag) return; delete root.dataset.held; if (FAULT === "e3-latch") root.dataset.kbd = "";
+  const release = () => { if (!drag) return; delete root.dataset.held; if (FAULT === "e3-latch") root.dataset.kbd = ""; OWN();
     if (FAULT === "e10-rerender") { root.classList.remove("pinned"); root.style.left = root.style.top = ""; }
     if (root._unpin) { root._unpin(); root._unpin = null; }
     settleVeil(true);
@@ -777,7 +803,7 @@ function wireSlider(root) {
     raf = requestAnimationFrame(step); };
   th.addEventListener("pointerup", release); th.addEventListener("pointercancel", release);
   // H8: a touch engine that sends no pointer event (Playwright WebKit's raw driver) holds by touchstart … touchend
-  th.addEventListener("touchstart", (e) => { if (drag) return; const t = e.touches[0]; cancelAnimationFrame(raf); delete root.dataset.kbd; writeReach(root); root.dataset.held = "touch"; settleVeil(true); drag = { x0: x, cx: t.clientX, hist: [{ t: performance.now(), x }] }; }, { passive: true });
+  th.addEventListener("touchstart", (e) => { if (drag) return; const t = e.touches[0]; cancelAnimationFrame(raf); delete root.dataset.kbd; checkToken(root); writeReach(root); root.dataset.held = "touch"; settleVeil(true); drag = { x0: x, cx: t.clientX, hist: [{ t: performance.now(), x }] }; OWN(); }, { passive: true });
   th.addEventListener("touchmove", (e) => { const t = e.touches[0]; if (t) move(t.clientX); }, { passive: true });
   th.addEventListener("touchend", release); th.addEventListener("touchcancel", release);
   // H8 (CK-25): the loupe while held, on the scenes E-13 reads
@@ -789,6 +815,45 @@ function wireSlider(root) {
 // viewport, or the clipping scroller), over its own area. It re-reads the place only when that ratio leaves its armed
 // value, so a move whose new rect lies inside the armed rect (ratio 1), or one toward a scroller's visible side (the
 // clipped ratio unchanged), is never heard; the next childList mutation glides the slider from the stale place
+// H13 (CK-20; REGISTRY §P12-7 items 2-5, §P12-8.1 (a); pass-13/H13.md §1): THE CURED HOST GLIDE, by construction over the derived
+// inputs. The place it starts from is the place PAINTED, read each frame at that frame's timeline time (the first rAF callback the page
+// registers); the place it goes to is read when a record arrives (a forced layout, which in both engines already holds the engine's own
+// scroll adjustment: facts13 A). The two reads are at one animation time, so an ancestor's running animation moves neither and nothing is
+// glided for it; every layout move (any record kind), every size-dependent paint map (a percent translate, a centred origin, the
+// Dialog's -50% -50%) and every scroll adjustment (anchoring keeps the paint still: no glide; a clamp moves it: glided) is the painted
+// difference. The map from a translate written on the root to its paint is asked of the engine (two probe writes, then one Newton step
+// for a perspective), so every transform above the root is carried as it paints. The observer hears childList, attributes and
+// characterData; the fixture's own writes are taken from it before delivery (OWN: takeRecords, any foreign record re-delivered), so
+// they never re-enter it. Instant under reduce. Plants: e10-hostglidelevel (the map as axis lengths: rotation and skew laid level),
+// e10-hostglidechild (childList only), e10-hostglidestale (the painted place read a frame behind), e10-reenter (OWN takes nothing);
+// e10-hostglidelayout and the pass-12 plants e10-glidescale, e10-hostglideratio, e10-hostglideone, e10-hostglideframe run H12's
+// layout model (LAYOUT_GLIDE)
+const LAYOUT_GLIDE = ["e10-hostglidelayout", "e10-glidescale", "e10-hostglideratio", "e10-hostglideone", "e10-hostglideframe"].includes(FAULT);
+function hostGlide(root, engaged) {
+  const centre = () => { const q = root.getBoundingClientRect(); return { x: q.left + q.width / 2, y: q.top + q.height / 2 }; };
+  let painted = null, last = null;
+  const frame = () => { if (engaged()) { const now = centre(); if (FAULT === "e10-hostglidestale") { painted = last ?? now; last = now; } else painted = now; } else { painted = last = null; } requestAnimationFrame(frame); };
+  requestAnimationFrame(frame);
+  const own = (r) => { const t = r.target; return (t.closest && (t.closest(".fx-loupe, .fx-veil, .fx-lensprobe, [data-fx-own]") || (t === root && r.type === "attributes"))) || t === document.documentElement || [...r.addedNodes, ...r.removedNodes].some((n) => n.nodeType === 1 && n.matches?.(".fx-loupe, .fx-veil, .fx-lensprobe, [data-fx-own]")) || (r.type === "attributes" && t.classList?.contains("fx-thumb")); };
+  const glideFrom = () => {
+    if (!engaged() || !painted || prm()) return;
+    const now = centre(); const dx = painted.x - now.x, dy = painted.y - now.y;
+    if (Math.hypot(dx, dy) <= 0.5) return;
+    const tv = travelOf(root); if (!tv) return;
+    const base = root.style.translate; const at = (tx, ty) => { root.style.translate = tx + "px " + ty + "px"; return centre(); };
+    const p0 = at(0, 0), px = at(40, 0), py = at(0, 40);
+    let a = (px.x - p0.x) / 40, b = (py.x - p0.x) / 40, c = (px.y - p0.y) / 40, d = (py.y - p0.y) / 40;
+    if (FAULT === "e10-hostglidelevel") { const sx = Math.hypot(a, c), sy = Math.hypot(b, d); a = sx; b = 0; c = 0; d = sy; }
+    const det = a * d - b * c || 1; const inv = (u, v) => ({ x: (d * u - b * v) / det, y: (-c * u + a * v) / det });
+    let t = inv(painted.x - p0.x, painted.y - p0.y);
+    if (FAULT !== "e10-hostglidelevel") { const q = at(t.x, t.y); const r = inv(painted.x - q.x, painted.y - q.y); t = { x: t.x + r.x, y: t.y + r.y }; }
+    root.style.translate = base; OWN();
+    root.animate([{ translate: t.x + "px " + t.y + "px" }, { translate: "0 0" }], { duration: tv.ms, easing: tv.easing, composite: "add" });
+  };
+  const mo = new MutationObserver((recs) => { if (recs.some((r) => !own(r))) glideFrom(); });
+  mo.observe(document.body, FAULT === "e10-hostglidechild" ? { childList: true, subtree: true } : { childList: true, subtree: true, attributes: true, characterData: true });
+  OWN = () => { if (FAULT === "e10-reenter") return; const rs = mo.takeRecords(); if (rs.some((r) => !own(r))) queueMicrotask(glideFrom); };
+}
 function ratioStage(root, clipEl) {
   let armed = null, at = null, r0 = null;
   const R = () => { const q = root.getBoundingClientRect(); return { l: q.left, t: q.top, r: q.right, b: q.bottom }; };
@@ -935,7 +1000,10 @@ function mountScene() {
       if (late) root.addEventListener("wheel", (e) => { if (!up) return; e.preventDefault(); box.scrollTop += e.deltaY; }, { passive: false });
     }
   }
-  if (SCENE === "slider" || SCENE === "clipstale") {
+  if (SCENE === "slider" || SCENE === "clipstale" || (SCENE === "presented" && DLGS)) {
+    const root = SCENE === "presented" ? stage.querySelector('[data-t="dlg-slider"] .fx-slider') : stage.querySelector(".fx-slider");
+    const engaged = () => root.dataset.held !== undefined || root.dataset.kbd !== undefined;
+    if (LAYOUT_GLIDE) {
     // H9 (CK-20, glidescale): the re-render glide. H12 (REGISTRY §P11-7 items 2, 5; §P11-8.1, CK-20's frame family): while engaged,
     // a childList change anywhere in the document glides the slider from where it was painted to its new place, on the travel's row
     // (travelOf), instant under reduce. Its offset chain is read every frame while engaged, so a layout move with no mutation is never
@@ -948,8 +1016,7 @@ function mountScene() {
     // e10-hostglideone (no ratio at all: C-A11's flowone, C-E11's hostzoom), e10-hostglideframe (the accumulated flow, each
     // box's offset through its whole painted frame, its own transform with it, cached a frame behind the read: C-A11's glideframe as
     // written, which reads an ancestor's running scale as a move)
-    const root = stage.querySelector(".fx-slider"); let chain = null, flowWas = null;
-    const engaged = () => root.dataset.held !== undefined || root.dataset.kbd !== undefined;
+    let chain = null, flowWas = null;
     const read = () => { const c = []; for (let e = root; e; e = e.offsetParent) c.push({ e, x: e.offsetLeft, y: e.offsetTop }); return c; };
     const weight = (e) => { if (FAULT === "e10-hostglideone") return 1; if (FAULT === "e10-hostglideratio") return e.currentCSSZoom; if (FAULT === "e10-hostglideframe") return e.offsetWidth ? e.getBoundingClientRect().width / e.offsetWidth : 1; const p = e.parentElement; return fxFrame(e) * e.currentCSSZoom / (p ? p.currentCSSZoom : 1); };
     const unit = () => (FAULT === "e10-hostglideone" || FAULT === "e10-glidescale" ? 1 : FAULT === "e10-hostglideratio" ? root.currentCSSZoom : fxFrame(root));
@@ -961,6 +1028,7 @@ function mountScene() {
       const u = unit(); const dx = (was.x - is.x) / u, dy = (was.y - is.y) / u;
       if (Math.hypot(dx, dy) > 0.5 && !prm()) { const tv = travelOf(root); if (tv) root.animate([{ translate: dx + "px " + dy + "px" }, { translate: "0 0" }], { duration: tv.ms, easing: tv.easing, composite: "add" }); }
     }).observe(document.body, { childList: true, subtree: true });
+    } else hostGlide(root, engaged);
   }
   if (SCENE === "presented") {
     // H6 (CK-10): the dialog presents and dismisses on its class; its clock is read loudly like every act's
