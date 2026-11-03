@@ -757,3 +757,25 @@ Outage log:
 - 2026-11-02 · Zone bisection: candidate 3 (value.js Tailwind server, paused 21:32:43-21:54) CLEARED, slope 144-172/s; resumed. Cleared so far: hassio runs, Playwright WebKit, Tailwind. Rate tracks load (per-minute ~95/s at load 5). Next standing candidate Docker Desktop VM (restarted 19:42:59); owner call.
 - 2026-11-03 · D5 p13 run ENDED unscored (REGISTRY part at 3223): H13 Chromium-only, P-E13 ffa64fc4 + derivation banked, critics static only; static counterexamples already break CK-20 (script-animated ancestor glided every frame; lens scale from bbox under rotate), so the fixed point is not reached. Count 0. Zone still ARMED 13:06 (3.13M, ~30/s); cleared: hassio, WebKit, Tailwind, Docker VM. INBOUND O-122 (Gregg G-15..18) + O-123 (value.js OD-1/OD-5) placed f38280eb1.
 - 2026-11-03 · DISK 100% (16 GB free, down from 50 GB): owner approved four reclaim classes (U loop P8+P9 scratch ~1.1 TiB apparent, U closed-lane worktrees, csc411 pass-8/9 scratch ~37 GB, hassio merged worktrees ~30 GB), check-thrice, each owning session by name; assay wf_ce44f5f4-d4c running; deeper assay to follow.
+
+## RESUME BLOCK (written 2026-11-03 before the owner's reboot)
+
+Original task: the BL formation (D2, D5 to convergence; then the landings) plus the owner-approved 10.1.4 publish. All held since 2026-11-02 20:28 by ZONE-ARMED. Nothing is in flight.
+
+1. **10.1.4 release close.** The worktree is `.claude/worktrees/release-10.1.4` on branch `release/10.1.4`, head a89f9c2c1. 4 critic rounds ran, the last CLEAN. Owed:
+   - a release-close seat (the close phase of `docs/tranches/BL/driver/glass-10.1.4.js`, as a fresh driver: the full battery, the ratchet rebind on the committed tree, the CHANGELOG date);
+   - then `scripts/release.sh v10.1.4`, `git push origin HEAD v10.1.4` from the worktree, and watching release.yml (the menu flake: `gh run rerun --failed`);
+   - then notify sci-report-82 (Gregg drops the FindingsTable nudge and its @page override) and value.js, and write the memory entry.
+2. **D2 pass 12.** The REGISTRY part is at line 3407 of `design/dock/REGISTRY.md` and is unscored. bp12 is banked: `pass-12/D2-Bp-p12.patch`, sha256 5318a3dc. Owed, as a fresh driver modelled on `driver/bl-design-d2-pass12.js`:
+   - a builder completion: re-run the 3 WebKit A/B reds (`pass-12/D2-Bp-build-records/scripts/rerun.sh`) and re-read the W·l slot;
+   - a critic completion: the full §P11-7.4 battery and the A/Bs under rules (a), (b) and (c);
+   - then the agglomeration.
+   Clean makes it 1 of 2, and pass 13 confirms.
+3. **D5 pass 13.** The REGISTRY part is at line 3223 of `design/engagement/REGISTRY.md` and is unscored. P-E13 `ffa64fc4` and its derivation are banked, and H13 is green in Chromium only. The static counterexamples already break CK-20: a script-animated ancestor is glided every frame, and the lens scale is read from its bounding box under rotate. Owed: the pass-14 plan from §P13-8, as a fresh driver modelled on `driver/bl-design-d5-pass13.js`.
+4. **Then the landings:** merge release/10.1.1 through 10.1.4 into master; then W-0.8 (§10 D5 cells, §11 O-122/O-123 laws); then W-0.1 (D3 plus addenda incl. O-114, O-111/G-15); then D4 W-J.1; then cut 10.2.0.
+5. **Placed and answered while held:**
+   - INBOUND O-120 (Gregg G-10..14), O-121 (kf 6.1.0: the U lane retires 9d93e6097 in U-B9), O-122 (Gregg G-15..18) and O-123 (value.js OD-1/OD-5).
+   - The W-G.7 §11 reconciliation with O-118 (2).
+   - The W-L.1 §3.21-3.22 DataTable contract.
+
+Disk episode, one line: on 2026-11-03 the volume went from 100% (15 GiB free) to 211+ GiB free. That came from owner-approved reclaims of U-loop P8/P9 scratch, U closed lanes, csc411 pass-8/9, hassio merged worktrees and value.js clean worktrees. The assay is `~/.claude/guard/disk-assay-2026-11-03/REPORT.md`. Zone bisection the same night cleared hassio's runs, WebKit, Tailwind and the Docker VM. The lead found afterwards: hassio's s0 conftest copytree churn (~25 GB and about 55 trees per run).
