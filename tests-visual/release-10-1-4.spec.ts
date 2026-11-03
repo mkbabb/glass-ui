@@ -122,6 +122,38 @@ test.describe("O-119 (g): DataTable learns its width on mount", () => {
     });
 });
 
+test.describe("critique-3 F-4: a DataTable in a content-sized host settles", () => {
+    const swaps = (page: Page) =>
+        page.evaluate(() => (window as unknown as { __swaps: number }).__swaps);
+    const view = (page: Page) =>
+        page.evaluate(() =>
+            document.querySelector('[data-witness="host"] .data-table-cards') ? "cards" : "table",
+        );
+    // The table's root is narrower than the card breakpoint and the cards' wider, so each
+    // projection's width asks for the other. At most one swap per size change from
+    // outside, then none.
+    for (const host of ["inline", "grid", "flex", "fit"]) {
+        test(`${host} host: the projection settles from mount`, async ({ page }) => {
+            await page.setViewportSize({ width: 1280, height: 800 });
+            await open(page, `scene=table-osc&host=${host}&len=36`);
+            await page.waitForTimeout(1000);
+            const settled = { swaps: await swaps(page), view: await view(page) };
+            expect(settled.swaps).toBeLessThanOrEqual(1);
+            await page.waitForTimeout(1000);
+            expect({ swaps: await swaps(page), view: await view(page) }).toEqual(settled);
+        });
+    }
+    test("flex host, rows arriving after mount: the projection settles", async ({ page }) => {
+        await page.setViewportSize({ width: 1280, height: 800 });
+        await open(page, "scene=table-osc&host=flex&len=36&rows=later");
+        await page.waitForTimeout(1300);
+        const settled = { swaps: await swaps(page), view: await view(page) };
+        expect(settled.swaps).toBeLessThanOrEqual(2);
+        await page.waitForTimeout(1000);
+        expect({ swaps: await swaps(page), view: await view(page) }).toEqual(settled);
+    });
+});
+
 test.describe("O-119 (f), the @page half: only a deck prints at slide geometry", () => {
     test("a page without a deck keeps the reader's print defaults", async ({ page }) => {
         await open(page, "scene=print-plain");

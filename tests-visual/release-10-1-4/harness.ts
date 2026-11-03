@@ -5,7 +5,7 @@
 // mounts unchanged on a 10.1.3 tree: that is how each witness is shown RED on 10.1.3
 // and GREEN on 10.1.4.
 import "../../demo/demo.css";
-import { createApp, defineComponent, h, nextTick, type Component } from "vue";
+import { createApp, defineComponent, h, nextTick, ref, type Component } from "vue";
 
 import DataTable from "../../src/components/data-table/DataTable.vue";
 import { DeckSlide, DeckStage, useDeck } from "../../src/components/deck";
@@ -55,6 +55,33 @@ const scenes: Record<string, Component> = {
         return () =>
             h("div", { "data-witness": "host", style: `inline-size:${width}px` }, [
                 h(DataTable, { columns, rows, responsive: true }),
+            ]);
+    }),
+    // A content-sized host (`?host=`: inline-block, an `auto` grid cell, a flex item,
+    // fit-content) around a two-column DataTable whose body label and value are each
+    // `?len=` characters: as a table (label above value) the root is narrower than the
+    // card breakpoint, as cards (label beside value) wider. `?rows=later` adds the row
+    // 300 ms after mount, as a fetch does (critique-3 F-4).
+    "table-osc": defineComponent(() => {
+        const len = Number(params.get("len") ?? 36);
+        const oscColumns = [
+            { key: "n", label: "N" },
+            { key: "v", label: "L".repeat(len) },
+        ];
+        const oscRows = [{ _id: "1", n: "a", v: "v".repeat(len) }];
+        const shown = ref(params.get("rows") === "later" ? [] : oscRows);
+        if (params.get("rows") === "later") setTimeout(() => (shown.value = oscRows), 300);
+        const host = {
+            inline: "display:inline-block",
+            grid: "display:grid;grid-template-columns:auto 1fr",
+            flex: "display:flex;align-items:start",
+            fit: "inline-size:fit-content",
+        }[params.get("host") ?? "flex"];
+        return () =>
+            h("div", [
+                h("div", { "data-witness": "host", style: host }, [
+                    h(DataTable, { columns: oscColumns, rows: shown.value, responsive: true }),
+                ]),
             ]);
     }),
     // A page that prints and carries no deck: an article, as Gregg's records view.
@@ -107,6 +134,20 @@ if (!Scene) throw new Error(`unknown scene "${scene}"`);
 // A consumer's SPA wrapper with a floor of its own: the deck's print reset zeroes it
 // (`!important`), and a page without a deck keeps it.
 document.getElementById("app")!.style.minBlockSize = "50px";
+// Every table/cards replacement in the witness host, counted from before mount.
+w.__swaps = 0;
+let view = "";
+new MutationObserver(() => {
+    const host = document.querySelector('[data-witness="host"]');
+    if (!host) return;
+    const now = host.querySelector(".data-table-cards")
+        ? "cards"
+        : host.querySelector("table")
+          ? "table"
+          : "";
+    if (view && now && now !== view) (w.__swaps as number)++;
+    if (now) view = now;
+}).observe(document.getElementById("app")!, { subtree: true, childList: true });
 createApp(Scene).mount("#app");
 await nextTick();
 document.querySelector<HTMLDialogElement>('[data-witness="dialog"]')?.showModal();
