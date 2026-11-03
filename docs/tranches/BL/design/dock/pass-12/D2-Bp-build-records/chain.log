@@ -1,0 +1,57 @@
+2026-11-02 13:31:33 queue trace webkit · 13:31  up 17:56, 3 users, load averages: 14.08 10.47 9.91
+2026-11-02 13:55:50 smoke fmtrace chromium (trace slot still queued, not admitted) · 13:55  up 18:20, 3 users, load averages: 7.33 10.11 9.83
+2026-11-02 14:43:33 end trace webkit exit 0 · 14:43  up 19:08, 3 users, load averages: 5.93 7.72 9.01
+2026-11-02 14:48:45 queue slot2 webkit (chk fmx fmt) · 14:48  up 19:13, 3 users, load averages: 6.92 7.78 8.69
+2026-11-02 14:49:20 start trace+chk chromium (seat lock) · 14:49  up 19:13, 3 users, load averages: 12.66 9.06 9.11
+2026-11-02 14:54:43 end trace+chk chromium exit 0 · 14:54  up 19:19, 3 users, load averages: 8.12 8.07 8.56
+2026-11-02 14:59:23 builds bp12 (seat lock) · 14:59  up 19:23, 3 users, load averages: 11.56 9.45 8.96
+2026-11-02 15:00:35 smoke bp12c chromium (seat lock) · 15:00  up 19:25, 3 users, load averages: 14.82 10.71 9.46
+2026-11-02 15:04:21 rebuild bp12 family after the ramp divisor fix (seat lock) · 15:04  up 19:28, 3 users, load averages: 12.01 11.88 10.37
+2026-11-02 15:09:58 start PR + F7 on the bp12 tree (seat lock) · 15:09  up 19:34, 3 users, load averages: 7.39 9.07 9.51
+2026-11-02 15:12:56 end PR + F7 · 15:12  up 19:37, 3 users, load averages: 15.40 12.43 10.82
+2026-11-02 16:53:45 end slot2 webkit exit 0 · 16:53  up 21:18, 3 users, load averages: 8.31 8.05 7.55
+2026-11-02 16:54:12 rebuild the bp12 family: v2 (the gift taken with its ramp beyond it) · 16:54  up 21:18, 3 users, load averages: 8.00 7.99 7.55
+2026-11-02 17:05:31 smoke bp12 v2 chromium (seat lock) · 17:05  up 21:30, 3 users, load averages: 15.18 12.36 10.11
+2026-11-02 17:10:12 start PR + F7 on the final bp12 tree (v2; seat lock; the v1 read is first-read/) · 17:10  up 21:34, 3 users, load averages: 8.61 11.79 10.64
+2026-11-02 17:19:49 end PR + F7 · PR 6/6, F7 13/13 · 17:19  up 21:44, 3 users, load averages: 14.23 12.29 11.23
+2026-11-02 17:19:57 CHAIN start (steps: all); harness 9d12810bc24d91d2 · load averages: 13.11 12.12 11.19
+2026-11-02 17:19:57 start-gate att chromium light slot 1 at load 13.11 (bound 20, waited 0 s) · load averages: 13.11 12.12 11.19
+2026-11-02 17:19:57 queue att chromium light slot 1 [bat cr chk si frz ab heir] · load averages: 13.11 12.12 11.19
+2026-11-02 17:23:51 CHAIN stopped by PID at 17:24 (chain 9722, slot 9765): BAT was not exported into the slot, so the bat sub-step wrote nothing; cr r1 partial. Its log and partial cr are under aborted-17-20/. Fixed the export; restart. · 17:23  up 21:48, 3 users, load averages: 14.63 13.35 11.95
+2026-11-02 17:23:55 CHAIN start (steps: all); harness 9d12810bc24d91d2 · load averages: 14.63 13.35 11.95
+2026-11-02 17:23:55 start-gate att chromium light slot 1 at load 14.63 (bound 20, waited 0 s) · load averages: 14.63 13.35 11.95
+2026-11-02 17:23:55 queue att chromium light slot 1 [bat cr chk si frz ab heir] · load averages: 14.63 13.35 11.95
+2026-11-02 17:50:28 end att chromium light slot 1 exit 0 · load averages: 8.11 7.93 8.98
+2026-11-02 17:50:28 start-gate att chromium dark slot 1 at load 8.11 (bound 20, waited 0 s) · load averages: 8.11 7.93 8.98
+2026-11-02 17:50:28 queue att chromium dark slot 1 [bat cr chk si frz ab] · load averages: 8.11 7.93 8.98
+2026-11-02 18:18:31 end att chromium dark slot 1 exit 0 · load averages: 9.01 10.23 9.65
+2026-11-02 18:18:31 start-gate att webkit light slot 1 at load 9.01 (bound 20, waited 0 s) · load averages: 9.01 10.23 9.65
+2026-11-02 18:18:31 queue att webkit light slot 1 [bat fmlow cr chk fmt si frz ab fmab r2 heir] · load averages: 9.01 10.23 9.65
+2026-11-02 18:39:55 chain parent stopped by PID (21689) while the admitted WebKit light slot (guarded 39144) runs on to its end: the battery's W·l CASES read case·rotated·control and case·rotated FAIL 3 of 3 (seat snap 0.63-0.64 px at the collapse's flag close; pass-11 bp10 read 0.16 / 0.1). bp12 v2 is to be superseded; no later slot is queued. · 18:39  up 23:04, 3 users, load averages: 4.47 7.91 10.01
+2026-11-02 18:41:08 start rotdiag (WebKit, bp12c/bp10c, host 0/none, 2 runs) · 18:41  up 23:05, 3 users, load averages: 6.44 7.88 9.83
+2026-11-02 18:48:23 start rotdiag A/B (WebKit, bp12c/bp10c alternating, host 0, 4 rounds x 3 runs) · 18:48  up 23:12, 3 users, load averages: 10.68 8.32 9.09
+2026-11-02 18:51:49 the stopped W·l slot: guarded killed it on 'caller died' at 18:38 during sub cr (bat and fmlow had ended, exit 0); its partial cr and slot log are in aborted-18-38/. rotdiag: the collapse snap is the base's (bp10c 8/12 > 0.5, bp12c 6/12), so bp12 v2 stands. Resume: W·l A/B+readings slot, W·d att, cost. · 18:51  up 23:16, 3 users, load averages: 16.27 11.77 10.33
+2026-11-02 18:51:53 CHAIN start (steps: att); harness 9d12810bc24d91d2 · load averages: 16.27 11.77 10.33
+2026-11-02 18:51:53 start-gate att webkit light slot 1 at load 16.27 (bound 20, waited 0 s) · load averages: 16.27 11.77 10.33
+2026-11-02 18:51:53 queue att webkit light slot 1 [cr chk fmt si frz ab fmab r2 heir] · load averages: 16.27 11.77 10.33
+2026-11-02 19:59:26 end att webkit light slot 1 exit 0 · load averages: 7.97 8.57 10.89
+2026-11-02 19:59:26 CHAIN-DONE · load averages: 7.97 8.57 10.89
+2026-11-02 19:59:26 CHAIN start (steps: att cost); harness 9d12810bc24d91d2 · load averages: 7.97 8.57 10.89
+2026-11-02 19:59:26 start-gate att webkit dark slot 1 at load 7.97 (bound 20, waited 0 s) · load averages: 7.97 8.57 10.89
+2026-11-02 19:59:26 queue att webkit dark slot 1 [bat fmlow cr chk fmt si frz ab fmab r2] · load averages: 7.97 8.57 10.89
+2026-11-02 20:57:12 end att webkit dark slot 1 exit 0 · load averages: 11.59 11.24 10.68
+2026-11-02 20:57:12 start cost · load averages: 11.59 11.24 10.68
+2026-11-02 20:57:12 start-gate cost bp12 r1 at load 11.59 (bound 15, waited 0 s) · load averages: 11.59 11.24 10.68
+2026-11-02 20:58:14 start-gate cost bp10 r1 at load 13.74 (bound 15, waited 0 s) · load averages: 13.74 11.86 10.94
+2026-11-02 20:59:14 start-gate cost fv5 r1 at load 11.90 (bound 15, waited 0 s) · load averages: 11.90 11.67 10.93
+2026-11-02 21:00:17 start-gate cost bp12 r2 at load 10.48 (bound 15, waited 0 s) · load averages: 10.48 11.24 10.82
+2026-11-02 21:01:16 start-gate cost bp10 r2 at load 10.17 (bound 15, waited 0 s) · load averages: 10.17 11.09 10.79
+2026-11-02 21:02:17 start-gate cost fv5 r2 at load 8.94 (bound 15, waited 0 s) · load averages: 9.18 10.61 10.63
+2026-11-02 21:03:20 start-gate cost bp12 r3 at load 11.19 (bound 15, waited 0 s) · load averages: 11.19 10.82 10.70
+2026-11-02 21:05:10 start-gate cost bp10 r3 at load 13.83 (bound 15, waited 0 s) · load averages: 13.83 12.20 11.27
+2026-11-02 21:07:42 start-gate cost fv5 r3 at load 14.06 (bound 15, waited 90 s) · load averages: 14.06 14.42 12.43
+2026-11-02 21:08:46 end cost · load averages: 16.29 14.85 12.72
+2026-11-02 21:08:46 CHAIN-DONE · load averages: 16.29 14.85 12.72
+2026-11-02 21:09:02 queue rerun webkit light (bp12 A/B reds x2) · 21:09  up 1 day,  1:33, 3 users, load averages: 16.73 15.04 12.83
+2026-11-02 21:19:25 end rerun · 21:19  up 1 day,  1:43, 3 users, load averages: 7.92 8.16 9.91
+2026-11-02 21:19:29 ZONE-ARMED reported by guarded at 21:09 (the re-run slot's queue message). Every run stopped: the re-run slot withdrawn by PID (33590) while waiting for the webkit lock, before admission; no re-run read was taken. · 21:19  up 1 day,  1:44, 3 users, load averages: 7.69 8.11 9.88
