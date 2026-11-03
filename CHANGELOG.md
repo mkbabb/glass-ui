@@ -4,7 +4,7 @@
 
 A patch for two defects sci-report reported live from the Gregg Museum dashboard on
 10.1.3 (records: `docs/tranches/BL/audit/INBOUND.md` O-119, items (g) and the `@page`
-half of (f); `docs/release-10.1.4/implement.md`). Each cure is in one file. No public
+half of (f); `docs/release-10.1.4/implement.md`). Each cure is small and internal. No public
 API is removed or renamed, no token value moves, and a consumer has nothing to change.
 Gregg can delete both workarounds.
 
@@ -23,6 +23,15 @@ Gregg can delete both workarounds.
   backdrop sampler, the fading-scroll measure, the pager worm's seat, the dock
   crossfade's peak, the demo's virtual window) recompute idempotently, and each
   already measures on mount, so the extra dispatch repeats that measure.
+  `DataTable` now also settles in a content-sized host (an inline-block, a flex item,
+  an `auto` grid track, `fit-content`). There its root is as wide as the projection it
+  renders. With a long column label and long values the table is narrower than
+  `cardBreakpoint` and the cards wider, so each projection's width asked for the other
+  and the two alternated every frame, from mount (at 10.1.3, from the first size change
+  after mount, such as rows arriving). A projection change now measures the root it
+  rendered, and a width that would take the projection straight back is held. Only a
+  different width decides again, so each size change from outside swaps the projection
+  at most once.
 
 - **Only a deck prints at slide geometry (O-119 f, the `@page` half).** The deck's
   print block in `capture.css` declared an unnamed `@page { size: 1280px 720px;
