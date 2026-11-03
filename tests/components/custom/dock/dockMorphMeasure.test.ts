@@ -3,6 +3,7 @@ import { computed, createApp, defineComponent, h, nextTick, ref } from "vue";
 import { useDockExpandedSize } from "@glass/components/dock/composables/dockMorphMeasure";
 import { useDockMorphOrchestrator } from "@glass/components/dock/composables/useDockMorph";
 import { mountComposable } from "../../../utils/mountComposable";
+import { TestResizeObserver } from "../../../setup";
 
 type Axis = "horizontal" | "vertical";
 
@@ -113,7 +114,7 @@ function dockModel(axis: Axis = "horizontal") {
 }
 
 function mountMeasure(dock: ReturnType<typeof dockModel>, axis: Axis = "horizontal") {
-    return mountComposable(() =>
+    const mounted = mountComposable(() =>
         useDockExpandedSize({
             rootEl: ref(dock.root),
             contentEl: ref(dock.content),
@@ -122,10 +123,14 @@ function mountMeasure(dock: ReturnType<typeof dockModel>, axis: Axis = "horizont
             axis: ref(axis),
         }),
     );
+    // The frame after the mount: the observer's initial delivery takes the first capture.
+    TestResizeObserver.deliverInitial();
+    return mounted;
 }
 
 /** Let a MutationObserver's microtask run. */
-const mutationsSettle = () => new Promise<void>((resolve) => setTimeout(resolve, 0));
+const mutationsSettle = () =>
+    new Promise<void>((resolve) => setTimeout(resolve, 0)).then(() => TestResizeObserver.deliverInitial());
 
 /**
  * A dock whose posture follows `expanded` through the morph orchestrator: the render
@@ -171,6 +176,7 @@ function orchestrated(dock: ReturnType<typeof dockModel>) {
         }),
     );
     app.mount(host);
+    TestResizeObserver.deliverInitial();
     return {
         expanded,
         wide,
@@ -257,6 +263,7 @@ describe("useDockExpandedSize", () => {
         dock.model.chrome = { expanded: 20, collapsed: 20 };
         dock.model.summary = 60;
         const { unmount } = mountMeasure(dock, "vertical");
+        resize(); // the stub's own initial delivery
         expect(dock.px("expanded")).toBe("277px");
 
         dock.posture("collapsed");
@@ -500,3 +507,70 @@ describe("useDockExpandedSize — the first expand of a vertical dock", () => {
     });
 });
 
+
+describe("G-M1-6 — the attach capture rides the observer's first delivery (U/B8 PF)", () => {
+    /* RED before: `attach()` ended in a synchronous `capture()`, so every dock mount read
+       layout inside Vue's flush: one forced layout per figure corner dock, about 80 ms on
+       /sci phone scroll (B7D-PERF §5). Mutation: restore the unconditional capture and the
+       first expectation reds (the endpoint is already on the root before the frame). */
+    it("publishes nothing in the mount flush and both endpoints on the first delivery", () => {
+        const dock = dockModel();
+        dock.model.chrome.collapsed = 24;
+        dock.model.summary = 32;
+        dock.posture("collapsed");
+        const { unmount } = mountComposable(() =>
+            useDockExpandedSize({
+                rootEl: ref(dock.root),
+                contentEl: ref(dock.content),
+                expandedEl: ref(dock.full),
+                collapsedEl: ref(dock.summary),
+                axis: ref("horizontal"),
+            }),
+        );
+        expect(dock.px("collapsed")).toBe("");
+        expect(dock.px("expanded")).toBe("");
+        TestResizeObserver.deliverInitial();
+        expect(dock.px("collapsed")).toBe("56px");
+        expect(dock.px("expanded")).toBe("592px");
+        unmount();
+    });
+
+    it("without an observer the capture runs at attach", () => {
+        vi.stubGlobal("ResizeObserver", undefined);
+        const dock = dockModel();
+        const { unmount } = mountComposable(() =>
+            useDockExpandedSize({
+                rootEl: ref(dock.root),
+                contentEl: ref(dock.content),
+                expandedEl: ref(dock.full),
+                collapsedEl: ref(dock.summary),
+                axis: ref("horizontal"),
+            }),
+        );
+        expect(dock.px("expanded")).not.toBe("");
+        unmount();
+        vi.unstubAllGlobals();
+    });
+});
+
+describe("a pane mutation captures on the observer's delivery, not in the microtask (U/B8 PF)", () => {
+    /* RED before: the MutationObserver called capture() in its microtask, reading a layout the
+       patch had just dirtied: a forced layout per Sections-cell change on a phone scroll (glass
+       getSize, 107 ms self time on the /sci walk). Mutation: restore the capture and the first
+       expectation reds. */
+    it("re-observes in the microtask and publishes on the next delivery", async () => {
+        const dock = dockModel();
+        dock.model.chrome.collapsed = 24;
+        dock.model.summary = 32;
+        dock.posture("collapsed");
+        const { unmount } = mountMeasure(dock);
+        expect(dock.px("collapsed")).toBe("56px");
+        dock.model.summary = 48;
+        dock.summary.append(document.createElement("span"));
+        await new Promise<void>((resolve) => setTimeout(resolve, 0));
+        expect(dock.px("collapsed")).toBe("56px");
+        TestResizeObserver.deliverInitial();
+        expect(dock.px("collapsed")).toBe("72px");
+        unmount();
+    });
+});

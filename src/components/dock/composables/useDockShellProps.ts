@@ -23,8 +23,7 @@
 //                  stay exposed, so a consumer that owns posture still owns it.
 
 import { computed, type ComputedRef } from "vue";
-
-export type DockBackdropMode = "live" | "static";
+import type { BackdropMode } from "../../_shared/axes";
 
 /**
  * Collapse posture. `"closed"` (default) mounts collapsed, `"open"` mounts
@@ -51,7 +50,7 @@ export interface DockProps {
      * backdrop; `"static"` uses a solid plate with no luminance observer or
      * backdrop-filter work.
      */
-    backdropMode?: DockBackdropMode;
+    backdropMode?: BackdropMode;
     /**
      * Corner treatment.
      *   `"pill"`    — the stadium silhouette (default).

@@ -20,9 +20,9 @@ import {
 import {
     GlassDock,
     DockControl,
-    DockTrigger,
     DockSeparator,
 } from "@glass/components/dock";
+import { DockTrigger } from "@glass/components/dock/trigger";
 import {
     Select,
     SelectContent,

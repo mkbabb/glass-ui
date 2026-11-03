@@ -221,11 +221,16 @@ export function useDockExpandedSize(
             observe();
         }
         if (typeof MutationObserver !== "undefined") {
-            // A pane's content changed: the patch is complete when this microtask runs,
-            // before the frame lays out or paints.
+            // A pane's content changed: re-observe its children. With an observer, the
+            // re-observe IS the capture: every target's initial delivery runs after this
+            // frame's layout and before its paint. A capture here, in the microtask, read a
+            // layout the patch had just dirtied, so it forced one inside the scroll: the phone
+            // bar's Sections cell changes on each section crossing (glass `getSize` was the top
+            // self-time function of the /sci phone scroll walk, 107 ms; U/B8 PF). Without an
+            // observer the microtask is the last moment before paint, so it captures.
             mutations = new MutationObserver(() => {
                 observe();
-                capture();
+                if (!observer) capture();
             });
             for (const pane of [expandedEl.value, collapsedEl.value]) {
                 if (pane) {
@@ -237,7 +242,14 @@ export function useDockExpandedSize(
                 }
             }
         }
-        capture();
+        // The first capture rides the observer's initial delivery, which runs after the
+        // frame's layout and before its paint, so the endpoints are on the root for the
+        // first paint without a layout forced inside Vue's flush. On a dashboard every
+        // figure's corner dock attaches during the scroll that brings it in, and the
+        // in-flush capture was one forced layout per dock (about 80 ms on /sci phone
+        // scroll, U/B7d M1; G-M1-6). Without an observer there is no later frame to wait
+        // for, so the capture runs now.
+        if (!observer) capture();
     }
 
     watch([rootEl, contentEl, expandedEl, collapsedEl, axis], attach, {

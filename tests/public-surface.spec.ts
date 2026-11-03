@@ -18,6 +18,7 @@ import * as Dark from "@glass/composables/dark";
 import * as DataTableSurface from "@glass/components/data-table";
 import * as DialogSurface from "@glass/components/dialog";
 import * as Dock from "@glass/components/dock";
+import * as DockTriggerSurface from "@glass/components/dock/trigger";
 import * as MenuSurface from "@glass/components/menu";
 import * as ExpandableContainerSurface from "@glass/components/expandable-container";
 import * as InputSurface from "@glass/components/input";
@@ -523,10 +524,8 @@ const exactSubpathRuntimeSurfaces = [
             "DockLayerGroup",
             // The orientation+layout-aware divider primitive.
             "DockSeparator",
-            // The ONE overlay trigger (folds the
-            // retired DockSelectTrigger/DockDropdownTrigger/DockPopoverTrigger onto the
-            // shared `.dock-trigger` recipe).
-            "DockTrigger",
+            // `DockTrigger` is OFF this barrel (U/B8 PF, G-M1-3b): it publishes on
+            // `./dock-trigger`, so its reka triggers leave every entry that renders a dock.
             "GlassDock",
             // The external-CTA-morphs-into-dock receive seam
             // (the /motion export STAYS — a re-export, not a move).
@@ -537,6 +536,12 @@ const exactSubpathRuntimeSurfaces = [
             "useDockContext",
             "useOptionalDockContext",
         ],
+    },
+    {
+        // U/B8 PF (G-M1-3b): the ONE overlay trigger on its own door.
+        subpath: "dock-trigger",
+        surface: DockTriggerSurface,
+        names: ["DockTrigger"],
     },
 ] as const;
 

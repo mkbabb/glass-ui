@@ -21,10 +21,10 @@ import {
 import {
     GlassDock,
     DockControl,
-    DockTrigger,
     DockSeparator,
     DockBackgroundToggle,
 } from "@glass/components/dock";
+import { DockTrigger } from "@glass/components/dock/trigger";
 import { Slider } from "@glass/components/slider";
 // HoverPopover folded onto <Popover trigger="hover">.
 import { Popover, PopoverContent, PopoverTrigger } from "@glass/components/popover";

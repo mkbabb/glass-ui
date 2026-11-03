@@ -7,7 +7,8 @@ vi.mock("@glass/composables/glass/useGlassBackdropLuminance", () => ({
     useGlassBackdropLuminance: sampleBackdrop,
 }));
 
-import { GlassDock, type DockBackdropMode } from "@glass/components/dock";
+import { GlassDock } from "@glass/components/dock";
+import type { BackdropMode } from "@glass/components/_shared/axes";
 
 describe("GlassDock backdrop mode", () => {
     beforeEach(() => sampleBackdrop.mockClear());
@@ -21,7 +22,7 @@ describe("GlassDock backdrop mode", () => {
     });
 
     it("witnesses static mode without mounting the backdrop sampler", () => {
-        const mode: DockBackdropMode = "static";
+        const mode: BackdropMode = "static";
         const wrapper = mount(GlassDock, { props: { backdropMode: mode } });
 
         expect(wrapper.get(".glass-dock").attributes("data-backdrop-mode")).toBe(mode);

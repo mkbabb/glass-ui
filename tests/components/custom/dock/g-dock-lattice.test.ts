@@ -6,6 +6,7 @@ import { nextTick, ref } from "vue";
 
 import GlassDock from "@glass/components/dock/GlassDock.vue";
 import { useDockExpandedSize } from "@glass/components/dock/composables/dockMorphMeasure";
+import { TestResizeObserver } from "../../../setup";
 
 import { mountComposable } from "../../../utils/mountComposable";
 
@@ -596,6 +597,7 @@ describe("G-DOCK-MORPH — a morph never starts against an unmeasured target", (
             }),
         );
         await nextTick();
+        TestResizeObserver.deliverInitial(); // the frame: the first capture (G-M1-6)
         expect(root.style.getPropertyValue("--dock-collapsed-px")).toBe(`${COLLAPSED_SPAN}px`);
 
         const expandedPx = Number.parseFloat(root.style.getPropertyValue("--dock-expanded-px"));
