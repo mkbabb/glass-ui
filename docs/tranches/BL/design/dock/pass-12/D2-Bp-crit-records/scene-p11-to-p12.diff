@@ -1,0 +1,95 @@
+13,17c13,17
+< // painted rects only within the half pixel the offsets round away, so an ancestor scale
+< // or rotate moves the model no further than that rounding. Without the refinement a box
+< // that moves 0.1 px can read as a 1 px move and step by it (WebKit). The anchor below is
+< // the other painted read: a ratio of two lengths in the same frame, so a uniform
+< // ancestor scale cancels.
+---
+> // painted centres only within the half pixel the offsets round away, so an ancestor scale
+> // or rotate moves the model no further than that rounding, and a box's own scale about its
+> // centre (a seat's engagement) not at all. Without the refinement a box that moves 0.1 px
+> // can read as a 1 px move and step by it (WebKit). The anchor below is the other painted
+> // read: a ratio of two lengths in the same frame, so a uniform ancestor scale cancels.
+65,67c65,69
+< // its last frame and is cut below its seam no sooner than one front alone would cut it. On
+< // the frame it is cut, the unit coming in takes at once the part it gave up, and eases on
+< // from there. Every frame of the exchange shows one of the two on that place.
+---
+> // its last frame (its seam ramps rise to full by its middle) and is cut below its seam no
+> // sooner than one front alone would cut it. On the frame it is cut, the unit coming in
+> // takes at once the part it gave up, at full ink (its own seam ramp falls beyond that
+> // part, where nothing paints), and eases on from there. Every frame of the exchange shows
+> // one of the two on that place.
+77c79,81
+< // inside the window.
+---
+> // inside the window. An episode lands once: the check its own end sets off (a clone
+> // leaving the DOM) reads every box that has not moved where the model has it, so it opens
+> // no second window.
+546a551,553
+>         // A unit closing on its heir's place (The handoff) keeps the ink at its middle to its
+>         // last frame: its ramps rise to full by its middle, so the middle paints whole until the
+>         // frame it hands the place on.
+555,556c562,564
+<         const mid = (a0 + a1) / 2;
+<         const at = [a0, Math.min(a0 + m.seam, mid), Math.max(a1 - m.seam, mid), a1];
+---
+>         const q = Math.min(m.seam, (a1 - a0) / 2);
+>         const k = (m.exit?.heir && q) || m.seam;
+>         const at = [a0, a0 + q, a1 - q, a1];
+558c566
+<             clamp01(Math.min(cs ? (x - a0) / m.seam : 1, ce ? (a1 - x) / m.seam : 1));
+---
+>             clamp01(Math.min(cs ? (x - a0) / k : 1, ce ? (a1 - x) / k : 1));
+715c723,724
+<         // in takes it on the frame it is given, so the place is never left to no unit.
+---
+>         // in takes it on the frame it is given, its seam ramp beyond it, so the place paints
+>         // at full ink and is never left to no unit.
+730,731c739,740
+<                 cs = Math.max(cs, Math.min(r.s - (r.ds > 0.05 ? REVEAL_GAIN * r.ds : r.s / 2), g0 - box.lo));
+<                 ce = Math.max(ce, Math.min(r.e - (r.de > 0.05 ? REVEAL_GAIN * r.de : r.e / 2), box.hi - g1));
+---
+>                 cs = Math.max(cs, Math.min(r.s - (r.ds > 0.05 ? REVEAL_GAIN * r.ds : r.s / 2), g0 - m.seam - box.lo));
+>                 ce = Math.max(ce, Math.min(r.e - (r.de > 0.05 ? REVEAL_GAIN * r.de : r.e / 2), box.hi - g1 - m.seam));
+740,743c749,753
+<         // Two cut edges that face each other keep the seam, whatever cut them and whichever
+<         // way each unit goes. The fronts hold the side a unit arrives from; this holds the rest:
+<         // an edge still easing back, an edge a retarget left on a side nothing arrives from.
+<         // The unit coming in gives way, the later of two; a unit going out is never held by it.
+---
+>         // Two cut edges that face each other keep the seam, whatever cut them, unless both
+>         // units are going out: their fronts are the exchange's. The fronts hold the side a unit
+>         // arrives from; this holds the rest: an edge still easing back, an edge a retarget left
+>         // on a side nothing arrives from. The unit coming in gives way, the later of two; a
+>         // unit going out is never held by it.
+1122,1126c1132,1140
+<         // Sub-pixel positions. The offsets are whole px; a box's painted rect against its
+<         // frame's, less the translate this scene wrote on it, recovers the fraction they
+<         // round away. That reading is trusted only inside the rounding, so a transform
+<         // between the two (a rotated host) moves the model no further than the offsets
+<         // alone would. `edge`: the offsets run from the frame's padding edge.
+---
+>         // Sub-pixel positions. The offsets are whole px; a box's painted centre against its
+>         // frame's edge, less the translate this scene wrote on it and half its layout size,
+>         // recovers the fraction they round away. The centre, because a box's own scale or
+>         // rotate about its centre (a seat's engagement) moves its corners and not its centre:
+>         // a seat read while it is engaged reads where it is laid out, so a box that has not
+>         // moved reads the same place at every check and the end of an episode never starts
+>         // another. That reading is trusted only inside the rounding, so a transform between
+>         // the two (a rotated host) moves the model no further than the offsets alone would.
+>         // `edge`: the offsets run from the frame's padding edge.
+1135c1149
+<         const fine = (el: HTMLElement, frame: HTMLElement, at: V, edge: boolean): V => {
+---
+>         const fine = (el: HTMLElement, frame: HTMLElement, at: V, s: Size, edge: boolean): V => {
+1139,1140c1153,1154
+<             const fx = (a.left - f.left) / sx - (w?.x ?? 0) - (edge ? frame.clientLeft : 0) - at.x;
+<             const fy = (a.top - f.top) / sy - (w?.y ?? 0) - (edge ? frame.clientTop : 0) - at.y;
+---
+>             const fx = ((a.left + a.right) / 2 - f.left) / sx - s.w / 2 - (w?.x ?? 0) - (edge ? frame.clientLeft : 0) - at.x;
+>             const fy = ((a.top + a.bottom) / 2 - f.top) / sy - s.h / 2 - (w?.y ?? 0) - (edge ? frame.clientTop : 0) - at.y;
+1152d1165
+<             m.pos = fine(el, frame, at, edge);
+1153a1167
+>             m.pos = fine(el, frame, at, s, edge);
