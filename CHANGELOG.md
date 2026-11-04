@@ -1,6 +1,6 @@
 # Changelog
 
-## 10.1.4 — unreleased
+## 10.1.4 — 2026-11-04
 
 A patch for two defects sci-report reported live from the Gregg Museum dashboard on
 10.1.3 (records: `docs/tranches/BL/audit/INBOUND.md` O-119, items (g) and the `@page`
