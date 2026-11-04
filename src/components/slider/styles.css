@@ -154,7 +154,11 @@
    THE MARKS RIDE THE SAME LANE. A value mark is the thumb's CENTRE at that value,
    `d/2 + p·(track − d)`, so the marks register (`glass/value-marks.css`, `inset: 0`)
    is inset by half a diameter at both ends of the main axis: its `p·box` lands on that
-   centre, inverted and RTL included (the inset is symmetric). [10.1.5 critique D1] At
+   centre, inverted and RTL included (the inset is symmetric). The inset is the
+   register's own `--value-mark-inset`, set here: [10.1.5 critique 2 E4] ~~a
+   `.glass-value-marks` rule in this sheet~~ named the register's selector, which
+   enrolled this whole stylesheet into the component-only `./styles.css` entry
+   (`scripts/gen-component-styles.mjs`). [10.1.5 critique D1] At
    `inset: 0` a mark sat at `p·track`, up to half a diameter off the thumb, and a mark
    near min was already under the fill at min. */
 .slider-lane {
@@ -164,6 +168,7 @@
 
 .glass-slider:not([data-variant="spectrum"]) {
     --slider-lane-cut: var(--slider-thumb-size, 1rem);
+    --value-mark-inset: calc(var(--slider-lane-cut) / 2);
 }
 
 .glass-slider:not([data-variant="spectrum"]):not([data-orientation="vertical"]) {
@@ -179,9 +184,6 @@
     &[data-inverted] .slider-range {
         margin-inline: calc(-1 * var(--slider-lane-cut)) 0;
     }
-    & .glass-value-marks {
-        inset-inline: calc(var(--slider-lane-cut) / 2);
-    }
 }
 
 .glass-slider[data-orientation="vertical"]:not([data-variant="spectrum"]) {
@@ -196,9 +198,6 @@
     }
     &[data-inverted] .slider-range {
         margin-block: 0 calc(-1 * var(--slider-lane-cut));
-    }
-    & .glass-value-marks {
-        inset-block: calc(var(--slider-lane-cut) / 2);
     }
 }
 

@@ -1,4 +1,5 @@
 import { onScopeDispose, watch, type Ref } from "vue";
+import { DOCK_SEAT_ATTR } from "../constants";
 
 type Axis = "horizontal" | "vertical";
 
@@ -170,6 +171,8 @@ export function useDockExpandedSize(
     const { rootEl, contentEl, expandedEl, collapsedEl, axis } = options;
     let observer: ResizeObserver | null = null;
     let crossObserver: ResizeObserver | null = null;
+    let seatObserver: ResizeObserver | null = null;
+    const seatBoxes = new Map<Element, { inline: number; block: number }>();
     let mutations: MutationObserver | null = null;
     let expandedChrome: number | null = null;
     let collapsedChrome: number | null = null;
@@ -250,11 +253,59 @@ export function useDockExpandedSize(
         crossObserver.observe(plate);
     }
 
+    /*
+     * THE RUN'S LARGEST SEAT, `--dock-seat-max-inline-px` / `--dock-seat-max-block-px`
+     * (10.1.5 critique 2 E1, E2; W-0.8 §11, OD-13). A hovered seat's ink past its layout
+     * box is its own extent times `(s − 1)/2` plus its scaled ring, so the run's reserve
+     * (run.css `--dock-run-reserve-*`) is sized from the largest seat on each axis: a
+     * label-wide tab or the open seat, not the icon cell. The seats are the run's
+     * DECLARED seats (`DOCK_SEAT_ATTR`, which `<DockControl>` and `<DockTrigger>` set) at
+     * any depth, so a layer group's seats count and the group's own box does not. The
+     * ResizeObserver's border box is layout: the hover `scale` never reaches it, so the
+     * reserve does not move while a seat is engaged. Written on the root, where run.css
+     * derives the reserve (the layers read it as well as the run), and re-observed when
+     * the run's content changes. A run with no seats reserves the ring alone.
+     */
+    function publishSeats(root: HTMLElement): void {
+        let inline = 0;
+        let block = 0;
+        for (const box of seatBoxes.values()) {
+            inline = Math.max(inline, box.inline);
+            block = Math.max(block, box.block);
+        }
+        root.style.setProperty("--dock-seat-max-inline-px", `${inline}px`);
+        root.style.setProperty("--dock-seat-max-block-px", `${block}px`);
+    }
+
+    function observeSeats(): void {
+        const root = rootEl.value;
+        const run = expandedEl.value;
+        if (!root || !run || typeof ResizeObserver === "undefined") return;
+        seatObserver?.disconnect();
+        seatObserver = null;
+        seatBoxes.clear();
+        const seats = run.querySelectorAll(`[${DOCK_SEAT_ATTR}]`);
+        if (seats.length === 0) {
+            publishSeats(root);
+            return;
+        }
+        seatObserver = new ResizeObserver((entries) => {
+            for (const entry of entries) {
+                const box = entry.borderBoxSize?.[0];
+                if (box) seatBoxes.set(entry.target, { inline: box.inlineSize, block: box.blockSize });
+            }
+            publishSeats(root);
+        });
+        for (const seat of seats) seatObserver.observe(seat);
+    }
+
     function attach(): void {
         observer?.disconnect();
         observer = null;
         crossObserver?.disconnect();
         crossObserver = null;
+        seatObserver?.disconnect();
+        seatObserver = null;
         mutations?.disconnect();
         mutations = null;
         if (!rootEl.value) return;
@@ -263,11 +314,13 @@ export function useDockExpandedSize(
             observe();
         }
         observeCross(rootEl.value);
+        observeSeats();
         if (typeof MutationObserver !== "undefined") {
             // A pane's content changed: the patch is complete when this microtask runs,
             // before the frame lays out or paints.
             mutations = new MutationObserver(() => {
                 observe();
+                observeSeats();
                 capture();
             });
             for (const pane of [expandedEl.value, collapsedEl.value]) {
@@ -299,6 +352,8 @@ export function useDockExpandedSize(
         observer = null;
         crossObserver?.disconnect();
         crossObserver = null;
+        seatObserver?.disconnect();
+        seatObserver = null;
         mutations?.disconnect();
         mutations = null;
         if (typeof window !== "undefined") window.removeEventListener("resize", onResize);

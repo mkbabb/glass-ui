@@ -274,15 +274,17 @@ describe("G-DOCK-RUN — the platform is the detent engine", () => {
      * `auto` universally, which is the one universally-true RED in the audit.
      */
     it.each([
-        ["horizontal", "x", "scroll-padding-inline", "pan-x"],
-        ["vertical", "y", "scroll-padding-block", "pan-y"],
-    ] as const)("the %s run is a snapped, contained, single-owner scroller", (_o, axis, pad, pan) => {
+        ["horizontal", "x", "scroll-padding-inline", "pan-x", "inline"],
+        ["vertical", "y", "scroll-padding-block", "pan-y", "block"],
+    ] as const)("the %s run is a snapped, contained, single-owner scroller", (_o, axis, pad, pan, side) => {
         const run = declarations(`${STYLES}/run.css`);
         expect(run).toContain(`scroll-snap-type: ${axis} mandatory`);
         // The half pitch, plus the run's reserve, which the padding box adds before the
         // first seat (O-129 r1): every rest keeps its scroll offset.
         expect(run).toMatch(
-            new RegExp(`${pad}:\\s*calc\\(var\\(--dock-pitch\\) / 2 \\+ var\\(--dock-run-reserve\\)\\)`),
+            new RegExp(
+                `${pad}:\\s*calc\\(var\\(--dock-pitch\\) / 2 \\+ var\\(--dock-run-reserve-${side}\\)\\)`,
+            ),
         );
         expect(run).toContain(`touch-action: ${pan}`);
         expect(run).toContain("overscroll-behavior: contain");
@@ -715,16 +717,25 @@ describe("G-DOCK-MATERIAL — the focus ring composes instead of competing", () 
         //    different selector would leave the reserve exactly as defeated as it was.
         const reserveRules = [...run.matchAll(/\.glass-dock \.dock-run \{([^{}]*)\}/g)]
             .map((m) => m[1]!)
-            .filter((body) => /padding:\s*var\(--dock-run-reserve\)/.test(body));
+            .filter((body) =>
+                /padding:\s*var\(--dock-run-reserve-block\) var\(--dock-run-reserve-inline\)/.test(body),
+            );
         expect(reserveRules.length).toBe(1);
         expect(reserveRules[0]).toMatch(/box-sizing:\s*content-box/);
-        expect(reserveRules[0]).toMatch(/margin:\s*calc\(-1 \* var\(--dock-run-reserve\)\)/);
+        expect(reserveRules[0]).toMatch(
+            /margin:\s*calc\(-1 \* var\(--dock-run-reserve-block\)\) calc\(-1 \* var\(--dock-run-reserve-inline\)\)/,
+        );
         // The reserve is the composed ink of a focused, hovered seat: its hover overhang
         // PLUS its ring, which scales with it (O-129 r1, O-123 OD-5: a seat's engagement
-        // scale never counts as reach; 10.1.5 critique D4: the two inks add).
-        expect(reserveRules[0]).toMatch(
-            /--dock-run-reserve:\s*calc\(\s*var\(--dock-seat\) \* \(var\(--scale-hover-dock\) - 1\) \/ 2 \+\s*var\(--dock-ring-reserve\) \* var\(--scale-hover-dock\)\s*\)/,
-        );
+        // scale never counts as reach; 10.1.5 critique D4: the two inks add), and the
+        // overhang is the LARGEST seat's on each axis (10.1.5 critique 2 E1, E2).
+        for (const side of ["inline", "block"]) {
+            expect(run).toMatch(
+                new RegExp(
+                    `--dock-run-reserve-${side}:\\s*round\\(\\s*up,\\s*var\\(--dock-seat-max-${side}-px\\) \\* \\(var\\(--scale-hover-dock\\) - 1\\) / 2 \\+\\s*var\\(--dock-ring-reserve\\) \\* var\\(--scale-hover-dock\\),\\s*1px\\s*\\)`,
+                ),
+            );
+        }
 
         // 2. ONE OWNER. The vertical rotation swaps the AXIS, not the box model; a
         //    restatement there is the two-owners defect the R1 cure struck in
