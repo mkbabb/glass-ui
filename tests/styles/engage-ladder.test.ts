@@ -266,12 +266,12 @@ describe("G-ENGAGE-RUNG · ladder arm — §4's checkable seven, given a subject
         expect(canonical).toBeDefined();
         expect(canonical!.value).toBeLessThanOrEqual(HOVER_GEOMETRY_BUDGET);
 
-        // Exactly one token exceeds the ceiling and it is the dock's own — NAMED, so a
-        // new exceedance REDs here instead of joining an unbounded set. The dock rows
-        // own that token; the ladder owns the ceiling it is measured against.
+        // No token exceeds the ceiling. The one that did, the dock's `--scale-hover-dock`
+        // (1.1), is deleted with its readers (U/B8r I-2: no dock control scales on
+        // hover), so a new exceedance REDs here instead of joining an unbounded set.
         expect(
             declared.filter((row) => row.value > HOVER_GEOMETRY_BUDGET).map((r) => r.token),
-        ).toEqual(["--scale-hover-dock"]);
+        ).toEqual([]);
     });
 
     it("the ladder MINTS nothing — every cited row exists in its own root", () => {

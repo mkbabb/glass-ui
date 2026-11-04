@@ -19,7 +19,8 @@ register it rides (its `--spring-<name>-duration` clock + the coupled-fade partn
 PRM behavior.
 
 1. **HOVER-LIFT** — *"this is touchable."* A sub-perceptual scale lift
-   (`--scale-hover-btn` 1.05 / `--scale-hover-dock` 1.1 / `--scale-hover` 1.08,
+   (`--scale-hover-btn` 1.05 / `--scale-hover` 1.08; the dock controls take no hover
+   scale since U/B8r I-2,
    `tokens/scale-paper.css`) on `--spring-smooth`, the surface bg shifting to the next
    glass tier, the gleam waking — the three legs as ONE motion (the `transition-control`
    utility `utilities/btn.css` carries border/shadow/transform/color TOGETHER so they
@@ -76,9 +77,9 @@ the SFC template + the CVA `index.ts`).
 |---|---|---|---|---|---|---|---|
 | **Button** (glass: default/glass/primary-audacious) | ui/button | ✓ `scale-hover` | ✓ `v-specular` auto-arm | ✓ `useSpringPress`+`tap-squish` `--glass-btn-press-t` | — | ✓ `.focus-ring` | `useSpringPress.ts`·`vSpecular.ts`·`index.ts` CVA base; press reads the eased `press` register (`BC.W-SPRING-EASE`) |
 | **Button** (solid/destructive/link/secondary/outline/ghost) | ui/button | ✓ `scale-hover` | — (opaque, no glass-tier `::before`) | ✓ `.tap-squish` `:active` + `useSpringPress` | — | ✓ `.focus-ring` | `index.ts` `transition-control`; the gleam is glass-tier-only (recorded) |
-| **DockIconButton** | custom/dock | ✓ `--scale-hover-dock` | ✓ `v-specular` | ✓ `tap-squish`/`:active` | — | ✓ `.focus-ring` | `DockIconButton.vue`·`dock/styles/controls/icon-button.css` |
-| **DockTabButton / DockSelectTrigger / DockDropdownTrigger** | custom/dock | ✓ `--scale-hover-dock` | ✓ `v-specular` | ✓ `:active` press | — | ✓ `.focus-ring` (`dock.css`) | `dock/styles/controls/triggers.css`·`dock/styles/controls/tab-button.css` |
-| **DarkModeToggle** | custom/dock | ✓ `--scale-hover-dock` | ✓ `v-specular` | ✓ `:active` press | — | ✓ `.focus-ring` (`dark-mode-toggle.css`) | `dark-mode-toggle/dark-mode-toggle.css` |
+| **DockIconButton** | custom/dock | — (no hover scale, U/B8r I-2) | ✓ `v-specular` | ✓ `tap-squish`/`:active` | — | ✓ `.focus-ring` | `DockIconButton.vue`·`dock/styles/controls/icon-button.css` |
+| **DockTabButton / DockSelectTrigger / DockDropdownTrigger** | custom/dock | — (no hover scale, U/B8r I-2) | ✓ `v-specular` | ✓ `:active` press | — | ✓ `.focus-ring` (`dock.css`) | `dock/styles/controls/triggers.css`·`dock/styles/controls/tab-button.css` |
+| **DarkModeToggle** | custom/dock | — (no hover scale, U/B8r I-2) | ✓ `v-specular` | ✓ `:active` press | — | ✓ `.focus-ring` (`dark-mode-toggle.css`) | `dark-mode-toggle/dark-mode-toggle.css` |
 | **SegmentedTabs pill indicator** (variant="pill") | ui/tabs | ✓ glass plate | ✓ tier `::before` | ✓ squish-on-travel `--stretch` | ✓ `:draggable` (`useDragMorph`) | ✓ roving-tabindex | `useTabIndicator.ts`·`useDragMorph.ts`; reads the eased `snappy` |
 | **SegmentedTabs underline indicator** (variant="underline") | ui/tabs | — (a hairline does not lift) | — | — (a hairline does not squish) | — | ✓ roving-tabindex | the ink mark SLIDES on `--spring-snappy` (recorded — the paper material) |
 | **menu row** (Dropdown/Context/Select/Combobox/Command items) | ui/dropdown-menu, ui/context-menu, ui/select, ui/combobox, ui/command | ✓ `--menu-row-lift` -1px on `--spring-smooth` | — (a row is quiet — gleam reserved for the trigger) | — (select-on-click, no squish) | — | ✓ `data-highlighted` + `.focus-ring` | `menu.css` (the lift rides `--spring-smooth`, co-timed with the bg tint) |

@@ -4,6 +4,23 @@
 
 Merged on local branch `u/b7-glass` (off `release/10.1.1` bbf176f02, with the published `v10.1.2` merged in) from `u/b7-glass-shape` (rows B7-G1 to B7-G6) and `u/b7-glass-perf` (rows B7-G7 to B7-G9). Row numbers follow the relay letter.
 
+### The figure dock's hover and corner (`u/b8r-glass`, U/B8r I-2 and I-3)
+
+- **No dock control scales on hover (I-2).** `.dock-icon-button` and `.dock-tab-button`
+  answered a hover with `scale: 1.1`, so atlas's figure-dock Table view toggle grew under
+  the pointer in Chromium, Firefox and WebKit (atlas register MO-09: no hover scale; the
+  owner's order of 2026-10-19). A hover now changes the fill and the gleam only; the press
+  keeps its spring. The token `--scale-hover-dock` is deleted with its last two readers.
+  Breaking for a consumer that set or read it: delete the declaration. No alias.
+- **A closed dock with a persistent control keeps the bar corner (I-3).** A closed
+  horizontal dock was always `--radius-circle` (50%). With a `#persistent` control beside
+  the summary the box is two cells wide (atlas's 100 x 52 figure dock), so 50% drew an
+  oval, a full-radius box over 40 px (atlas register F-20). That dock now takes
+  `--radius-dock` (16 px), the corner it wears open. A dock of one cell stays a circle.
+  Witnesses: `tests/components/custom/dock/dock-hover-corner.test.ts` (4 tests, 3 red on
+  c3b73337a), `tests/styles/engage-ladder.test.ts` (the hover budget now names no
+  exceedance), and atlas `src/charts/frame/PlateDock.browser.spec.ts` in three engines.
+
 ### Root items (`u/b7d-glass-register`, U/B7d M3)
 
 - **A collapsed dock's progress rim has length (D-08).** The rule that centres the
