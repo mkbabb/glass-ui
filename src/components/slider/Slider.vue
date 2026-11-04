@@ -339,20 +339,31 @@ onMounted(() => {
                 shipped `saturate(1.4)` over half its own colour and a hard seam at the
                 handle. A class that is never applied cannot be un-applied wrongly.
             -->
-            <SliderRange
-                class="slider-range"
-                :class="v !== 'spectrum' && 'glass-liquid-fill'"
-                :data-held="isHeld || undefined"
-            >
-                <template v-if="grasping && graspable">
-                    <span class="glass-grasp-carrier" data-grasp="rest"></span>
-                    <span
-                        class="glass-grasp-carrier"
-                        data-grasp="grasp"
-                        @transitionend="onGraspReleaseEnd"
-                    ></span>
-                </template>
-            </SliderRange>
+            <!--
+                THE LANE (O-129 r5). reka places the range by percentages of its
+                containing block and the thumb by `contain` alignment, whose leading edge
+                travels `p·(track − thumb)`. The lane is the track less one thumb
+                diameter, so the range's percentages land on the thumb's travel, and the
+                range reaches one diameter past it (styles.css): the fill is exactly
+                `thumb + p·(track − thumb)` wide, never narrower than the thumb at min,
+                and the thumb sits inside its leading end at every value.
+            -->
+            <span class="slider-lane">
+                <SliderRange
+                    class="slider-range"
+                    :class="v !== 'spectrum' && 'glass-liquid-fill'"
+                    :data-held="isHeld || undefined"
+                >
+                    <template v-if="grasping && graspable">
+                        <span class="glass-grasp-carrier" data-grasp="rest"></span>
+                        <span
+                            class="glass-grasp-carrier"
+                            data-grasp="grasp"
+                            @transitionend="onGraspReleaseEnd"
+                        ></span>
+                    </template>
+                </SliderRange>
+            </span>
         </SliderTrack>
         <!--
             The thumb's specular anchor is FROZEN at 50%/50% and that is correct, not a

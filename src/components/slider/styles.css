@@ -64,7 +64,7 @@
 }
 
 /* The SIZE axis. `--slider-track-height` is the capsule thickness; `--slider-thumb-size`
-   sizes the spectrum's visible handle and the scrubber's invisible value-follow box.
+   sizes the spectrum's visible handle and the scrubber's inscribed disc.
    thumb ≤ track at every rung — the inscription law.
    [2026-09-22 · O-23 L-3] The rungs read `--slider-track-height-{sm,md,lg}` and
    `--slider-thumb-size-{sm,md,lg}` from the token :root (`tokens/sizing.css`), so a
@@ -141,19 +141,79 @@
     --liquid-fill-tint: var(--slider-range-bg, var(--glass-capsule-warm));
 }
 
-/* THE INVISIBLE THUMB. The scrubber is ONE continuous glass segment and the filled
-   cylinder's leading EDGE is the handle; the reka thumb stays mounted (a11y, keyboard,
-   drag and value-follow are all native on it) and paints nothing. Keyboard focus does
-   not ring it — it ribbons the TRACK, below. */
+/* THE LANE — the range's containing block (Slider.vue). On the scrubber it is the track
+   less one thumb diameter, anchored at the edge the fill grows from, and the range
+   reaches one diameter past its far end with a negative margin on its leading edge. reka
+   writes the range's two offsets as percentages of this box, so the fill is
+   `d + p·(track − d)`: one thumb diameter at min, the whole track at max, and its
+   leading end always the thumb's trailing edge (`contain` alignment puts the thumb at
+   `p·(track − d)`). [2026-11-04 · 10.1.5 · O-129 r5] At 10.1.4 the fill was `p·track`
+   and the thumb painted nothing, so the minimum painted a bare track (fourier /morph
+   'Morph' at 50 of 50..800) and the maximum an inert full bar (value's 'Zones' 6/6).
+   The spectrum's range paints no fill, so its lane is the whole track. */
+.slider-lane {
+    position: absolute;
+    inset: 0;
+}
+
+.glass-slider:not([data-variant="spectrum"]) {
+    --slider-lane-cut: var(--slider-thumb-size, 1rem);
+}
+
+.glass-slider:not([data-variant="spectrum"]):not([data-orientation="vertical"]) {
+    & .slider-lane {
+        inset-inline-end: var(--slider-lane-cut);
+    }
+    & .slider-range {
+        margin-inline-end: calc(-1 * var(--slider-lane-cut));
+    }
+    &[data-inverted] .slider-lane {
+        inset-inline: var(--slider-lane-cut) 0;
+    }
+    &[data-inverted] .slider-range {
+        margin-inline: calc(-1 * var(--slider-lane-cut)) 0;
+    }
+}
+
+.glass-slider[data-orientation="vertical"]:not([data-variant="spectrum"]) {
+    & .slider-lane {
+        inset-block-start: var(--slider-lane-cut);
+    }
+    & .slider-range {
+        margin-block-start: calc(-1 * var(--slider-lane-cut));
+    }
+    &[data-inverted] .slider-lane {
+        inset-block: 0 var(--slider-lane-cut);
+    }
+    &[data-inverted] .slider-range {
+        margin-block: 0 calc(-1 * var(--slider-lane-cut));
+    }
+}
+
+/* THE INTEGRATED THUMB. The scrubber is ONE continuous glass segment and its handle is
+   a disc INSCRIBED in the fill's leading end: `--slider-thumb-size` on both axes, which
+   the size rungs above hold at or under the track height (the inscription law), centred
+   on the cross axis by the root's own `align-items: center`. It is the same object at
+   min, mid and max, so the value's end is visible at both extremes. Its paint is the
+   switch thumb's (`--card` over `--shadow-sm`), the house's one knob. Keyboard focus does
+   not ring it — it ribbons the TRACK, below.
+   [2026-11-04 · 10.1.5 · O-129 r5] ~~`width: 0; opacity: 0` — the invisible thumb~~:
+   with no thumb and a fill of `p·track`, both extremes lost the handle. */
 .slider-thumb {
     display: block;
-    width: 0;
-    height: var(--slider-track-height, 0.375rem);
-    opacity: 0;
-    background: transparent;
+    width: var(--slider-thumb-size, 1rem);
+    height: var(--slider-thumb-size, 1rem);
     border: none;
-    box-shadow: none;
+    border-radius: var(--radius-pill);
+    background: var(--card);
+    box-shadow: var(--shadow-sm);
     transition: transform var(--spring-press-duration) var(--spring-press);
+}
+
+/* The track carries the keyboard ring (below), so the UA outline is suppressed in the
+   same breath — the ring is beside it, on the track. */
+.glass-slider:not([data-variant="spectrum"]) .slider-thumb:focus-visible {
+    outline: none;
 }
 
 /* THE APPROACH AFFORDANCE. The warm glass DENSIFIES as the pointer nears it: the fill's
@@ -171,7 +231,7 @@
     --liquid-fill-strength: 100%;
 }
 
-/* Keyboard focus rings the TRACK, not the invisible thumb. `:focus-visible` and not
+/* Keyboard focus rings the TRACK, not the thumb. `:focus-visible` and not
    `:focus-within`: the latter matches pointer focus too, so grabbing the track with a
    mouse painted the keyboard ring. No `:focus-within` fallback pairs with it — that
    would paint back the very ring this predicate removes. */
@@ -346,6 +406,11 @@
     }
     .slider-range {
         background: Highlight;
+    }
+    .glass-slider:not([data-variant="spectrum"]) .slider-thumb {
+        forced-color-adjust: none;
+        background: Canvas;
+        border: 1px solid CanvasText;
     }
     .glass-slider[data-variant="spectrum"] .slider-thumb {
         border-color: CanvasText;

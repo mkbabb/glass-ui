@@ -80,9 +80,10 @@ describe("Slider value marks", () => {
         expect(wrapper.get(".slider-track").element.children[0]?.classList).toContain(
             "glass-value-marks",
         );
-        expect(wrapper.get(".slider-track").element.children[1]?.classList).toContain(
-            "slider-range",
-        );
+        // The fill rides its lane (O-129 r5): the track less one thumb diameter.
+        const lane = wrapper.get(".slider-track").element.children[1];
+        expect(lane?.classList).toContain("slider-lane");
+        expect(lane?.children[0]?.classList).toContain("slider-range");
     });
 
     it.each([
