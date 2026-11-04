@@ -18,6 +18,17 @@
     :root {
         --ui-scale: var(--ui-coarse-scale, 1.5);
         --control-floor: var(--touch-target, 2.75rem);
+        /* THE TYPE TAKES THE NO-ZOOM FLOOR, NOT THE COMFORT SCALE. [2026-11-04 · 10.1.5
+           · O-129 r6] ~~`--control-text: calc(var(--type-small) * var(--ui-scale))` under
+           the coarse 1.5×~~ painted 21px field text in a 54px bar at 390 (value.js
+           Browse search: 1.72× its pane subtitle, against 1.14× on desktop). A touch
+           target is BOX — the heights above keep the 1.5× — and the one type law touch
+           adds is iOS Safari's: a focused field under 16px zooms the page. So both
+           control rungs floor at 16px over their unscaled fluid base, which keeps a
+           field from zooming at every rung and keeps `-sm` from outgrowing the default
+           rung (12px × 1.5 = 18px was above the default's 16). */
+        --control-text: max(var(--type-small), 1rem);
+        --control-text-sm: max(var(--type-caption), 1rem);
     }
 }
 
