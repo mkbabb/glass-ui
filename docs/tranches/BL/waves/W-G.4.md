@@ -199,3 +199,5 @@ R.done();
 ```
 
 HEAD output: `light {"dmax255":3,"movedPct":6.94,"meanC":0.0231,"meanL":0.9182}`, `dark {"dmax255":9,"movedPct":67.94,"meanC":0.0184,"meanL":0.3364}`, both FAIL. (The run at this seat applied the ≥ 25 % moved clause to both themes and had no L clause; the verdicts are the same under the gate as written.)
+
+**Addendum (2026-11-04), INBOUND O-130 (2)–(4), value.js's aurora palette.** Gates on the greenfield's one config layer (which replaces `resolveAtoms`): **(2)** the seed is a stop by construction (an odd stop count with the seed at the centre, or a seed-anchored stop), and the symmetric seam is kept; gate: the nearest palette stop to the seed is ΔE_ok ≤ 0.01. **(3)** the tonemap on an LDR palette is the identity below the clip: gate: stop L above 0.7 holds within 0.005, and chroma near white within 10% of the seed's. **(4)** temperatureShift's cool pull does not stack with the analogous walk: gate: served hue error ≤ 2° on red and violet seeds (efflorescence, tomato, rebeccapurple), as on green, teal and blue.
