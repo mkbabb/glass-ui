@@ -40,6 +40,12 @@
        ratio it rides the fluid clamp and the comfort factor exactly once, for free.
        A 44px touch target needs 44px of BOX (`--touch-target`), never a 21px label. */
     --control-label: calc(var(--control-text) * 0.886653);
+    /* THE FIELD TYPE FLOOR: the least font size a focusable text field paints. 0 on a
+       fine pointer; the coarse arm (light-dark.css) lifts it to iOS Safari's 16px
+       no-zoom line. `.input-pill` and `.input-bar-field` take
+       `max(<their rung>, var(--field-text-floor))`, so an sm field cannot zoom the page
+       while the `-sm` control rung keeps its ratio for every non-field reader. */
+    --field-text-floor: 0px;
     /* The control-GLYPH cohort — the glyph grows WITH the box. The un-sized-`<svg>`
        CVA rule reads these via `size-[var(--ui-glyph)]`, keeping the
        `:not([class*=size-])` host-sized-icon escape intact. */
