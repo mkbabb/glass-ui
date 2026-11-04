@@ -1,0 +1,98 @@
+== retarget A/B (pass-10 builder's absum.py)
+('chromium', 'dark', 'bp10', 'retarget·120') reads 8 splice 0 [] sliver [] other red [] load 9.96 - 12.14
+('chromium', 'dark', 'bp10', 'retarget·40') reads 8 splice 0 [] sliver [] other red [] load 9.17 - 11.2
+('chromium', 'dark', 'bp10', 'retarget·80') reads 8 splice 0 [] sliver [] other red [] load 9.62 - 12.14
+('chromium', 'dark', 'bp12', 'retarget·120') reads 8 splice 0 [] sliver [] other red [] load 9.17 - 11.87
+('chromium', 'dark', 'bp12', 'retarget·40') reads 8 splice 0 [] sliver [] other red [] load 9.88 - 10.65
+('chromium', 'dark', 'bp12', 'retarget·80') reads 8 splice 0 [] sliver [] other red [] load 9.88 - 11.87
+('chromium', 'light', 'bp10', 'retarget·120') reads 8 splice 0 [] sliver [] other red [] load 7.41 - 8.79
+('chromium', 'light', 'bp10', 'retarget·40') reads 8 splice 0 [] sliver [] other red [] load 7.8 - 8.89
+('chromium', 'light', 'bp10', 'retarget·80') reads 8 splice 0 [] sliver [] other red [] load 7.8 - 8.79
+('chromium', 'light', 'bp12', 'retarget·120') reads 8 splice 0 [] sliver [] other red [] load 7.64 - 8.89
+('chromium', 'light', 'bp12', 'retarget·40') reads 8 splice 0 [] sliver [] other red [] load 7.83 - 8.65
+('chromium', 'light', 'bp12', 'retarget·80') reads 8 splice 0 [] sliver [] other red [] load 7.64 - 8.73
+('webkit', 'dark', 'bp10', 'retarget·120') reads 8 splice 0 [] sliver [] other red [('2', 'leaving', 9.94)] load 7.65 - 9.94
+('webkit', 'dark', 'bp10', 'retarget·40') reads 8 splice 0 [] sliver [] other red [] load 7.62 - 10.37
+('webkit', 'dark', 'bp10', 'retarget·80') reads 8 splice 0 [] sliver [] other red [] load 7.65 - 10.37
+('webkit', 'dark', 'bp12', 'retarget·120') reads 8 splice 0 [] sliver [] other red [] load 7.62 - 12.24
+('webkit', 'dark', 'bp12', 'retarget·40') reads 8 splice 0 [] sliver [] other red [] load 7.76 - 11.21
+('webkit', 'dark', 'bp12', 'retarget·80') reads 8 splice 0 [] sliver [] other red [] load 7.76 - 12.24
+('webkit', 'light', 'bp10', 'retarget·120') reads 8 splice 0 [] sliver [] other red [] load 7.65 - 11.44
+('webkit', 'light', 'bp10', 'retarget·40') reads 8 splice 0 [] sliver [] other red [] load 7.91 - 10.87
+('webkit', 'light', 'bp10', 'retarget·80') reads 8 splice 0 [] sliver [] other red [] load 7.91 - 11.44
+('webkit', 'light', 'bp12', 'retarget·120') reads 8 splice 0 [] sliver [] other red [] load 8.08 - 11.55
+('webkit', 'light', 'bp12', 'retarget·40') reads 8 splice 0 [] sliver [] other red [] load 7.65 - 10.67
+('webkit', 'light', 'bp12', 'retarget·80') reads 8 splice 0 [] sliver [] other red [] load 8.08 - 11.5
+('chromium', 'bp10') splice 0/48 sliver 0/48 load 7.41-12.14
+('chromium', 'bp12') splice 0/48 sliver 0/48 load 7.64-11.87
+('webkit', 'bp10') splice 0/48 sliver 0/48 load 7.62-11.44
+('webkit', 'bp12') splice 0/48 sliver 0/48 load 7.62-12.24
+
+== reversal stub A/B (phase2.mjs rev-c, bp10 / bp8)
+bp10-chromium-dark-k1.log: reads 12 splice 0 sliver 0 blank 0 stub 0 error 0 load 8.59-9.29
+bp10-chromium-dark-k2.log: reads 12 splice 0 sliver 0 blank 0 stub 0 error 0 load 7.47-8.08
+bp10-chromium-light-k1.log: reads 12 splice 0 sliver 0 blank 0 stub 0 error 0 load 7.52-8.21
+bp10-chromium-light-k2.log: reads 12 splice 0 sliver 0 blank 0 stub 0 error 0 load 8.57-9.33
+bp10-webkit-dark-k1.log: reads 12 splice 0 sliver 0 blank 0 stub 0 error 0 load 14.25-16.77
+bp10-webkit-dark-k2.log: reads 12 splice 0 sliver 0 blank 0 stub 0 error 0 load 8.8-10.35
+bp10-webkit-light-k1.log: reads 12 splice 0 sliver 0 blank 0 stub 0 error 0 load 9.36-11.9
+bp10-webkit-light-k2.log: reads 12 splice 0 sliver 0 blank 0 stub 0 error 0 load 11.93-14.97
+bp12-chromium-dark-k1.log: reads 12 splice 0 sliver 0 blank 0 stub 0 error 0 load 8.64-9.53
+bp12-chromium-dark-k2.log: reads 12 splice 0 sliver 0 blank 0 stub 0 error 0 load 7.97-8.66
+bp12-chromium-light-k1.log: reads 12 splice 0 sliver 0 blank 0 stub 0 error 0 load 7.51-8.21
+bp12-chromium-light-k2.log: reads 12 splice 0 sliver 0 blank 0 stub 0 error 0 load 8.32-9.56
+bp12-webkit-dark-k1.log: reads 12 splice 0 sliver 0 blank 0 stub 0 error 0 load 13.42-16.91
+bp12-webkit-dark-k2.log: reads 12 splice 0 sliver 0 blank 0 stub 0 error 0 load 9.8-13.98
+bp12-webkit-light-k1.log: reads 12 splice 0 sliver 0 blank 0 stub 0 error 0 load 9.36-11.14
+bp12-webkit-light-k2.log: reads 12 splice 0 sliver 0 blank 0 stub 0 error 0 load 10.57-14.0
+== swap reversed, and retargeted during the reversal (swrev.mjs)
+bp10-chromium-dark.log: reads 10 splice 0 sliver 0 blank 0 stub 0 error 0 load 7.01-7.65
+bp10-chromium-light.log: reads 10 splice 0 sliver 0 blank 0 stub 0 error 0 load 8.9-9.63
+bp10-webkit-dark.log: reads 10 splice 0 sliver 0 blank 0 stub 0 error 0 load 13.03-14.24
+bp10-webkit-light.log: reads 10 splice 0 sliver 0 blank 0 stub 0 error 0 load 9.73-12.08
+bp12-chromium-dark.log: reads 40 splice 0 sliver 0 blank 0 stub 0 error 0 load 7.29-8.59
+bp12-chromium-light.log: reads 40 splice 0 sliver 0 blank 0 stub 0 error 0 load 8.89-9.7
+bp12-webkit-dark.log: reads 40 splice 2 sliver 0 blank 0 stub 0 error 0 load 8.1-16.32
+    rev  40 then 32 r1 frame 4 splice 1 s7|s8 gap 7.46 at 117 sliver 0 blank ok stub true [load 9.09]
+    rev  40 then 64 r2 frame 4 splice 1 s7|s8 gap 7.56 at 152 sliver 0 blank ok stub true [load 12.1]
+bp12-webkit-light.log: reads 40 splice 0 sliver 0 blank 0 stub 0 error 0 load 9.97-14.24
+== a retarget during the morph reversal (phase3.mjs)
+bp12-chromium-dark-rev-c-rt-16.log: reads 8 splice 0 sliver 0 blank 0 stub 0 error 0 load 7.53-7.92
+bp12-chromium-dark-rev-c-rt-32.log: reads 8 splice 0 sliver 0 blank 0 stub 0 error 0 load 8.4-9.35
+bp12-chromium-dark-rev-c-rt-64.log: reads 8 splice 0 sliver 0 blank 0 stub 0 error 0 load 7.97-9.4
+bp12-chromium-dark-rev-e-rt-16.log: reads 8 splice 0 sliver 0 blank 0 stub 0 error 0 load 7.97-8.96
+bp12-chromium-dark-rev-e-rt-32.log: reads 8 splice 0 sliver 0 blank 0 stub 0 error 0 load 8.64-9.53
+bp12-chromium-dark-rev-e-rt-64.log: reads 8 splice 0 sliver 0 blank 0 stub 0 error 0 load 8.12-9.33
+bp12-chromium-light-rev-c-rt-16.log: reads 8 splice 0 sliver 0 blank 0 stub 0 error 0 load 8.48-9.47
+bp12-chromium-light-rev-c-rt-32.log: reads 8 splice 0 sliver 0 blank 0 stub 1 error 0 load 8.3-8.81
+    morph rev-c-rt+32 0.5 r1 frame 12 splice 0 sliver 0 blank ok stub false [load 8.81]
+bp12-chromium-light-rev-c-rt-64.log: reads 8 splice 0 sliver 0 blank 0 stub 0 error 0 load 8.22-8.95
+bp12-chromium-light-rev-e-rt-16.log: reads 8 splice 0 sliver 0 blank 0 stub 0 error 0 load 8.9-12.28
+bp12-chromium-light-rev-e-rt-32.log: reads 8 splice 0 sliver 0 blank 0 stub 0 error 0 load 10.01-11.08
+bp12-chromium-light-rev-e-rt-64.log: reads 8 splice 0 sliver 0 blank 0 stub 0 error 0 load 10.17-16.4
+bp12-webkit-dark-rev-c-rt-16.log: reads 8 splice 0 sliver 0 blank 0 stub 0 error 0 load 13.43-14.83
+bp12-webkit-dark-rev-c-rt-32.log: reads 8 splice 0 sliver 0 blank 0 stub 0 error 0 load 13.21-15.22
+bp12-webkit-dark-rev-c-rt-64.log: reads 8 splice 0 sliver 0 blank 0 stub 0 error 0 load 13.66-15.54
+bp12-webkit-dark-rev-e-rt-16.log: reads 8 splice 0 sliver 0 blank 0 stub 0 error 0 load 12.58-13.87
+bp12-webkit-dark-rev-e-rt-32.log: reads 8 splice 0 sliver 0 blank 0 stub 0 error 0 load 11.31-13.25
+bp12-webkit-dark-rev-e-rt-64.log: reads 8 splice 0 sliver 0 blank 0 stub 0 error 0 load 10.97-12.2
+bp12-webkit-light-rev-c-rt-16.log: reads 8 splice 0 sliver 0 blank 0 stub 0 error 0 load 11.44-13.87
+bp12-webkit-light-rev-c-rt-32.log: reads 8 splice 0 sliver 0 blank 0 stub 0 error 0 load 11.5-13.76
+bp12-webkit-light-rev-c-rt-64.log: reads 8 splice 0 sliver 0 blank 0 stub 0 error 0 load 11.38-12.57
+bp12-webkit-light-rev-e-rt-16.log: reads 8 splice 0 sliver 0 blank 0 stub 0 error 0 load 10.71-12.39
+bp12-webkit-light-rev-e-rt-32.log: reads 8 splice 0 sliver 0 blank 0 stub 0 error 0 load 8.7-10.91
+bp12-webkit-light-rev-e-rt-64.log: reads 8 splice 0 sliver 0 blank 0 stub 0 error 0 load 10.08-11.89
+== retarget·N at the unswept offsets (sweep.mjs)
+bp12-chromium-dark-early.log: reads 22 splice 0 sliver 0 blank 0 stub 0 error 0 load 7.61-8.37
+bp12-chromium-dark-late.log: reads 26 splice 0 sliver 0 blank 0 stub 0 error 0 load 8.26-8.95
+bp12-chromium-light-early.log: reads 22 splice 0 sliver 0 blank 0 stub 0 error 0 load 10.23-14.27
+bp12-chromium-light-late.log: reads 26 splice 0 sliver 0 blank 0 stub 0 error 0 load 8.58-10.23
+bp12-webkit-dark-early.log: reads 22 splice 0 sliver 0 blank 0 stub 0 error 0 load 10.22-14.34
+bp12-webkit-dark-late.log: reads 26 splice 0 sliver 0 blank 0 stub 0 error 0 load 10.48-14.96
+bp12-webkit-light-early.log: reads 22 splice 0 sliver 0 blank 0 stub 0 error 0 load 8.01-11.0
+bp12-webkit-light-late.log: reads 26 splice 0 sliver 0 blank 0 stub 0 error 0 load 6.88-8.01
+== frozen vmorph collapse (frz.mjs)
+frz-chromium-dark.log: reads 12 frozen-on-a-splice-frame 3 facingCut 0 freeze-not-held 0 error 0 load 8.85-9.83
+frz-chromium-light.log: reads 12 frozen-on-a-splice-frame 3 facingCut 0 freeze-not-held 0 error 0 load 12.41-13.51
+frz-webkit-dark.log: reads 12 frozen-on-a-splice-frame 1 facingCut 0 freeze-not-held 0 error 0 load 10.7-11.83
+frz-webkit-light.log: reads 12 frozen-on-a-splice-frame 0 facingCut 0 freeze-not-held 0 error 0 load 7.32-8.96

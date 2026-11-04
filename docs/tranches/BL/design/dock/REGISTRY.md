@@ -3665,3 +3665,310 @@ Every class a pass-12 seat recorded is placed. None is left unassigned, and none
 | D5 pass 12 closed 20/27, convergence end of its pass 14 | `FORMATION-PROGRESS.md` | what moves with this count (§P12-5 item 3) |
 | O-118, O-119, O-113's dock rows, the atlas U/B7d addendum, W-0.8 §10, 10.1.3's cures, O-101, O-110, O-102d, O-104 | §P11-8; INBOUND; `waves/W-0.8.md` | W-0.8, as §P11-5 placed them, updated at §P12-5 |
 | real Safari | every report | **UNMEASURED (owner's safaridriver checkbox)**; O-103: not granted |
+
+---
+
+# D2 · pass 12 · completion: B′ at 35/38, rule (b) fires on the base's reversal stub, NOT CLEAN, the count stays at 0
+
+Everything above this line is the record of passes 1-12 and the owner's rulings. It is left as written. This part closes pass 12, which §P12-0 left open. No "D2 · CONVERGED" part follows it.
+
+| field | value |
+|---|---|
+| seat | D2 pass-12 agglomeration (completion). It rules pass 12 by §P12-7.3 item 2 (§P11-7.5's test): B′'s rows of 38 on the ruled digest, whether the pass is clean, and the convergence count. It places every class a pass-12 seat recorded, updates §P12-5's landing content with W-0.8 §11, and writes the pass-13 plan |
+| model | `claude-opus-5-5`, asserted from own system identity |
+| HEAD | `7da9a0285`. `git diff --name-only 85c9adbf3 HEAD -- src demo tests package.json docs/design` is empty (85c9adbf3 is the critic's worktree base), so every reading describes today's tree. This seat re-hashed `pass-12/D2-Bp-p12.patch` (**`5318a3dcefdb9ca86337b780ff35784a82291f9108953098b950905e8696cff7`**), `pass-11/D2-Bp-p11.patch` (`b5d5c9db…`), `pass-6/floor-v5.patch` (`cba6bdc2…`), `pass-4/floor-v3.patch` (`637d1625…`) and `pass-10/D2-Bp-proto.patch` (`09aa6b3b…`), all equal. It checked `harness/` against `pass-8/H8-records/harness.sha256` at its start and its end: 42 OK, list hash `9d12810b…` |
+| inputs | §P12-0 to §P12-8 in full; §P11-0 to §P11-8 in full (rules (a), (b), (c), the arm set and the load rules at §P11-7); `pass-12/D2-Bp-critique-complete.md` in full; everything else under `pass-12/` as §P12 cites it (`D2-Bp-build.md`, `D2-Bp-critique.md`); `audit/INBOUND.md` to its last row (O-133); `FORMATION-PROGRESS.md` to its last line (the post-reboot launch order); `waves/W-0.8.md` §11 in full. Read directly for single facts: the critic's `digest/counts-p12critc-ruled.md`, `digest/rows-p12critc-ruled.md`, `sum/absum.txt` and `harness-check-end.txt` |
+| instruments | none. This seat measures nothing; every number cites the report that measured it (P-3) |
+| fences | no source edit, no git write; this part is the only write. Nothing under `~/.claude` was read. `ps` shows no D2 process left (the chain 54942 and `followup.sh` 49563 have exited) |
+| engines | every WebKit number is **Playwright WebKit**, unshimmed. Real Safari is **UNMEASURED (owner's safaridriver checkbox)**: O-103, not granted |
+| owner rulings | **O-103**; O-87 and O-88 bind; **O-118** as it stands. **The owner's 2026-11-03 post-reboot order** ("re-deploy all workflows … no deferring") meets §P12-7.1's precondition: the guard re-armed its zone flag at about 30k (21:30:49) as a warning, and the owner made the guard's count gates the stop. INBOUND **O-123** and **O-124** are placed at W-0.8 §11, outside the 38, and open no row. **O-129** r9 (seat tooltips) is placed at D2 pass 13 as a seat-grammar ruling and opens no pass-12 row. O-130 to O-133 touch none of the 38 |
+
+Short citations: `CC` is `pass-12/D2-Bp-critique-complete.md`; `BU` and `C12` as §P12.
+
+**The completion critic ran to its end.** It is one seat in two entries. The first entry (2026-11-03 21:34) built the arms, ran the owed re-runs, the battery, `fmlow`, the digest and the first read queues, and died at a login expiry about 03:00 with no report. Its chain ran on under `guarded`, orphaned, to `CHAIN-DONE` at 10:42:38. The second entry (05:28) waited on that PID, ran no second battery, ran two attribution A/Bs (F1, F2) after the chain exited, and wrote the report (CC header, §1). Every step of §P12-7.2 has a reading. So pass 12 is scored here, from CC's ruled digest.
+
+---
+
+## P12c-0 · In brief
+
+| build | status | 38 rows (ruled, of record) | first 36 | first 24 | default digest | open rows | reason in one line |
+|---|---|---:|---:|---:|---|---|---|
+| D2-B′ `bp12` (`5318a3dc…`) | **ADVANCE, NOT CLEAN** | **35/38 (92 %)** | **33/36** | **22/24** | 34/38, 32/36, 21/24 (P1 OWNER-BLOCKED; P3, R6, B2 FAIL) | **P3, R6, B2** | one cell: C·l W3 `reversal` [stub], "n" 30 % cut by a 0.24 px edge at 886.9 px, +116.7 ms, in the main run and re-run 1. **Rule (b) fires** |
+| D2-B′ `bp10` (`b5d5c9db…`) | reference arm | 37/38 as §P11-2 | 35/36 | 23/24 | 36/38 | P3 | unchanged; no pass-12 battery of record |
+| D2-G | BANKED (§P5-4); its seats did not run | — | — | — | — | — | no re-trigger recorded |
+
+**Pass 12 is NOT CLEAN. Clean-pass count: 0 of 2.** Pass 13 is a build pass with the list held fixed (§P12c-7). **The earliest D2 convergence moves to pass 14's close.**
+
+Four findings.
+1. **bp12's two cures hold in paint at the critic.** The window: rule (c) reads 0 late in 32, and every bp12 `content-remove` gap is 0 ms, against bp10's second window at 31-34 ms in 8 of 16 WebKit reads. On `lanes`, bp12t reads 0 late in 72 against bp10t's 2, and no window on either build closes while a lane paints (CC §0, §3.1). B2: FM A/B 0 holes in 32, the strips clean by eye in all four columns, and the display-frame probe's least ink 0.422 (CC §3.2). P3's pass-11 red, the window, is gone.
+2. **The row that opened is the reversal stub, and it is the base's class.** It is C11 §3.2's shared reversal stub, which pass 11 placed as "rule (b) per column", drawn twice at one slot of one battery. F1, an A/B the critic added at loads 4.91-6.46, reads it bp10 3 of 16 and bp12 0 of 16. Over every bp12 read of the cell (the builder's battery included), it reads 3 in 27. §P9-0 finding 2 governs: an attribution to the base does not close a row (CC §2).
+3. **The retarget splice holds where it was cured, and a new phase finds it on the base.** Rule (a) reads 0 of 96 on bp12. At "the swap reversed at 40 ms, then retargeted 16-64 ms later" (`swrev`, W·d), both builds splice `s7|s8` about one read in ten: F2 reads bp10 3 of 32 and bp12 2 of 32 (CC §3.3). That is a probe reading at a phase no rule reads, and it turns no row.
+4. **R2's margin read its thinnest, once.** W·l `swap-long`, seat 2, read 0.494 against the 0.5 bound (margin 0.006) at 12.03, on one `r2x` read. The other ten reads of that cell sit at 0.349-0.458. Seat 8 `warm-expand` does not separate the builds, so the builder's 0.024 there is not a seat-8 tail (CC §3.4). R2 is PASS ×4.
+
+---
+
+## P12c-1 · How the completion ran
+
+| step | record | what it established |
+|---|---|---|
+| first entry: builds (2026-11-03 21:35 → 22:26) | CC §1; `build-*.log`, `apply.log` | `fv3`, `fv5`, `bp10`, `bp12` and their instrumented arms, each exit 0. Staged with `git apply` only, with no commit (C12's incident not repeated). bp12's scene chunk 21,483 B, the builder's size |
+| PR, F7 (22:26 → 22:32) | `PR/`, `F7/` | PR 6/6 at 11.34, F7 13/13 at 13.78 |
+| the owed re-runs (22:33 → 22:38) | `rerun/` | bp12 W·l `retarget·40`, `retarget·120`, `content-remove`: 3/3 PASS ×2 at 10.73 and 10.92. **The builder's [trajectory] and [stub] pair are NOT-REPRODUCED** |
+| battery, four columns (22:38 → 23:46) | `battery/`, `digest/` | 671 cells, highest cell load 15.48. No slot above 31, so none re-read. The W·l reading replaces the builder's 33.37 slot, which stays in BU's records |
+| `fmlow` W·l, W·d (admitted 01:10:58 and 02:35:00) | `fm-reads.txt`, `filmstrips/` | 84-min lock waits, each waited out |
+| the first entry's death (about 03:00, login expiry) | CC header; `FORMATION-PROGRESS.md` | the chain ran on under `guarded`; partial records banked `5bcef470d` |
+| read queues and attacks (02:35 → 10:33) | `q/`, `ab/`, `cr/`, `fmab/`, `si/`, `r2/`, `r2x/`, `lanes/`, `edge/`, `swrev/`, `rtrev/`, `revst/`, `heir/`, `fs/`, `frz/`, `cases/` | every A/B read started at ≤ 11, attacks at ≤ 15, `r2x` at 10-15. Exits 75 were each queue's own budget or gate, each requeued |
+| cost (10:33 → 10:42) | `cost/`, `sum/costtab.txt` | Chromium, `--cpu-cores 0`, each start ≤ 15 |
+| second entry: F1 (10:42 → 10:52), F2 (admitted 11:45:19 → 12:12:29) | `followup/` | F1 the `reversal` A/B in Chromium; F2 the `swrev` A/B in W·d. F2 was admitted before the guard's 8.01M refusal (12:0x, `FORMATION-PROGRESS.md`) and ran to its end. Its readings attribute a class and turn no row |
+
+The machine law held. There was one heavy run at a time, and every browser run went through the guard, never `--light`. Playwright WebKit ran under `--exclusive webkit`, queued and never cancelled. No admitted slot was ended by stopping its parent, and no lock wait passed 90 min (the longest were 84, 84 and 80). No process remains. The worktree entry is removed. Its directory (`.claude/worktrees/bl/D2/p12c/Bp-crit/`, about 1.3 GB, nothing of record) was refused deletion by the permission check, like the builder's (CC §7).
+
+---
+
+## P12c-2 · Registry: D2-B′ `bp12`, ADVANCE, NOT CLEAN, 35/38
+
+**The reading of record is the completion critic's ruled digest, with B2 read on the strips: 35/38, 33/36, 22/24 (default 34/38, 32/36, 21/24).** 671 cells: 0 NOT-REPRODUCED, 12 UNMEASURED (W8 `consumer·*`, as every pass), 12 RECORD, and no FAIL outside CASES and the one W3 cell (`digest/counts-p12critc-ruled.md`, `rows-p12critc-ruled.md`; read directly by this seat).
+
+| row | ruled | default | note |
+|---|---|---|---|
+| **P3** | **FAIL** | **FAIL** | C·l 41/42: W3 `reversal` [stub] (default also [window], Q-4 (a)); C·d, W·l, W·d 42/42 |
+| **R6** | **FAIL** | **FAIL** | C·l 39/40: the same cell; C·d 40/40, W·l and W·d 46/46; FM stub 0 ×4 |
+| **B2** | **FAIL** | **FAIL** | C·l 39/40: the same cell, through H6-1's W3 stub. FM and the strips are clean in all four columns (CC §3.2) |
+| P1 | PASS | OWNER-BLOCKED (Q-12) | 42/42 ×4 |
+| P2, P4, P5; F1-F7; N1-N5 | PASS | PASS | F6 0 crashes; F7 13/13 at 13.78; N5 with PR |
+| R1 | PASS | PASS | no [terminal] borderline this battery |
+| R2 | PASS ×4 | PASS | 33/33 ×4; margins below |
+| R3-R5, R7, R8 | PASS | PASS | R8's UM are ST's `stall·nb·*` markers |
+| B1, B3 | PASS | PASS | PR 5/5 |
+| C1-C9 | PASS | PASS | ×4 |
+| L1 | PASS | PASS | 6/6 per engine against `fv3` |
+
+**P3, R6, B2: one cell, and how it is ruled.**
+- **The rows are open.** C·l W3 `reversal` reads one [stub] frame in the battery's main run (11.81) and in re-run 1 (9.79). Each is the same glyph, "n" of a tab button, painted 30 % at opacity 1, behind an edge whose alpha runs 10→90 % in 0.24 px, at 886.9 px and +116.7 ms. Re-run 2 (10.47) reads 0. Under H6-7, re-run 1 reproduces the check, so the cell is FAIL on both digests. Its `stub` check feeds P3, R6 and B2 (CC §0, §2). The agglomeration turns no row against the digest.
+- **The attribution closes nothing.** F1 reads bp10 3 of 16 and bp12 0 of 16. Pass 11 read the class on bp10 2 of 96 and bp8 5 of 96 (C11 §3.2). Earlier records of this cell on bp10 and bp8 read 0 in 22. So the class is the base's, at a rate one battery draws now and then. This is the pattern §P11-4 named: a near-bound class of the base opens a row when a battery happens to sample it. §P9-0 finding 2 and the pass-9 and pass-11 precedents hold: a shared class is cured by a build.
+- **The critic's lead, for pass 13's builder, not a cause.** A 0.24 px ramp is not a seam ramp (those rise over one seam, `1ch`). So the edge is the plate's own edge or a clip edge that met no ramp on the retarget frame of the reversal. Nobody has traced which. Its sibling is §P11-8's plate-edge class: the opening plate's edge cuts "r" at 794 px on W·l `swap-long` and `retarget·*`, and BU §4.1 read that signature again on the R2 A/B.
+- **B2 is read on the strips and is clean there.** The row is FAIL only through the W3 stub law it shares with R6. The gift frame's cure holds (§P12c-0 finding 1). The two `fmlow` r2 `warm-collapse` slot-5 frames (0.08, 0.071) are the far seat cut by the closing plate's own edge. That is the class pass 11 and BU placed, NR under H8-1 in each column.
+
+**The §P11-7.1 rules:**
+
+| rule | reading of record (CC) | ruled here |
+|---|---|---|
+| (a) two `splice` reads at one `retarget` cell, one column, one A/B | bp12 0 of 96 (C 0/48, W 0/48), sliver 0 of 96; bp10 0 of 96 (`sum/absum.txt`, read directly) | **does not fire** |
+| (b) two `stub` reads at one slot, one column, one battery | C·l W3 `reversal`, main and re-run 1, "n" at 886.9 px, +116.7 ms | **fires** |
+| (c) any bp12 `content-remove` A/B read whose flag closes over 2F + 0.5 after the landing | 0 late in 32; every bp12 gap 0 ms in all four columns (`sum/crsum.txt`) | **does not fire** |
+
+The builder's W·l `retarget·40` / `·120` stub pair (BU §4.1) does not fire (b). It came from one W3 run of an A/B, not a battery, it is NOT-REPRODUCED on two re-runs, and CC's W·l battery reads 0 stub at those slots (CC §1).
+
+**Rulings this seat makes on the readings.** None turns a row.
+- **The window cure is a law, read in paint.** No bp12 window closes late or early in 72 `lanes` reads and 32 `content-remove` A/B reads. Every non-zero bp12t gap is the extent's one in-band step, a frame that paints motion inside the window (CC §3.1). W-8 is met in both directions. Pass 13 holds it under rule (c).
+- **The `swrev` splice is a class of the base, at a phase no rule reads.** Rule (a) is the `retarget·N` A/B's, and it reads 0. The `swrev` reads are a critic's probe, and a critic's probe turns no row (§P12-7.2). But a visible splice on the swap's reverse-then-retarget is a defect of motion under D-1, whatever instrument shows it. So it is placed for pass 13's build, with an A/B reading beside the rows (§P12c-7.3 item 2). It becomes no rule, because critics may not add rows and a rule on a cell no row reads would be one.
+- **R2 at 0.006.** One read on a seat neither earlier seat named; the row is PASS ×4. §P12-7.3 item 2 makes the margin no row. It is placed for pass 13's builder to hold, since a cure that moves an edge on the swap or the reversal could spend it (§P12c-7.3 item 3).
+- **The header and the facing-pair comment say what the code does** (CC §3.6, agreeing with C12 §2). The centre law's boundary stays the landing's grep (§P12c-5).
+- **CASES `case·rotated`** reads bp12 and bp10 equal: W·l 4 of 6 each, C·l [jerk] 1 of 3 each. §P12-2's ruling (the landing step on the closing frame meets W-8 as written) stands.
+- **The builder's [window]-only report of its C·l `reversal` read.** Its main log also carried this stub (CC §1). Its digest read the cell NOT-REPRODUCED, so nothing of record changes, but a builder's report must name every red check of a red cell (§P12c-7.3 item 6).
+
+**Readings beside the rows** (CC; of record as readings, none a row):
+
+| reading | C·l | C·d | W·l | W·d | note |
+|---|---:|---:|---:|---:|---|
+| R2 margin, critic battery (bound 0.5) | 0.128 (`swap-long`, seat 1) | 0.125 (`first-expand`, seat 8) | 0.038 (`swap-short`, seat 3) | 0.040 (`warm-collapse`, seat 2) | of record |
+| R2 margin, `r2x` at 10-15, bp12 / bp10 worst of 3 | — | — | **0.006** (`swap-long`, seat 2, 12.03) / 0.044 | 0.035 / 0.017 | the thinnest B′ read, one read |
+| `reversal` stub (F1 A/B), bp12 / bp10 | 0/8 / 1/8 | 0/8 / 2/8 | — | — | WebKit 0 on either build |
+| `swrev` splice `s7\|s8`, bp12 / bp10 | 0 / 0 | 0 / 0 | 0 / 0 | **2/40 + 2/32 (F2) / 3/32 (F2)** | frame 4, 7.2-8.1 px |
+| `content-remove` gaps, bp12 / bp10 | 0 ×8 / 0 ×8 | 0 ×8 / 8.4, 0 ×7 | 0 ×8 / 31-34 in 5 | 0 ×8 / 15-34 in 5 | rule (c)'s reading |
+| FM holes (A/B), bp12 / bp10 | — | — | 0/16 / 0/16 | 0/16 / 0/16 | |
+| `vmorph` collapse frozen frame (48 reads) | `facingCut` 0 | 0 | 0 | 0 | no ink cut at the leaving pair |
+| display-frame, runs with an empty frame | 0/18 ×2 | 0/18 ×2 | 0/18 ×2 | 0/18 ×2 | bp12 least ink 0.422 |
+
+---
+
+## P12c-3 · The cost row (not a row; for the record under Q-15 (a))
+
+| measure | bp12 `CC` | bp10 `CC` | fv5 `CC` | bp12 `BU` | bp10 `BU` | fv5 `BU` |
+|---|---:|---:|---:|---:|---:|---:|
+| frames over 25 ms, sum over the four 4× rows (3 runs each) | 6 | 4 | 0 | 14 | 16 | 2 |
+| main-thread ms per frame, 4×40 lead | 1.658-1.793 | 1.536-1.606 | 0.103-0.264 | — | — | — |
+
+**Reading.** Read at starts of 7.5-11.84, bp12 and bp10 do not separate. fv5 is back to 0, so BU's 2 was load. Floor v5's lead rows run at about a tenth of B′'s main-thread time. That is the lead Q-15 (a) prices.
+
+---
+
+## P12c-4 · The §P11-7.5 rule, applied, and the convergence history
+
+| clause | holds? | evidence |
+|---|---|---|
+| 0 open rows of 38 on the ruled digest | **no** | 35/38: P3, R6, B2 FAIL through C·l W3 `reversal` [stub] (§P12c-2) |
+| B2 read on the strips | the strips are clean ×4 | the row is FAIL through the W3 stub only |
+| §7.1 (a) | does not fire | bp12 0 of 96 |
+| §7.1 (b) | **fires** | two stub reads at one slot in C·l of one battery |
+| §7.1 (c) | does not fire | bp12 0 late in 32, every gap 0 |
+| the reading is the critic's digest; no probe used to turn a row | yes | CC §5; this seat turned none either way |
+| G re-trigger (the WebKit-clock condition) | no | no pass-12 seat recorded it |
+| two consecutive clean passes | **0 of 2** | pass 12 is not clean |
+
+**The convergence history (B′, the route of record from pass 3).** §P11-4's table, with pass 12's rows replacing §P12-4's placeholder:
+
+| pass | list | score of record | first 24 | open | what closed or opened |
+|---|---|---:|---:|---|---|
+| … | | | | | passes 3-11 as §P11-4 |
+| `BU`, pass 12 | 38 rows | not of record (the builder's digest: no row FAIL) | — | — | the builder's battery |
+| **12** | 38 rows | **35/38 (92 %); default 34/38** | **22/24** | **P3, R6, B2** | **the window's second episode and the B2 gift frame cured, read in paint. The base's C·l reversal stub drawn twice in one slot: rule (b). Count 0** |
+
+The list has been fixed at 38 rows since pass 5. **Clean passes: 0 of 2. Earliest D2 convergence: pass 14's close** (pass 13 a clean build pass, pass 14 its confirmation).
+
+What passes 8-12 show, read together. Every pass since 8 that did not open a row of its own cure opened a near-bound class of the base, in Playwright WebKit or Chromium, at a rate one battery samples only now and then: the splice (pass 9), the window (pass 11), and now the reversal stub (pass 12). Each was placed beforehand as a near-bound or shared class. The cures for the classes the builds aimed at held each time: the splice since pass 10, and the window and the gift frame in pass 12. The lesson for pass 13 is the one §P11-4 drew, carried one step further. **The builder cures every shared class that is placed with a red at a battery cell**, not only the one that opened: the reversal stub, and its plate-edge sibling at 794 px. It reads each at the rate the A/B can see, and the pass carries a rule on that A/B (rule (d)).
+
+---
+
+## P12c-5 · O-88: the facility status, and 10.2.0's critical path
+
+**C1-C9 hold on B′ in both engines and both themes for the seventh pass running** (CC §5). O-88's facility is complete on its carrier. The carrier is three rows short on the whole list, and all three come from one single-frame stub of the base on the reversal, not from the facility. D3 and D4 have converged. O-103's go applies once D2 converges and the landing is green. D2 alone still binds the date, and it moves by one pass, to pass 14's close.
+
+1. **Pass 13, a build pass** (§P12c-7), then **pass 14, its confirmation.** If both are clean, D2 is CONVERGED at pass 14's close.
+2. **The landing (W-0.8)**, unchanged in order. Its content as of today, with each change from §P12-5 step 2 marked:
+   - **The 10.1.x merge (changed).** **10.1.4 is published** (tag `v10.1.4` on `fd494d7ab`, npm with provenance, run 41814678449). **10.1.5 is in its loop** on `release/10.1.5`, cut from v10.1.4. It carries O-129 r1, r2, r5, r6 and r7, O-132 OD-16 and OD-17, and O-133. Its run ended not ready at the 8.01M zone stop, and the resume is driver 10.1.5b (`FORMATION-PROGRESS.md`). `release/10.1.1` to `10.1.5` stay unmerged to master, held for W-0.8. Then floor v5 + B′ is rebased on them, with B′ being **pass 13's patch once converged** (pass 12's `5318a3dc…` is not clean). B′ deletes `useDockMorph.ts` and `dockMorphMeasure.ts`, so each cure is carried as its law on the landed scene, never as a ported file. **New with 10.1.5:** its run-reserve cures (O-124 OD-13 and O-132 OD-17's ring room, and r1's reach that does not count a hovered seat's scale) are laws on the 10.1.x run. Each is carried onto the landed scene with its 10.1.5 witness as the gate.
+   - **Laws on the landed scene, each with its gate,** as §P12-5: O-101; O-110; 10.1.3's further cures; O-102d's seat marker; 10.1.1's and 10.1.2's cures; O-104's Z-Dock-16 and Z-LG-7; the centre law's boundary grep (after the merge, no box framing dock units carries a scale or rotate of its own, or the boundary is read in paint before the scene is taken). The 10.1.5 reserve, which is measured by a ResizeObserver per axis, is a box beside the units and frames none. The grep confirms that on the merged tree.
+   - **W-0.8 §11 (new in this list), each row's law and gate as §11 states it** (P-3: §11 is the source of record, and these lines only place them):
+     - **O-123 OD-1**: the cap timeline runs only on the run that paints, so a collapsed plate is a circle (radius half the extent on both axes, after settle, pointer off). 10.1.5 ships O-129 r2's interim (the cap animation off under `.collapsed`), and the §11 gate stays on the landing;
+     - **O-123 OD-5**: a seat's own engagement scale never counts as reach (run `scrollWidth` equals `clientWidth` with the pointer on the trailing seat). It is the cap's form of the scene's painted-centre law (pass 12's `fine()`). On the landed tree the two must be one law, stated once (P-3): the scene's reading and the run's reach both take a box's own centred scale as no motion and no reach;
+     - **O-124 OD-5b**: the O-123 cap law in every posture (expanded at rest, input mode, collapsed, each layer), both caps, both engines;
+     - **O-124 OD-13**: a seat's ring is never clipped by the run, so the ring reserve equals the largest ring any seat paints, on every axis. 10.1.5's per-axis largest-seat reserve is the interim law, and its fix-2 WebKit witness is still owed;
+     - **O-124 OD-14**: dock transitions animate no layout-triggering property and drop no frame at 60 Hz. **This is D2's object.** B′'s scene is the cure, D2's motion rows are its gates in the passes, and §11's frame-timing trace on value.js's served postures is its landing gate. O-130's OD-14 trace is banked as its witness: GPU frame rate is not the defect, and the roughness is O-129 r3/r4's geometry, which B′ deletes;
+     - O-122 G-17 (no forced layout in the mount task), O-129 r3 (the face-swap snap), r4 (the expand hitch) and r8 (the press grammar), O-131 G-20 (the rim track) and G-22 (the stacked Metric group), and O-132 OD-18 (every liquid path in WebKit as in Chromium, r3/r4's frame gates green in Playwright WebKit, plus the WebKit census of the liquid paths): §11 as written. r3, r4 and OD-18 read B′'s scene, so the passes' W3 and FM witnesses are their nearest pre-landing reading. They open none of the 38.
+   - **O-118's rulings that land here; O-119 (d) (d1), (d2), (d4); O-120 (none); O-121's gate** (`@mkbabb/keyframes.js` exact `6.1.0` or later, `git grep -n 'spring.value === spring.target' src/` empty; the U lane retires `9d93e6097` in U-B9): unchanged from §P12-5.
+   - **O-113's dock rows and the atlas U/B7d addendum**: unchanged. The addendum is still untracked (`git status`), and registering it is formation's.
+   - **W-0.8 §10's D5-held cells**: unchanged, outside the 38, opening no row. F-17's "once D2 converges" moves with this count, to pass 14's close at the earliest.
+   - **The far-side consumer read**: unchanged, unmeasured, no row.
+   - **The prose sweep, extended**: §P11-5's list, unchanged. p12's added lines add no id (C12 §2.3, CC §3.6).
+   - **F7 on the landed tree**: the boot graph's margin is **21 B** on bp12 (503,787 against 503,808, read again by CC §4). The ceiling is not raised. Every byte the landing adds is held against it: the 10.1.1-10.1.5 merge, O-101, O-110, O-118 (1), the O-121 repin and the §11 laws. So **the ceiling's re-read with the owner is the landing's first step, before any merge bytes**, as §P12-5 set. Pass 13's cure is held to the same 21 B (§P12c-7.3 item 3).
+3. **What moves with this count,** for the driver:
+   - D4's W-J.1;
+   - D5's held cells. D5's pass-13 completion is running (c3), and its own register puts convergence at the end of its pass 14 at the earliest, after D2's held cells land;
+   - the W-0.12 and W-I.1 waves on W-0.8's carrier. O-129 r9 (seat tooltips) is ruled by D2's pass-13 agglomeration before W-I.1 lands (§P12c-7.5);
+   - the peers told "10.2.0 after D2 converges + W-0.8" (O-113, the atlas lane under O-118 and O-121, Gregg's 10.2.0 relay under O-119, O-120, O-122 and O-131, value.js under O-123, O-124, O-129, O-130 and O-132). The D2 date moves one pass for each of them.
+
+---
+
+## P12c-6 · What the owner must rule
+
+**No D2 question.** Rule (b) fired on its wording, and no seat asks to move a bound. The `swrev` splice and the R2 margin are placed for pass 13's build.
+
+**What waits on the owner** is the machine again. The guard refused heavy and browser runs from 8.01M at 12:0x on 2026-11-04 (`FORMATION-PROGRESS.md`: the zone stop and "reboot needed"). Pass 13's builder cannot run a battery until the guard admits heavy runs. The pass-12 completion ended its last run (F2) before that refusal took effect on it.
+
+**One message for the owner** (none gates):
+- **For your information.** Pass 12's two cures hold at the fresh critic, read in paint: the "morphing" flag now closes with the landing in Playwright WebKit (0 late, against the previous build's second window in half its reads), and the warm-expand slot no longer paints empty. The pass is still not clean. A one-frame cut through the letter "n" of a tab button, at the reversal's retarget frame in Chromium light, came up twice in one battery slot, and that is rule (b). The previous build shows the same cut more often (3 of 16 against 0 of 16 in an A/B), so it is an old near-bound defect that this battery happened to sample, as in passes 9 and 11. Pass 13 builds against it and against its sibling at 794 px. D2's earliest convergence moves from pass 13 to pass 14.
+- **Chore.** `.claude/worktrees/bl/D2/p12c/Bp-crit/` (about 1.3 GB) joins `p12/Bp-build/` (about 1.4 GB) and the empty `p11/` parent. None holds anything of record. Each removal was refused by the permission check.
+
+---
+
+## P12c-7 · The pass-13 plan: a build pass, the list fixed, the count at 0
+
+Pass 12 opened P3, R6 and B2, and rule (b) fired. So pass 13 is a build pass on the §P11-7 model: one builder, then a fresh critic, then the agglomeration. **The list is held fixed at 38. The count is 0.** If pass 13 is clean, it is 1 of 2, and pass 14 confirms it on the §P10-7 model.
+
+### 7.1 · Harness and rules
+
+**H8 as landed, unchanged** (`9d12810b…`). Every seat checks the per-file list against `pass-8/H8-records/harness.sha256` at its start and at its end. No H9. No bound is re-read inside the pass: H6-1's stub law (10-90 % in 2 px) and Q-4 (c)'s window are fixed, and no seat moves either to turn a cell.
+
+**Rules (a), (b) and (c) carry**, with bp13 in place of bp12: (a) two `splice` reads at one `retarget` cell in one column of one A/B; (b) two `stub` reads at one slot in one column of one battery; (c) any bp13 `content-remove` A/B read whose flag closes more than 2F + 0.5 after the landing. **One rule is added to the A/B, not to the list:** (d) on the `reversal` A/B of §7.3 item 5, any bp13 `stub` read at the W3 `reversal` cell makes pass 13 not clean, whatever the battery reads. bp10 reads the class 3 of 16, and bp12 3 of 27 over every read. Rule (d) is rule (c)'s form, on the cell that opened, and it mints no row.
+
+### 7.2 · Floor and arms
+
+**Floor v5** (`cba6bdc2…`) stays the base. No floor v6, and no merge into the base during the pass. The 10.1.x merge (10.1.1-10.1.5) is the landing's. **Arms:** `bp13` (HEAD + floor v5 + `pass-13/D2-Bp-p13.patch`), `bp12` (HEAD + floor v5 + `pass-12/D2-Bp-p12.patch`, `5318a3dc…`) as the reference arm, `fv5`, and `fv3` for L1. bp10 is not an arm. bp12 has bp10's classes at equal or lower rates (CC §2, §3.3), so it is the stricter control (P-1). Every seat stages with `git apply` only, with no commit.
+
+### 7.3 · Route obligations: D2-B′ (the builder)
+
+A seat that authored nothing in D2's passes 11 and 12, and was no pass-12 critic. It builds `bp13` on HEAD + floor v5 + `pass-12/D2-Bp-p12.patch` (`5318a3dc…`), and its patch is `pass-13/D2-Bp-p13.patch` over HEAD + floor v5.
+
+1. **Read the cause of the reversal stub before writing a line.** Use the pass-12 builder's trace (`trace/`, the `instrument.py` lineage), extended to edges. On C·l and C·d W3 `reversal`, bp12 against bp10 alternating (bp10 draws it 3 of 16, so it is the trace's carrier), per frame from the reversal's retarget to +150 ms, record:
+   - the rAF timestamp;
+   - every box whose edge lies across a glyph's ink inside the plate: the plate, the run clip, each unit's clip and mask, and each seam ramp's extent;
+   - which edge sits at 886.9 px on the stub frame, and why that frame puts it there without a ramp.
+
+   Then read the same trace on its sibling: the opening plate's edge across "r" at 794 px (W·l `swap-long` and `retarget·*`, §P11-8, BU §4.1). The trace must say whether the two are one class (a hard plate or clip edge crossing a glyph on one frame) or two.
+2. **The `swrev` splice.** W·d, `swrev.mjs --at 40 --then 0,16,32,64 --runs 2`, bp12 against bp10. Read the scene's per-frame state for seats 7 and 8 on frame 4: each unit's place, the seam, and the retarget's write order. The question is whether pass 10's retarget law, which holds at `retarget·N`, is bypassed when a retarget lands on a swap already reversed. If it is the same law at a new phase, the cure extends that law, and there is no second mechanism. The reading goes beside the rows, with no rule, because it is a probe cell no row reads (§P12c-2).
+3. **The cure is a law, with no tuned constant.** On every frame, a glyph is whole or cut by a seam ramp. No hard edge crosses glyph ink inside the plate: the header's handoff law, applied to the plate's and the clips' own edges. A cure that moves an edge earlier or later only to miss the glyph at this cell is a mask under E-2, not a cure. `LAND_PX`, `SEAM_SLACK_PX`, `TOUCH_PX`, `REVEAL_GAIN`, `OFFSET_ROUNDING_PX`, H6-1's stub bounds and every other bound stay as they are, and the pass-5 `LEAD_DROP` lesson binds. **Hold what is cured and what is thin:**
+   - the window (rule (c): 0 late, gaps one in-band frame at most) and the centre law;
+   - the B2 gift frame (FM 0 holes, least ink at the place, the strips);
+   - the retarget splice (rule (a): 0 of 96);
+   - the heir (`o.enter`), and `vmorph` collapse on the frozen frame (`facingCut` 0);
+   - **R2's margin**, reported per column with the seat. Its thin seat is now W·l `swap-long` seat 2 (0.006, one read) beside seat 1 at `retarget·80`. A cure on the plate's or a clip's edge at the swap or the reversal must not spend it. Read it against bp12 in alternating slots at load 10-15;
+   - **the boot graph: 21 B of margin and no raise.** A cure that costs bytes finds them in the scene. If no byte-neutral cure exists, the builder stops and reports that, with the cure's cost. The ceiling is the owner's to re-read at the landing (§P12c-5), and no seat raises it.
+4. **Prose.** The header states any new edge law once (P-3). The facing-pair comment, "The model", "The handoff" and "The window" still say what the code does. No REGISTRY or harness id appears in an added line.
+5. **One battery under H8,** all four columns, on §P10-7.3 item 2's arm set and load rules: every witness, red cells re-run twice, FM's six B2 cells three runs each, `fmlow` per WebKit theme, F7, PR, and L1 against `fv3`. Each slot starts at load ≤ 20 and is read again at WebKit lock admission. A slot whose cells run above 31 is re-read, and both readings are kept. **The A/Bs, bp13 and bp12 alternating, each read started at load ≤ 11, and the seat waits for that rather than timing out into a higher start:**
+   - `retarget·40/80/120`, 8 rounds, both themes and engines (rules (a), (b));
+   - `content-remove`, 8 rounds, both themes and engines (rule (c); every gap reported);
+   - **`reversal`, 16 rounds per Chromium theme and 8 per WebKit theme (rule (d)); every stub read reported with its glyph, edge, offset and ramp width**;
+   - `swrev` at `--at 40 --then 0,16,32,64`, 8 rounds per WebKit theme (beside the rows);
+   - FM `warm-expand` and `first-expand` in WebKit; the display-frame probe; R2 per column with the seat; cost (bp13, bp12, fv5, each read started at ≤ 15); the boot graph.
+6. **The report names every red check of every red cell**, in the battery and in the A/Bs (BU §5 reported a cell [window] only while its log also read [stub], CC §1).
+
+### 7.4 · The fresh critic
+
+A seat that authored nothing in D2 and was no earlier D2 critic. It reads `pass-12/D2-Bp-critique-complete.md` and the builder's report in full. It re-hashes the patches, checks the harness at its start and end, and stages the arms with `git apply` only. It runs the builder's owed re-runs, then one battery of all four columns under H8 on the same arm set and load rules, then its own A/Bs of §7.3 item 5, rule (d)'s included. It attacks:
+- the reversal and its siblings: `reversal`, `rtrev`, `revst`, and every cell where an opening or closing plate edge meets a glyph (`swap-*`, `retarget·*`, `lead-*`), in Chromium at load ≤ 11 and in Playwright WebKit;
+- the `swrev` phase in all four columns, with F2's arguments;
+- the window, late and early, on `content-add`, `lead-*`, `swap-*`, `warm-*` and `content-remove` in Playwright WebKit at load ≤ 11;
+- the B2 strips by eye in all four columns, with the `warm-collapse` slot-5 frame;
+- R2 at load 10-15, above all W·l `swap-long` seat 2 and seat 1 at `retarget·80`, against bp12 in alternating slots;
+- the heir at `fs-to-one` and `fs-to-three`; `vmorph` collapse on the frozen frame, both engines;
+- the header and the comments against the code; the centre law's boundary, read statically only;
+- CASES `case·rotated` on bp13 and bp12, for the record only, outside the 38.
+
+**A critic may not add rows, and may not rule a row PASS against its own instrument.** If it opens one of the 38, or any of rules (a)-(d) fires, pass 13 is not clean, the count stays 0, and pass 14 is a build pass with the list held fixed.
+
+### 7.5 · Order
+
+1. The builder (§7.3), then the fresh critic (§7.4). There is one heavy run at a time per seat. Every browser run goes through the guard and is never `--light`, and Playwright WebKit runs under `--exclusive webkit`, queued and never cancelled. No admitted slot is ended by stopping its parent. A queued slot is withdrawn only before admission, and only when its build is superseded or the guard refuses. G's seats do not run.
+   - **The stop is the guard's refusal.** A seat checks `guarded`'s own messages before each slot, and nothing under `~/.claude` is read. Under the owner's 2026-11-03 order an armed flag that admits runs is a warning, not a stop, and readings it admits are of record. A refused run stops the seat's runs. The seat records what ran, and a completion seat finishes the rest. **A seat that measured nothing reports no score and no "0 defects"**: the 10.1.5 driver lesson (`FORMATION-PROGRESS.md`, 2026-11-04 12:1x) binds D2's drivers too.
+   - **A seat that dies mid-chain** (as at the login expiry) leaves its chain running under `guarded`. The resumed seat waits on the chain's PID and reads its finished records. It runs no second battery, as CC did.
+2. **The pass-13 agglomeration.** It rules by §P11-7.5 with rule (d) added. **Pass 13 is clean** at 0 open rows of 38 on the ruled digest, B2 read on the strips included, with none of (a)-(d) fired. Then the count is 1 of 2, and pass 14 is the confirmation on the §P10-7 model: a fresh re-measure seat proves its build byte-identical to `D2-Bp-p13.patch`'s, then a fresh battery, fresh A/Bs and a fresh critic; rules (a)-(d) carry, and there is no new build unless a row opens. The B2 hole, the R2 margin and the `swrev` splice are no rows. Seen on bp13 again, each is placed for the next build, and none makes a pass unclean by itself. **The agglomeration also rules O-129 r9 (seat tooltips) as a statement of D2's seat grammar for W-I.1**, from the relay letter that INBOUND cites, outside the 38 and with no build in the pass.
+3. After convergence, outside the passes: the landing (W-0.8, §P12c-5 step 2).
+
+### 7.6 · The checklist (fixed; critics may not add rows)
+
+The same 38 rows as §P11-7.6, read on H8 unchanged. Critics report the 38, the first 36 and the first 24 on the ruled digest (O-103), with the default digest beside it. **The convergence rule:** D2 is CONVERGED at two consecutive clean passes, at the earliest pass 13 (a build) and pass 14 (its confirmation). There is no winner rule while G is banked. If WebKit's clock condition re-triggers G, the §P4-7.5 rule returns, with G measured under H8 on the same arm set.
+
+---
+
+## P12c-8 · Next-pass defect classes, placed
+
+Every class a pass-12 seat recorded is placed, §P12-8's included where the completion read them again. None is left unassigned, and none was minted into the list.
+
+| class | recorded in | placed in |
+|---|---|---|
+| **C·l W3 `reversal` [stub]: "n" 30 % behind a 0.24 px edge at 886.9 px, +116.7 ms, main and re-run 1** | CC §0, §2 | **P3, R6, B2 FAIL; rule (b) fires.** The base's (F1 bp10 3/16, bp12 0/16; C11 §3.2). **Pass 13's build** (§P12c-7.3 items 1, 3) with rule (d) |
+| the opening plate's edge across "r" at 794 px (W·l `swap-long`, `retarget·*`) | §P11-8; BU §4.1 | read in pass 13's trace as the stub's sibling (§P12c-7.3 item 1); one law if one class |
+| **`swrev` W·d splice `s7\|s8`** (swap reversed at 40 ms, retargeted 16-64 ms later; 7.2-8.1 px, frame 4) | CC §3.3 | the base's (F2 bp10 3/32, bp12 2/32); not rule (a), no row; **pass 13's build** (§P12c-7.3 item 2), its A/B beside the rows |
+| `rtrev` C·l one stub (rev-c-rt+32 at 0.5, 8.81) | CC §3.3 | the reversal-stub family; read in pass 13's trace and attacks |
+| **R2 W·l 0.494 (`swap-long`, seat 2, 12.03): margin 0.006** | CC §3.4 | R2 PASS; the margin is no row; **held by pass 13's builder** and read against bp12 at 10-15 (§P12c-7.3 item 3) |
+| R2 seat 8 `warm-expand` (BU's 0.024) | BU §4.4; CC §3.4 | **closed as a reading**: it does not separate the builds (bp12 ≤ 0.458, bp10 ≤ 0.469); the heir's held middle does not spend it |
+| the window's second episode (`content-remove`, WebKit) | BU §1; CC §0, §3.1 | **cured, read in paint**: rule (c) 0/32, `lanes` 0/72 late, no window closed early; held under rule (c) |
+| the B2 gift frame | BU §3; CC §3.2 | **cured, read in paint**: FM 0/32, strips clean ×4, least ink ≥ 0.422; held |
+| W·l and W·d `fmlow` r2 `warm-collapse`, slot 5, one frame (0.08, 0.071) | CC §3.2; BU §3 | the far seat cut by the closing plate's own edge; NR under H8-1; **read with the plate-edge law in pass 13's trace** |
+| the builder's owed re-runs ([trajectory], the W·l stub pair) | BU §5, §4.1; CC §1 | **NOT-REPRODUCED** (3/3 PASS ×2); the pair does not fire (b); closed |
+| the builder's slot with cells to 33.37 | BU §5; CC §1 | **replaced** by CC's W·l battery (cells ≤ 13.65); both kept; closed |
+| the builder's C·l `reversal` reported [window] only while its log read [stub] too | CC §1 | nothing of record changes; **§P12c-7.3 item 6** (name every red check) |
+| bp10 W·d `retarget·120` r2 [leaving] (9.94) | CC §4 | the control's; one read; recorded |
+| `vmorph` collapse on the frozen frame | CC §3.5 | `facingCut` 0 on 48; held |
+| the heir; `fs-to-three`'s one flagged frame | CC §3.5 | `o.enter` holds; the probe's `wide` limit, equal on both builds |
+| CASES `case·rotated` C·l [jerk], W·l [snap] | CC §3.5; BU §6 | outside the 38; bp12 = bp10; §P12-2's ruling stands |
+| the centre law's boundary (`sx`/`sy` are the root's ratio) | C12 §2.1; CC §3.6 | the landing's grep (§P12c-5); a static read for pass 13's critic |
+| cost bp12 6, bp10 4, fv5 0 | CC §4 | noise at the threshold; Q-15 (a) |
+| boot graph 21 B | BU §4.5; CC §4 | F7 holds, no raise; pass 13's cure held to it (§P12c-7.3 item 3); the ceiling re-read is the landing's first step |
+| the first entry's death at the login expiry; the chain orphaned under `guarded` | CC header, §1 | nothing of record lost; the resumed entry waited on the PID; **standing practice** (§P12c-7.5 item 1) |
+| the completion ran under an armed zone flag | CC header; `FORMATION-PROGRESS.md` | the owner's 2026-11-03 order meets §P12-7.1; **the stop is the guard's refusal** (§P12c-7.5 item 1) |
+| F2 admitted 11:45:19, before the guard's 8.01M refusal at 12:0x, and run to its end | CC §1; `FORMATION-PROGRESS.md` | admitted before the refusal, so of record as an attribution reading; it turns no row |
+| the 8.01M zone stop (2026-11-04 12:0x), a reboot needed | `FORMATION-PROGRESS.md` | the machine's; pass 13's builder starts when the guard admits heavy runs (§P12c-6) |
+| WebKit lock waits 84, 84, 80, 53, 30, 16 and 9 min | CC §1 | waited out, none over 90 |
+| CC's report and its later records are untracked or modified after `5bcef470d` (`git status`) | `git status` | committing them is the driver's; this seat makes no git write |
+| `.claude/worktrees/bl/D2/p12c/Bp-crit/` (about 1.3 GB), beside `p12/Bp-build/` and the empty `p11/` | CC §7; BU §7; §P11-6 | the owner's chore (§P12c-6) |
+| §P12-8's builder incidents 1-5 and the C12 commit | §P12-8 | as placed there; CC staged with `git apply` only and ended no admitted slot by its parent |
+| O-123 OD-1, OD-5 | INBOUND; W-0.8 §11 | **W-0.8 §11 (10.2.0)**; OD-5 stated once with the scene's centre law (§P12c-5); r1/r2 interims in 10.1.5; none of the 38 |
+| O-124 OD-5b, OD-13, OD-14 | INBOUND; W-0.8 §11 | **W-0.8 §11**; OD-14 is D2's object, gated in the passes by D2's motion rows and at the landing by §11's frame-timing trace; none of the 38 |
+| O-129 r1, r2, r5, r6, r7; r3, r4, r8; r9; r10 | INBOUND | 10.1.5; W-0.8 §11; **D2 pass 13's agglomeration rules r9 for W-I.1** (§P12c-7.5); W-I.1 |
+| O-130 (1), (2)-(4), the OD-14 trace | INBOUND | W-0.1; W-G.4; the witness of O-124 OD-14 (§P12c-5) |
+| O-131 G-19, G-20, G-21, G-22; O-132 OD-16, OD-17, OD-18; O-133 | INBOUND | as INBOUND places them (W-E.7; W-0.8 §11; W-I.3; 10.1.5; W-0.8 §11 with the WebKit census); none of the 38 |
+| 10.1.4 published; 10.1.5 in its loop, ended not ready at the zone stop | `FORMATION-PROGRESS.md` | the merge at W-0.8 now spans 10.1.1-10.1.5 (§P12c-5) |
+| D5 pass 13 completion running (c3) | `FORMATION-PROGRESS.md` | what moves with this count (§P12c-5 item 3) |
+| O-118, O-119, O-120, O-121, O-113's dock rows, the atlas U/B7d addendum, W-0.8 §10, 10.1.3's cures, O-101, O-110, O-102d, O-104 | §P12-8; INBOUND | W-0.8, as §P12-5 placed them, updated at §P12c-5 |
+| real Safari | every report | **UNMEASURED (owner's safaridriver checkbox)**; O-103: not granted |
