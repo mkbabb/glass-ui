@@ -1,0 +1,21 @@
+# P-E13-complete (D5 pass 13, wave c2) process notes, appended in order; the report cites them.
+03:00 · model claude-opus-5-5 (own system identity). HEAD ad509c105; `git diff --stat d94e413dd HEAD -- src tests demo` prints nothing;
+        release/10.1.1..10.1.4 not ancestors (exit 1 each). INBOUND (mtime 11-04 02:10, last rows O-129, O-130) and FORMATION-PROGRESS
+        (mtime 02:58, last line "D5 P13c c0+c1 DONE ... c2 E13 running") re-read: no ruling names a D5 CK cell after O-121.
+        P-E13.patch shasum ffa64fc4054bf5368000f29bd3930b47743f115f. Harness hash f2cc94e3fa868752c491c1238abfab4eb99f31f8 (H13-complete's).
+        Worktree .claude/worktrees/bl/D5/p13c/E13c/wt (detached HEAD), node_modules symlinked; the checkout has no tests-visual/node_modules.
+03:00-03:49 · builds (builds.sh) in ONE guarded call; admission waited 49 min at load 11-21. Trees: cand13 30f51077c3ec, cand12 61f7b80ac552,
+        cand11 6317ad295579, cand8 92f38f424df2; plants level c2695a446247, child 78b8012b6d4f, stale 4c718c3e2542, noown b53b2aece8d1,
+        typedom 2a88db2387df, reachzero cf805029101d (each equal to E13/logs/plants.txt); after: da39a3ee5e6b.
+03:2x · FENCE SLIP, stated: one `ls ~/.claude/guard/runs | wc -l` (a count of the directory's entries, no file content read). Not repeated.
+03:50 · THE PLAN, set before the start (all.sh: c-queue.sh then wk-queue.sh, one heavy run at a time):
+        Chromium: c1.txt (E13/c1.txt's 15 stages unchanged + rec, paint) in named guarded batches C-1, C-2, ... (no stage starts after 50 min
+        of a batch; c-run.sh). Estimate ~90-110 min, so C-1 and C-2 are planned.
+        WebKit: wk.txt (E13/wk-w1.txt's 18 stages unchanged + rec, paint), queued after the Chromium batches, `guarded --exclusive webkit
+        --timeout 90`. Estimate from H13c's WebKit timings (E-11 parts 13 min, E-10 hg13 5 min, each rr up to 15 min of load gate, the whole
+        E-10 ~12 min and E-11 ~15 min) is 85-120 min, more than one 90-minute acquisition. So the WebKit battery is planned as TWO NAMED
+        acquisitions: WK-1 runs wk.txt in order and starts no stage after 80 min; WK-2 is queued at once for every stage left (wk-queue.sh
+        loops WK-1..WK-6 only while stages remain). Each acquisition and each stage is recorded in logs/wk-queue.log.
+        Additions to E13's lists, by this seat, for REGISTRY §P13-8.2 c2's charter: rec (rec13.mjs: the per-record cost, §P13-7 item 10)
+        and paint (paint13.mjs: §P13-5's two predicted paints as stills with numbers), each in both engines, after the lists' last lines.
+04:0x · cand13-E-10 chromium --part hg13 read 89/1: FAIL 'scroll · clamp scroller · remove below · none' (21.85 px on the act's frame, load 13.5). Seen under load, so two re-reads of --hg13 scroll appended to c1.txt by atomic rename (--rr 1, --rr 2: an inert arg that names the re-read in the log hash, as H13c did).

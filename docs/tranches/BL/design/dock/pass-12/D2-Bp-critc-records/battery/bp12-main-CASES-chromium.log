@@ -1,0 +1,11 @@
+22:59  up  8:18, 2 users, load averages: 12.42 10.65 10.68
+PASS  CASES  Chromium  case·capped·seat-transition  cap 150 px, run overflowing true; grow and shrink a seat's own width transition: page errors 0, window error events 0; plate travel 0 px, largest one-frame step 0 px; flag at rest closed; chromium-case_capped_seat-transition.json  [load 12.42]
+PASS  CASES  Chromium  case·capped·morph  cap 300 px: expand (run overflowing true), add a seat, collapse: page errors 0, window error events 0; plate travel 198 px, largest one-frame step 13.84 px; flag at rest closed; chromium-case_capped_morph.json  [load 12.39]
+PASS  CASES  Chromium  case·consumer-margin  unlayered ".glass-dock { margin-inline: 20px; }" (computed margin-left at rest 20px): expand, collapse; plate end edge past the neighbour by at most -31.98 px (bound 0.5); neighbour travel 379.66 px, largest one-frame step 26.61 px against the plate edge's 27.08 px (+1); chromium-case_consumer-margin.json  [load 12.12]
+PASS  CASES  Chromium  case·consumer-margin·control  no consumer rule (computed margin-left at rest 8px): expand, collapse; plate end edge past the neighbour by at most -19.98 px (bound 0.5); neighbour travel 379.66 px, largest one-frame step 28.08 px against the plate edge's 28.08 px (+1); chromium-case_consumer-margin_control.json  [load 12.12]
+PASS  CASES  Chromium  case·rotated·control  host rotate(0deg): expand, collapse; seats' largest second difference 5.82 px/frame²; largest one-frame seat move after the window closed 0.26 px (bound 0.5); chromium-case_rotated_control.json  [load 12.12]
+PASS  CASES  Chromium  case·rotated  host rotate(2deg): expand, collapse; seats' largest second difference 6.26 px/frame² (control 5.82, bound +1); largest one-frame seat move after the window closed 0.27 px (bound 0.5); chromium-case_rotated.json  [load 11.71]
+PASS  CASES  bp12@85c9adbf  6/6 cells pass  (json: /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D2/p12c/Bp-crit/out/chromium/bp12/main/runs/CASES-bp12/CASES.json)
+exit 0
+22:59  up  8:18, 2 users, load averages: 11.71 10.59 10.65
+reds: none
