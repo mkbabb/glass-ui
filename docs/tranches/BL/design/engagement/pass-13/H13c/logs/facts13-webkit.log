@@ -1,0 +1,77 @@
+# H13c facts13 webkit · 2026-11-03 23:46:36 · load { 9.55 9.95 10.46 } · harness 0dbb165e0e86 · 
+# facts13 webkit · load 9.6/9.9/10.5 · playwright ok
+# browser 26.5
+A anchor page insert above: before st 540 top 100 · sync (forced layout) st 580 top 100 · mutation callback st 580 top 100 · resize step st 580 top 100 · next rAF st 580 top 100 · after the next paint st 580 top 100
+A anchor page remove above: before st 540 top 100 · sync (forced layout) st 500 top 100 · mutation callback st 500 top 100 · resize step st 500 top 100 · next rAF st 500 top 100 · after the next paint st 500 top 100
+A anchor scroller insert above: before st 540 top 180 · sync (forced layout) st 580 top 180 · mutation callback st 580 top 180 · resize step st 580 top 180 · next rAF st 580 top 180 · after the next paint st 580 top 180
+A anchor scroller remove above: before st 540 top 180 · sync (forced layout) st 500 top 180 · mutation callback st 500 top 180 · resize step st 500 top 180 · next rAF st 500 top 180 · after the next paint st 500 top 180
+A clamp page remove below: before st 280 top 360 · sync (forced layout) st 240 top 400 · mutation callback st 240 top 400 · resize step st 240 top 400 · next rAF st 240 top 400 · after the next paint st 240 top 400
+A clamp scroller remove below: before st 480 top 240 · sync (forced layout) st 440 top 280 · mutation callback st 440 top 280 · resize step st 440 top 280 · next rAF st 440 top 280 · after the next paint st 440 top 280
+B time "210ms": computed text "210ms" · CSS transition-duration 0.21s · Typed OM 210 · registered <time> "0s"
+B time "0.21s": computed text "0.21s" · CSS transition-duration 0.21s · Typed OM 210 · registered <time> "0s"
+B time "210MS": computed text "210MS" · CSS transition-duration 0.21s · Typed OM 210 · registered <time> "0s"
+B time "0.21S": computed text "0.21S" · CSS transition-duration 0.21s · Typed OM 210 · registered <time> "0s"
+B time "2.1e2ms": computed text "2.1e2ms" · CSS transition-duration 0.21s · Typed OM 210 · registered <time> "0s"
+B time "+0.21s": computed text "+0.21s" · CSS transition-duration 0.21s · Typed OM 210 · registered <time> "0s"
+B time "/* c */ 210ms": computed text "210ms" · CSS transition-duration 0.21s · Typed OM 210 · registered <time> "0s"
+B time "-0s": computed text "-0s" · CSS transition-duration 0s · Typed OM 0 · registered <time> "0s"
+B time "210": computed text "210" · CSS transition-duration 0s · Typed OM THROWS TypeError · registered <time> "0s"
+B time "210ms, 0.3s": computed text "210ms, 0.3s" · CSS transition-duration 0s · Typed OM THROWS SyntaxError · registered <time> "0s"
+B time "inherit": computed text "" · CSS transition-duration 0s · Typed OM THROWS SyntaxError · registered <time> "0s"
+B time "calc(0.1s + 110ms)": computed text "calc(0.1s + 110ms)" · CSS transition-duration 0.21s · Typed OM THROWS SyntaxError · registered <time> "0s"
+B time "calc(105ms * 2)": computed text "calc(105ms * 2)" · CSS transition-duration 0.21s · Typed OM THROWS SyntaxError · registered <time> "0s"
+B time "min(210ms, 1s)": computed text "min(210ms, 1s)" · CSS transition-duration 0.21s · Typed OM THROWS SyntaxError · registered <time> "0s"
+B time "max(210ms, 0.1s)": computed text "max(210ms, 0.1s)" · CSS transition-duration 0.21s · Typed OM THROWS SyntaxError · registered <time> "0s"
+B time "clamp(100ms, 210ms, 1s)": computed text "clamp(100ms, 210ms, 1s)" · CSS transition-duration 0.21s · Typed OM THROWS SyntaxError · registered <time> "0s"
+B time "calc(var(--h13-undefined, 210ms))": computed text "calc(210ms)" · CSS transition-duration 0.21s · Typed OM THROWS SyntaxError · registered <time> "0s"
+B time "var(--h13-undefined, 210ms)": computed text "210ms" · CSS transition-duration 0.21s · Typed OM 210 · registered <time> "0s"
+B time "calc(calc(105ms) * 2)": computed text "calc(calc(105ms) * 2)" · CSS transition-duration 0.21s · Typed OM THROWS SyntaxError · registered <time> "0s"
+B time "round(nearest, 214ms, 10ms)": computed text "round(nearest, 214ms, 10ms)" · CSS transition-duration 0.21s · Typed OM THROWS SyntaxError · registered <time> "0s"
+B time "abs(-210ms)": computed text "abs(-210ms)" · CSS transition-duration 0.21s · Typed OM THROWS SyntaxError · registered <time> "0s"
+B time "calc(1s * 0.21)": computed text "calc(1s * 0.21)" · CSS transition-duration 0.21s · Typed OM THROWS SyntaxError · registered <time> "0s"
+B time "calc(infinity * 1s)": computed text "calc(infinity * 1s)" · CSS transition-duration 179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180919299881250404026184124858368s · Typed OM THROWS SyntaxError · registered <time> "0s"
+B time "1e-3s": computed text "1e-3s" · CSS transition-duration 0.001s · Typed OM 1 · registered <time> "0s"
+B time "nonsense": computed text "nonsense" · CSS transition-duration 0s · Typed OM THROWS SyntaxError · registered <time> "0s"
+B number "1.06": computed text "1.06" · CSS scale 1.06 · Typed OM 1.06 · registered <number> "1.06"
+B number "calc(1 + 0.06)": computed text "calc(1 + 0.06)" · CSS scale 1.06 · Typed OM THROWS SyntaxError · registered <number> "1.06"
+B number "min(1.06, 2)": computed text "min(1.06, 2)" · CSS scale 1.06 · Typed OM THROWS SyntaxError · registered <number> "1.06"
+B number "max(1.06, 1)": computed text "max(1.06, 1)" · CSS scale 1.06 · Typed OM THROWS SyntaxError · registered <number> "1.06"
+B number "clamp(1, 1.06, 2)": computed text "clamp(1, 1.06, 2)" · CSS scale 1.06 · Typed OM THROWS SyntaxError · registered <number> "1.06"
+B number "calc(var(--h13-undefined, 1.06))": computed text "calc(1.06)" · CSS scale 1.06 · Typed OM THROWS SyntaxError · registered <number> "1.06"
+B number "1.06E0": computed text "1.06E0" · CSS scale 1.06 · Typed OM 1.06 · registered <number> "1.06"
+B number "+1.06": computed text "+1.06" · CSS scale 1.06 · Typed OM 1.06 · registered <number> "1.06"
+B number "/* c */ 1.06": computed text "1.06" · CSS scale 1.06 · Typed OM 1.06 · registered <number> "1.06"
+B number "1.06abc": computed text "1.06abc" · CSS scale none · Typed OM THROWS SyntaxError · registered <number> "0"
+B number "nonsense": computed text "nonsense" · CSS scale none · Typed OM THROWS SyntaxError · registered <number> "0"
+B length "16px": computed text "16px" · CSS width 16px · shape-margin 16px · Typed OM 16 · Typed OM of shape-margin 16 · registered <length> "16px"
+B length "1rem": computed text "1rem" · CSS width 16px · shape-margin 16px · Typed OM THROWS TypeError · Typed OM of shape-margin 16 · registered <length> "16px"
+B length "calc(0.5rem + 8px)": computed text "calc(0.5rem + 8px)" · CSS width 16px · shape-margin 16px · Typed OM THROWS TypeError · Typed OM of shape-margin 16 · registered <length> "16px"
+B length "max(16px, 1rem)": computed text "max(16px, 1rem)" · CSS width 16px · shape-margin 16px · Typed OM THROWS TypeError · Typed OM of shape-margin 16 · registered <length> "16px"
+B length "clamp(0px, 16px, 2rem)": computed text "clamp(0px, 16px, 2rem)" · CSS width 16px · shape-margin 16px · Typed OM THROWS TypeError · Typed OM of shape-margin 16 · registered <length> "16px"
+B length "min(16px, 5vw)": computed text "min(16px, 5vw)" · CSS width 16px · shape-margin 16px · Typed OM THROWS TypeError · Typed OM of shape-margin 16 · registered <length> "16px"
+B length "calc(var(--h13-undefined, 16px))": computed text "calc(16px)" · CSS width 16px · shape-margin 16px · Typed OM 16 · Typed OM of shape-margin 16 · registered <length> "16px"
+B length "5%": computed text "5%" · CSS width 64px · shape-margin 5% · Typed OM THROWS TypeError · Typed OM of shape-margin THROWS TypeError · registered <length> "0px"
+B length "calc(-1rem)": computed text "calc(-1rem)" · CSS width 0px · shape-margin 0px · Typed OM THROWS TypeError · Typed OM of shape-margin 0 · registered <length> "-16px"
+B length "nonsense": computed text "nonsense" · CSS width 0px · shape-margin 0px · Typed OM THROWS SyntaxError · Typed OM of shape-margin 0 · registered <length> "0px"
+B easing "ease-in": computed text "ease-in" · KeyframeEffect takes ease-in · CSS transition-timing-function ease-in · CSS.supports(animation-timing-function) true
+B easing "EASE-IN-OUT": computed text "EASE-IN-OUT" · KeyframeEffect takes ease-in-out · CSS transition-timing-function ease-in-out · CSS.supports(animation-timing-function) true
+B easing "linear(0, 0.5 50%, 1)": computed text "linear(0, 0.5 50%, 1)" · KeyframeEffect takes linear(0.00 0%, 0.50 50%, 1.00 100%) · CSS transition-timing-function linear(0 0%, 0.5 50%, 1 100%) · CSS.supports(animation-timing-function) true
+B easing "steps(2, jump-none)": computed text "steps(2, jump-none)" · KeyframeEffect takes steps(2, jump-none) · CSS transition-timing-function steps(2, jump-none) · CSS.supports(animation-timing-function) true
+B easing "step-end": computed text "step-end" · KeyframeEffect takes steps(1) · CSS transition-timing-function steps(1) · CSS.supports(animation-timing-function) true
+B easing "/* c */ ease-in": computed text "ease-in" · KeyframeEffect takes ease-in · CSS transition-timing-function ease-in · CSS.supports(animation-timing-function) true
+B easing "var(--h13-undefined, ease-in)": computed text "ease-in" · KeyframeEffect takes ease-in · CSS transition-timing-function ease-in · CSS.supports(animation-timing-function) true
+B easing "cubic-bezier(0, 2, 1, -1)": computed text "cubic-bezier(0, 2, 1, -1)" · KeyframeEffect takes cubic-bezier(0, 2, 1, -1) · CSS transition-timing-function cubic-bezier(0, 2, 1, -1) · CSS.supports(animation-timing-function) true
+B easing "cubic-bezier(1.5, 0, 0, 1)": computed text "cubic-bezier(1.5, 0, 0, 1)" · KeyframeEffect refuses (TypeError) · CSS transition-timing-function ease · CSS.supports(animation-timing-function) false
+B easing "steps(0)": computed text "steps(0)" · KeyframeEffect refuses (TypeError) · CSS transition-timing-function ease · CSS.supports(animation-timing-function) false
+B easing "ease, linear": computed text "ease, linear" · KeyframeEffect refuses (TypeError) · CSS transition-timing-function ease, linear · CSS.supports(animation-timing-function) true
+B easing "inherit": computed text "" · KeyframeEffect refuses (TypeError) · CSS transition-timing-function ease · CSS.supports(animation-timing-function) false
+B easing "nonsense": computed text "nonsense" · KeyframeEffect refuses (TypeError) · CSS transition-timing-function ease · CSS.supports(animation-timing-function) false
+C rotate 10deg: a translate 0 40px on the host paints (-6.946, 39.392); 40px 0 paints (39.392, 6.946)
+C skewX 15deg: a translate 0 40px on the host paints (10.718, 40); 40px 0 paints (40, 0)
+C skewY 8deg: a translate 0 40px on the host paints (0, 40); 40px 0 paints (40, 5.622)
+C matrix rot+scale: a translate 0 40px on the host paints (-5.56, 31.52); 40px 0 paints (31.52, 5.56)
+C perspective rotateX 25deg: a translate 0 40px on the host paints (-2.92, 37.309); 40px 0 paints (40.002, 0)
+C translate 0 20%: a translate 0 40px on the host paints (0, 40); 40px 0 paints (40, 0)
+# end · load 9.6/9.9/10.5
+# exit 0 · 2026-11-03 23:46:38 · load { 9.55 9.95 10.46 }
+# end · 2026-11-03 23:46:38 · load { 9.55 9.95 10.46 } · harness 0dbb165e0e86

@@ -1,0 +1,88 @@
+# C-1 queued 2026-11-03 22:18:56 · 16 stage(s) left · load { 13.40 14.86 16.25 }
+# C-1 batch admitted 2026-11-03 22:21:41 · load { 16.98 15.09 16.05 }
+# 22:21:41 start (0 min): facts13 chromium · load { 16.98 15.09 16.05 }
+facts13 chromium · # exit 0 · 2026-11-03 22:21:42 · load { 16.98 15.09 16.05 }  · /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-13/H13c/logs/facts13-chromium.log
+# 22:21:42 end (0): facts13 chromium · load { 16.98 15.09 16.05 }
+# 22:21:42 start (0 min): factsc chromium · load { 16.98 15.09 16.05 }
+factsc chromium · # exit 0 · 2026-11-03 22:21:43 · load { 17.38 15.20 16.08 }  · /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-13/H13c/logs/factsc-chromium.log
+# 22:21:43 end (0): factsc chromium · load { 17.38 15.20 16.08 }
+# 22:21:43 start (0 min): factsa13 chromium · load { 17.38 15.20 16.08 }
+factsa13 chromium · # exit 0 · 2026-11-03 22:21:45 · load { 17.38 15.20 16.08 }  · /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-13/H13c/logs/factsa13-chromium.log
+# 22:21:45 end (0): factsa13 chromium · load { 17.38 15.20 16.08 }
+# 22:21:45 start (0 min): st-E-13 chromium · load { 17.38 15.20 16.08 }
+st-E-13 chromium · selftest: 8 runs, 0 N/A; every witness passes its fixture, fails each planted violation on the planted cell, and passes each control, in every engine with an input for it # exit 0 · 2026-11-03 22:33:33 · load { 8.99 11.7 · /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-13/H13c/logs/st-E-13-chromium.log
+# 22:33:33 end (0): st-E-13 chromium · load { 8.99 11.71 13.63 }
+# 22:33:33 start (11 min): st-E-3 chromium · load { 8.99 11.71 13.63 }
+st-E-3 chromium · selftest: 12 runs, 0 N/A; every witness passes its fixture, fails each planted violation on the planted cell, and passes each control, in every engine with an input for it # exit 0 · 2026-11-03 22:37:38 · load { 10.08 11 · /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-13/H13c/logs/st-E-3-chromium.log
+# 22:37:38 end (0): st-E-3 chromium · load { 10.08 11.05 12.82 }
+# 22:37:38 start (15 min): clean chromium --only E-1,E-2,E-3,E-4,E-5,E-6,E-7 · load { 10.08 11.05 12.82 }
+clean chromium · E-7 chromium exit 0 · E-7 chromium PASS · 7 pass, 0 fail, 0 unmeasured of 7 gating cells (0 reported) · load 7.8/9.7/11.8 at start, 7.8/9.7/11.8 at end · 3 s, load at start 7.8/9.7/11.8 # exit 0 · 2026-11-03 22:41:45 · l · /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-13/H13c/logs/clean-chromium-b1248f.log
+# 22:41:45 end (0): clean chromium --only E-1,E-2,E-3,E-4,E-5,E-6,E-7 · load { 7.78 9.67 11.80 }
+# 22:41:45 start (20 min): clean chromium --only E-8,E-9,E-10,E-11,E-12,E-13 · load { 7.78 9.67 11.80 }
+clean chromium · E-13 chromium exit 0 · E-13 chromium PASS · 36 pass, 0 fail, 0 unmeasured of 36 gating cells (4 reported) · load 9.7/9.7/10.1 at start, 11.2/10.5/10.4 at end · 94 s, load at start 9.7/9.7/10.1 # exit 1 · 2026-11-03 23:11 · /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-13/H13c/logs/clean-chromium-63c3b3.log
+# 23:11:09 end (0): clean chromium --only E-8,E-9,E-10,E-11,E-12,E-13 · load { 11.24 10.46 10.37 }
+# 23:11:09 start (49 min): cand12-E-10 chromium --part hg13 · load { 11.24 10.46 10.37 }
+cand12-E-10 chromium · E-10 chromium FAIL · 43 pass, 47 fail, 0 unmeasured of 90 gating cells (3 reported) · load 11.2/10.5/10.4 at start, 9.2/10.1/10.2 at end # exit 1 · 2026-11-03 23:14:28 · load { 9.24 10.08 10.24 }  · /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-13/H13c/logs/cand12-E-10-chromium-da1764.log
+# 23:14:28 end (0): cand12-E-10 chromium --part hg13 · load { 9.24 10.08 10.24 }
+# 23:14:28 C-1 stops at 52 min; the rest goes to the next named batch
+# C-1 batch end 2026-11-03 23:14:28 · load { 9.24 10.08 10.24 }
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1793759449 slope=40.7/s inuse=30389 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. Finish what you are doing and report it; the owner decides on the reboot.
+# C-1 guard exit 0 2026-11-03 23:14:34 · load { 9.06 10.03 10.22 }
+# C-2 queued 2026-11-03 23:14:34 · 10 stage(s) left · load { 9.06 10.03 10.22 }
+# C-2 batch admitted 2026-11-03 23:17:35 · load { 9.68 9.97 10.16 }
+# 23:17:35 start (0 min): cand12-E-11 chromium --part forms,tokens,census,reachin · load { 9.68 9.97 10.16 }
+cand12-E-11 chromium · E-11 chromium FAIL · 188 pass, 26 fail, 0 unmeasured of 214 gating cells (5 reported) · load 9.7/10.0/10.2 at start, 11.2/11.2/10.9 at end # exit 1 · 2026-11-03 23:29:54 · load { 11.18 11.24 10.89 }  · /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-13/H13c/logs/cand12-E-11-chromium-eb49c2.log
+# 23:29:54 end (0): cand12-E-11 chromium --part forms,tokens,census,reachin · load { 11.18 11.24 10.89 }
+# 23:29:54 start (12 min): plant-allkinds-E-10 chromium --part hg13 --hg13 kind,reentry · load { 11.18 11.24 10.89 }
+plant-allkinds-E-10 chromium · E-10 chromium FAIL · 13 pass, 7 fail, 0 unmeasured of 20 gating cells (0 reported) · load 11.2/11.2/10.9 at start, 10.0/10.9/10.8 at end # exit 1 · 2026-11-03 23:30:38 · load { 10.00 10.87 10.77 }  · /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-13/H13c/logs/plant-allkinds-E-10-chromium-ef57d9.log
+# 23:30:38 end (0): plant-allkinds-E-10 chromium --part hg13 --hg13 kind,reentry · load { 10.00 10.87 10.77 }
+# 23:30:38 start (13 min): head-E-10 chromium --part hg13 · load { 10.00 10.87 10.77 }
+head-E-10 chromium · E-10 chromium FAIL · 10 pass, 78 fail, 2 unmeasured of 90 gating cells (3 reported) · load 10.0/10.9/10.8 at start, 10.3/10.9/10.8 at end # exit 1 · 2026-11-03 23:33:56 · load { 10.32 10.93 10.85 }  · /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-13/H13c/logs/head-E-10-chromium-da1764.log
+# 23:33:56 end (0): head-E-10 chromium --part hg13 · load { 10.32 10.93 10.85 }
+# 23:33:56 start (16 min): head-E-11 chromium --part forms,tokens,census,reachin · load { 10.32 10.93 10.85 }
+head-E-11 chromium · E-11 chromium FAIL · 123 pass, 1 fail, 6 unmeasured of 130 gating cells (0 reported) · load 10.3/10.9/10.8 at start, 9.7/10.9/11.0 at end # exit 1 · 2026-11-03 23:40:44 · load { 9.68 10.90 10.99 }  · /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-13/H13c/logs/head-E-11-chromium-eb49c2.log
+# 23:40:44 end (0): head-E-11 chromium --part forms,tokens,census,reachin · load { 9.68 10.90 10.99 }
+# 23:40:44 start (23 min): glance-cand12 chromium · load { 9.68 10.90 10.99 }
+glance-cand12 chromium · E-10 chromium UNMEASURED · 0 pass, 0 fail, 0 unmeasured of 0 gating cells (3 reported) · load 9.7/10.9/11.0 at start, 8.9/10.7/10.9 at end # exit 3 · 2026-11-03 23:40:50 · load { 8.90 10.69 10.91 }  · /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-13/H13c/logs/glance-cand12-chromium.log
+# 23:40:50 end (0): glance-cand12 chromium · load { 8.90 10.69 10.91 }
+# 23:40:50 start (23 min): glance-cand13 chromium · load { 8.90 10.69 10.91 }
+glance-cand13 chromium · E-10 chromium UNMEASURED · 0 pass, 0 fail, 0 unmeasured of 0 gating cells (3 reported) · load 8.9/10.7/10.9 at start, 9.0/10.7/10.9 at end # exit 3 · 2026-11-03 23:40:56 · load { 8.98 10.68 10.91 }  · /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-13/H13c/logs/glance-cand13-chromium.log
+# 23:40:56 end (0): glance-cand13 chromium · load { 8.98 10.68 10.91 }
+# 23:40:56 start (23 min): fxglance chromium · load { 8.98 10.68 10.91 }
+fxglance chromium · E-10 chromium UNMEASURED · 0 pass, 0 fail, 0 unmeasured of 0 gating cells (3 reported) · load 9.0/10.7/10.9 at start, 9.2/10.7/10.9 at end # exit 3 · 2026-11-03 23:41:00 · load { 9.23 10.70 10.91 }  · /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-13/H13c/logs/fxglance-chromium.log
+# 23:41:00 end (0): fxglance chromium · load { 9.23 10.70 10.91 }
+# 23:41:00 start (23 min): cap chromium · load { 9.23 10.70 10.91 }
+cap chromium · CAP chromium PASS · 4 pass, 0 fail, 0 unmeasured of 4 gating cells (0 reported) · load 9.2/10.7/10.9 at start, 9.0/10.6/10.9 at end # exit 0 · 2026-11-03 23:41:12 · load { 8.96 10.59 10.87 }  · /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-13/H13c/logs/cap-chromium.log
+# 23:41:12 end (0): cap chromium · load { 8.96 10.59 10.87 }
+# 23:41:12 start (23 min): factsc chromium r2-clamp-cured · load { 8.96 10.59 10.87 }
+factsc chromium · # exit 0 · 2026-11-03 23:41:13 · load { 8.96 10.59 10.87 }  · /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-13/H13c/logs/factsc-chromium-eb7214.log
+# 23:41:13 end (0): factsc chromium r2-clamp-cured · load { 8.96 10.59 10.87 }
+# 23:41:13 start (23 min): st-E-8 chromium · load { 8.96 10.59 10.87 }
+st-E-8 chromium · selftest: 5 runs, 0 N/A; every witness passes its fixture, fails each planted violation on the planted cell, and passes each control, in every engine with an input for it # exit 0 · 2026-11-03 23:42:34 · load { 9.72 10.3 · /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-13/H13c/logs/st-E-8-chromium.log
+# 23:42:34 end (0): st-E-8 chromium · load { 9.72 10.37 10.76 }
+# C-2 batch end 2026-11-03 23:42:34 · load { 9.72 10.37 10.76 }
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1793759449 slope=40.7/s inuse=30389 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. Finish what you are doing and report it; the owner decides on the reboot.
+# C-2 guard exit 0 2026-11-03 23:42:38 · load { 9.67 10.35 10.74 }
+# c queue end 2026-11-03 23:42:38 · load { 9.67 10.35 10.74 }
+# C-3 (the follow-up facts, one guarded call) queued 2026-11-04 02:20:41 · load { 12.12 11.29 10.63 }
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1793759449 slope=40.7/s inuse=30389 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. Finish what you are doing and report it; the owner decides on the reboot.
+# C-3 batch admitted 2026-11-04 02:38:11 · load { 11.55 12.15 11.55 }
+# 02:38:11 start (0 min): factsd chromium · load { 11.55 12.15 11.55 }
+factsd chromium · # exit 0 · 2026-11-04 02:38:12 · load { 11.55 12.15 11.55 }  · /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-13/H13c/logs/factsd-chromium.log
+# 02:38:12 end (0): factsd chromium · load { 11.55 12.15 11.55 }
+# 02:38:12 start (0 min): factse chromium · load { 11.55 12.15 11.55 }
+factse chromium · # exit 0 · 2026-11-04 02:38:14 · load { 11.35 12.10 11.54 }  · /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-13/H13c/logs/factse-chromium.log
+# 02:38:14 end (0): factse chromium · load { 11.35 12.10 11.54 }
+# 02:38:14 start (0 min): factsf chromium · load { 11.35 12.10 11.54 }
+factsf chromium · # exit 0 · 2026-11-04 02:38:16 · load { 11.35 12.10 11.54 }  · /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-13/H13c/logs/factsf-chromium.log
+# 02:38:16 end (0): factsf chromium · load { 11.35 12.10 11.54 }
+# C-3 batch end 2026-11-04 02:38:16 · load { 11.35 12.10 11.54 }
+# C-3 guard exit 0 2026-11-04 02:38:20 · load { 11.40 12.10 11.54 }
+# C-4 queued 2026-11-04 02:40:30
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1793759449 slope=40.7/s inuse=30389 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. Finish what you are doing and report it; the owner decides on the reboot.
+# C-4 batch admitted 2026-11-04 02:54:23 · load { 9.26 8.58 9.42 }
+# 02:54:23 start (0 min): factsg chromium · load { 9.26 8.58 9.42 }
+factsg chromium · # exit 0 · 2026-11-04 02:54:23 · load { 9.26 8.58 9.42 }  · /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-13/H13c/logs/factsg-chromium.log
+# 02:54:23 end (0): factsg chromium · load { 9.26 8.58 9.42 }
+# C-4 batch end 2026-11-04 02:54:23 · load { 9.26 8.58 9.42 }
+# C-4 guard exit 0 2026-11-04 02:54:27 · load { 9.26 8.58 9.42 }

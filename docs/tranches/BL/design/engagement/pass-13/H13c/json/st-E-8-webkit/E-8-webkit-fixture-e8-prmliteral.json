@@ -1,0 +1,68 @@
+{
+ "id": "E-8",
+ "engine": "webkit",
+ "version": "26.5",
+ "target": {
+  "fixture": true,
+  "fault": "e8-prmliteral"
+ },
+ "loadStart": "11.0/11.1/10.5",
+ "loadEnd": "11.0/11.1/10.5",
+ "verdict": "FAIL",
+ "cells": [
+  {
+   "name": "E-8 mirror",
+   "status": "PASS",
+   "line": "2 rows, 4 --engage-* tokens on :root · drift [] · orphans []",
+   "load": "10.7/11.0/10.5"
+  },
+  {
+   "name": "E-8 literal pop",
+   "status": "PASS",
+   "line": "8 animation(s) ran [background-color@55ms, scale@350ms, script@60ms, script@180ms] against 6 clock tokens · minted []",
+   "load": "10.7/11.0/10.5"
+  },
+  {
+   "name": "E-8 literal pop PRM",
+   "status": "FAIL",
+   "line": "6 animation(s) ran [background-color@100ms, script@60ms, script@180ms] against 6 clock tokens · minted [CSSTransition background-color 100ms on ctl engage-pressed]",
+   "load": "10.7/11.0/10.5"
+  },
+  {
+   "name": "E-8 literal travel",
+   "status": "PASS",
+   "line": "8 animation(s) ran [background-color@55ms, scale@350ms, script@350ms] against 6 clock tokens · minted []",
+   "load": "10.4/10.9/10.5"
+  },
+  {
+   "name": "E-8 literal travel PRM",
+   "status": "FAIL",
+   "line": "8 animation(s) ran [background-color@100ms, script@60ms, script@180ms] against 6 clock tokens · minted [CSSTransition background-color 100ms on seg engage-pressed]",
+   "load": "10.4/10.9/10.5"
+  },
+  {
+   "name": "E-8 literal rest",
+   "status": "PASS",
+   "line": "9 animation(s) ran [background-color@55ms, scale@350ms, script@60ms, script@180ms] against 6 clock tokens · minted []",
+   "load": "10.9/11.0/10.5"
+  },
+  {
+   "name": "E-8 literal rest PRM",
+   "status": "FAIL",
+   "line": "6 animation(s) ran [background-color@100ms, script@60ms, script@180ms] against 6 clock tokens · minted [CSSTransition background-color 100ms on ctl engage-pressed]",
+   "load": "10.9/11.0/10.5"
+  },
+  {
+   "name": "E-8 literal act",
+   "status": "PASS",
+   "line": "10 animation(s) ran [background-color@55ms, scale@350ms, script@60ms, script@180ms] against 6 clock tokens · minted []",
+   "load": "10.9/11.0/10.5"
+  },
+  {
+   "name": "E-8 literal act PRM",
+   "status": "FAIL",
+   "line": "8 animation(s) ran [background-color@100ms, script@60ms, script@180ms] against 6 clock tokens · minted [CSSTransition background-color 100ms on ctl engage-pressed]",
+   "load": "11.0/11.1/10.5"
+  }
+ ]
+}

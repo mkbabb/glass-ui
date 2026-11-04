@@ -1,0 +1,28 @@
+# H13c factsf chromium · 2026-11-04 02:38:14 · load { 11.35 12.10 11.54 } · harness 0dbb165e0e86 · 
+# facts13f chromium · 2026-11-04T07:38:14.766Z · load 11.35/12.10/11.54
+# browser 149.0.7827.55
+F3c V1 body.prepend, plain target · run 1: before top 50 scrollY 830 · callback top 50 scrollY 870 · two frames later top 50 scrollY 870 · load 11.35/12.10/11.54
+F3c V1 body.prepend, plain target · run 2: before top 50 scrollY 830 · callback top 50 scrollY 870 · two frames later top 50 scrollY 870 · load 11.35/12.10/11.54
+F3c V2 insert as <main>'s first child, a header above <main> · run 1: before top 50 scrollY 830 · callback top 50 scrollY 870 · two frames later top 50 scrollY 870 · load 11.35/12.10/11.54
+F3c V2 insert as <main>'s first child, a header above <main> · run 2: before top 50 scrollY 830 · callback top 50 scrollY 870 · two frames later top 50 scrollY 870 · load 11.35/12.10/11.54
+F3c V3 V2 + probe writes on the target in the callback (the fixture's two translate probes, then restored) · run 1: before top 50 scrollY 830 · callback top 50 scrollY 870 · two frames later top 50 scrollY 870 · load 11.35/12.10/11.54
+F3c V3 V2 + probe writes on the target in the callback (the fixture's two translate probes, then restored) · run 2: before top 50 scrollY 830 · callback top 50 scrollY 870 · two frames later top 50 scrollY 870 · load 11.35/12.10/11.54
+F3c V4 V2 + a composite:add translate animation started on the target in the callback (the glide) · run 1: before top 50 scrollY 830 · callback top 50 scrollY 870 · two frames later top 88.09 scrollY 870 · load 11.35/12.10/11.54
+F3c V4 V2 + a composite:add translate animation started on the target in the callback (the glide) · run 2: before top 50 scrollY 830 · callback top 50 scrollY 870 · two frames later top 88.1 scrollY 870 · load 11.35/12.10/11.54
+F3c V5 V2 + the target already carries a running WAAPI animation (an engaged control's own) · run 1: before top 50 scrollY 830 · callback top 50 scrollY 870 · two frames later top 50 scrollY 870 · load 11.35/12.10/11.54
+F3c V5 V2 + the target already carries a running WAAPI animation (an engaged control's own) · run 2: before top 50 scrollY 830 · callback top 50 scrollY 870 · two frames later top 50 scrollY 870 · load 11.35/12.10/11.54
+F3c V6 V2 + the insert made from a page.evaluate task (no rAF), as a harness act · run 1: before top 50 scrollY 830 · callback top 50 scrollY 870 · two frames later top 50 scrollY 870 · load 11.35/12.10/11.54
+F3c V6 V2 + the insert made from a page.evaluate task (no rAF), as a harness act · run 2: before top 50 scrollY 830 · callback top 50 scrollY 870 · two frames later top 50 scrollY 870 · load 11.35/12.10/11.54
+F3c V7 V2 + target in a card with scale 0.8 · run 1: before top 54 scrollY 830 · callback top 54 scrollY 870 · two frames later top 54 scrollY 870 · load 11.35/12.10/11.54
+F3c V7 V2 + target in a card with scale 0.8 · run 2: before top 54 scrollY 830 · callback top 54 scrollY 870 · two frames later top 54 scrollY 870 · load 11.35/12.10/11.54
+F3c V8 V2 + a popover shown in the top layer (the loupe) · run 1: before top 50 scrollY 830 · callback top 50 scrollY 870 · two frames later top 50 scrollY 870 · load 11.35/12.10/11.54
+F3c V8 V2 + a popover shown in the top layer (the loupe) · run 2: before top 50 scrollY 830 · callback top 50 scrollY 870 · two frames later top 50 scrollY 870 · load 11.35/12.10/11.54
+F3c V9 V2 + a rAF loop reading the target's rect every frame and an additive translate animation running on it · run 1: before top 50 scrollY 830 · callback top 50 scrollY 870 · two frames later top 50 scrollY 870 · load 11.35/12.10/11.54
+F3c V9 V2 + a rAF loop reading the target's rect every frame and an additive translate animation running on it · run 2: before top 50 scrollY 830 · callback top 50 scrollY 870 · two frames later top 50 scrollY 870 · load 11.35/12.10/11.54
+F3c V10 V2 + the scroll made one frame before the insert · run 1: before top 50 scrollY 830 · callback top 50 scrollY 870 · two frames later top 50 scrollY 870 · load 11.35/12.10/11.54
+F3c V10 V2 + the scroll made one frame before the insert · run 2: before top 50 scrollY 830 · callback top 50 scrollY 870 · two frames later top 50 scrollY 870 · load 11.35/12.10/11.54
+F3c V11 V2 + the target carries will-change: transform and translate: 0 0 · run 1: before top 50 scrollY 830 · callback top 50 scrollY 870 · two frames later top 50 scrollY 870 · load 11.35/12.10/11.54
+F3c V11 V2 + the target carries will-change: transform and translate: 0 0 · run 2: before top 50 scrollY 830 · callback top 50 scrollY 870 · two frames later top 50 scrollY 870 · load 11.35/12.10/11.54
+# end · load 11.35/12.10/11.54
+# exit 0 · 2026-11-04 02:38:16 · load { 11.35 12.10 11.54 }
+# end · 2026-11-04 02:38:16 · load { 11.35 12.10 11.54 } · harness 0dbb165e0e86

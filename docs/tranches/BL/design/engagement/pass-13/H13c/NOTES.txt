@@ -1,0 +1,43 @@
+# H13-complete process notes (appended in order; the report cites them)
+22:2x · facts13c.mjs F3's clamp cell was degenerate at its first Chromium read (page 780 px tall in an 800 px viewport, so it never scrolled:
+        st 0 -> 0). Cured by rule (the tail 60 -> 200 px, so the page scrolls 120 px and the removal clamps it); the cured cell re-reads as the
+        stage `factsc chromium r2-clamp-cured` appended to c1.txt by atomic rename; WebKit reads the cured script only. F1, F2, F4, F5 unchanged.
+22:5x · HARNESS DEFECT found by the self-test of record (clean chromium --only E-8..E-13, log clean-chromium-63c3b3.log): E-8's mirror cell FAILed the
+        clean fixture: "drift [--engage-control-engage-release calc(90ms * 2) ≠ 180ms]". H13 made that fixture default the library's math form
+        (H13 §1.2) and never ran E-8 clean (held). The mirror parsed the token's TEXT as a dimension. Cured by rule (H13 §3 item 1's class: a reader
+        narrower than the consumer): the mirror now reads each --engage-* token as its consumer computes it (CLOCKS' inline !important
+        transition-duration probe, every value incl. 0), printing the text beside it; e8-drift (56 vs 55 ms) still differs. harness/e8-clock.mjs,
+        pre-cure copy pre/e8-clock.mjs (28 diff lines). The stage's later witnesses (E-9..E-13) ran on the pre-cure hash a09eb8c7 (E-8 is read
+        by none of them). Re-read: st-E-8 chromium and st-E-8 webkit appended by atomic rename; WebKit's clean E-8 runs on the cured file.
+23:5x · facts13c's first WebKit read (logs/factsc-webkit.log) showed the registered <time> read of four refused forms (initial, a list, a bare
+        210, 21%) returning "0.21s" instead of its initial -1s, in WebKit only, and F4's transition sample differing between rAF and a posted task
+        in 6/30 samples. facts13d.mjs (F1d: refused forms by read history; F4d: the sample difference at 1 px/ms) added as stage `factsd`, inserted
+        after factsa13 in wk.txt by atomic rename (run-h13c.sh likewise), and read in Chromium after the WebKit queue in its own guarded call.
+23:5x · factsd (WebKit) refused every form to -1 in every history, so facts13c F1's four WebKit 0.21s rows are the cell's own consumer write
+        (transition-duration: var(--tok) on the element read, transition-property at its default `all`) leaving a running transition that the
+        next read sees. facts13e.mjs (F6: C-A13 calcctx's fragments on a fresh element; F7: a transition on the element read, by read history)
+        added as stage `factse`, inserted after factsd in wk.txt by atomic rename; Chromium after the WebKit queue.
+00:0x · facts13e gained F3b (anchoring as getBoundingClientRect reads it in the MO callback, no scroll query first) before its stage started: the clean fixture's WebKit anchor-insert cells FAILed (fx-E-10 webkit: scrollY 894 -> 894 at the act's frame -> 934 after; the root thrown 34.2 px at +32 ms); the fixture's glideFrom reads getBoundingClientRect only, F3/facts13 A read scrollTop first.
+00:1x · facts13f.mjs (F3c: anchoring at the MO callback, seven variants from the plain page toward the fixture's scene, two runs each) added as stage factsf after factse (atomic renames).
+00:2x · HARNESS DEFECT 2, found by the self-test of record (fx-E-10 webkit --part hg13,hostglide; reproduced 3/3, at load 15.3, 8.6 and 7.9):
+        the clean fixture FAILs `scroll · anchor page · insert above · none|scale 0.8` and `anchor scroller · insert above` in WebKit:
+        the anchoring scroll lands a frame after the record's callback read the place (scrollY 894 -> 894 -> 934; G.scrollTop 790 -> 830), so
+        the fixture glides the layout move and the late adjustment throws the root 33.5-34.6 px at +32 ms. Remove-above anchoring and both
+        clamps are applied at the callback (PASS). facts13f (7 library-free variants, 2 runs each) does NOT reproduce it: anchoring is applied
+        before the callback on every variant in WebKit. Cured by rule in fixtures.mjs hostGlide (pre-cure copy pre/fixtures.mjs): the
+        engine's scroll adjustments of a rendering update arrive as scroll events before that update's animation-frame callbacks, so a glide
+        a record started is re-taken from painted − now at a scroll event before the next frame callback, keeping its start time when the
+        re-take equals it (a clamp), never on a later frame. LAYOUT_GLIDE plants keep H12's path. Re-reads: the WebKit new cells and the five
+        new plants on the cured fixture (inserted after the --rr 2 stage), and st-E-10 chromium whole after the WebKit queue (c1.txt). For P-E13
+        and the critics: the candidate's construction rests on the same fact (painted − now read in the observer callback); on cand13 in WebKit
+        these anchoring-insert cells are read by c2.
+00:2x · st-E-11 webkit (part a, started 00:12:35) spans the fixtures.mjs cure: its later witness runs (each a fresh node process) import the cured file. The cure touches hostGlide's glide re-take only, which E-11's cells never trigger (no record during a hold); harness hash 0dbb165e -> 9724e047 within the stage.
+00:3x · The fixture re-take (00:2x) did NOT cure the cells: on the cured fixture the three WebKit anchor-insert cells FAIL as before (fx-E-10
+        webkit --cured anchor: the adjustment lands at +34 ms, two frames after the act, outside the act's rendering update the re-take keys on).
+        Four more library-free variants (facts13f V8 top-layer popover, V9 a per-frame rect loop with an additive translate on the target,
+        V10 the scroll one frame before the insert, V11 will-change + translate) apply anchoring before the callback, as V1-V7 did. The cure was
+        unproven and changed nothing, so it was REVERTED: fixtures.mjs restored byte for byte to HEAD (git diff --quiet), harness hash back to
+        0dbb165e (the E-8 cure only). `st-E-10 chromium --cured anchor` removed from c1.txt (no fixture change remains to re-read).
+        HARNESS DEFECT 2 stays OPEN: the clean fixture's WebKit `scroll · anchor * · insert above` cells (3) fail reproducibly, cause unfound.
+02:3x · Narrowing of defect 2: HEAD in WebKit anchors on the act's own frame (head-E-10-webkit: scrollY 898 -> 938 -> 938, path all 0.0: PASS), cand12 glides the layout move (-40.0 on the act's frame: FAIL), the clean fixture's anchoring lands a frame late (894 -> 894 -> 934: FAIL). So the fixture's own callback work defers WebKit's anchoring adjustment; facts13f's 11 library-free variants do not isolate which part. Open.
+02:4x · facts13 B's registered column, facts13c F1's <time> rows and C-A13's registered cell all read the registered property on an element that carried (or had carried) the consumer's transition-duration, F7's trigger in WebKit; every <time> row's value is 210 ms, so a stale read is indistinguishable from a take. facts13g.mjs re-reads F1 with a fresh element per form and the consumer on a separate element: WK-3, a third named acquisition (one stage), and Chromium in C-4.

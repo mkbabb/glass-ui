@@ -1,0 +1,109 @@
+# H13c factsc chromium · 2026-11-03 23:41:12 · load { 8.96 10.59 10.87 } · harness 0dbb165e0e86 · r2-clamp-cured
+# facts13c chromium · 2026-11-04T04:41:12.680Z · load 8.96/10.59/10.87
+# browser 149.0.7827.55
+## F1 registered read per form · load 8.96/10.59/10.87
+F1 ms | "210ms" | registered "0.21s" -> 210 | consumer transition-duration "0.21s"
+F1 ms | "0.21s" | registered "0.21s" -> 210 | consumer transition-duration "0.21s"
+F1 ms | "210MS" | registered "0.21s" -> 210 | consumer transition-duration "0.21s"
+F1 ms | "2.1e2ms" | registered "0.21s" -> 210 | consumer transition-duration "0.21s"
+F1 ms | "+0.21s" | registered "0.21s" -> 210 | consumer transition-duration "0.21s"
+F1 ms | "/* c */ 210ms" | registered "0.21s" -> 210 | consumer transition-duration "0.21s"
+F1 ms | "calc(0.1s + 110ms)" | registered "0.21s" -> 210 | consumer transition-duration "0.21s"
+F1 ms | "calc(105ms * 2)" | registered "0.21s" -> 210 | consumer transition-duration "0.21s"
+F1 ms | "min(210ms, 1s)" | registered "0.21s" -> 210 | consumer transition-duration "0.21s"
+F1 ms | "max(210ms, 1ms)" | registered "0.21s" -> 210 | consumer transition-duration "0.21s"
+F1 ms | "clamp(1ms, 210ms, 1s)" | registered "0.21s" -> 210 | consumer transition-duration "0.21s"
+F1 ms | "round(nearest, 214ms, 10ms)" | registered "0.21s" -> 210 | consumer transition-duration "0.21s"
+F1 ms | "mod(1210ms, 1000ms)" | registered "0.21s" -> 210 | consumer transition-duration "0.21s"
+F1 ms | "rem(1210ms, 1000ms)" | registered "0.21s" -> 210 | consumer transition-duration "0.21s"
+F1 ms | "abs(-210ms)" | registered "0.21s" -> 210 | consumer transition-duration "0.21s"
+F1 ms | "calc(0.21s * sign(1s))" | registered "0.21s" -> 210 | consumer transition-duration "0.21s"
+F1 ms | "calc(0.21s * pi / pi)" | registered "0.21s" -> 210 | consumer transition-duration "0.21s"
+F1 ms | "calc(0.21s * e / e)" | registered "0.21s" -> 210 | consumer transition-duration "0.21s"
+F1 ms | "calc(infinity * 1s)" | registered "1.79769e+308s" -> REFUSED | consumer transition-duration "1.79769e+308s"
+F1 ms | "calc(var(--nope, 210ms))" | registered "0.21s" -> 210 | consumer transition-duration "0.21s"
+F1 ms | "var(--nope, 210ms)" | registered "0.21s" -> 210 | consumer transition-duration "0.21s"
+F1 ms | "inherit" | registered "0.21s" -> 210 | consumer transition-duration "0.21s"
+F1 ms | "initial" | registered "-1s" -> REFUSED | consumer transition-duration "0s"
+F1 ms | "unset" | registered "0.21s" -> 210 | consumer transition-duration "0.21s"
+F1 ms | "210ms, 1s" | registered "-1s" -> REFUSED | consumer transition-duration "0.21s, 1s"
+F1 ms | "210" | registered "-1s" -> REFUSED | consumer transition-duration "0s"
+F1 ms | "21%" | registered "-1s" -> REFUSED | consumer transition-duration "0s"
+F1 number | "1.06" | registered "1.06" -> 1.06 | consumer scale "1.06"
+F1 number | "1.06E0" | registered "1.06" -> 1.06 | consumer scale "1.06"
+F1 number | "+1.06" | registered "1.06" -> 1.06 | consumer scale "1.06"
+F1 number | "/* c */ 1.06" | registered "1.06" -> 1.06 | consumer scale "1.06"
+F1 number | "calc(1 + 0.06)" | registered "1.06" -> 1.06 | consumer scale "1.06"
+F1 number | "min(1.06, 2)" | registered "1.06" -> 1.06 | consumer scale "1.06"
+F1 number | "max(1.06, 1)" | registered "1.06" -> 1.06 | consumer scale "1.06"
+F1 number | "clamp(1, 1.06, 2)" | registered "1.06" -> 1.06 | consumer scale "1.06"
+F1 number | "round(1.06, 0.01)" | registered "1.06" -> 1.06 | consumer scale "1.06"
+F1 number | "mod(3.06, 2)" | registered "1.06" -> 1.06 | consumer scale "1.06"
+F1 number | "rem(3.06, 2)" | registered "1.06" -> 1.06 | consumer scale "1.06"
+F1 number | "abs(-1.06)" | registered "1.06" -> 1.06 | consumer scale "1.06"
+F1 number | "calc(sign(1) * 1.06)" | registered "1.06" -> 1.06 | consumer scale "1.06"
+F1 number | "calc(1.06 * pi / pi)" | registered "1.06" -> 1.06 | consumer scale "1.06"
+F1 number | "calc(1.06 * e / e)" | registered "1.06" -> 1.06 | consumer scale "1.06"
+F1 number | "calc(infinity)" | registered "1.79769e+308" -> 1.79769e+308 | consumer scale "1.79769e+308"
+F1 number | "calc(var(--nope, 1.06))" | registered "1.06" -> 1.06 | consumer scale "1.06"
+F1 number | "var(--nope, 1.06)" | registered "1.06" -> 1.06 | consumer scale "1.06"
+F1 number | "inherit" | registered "1.06" -> 1.06 | consumer scale "1.06"
+F1 number | "initial" | registered "-1" -> REFUSED | consumer scale "none"
+F1 number | "unset" | registered "1.06" -> 1.06 | consumer scale "1.06"
+F1 number | "1.06, 2" | registered "-1" -> REFUSED | consumer scale "none"
+F1 number | "106%" | registered "-1" -> REFUSED | consumer scale "1.06"
+F1 px | "16px" | registered "16px" -> 16 | consumer padding-left "16px"
+F1 px | "16PX" | registered "16px" -> 16 | consumer padding-left "16px"
+F1 px | "1.6e1px" | registered "16px" -> 16 | consumer padding-left "16px"
+F1 px | "+16px" | registered "16px" -> 16 | consumer padding-left "16px"
+F1 px | "/* c */ 16px" | registered "16px" -> 16 | consumer padding-left "16px"
+F1 px | "calc(8px + 8px)" | registered "16px" -> 16 | consumer padding-left "16px"
+F1 px | "min(16px, 99px)" | registered "16px" -> 16 | consumer padding-left "16px"
+F1 px | "max(16px, 1px)" | registered "16px" -> 16 | consumer padding-left "16px"
+F1 px | "clamp(1px, 16px, 99px)" | registered "16px" -> 16 | consumer padding-left "16px"
+F1 px | "round(16.4px, 1px)" | registered "16px" -> 16 | consumer padding-left "16px"
+F1 px | "mod(36px, 20px)" | registered "16px" -> 16 | consumer padding-left "16px"
+F1 px | "rem(36px, 20px)" | registered "16px" -> 16 | consumer padding-left "16px"
+F1 px | "abs(-16px)" | registered "16px" -> 16 | consumer padding-left "16px"
+F1 px | "calc(16px * sign(1px))" | registered "16px" -> 16 | consumer padding-left "16px"
+F1 px | "calc(16px * pi / pi)" | registered "16px" -> 16 | consumer padding-left "16px"
+F1 px | "calc(16px * e / e)" | registered "16px" -> 16 | consumer padding-left "16px"
+F1 px | "calc(infinity * 1px)" | registered "3.35544e+07px" -> 33554400 | consumer padding-left "3.35544e+07px"
+F1 px | "calc(var(--nope, 16px))" | registered "16px" -> 16 | consumer padding-left "16px"
+F1 px | "var(--nope, 16px)" | registered "16px" -> 16 | consumer padding-left "16px"
+F1 px | "inherit" | registered "16px" -> 16 | consumer padding-left "16px"
+F1 px | "initial" | registered "-1px" -> REFUSED | consumer padding-left "0px"
+F1 px | "unset" | registered "16px" -> 16 | consumer padding-left "16px"
+F1 px | "1rem" | registered "16px" -> 16 | consumer padding-left "16px"
+F1 px | "1em" | registered "14px" -> 14 | consumer padding-left "14px"
+F1 px | "2vw" | registered "20px" -> 20 | consumer padding-left "20px"
+F1 px | "5%" | registered "-1px" -> REFUSED | consumer padding-left "40px"
+F1 px | "16px 2px" | registered "-1px" -> REFUSED | consumer padding-left "0px"
+F1 px | "16" | registered "-1px" -> REFUSED | consumer padding-left "0px"
+## F2 paused composite add translate, same task · load 8.96/10.59/10.87
+F2 none: probe 40px 0 moves (40.000, 0.000), probe 0 40px moves (0.000, 40.000) · inline translate 40px 0 (40.000, 0.000), 0 40px (0.000, 40.000) · after cancel (0.000, 0.000)
+F2 scale 0.8: probe 40px 0 moves (32.000, 0.000), probe 0 40px moves (0.000, 32.000) · inline translate 40px 0 (32.000, 0.000), 0 40px (0.000, 32.000) · after cancel (0.000, 0.000)
+F2 rotate 10deg: probe 40px 0 moves (39.392, 6.946), probe 0 40px moves (-6.946, 39.392) · inline translate 40px 0 (39.392, 6.946), 0 40px (-6.946, 39.392) · after cancel (0.000, 0.000)
+F2 perspective(600px) rotateX(25deg): probe 40px 0 moves (40.003, 0.000), probe 0 40px moves (-4.090, 37.312) · inline translate 40px 0 (40.003, 0.000), 0 40px (-4.090, 37.312) · after cancel (0.000, 0.000)
+## F3 anchoring and clamp at the MutationObserver callback · load 8.96/10.59/10.87
+F3 page insert above: before st 540 top 100.00 · callback st 580 top 100.00
+F3 page remove above: before st 540 top 100.00 · callback st 500 top 100.00
+F3 page clamp remove below: before st 120 top 520.00 · callback st 80 top 560.00
+## F4 timeline time and a running transition, rAF vs a task posted from it · load 8.96/10.59/10.87
+F4 sample 0: rAF t 54.200 translate 1.952px · task t 54.200 translate 1.952px
+F4 sample 1: rAF t 62.400 translate 3.592px · task t 62.400 translate 3.592px
+F4 sample 2: rAF t 70.800 translate 5.272px · task t 70.800 translate 5.272px
+F4 sample 3: rAF t 79.100 translate 6.932px · task t 79.100 translate 6.932px
+F4 sample 4: rAF t 86.300 translate 8.372px · task t 86.300 translate 8.372px
+F4 sample 5: rAF t 94.200 translate 9.952px · task t 94.200 translate 9.952px
+F4 summary: 30 samples · timeline time equal 30/30 · transition value equal 30/30 · a frame between 0/30
+## F5 transition all on the element read · load 8.96/10.59/10.87
+F5 transition: all 150ms: time "0.21s" (second read "0.21s") · number "1.06" · length "16px" · animations after 0
+F5 transition: all 300ms linear: time "0.21s" (second read "0.21s") · number "1.06" · length "16px" · animations after 0
+F5 transition-property: all; transition-duration: 150ms: time "0.21s" (second read "0.21s") · number "1.06" · length "16px" · animations after 0
+F5 transition: --engage-read-time 150ms: time "-1s" (second read "-1s") · number "1.06" · length "16px" · animations after 0
+F5 transition: opacity 150ms: time "0.21s" (second read "0.21s") · number "1.06" · length "16px" · animations after 0
+F5 transition: none: time "0.21s" (second read "0.21s") · number "1.06" · length "16px" · animations after 0
+# end · load 8.96/10.59/10.87
+# exit 0 · 2026-11-03 23:41:13 · load { 8.96 10.59 10.87 }
+# end · 2026-11-03 23:41:13 · load { 8.96 10.59 10.87 } · harness 0dbb165e0e86

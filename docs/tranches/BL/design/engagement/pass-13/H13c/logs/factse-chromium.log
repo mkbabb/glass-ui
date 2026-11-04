@@ -1,0 +1,22 @@
+# H13c factse chromium · 2026-11-04 02:38:12 · load { 11.55 12.15 11.55 } · harness 0dbb165e0e86 · 
+# facts13e chromium · 2026-11-04T07:38:12.953Z · load 11.35/12.10/11.54
+# browser 149.0.7827.55
+## F6 consumer fragments, fresh element · load 11.35/12.10/11.54
+F6 ms | "0.1s + 110ms" | registered read (fresh, no transition) "-1s" | the library's consumer computes "0.21s"
+F6 ms | "105ms * 2" | registered read (fresh, no transition) "-1s" | the library's consumer computes "0.21s"
+F6 ms | "2 * 105ms" | registered read (fresh, no transition) "-1s" | the library's consumer computes "0.21s"
+F6 ms | "calc(0.1s + 110ms)" | registered read (fresh, no transition) "0.21s" | the library's consumer computes "0.21s"
+F6 number | "1 + 0.06" | registered read (fresh, no transition) "-1" | the library's consumer computes "1.06"
+F6 number | "2 * 0.53" | registered read (fresh, no transition) "-1" | the library's consumer computes "1.06"
+F6 number | "calc(1 + 0.06)" | registered read (fresh, no transition) "1.06" | the library's consumer computes "1.06"
+## F3b anchoring as getBoundingClientRect reads it in the MutationObserver callback (no scroll query first) · load 11.35/12.10/11.54
+F3b page insert above (rect first): before scrollTop 840 rect 100.00 · callback rect 100.00, scrollTop 880, rect 100.00 · two frames later scrollTop 880 rect 100.00
+F3b page insert above (rect first): before scrollTop 840 rect 100.00 · callback rect 100.00, scrollTop 880, rect 100.00 · two frames later scrollTop 880 rect 100.00
+F3b page insert above (scrollTop first): before scrollTop 840 rect 100.00 · callback scrollTop 880, rect 100.00 · two frames later scrollTop 880 rect 100.00
+## F7 a transition on the element read, by history · load 11.35/12.10/11.54
+F7 transition-duration: 210ms: same task 999ms "0.999s" · nonsense "-1s" · 210ms "0.21s" | 400 ms later nonsense "-1s" · 210ms "0.21s" · 999ms "0.999s" · animations on it 0
+F7 transition-property: all; transition-duration: 150ms: same task 999ms "0.999s" · nonsense "-1s" · 210ms "0.21s" | 400 ms later nonsense "-1s" · 210ms "0.21s" · 999ms "0.999s" · animations on it 0
+F7 transition: none: same task 999ms "0.999s" · nonsense "-1s" · 210ms "0.21s" | 400 ms later nonsense "-1s" · 210ms "0.21s" · 999ms "0.999s" · animations on it 0
+# end · load 11.35/12.10/11.54
+# exit 0 · 2026-11-04 02:38:14 · load { 11.35 12.10 11.54 }
+# end · 2026-11-04 02:38:14 · load { 11.35 12.10 11.54 } · harness 0dbb165e0e86

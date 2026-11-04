@@ -1,0 +1,20 @@
+# H13c factsf webkit · 2026-11-04 00:11:54 · load { 8.25 9.31 11.17 } · harness 0dbb165e0e86 · 
+# facts13f webkit · 2026-11-04T05:11:54.557Z · load 8.25/9.31/11.17
+# browser 26.5
+F3c V1 body.prepend, plain target · run 1: before top 50 scrollY 830 · callback top 50 scrollY 870 · two frames later top 50 scrollY 870 · load 8.25/9.31/11.17
+F3c V1 body.prepend, plain target · run 2: before top 50 scrollY 830 · callback top 50 scrollY 870 · two frames later top 50 scrollY 870 · load 8.25/9.31/11.17
+F3c V2 insert as <main>'s first child, a header above <main> · run 1: before top 50 scrollY 830 · callback top 50 scrollY 870 · two frames later top 50 scrollY 870 · load 8.25/9.31/11.17
+F3c V2 insert as <main>'s first child, a header above <main> · run 2: before top 50 scrollY 830 · callback top 50 scrollY 870 · two frames later top 50 scrollY 870 · load 8.25/9.31/11.17
+F3c V3 V2 + probe writes on the target in the callback (the fixture's two translate probes, then restored) · run 1: before top 50 scrollY 830 · callback top 50 scrollY 870 · two frames later top 50 scrollY 870 · load 8.55/9.35/11.18
+F3c V3 V2 + probe writes on the target in the callback (the fixture's two translate probes, then restored) · run 2: before top 50 scrollY 830 · callback top 50 scrollY 870 · two frames later top 50 scrollY 870 · load 8.55/9.35/11.18
+F3c V4 V2 + a composite:add translate animation started on the target in the callback (the glide) · run 1: before top 50 scrollY 830 · callback top 50 scrollY 870 · two frames later top 86.23 scrollY 870 · load 8.55/9.35/11.18
+F3c V4 V2 + a composite:add translate animation started on the target in the callback (the glide) · run 2: before top 50 scrollY 830 · callback top 50 scrollY 870 · two frames later top 86.23 scrollY 870 · load 8.55/9.35/11.18
+F3c V5 V2 + the target already carries a running WAAPI animation (an engaged control's own) · run 1: before top 50 scrollY 830 · callback top 50 scrollY 870 · two frames later top 50 scrollY 870 · load 8.55/9.35/11.18
+F3c V5 V2 + the target already carries a running WAAPI animation (an engaged control's own) · run 2: before top 50 scrollY 830 · callback top 50 scrollY 870 · two frames later top 50 scrollY 870 · load 8.55/9.35/11.18
+F3c V6 V2 + the insert made from a page.evaluate task (no rAF), as a harness act · run 1: before top 50 scrollY 830 · callback top 50 scrollY 870 · two frames later top 50 scrollY 870 · load 8.55/9.35/11.18
+F3c V6 V2 + the insert made from a page.evaluate task (no rAF), as a harness act · run 2: before top 50 scrollY 830 · callback top 50 scrollY 870 · two frames later top 50 scrollY 870 · load 8.55/9.35/11.18
+F3c V7 V2 + target in a card with scale 0.8 · run 1: before top 54 scrollY 830 · callback top 54 scrollY 870 · two frames later top 54 scrollY 870 · load 8.55/9.35/11.18
+F3c V7 V2 + target in a card with scale 0.8 · run 2: before top 54 scrollY 830 · callback top 54 scrollY 870 · two frames later top 54 scrollY 870 · load 8.55/9.35/11.18
+# end · load 8.55/9.35/11.18
+# exit 0 · 2026-11-04 00:11:57 · load { 8.55 9.35 11.18 }
+# end · 2026-11-04 00:11:57 · load { 8.55 9.35 11.18 } · harness 0dbb165e0e86

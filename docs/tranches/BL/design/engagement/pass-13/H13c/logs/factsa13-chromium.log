@@ -1,0 +1,97 @@
+# H13c factsa13 chromium · 2026-11-03 22:21:43 · load { 17.38 15.20 16.08 } · harness a09eb8c765b3 · 
+# C-A13 facts · chromium 149.0.7827.55 · 2026-11-04T03:21:44.183Z · load 17.38 15.20 16.08
+## registered · load 17.38 15.20 16.08
+ms | 210ms | read "0.21s" -> 210 | consumer transition-duration "0.21s"
+ms | 0.21s | read "0.21s" -> 210 | consumer transition-duration "0.21s"
+ms | 210MS | read "0.21s" -> 210 | consumer transition-duration "0.21s"
+ms | 2.1e2ms | read "0.21s" -> 210 | consumer transition-duration "0.21s"
+ms | +0.21s | read "0.21s" -> 210 | consumer transition-duration "0.21s"
+ms | /*c*/0.21s | read "0.21s" -> 210 | consumer transition-duration "0.21s"
+ms | calc(0.1s + 110ms) | read "0.21s" -> 210 | consumer transition-duration "0.21s"
+ms | calc(105ms * 2) | read "0.21s" -> 210 | consumer transition-duration "0.21s"
+ms | min(210ms, 1s) | read "0.21s" -> 210 | consumer transition-duration "0.21s"
+ms | max(210ms, 1ms) | read "0.21s" -> 210 | consumer transition-duration "0.21s"
+ms | clamp(1ms, 210ms, 1s) | read "0.21s" -> 210 | consumer transition-duration "0.21s"
+ms | round(nearest, 214ms, 10ms) | read "0.21s" -> 210 | consumer transition-duration "0.21s"
+ms | abs(-210ms) | read "0.21s" -> 210 | consumer transition-duration "0.21s"
+ms | calc(var(--nope, 0.21s)) | read "0.21s" -> 210 | consumer transition-duration "0.21s"
+ms | calc(0.21s * pi / pi) | read "0.21s" -> 210 | consumer transition-duration "0.21s"
+ms | calc(0.21s * e / e) | read "0.21s" -> 210 | consumer transition-duration "0.21s"
+ms | mod(1210ms, 1000ms) | read "0.21s" -> 210 | consumer transition-duration "0.21s"
+ms | rem(1210ms, 1000ms) | read "0.21s" -> 210 | consumer transition-duration "0.21s"
+ms | calc(0.21s * sign(1s)) | read "0.21s" -> 210 | consumer transition-duration "0.21s"
+ms | calc(var(--settle) * var(--tempo)) | read "0.21s" -> 210 | consumer transition-duration "0.21s"
+ms | calc(infinity * 1s) | read "1.79769e+308s" -> NaN | consumer transition-duration "1.79769e+308s"
+ms | 1e-3s | read "0.001s" -> 1 | consumer transition-duration "0.001s"
+ms | -0s | read "0s" -> 0 | consumer transition-duration "0s"
+ms | 210 | read "-1s" -> -1000 | consumer transition-duration "0s"
+ms | 210ms, 1s | read "-1s" -> -1000 | consumer transition-duration "0.21s, 1s"
+ms | inherit | read "-1s" -> -1000 | consumer transition-duration "0s"
+ms | initial | read "-1s" -> -1000 | consumer transition-duration "0s"
+ms | unset | read "-1s" -> -1000 | consumer transition-duration "0s"
+number | 1.06 | read "1.06" -> 1.06 | consumer opacity "0.06"
+number | calc(1 + 0.06) | read "1.06" -> 1.06 | consumer opacity "0.06"
+number | min(1.06, 2) | read "1.06" -> 1.06 | consumer opacity "0.06"
+number | clamp(1, 1.06, 2) | read "1.06" -> 1.06 | consumer opacity "0.06"
+number | round(1.06, 0.01) | read "1.06" -> 1.06 | consumer opacity "0.06"
+number | abs(-1.06) | read "1.06" -> 1.06 | consumer opacity "0.06"
+number | calc(1.06 * e / e) | read "1.06" -> 1.06 | consumer opacity "0.06"
+number | sign(1) * 1.06 | read "-1" -> -1 | consumer opacity "0.06"
+number | calc(sign(1) * 1.06) | read "1.06" -> 1.06 | consumer opacity "0.06"
+px | 16px | read "16px" -> 16 | consumer padding-left "16px"
+px | 1rem | read "16px" -> 16 | consumer padding-left "16px"
+px | calc(1rem + 2px) | read "18px" -> 18 | consumer padding-left "18px"
+px | min(16px, 5vw) | read "16px" -> 16 | consumer padding-left "16px"
+px | max(1px, 16px) | read "16px" -> 16 | consumer padding-left "16px"
+px | clamp(1px, 16px, 99px) | read "16px" -> 16 | consumer padding-left "16px"
+px | abs(-16px) | read "16px" -> 16 | consumer padding-left "16px"
+px | 1em | read "16px" -> 16 | consumer padding-left "16px"
+px | round(16.4px, 1px) | read "16px" -> 16 | consumer padding-left "16px"
+## calcctx · load 17.38 15.20 16.08
+--spring-dock-settle: 210ms | registered read "0.21s" | library consumer calc(settle * tempo) "0.21s"
+--spring-dock-settle: 0.1s + 110ms | registered read "-1s" | library consumer calc(settle * tempo) "0.21s"
+--spring-dock-settle: 105ms * 2 | registered read "-1s" | library consumer calc(settle * tempo) "0.21s"
+--spring-dock-settle: 2 * 105ms | registered read "-1s" | library consumer calc(settle * tempo) "0.21s"
+--scale-engage: 1.06 | registered read "1.06" | library consumer calc(1 + (x - 1) * g) "1.06"
+--scale-engage: 1 + 0.06 | registered read "-1" | library consumer calc(1 + (x - 1) * g) "1.06"
+--scale-engage: 2 * 0.53 | registered read "-1" | library consumer calc(1 + (x - 1) * g) "1.06"
+## transitionall · load 17.38 15.20 16.08
+transition: all 300ms linear | read "0.21s" | animations after 0
+transition-property: all; transition-duration: 300ms | read "0.21s" | animations after 0
+transition: --engage-read-time 300ms linear | read "-1s" | animations after 0
+transition: none | read "0.21s" | animations after 0
+## probe · load 17.38 15.20 16.08
+none | dx 40.000 dy 0.000 | after cancel 0.000
+rotate: 10deg | dx 39.392 dy 6.946 | after cancel 0.000
+perspective: 600px | dx 40.002 dy 0.000 | after cancel 0.000
+## anchor · load 17.38 15.20 16.08
+page insert above: before st 540 top 60 | MO callback st 580 top 60 | +2 frames st 580 top 60
+page remove above: MO callback st 540 top 60 | +2 frames st 540 top 60
+page clamp: before st 640 top 360 | MO callback st 600 top 400 | +2 frames st 600 top 400
+scroller insert above: before st 480 top 120 | MO callback st 520 top 120 | +2 frames st 520 top 120
+## bbox · load 17.38 15.20 16.08
+none | track 300x6 | bbox/offset x 1.0000 y 1.0000
+rotate: 10deg | track 300x6 | bbox/offset x 0.9883 y 9.6672
+transform: skewX(15deg) | track 300x6 | bbox/offset x 1.0054 y 1.0000
+scale: 0.8 | track 300x6 | bbox/offset x 0.8000 y 0.8000
+## shadow · load 17.38 15.20 16.08
+shadow edit: target top 20 -> 76, records on <html> subtree 0
+## snap · load 17.38 15.20 16.08
+overflow-anchor auto: before st 600 top 0 | MO callback st 640 top 0 | settled st 640 top 0
+overflow-anchor none: before st 600 top 0 | MO callback st 640 top 0 | settled st 640 top 0
+## animstart · load 17.38 15.20 16.08
+class starts a keyframe animation (from translate 0 -40px): top before 100, in MO callback 60 (layout unmoved)
+## link · load 17.38 15.20 16.08
+link insert: top before 0, at its record 0, at load 40; records by the insert 1, after 1
+## newton · load 17.38 15.20 16.08
+perspective 600px rotateX(25deg) layout move 40px | painted move 37.55 px | first-frame landing error 0.171 px
+perspective 600px rotateX(25deg) layout move 160px | painted move 157.11 px | first-frame landing error 4.509 px
+perspective 300px rotateX(45deg) layout move 40px | painted move 37.92 px | first-frame landing error 1.740 px
+perspective 300px rotateX(45deg) layout move 160px | painted move 197.91 px | first-frame landing error 41.191 px
+perspective 200px rotateX(60deg) layout move 40px | painted move 57.57 px | first-frame landing error 7.815 px
+perspective 200px rotateX(60deg) layout move 120px | painted move 322.24 px | first-frame landing error 133.806 px
+## fieldsizing · load 17.38 15.20 16.08
+field-sizing true: target top 26 -> 106, records 0
+# end · load 17.38 15.20 16.08
+# exit 0 · 2026-11-03 22:21:45 · load { 17.38 15.20 16.08 }
+# end · 2026-11-03 22:21:45 · load { 17.38 15.20 16.08 } · harness a09eb8c765b3

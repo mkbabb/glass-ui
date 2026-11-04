@@ -1,0 +1,26 @@
+# H13c factsd webkit · 2026-11-03 23:51:50 · load { 15.29 13.87 12.15 } · harness 0dbb165e0e86 · 
+# facts13d webkit · 2026-11-04T04:51:50.614Z · load 15.03/13.84/12.14
+# browser 26.5
+## F1d refused forms by history · load 15.03/13.84/12.14
+F1d ms | "initial" | (a) fresh "-1s" · (b) after "0.999s" -> "-1s" · (c) kept after "0.999s" -> "-1s" · (d) <html> token after "0.999s" -> "-1s"
+F1d ms | "210ms, 1s" | (a) fresh "-1s" · (b) after "0.999s" -> "-1s" · (c) kept after "0.999s" -> "-1s" · (d) <html> token after "0.999s" -> "-1s"
+F1d ms | "210" | (a) fresh "-1s" · (b) after "0.999s" -> "-1s" · (c) kept after "0.999s" -> "-1s" · (d) <html> token after "0.999s" -> "-1s"
+F1d ms | "21%" | (a) fresh "-1s" · (b) after "0.999s" -> "-1s" · (c) kept after "0.999s" -> "-1s" · (d) <html> token after "0.999s" -> "-1s"
+F1d ms | "nonsense" | (a) fresh "-1s" · (b) after "0.999s" -> "-1s" · (c) kept after "0.999s" -> "-1s" · (d) <html> token after "0.999s" -> "-1s"
+F1d ms | "1px" | (a) fresh "-1s" · (b) after "0.999s" -> "-1s" · (c) kept after "0.999s" -> "-1s" · (d) <html> token after "0.999s" -> "-1s"
+F1d number | "initial" | (a) fresh "-1" · (b) after "9.99" -> "-1" · (c) kept after "9.99" -> "-1" · (d) <html> token after "9.99" -> "-1"
+F1d number | "1.06, 2" | (a) fresh "-1" · (b) after "9.99" -> "-1" · (c) kept after "9.99" -> "-1" · (d) <html> token after "9.99" -> "-1"
+F1d number | "106%" | (a) fresh "-1" · (b) after "9.99" -> "-1" · (c) kept after "9.99" -> "-1" · (d) <html> token after "9.99" -> "-1"
+F1d number | "nonsense" | (a) fresh "-1" · (b) after "9.99" -> "-1" · (c) kept after "9.99" -> "-1" · (d) <html> token after "9.99" -> "-1"
+F1d number | "1px" | (a) fresh "-1" · (b) after "9.99" -> "-1" · (c) kept after "9.99" -> "-1" · (d) <html> token after "9.99" -> "-1"
+F1d px | "initial" | (a) fresh "-1px" · (b) after "99px" -> "-1px" · (c) kept after "99px" -> "-1px" · (d) <html> token after "99px" -> "-1px"
+F1d px | "16px 2px" | (a) fresh "-1px" · (b) after "99px" -> "-1px" · (c) kept after "99px" -> "-1px" · (d) <html> token after "99px" -> "-1px"
+F1d px | "16" | (a) fresh "-1px" · (b) after "99px" -> "-1px" · (c) kept after "99px" -> "-1px" · (d) <html> token after "99px" -> "-1px"
+F1d px | "5%" | (a) fresh "-1px" · (b) after "99px" -> "-1px" · (c) kept after "99px" -> "-1px" · (d) <html> token after "99px" -> "-1px"
+F1d px | "nonsense" | (a) fresh "-1px" · (b) after "99px" -> "-1px" · (c) kept after "99px" -> "-1px" · (d) <html> token after "99px" -> "-1px"
+F1d px | "1s" | (a) fresh "-1px" · (b) after "99px" -> "-1px" · (c) kept after "99px" -> "-1px" · (d) <html> token after "99px" -> "-1px"
+## F4d transition sample, rAF vs posted task, 1 px/ms · load 15.03/13.84/12.14
+F4d 60 samples (59 mid-flight) · timeline moved 0/60 · a frame between 0/60 · task − rAF sample, ms of animation time at 1 px/ms: nonzero 20/59, min 0.000, median 0.000, max 1.000
+# end · load 15.03/13.84/12.14
+# exit 0 · 2026-11-03 23:51:52 · load { 15.03 13.84 12.14 }
+# end · 2026-11-03 23:51:52 · load { 15.03 13.84 12.14 } · harness 0dbb165e0e86

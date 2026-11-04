@@ -1,0 +1,50 @@
+{
+ "id": "E-10",
+ "engine": "webkit",
+ "version": "26.5",
+ "target": {
+  "fixture": true,
+  "fault": "e10-reachframe"
+ },
+ "loadStart": "9.4/9.0/9.7",
+ "loadEnd": "9.4/9.1/9.7",
+ "verdict": "FAIL",
+ "cells": [
+  {
+   "name": "E-10 slider reach · none",
+   "status": "PASS",
+   "line": "the card none · the gutter --fx-gutter painted 16.00 px (frame 1.000) · rest 22.0..368.0 of 390 (room 22.0, width 346.0) · the rule in paint: min(block ×1.0600, 1 + 2·(22.0 − 16.0)/346.0) = ×1.0347 · engaged ×1.0347 inline (358.0 px, -0.00 px off the figure; bound ≤ 1), 16.0..374.0: margin 16.0 against the gutter 16.0 − 1 · errors 0",
+   "load": "9.4/9.0/9.7"
+  },
+  {
+   "name": "E-10 slider reach · scale 0.8",
+   "status": "FAIL",
+   "line": "the card scale 0.8 · the gutter --fx-gutter painted 12.80 px (frame 0.799) · rest 18.8..371.2 of 390 (room 18.8, width 352.4) · the rule in paint: min(block ×1.0600, 1 + 2·(18.8 − 12.8)/352.4) = ×1.0341 · engaged ×1.0000 inline (352.4 px, -12.00 px off the figure; bound ≤ 1), 18.8..371.2: margin 18.8 against the gutter 12.8 − 1 · errors 0",
+   "load": "9.4/9.0/9.7"
+  },
+  {
+   "name": "E-10 slider reach · zoom 0.8",
+   "status": "FAIL",
+   "line": "the card zoom 0.8 · the gutter --fx-gutter painted 12.80 px (frame 0.801) · rest 18.8..371.2 of 390 (room 18.8, width 352.4) · the rule in paint: min(block ×1.0600, 1 + 2·(18.8 − 12.8)/352.4) = ×1.0341 · engaged ×1.0000 inline (352.4 px, -12.00 px off the figure; bound ≤ 1), 18.8..371.2: margin 18.8 against the gutter 12.8 − 1 · errors 0",
+   "load": "9.4/9.0/9.7"
+  },
+  {
+   "name": "E-10 slider reach · zoom 1.25",
+   "status": "FAIL",
+   "line": "the card zoom 1.25 · the gutter --fx-gutter painted 20.00 px (frame 1.252) · rest 26.0..364.0 of 390 (room 26.0, width 338.0) · the rule in paint: min(block ×1.0600, 1 + 2·(26.0 − 20.0)/338.0) = ×1.0355 · engaged ×1.0600 inline (358.3 px, 8.28 px off the figure; bound ≤ 1), 15.9..374.1: margin 15.9 against the gutter 20.0 − 1 · errors 0",
+   "load": "9.4/9.0/9.7"
+  },
+  {
+   "name": "E-10 slider reach · zoom 2",
+   "status": "FAIL",
+   "line": "the card zoom 2 · the gutter --fx-gutter painted 32.00 px (frame 2.000) · rest 38.0..352.0 of 390 (room 38.0, width 314.0) · the rule in paint: min(block ×1.0600, 1 + 2·(38.0 − 32.0)/314.0) = ×1.0382 · engaged ×1.0600 inline (332.8 px, 6.84 px off the figure; bound ≤ 1), 28.6..361.4: margin 28.6 against the gutter 32.0 − 1 · errors 0",
+   "load": "9.4/9.1/9.7"
+  },
+  {
+   "name": "E-10 slider reach · zoom 1.25 + scale 0.8",
+   "status": "PASS",
+   "line": "the card zoom 1.25 + scale 0.8 · the gutter --fx-gutter painted 16.00 px (frame 1.000) · rest 22.0..368.0 of 390 (room 22.0, width 346.0) · the rule in paint: min(block ×1.0600, 1 + 2·(22.0 − 16.0)/346.0) = ×1.0347 · engaged ×1.0347 inline (358.0 px, -0.00 px off the figure; bound ≤ 1), 16.0..374.0: margin 16.0 against the gutter 16.0 − 1 · errors 0",
+   "load": "9.4/9.1/9.7"
+  }
+ ]
+}

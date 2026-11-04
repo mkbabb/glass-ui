@@ -53,15 +53,19 @@ const CLOCKS = () => {
   // probe. Pass 2 set it without importance: under reduce every token read 0, the clock set came back empty ("against
   // 0 clock tokens"), and every kept clock, A's authorized rows included, read as minted (C-CP §4.1, CP §7.4), which
   // contradicted E-9 (a rung keeps its light leg under reduce)
+  // H13-complete (pass 13 c1): a token's value is what its consumer computes (`resolved`, every value incl. 0), not its text.
+  // H13 made the fixture's `--engage-control-engage-release` the library's math form `calc(90ms * 2)`, so the mirror read the
+  // text `calc(90ms * 2)` against the row's 180 and called an equal clock drift (clean E-8 FAIL, first read at this seat)
+  const resolved = new Map();
   for (const n of names) {
     probe.style.removeProperty("transition-duration"); probe.style.setProperty("transition-duration", `var(${n})`, "important");
     const v = getComputedStyle(probe).transitionDuration.split(",")[0].trim();
-    const m = v.match(/^([\d.]+)(m?s)$/); if (m && probe.style.getPropertyValue("transition-duration")) { const x = +m[1] * (m[2] === "s" ? 1000 : 1); if (x > 0) ms.set(n, x); }
+    const m = v.match(/^([\d.]+)(m?s)$/); if (m && probe.style.getPropertyValue("transition-duration")) { const x = +m[1] * (m[2] === "s" ? 1000 : 1); resolved.set(n, x); if (x > 0) ms.set(n, x); }
   }
   probe.remove();
   const root = getComputedStyle(document.documentElement);
   const engage = [...names].filter((n) => n.startsWith("--engage-") && root.getPropertyValue(n).trim() !== "");
-  return { clocks: [...ms.entries()], engage: engage.map((n) => [n, root.getPropertyValue(n).trim()]) };
+  return { clocks: [...ms.entries()], engage: engage.map((n) => [n, root.getPropertyValue(n).trim(), resolved.has(n) ? resolved.get(n) : NaN]) };
 };
 
 await witness("E-8", "one clock authority; no rung literal", async ({ E, T, cell, guard, idx, engine }) => {
@@ -88,13 +92,14 @@ await witness("E-8", "one clock authority; no rung literal", async ({ E, T, cell
       mirrored = true;
       if (!r.env) cell("E-8 mirror", "FAIL", "the build exposes no envelope table (window.__e.envelopes)");
       else {
-        const got = new Map(r.ck.engage);
+        const got = new Map(r.ck.engage.map(([n, text]) => [n, text]));
+        const val = new Map(r.ck.engage.map(([n, , x]) => [n, x]));
         const bad = [];
         for (const row of r.env) for (const [leg, v] of [["attack", row.attackMs], ["release", row.releaseMs]]) {
-          // compared in milliseconds: a minifier may respell 120ms as .12s (measured in the HEAD build)
-          const n = `--engage-${row.role}-${leg}`; const g = got.get(n); const mm = g?.match(/^([\d.]+)(m?s)$/);
-          const ms = mm ? +mm[1] * (mm[2] === "s" ? 1000 : 1) : NaN;
-          if (!(Math.abs(ms - v) < 0.01)) bad.push(`${n} ${g ?? "absent"} ≠ ${v}ms`);
+          // compared in milliseconds as the consumer computes the token (a minifier may respell 120ms as .12s; the library
+          // writes clocks as calc()), the text printed beside it; a token the consumer refuses reads NaN and is drift
+          const n = `--engage-${row.role}-${leg}`; const g = got.get(n); const ms = val.has(n) ? val.get(n) : NaN;
+          if (!(Math.abs(ms - v) < 0.01)) bad.push(`${n} ${g ?? "absent"} (${Number.isFinite(ms) ? `${ms}ms` : "unresolved"}) ≠ ${v}ms`);
         }
         const orphans = [...got.keys()].filter((n) => !r.env.some((row) => n === `--engage-${row.role}-attack` || n === `--engage-${row.role}-release`));
         cell("E-8 mirror", bad.length || orphans.length ? "FAIL" : "PASS", `${r.env.length} rows, ${got.size} --engage-* tokens on :root · drift [${bad.join("; ")}] · orphans [${orphans.join(", ")}]`);

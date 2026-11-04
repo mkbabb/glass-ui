@@ -1,0 +1,11 @@
+# H13c rr-cand11-ca11 webkit · 2026-11-04 01:29:31 · load { 12.79 12.33 11.52 } · harness 0dbb165e0e86 · --only exit-side --r 1
+# load gate: waited 240 s for a 1-minute load below 8; now { 7.98 10.75 11.10 }
+# C-A11 probe · C-A11's adversarial cells on the candidate's lens, host glide and travel tokens: off H11's cards, inside the travel, on the exit, on a wheel, across a re-render, and fail-loud on both paths
+# target /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p13c/H13c/wt/.h13out/builds/cand11 · engine webkit · lock wait 0.0 s · other headless processes: chromium 4, webkit 0 · load 8.0/10.7/11.1 at start
+# scene app: harness scenes/App.vue (sha1 9e34ffa5714e)
+# webkit 26.5 (Playwright WebKit, not Safari; real Safari UNMEASURED (owner's safaridriver checkbox))
+  PASS       CA11 exit-side · none · 6 visible exit frames, 1 change(s) · step over 16.7 ms 7.4 px (bound 15.1 + the 4 px drive) · off > 2 px on 4 frames over 52 ms (≤ 465) · load 8.0/10.7/11.1
+  PASS       CA11 exit-side · zoom125 · 6 visible exit frames, 1 change(s) · step over 16.7 ms 9.0 px (bound 18.6 + the 4 px drive) · off > 2 px on 4 frames over 50 ms (≤ 465) · load 7.8/10.6/11.0
+C-A11 probe webkit PASS · 2 pass, 0 fail, 0 unmeasured of 2 gating cells (0 reported) · load 8.0/10.7/11.1 at start, 7.8/10.6/11.0 at end
+# exit 0 · 2026-11-04 01:33:47 · load { 7.82 10.58 11.03 }
+# end · 2026-11-04 01:33:47 · load { 7.82 10.58 11.03 } · harness 0dbb165e0e86

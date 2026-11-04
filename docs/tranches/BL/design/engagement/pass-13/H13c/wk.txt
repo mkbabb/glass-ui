@@ -1,0 +1,54 @@
+# H13-complete WebKit list (D5 pass 13 c1): H13/wk-w1.txt unchanged in content and order, with (1) the engine facts as three stages
+# (facts13, facts13c = C-E13 F1-F5, C-A13 facts-a13); (2) cand13 beside cand12 and cand11 in the exit-side re-reads, three rounds each
+# (REGISTRY §P13-8.2 c1); (3) glance-cand13 beside glance-cand12; (4) st-E-11's six plants and `clean` split into named stages, so no
+# stage nears the 90-min cap. Run in named acquisitions WK-1..WK-6 (wk-queue.sh): list order, no stage started after 80 min of an acquisition
+facts13 webkit
+factsc webkit
+factsa13 webkit
+factsd webkit
+factse webkit
+factsf webkit
+fx-E-10 webkit --part hg13 --hg13 scroll --rr 1
+fx-E-10 webkit --part hg13 --hg13 scroll --rr 2
+fx-E-10 webkit --part hg13,hostglide --cured anchor
+st-E-10 webkit --faults e10-hostglidelayout,e10-hostglidelevel,e10-hostglidechild,e10-hostglidestale,e10-reenter --cured anchor
+factsf webkit V8,V9,V10,V11
+fx-E-10 webkit --part hg13,hostglide
+st-E-10 webkit --faults e10-hostglidelayout,e10-hostglidelevel,e10-hostglidechild,e10-hostglidestale,e10-reenter
+fx-E-11 webkit --part forms,tokens,census,reachin,travel
+st-E-11 webkit --faults e11-narrowread,e11-typedom,e11-reachzero
+st-E-11 webkit --faults e11-travellist,e11-travelunit,e11-travelthrow
+cand12-E-10 webkit --part hg13
+cand12-E-11 webkit --part forms,tokens,census,reachin
+rr-cand12-ce11 webkit --only exit-side --round 1
+rr-cand11-ce11 webkit --only exit-side --round 1
+rr-cand13-ce11 webkit --only exit-side --round 1
+rr-cand12-ca11 webkit --only exit-side --r 1
+rr-cand11-ca11 webkit --only exit-side --r 1
+rr-cand13-ca11 webkit --only exit-side --r 1
+rr-cand12-ce11 webkit --only exit-side --round 2
+rr-cand11-ce11 webkit --only exit-side --round 2
+rr-cand13-ce11 webkit --only exit-side --round 2
+rr-cand12-ca11 webkit --only exit-side --r 2
+rr-cand11-ca11 webkit --only exit-side --r 2
+rr-cand13-ca11 webkit --only exit-side --r 2
+rr-cand12-ce11 webkit --only exit-side --round 3
+rr-cand11-ce11 webkit --only exit-side --round 3
+rr-cand13-ce11 webkit --only exit-side --round 3
+rr-cand12-ca11 webkit --only exit-side --r 3
+rr-cand11-ca11 webkit --only exit-side --r 3
+rr-cand13-ca11 webkit --only exit-side --r 3
+plant-allkinds-E-10 webkit --part hg13 --hg13 kind,reentry
+glance-cand12 webkit
+glance-cand13 webkit
+fxglance webkit
+st-E-10 webkit --faults e10-hostglideratio,e10-hostglideone,e10-hostglideframe,e10-glidescale,e10-rerender,e10-relayout,e10-reachframe
+fx-E-10 webkit --part old,anc,dlg,trail,glide,vanish,feather,radius,place,film,lensside,lensfilm,reach
+clean webkit --only E-1,E-2,E-3,E-4,E-5
+clean webkit --only E-6,E-7,E-8,E-9,E-12,E-13
+fx-E-11 webkit --part old
+st-E-3 webkit --faults e3-gutter
+cap webkit
+head-E-10 webkit --part hg13
+head-E-11 webkit --part forms,tokens,census,reachin
+st-E-8 webkit
