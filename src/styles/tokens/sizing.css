@@ -59,6 +59,14 @@
          • PRIMARY (`--dropdown-text`) → item rows, triggers, filter inputs, empties.
          • SECONDARY → section labels, group-headings, keyboard shortcuts.
        `--dropdown-input-height` unifies the two filter-input heights onto one rung. */
+    /* The icon slot's gap: an icon-led row's glyph to its label. ONE rung for the dock
+       trigger family (`dock/styles/controls/triggers.css`) and the menu row
+       (`glass/overlay-plate.css` `.menu__item`), so a consumer's bare icon component
+       sits off its label by the same 4px in the dock and in the menu it opens.
+       [2026-11-04 · 10.1.5 · O-129 r7] The menu row had no gap at all: fourier's nav
+       menu (`AppDock.vue:230-240`) painted its icon flush against the label. */
+    --icon-label-gap: 0.25rem;
+
     --dropdown-text:           var(--control-text);
     --dropdown-text-secondary: var(--control-text-sm);
     --dropdown-input-height:   var(--control-h-md);

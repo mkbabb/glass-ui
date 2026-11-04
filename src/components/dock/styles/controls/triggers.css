@@ -27,7 +27,7 @@
         flex-shrink: 0;
         /* identity base */
         scale: 1;
-        gap: var(--dock-trigger-gap, 0.25rem);
+        gap: var(--dock-trigger-gap, var(--icon-label-gap));
         min-height: var(--dock-trigger-min-height, auto);
         padding: var(--dock-trigger-padding-block, 0.25rem)
             var(--dock-trigger-padding-inline, 0.5rem);
