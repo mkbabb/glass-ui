@@ -19,3 +19,27 @@
         Additions to E13's lists, by this seat, for REGISTRY §P13-8.2 c2's charter: rec (rec13.mjs: the per-record cost, §P13-7 item 10)
         and paint (paint13.mjs: §P13-5's two predicted paints as stills with numbers), each in both engines, after the lists' last lines.
 04:0x · cand13-E-10 chromium --part hg13 read 89/1: FAIL 'scroll · clamp scroller · remove below · none' (21.85 px on the act's frame, load 13.5). Seen under load, so two re-reads of --hg13 scroll appended to c1.txt by atomic rename (--rr 1, --rr 2: an inert arg that names the re-read in the log hash, as H13c did).
+05:28 · RESUME. The seat that held this charter died at ~03:00 (login expiry) and wrote no report; its all.sh (PID 19798) ran on orphaned under guarded.
+        The resumed seat (claude-opus-5-5, own system identity) started no second run: it read NOTES, the runners, c1.log and wk-queue.log, and waits on
+        PID 19798 (kill -0 every 60 s, in the background). Chromium list: every stage ran (c1.done = c1.txt). cost/glance/rec/paint exit 3 = REPORT-only
+        (0 gating cells), measured, not a harness failure.
+05:3x · cand13 E-2 Chromium read 98/66 (every commit's arm iii, light rise ≤ 0.0056 against ≥ 0.01; load 8.5-12). No cand12 E-2 exists under harness
+        f2cc94e3, so a regression cannot be told from a harness change. Added by atomic rename: `cand12-E-2 webkit` at the end of wk.txt (the same
+        acquisition chain). After the WebKit queue ends: one guarded Chromium batch (C-3) with cand12-E-2 and cand11-E-2 as controls and two re-reads of
+        cand13-E-2 (the load rule).
+06:3x · WK-1 stopped by the 80-min rule at 06:32 with paint + cand12-E-2 left; WK-2 queued 06:32. cand13 E-2 WebKit 89/75 (arm iii) at load 14-16: two re-reads appended to wk.txt by atomic rename (cand13-E-2 webkit --rr 1, --rr 2), to run in WK-2.
+08:04 · WK-2's lock wait passed 90 min (queued 06:32:05, not admitted at 08:04). Recorded; the seat keeps waiting, no WebKit cell returned UNMEASURED for the lock.
+08:1x · CAUSE of the E-2 fails found: a harness-invocation reason, not the candidate. cand12 E-2 WebKit (08:07, load 10.8) read 89/75, the
+        same fail set as cand13 cell for cell. e2-commit.mjs defaults to arms i,iii ("arm ii printed, not admitted: Q-5 unruled"); Q-5 is ruled
+        (O-103d (1), REGISTRY §P6), and pass 12's runners pass `--commit-arms i,ii` (C-A12/scripts/run.sh:37, C-E12/scripts/run.sh:63).
+        run-e13c.sh (copied from H13c's form) drops it. Every failing cell prints arm ii at 1.20-2.64 px against > 0.8.
+        So: wk.txt's not-yet-started `cand13-E-2 webkit --rr 2` replaced by `cand13-E-2 webkit --commit-arms i,ii` (atomic rename, 08:18;
+        `--rr 1` was already running and runs out); c1b.txt rewritten to cand13 + cand12 E-2 Chromium under `--commit-arms i,ii` (batch C-3).
+        The default-arm reads stay as a REPORT of arm iii (light) on both builds.
+08:06:47 · WK-2 admitted after a 94.7-min lock wait (queued 06:32:05); ran paint webkit, cand12-E-2 webkit, cand13-E-2 webkit --rr 1, cand13-E-2 webkit
+        --commit-arms i,ii (164/0); guard exit 0 08:21:39. all.sh "all done" 08:21:39; PID 19798 gone.
+08:21:52-08:28:19 · C-3 (guarded --timeout 60, admitted at once): cand13-E-2 and cand12-E-2 chromium --commit-arms i,ii, 164/0 each.
+        JSON dirs are keyed by stage + engine, so a later read of a stage overwrites its earlier JSON (cand13-E-2-*, cand13-E-11-webkit);
+        the logs are distinct per argument hash and are the record.
+08:29 · worktree removed (git worktree remove --force), empty parents p13c/E13c and p13c removed by rmdir; no process of this seat running.
+        Harness hash f2cc94e3fa86 in every stage log (88 lines). WebKit: only the planned 60-navigation retires (H3-1), no engine close.

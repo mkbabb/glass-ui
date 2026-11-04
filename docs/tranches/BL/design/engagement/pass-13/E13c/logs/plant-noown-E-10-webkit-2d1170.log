@@ -1,0 +1,10 @@
+# E13c plant-noown-E-10 webkit · 2026-11-04 05:43:31 · load { 11.46 11.19 9.57 } · harness f2cc94e3fa86 · --part hg13 --hg13 reentry
+# E-10 · CK-20 no one-frame discontinuity on an engagement path
+# target /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p13c/E13c/wt/.e13out/builds/plant-noown · engine webkit · lock wait 0.0 s · other headless processes: chromium 8, webkit 0 · load 11.5/11.2/9.6 at start
+# scene app: harness scenes/App.vue (sha1 9e34ffa5714e)
+# webkit 26.5 (Playwright WebKit, not Safari; real Safari UNMEASURED (owner's safaridriver checkbox))
+  PASS       E-10 slider reentry · a still hold, 1000 ms, no harness mutation · records delivered to any MutationObserver in the window that the harness did not make: 0 in 0 deliveries (bound 0) · none · all deliveries 0 (0 records) · errors 0 · load 11.0/11.1/9.6
+  FAIL       E-10 slider reentry · a 40 px block inserted before C, then 40 frames · records delivered to any MutationObserver in the window that the harness did not make: 8 in 7 deliveries (bound 0) · observer [html childList,subtree,attributes,characterData] 7 deliveries, 8 records: 2× attributes:style on span.glass-slider.engage-held (in host); 6× attributes:style on span.glass-loupe.glass-plate (in host) · all deliveries 9 (10 records) · errors 0 · load 11.0/11.1/9.6
+E-10 webkit FAIL · 1 pass, 1 fail, 0 unmeasured of 2 gating cells (0 reported) · load 11.5/11.2/9.6 at start, 11.0/11.1/9.6 at end
+# exit 1 · 2026-11-04 05:43:38 · load { 11.02 11.11 9.55 }
+# end · 2026-11-04 05:43:38 · load { 11.02 11.11 9.55 } · harness f2cc94e3fa86

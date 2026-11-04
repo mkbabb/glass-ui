@@ -20,3 +20,9 @@ cost webkit
 glance-cand13 webkit
 rec webkit
 paint webkit
+# Added 05:3x by the resumed seat (atomic rename): cand12 E-2 as the control for cand13 E-2 Chromium 98/66 (arm iii), the same harness f2cc94e3.
+cand12-E-2 webkit
+# Added 06:3x (atomic rename): cand13 E-2 WebKit read 89/75 at load 14-16; two re-reads under the load rule.
+cand13-E-2 webkit --rr 1
+# Replaced 08:2x (atomic rename): the --rr 2 re-read, by cand13 E-2 under O-103d (1)`s arms (--commit-arms i,ii, as pass-12 C-A12/C-E12 run.sh), the read of record.
+cand13-E-2 webkit --commit-arms i,ii

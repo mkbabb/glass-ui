@@ -1,0 +1,11 @@
+# E13c plant-stale-E-10 webkit · 2026-11-04 05:43:22 · load { 12.26 11.33 9.60 } · harness f2cc94e3fa86 · --part hg13 --hg13 anim
+# E-10 · CK-20 no one-frame discontinuity on an engagement path
+# target /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p13c/E13c/wt/.e13out/builds/plant-stale · engine webkit · lock wait 0.0 s · other headless processes: chromium 8, webkit 0 · load 12.3/11.3/9.6 at start
+# scene app: harness scenes/App.vue (sha1 9e34ffa5714e)
+# webkit 26.5 (Playwright WebKit, not Safari; real Safari UNMEASURED (owner's safaridriver checkbox))
+  FAIL       E-10 slider anim · css-transition scale · C runs css-transition scale from frame 2 (C's painted centre moved 1.08, 0.06 px across the mutation's frame); an unrelated 40 px block appended after C on frame 14 · translate glides on the root in the next 6 frames 6 (clock 210 ms) (bound 0) · the root's painted step on the mutation's frame 7.12, 0.40 against the frame before 0.40, 0.02: 6.73 px off its own motion (bound ≤ 0.5) · errors 0 · load 11.7/11.2/9.6
+  FAIL       E-10 slider anim · waapi translate · C runs waapi translate from frame 2 (C's painted centre moved 0.00, 1.70 px across the mutation's frame); an unrelated 40 px block appended after C on frame 14 · translate glides on the root in the next 6 frames 6 (clock 210 ms) (bound 0) · the root's painted step on the mutation's frame 0.00, -18.30 against the frame before 0.00, 1.50: 19.80 px off its own motion (bound ≤ 0.5) · errors 0 · load 11.7/11.2/9.6
+  FAIL       E-10 slider anim · waapi rotate · C runs waapi rotate from frame 2 (C's painted centre moved -0.07, 0.67 px across the mutation's frame); an unrelated 40 px block appended after C on frame 14 · translate glides on the root in the next 6 frames 6 (clock 210 ms) (bound 0) · the root's painted step on the mutation's frame 0.59, -7.70 against the frame before -0.07, 0.71: 8.43 px off its own motion (bound ≤ 0.5) · errors 0 · load 11.5/11.2/9.6
+E-10 webkit FAIL · 0 pass, 3 fail, 0 unmeasured of 3 gating cells (0 reported) · load 12.3/11.3/9.6 at start, 11.5/11.2/9.6 at end
+# exit 1 · 2026-11-04 05:43:31 · load { 11.46 11.19 9.57 }
+# end · 2026-11-04 05:43:31 · load { 11.46 11.19 9.57 } · harness f2cc94e3fa86

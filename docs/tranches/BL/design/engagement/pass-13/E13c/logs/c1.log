@@ -67,3 +67,14 @@ cand13-E-10 chromium · E-10 chromium FAIL · 6 pass, 1 fail, 0 unmeasured of 7 
 [guarded] WARNING: the kernel zone leak is ARMED (armed 1793759449 slope=40.7/s inuse=30389 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. Finish what you are doing and report it; the owner decides on the reboot.
 # C-2 guard exit 0 2026-11-04 05:11:37 · load { 9.19 8.62 9.10 }
 # c queue end 2026-11-04 05:11:37 · load { 9.19 8.62 9.10 }
+# C-3 queued 2026-11-04 08:21:52 · load { 10.26 9.17 10.11 }
+# C-3 batch admitted 2026-11-04 08:21:52 · load { 10.26 9.17 10.11 }
+# 08:21:52 start (0 min): cand13-E-2 chromium --commit-arms i,ii · load { 10.26 9.17 10.11 }
+cand13-E-2 chromium · E-2 chromium PASS · 164 pass, 0 fail, 0 unmeasured of 164 gating cells (16 reported) · load 10.3/9.2/10.1 at start, 8.9/8.8/9.7 at end # exit 0 · 2026-11-04 08:25:05 · load { 8.88 8.77 9.73 }  · /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-13/E13c/logs/cand13-E-2-chromium-41f864.log
+# 08:25:05 end (0): cand13-E-2 chromium --commit-arms i,ii · load { 8.88 8.77 9.73 }
+# 08:25:05 start (3 min): cand12-E-2 chromium --commit-arms i,ii · load { 8.88 8.77 9.73 }
+cand12-E-2 chromium · E-2 chromium PASS · 164 pass, 0 fail, 0 unmeasured of 164 gating cells (16 reported) · load 8.9/8.8/9.7 at start, 11.5/9.9/10.0 at end # exit 0 · 2026-11-04 08:28:19 · load { 11.53 9.94 10.01 }  · /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-13/E13c/logs/cand12-E-2-chromium-41f864.log
+# 08:28:19 end (0): cand12-E-2 chromium --commit-arms i,ii · load { 11.53 9.94 10.01 }
+# C-3 batch end 2026-11-04 08:28:19 · load { 11.53 9.94 10.01 }
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1793759449 slope=40.7/s inuse=30389 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. Finish what you are doing and report it; the owner decides on the reboot.
+# C-3 guard exit 0 2026-11-04 08:28:23 · load { 11.53 9.94 10.01 }
