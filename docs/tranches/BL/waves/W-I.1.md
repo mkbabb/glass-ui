@@ -468,3 +468,7 @@ console.log(`VERDICT ${label}: ${fails} FAIL of ${results.filter((r) => r.pass !
 ```
 
 `hover-census.mjs` is `W-I.3.md` appendix A; `demo-aria.mjs` is `W-I.2.md` appendix A.
+
+## Addendum (2026-11-04): INBOUND O-129 rows 9 and 10
+- **Row 9, seat tooltips.** No dock seat shows a tooltip today. Whether seats show tooltips is a matter for D2's seat grammar, and D2 rules on it before this wave lands. If D2 adopts them, DockIconButton gives each seat a `role=tooltip` on `--duration-fast`/`--spring-present`, fine pointer only. If not, the seat's accessible name alone carries the label, and the ruling is recorded in D2's REGISTRY.
+- **Row 10, the compact dock on short landscape screens.** The dock's block size reads one token, `--dock-block`. On `(orientation: landscape) and (max-height: 500px)` it resolves to a compact rung, which every seat, ring reserve and plate radius derive from. Gate: fourier at 844x390 seats its dock at the compact rung, and the O-123/O-124 cap and ring gates hold there.

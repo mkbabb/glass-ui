@@ -209,3 +209,5 @@ if (process.argv[2] === "--diff") {
   console.log(`computed-sweep: ${routes.length} routes × 2 themes · ${Object.keys(rec).length} elements → ${out}`);
 }
 ```
+
+**Addendum (2026-11-04), INBOUND O-129 row 6.** On a coarse or narrow viewport, the one control-size authority (item 10) renders input type at a 16 px floor (iOS no-zoom), not 21 px. 10.1.5 makes the cure first. Gate: at 390 px, input type ÷ the pane subtitle's type ≤ 1.25.
