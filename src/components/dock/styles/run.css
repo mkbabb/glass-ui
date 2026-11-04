@@ -495,11 +495,19 @@
         --dock-cap-cut: var(--radius-lg);
     }
 
-    .glass-dock .dock-run {
+    /* [2026-11-04 · 10.1.5 · O-129 r2, O-123 OD-1] THE TIMELINE IS NAMED ONLY ON THE
+       RUN THAT PAINTS. A collapsed dock's full pane stays laid out (absolute, inset 0,
+       layers.css) inside the collapsed box and still scrolls (263/60 at 390), so a
+       timeline on every `.dock-run` cut the collapsed plate's trailing corners to
+       `--dock-cap-cut`: `50% 16px 16px 50%` on a 60x60 circle. Gated on the pane's own
+       `is-active` (the DOM posture the morph and the measure both read), the collapsed
+       dock names no `--dock-run` timeline, the plate's animations are inactive, and it
+       paints its rest corner: a circle. */
+    .glass-dock .dock-run.is-active {
         scroll-timeline: --dock-run inline;
     }
 
-    .glass-dock.vertical .dock-run {
+    .glass-dock.vertical .dock-run.is-active {
         scroll-timeline: --dock-run block;
     }
 
