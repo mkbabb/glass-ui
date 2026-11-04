@@ -138,3 +138,5 @@ process.exit(ungPaint.length ? 1 : 0);
 ```
 
 `tt-fine.mjs` (the fine-pointer tooltip read behind G5) opens the band-I probe's `hover` scene, hovers the tooltip trigger for 600 ms, clicks it, moves the pointer to (800, 850), waits 900 ms, and counts visible `[role="tooltip"], [data-slot="tooltip-content"]` nodes at each step.
+
+**Addendum (2026-11-04), INBOUND O-131 G-21 (Gregg pass 7), named witnesses.** `.dark-mode-toggle-button:hover`, `.dock-tab-button:hover` and `.dock-trigger:hover` paint outside `@media (hover: hover)`, so on touch the hover disc stays after a tap. They join the census as named cells. Gate: tap DarkModeToggle, a dock tab and a dock trigger inside GlassDock at 390 with touch; after the tap, no hover paint on the tapped element. Gregg's `PageDock.vue` `(hover: none)` reset retires.

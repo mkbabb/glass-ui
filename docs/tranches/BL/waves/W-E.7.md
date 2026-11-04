@@ -213,3 +213,5 @@ process.exitCode = fails ? 1 : 0;
 ```
 
 The row-budget run reads the route list from the running router (`#app.__vue_app__`, which the production demo build keeps); the wired spec reads `demo/stories/manifest.ts` instead, so the route set is the manifest's and not whatever the router registered.
+
+**Addendum (2026-11-04), INBOUND O-131 G-19 (Gregg pass 7).** The coarse hit-area floor (44 px) on DockControl and SegmentedTabs is keyed to the compact width class as well as `(pointer: coarse)`. A 390-wide fine-pointer viewport gives hero tabs 28 px tall and icon toggles 32x32 today. Gate: at 390 with a fine pointer and with a coarse one, every DockControl and SegmentedTabs hit box is ≥ 44 px on both axes. Gregg's `style.css` copy of the coarse tokens at `max-width: 639.98px` retires.
