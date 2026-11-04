@@ -1,0 +1,26 @@
+# C-E13-complete held list: the WebKit stages guarded REFUSED at 14:42:39 (WK-2: 'kernel zone data.kalloc.1024 at 8.81M ... heavy and browser runs stop at 8M: reboot the Mac').
+# WK-1 (admitted 13:13:09, ended 14:42:35, guard exit 0) ran the 45 wk.txt stages before these. The next completion runs these unchanged, in this order, with
+# this seat's run.sh and builds (rebuild by builds.sh cand13 cand11 cand12 cand8 into a fresh worktree; src trees in NOTES.txt). Chromium: none held.
+plant-reachzero-e11 webkit --part reachin
+rr-cand13-ce11 webkit --only exit-side --round 2
+rr-cand13-ca11 webkit --only exit-side --r 2
+rr-cand11-ce11 webkit --only exit-side --round 1
+rr-cand11-ca11 webkit --only exit-side --r 1
+cand13-ce11 webkit --only side,clock,reverse,wheel,release-mid,exit-side,rerender,reach,repress,press-line,noroom,still
+cand13-ce11 webkit --only loudx,relclock
+cand13-ce11 webkit --only side,clock --tfs trackzoom,htmlzoom,zoom25
+cand13-ca11 webkit --only side,clock,reverse,wheel,release-mid,exit-side,rerender,hostglide,repress,reach
+cand13-ca11 webkit --only loud
+cand13-ce9 webkit --only stack,dom,lensdlg,anc,lens
+cand13-ce9c webkit --only lensfilm
+cand13-ca9 webkit --only stack,loop,flip,flipstill,zoom
+cand13-crest webkit
+cand13-tip webkit
+rec webkit
+paint webkit
+h13still-cand13 webkit
+cand13-glance webkit
+cand13-zglance webkit
+cand13-stills webkit
+cand13-ca12 webkit --only still
+cand13-cap webkit

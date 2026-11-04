@@ -1,0 +1,25 @@
+{
+ "id": "E-10",
+ "engine": "webkit",
+ "version": "26.5",
+ "target": {
+  "build": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p13c/C-E13c/wt/.ce13out/builds/plant-noown"
+ },
+ "loadStart": "6.7/5.3/5.9",
+ "loadEnd": "6.4/5.3/5.9",
+ "verdict": "FAIL",
+ "cells": [
+  {
+   "name": "E-10 slider reentry · a still hold, 1000 ms, no harness mutation",
+   "status": "PASS",
+   "line": "records delivered to any MutationObserver in the window that the harness did not make: 0 in 0 deliveries (bound 0) · none · all deliveries 0 (0 records) · errors 0",
+   "load": "6.7/5.3/5.9"
+  },
+  {
+   "name": "E-10 slider reentry · a 40 px block inserted before C, then 40 frames",
+   "status": "FAIL",
+   "line": "records delivered to any MutationObserver in the window that the harness did not make: 6 in 5 deliveries (bound 0) · observer [html childList,subtree,attributes,characterData] 5 deliveries, 6 records: 2× attributes:style on span.glass-slider.engage-held (in host); 4× attributes:style on span.glass-loupe.glass-plate (in host) · all deliveries 7 (8 records) · errors 0",
+   "load": "6.4/5.3/5.9"
+  }
+ ]
+}

@@ -1,0 +1,12 @@
+# C-A13c plant-reachzero-E-11 chromium · 2026-11-04 10:49:34 · load { 5.19 6.30 8.58 } · harness f2cc94e3fa86 · --part reachin
+# E-11 · CK-21 no silent degradation
+# target /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p13c/C-A13c/wt/.ca13out/builds/plant-reachzero · engine chromium · lock wait 10.0 s · other headless processes: chromium 4, webkit 2 · load 6.0/6.4/8.6 at start
+# scene app: harness scenes/App.vue (sha1 9e34ffa5714e)
+# chromium 149.0.7827.55
+  PASS       E-11 slider reach input · --scale-engage nonsense · --scale-engage: nonsense on <html> before the first script (expect refused) · held inline ×1.0000, block ×1.0000 (338.0 × 20.0 of rest 338.0 × 20.0; clean 350.0 × 21.2) · console errors naming the token 1 ("[glass-ui] engage stage: --scale-engage is unreadable on the host; the held control does not grow along its inline axis."), uncaught 0 · load 5.8/6.4/8.6
+  FAIL       E-11 slider reach input · --space-section nonsense · THE PAINT CONTRADICTS THE MESSAGE (a collapse) · --space-section: nonsense on <html> before the first script (expect refused) · held inline ×0.0000, block ×1.0600 (0.0 × 21.2 of rest 378.0 × 20.0; clean 350.0 × 21.2) · console errors naming the token 1 ("[glass-ui] engage stage: --space-section is unreadable on the host; the held control does not grow along its inline axis"), uncaught 0 · load 5.8/6.4/8.6
+  PASS       E-11 slider reach input · --scale-engage calc(1.06 * 1) · --scale-engage: calc(1.06 * 1) on <html> before the first script (expect taken) · held inline ×1.0355, block ×1.0600 (350.0 × 21.2 of rest 338.0 × 20.0; clean 350.0 × 21.2) · console errors naming the token 0, uncaught 0 · load 5.6/6.3/8.5
+  PASS       E-11 slider reach input · --space-section calc(10px + 10px) · --space-section: calc(10px + 10px) on <html> before the first script (expect taken) · held inline ×1.0355, block ×1.0600 (350.0 × 21.2 of rest 338.0 × 20.0; clean 350.0 × 21.2) · console errors naming the token 0, uncaught 0 · load 5.6/6.3/8.5
+E-11 chromium FAIL · 3 pass, 1 fail, 0 unmeasured of 4 gating cells (0 reported) · load 6.0/6.4/8.6 at start, 5.6/6.3/8.5 at end
+# exit 1 · 2026-11-04 10:49:54 · load { 5.59 6.34 8.54 }
+# end · 2026-11-04 10:49:54 · load { 5.59 6.34 8.54 } · harness f2cc94e3fa86

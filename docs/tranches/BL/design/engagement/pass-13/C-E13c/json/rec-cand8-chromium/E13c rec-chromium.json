@@ -1,0 +1,37 @@
+{
+ "id": "E13c rec",
+ "engine": "chromium",
+ "version": "149.0.7827.55",
+ "target": {
+  "build": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p13c/C-E13c/wt/.ce13out/builds/cand8"
+ },
+ "loadStart": "15.9/16.4/14.9",
+ "loadEnd": "18.7/17.0/15.1",
+ "verdict": "UNMEASURED",
+ "cells": [
+  {
+   "name": "rec · attr",
+   "status": "REPORT",
+   "line": "cand8 · 200 attr records in one task, 15 rounds · rest median 0.100 ms (min 0.000) · held median 0.100 ms (min 0.000) · per record held − rest: median 0.00 µs, min 0.00 µs · engaged during the held batch true",
+   "load": "15.9/16.4/14.9"
+  },
+  {
+   "name": "rec · text",
+   "status": "REPORT",
+   "line": "cand8 · 200 text records in one task, 15 rounds · rest median 0.100 ms (min 0.100) · held median 0.100 ms (min 0.000) · per record held − rest: median 0.00 µs, min -0.50 µs · engaged during the held batch true",
+   "load": "17.0/16.6/15.0"
+  },
+  {
+   "name": "arm",
+   "status": "REPORT",
+   "line": "cand8 · press to +400 ms: 7 style records (7 in the first 34 ms) by target {\"span.glass-slider.engage-held\":4,\"span.glass-loupe.glass-plate\":3} · token reads (a removal whose old value carried --engage-read-): 0 {} at ms [] · after the release + 800 ms, elements with no style attribute before the press that carry one now: 0 ",
+   "load": "17.0/16.6/15.0"
+  },
+  {
+   "name": "cdp · writer",
+   "status": "REPORT",
+   "line": "cand8 · rest with the writer (10 attribute records a frame): 362 frames, script 0.040 ms/frame, task 0.159 ms/frame, layouts 0.0/s, recalcs 0.0/s · held still: 361 frames, script 0.102 ms/frame, task 0.255 ms/frame, layouts 0.0/s, recalcs 0.0/s · held still with the writer: 361 frames, script 0.095 ms/frame, task 0.248 ms/frame, layouts 0.0/s, recalcs 0.0/s · the writer's held − rest script 0.055 ms/frame",
+   "load": "18.7/17.0/15.1"
+  }
+ ]
+}

@@ -1,0 +1,68 @@
+# C-E13-complete WebKit list, planned before the start as THREE named acquisitions WK-1, WK-2, WK-3 (one `guarded --exclusive webkit
+# --timeout 90` each, queued consecutively by wk-queue.sh; no stage starts after 80 min of an acquisition, so the cap never cuts one).
+# The pass-12 critics' WebKit batteries took 78.7 min (C-A12, one acquisition) and 2 x ~80 min (C-E12) for fewer stages, so this list
+# cannot fit one. Planned split by cumulative estimate from C-E12's WebKit stage times: WK-1 = held battery + CK-20/CK-21 paths
+# (ce13c .. cand13-E-13), WK-2 = scoring witnesses, idle bar, plants, exit-side re-reads, WK-3 = pass-11 paths, older instruments,
+# stills, CAP. Whatever an acquisition leaves runs in the next, recorded in wk-queue.log. No cost bar (CDP, Chromium only); D10 is
+# Chromium-only. WebKit retires its browser at 60 navigations (lib.mjs NAV_CAP, tile H3-1).
+cand13-ce13c webkit --only d1,d2,d3,d4,d5,d6,d7,d8,d9,stills
+cand12-ce13c webkit --only d1,d2,d3,d4,d5,d6,d7,d8,d9
+plant-child-ce13c webkit --only d1,d2,d3,d5
+cand13-E-10 webkit
+cand13-E-11 webkit
+cand13-ce12 webkit
+cand13-ca12 webkit --only xf,kind,anchor
+cand13-ca12 webkit --only errs
+cand13-vals webkit
+cand13-e11v webkit
+cand13-origin webkit
+cand13-E-13 webkit
+rr-cand13-ce11 webkit --only exit-side --round 1
+rr-cand13-ca11 webkit --only exit-side --r 1
+cand13-E-1 webkit
+cand13-E-2 webkit
+cand13-E-3 webkit
+cand13-E-4 webkit
+cand13-E-5 webkit
+cand13-E-6 webkit
+cand13-E-7 webkit
+cand13-E-8 webkit
+cand13-E-9 webkit
+cand13-prmplant webkit
+cand13-E-12 webkit
+cand8-ca9idle webkit
+cand13-ca9idle webkit
+cand8-ca9idle webkit --round 2
+cand13-ca9idle webkit --round 2
+cand8-ca6idle webkit
+cand13-ca6idle webkit
+cand13-loop webkit
+plant-loop-loop webkit
+plant-level-e10 webkit --part hg13 --hg13 xf
+plant-child-e10 webkit --part hg13 --hg13 kind
+plant-stale-e10 webkit --part hg13 --hg13 anim
+plant-noown-e10 webkit --part hg13 --hg13 reentry
+plant-typedom-e11 webkit --part forms,census
+plant-reachzero-e11 webkit --part reachin
+rr-cand13-ce11 webkit --only exit-side --round 2
+rr-cand13-ca11 webkit --only exit-side --r 2
+rr-cand11-ce11 webkit --only exit-side --round 1
+rr-cand11-ca11 webkit --only exit-side --r 1
+cand13-ce11 webkit --only side,clock,reverse,wheel,release-mid,exit-side,rerender,reach,repress,press-line,noroom,still
+cand13-ce11 webkit --only loudx,relclock
+cand13-ce11 webkit --only side,clock --tfs trackzoom,htmlzoom,zoom25
+cand13-ca11 webkit --only side,clock,reverse,wheel,release-mid,exit-side,rerender,hostglide,repress,reach
+cand13-ca11 webkit --only loud
+cand13-ce9 webkit --only stack,dom,lensdlg,anc,lens
+cand13-ce9c webkit --only lensfilm
+cand13-ca9 webkit --only stack,loop,flip,flipstill,zoom
+cand13-crest webkit
+cand13-tip webkit
+rec webkit
+paint webkit
+h13still-cand13 webkit
+cand13-glance webkit
+cand13-zglance webkit
+cand13-stills webkit
+cand13-ca12 webkit --only still
+cand13-cap webkit

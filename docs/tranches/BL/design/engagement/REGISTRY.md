@@ -3428,3 +3428,230 @@ Unchanged (`§3.5`, `§P1-9.4`, `§P2-8.4` .. `§P12-8.4`): at least three full 
 - passes 14 and 15 both clean.
 
 On the present record the realistic earliest is two confirmation passes after the held cells land. **The fixed point is not reached, so D5 does not yet wait on D2 and D3: it completes pass 13 and builds pass 14.** When a pass reaches the fixed point, D5 then waits for F-16 and F-17 (or their 10.2.0 landings through master, which follow D2's convergence, O-88) and runs no build pass until they land. **The R-K1-c vehicle moves with this registry again:** it was "after pass 14 at the earliest"; it is now after pass 15 at the earliest. atlas's M-7 stays until then.
+
+---
+
+# D5 · pass 13 · completion: cand13 at 16/27 on both critics, both critics held at the zone gate before their second WebKit acquisition, NOT CLEAN, the count stays 0
+
+Everything above this line is the record of passes 1-13 and the owner's rulings. It is left as written. This part closes what the pass-13 completion measured (§P13-8.2 wave c4). It scores only what a seat measured.
+
+| field | value |
+|---|---|
+| seat | D5 pass-13 completion agglomeration (§P13-8.2 c4): the candidate's status on the plan's rule, the clean-pass count, the fixed point, what D2 and D3 hold, every class placed, the base of P-E14, the rest of the completion and the pass-14 plan |
+| model | `claude-opus-5-5`, asserted from own system identity |
+| HEAD | `4c3306a46`, docs only past P-E12's build base `d94e413dd` (`git diff --stat d94e413dd HEAD -- src tests demo` prints nothing). `release/10.1.1`..`10.1.4` are not ancestors of HEAD (`git merge-base --is-ancestor`, exit 1 each). The base did not move; F5‴ carries |
+| the candidate's bytes | `P-E13.patch` **`ffa64fc4054bf5368000f29bd3930b47743f115f`** and `P-E12.patch` `028c180777ff2409…` (this seat's `shasum`, matching every completion seat). Src tree `30f51077c3ec` (H13-complete, P-E13-complete, C-A13-complete, C-E13-complete each read it back) |
+| inputs, read in full | `pass-13/H13-complete.md`, `P-E13-complete.md`, `C-A13-complete.md`, `C-E13-complete.md`; this file's pass-13 part (§P13-0..§P13-8), pass-12 part (§P12-0..§P12-8) and §P1-6; the heads of `C-A13c/held-wk2.txt` and `C-E13c/held-wk.txt`; `../dock/REGISTRY.md`'s "D2 · pass 12 · completion" header and §P12c-0; `../../CHARTER.md`'s design-loop rules (lines 75, 78); `../../audit/INBOUND.md` (mtime 2026-11-04 11:33, last row **O-133**) and `../../FORMATION-PROGRESS.md` (mtime 12:20, last line the D2 pass-12 close), re-read at this seat's start; `git log 06a0240ee..HEAD -- waves/W-0.1.md` (one commit, `fd44a9022`, O-130's placement, no D5 or F-16 line in its diff) |
+| left unread, stated | `H13.md`, `P-E13.md`, `C-A13.md`, `C-E13.md` and `held-battery.txt` beyond what §P13-2 and §P13-4 carry (the pass-13 agglomeration read them in full); every seat's logs, JSON and frames beyond the lines the reports cite; round 0 and passes 1-11 beyond §P1-6. No ruling below rests on an unread part |
+| instruments | none that measure. `shasum` of both patches, the ancestry checks, `git log` on the waves files, `ls` of `.claude/worktrees/bl/D5/`. Every number cites the seat that measured it (P-3) |
+| fences | no source edit, no git write; this part is the only write. Nothing under `~/.claude` was read |
+| engines | Chromium 149.0.7827.55 and Playwright WebKit 26.5 (playwright 1.61.1), headless shell, no GPU arguments. Playwright WebKit is not Safari. Real Safari: **UNMEASURED (owner's safaridriver checkbox)** |
+| rulings in force | O-103d (1)-(4) (E-2 under `--commit-arms i,ii`); O-103f; Q-1 (c) and Q-4 (b) as defaults; O-118 (3); O-87. **O-122..O-133** arrived since the pass-13 part. None names a D5 cell or a CK row (H13-complete, P-E13-complete and both critics grepped them; this seat read O-129..O-133's rows: 10.1.5, W-0.1, W-0.8 §11, W-E.7, D2 pass 13). Nothing to fold |
+
+Short citations: `H13c §n`, `E13c §n`, `CA13c §n`, `CE13c §n` are the four completion reports' sections.
+
+## P13c-0 · In brief
+
+**Seats' completeness.** **c0 and c1 (H13c) COMPLETE**, with one harness defect open (the clean fixture's three WebKit anchor-insert cells, H13c §3.2). **c2 (E13c) COMPLETE** (two holders; the first died at a login expiry and its orphaned battery was waited out, not rerun; E13c header). **c3 is PARTIAL in both seats, and each says so.** C-A13c ran its whole Chromium list and its WK-1 (17 stages). `guarded` refused its WK-2 at 13:13:09 with the kernel zone at **8.47M**: 29 WebKit stages and the gates were not run (`C-A13c/held-wk2.txt`). C-E13c ran its whole Chromium list, the gates, and 45 of 68 WebKit stages in WK-1. WK-2 was refused at 14:42:39 at **8.81M**: 23 WebKit stages were not run (`C-E13c/held-wk.txt`). So this part scores only what the two critics measured. Rows whose deciding cell is held stay OPEN, and the rest of the completion is planned in §P13c-8.0.
+
+| candidate | built as | critics | rows closed / applicable (both critics) | pass 12 | status |
+|---|---|---|---:|---:|---|
+| **A+E** | `P-E13.patch` `ffa64fc4…` = F5‴ + P-A7 + E13, src tree `30f51077c3ec` | C-A13c **PARTIAL** 17/27; C-E13c **PARTIAL** 17/27 | **16/27 = 59 %**, plus 2 rows (CK-16, CK-27) whose WebKit cells are held | 20/27 = 74 % on `cand12` | **ADVANCE, NOT CLEAN.** Below `cand12` by four rows: CK-04 and CK-09 regress, CK-16 and CK-27 wait on held cells |
+
+**Pass 13 is not a clean pass. The clean-pass count stays 0.** The score series: 52 % (pass 4), 37 %, 67 %, 78 %, 78 %, 81 %, 78 %, 78 %, 74 % (pass 12), **59 % (pass 13, two rows held)**. If the held lists read both held rows closed, the ceiling on these bytes is 18/27 = 67 %.
+
+**The loop has not reached its fixed point, and it cannot on these bytes.** Outside the rows D2 and D3 hold, CK-04, CK-09, CK-20, CK-21, CK-22 and CK-25's lens clause each carry a counterexample measured on the built candidate in both engines. No held cell can close any of them (CE13c §5: "CK-20, 21, 22, 04, 09 cannot, on these bytes"). Pass 14 is a build pass. Seven findings shape it.
+
+1. **What cand13 cured, in paint, of record in both engines.** On H13's member set it lands rotation, skew, percent `translate`, the library Dialog, every attribute and text re-render kind and scroll anchoring at 0.00 px on the act's frame, where cand12 was 3.49-40.00 px off (H13c §4, §6; E-10 `hg13` 89/1 Chromium, 90/0 WebKit, E13c §2). It cured pass 12's WebKit false `--spring-panel-duration` error: the default-token census reads 31/31 in both engines, and the `typedom` plant brings back 23/31 in WebKit (E13c §6). Held still, CPU per frame is the lowest of the line after `cand8` (E13c §5). E-2, E-3, E-5, E-9, E-12 and E-13 hold on both critics.
+2. **cand13 regresses from cand12 on member sets cand12 carried, each read by a critic with cand12 beside it in the same run, both engines:**
+   - the perspective members: C-A13c's six (cand13 0.17-57.27 px, cand12 0.00) and C-E13c's 18 (14 fail, up to 100.72 px; cand12 18 × 0.00). §P13-2 row 3's "no regression" is **corrected** (§P13c-4);
+   - a script-animated ancestor: up to 72.00 px Chromium and 80.00 px WebKit under a page loop, 27.04 px under the Carousel's own `--member-scale` mechanism; cand12 0.00-0.01 (CE13c §2.1 D1). E13c's two predicted-paint reads agree in kind (36.79 and 38.69 px);
+   - an early page loop: a 40 px insert never arrives (0.0 px moved by +358 ms Chromium and +718 ms WebKit, 43 glides started; cand12 1 glide, settled 208.2 ms), and in WebKit a CSS card scale under the loop glides (CE13c D2);
+   - an animation the record starts: 40.00 px against the author's entrance (CA13c §2.2);
+   - the host's own size change: the fixed edge thrown 40.0 px (CA13c §2.5, graded with the grow's share) and 4.48 px for a scrubbed NumberField in Chromium (CE13c D5);
+   - the loupe under `rotate: 10deg`: `--lens-sy` ×4.3571, hung below the track (CA13c §2.4, CE13c §2.1, E13c §4);
+   - **CK-04**: a card scaled about the held control during the hold leaves the reach 16.1 px from the edges against a 25.0 px gutter (CE13c D9; `h.fx` cached);
+   - **CK-09**: E-8's mirror finds three orphan `--engage-read-*` tokens on `:root` (18/1 per engine, both critics).
+3. **The mechanism is confirmed by a plant.** `plant-child` (cand13 hearing child lists only, as cand12 did) passes D1, D2 and D5 where cand13 fails (CE13c §0.1). Hearing attribute and text records is what brings animations made of records into the glide. §P13-7 item 3 is now paint in both engines.
+4. **Members that fail on cand12 as on cand13, both engines, so not regressions:** the released host on its exit clock (D3); `--motion-tempo` ≤ 0 running 210 ms while CSS runs 0 s, with no error (D7, CA13c §2.6); the context-relative gutter (D8); the consumer's `calc()` fragments refused loud while the consumer computes them (CA13c §2.6, H13c F6); shadow-root, `field-sizing` and `<link>` moves cut in one frame (CA13c §2.3); Chromium's clamp-scroller removal 21.85 px on the act's frame, where cand12 read 40.00 px (E13c §2.1, both critics).
+5. **New with the registered read, WebKit only:** a consumer's `transition: all` or `transition-property: all` on the held host raises a false engage error on default tokens and drops the inline grow to ×1.0000 (CA13c §2.7, CE13c D6; H13c F7 library-free). Latent in every sibling (both critics' greps).
+6. **The WebKit exit-side regression from cand11 is of record** (§P12-7 item 8 is no longer PLAUSIBLE). `ce11 exit-side` fails on cand13 in 5 of 5 rounds read by H13c (3) and E13c (2), and passes in C-E13c's one round. It never fails on cand11 (6 of 6, H13c §5). The second round and cand11's control are in C-E13c's held list.
+7. **The engine facts of record** (H13c §1, both engines, library-free): F2 the probe, F3 anchoring at the callback and F1g the registered read per form hold. F4 holds in Chromium; in WebKit a running transition's sample moves up to 1.000 ms of animation time between the rAF callback and a posted task. F6 holds in both engines. F7 is WebKit's. Every fact P-E14 rests on is now read in both engines, except what S14 adds (§P13c-8.2).
+
+## P13c-1 · Registry
+
+| id | family | status after the completion | carries forward |
+|---|---|---|---|
+| **A+E** | the declared register with the engaged stage | ADVANCE, the one convergence candidate; `cand13` 16/27 on both critics (two rows held); `cand12` 20/27 | the held lists (§P13c-8.0), then P-E14 on P-E13 (§P13c-6) |
+| (c), D5-B, D5-C, D5-D, D5-X1..X3 | — | as §P13-1 | unchanged |
+| D5-B (door) | the door's parts | in the floor (F5‴) | unchanged |
+
+## P13c-2 · The candidate, row by row
+
+"Both" means both critics closed the row on their own replay in both engines. A row closes only that way.
+
+| row | C-A13c | C-E13c | ruled | reason |
+|---|---|---|---|---|
+| CK-01 | OPEN ◇ | OPEN ◇ | **OPEN ◇** | D2's latch (54/55 `dock`), D3's amplitude (WebKit 1.72-1.73 against 1.25-1.26) and A's reduce leg |
+| CK-02, 03 | CLOSED | CLOSED | **CLOSED** | E-2 164/0 both engines, arms i,ii |
+| **CK-04** | CLOSED (E-3 22/0) | OPEN (D9, both engines) | **OPEN** | §P13c-4 |
+| CK-05, 06, 07, 08 | CLOSED | CLOSED | **CLOSED** | E-4 18/0 and 15/0/4 (the Carousel's engine fact); E-5 56/0; S6 RETIRED; E-7 6/1 with D2's named clause |
+| **CK-09** | OPEN (orphans) | OPEN (orphans) | **OPEN**, regression | both read E-8 18/1 per engine |
+| CK-10, 11, 12, 13, 14, 15 | CLOSED | CLOSED | **CLOSED** | E-9 85/0, PRM plant 32 red; E-12 101/0/1 and 100/0/2; static census; E-10's hand-off cells |
+| **CK-16** | OPEN (WebKit held) | CLOSED (both engines at the bar) | **OPEN, held** | §P13c-4 |
+| CK-17 | OPEN ◇ | OPEN ◇ | **OPEN ◇** | D2 |
+| CK-18 | CLOSED | CLOSED | **CLOSED** | E-4's four surfaces |
+| CK-19 | OPEN ◇ | OPEN ◇ | **OPEN ◇** | D3 |
+| **CK-20** | OPEN | OPEN | **OPEN** | finding 2's members, finding 4's, finding 6 |
+| **CK-21** | OPEN | OPEN | **OPEN** | the `calc()` fragments (both engines), `transition: all` (WebKit), `--motion-tempo` ≤ 0, the context gutter |
+| **CK-22** | OPEN | OPEN | **OPEN** | the union of both critics' sentences (CA13c §4, CE13c §2.3): `stage.ts:38-44`, `:50-52`, `:58-60`, `:197`; `settle.ts:13-16`; `engage-stage.css:12-16`; P-E13 §7's C-2; no MIGRATION row for `style=""` at load (CA13c §2.8) or for the three names on `:root` |
+| CK-23 | CLOSED | CLOSED | **CLOSED** | numstat 199 files +5989/−1653, `src` 154 +3425/−1359 (both critics' `git apply --numstat`); CPU per frame measured; §P13c-4 |
+| CK-24 | CLOSED | CLOSED | **CLOSED** | E-1 `static` |
+| CK-25 | OPEN ◇ and D5's | OPEN ◇ and D5's | **OPEN** | D3's ambient clause; D5's: the loupe under rotation and the held slider apart from a script-moved card are below grade in both critics' frames; WebKit CAP held in both |
+| CK-26 | CLOSED | CLOSED | **CLOSED** | three private `@property` registrations, no lighting layer, blur token or radius (O-87) |
+| **CK-27** | OPEN (six WebKit plants held) | OPEN (`reachzero` WebKit held) | **OPEN, held** | §P13c-4 |
+
+**Closed: 16 of 27** (CK-02, 03, 05, 06, 07, 08, 10, 11, 12, 13, 14, 15, 18, 23, 24, 26). **Open: 11.** Of these, **held by D2 or D3:** CK-01, 17 and 19. **Held cells:** CK-16 and CK-27. **D5's own, with counterexamples on these bytes:** CK-04, 09, 20, 21 and 22. **Both:** CK-25 (D3's clause and D5's lens and carry).
+
+## P13c-3 · The floor (F5‴)
+
+No floor seat ran. None of §P12-8.2's three triggers fired: the base did not move, D3 has not published F-16, and D2 has not converged, so F-17 is not published. F5‴ carries as §P12-3 left it.
+
+## P13c-4 · Where the critics and seats differ, and the ruling
+
+The plan's rule: a row the critics disagree on is OPEN unless one critic's measurement refutes the other's on the same path. A counterexample either critic measured stands unless it is refuted.
+
+| item | one side | the other | ruling |
+|---|---|---|---|
+| **CK-04** | C-A13c: E-3 22/0, both engines | C-E13c: D9 fails, both engines, 16.1 px against 25.0 (bound ≥ 24.0); scaled before the hold, 25.0; cand12 passes both | **OPEN.** C-A13c did not drive D9. E-3's pass and D9's fail are different paths, so neither refutes the other, and the counterexample stands |
+| **CK-16** | C-A13c: Chromium at the bar (119.9 against `cand8` 120.4); its WebKit idle and loop cells held | C-E13c: both engines at the bar (WebKit 59.9/59.9 against 59.9/60.4), loop 2/2, `plant-loop` 0/2 | **OPEN, held.** The row needs both critics. C-A13c has no WebKit measurement to refute or confirm. C-E13c's reading is the one of record on that path. The row closes when C-A13c's held cells (`cand8-ca9idle`, `cand13-ca9idle`, `cand13-loop`, WebKit) read at the bar |
+| **CK-27** | C-A13c: six plants red in Chromium; WebKit held | C-E13c: every plant red in both engines but `reachzero` WebKit, held | **OPEN, held.** P-E13-complete read all six red in WebKit (E13c §6), but a builder's reading does not score a critic's row. The row closes when both critics' held plant stages read red on their cells |
+| CK-23 | under load (21.3-12.7), the builds do not separate | at 15.8-14.8 cand13 sits below cand11 and cand12 on `zoom125` and `deep`; **a held drag forces about 30 % more layouts and 79 % more style recalcs** than every other build (CE13c §2.4) | **CLOSED on both**, since the row is the numstat, priced. The drag's forced work is recorded as class 4 (§P13c-5) and priced in P-E14 |
+| perspective | §P13-2 row 3: "no (cand12 read perspective 1.20-3.92 px off)" | both critics: cand12 0.00 px on all 6 + 18 members (a block inserted inside the tilted card), cand13 fails 19 of 24 | **Corrected: a regression on this member set.** Pass 12's 1.20-3.92 px were other setups (§P12-4). Both statements stand on their own paths: cand12 is exact on the in-card insert and not elsewhere. P-E14 carries both sets |
+| WebKit exit-side | H13c 3 of 3 and E13c 2 of 2 rounds fail `ce11` on cand13; E13c reads one `ca11` fail (100.5 px) | C-E13c: one round passes `ce11` and `ca11` | **Stands as a regression from cand11.** One passing round does not refute five failing ones on the same path. A cell that fails in some rounds fails the row |
+| F7 on the built root | H13c F7, library-free: a bare `transition-duration: 210ms` empties the read in WebKit | CA13c §2.7: on the built root a bare duration does not, because the root's computed `transition-property` is the library's list; the `all` forms do | **Not a refutation.** These are different paths. The counterexample on the built candidate is `transition: all` and `transition-property: all`. The library-free fact stands for any element whose property list reaches the read |
+| `style=""` residue | E13c §5: 0 residue on every build after a press | CA13c §2.8: Button, Switch and Checkbox carry `style=""` **from load** on cand13, both engines | **CA13c's read stands.** E13c's cell compares before the press and after the release, so it cannot see a write at mount (E13c §7 item 4 names the gap) |
+| the WebKit anchor-insert cells | H13c §3.2: the clean fixture fails three | E13c §2.1, both critics' E-10 WebKit 213/0: cand13 passes them (0.00 px) | **The candidate passes, and the fixture defect is the harness's** (H14, §P13c-8.2) |
+| the script-carry figures | E13c: 36.79 / 38.69 px; CE13c `paint13`: 41.47 px (load 24-27) | CE13c D1: 72.00 / 80.00 px | **Both agree in kind.** The scenes differ (a 30 px sine against an 80 px ramp) |
+| CK-12 | C-A13c: closed, static | C-E13c: closed as a static census row; WebKit crest held | **CLOSED.** The row is the census, and both read it |
+
+## P13c-5 · Defect classes (recorded; no CK row added), each placed
+
+**§P13-7's classes, as the completion leaves them:**
+
+| §P13-7 item | now | placed |
+|---|---|---|
+| 1 the consumer's `calc()` fragments | of record in both engines (H13c F6), and paint on the built candidate (CA13c §2.6) | CK-21; P-E14 |
+| 2 a read narrowed by a rule that never names it | WebKit `transition: all` in paint (CA13c §2.7, CE13c D6) | CK-21; P-E14 |
+| 3 a move partitioned by mechanism | paint in both engines, with the plant (finding 3) | CK-20; the fresh formulation (§P13c-8.1) |
+| 4 the chord step | paint, and a regression (finding 2) | CK-20, CK-22; P-E14 |
+| 5 a rect ratio for a scale | paint, and a regression | CK-20, CK-25, CK-22; P-E14 |
+| 6 moves with no record | paint in both engines (CA13c §2.3) | CK-20; the formulation |
+| 7 a token read through a shared helper | paint (D7); not a regression | CK-21; P-E14. `motionTempo()`'s callers outside `engage/` stay formation's |
+| 8 named exceptions claimed away; stale comments | both critics' sentences | CK-22; P-E14 |
+| 9 witnesses at the easiest member; facts unread in one engine | the facts are read of record in both engines (H13c §1). Sampling stays the class: every regression in finding 2 sits outside H13's members | the parameter-range rule (§P13c-8.1 (c)) |
+| 10 consumer-visible side effects | `style=""` from load (CA13c §2.8); the drag's forced work (CE13c §2.4) | CK-22 MIGRATION, CK-23; P-E14 |
+| 11 the host's own size change | paint, and a regression | CK-20; P-E14 |
+| 12 a cached frame; a context-relative gutter | D9 is a CK-04 counterexample in both engines; D8 is paint and not a regression | CK-04, CK-21; P-E14 |
+| 13 process | as below | records |
+
+**New in the completion:**
+
+| # | class | source | placed at | owner of the cure |
+|---|---|---|---|---|
+| 1 | **A private name in the public token namespace.** The read's three `@property` registrations compute on `:root` inside `--engage-*`, which E-8's mirror keeps for envelope rows (§P1-6 CK-09) | CA13c §5 item 1, CE13c §6 item 3 | CK-09 | P-E14: the private reads live outside `--engage-*`, as `--stage-*` and `--rung-*` do, with no alias (E-1). E-8's mirror is the plant, unchanged |
+| 2 | **A cure that regresses a member set the previous build carried.** Each regression in finding 2 is a member H13 did not drive and cand12 passed | CA13c §5 item 2, CE13c §0.1 | CK-20, CK-27 | S14 lists every member set cand12 (and cand11, for exit-side) passes. H14 carries each as a cell, with the older build as the passing reference and cand13 as the plant where it fails |
+| 3 | **A mount-time read with a DOM side effect** (`style=""` on every commit host from load) | CA13c §5 item 3 | CK-22, CK-23 | P-E14: no residue, or a MIGRATION row |
+| 4 | **Forced work that scales with the page's own writes during a hold** (+30 % layouts, +79 % recalcs on a drag; the thumb's style records reach `onMutation`) | CE13c §2.4 | CK-23, CK-16 | P-E14 prices it beside cand12. H14's cost cell carries the drag |
+| 5 | **An instrument whose bound leaves out a size-dependent share** (the grow's own edge travel in `hostsize`) | CA13c §5 item 4 | instruments | H14, when it adopts the cell |
+| 6 | **Harness and runner defects found by the completion:** (a) `e2-commit.mjs` defaults to arms i,iii and prints "Q-5 unruled" against O-103d (1) (E13c §3); (b) the clean fixture's WebKit anchor-insert cells (H13c §3.2); (c) the witness deadline counts from before the shared harness lock (CE13c §4 item 1); (d) a later read of a stage overwrites its JSON (E13c §7 item 8); (e) the NumberField scrub drive does not engage in WebKit (CE13c §4 item 3); (f) E-7's static arm reads whatever tree the worktree holds (CE13c §4 item 2); (g) facts cells that wrote the consumer's `transition-duration` on the element they read (H13c §1 note) | the seats | CK-27, instruments | H14, the harness's owner, each by rule and recorded |
+| 7 | **Process.** The zone gate refused both critics' second WebKit acquisition (8.47M, 8.81M). The WebKit lock waited 71.8 min (C-E13c) and 94.7 min (E13c WK-2). The shared harness lock waited up to 1281.8 s on a Chromium stage. A login expiry killed E13c's first holder, and its orphaned battery was waited out, not rerun. Each seat that stopped returned PARTIAL with its held list as a runnable file. Two empty worktree parents (`p13/H13`, `p13/C-A13`) and an empty `p13c/` remain | the seats' process notes | records | the orchestrator: commit the completion records; remove the empty parents; plan each WebKit list as named acquisitions, as every seat did |
+
+## P13c-6 · The base of P-E14: **P-E13**
+
+§P13-8.3's rule: P-E14 builds on P-E12 only if the completion reads a cand13 regression, on rows cand12 closed, that P-E14 cannot cure in place. Two rows regress: CK-04 and CK-09.
+- **CK-09** is cured in place by moving three registered names out of `--engage-*`.
+- **CK-04** is cured in place by reading the reach's frame again on whatever invalidates it, as cand12 did per scroll.
+- **CK-20's regressions** (finding 2) are inside a row that is open on both builds. They come from the one mechanism the fresh formulation replaces (finding 3), so going back to P-E12 would not cure them.
+
+Going back would also discard what cand13 alone carries: rotation, skew, percent `translate`, the Dialog, every attribute and text kind, anchoring, the WebKit default-token census, and the lower cost. **P-E14 builds on P-E13, in place, one arm.** Its derivation cites cand12 as the passing reference on each member set cand12 carried (class 2). A's part stays P-A7's bytes unless D3's lane arrives.
+
+## P13c-7 · What D2 and D3 hold
+
+**D2** (`../dock/REGISTRY.md`, "D2 · pass 12 · completion"): pass 12 **NOT CLEAN**, 35/38, count **0 of 2**; pass 13 is a build pass (its driver is `../../driver/bl-design-d2-pass13.js`, owed at launch). **D2's earliest convergence is its pass 14's close**, so F-17 cannot come before then. D2 holds CK-01's `dock` latch, CK-17, and CK-08's named clause (`GlassDock.vue`'s `data-held`), as `waves/W-0.8.md` §10 states. §10 is unchanged; W-0.8's later commits are §11's (O-122..O-133).
+
+**D3** (`waves/W-0.1.md` addendum): unchanged for D5. The one commit since `06a0240ee` is `fd44a9022` (O-130's plate-L floor), and its diff carries no D5, F-16 or lean line. D3 holds CK-19, CK-01's ambient runtime cell (WebKit 1.72-1.73 against 1.25-1.26 at rest, both critics) and CK-25's ambient clause. It also holds the lean on its own scalar as F-16. **No D3 hunk is published.**
+
+**Rows that cannot close inside D5:** CK-01, CK-17, CK-19, CK-25's ambient clause. **Rows building can close:** CK-04, 09, 20, 21, 22, CK-25's lens clause. The held cells can close CK-16 and CK-27.
+
+**Formation owes:**
+- the commit of the completion records (`pass-13/C-A13-complete.md`, `C-E13-complete.md`, `C-A13c/`, `C-E13c/`, all untracked);
+- the empty worktree parents `.claude/worktrees/bl/D5/p13/H13/`, `p13/C-A13/` and `p13c/`;
+- as §P13-6 stated: the master merge of `release/10.1.1`..`10.1.4`, F5‴'s rebase, and the F-16 and F-17 hunks as their owners publish them.
+
+## P13c-8 · The next step: the rest of the completion, then pass 14
+
+The checklist stays **CK-01..CK-27, unchanged**. Critics may not add rows. Rulings as in the header. A ruling that arrives mid-pass is folded at the next seat boundary. Each seat re-reads `../../audit/INBOUND.md` and `../../FORMATION-PROGRESS.md` at its start. Every seat is Opus, declared explicitly.
+
+**The precondition, for every remaining seat:** the owner reboots, and `guarded` admits a heavy run again (it refuses at kalloc.1024 ≥ 8M, last read 8.81M). D5 has no lever on this. After the reboot, D5's seats compete with the owed `glass-10.1.5b.js` and D2's pass 13. The orchestrator sums every live run's widest remaining pool against the 5-6 ceiling, runs at most three D5 seats at a time, and holds one WebKit lock machine-wide.
+
+### P13c-8.0 · The rest of the completion (c3b, c4b)
+
+| wave | seat | charter |
+|---|---|---|
+| c3b | **C-A13-complete-2, C-E13-complete-2** (fresh Opus seats, each eligible as a pass-13 critic) | Each rebuilds by its parent seat's `builds.sh` in a fresh worktree and reads every src tree back against its parent's `logs/builds.log`. C-A13: `C-A13c/held-wk2.txt` as one `--exclusive webkit` acquisition, then `gates.sh`. C-E13: `C-E13c/held-wk.txt`. **Both lists run unchanged, serially on the WebKit lock**, each split into named acquisitions before it starts if it cannot fit 90 minutes. Each reads its parent's report in full and scores only the rows its held cells bear on: CK-16 (C-A13), CK-27 (both), CK-25's WebKit frames, CK-20's exit-side (cand13 beside cand11) and the critics' WebKit paths. A held cell that fails is a counterexample and goes into S14's inputs. A seat refused again returns PARTIAL with the same list |
+| c4b | agglomeration | appends "D5 · pass 13 · completion 2": CK-16 and CK-27 on both critics, any new WebKit counterexample placed. It changes neither the base nor the formulation unless a held cell refutes a reading above on the same path |
+
+**Pass 14 does not wait on c4b for its static work.** S14 (wave 1 below) runs no browser and starts after the reboot, alongside c3b. H14's and P-E14's browser stages start after c4b, so the WebKit lock serves one list at a time and S14 has c4b's members in hand before H14 builds cells.
+
+### P13c-8.1 · What pass 14 must be: a build pass under a fresh formulation
+
+Three passes found new members of the same families by enumeration, and pass 13 found them at the derivation's level. The completion measured why: the construction sorts moves by mechanism (a record to glide, time to leave), and an animation made of records, a record that starts an animation, a page loop writing every frame and a move with no record each fall on the wrong side (finding 3). The charter's rule for a stalled pass is a fresh formulation (CHARTER line 78). **The row asks for continuity in paint. Pass 14 starts from that statement, not from a list of mechanisms.**
+
+**The formulation P-E14 derives from (S14, a section of `P-E14.md` written and challenged before any byte is built):**
+
+- **(a) The invariant, stated on paint.** Read the held host's painted place once per frame in the frame of the box that carries it. Between two frames it never steps by more than the row's bound (≤ 0.5 px on the act's frame; ≤ H14's bound over any 16.7 ms). A move of the carrier (any ancestor's transform, animation, scroll or script-written style, at any rate) is carried and never resisted. A move of the host's place inside its carrier that the engine paints as a step is glided from where it was painted. The stage's own glide is one more move under the same invariant, so it must land.
+- **(b) The decomposition S14 must choose and defend.** S14 separates "carried" from "stepped" by the geometry the engine paints, never by which observer heard it. H13 §1.1 (i) named a frame-driven read that hears a move with no record. A split of the painted map into the carrier's map and the host's offset inside it is the other construction in view. S14 picks one, or a third, and shows that every member below falls on the side the invariant asks for. **A layout-property animation** (a script or transition writing `top`, `margin` or `width` of an ancestor every frame) belongs to both families. S14 states its treatment and the member's range.
+- **(c) Each member with a parameter range that bounds its family,** and the reason the range bounds it (the extremal cell, or a monotone error in the parameter). The minimum sets, from this pass's records:
+  - perspective: P 200-600 px, θ 0-60°, insert 40-200 px, host −200 to +150 px from the origin, inside and outside the tilted card (CA13c §2.1, CE13c D4, pass 12's setups);
+  - rotation, skew, scale and their compositions on the lens, over track aspects 300 × 6 to 140 × 76 (CA13c §2.4);
+  - script-animated ancestors: inline `translate`, `scale`, a custom property (the Carousel's `--member-scale`), a scroll-linked parallax; amplitude 0-80 px, period 200-600 ms; page loops requested before and after the stage's (CE13c D1, D2);
+  - animations a record starts, on C and on G (CA13c §2.2), and CSS transitions under a page loop in WebKit (CE13c D2);
+  - moves with no record: shadow trees, `field-sizing` IDL state, `<link>`, font and image loads, CSSOM edits, pseudo-class restyles (CA13c §2.3);
+  - the host's own size change, left-aligned and centred, with the grow's share stated (CA13c §2.5, CE13c D5);
+  - a card scaled about the held control during the hold, 0.8-1.25 (CE13c D9);
+  - the released host on its exit clock under an ancestor's animation (CE13c D3);
+  - the clamp in a scroller and on the page, in both engines (E13c §2.1);
+  - the exit-side cells with cand11 as the passing reference (H13c §5);
+  - and **every member cand12 passes** (class 2).
+  A held control that is not glided at all under some member is admissible **only as a stated limit** with its read in each engine, for the critics to test, never as a claim a header widens.
+- **(d) Every engine fact S14 uses, with its read in each engine.** Cite H13c §1 (F1g, F2, F3, F4 with WebKit's 1 ms, F6, F7) or read a new fact library-free under `guarded` on a fresh element with the consumer elsewhere (class 6 (g)).
+- **(e) The token reads by call graph, each consumer by its expression.** Enumerate from `tokenOf`, `easingOf`, `rowClockMs` and `motionTempo()` by call, not by name. For each token, the library's own consumer expression is read in the bytes (`engage.css`'s `calc(1 + (var(--scale-engage) - 1) * …)`, `scheme-spring.css`'s settles, the gutter's page padding), and the read takes exactly what that expression computes, in that consumer's context (`em`, `cq*`; D8). The read sits where the page's cascade cannot narrow it (F7), or the limit is stated with its read in each engine. It leaves no DOM residue (class 3). Its private names sit outside `--engage-*` (class 1). `--motion-tempo` ≤ 0 is either the clock CSS runs or one loud error, never a silent 1 (E-2).
+- **(f) CK-04's frame** is read again on whatever invalidates it (D9).
+- **(g) CK-22:** every header sentence and every comment is read against S14's own limits, with no comment left on deleted code. A MIGRATION row covers every consumer-visible effect (residue, names on `:root`, forced work).
+- **(h) Cost:** the drag's forced layouts and recalcs priced beside cand12, plus CPU per frame held still beside cand8, cand11, cand12 and cand13.
+
+### P13c-8.2 · Seats and order
+
+| wave | seat | charter |
+|---|---|---|
+| 0 | — | re-read INBOUND and FORMATION-PROGRESS; record the base; check F-16 and F-17. A floor seat runs only on §P12-8.2's triggers |
+| 1 | **P-E14, part S** (statement only; no build, no browser beyond library-free facts cells under `guarded`) | S14 per §P13c-8.1 (a)-(h), on P-E13. It may run alongside c3b, and it folds c4b's members before it closes |
+| 1b | **S14 challenge** (one fresh Opus seat that has authored no D5 seat and been no critic in passes 3-13) | Attacks S14 statically and with library-free engine reads in both engines: a member past S14's ranges, a fact unread in one engine, a consumer expression not enumerated, a limit claimed away. P-E14 folds every finding into S14 before H14 starts, and records each one. This seat scores no row |
+| 2 | **H14** (the one owner of `../harness/`) | Builds its cells from S14 as written, member by member and range by range, each with a plant: cand13 where it fails, cand12 or cand11 as the passing reference where they pass, HEAD as the control. Cures class 6 (a)-(g) by rule and records each one: E-2's default arms become O-103d (1)'s; the WebKit anchor-insert fixture is cured, or its limit is stated with its read; deadlines count from admission. Self-test of record green in both engines, after c4b releases the WebKit lock |
+| 3 | **P-E14, part B** | builds on P-E13 to S14. Gates (build, typecheck, `demo:dist:build`, vitest). H14's lists in both engines, every plant on its cells, the cost (§P13c-8.1 (h)), and the glance including the two paints of finding 2 |
+| 4 | **C-A14, C-E14** | two critics who authored no D5 seat in passes 2-14 and were no critic in passes 3-13. Both read the pass-13 part, this part and the pass-12 part in full, plus §P1-6. Each scores CK-01..CK-27 in both engines on the harness's own app, with the gestalt read from its own frames. Each attacks S14 (a member past its ranges is a counterexample to the row it breaks) and drives each family past H14's cells. Each drives every path both pass-13 completion critics found, every path the pass-12 critics found, and the idle bar beside `cand8` in the same run. **A critic that measured nothing does not end the pass, and a critic whose WebKit cells are not admitted returns those rows open** |
+| 5 | agglomeration | the pass-14 registry |
+
+Machine law as §P12-8.3: no `--light` for a browser run, one browser per battery with a context per cell, WebKit only inside `--exclusive webkit`. Each list is planned before it starts as named acquisitions of at most 90 minutes. Runners are replaced by rename. The orchestrator commits each seat's records after the seat returns.
+
+### P13c-8.3 · Convergence criterion
+
+Unchanged (`§3.5`, `§P1-9.4`, `§P2-8.4` .. `§P13-8.4`): at least three full passes (met); zero open rows against CK-01..CK-27; a fresh adversarial audit by seats that did not author the winning spec; two consecutive clean passes. **The clean-pass count after pass 13 is 0.**
+
+Pass 14 cannot be clean. CK-01 and CK-17 need F-17 in D5's base, and F-17 follows D2's convergence, which comes at D2's pass 14 close at the earliest. F-16 is not published. So **D5's convergence comes at the close of pass 16 at the earliest** on the present record (§P13-8.4 said pass 15). That needs all of:
+- P-E14's CK-04, 09, 20, 21 and 22 and CK-25's lens clause closed on both critics;
+- F-17 and F-16 (or their 10.2.0 landings through master) in D5's base, with A's reduce write on D3's lane;
+- passes 15 and 16 both clean.
+
+If pass 14 reaches the fixed point, D5 runs no further build pass until F-16 and F-17 land. **The R-K1-c vehicle moves with this registry: after pass 16 at the earliest.** atlas's M-7 stays until then.

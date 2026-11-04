@@ -1,0 +1,204 @@
+# C-1 queued 2026-11-04 08:49:29 · 57 stage(s) left · load { 13.27 11.18 10.47 }
+# C-1 batch admitted 2026-11-04 08:49:29 · load { 13.27 11.18 10.47 }
+# 08:49:29 start (0 min): cand13-ce13c chromium --only d1,d2,d3,d4,d5,d6,d7,d8,d9,d10,stills · load { 13.27 11.18 10.47 }
+cand13-ce13c chromium · C-E13c chromium HARNESS ERROR · deadline 1500 s passed (hang) · load 8.6/10.2/10.9 · # exit 2 · 2026-11-04 09:14:30 · load { 8.58 10.24 10.86 } · cand13-ce13c-chromium-0f41a8.log
+# 09:14:30 end (0): cand13-ce13c chromium --only d1,d2,d3,d4,d5,d6,d7,d8,d9,d10,stills · load { 8.58 10.24 10.86 }
+# 09:14:30 start (25 min): cand12-ce13c chromium --only d1,d2,d3,d4,d5,d6,d7,d8,d9,d10 · load { 8.58 10.24 10.86 }
+cand12-ce13c chromium · C-E13c chromium FAIL · 36 pass, 7 fail, 0 unmeasured of 43 gating cells (2 reported) · load 4.4/5.4/7.9 at start, 5.5/5.5/7.7 at end · # exit 1 · 2026-11-04 09:25:24 · load { 5.49 5.52 7.72 } · cand12-ce13c-chromium-73f0c1.log
+# 09:25:24 end (0): cand12-ce13c chromium --only d1,d2,d3,d4,d5,d6,d7,d8,d9,d10 · load { 5.49 5.52 7.72 }
+# 09:25:25 start (35 min): cand13-ce13c chromium --only d1,d2,d3,d4,d5,d6,d7,d8,d9,d10,stills --rr 1 · load { 5.49 5.52 7.72 }
+cand13-ce13c chromium · C-E13c chromium FAIL · 15 pass, 28 fail, 0 unmeasured of 43 gating cells (4 reported) · load 5.5/5.5/7.7 at start, 6.3/5.8/7.6 at end · # exit 1 · 2026-11-04 09:26:36 · load { 6.28 5.76 7.63 } · cand13-ce13c-chromium-d07d6f.log
+# 09:26:36 end (0): cand13-ce13c chromium --only d1,d2,d3,d4,d5,d6,d7,d8,d9,d10,stills --rr 1 · load { 6.28 5.76 7.63 }
+# 09:26:36 start (37 min): plant-child-ce13c chromium --only d1,d2,d3,d5 · load { 6.28 5.76 7.63 }
+plant-child-ce13c chromium · C-E13c chromium FAIL · 11 pass, 1 fail, 0 unmeasured of 12 gating cells (0 reported) · load 6.8/5.9/7.6 at start, 5.9/5.8/7.5 at end · # exit 1 · 2026-11-04 09:27:20 · load { 5.90 5.78 7.55 } · plant-child-ce13c-chromium-c471de.log
+# 09:27:20 end (0): plant-child-ce13c chromium --only d1,d2,d3,d5 · load { 5.90 5.78 7.55 }
+# 09:27:20 start (37 min): cand11-ce13c chromium --only d10 · load { 5.90 5.78 7.55 }
+cand11-ce13c chromium · C-E13c chromium UNMEASURED · 0 pass, 0 fail, 0 unmeasured of 0 gating cells (2 reported) · load 5.9/5.8/7.5 at start, 6.6/5.9/7.6 at end · # exit 3 · 2026-11-04 09:27:25 · load { 6.63 5.94 7.59 } · cand11-ce13c-chromium-4fcf59.log
+# 09:27:26 end (0): cand11-ce13c chromium --only d10 · load { 6.63 5.94 7.59 }
+# 09:27:26 start (37 min): cand8-ce13c chromium --only d10 · load { 6.63 5.94 7.59 }
+cand8-ce13c chromium · C-E13c chromium UNMEASURED · 0 pass, 0 fail, 0 unmeasured of 0 gating cells (2 reported) · load 6.6/5.9/7.6 at start, 6.3/5.9/7.6 at end · # exit 3 · 2026-11-04 09:27:31 · load { 6.34 5.89 7.56 } · cand8-ce13c-chromium-4fcf59.log
+# 09:27:31 end (0): cand8-ce13c chromium --only d10 · load { 6.34 5.89 7.56 }
+# 09:27:31 start (38 min): cand13-E-10 chromium · load { 6.34 5.89 7.56 }
+cand13-E-10 chromium · E-10 chromium FAIL · 217 pass, 1 fail, 0 unmeasured of 218 gating cells (45 reported) · load 6.3/5.9/7.6 at start, 8.2/7.9/7.9 at end · # exit 1 · 2026-11-04 09:38:52 · load { 8.23 7.88 7.90 } · cand13-E-10-chromium.log
+# 09:38:52 end (0): cand13-E-10 chromium · load { 8.23 7.88 7.90 }
+# 09:38:52 start (49 min): cand13-E-11 chromium · load { 8.23 7.88 7.90 }
+cand13-E-11 chromium · E-11 chromium PASS · 261 pass, 0 fail, 5 unmeasured of 266 gating cells (6 reported) · load 8.2/8.1/8.0 at start, 8.1/6.1/6.4 at end · # exit 0 · 2026-11-04 10:01:55 · load { 8.11 6.05 6.38 } · cand13-E-11-chromium.log
+# 10:01:55 end (0): cand13-E-11 chromium · load { 8.11 6.05 6.38 }
+# 10:01:55 C-1 stops at 72 min; the rest goes to the next named batch
+# C-1 batch end 2026-11-04 10:01:55 · load { 8.11 6.05 6.38 }
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1793759449 slope=40.7/s inuse=30389 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. Finish what you are doing and report it; the owner decides on the reboot.
+# C-1 guard exit 0 2026-11-04 10:01:59 · load { 8.02 6.07 6.38 }
+# C-2 queued 2026-11-04 10:01:59 · 51 stage(s) left · load { 8.02 6.07 6.38 }
+# C-2 batch admitted 2026-11-04 10:01:59 · load { 8.02 6.07 6.38 }
+# 10:01:59 start (0 min): cand13-ce12 chromium · load { 8.02 6.07 6.38 }
+cand13-ce12 chromium · C-E12 probe chromium FAIL · 27 pass, 1 fail, 0 unmeasured of 28 gating cells (10 reported) · load 8.1/6.3/6.5 at start, 8.2/6.8/6.6 at end · # exit 1 · 2026-11-04 10:03:49 · load { 8.23 6.82 6.64 } · cand13-ce12-chromium.log
+# 10:03:49 end (0): cand13-ce12 chromium · load { 8.23 6.82 6.64 }
+# 10:03:49 start (1 min): cand13-ca12 chromium --only xf,kind,anchor · load { 8.23 6.82 6.64 }
+cand13-ca12 chromium · C-A12 probe chromium PASS · 48 pass, 0 fail, 0 unmeasured of 48 gating cells (0 reported) · load 25.0/12.2/8.7 at start, 16.2/13.5/9.6 at end · # exit 0 · 2026-11-04 10:07:30 · load { 16.23 13.47 9.62 } · cand13-ca12-chromium-325437.log
+# 10:07:30 end (0): cand13-ca12 chromium --only xf,kind,anchor · load { 16.23 13.47 9.62 }
+# 10:07:30 start (5 min): cand13-ca12 chromium --only errs · load { 16.23 13.47 9.62 }
+cand13-ca12 chromium · C-A12 probe chromium PASS · 9 pass, 0 fail, 0 unmeasured of 9 gating cells (0 reported) · load 16.2/13.5/9.6 at start, 16.1/13.5/9.7 at end · # exit 0 · 2026-11-04 10:07:45 · load { 16.11 13.52 9.68 } · cand13-ca12-chromium-35d900.log
+# 10:07:45 end (0): cand13-ca12 chromium --only errs · load { 16.11 13.52 9.68 }
+# 10:07:45 start (5 min): cand13-vals chromium · load { 16.11 13.52 9.68 }
+cand13-vals chromium · CE12-E-11 chromium PASS · 57 pass, 0 fail, 0 unmeasured of 57 gating cells (0 reported) · load 13.4/10.4/9.3 at start, 15.0/12.8/10.6 at end · # exit 0 · 2026-11-04 10:20:05 · load { 14.99 12.78 10.56 } · cand13-vals-chromium.log
+# 10:20:05 end (0): cand13-vals chromium · load { 14.99 12.78 10.56 }
+# 10:20:05 start (18 min): cand13-e11v chromium · load { 14.99 12.78 10.56 }
+cand13-e11v chromium · E-11 chromium FAIL · 67 pass, 5 fail, 0 unmeasured of 72 gating cells (0 reported) · load 16.8/13.9/11.3 at start, 13.7/13.1/11.5 at end · # exit 1 · 2026-11-04 10:26:44 · load { 13.66 13.07 11.50 } · cand13-e11v-chromium.log
+# 10:26:44 end (0): cand13-e11v chromium · load { 13.66 13.07 11.50 }
+# 10:26:44 start (24 min): cand13-origin chromium · load { 13.66 13.07 11.50 }
+cand13-origin chromium · E12 origin chromium PASS · 22 pass, 0 fail, 0 unmeasured of 22 gating cells (0 reported) · load 13.7/13.1/11.5 at start, 15.0/13.5/11.7 at end · # exit 0 · 2026-11-04 10:27:29 · load { 14.97 13.51 11.74 } · cand13-origin-chromium.log
+# 10:27:29 end (0): cand13-origin chromium · load { 14.97 13.51 11.74 }
+# 10:27:29 start (25 min): cand13-E-13 chromium · load { 14.97 13.51 11.74 }
+cand13-E-13 chromium · E-13 chromium PASS · 36 pass, 0 fail, 0 unmeasured of 36 gating cells (4 reported) · load 15.0/13.5/11.7 at start, 13.8/13.9/12.1 at end · # exit 0 · 2026-11-04 10:29:11 · load { 13.78 13.90 12.13 } · cand13-E-13-chromium.log
+# 10:29:11 end (0): cand13-E-13 chromium · load { 13.78 13.90 12.13 }
+# 10:29:11 start (27 min): cand13-E-1 chromium · load { 13.78 13.90 12.13 }
+cand13-E-1 chromium · E-1 chromium FAIL · 93 pass, 1 fail, 2 unmeasured of 96 gating cells (0 reported) · load 13.8/13.9/12.1 at start, 12.4/13.5/12.1 at end · # exit 1 · 2026-11-04 10:29:47 · load { 12.36 13.54 12.07 } · cand13-E-1-chromium.log
+# 10:29:47 end (0): cand13-E-1 chromium · load { 12.36 13.54 12.07 }
+# 10:29:47 start (27 min): cand13-E-2 chromium · load { 12.36 13.54 12.07 }
+cand13-E-2 chromium · E-2 chromium PASS · 164 pass, 0 fail, 0 unmeasured of 164 gating cells (16 reported) · load 11.3/13.1/12.0 at start, 11.5/12.5/11.9 at end · # exit 0 · 2026-11-04 10:33:38 · load { 11.54 12.46 11.95 } · cand13-E-2-chromium.log
+# 10:33:39 end (0): cand13-E-2 chromium · load { 11.54 12.46 11.95 }
+# 10:33:39 start (31 min): cand13-E-3 chromium · load { 11.54 12.46 11.95 }
+cand13-E-3 chromium · E-3 chromium PASS · 22 pass, 0 fail, 0 unmeasured of 22 gating cells (0 reported) · load 10.4/12.2/11.9 at start, 10.0/12.0/11.8 at end · # exit 0 · 2026-11-04 10:34:08 · load { 10.03 11.99 11.79 } · cand13-E-3-chromium.log
+# 10:34:08 end (0): cand13-E-3 chromium · load { 10.03 11.99 11.79 }
+# 10:34:08 start (32 min): cand13-E-4 chromium · load { 10.03 11.99 11.79 }
+cand13-E-4 chromium · E-4 chromium PASS · 18 pass, 0 fail, 0 unmeasured of 18 gating cells (1 reported) · load 9.6/11.9/11.8 at start, 13.9/12.7/12.1 at end · # exit 0 · 2026-11-04 10:36:17 · load { 13.90 12.69 12.09 } · cand13-E-4-chromium.log
+# 10:36:17 end (0): cand13-E-4 chromium · load { 13.90 12.69 12.09 }
+# 10:36:17 start (34 min): cand13-E-5 chromium · load { 13.90 12.69 12.09 }
+cand13-E-5 chromium · E-5 chromium PASS · 56 pass, 0 fail, 0 unmeasured of 56 gating cells (0 reported) · load 13.9/12.7/12.1 at start, 8.8/10.8/11.4 at end · # exit 0 · 2026-11-04 10:40:00 · load { 8.83 10.79 11.43 } · cand13-E-5-chromium.log
+# 10:40:00 end (0): cand13-E-5 chromium · load { 8.83 10.79 11.43 }
+# 10:40:00 start (38 min): cand13-E-6 chromium · load { 8.83 10.79 11.43 }
+cand13-E-6 chromium · E-6 chromium FAIL · 4 pass, 2 fail, 8 unmeasured of 14 gating cells (0 reported) · load 5.2/6.3/8.6 at start, 6.0/6.4/8.6 at end · # exit 1 · 2026-11-04 10:49:44 · load { 5.97 6.44 8.60 } · cand13-E-6-chromium.log
+# 10:49:44 end (0): cand13-E-6 chromium · load { 5.97 6.44 8.60 }
+# 10:49:44 start (47 min): cand13-E-7 chromium · load { 5.97 6.44 8.60 }
+cand13-E-7 chromium · E-7 chromium FAIL · 4 pass, 3 fail, 0 unmeasured of 7 gating cells (0 reported) · load 5.6/6.3/8.5 at start, 5.5/6.3/8.5 at end · # exit 1 · 2026-11-04 10:49:57 · load { 5.54 6.32 8.52 } · cand13-E-7-chromium.log
+# 10:49:57 end (0): cand13-E-7 chromium · load { 5.54 6.32 8.52 }
+# 10:49:57 start (47 min): cand13-E-8 chromium · load { 5.54 6.32 8.52 }
+cand13-E-8 chromium · E-8 chromium FAIL · 18 pass, 1 fail, 0 unmeasured of 19 gating cells (0 reported) · load 5.5/6.3/8.5 at start, 5.4/6.2/8.3 at end · # exit 1 · 2026-11-04 10:50:42 · load { 5.37 6.16 8.35 } · cand13-E-8-chromium.log
+# 10:50:42 end (0): cand13-E-8 chromium · load { 5.37 6.16 8.35 }
+# 10:50:42 start (48 min): cand13-E-9 chromium · load { 5.37 6.16 8.35 }
+cand13-E-9 chromium · E-9 chromium PASS · 85 pass, 0 fail, 0 unmeasured of 85 gating cells (8 reported) · load 5.5/6.2/8.3 at start, 5.4/5.9/8.0 at end · # exit 0 · 2026-11-04 10:52:15 · load { 5.40 5.95 8.04 } · cand13-E-9-chromium.log
+# 10:52:15 end (0): cand13-E-9 chromium · load { 5.40 5.95 8.04 }
+# 10:52:15 C-2 stops at 50 min; the rest goes to the next named batch
+# C-2 batch end 2026-11-04 10:52:15 · load { 5.40 5.95 8.04 }
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1793759449 slope=40.7/s inuse=30389 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. Finish what you are doing and report it; the owner decides on the reboot.
+# C-2 guard exit 0 2026-11-04 10:52:20 · load { 5.29 5.91 8.02 }
+# C-3 queued 2026-11-04 10:52:20 · 35 stage(s) left · load { 5.29 5.91 8.02 }
+# C-3 batch admitted 2026-11-04 10:52:20 · load { 5.29 5.91 8.02 }
+# 10:52:20 start (0 min): cand13-prmplant chromium · load { 5.29 5.91 8.02 }
+cand13-prmplant chromium · E-9 chromium FAIL · 40 pass, 32 fail, 0 unmeasured of 72 gating cells (7 reported) · load 5.5/5.9/8.0 at start, 6.1/5.9/7.9 at end · # exit 1 · 2026-11-04 10:53:25 · load { 6.09 5.92 7.86 } · cand13-prmplant-chromium.log
+# 10:53:25 end (0): cand13-prmplant chromium · load { 6.09 5.92 7.86 }
+# 10:53:25 start (1 min): cand13-E-12 chromium · load { 6.09 5.92 7.86 }
+cand13-E-12 chromium · E-12 chromium PASS · 101 pass, 0 fail, 1 unmeasured of 102 gating cells (10 reported) · load 6.1/5.9/7.9 at start, 4.8/5.6/7.5 at end · # exit 0 · 2026-11-04 10:55:02 · load { 4.83 5.58 7.51 } · cand13-E-12-chromium.log
+# 10:55:02 end (0): cand13-E-12 chromium · load { 4.83 5.58 7.51 }
+# 10:55:02 start (2 min): cand8-ca9idle chromium · load { 4.83 5.58 7.51 }
+cand8-ca9idle chromium · C-A9 probe chromium UNMEASURED · 0 pass, 0 fail, 0 unmeasured of 0 gating cells (1 reported) · load 5.0/5.3/7.1 at start, 4.7/5.2/7.1 at end · # exit 3 · 2026-11-04 10:57:24 · load { 4.74 5.23 7.07 } · cand8-ca9idle-chromium.log
+# 10:57:24 end (0): cand8-ca9idle chromium · load { 4.74 5.23 7.07 }
+# 10:57:24 start (5 min): cand13-ca9idle chromium · load { 4.74 5.23 7.07 }
+cand13-ca9idle chromium · C-A9 probe chromium UNMEASURED · 0 pass, 0 fail, 0 unmeasured of 0 gating cells (1 reported) · load 7.1/5.7/7.0 at start, 6.7/5.7/7.0 at end · # exit 3 · 2026-11-04 10:59:33 · load { 6.75 5.65 6.96 } · cand13-ca9idle-chromium.log
+# 10:59:33 end (0): cand13-ca9idle chromium · load { 6.75 5.65 6.96 }
+# 10:59:33 start (7 min): cand8-ca9idle chromium --round 2 · load { 6.75 5.65 6.96 }
+cand8-ca9idle chromium · C-A9 probe chromium UNMEASURED · 0 pass, 0 fail, 0 unmeasured of 0 gating cells (1 reported) · load 6.7/5.7/7.0 at start, 6.8/5.7/7.0 at end · # exit 3 · 2026-11-04 10:59:39 · load { 6.77 5.68 6.96 } · cand8-ca9idle-chromium-93f2de.log
+# 10:59:39 end (0): cand8-ca9idle chromium --round 2 · load { 6.77 5.68 6.96 }
+# 10:59:39 start (7 min): cand13-ca9idle chromium --round 2 · load { 6.77 5.68 6.96 }
+cand13-ca9idle chromium · C-A9 probe chromium UNMEASURED · 0 pass, 0 fail, 0 unmeasured of 0 gating cells (1 reported) · load 6.1/5.8/6.8 at start, 6.3/5.8/6.8 at end · # exit 3 · 2026-11-04 11:02:16 · load { 6.32 5.84 6.80 } · cand13-ca9idle-chromium-93f2de.log
+# 11:02:16 end (0): cand13-ca9idle chromium --round 2 · load { 6.32 5.84 6.80 }
+# 11:02:16 start (9 min): cand8-ca6idle chromium · load { 6.32 5.84 6.80 }
+cand8-ca6idle chromium · CA6-probe chromium UNMEASURED · 0 pass, 0 fail, 0 unmeasured of 0 gating cells (4 reported) · load 6.2/6.8/6.9 at start, 6.0/6.7/6.9 at end · # exit 3 · 2026-11-04 11:09:11 · load { 5.95 6.75 6.90 } · cand8-ca6idle-chromium.log
+# 11:09:12 end (0): cand8-ca6idle chromium · load { 6.36 6.82 6.92 }
+# 11:09:12 start (16 min): cand13-ca6idle chromium · load { 6.36 6.82 6.92 }
+cand13-ca6idle chromium · CA6-probe chromium UNMEASURED · 0 pass, 0 fail, 0 unmeasured of 0 gating cells (4 reported) · load 6.4/6.8/6.9 at start, 7.1/7.0/7.0 at end · # exit 3 · 2026-11-04 11:09:29 · load { 7.12 6.96 6.97 } · cand13-ca6idle-chromium.log
+# 11:09:29 end (0): cand13-ca6idle chromium · load { 7.12 6.96 6.97 }
+# 11:09:29 start (17 min): cand13-loop chromium · load { 7.12 6.96 6.97 }
+cand13-loop chromium · E9-probe chromium PASS · 2 pass, 0 fail, 0 unmeasured of 2 gating cells (10 reported) · load 7.1/7.0/7.0 at start, 6.4/6.8/6.9 at end · # exit 0 · 2026-11-04 11:09:55 · load { 6.44 6.82 6.92 } · cand13-loop-chromium.log
+# 11:09:55 end (0): cand13-loop chromium · load { 6.44 6.82 6.92 }
+# 11:09:55 start (17 min): plant-loop-loop chromium · load { 6.44 6.82 6.92 }
+plant-loop-loop chromium · E9-probe chromium FAIL · 0 pass, 2 fail, 0 unmeasured of 2 gating cells (10 reported) · load 5.6/6.6/6.8 at start, 5.1/6.4/6.8 at end · # exit 1 · 2026-11-04 11:10:50 · load { 5.10 6.40 6.75 } · plant-loop-loop-chromium.log
+# 11:10:50 end (0): plant-loop-loop chromium · load { 5.10 6.40 6.75 }
+# 11:10:50 start (18 min): plant-level-e10 chromium --part hg13 --hg13 xf · load { 5.10 6.40 6.75 }
+plant-level-e10 chromium · E-10 chromium FAIL · 46 pass, 12 fail, 0 unmeasured of 58 gating cells (0 reported) · load 4.0/5.1/6.1 at start, 5.8/5.5/6.1 at end · # exit 1 · 2026-11-04 11:17:27 · load { 5.82 5.47 6.08 } · plant-level-e10-chromium-285697.log
+# 11:17:27 end (0): plant-level-e10 chromium --part hg13 --hg13 xf · load { 5.91 5.49 6.09 }
+# 11:17:27 start (25 min): plant-child-e10 chromium --part hg13 --hg13 kind · load { 5.91 5.49 6.09 }
+plant-child-e10 chromium · E-10 chromium FAIL · 6 pass, 12 fail, 0 unmeasured of 18 gating cells (0 reported) · load 7.8/7.0/6.6 at start, 7.2/7.0/6.6 at end · # exit 1 · 2026-11-04 11:21:42 · load { 7.21 6.96 6.62 } · plant-child-e10-chromium-d1210b.log
+# 11:21:42 end (0): plant-child-e10 chromium --part hg13 --hg13 kind · load { 7.21 6.96 6.62 }
+# 11:21:42 start (29 min): plant-stale-e10 chromium --part hg13 --hg13 anim · load { 7.21 6.96 6.62 }
+plant-stale-e10 chromium · E-10 chromium FAIL · 0 pass, 3 fail, 0 unmeasured of 3 gating cells (0 reported) · load 7.5/7.0/6.7 at start, 7.9/7.1/6.7 at end · # exit 1 · 2026-11-04 11:22:31 · load { 7.87 7.13 6.69 } · plant-stale-e10-chromium-b6ad9e.log
+# 11:22:31 end (0): plant-stale-e10 chromium --part hg13 --hg13 anim · load { 7.87 7.13 6.69 }
+# 11:22:31 start (30 min): plant-noown-e10 chromium --part hg13 --hg13 reentry · load { 7.87 7.13 6.69 }
+plant-noown-e10 chromium · E-10 chromium FAIL · 1 pass, 1 fail, 0 unmeasured of 2 gating cells (0 reported) · load 7.9/7.1/6.7 at start, 8.0/7.2/6.7 at end · # exit 1 · 2026-11-04 11:22:37 · load { 8.04 7.18 6.71 } · plant-noown-e10-chromium-2d1170.log
+# 11:22:37 end (0): plant-noown-e10 chromium --part hg13 --hg13 reentry · load { 7.96 7.17 6.71 }
+# 11:22:37 start (30 min): plant-typedom-e11 chromium --part forms,census · load { 7.96 7.17 6.71 }
+plant-typedom-e11 chromium · E-11 chromium FAIL · 100 pass, 13 fail, 0 unmeasured of 113 gating cells (5 reported) · load 7.7/7.3/6.8 at start, 13.5/11.0/9.1 at end · # exit 1 · 2026-11-04 11:33:07 · load { 13.53 11.02 9.08 } · plant-typedom-e11-chromium-5eb875.log
+# 11:33:07 end (0): plant-typedom-e11 chromium --part forms,census · load { 13.53 11.02 9.08 }
+# 11:33:07 start (40 min): plant-reachzero-e11 chromium --part reachin · load { 13.53 11.02 9.08 }
+plant-reachzero-e11 chromium · E-11 chromium FAIL · 3 pass, 1 fail, 0 unmeasured of 4 gating cells (0 reported) · load 21.3/13.6/10.1 at start, 21.4/14.0/10.3 at end · # exit 1 · 2026-11-04 11:34:13 · load { 21.37 13.97 10.34 } · plant-reachzero-e11-chromium-35c128.log
+# 11:34:13 end (0): plant-reachzero-e11 chromium --part reachin · load { 21.37 13.97 10.34 }
+# 11:34:13 start (41 min): cand13-ce11 chromium --only side,clock,reverse,wheel,release-mid,exit-side,rerender,reach,repress,press-line,noroom,still · load { 21.37 13.97 10.34 }
+cand13-ce11 chromium · C-E11 probe chromium PASS · 72 pass, 0 fail, 1 unmeasured of 73 gating cells (6 reported) · load 19.0/14.0/10.5 at start, 13.6/15.8/12.3 at end · # exit 0 · 2026-11-04 11:39:02 · load { 13.60 15.82 12.33 } · cand13-ce11-chromium-bbe2d1.log
+# 11:39:02 end (0): cand13-ce11 chromium --only side,clock,reverse,wheel,release-mid,exit-side,rerender,reach,repress,press-line,noroom,still · load { 14.83 16.04 12.43 }
+# 11:39:02 start (46 min): cand13-ce11 chromium --only loudx,relclock · load { 14.83 16.04 12.43 }
+cand13-ce11 chromium · C-E11 probe chromium PASS · 22 pass, 0 fail, 0 unmeasured of 22 gating cells (0 reported) · load 13.8/15.7/12.4 at start, 12.6/14.8/12.4 at end · # exit 0 · 2026-11-04 11:40:49 · load { 12.60 14.85 12.38 } · cand13-ce11-chromium-69cb08.log
+# 11:40:49 end (0): cand13-ce11 chromium --only loudx,relclock · load { 12.60 14.85 12.38 }
+# 11:40:49 start (48 min): cand13-ce11 chromium --only side,clock --tfs trackzoom,htmlzoom,zoom25 · load { 12.60 14.85 12.38 }
+cand13-ce11 chromium · C-E11 probe chromium PASS · 8 pass, 0 fail, 1 unmeasured of 9 gating cells (0 reported) · load 11.0/14.1/12.2 at start, 9.8/13.5/12.1 at end · # exit 0 · 2026-11-04 11:42:06 · load { 9.85 13.54 12.09 } · cand13-ce11-chromium-12045a.log
+# 11:42:06 end (0): cand13-ce11 chromium --only side,clock --tfs trackzoom,htmlzoom,zoom25 · load { 9.85 13.54 12.09 }
+# 11:42:06 start (49 min): cand13-ca11 chromium --only side,clock,reverse,wheel,release-mid,exit-side,rerender,hostglide,repress,reach · load { 9.85 13.54 12.09 }
+cand13-ca11 chromium · C-A11 probe chromium PASS · 43 pass, 0 fail, 0 unmeasured of 43 gating cells (4 reported) · load 9.7/13.2/12.0 at start, 14.2/13.4/12.2 at end · # exit 0 · 2026-11-04 11:45:07 · load { 14.16 13.37 12.25 } · cand13-ca11-chromium-7c5f7b.log
+# 11:45:08 end (0): cand13-ca11 chromium --only side,clock,reverse,wheel,release-mid,exit-side,rerender,hostglide,repress,reach · load { 14.16 13.37 12.25 }
+# 11:45:08 C-3 stops at 52 min; the rest goes to the next named batch
+# C-3 batch end 2026-11-04 11:45:08 · load { 14.16 13.37 12.25 }
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1793759449 slope=40.7/s inuse=30389 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. Finish what you are doing and report it; the owner decides on the reboot.
+# C-3 guard exit 0 2026-11-04 11:45:14 · load { 13.90 13.33 12.24 }
+# C-4 queued 2026-11-04 11:45:14 · 16 stage(s) left · load { 13.90 13.33 12.24 }
+# C-4 batch admitted 2026-11-04 11:45:14 · load { 13.90 13.33 12.24 }
+# 11:45:14 start (0 min): cand13-ca11 chromium --only loud · load { 13.90 13.33 12.24 }
+cand13-ca11 chromium · C-A11 probe chromium PASS · 14 pass, 0 fail, 0 unmeasured of 14 gating cells (0 reported) · load 13.1/13.2/12.2 at start, 12.1/12.9/12.2 at end · # exit 0 · 2026-11-04 11:46:34 · load { 12.09 12.87 12.16 } · cand13-ca11-chromium-5b5bc0.log
+# 11:46:34 end (0): cand13-ca11 chromium --only loud · load { 12.09 12.87 12.16 }
+# 11:46:34 start (1 min): cand13-ce9 chromium --only stack,dom,lensdlg,anc,lens · load { 12.09 12.87 12.16 }
+cand13-ce9 chromium · CE9-probe chromium PASS · 6 pass, 0 fail, 0 unmeasured of 6 gating cells (12 reported) · load 11.2/12.6/12.1 at start, 10.9/12.3/12.0 at end · # exit 0 · 2026-11-04 11:47:42 · load { 10.87 12.34 12.01 } · cand13-ce9-chromium-40cdd2.log
+# 11:47:42 end (0): cand13-ce9 chromium --only stack,dom,lensdlg,anc,lens · load { 10.87 12.34 12.01 }
+# 11:47:42 start (2 min): cand13-ca9 chromium --only stack,loop,flip,flipstill,zoom · load { 10.88 12.32 12.00 }
+cand13-ca9 chromium · C-A9 probe chromium PASS · 8 pass, 0 fail, 0 unmeasured of 8 gating cells (5 reported) · load 12.7/12.6/12.1 at start, 23.5/16.0/13.4 at end · # exit 0 · 2026-11-04 11:49:03 · load { 23.49 15.95 13.42 } · cand13-ca9-chromium-873cdb.log
+# 11:49:03 end (0): cand13-ca9 chromium --only stack,loop,flip,flipstill,zoom · load { 23.49 15.95 13.42 }
+# 11:49:03 start (3 min): cand13-crest chromium · load { 23.49 15.95 13.42 }
+cand13-crest chromium · C-A8 probe chromium PASS · 2 pass, 0 fail, 0 unmeasured of 2 gating cells (0 reported) · load 23.3/16.2/13.5 at start, 23.3/16.2/13.5 at end · # exit 0 · 2026-11-04 11:49:16 · load { 23.27 16.16 13.52 } · cand13-crest-chromium.log
+# 11:49:17 end (0): cand13-crest chromium · load { 23.27 16.16 13.52 }
+# 11:49:17 start (4 min): cand13-tip chromium · load { 23.27 16.16 13.52 }
+cand13-tip chromium · E8-probe chromium PASS · 4 pass, 0 fail, 0 unmeasured of 4 gating cells (0 reported) · load 16.8/17.3/14.6 at start, 15.8/17.1/14.5 at end · # exit 0 · 2026-11-04 11:52:10 · load { 15.81 17.10 14.52 } · cand13-tip-chromium.log
+# 11:52:10 end (0): cand13-tip chromium · load { 15.81 17.10 14.52 }
+# 11:52:10 start (6 min): cost-bar chromium · load { 15.81 17.10 14.52 }
+cost-bar chromium · C-E11 probe chromium UNMEASURED · 0 pass, 0 fail, 0 unmeasured of 0 gating cells (3 reported) · load 15.9/16.7/14.9 at start, 14.8/16.4/14.8 at end · # exit 3 · 2026-11-04 11:55:27 · load { 14.77 16.42 14.80 } · cost-bar-chromium.log
+# 11:55:27 end (0): cost-bar chromium · load { 14.77 16.42 14.80 }
+# 11:55:27 start (10 min): rec chromium · load { 14.77 16.42 14.80 }
+rec chromium · E13c rec chromium UNMEASURED · 0 pass, 0 fail, 0 unmeasured of 0 gating cells (4 reported) · load 20.5/17.5/15.4 at start, 21.5/17.9/15.5 at end · # exit 3 · 2026-11-04 11:57:21 · load { 21.50 17.89 15.54 } · rec-chromium.log
+# 11:57:21 end (0): rec chromium · load { 21.50 17.89 15.54 }
+# 11:57:21 start (12 min): paint chromium · load { 21.50 17.89 15.54 }
+paint chromium · E13c paint chromium UNMEASURED · 0 pass, 0 fail, 0 unmeasured of 0 gating cells (4 reported) · load 26.5/19.1/16.0 at start, 26.8/19.4/16.1 at end · # exit 3 · 2026-11-04 11:57:41 · load { 26.79 19.38 16.13 } · paint-chromium.log
+# 11:57:41 end (0): paint chromium · load { 26.79 19.38 16.13 }
+# 11:57:41 start (12 min): h13still-cand13 chromium · load { 26.79 19.38 16.13 }
+h13still-cand13 chromium · E-10 chromium UNMEASURED · 0 pass, 0 fail, 0 unmeasured of 0 gating cells (3 reported) · load 26.8/19.4/16.1 at start, 27.1/19.7/16.3 at end · # exit 3 · 2026-11-04 11:57:48 · load { 27.07 19.69 16.28 } · h13still-cand13-chromium.log
+# 11:57:48 end (0): h13still-cand13 chromium · load { 27.07 19.69 16.28 }
+# 11:57:48 start (12 min): cand13-glance chromium · load { 27.07 19.69 16.28 }
+cand13-glance chromium · H12 glance chromium UNMEASURED · 0 pass, 0 fail, 0 unmeasured of 0 gating cells (2 reported) · load 27.1/19.7/16.3 at start, 26.0/19.6/16.3 at end · # exit 3 · 2026-11-04 11:57:53 · load { 26.03 19.60 16.27 } · cand13-glance-chromium.log
+# 11:57:54 end (0): cand13-glance chromium · load { 26.03 19.60 16.27 }
+# 11:57:54 start (12 min): cand13-zglance chromium · load { 26.03 19.60 16.27 }
+cand13-zglance chromium · H11 glance chromium UNMEASURED · 0 pass, 0 fail, 0 unmeasured of 0 gating cells (2 reported) · load 26.0/19.6/16.3 at start, 25.9/19.7/16.3 at end · # exit 3 · 2026-11-04 11:58:01 · load { 25.86 19.67 16.31 } · cand13-zglance-chromium.log
+# 11:58:01 end (0): cand13-zglance chromium · load { 25.86 19.67 16.31 }
+# 11:58:01 start (12 min): cand13-stills chromium · load { 25.86 19.67 16.31 }
+cand13-stills chromium · C-E12 stills chromium UNMEASURED · 0 pass, 0 fail, 0 unmeasured of 0 gating cells (2 reported) · load 25.9/19.7/16.3 at start, 26.7/19.9/16.4 at end · # exit 3 · 2026-11-04 11:58:06 · load { 26.68 19.94 16.43 } · cand13-stills-chromium.log
+# 11:58:07 end (0): cand13-stills chromium · load { 26.68 19.94 16.43 }
+# 11:58:07 start (12 min): cand13-ca12 chromium --only still · load { 26.68 19.94 16.43 }
+cand13-ca12 chromium · C-A12 probe chromium UNMEASURED · 0 pass, 0 fail, 0 unmeasured of 0 gating cells (4 reported) · load 25.5/19.8/16.4 at start, 24.5/19.7/16.4 at end · # exit 3 · 2026-11-04 11:58:15 · load { 24.50 19.70 16.38 } · cand13-ca12-chromium-49fd79.log
+# 11:58:15 end (0): cand13-ca12 chromium --only still · load { 24.50 19.70 16.38 }
+# 11:58:15 start (13 min): cand13-cap chromium · load { 24.50 19.70 16.38 }
+cand13-cap chromium · CAP chromium PASS · 18 pass, 0 fail, 0 unmeasured of 18 gating cells (24 reported) · load 24.5/19.7/16.4 at start, 23.1/19.8/16.9 at end · # exit 0 · 2026-11-04 12:01:03 · load { 23.12 19.78 16.90 } · cand13-cap-chromium.log
+# 12:01:03 end (0): cand13-cap chromium · load { 23.12 19.78 16.90 }
+# 12:01:03 start (15 min): cand13-ce13c chromium --only stills --rr 2 · load { 23.12 19.78 16.90 }
+cand13-ce13c chromium · C-E13c chromium UNMEASURED · 0 pass, 0 fail, 0 unmeasured of 0 gating cells (2 reported) · load 23.1/19.8/16.9 at start, 22.3/19.7/16.9 at end · # exit 3 · 2026-11-04 12:01:07 · load { 22.31 19.67 16.88 } · cand13-ce13c-chromium-e98d28.log
+# 12:01:07 end (0): cand13-ce13c chromium --only stills --rr 2 · load { 22.31 19.67 16.88 }
+# 12:01:07 start (15 min): cand13-E-7 chromium --rr 1 · load { 22.31 19.67 16.88 }
+cand13-E-7 chromium · E-7 chromium FAIL · 6 pass, 1 fail, 0 unmeasured of 7 gating cells (0 reported) · load 22.3/19.7/16.9 at start, 21.5/19.5/16.9 at end · # exit 1 · 2026-11-04 12:01:13 · load { 21.48 19.54 16.85 } · cand13-E-7-chromium-55ce32.log
+# 12:01:13 end (0): cand13-E-7 chromium --rr 1 · load { 21.48 19.54 16.85 }
+# C-4 batch end 2026-11-04 12:01:13 · load { 21.48 19.54 16.85 }
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1793759449 slope=40.7/s inuse=30389 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. Finish what you are doing and report it; the owner decides on the reboot.
+# C-4 guard exit 0 2026-11-04 12:01:19 · load { 20.64 19.40 16.82 }
+# c queue end 2026-11-04 12:01:19 · load { 20.64 19.40 16.82 }

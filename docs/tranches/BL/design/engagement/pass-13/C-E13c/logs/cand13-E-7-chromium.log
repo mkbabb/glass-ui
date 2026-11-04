@@ -1,0 +1,15 @@
+# C-E13c cand13-E-7 chromium · 2026-11-04 10:49:44 · load { 5.97 6.44 8.60 } · harness f2cc94e3fa86 · 
+# E-7 · one writer of data-engaged, meaning held
+# target /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p13c/C-E13c/wt/.ce13out/builds/cand13 · engine chromium · lock wait 9.5 s · other headless processes: chromium 4, webkit 2 · load 5.6/6.3/8.5 at start
+# scene app: harness scenes/App.vue (sha1 9e34ffa5714e)
+# chromium 149.0.7827.55
+  FAIL       E-7 writers data-engaged (static) · 2 writer file(s): src/components/dialog/ModalOverlay.vue, src/components/slider/Slider.vue · bound ≤ 1, under src/composables/motion/engage/ · tree /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p13c/C-E13c/wt · load 5.6/6.3/8.5
+  FAIL       E-7 writers data-held (static) · 2 writer file(s): src/components/dock/GlassDock.vue, src/components/slider/Slider.vue · bound ≤ 1, under src/composables/motion/engage/ · tree /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p13c/C-E13c/wt · load 5.6/6.3/8.5
+  FAIL       E-7 writers data-press (static) · 1 writer file(s): src/components/pager-dots/PagerDots.vue · bound ≤ 1, under src/composables/motion/engage/ · tree /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p13c/C-E13c/wt · load 5.6/6.3/8.5
+  PASS       E-7 writers data-commit (static) · 0 writer file(s): none · bound ≤ 1, under src/composables/motion/engage/ · tree /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p13c/C-E13c/wt · load 5.6/6.3/8.5
+  PASS       E-7 slider held · [data-engaged] nodes while pointer-held 1 · bound ≥ 1 · load 5.6/6.3/8.5
+  PASS       E-7 slider held PRM · reduce · [data-engaged] nodes while pointer-held 1 · bound ≥ 1 · load 5.6/6.3/8.5
+  PASS       E-7 modal open, nothing held · dialog open true · veil nodes 1 · [data-engaged] nodes 0 · bound 0 · load 5.5/6.3/8.5
+E-7 chromium FAIL · 4 pass, 3 fail, 0 unmeasured of 7 gating cells (0 reported) · load 5.6/6.3/8.5 at start, 5.5/6.3/8.5 at end
+# exit 1 · 2026-11-04 10:49:57 · load { 5.54 6.32 8.52 }
+# end · 2026-11-04 10:49:57 · load { 5.54 6.32 8.52 } · harness f2cc94e3fa86

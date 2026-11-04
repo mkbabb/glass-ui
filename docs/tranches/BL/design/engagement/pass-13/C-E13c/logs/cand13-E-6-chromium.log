@@ -1,0 +1,22 @@
+# C-E13c cand13-E-6 chromium · 2026-11-04 10:40:00 · load { 8.83 10.79 11.43 } · harness f2cc94e3fa86 · 
+# E-6 · the idle rung under the compositor-only bound
+# target /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p13c/C-E13c/wt/.ce13out/builds/cand13 · engine chromium · lock wait 573.2 s · other headless processes: chromium 4, webkit 2 · load 5.2/6.3/8.6 at start
+# scene app: harness scenes/App.vue (sha1 9e34ffa5714e)
+# chromium 149.0.7827.55
+  FAIL       E-6 s6 present light · 0 running infinite animation(s) at rest · load 6.0/6.4/8.6
+  UNMEASURED E-6 s6 channel light · no idle animation to read · load 6.0/6.4/8.6
+  UNMEASURED E-6 s6 shape light · no idle animation to read · load 6.0/6.4/8.6
+  UNMEASURED E-6 s6 amplitude light · no idle animation to read · load 6.0/6.4/8.6
+  UNMEASURED E-6 s6 period light · no idle animation to read · load 6.0/6.4/8.6
+  PASS       E-6 s6 layouts/s light · layouts/s 0.0 · style recalcs/s 0.0 over 3 s at rest (bound 0 layouts/s) · load 6.0/6.4/8.6
+  PASS       E-6 s6 PRM light · 0 idle animation(s) under reduced motion, 0 spatial · load 6.0/6.4/8.6
+  FAIL       E-6 s6 present dark · 0 running infinite animation(s) at rest · load 6.0/6.4/8.6
+  UNMEASURED E-6 s6 channel dark · no idle animation to read · load 6.0/6.4/8.6
+  UNMEASURED E-6 s6 shape dark · no idle animation to read · load 6.0/6.4/8.6
+  UNMEASURED E-6 s6 amplitude dark · no idle animation to read · load 6.0/6.4/8.6
+  UNMEASURED E-6 s6 period dark · no idle animation to read · load 6.0/6.4/8.6
+  PASS       E-6 s6 layouts/s dark · layouts/s 0.0 · style recalcs/s 0.0 over 3 s at rest (bound 0 layouts/s) · load 6.0/6.4/8.6
+  PASS       E-6 s6 PRM dark · 0 idle animation(s) under reduced motion, 0 spatial · load 6.0/6.4/8.6
+E-6 chromium FAIL · 4 pass, 2 fail, 8 unmeasured of 14 gating cells (0 reported) · load 5.2/6.3/8.6 at start, 6.0/6.4/8.6 at end
+# exit 1 · 2026-11-04 10:49:44 · load { 5.97 6.44 8.60 }
+# end · 2026-11-04 10:49:44 · load { 5.97 6.44 8.60 } · harness f2cc94e3fa86

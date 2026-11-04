@@ -1,0 +1,12 @@
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1793759449 slope=40.7/s inuse=30389 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. Finish what you are doing and report it; the owner decides on the reboot.
+# C-E13c · held-battery.txt §3 on the built candidate
+# target /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p13c/C-E13c/wt/.ce13out/builds/cand13 · engine chromium · lock wait 0.0 s · other headless processes: chromium 8, webkit 0 · load 12.7/11.2/10.3 at start
+# scene app: harness scenes/App.vue (sha1 9e34ffa5714e)
+# chromium 149.0.7827.55
+# held control: scene slider root .glass-slider thumb [role="slider"]; label cand13
+  FAIL       D1 raf-translate · cand13 · the card moved 72.0 px over 60 engaged frames · the held root's centre off its card's rest offset: max 71.95 px, median 33.31 px, frames over 2 px 53 · stage glides started 54 · errors 0 (bound: ≤ 0.5 px every frame, 0 glides) · load 12.0/11.1/10.3
+  FAIL       D1 scroll-parallax · cand13 · the card moved 168.0 px over 60 engaged frames · the held root's centre off its card's rest offset: max 25.49 px, median 13.06 px, frames over 2 px 45 · stage glides started 30 · errors 0 (bound: ≤ 0.5 px every frame, 0 glides) · load 12.0/11.1/10.3
+  UNMEASURED D1 member-scale · cand13 · the card moved 0.0 px over 60 engaged frames · the held root's centre off its card's rest offset: max 0.00 px, median 0.00 px, frames over 2 px 0 · stage glides started 0 · errors 0 (bound: ≤ 0.5 px every frame, 0 glides) · load 12.0/11.1/10.3
+  FAIL       D3 card-scale + unrelated append · cand13 · released, then the card's 600 ms scale 1 → 0.9 and an unrelated node appended at frame 5 · the root on the stage at the act: true / at frame 5: true · stage glides started 1 (bound 0) · errors 0 · load 11.6/11.0/10.3
+  PASS       D3 card-scale alone (control) · cand13 · released, then the card's 600 ms scale 1 → 0.9 and no record · the root on the stage at the act: true · stage glides started 0 (bound 0) · errors 0 · load 11.6/11.0/10.3
+C-E13c chromium FAIL · 1 pass, 3 fail, 1 unmeasured of 5 gating cells (0 reported) · load 12.7/11.2/10.3 at start, 11.6/11.0/10.3 at end

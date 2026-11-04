@@ -1,0 +1,11 @@
+# C-E13c plant-stale-e10 chromium · 2026-11-04 11:21:42 · load { 7.21 6.96 6.62 } · harness f2cc94e3fa86 · --part hg13 --hg13 anim
+# E-10 · CK-20 no one-frame discontinuity on an engagement path
+# target /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p13c/C-E13c/wt/.ce13out/builds/plant-stale · engine chromium · lock wait 42.1 s · other headless processes: chromium 0, webkit 2 · load 7.5/7.0/6.7 at start
+# scene app: harness scenes/App.vue (sha1 9e34ffa5714e)
+# chromium 149.0.7827.55
+  FAIL       E-10 slider anim · css-transition scale · C runs css-transition scale from frame 2 (C's painted centre moved 0.50, 0.03 px across the mutation's frame); an unrelated 40 px block appended after C on frame 14 · translate glides on the root in the next 6 frames 6 (clock 210 ms) (bound 0) · the root's painted step on the mutation's frame 6.53, 0.36 against the frame before -0.62, -0.03: 7.16 px off its own motion (bound ≤ 0.5) · errors 0 · load 7.9/7.1/6.7
+  FAIL       E-10 slider anim · waapi translate · C runs waapi translate from frame 2 (C's painted centre moved 0.00, 0.83 px across the mutation's frame); an unrelated 40 px block appended after C on frame 14 · translate glides on the root in the next 6 frames 6 (clock 210 ms) (bound 0) · the root's painted step on the mutation's frame 0.00, -9.19 against the frame before 0.00, 0.84: 10.03 px off its own motion (bound ≤ 0.5) · errors 0 · load 7.9/7.1/6.7
+  FAIL       E-10 slider anim · waapi rotate · C runs waapi rotate from frame 2 (C's painted centre moved -0.03, 0.35 px across the mutation's frame); an unrelated 40 px block appended after C on frame 14 · translate glides on the root in the next 6 frames 6 (clock 210 ms) (bound 0) · the root's painted step on the mutation's frame 0.25, -3.84 against the frame before -0.03, 0.35: 4.20 px off its own motion (bound ≤ 0.5) · errors 0 · load 7.9/7.1/6.7
+E-10 chromium FAIL · 0 pass, 3 fail, 0 unmeasured of 3 gating cells (0 reported) · load 7.5/7.0/6.7 at start, 7.9/7.1/6.7 at end
+# exit 1 · 2026-11-04 11:22:31 · load { 7.87 7.13 6.69 }
+# end · 2026-11-04 11:22:31 · load { 7.87 7.13 6.69 } · harness f2cc94e3fa86

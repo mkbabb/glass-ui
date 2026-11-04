@@ -1,0 +1,30 @@
+# C-E13c cand13-E-3 chromium · 2026-11-04 10:33:39 · load { 11.54 12.46 11.95 } · harness f2cc94e3fa86 · 
+# E-3 · CK-04 the held slider and the keyboard engagement's contract
+# target /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p13c/C-E13c/wt/.ce13out/builds/cand13 · engine chromium · lock wait 7.0 s · other headless processes: chromium 9, webkit 2 · load 10.4/12.2/11.9 at start
+# scene app: harness scenes/App.vue (sha1 9e34ffa5714e)
+# chromium 149.0.7827.55
+  PASS       E-3 slider desk pointer-held light · rest 360.0 px → held 381.6 px (×1.060; [data-engaged] 1) · bound ×1.03 sustained at 450 ms · load 10.4/12.2/11.9
+  PASS       E-3 slider desk keyboard-focused light · rest 360.0 px → focused 381.6 px (×1.060; focus on slider) · bound ×1.03 · load 10.4/12.2/11.9
+  PASS       E-3 slider desk keyboard register light · Tab-engaged: [data-held] 0 · cursor grabbing false · root height ×1.060 body height ×1.060 (bound: no data-held, no grabbing, no squish < ×0.99: the hand's register is the pointer's) · load 10.4/12.2/11.9
+  PASS       E-3 slider afterdrag light · a pointer drag and release, +600 ms: ×1.000 × 1.000 · [data-held] 0 · veil 0 (bound ×1 ± 0.002, X-1) · load 10.0/12.1/11.8
+  PASS       E-3 slider modifier light · after a drag (focus on slider), each held alone 400 ms: Shift ×1.000 × 1.000 held 0 · Meta ×1.000 × 1.000 held 0 · Control ×1.000 × 1.000 held 0 · Alt ×1.000 × 1.000 held 0 (bound ×1 ± 0.002, no data-held) · load 10.0/12.1/11.8
+  PASS       E-3 slider unacted key light · after a drag, "k" +450 ms: ×1.000 × 1.000 · veil 0 (bound ×1 ± 0.002, no veil: a key the control does not act on engages nothing) · load 10.0/12.1/11.8
+  PASS       E-3 slider script focus light · element.focus() with no key event (focus on slider), +450 ms: ×1.000 × 1.000 · veil 0 (bound ×1 ± 0.002, no veil) · load 10.0/12.1/11.8
+  PASS       E-3 slider phone touch-held light · 390×844 coarse · rest 358.0 × 24.0 px → touch-held 358.0 × 25.4 px (inline ×1.000, block ×1.060; [data-engaged] 1) · bound ×1.03 on either axis · load 10.0/12.1/11.8
+  PASS       E-3 slider phone gutter light · engaged box 16.0..374.0 px in a 390 px viewport · bound 16..374 px · load 10.0/12.1/11.8
+  PASS       E-3 slider keyboard-focused PRM light · reduce · rest → focused ×1.000 × 1.000 (focus on slider) · bound ×1 ± 0.002 · load 10.7/12.2/11.9
+  PASS       E-3 slider phone touch-held PRM light · reduce · rest → touch-held ×1.000 × 1.000 · light leg [root child0 bg, root child0 shadow, root child1 bg, root child1 shadow, root child2 bg, root child2 opacity] (bound ×1 ± 0.002 on both axes and ≥ 1 paint property) · load 10.7/12.2/11.9
+  PASS       E-3 slider desk pointer-held dark · rest 360.0 px → held 381.6 px (×1.060; [data-engaged] 1) · bound ×1.03 sustained at 450 ms · load 10.7/12.2/11.9
+  PASS       E-3 slider desk keyboard-focused dark · rest 360.0 px → focused 381.6 px (×1.060; focus on slider) · bound ×1.03 · load 10.7/12.2/11.9
+  PASS       E-3 slider desk keyboard register dark · Tab-engaged: [data-held] 0 · cursor grabbing false · root height ×1.060 body height ×1.060 (bound: no data-held, no grabbing, no squish < ×0.99: the hand's register is the pointer's) · load 10.7/12.2/11.9
+  PASS       E-3 slider afterdrag dark · a pointer drag and release, +600 ms: ×1.000 × 1.000 · [data-held] 0 · veil 0 (bound ×1 ± 0.002, X-1) · load 10.2/12.1/11.8
+  PASS       E-3 slider modifier dark · after a drag (focus on slider), each held alone 400 ms: Shift ×1.000 × 1.000 held 0 · Meta ×1.000 × 1.000 held 0 · Control ×1.000 × 1.000 held 0 · Alt ×1.000 × 1.000 held 0 (bound ×1 ± 0.002, no data-held) · load 10.2/12.1/11.8
+  PASS       E-3 slider unacted key dark · after a drag, "k" +450 ms: ×1.000 × 1.000 · veil 0 (bound ×1 ± 0.002, no veil: a key the control does not act on engages nothing) · load 10.2/12.1/11.8
+  PASS       E-3 slider script focus dark · element.focus() with no key event (focus on slider), +450 ms: ×1.000 × 1.000 · veil 0 (bound ×1 ± 0.002, no veil) · load 10.2/12.1/11.8
+  PASS       E-3 slider phone touch-held dark · 390×844 coarse · rest 358.0 × 24.0 px → touch-held 358.0 × 25.4 px (inline ×1.000, block ×1.060; [data-engaged] 1) · bound ×1.03 on either axis · load 10.0/12.0/11.8
+  PASS       E-3 slider phone gutter dark · engaged box 16.0..374.0 px in a 390 px viewport · bound 16..374 px · load 10.0/12.0/11.8
+  PASS       E-3 slider keyboard-focused PRM dark · reduce · rest → focused ×1.000 × 1.000 (focus on slider) · bound ×1 ± 0.002 · load 10.0/12.0/11.8
+  PASS       E-3 slider phone touch-held PRM dark · reduce · rest → touch-held ×1.000 × 1.000 · light leg [root child0 bg, root child0 shadow, root child1 bg, root child1 shadow, root child2 bg, root child2 opacity] (bound ×1 ± 0.002 on both axes and ≥ 1 paint property) · load 10.0/12.0/11.8
+E-3 chromium PASS · 22 pass, 0 fail, 0 unmeasured of 22 gating cells (0 reported) · load 10.4/12.2/11.9 at start, 10.0/12.0/11.8 at end
+# exit 0 · 2026-11-04 10:34:08 · load { 10.03 11.99 11.79 }
+# end · 2026-11-04 10:34:08 · load { 10.03 11.99 11.79 } · harness f2cc94e3fa86

@@ -1,0 +1,138 @@
+# C-A13c CK-22 greps · 2026-11-04 08:44:32 · glass-ui HEAD 81c0ec761
+# self-check on the candidate's own src (counts)
+#   SL '<Slider\b': 9
+#   NF '<NumberField\b': 0
+#   SS '--spring-[a-z-]*-settle *:': 6
+#   GE '--scale-engage *:': 1
+#   MT '--motion-tempo *:': 4
+#   GS '--space-section *:': 2
+#   TA 'transition-all|transition: *all|transition-property: *all': 0
+#   NS 'not\(\[style\]\)|\[style\]': 0
+#   RT '(rotate|skew|perspective)\(|(^|[^-a-z])rotate *:': 9
+#   FS 'field-sizing': 9
+#   SH 'attachShadow': 0
+#   ER '--engage-read-': 5
+atlas @ 069708a · SL 2 NF 0 SS 0 GE 0 MT 0 GS 0 TA 0 NS 0 RT 9 FS 0 SH 0 ER 0
+bbnf-buddy @ 2857c2f · SL 1 NF 0 SS 0 GE 0 MT 0 GS 0 TA 2 NS 0 RT 9 FS 0 SH 0 ER 0
+chicago @  · SL 0 NF 0 SS 0 GE 0 MT 0 GS 0 TA 0 NS 0 RT 0 FS 0 SH 0 ER 0
+keyframes.js @ 9bd5b335 · SL 5 NF 1 SS 0 GE 0 MT 0 GS 0 TA 1 NS 0 RT 92 FS 0 SH 1 ER 0
+   SH keyframes.js/test/ingest/ingest.test.ts:435:        const shadow = host.attachShadow({ mode: "open" });
+slides @ 7dcbb3b · SL 0 NF 0 SS 0 GE 0 MT 0 GS 0 TA 0 NS 0 RT 16 FS 0 SH 0 ER 0
+speedtest @ e2d9444d · SL 2 NF 6 SS 0 GE 0 MT 0 GS 0 TA 7 NS 0 RT 14 FS 0 SH 0 ER 0
+value.js @ 1a719a8a2 · SL 7 NF 1 SS 0 GE 0 MT 0 GS 0 TA 3 NS 0 RT 67 FS 5 SH 1 ER 0
+   FS value.js/demo/app/.vite-critic-9216/deps/highlight__js_lib_languages_css.js:433:	"field-sizing",
+   FS value.js/demo/app/.vite-critic-9216/deps/tailwind-merge.js:2951:			* @see https://tailwindcss.com/docs/field-sizing
+   FS value.js/demo/app/.vite-critic-9216/deps/tailwind-merge.js:2953:			"field-sizing": [{ "field-sizing": ["fixed", "content"] }],
+   FS value.js/demo/palettes/admin/panels/AdminTagsPanel.vue:77:                 sizes to its own content. The field is `field-sizing: content`
+   FS value.js/demo/palettes/admin/panels/AdminTagsPanel.vue:90:                    class="input-bar-field field-sizing-content min-w-auto max-w-full"
+   SH value.js/demo/app/.vite-critic-9216/deps/vue.runtime.esm-bundler-DQai_KuN.js:7764:				this.attachShadow(extend({}, _def.shadowRootOptions, { mode: "open" }));
+fourier-analysis @ 3bb9da5 · SL 5 NF 1 SS 0 GE 0 MT 0 GS 0 TA 5 NS 0 RT 5 FS 0 SH 0 ER 0
+sci-report @ bbcbd503 · SL 5 NF 0 SS 1 GE 0 MT 1 GS 0 TA 0 NS 0 RT 42 FS 1 SH 0 ER 0
+   SS sci-report/dist-ob11/assets/index-BPa7lE7v.css:1:@layer atlas,atlas.tokens,atlas.recipes,atlas.components;@layer atlas.tokens{@layer properties{@supports (((-webkit-hyphe
+   MT sci-report/dist-ob11/assets/index-BPa7lE7v.css:1:@layer atlas,atlas.tokens,atlas.recipes,atlas.components;@layer atlas.tokens{@layer properties{@supports (((-webkit-hyphe
+   FS sci-report/dist-ob11/assets/index-BPa7lE7v.css:1:@layer atlas,atlas.tokens,atlas.recipes,atlas.components;@layer atlas.tokens{@layer properties{@supports (((-webkit-hyphe
+gregg @  · SL 0 NF 0 SS 31 GE 0 MT 23 GS 23 TA 0 NS 0 RT 126 FS 21 SH 6 ER 0
+   SS gregg/.shots/p5-dist/assets/index-D_PizLdn.css:1:.page-dock[data-v-a0413157]{position:fixed;inset-inline:0;bottom:.75rem;z-index:40;display:flex;justify-content:center;pa
+   SS gregg/.shots/p6c-dist/assets/index-BLuIEIA5.css:1:.page-dock[data-v-9fe69212]{position:fixed;inset-inline:0;bottom:.75rem;z-index:40;display:flex;justify-content:center;p
+   SS gregg/.shots/p5live/index-B7IP4d_0.css:1:.page-dock[data-v-2211bcfd]{position:fixed;inset-inline:0;bottom:.75rem;z-index:40;display:flex;justify-content:center;padding-in
+   SS gregg/.shots/bundle3/assets/index-DP-p8r_2.css:1:.page-dock[data-v-d79432b4]{position:fixed;inset-inline:0;bottom:max(.75rem,env(safe-area-inset-bottom));z-index:40;displ
+   SS gregg/.shots/p3-dist/assets/index-B5gI8K46.css:1:.page-dock[data-v-d79432b4]{position:fixed;inset-inline:0;bottom:max(.75rem,env(safe-area-inset-bottom));z-index:40;displ
+   SS gregg/.shots/final-dist/assets/index-CknuuUxS.css:1:.page-dock[data-v-0d4fa9e6]{position:fixed;inset-inline:0;bottom:max(.75rem,env(safe-area-inset-bottom));z-index:40;di
+   SS gregg/.shots/bundle/assets/index-DmkXDzJ2.css:1:.page-dock[data-v-d79432b4]{position:fixed;inset-inline:0;bottom:max(.75rem,env(safe-area-inset-bottom));z-index:40;displa
+   SS gregg/.shots/p4priv/live/index-BiBbDLs-.css:1:.page-dock[data-v-4adbbcf0]{position:fixed;inset-inline:0;bottom:.75rem;z-index:40;display:flex;justify-content:center;paddi
+   SS gregg/.shots/bundle2/assets/index-DboAHICv.css:1:.page-dock[data-v-d79432b4]{position:fixed;inset-inline:0;bottom:max(.75rem,env(safe-area-inset-bottom));z-index:40;displ
+   SS gregg/.shots/p7/dist-base-min/assets/index-i9krx6wc.css:1:.page-dock[data-v-9fe69212]{position:fixed;inset-inline:0;bottom:.75rem;z-index:40;display:flex;justify-content:
+   SS gregg/.shots/p7/dist-after-nm/assets/index-Bliv25jt.css:13675:  --spring-press-settle: .12s;
+   SS gregg/.shots/p7/dist-after-nm/assets/index-Bliv25jt.css:13676:  --spring-present-settle: .2s;
+   SS gregg/.shots/p7/dist-after-nm/assets/index-Bliv25jt.css:13677:  --spring-dock-settle: .21s;
+   SS gregg/.shots/p7/dist-after-nm/assets/index-Bliv25jt.css:13678:  --spring-panel-settle: .45s;
+   SS gregg/.shots/p7/dist-after-nm/assets/index-Bliv25jt.css:13679:  --spring-bloom-settle: .37s;
+   SS gregg/.shots/p7/dist-after-nm/assets/index-Bliv25jt.css:13680:  --spring-world-settle: .57s;
+   SS gregg/.shots/p7/dist-after/assets/index-BfXiHBOV.css:1:.page-dock[data-v-f4907755]{position:fixed;inset-inline:0;bottom:.75rem;z-index:40;display:flex;justify-content:cen
+   SS gregg/.shots/p7/dist-base/assets/index-B2xD87Uz.css:13650:  --spring-press-settle: .12s;
+   SS gregg/.shots/p7/dist-base/assets/index-B2xD87Uz.css:13651:  --spring-present-settle: .2s;
+   SS gregg/.shots/p7/dist-base/assets/index-B2xD87Uz.css:13652:  --spring-dock-settle: .21s;
+   SS gregg/.shots/p7/dist-base/assets/index-B2xD87Uz.css:13653:  --spring-panel-settle: .45s;
+   SS gregg/.shots/p7/dist-base/assets/index-B2xD87Uz.css:13654:  --spring-bloom-settle: .37s;
+   SS gregg/.shots/p7/dist-base/assets/index-B2xD87Uz.css:13655:  --spring-world-settle: .57s;
+   SS gregg/.shots/r2w-bundle/assets/index-BDutKujZ.css:1:.page-dock[data-v-a0413157]{position:fixed;inset-inline:0;bottom:.75rem;z-index:40;display:flex;justify-content:center
+   SS gregg/.shots/p6-build/assets/index-OVxkdjmK.css:1:.page-dock[data-v-4adbbcf0]{position:fixed;inset-inline:0;bottom:.75rem;z-index:40;display:flex;justify-content:center;p
+   SS gregg/.shots/p6-dist/assets/index-6YEt5Ave.css:1:.page-dock[data-v-b68517b1]{position:fixed;inset-inline:0;bottom:.75rem;z-index:40;display:flex;justify-content:center;pa
+   SS gregg/.shots/p3-r1-dist/assets/index-DboAHICv.css:1:.page-dock[data-v-d79432b4]{position:fixed;inset-inline:0;bottom:max(.75rem,env(safe-area-inset-bottom));z-index:40;di
+   SS gregg/.shots/p6r2m-dist/assets/index-DgVkLIQ_.css:1:.page-dock[data-v-9fe69212]{position:fixed;inset-inline:0;bottom:.75rem;z-index:40;display:flex;justify-content:center
+   SS gregg/.shots/p7-build/assets/index-DdibmGbl.css:1:.page-dock[data-v-4adbbcf0]{position:fixed;inset-inline:0;bottom:.75rem;z-index:40;display:flex;justify-content:center;p
+   SS gregg/.shots/p5-build/assets/index-DP-p8r_2.css:1:.page-dock[data-v-d79432b4]{position:fixed;inset-inline:0;bottom:max(.75rem,env(safe-area-inset-bottom));z-index:40;disp
+   SS gregg/.shots/p5-campus-dist/assets/index-_ocAnSVr.css:1:.page-dock[data-v-02d6d836]{position:fixed;inset-inline:0;bottom:.75rem;z-index:40;display:flex;justify-content:ce
+   MT gregg/.shots/p5-dist/assets/index-D_PizLdn.css:1:.page-dock[data-v-a0413157]{position:fixed;inset-inline:0;bottom:.75rem;z-index:40;display:flex;justify-content:center;pa
+   MT gregg/.shots/p6c-dist/assets/index-BLuIEIA5.css:1:.page-dock[data-v-9fe69212]{position:fixed;inset-inline:0;bottom:.75rem;z-index:40;display:flex;justify-content:center;p
+   MT gregg/.shots/p5live/index-B7IP4d_0.css:1:.page-dock[data-v-2211bcfd]{position:fixed;inset-inline:0;bottom:.75rem;z-index:40;display:flex;justify-content:center;padding-in
+   MT gregg/.shots/bundle3/assets/index-DP-p8r_2.css:1:.page-dock[data-v-d79432b4]{position:fixed;inset-inline:0;bottom:max(.75rem,env(safe-area-inset-bottom));z-index:40;displ
+   MT gregg/.shots/p3-dist/assets/index-B5gI8K46.css:1:.page-dock[data-v-d79432b4]{position:fixed;inset-inline:0;bottom:max(.75rem,env(safe-area-inset-bottom));z-index:40;displ
+   MT gregg/.shots/final-dist/assets/index-CknuuUxS.css:1:.page-dock[data-v-0d4fa9e6]{position:fixed;inset-inline:0;bottom:max(.75rem,env(safe-area-inset-bottom));z-index:40;di
+   MT gregg/.shots/bundle/assets/index-DmkXDzJ2.css:1:.page-dock[data-v-d79432b4]{position:fixed;inset-inline:0;bottom:max(.75rem,env(safe-area-inset-bottom));z-index:40;displa
+   MT gregg/.shots/p4priv/live/index-BiBbDLs-.css:1:.page-dock[data-v-4adbbcf0]{position:fixed;inset-inline:0;bottom:.75rem;z-index:40;display:flex;justify-content:center;paddi
+   MT gregg/.shots/bundle2/assets/index-DboAHICv.css:1:.page-dock[data-v-d79432b4]{position:fixed;inset-inline:0;bottom:max(.75rem,env(safe-area-inset-bottom));z-index:40;displ
+   MT gregg/.shots/p7/dist-base-min/assets/index-i9krx6wc.css:1:.page-dock[data-v-9fe69212]{position:fixed;inset-inline:0;bottom:.75rem;z-index:40;display:flex;justify-content:
+   MT gregg/.shots/p7/dist-after-nm/assets/index-Bliv25jt.css:537:      --motion-tempo: 1;
+   MT gregg/.shots/p7/dist-after-nm/assets/index-Bliv25jt.css:1010:    --motion-tempo: 1;
+   MT gregg/.shots/p7/dist-after/assets/index-BfXiHBOV.css:1:.page-dock[data-v-f4907755]{position:fixed;inset-inline:0;bottom:.75rem;z-index:40;display:flex;justify-content:cen
+   MT gregg/.shots/p7/dist-base/assets/index-B2xD87Uz.css:512:      --motion-tempo: 1;
+   MT gregg/.shots/p7/dist-base/assets/index-B2xD87Uz.css:985:    --motion-tempo: 1;
+   MT gregg/.shots/r2w-bundle/assets/index-BDutKujZ.css:1:.page-dock[data-v-a0413157]{position:fixed;inset-inline:0;bottom:.75rem;z-index:40;display:flex;justify-content:center
+   MT gregg/.shots/p6-build/assets/index-OVxkdjmK.css:1:.page-dock[data-v-4adbbcf0]{position:fixed;inset-inline:0;bottom:.75rem;z-index:40;display:flex;justify-content:center;p
+   MT gregg/.shots/p6-dist/assets/index-6YEt5Ave.css:1:.page-dock[data-v-b68517b1]{position:fixed;inset-inline:0;bottom:.75rem;z-index:40;display:flex;justify-content:center;pa
+   MT gregg/.shots/p3-r1-dist/assets/index-DboAHICv.css:1:.page-dock[data-v-d79432b4]{position:fixed;inset-inline:0;bottom:max(.75rem,env(safe-area-inset-bottom));z-index:40;di
+   MT gregg/.shots/p6r2m-dist/assets/index-DgVkLIQ_.css:1:.page-dock[data-v-9fe69212]{position:fixed;inset-inline:0;bottom:.75rem;z-index:40;display:flex;justify-content:center
+   MT gregg/.shots/p7-build/assets/index-DdibmGbl.css:1:.page-dock[data-v-4adbbcf0]{position:fixed;inset-inline:0;bottom:.75rem;z-index:40;display:flex;justify-content:center;p
+   MT gregg/.shots/p5-build/assets/index-DP-p8r_2.css:1:.page-dock[data-v-d79432b4]{position:fixed;inset-inline:0;bottom:max(.75rem,env(safe-area-inset-bottom));z-index:40;disp
+   MT gregg/.shots/p5-campus-dist/assets/index-_ocAnSVr.css:1:.page-dock[data-v-02d6d836]{position:fixed;inset-inline:0;bottom:.75rem;z-index:40;display:flex;justify-content:ce
+   GS gregg/.shots/p5-dist/assets/index-D_PizLdn.css:1:.page-dock[data-v-a0413157]{position:fixed;inset-inline:0;bottom:.75rem;z-index:40;display:flex;justify-content:center;pa
+   GS gregg/.shots/p6c-dist/assets/index-BLuIEIA5.css:1:.page-dock[data-v-9fe69212]{position:fixed;inset-inline:0;bottom:.75rem;z-index:40;display:flex;justify-content:center;p
+   GS gregg/.shots/p5live/index-B7IP4d_0.css:1:.page-dock[data-v-2211bcfd]{position:fixed;inset-inline:0;bottom:.75rem;z-index:40;display:flex;justify-content:center;padding-in
+   GS gregg/.shots/bundle3/assets/index-DP-p8r_2.css:1:.page-dock[data-v-d79432b4]{position:fixed;inset-inline:0;bottom:max(.75rem,env(safe-area-inset-bottom));z-index:40;displ
+   GS gregg/.shots/p3-dist/assets/index-B5gI8K46.css:1:.page-dock[data-v-d79432b4]{position:fixed;inset-inline:0;bottom:max(.75rem,env(safe-area-inset-bottom));z-index:40;displ
+   GS gregg/.shots/final-dist/assets/index-CknuuUxS.css:1:.page-dock[data-v-0d4fa9e6]{position:fixed;inset-inline:0;bottom:max(.75rem,env(safe-area-inset-bottom));z-index:40;di
+   GS gregg/.shots/bundle/assets/index-DmkXDzJ2.css:1:.page-dock[data-v-d79432b4]{position:fixed;inset-inline:0;bottom:max(.75rem,env(safe-area-inset-bottom));z-index:40;displa
+   GS gregg/.shots/p4priv/live/index-BiBbDLs-.css:1:.page-dock[data-v-4adbbcf0]{position:fixed;inset-inline:0;bottom:.75rem;z-index:40;display:flex;justify-content:center;paddi
+   GS gregg/.shots/bundle2/assets/index-DboAHICv.css:1:.page-dock[data-v-d79432b4]{position:fixed;inset-inline:0;bottom:max(.75rem,env(safe-area-inset-bottom));z-index:40;displ
+   GS gregg/.shots/p7/dist-base-min/assets/index-i9krx6wc.css:1:.page-dock[data-v-9fe69212]{position:fixed;inset-inline:0;bottom:.75rem;z-index:40;display:flex;justify-content:
+   GS gregg/.shots/p7/dist-after-nm/assets/index-Bliv25jt.css:14608:  --space-section: 2rem;
+   GS gregg/.shots/p7/dist-after-nm/assets/index-Bliv25jt.css:14683:    --space-section: 1.25rem;
+   GS gregg/.shots/p7/dist-after/assets/index-BfXiHBOV.css:1:.page-dock[data-v-f4907755]{position:fixed;inset-inline:0;bottom:.75rem;z-index:40;display:flex;justify-content:cen
+   GS gregg/.shots/p7/dist-base/assets/index-B2xD87Uz.css:14583:  --space-section: 2rem;
+   GS gregg/.shots/p7/dist-base/assets/index-B2xD87Uz.css:14658:    --space-section: 1.25rem;
+   GS gregg/.shots/r2w-bundle/assets/index-BDutKujZ.css:1:.page-dock[data-v-a0413157]{position:fixed;inset-inline:0;bottom:.75rem;z-index:40;display:flex;justify-content:center
+   GS gregg/.shots/p6-build/assets/index-OVxkdjmK.css:1:.page-dock[data-v-4adbbcf0]{position:fixed;inset-inline:0;bottom:.75rem;z-index:40;display:flex;justify-content:center;p
+   GS gregg/.shots/p6-dist/assets/index-6YEt5Ave.css:1:.page-dock[data-v-b68517b1]{position:fixed;inset-inline:0;bottom:.75rem;z-index:40;display:flex;justify-content:center;pa
+   GS gregg/.shots/p3-r1-dist/assets/index-DboAHICv.css:1:.page-dock[data-v-d79432b4]{position:fixed;inset-inline:0;bottom:max(.75rem,env(safe-area-inset-bottom));z-index:40;di
+   GS gregg/.shots/p6r2m-dist/assets/index-DgVkLIQ_.css:1:.page-dock[data-v-9fe69212]{position:fixed;inset-inline:0;bottom:.75rem;z-index:40;display:flex;justify-content:center
+   GS gregg/.shots/p7-build/assets/index-DdibmGbl.css:1:.page-dock[data-v-4adbbcf0]{position:fixed;inset-inline:0;bottom:.75rem;z-index:40;display:flex;justify-content:center;p
+   GS gregg/.shots/p5-build/assets/index-DP-p8r_2.css:1:.page-dock[data-v-d79432b4]{position:fixed;inset-inline:0;bottom:max(.75rem,env(safe-area-inset-bottom));z-index:40;disp
+   GS gregg/.shots/p5-campus-dist/assets/index-_ocAnSVr.css:1:.page-dock[data-v-02d6d836]{position:fixed;inset-inline:0;bottom:.75rem;z-index:40;display:flex;justify-content:ce
+   FS gregg/.shots/p5-dist/assets/index-D_PizLdn.css:1:.page-dock[data-v-a0413157]{position:fixed;inset-inline:0;bottom:.75rem;z-index:40;display:flex;justify-content:center;pa
+   FS gregg/.shots/p6c-dist/assets/index-BLuIEIA5.css:1:.page-dock[data-v-9fe69212]{position:fixed;inset-inline:0;bottom:.75rem;z-index:40;display:flex;justify-content:center;p
+   FS gregg/.shots/p5live/index-B7IP4d_0.css:1:.page-dock[data-v-2211bcfd]{position:fixed;inset-inline:0;bottom:.75rem;z-index:40;display:flex;justify-content:center;padding-in
+   FS gregg/.shots/bundle3/assets/index-DP-p8r_2.css:1:.page-dock[data-v-d79432b4]{position:fixed;inset-inline:0;bottom:max(.75rem,env(safe-area-inset-bottom));z-index:40;displ
+   FS gregg/.shots/p3-dist/assets/index-B5gI8K46.css:1:.page-dock[data-v-d79432b4]{position:fixed;inset-inline:0;bottom:max(.75rem,env(safe-area-inset-bottom));z-index:40;displ
+   FS gregg/.shots/final-dist/assets/index-CknuuUxS.css:1:.page-dock[data-v-0d4fa9e6]{position:fixed;inset-inline:0;bottom:max(.75rem,env(safe-area-inset-bottom));z-index:40;di
+   FS gregg/.shots/bundle/assets/index-DmkXDzJ2.css:1:.page-dock[data-v-d79432b4]{position:fixed;inset-inline:0;bottom:max(.75rem,env(safe-area-inset-bottom));z-index:40;displa
+   FS gregg/.shots/p4priv/live/index-BiBbDLs-.css:1:.page-dock[data-v-4adbbcf0]{position:fixed;inset-inline:0;bottom:.75rem;z-index:40;display:flex;justify-content:center;paddi
+   FS gregg/.shots/bundle2/assets/index-DboAHICv.css:1:.page-dock[data-v-d79432b4]{position:fixed;inset-inline:0;bottom:max(.75rem,env(safe-area-inset-bottom));z-index:40;displ
+   FS gregg/.shots/p7/dist-base-min/assets/index-i9krx6wc.css:1:.page-dock[data-v-9fe69212]{position:fixed;inset-inline:0;bottom:.75rem;z-index:40;display:flex;justify-content:
+   FS gregg/.shots/p7/dist-after-nm/assets/index-Bliv25jt.css:8404:    field-sizing: content;
+   FS gregg/.shots/p7/dist-after/assets/index-BfXiHBOV.css:1:.page-dock[data-v-f4907755]{position:fixed;inset-inline:0;bottom:.75rem;z-index:40;display:flex;justify-content:cen
+   FS gregg/.shots/p7/dist-base/assets/index-B2xD87Uz.css:8379:    field-sizing: content;
+   FS gregg/.shots/r2w-bundle/assets/index-BDutKujZ.css:1:.page-dock[data-v-a0413157]{position:fixed;inset-inline:0;bottom:.75rem;z-index:40;display:flex;justify-content:center
+   FS gregg/.shots/p6-build/assets/index-OVxkdjmK.css:1:.page-dock[data-v-4adbbcf0]{position:fixed;inset-inline:0;bottom:.75rem;z-index:40;display:flex;justify-content:center;p
+   FS gregg/.shots/p6-dist/assets/index-6YEt5Ave.css:1:.page-dock[data-v-b68517b1]{position:fixed;inset-inline:0;bottom:.75rem;z-index:40;display:flex;justify-content:center;pa
+   FS gregg/.shots/p3-r1-dist/assets/index-DboAHICv.css:1:.page-dock[data-v-d79432b4]{position:fixed;inset-inline:0;bottom:max(.75rem,env(safe-area-inset-bottom));z-index:40;di
+   FS gregg/.shots/p6r2m-dist/assets/index-DgVkLIQ_.css:1:.page-dock[data-v-9fe69212]{position:fixed;inset-inline:0;bottom:.75rem;z-index:40;display:flex;justify-content:center
+   FS gregg/.shots/p7-build/assets/index-DdibmGbl.css:1:.page-dock[data-v-4adbbcf0]{position:fixed;inset-inline:0;bottom:.75rem;z-index:40;display:flex;justify-content:center;p
+   FS gregg/.shots/p5-build/assets/index-DP-p8r_2.css:1:.page-dock[data-v-d79432b4]{position:fixed;inset-inline:0;bottom:max(.75rem,env(safe-area-inset-bottom));z-index:40;disp
+   FS gregg/.shots/p5-campus-dist/assets/index-_ocAnSVr.css:1:.page-dock[data-v-02d6d836]{position:fixed;inset-inline:0;bottom:.75rem;z-index:40;display:flex;justify-content:ce
+   SH gregg/.shots/priv3/out3.mjs:55042:            this.attachShadow(
+   SH gregg/.shots/priv3/out3.mjs:56966:            this.attachShadow(
+   SH gregg/.shots/probe/out2.mjs:55042:            this.attachShadow(
+   SH gregg/.shots/probe/out2.mjs:56966:            this.attachShadow(
+   SH gregg/.shots/probe/out.mjs:55042:            this.attachShadow(
+   SH gregg/.shots/probe/out.mjs:56966:            this.attachShadow(

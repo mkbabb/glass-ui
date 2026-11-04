@@ -1,0 +1,66 @@
+# C-E13-complete Chromium list (c-run.sh, named batches C-1.. under the 50-min rule). Order: held-battery.txt §3 first (cand13, the
+# controls cand12 and plant-child, the cost cell's cand11 and cand8), then the pass-12 critics' paths, the scoring witnesses whole, the
+# idle bar beside cand8 (O-103f (1)), the plants on their cells, the pass-11 critics' paths and the older instruments, cost, stills, CAP.
+cand13-ce13c chromium --only d1,d2,d3,d4,d5,d6,d7,d8,d9,d10,stills
+cand12-ce13c chromium --only d1,d2,d3,d4,d5,d6,d7,d8,d9,d10
+# re-read 09:2x: the first line hit lib.mjs's witness deadline (1500 s, counted from before acquireLock) while waiting 25 min on the shared harness lock; a harness-invocation reason. run.sh now passes --deadline 5400 to every node call.
+cand13-ce13c chromium --only d1,d2,d3,d4,d5,d6,d7,d8,d9,d10,stills --rr 1
+plant-child-ce13c chromium --only d1,d2,d3,d5
+cand11-ce13c chromium --only d10
+cand8-ce13c chromium --only d10
+cand13-E-10 chromium
+cand13-E-11 chromium
+cand13-ce12 chromium
+cand13-ca12 chromium --only xf,kind,anchor
+cand13-ca12 chromium --only errs
+cand13-vals chromium
+cand13-e11v chromium
+cand13-origin chromium
+cand13-E-13 chromium
+cand13-E-1 chromium
+cand13-E-2 chromium
+cand13-E-3 chromium
+cand13-E-4 chromium
+cand13-E-5 chromium
+cand13-E-6 chromium
+cand13-E-7 chromium
+cand13-E-8 chromium
+cand13-E-9 chromium
+cand13-prmplant chromium
+cand13-E-12 chromium
+cand8-ca9idle chromium
+cand13-ca9idle chromium
+cand8-ca9idle chromium --round 2
+cand13-ca9idle chromium --round 2
+cand8-ca6idle chromium
+cand13-ca6idle chromium
+cand13-loop chromium
+plant-loop-loop chromium
+plant-level-e10 chromium --part hg13 --hg13 xf
+plant-child-e10 chromium --part hg13 --hg13 kind
+plant-stale-e10 chromium --part hg13 --hg13 anim
+plant-noown-e10 chromium --part hg13 --hg13 reentry
+plant-typedom-e11 chromium --part forms,census
+plant-reachzero-e11 chromium --part reachin
+cand13-ce11 chromium --only side,clock,reverse,wheel,release-mid,exit-side,rerender,reach,repress,press-line,noroom,still
+cand13-ce11 chromium --only loudx,relclock
+cand13-ce11 chromium --only side,clock --tfs trackzoom,htmlzoom,zoom25
+cand13-ca11 chromium --only side,clock,reverse,wheel,release-mid,exit-side,rerender,hostglide,repress,reach
+cand13-ca11 chromium --only loud
+cand13-ce9 chromium --only stack,dom,lensdlg,anc,lens
+cand13-ca9 chromium --only stack,loop,flip,flipstill,zoom
+cand13-crest chromium
+cand13-tip chromium
+cost-bar chromium
+rec chromium
+paint chromium
+h13still-cand13 chromium
+cand13-glance chromium
+cand13-zglance chromium
+cand13-stills chromium
+cand13-ca12 chromium --only still
+cand13-cap chromium
+# added 09:3x: the stills re-taken on the outlined card (ce13c-probe.mjs stills part replaced by rename)
+cand13-ce13c chromium --only stills --rr 2
+# added 10:5x: E-7 on the cand13 tree (the worktree now carries P-E13)
+cand13-E-7 chromium --rr 1
