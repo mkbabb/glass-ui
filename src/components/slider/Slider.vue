@@ -143,13 +143,16 @@ function writeVeilCentre(): void {
 // The lens organ over the scrub site. Its geometry is measured ONCE per grasp — the
 // track's own box and the viewport point it hangs from — and the per-value write is
 // two custom properties, no layout read. `--loupe-x` is the value point in TRACK
-// coordinates: the clone is laid out at 3× and transformed down by k/3, so
+// coordinates, the thumb's centre on the lane (`d/2 + p·(track − d)`, styles.css THE
+// LANE), and the lens fill ends at the thumb's trailing edge, as the real fill does
+// [10.1.5 critique D1: at `p·track` both sat off the thumb]: the clone is laid out at 3× and transformed down by k/3, so
 // `LENS/2 − k·x` puts that point dead centre at every k (the two scales cancel).
 // Horizontal only: a vertical scrubber's finger does not occlude its own value point.
 // THE ONE PREDICATE. Scrubber-only comes free — `grasping` opens only for a graspable
 // variant — so the spectrum is excluded here and nowhere else; horizontal-only is the
 // stated occlusion rule. Nothing downstream re-tests either.
 const loupeTrackW = ref(0);
+let loupeThumbD = 0;
 const loupeShown = computed(
     () => grasping.value && props.orientation !== "vertical",
 );
@@ -170,6 +173,8 @@ function writeLoupeGeometry(): void {
     const track = host.querySelector<HTMLElement>(".slider-track");
     if (!track) return;
     const rect = track.getBoundingClientRect();
+    // The thumb's layout diameter: `offsetWidth`, so the held press scale never reaches it.
+    loupeThumbD = host.querySelector<HTMLElement>(".slider-thumb")?.offsetWidth ?? 0;
     loupeTrackW.value = rect.width;
     lens.style.setProperty("--loupe-track-w", `${rect.width}px`);
     lens.style.setProperty("--loupe-left", `${rect.left + rect.width / 2}px`);
@@ -179,9 +184,10 @@ function writeLoupeGeometry(): void {
 function writeLoupeValue(): void {
     const lens = loupeRef.value;
     if (!lens || !loupeTrackW.value) return;
-    const x = valueFraction() * loupeTrackW.value;
+    const d = loupeThumbD;
+    const x = d / 2 + valueFraction() * (loupeTrackW.value - d);
     lens.style.setProperty("--loupe-x", `${x}px`);
-    lens.style.setProperty("--loupe-fill-w", `${x * 3}px`);
+    lens.style.setProperty("--loupe-fill-w", `${(x + d / 2) * 3}px`);
 }
 
 function trackViewport(on: boolean): void {

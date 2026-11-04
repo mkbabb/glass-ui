@@ -150,7 +150,13 @@
    `p·(track − d)`). [2026-11-04 · 10.1.5 · O-129 r5] At 10.1.4 the fill was `p·track`
    and the thumb painted nothing, so the minimum painted a bare track (fourier /morph
    'Morph' at 50 of 50..800) and the maximum an inert full bar (value's 'Zones' 6/6).
-   The spectrum's range paints no fill, so its lane is the whole track. */
+   The spectrum's range paints no fill, so its lane is the whole track.
+   THE MARKS RIDE THE SAME LANE. A value mark is the thumb's CENTRE at that value,
+   `d/2 + p·(track − d)`, so the marks register (`glass/value-marks.css`, `inset: 0`)
+   is inset by half a diameter at both ends of the main axis: its `p·box` lands on that
+   centre, inverted and RTL included (the inset is symmetric). [10.1.5 critique D1] At
+   `inset: 0` a mark sat at `p·track`, up to half a diameter off the thumb, and a mark
+   near min was already under the fill at min. */
 .slider-lane {
     position: absolute;
     inset: 0;
@@ -173,6 +179,9 @@
     &[data-inverted] .slider-range {
         margin-inline: calc(-1 * var(--slider-lane-cut)) 0;
     }
+    & .glass-value-marks {
+        inset-inline: calc(var(--slider-lane-cut) / 2);
+    }
 }
 
 .glass-slider[data-orientation="vertical"]:not([data-variant="spectrum"]) {
@@ -187,6 +196,9 @@
     }
     &[data-inverted] .slider-range {
         margin-block: 0 calc(-1 * var(--slider-lane-cut));
+    }
+    & .glass-value-marks {
+        inset-block: calc(var(--slider-lane-cut) / 2);
     }
 }
 
@@ -282,7 +294,11 @@
     }
 }
 
-.glass-slider[data-disabled] .slider-range {
+/* The disabled register dims the scrubber's whole value: the fill and the disc
+   inscribed in it. [10.1.5 critique D3] The thumb is new paint in 10.1.5 and painted at
+   full strength on a half-strength fill. */
+.glass-slider[data-disabled] .slider-range,
+.glass-slider[data-disabled]:not([data-variant="spectrum"]) .slider-thumb {
     opacity: var(--opacity-disabled);
 }
 
