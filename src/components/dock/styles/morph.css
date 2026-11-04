@@ -175,6 +175,20 @@
         border-radius: var(--radius-circle);
     }
 
+    /* A collapsed dock that keeps a `#persistent` control beside its summary is NOT a
+       square: it is two cells wide (atlas's figure dock, Table view plus the handle,
+       100 x 52). `50%` on that box drew an oval lozenge, a full-radius box over 40 px
+       (U/B8r I-3, atlas register F-20). Such a dock is a short bar, a container, so it
+       keeps the bar corner it wears open (`--radius-dock`, 16 px on a 52 px box): the
+       collapse and the open dock share one corner, and the morph swaps no silhouette.
+       The circle stays for the square cases: the summary alone, or a persistent
+       control alone (the empty-summary case above). Two flat `:has()`, never nested. */
+    .glass-dock.collapsed:not([data-morphing]):not(.vertical):has(.dock-persistent):has(
+            .dock-layer--summary:not(:empty)
+        ) {
+        border-radius: var(--radius-dock);
+    }
+
     /* The collapsed summary is a PERFECT CIRCLE. The `.dock-layer`
        base rule (`.glass-dock:not(.vertical) .dock-layer`) locks `height:
        var(--dock-layer-height)` (40px) on EVERY layer including the summary; against
