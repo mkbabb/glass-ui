@@ -169,6 +169,7 @@ export function useDockExpandedSize(
 ): UseDockExpandedSizeReturn {
     const { rootEl, contentEl, expandedEl, collapsedEl, axis } = options;
     let observer: ResizeObserver | null = null;
+    let crossObserver: ResizeObserver | null = null;
     let mutations: MutationObserver | null = null;
     let expandedChrome: number | null = null;
     let collapsedChrome: number | null = null;
@@ -228,9 +229,32 @@ export function useDockExpandedSize(
         }
     }
 
+    /*
+     * THE PLATE'S CROSS EXTENT, `--dock-plate-cross-px` (O-129 r1, O-123 OD-5): the
+     * plate's block size on a horizontal dock, its inline size on a vertical one. The
+     * stadium's rest corner is half of it (run.css `--dock-cap-rest`), a length, so the
+     * corner is a circle of the plate's own height on every box and at every point of the
+     * cut-cap timeline. It is the ResizeObserver's border box of the plate: layout, not
+     * paint, so the morph's `scale` never reaches it, fractional, and delivered after
+     * layout and before paint, so the first painted frame already carries it.
+     */
+    function observeCross(root: HTMLElement): void {
+        const plate = root.querySelector<HTMLElement>(":scope > .dock-plate");
+        if (!plate || typeof ResizeObserver === "undefined") return;
+        crossObserver = new ResizeObserver(([entry]) => {
+            const box = entry?.borderBoxSize?.[0];
+            if (!box) return;
+            const px = axis.value === "vertical" ? box.inlineSize : box.blockSize;
+            root.style.setProperty("--dock-plate-cross-px", `${px}px`);
+        });
+        crossObserver.observe(plate);
+    }
+
     function attach(): void {
         observer?.disconnect();
         observer = null;
+        crossObserver?.disconnect();
+        crossObserver = null;
         mutations?.disconnect();
         mutations = null;
         if (!rootEl.value) return;
@@ -238,6 +262,7 @@ export function useDockExpandedSize(
             observer = new ResizeObserver(() => capture());
             observe();
         }
+        observeCross(rootEl.value);
         if (typeof MutationObserver !== "undefined") {
             // A pane's content changed: the patch is complete when this microtask runs,
             // before the frame lays out or paints.
@@ -272,6 +297,8 @@ export function useDockExpandedSize(
         disposed = true;
         observer?.disconnect();
         observer = null;
+        crossObserver?.disconnect();
+        crossObserver = null;
         mutations?.disconnect();
         mutations = null;
         if (typeof window !== "undefined") window.removeEventListener("resize", onResize);

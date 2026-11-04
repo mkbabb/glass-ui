@@ -279,7 +279,11 @@ describe("G-DOCK-RUN — the platform is the detent engine", () => {
     ] as const)("the %s run is a snapped, contained, single-owner scroller", (_o, axis, pad, pan) => {
         const run = declarations(`${STYLES}/run.css`);
         expect(run).toContain(`scroll-snap-type: ${axis} mandatory`);
-        expect(run).toMatch(new RegExp(`${pad}:\\s*calc\\(var\\(--dock-pitch\\) / 2\\)`));
+        // The half pitch, plus the run's reserve, which the padding box adds before the
+        // first seat (O-129 r1): every rest keeps its scroll offset.
+        expect(run).toMatch(
+            new RegExp(`${pad}:\\s*calc\\(var\\(--dock-pitch\\) / 2 \\+ var\\(--dock-run-reserve\\)\\)`),
+        );
         expect(run).toContain(`touch-action: ${pan}`);
         expect(run).toContain("overscroll-behavior: contain");
         expect(run).toMatch(/\.dock-run > \*\s*\{[^{}]*scroll-snap-align:\s*start/);
@@ -319,8 +323,9 @@ describe("G-DOCK-RUN — the platform is the detent engine", () => {
      * BOTH ENDPOINTS ARRIVE THROUGH THE TOKEN PAIR, so retargeting a shape is a token
      * line and never a keyframe edit — and `from: 9999px`, which the half-box clamp pins
      * until t=0.9988 (measured: t=0.999 still reads 25.98px), appears nowhere.
-     * `--dock-cap-rest` is `50%` on the stadium precisely because 50% IS the resolved
-     * corner with no plate-height token to couple to.
+     * `--dock-cap-rest` is a LENGTH on the stadium, half the plate's measured cross
+     * extent (O-129 r1, O-123 OD-5): `50%` resolved per axis and painted an ellipse on
+     * any plate wider than tall.
      */
     it("the cap keyframes only through the rest/cut token pair", () => {
         const run = read(`${STYLES}/run.css`);
@@ -332,7 +337,8 @@ describe("G-DOCK-RUN — the platform is the detent engine", () => {
             }
         }
         const decls = declarations(`${STYLES}/run.css`);
-        expect(decls).toMatch(/--dock-cap-rest:\s*50%/);
+        expect(decls).toMatch(/--dock-cap-rest:\s*calc\(var\(--dock-plate-cross-px\) \/ 2\)/);
+        expect(decls).not.toMatch(/--dock-cap-rest:\s*[\d.]+%/);
         // Declarations only: `from: 9999px` is NAMED in the docblock as the rejected
         // alternative, and a detector that cannot tell a rejection from a declaration
         // would RED the file for explaining itself.
@@ -709,10 +715,15 @@ describe("G-DOCK-MATERIAL — the focus ring composes instead of competing", () 
         //    different selector would leave the reserve exactly as defeated as it was.
         const reserveRules = [...run.matchAll(/\.glass-dock \.dock-run \{([^{}]*)\}/g)]
             .map((m) => m[1]!)
-            .filter((body) => /padding-block:\s*var\(--dock-ring-reserve\)/.test(body));
+            .filter((body) => /padding:\s*var\(--dock-run-reserve\)/.test(body));
         expect(reserveRules.length).toBe(1);
         expect(reserveRules[0]).toMatch(/box-sizing:\s*content-box/);
-        expect(reserveRules[0]).toMatch(/margin-block:\s*calc\(-1 \* var\(--dock-ring-reserve\)\)/);
+        expect(reserveRules[0]).toMatch(/margin:\s*calc\(-1 \* var\(--dock-run-reserve\)\)/);
+        // The reserve covers the ring AND a seat's own hover scale (O-129 r1, O-123 OD-5:
+        // a seat's engagement scale never counts as reach).
+        expect(reserveRules[0]).toMatch(
+            /--dock-run-reserve:\s*max\(\s*var\(--dock-ring-reserve\),\s*calc\(var\(--dock-seat\) \* \(var\(--scale-hover-dock\) - 1\) \/ 2\)\s*\)/,
+        );
 
         // 2. ONE OWNER. The vertical rotation swaps the AXIS, not the box model; a
         //    restatement there is the two-owners defect the R1 cure struck in

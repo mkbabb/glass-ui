@@ -172,7 +172,7 @@
            rest, for every port width a `flex: 1` run can take. The rejected alternative
            sized the port itself (`V = (k−1)·P + gap + seat/2`) — unbuildable under the
            budget law directly above, where V is an OUTPUT of layout, not an input. */
-        scroll-padding-inline: calc(var(--dock-pitch) / 2);
+        scroll-padding-inline: calc(var(--dock-pitch) / 2 + var(--dock-run-reserve));
         /* The gesture has ONE owner. `pan-x` hands the inline gesture to the scroller,
            which is what makes the deleted `useDockTouchGate` a second owner rather than
            a collaborator, and `contain` keeps a bottomed-out flick from chaining into
@@ -247,9 +247,27 @@
            It also removes a silent dependency on the HOST: the run was content-box or
            border-box according to whether the consumer shipped a `*` reset, and this
            states it. `@layer components` is after `base`, so a preflight reset loses. */
+        /* [2026-11-04 · 10.1.5 · O-129 r1, O-123 OD-5] THE RESERVE IS ON BOTH AXES, and
+           it covers a seat's own engagement scale as well as its ring. A hovered seat
+           (`scale: var(--scale-hover-dock)`, 1.1, `controls/icon-button.css`) grows its
+           transformed box `seat·(1.1 − 1)/2` = 2.2 px past its layout box, and a
+           scroll container counts a transformed descendant as scrollable overflow. With
+           no inline padding to absorb it, a run that hid nothing read 2 px of reach
+           under the pointer on its trailing seat (value.js: 166/164 at 390, 213/211 at
+           844), the cut-cap timeline went active, and the plate's corners cut. The
+           inline padding is the same content-box reserve the block axis already takes,
+           handed back by the same negative margin, so the run's outer box and every
+           seat's position are unchanged and the seat's ink ends inside the padding box.
+           The scroll axis carries it too: `scroll-padding` above adds the reserve back,
+           so every snap rest and the reach anchor (`useDockRun`, `i·P − P/2`) keep
+           their scroll offsets. A seat's engagement scale never counts as reach. */
+        --dock-run-reserve: max(
+            var(--dock-ring-reserve),
+            calc(var(--dock-seat) * (var(--scale-hover-dock) - 1) / 2)
+        );
         box-sizing: content-box;
-        padding-block: var(--dock-ring-reserve);
-        margin-block: calc(-1 * var(--dock-ring-reserve));
+        padding: var(--dock-run-reserve);
+        margin: calc(-1 * var(--dock-run-reserve));
         /* THE SECOND TERM OF P, declared where the first one is. `.dock-layer`'s base
            rule sets `gap: var(--dock-layer-gap)`; restating it as `--dock-run-gap` here
            costs nothing today (the token binds to exactly that) and is what lets W9
@@ -288,16 +306,13 @@
         overflow-x: hidden;
         overflow-y: auto;
         scroll-snap-type: y mandatory;
-        scroll-padding-block: calc(var(--dock-pitch) / 2);
+        scroll-padding-block: calc(var(--dock-pitch) / 2 + var(--dock-run-reserve));
         touch-action: pan-y;
         min-block-size: 0;
-        /* [2026-08-28 · BK π-CURE · R2] The ring reserve ROTATES with the port. Every
-           declaration in this rule is the base rule's twin on the other axis, and the
-           reserve is no exception: here the block axis is the SCROLL axis (block padding
-           would join the scrollable length and shift the snap positions), and the inline
-           axis is the one `overflow-x: hidden` clips. The base pair is zeroed rather than
-           left to cascade — a reserve on the scroll axis is not a smaller mistake than
-           no reserve on the clipped one.
+        /* [2026-11-04 · 10.1.5 · O-129 r1] ~~The reserve rotates with the port: block
+           padding zeroed, inline padding taken~~ — the reserve is now on BOTH axes in the
+           base rule, and the scroll axis's `scroll-padding-block` adds it back, so a
+           block-axis reserve no longer shifts the snap positions. Nothing to restate.
 
            [2026-08-29 · BK π-RERUN-R2] The `box-sizing: content-box` this rotation needs
            is NOT restated here. It is one fact about the run and the base rule declares
@@ -305,10 +320,6 @@
            unit-8 record struck. This rule is where it BINDS hardest, though — the
            `width: 100%` that fixed this run's cross axis is what made the reserve read as
            zero, and the whole 8px overflow the re-capture measured was here. */
-        padding-block: 0;
-        margin-block: 0;
-        padding-inline: var(--dock-ring-reserve);
-        margin-inline: calc(-1 * var(--dock-ring-reserve));
     }
 
     /* ══ W4 · THE OPEN SEAT ══════════════════════════════════════════════════════
@@ -445,12 +456,17 @@
        `position: absolute` overlay SIBLING of the port and scroll timelines resolve
        DOWN, never up. `styles/scroll-driven.css` documents that trap already.
 
-       `from` IS 50%, and that specific value is the ruling. `50%` resolves to the
-       stadium's own corner, so the pill's rest keyframe is exact with no plate-height
-       token to couple to; the rejected `from: 9999px` is pinned by the half-box clamp
-       until t=0.9988 (measured: t=0.999 still reads 25.98px), i.e. an animation that
-       does nothing until it snaps. The finite shapes keyframe from their literal rests,
-       where no clamp is in play.
+       `from` IS A LENGTH: half the plate's cross extent, `--dock-plate-cross-px / 2`,
+       which `useDockExpandedSize` (dockMorphMeasure.ts) publishes from the plate's own
+       ResizeObserver border box. [2026-11-04 · 10.1.5 · O-129 r1, O-123 OD-5]
+       ~~`from` is 50%, which "resolves to the stadium's own corner"~~ — false: a
+       percentage radius resolves per axis, so on a 188x60 plate `50%` is a 94x30 px
+       ellipse inside the ring. A length larger than the half extent is no cure either:
+       `from: 9999px` is pinned by the half-box clamp until t=0.9988 (measured: t=0.999
+       still reads 25.98px), an animation that does nothing until it snaps, and the
+       clamp scales all four corners by one factor, so an oversized rest also shrinks
+       the cut on the other edge. Only the true half extent is exact. The finite shapes
+       keyframe from their literal rests, where no clamp is in play.
 
        TWO RUNGS DOWN, ON THE SERIES — never a hand-picked number. The corner series is
        4 · 10 · 16 · 24 · stadium, and every value below is that series by name:
@@ -462,10 +478,10 @@
        against π·28²/2), never the ~700 an earlier draft claimed. */
     .glass-dock {
         timeline-scope: --dock-run;
-        /* The rest corner and its two-rung drop, per shape. `50%` is the stadium's
-           resolved corner (see above); the finite shapes name their own rest so the
-           keyframe never has to guess at a box height. */
-        --dock-cap-rest: 50%;
+        /* The rest corner and its two-rung drop, per shape. The stadium's rest is half
+           the plate's measured cross extent (see above); the finite shapes name their
+           own rest so the keyframe never has to guess at a box height. */
+        --dock-cap-rest: calc(var(--dock-plate-cross-px) / 2);
         --dock-cap-cut: var(--radius-card);
     }
 
@@ -485,6 +501,14 @@
 
     .glass-dock.vertical .dock-run {
         scroll-timeline: --dock-run block;
+    }
+
+    /* The stadium plate's resting corner is the same length the cap keyframes rest at,
+       so a run with nothing to scroll and a run flush at both ends paint one corner,
+       a circle of half the cross extent, rather than the box's `9999px` through the
+       half-box clamp. The finite shapes keep the corner they inherit from the box. */
+    .glass-dock.shape-pill .dock-plate {
+        border-radius: var(--dock-cap-rest);
     }
 
     /* Each edge's whole transition is confined to ONE PITCH of travel via
@@ -550,7 +574,8 @@
    One set per AXIS, not per edge: the trailing arm reads the same keyframes with
    `animation-direction: reverse`, which is what makes "flush = completeness" a single
    grammar rather than two mirrored authorings that can drift. `from` is the rest
-   corner — `50%` on the stadium, the literal rung on the finite shapes — and `to` is
+   corner — half the plate's cross extent on the stadium, the literal rung on the
+   finite shapes — and `to` is
    two rungs down the 4·10·16·24·stadium series. Both endpoints arrive through
    `--dock-cap-rest`/`--dock-cap-cut`, so retargeting a shape is a token line and never
    a keyframe edit. */
