@@ -260,10 +260,16 @@
            seat's position are unchanged and the seat's ink ends inside the padding box.
            The scroll axis carries it too: `scroll-padding` above adds the reserve back,
            so every snap rest and the reach anchor (`useDockRun`, `i·P − P/2`) keep
-           their scroll offsets. A seat's engagement scale never counts as reach. */
-        --dock-run-reserve: max(
-            var(--dock-ring-reserve),
-            calc(var(--dock-seat) * (var(--scale-hover-dock) - 1) / 2)
+           their scroll offsets. A seat's engagement scale never counts as reach.
+           THE TWO INKS ADD. The ring is an outline on the seat, so it scales with the
+           seat: a keyboard-focused seat under the pointer paints its hover overhang
+           `seat·(s − 1)/2` PLUS its ring `ring·s` past its layout box, 2.2 + 4.4 = 6.6 px
+           at the house geometry. The reserve is that sum. [10.1.5 critique D4]
+           ~~`max(ring, seat·(s − 1)/2)`~~ = 4 px clipped that ring by 2.4 px on the
+           block edges and the trailing edge. */
+        --dock-run-reserve: calc(
+            var(--dock-seat) * (var(--scale-hover-dock) - 1) / 2 +
+                var(--dock-ring-reserve) * var(--scale-hover-dock)
         );
         box-sizing: content-box;
         padding: var(--dock-run-reserve);

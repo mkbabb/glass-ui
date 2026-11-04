@@ -719,10 +719,11 @@ describe("G-DOCK-MATERIAL — the focus ring composes instead of competing", () 
         expect(reserveRules.length).toBe(1);
         expect(reserveRules[0]).toMatch(/box-sizing:\s*content-box/);
         expect(reserveRules[0]).toMatch(/margin:\s*calc\(-1 \* var\(--dock-run-reserve\)\)/);
-        // The reserve covers the ring AND a seat's own hover scale (O-129 r1, O-123 OD-5:
-        // a seat's engagement scale never counts as reach).
+        // The reserve is the composed ink of a focused, hovered seat: its hover overhang
+        // PLUS its ring, which scales with it (O-129 r1, O-123 OD-5: a seat's engagement
+        // scale never counts as reach; 10.1.5 critique D4: the two inks add).
         expect(reserveRules[0]).toMatch(
-            /--dock-run-reserve:\s*max\(\s*var\(--dock-ring-reserve\),\s*calc\(var\(--dock-seat\) \* \(var\(--scale-hover-dock\) - 1\) \/ 2\)\s*\)/,
+            /--dock-run-reserve:\s*calc\(\s*var\(--dock-seat\) \* \(var\(--scale-hover-dock\) - 1\) \/ 2 \+\s*var\(--dock-ring-reserve\) \* var\(--scale-hover-dock\)\s*\)/,
         );
 
         // 2. ONE OWNER. The vertical rotation swaps the AXIS, not the box model; a
