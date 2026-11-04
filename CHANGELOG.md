@@ -1,5 +1,11 @@
 # Changelog
 
+## 10.1.5 — unreleased
+
+A patch for five paint defects value.js reported from color.babb.dev, keyframes.babb.dev
+and fourier.babb.dev on 10.1.4 (records: `docs/tranches/BL/audit/INBOUND.md` O-129 rows
+1, 2, 5, 6 and 7; `docs/release-10.1.5/implement.md`).
+
 ## 10.1.4 — 2026-11-04
 
 A patch for two defects sci-report reported live from the Gregg Museum dashboard on
