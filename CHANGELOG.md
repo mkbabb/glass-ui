@@ -4,7 +4,54 @@
 
 A patch for five paint defects value.js reported from color.babb.dev, keyframes.babb.dev
 and fourier.babb.dev on 10.1.4 (records: `docs/tranches/BL/audit/INBOUND.md` O-129 rows
-1, 2, 5, 6 and 7; `docs/release-10.1.5/implement.md`).
+1, 2, 5, 6 and 7; `docs/release-10.1.5/implement.md`). No public API is removed or
+renamed. Two token values move, each because the token is the cure: `--dock-cap-rest`
+on the pill (`50%` to half the plate's measured cross extent) and, under
+`(pointer: coarse)`, `--control-text`/`--control-text-sm` (the 1.5x comfort scale to the
+16 px floor). One token is new, `--icon-label-gap` (0.25rem), and the dock publishes
+one new measured property, `--dock-plate-cross-px`.
+
+- **The dock pill's corner is a circle at rest (O-129 r1).** The cut-cap keyframes
+  rested at `--dock-cap-rest: 50%`. A percentage radius resolves per axis, so whenever
+  the scroll timeline was active a 188x60 plate painted 94x30 px corners, an ellipse
+  inside the ring. The rest is now a length, half the plate's cross extent, which
+  `useDockExpandedSize` publishes as `--dock-plate-cross-px` from the plate's own
+  ResizeObserver border box (block size on a horizontal dock, inline size on a vertical
+  one). The stadium plate also rests at that length when nothing scrolls. The timeline
+  was armed by 2 px of reach that was not there: a hovered seat's `scale: 1.1` grows its
+  box 2.2 px past its layout box, and the run counted that as scrollable overflow. The
+  run's content-box reserve, already on the block axis, is now on both axes and covers
+  the larger of the ring and the hover ink. Its scroll padding adds the reserve back, so
+  every snap rest and reach anchor keeps its offset. A run that hides nothing now has
+  nothing to scroll.
+
+- **A collapsed dock is a circle (O-129 r2).** The collapsed dock's full pane stays laid
+  out behind the summary and still scrolls, so the cap timeline cut the collapsed
+  plate's trailing corners to 16 px (`50% 16px 16px 50%`). The `--dock-run` timeline is
+  now named only on the pane that is active, so a collapsed plate paints its rest
+  corner.
+
+- **The Slider's thumb shows at min and max (O-129 r5).** The scrubber painted no thumb
+  and a fill of `value x track`, so at the minimum there was a bare track and at the
+  maximum an inert full bar. The thumb is now a disc of `--slider-thumb-size`, inscribed
+  in the track (the size rungs still take `min(thumb, track)`), painted like the switch
+  thumb. The fill rides a lane one thumb diameter shorter than the track and reaches one
+  diameter past it, so it is `thumb + value x (track - thumb)` wide: one thumb at min,
+  the whole track at max, and the thumb always sits in its leading end, inverted and
+  vertical included. The spectrum variant is unchanged. The fill is now wrapped in a
+  `.slider-lane` element inside the track.
+
+- **Touch keeps control type at 16 px (O-129 r6).** The coarse-pointer arm set
+  `--ui-scale: 1.5`, and `--control-text` multiplied it into the type, so the
+  `.input-bar` field and the picker rows painted 21 px in a 54 px bar at 390 px. Under
+  `(pointer: coarse)` both control text rungs are now `max(fluid base, 1rem)`: the iOS
+  no-zoom floor, with the comfort scale left on the box, whose heights are unchanged.
+  `--control-text-sm` no longer outgrows `--control-text` on touch (18 px against 16).
+
+- **A menu item's icon stands off its label (O-129 r7).** `.menu__item` and
+  `.menu__sub-trigger` had no gap, so a bare icon component sat flush against its label.
+  Both now take `gap: var(--icon-label-gap)`, the 4 px the dock trigger family already
+  painted. The dock trigger reads the same token as its fallback.
 
 ## 10.1.4 — 2026-11-04
 

@@ -1,0 +1,1053 @@
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1793759449 slope=40.7/s inuse=30389 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. Finish what you are doing and report it; the owner decides on the reboot.
+
+ RUN  v4.1.10 /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5
+
+ ❯ tests/public-surface.spec.ts (96 tests | 5 failed) 1069ms
+     × G-NO-ORPHAN-EXPORT: the committed .published-roster equals the emitted roster 5ms
+     × has a built dist/ to accept 0ms
+     × ships exactly the style closure plus the three generated members 1ms
+     × rejects packed CSS drift against the built artifact 0ms
+     × keeps raw code-bearing sources out of the built artifact 1ms
+ ❯ tests/styles/glass-subtlety.test.ts (36 tests | 1 failed) 3688ms
+     × is MOUNTED by both named consumers, on the plate that carries the hold 4ms
+ ❯ tests/components/fourier-field/FourierField.smoke.test.ts (0 test)
+(node:62592) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ❯ tests/gates/boot-graph.test.ts (14 tests | 3 failed) 90ms
+     × the built demo has a dist-demo to measure 5ms
+     × the dist-demo it measures is NEWER than every source it is built from 1ms
+     × the eager graph stays under the modulepreload and byte ceilings 0ms
+ ❯ tests/components/custom/dock/g-dock-lattice.test.ts (34 tests | 4 failed) 97ms
+     × the horizontal run is a snapped, contained, single-owner scroller 3ms
+     × the vertical run is a snapped, contained, single-owner scroller 1ms
+     × the cap keyframes only through the rest/cut token pair 1ms
+     × the ring reserve is stated in the box model that lets it exist 1ms
+ ❯ tests/components/ui/slider/Slider.marks.test.ts (9 tests | 1 failed) 78ms
+     × leaves a range slider as two native thumbs over one shared mark rail 11ms
+ ❯ tests/styles/backdrop-prefix-normalization.test.ts (4 tests | 1 failed) 8ms
+     × ships every backdrop-filter as an adjacent -webkit-/standard pair 3ms
+(node:63222) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:63467) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ❯ tests/components/a11y/coarse-target.test.ts (13 tests | 1 failed) 10ms
+     × the invisible standard thumb is still invisible — the target is the TRACK 3ms
+
+⎯⎯⎯⎯⎯⎯ Failed Suites 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/components/fourier-field/FourierField.smoke.test.ts [ tests/components/fourier-field/FourierField.smoke.test.ts ]
+Error: Failed to resolve import "@mkbabb/glass-ui/fourier-math" from "tests/components/fourier-field/FourierField.smoke.test.ts". Does the file exist?
+  Plugin: vite:import-analysis
+  File: /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests/components/fourier-field/FourierField.smoke.test.ts:18:29
+  15 |  import { readFileSync, readdirSync, statSync } from "node:fs";
+  16 |  import { join } from "node:path";
+  17 |  import * as fourierMath from "@mkbabb/glass-ui/fourier-math";
+     |                                ^
+  18 |  import { dftFromPoints, makeEllipticSpectrum, positionsAt } from "@mkbabb/glass-ui/fourier-math";
+  19 |  import { DEFAULT_FOURIER_CONFIG, FourierField, FOURIER_FIGURES, makeHarmonicFigure, mintSpectrum } from "@glass/compo...
+ ❯ TransformPluginContext._formatLog ../../../node_modules/vite/dist/node/chunks/node.js:30416:39
+ ❯ TransformPluginContext.error ../../../node_modules/vite/dist/node/chunks/node.js:30413:14
+ ❯ normalizeUrl ../../../node_modules/vite/dist/node/chunks/node.js:27438:18
+ ❯ ../../../node_modules/vite/dist/node/chunks/node.js:27506:30
+ ❯ TransformPluginContext.transform ../../../node_modules/vite/dist/node/chunks/node.js:27474:4
+ ❯ EnvironmentPluginContainer.transform ../../../node_modules/vite/dist/node/chunks/node.js:30201:14
+ ❯ loadAndTransform ../../../node_modules/vite/dist/node/chunks/node.js:20124:26
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/17]⎯
+
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 16 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/public-surface.spec.ts > Row 8 package falsifiers > G-NO-ORPHAN-EXPORT: the committed .published-roster equals the emitted roster
+AssertionError: dist/ is absent — run `npm run build` first: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/public-surface.spec.ts:939:83
+    937|     // here), so what it measures is exactly what `npm run verify:pack…
+    938|     it("G-NO-ORPHAN-EXPORT: the committed .published-roster equals the…
+    939|         expect(existsSync("dist"), "dist/ is absent — run `npm run bui…
+       |                                                                                   ^
+    940|         const verifier = pathToFileURL(resolve("scripts/verify-export-…
+    941|         const probe = `
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/17]⎯
+
+ FAIL  tests/public-surface.spec.ts > Row 8 built-artifact acceptance > has a built dist/ to accept
+AssertionError: dist/ is absent — run `npm run build` first; the dist arm is load-bearing: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/public-surface.spec.ts:964:34
+    962|
+    963|     it("has a built dist/ to accept", () => {
+    964|         expect(built, buildHint).toBe(true);
+       |                                  ^
+    965|     });
+    966|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/17]⎯
+
+ FAIL  tests/public-surface.spec.ts > Row 8 built-artifact acceptance > ships exactly the style closure plus the three generated members
+AssertionError: dist/ is absent — run `npm run build` first; the dist arm is load-bearing: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/public-surface.spec.ts:976:34
+    974|
+    975|     it("ships exactly the style closure plus the three generated membe…
+    976|         expect(built, buildHint).toBe(true);
+       |                                  ^
+    977|         const closure = collectStyleClosure(process.cwd());
+    978|         const sourceRoot = resolve(process.cwd(), "src");
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/17]⎯
+
+ FAIL  tests/public-surface.spec.ts > Row 8 built-artifact acceptance > rejects packed CSS drift against the built artifact
+AssertionError: dist/ is absent — run `npm run build` first; the dist arm is load-bearing: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/public-surface.spec.ts:995:34
+    993|
+    994|     it("rejects packed CSS drift against the built artifact", () => {
+    995|         expect(built, buildHint).toBe(true);
+       |                                  ^
+    996|         const verifier = pathToFileURL(resolve("scripts/verify-export-…
+    997|         const probe = `
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/17]⎯
+
+ FAIL  tests/public-surface.spec.ts > Row 8 built-artifact acceptance > keeps raw code-bearing sources out of the built artifact
+AssertionError: dist/ is absent — run `npm run build` first; the dist arm is load-bearing: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/public-surface.spec.ts:1025:34
+    1023|
+    1024|     it("keeps raw code-bearing sources out of the built artifact", () …
+    1025|         expect(built, buildHint).toBe(true);
+       |                                  ^
+    1026|         const files = filesUnder("dist");
+    1027|         expect(files.filter((file) => /\.vue$/.test(file))).toEqual([]…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/17]⎯
+
+ FAIL  tests/gates/boot-graph.test.ts > gate:boot-graph — build arm > the built demo has a dist-demo to measure
+AssertionError: dist-demo/index.html is absent — run `npm run demo:dist:build` (npm test runs it first): expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/gates/boot-graph.test.ts:566:34
+    564|
+    565|     it("the built demo has a dist-demo to measure", () => {
+    566|         expect(built, buildHint).toBe(true);
+       |                                  ^
+    567|     });
+    568|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/17]⎯
+
+ FAIL  tests/gates/boot-graph.test.ts > gate:boot-graph — build arm > the dist-demo it measures is NEWER than every source it is built from
+AssertionError: dist-demo/index.html is absent — run `npm run demo:dist:build` (npm test runs it first): expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/gates/boot-graph.test.ts:570:34
+    568|
+    569|     it("the dist-demo it measures is NEWER than every source it is bui…
+    570|         expect(built, buildHint).toBe(true);
+       |                                  ^
+    571|         const builtAt = statSync(indexHtml).mtimeMs;
+    572|         const newestSrc = newestSourceMtime();
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/17]⎯
+
+ FAIL  tests/gates/boot-graph.test.ts > gate:boot-graph — build arm > the eager graph stays under the modulepreload and byte ceilings
+AssertionError: dist-demo/index.html is absent — run `npm run demo:dist:build` (npm test runs it first): expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/gates/boot-graph.test.ts:580:34
+    578|
+    579|     it("the eager graph stays under the modulepreload and byte ceiling…
+    580|         expect(built, buildHint).toBe(true);
+       |                                  ^
+    581|         const html = readFileSync(indexHtml, "utf8");
+    582|         const graph = measureEagerGraph(
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/17]⎯
+
+ FAIL  tests/styles/backdrop-prefix-normalization.test.ts > G-GLASS-HAS-FROST arm (b) — the shipped dist bytes > ships every backdrop-filter as an adjacent -webkit-/standard pair
+AssertionError: dist/ is absent — run `npm run build` first; the dist arm is load-bearing and a skipped run is not a pass: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/styles/backdrop-prefix-normalization.test.ts:152:34
+    150|     const buildHint = "dist/ is absent — run `npm run build` first; th…
+    151|     it("ships every backdrop-filter as an adjacent -webkit-/standard p…
+    152|         expect(built, buildHint).toBe(true);
+       |                                  ^
+    153|         const files = distCssFiles(DIST);
+    154|         expect(files.length).toBeGreaterThan(0);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/17]⎯
+
+ FAIL  tests/styles/glass-subtlety.test.ts > grasp register — the material answers the hand > is MOUNTED by both named consumers, on the plate that carries the hold
+AssertionError: src/components/slider/Slider.vue: slider-range does not carry the hold — the register cannot match it: expected '<span class="slider-range-lane">' to contain 'data-held'
+
+Expected: "data-held"
+Received: "<span class="slider-range-lane">"
+
+ ❯ tests/styles/glass-subtlety.test.ts:820:15
+    818|                 plateTag![0],
+    819|                 `${file}: ${plateClass} does not carry the hold — the …
+    820|             ).toContain("data-held");
+       |               ^
+    821|             // …and both carriers mount inside it, unmounting on the r…
+    822|             // transitionend rather than on a timer.
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[11/17]⎯
+
+ FAIL  tests/components/a11y/coarse-target.test.ts > G-COARSE-TARGET — the Slider's operable target clears the measured floor > the invisible standard thumb is still invisible — the target is the TRACK
+AssertionError: expected '\n    display: block;\n    width: var…' to match /width:\s*0;/
+
+- Expected:
+/width:\s*0;/
+
++ Received:
+"
+    display: block;
+    width: var(--slider-thumb-size, 1rem);
+    height: var(--slider-thumb-size, 1rem);
+    border: none;
+    border-radius: var(--radius-pill);
+    background: var(--card);
+    box-shadow: var(--shadow-sm);
+    transition: transform var(--spring-press-duration) var(--spring-press);
+"
+
+ ❯ tests/components/a11y/coarse-target.test.ts:166:27
+    164|         const thumb = live.match(/\n\.slider-thumb\s*\{([\s\S]*?)\}/);
+    165|         expect(thumb).not.toBeNull();
+    166|         expect(thumb![1]).toMatch(/width:\s*0;/);
+       |                           ^
+    167|         expect(thumb![1]).toMatch(/opacity:\s*0;/);
+    168|     });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[12/17]⎯
+
+ FAIL  tests/components/custom/dock/g-dock-lattice.test.ts > G-DOCK-RUN — the platform is the detent engine > the horizontal run is a snapped, contained, single-owner scroller
+AssertionError: expected '\n\n@layer components {\n    \n    .g…' to match /scroll-padding-inline:\s*calc\(va…/ 2\)
+
+- Expected:
+/scroll-padding-inline:\s*calc\(var\(--dock-pitch\) \/ 2\)/
+
++ Received:
+"
+
+@layer components {
+    
+    .glass-dock {
+        --dock-seat: var(--dock-control-size);
+        
+        --dock-run-gap: 0.5rem;
+        --dock-pitch: calc(var(--dock-seat) + var(--dock-run-gap));
+        
+        --dock-open-pitches: 3;
+        --dock-open-seat: calc(
+            var(--dock-open-pitches) * var(--dock-pitch) - var(--dock-run-gap)
+        );
+    }
+
+    .glass-dock.vertical {
+        --dock-open-pitches: 2;
+    }
+
+    
+    .glass-dock > .dock-controls > .dock-layers {
+        flex: 1 1 auto;
+        min-inline-size: 0;
+        min-block-size: 0;
+    }
+
+    
+    .glass-dock > .dock-controls > .dock-persistent {
+        flex: 0 0 auto;
+    }
+
+    
+    .glass-dock .dock-run {
+        
+        overflow-x: auto;
+        overflow-y: hidden;
+        
+        scroll-snap-type: x mandatory;
+        
+        scroll-padding-inline: calc(var(--dock-pitch) / 2 + var(--dock-run-reserve));
+        
+        touch-action: pan-x;
+        overscroll-behavior: contain;
+        scrollbar-width: none;
+        
+        min-inline-size: 0;
+        
+        
+        
+        --dock-run-reserve: max(
+            var(--dock-ring-reserve),
+            calc(var(--dock-seat) * (var(--scale-hover-dock) - 1) / 2)
+        );
+        box-sizing: content-box;
+        padding: var(--dock-run-reserve);
+        margin: calc(-1 * var(--dock-run-reserve));
+        
+        gap: var(--dock-run-gap);
+    }
+
+    .glass-dock .dock-run::-webkit-scrollbar {
+        display: none;
+    }
+
+    
+    .glass-dock .dock-run > * {
+        scroll-snap-align: start;
+        flex: 0 0 auto;
+    }
+
+    
+    .glass-dock.vertical .dock-run {
+        overflow-x: hidden;
+        overflow-y: auto;
+        scroll-snap-type: y mandatory;
+        scroll-padding-block: calc(var(--dock-pitch) / 2 + var(--dock-run-reserve));
+        touch-action: pan-y;
+        min-block-size: 0;
+        
+    }
+
+    
+    .glass-dock .dock-run > [aria-current]:not([aria-current=\"false\"]),
+    .glass-dock .dock-run > :has([aria-current]:not([aria-current=\"false\"])) {
+        inline-size: var(--dock-open-seat);
+        
+        transition: inline-size var(--spring-dock-duration) var(--spring-dock);
+    }
+
+    
+    .glass-dock .dock-run > :not([aria-current]:not([aria-current=\"false\"])):not(
+            :has([aria-current]:not([aria-current=\"false\"]))
+        ) {
+        transition: inline-size var(--spring-dock-duration) var(--spring-dock);
+    }
+
+    
+    .glass-dock.vertical .dock-run > [aria-current]:not([aria-current=\"false\"]),
+    .glass-dock.vertical .dock-run > :has([aria-current]:not([aria-current=\"false\"])) {
+        inline-size: auto;
+        block-size: var(--dock-open-seat);
+        transition: block-size var(--spring-dock-duration) var(--spring-dock);
+    }
+
+    .glass-dock.vertical
+        .dock-run
+        > :not([aria-current]:not([aria-current=\"false\"])):not(
+            :has([aria-current]:not([aria-current=\"false\"]))
+        ) {
+        transition: block-size var(--spring-dock-duration) var(--spring-dock);
+    }
+
+    
+
+    
+    .glass-dock {
+        timeline-scope: --dock-run;
+        
+        --dock-cap-rest: calc(var(--dock-plate-cross-px) / 2);
+        --dock-cap-cut: var(--radius-card);
+    }
+
+    .glass-dock.shape-rounded {
+        --dock-cap-rest: var(--radius-card);
+        --dock-cap-cut: var(--radius-xs);
+    }
+
+    .glass-dock.shape-card {
+        --dock-cap-rest: var(--dock-card-radius, var(--radius-dock-card));
+        --dock-cap-cut: var(--radius-lg);
+    }
+
+    
+    .glass-dock .dock-run.is-active {
+        scroll-timeline: --dock-run inline;
+    }
+
+    .glass-dock.vertical .dock-run.is-active {
+        scroll-timeline: --dock-run block;
+    }
+
+    
+    .glass-dock.shape-pill .dock-plate {
+        border-radius: var(--dock-cap-rest);
+    }
+
+    
+    .glass-dock .dock-plate {
+        animation:
+            gl-dock-cap-inline-start linear both,
+            gl-dock-cap-inline-end linear both;
+        animation-timeline: --dock-run, --dock-run;
+        animation-range:
+            0 var(--dock-pitch),
+            calc(100% - var(--dock-pitch)) 100%;
+        animation-direction: normal, reverse;
+    }
+
+    .glass-dock.vertical .dock-plate {
+        animation:
+            gl-dock-cap-block-start linear both,
+            gl-dock-cap-block-end linear both;
+        animation-timeline: --dock-run, --dock-run;
+        animation-range:
+            0 var(--dock-pitch),
+            calc(100% - var(--dock-pitch)) 100%;
+        animation-direction: normal, reverse;
+    }
+
+    
+    .glass-dock .dock-run-status {
+        position: absolute;
+        inline-size: 1px;
+        block-size: 1px;
+        margin: -1px;
+        padding: 0;
+        overflow: hidden;
+        clip-path: inset(50%);
+        white-space: nowrap;
+        border: 0;
+    }
+}
+
+
+@keyframes gl-dock-cap-inline-start {
+    from {
+        border-start-start-radius: var(--dock-cap-rest);
+        border-end-start-radius: var(--dock-cap-rest);
+    }
+    to {
+        border-start-start-radius: var(--dock-cap-cut);
+        border-end-start-radius: var(--dock-cap-cut);
+    }
+}
+
+@keyframes gl-dock-cap-inline-end {
+    from {
+        border-start-end-radius: var(--dock-cap-rest);
+        border-end-end-radius: var(--dock-cap-rest);
+    }
+    to {
+        border-start-end-radius: var(--dock-cap-cut);
+        border-end-end-radius: var(--dock-cap-cut);
+    }
+}
+
+@keyframes gl-dock-cap-block-start {
+    from {
+        border-start-start-radius: var(--dock-cap-rest);
+        border-start-end-radius: var(--dock-cap-rest);
+    }
+    to {
+        border-start-start-radius: var(--dock-cap-cut);
+        border-start-end-radius: var(--dock-cap-cut);
+    }
+}
+
+@keyframes gl-dock-cap-block-end {
+    from {
+        border-end-start-radius: var(--dock-cap-rest);
+        border-end-end-radius: var(--dock-cap-rest);
+    }
+    to {
+        border-end-start-radius: var(--dock-cap-cut);
+        border-end-end-radius: var(--dock-cap-cut);
+    }
+}
+"
+
+ ❯ tests/components/custom/dock/g-dock-lattice.test.ts:282:21
+    280|         const run = declarations(`${STYLES}/run.css`);
+    281|         expect(run).toContain(`scroll-snap-type: ${axis} mandatory`);
+    282|         expect(run).toMatch(new RegExp(`${pad}:\\s*calc\\(var\\(--dock…
+       |                     ^
+    283|         expect(run).toContain(`touch-action: ${pan}`);
+    284|         expect(run).toContain("overscroll-behavior: contain");
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[13/17]⎯
+
+ FAIL  tests/components/custom/dock/g-dock-lattice.test.ts > G-DOCK-RUN — the platform is the detent engine > the vertical run is a snapped, contained, single-owner scroller
+AssertionError: expected '\n\n@layer components {\n    \n    .g…' to match /scroll-padding-block:\s*calc\(var…/ 2\)
+
+- Expected:
+/scroll-padding-block:\s*calc\(var\(--dock-pitch\) \/ 2\)/
+
++ Received:
+"
+
+@layer components {
+    
+    .glass-dock {
+        --dock-seat: var(--dock-control-size);
+        
+        --dock-run-gap: 0.5rem;
+        --dock-pitch: calc(var(--dock-seat) + var(--dock-run-gap));
+        
+        --dock-open-pitches: 3;
+        --dock-open-seat: calc(
+            var(--dock-open-pitches) * var(--dock-pitch) - var(--dock-run-gap)
+        );
+    }
+
+    .glass-dock.vertical {
+        --dock-open-pitches: 2;
+    }
+
+    
+    .glass-dock > .dock-controls > .dock-layers {
+        flex: 1 1 auto;
+        min-inline-size: 0;
+        min-block-size: 0;
+    }
+
+    
+    .glass-dock > .dock-controls > .dock-persistent {
+        flex: 0 0 auto;
+    }
+
+    
+    .glass-dock .dock-run {
+        
+        overflow-x: auto;
+        overflow-y: hidden;
+        
+        scroll-snap-type: x mandatory;
+        
+        scroll-padding-inline: calc(var(--dock-pitch) / 2 + var(--dock-run-reserve));
+        
+        touch-action: pan-x;
+        overscroll-behavior: contain;
+        scrollbar-width: none;
+        
+        min-inline-size: 0;
+        
+        
+        
+        --dock-run-reserve: max(
+            var(--dock-ring-reserve),
+            calc(var(--dock-seat) * (var(--scale-hover-dock) - 1) / 2)
+        );
+        box-sizing: content-box;
+        padding: var(--dock-run-reserve);
+        margin: calc(-1 * var(--dock-run-reserve));
+        
+        gap: var(--dock-run-gap);
+    }
+
+    .glass-dock .dock-run::-webkit-scrollbar {
+        display: none;
+    }
+
+    
+    .glass-dock .dock-run > * {
+        scroll-snap-align: start;
+        flex: 0 0 auto;
+    }
+
+    
+    .glass-dock.vertical .dock-run {
+        overflow-x: hidden;
+        overflow-y: auto;
+        scroll-snap-type: y mandatory;
+        scroll-padding-block: calc(var(--dock-pitch) / 2 + var(--dock-run-reserve));
+        touch-action: pan-y;
+        min-block-size: 0;
+        
+    }
+
+    
+    .glass-dock .dock-run > [aria-current]:not([aria-current=\"false\"]),
+    .glass-dock .dock-run > :has([aria-current]:not([aria-current=\"false\"])) {
+        inline-size: var(--dock-open-seat);
+        
+        transition: inline-size var(--spring-dock-duration) var(--spring-dock);
+    }
+
+    
+    .glass-dock .dock-run > :not([aria-current]:not([aria-current=\"false\"])):not(
+            :has([aria-current]:not([aria-current=\"false\"]))
+        ) {
+        transition: inline-size var(--spring-dock-duration) var(--spring-dock);
+    }
+
+    
+    .glass-dock.vertical .dock-run > [aria-current]:not([aria-current=\"false\"]),
+    .glass-dock.vertical .dock-run > :has([aria-current]:not([aria-current=\"false\"])) {
+        inline-size: auto;
+        block-size: var(--dock-open-seat);
+        transition: block-size var(--spring-dock-duration) var(--spring-dock);
+    }
+
+    .glass-dock.vertical
+        .dock-run
+        > :not([aria-current]:not([aria-current=\"false\"])):not(
+            :has([aria-current]:not([aria-current=\"false\"]))
+        ) {
+        transition: block-size var(--spring-dock-duration) var(--spring-dock);
+    }
+
+    
+
+    
+    .glass-dock {
+        timeline-scope: --dock-run;
+        
+        --dock-cap-rest: calc(var(--dock-plate-cross-px) / 2);
+        --dock-cap-cut: var(--radius-card);
+    }
+
+    .glass-dock.shape-rounded {
+        --dock-cap-rest: var(--radius-card);
+        --dock-cap-cut: var(--radius-xs);
+    }
+
+    .glass-dock.shape-card {
+        --dock-cap-rest: var(--dock-card-radius, var(--radius-dock-card));
+        --dock-cap-cut: var(--radius-lg);
+    }
+
+    
+    .glass-dock .dock-run.is-active {
+        scroll-timeline: --dock-run inline;
+    }
+
+    .glass-dock.vertical .dock-run.is-active {
+        scroll-timeline: --dock-run block;
+    }
+
+    
+    .glass-dock.shape-pill .dock-plate {
+        border-radius: var(--dock-cap-rest);
+    }
+
+    
+    .glass-dock .dock-plate {
+        animation:
+            gl-dock-cap-inline-start linear both,
+            gl-dock-cap-inline-end linear both;
+        animation-timeline: --dock-run, --dock-run;
+        animation-range:
+            0 var(--dock-pitch),
+            calc(100% - var(--dock-pitch)) 100%;
+        animation-direction: normal, reverse;
+    }
+
+    .glass-dock.vertical .dock-plate {
+        animation:
+            gl-dock-cap-block-start linear both,
+            gl-dock-cap-block-end linear both;
+        animation-timeline: --dock-run, --dock-run;
+        animation-range:
+            0 var(--dock-pitch),
+            calc(100% - var(--dock-pitch)) 100%;
+        animation-direction: normal, reverse;
+    }
+
+    
+    .glass-dock .dock-run-status {
+        position: absolute;
+        inline-size: 1px;
+        block-size: 1px;
+        margin: -1px;
+        padding: 0;
+        overflow: hidden;
+        clip-path: inset(50%);
+        white-space: nowrap;
+        border: 0;
+    }
+}
+
+
+@keyframes gl-dock-cap-inline-start {
+    from {
+        border-start-start-radius: var(--dock-cap-rest);
+        border-end-start-radius: var(--dock-cap-rest);
+    }
+    to {
+        border-start-start-radius: var(--dock-cap-cut);
+        border-end-start-radius: var(--dock-cap-cut);
+    }
+}
+
+@keyframes gl-dock-cap-inline-end {
+    from {
+        border-start-end-radius: var(--dock-cap-rest);
+        border-end-end-radius: var(--dock-cap-rest);
+    }
+    to {
+        border-start-end-radius: var(--dock-cap-cut);
+        border-end-end-radius: var(--dock-cap-cut);
+    }
+}
+
+@keyframes gl-dock-cap-block-start {
+    from {
+        border-start-start-radius: var(--dock-cap-rest);
+        border-start-end-radius: var(--dock-cap-rest);
+    }
+    to {
+        border-start-start-radius: var(--dock-cap-cut);
+        border-start-end-radius: var(--dock-cap-cut);
+    }
+}
+
+@keyframes gl-dock-cap-block-end {
+    from {
+        border-end-start-radius: var(--dock-cap-rest);
+        border-end-end-radius: var(--dock-cap-rest);
+    }
+    to {
+        border-end-start-radius: var(--dock-cap-cut);
+        border-end-end-radius: var(--dock-cap-cut);
+    }
+}
+"
+
+ ❯ tests/components/custom/dock/g-dock-lattice.test.ts:282:21
+    280|         const run = declarations(`${STYLES}/run.css`);
+    281|         expect(run).toContain(`scroll-snap-type: ${axis} mandatory`);
+    282|         expect(run).toMatch(new RegExp(`${pad}:\\s*calc\\(var\\(--dock…
+       |                     ^
+    283|         expect(run).toContain(`touch-action: ${pan}`);
+    284|         expect(run).toContain("overscroll-behavior: contain");
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[14/17]⎯
+
+ FAIL  tests/components/custom/dock/g-dock-lattice.test.ts > G-DOCK-RUN — the platform is the detent engine > the cap keyframes only through the rest/cut token pair
+AssertionError: expected '\n\n@layer components {\n    \n    .g…' to match /--dock-cap-rest:\s*50%/
+
+- Expected:
+/--dock-cap-rest:\s*50%/
+
++ Received:
+"
+
+@layer components {
+    
+    .glass-dock {
+        --dock-seat: var(--dock-control-size);
+        
+        --dock-run-gap: 0.5rem;
+        --dock-pitch: calc(var(--dock-seat) + var(--dock-run-gap));
+        
+        --dock-open-pitches: 3;
+        --dock-open-seat: calc(
+            var(--dock-open-pitches) * var(--dock-pitch) - var(--dock-run-gap)
+        );
+    }
+
+    .glass-dock.vertical {
+        --dock-open-pitches: 2;
+    }
+
+    
+    .glass-dock > .dock-controls > .dock-layers {
+        flex: 1 1 auto;
+        min-inline-size: 0;
+        min-block-size: 0;
+    }
+
+    
+    .glass-dock > .dock-controls > .dock-persistent {
+        flex: 0 0 auto;
+    }
+
+    
+    .glass-dock .dock-run {
+        
+        overflow-x: auto;
+        overflow-y: hidden;
+        
+        scroll-snap-type: x mandatory;
+        
+        scroll-padding-inline: calc(var(--dock-pitch) / 2 + var(--dock-run-reserve));
+        
+        touch-action: pan-x;
+        overscroll-behavior: contain;
+        scrollbar-width: none;
+        
+        min-inline-size: 0;
+        
+        
+        
+        --dock-run-reserve: max(
+            var(--dock-ring-reserve),
+            calc(var(--dock-seat) * (var(--scale-hover-dock) - 1) / 2)
+        );
+        box-sizing: content-box;
+        padding: var(--dock-run-reserve);
+        margin: calc(-1 * var(--dock-run-reserve));
+        
+        gap: var(--dock-run-gap);
+    }
+
+    .glass-dock .dock-run::-webkit-scrollbar {
+        display: none;
+    }
+
+    
+    .glass-dock .dock-run > * {
+        scroll-snap-align: start;
+        flex: 0 0 auto;
+    }
+
+    
+    .glass-dock.vertical .dock-run {
+        overflow-x: hidden;
+        overflow-y: auto;
+        scroll-snap-type: y mandatory;
+        scroll-padding-block: calc(var(--dock-pitch) / 2 + var(--dock-run-reserve));
+        touch-action: pan-y;
+        min-block-size: 0;
+        
+    }
+
+    
+    .glass-dock .dock-run > [aria-current]:not([aria-current=\"false\"]),
+    .glass-dock .dock-run > :has([aria-current]:not([aria-current=\"false\"])) {
+        inline-size: var(--dock-open-seat);
+        
+        transition: inline-size var(--spring-dock-duration) var(--spring-dock);
+    }
+
+    
+    .glass-dock .dock-run > :not([aria-current]:not([aria-current=\"false\"])):not(
+            :has([aria-current]:not([aria-current=\"false\"]))
+        ) {
+        transition: inline-size var(--spring-dock-duration) var(--spring-dock);
+    }
+
+    
+    .glass-dock.vertical .dock-run > [aria-current]:not([aria-current=\"false\"]),
+    .glass-dock.vertical .dock-run > :has([aria-current]:not([aria-current=\"false\"])) {
+        inline-size: auto;
+        block-size: var(--dock-open-seat);
+        transition: block-size var(--spring-dock-duration) var(--spring-dock);
+    }
+
+    .glass-dock.vertical
+        .dock-run
+        > :not([aria-current]:not([aria-current=\"false\"])):not(
+            :has([aria-current]:not([aria-current=\"false\"]))
+        ) {
+        transition: block-size var(--spring-dock-duration) var(--spring-dock);
+    }
+
+    
+
+    
+    .glass-dock {
+        timeline-scope: --dock-run;
+        
+        --dock-cap-rest: calc(var(--dock-plate-cross-px) / 2);
+        --dock-cap-cut: var(--radius-card);
+    }
+
+    .glass-dock.shape-rounded {
+        --dock-cap-rest: var(--radius-card);
+        --dock-cap-cut: var(--radius-xs);
+    }
+
+    .glass-dock.shape-card {
+        --dock-cap-rest: var(--dock-card-radius, var(--radius-dock-card));
+        --dock-cap-cut: var(--radius-lg);
+    }
+
+    
+    .glass-dock .dock-run.is-active {
+        scroll-timeline: --dock-run inline;
+    }
+
+    .glass-dock.vertical .dock-run.is-active {
+        scroll-timeline: --dock-run block;
+    }
+
+    
+    .glass-dock.shape-pill .dock-plate {
+        border-radius: var(--dock-cap-rest);
+    }
+
+    
+    .glass-dock .dock-plate {
+        animation:
+            gl-dock-cap-inline-start linear both,
+            gl-dock-cap-inline-end linear both;
+        animation-timeline: --dock-run, --dock-run;
+        animation-range:
+            0 var(--dock-pitch),
+            calc(100% - var(--dock-pitch)) 100%;
+        animation-direction: normal, reverse;
+    }
+
+    .glass-dock.vertical .dock-plate {
+        animation:
+            gl-dock-cap-block-start linear both,
+            gl-dock-cap-block-end linear both;
+        animation-timeline: --dock-run, --dock-run;
+        animation-range:
+            0 var(--dock-pitch),
+            calc(100% - var(--dock-pitch)) 100%;
+        animation-direction: normal, reverse;
+    }
+
+    
+    .glass-dock .dock-run-status {
+        position: absolute;
+        inline-size: 1px;
+        block-size: 1px;
+        margin: -1px;
+        padding: 0;
+        overflow: hidden;
+        clip-path: inset(50%);
+        white-space: nowrap;
+        border: 0;
+    }
+}
+
+
+@keyframes gl-dock-cap-inline-start {
+    from {
+        border-start-start-radius: var(--dock-cap-rest);
+        border-end-start-radius: var(--dock-cap-rest);
+    }
+    to {
+        border-start-start-radius: var(--dock-cap-cut);
+        border-end-start-radius: var(--dock-cap-cut);
+    }
+}
+
+@keyframes gl-dock-cap-inline-end {
+    from {
+        border-start-end-radius: var(--dock-cap-rest);
+        border-end-end-radius: var(--dock-cap-rest);
+    }
+    to {
+        border-start-end-radius: var(--dock-cap-cut);
+        border-end-end-radius: var(--dock-cap-cut);
+    }
+}
+
+@keyframes gl-dock-cap-block-start {
+    from {
+        border-start-start-radius: var(--dock-cap-rest);
+        border-start-end-radius: var(--dock-cap-rest);
+    }
+    to {
+        border-start-start-radius: var(--dock-cap-cut);
+        border-start-end-radius: var(--dock-cap-cut);
+    }
+}
+
+@keyframes gl-dock-cap-block-end {
+    from {
+        border-end-start-radius: var(--dock-cap-rest);
+        border-end-end-radius: var(--dock-cap-rest);
+    }
+    to {
+        border-end-start-radius: var(--dock-cap-cut);
+        border-end-end-radius: var(--dock-cap-cut);
+    }
+}
+"
+
+ ❯ tests/components/custom/dock/g-dock-lattice.test.ts:335:23
+    333|         }
+    334|         const decls = declarations(`${STYLES}/run.css`);
+    335|         expect(decls).toMatch(/--dock-cap-rest:\s*50%/);
+       |                       ^
+    336|         // Declarations only: `from: 9999px` is NAMED in the docblock …
+    337|         // alternative, and a detector that cannot tell a rejection fr…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[15/17]⎯
+
+ FAIL  tests/components/custom/dock/g-dock-lattice.test.ts > G-DOCK-MATERIAL — the focus ring composes instead of competing > the ring reserve is stated in the box model that lets it exist
+AssertionError: expected +0 to be 1 // Object.is equality
+
+- Expected
++ Received
+
+- 1
++ 0
+
+ ❯ tests/components/custom/dock/g-dock-lattice.test.ts:713:37
+    711|             .map((m) => m[1]!)
+    712|             .filter((body) => /padding-block:\s*var\(--dock-ring-reser…
+    713|         expect(reserveRules.length).toBe(1);
+       |                                     ^
+    714|         expect(reserveRules[0]).toMatch(/box-sizing:\s*content-box/);
+    715|         expect(reserveRules[0]).toMatch(/margin-block:\s*calc\(-1 \* v…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[16/17]⎯
+
+ FAIL  tests/components/ui/slider/Slider.marks.test.ts > Slider value marks > leaves a range slider as two native thumbs over one shared mark rail
+AssertionError: expected [ 'slider-range-lane' ] to include 'slider-range'
+ ❯ tests/components/ui/slider/Slider.marks.test.ts:83:77
+     81|             "glass-value-marks",
+     82|         );
+     83|         expect(wrapper.get(".slider-track").element.children[1]?.class…
+       |                                                                             ^
+     84|             "slider-range",
+     85|         );
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[17/17]⎯
+
+
+ Test Files  8 failed | 237 passed | 2 skipped (247)
+      Tests  16 failed | 2344 passed | 10 expected fail | 8 skipped (2378)
+   Start at  06:16:48
+   Duration  59.10s (transform 4.18s, setup 7.75s, import 26.90s, tests 21.20s, environment 34.05s)
+
