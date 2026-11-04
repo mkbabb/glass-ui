@@ -183,3 +183,60 @@ reasons and pass on the cured tree; no other unit changed.
 - WebKit 2311 (the repo's resolved Playwright WebKit) was not run; the dock-bearing
   release specs run on 2287 (O-99).
 - r3, r4 and r8 to r10 are untouched (W-0.8, D2, W-I.1).
+
+## Fix round 1 (critique-1.md D1 to D4)
+
+Fixer: claude-opus-5-5. Records `docs/release-10.1.5/fix-1/`, script
+`docs/release-10.1.5/scripts/witness-fix-1.sh` (the branch arm, the g6 specs, then the
+RED arm: the `src` files this round changed checked out from the round-0 tip `0162d71cf`,
+restored to HEAD after).
+
+- **D1, marks off the lane.** `slider/styles.css`: on the scrubber the marks register is
+  inset by half a thumb diameter at both ends of the main axis (`inset-inline` on a
+  horizontal slider, `inset-block` on a vertical one), so `p·box` lands on the thumb's
+  centre `d/2 + p·(track − d)`; symmetric, so inverted and RTL hold. The same law moved
+  the loupe (`Slider.vue` `writeLoupeValue`): it also read `p·track`. Its value point is
+  now the thumb's centre and its fill ends at the thumb's trailing edge, from the thumb's
+  layout diameter (`offsetWidth`) measured once per grasp. The spectrum's marks are
+  unchanged (its lane is the whole track; not part of this patch).
+- **D2, the flattened `-sm` rung.** `tokens/light-dark.css` coarse arm:
+  `--control-text-sm: max(var(--type-caption), calc(1rem * 6 / 7))`, the 16 px floor
+  times the base pair's own floor ratio (0.75rem / 0.875rem), so the rung stays 0.86 to
+  0.88 of the default on touch as on desktop. The no-zoom floor moves to the fields: new
+  token `--field-text-floor` (`0px` at `:root` in `tokens/sizing.css`, `1rem` under
+  `(pointer: coarse)`), read by `.input-pill` and `.input-bar-field` as
+  `max(<rung>, var(--field-text-floor))`. Token values moved, each the cure: coarse
+  `--control-text-sm` (16 to 13.71 px at 390). New: `--field-text-floor`.
+- **D3, the undimmed disabled thumb.** `.glass-slider[data-disabled]:not([data-variant="spectrum"]) .slider-thumb`
+  joins the range's `opacity: var(--opacity-disabled)` rule. The spectrum's disabled
+  handle is as it was at 10.1.4.
+- **D4, the clipped focus ring under the pointer.** `dock/styles/run.css`:
+  `--dock-run-reserve: calc(seat·(s − 1)/2 + ring·s)`, the composed ink, 6.6 px at the
+  house geometry (was `max()`, 4 px). The padding and the handed-back margin read it as
+  before, as do both `scroll-padding` arms, so seat positions and snap offsets do not
+  move. `g-dock-lattice.test.ts` moved with the law.
+
+### Witnesses (release-10-1-5.spec.ts, cells c1 to c4)
+
+| cell | Chromium round 0 | Chromium fix 1 | WebKit 2287 round 0 | WebKit 2287 fix 1 |
+|---|---|---|---|---|
+| c1 a mark = the thumb's centre at its value (horizontal, inverted, vertical); a mark at 5 lies past the fill at min; the loupe's value point and fill end = the thumb's centre and trailing edge | RED (on-25: mark 92, thumb centre 96) | GREEN | RED (same reads) | GREEN |
+| c2 coarse 390: menu label, shortcut and sm Button ÷ their default rung in 0.82 to 0.92; the sm field and the default field 16 px | RED (all 16, ratio 1) | GREEN | RED (same) | GREEN |
+| c3 disabled scrubber: thumb opacity = fill opacity < 1 | RED (thumb 1, fill 0.5) | GREEN | RED (same) | GREEN |
+| c4 coarse 390 and desktop 1280: a keyboard-focused, hovered seat's ring (outline + offset, × scale) inside every clipping box to the dock root; the run still hides nothing | RED (ring top 17.4 against the run's 20) | GREEN | RED (ring top 17.4 against 20) | GREEN |
+
+### Gates
+
+| gate | result |
+|---|---|
+| release-10-1-5 (g1 to g5, c1 to c4), Chromium | 14/14 |
+| g6 release-10-1-4, Chromium | 23/23 |
+| g6 release-10-1-3, Chromium | 60/60 |
+| WebKit 2287 (the same three) | release-10-1-5 14/14; 10-1-4 15 passed, 8 skipped (page.pdf); 10-1-3 58 passed, 2 skipped (CDP swipe) |
+| `npm run typecheck` | exit 0 |
+| `npx vitest run --maxWorkers=2` | 246/247 files; 2396 passed, 10 expected fail, 1 skipped; 1 failed, the boot-graph build arm (stale `dist-demo`) |
+| `npm run build`, `npm run demo:dist:build`, then `boot-graph.test.ts` | exit 0, exit 0, 14/14 |
+| `npm run verify:package` | ratchet refused +493 B (2943093 > 2942600); rebound on the committed tree, then terminal CLEAN, version 10.1.5 |
+
+The c1 RED arm fails on its mark read before it reaches the loupe read; the loupe half is
+shown GREEN only, by the lane law it asserts.

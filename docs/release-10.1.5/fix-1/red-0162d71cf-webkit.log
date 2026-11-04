@@ -1,0 +1,118 @@
+
+Running 5 tests using 1 worker
+
+  ✘  1 [webkit] › tests-visual/release-10-1-5.spec.ts:340:1 › c1 a value mark is the thumb's centre at that value, on every axis; the loupe's value point is the thumb's centre (1.3s)
+  ✘  2 [webkit] › tests-visual/release-10-1-5.spec.ts:408:5 › coarse phone, round 1 › c2 coarse: the -sm rung stays the quieter rung for every non-field reader; an sm field floors at 16px (1.3s)
+  ✘  3 [webkit] › tests-visual/release-10-1-5.spec.ts:437:5 › coarse phone, round 1 › c4 coarse 390: a keyboard-focused seat under the pointer keeps its whole ring (1.9s)
+  ✘  4 [webkit] › tests-visual/release-10-1-5.spec.ts:444:1 › c3 the disabled scrubber dims its thumb with its fill (1.2s)
+  ✘  5 [webkit] › tests-visual/release-10-1-5.spec.ts:513:1 › c4 desktop: a keyboard-focused seat under the pointer keeps its whole ring (1.9s)
+
+
+  1) [webkit] › tests-visual/release-10-1-5.spec.ts:340:1 › c1 a value mark is the thumb's centre at that value, on every axis; the loupe's value point is the thumb's centre 
+
+    Error: on-25 ({"id":"on-25","value":25,"vertical":false,"thumbCentre":96,"fill":{"l":24,"r":104,"t":12,"b":32},"marks":[{"pos":"25%","at":92},{"pos":"50%","at":160},{"pos":"75%","at":228}]}): mark = thumb centre
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.5
+    Received:    4
+
+      371 |         const on = row.marks.find((m) => Math.abs(Number.parseFloat(m.pos) - row.value) < 0.01)!;
+      372 |         expect(on, `${cell}: a mark at the value`).toBeTruthy();
+    > 373 |         expect(Math.abs(on.at - row.thumbCentre), `${cell}: mark = thumb centre`).toBeLessThanOrEqual(0.5);
+          |                                                                                   ^
+      374 |     }
+      375 |
+      376 |     // The loupe: grasp the on-25 thumb and read the lens's value point against it.
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:373:83
+
+    Error Context: tests-visual/test-results/release-10-1-5-c1-a-value--cea51-point-is-the-thumb-s-centre-webkit/error-context.md
+
+  2) [webkit] › tests-visual/release-10-1-5.spec.ts:408:5 › coarse phone, round 1 › c2 coarse: the -sm rung stays the quieter rung for every non-field reader; an sm field floors at 16px 
+
+    Error: label ÷ item is the quieter rung ({"item":16,"label":16,"shortcut":16,"btnMd":16,"btnSm":16,"barSm":16,"bar":16})
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.92
+    Received:    1
+
+      427 |         for (const [quiet, loud] of [["label", "item"], ["shortcut", "item"], ["btnSm", "btnMd"]] as const) {
+      428 |             const ratio = read[quiet] / read[loud];
+    > 429 |             expect(ratio, `${quiet} ÷ ${loud} is the quieter rung (${cell})`).toBeLessThanOrEqual(0.92);
+          |                                                                               ^
+      430 |             expect(ratio, `${quiet} ÷ ${loud} keeps the desktop ratio (${cell})`).toBeGreaterThanOrEqual(0.82);
+      431 |         }
+      432 |         // The no-zoom law binds fields: the sm field and the default field paint 16px.
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:429:79
+
+    Error Context: tests-visual/test-results/release-10-1-5-coarse-phon-c3723--an-sm-field-floors-at-16px-webkit/error-context.md
+
+  3) [webkit] › tests-visual/release-10-1-5.spec.ts:437:5 › coarse phone, round 1 › c4 coarse 390: a keyboard-focused seat under the pointer keeps its whole ring 
+
+    Error: Seat 1 ({"focusVisible":true,"hover":true,"scale":1.1,"outline":"solid","ink":4.4,"ring":{"l":171.6812530517578,"r":228.8812469482422,"t":17.39999923706055,"b":74.5999969482422},"clips":[{"cls":"dock-layer dock-layer--full dock-run is-active","l":59.71875,"r":330.28125,"t":20,"b":72}]}): ring inside dock-layer dock-layer--full dock-run is-active (top)
+
+    expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 19.5
+    Received:    17.39999923706055
+
+      502 |             expect(read.ring.l, `${cell}: ring inside ${c.cls} (left)`).toBeGreaterThanOrEqual(c.l - 0.5);
+      503 |             expect(read.ring.r, `${cell}: ring inside ${c.cls} (right)`).toBeLessThanOrEqual(c.r + 0.5);
+    > 504 |             expect(read.ring.t, `${cell}: ring inside ${c.cls} (top)`).toBeGreaterThanOrEqual(c.t - 0.5);
+          |                                                                        ^
+      505 |             expect(read.ring.b, `${cell}: ring inside ${c.cls} (bottom)`).toBeLessThanOrEqual(c.b + 0.5);
+      506 |         }
+      507 |         await pointerOff(page);
+        at c4 (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:504:72)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:438:9
+
+    Error Context: tests-visual/test-results/release-10-1-5-coarse-phon-82017-ointer-keeps-its-whole-ring-webkit/error-context.md
+
+  4) [webkit] › tests-visual/release-10-1-5.spec.ts:444:1 › c3 the disabled scrubber dims its thumb with its fill 
+
+    Error: dis-min: the thumb dims with it ({"id":"dis-min","thumb":1,"range":0.5})
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0.5
+    Received: 1
+
+      453 |     for (const row of rows) {
+      454 |         expect(row.range, `${row.id}: the fill dims (${JSON.stringify(row)})`).toBeLessThan(1);
+    > 455 |         expect(row.thumb, `${row.id}: the thumb dims with it (${JSON.stringify(row)})`).toBe(row.range);
+          |                                                                                         ^
+      456 |     }
+      457 | });
+      458 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:455:89
+
+    Error Context: tests-visual/test-results/release-10-1-5-c3-the-disa-df36a-ims-its-thumb-with-its-fill-webkit/error-context.md
+
+  5) [webkit] › tests-visual/release-10-1-5.spec.ts:513:1 › c4 desktop: a keyboard-focused seat under the pointer keeps its whole ring 
+
+    Error: Seat 1 ({"focusVisible":true,"hover":true,"scale":1.1,"outline":"solid","ink":4.4,"ring":{"l":625.69375,"r":678.49375,"t":17.6,"b":70.4},"clips":[{"cls":"dock-layer dock-layer--full dock-run is-active","l":507.890625,"r":772.09375,"t":20,"b":68}]}): ring inside dock-layer dock-layer--full dock-run is-active (top)
+
+    expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 19.5
+    Received:    17.6
+
+      502 |             expect(read.ring.l, `${cell}: ring inside ${c.cls} (left)`).toBeGreaterThanOrEqual(c.l - 0.5);
+      503 |             expect(read.ring.r, `${cell}: ring inside ${c.cls} (right)`).toBeLessThanOrEqual(c.r + 0.5);
+    > 504 |             expect(read.ring.t, `${cell}: ring inside ${c.cls} (top)`).toBeGreaterThanOrEqual(c.t - 0.5);
+          |                                                                        ^
+      505 |             expect(read.ring.b, `${cell}: ring inside ${c.cls} (bottom)`).toBeLessThanOrEqual(c.b + 0.5);
+      506 |         }
+      507 |         await pointerOff(page);
+        at c4 (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:504:72)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:515:5
+
+    Error Context: tests-visual/test-results/release-10-1-5-c4-desktop--ab56a-ointer-keeps-its-whole-ring-webkit/error-context.md
+
+  5 failed
+    [webkit] › tests-visual/release-10-1-5.spec.ts:340:1 › c1 a value mark is the thumb's centre at that value, on every axis; the loupe's value point is the thumb's centre 
+    [webkit] › tests-visual/release-10-1-5.spec.ts:408:5 › coarse phone, round 1 › c2 coarse: the -sm rung stays the quieter rung for every non-field reader; an sm field floors at 16px 
+    [webkit] › tests-visual/release-10-1-5.spec.ts:437:5 › coarse phone, round 1 › c4 coarse 390: a keyboard-focused seat under the pointer keeps its whole ring 
+    [webkit] › tests-visual/release-10-1-5.spec.ts:444:1 › c3 the disabled scrubber dims its thumb with its fill 
+    [webkit] › tests-visual/release-10-1-5.spec.ts:513:1 › c4 desktop: a keyboard-focused seat under the pointer keeps its whole ring 

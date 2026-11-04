@@ -15,11 +15,14 @@ import DockLayer from "../../src/components/dock/DockLayer.vue";
 import DockLayerGroup from "../../src/components/dock/DockLayerGroup.vue";
 import Slider from "../../src/components/slider/Slider.vue";
 import Input from "../../src/components/input/Input.vue";
+import Button from "../../src/components/button/Button.vue";
 import CardDescription from "../../src/components/card/CardDescription.vue";
 import {
     DropdownMenu,
     DropdownMenuContent,
     DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuShortcut,
     DropdownMenuTrigger,
 } from "../../src/components/menu";
 
@@ -160,6 +163,34 @@ const scenes: Record<string, Component> = {
                 row("max", 6, 1, 6),
                 row("inv-min", 50, 50, 800, { inverted: true }),
                 row("inv-max", 6, 1, 6, { inverted: true }),
+                row("dis-min", 0, 0, 10, { disabled: true }),
+                row("dis-max", 10, 0, 10, { disabled: true }),
+            ]);
+    }),
+
+    // Value marks on the scrubber (critique D1): a mark at each quarter with the value
+    // ON a mark, the same inverted and vertical, and a value at min below a near mark.
+    marks: defineComponent(() => {
+        const quarters = [0, 25, 50, 75, 100];
+        const row = (id: string, value: number, marks: number[], extra: Record<string, unknown> = {}) =>
+            h(
+                "div",
+                {
+                    "data-witness": id,
+                    style:
+                        extra.orientation === "vertical"
+                            ? "padding:12px 24px;block-size:200px;display:inline-flex"
+                            : "padding:12px 24px;inline-size:320px",
+                },
+                [h(Slider, { modelValue: [value], min: 0, max: 100, marks, "aria-label": id, ...extra })],
+            );
+        return () =>
+            h("div", [
+                row("on-25", 25, quarters),
+                row("on-75", 75, quarters),
+                row("inv-25", 25, quarters, { inverted: true }),
+                row("v-75", 75, quarters, { orientation: "vertical" }),
+                row("below-5", 0, [5]),
             ]);
     }),
 
@@ -177,6 +208,22 @@ const scenes: Record<string, Component> = {
                     }),
                 ]),
                 h(Input, { "data-witness": "pill", "aria-label": "Name", placeholder: "Name" }),
+                // An sm field: the `-sm` rung through the field seam (critique D2).
+                h("label", { class: "input-bar", "data-witness": "bar-sm", style: "--control-pill-text: var(--control-text-sm)" }, [
+                    h("input", { class: "input-bar-field", "aria-label": "Filter", placeholder: "Filter" }),
+                ]),
+                h(Button, { "data-witness": "btn-md" }, () => "Button"),
+                h(Button, { "data-witness": "btn-sm", size: "sm" }, () => "Small"),
+                h(DropdownMenu, { defaultOpen: true, modal: false }, () => [
+                    h(DropdownMenuTrigger, () => "Open"),
+                    h(DropdownMenuContent, { align: "start" }, () => [
+                        h(DropdownMenuLabel, { "data-witness": "mlabel" }, () => "Section"),
+                        h(DropdownMenuItem, { "data-witness": "mitem" }, () => [
+                            h("span", "Item"),
+                            h(DropdownMenuShortcut, { "data-witness": "mshort" }, () => "⌘K"),
+                        ]),
+                    ]),
+                ]),
             ]),
     ),
 

@@ -13,6 +13,14 @@
 //   g3  Slider thumb visible and one size at min, mid and max, inside the fill
 //   g4  390 coarse: field type ≤ 16px, field ÷ pane subtitle ≤ 1.25
 //   g5  DropdownMenuItem icon-to-label gap = `--icon-label-gap` = the dock trigger's gap
+//
+// Critique round 1 (docs/release-10.1.5/critique-1.md), RED on the round-0 branch
+// (0162d71cf) and GREEN after the fix round:
+//   c1  (D1) a value mark is the thumb's centre at that value; the loupe's value point too
+//   c2  (D2) coarse: the `-sm` rung stays below the default for every non-field reader;
+//       an sm field still floors at 16px
+//   c3  (D3) the disabled scrubber dims its thumb with its fill
+//   c4  (D4) a keyboard-focused seat under the pointer: its whole ring inside every clip
 import { expect, test, type Page } from "@playwright/test";
 
 async function open(page: Page, query: string): Promise<void> {
@@ -325,4 +333,184 @@ test("g5 the DropdownMenuItem icon-to-label gap is the icon-slot token, the dock
         return label.left - icon.right;
     });
     expect(Math.abs(trigger - menu.gap), `dock trigger gap ${trigger} = menu gap`).toBeLessThanOrEqual(0.5);
+});
+
+/* ── critique round 1 ───────────────────────────────────────────────────────── */
+
+test("c1 a value mark is the thumb's centre at that value, on every axis; the loupe's value point is the thumb's centre", async ({
+    page,
+}) => {
+    await open(page, "scene=marks");
+    const rows = await page.evaluate(() =>
+        [...document.querySelectorAll<HTMLElement>("[data-witness]")].map((row) => {
+            const vertical = !!row.querySelector('[data-orientation="vertical"]');
+            const mid = (r: DOMRect) => (vertical ? (r.top + r.bottom) / 2 : (r.left + r.right) / 2);
+            const thumb = row.querySelector(".slider-thumb")!.getBoundingClientRect();
+            const fill = row.querySelector(".slider-range")!.getBoundingClientRect();
+            const marks = [...row.querySelectorAll<HTMLElement>(".glass-value-mark")].map((m) => {
+                const b = m.getBoundingClientRect();
+                return { pos: m.style.getPropertyValue("--value-mark-position"), at: vertical ? b.top : b.left };
+            });
+            return {
+                id: row.dataset.witness!,
+                value: Number(row.querySelector(".slider-thumb")!.getAttribute("aria-valuenow")),
+                vertical,
+                thumbCentre: mid(thumb),
+                fill: { l: fill.left, r: fill.right, t: fill.top, b: fill.bottom },
+                marks,
+            };
+        }),
+    );
+    for (const row of rows) {
+        const cell = `${row.id} (${JSON.stringify(row)})`;
+        if (row.id === "below-5") {
+            // At min the fill ends at the thumb's trailing edge; a mark at 5 lies beyond it.
+            expect(row.marks[0]!.at, `${cell}: the 5 mark is past the fill at min`).toBeGreaterThan(row.fill.r + 0.5);
+            continue;
+        }
+        const on = row.marks.find((m) => Math.abs(Number.parseFloat(m.pos) - row.value) < 0.01)!;
+        expect(on, `${cell}: a mark at the value`).toBeTruthy();
+        expect(Math.abs(on.at - row.thumbCentre), `${cell}: mark = thumb centre`).toBeLessThanOrEqual(0.5);
+    }
+
+    // The loupe: grasp the on-25 thumb and read the lens's value point against it.
+    const thumb = page.locator('[data-witness="on-25"] .slider-thumb');
+    const box = (await thumb.boundingBox())!;
+    await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
+    await page.mouse.down();
+    await settle(page, 400);
+    const loupe = await page.evaluate(() => {
+        const lens = document.querySelector<HTMLElement>(".glass-loupe");
+        const row = document.querySelector('[data-witness="on-25"]')!;
+        const track = row.querySelector<HTMLElement>(".slider-track")!;
+        const thumb = row.querySelector<HTMLElement>(".slider-thumb")!;
+        // Layout, not the held squish: the lane's centre law from the live value.
+        const p = Number(thumb.getAttribute("aria-valuenow")) / 100;
+        const d = thumb.offsetWidth;
+        const centre = d / 2 + p * (track.offsetWidth - d);
+        return {
+            mounted: !!lens,
+            p,
+            x: lens ? Number.parseFloat(lens.style.getPropertyValue("--loupe-x")) : NaN,
+            fillW: lens ? Number.parseFloat(lens.style.getPropertyValue("--loupe-fill-w")) : NaN,
+            centre,
+            fillEnd: centre + d / 2,
+        };
+    });
+    await page.mouse.up();
+    expect(loupe.mounted, `the loupe mounts on the grasp (${JSON.stringify(loupe)})`).toBe(true);
+    expect(Math.abs(loupe.x - loupe.centre), `loupe value point = thumb centre (${JSON.stringify(loupe)})`).toBeLessThanOrEqual(1);
+    expect(Math.abs(loupe.fillW / 3 - loupe.fillEnd), `loupe fill = the fill (${JSON.stringify(loupe)})`).toBeLessThanOrEqual(1);
+});
+
+test.describe("coarse phone, round 1", () => {
+    test.use({ hasTouch: true, isMobile: true, viewport: { width: 390, height: 844 } });
+    test("c2 coarse: the -sm rung stays the quieter rung for every non-field reader; an sm field floors at 16px", async ({
+        page,
+    }) => {
+        await open(page, "scene=type");
+        await expectCoarse(page);
+        const read = await page.evaluate(() => {
+            const px = (sel: string) =>
+                Number.parseFloat(getComputedStyle(document.querySelector(sel)!).fontSize);
+            return {
+                item: px('[data-witness="mitem"]'),
+                label: px('[data-witness="mlabel"]'),
+                shortcut: px('[data-witness="mshort"]'),
+                btnMd: px('[data-witness="btn-md"]'),
+                btnSm: px('[data-witness="btn-sm"]'),
+                barSm: px('[data-witness="bar-sm"] input'),
+                bar: px('[data-witness="bar"] input'),
+            };
+        });
+        const cell = JSON.stringify(read);
+        for (const [quiet, loud] of [["label", "item"], ["shortcut", "item"], ["btnSm", "btnMd"]] as const) {
+            const ratio = read[quiet] / read[loud];
+            expect(ratio, `${quiet} ÷ ${loud} is the quieter rung (${cell})`).toBeLessThanOrEqual(0.92);
+            expect(ratio, `${quiet} ÷ ${loud} keeps the desktop ratio (${cell})`).toBeGreaterThanOrEqual(0.82);
+        }
+        // The no-zoom law binds fields: the sm field and the default field paint 16px.
+        expect(read.barSm, `sm field floors at 16px (${cell})`).toBe(16);
+        expect(read.bar, `default field is 16px (${cell})`).toBe(16);
+    });
+
+    test("c4 coarse 390: a keyboard-focused seat under the pointer keeps its whole ring", async ({ page }) => {
+        await c4(page);
+    });
+});
+
+/* ── c3 · the disabled thumb ─────────────────────────────────────────────────── */
+
+test("c3 the disabled scrubber dims its thumb with its fill", async ({ page }) => {
+    await open(page, "scene=slider");
+    const rows = await page.evaluate(() =>
+        ["dis-min", "dis-max"].map((id) => {
+            const row = document.querySelector(`[data-witness="${id}"]`)!;
+            const op = (sel: string) => Number(getComputedStyle(row.querySelector(sel)!).opacity);
+            return { id, thumb: op(".slider-thumb"), range: op(".slider-range") };
+        }),
+    );
+    for (const row of rows) {
+        expect(row.range, `${row.id}: the fill dims (${JSON.stringify(row)})`).toBeLessThan(1);
+        expect(row.thumb, `${row.id}: the thumb dims with it (${JSON.stringify(row)})`).toBe(row.range);
+    }
+});
+
+/* ── c4 · the focused seat under the pointer ─────────────────────────────────── */
+
+async function c4(page: Page): Promise<void> {
+    await open(page, "scene=dock");
+    for (const label of ["Seat 1", "Seat 3"]) {
+        const seat = page.locator(`[data-witness="${label}"]`);
+        // A key press arms :focus-visible; focus() then keeps it.
+        await page.keyboard.press("Shift");
+        await seat.focus();
+        await seat.hover();
+        await settle(page, 600);
+        const read = await seat.evaluate((el) => {
+            const cs = getComputedStyle(el);
+            const s = cs.scale === "none" ? 1 : Number.parseFloat(cs.scale);
+            const ink = (Number.parseFloat(cs.outlineWidth) + Number.parseFloat(cs.outlineOffset)) * s;
+            const r = el.getBoundingClientRect();
+            const ring = { l: r.left - ink, r: r.right + ink, t: r.top - ink, b: r.bottom + ink };
+            // Every clipping box between the seat and the dock root, the run first.
+            const clips: { cls: string; l: number; r: number; t: number; b: number }[] = [];
+            for (let a = el.parentElement; a; a = a.parentElement) {
+                const o = getComputedStyle(a);
+                if (o.overflowX !== "visible" || o.overflowY !== "visible") {
+                    const b = a.getBoundingClientRect();
+                    clips.push({ cls: a.className, l: b.left, r: b.right, t: b.top, b: b.bottom });
+                }
+                if (a.classList.contains("glass-dock")) break;
+            }
+            return {
+                focusVisible: el.matches(":focus-visible"),
+                hover: el.matches(":hover"),
+                scale: s,
+                outline: cs.outlineStyle,
+                ink,
+                ring,
+                clips,
+            };
+        });
+        const cell = `${label} (${JSON.stringify(read)})`;
+        expect(read.focusVisible && read.hover, `${cell}: focused and hovered`).toBe(true);
+        expect(read.scale, `${cell}: hover-scaled`).toBeGreaterThan(1);
+        expect(read.outline, `${cell}: the ring paints`).not.toBe("none");
+        expect(read.clips.length, `${cell}: the run clips`).toBeGreaterThan(0);
+        for (const c of read.clips) {
+            expect(read.ring.l, `${cell}: ring inside ${c.cls} (left)`).toBeGreaterThanOrEqual(c.l - 0.5);
+            expect(read.ring.r, `${cell}: ring inside ${c.cls} (right)`).toBeLessThanOrEqual(c.r + 0.5);
+            expect(read.ring.t, `${cell}: ring inside ${c.cls} (top)`).toBeGreaterThanOrEqual(c.t - 0.5);
+            expect(read.ring.b, `${cell}: ring inside ${c.cls} (bottom)`).toBeLessThanOrEqual(c.b + 0.5);
+        }
+        await pointerOff(page);
+    }
+    // And the run still hides nothing under the reserve.
+    expectNoReach(await readPlate(page), "c4 after the focused hover");
+}
+
+test("c4 desktop: a keyboard-focused seat under the pointer keeps its whole ring", async ({ page }) => {
+    await page.setViewportSize({ width: 1280, height: 844 });
+    await c4(page);
 });
