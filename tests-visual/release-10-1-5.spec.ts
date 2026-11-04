@@ -21,6 +21,14 @@
 //       an sm field still floors at 16px
 //   c3  (D3) the disabled scrubber dims its thumb with its fill
 //   c4  (D4) a keyboard-focused seat under the pointer: its whole ring inside every clip
+//
+// Critique round 2 (critique-2.md), RED on the round-1 tip (65fdbd228), GREEN after:
+//   e1  (E1) a label-wide tab under the pointer: no reach, the rest corner holds
+//   e2  (E2) a focused, hovered tab seat, leading and trailing, horizontal and vertical:
+//       its whole ring inside every clip
+//   e3  (E3) beside both persistent regions: the run's clip and hit stop at their seats,
+//       at rest and scrolled; the edge seats keep their ring
+//   E4 is the vitest arm tests/styles/typed-track-seam.test.ts, read after a build
 import { expect, test, type Page } from "@playwright/test";
 
 async function open(page: Page, query: string): Promise<void> {
@@ -458,54 +466,61 @@ test("c3 the disabled scrubber dims its thumb with its fill", async ({ page }) =
 
 /* ── c4 · the focused seat under the pointer ─────────────────────────────────── */
 
+/**
+ * A keyboard-focused seat under the pointer: its ring (the transformed box grown by
+ * `(outline-width + outline-offset) × scale`) lies inside every clipping box between it
+ * and the dock root, the run first.
+ */
+async function expectFocusedRingWhole(page: Page, witness: string): Promise<void> {
+    const seat = page.locator(`[data-witness="${witness}"]`);
+    // A key press arms :focus-visible; focus() then keeps it.
+    await page.keyboard.press("Shift");
+    await seat.focus();
+    await seat.hover();
+    await settle(page, 600);
+    const read = await seat.evaluate((el) => {
+        const cs = getComputedStyle(el);
+        const s = cs.scale === "none" ? 1 : Number.parseFloat(cs.scale);
+        const ink = (Number.parseFloat(cs.outlineWidth) + Number.parseFloat(cs.outlineOffset)) * s;
+        const r = el.getBoundingClientRect();
+        const ring = { l: r.left - ink, r: r.right + ink, t: r.top - ink, b: r.bottom + ink };
+        const clips: { cls: string; l: number; r: number; t: number; b: number }[] = [];
+        for (let a = el.parentElement; a; a = a.parentElement) {
+            const o = getComputedStyle(a);
+            if (o.overflowX !== "visible" || o.overflowY !== "visible") {
+                const b = a.getBoundingClientRect();
+                clips.push({ cls: a.className, l: b.left, r: b.right, t: b.top, b: b.bottom });
+            }
+            if (a.classList.contains("glass-dock")) break;
+        }
+        return {
+            focusVisible: el.matches(":focus-visible"),
+            hover: el.matches(":hover"),
+            scale: s,
+            width: r.width,
+            outline: cs.outlineStyle,
+            ink,
+            ring,
+            clips,
+        };
+    });
+    const cell = `${witness} (${JSON.stringify(read)})`;
+    expect(read.focusVisible && read.hover, `${cell}: focused and hovered`).toBe(true);
+    expect(read.scale, `${cell}: hover-scaled`).toBeGreaterThan(1);
+    expect(read.outline, `${cell}: the ring paints`).not.toBe("none");
+    expect(read.clips.length, `${cell}: the run clips`).toBeGreaterThan(0);
+    for (const c of read.clips) {
+        expect(read.ring.l, `${cell}: ring inside ${c.cls} (left)`).toBeGreaterThanOrEqual(c.l - 0.5);
+        expect(read.ring.r, `${cell}: ring inside ${c.cls} (right)`).toBeLessThanOrEqual(c.r + 0.5);
+        expect(read.ring.t, `${cell}: ring inside ${c.cls} (top)`).toBeGreaterThanOrEqual(c.t - 0.5);
+        expect(read.ring.b, `${cell}: ring inside ${c.cls} (bottom)`).toBeLessThanOrEqual(c.b + 0.5);
+    }
+    await pointerOff(page);
+}
+
 async function c4(page: Page): Promise<void> {
     await open(page, "scene=dock");
-    for (const label of ["Seat 1", "Seat 3"]) {
-        const seat = page.locator(`[data-witness="${label}"]`);
-        // A key press arms :focus-visible; focus() then keeps it.
-        await page.keyboard.press("Shift");
-        await seat.focus();
-        await seat.hover();
-        await settle(page, 600);
-        const read = await seat.evaluate((el) => {
-            const cs = getComputedStyle(el);
-            const s = cs.scale === "none" ? 1 : Number.parseFloat(cs.scale);
-            const ink = (Number.parseFloat(cs.outlineWidth) + Number.parseFloat(cs.outlineOffset)) * s;
-            const r = el.getBoundingClientRect();
-            const ring = { l: r.left - ink, r: r.right + ink, t: r.top - ink, b: r.bottom + ink };
-            // Every clipping box between the seat and the dock root, the run first.
-            const clips: { cls: string; l: number; r: number; t: number; b: number }[] = [];
-            for (let a = el.parentElement; a; a = a.parentElement) {
-                const o = getComputedStyle(a);
-                if (o.overflowX !== "visible" || o.overflowY !== "visible") {
-                    const b = a.getBoundingClientRect();
-                    clips.push({ cls: a.className, l: b.left, r: b.right, t: b.top, b: b.bottom });
-                }
-                if (a.classList.contains("glass-dock")) break;
-            }
-            return {
-                focusVisible: el.matches(":focus-visible"),
-                hover: el.matches(":hover"),
-                scale: s,
-                outline: cs.outlineStyle,
-                ink,
-                ring,
-                clips,
-            };
-        });
-        const cell = `${label} (${JSON.stringify(read)})`;
-        expect(read.focusVisible && read.hover, `${cell}: focused and hovered`).toBe(true);
-        expect(read.scale, `${cell}: hover-scaled`).toBeGreaterThan(1);
-        expect(read.outline, `${cell}: the ring paints`).not.toBe("none");
-        expect(read.clips.length, `${cell}: the run clips`).toBeGreaterThan(0);
-        for (const c of read.clips) {
-            expect(read.ring.l, `${cell}: ring inside ${c.cls} (left)`).toBeGreaterThanOrEqual(c.l - 0.5);
-            expect(read.ring.r, `${cell}: ring inside ${c.cls} (right)`).toBeLessThanOrEqual(c.r + 0.5);
-            expect(read.ring.t, `${cell}: ring inside ${c.cls} (top)`).toBeGreaterThanOrEqual(c.t - 0.5);
-            expect(read.ring.b, `${cell}: ring inside ${c.cls} (bottom)`).toBeLessThanOrEqual(c.b + 0.5);
-        }
-        await pointerOff(page);
-    }
+    for (const label of ["Seat 1", "Seat 3"]) await expectFocusedRingWhole(page, label);
     // And the run still hides nothing under the reserve.
     expectNoReach(await readPlate(page), "c4 after the focused hover");
 }
@@ -514,3 +529,110 @@ test("c4 desktop: a keyboard-focused seat under the pointer keeps its whole ring
     await page.setViewportSize({ width: 1280, height: 844 });
     await c4(page);
 });
+
+/* ── e1-e3 · critique round 2: the largest seat and the room beside the run ──────
+   (docs/release-10.1.5/critique-2.md). RED on the round-1 tip 65fdbd228, GREEN after. */
+
+async function openSeats(page: Page, query: string): Promise<void> {
+    await open(page, `scene=seats&${query}`);
+    if (test.info().project.use.isMobile) await expectCoarse(page);
+    await pointerOff(page);
+    await settle(page, 200);
+}
+
+const LONG_TAB = "kinds=icon,tab:A much longer label";
+
+/** E1: a seat wider than 3 icon cells, hovered, is still not reach. */
+function e1(width: number): void {
+    test(`e1 at ${width}: a label-wide tab under the pointer gives the run no reach and cuts no corner`, async ({
+        page,
+    }) => {
+        await page.setViewportSize({ width, height: 844 });
+        await openSeats(page, LONG_TAB);
+        const tab = page.locator('[data-witness="S2"]');
+        expect(
+            await tab.evaluate((el) => (el as HTMLElement).offsetWidth),
+            "the trailing tab is wider than the 132 px the icon-cell reserve covered",
+        ).toBeGreaterThan(132);
+        const rest = await readPlate(page);
+        await tab.hover();
+        await settle(page, 600);
+        const hovered = await readPlate(page);
+        expect(
+            await tab.evaluate((el) => getComputedStyle(el).scale),
+            "the tab is hover-scaled",
+        ).not.toBe("1");
+        expectNoReach(rest, `${width} rest`);
+        expectNoReach(hovered, `${width} hover on the wide tab`);
+        expectRestCorner(rest, `${width} rest`);
+        expectRestCorner(hovered, `${width} hover on the wide tab`);
+    });
+}
+
+/** E2: a focused, hovered tab seat keeps its whole ring, leading and trailing, both docks. */
+function e2(width: number): void {
+    test(`e2 at ${width}: focused, hovered tab seats keep their whole ring on every edge`, async ({ page }) => {
+        await page.setViewportSize({ width, height: 844 });
+        await openSeats(page, "kinds=tab:Home,icon,icon,tab:Settings");
+        for (const seat of ["S1", "S4"]) await expectFocusedRingWhole(page, seat);
+        expectNoReach(await readPlate(page), `${width} after the focused hovers`);
+        await openSeats(page, "kinds=tab:Home,icon,tab:Settings&orientation=vertical");
+        for (const seat of ["S1", "S3"]) await expectFocusedRingWhole(page, seat);
+    });
+}
+
+/** E3: the run's scroll clip stays off the persistent regions beside it. */
+function e3(width: number): void {
+    test(`e3 at ${width}: the run's clip and hit stop at the persistent seats, at rest and scrolled`, async ({
+        page,
+    }) => {
+        await page.setViewportSize({ width, height: 844 });
+        await openSeats(page, `fit=0&maxw=360&persistent=1&kinds=${Array(12).fill("icon").join(",")}`);
+        for (const at of ["start", "mid", "end"] as const) {
+            const read = await page.evaluate(async (at) => {
+                const run = document.querySelector<HTMLElement>(".dock-run")!;
+                const range = run.scrollWidth - run.clientWidth;
+                run.scrollLeft = at === "start" ? 0 : at === "mid" ? range / 2 : range;
+                await new Promise((r) => setTimeout(r, 500));
+                const box = (sel: string) => document.querySelector(sel)!.getBoundingClientRect();
+                const runBox = run.getBoundingClientRect();
+                const lead = box('[data-witness="lead"]');
+                const tail = box('[data-witness="tail"]');
+                const hit = (x: number, y: number) => document.elementFromPoint(x, y)?.closest("[data-witness]")?.getAttribute("data-witness") ?? null;
+                return {
+                    range,
+                    scroll: run.scrollLeft,
+                    run: [runBox.left, runBox.right],
+                    lead: [lead.left, lead.right],
+                    tail: [tail.left, tail.right],
+                    leadHit: hit(lead.right - 0.5, (lead.top + lead.bottom) / 2),
+                    tailHit: hit(tail.left + 0.5, (tail.top + tail.bottom) / 2),
+                };
+            }, at);
+            const cell = `${width} ${at} (${JSON.stringify(read)})`;
+            expect(read.range, `${cell}: the run overflows`).toBeGreaterThan(0);
+            expect(read.run[0], `${cell}: the clip starts at or after the lead seat`).toBeGreaterThanOrEqual(read.lead[1]);
+            expect(read.run[1], `${cell}: the clip ends at or before the tail seat`).toBeLessThanOrEqual(read.tail[0]);
+            expect(read.leadHit, `${cell}: the lead seat owns its own edge`).toBe("lead");
+            expect(read.tailHit, `${cell}: the tail seat owns its own edge`).toBe("tail");
+        }
+        // The run's edge seats beside the persistent regions still keep their whole ring.
+        await openSeats(page, "persistent=1&kinds=tab:Home,icon,tab:Settings");
+        for (const seat of ["S1", "S3"]) await expectFocusedRingWhole(page, seat);
+        expectNoReach(await readPlate(page), `${width} persistent, after the focused hovers`);
+    });
+}
+
+test.describe("critique 2, coarse phone", () => {
+    test.use({ hasTouch: true, isMobile: true, viewport: { width: 390, height: 844 } });
+    e1(390);
+    e1(844);
+    e2(390);
+    e3(390);
+});
+
+e1(390);
+e1(1440);
+e2(390);
+e2(1440);
+e3(390);

@@ -96,6 +96,58 @@ const scenes: Record<string, Component> = {
             );
     }),
 
+    // Critique round 2: a dock of mixed seats. `?kinds=` a comma list of `icon` and
+    // `tab:<label>` (each seat `data-witness="S<i>"`), `?persistent=1` adds a seat in each
+    // persistent region (`lead`, `tail`), `?orientation=vertical` a vertical dock in a
+    // `?stageH=` tall column, `?maxw=` a max inline size and `?fit=0` drops fitContent.
+    seats: defineComponent(() => {
+        const orientation = (params.get("orientation") ?? "horizontal") as "horizontal" | "vertical";
+        const kinds = (params.get("kinds") ?? "icon,icon,icon").split(",");
+        const persistent = params.get("persistent") === "1";
+        return () =>
+            h(
+                "div",
+                {
+                    "data-witness": "stage",
+                    style:
+                        orientation === "vertical"
+                            ? `display:flex;padding:16px;block-size:${params.get("stageH") ?? "600"}px`
+                            : "display:flex;justify-content:center;align-items:flex-start;padding:16px 0;min-block-size:240px",
+                },
+                [
+                    h(
+                        GlassDock,
+                        {
+                            fitContent: params.get("fit") !== "0",
+                            collapse: false,
+                            orientation,
+                            style: params.get("maxw") ? `max-inline-size:${params.get("maxw")}px` : undefined,
+                        },
+                        {
+                            default: () =>
+                                kinds.map((k, i) =>
+                                    k.startsWith("tab:")
+                                        ? h(DockControl, { shape: "tab", "data-witness": `S${i + 1}` }, () => [
+                                              glyph(),
+                                              h("span", k.slice(4)),
+                                          ])
+                                        : h(DockControl, { "aria-label": `S${i + 1}`, "data-witness": `S${i + 1}` }, glyph),
+                                ),
+                            collapsed: () => h("span", glyph()),
+                            ...(persistent
+                                ? {
+                                      persistent: () =>
+                                          h(DockControl, { "aria-label": "Lead", "data-witness": "lead" }, glyph),
+                                      "persistent-end": () =>
+                                          h(DockControl, { "aria-label": "Tail", "data-witness": "tail" }, glyph),
+                                  }
+                                : {}),
+                        },
+                    ),
+                ],
+            );
+    }),
+
     // A dock whose run is a DockLayerGroup: an action layer of seats and an INPUT layer
     // (value's colour input: a `.dock-search-field` holding an `.input-bar`). The active
     // layer is `window.__layer` (a ref), so a witness can step through every layer.
