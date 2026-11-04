@@ -8,8 +8,9 @@ and fourier.babb.dev on 10.1.4 (records: `docs/tranches/BL/audit/INBOUND.md` O-1
 renamed. Two token values move, each because the token is the cure: `--dock-cap-rest`
 on the pill (`50%` to half the plate's measured cross extent) and, under
 `(pointer: coarse)`, `--control-text`/`--control-text-sm` (the 1.5x comfort scale to the
-16 px floor). One token is new, `--icon-label-gap` (0.25rem), and the dock publishes
-one new measured property, `--dock-plate-cross-px`.
+16 px floor and to 6/7 of it). Two tokens are new, `--icon-label-gap` (0.25rem) and
+`--field-text-floor` (0 px, 16 px under a coarse pointer), and the dock publishes one new
+measured property, `--dock-plate-cross-px`.
 
 - **The dock pill's corner is a circle at rest (O-129 r1).** The cut-cap keyframes
   rested at `--dock-cap-rest: 50%`. A percentage radius resolves per axis, so whenever
@@ -21,7 +22,8 @@ one new measured property, `--dock-plate-cross-px`.
   was armed by 2 px of reach that was not there: a hovered seat's `scale: 1.1` grows its
   box 2.2 px past its layout box, and the run counted that as scrollable overflow. The
   run's content-box reserve, already on the block axis, is now on both axes and covers
-  the larger of the ring and the hover ink. Its scroll padding adds the reserve back, so
+  the hover ink plus the ring, which scales with the seat (6.6 px), so a keyboard-focused
+  seat under the pointer keeps its whole ring. Its scroll padding adds the reserve back, so
   every snap rest and reach anchor keeps its offset. A run that hides nothing now has
   nothing to scroll.
 
@@ -38,15 +40,20 @@ one new measured property, `--dock-plate-cross-px`.
   thumb. The fill rides a lane one thumb diameter shorter than the track and reaches one
   diameter past it, so it is `thumb + value x (track - thumb)` wide: one thumb at min,
   the whole track at max, and the thumb always sits in its leading end, inverted and
-  vertical included. The spectrum variant is unchanged. The fill is now wrapped in a
-  `.slider-lane` element inside the track.
+  vertical included. Value marks and the loupe's value point sit on the thumb's centre
+  at their value, and a disabled scrubber dims its thumb with its fill. The spectrum
+  variant is unchanged. The fill is now wrapped in a `.slider-lane` element inside the
+  track.
 
 - **Touch keeps control type at 16 px (O-129 r6).** The coarse-pointer arm set
   `--ui-scale: 1.5`, and `--control-text` multiplied it into the type, so the
   `.input-bar` field and the picker rows painted 21 px in a 54 px bar at 390 px. Under
-  `(pointer: coarse)` both control text rungs are now `max(fluid base, 1rem)`: the iOS
-  no-zoom floor, with the comfort scale left on the box, whose heights are unchanged.
-  `--control-text-sm` no longer outgrows `--control-text` on touch (18 px against 16).
+  `(pointer: coarse)` `--control-text` is now `max(fluid base, 1rem)`, with the comfort
+  scale left on the box, whose heights are unchanged, and `--control-text-sm` is
+  `max(fluid base, 1rem x 6/7)`, so menu labels, shortcuts and small buttons stay the
+  quieter rung on touch. The iOS no-zoom floor binds text fields: `.input-pill` and
+  `.input-bar-field` read the new `--field-text-floor`, 16 px under a coarse pointer,
+  so a small field still paints 16 px.
 
 - **A menu item's icon stands off its label (O-129 r7).** `.menu__item` and
   `.menu__sub-trigger` had no gap, so a bare icon component sat flush against its label.
