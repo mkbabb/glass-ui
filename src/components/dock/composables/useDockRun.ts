@@ -211,12 +211,11 @@ export function useDockRun(options: UseDockRunOptions): UseDockRunReturn {
      *
      * FULLY INSIDE means inside the port LESS THE RUN'S RESERVE on the scroll axis (the
      * run's leading padding, run.css `--dock-run-reserve-*`): the reserve is room for a
-     * seat's ink (its hover overhang and ring), never room for the seat. [10.1.5 fix
-     * round 3] ~~The port's padding box~~ counted a seat that had overflowed into the
-     * trailing reserve as in view, and WebKit's own focus reveal agrees with that, so
-     * a focused end seat of a run that overflows by less than the reserve was never
-     * reached and its ring painted past the clip (coarse 390, beside both persistent
-     * regions: 0.55 px).
+     * seat's ink (its hover overhang and ring), never room for the seat. The padding
+     * box would count a seat that has overflowed into the trailing reserve as in view,
+     * and WebKit's own focus reveal agrees with it, so a focused end seat of a run that
+     * overflows by less than the reserve would never be reached and its ring would
+     * paint past the clip.
      */
     function occluded(run: HTMLElement, seat: HTMLElement): boolean {
         const port = run.getBoundingClientRect();
@@ -226,8 +225,7 @@ export function useDockRun(options: UseDockRunOptions): UseDockRunReturn {
             Number.parseFloat(vertical() ? style.paddingBlockStart : style.paddingInlineStart) || 0;
         // Sub-pixel tolerance: a flush seat routinely measures a fraction outside its
         // port under fractional device ratios, and reaching for it would glide by ~0px
-        // on every focus — motion with no cause. The reserve's scroll step (run.css
-        // `--dock-run-step-*`, 1px) is the room that covers it.
+        // on every focus — motion with no cause.
         const slack = 1;
         return vertical()
             ? box.top < port.top + reserve - slack || box.bottom > port.bottom - reserve + slack

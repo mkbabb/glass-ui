@@ -726,23 +726,17 @@ describe("G-DOCK-MATERIAL — the focus ring composes instead of competing", () 
             /margin:\s*calc\(-1 \* var\(--dock-run-reserve-block\)\) calc\(-1 \* var\(--dock-run-reserve-inline\)\)/,
         );
         // The reserve is the composed ink of a focused, hovered seat: its hover overhang
-        // PLUS its ring, which scales with it (O-129 r1, O-123 OD-5: a seat's engagement
-        // scale never counts as reach; 10.1.5 critique D4: the two inks add), and the
-        // overhang is the LARGEST seat's on each axis (10.1.5 critique 2 E1, E2), plus
-        // the scroll step: WebKit's whole-pixel scroll offset falls up to 1 px short of a
-        // fractional end (10.1.5 fix round 3), 1px on the scroll axis, 0 on the cross.
+        // PLUS its ring, which scales with it (a seat's engagement scale never counts as
+        // reach, and the two inks add), and the overhang is the largest scaling seat's on
+        // each axis. Nothing else: no scroll step rides the reserve.
         for (const side of ["inline", "block"]) {
             expect(run).toMatch(
                 new RegExp(
-                    `--dock-run-reserve-${side}:\\s*round\\(\\s*up,\\s*var\\(--dock-seat-max-${side}-px\\) \\* \\(var\\(--scale-hover-dock\\) - 1\\) / 2 \\+\\s*var\\(--dock-ring-reserve\\) \\* var\\(--scale-hover-dock\\) \\+ var\\(--dock-run-step-${side}\\),\\s*1px\\s*\\)`,
+                    `--dock-run-reserve-${side}:\\s*round\\(\\s*up,\\s*var\\(--dock-seat-max-${side}-px\\) \\* \\(var\\(--scale-hover-dock\\) - 1\\) / 2 \\+\\s*var\\(--dock-ring-reserve\\) \\* var\\(--scale-hover-dock\\),\\s*1px\\s*\\)`,
                 ),
             );
         }
-
-        expect(run).toMatch(/\.glass-dock \{[^{}]*--dock-run-step-inline:\s*1px;\s*--dock-run-step-block:\s*0px;/);
-        expect(run).toMatch(
-            /\.glass-dock\.vertical \{[^{}]*--dock-run-step-inline:\s*0px;\s*--dock-run-step-block:\s*1px;/,
-        );
+        expect(run).not.toMatch(/--dock-run-step-/);
 
         // 2. ONE OWNER. The vertical rotation swaps the AXIS, not the box model; a
         //    restatement there is the two-owners defect the R1 cure struck in
@@ -828,7 +822,8 @@ describe("G-DOCK-MATERIAL — the focus ring composes instead of competing", () 
             /\.glass-dock \{\s*border-radius:\s*var\(--radius-dock\);\s*\}/,
         );
 
-        // 3. The band's ONLY keyframed radius is the cut cap's, on the plate.
+        // 3. The band's ONLY keyframed radii are the cut cap's: the plate's, and the
+        //    run's clip, which follows the plate's corner on the same timeline.
         const keyframed = bandCss()
             .flatMap(({ file, css }) =>
                 [...css.matchAll(/@keyframes\s+([\w-]+)\s*\{[\s\S]*?\n\}/g)].map((m) => ({
@@ -843,7 +838,18 @@ describe("G-DOCK-MATERIAL — the focus ring composes instead of competing", () 
             "gl-dock-cap-block-start",
             "gl-dock-cap-inline-end",
             "gl-dock-cap-inline-start",
+            "gl-dock-clip-block-end",
+            "gl-dock-clip-block-start",
+            "gl-dock-clip-inline-end",
+            "gl-dock-clip-inline-start",
         ]);
+        // The run's clip reads the cap's own endpoints and the cap's own timeline.
+        const run = declarations(`${STYLES}/run.css`);
+        expect(run).toMatch(/--dock-run-corner-rest:\s*max\(0px, var\(--dock-cap-rest\) - var\(--dock-run-inset\)\)/);
+        expect(run).toMatch(/--dock-run-corner-cut:\s*max\(0px, var\(--dock-cap-cut\) - var\(--dock-run-inset\)\)/);
+        expect(run).toMatch(
+            /\.glass-dock \.dock-run\.is-active \{[^{}]*animation-timeline:\s*--dock-run, --dock-run;/,
+        );
         expect(new Set(keyframed.map(({ file }) => file))).toEqual(
             new Set([`${STYLES}/run.css`]),
         );

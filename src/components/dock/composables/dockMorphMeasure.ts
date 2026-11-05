@@ -233,39 +233,52 @@ export function useDockExpandedSize(
     }
 
     /*
-     * THE PLATE'S CROSS EXTENT, `--dock-plate-cross-px` (O-129 r1, O-123 OD-5): the
-     * plate's block size on a horizontal dock, its inline size on a vertical one. The
-     * stadium's rest corner is half of it (run.css `--dock-cap-rest`), a length, so the
-     * corner is a circle of the plate's own height on every box and at every point of the
-     * cut-cap timeline. It is the ResizeObserver's border box of the plate: layout, not
-     * paint, so the morph's `scale` never reaches it, fractional, and delivered after
-     * layout and before paint, so the first painted frame already carries it.
+     * THE PLATE'S CROSS EXTENT, `--dock-plate-cross-px`: the plate's block size on a
+     * horizontal dock, its inline size on a vertical one. The stadium's rest corner is
+     * half of it (run.css `--dock-cap-rest`), a length, so the corner is a circle of the
+     * plate's own height on every box and at every point of the cut-cap timeline. It is
+     * read from the plate's layout box (`offset*`), so the morph's `scale` never reaches
+     * it, once when the dock attaches and then from the ResizeObserver's border box,
+     * which is fractional and delivered after layout and before paint, so the first
+     * painted frame already carries it.
      */
+    function publishCross(root: HTMLElement, inline: number, block: number): void {
+        const px = axis.value === "vertical" ? inline : block;
+        root.style.setProperty("--dock-plate-cross-px", `${px}px`);
+    }
+
     function observeCross(root: HTMLElement): void {
         const plate = root.querySelector<HTMLElement>(":scope > .dock-plate");
-        if (!plate || typeof ResizeObserver === "undefined") return;
+        if (!plate) return;
+        publishCross(root, plate.offsetWidth, plate.offsetHeight);
+        if (typeof ResizeObserver === "undefined") return;
         crossObserver = new ResizeObserver(([entry]) => {
             const box = entry?.borderBoxSize?.[0];
-            if (!box) return;
-            const px = axis.value === "vertical" ? box.inlineSize : box.blockSize;
-            root.style.setProperty("--dock-plate-cross-px", `${px}px`);
+            if (box) publishCross(root, box.inlineSize, box.blockSize);
         });
         crossObserver.observe(plate);
     }
 
     /*
-     * THE RUN'S LARGEST SEAT, `--dock-seat-max-inline-px` / `--dock-seat-max-block-px`
-     * (10.1.5 critique 2 E1, E2; W-0.8 §11, OD-13). A hovered seat's ink past its layout
-     * box is its own extent times `(s − 1)/2` plus its scaled ring, so the run's reserve
-     * (run.css `--dock-run-reserve-*`) is sized from the largest seat on each axis: a
+     * THE RUN'S LARGEST SCALING SEAT, `--dock-seat-max-inline-px` /
+     * `--dock-seat-max-block-px`. A hovered seat's ink past its layout box is its own
+     * extent times `(s − 1)/2` plus its scaled ring, so the run's reserve (run.css
+     * `--dock-run-reserve-*`) is sized from the largest seat that scales on each axis: a
      * label-wide tab or the open seat, not the icon cell. The seats are the run's
-     * DECLARED seats (`DOCK_SEAT_ATTR`, which `<DockControl>` and `<DockTrigger>` set) at
-     * any depth, so a layer group's seats count and the group's own box does not. The
-     * ResizeObserver's border box is layout: the hover `scale` never reaches it, so the
-     * reserve does not move while a seat is engaged. Written on the root, where run.css
-     * derives the reserve (the layers read it as well as the run), and re-observed when
-     * the run's content changes. A run with no seats reserves the ring alone.
+     * DECLARED seats (`DOCK_SEAT_ATTR`) at any depth, so a layer group's seats count and
+     * the group's own box does not, less the `<DockTrigger>` family (`.dock-trigger`),
+     * whose hover scale is off: it paints only its ring, which the reserve holds for
+     * every seat. Each box is a layout box (`offset*` when the seat joins, then the
+     * ResizeObserver's border box): the hover `scale` never reaches it, so the reserve
+     * does not move while a seat is engaged. Written on the root, where run.css derives
+     * the reserve (the layers read it as well as the run). When the run's content
+     * changes, the observed set is diffed against the run's seats, so a ticking label
+     * re-observes nothing: one observer per attach, made when the first seat joins. A
+     * run with no scaling seat reserves the ring alone.
      */
+    const SCALING_SEATS = `[${DOCK_SEAT_ATTR}]:not(.dock-trigger)`;
+    let seatsPublished = "";
+
     function publishSeats(root: HTMLElement): void {
         let inline = 0;
         let block = 0;
@@ -273,6 +286,9 @@ export function useDockExpandedSize(
             inline = Math.max(inline, box.inline);
             block = Math.max(block, box.block);
         }
+        const key = `${inline} ${block}`;
+        if (key === seatsPublished) return;
+        seatsPublished = key;
         root.style.setProperty("--dock-seat-max-inline-px", `${inline}px`);
         root.style.setProperty("--dock-seat-max-block-px", `${block}px`);
     }
@@ -280,23 +296,33 @@ export function useDockExpandedSize(
     function observeSeats(): void {
         const root = rootEl.value;
         const run = expandedEl.value;
-        if (!root || !run || typeof ResizeObserver === "undefined") return;
-        seatObserver?.disconnect();
-        seatObserver = null;
-        seatBoxes.clear();
-        const seats = run.querySelectorAll(`[${DOCK_SEAT_ATTR}]`);
-        if (seats.length === 0) {
-            publishSeats(root);
-            return;
+        if (!root || !run) return;
+        const seats = new Set(run.querySelectorAll<HTMLElement>(SCALING_SEATS));
+        if (seats.size > 0 && !seatObserver && typeof ResizeObserver !== "undefined") {
+            seatObserver = new ResizeObserver((entries) => {
+                for (const entry of entries) {
+                    const box = entry.borderBoxSize?.[0];
+                    if (box && seatBoxes.has(entry.target)) {
+                        seatBoxes.set(entry.target, {
+                            inline: box.inlineSize,
+                            block: box.blockSize,
+                        });
+                    }
+                }
+                publishSeats(root);
+            });
         }
-        seatObserver = new ResizeObserver((entries) => {
-            for (const entry of entries) {
-                const box = entry.borderBoxSize?.[0];
-                if (box) seatBoxes.set(entry.target, { inline: box.inlineSize, block: box.blockSize });
-            }
-            publishSeats(root);
-        });
-        for (const seat of seats) seatObserver.observe(seat);
+        for (const seat of seatBoxes.keys()) {
+            if (seats.has(seat as HTMLElement)) continue;
+            seatObserver?.unobserve(seat);
+            seatBoxes.delete(seat);
+        }
+        for (const seat of seats) {
+            if (seatBoxes.has(seat)) continue;
+            seatBoxes.set(seat, { inline: seat.offsetWidth, block: seat.offsetHeight });
+            seatObserver?.observe(seat);
+        }
+        publishSeats(root);
     }
 
     function attach(): void {
@@ -308,12 +334,15 @@ export function useDockExpandedSize(
         seatObserver = null;
         mutations?.disconnect();
         mutations = null;
-        if (!rootEl.value) return;
+        seatBoxes.clear();
+        seatsPublished = "";
+        const root = rootEl.value;
+        if (!root) return;
         if (typeof ResizeObserver !== "undefined") {
             observer = new ResizeObserver(() => capture());
             observe();
         }
-        observeCross(rootEl.value);
+        observeCross(root);
         observeSeats();
         if (typeof MutationObserver !== "undefined") {
             // A pane's content changed: the patch is complete when this microtask runs,

@@ -46,10 +46,9 @@
        region renders only when the consumer authors a `#persistent` slot
        (GlassDock.vue guards it with `v-if="$slots.persistent"`), so a dock with no
        persistent controls is byte-identical to before (no empty flex item). */
-    /* [10.1.5 critique 2 E3] ~~`.dock-persistent + .dock-layers { margin-inline-start:
-       var(--dock-layer-gap) }`~~ and its vertical twin moved to `run.css` (THE ROOM FOR
-       THE RESERVE): the gap now lies past the run's reserve, and one rule set owns
-       the layers' scroll-axis margins. */
+    /* The gap between a leading persistent region and the layers is `run.css`'s (THE
+       ROOM FOR THE RESERVE): it lies past the run's reserve, and one rule set owns the
+       layers' scroll-axis margins. */
 
     /* The VERTICAL dock's layer panes lay their content
        out as a COLUMN. The dock body is the SAME orientation-agnostic
