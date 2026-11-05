@@ -89,10 +89,6 @@ import ShowcaseFrame from "../../chassis/showcase/ShowcaseFrame.vue";
                         Transition: <code class="fira-code">--duration-fast</code> +
                         <code class="fira-code">--ease-standard</code>.
                     </li>
-                    <li>
-                        Sibling token <code class="fira-code">--scale-hover-dock</code> (default 1.1) lives in the
-                        dock geometry block — keep the hover ladder visually homogenous across substrates.
-                    </li>
                 </ul>
             </ShowcaseFrame>
         </StorySection>

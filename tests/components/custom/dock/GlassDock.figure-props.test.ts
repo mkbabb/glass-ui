@@ -111,17 +111,16 @@ describe("GlassDock anchor", () => {
         expect(w.attributes("data-anchor")).toBeUndefined();
     });
 
-    it("end: the root carries the anchor, the sheet pins that edge, and the origin stays measured", () => {
+    // The pin itself is layout, which jsdom cannot do: the engine witness is
+    // `tests-visual/u-b7.spec.ts` ("anchor · …"), which lays the dock in a flex and a
+    // grid row with free space in Chromium and WebKit and measures the edge gap.
+    it("end: the root carries the anchor, and the origin stays measured", () => {
         const w = mountDock({ anchor: "end" });
         expect(w.attributes("data-anchor")).toBe("end");
         const css = readFileSync(
             join(process.cwd(), "src/components/dock/styles/layers.css"),
             "utf8",
         ).replace(/\/\*[\s\S]*?\*\//g, "");
-        expect(css).toMatch(
-            /\.glass-dock\[data-anchor="end"\]:not\(\.vertical\)\s*\{\s*margin-inline-start:\s*auto;/,
-        );
-        expect(css).toMatch(/\.glass-dock\[data-anchor="end"\]\.vertical\s*\{\s*margin-block-start:\s*auto;/);
         // The morph's origin is the measured fixed point (`--dock-morph-origin`), never a
         // declared edge: no anchor rule sets `transform-origin`.
         expect(css).not.toMatch(/\[data-anchor="[a-z]+"\][^{]*\{[^}]*transform-origin/);

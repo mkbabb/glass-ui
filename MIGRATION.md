@@ -7,54 +7,52 @@ rename or import re-point per call site.
 
 ## 11.0.0
 
-The CHANGELOG's 11.0.0 entry lists every break with its migration step; the rows below
-give the detail.
+The CHANGELOG's 11.0.0 entry lists every breaking change with its migration step. The
+sections below give the detail.
 
-### The figure dock's hover and corner (`u/b8r-glass`, U/B8r I-2 and I-3)
+### The dock's hover and its closed corner
 
-- **No dock control scales on hover (I-2).** `.dock-icon-button` and `.dock-tab-button`
-  answered a hover with `scale: 1.1`, so atlas's figure-dock Table view toggle grew under
-  the pointer in Chromium, Firefox and WebKit (atlas register MO-09: no hover scale; the
-  owner's order of 2026-10-19). A hover now changes the fill and the gleam only; the press
-  keeps its spring. The token `--scale-hover-dock` is deleted with its last two readers.
-  Breaking for a consumer that set or read it: delete the declaration. No alias.
-- **A closed dock with a persistent control keeps the bar corner (I-3).** A closed
-  horizontal dock was always `--radius-circle` (50%). With a `#persistent` control beside
-  the summary the box is two cells wide (atlas's 100 x 52 figure dock), so 50% drew an
-  oval, a full-radius box over 40 px (atlas register F-20). That dock now takes
-  `--radius-dock` (16 px), the corner it wears open. A dock of one cell stays a circle.
-  Witnesses: `tests/components/custom/dock/dock-hover-corner.test.ts` (4 tests, 3 red on
-  c3b73337a), `tests/styles/engage-ladder.test.ts` (the hover budget now names no
-  exceedance), and atlas `src/charts/frame/PlateDock.browser.spec.ts` in three engines.
+- **No dock control grows on hover any more.** `.dock-icon-button` and `.dock-tab-button`
+  used to answer a hover with `scale: 1.1`, so a small control such as a figure dock's
+  view toggle swelled under the pointer. A hover now changes the fill and the highlight
+  only, and a press keeps its spring. We deleted the `--scale-hover-dock` token along
+  with its last readers, so a stylesheet that sets or reads it should delete that
+  declaration. Nothing replaces it.
+- **A closed dock with a persistent control keeps a rounded-rectangle corner.** A closed
+  horizontal dock always took `--radius-circle` (50%). When a `#persistent` control sits
+  beside the summary, the box is two cells wide, so 50% drew an oval. That dock now takes
+  `--radius-dock` (16 px), the same corner it wears when open. A dock of one cell is
+  still a circle.
 
-### Load time and frame rate (`u/b8-perf-glass`, U/B8 PF)
+### Backdrops, the still aurora and the dock trigger
 
-- **`DockBackdropMode` is removed; the axis is `BackdropMode` in `./axes`.** The same
-  `"live" | "static"` union now also types `Surface` and `Card`'s new `backdropMode` prop.
-  Breaking for a consumer that imported the type by name: import `BackdropMode` from
-  `@mkbabb/glass-ui/axes`. No alias.
-- **`Surface` and `Card` take `backdropMode`.** `"static"` keeps the plate's rung, fill,
-  edge and rim and withholds the backdrop-filter (`[data-backdrop-mode="static"]`). Use it
-  for in-flow plates over a still field. The default, `"live"`, is unchanged.
-- **`STILL_FIELD` (`./aurora`, A7).** A preset partial that zeroes the four drift axes
-  and the clocked film grain (`paperGrain`); the spatial canvas tooth stays. Spread it last over a field config; the loop parks after the first
-  frame. Additive.
-- **`DockTrigger` moves from `./dock` to `./dock-trigger` (G-M1-3b).** Import it as
-  `import { DockTrigger } from "@mkbabb/glass-ui/dock-trigger"`. `dist/dock.js` no longer
-  imports reka's `SelectTrigger`, `SelectIcon` or `PopoverTrigger`, or the
-  `DropdownMenuTrigger` chunk, so a consumer that renders `GlassDock` at first paint and
-  triggers only in lazy menus keeps them out of its entry. Breaking; no alias.
+- **`DockBackdropMode` is removed, and the type is now `BackdropMode` in `./axes`.** The
+  same `"live" | "static"` union also types the new `backdropMode` prop on `Surface` and
+  `Card`. If you imported the type by name, import `BackdropMode` from
+  `@mkbabb/glass-ui/axes` instead. There is no alias.
+- **`Surface` and `Card` take `backdropMode`.** With `"static"`, the plate keeps its
+  fill, edge and rim but skips the backdrop filter, and it carries
+  `data-backdrop-mode="static"`. Use it for plates that sit in the page flow over a
+  field that does not move. The default, `"live"`, behaves as before.
+- **`./aurora` exports `STILL_FIELD`.** It is a partial config that zeroes the four drift
+  axes and the animated film grain (`paperGrain`), while the canvas texture stays. Spread
+  it last over a field config, and the render loop parks after the first frame. This is
+  additive.
+- **`DockTrigger` moves from `./dock` to `./dock-trigger`.** Import it with
+  `import { DockTrigger } from "@mkbabb/glass-ui/dock-trigger"`. Since `dist/dock.js` no
+  longer imports reka's `SelectTrigger`, `SelectIcon` or `PopoverTrigger`, or the
+  `DropdownMenuTrigger` chunk, a page that shows a `GlassDock` at first paint and opens
+  menus only later keeps that code out of its entry bundle. There is no alias.
 
-### Root items (`u/b7-glass`, U/B7c C3)
+### Menus and modals
 
-- **`<DropdownMenu trigger="context">` becomes `<ContextMenu>`.** The region-anchored menu
-  is its own root, so a page that renders only `DropdownMenu` no longer bundles reka's
-  ContextMenu family. The parts (`DropdownMenuTrigger`, `DropdownMenuContent`,
-  `DropdownMenuItem` and the rest) are unchanged and serve both roots. `DropdownMenu`
-  loses its `trigger` prop; `DropdownMenuProps` is now the click root's props alone, and
-  `ContextMenuProps` has `dir` and `modal` only. The public `MenuTrigger` type is removed.
-  Known call sites: speedtest `AdminSessionsTable.vue` and `ResultsTable.vue`, bbnf-buddy
-  `ControlPointOverlay.vue`. Atlas and sci have none.
+- **`<DropdownMenu trigger="context">` becomes `<ContextMenu>`.** The right-click menu is
+  its own root now, so a page that renders only `DropdownMenu` no longer bundles reka's
+  context-menu code. The parts (`DropdownMenuTrigger`, `DropdownMenuContent`,
+  `DropdownMenuItem` and the rest) are unchanged and work under both roots.
+  `DropdownMenu` loses its `trigger` prop, `DropdownMenuProps` now describes the click
+  menu alone, and `ContextMenuProps` has only `dir` and `modal`. We removed the public
+  `MenuTrigger` type, so code that imported it should drop that import.
 
   ```diff
   - <DropdownMenu trigger="context">
@@ -64,150 +62,158 @@ give the detail.
   - </DropdownMenu>
   + </ContextMenu>
   ```
-- **A modal `Dialog`, `SheetContent` or `CommandDialog` no longer locks `body`.**
-  While its scrim is present, the root element (`html`) carries `overflow: hidden`, and
-  `body` keeps its overflow and padding. reka's `--scrollbar-width` custom property on
-  the root and the `padding-right` compensation on `body` are gone; the root's
-  `scrollbar-gutter: stable` keeps the layout still. A consumer that read
-  `--scrollbar-width`, or tested `body.style.overflow` to detect an open modal, reads
+- **A modal `Dialog`, `SheetContent` or `CommandDialog` no longer locks `body`.** While
+  its scrim is showing, the root element (`html`) carries `overflow: hidden`, and `body`
+  keeps its own overflow and padding. reka's `--scrollbar-width` property on the root and
+  its `padding-right` compensation on `body` are gone, because the root's
+  `scrollbar-gutter: stable` already keeps the layout still. If your code read
+  `--scrollbar-width`, or checked `body.style.overflow` to detect an open modal, read
   `document.documentElement.style.overflow` instead. reka's `ConfigProvider`
-  `scrollBody` option no longer affects glass modals. The modal content's own
-  `pointer-events: none` guard on `body` (reka's dismissable layer) is unchanged, and on
-  close `body` gets back the consumer's own inline `pointer-events`.
-- **A dock's live backdrop sampling follows events.** The observer samples when the field
-  canvas announces a frame, which glass's canvas lifecycle (Aurora, Blob, every
-  `useWebGLCanvas`, `useWebGPUCanvas` and `useCanvas2D` field) does on each draw. A
-  `backgroundCanvas` drawn outside that lifecycle is sampled on mount, resize, scroll,
-  theme change and the end of a transition on it, not on its own frames.
+  `scrollBody` option no longer affects glass modals. The `pointer-events: none` guard
+  that reka puts on `body` while a modal is open is unchanged, and when the modal closes,
+  `body` gets back whatever inline `pointer-events` you had set.
+- **A dock samples its live backdrop when the field draws.** The dock reads the
+  backdrop each time the field canvas announces a frame, which every glass canvas
+  (Aurora, Blob, and any field built on `useWebGLCanvas`, `useWebGPUCanvas` or
+  `useCanvas2D`) does on each draw. A `backgroundCanvas` you draw yourself, outside
+  those helpers, is sampled on mount, resize, scroll, theme change and at the end of a
+  transition on it, but not on each of its own frames.
 
-### Shape, glide and the dropdown system (`u/b7-glass-shape`)
+### Shape, glide and the dropdown system
 
-Proposed by the atlas formation on local branch `u/b7-glass-shape` off `release/10.1.1`; glass takes, re-authors or declines each row. Clean breaks, no aliases. The browser witnesses are `tests-visual/b7-shape.config.ts` (harness `tests-visual/b7-shape/`), run in Chromium and Firefox; each fails on the `v10.1.1` tag (bbf176f02) unless the row says otherwise.
+Each change below is a clean break with no alias.
 
-- **SegmentedTabs glides; the eyeglass, the press squish and the capsule hover are removed
-  (B7-G1).** The indicator moves by `translate`/`width`/`height` on `--spring-dock` and keeps
-  its size; neither material deforms. Removed with no replacement: the documented arming hook
-  `--eyeglass-span-max`, the `data-eyeglass-wake` and `data-eyeglass-clamped` attributes, the
-  `--stretch` channel on the tabs indicator, the label `transition-delay`, the press
-  animation and `.glass-capsule-hover` on inactive tabs. A consumer that declared
-  `--eyeglass-span-max` deletes the declaration (atlas and sci have none). The drag
-  (`motion="full"`) still follows the pointer and snaps; it no longer squishes.
-- **New token `--hover-ink-mix: 45%`.** The colour-only hover weight: an inactive label moves
-  from `--muted-foreground` toward `--foreground` by this weight. Additive.
+- **SegmentedTabs glides, and the eyeglass, the press squish and the capsule hover are
+  gone.** The indicator moves by `translate`, `width` and `height` on `--spring-dock` and
+  keeps its size, so neither material deforms. These are removed with no replacement:
+  the `--eyeglass-span-max` token, the `data-eyeglass-wake` and `data-eyeglass-clamped`
+  attributes, the `--stretch` channel on the tabs indicator, the label
+  `transition-delay`, the press animation, and `.glass-capsule-hover` on inactive tabs.
+  If you declared `--eyeglass-span-max`, delete the declaration. A drag (`motion="full"`)
+  still follows the pointer and snaps, but it no longer squishes.
+- **There is a new token, `--hover-ink-mix: 45%`.** It sets how far an inactive label's
+  colour moves from `--muted-foreground` toward `--foreground` on hover. This is
+  additive.
+- **The selection engine no longer deforms.** With SegmentedTabs gliding, the dock's
+  layer switcher was the last indicator that stretched, and it now glides the same way.
+  We removed these from `@mkbabb/glass-ui/motion-core` with no replacement: the `deform`
+  parameter and the `SelectionDeform` type, `squishOnTravel` (from both
+  `useSelectionIndicator` and `useSelectionGroup`), the `activeValues` parameter of
+  `useSelectionIndicator`, the `onSelect` parameter of `useSelectionGroup`, and the
+  constants `DEFAULT_INDICATOR_MAX_STRETCH` and `INDICATOR_RELEASE_AT_ARRIVAL`. The
+  `--tab-indicator-max-stretch` token is deleted too. If you pass any of these, delete
+  the argument.
+- **`.glass-capsule-hover` no longer moves, and `ToggleGroupItem` no longer squishes.** A
+  hover no longer scales a capsule (it used to grow by 1.015 on
+  `--ease-cartoon-punch`), and the capsule's `:active` press snap is gone, while the
+  catch-light stays. `ToggleGroupItem` drops `.tap-squish` and its `--scale-press`
+  adjustment. This changes paint and motion only, not the API. `.tap-squish` and
+  `useLiquidPress` on Button, Switch, Checkbox, Radio and the dock controls are
+  unchanged.
+- **`--radius-pill` is now `1rem`, and there is a new `--radius-circle: 50%`.** A box up
+  to 32 px tall still shows a full pill, since the browser clamps a radius to half the
+  shorter side, but a taller box shows 16 px corners. Glass's own circles now use
+  `--radius-circle`: the avatar, status dot, dot ring, pager dot, switch thumb, radio dot,
+  dark-mode toggle, dock icon button, dialog close button, icon chip and chip remove
+  button, menu radio dot, expandable trigger and the collapsed dock at rest.
+  `--mark-stadium` is set for `.badge-atom` only. The dock's cut cap rests on
+  `--radius-dock` and cuts to `--radius-xs`. This is a visual break. A box of yours taller
+  than 32 px that read `--radius-pill`, `--radius-control`, `--radius-tab`,
+  `--radius-badge` or `--radius-dock` now shows corners, and a circle of yours that used
+  the pill radius on a box taller than 32 px should switch to `--radius-circle`.
+- **`GlassDock` gains `expandOn`, `anchor` and `collapsedLabel`.** These are additive, and
+  each one defaults to the old behaviour (`"hover"`, `"center"` and `"Expand dock"`).
+  The new types `DockExpandOn` and `DockAnchor` are exported. With `anchor="start"` or
+  `anchor="end"`, the root carries `data-anchor`, and the dock pins itself to that edge
+  of a flex or grid container: the anchored side's margin is zero and the free space
+  goes to the far side. On a vertical dock the pin is on the block axis, and with
+  `dir="rtl"` the inline edges swap. The dock's morph grows from the edge it is laid at,
+  so the dock, its `#persistent` group and its panes all hold that edge while it opens
+  and closes.
+- **There is one dropdown system.**
+  - `DropdownMenu` now defaults to `modal: false`. Pass `modal` for a menu that must
+    make the rest of the page inert, and a modal menu still takes reka's body scroll
+    lock.
+  - `SelectContent` passes `bodyLock: false`, and its 4 px gap to the trigger is now
+    `sideOffset: 4`. The old default was `0` plus a `translate-*-1` nudge, which is gone.
+  - `ExpandableContainer` locks scrolling on `<html>` instead of `<body>`.
+  - The root element carries `scrollbar-gutter: stable` (through `:where(html)`, so it
+    has no specificity).
+  - `DropdownMenuContent`, `PopoverContent` and `SelectContent` pass
+    `collisionPadding: 16`.
+  - The menu, panel and listbox plates take
+    `max-inline-size: min(22rem, 100vw - 2rem)`. Their `max-block-size` is the available
+    height reka measures, with no `--overlay-max-block` clamp, and the element that
+    scrolls has `overflow-y: auto` and `overscroll-behavior: contain`. The command list
+    and the hint still use `--overlay-max-block`. The select viewport loses
+    `max-h-[inherit]`.
+  - Below 30rem, `SelectContent` opens as a bottom sheet and carries
+    `data-form="sheet"`.
 
-- **The selection engine no longer deforms (B7-G2).** With SegmentedTabs gliding, the dock
-  layer switcher was the last `plate` consumer; it now glides the same way. Removed from
-  `@mkbabb/glass-ui/motion-core` with no replacement: the `deform` parameter and the
-  `SelectionDeform` type, `squishOnTravel` (from both `useSelectionIndicator` and
-  `useSelectionGroup`), the `activeValues` parameter of `useSelectionIndicator`, the
-  `onSelect` parameter of `useSelectionGroup` (no caller left), and the constants
-  `DEFAULT_INDICATOR_MAX_STRETCH` and `INDICATOR_RELEASE_AT_ARRIVAL`. The token
-  `--tab-indicator-max-stretch` is deleted. A caller passing any of these deletes the
-  argument; atlas and sci pass none.
+  If you relied on a dropdown making the page inert, pass `modal`. If you styled
+  `[data-slot="select-content"]` by its `data-side` translate, drop that rule.
+- **There is a new `--radius-bar` token and a `data-shape="bar"` attribute.**
+  `--radius-bar` is `var(--radius-panel)` (12 px). `Button`, `ToggleGroupItem` and
+  `SegmentedTabs` carry `data-shape="bar"` and take `--radius-bar` when the label wraps,
+  when the box is taller than its rung (`min-block-size`), or when it is wider than
+  20rem. A single-line control on its rung keeps the pill, and `ToggleGroupItem` now
+  caps its pill radius at half its rung, as `Button` does. If your own CSS keyed on the
+  round corner of a wide or wrapping button, select `[data-shape="bar"]` instead.
 
-- **`.glass-capsule-hover` has no spatial leg; ToggleGroupItem does not squish (B7-G3).**
-  Hover no longer scales a capsule composer (1.015 on `--ease-cartoon-punch`), and the
-  capsule's `:active` press snap is gone; the specular catch-light stays. ToggleGroupItem
-  drops `.tap-squish` and its `--scale-press` reconciliation. Paint and motion only; no API
-  change. `.tap-squish` and `useLiquidPress` on Button, Switch, Checkbox, Radio and the dock
-  controls are unchanged.
+### Styles, the aurora and the dock's hit box
 
-- **`--radius-pill` is `1rem`; new `--radius-circle: 50%` (B7-G4).** A box up to 32 px tall
-  still renders a full stadium (the engine clamps a radius to half the shorter side); a
-  taller box shows 16 px corners. Circles move to `--radius-circle`: avatar, status dot,
-  dot ring, pager dot, switch thumb, radio dot, dark-mode toggle, dock icon button, dialog
-  close, icon chip and chip remove, menu radio dot, expandable trigger and the collapsed
-  dock at rest. `--mark-stadium` is set for `.badge-atom` only. The dock's cut cap rests on
-  `--radius-dock` and cuts to `--radius-xs`. No literal `9999px` remains in `src`. Visual
-  break: a consumer box taller than 32 px that read `--radius-pill`, `--radius-control`,
-  `--radius-tab`, `--radius-badge` or `--radius-dock` now shows corners; a consumer circle
-  that used the pill on a box above 32 px moves to `--radius-circle`.
+- **Per-component sheets are no longer part of `@mkbabb/glass-ui/styles`.** The rules for
+  the Configurator, MusicStaff, Metric, Deck (stage, turn, capture and reveal), Carousel
+  and SortableList now load with their component's module. If you import the component
+  from its subpath or from the root, nothing changes for you. If you write these class
+  names on your own markup without importing the component, those rules no longer
+  reach it. The sheets are not package exports, so render the component or copy the
+  rules you need. The sheets still sit in `@layer components`, so they rank against the
+  entry exactly as before.
+- **The aurora's static ground no longer follows nucleus positions.** If you moved nuclei
+  to shift the static ground (on the `"css"` substrate, or before the canvas starts),
+  you now see the ground the preset mounted with, while the live canvas still moves. To
+  change the ground, change the palette or the field shape. `.aurora-placeholder` is now
+  two elements, so a selector that assumed one element should select
+  `[data-aurora-ground-active]`.
+- **A dock its owner opens takes taps while it morphs.** If you delayed your own scrim or
+  row handlers to wait out the dock's click-integrity window, you can arm them as soon
+  as the dock opens. The delay still applies when the dock opens from a hover.
+- **A wheel over an expanded dock run that has reached its end no longer scrolls the
+  page** in Firefox, which now matches Chromium.
+- **There are two new exports**, `auroraGroundKey(config)` and
+  `GpuSubstrateOptions.prepare`.
 
-- **`GlassDock` gains `expandOn`, `anchor` and `collapsedLabel` (B7-G5).** Additive; each
-  defaults to today's behaviour (`"hover"`, `"center"`, `"Expand dock"`). New exported types
-  `DockExpandOn` and `DockAnchor`. Under `anchor` other than `"center"` the root carries
-  `data-anchor` and an auto margin that pins it to that edge of a flex or grid container.
-  The morph's origin is measured from layout when it starts (10.1.3), so the dock, its
-  `#persistent` group and its panes hold whichever edge the dock is laid at.
-
-- **The one dropdown system (B7-G6).**
-  - `DropdownMenu` defaults to `modal: false`. Pass `modal` for a menu that must make the
-    page inert; a modal menu still takes reka's body scroll lock.
-  - `SelectContent` passes `bodyLock: false`, and its 4px gap to the trigger is now
-    `sideOffset: 4` (the default was `0` plus a `translate-*-1` nudge, which is gone).
-  - `ExpandableContainer` locks scroll on `<html>` instead of `<body>`.
-  - The root carries `scrollbar-gutter: stable` (`:where(html)`, zero specificity).
-  - `DropdownMenuContent`, `PopoverContent` and `SelectContent` pass `collisionPadding: 16`.
-  - The menu, panel and listbox plates: `max-inline-size: min(22rem, 100vw - 2rem)`;
-    `max-block-size` is reka's measured available height with no `--overlay-max-block`
-    clamp; `overflow-y: auto` and `overscroll-behavior: contain` on the scroll owner.
-    `--overlay-max-block` remains for the command list and the hint. The select viewport
-    loses `max-h-[inherit]`.
-  - Below 30rem, `SelectContent` opens as a bottom sheet (`data-form="sheet"`).
-  Consumer action: a consumer that relied on a dropdown making the page inert passes
-  `modal`. A consumer that styled `[data-slot="select-content"]` by `data-side` translate
-  drops that.
-
-- **`--radius-bar` and `data-shape="bar"` (B7-G4).** New token `--radius-bar:
-  var(--radius-panel)` (12px). `Button`, `ToggleGroupItem` and `SegmentedTabs` carry
-  `data-shape="bar"` when the label wraps, the box is taller than its rung
-  (`min-block-size`), or it is wider than 20rem, and then take `--radius-bar`. A
-  single-line control on its rung keeps the stadium; `ToggleGroupItem` now bounds its
-  stadium at half its rung, as the Button does. Consumer action: a consumer that keyed its
-  own CSS on a wide or wrapping button's round corner reads `[data-shape="bar"]` instead.
-
-### Styles, aurora and the dock hit box (`u/b7-glass-perf`)
-
-- **Per-component sheets are no longer in `@mkbabb/glass-ui/styles`.** The Configurator,
-  MusicStaff, Metric, Deck (stage, turn, capture, reveal), Carousel and SortableList rules
-  load with their component's module. A consumer that imports the component from its
-  subpath or the root needs no change. A consumer that writes these class names on its
-  own markup without importing the component loses their rules; the sheets are not
-  package exports, so render the component or copy the rules it needs. The sheets still
-  sit in `@layer components`, so their rank against the entry is unchanged.
-- **The aurora ground does not follow nuclei positions.** A consumer that moved nuclei to
-  shift the static ground (on the `"css"` substrate, or before the canvas arms) now sees
-  the ground the preset mounted with; the live canvas still moves. To change the ground,
-  change the palette or the field shape. `.aurora-placeholder` is now two elements; a
-  consumer selector that assumed one should select `[data-aurora-ground-active]`.
-- **A dock opened by its owner takes taps while it morphs.** A consumer that delayed its
-  own scrim or row handlers to wait out the click-integrity window can arm them on open.
-  The deferral still applies after a hover approach.
-- **A wheel over an expanded run that has reached its end no longer scrolls the page** in
-  Firefox, matching Chromium.
-- **New:** `auroraGroundKey(config)`; `GpuSubstrateOptions.prepare`.
-
-### Package closure, the cartoon shadow and the entry diet (`u/b7-glass`, U/B7b X3)
+### Package layout, the shadow and a lighter entry
 
 - **`dist/glass-ui.css` is removed, and `@mkbabb/glass-ui/styles` no longer carries any
-  component's SFC rules.** Each component chunk imports its own sheet
-  (`dist/<chunk>.css`), so a bundler consumer needs no change: the sheet loads with the
-  component. A Node-run test suite that imports a glass component now meets a `.css`
-  import in many more chunks (25, up from the 6 F5 sheets). Let the test runner's
-  bundler transform glass-ui, for example vitest `server.deps.inline: [/@mkbabb\/glass-ui/]`
-  (atlas's `vitest.config.ts` already does). A consumer that styled glass markup
-  through the SFC rules without rendering the component (copied markup, server HTML)
-  loses those rules; render the component or import its chunk.
-- **A component subpath, and the root barrel, are no longer importable in plain Node
-  without a CSS loader.** Their chunks import stylesheets. The F5 sheets already made
-  the root barrel, `/carousel`, `/configurator`, `/deck`, `/metric`, `/music-staff` and
-  `/sortable-list` so on this branch; the X3 split extends it to every subpath whose
-  components own styles (`/aurora`, `/status-dot`, `/toggle-group`, `/timeline`, …).
-  Composable and utility subpaths are unchanged. A Node script or test that imports
-  them registers a loader that maps `.css` to an empty module, or runs through a
-  bundler (vitest with glass-ui inlined). `verify:package` does the former in its
-  install arm.
-- **The SFC rules now load after the `/styles` entry, not inside it.** They stay in
-  `@layer components`, so a consumer's `utilities` layer still wins. Within
-  `components`, an SFC rule now follows `components.css` and `accessibility.css` in
-  document order; the B7b census found no element that carries an a11y-overridden class
-  together with an SFC rule that sets the same property.
-- **`./styles.css` (`dist/component-styles.css`) folds the three shared registers
-  only** (`track-well`, `track-flow`, `value-marks`). The SFC rules it used to pull in
-  through `glass-ui.css` ride their chunks.
-- **`dist/components/_shared/field/control.css` is no longer published.** It was never
-  loaded: its rules ship through the field components' `<style src>`, now in
-  `dist/control.css`.
+  component's own rules.** Each component chunk imports its own sheet
+  (`dist/<chunk>.css`), so a bundler consumer needs no change, since the sheet loads with
+  the component. A test suite that runs in Node and imports a glass component now meets
+  a `.css` import in many more chunks. Let the test runner's bundler transform
+  glass-ui, for example with vitest's `server.deps.inline: [/@mkbabb\/glass-ui/]`. If you
+  styled glass markup through those rules without rendering the component (copied
+  markup or server-rendered HTML), the rules no longer reach it, so render the component
+  or import its chunk.
+- **A component subpath, and the root entry, can no longer be imported in plain Node
+  without a CSS loader**, because their chunks import stylesheets. This now holds for
+  every subpath whose components carry styles (`/aurora`, `/status-dot`,
+  `/toggle-group`, `/timeline` and others), as it already did for the root entry,
+  `/carousel`, `/configurator`, `/deck`, `/metric`, `/music-staff` and
+  `/sortable-list`. Composable and utility subpaths are unchanged. A Node script or test
+  that imports them should register a loader that maps `.css` to an empty module, or run
+  through a bundler (vitest with glass-ui inlined).
+- **Component rules now load after the `/styles` entry, not inside it.** They stay in
+  `@layer components`, so your `utilities` layer still wins. Within `components`, a
+  component's rule now follows `components.css` and `accessibility.css` in document
+  order. We checked every element that carries one of the accessibility classes and
+  found none that also gets a component rule setting the same property.
+- **`./styles.css` (`dist/component-styles.css`) now holds only the three shared
+  registers** (`track-well`, `track-flow` and `value-marks`). The component rules it used
+  to pull in through `glass-ui.css` now load with their chunks.
+- **`dist/components/_shared/field/control.css` is no longer published.** Nothing ever
+  loaded it, because its rules ship through the field components' own styles, which are
+  now in `dist/control.css`.
 
 ## 10.1.2
 

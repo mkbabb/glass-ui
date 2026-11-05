@@ -90,7 +90,54 @@ const auroraScroll = defineComponent(() => {
         ]);
 });
 
+/** A press-only figure dock (`anchor`, static backdrop), its summary a 44 px handle. */
+const figureDock = (anchor: string, orientation: "horizontal" | "vertical" = "horizontal") =>
+    h(
+        GlassDock,
+        {
+            orientation,
+            collapse: "closed",
+            expandOn: "press",
+            anchor,
+            collapsedLabel: "Tools for the figure",
+            backdropMode: "static",
+            "data-probe": "dock",
+        },
+        {
+            default: () =>
+                ["Options", "Download", "Enlarge", "Close"].map((label) =>
+                    h(DockControl, { "aria-label": label, "data-seat": label }, () => label[0]),
+                ),
+            collapsed: () =>
+                h("span", { "data-probe": "handle", style: "display:grid;place-items:center;inline-size:44px;block-size:44px" }, "≡"),
+        },
+    );
+
 const scenes: Record<string, Component> = {
+    // anchor · a figure dock in a 720 px flex or grid row (or a 480 px column for a
+    // vertical dock) with free space; `dir=rtl` mirrors the row.
+    "figure-row": defineComponent(() => () => {
+        const vertical = params.get("orientation") === "vertical";
+        const box = params.get("box") === "grid" ? "display:grid" : vertical ? "display:flex;flex-direction:column" : "display:flex";
+        const size = vertical ? "block-size:480px;inline-size:120px" : "inline-size:720px";
+        return h("div", { style: "padding:24px", dir: params.get("dir") ?? "ltr" }, [
+            h("div", { "data-probe": "row", style: `${box};${size};outline:1px dashed gray` }, [
+                figureDock(params.get("anchor") ?? "end", vertical ? "vertical" : "horizontal"),
+            ]),
+        ]);
+    }),
+    // anchor · atlas's figure lane: a content-sized flex-end wrapper in a flex-end control.
+    "figure-atlas": defineComponent(() => () =>
+        h("div", { style: "padding:24px;display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:1rem;inline-size:min(900px,100% - 48px)" }, [
+            h("div", { style: "grid-column:1" }, "Fund balance by year"),
+            h(
+                "div",
+                { "data-probe": "control", style: "grid-column:3;display:flex;flex:none;align-items:flex-start;gap:.75rem;justify-content:flex-end;min-inline-size:196px" },
+                [h("div", { style: "display:flex;justify-content:flex-end;min-inline-size:44px" }, [figureDock("end")])],
+            ),
+        ]),
+    ),
+
     // D-5 · a vertical dock opened by its owner, then a seat tapped mid-morph.
     "dock-morph": defineComponent(() => {
         const dock = verticalDock();

@@ -177,3 +177,73 @@ test.describe("U/B7", () => {
         expect(await page.evaluate(() => (window as any).__groundWrites)).toBe(0);
     });
 });
+
+// ── anchor · the figure dock pins to the named edge of its container ────────────────
+const rectOf = (page: Page, sel: string) =>
+    page.evaluate((s) => {
+        const r = document.querySelector<HTMLElement>(s)!.getBoundingClientRect();
+        return { left: r.left, right: r.right, top: r.top, bottom: r.bottom, width: r.width, height: r.height };
+    }, sel);
+
+test.describe("anchor", () => {
+    const cells: { box: "flex" | "grid"; anchor: "start" | "end"; dir: "ltr" | "rtl"; orientation: "horizontal" | "vertical" }[] = [];
+    for (const box of ["flex", "grid"] as const)
+        for (const anchor of ["start", "end"] as const) {
+            cells.push({ box, anchor, dir: "ltr", orientation: "horizontal" });
+            cells.push({ box, anchor, dir: "ltr", orientation: "vertical" });
+        }
+    cells.push({ box: "flex", anchor: "end", dir: "rtl", orientation: "horizontal" });
+    for (const c of cells) {
+        test(`anchor · ${c.anchor} in a ${c.box} ${c.orientation === "vertical" ? "column" : "row"} (${c.dir}) with free space pins the dock to that edge`, async ({ page }) => {
+            await open(page, `scene=figure-row&box=${c.box}&anchor=${c.anchor}&dir=${c.dir}&orientation=${c.orientation}`);
+            await page.waitForTimeout(400);
+            const row = await rectOf(page, '[data-probe="row"]');
+            const dock = await rectOf(page, '[data-probe="dock"]');
+            let near: number;
+            let far: number;
+            if (c.orientation === "vertical") {
+                near = c.anchor === "end" ? row.bottom - dock.bottom : dock.top - row.top;
+                far = c.anchor === "end" ? dock.top - row.top : row.bottom - dock.bottom;
+            } else {
+                // The inline end is the right in ltr and the left in rtl.
+                const atRight = (c.anchor === "end") === (c.dir === "ltr");
+                near = atRight ? row.right - dock.right : dock.left - row.left;
+                far = atRight ? dock.left - row.left : row.right - dock.right;
+            }
+            const at = JSON.stringify({ row, dock });
+            expect(Math.abs(near), `the anchored edge sits on the container's edge: ${at}`).toBeLessThan(1.5);
+            expect(far, `the free space is on the other side: ${at}`).toBeGreaterThan(100);
+        });
+    }
+
+    test("anchor · atlas's figure lane holds its end edge through the press expand", async ({ page }, info) => {
+        await open(page, "scene=figure-atlas");
+        await page.waitForTimeout(400);
+        const control = await rectOf(page, '[data-probe="control"]');
+        const before = await rectOf(page, '[data-probe="dock"]');
+        const trace = page.evaluate(
+            () =>
+                new Promise<number[]>((resolve) => {
+                    const dock = document.querySelector<HTMLElement>('[data-probe="dock"]')!;
+                    const out: number[] = [];
+                    const t0 = performance.now();
+                    const tick = () => {
+                        out.push(dock.getBoundingClientRect().right);
+                        if (performance.now() - t0 < 900) requestAnimationFrame(tick);
+                        else resolve(out);
+                    };
+                    requestAnimationFrame(tick);
+                }),
+        );
+        const handle = page.locator('[data-probe="handle"]');
+        if (info.project.use.hasTouch) await handle.tap();
+        else await handle.click();
+        const rights = await trace;
+        await page.waitForTimeout(300);
+        const after = await rectOf(page, '[data-probe="dock"]');
+        const drift = Math.max(...rights.map((r) => Math.abs(r - before.right)));
+        expect(Math.abs(before.right - control.right), "the collapsed handle sits at the lane's end").toBeLessThan(1.5);
+        expect(after.width, "the dock expanded").toBeGreaterThan(before.width + 40);
+        expect(drift, "the end edge holds across the morph").toBeLessThan(2);
+    });
+});
