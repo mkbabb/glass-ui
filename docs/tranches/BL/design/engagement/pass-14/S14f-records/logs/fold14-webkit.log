@@ -1,0 +1,92 @@
+# fold14 webkit · 2026-11-05T07:58:56.652Z · load 14.33/16.21/15.82
+# browser 26.5
+## Y1 the place Q under an offsetParent membership change (X1's scene, the card bordered 3px) · load 14.33/16.21/15.82
+fractional · (a) instant scale 1.25: links h>g>BODY → h>c>g>BODY (1 changed) · raw Δ (-3,-2) · Q Δ (0,1) · painted Δ 10.938 · |ΔQ| ≤ links changed: yes
+fractional · (d) will-change: transform: links h>g>BODY → h>c>g>BODY (1 changed) · raw Δ (-3,-2) · Q Δ (0,1) · painted Δ 0.000 · |ΔQ| ≤ links changed: yes
+fractional · (e) contain: paint: links h>g>BODY → h>c>g>BODY (1 changed) · raw Δ (-3,-2) · Q Δ (0,1) · painted Δ 0.000 · |ΔQ| ≤ links changed: yes
+fractional · (f) filter: blur(1px): links h>g>BODY → h>c>g>BODY (1 changed) · raw Δ (-3,-2) · Q Δ (0,1) · painted Δ 0.000 · |ΔQ| ≤ links changed: yes
+fractional · (g) perspective: 400px: links h>g>BODY → h>c>g>BODY (1 changed) · raw Δ (-3,-2) · Q Δ (0,1) · painted Δ 0.000 · |ΔQ| ≤ links changed: yes
+fractional · (h) offset-path: path('M0,0 L10,0'): links h>g>BODY → h>c>g>BODY (1 changed) · raw Δ (-3,-2) · Q Δ (0,1) · painted Δ 0.000 · |ΔQ| ≤ links changed: yes
+fractional · (i) position: relative (control): links h>g>BODY → h>c>g>BODY (1 changed) · raw Δ (-3,-2) · Q Δ (0,1) · painted Δ 0.000 · |ΔQ| ≤ links changed: yes
+fractional · (b) rotate transition, 2 frames in: links h>g>BODY → h>c>g>BODY (1 changed) · raw Δ (-3,-2) · Q Δ (0,1) · painted Δ -5.513 · |ΔQ| ≤ links changed: yes
+fractional · (c) keyframes entrance mid-run → after its end: links h>c>g>BODY → h>g>BODY (1 changed) · raw Δ (3,2) · Q Δ (0,-1) · painted Δ 30.933 · |ΔQ| ≤ links changed: yes
+fractional · (j) scale onset + 40 px insert above the host, same frame: links h>g>BODY → h>c>g>BODY (1 changed) · raw Δ (-3,38) · Q Δ (0,41) · painted Δ 60.938 · |ΔQ| ≤ links changed: NO (expected ΔQ y 40 ± links changed)
+integer · (a) instant scale 1.25: links h>g>BODY → h>c>g>BODY (1 changed) · raw Δ (-3,-3) · Q Δ (0,0) · painted Δ 10.750 · |ΔQ| ≤ links changed: yes
+integer · (d) will-change: transform: links h>g>BODY → h>c>g>BODY (1 changed) · raw Δ (-3,-3) · Q Δ (0,0) · painted Δ 0.000 · |ΔQ| ≤ links changed: yes
+integer · (e) contain: paint: links h>g>BODY → h>c>g>BODY (1 changed) · raw Δ (-3,-3) · Q Δ (0,0) · painted Δ 0.000 · |ΔQ| ≤ links changed: yes
+integer · (f) filter: blur(1px): links h>g>BODY → h>c>g>BODY (1 changed) · raw Δ (-3,-3) · Q Δ (0,0) · painted Δ 0.000 · |ΔQ| ≤ links changed: yes
+integer · (g) perspective: 400px: links h>g>BODY → h>c>g>BODY (1 changed) · raw Δ (-3,-3) · Q Δ (0,0) · painted Δ 0.000 · |ΔQ| ≤ links changed: yes
+integer · (h) offset-path: path('M0,0 L10,0'): links h>g>BODY → h>c>g>BODY (1 changed) · raw Δ (-3,-3) · Q Δ (0,0) · painted Δ 0.000 · |ΔQ| ≤ links changed: yes
+integer · (i) position: relative (control): links h>g>BODY → h>c>g>BODY (1 changed) · raw Δ (-3,-3) · Q Δ (0,0) · painted Δ 0.000 · |ΔQ| ≤ links changed: yes
+integer · (b) rotate transition, 2 frames in: links h>g>BODY → h>c>g>BODY (1 changed) · raw Δ (-3,-3) · Q Δ (0,0) · painted Δ -5.685 · |ΔQ| ≤ links changed: yes
+integer · (c) keyframes entrance mid-run → after its end: links h>c>g>BODY → h>g>BODY (1 changed) · raw Δ (3,3) · Q Δ (0,0) · painted Δ 30.933 · |ΔQ| ≤ links changed: yes
+integer · (j) scale onset + 40 px insert above the host, same frame: links h>g>BODY → h>c>g>BODY (1 changed) · raw Δ (-3,37) · Q Δ (0,40) · painted Δ 60.750 · |ΔQ| ≤ links changed: NO (expected ΔQ y 40 ± links changed)
+## end Y1 · load 14.33/16.21/15.82
+## Y2 a changing CSS zoom: currentCSSZoom on the chain on the frame it lays out · load 14.33/16.21/15.82
+ancestor zoom 1 → 1.25: currentCSSZoom on the chain 1,1,1 → 1.25,1,1 · Q (10,80) → (10,72) · painted Δ 7.500 · zoom change seen on its frame: yes
+sibling above zoom 1 → 1.25: currentCSSZoom on the chain 1,1,1 → 1,1,1 (unchanged: yes) · Q (10,80) → (10,90) · painted Δ 10.000
+## end Y2 · load 14.33/16.21/15.82
+## Y3 sticky under a scroll: the sticky link's offset change against the scroll delta, per frame · load 14.33/16.21/15.82
+scroller top:
+    ΔS 40 · sticky Δ 0 · other links Δ 0 · painted Δ -40.000 · sticky Δ within the scroll's (same sign, ≤ |ΔS|): yes → carried
+    ΔS 60 · sticky Δ 50 · other links Δ 0 · painted Δ -10.000 · sticky Δ within the scroll's (same sign, ≤ |ΔS|): yes → carried
+    ΔS 100 · sticky Δ 100 · other links Δ 0 · painted Δ 0.000 · sticky Δ within the scroll's (same sign, ≤ |ΔS|): yes → carried
+page top:
+    ΔS 40 · sticky Δ 0 · other links Δ 0 · painted Δ -40.000 · sticky Δ within the scroll's (same sign, ≤ |ΔS|): yes → carried
+    ΔS 60 · sticky Δ 50 · other links Δ 0 · painted Δ -10.000 · sticky Δ within the scroll's (same sign, ≤ |ΔS|): yes → carried
+    ΔS 100 · sticky Δ 100 · other links Δ 0 · painted Δ 0.000 · sticky Δ within the scroll's (same sign, ≤ |ΔS|): yes → carried
+scroller bottom:
+    ΔS 150 · sticky Δ 150 · other links Δ 0 · painted Δ 0.000 · sticky Δ within the scroll's (same sign, ≤ |ΔS|): yes → carried
+    ΔS 70 · sticky Δ 70 · other links Δ 0 · painted Δ 0.000 · sticky Δ within the scroll's (same sign, ≤ |ΔS|): yes → carried
+    ΔS 40 · sticky Δ 30 · other links Δ 0 · painted Δ -10.000 · sticky Δ within the scroll's (same sign, ≤ |ΔS|): yes → carried
+    ΔS 40 · sticky Δ 0 · other links Δ 0 · painted Δ -40.000 · sticky Δ within the scroll's (same sign, ≤ |ΔS|): yes → carried
+    ΔS 50 · sticky Δ 0 · other links Δ 0 · painted Δ -50.000 · sticky Δ within the scroll's (same sign, ≤ |ΔS|): yes → carried
+scroller top+end:
+    ΔS 40 · sticky Δ 0 · other links Δ 0 · painted Δ -40.000 · sticky Δ within the scroll's (same sign, ≤ |ΔS|): yes → carried
+    ΔS 60 · sticky Δ 50 · other links Δ 0 · painted Δ -10.000 · sticky Δ within the scroll's (same sign, ≤ |ΔS|): yes → carried
+    ΔS 150 · sticky Δ 150 · other links Δ 0 · painted Δ 0.000 · sticky Δ within the scroll's (same sign, ≤ |ΔS|): yes → carried
+    ΔS 120 · sticky Δ 120 · other links Δ 0 · painted Δ 0.000 · sticky Δ within the scroll's (same sign, ≤ |ΔS|): yes → carried
+    ΔS 60 · sticky Δ 30 · other links Δ 0 · painted Δ -30.000 · sticky Δ within the scroll's (same sign, ≤ |ΔS|): yes → carried
+    ΔS 120 · sticky Δ 0 · other links Δ 0 · painted Δ -120.000 · sticky Δ within the scroll's (same sign, ≤ |ΔS|): yes → carried
+insert 40 px above an unstuck sticky box, no scroll: ΔS 0 · sticky Δ 40 · painted Δ 40.000 · excess over |ΔS| = layout: yes → a step
+## end Y3 · load 14.33/16.21/15.82
+## Y4 re-snap: the scroll range on the re-snap frame; anchoring in a sibling column with the host focused · load 14.33/16.21/15.82
+align center: scrollTop 600 → 650 · range 1200 → 1300 · per frame (top/range) 650/1300 650/1300 650/1300 650/1300 650/1300 650/1300 · Q y Δ 0 · painted Δ -50.000
+align end: scrollTop 600 → 700 · range 1200 → 1300 · per frame (top/range) 700/1300 700/1300 700/1300 700/1300 700/1300 700/1300 · Q y Δ 0 · painted Δ -100.000
+align start: scrollTop 600 → 600 · range 1200 → 1300 · per frame (top/range) 600/1300 600/1300 600/1300 600/1300 600/1300 600/1300 · Q y Δ 0 · painted Δ 0.000
+anchoring, insert 40 px in the sibling column, host div tabindex=0, focused (active true): scrollTop 500 → 540 · host painted Δ -40.000
+anchoring, insert 40 px in the sibling column, host input type=range, focused (active true): scrollTop 500 → 540 · host painted Δ -40.000
+anchoring, insert 40 px in the sibling column, host div, not focused (X3's control) (active false): scrollTop 500 → 540 · host painted Δ -40.000
+## end Y4 · load 13.66/16.04/15.77
+## Y5 the declared read on the host's ::before, against the same read on the host · load 13.66/16.04/15.77
+class arrival, host transition: all 300ms linear allow-discrete · +0 host stage-unset / ::before 0.21s / consumer 0.3s · +133 host stage-unset / ::before 0.21s / consumer 0.3s · +235 host 0.21s / ::before 0.21s / consumer 0.3s
+class arrival, host transition: all 300ms linear · +0 host 0.21s / ::before 0.21s / consumer 0.3s · +118 host 0.21s / ::before 0.21s / consumer 0.3s · +217 host 0.21s / ::before 0.21s / consumer 0.3s
+class arrival, host transition: none · +0 host 0.21s / ::before 0.21s / consumer 0s · +118 host 0.21s / ::before 0.21s / consumer 0s · +218 host 0.21s / ::before 0.21s / consumer 0s
+token 0.21s → 0.5s at runtime, host transition: all 300ms linear · +0 host 0.21s / ::before 0.5s / consumer 0.5s · +117 host 0.3231s / ::before 0.5s / consumer 0.5s · +217 host 0.419767s / ::before 0.5s / consumer 0.5s · +502 host 0.5s / ::before 0.5s / consumer 0.5s
+token 0.21s → 0.5s at runtime, host transition: all 300ms linear allow-discrete · +0 host 0.5s / ::before 0.5s / consumer 0.5s · +101 host 0.5s / ::before 0.5s / consumer 0.5s · +218 host 0.5s / ::before 0.5s / consumer 0.5s · +503 host 0.5s / ::before 0.5s / consumer 0.5s
+a generated ::before with its own transition: all … allow-discrete · +0 host 0.5s / ::before stage-unset / consumer 0s · +118 host 0.5s / ::before stage-unset / consumer 0s
+## end Y5 · load 13.66/16.04/15.77
+## Y6 the in-frame compensation −Δ under a carrier moving between the two reads (twin cards, one gets the insert) · load 13.66/16.04/15.77
+card translate animation 0 → (80, 30) px, 200 ms alternate (start times equal: true): insert 40: Δ 40 · A against its twin B: 40.152 px uncompensated, 0.427 px after −Δ · insert 120: Δ 120 · A against its twin B: 120.000 px uncompensated, 0.000 px after −Δ
+card rotate animation 0 → 20deg, 200 ms alternate (start times equal: true): insert 40: Δ 40 · A against its twin B: 40.000 px uncompensated, 0.000 px after −Δ · insert 120: Δ 120 · A against its twin B: 120.000 px uncompensated, 0.000 px after −Δ
+card perspective(400px) rotateX(40deg) + translate animation (start times equal: true): insert 40: Δ 40 · A against its twin B: 40.352 px uncompensated, 0.000 px after −Δ · insert 120: Δ 120 · A against its twin B: 141.892 px uncompensated, 0.000 px after −Δ
+## end Y6 · load 13.66/16.04/15.77
+## Y7 b.6 restated: the velocity carried across a still frame below the chain's resolution · load 13.66/16.04/15.77
+ramp 12 px / 1000 ms: 63 frames (dt mean 16.67 ms, max 19.00), 60 moving · as written 0 glides, 0.00 px · folded per frame 0 glides, 0.00 px · folded per time 0 glides, 0.00 px (the onset frame is one glide by design)
+ramp 40 px / 1000 ms: 63 frames (dt mean 16.67 ms, max 19.00), 60 moving · as written 20 glides, 13.41 px · folded per frame 1 glides, 0.64 px · folded per time 1 glides, 0.64 px (the onset frame is one glide by design)
+ramp 100 px / 1000 ms: 64 frames (dt mean 16.64 ms, max 19.00), 61 moving · as written 2 glides, 3.09 px · folded per frame 2 glides, 3.09 px · folded per time 13 glides, 10.63 px (the onset frame is one glide by design)
+ramp 200 px / 1000 ms: 63 frames (dt mean 16.67 ms, max 19.00), 60 moving · as written 12 glides, 10.97 px · folded per frame 12 glides, 10.97 px · folded per time 28 glides, 27.84 px (the onset frame is one glide by design)
+train, 16 px every frame (30 frames): as written 1 glides, 16.00 px · folded per frame 1 glides, 16.00 px · folded per time 1 glides, 16.00 px
+train, 16 px every second frame (30 frames): as written 15 glides, 240.00 px · folded per frame 15 glides, 240.00 px · folded per time 15 glides, 240.00 px
+## end Y7 · load 13.13/15.89/15.71
+## Y8 b.6 on the chain's integer step (the in-frame measure −Δ): ramps and step trains · load 13.13/15.89/15.71
+ramp 12 px / 1000 ms: 63 frames, integer steps {"0":51,"1":12} · as written 12 glides, 12 px · folded 0 glides, 0 px (the onset is one glide by design)
+ramp 40 px / 1000 ms: 63 frames, integer steps {"0":23,"1":40} · as written 20 glides, 20 px · folded 0 glides, 0 px (the onset is one glide by design)
+ramp 100 px / 1000 ms: 64 frames, integer steps {"0":4,"1":20,"2":40} · as written 40 glides, 40 px · folded 0 glides, 0 px (the onset is one glide by design)
+ramp 200 px / 1000 ms: 63 frames, integer steps {"0":3,"3":40,"4":20} · as written 40 glides, 42 px · folded 1 glides, 3 px (the onset is one glide by design)
+ramp 400 px / 1000 ms: 64 frames, integer steps {"0":4,"6":22,"7":36,"8":2} · as written 40 glides, 49 px · folded 5 glides, 14 px (the onset is one glide by design)
+train, 16 px every frame (30): as written 1 glides, 16 px · folded 1 glides, 16 px
+train, 16 px every second frame (30): as written 15 glides, 240 px · folded 15 glides, 240 px
+one 1 px insert, then still, then a 40 px insert: as written 2 glides, 41 px · folded 1 glides, 39 px
+## end Y8 · load 13.68/15.96/15.74
+# closed · load 13.68/15.96/15.74
