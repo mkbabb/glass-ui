@@ -325,3 +325,93 @@ are unchanged at that tip.
 `g-dock-lattice.test.ts` moved with the law (no step in the reserve; the run's clip
 keyframes join the cap's as the band's animated radii, on the cap's endpoints and
 timeline).
+
+## Fix round 5 (critique-5.md: K1, K2, K3 under the round-5 ruling)
+
+Seat: claude-opus-5-5. Every browser run was admitted by `guarded` (WebKit 2287 under
+`--exclusive webkit`; Chromium queued about 20 minutes once for a browser slot, then
+ran). Records `docs/release-10.1.5/fix-5/`, scripts `scripts/witness-fix-5.sh` (the
+branch, g6, then the RED arm: the `src` files this round changed checked out from the
+round-5 tip `5836adb5f`, restored to HEAD after) and `scripts/gates-fix-5.sh`.
+
+### Cures
+
+- **K1.** `useDockRun.ts`: the anchor is the seat's start from its layout box
+  (`offsetLeft`/`offsetTop`; the run is positioned, so it is the seats' offset parent)
+  less the run's computed `scroll-padding` start, clamped to `[0, scrollMax]`. That is
+  the snap position the platform itself uses, so a wide leading or trailing tab no
+  longer leaves the end seat's anchor short of `scrollMax`. `occluded()` reads the same
+  layout box against the scroll position and `clientWidth`/`clientHeight` less the
+  reserve, so a hovered seat that rests in view is not reach. The `i·P + (m−1)·P − P/2`
+  arithmetic and `readScalar` are deleted. `g-dock-lattice.test.ts` G-DOCK-REACH moved
+  with the law: the open seat's width is still authored from the pitch, and the anchor
+  and the occlusion read layout boxes, never `getBoundingClientRect`.
+- **K2.** `run.css`: the run's clip keyframes (`gl-dock-clip-*`) start square (`0`) and
+  reach the plate's rest corner at `1%` of the pitch, then the cut at `100%`. A run
+  flush at an edge clips that edge square, as a run with nothing to scroll does, and
+  from under one pixel of travel the clip follows the plate's corner as fix 4 made it
+  (h1 holds in both engines). The square is a keyframe rather than a range gap: WebKit
+  2287 holds a scroll-driven animation's end value past its range end whatever its
+  fill (measured: the trailing arm at `scrollTop = max` read progress 0 with
+  `fill: backwards` and a range ending `calc(100% − 1px)`).
+- **K3, r1 at every width.** `run.css`: the horizontal run's reserves are two boxes,
+  `::before` (which takes back the leading padding by its own margin, so at full size it
+  moves nothing) and the existing `::after`, both `inline-size: --dock-run-reserve-inline`,
+  `min-inline-size: 0` and `flex-shrink: --dock-run-yield`. `dockMorphMeasure.ts`
+  publishes `--dock-run-yield` (1 when the seats' layout span fits the run's
+  `clientWidth`, else 0) from the same capture its observers already drive. With the
+  seats fitting, the two boxes shrink equally to half the room left, so the run's
+  scroll extent is its port. With the seats overflowing, both hold the full reserve and
+  scroll it. Neither the span nor the port depends on the yield, and the boxes' declared
+  size is the full reserve either way, so a content-sized dock's width never reads the
+  yield. No viewport-capped plate widens and no spacer sits on top of a clamp. The
+  vertical run keeps its padding reserve and does not yield (no K3 reading names it).
+
+Tokens: no existing token value moved. New, internal to the run: `--dock-run-yield`
+(registered `0` on `.glass-dock`, written on the root). No export removed or renamed.
+
+**Bound under the yield, measured (`fix-5/probe/k3-*.json`).** At 320 coarse the room per
+side is 7.86 px in Chromium and 5.53 px in WebKit, whose labels lay out wider. A
+keyboard-focused end seat's ring (4 px) is whole in both engines: 3.86 and 1.53 px to
+spare. Focus plus hover on a label tab adds the tab's 5 px hover overhang, so that ink
+passes the room. It is cut 0.9 to 1.6 px in Chromium and 3.3 to 4.1 px in WebKit at 320
+coarse, and 1.5 to 1.7 px on the e4 capped docks. The ruling admits no other room: the
+run cannot scroll and the plate cannot widen.
+
+### Witnesses (release-10-1-5.spec.ts k1 to k3, e4 restated)
+
+| cell | Chromium 5836adb5f | Chromium fix 5 | WebKit 2287 5836adb5f | WebKit 2287 fix 5 |
+|---|---|---|---|---|
+| k1 fine 320 house run with persistent regions: End, Home, focus(), hover then focus land flush, ring whole | RED (End 503 / 516) | GREEN | RED (505 / 521) | GREEN |
+| k1 coarse 320 | RED (537 / 564) | GREEN | RED (539 / 569) | GREEN |
+| k2 vertical tab run, flush at start and end: square edge, ring whole; mid-run rounds | RED (`50% 61.34px` at the flush start) | GREEN | RED (`50% 63.09px`) | GREEN |
+| k3 fine 320: no reach, rest corners, focused end seats ringed | GREEN (316/316 already) | GREEN | RED (317/316) | GREEN |
+| k3 coarse 320 | RED (320/316) | GREEN | RED (325/316) | GREEN |
+| e4 390 coarse, capped 4 px under content: no reach, rest corners, focused end seat ringed | RED (225/221) | GREEN | RED (228/224) | GREEN |
+| e4 1440 | RED (226/222) | GREEN | RED (232/227) | GREEN |
+
+`expectHonestReach` (e3) now reads the r1 law: no reach when the seats' span fits the
+port, else the span's overrun plus both reserves.
+
+### Gates
+
+| gate | result |
+|---|---|
+| release-10-1-5, Chromium | 37/37 |
+| release-10-1-5, WebKit 2287 | 37/37 |
+| g6 release-10-1-4 | Chromium 23/23; WebKit 14 passed, 1 failed, 8 skipped, then on re-run 15 passed, 8 skipped (page.pdf). The one failure was critique-3 F-4, a DataTable flex host's projection settle (`swaps` 2 against ≤ 1), a file this round does not touch |
+| g6 release-10-1-3 | Chromium 60/60; WebKit 58 passed, 2 skipped (CDP swipe) |
+| `npm run typecheck` | exit 0 |
+| `npm run build`, `npm run demo:dist:build` | exit 0, exit 0 |
+| `npx vitest run --maxWorkers=2` | 247/247 files; 2397 passed, 10 expected fail, 1 skipped |
+| `npm run verify:package` | ratchet refused +840 B (2949473 > 2948633); rebound on the committed tree, then terminal CLEAN, version 10.1.5 |
+
+`dockMorphMeasure.test.ts` "a capture keeps the run's scroll position" failed 1 of 5
+isolated runs during the round (`fix-5/dock-vitest.log`): the flake fix round 3
+recorded in that file. The full g7 run passed it.
+
+### Not cured here
+
+- The RTL reach direction (critique-5's not-defects list) is unchanged: `scrollPos`
+  and `writeScroll` carry no RTL sign.
+- O-157 (inbound during this round) is not in this round's scope.
