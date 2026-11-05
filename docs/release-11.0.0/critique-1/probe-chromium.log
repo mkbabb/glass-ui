@@ -1,0 +1,197 @@
+
+Running 12 tests using 1 worker
+
+  ✘   1 [chromium-1440-fine] › docs/release-11.0.0/critique-1/probe.spec.ts:41:9 › anchor=end in a flex row with free space pins the dock to that edge (882ms)
+  ✘   2 [chromium-1440-fine] › docs/release-11.0.0/critique-1/probe.spec.ts:41:9 › anchor=start in a flex row with free space pins the dock to that edge (610ms)
+  ✘   3 [chromium-1440-fine] › docs/release-11.0.0/critique-1/probe.spec.ts:41:9 › anchor=end in a grid row with free space pins the dock to that edge (640ms)
+  ✘   4 [chromium-1440-fine] › docs/release-11.0.0/critique-1/probe.spec.ts:41:9 › anchor=start in a grid row with free space pins the dock to that edge (647ms)
+  ✓   5 [chromium-1440-fine] › docs/release-11.0.0/critique-1/probe.spec.ts:56:1 › atlas lane: the figure dock's end edge holds through the press expand (1.8s)
+[WebServer] 10:57:17 AM [vite] (client) [Unhandled error] Error: ResizeObserver loop completed with undelivered notifications.
+[WebServer]  > ../../../../../../../@vite/client:531:50
+[WebServer] 
+  ✓   6 [chromium-1440-fine] › docs/release-11.0.0/critique-1/probe.spec.ts:70:1 › page dock: every posture stays on screen and hit-testable (4.1s)
+  ✘   7 [chromium-390-coarse] › docs/release-11.0.0/critique-1/probe.spec.ts:41:9 › anchor=end in a flex row with free space pins the dock to that edge (642ms)
+  ✘   8 [chromium-390-coarse] › docs/release-11.0.0/critique-1/probe.spec.ts:41:9 › anchor=start in a flex row with free space pins the dock to that edge (610ms)
+  ✘   9 [chromium-390-coarse] › docs/release-11.0.0/critique-1/probe.spec.ts:41:9 › anchor=end in a grid row with free space pins the dock to that edge (651ms)
+  ✘  10 [chromium-390-coarse] › docs/release-11.0.0/critique-1/probe.spec.ts:41:9 › anchor=start in a grid row with free space pins the dock to that edge (595ms)
+  ✓  11 [chromium-390-coarse] › docs/release-11.0.0/critique-1/probe.spec.ts:56:1 › atlas lane: the figure dock's end edge holds through the press expand (1.8s)
+[WebServer] 10:57:27 AM [vite] (client) [Unhandled error] Error: ResizeObserver loop completed with undelivered notifications.
+[WebServer]  > ../../../../../../../@vite/client:531:50
+[WebServer] 
+[WebServer] 10:57:28 AM [vite] (client) [Unhandled error] Error: ResizeObserver loop completed with undelivered notifications.
+[WebServer]  > ../../../../../../../@vite/client:531:50
+[WebServer] 
+  ✓  12 [chromium-390-coarse] › docs/release-11.0.0/critique-1/probe.spec.ts:70:1 › page dock: every posture stays on screen and hit-testable (4.0s)
+
+
+  1) [chromium-1440-fine] › docs/release-11.0.0/critique-1/probe.spec.ts:41:9 › anchor=end in a flex row with free space pins the dock to that edge 
+
+    Error: the end edge gap (dock 356..412 in row 24..744; margins {"start":"332px","end":"332px"})
+
+    expect(received).toBeLessThan(expected)
+
+    Expected: < 1.5
+    Received:   332
+
+      49 |             test.info().annotations.push({ type: "geometry", description: JSON.stringify({ row, dock, margins }) });
+      50 |             const edge = anchor === "end" ? row.right - dock.right : dock.left - row.left;
+    > 51 |             expect(Math.abs(edge), `the ${anchor} edge gap (dock ${dock.left}..${dock.right} in row ${row.left}..${row.right}; margins ${JSON.stringify(margins)})`).toBeLessThan(1.5);
+         |                                                                                                                                                                      ^
+      52 |         });
+      53 |     }
+      54 | }
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/docs/release-11.0.0/critique-1/probe.spec.ts:51:166
+
+    Error Context: test-results/probe-anchor-end-in-a-flex-63f31--pins-the-dock-to-that-edge-chromium-1440-fine/error-context.md
+
+  2) [chromium-1440-fine] › docs/release-11.0.0/critique-1/probe.spec.ts:41:9 › anchor=start in a flex row with free space pins the dock to that edge 
+
+    Error: the start edge gap (dock 356..412 in row 24..744; margins {"start":"332px","end":"332px"})
+
+    expect(received).toBeLessThan(expected)
+
+    Expected: < 1.5
+    Received:   332
+
+      49 |             test.info().annotations.push({ type: "geometry", description: JSON.stringify({ row, dock, margins }) });
+      50 |             const edge = anchor === "end" ? row.right - dock.right : dock.left - row.left;
+    > 51 |             expect(Math.abs(edge), `the ${anchor} edge gap (dock ${dock.left}..${dock.right} in row ${row.left}..${row.right}; margins ${JSON.stringify(margins)})`).toBeLessThan(1.5);
+         |                                                                                                                                                                      ^
+      52 |         });
+      53 |     }
+      54 | }
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/docs/release-11.0.0/critique-1/probe.spec.ts:51:166
+
+    Error Context: test-results/probe-anchor-start-in-a-fl-b33e1--pins-the-dock-to-that-edge-chromium-1440-fine/error-context.md
+
+  3) [chromium-1440-fine] › docs/release-11.0.0/critique-1/probe.spec.ts:41:9 › anchor=end in a grid row with free space pins the dock to that edge 
+
+    Error: the end edge gap (dock 356..412 in row 24..744; margins {"start":"0px","end":"0px"})
+
+    expect(received).toBeLessThan(expected)
+
+    Expected: < 1.5
+    Received:   332
+
+      49 |             test.info().annotations.push({ type: "geometry", description: JSON.stringify({ row, dock, margins }) });
+      50 |             const edge = anchor === "end" ? row.right - dock.right : dock.left - row.left;
+    > 51 |             expect(Math.abs(edge), `the ${anchor} edge gap (dock ${dock.left}..${dock.right} in row ${row.left}..${row.right}; margins ${JSON.stringify(margins)})`).toBeLessThan(1.5);
+         |                                                                                                                                                                      ^
+      52 |         });
+      53 |     }
+      54 | }
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/docs/release-11.0.0/critique-1/probe.spec.ts:51:166
+
+    Error Context: test-results/probe-anchor-end-in-a-grid-54bba--pins-the-dock-to-that-edge-chromium-1440-fine/error-context.md
+
+  4) [chromium-1440-fine] › docs/release-11.0.0/critique-1/probe.spec.ts:41:9 › anchor=start in a grid row with free space pins the dock to that edge 
+
+    Error: the start edge gap (dock 356..412 in row 24..744; margins {"start":"0px","end":"0px"})
+
+    expect(received).toBeLessThan(expected)
+
+    Expected: < 1.5
+    Received:   332
+
+      49 |             test.info().annotations.push({ type: "geometry", description: JSON.stringify({ row, dock, margins }) });
+      50 |             const edge = anchor === "end" ? row.right - dock.right : dock.left - row.left;
+    > 51 |             expect(Math.abs(edge), `the ${anchor} edge gap (dock ${dock.left}..${dock.right} in row ${row.left}..${row.right}; margins ${JSON.stringify(margins)})`).toBeLessThan(1.5);
+         |                                                                                                                                                                      ^
+      52 |         });
+      53 |     }
+      54 | }
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/docs/release-11.0.0/critique-1/probe.spec.ts:51:166
+
+    Error Context: test-results/probe-anchor-start-in-a-gr-90e3f--pins-the-dock-to-that-edge-chromium-1440-fine/error-context.md
+
+  5) [chromium-390-coarse] › docs/release-11.0.0/critique-1/probe.spec.ts:41:9 › anchor=end in a flex row with free space pins the dock to that edge 
+
+    Error: the end edge gap (dock 354..414 in row 24..744; margins {"start":"330px","end":"330px"})
+
+    expect(received).toBeLessThan(expected)
+
+    Expected: < 1.5
+    Received:   330
+
+      49 |             test.info().annotations.push({ type: "geometry", description: JSON.stringify({ row, dock, margins }) });
+      50 |             const edge = anchor === "end" ? row.right - dock.right : dock.left - row.left;
+    > 51 |             expect(Math.abs(edge), `the ${anchor} edge gap (dock ${dock.left}..${dock.right} in row ${row.left}..${row.right}; margins ${JSON.stringify(margins)})`).toBeLessThan(1.5);
+         |                                                                                                                                                                      ^
+      52 |         });
+      53 |     }
+      54 | }
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/docs/release-11.0.0/critique-1/probe.spec.ts:51:166
+
+    Error Context: test-results/probe-anchor-end-in-a-flex-63f31--pins-the-dock-to-that-edge-chromium-390-coarse/error-context.md
+
+  6) [chromium-390-coarse] › docs/release-11.0.0/critique-1/probe.spec.ts:41:9 › anchor=start in a flex row with free space pins the dock to that edge 
+
+    Error: the start edge gap (dock 354..414 in row 24..744; margins {"start":"330px","end":"330px"})
+
+    expect(received).toBeLessThan(expected)
+
+    Expected: < 1.5
+    Received:   330
+
+      49 |             test.info().annotations.push({ type: "geometry", description: JSON.stringify({ row, dock, margins }) });
+      50 |             const edge = anchor === "end" ? row.right - dock.right : dock.left - row.left;
+    > 51 |             expect(Math.abs(edge), `the ${anchor} edge gap (dock ${dock.left}..${dock.right} in row ${row.left}..${row.right}; margins ${JSON.stringify(margins)})`).toBeLessThan(1.5);
+         |                                                                                                                                                                      ^
+      52 |         });
+      53 |     }
+      54 | }
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/docs/release-11.0.0/critique-1/probe.spec.ts:51:166
+
+    Error Context: test-results/probe-anchor-start-in-a-fl-b33e1--pins-the-dock-to-that-edge-chromium-390-coarse/error-context.md
+
+  7) [chromium-390-coarse] › docs/release-11.0.0/critique-1/probe.spec.ts:41:9 › anchor=end in a grid row with free space pins the dock to that edge 
+
+    Error: the end edge gap (dock 354..414 in row 24..744; margins {"start":"0px","end":"0px"})
+
+    expect(received).toBeLessThan(expected)
+
+    Expected: < 1.5
+    Received:   330
+
+      49 |             test.info().annotations.push({ type: "geometry", description: JSON.stringify({ row, dock, margins }) });
+      50 |             const edge = anchor === "end" ? row.right - dock.right : dock.left - row.left;
+    > 51 |             expect(Math.abs(edge), `the ${anchor} edge gap (dock ${dock.left}..${dock.right} in row ${row.left}..${row.right}; margins ${JSON.stringify(margins)})`).toBeLessThan(1.5);
+         |                                                                                                                                                                      ^
+      52 |         });
+      53 |     }
+      54 | }
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/docs/release-11.0.0/critique-1/probe.spec.ts:51:166
+
+    Error Context: test-results/probe-anchor-end-in-a-grid-54bba--pins-the-dock-to-that-edge-chromium-390-coarse/error-context.md
+
+  8) [chromium-390-coarse] › docs/release-11.0.0/critique-1/probe.spec.ts:41:9 › anchor=start in a grid row with free space pins the dock to that edge 
+
+    Error: the start edge gap (dock 354..414 in row 24..744; margins {"start":"0px","end":"0px"})
+
+    expect(received).toBeLessThan(expected)
+
+    Expected: < 1.5
+    Received:   330
+
+      49 |             test.info().annotations.push({ type: "geometry", description: JSON.stringify({ row, dock, margins }) });
+      50 |             const edge = anchor === "end" ? row.right - dock.right : dock.left - row.left;
+    > 51 |             expect(Math.abs(edge), `the ${anchor} edge gap (dock ${dock.left}..${dock.right} in row ${row.left}..${row.right}; margins ${JSON.stringify(margins)})`).toBeLessThan(1.5);
+         |                                                                                                                                                                      ^
+      52 |         });
+      53 |     }
+      54 | }
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/docs/release-11.0.0/critique-1/probe.spec.ts:51:166
+
+    Error Context: test-results/probe-anchor-start-in-a-gr-90e3f--pins-the-dock-to-that-edge-chromium-390-coarse/error-context.md
+
+  8 failed
+    [chromium-1440-fine] › docs/release-11.0.0/critique-1/probe.spec.ts:41:9 › anchor=end in a flex row with free space pins the dock to that edge 
+    [chromium-1440-fine] › docs/release-11.0.0/critique-1/probe.spec.ts:41:9 › anchor=start in a flex row with free space pins the dock to that edge 
+    [chromium-1440-fine] › docs/release-11.0.0/critique-1/probe.spec.ts:41:9 › anchor=end in a grid row with free space pins the dock to that edge 
+    [chromium-1440-fine] › docs/release-11.0.0/critique-1/probe.spec.ts:41:9 › anchor=start in a grid row with free space pins the dock to that edge 
+    [chromium-390-coarse] › docs/release-11.0.0/critique-1/probe.spec.ts:41:9 › anchor=end in a flex row with free space pins the dock to that edge 
+    [chromium-390-coarse] › docs/release-11.0.0/critique-1/probe.spec.ts:41:9 › anchor=start in a flex row with free space pins the dock to that edge 
+    [chromium-390-coarse] › docs/release-11.0.0/critique-1/probe.spec.ts:41:9 › anchor=end in a grid row with free space pins the dock to that edge 
+    [chromium-390-coarse] › docs/release-11.0.0/critique-1/probe.spec.ts:41:9 › anchor=start in a grid row with free space pins the dock to that edge 
+  4 passed (24.1s)
+EXIT 1
