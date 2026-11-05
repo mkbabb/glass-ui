@@ -200,8 +200,12 @@ provideDockContext({
 
    [2026-10-21 · 10.1.2 · O-101] `measure` goes to the morph orchestrator below, which
    calls it when it arms (post-flush, before `[data-morphing]`), so an expand reserves
-   the box of the pane it opens onto, not a span latched before the pane changed. */
-const { measure } = useDockExpandedSize({
+   the box of the pane it opens onto, not a span latched before the pane changed.
+
+   [2026-10-28 · 10.1.3 · O-110] The orchestrator also has it read the boxes painted
+   before the posture patch and pin the morph's origins to them when it arms, so an
+   edge-anchored dock grows from its anchored edge from the first frame. */
+const geometry = useDockExpandedSize({
     rootEl: dockEl,
     contentEl: layersEl,
     expandedEl: fullEl,
@@ -234,7 +238,7 @@ const {
     onMorphActiveChange: (active) => {
         isTransitioning.value = active;
     },
-    measure,
+    geometry,
 });
 
 const summaryIsDisclosure = computed(() => outerCurrentLayer.value === "summary");
@@ -428,8 +432,9 @@ defineExpose({
             L1 THE CONTROLS. The normal-flow control run OVER the plate.
             `display: contents` (dock/dock.css) so it GROUPS the controls the SFC places
             WITHOUT interposing a flex context — the controls stay direct flex children of
-            `.glass-dock` (the flex layout is unchanged), and NO ancestor clips them
-            (`overflow: visible` both axes; the box carries no clip/contain).
+            `.glass-dock` (the flex layout is unchanged). At rest no ancestor clips them
+            (`overflow: visible` both axes); while `[data-morphing]` is set the box clips
+            on the morph axis only (dock/styles/shell.css, the morph clip).
         -->
         <div class="dock-controls">
         <!--

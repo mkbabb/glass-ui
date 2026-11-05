@@ -114,7 +114,33 @@ export interface UseDockExpandedSizeReturn {
      * DOM is patched and before `[data-morphing]` reserves one.
      */
     measure: () => void;
+    /**
+     * Read the painted boxes the morph starts from: the root, each persistent region and
+     * both panes. The morph calls this before the posture's DOM is patched.
+     */
+    first: () => void;
+    /**
+     * Pin the morph's origins so its first frame paints the boxes `first` read (a
+     * collapse, which starts unscaled, holds its rest instead). The morph calls this
+     * once `[data-morphing]` and the start scalar are set.
+     */
+    anchor: () => void;
+    /** Clear the origins `anchor` wrote. The morph calls this when it settles. */
+    release: () => void;
 }
+
+type Span = { start: number; size: number };
+
+function span(el: Element, axis: Axis): Span {
+    const r = el.getBoundingClientRect();
+    return axis === "vertical" ? { start: r.top, size: r.height } : { start: r.left, size: r.width };
+}
+
+/** The boxes `first` reads, keyed by element: what the frame before the morph painted. */
+type FirstBoxes = Map<Element, Span>;
+
+const ORIGIN = "--dock-morph-origin";
+const PANE_SHIFT = "--dock-pane-shift";
 
 /**
  * Measure the dock's two endpoints, `--dock-expanded-px` and `--dock-collapsed-px`.
@@ -271,5 +297,171 @@ export function useDockExpandedSize(
         if (typeof window !== "undefined") window.removeEventListener("resize", onResize);
     });
 
-    return { measure: capture };
+    /*
+     * THE MORPH'S ORIGINS (value.js O-110). The morph reserves the expanded box from its
+     * first frame and paints the visible box with `scale` about the root's
+     * `transform-origin`; the persistent regions and the layers carry the inverse scale
+     * about their own. A fixed `center` origin is right only for a dock centred on its
+     * host: an edge-anchored dock (a box pinned to its host's right edge by `right` alone,
+     * whose width is the dock's) reserves the expanded box leftward from that edge, and
+     * its first frame painted the collapsed box centred in it, its controls centred with
+     * it. A seat under the pointer moved between pointerdown and pointerup, and the click
+     * went to their common ancestor (fourier /v at 390: "Edit contour" x 317 -> 215).
+     *
+     * Each origin is instead the fixed point of the map from the box the morph lays out
+     * (`anchor`) to a box it must paint, so every frame moves each edge linearly between
+     * the box the frame before the morph painted (`first`) and its rest. In an element's
+     * own coordinates, with `s` the root's scale at that box, the root's origin is
+     * `(painted - laid) / (1 - s)`: the anchored edge for an edge-anchored dock, the
+     * centre for a centred one, read from the layout rather than told.
+     *
+     * The box it must paint is the FIRST box whenever the first frame scales (an expand,
+     * or any reversal). A collapse starts unscaled (`s = 1`: the reserved box is the box
+     * it painted), where every origin is a fixed point, so its origins come from the END
+     * box instead: the root laid out at rest in the posture it collapses to, read in the
+     * same task with the reservation lifted and the scalar at its end. Either way the
+     * other end is the reserved layout itself, so both ends hold.
+     *
+     * A persistent region (rigid, the same box in both postures) takes the origin that
+     * holds its own box at that same end, so a region on the anchored side stays put and
+     * one on the open side rides the moving edge, inside the plate on every frame. The
+     * layers take the root's own fixed point, so the root's scale and theirs cancel and a
+     * pane lays out where the reserved layout puts it; each pane is then shifted to the
+     * box it paints: the leaving pane to the box it painted, at the first frame; the
+     * entering pane of a collapse to its rest, at the last frame, whether the collapse
+     * starts unscaled or reverses an expand mid-morph (an expand's entering pane already
+     * paints its rest there, at scale 1).
+     */
+    let firstBoxes: FirstBoxes | null = null;
+
+    function rigidRegions(root: HTMLElement): HTMLElement[] {
+        return [...root.querySelectorAll<HTMLElement>(":scope > .dock-controls > .dock-persistent")];
+    }
+
+    function panes(): HTMLElement[] {
+        return [expandedEl.value, collapsedEl.value].filter((el): el is HTMLElement => !!el);
+    }
+
+    function first(): void {
+        const root = rootEl.value;
+        if (!root) return;
+        const a = axis.value;
+        firstBoxes = new Map(
+            [root, ...rigidRegions(root), ...panes()].map((el) => [el, span(el, a)] as const),
+        );
+    }
+
+    function release(): void {
+        const root = rootEl.value;
+        if (!root) return;
+        for (const el of [root, ...rigidRegions(root), contentEl.value]) el?.style.removeProperty(ORIGIN);
+        for (const pane of panes()) pane.style.removeProperty(PANE_SHIFT);
+    }
+
+    function anchor(): void {
+        const root = rootEl.value;
+        const layers = contentEl.value;
+        const boxes = firstBoxes;
+        firstBoxes = null;
+        release();
+        if (!root || !layers || !boxes || !boxes.get(root)) return;
+
+        const a = axis.value;
+        const rigid = rigidRegions(root);
+        const painted = span(root, a);
+        const unscaled = [root, ...rigid, layers].map((el) => [el, "scale", "none"] as const);
+        const read = () =>
+            new Map([root, ...rigid, layers, ...panes()].map((el) => [el, span(el, a)] as const));
+        // The laid-out boxes: the root's and the regions' morph scale lifted, in one task.
+        const laid = withOverrides(unscaled, read);
+        const box = laid.get(root)!;
+        const local = getSize(root, a);
+        // Viewport px per root-local px (an ancestor's transform).
+        const k = box.size / local;
+        if (!(k > 0)) return;
+        const unit = (s: number) => Math.abs(1 - s) < 1e-4;
+
+        // The rest boxes, read for every collapse (its entering pane is shifted to its
+        // rest, from an unscaled start and from a reversal alike) and for any unscaled
+        // start, whose origins hold them. The DOM is the posture's: a collapse is the
+        // full pane no longer active.
+        let s = painted.size / box.size;
+        const collapsing = !expandedEl.value?.classList.contains("is-active");
+        const end =
+            collapsing || unit(s)
+                ? withOverrides(
+                      [
+                          ...unscaled,
+                          [root, "--dock-expanded-px", "initial"],
+                          [root, "--dock-morph-t", "1"],
+                      ],
+                      read,
+                  )
+                : null;
+        // The end the origins hold: the first boxes, or for an unscaled start the rest.
+        let target: Map<Element, Span> = boxes;
+        if (end && unit(s)) {
+            target = end;
+            s = end.get(root)!.size / box.size;
+        }
+        if (!Number.isFinite(s)) return;
+
+        const toLocal = (viewport: number) => (viewport - box.start) / k;
+        const fixedPoint = (to: number, from: number) => (unit(s) ? null : (to - from) / (1 - s));
+        const centre = (b: Span) => toLocal(b.start + b.size / 2);
+        // The root's origin, root-local; a no-op scale takes any (the centre).
+        const origin = fixedPoint(toLocal(target.get(root)!.start), 0) ?? local / 2;
+        const percent = (px: number, size: number) => `${(px / size) * 100}%`;
+        root.style.setProperty(ORIGIN, percent(origin, local));
+
+        for (const region of rigid) {
+            const to = target.get(region);
+            const now = laid.get(region)!;
+            const size = getSize(region, a);
+            if (!to || !(size > 0)) continue;
+            // The origin that holds the region's centre at its target box at scale `s`
+            // (the region is rigid, so its centre is its box; a glyph floor that sizes it
+            // differently per posture splits the difference evenly).
+            const held = fixedPoint(centre(to), centre(now));
+            region.style.setProperty(
+                ORIGIN,
+                percent((held === null ? origin : origin - held) - toLocal(now.start), size),
+            );
+        }
+
+        const layersSize = getSize(layers, a);
+        if (layersSize > 0) {
+            layers.style.setProperty(
+                ORIGIN,
+                percent(origin - toLocal(laid.get(layers)!.start), layersSize),
+            );
+        }
+
+        // Each pane is shifted so that it paints its box at the end of the morph where it
+        // is opaque. The leaving pane is opaque at the first frame, where it paints its
+        // laid box, since the origins were just derived from that layout. The entering pane
+        // of a collapse is opaque at the last frame, so its shift is read there: the pane
+        // painted at the end scalar, with the origins now written. Its laid box is not used,
+        // because the root's padding interpolates on the scalar and moves the layers
+        // under their origin, so a pane's laid box at the start is not where it paints at
+        // the end. The shift is written as a percentage of the pane's own box, as every
+        // origin is: a `px` length is not zoom-neutral. Under an ancestor CSS `zoom`,
+        // WebKit zooms a registered `<length>` custom property where it computes and
+        // again where `translate` uses it, so the pane moved `k` times its shift (critique-7
+        // D-1). A percentage resolves against the pane's laid box, which carries the zoom
+        // once, in every engine.
+        for (const pane of panes()) {
+            const leaving = pane.classList.contains("is-leaving");
+            const to = leaving ? boxes.get(pane) : end?.get(pane);
+            const size = getSize(pane, a);
+            if (!to || !(size > 0)) continue;
+            const now = leaving
+                ? laid.get(pane)
+                : withOverrides([[root, "--dock-morph-t", "1"]], () => span(pane, a));
+            if (!now) continue;
+            pane.style.setProperty(PANE_SHIFT, percent((to.start - now.start) / k, size));
+        }
+    }
+
+    return { measure: capture, first, anchor, release };
 }

@@ -211,6 +211,79 @@ describe("DataTable interaction semantics", () => {
         expect(wrapper.emitted("update:selectedRowId")).toBeUndefined();
     });
 
+    it("projects cards on the first observation when the laid-out box already reads narrow (O-119 g)", async () => {
+        // The platform delivers its first observation after `observe` returns, at the
+        // next rendering update, never inside the call.
+        class LaterNarrowResizeObserver extends NarrowResizeObserver {
+            observe(target: Element) {
+                queueMicrotask(() => super.observe(target));
+            }
+        }
+        vi.stubGlobal("ResizeObserver", LaterNarrowResizeObserver);
+        // The engine has laid the root out at the width its first observation carries.
+        vi.spyOn(HTMLElement.prototype, "getBoundingClientRect").mockReturnValue({
+            width: 320,
+            height: 240,
+        } as DOMRect);
+        const wrapper = mountTable(
+            [
+                { _id: "1", name: "Ada" },
+                { _id: "2", name: "Grace" },
+            ],
+            { responsive: true },
+        );
+
+        await vi.waitFor(() => expect(wrapper.find(".data-table-cards").exists()).toBe(true));
+        expect(wrapper.find("table").exists()).toBe(false);
+    });
+
+    it("settles in a content-sized host whose table is narrow and whose cards are wide (critique-3 F-4)", async () => {
+        // The host sizes the root to its content: 412 px as a table, 763 px as cards.
+        // Each width asks for the other projection; the root's own observer reports
+        // the width the projection just produced.
+        const width = (el: Element) => (el.querySelector(".data-table-cards") ? 763 : 412);
+        let observer: { cb: ResizeObserverCallback; target: Element } | null = null;
+        class HostResizeObserver {
+            constructor(private readonly cb: ResizeObserverCallback) {}
+            observe(target: Element) {
+                observer = { cb: this.cb, target };
+            }
+            unobserve() {}
+            disconnect() {}
+        }
+        const report = () => {
+            const { cb, target } = observer!;
+            cb(
+                [{ target, contentRect: { width: width(target), height: 100 } } as ResizeObserverEntry],
+                {} as ResizeObserver,
+            );
+        };
+        vi.stubGlobal("ResizeObserver", HostResizeObserver);
+        vi.spyOn(HTMLElement.prototype, "clientWidth", "get").mockImplementation(function (
+            this: HTMLElement,
+        ) {
+            return this.classList.contains("data-table") ? width(this) : 0;
+        });
+        vi.spyOn(window, "getComputedStyle").mockReturnValue({
+            paddingLeft: "0px",
+            paddingRight: "0px",
+        } as CSSStyleDeclaration);
+        const wrapper = mountTable([{ _id: "1", name: "Ada" }], { responsive: true });
+        const view = () => (wrapper.find(".data-table-cards").exists() ? "cards" : "table");
+        await vi.waitFor(() => expect(observer).not.toBeNull());
+
+        // The first observation: 412 px, under the breakpoint, takes the cards.
+        report();
+        await vi.waitFor(() => expect(view()).toBe("cards"));
+        // The cards' own 763 px echo does not take the table back, however often it repeats.
+        for (let i = 0; i < 4; i++) {
+            report();
+            await new Promise((r) => requestAnimationFrame(r));
+            await wrapper.vm.$nextTick();
+            expect(view()).toBe("cards");
+        }
+    });
+
     it("projects the same controlled selection contract onto responsive cards", async () => {
         vi.stubGlobal("ResizeObserver", NarrowResizeObserver);
         const wrapper = mountTable(

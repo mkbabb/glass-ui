@@ -101,10 +101,11 @@ export interface DockProps {
      */
     expandOn?: DockExpandOn;
     /**
-     * The edge the size morph grows from. `"center"` (default) grows both ways;
-     * `"end"` keeps the inline end (the block end on a vertical dock) fixed so the box
-     * grows toward the start, `"start"` the reverse. Logical: `dir="rtl"` mirrors it.
-     * The rigid-content counter-scale pivots on the same edge.
+     * The edge the dock is pinned to in a flex or grid container. `"center"` (default)
+     * adds nothing; `"end"` pins the inline end (the block end on a vertical dock) with
+     * an auto margin, so the box grows toward the start; `"start"` the reverse. Logical:
+     * `dir="rtl"` mirrors it. The morph's origin is measured from layout when it starts,
+     * so the size morph and the rigid content hold whichever edge the dock is laid at.
      */
     anchor?: DockAnchor;
     /**

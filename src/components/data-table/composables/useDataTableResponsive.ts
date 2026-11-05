@@ -16,6 +16,8 @@ export interface UseDataTableResponsiveOptions<T> {
 export interface UseDataTableResponsiveReturn<T> {
     /** True when the table should render the stacked card-per-row projection. */
     isCard: ComputedRef<boolean>;
+    /** The projection a container of `width` CSS px takes: the one rule `isCard` reads. */
+    cardAt: (width: number) => boolean;
     /** The first column — the card's header line. */
     headerColumn: ComputedRef<DataTableColumn<T> | undefined>;
     /** Every column after the first — the card body's label/value pairs. */
@@ -34,10 +36,9 @@ export function useDataTableResponsive<T extends Record<string, any>>(
 ): UseDataTableResponsiveReturn<T> {
     const { columns, responsive, cardBreakpoint, containerWidth } = options;
 
-    const isCard = computed(() => {
-        const width = toValue(containerWidth);
-        return toValue(responsive) && width > 0 && width < toValue(cardBreakpoint);
-    });
+    const cardAt = (width: number): boolean =>
+        toValue(responsive) && width > 0 && width < toValue(cardBreakpoint);
+    const isCard = computed(() => cardAt(toValue(containerWidth)));
 
     const headerColumn = computed<DataTableColumn<T> | undefined>(
         () => toValue(columns)[0],
@@ -46,5 +47,5 @@ export function useDataTableResponsive<T extends Record<string, any>>(
         toValue(columns).slice(1),
     );
 
-    return { isCard, headerColumn, bodyColumns };
+    return { isCard, cardAt, headerColumn, bodyColumns };
 }

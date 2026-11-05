@@ -111,7 +111,7 @@ describe("GlassDock anchor", () => {
         expect(w.attributes("data-anchor")).toBeUndefined();
     });
 
-    it("end: the root carries the anchor and the sheet pivots the morph on that edge", () => {
+    it("end: the root carries the anchor, the sheet pins that edge, and the origin stays measured", () => {
         const w = mountDock({ anchor: "end" });
         expect(w.attributes("data-anchor")).toBe("end");
         const css = readFileSync(
@@ -119,11 +119,13 @@ describe("GlassDock anchor", () => {
             "utf8",
         ).replace(/\/\*[\s\S]*?\*\//g, "");
         expect(css).toMatch(
-            /\.glass-dock\[data-morphing\]\[data-anchor="end"\]:not\(\.vertical\),[^{]*\{\s*transform-origin:\s*right center;/,
+            /\.glass-dock\[data-anchor="end"\]:not\(\.vertical\)\s*\{\s*margin-inline-start:\s*auto;/,
         );
-        expect(css).toMatch(
-            /\[data-anchor="end"\]:not\(\.vertical\):dir\(rtl\),[^{]*\{\s*transform-origin:\s*left center;/,
-        );
+        expect(css).toMatch(/\.glass-dock\[data-anchor="end"\]\.vertical\s*\{\s*margin-block-start:\s*auto;/);
+        // The morph's origin is the measured fixed point (`--dock-morph-origin`), never a
+        // declared edge: no anchor rule sets `transform-origin`.
+        expect(css).not.toMatch(/\[data-anchor="[a-z]+"\][^{]*\{[^}]*transform-origin/);
+        expect(css).toMatch(/\.glass-dock\[data-morphing\]:not\(\.vertical\)\s*\{\s*transform-origin:\s*var\(--dock-morph-origin\) center;/);
     });
 });
 

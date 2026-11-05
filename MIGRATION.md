@@ -5,9 +5,10 @@ records the breaking changes that landed in that cut, newest first. Clean breaks
 — no legacy aliases, no back-compat shims (L invariant 4); every break is a one-line
 rename or import re-point per call site.
 
-## 10.2.0 (proposed by atlas U/B7)
+## 11.0.0
 
-Merged on local branch `u/b7-glass` (off `release/10.1.1` bbf176f02, with the published `v10.1.2` merged in) from `u/b7-glass-shape` (rows B7-G1 to B7-G6) and `u/b7-glass-perf` (rows B7-G7 to B7-G9). Row numbers follow the relay letter.
+The CHANGELOG's 11.0.0 entry lists every break with its migration step; the rows below
+give the detail.
 
 ### The figure dock's hover and corner (`u/b8r-glass`, U/B8r I-2 and I-3)
 
@@ -125,8 +126,9 @@ Proposed by the atlas formation on local branch `u/b7-glass-shape` off `release/
 - **`GlassDock` gains `expandOn`, `anchor` and `collapsedLabel` (B7-G5).** Additive; each
   defaults to today's behaviour (`"hover"`, `"center"`, `"Expand dock"`). New exported types
   `DockExpandOn` and `DockAnchor`. Under `anchor` other than `"center"` the root carries
-  `data-anchor`. With a `#persistent` group under `anchor="end"`, that group pivots on the
-  same edge during the morph.
+  `data-anchor` and an auto margin that pins it to that edge of a flex or grid container.
+  The morph's origin is measured from layout when it starts (10.1.3), so the dock, its
+  `#persistent` group and its panes hold whichever edge the dock is laid at.
 
 - **The one dropdown system (B7-G6).**
   - `DropdownMenu` defaults to `modal: false`. Pass `modal` for a menu that must make the

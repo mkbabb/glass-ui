@@ -46,8 +46,10 @@ the existing Reka-backed menu, select, or popover families.
 `collapse: false` never collapses. `expandOn="press"` opens only on a press or
 Enter/Space on the collapsed summary, pinned; hover, focus and the idle timer are inert,
 and Escape, a press outside or focus leaving the dock closes it. Use it where a page
-carries many docks (one per figure). `anchor="end"` keeps the inline end fixed while the
-box grows toward the start (the block end on a vertical dock; `dir="rtl"` mirrors it).
+carries many docks (one per figure). `anchor="end"` pins the dock to the inline end of a flex or
+grid container (the block end on a vertical dock; `dir="rtl"` mirrors it), and the box
+grows toward the start. The morph always grows from the edge the dock is laid at: its
+origin is measured when it starts, so a dock pinned by its own CSS needs no `anchor`.
 `collapsedLabel` names the collapsed summary, e.g. "Tools for Fund balance by year".
 `backdropMode="static"` avoids backdrop sampling and filtering (a `"live"` dock samples
 the painted backdrop by default).
