@@ -11,7 +11,7 @@ ran. Artefacts are in `critique-1/`.
 
 ## Verdict
 
-**Two defects, one of them a broken prop contract.** Neither affects atlas, and every
+**Three defects, one of them a broken prop contract.** Neither affects atlas, and every
 cure from 10.1.3 and 10.1.4 survives the merge.
 
 ## Defects
@@ -62,6 +62,15 @@ The fix has two parts:
 - Replace the regex arm with a geometry arm, for example this probe's `row` scene in a
   release spec.
 
+The orchestrator note `3d67b4572` says the pin stays only if it is the one mechanism and
+atlas renders the same with it. As shipped, the pin is inert, and atlas's lane holds its
+end edge through the measured origin and atlas's own flex-end layout alone. The owner
+therefore chooses between two cures, and either one must also fix all four texts above:
+
+- Make the pin real, as described above.
+- Delete the pin rules, and describe `anchor` as the attribute hook it then is (or
+  remove the prop if nothing reads it).
+
 ### D2 · The demo still documents the deleted `--scale-hover-dock` token (minor)
 
 `demo/stories/foundations/css-utilities.vue:93` tells readers: "Sibling token
@@ -76,6 +85,27 @@ Every other hit for the deleted token or the old `DockTrigger` import in `src`, 
 `docs` (outside the archive and tranche records) and `tests` is a struck-history comment
 or an assertion that the token or import is gone. The demo imports `DockTrigger` from
 `@glass/components/dock/trigger`, which is the new module.
+
+### D3 · MIGRATION.md's 11.0.0 section still carries internal ids and record prose (moderate)
+
+Orchestrator note `3d67b4572` rules MIGRATION.md consumer-facing under the same prose rule
+as the CHANGELOG. Its `## 11.0.0` section (203 lines) still names internal branches, rows
+and records. For example:
+
+- headings `(`u/b8r-glass`, U/B8r I-2 and I-3)`, `(`u/b8-perf-glass`, U/B8 PF)`,
+  `(`u/b7-glass`, U/B7c C3)`, `(`u/b7-glass-shape`)`, `(`u/b7-glass-perf`)` and
+  `(`u/b7-glass`, U/B7b X3)`;
+- row tags `(I-2)`, `(I-3)`, `(B7-G1)` to `(B7-G6)`, and "atlas register MO-09";
+- line 77, "Proposed by the atlas formation on local branch `u/b7-glass-shape` off
+  `release/10.1.1`; glass takes, re-authors or declines each row", with the tag hash
+  `bbf176f02`;
+- line 195, "the B7b census".
+
+You can reproduce the list with
+`awk '/^## 11.0.0/{p=1;next} /^## /{if(p)exit} p' MIGRATION.md | grep -nE "U/B|B7|O-[0-9]|u/b|MO-|I-[0-9]"`.
+
+The fix is to rewrite the section in plain consumer sentences, keeping each migration
+step.
 
 ## What held
 
