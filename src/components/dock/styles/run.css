@@ -139,15 +139,15 @@
            on the two boxes, leaving the run's clip 1/64 px over a persistent seat, which
            Chromium's scroller hit test widens to the enclosing pixel (the lead seat lost
            its edge hit at −0.4 px). A whole pixel cancels exactly.
-           THE SCROLL STEP, on the scroll axis only. [10.1.5 fix round 3, the fix-2 WebKit e3 cell] WebKit's
-           scroll offset is a whole pixel, so a run whose overflow is fractional
-           (a 390 px coarse dock with persistent regions whose labels lay out 0.94 px
-           past the port) scrolls only to the whole pixel below its end, and the seat
-           at the end sits up to 1 px short of the end padding: ~~the bare ink~~ (10 px
-           round(up) of 9.6) left 9.06 px, and a focused, hovered trailing tab painted
-           its ring 0.55 px past the clip. `--dock-run-step-*` is that step, 1px on the
-           scroll axis and 0 on the cross axis (which scrolls nothing), so the padding
-           past the reachable end always holds the whole ink. */
+           THE SCROLL STEP, on the scroll axis only. [10.1.5 fix round 3] WebKit's
+           scroll offset is a whole pixel, so a run whose overflow is fractional scrolls
+           only to the whole pixel below its end, and its end seat sits up to 1 px into
+           the trailing reserve; reach (`useDockRun.occluded`) also lets a seat sit 1 px
+           into it before it moves. ~~The bare ink~~ (10 px, round(up) of 9.6) left
+           9.06 px at coarse 390 beside both persistent regions, and a focused, hovered
+           end tab painted its ring 0.55 px past the clip. `--dock-run-step-*` is that
+           pixel, 1px on the scroll axis and 0 on the cross axis (which scrolls
+           nothing), so the reserve past the reachable end always holds the whole ink. */
         --dock-run-step-inline: 1px;
         --dock-run-step-block: 0px;
         --dock-run-reserve-inline: round(
@@ -385,6 +385,39 @@
 
     .glass-dock .dock-run::-webkit-scrollbar {
         display: none;
+    }
+
+    /* THE TRAILING RESERVE IS A BOX, not padding, on the scroll axis. [10.1.5 fix round
+       3] WebKit does not count a flex scroller's END padding as scrollable overflow: a
+       run whose seats overflowed its content box by less than the reserve read
+       `scrollWidth = clientWidth` and could not scroll (coarse 390 beside both
+       persistent regions: the end seat 0.94 px into the padding, `scrollLeft = 999`
+       read back 0), and one that overflowed by more scrolled only until its end seat met
+       the clip, its whole trailing ink cut. A spacer box is overflow in every engine. It
+       is the reserve long, and its leading margin takes back the run gap the flex
+       layout puts before it, so its end lies the reserve past the last seat: the
+       padding's own place, the run's outer box and every seat unchanged. A run with no
+       seat keeps its padding. */
+    .glass-dock:not(.vertical) .dock-run:has(> *) {
+        padding-inline-end: 0;
+    }
+
+    .glass-dock:not(.vertical) .dock-run:has(> *)::after {
+        content: "";
+        flex: none;
+        inline-size: var(--dock-run-reserve-inline);
+        margin-inline-start: calc(-1 * var(--dock-run-gap));
+    }
+
+    .glass-dock.vertical .dock-run:has(> *) {
+        padding-block-end: 0;
+    }
+
+    .glass-dock.vertical .dock-run:has(> *)::after {
+        content: "";
+        flex: none;
+        block-size: var(--dock-run-reserve-block);
+        margin-block-start: calc(-1 * var(--dock-run-gap));
     }
 
     /* THE SEATS. Every direct child of the run is a snap target and none of them flex —
