@@ -823,3 +823,4 @@ Disk episode, one line: on 2026-11-03 the volume went from 100% (15 GiB free) to
 - 2026-11-05 09:31 — 10.1.5 critic 5 result: measured, 3 defects (K1, K2, K3); the fix seat before round 6 is running and reads the K3 ruling note.
 - 2026-11-05 10:30 — 11.0.0 merge seat done, measured: U line 2800d386b, then release/10.1.4 4af838a60 (5 conflicts; layers.css took the 10.1.3 measured origin, and the anchor prop now uses an auto-margin pin), then ratchet 6fc179766 and CHANGELOG a858969c8. Critic 1 is running. orchestrator-note-merge.md covers MIGRATION.md prose and the anchor witness.
 - 2026-11-05 10:50 — INBOUND O-157 (parkway NPIG-G6, the static plate ignoring --glass-veil-ink) is placed in 10.1.5 (inbound-O-157.md). I told sci-report-36 that 10.1.5 by 16:00 is not promised.
+- 2026-11-05 10:52 — sci-report-36: parkway's grantor meeting ships on 10.1.4. Parkway and slides pin 10.1.4 exactly, so they re-pin to 10.1.5 by hand once the publish notice arrives.
