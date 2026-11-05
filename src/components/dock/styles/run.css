@@ -387,17 +387,19 @@
         display: none;
     }
 
-    /* THE TRAILING RESERVE IS A BOX, not padding, on the scroll axis. [10.1.5 fix round
-       3] WebKit does not count a flex scroller's END padding as scrollable overflow: a
-       run whose seats overflowed its content box by less than the reserve read
-       `scrollWidth = clientWidth` and could not scroll (coarse 390 beside both
-       persistent regions: the end seat 0.94 px into the padding, `scrollLeft = 999`
-       read back 0), and one that overflowed by more scrolled only until its end seat met
-       the clip, its whole trailing ink cut. A spacer box is overflow in every engine. It
-       is the reserve long, and its leading margin takes back the run gap the flex
-       layout puts before it, so its end lies the reserve past the last seat: the
-       padding's own place, the run's outer box and every seat unchanged. A run with no
-       seat keeps its padding. */
+    /* THE TRAILING RESERVE IS A BOX, not padding, on a horizontal run. [10.1.5 fix
+       round 3] WebKit counts a flex row scroller's END padding as scrollable overflow
+       only once the seats pass the padding box: a run whose seats overran its content
+       box by less than the reserve read `scrollWidth = clientWidth` and could not
+       scroll (coarse 390 beside both persistent regions: the end seat 0.94 px into the
+       padding, `scrollLeft = 999` read back 0), so its focused, hovered end seat lost
+       ink to the clip. A spacer box is overflow in every engine. It is the reserve
+       long, and its leading margin takes back the run gap the flex layout puts before
+       it, so its end lies the reserve past the last seat: the padding's own place, the
+       run's outer box and every seat unchanged. A run with no seat keeps its padding.
+       The vertical run keeps its block-end padding: ~~the same spacer, rotated~~ moved
+       a bottom-anchored dock's leaving summary 2.6 px in one frame of the expand under
+       an ancestor `zoom` in WebKit (release-10-1-3 D-1, critique-7). */
     .glass-dock:not(.vertical) .dock-run:has(> *) {
         padding-inline-end: 0;
     }
@@ -407,17 +409,6 @@
         flex: none;
         inline-size: var(--dock-run-reserve-inline);
         margin-inline-start: calc(-1 * var(--dock-run-gap));
-    }
-
-    .glass-dock.vertical .dock-run:has(> *) {
-        padding-block-end: 0;
-    }
-
-    .glass-dock.vertical .dock-run:has(> *)::after {
-        content: "";
-        flex: none;
-        block-size: var(--dock-run-reserve-block);
-        margin-block-start: calc(-1 * var(--dock-run-gap));
     }
 
     /* THE SEATS. Every direct child of the run is a snap target and none of them flex —
