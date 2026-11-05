@@ -138,36 +138,23 @@
            same length, and a fractional one (6.6 px) rounds to different layout units
            on the two boxes, leaving the run's clip 1/64 px over a persistent seat, which
            Chromium's scroller hit test widens to the enclosing pixel (the lead seat lost
-           its edge hit at −0.4 px). A whole pixel cancels exactly.
-           THE SCROLL STEP, on the scroll axis only. [10.1.5 fix round 3, the fix-2 WebKit e3 cell] WebKit's
-           scroll offset is a whole pixel, so a run whose overflow is fractional
-           (a 390 px coarse dock with persistent regions whose labels lay out 0.94 px
-           past the port) scrolls only to the whole pixel below its end, and the seat
-           at the end sits up to 1 px short of the end padding: ~~the bare ink~~ (10 px
-           round(up) of 9.6) left 9.06 px, and a focused, hovered trailing tab painted
-           its ring 0.55 px past the clip. `--dock-run-step-*` is that step, 1px on the
-           scroll axis and 0 on the cross axis (which scrolls nothing), so the padding
-           past the reachable end always holds the whole ink. */
-        --dock-run-step-inline: 1px;
-        --dock-run-step-block: 0px;
+           its edge hit at −0.4 px). A whole pixel cancels exactly. */
         --dock-run-reserve-inline: round(
             up,
             var(--dock-seat-max-inline-px) * (var(--scale-hover-dock) - 1) / 2 +
-                var(--dock-ring-reserve) * var(--scale-hover-dock) + var(--dock-run-step-inline),
+                var(--dock-ring-reserve) * var(--scale-hover-dock),
             1px
         );
         --dock-run-reserve-block: round(
             up,
             var(--dock-seat-max-block-px) * (var(--scale-hover-dock) - 1) / 2 +
-                var(--dock-ring-reserve) * var(--scale-hover-dock) + var(--dock-run-step-block),
+                var(--dock-ring-reserve) * var(--scale-hover-dock),
             1px
         );
     }
 
     .glass-dock.vertical {
         --dock-open-pitches: 2;
-        --dock-run-step-inline: 0px;
-        --dock-run-step-block: 1px;
     }
 
     /* ── THE BUDGET LAW ──────────────────────────────────────────────────────────
