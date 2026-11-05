@@ -29,6 +29,11 @@
 //   e3  (E3) beside both persistent regions: the run's clip and hit stop at their seats,
 //       at rest and scrolled; the edge seats keep their ring
 //   E4 is the vitest arm tests/styles/typed-track-seam.test.ts, read after a build
+//
+// Fix round 3 (the fix-2 WebKit e3 cell at coarse 390), RED on cc7ea13b3, GREEN after:
+//   e4  an overflowing run scrolled to its end keeps a focused, hovered end seat's whole
+//       ring, horizontal beside both persistent regions and vertical (WebKit RED: the
+//       end padding was not scrollable overflow)
 import { expect, test, type Page } from "@playwright/test";
 
 async function open(page: Page, query: string): Promise<void> {
@@ -111,6 +116,34 @@ function expectNoReach(read: PlateRead, cell: string): void {
     expect(run.sh, `${cell}: run scrollHeight = clientHeight (${JSON.stringify(run)})`).toBe(
         run.ch,
     );
+}
+
+/**
+ * The run scrolls exactly what it hides: its reach equals how far its seats and the
+ * reserve past them overrun the port at its leading rest, to the engine's whole-pixel
+ * scroll extent. A run that fits reads no reach (`expectNoReach`); one whose seats do not
+ * fit in an engine's font metrics reads that overrun, never 0 (WebKit's dropped end
+ * padding hid it) and never more (a seat's engagement scale is not reach). Read with the
+ * pointer off and the run at its leading rest.
+ */
+async function expectHonestReach(page: Page, cell: string): Promise<void> {
+    await pointerOff(page);
+    await settle(page, 400);
+    const read = await page.evaluate(() => {
+        const run = document.querySelector<HTMLElement>(".dock-run.is-active")!;
+        run.scrollTo({ left: 0, top: 0, behavior: "instant" });
+        const port = run.getBoundingClientRect();
+        const reserve = Number.parseFloat(getComputedStyle(run).paddingInlineStart);
+        const seats = [...run.children].map((k) => k.getBoundingClientRect());
+        const last = seats[seats.length - 1]!;
+        return {
+            reach: run.scrollWidth - run.clientWidth,
+            overrun: Math.max(0, last.right + reserve - port.right),
+            reserve,
+        };
+    });
+    const at = `${cell} (${JSON.stringify(read)})`;
+    expect(Math.abs(read.reach - read.overrun), `${at}: reach = the seats' overrun`).toBeLessThanOrEqual(1);
 }
 
 async function pointerOff(page: Page): Promise<void> {
@@ -619,7 +652,37 @@ function e3(width: number): void {
         // The run's edge seats beside the persistent regions still keep their whole ring.
         await openSeats(page, "persistent=1&kinds=tab:Home,icon,tab:Settings");
         for (const seat of ["S1", "S3"]) await expectFocusedRingWhole(page, seat);
-        expectNoReach(await readPlate(page), `${width} persistent, after the focused hovers`);
+        // [fix round 3] At coarse 390 WebKit lays these labels out ~1 px past the 390 px
+        // dock, so the run honestly overflows there: it must scroll what it hides.
+        await expectHonestReach(page, `${width} persistent, after the focused hovers`);
+    });
+}
+
+/**
+ * E4: an overflowing run scrolled to its end still holds its end seat's whole ink. The
+ * trailing reserve must be scrollable overflow: WebKit drops a flex scroller's end
+ * padding from it, so at the end the last seat met the clip and a focused, hovered one
+ * lost its trailing ring and overhang. Horizontal (beside both persistent regions) and
+ * vertical.
+ */
+function e4(width: number): void {
+    test(`e4 at ${width}: an overflowing run at its end keeps the end seat's whole ring`, async ({ page }) => {
+        await page.setViewportSize({ width, height: 844 });
+        const icons = Array(12).fill("icon").join(",");
+        for (const query of [
+            `fit=0&maxw=360&persistent=1&kinds=${icons}`,
+            `orientation=vertical&stageH=360&kinds=${icons}`,
+        ]) {
+            await openSeats(page, query);
+            const range = await page.evaluate(() => {
+                const run = document.querySelector<HTMLElement>(".dock-run.is-active")!;
+                run.scrollTo({ left: run.scrollWidth, top: run.scrollHeight, behavior: "instant" });
+                return Math.max(run.scrollWidth - run.clientWidth, run.scrollHeight - run.clientHeight);
+            });
+            expect(range, `${width} ${query}: the run overflows`).toBeGreaterThan(0);
+            await settle(page, 400);
+            await expectFocusedRingWhole(page, "S12");
+        }
     });
 }
 
@@ -629,6 +692,7 @@ test.describe("critique 2, coarse phone", () => {
     e1(844);
     e2(390);
     e3(390);
+    e4(390);
 });
 
 e1(390);
@@ -636,3 +700,4 @@ e1(1440);
 e2(390);
 e2(1440);
 e3(390);
+e4(1440);
