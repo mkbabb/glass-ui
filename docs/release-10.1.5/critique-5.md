@@ -44,7 +44,7 @@ Every run was admitted by `guarded`: Chromium (`chromium-headless-new`) and Play
 |---|---|
 | Chromium, r5 cells, branch / v10.1.4 | run clip 2/2 and 2/2; r5b 2/2 and 2/2; r5c 2/2 and 2/2; r5d 1/1 and 1/1; reserve and segtabs 4/4 |
 | Chromium, critic-4 battery on the tip | 52/52 cells read |
-| WebKit 2287, whole spec, branch | 62/63. The one failure is `r5 run clip coarse`, which threw after 3.1 min because `.dock-run.is-active` was absent (see Owed); critic-4's battery 52/52 cells read |
+| WebKit 2287, whole spec, branch | 62/63; critic-4's battery 52/52 cells read. The one failure was `r5 run clip coarse`, which threw after 3.1 min: `null is not an object (evaluating 'run.style')`, no `.dock-run.is-active`. The harness now records the dock's classes and panes when the run is missing. Re-run under `--exclusive webkit`: 1/1 in 5.1 min, 538 rows, the active run present in every row. Not reproduced (1 of 2 runs), so not a finding |
 | WebKit 2287, r5 cells, v10.1.4 | 11/11 |
 | g6 Chromium | release-10-1-5 32/32, release-10-1-4 23/23, release-10-1-3 60/60 |
 | g6 WebKit 2287 | release-10-1-5 32/32, release-10-1-4 15 passed + 8 skips (`page.pdf`), release-10-1-3 58 passed + 2 skips (CDP swipe): the same skip set as fix 3 and fix 4 |
@@ -144,7 +144,7 @@ persistent regions: `End`, `focus()` and hover+focus on the end seat each settle
 | | ring outside the run's clip |
 |---|---|
 | 10.1.5 Chromium | 14.51 px (fine and coarse) |
-| 10.1.5 WebKit | 14.83 px |
+| 10.1.5 WebKit | 14.83 px (fine and coarse); the same 14.83 on `S12` at the run's end |
 | v10.1.4 Chromium / WebKit | 6.29 / 6.31 px |
 
 The run's block-start clip is `50% 61.3px`, a 64 × 61 px ellipse. That is
@@ -251,7 +251,7 @@ persistent regions: `End`, `focus()` and hover+focus on the end seat each settle
 | | ring outside the run's clip |
 |---|---|
 | 10.1.5 Chromium | 14.51 px (fine and coarse) |
-| 10.1.5 WebKit | 14.83 px |
+| 10.1.5 WebKit | 14.83 px (fine and coarse); the same 14.83 on `S12` at the run's end |
 | v10.1.4 Chromium / WebKit | 6.29 / 6.31 px |
 
 The run's block-start clip is `50% 61.3px`, a 64 × 61 px ellipse. That is
@@ -353,10 +353,5 @@ r1 holds only above the width where every seat plus both reserves fit.
   `occluded()` stops counting the hover scale. The K1 gate goes in both engines.
 - **K2:** the run's clip rounds only the cut. The K2 gate goes in both engines.
 - **K3:** a ruling, r1 or e4 at 320, then its cure or its stated bound.
-- **WebKit `r5 run clip coarse`.** It threw `null is not an object (evaluating
-  'run.style')`: no `.dock-run.is-active` at some point in the cell. The harness now
-  records the dock's classes and panes when the active run is missing, and the cell is
-  queued for re-run under `--exclusive webkit` (RERUN). The Chromium coarse cell and the
-  v10.1.4 WebKit coarse cell completed with the run present throughout.
 - After any cure: this spec (`release-10-1-5-critic-5.spec.ts`), then g6 and g7 in both
   engines.
