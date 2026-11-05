@@ -820,3 +820,4 @@ Disk episode, one line: on 2026-11-03 the volume went from 100% (15 GiB free) to
   - W-J.1 becomes 12.0.0.
   - 10.1.5 must publish under the `v10` dist-tag when `latest` is newer; the close gets this in orchestrator-note-dist-tag.md (ce9c62c70).
   - The master fast-forward to release/11.0.0 follows its publish. The 10.1.5 cures then forward-merge as 11.0.1.
+- 2026-11-05 09:31 — 10.1.5 critic 5 result: measured, 3 defects (K1, K2, K3); the fix seat before round 6 is running and reads the K3 ruling note.
