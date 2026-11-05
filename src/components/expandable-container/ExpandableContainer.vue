@@ -65,32 +65,6 @@
     </Teleport>
 </template>
 
-<script lang="ts">
-let bodyOverflowLockDepth = 0;
-let bodyOverflowBeforeLock: string | null = null;
-
-function acquireBodyOverflowLock() {
-    if (typeof document === "undefined") return false;
-
-    if (bodyOverflowLockDepth === 0) {
-        bodyOverflowBeforeLock = document.body.style.overflow;
-        document.body.style.overflow = "hidden";
-    }
-    bodyOverflowLockDepth += 1;
-    return true;
-}
-
-function releaseBodyOverflowLock() {
-    if (typeof document === "undefined" || bodyOverflowLockDepth === 0) return;
-
-    bodyOverflowLockDepth -= 1;
-    if (bodyOverflowLockDepth === 0) {
-        document.body.style.overflow = bodyOverflowBeforeLock ?? "";
-        bodyOverflowBeforeLock = null;
-    }
-}
-</script>
-
 <script setup lang="ts">
 import { nextTick, onUnmounted, ref, watch } from "vue";
 import { Maximize2, Minimize2 } from "@lucide/vue";
@@ -98,6 +72,7 @@ import { FocusScope } from "reka-ui";
 import { registerShortcut } from "../../composables/keyboard";
 import type { Surface } from "../_shared/axes";
 import { FOCUSABLE_SELECTOR } from "../_shared/focus";
+import { acquireRootScrollLock, releaseRootScrollLock } from "../_shared/overlay";
 
 defineOptions({ inheritAttrs: false });
 
@@ -148,16 +123,16 @@ function collapse() {
     open.value = false;
 }
 
-let holdsBodyOverflowLock = false;
+let holdsRootOverflowLock = false;
 let unregEsc: (() => void) | null = null;
 let restoreTarget: HTMLElement | null = null;
 
-function syncBodyOverflowLock(fullscreen: boolean) {
-    if (fullscreen && !holdsBodyOverflowLock) {
-        holdsBodyOverflowLock = acquireBodyOverflowLock();
-    } else if (!fullscreen && holdsBodyOverflowLock) {
-        releaseBodyOverflowLock();
-        holdsBodyOverflowLock = false;
+function syncRootOverflowLock(fullscreen: boolean) {
+    if (fullscreen && !holdsRootOverflowLock) {
+        holdsRootOverflowLock = acquireRootScrollLock();
+    } else if (!fullscreen && holdsRootOverflowLock) {
+        releaseRootScrollLock();
+        holdsRootOverflowLock = false;
     }
 }
 
@@ -204,7 +179,7 @@ function onScopeMountAutoFocus(event: Event) {
 watch(
     open,
     (isOpen, wasOpen) => {
-        syncBodyOverflowLock(isOpen);
+        syncRootOverflowLock(isOpen);
 
         if (isOpen && !wasOpen) {
             const active =
@@ -228,7 +203,7 @@ watch(
 onUnmounted(() => {
     unregEsc?.();
     unregEsc = null;
-    syncBodyOverflowLock(false);
+    syncRootOverflowLock(false);
 });
 </script>
 

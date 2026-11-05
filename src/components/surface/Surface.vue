@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, useAttrs, type HTMLAttributes } from "vue";
 import { Primitive } from "reka-ui";
-import type { Surface as SurfaceAxis, SurfaceTier } from "../_shared/axes";
+import type { BackdropMode, Surface as SurfaceAxis, SurfaceTier } from "../_shared/axes";
 import { cn } from "../_shared/class-names";
 import type { PrimitiveProps } from "../_shared/primitive";
 import { surfaceClass } from "../_shared/surface/resolve";
@@ -40,6 +40,8 @@ export interface SurfaceProps extends Omit<PrimitiveProps, "asChild"> {
     surface?: SurfaceDecoration;
     /** Thickness ON the resolved tier — never a tier jump. */
     deep?: boolean;
+    /** `static` samples no backdrop: the plate keeps its fill and drops the lens. */
+    backdropMode?: BackdropMode;
     class?: HTMLAttributes["class"];
 }
 
@@ -47,6 +49,7 @@ const props = withDefaults(defineProps<SurfaceProps>(), {
     tier: "resting",
     surface: "glass",
     deep: false,
+    backdropMode: "live",
     as: "div",
 });
 const attrs = useAttrs();
@@ -62,6 +65,7 @@ const forwardedAttrs = computed(() => {
         :as="as"
         :data-slot="attrs['data-slot'] ?? 'surface'"
         :data-surface="surface"
+        :data-backdrop-mode="backdropMode === 'static' ? 'static' : undefined"
         :class="cn(surfaceClass(tier, deep), props.class)"
     >
         <slot />

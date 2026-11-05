@@ -59,6 +59,7 @@ const selectable = computed(() => props.selected !== undefined);
         :tier="tier"
         :surface="surface"
         :deep="deep"
+        :backdrop-mode="backdropMode"
         :as="as"
         :data-shadow="shadow || undefined"
         :data-size="size"

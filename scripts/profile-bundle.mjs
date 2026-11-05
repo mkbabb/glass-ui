@@ -278,8 +278,8 @@ const BUDGETS = {
 
 // AO.W2 (inv α) — the real consumer-draw CSS artifact.
 // `@import "@mkbabb/glass-ui/styles"` resolves to dist/styles/index.css, which
-// @imports the 17 sibling cascade rungs (./tokens.css …) AND the folded
-// ../glass-ui.css (the AN.W1 SFC fold). Resolve ALL of them and gzip the
+// @imports the sibling cascade rungs (./tokens.css …). The SFC sheets ride their
+// chunks since U/B7b X3 and are not in this draw. Resolve ALL of them and gzip the
 // concatenation — that is glass-ui's published /styles draw. A byte added to
 // any cascade rung moves this number (the cascade arm is INSIDE the gate).
 function combinedStylesDraw(distRoot) {
@@ -287,7 +287,7 @@ function combinedStylesDraw(distRoot) {
     const indexPath = resolve(stylesDir, "index.css");
     if (!existsSync(indexPath)) return null;
     let css = readFileSync(indexPath, "utf-8");
-    // One-level resolve: ./*.css siblings + ../glass-ui.css both resolve under stylesDir.
+    // One-level resolve: the ./*.css siblings resolve under stylesDir.
     css = css.replace(/@import\s+["']([^"']+\.css)["'];?/g, (m, ref) => {
         const target = resolve(stylesDir, ref);
         return existsSync(target) ? `\n${readFileSync(target, "utf-8")}\n` : m;

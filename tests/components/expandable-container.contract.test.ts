@@ -6,6 +6,7 @@ import ExpandableContainer from "@glass/components/expandable-container/Expandab
 afterEach(() => {
     document.body.innerHTML = "";
     document.body.style.overflow = "";
+    document.documentElement.style.overflow = "";
 });
 
 describe("ExpandableContainer", () => {
@@ -42,7 +43,9 @@ describe("ExpandableContainer", () => {
 
         expect(document.querySelectorAll("[data-content]")).toHaveLength(1);
         expect(document.body.querySelector('[data-content]')?.getAttribute("data-fullscreen")).toBe("true");
-        expect(document.body.style.overflow).toBe("hidden");
+        // U/B7 D-2: the lock holds the root (the viewport scroller), never `body`.
+        expect(document.documentElement.style.overflow).toBe("hidden");
+        expect(document.body.style.overflow).toBe("");
         expect(document.activeElement?.getAttribute("data-mode")).toBe("collapse");
         expect(
             document
@@ -58,6 +61,7 @@ describe("ExpandableContainer", () => {
 
         expect(document.querySelectorAll("[data-content]")).toHaveLength(1);
         expect(wrapper.get('[data-content]').attributes("data-fullscreen")).toBe("false");
+        expect(document.documentElement.style.overflow).toBe("");
         expect(document.body.style.overflow).toBe("");
         expect(document.activeElement?.getAttribute("data-mode")).toBe("expand");
 

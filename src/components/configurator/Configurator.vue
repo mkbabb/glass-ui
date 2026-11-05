@@ -1,4 +1,5 @@
 <script setup lang="ts" generic="T">
+import "./styles.css";
 import { computed, type HTMLAttributes } from "vue";
 import { cn } from "../_shared/class-names";
 import { ExpandableContainer } from "../expandable-container";

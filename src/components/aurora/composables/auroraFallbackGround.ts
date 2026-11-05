@@ -319,6 +319,29 @@ export function auroraFallbackGround(
 }
 
 /**
+ * The identity of a config's fallback ground: the palette and the preset's field
+ * shape (softmax sharpness, value variance, and each nucleus's radius, ellipse and
+ * biases), without the nuclei positions.
+ *
+ * `Aurora.vue` encodes the ground once per key (atlas U/B7 F6, O-16). Nuclei that
+ * move (a scroll lean, a drift a consumer drives) move only on the GPU path; the
+ * ground stays the field the preset was mounted with. Two configs with the same key
+ * paint the same ground, so a config change that keeps the key costs no encode and
+ * no `background-image` write.
+ */
+export function auroraGroundKey(config: AuroraConfig): string {
+    const stops = config.palette.map((s) => [s.L, s.C, s.h]);
+    const nuclei = config.nuclei.map((n) => [
+        n.radius,
+        n.elongation ?? 1,
+        n.angle ?? 0,
+        n.paletteBias,
+        n.valueBias,
+    ]);
+    return JSON.stringify([stops, config.softmaxBeta, config.valueVariance, nuclei]);
+}
+
+/**
  * Paint the field samples into a `grid × grid` 2D canvas (one texel per cell, its
  * exact gamma color) and return a `data:` URI. Returns `null` when no `document` is
  * available (SSR) so the caller takes the layered-CSS fallback. The CSS upscale of

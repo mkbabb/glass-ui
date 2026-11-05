@@ -1,4 +1,6 @@
 import type {
+    ContextMenu,
+    ContextMenuProps,
     DropdownMenu,
     DropdownMenuCheckboxItem,
     DropdownMenuCheckboxItemProps,
@@ -22,7 +24,6 @@ import type {
     DropdownMenuSubTriggerProps,
     DropdownMenuTriggerAction,
     DropdownMenuTriggerProps,
-    MenuTrigger,
 } from "@glass/components/menu";
 
 type Assert<Condition extends true> = Condition;
@@ -37,19 +38,25 @@ type Lacks<Key extends PropertyKey, Shape> =
     Has<Key, Shape> extends false ? true : false;
 
 const clickState = { open: true } satisfies DropdownMenuProps;
-const contextState = { trigger: "context" } satisfies DropdownMenuProps;
+const contextState = { modal: false } satisfies ContextMenuProps;
 // @ts-expect-error a context menu has no anchor before a native invocation
-const controlledContext = { trigger: "context", open: true } satisfies DropdownMenuProps;
+const controlledContext = { open: true } satisfies ContextMenuProps;
 // @ts-expect-error an initially open context menu has no meaningful coordinates
-const defaultOpenContext = { trigger: "context", defaultOpen: true } satisfies DropdownMenuProps;
+const defaultOpenContext = { defaultOpen: true } satisfies ContextMenuProps;
+// @ts-expect-error the region-anchored menu is ContextMenu, not a DropdownMenu mode
+const triggerSwitch = { trigger: "context" } satisfies DropdownMenuProps;
 
 type RootContract = [
-    Assert<Equal<MenuTrigger, "click" | "context">>,
     Assert<Has<"open", DropdownMenuProps>>,
     Assert<Has<"defaultOpen", DropdownMenuProps>>,
     Assert<Has<"dir", DropdownMenuProps>>,
     Assert<Has<"modal", DropdownMenuProps>>,
-    Assert<Has<"trigger", DropdownMenuProps>>,
+    Assert<Lacks<"trigger", DropdownMenuProps>>,
+    Assert<Has<"dir", ContextMenuProps>>,
+    Assert<Has<"modal", ContextMenuProps>>,
+    Assert<Lacks<"open", ContextMenuProps>>,
+    Assert<Lacks<"defaultOpen", ContextMenuProps>>,
+    Assert<Has<"onUpdate:open", InstanceType<typeof ContextMenu>["$props"]>>,
     Assert<Lacks<"pressOpenDelay", DropdownMenuProps>>,
     Assert<Lacks<"as", DropdownMenuProps>>,
     Assert<Lacks<"asChild", DropdownMenuProps>>,
@@ -193,4 +200,5 @@ export type DropdownMenuPublicContracts = [
     typeof contextState,
     typeof controlledContext,
     typeof defaultOpenContext,
+    typeof triggerSwitch,
 ];

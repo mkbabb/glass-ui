@@ -490,7 +490,7 @@ const liveMessage = computed(() => {
         content: "";
         width: var(--pager-dot-size);
         height: var(--pager-dot-size);
-        border-radius: var(--radius-pill);
+        border-radius: var(--radius-circle);
         background: var(--pager-dot-inactive);
         transition:
             background-color var(--duration-fast) var(--ease-standard),

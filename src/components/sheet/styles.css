@@ -26,8 +26,11 @@
  * name — no logical-vs-physical cascade ambiguity.
  */
 @layer components {
+    /* `position: fixed` is NOT here. A `:where()` rule at 0,0,0 always lost to the
+       material class on the same element (`.glass-floating { position: relative }`,
+       0,1,0, same layer), so the sheet rendered in flow. The position rides the
+       `fixed` utility on the content's class list (SheetContent.vue), one path. */
     :where([data-slot="sheet-content"]) {
-        position: fixed;
         z-index: var(--z-modal);
     }
 }

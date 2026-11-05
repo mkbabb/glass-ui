@@ -2,11 +2,14 @@
 // surfaces use an `elementsFromPoint` stack walk; live surfaces downsample a known
 // background canvas because browsers do not expose composited backdrop-filter pixels.
 // The observer writes WCAG luminance and a light/dark bucket.
-// Live sampling is capped at 4 Hz, pauses offscreen or when hidden, and collapses to
-// one sample under reduced motion. Static surfaces sample at mount and resize settle.
+// Live sampling is event-driven: a sample follows a frame the field canvas announces
+// (`GLASS_FIELD_PAINT_EVENT`, from glass's canvas lifecycle), a scroll, a theme change,
+// or the end of a transition on the field. It is throttled to 4 Hz with a trailing
+// sample, parks offscreen, and collapses to one sample under reduced motion. Nothing
+// runs while the field is still. Static surfaces sample at mount and resize settle.
 
 import { onScopeDispose, readonly, ref, watch, type Ref } from "vue";
-import { useRAFLoop, type RAFLoopControls } from "../motion/core/useRAFLoop";
+import { GLASS_FIELD_PAINT_EVENT } from "./fieldPaint";
 import { useReducedMotion } from "../motion/core/useReducedMotion";
 import { useIntersectionPause } from "../motion/core/useIntersectionPause";
 import { useResizeObserver } from "../dom/useResizeObserver";
@@ -35,10 +38,11 @@ export interface UseGlassBackdropLuminanceOptions {
      */
     backgroundCanvas?: BackgroundCanvasSource;
     /**
-     * Force the LIVE periodic re-sample loop on (mirrors the `data-glass-sample="live"`
-     * attribute on the target). Default: read from the target's
-     * `data-glass-sample === "live"` attribute. The static page case samples once on
-     * mount + resize-settle; the live case re-samples on the throttled loop.
+     * Force LIVE re-sampling on (mirrors the `data-glass-sample="live"` attribute on
+     * the target). Default: read from the target's `data-glass-sample === "live"`
+     * attribute. The static page case samples once on mount + resize-settle; the live
+     * case also re-samples, throttled, when the field paints, the page scrolls, the
+     * theme changes or a transition on the field ends.
      */
     live?: boolean;
     /**
@@ -48,7 +52,7 @@ export interface UseGlassBackdropLuminanceOptions {
      */
     lightThreshold?: number;
     /**
-     * Minimum milliseconds between samples on the live loop (the ≤ 4 Hz throttle floor).
+     * Minimum milliseconds between live samples (the ≤ 4 Hz throttle floor).
      * Default 250 (4 Hz) and bounded to at least 250ms.
      */
     minSampleIntervalMs?: number;
@@ -83,7 +87,7 @@ export interface UseGlassBackdropLuminanceControls {
     readonly sample: Readonly<Ref<GlassBackdropSample>>;
     /** Force one sample now (bypasses the throttle — used on mount + resize-settle). */
     sampleNow: () => void;
-    /** Stop the loop + detach every observer/listener. */
+    /** Cancel a pending sample + detach every observer/listener. */
     dispose: () => void;
 }
 
@@ -201,12 +205,13 @@ export function useGlassBackdropLuminance(
     }
 
     /**
-     * Does the config intend the live loop? The loop must arm before a provided source
-     * resolves: field canvases commonly mount one beat after their consumer. Each tick
+     * Does the config intend live re-sampling? It must arm before a provided source
+     * resolves: field canvases commonly mount one beat after their consumer, and the
+     * canvas's first announced frame is what brings the first live sample. Each sample
      * re-resolves the source, so a live request is either sampled from that canvas or
      * reported unavailable; it never becomes a static sample.
      */
-    function wantsLiveLoop(): boolean {
+    function wantsLive(): boolean {
         if (options.live !== undefined) return options.live;
         if (target.value?.dataset.glassSample === "live") return true;
         // A CONFIGURED source — even one that resolves null THIS instant (the field
@@ -301,7 +306,7 @@ export function useGlassBackdropLuminance(
         // Live intent has one source of truth: an unavailable canvas is surfaced as
         // unavailable, never substituted with the static stack-walk/default signal.
         const ctx = getDownContext();
-        const mode = wantsLiveLoop() ? "live" : "static";
+        const mode = wantsLive() ? "live" : "static";
         const source =
             mode === "live" ? resolveSourceCanvas(options.backgroundCanvas) : null;
         // The animated field is TRANSLUCENT: composite it over the REAL opaque page
@@ -326,26 +331,99 @@ export function useGlassBackdropLuminance(
             typeof performance !== "undefined" ? performance.now() : sampledAt;
     }
 
-    // ── The rAF loop — THROTTLED to ≤ 4 Hz, only ticks while live + not reduced ──────
-    const loop: RAFLoopControls = useRAFLoop(
-        ({ now }) => {
-            if (prefersReduced.value) return; // PRM → one static sample, then park
-            if (now - lastSampleAt < sampleIntervalMs) return; // ≤ 4 Hz throttle
-            sampleNow();
-        },
-        { immediate: false, pauseWhenHidden: true, respectReducedMotion: true },
-    );
+    // ── Live re-sampling: event-driven, throttled to ≤ 4 Hz, trailing ───────────────
+    // There is no frame loop. The pixels under a live surface change only when the field
+    // paints, the page scrolls under the surface, the theme changes, or the field's
+    // ground cross-fades; each of those requests one sample. A request inside the
+    // throttle window schedules one trailing sample at the window's end, so the last
+    // change is always read and a burst of 60 paints a second costs at most 4 samples.
+    let liveArmed = false;
+    let parked = false;
+    let pendingSample: ReturnType<typeof setTimeout> | null = null;
 
-    // ── IntersectionObserver gate — park the loop while the surface is offscreen ─────
+    function cancelPending(): void {
+        if (pendingSample !== null) clearTimeout(pendingSample);
+        pendingSample = null;
+    }
+
+    function requestSample(): void {
+        if (!liveArmed || parked || pendingSample !== null) return;
+        const now = performance.now();
+        const wait = Math.max(0, lastSampleAt + sampleIntervalMs - now);
+        pendingSample = setTimeout(() => {
+            pendingSample = null;
+            if (liveArmed && !parked) sampleNow();
+        }, wait);
+    }
+
+    /** A frame drawn on the field canvas this surface reads. */
+    function onFieldPaint(event: Event): void {
+        if (!liveArmed || pendingSample !== null) return;
+        if (event.target === resolveSourceCanvas(options.backgroundCanvas)) {
+            requestSample();
+        }
+    }
+
+    /** A transition or animation that ends on the field canvas or an ancestor of it. */
+    function onFieldSettle(event: Event): void {
+        if (!liveArmed || pendingSample !== null) return;
+        const source = resolveSourceCanvas(options.backgroundCanvas);
+        const node = event.target;
+        if (source && node instanceof Node && node.contains(source)) requestSample();
+    }
+
+    let themeObserver: MutationObserver | null = null;
+    let schemeQuery: MediaQueryList | null = null;
+
+    function armLive(): void {
+        if (liveArmed) return;
+        liveArmed = true;
+        document.addEventListener(GLASS_FIELD_PAINT_EVENT, onFieldPaint, true);
+        document.addEventListener("scroll", requestSample, {
+            capture: true,
+            passive: true,
+        });
+        document.addEventListener("transitionend", onFieldSettle, true);
+        document.addEventListener("animationend", onFieldSettle, true);
+        if (typeof MutationObserver !== "undefined") {
+            themeObserver = new MutationObserver(requestSample);
+            themeObserver.observe(document.documentElement, {
+                attributes: true,
+                attributeFilter: ["class", "data-theme", "data-color-scheme"],
+            });
+        }
+        if (typeof matchMedia === "function") {
+            schemeQuery = matchMedia("(prefers-color-scheme: dark)");
+            schemeQuery.addEventListener("change", requestSample);
+        }
+    }
+
+    function disarmLive(): void {
+        if (!liveArmed) return;
+        liveArmed = false;
+        cancelPending();
+        document.removeEventListener(GLASS_FIELD_PAINT_EVENT, onFieldPaint, true);
+        document.removeEventListener("scroll", requestSample, true);
+        document.removeEventListener("transitionend", onFieldSettle, true);
+        document.removeEventListener("animationend", onFieldSettle, true);
+        themeObserver?.disconnect();
+        themeObserver = null;
+        schemeQuery?.removeEventListener("change", requestSample);
+        schemeQuery = null;
+    }
+
+    // ── IntersectionObserver gate — no samples while offscreen or the tab is hidden ──
     const io = useIntersectionPause(
         () => target.value,
         {
-            pause: () => loop.pause(),
+            pause: () => {
+                parked = true;
+                cancelPending();
+            },
             resume: () => {
-                // A covered per-surface observer stays parked (it inherits — never a loop).
-                const el = target.value;
-                if (el && coveredByShared(el)) return;
-                if (wantsLiveLoop() && !prefersReduced.value) loop.resume();
+                parked = false;
+                // Catch up on whatever changed while the surface was away.
+                requestSample();
             },
         },
         { rootMargin: "200px" },
@@ -354,26 +432,26 @@ export function useGlassBackdropLuminance(
     // ── Resize-settle re-sample (the static page case re-samples on a layout change) ─
     const ro = useResizeObserver(target, () => sampleNow());
 
-    // ── Arm/disarm the live loop on PRM flips (mirrors the substrate's live monitor) ─
+    // ── Arm/disarm live re-sampling on PRM flips ─────────────────────────────────────
     function applyMotionState(): void {
-        // A covered per-surface observer never runs the loop nor samples (it inherits the
-        // shared route signal via the cascade — the 12→1 collapse).
+        // A covered per-surface observer never re-samples (it inherits the shared route
+        // signal via the cascade — the 12→1 collapse).
         const el = target.value;
         if (el && coveredByShared(el)) {
-            loop.stop();
+            disarmLive();
             return;
         }
         if (prefersReduced.value) {
-            loop.stop();
+            disarmLive();
             sampleNow(); // one static frame under reduce (the substrate freezes too)
-        } else if (wantsLiveLoop()) {
-            // Each tick re-resolves the requested field canvas as it mounts.
-            loop.start();
+        } else if (wantsLive()) {
+            // Each sample re-resolves the requested field canvas as it mounts.
+            armLive();
         }
     }
     const stopMotionWatch = watch(prefersReduced, applyMotionState, { flush: "sync" });
 
-    // First sample once the target is present; arm the loop for the live case.
+    // First sample once the target is present; arm live re-sampling for the live case.
     const stopTargetWatch = watch(
         () => target.value,
         (el) => {
@@ -382,7 +460,7 @@ export function useGlassBackdropLuminance(
             // detect it + stand down (the demo also carries a static template marker so
             // the stamp is race-free from frame 0). A per-surface observer covered by a
             // shared ancestor stands down here — it inherits the route luma (no sample,
-            // no loop); an uncovered surface self-samples (the honest floor).
+            // no re-sampling); an uncovered surface self-samples (the honest floor).
             if (isShared) el.setAttribute(GLASS_BACKDROP_SHARED_ATTR, "");
             else if (coveredByShared(el)) return;
             sampleNow();
@@ -394,7 +472,7 @@ export function useGlassBackdropLuminance(
     function dispose(): void {
         stopTargetWatch();
         stopMotionWatch();
-        loop.dispose();
+        disarmLive();
         io.dispose();
         ro.stop();
         downCanvas = null;

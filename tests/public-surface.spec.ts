@@ -18,6 +18,7 @@ import * as Dark from "@glass/composables/dark";
 import * as DataTableSurface from "@glass/components/data-table";
 import * as DialogSurface from "@glass/components/dialog";
 import * as Dock from "@glass/components/dock";
+import * as DockTriggerSurface from "@glass/components/dock/trigger";
 import * as MenuSurface from "@glass/components/menu";
 import * as ExpandableContainerSurface from "@glass/components/expandable-container";
 import * as InputSurface from "@glass/components/input";
@@ -79,6 +80,7 @@ const uiRuntimeExports = [
     "Command",
     "DataTable",
     "Dialog",
+    "ContextMenu",
     "DropdownMenu",
     // HoverCard folded onto <Popover trigger="hover"> (clean break).
     "Label",
@@ -476,6 +478,9 @@ const exactSubpathRuntimeSurfaces = [
         subpath: "menu",
         surface: MenuSurface,
         names: [
+            // [U/B7c C3-3] The region-anchored root: `<DropdownMenu trigger="context">`
+            // became its own root, so a click-only consumer bundles no reka ContextMenu.
+            "ContextMenu",
             "DropdownMenu",
             "DropdownMenuCheckboxItem",
             "DropdownMenuContent",
@@ -519,10 +524,8 @@ const exactSubpathRuntimeSurfaces = [
             "DockLayerGroup",
             // The orientation+layout-aware divider primitive.
             "DockSeparator",
-            // The ONE overlay trigger (folds the
-            // retired DockSelectTrigger/DockDropdownTrigger/DockPopoverTrigger onto the
-            // shared `.dock-trigger` recipe).
-            "DockTrigger",
+            // `DockTrigger` is OFF this barrel (U/B8 PF, G-M1-3b): it publishes on
+            // `./dock-trigger`, so its reka triggers leave every entry that renders a dock.
             "GlassDock",
             // The external-CTA-morphs-into-dock receive seam
             // (the /motion export STAYS — a re-export, not a move).
@@ -533,6 +536,12 @@ const exactSubpathRuntimeSurfaces = [
             "useDockContext",
             "useOptionalDockContext",
         ],
+    },
+    {
+        // U/B8 PF (G-M1-3b): the ONE overlay trigger on its own door.
+        subpath: "dock-trigger",
+        surface: DockTriggerSurface,
+        names: ["DockTrigger"],
     },
 ] as const;
 
@@ -740,6 +749,57 @@ describe("Row 8 package falsifiers", () => {
             rmSync(fixture, { recursive: true, force: true });
         }
         // Subprocess probe — verifier module load flakes vitest's 5s default under the full battery.
+    }, 30_000);
+
+    // U/B7b X3: a component sheet a published chunk imports is a CSS entry. The packed
+    // comparison called the six F5 sheets (and the deck partials) unreachable because
+    // the closure was seeded from the `exports` sheets alone.
+    it("seeds the CSS closure from sheets a published chunk imports", () => {
+        const fixture = mkdtempSync(resolve(tmpdir(), "glass-script-css-"));
+        try {
+            const verifier = pathToFileURL(resolve("scripts/verify-export-types.mjs")).href;
+            const probe = `
+                import { mkdirSync, writeFileSync } from "node:fs";
+                import { verifyExportTypes } from ${JSON.stringify(verifier)};
+                const root = process.argv[1];
+                mkdirSync(root + "/dist/styles", { recursive: true });
+                mkdirSync(root + "/dist/components/widget", { recursive: true });
+                writeFileSync(root + "/package.json", JSON.stringify({
+                    name: "fixture",
+                    version: "1.0.0",
+                    exports: { "./widget": "./dist/widget.js", "./styles": "./dist/styles/index.css" },
+                }));
+                writeFileSync(root + "/package-lock.json", JSON.stringify({
+                    packages: { "": { name: "fixture", version: "1.0.0" } },
+                }));
+                writeFileSync(root + "/dist/styles/index.css", ":root{--probe:1px}");
+                writeFileSync(root + "/dist/widget.js", 'import { t as e } from "./chunk-A.js";\\nexport { e as Widget };');
+                writeFileSync(root + "/dist/components/widget/part.css", ".widget__part{color:red}");
+                writeFileSync(root + "/dist/components/widget/styles.css", '@import "./part.css";.widget{color:blue}');
+                const attempt = (chunk) => {
+                    writeFileSync(root + "/dist/chunk-A.js", chunk);
+                    try {
+                        const evidence = verifyExportTypes({ repositoryRoot: root, artifactRoot: root + "/dist", allowMissingRatchet: true });
+                        return { terminal: "CLEAN", css: evidence.css };
+                    } catch (error) {
+                        return { terminal: "FAILED", message: error.message };
+                    }
+                };
+                console.log(JSON.stringify({
+                    sheet: attempt('import "./components/widget/styles.css";\\nconst t = 1;\\nexport { t };'),
+                    dangling: attempt('import "./components/widget/missing.css";\\nconst t = 1;\\nexport { t };'),
+                }));
+            `;
+            const results = JSON.parse(runVerifierProbe(probe, fixture));
+            // index.css, the chunk's sheet and the partial it imports
+            expect(results.sheet).toEqual({ terminal: "CLEAN", css: 3 });
+            expect(results.dangling.terminal).toBe("FAILED");
+            expect(results.dangling.message).toContain(
+                "chunk-A.js: unresolved script import ./components/widget/missing.css",
+            );
+        } finally {
+            rmSync(fixture, { recursive: true, force: true });
+        }
     }, 30_000);
 
     it("G-BARREL-EXPLICIT: keeps the root barrel explicit", () => {
@@ -972,18 +1032,28 @@ describe("Row 8 built-artifact acceptance", () => {
                 : [name];
         });
 
-    it("ships exactly the style closure plus the three generated members", () => {
+    it("ships exactly the style closure, the chunk sheets and the two generated members", () => {
         expect(built, buildHint).toBe(true);
         const closure = collectStyleClosure(process.cwd());
         const sourceRoot = resolve(process.cwd(), "src");
         // src/styles and src/components are copied whole-tree, so the src-relative
-        // path IS the dist-relative path; the lifecycle then writes three members
-        // that have no source file (SFC bundle, utility emit, component entry).
+        // path IS the dist-relative path; the lifecycle then writes two members that
+        // have no source file (utility emit, component entry), and the library build
+        // writes one SFC sheet beside each chunk that owns styles, which that chunk
+        // imports (U/B7b X3).
+        const chunkSheets = filesUnder("dist")
+            .filter((file) => !file.includes("/") && file.endsWith(".js"))
+            .flatMap((chunk) =>
+                [...readFileSync(resolve("dist", chunk), "utf8").matchAll(/^import\s+"\.\/([^"/]+\.css)";$/gm)].map(
+                    (match) => match[1],
+                ),
+            );
+        expect(chunkSheets.length).toBeGreaterThan(0);
         const expected = new Set([
             ...[...closure.copySources]
                 .filter((path) => path.endsWith(".css"))
                 .map((path) => relative(sourceRoot, path)),
-            "glass-ui.css",
+            ...chunkSheets,
             "styles/components.css",
             "component-styles.css",
         ]);
@@ -1020,6 +1090,28 @@ describe("Row 8 built-artifact acceptance", () => {
         expect(results.removedCss).toEqual(["packed CSS closure is missing component-styles.css"]);
         // Subprocess probe — verifier module load flakes vitest's 5s default under the full battery.
     }, 30_000);
+
+    it("walks every shipped sheet from an export or a published chunk (U/B7b X3)", () => {
+        expect(built, buildHint).toBe(true);
+        const verifier = pathToFileURL(resolve("scripts/verify-export-types.mjs")).href;
+        const probe = `
+            import { verifyExportTypes } from ${JSON.stringify(verifier)};
+            console.log(JSON.stringify(verifyExportTypes({}).css));
+        `;
+        const shipped = filesUnder("dist").filter((file) => file.endsWith(".css"));
+        expect(JSON.parse(runVerifierProbe(probe))).toBe(shipped.length);
+    }, 30_000);
+
+    // U/B7b X3: vue-tsc copies an SFC's `import "./styles.css"` into its `.d.ts`. A
+    // declaration needs no side effect, and an installed consumer's TypeScript
+    // rejects it (TS2882, no declarations for the side-effect import).
+    it("keeps side-effect stylesheet imports out of the declarations", () => {
+        expect(built, buildHint).toBe(true);
+        const carriers = filesUnder("dist")
+            .filter((file) => /\.d\.(?:ts|mts|cts)$/.test(file))
+            .filter((file) => /^\s*import\s+["'][^"']+\.css["']/m.test(readFileSync(resolve("dist", file), "utf8")));
+        expect(carriers).toEqual([]);
+    });
 
     it("keeps raw code-bearing sources out of the built artifact", () => {
         expect(built, buildHint).toBe(true);

@@ -1,9 +1,5 @@
 import { computed, type ComputedRef, type Ref } from "vue";
-import {
-    useSelectionIndicator,
-    type SelectionDeform,
-    type SelectionOption,
-} from "./useSelectionIndicator";
+import { useSelectionIndicator, type SelectionOption } from "./useSelectionIndicator";
 // [2026-08-08 · BK #65, RT-32C] The canonical name, imported rather than respelled.
 // This file carried `type SelectionValue = SelectionOption["value"]` — a local alias
 // that resolved to the same type but made the library's scalar identity read as two
@@ -40,7 +36,7 @@ import {
  *   • the ROVING MACHINE — `useTabRovingFocus` composed VERBATIM (exactly-one-
  *     tabstop, axis-derived arrows, Home/End, wrap, disabled-skip);
  *   • the ONE TRAVELING-INDICATOR WRITER — `useSelectionIndicator` (the
- *     center-anchored ResizeObserver measure + the `--stretch` squish), so the
+ *     center-anchored ResizeObserver measure), so the
  *     dock and tabs indicator is Safari-identical by construction;
  *   • the RECENTER CALL — `el.scrollIntoView({inline:'nearest', block:'nearest'})`
  *     on every select, so a selection past the fold pulls itself into view.
@@ -81,15 +77,13 @@ export interface UseSelectionGroupParams<O extends SelectionOption> {
     /** The container scroller root (observed by the indicator's ResizeObserver). */
     containerRef: Ref<HTMLElement | null>;
     /**
-     * The traveling-indicator element (the deform write target). Omit (or leave
-     * null) for a group with no glide indicator at all (a paper-hairline strip, a
-     * plain toggle row) — the SQUISH then no-ops, which is HEAD's accurate half and
-     * is restored here. ~~The MEASURE does not no-op, and BK #84's rewording asserted
+     * The traveling-indicator element (the measured node). Omit (or leave null) for
+     * a group with no glide indicator at all (a plain toggle row). ~~The MEASURE does not no-op, and BK #84's rewording asserted
      * that it did: `useSelectionIndicator` attaches its `ResizeObserver`
      * unconditionally — that is the Safari-identical guarantee — and
      * `updateSingleSlider` keeps writing a `singleSliderStyle` such a caller never
      * reads. Economizing it is the indicator writer's own change to make.~~
-     * [2026-08-08 · BK #71 W-EYEGLASS, RT-84O: the change was made, in the file this
+     * [2026-08-08 · BK #71, RT-84O: the change was made, in the file this
      * text routed it to. `updateSingleSlider` now returns before its first rect read
      * when `indicatorRef` is null, so such a caller runs ZERO layout. What #84 wrote
      * was true of #84's HEAD and is false of this one — the `ResizeObserver` still
@@ -98,23 +92,8 @@ export interface UseSelectionGroupParams<O extends SelectionOption> {
      * container, so the container watcher already covers it.]
      */
     indicatorRef?: Ref<HTMLElement | null>;
-    /**
-     * What the travelling body is made of — `"plate"` (default, the full body and
-     * the eyeglass host), `"mark"` (a hairline: length only), `"none"`. STATED, not
-     * inferred: a multi-toggle group has no single travelling body, and that is a
-     * different fact from a hairline having no area, even though the old null-ref
-     * sentinel spelled both the same way.
-     */
-    deform?: ComputedRef<SelectionDeform>;
     /** Per-option item refs, index-aligned to `options`. */
     buttonRefs: Ref<HTMLElement[]>;
-    /**
-     * A per-commit side effect the CALLER owns, fired on every committed selection
-     * (pointer AND keyboard) before the model write — e.g. SegmentedTabs' press
-     * squish on the pressed button. The engine stays the one selection path; a
-     * caller that needs a local flourish hangs it here rather than forking `select`.
-     */
-    onSelect?: (value: O["value"], idx: number) => void;
 }
 
 export interface UseSelectionGroupReturn<V extends SelectionValue = string> {
@@ -124,7 +103,7 @@ export interface UseSelectionGroupReturn<V extends SelectionValue = string> {
     isSelected: (value: V) => boolean;
     /**
      * Commit a selection at `idx` — writes the model (toggle in `multiple`),
-     * fires the travel-squish, and recenters the item via `scrollIntoView`.
+     * and recenters the item via `scrollIntoView`.
      */
     select: (value: V, idx: number) => void;
     /** The roving tabindex for option `idx` (`0` for the tabstop, `-1` else). */
@@ -133,8 +112,6 @@ export interface UseSelectionGroupReturn<V extends SelectionValue = string> {
     onKeydown: (e: KeyboardEvent) => void;
     /** Inline style for the single-select traveling indicator (the ONE writer). */
     singleSliderStyle: Ref<Record<string, string>>;
-    /** Imperatively kick the travel-squish on a selection at `idx`. */
-    squishOnTravel: (toIdx: number) => void;
     /** The resolved group `role` (`radiogroup` | `tablist` | `group`). */
     groupRole: ComputedRef<SelectionRole>;
     /** The per-item ARIA attributes for `value`, role-per-mode. */
@@ -188,35 +165,25 @@ export function useSelectionGroup<O extends SelectionOption>(
 
     // ── The ONE traveling-indicator writer ──
     // The indicator tracks the (single) active value; a `multiple` group passes
-    // its first-selected as the glide anchor. A multi-toggle carries no single
-    // travelling body, so it declares `deform: "none"` — the fact stated in the
-    // parameter that means it, rather than smuggled through a null element ref that
-    // already means something else here.
+    // its first-selected as the glide anchor.
     const indicatorModel = computed<O["value"] | undefined>(
         () => activeValues.value[0],
     );
-    const deform = computed<SelectionDeform>(() =>
-        params.deform?.value ?? (modeRef.value === "multiple" ? "none" : "plate"),
-    );
 
-    const { singleSliderStyle, squishOnTravel } = useSelectionIndicator<O>({
+    const { singleSliderStyle } = useSelectionIndicator<O>({
         containerRef,
         indicatorRef: indicatorRef ?? { value: null } as Ref<HTMLElement | null>,
         buttonRefs,
         options,
         model: indicatorModel,
-        activeValues,
         vertical: isVertical,
-        deform,
     });
 
-    // ── The selection commit (the ONE registry write + recenter + squish) ──
+    // ── The selection commit (the ONE registry write + recenter) ──
 
     function select(value: O["value"], idx: number) {
         const option = options.value[idx];
         if (option?.disabled) return;
-
-        params.onSelect?.(value, idx);
 
         if (modeRef.value === "multiple") {
             const cur = Array.isArray(model.value) ? [...model.value] : [];
@@ -228,8 +195,6 @@ export function useSelectionGroup<O extends SelectionOption>(
             model.value = value;
         }
 
-        // The elastic travel-squish (no-op when there is no indicator element).
-        squishOnTravel(idx);
         // 's recenter FACILITY, fired here in the engine: a select
         // past the fold pulls itself into view (native scroll, no measure loop).
         buttonRefs.value[idx]?.scrollIntoView({
@@ -271,7 +236,6 @@ export function useSelectionGroup<O extends SelectionOption>(
         rovingTabindex,
         onKeydown: onStripKeydown,
         singleSliderStyle,
-        squishOnTravel,
         groupRole,
         itemAttrs,
     };

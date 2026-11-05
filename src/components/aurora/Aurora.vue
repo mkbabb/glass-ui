@@ -1,7 +1,11 @@
 <script setup lang="ts">
-import { computed, getCurrentInstance, ref, watch } from "vue";
+import { computed, getCurrentInstance, ref, shallowRef, watch } from "vue";
 import { useAurora } from "./composables/useAurora";
-import { auroraFallbackGround } from "./composables/auroraFallbackGround";
+import {
+    auroraFallbackGround,
+    auroraGroundKey,
+    type AuroraFallbackGround,
+} from "./composables/auroraFallbackGround";
 import type { AuroraRuntimeOptions } from "./composables/runtime";
 import { DEFAULT_AURORA_CONFIG, type AuroraConfig } from "./constants/presets";
 import { resolveRenderMode, type AuroraRenderMode } from "./constants/renderMode";
@@ -165,14 +169,56 @@ watch(api.rendererStatus, (status) => emit("rendererStatus", status), {
 //     is a same-palette dissolve FROM the ground TO the live field (no tone jump);
 //   - on the `"css"` substrate (software-raster, forced-capture) the SAME ground is
 //     the permanent certify surface (mean + per-quadrant luminance match the composite).
-// Reactive, so a preset switch repaints the ground too.
-const faithfulGround = computed(() => auroraFallbackGround(props.config));
-const placeholderBackgroundImage = computed(
-    () => faithfulGround.value.backgroundImage,
+//
+// ENCODED ONCE PER PALETTE AND PRESET (atlas U/B7 F6, O-16). The ground is keyed by
+// `auroraGroundKey` (palette + field shape, not nuclei positions), so a config change
+// that only moves nuclei (a scroll lean) re-encodes nothing and writes nothing to the
+// placeholder; the nuclei move on the GPU path only. When the key does change (a theme
+// or preset swap), the new ground is written to the second layer, which fades in over
+// the first at full opacity: the outgoing layer stays opaque underneath, so the
+// crossfade never lets the page show through.
+const grounds = shallowRef<[AuroraFallbackGround | null, AuroraFallbackGround | null]>([
+    null,
+    null,
+]);
+const activeGround = ref<0 | 1>(0);
+// 0 until the first key change; the first ground paints without a fade.
+const groundGeneration = ref(0);
+watch(
+    () => auroraGroundKey(props.config),
+    () => {
+        const ground = auroraFallbackGround(props.config);
+        if (!grounds.value[0]) {
+            grounds.value = [ground, null];
+            return;
+        }
+        const next = activeGround.value === 0 ? 1 : 0;
+        const layers: [AuroraFallbackGround | null, AuroraFallbackGround | null] = [
+            ...grounds.value,
+        ];
+        layers[next] = ground;
+        grounds.value = layers;
+        activeGround.value = next;
+        groundGeneration.value += 1;
+    },
+    { immediate: true },
 );
-const placeholderBackgroundColor = computed(
-    () => faithfulGround.value.backgroundColor,
-);
+// One style object per encoded ground. The layers carry `v-memo` on the ground and
+// its active state, so a re-render for any other prop (a nucleus move) patches
+// nothing on them: Vue would otherwise re-set both custom properties every render.
+const groundStyles = new WeakMap<AuroraFallbackGround, Record<string, string>>();
+const groundStyle = (ground: AuroraFallbackGround | null) => {
+    if (!ground) return undefined;
+    let style = groundStyles.get(ground);
+    if (!style) {
+        style = {
+            "--aurora-ground-image": ground.backgroundImage,
+            "--aurora-ground-color": ground.backgroundColor,
+        };
+        groundStyles.set(ground, style);
+    }
+    return style;
+};
 
 defineExpose({
     config: props.config,
@@ -218,12 +264,16 @@ defineExpose({
           the WebGL2-unavailable fallback.
         -->
         <div
+            v-for="(ground, layer) in grounds"
+            :key="layer"
+            v-memo="[ground, activeGround === layer, groundGeneration]"
             class="aurora-placeholder h-full min-h-0 w-full"
             aria-hidden="true"
-            :style="{
-                '--aurora-ground-image': placeholderBackgroundImage,
-                '--aurora-ground-color': placeholderBackgroundColor,
-            }"
+            :data-aurora-ground-active="activeGround === layer ? '' : undefined"
+            :data-aurora-ground-fade="
+                activeGround === layer && groundGeneration > 0 ? '' : undefined
+            "
+            :style="groundStyle(ground)"
         />
         <!--
           The live canvas presents an opaque GPU buffer; its public pigment alpha
@@ -304,7 +354,25 @@ defineExpose({
         background-color: var(--aurora-ground-color, transparent);
     }
 
+    /* The two ground layers. The active one paints on top; a newly written ground
+       fades in over the previous one, which stays opaque beneath it. */
+    .aurora-placeholder[data-aurora-ground-active] {
+        z-index: 1;
+    }
+
+    .aurora-placeholder[data-aurora-ground-fade] {
+        animation: aurora-ground-in var(--duration-fast) var(--ease-standard) both;
+    }
+
+    @keyframes aurora-ground-in {
+        from {
+            opacity: 0;
+        }
+    }
+
+    /* The canvas layer paints above both grounds. */
     .aurora-canvas-layer {
+        z-index: 2;
         opacity: 0;
         transition: opacity var(--duration-slow) var(--ease-standard);
         /* Experimental, efficacy unverified. Hypothesis: at armed
@@ -324,6 +392,11 @@ defineExpose({
     @media (prefers-reduced-motion: reduce) {
         .aurora-canvas-layer {
             transition-duration: 1ms;
+        }
+
+        /* A ground change is a cut. */
+        .aurora-placeholder[data-aurora-ground-fade] {
+            animation: none;
         }
     }
 

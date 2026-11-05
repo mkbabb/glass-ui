@@ -63,7 +63,7 @@
 
     .glass-chip--icon,
     .glass-chip--icon.glass-capsule {
-        border-radius: var(--radius-pill);
+        border-radius: var(--radius-circle);
     }
 
     .glass-chip__content {
@@ -78,7 +78,7 @@
         block-size: 1.25rem;
         padding: 0;
         border: 0;
-        border-radius: var(--radius-pill);
+        border-radius: var(--radius-circle);
         color: currentColor;
         background: color-mix(in srgb, currentColor 10%, oklch(0.9 0.05 75 / 0));
         cursor: pointer;
@@ -125,7 +125,7 @@
             inline-size: 1.25rem;
             block-size: 1.25rem;
             place-items: center;
-            border-radius: var(--radius-pill);
+            border-radius: var(--radius-circle);
             background: color-mix(in srgb, currentColor 10%, oklch(0.9 0.05 75 / 0));
         }
     }

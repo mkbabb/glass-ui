@@ -67,7 +67,9 @@ describe("Select product contract", () => {
 
         expect(content.classes()).toContain("overflow-hidden");
         expect(content.classes()).not.toContain("overflow-y-auto");
-        expect(viewport.classes()).toContain("max-h-[inherit]");
+        // U/B7 D-3: the viewport inherits no clamp; it fills the plate, whose block size
+        // is the room reka measured (glass/overlay-plate.css).
+        expect(viewport.classes()).not.toContain("max-h-[inherit]");
         // [BK #81 W-PICKER, 2026-08-08 — the bare `overflow-y-auto` utility this line
         // used to assert is gone: the viewport composes `.fading-scroll--y`, which IS
         // the scroll port (it declares `overflow-y: auto` in its own recipe) and is

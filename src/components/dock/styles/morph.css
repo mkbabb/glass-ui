@@ -101,7 +101,7 @@
     .glass-dock:not(.vertical) {
         /* The collapsed inline-pad endpoint is the EXPANDED block pad (max'd with the
            consumer `--dock-collapsed-padding` handle) so the height-pinned collapsed
-           pill is SYMMETRIC → a clean circle at the `--radius-dock` 9999px. The block
+           pill is SYMMETRIC → a clean circle at `--radius-circle` (below). The block
            axis is pinned to the expanded pad (below), so matching the inline collapsed
            endpoint to it keeps the box square (the B4 "symmetric collapsed padding
            keeps the pill a circle" intent, preserved through the §1 height-pin). The
@@ -165,6 +165,28 @@
         cursor: pointer;
         justify-content: center;
         box-shadow: var(--shadow-dock-override, var(--shadow-dock-collapsed));
+    }
+
+    /* The collapsed horizontal dock at rest is a square box, and it is drawn as a
+       circle (`--radius-circle`). `--radius-dock` (the pill rung, 1rem) is a corner on
+       anything taller than 32px, so the circle is stated here, for the settled box
+       only: mid-morph the box carries the expanded footprint under a scale. */
+    .glass-dock.collapsed:not([data-morphing]):not(.vertical) {
+        border-radius: var(--radius-circle);
+    }
+
+    /* A collapsed dock that keeps a `#persistent` control beside its summary is NOT a
+       square: it is two cells wide (atlas's figure dock, Table view plus the handle,
+       100 x 52). `50%` on that box drew an oval lozenge, a full-radius box over 40 px
+       (U/B8r I-3, atlas register F-20). Such a dock is a short bar, a container, so it
+       keeps the bar corner it wears open (`--radius-dock`, 16 px on a 52 px box): the
+       collapse and the open dock share one corner, and the morph swaps no silhouette.
+       The circle stays for the square cases: the summary alone, or a persistent
+       control alone (the empty-summary case above). Two flat `:has()`, never nested. */
+    .glass-dock.collapsed:not([data-morphing]):not(.vertical):has(.dock-persistent):has(
+            .dock-layer--summary:not(:empty)
+        ) {
+        border-radius: var(--radius-dock);
     }
 
     /* The collapsed summary is a PERFECT CIRCLE. The `.dock-layer`
@@ -256,6 +278,11 @@
     }
     .glass-dock.collapsed:has(.dock-layer--summary:empty) .dock-persistent > * {
         place-self: center;
+    }
+    /* The progress rim is out of flow and fills the pill (`inset: 0`). Centring it shrinks it to a
+       0 x 0 box, and the track inside it has no length, so the collapsed dock paints no progress. */
+    .glass-dock.collapsed:has(.dock-layer--summary:empty) .dock-persistent > .scroll-progress-rim {
+        place-self: stretch;
     }
     /* Floor the collapsed glyph at the 16px-min the switcher glyph
        carries (never a sliver inside an inline-flex column). */

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import "./styles.css";
 import { cn } from "../_shared/class-names";
 import type { MetricRowProps } from "./types";
 

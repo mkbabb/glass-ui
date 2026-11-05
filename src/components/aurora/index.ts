@@ -26,6 +26,8 @@ export type { AuroraRuntimeMode, AuroraRuntimeOptions } from "./composables/runt
 export {
     DEFAULT_AURORA_CONFIG,
     PAPER_WASH_GROUND,
+    // A7: the draw-once field partial (all drift and grain 0).
+    STILL_FIELD,
     // The chroma-floor identity, composed by consumers
     // these by name, no magic number).
     DEFAULT_VIVIDNESS,
@@ -94,6 +96,7 @@ export {
 // static composite mirror the certify π measures.
 export {
     auroraFallbackGround,
+    auroraGroundKey,
     sampleAuroraField,
     nucleiFieldStatic,
     relativeLuminance,

@@ -14,7 +14,7 @@ import type { Motion, Surface } from "../_shared/axes";
 import { useMotionAxis } from "../_shared/useMotionAxis";
 import { surfaceClass } from "../_shared/surface/resolve";
 import { scrimOpacity } from "../sheet/motion";
-import { useModalShortcutBarrier } from "../_shared/overlay";
+import { returnFocusQuietly, useModalShortcutBarrier } from "../_shared/overlay";
 import type { DismissableContentEmits } from "../_shared/interaction";
 
 /**
@@ -140,6 +140,7 @@ watch(
     },
     { flush: "sync" },
 );
+const onCloseAutoFocus = returnFocusQuietly(() => dialogRoot.triggerElement.value);
 
 // THE REBUFF. `locked` refuses Esc and outside-press, and the refusal is PERCEPTIBLE:
 // a monotonically-increasing count drives the rung the portaled node carries, so every
@@ -200,6 +201,7 @@ const contentClass = computed(() =>
             :style="contentStyle"
             :data-surface="props.surface"
             data-slot="dialog-content"
+            @close-auto-focus="onCloseAutoFocus"
             :data-dismiss="props.dismiss"
             :data-rebuff="rebuffRung"
             :data-scroll="props.scroll ? '' : undefined"

@@ -88,6 +88,18 @@
         backdrop-filter: none;
     }
 
+    /* ── static — the plate that samples no backdrop (the `backdropMode` axis) ──
+       A plate in the page flow over a still field: nothing passes behind it but the
+       field, so a live lens re-filters the whole plate on every scroll frame and
+       shows nothing the fill does not. The plate keeps its rung, fill, edge and rim;
+       only the backdrop-filter surface is withheld. Specificity 0-2-0 beats the rung
+       class and the `[data-surface]` rule alike, so it holds on every decoration.
+       Floating chrome that content scrolls under stays `live`. */
+    [data-surface][data-backdrop-mode="static"] {
+        -webkit-backdrop-filter: none;
+        backdrop-filter: none;
+    }
+
     /* ── .paper-ink-mark — the PAPER ink-hairline MARK register ────────────────
        The 2px `--foreground` ink mark on a paper
        surface — NO plate, NO blur, NO glass. This is a MARK register, NOT a

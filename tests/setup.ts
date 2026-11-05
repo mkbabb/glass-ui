@@ -6,9 +6,31 @@ config.global.stubs = {
 };
 
 class TestResizeObserver {
-    observe = vi.fn();
-    unobserve = vi.fn();
-    disconnect = vi.fn();
+    static instances = new Set<TestResizeObserver>();
+    readonly observe = vi.fn((target: Element) => {
+        this.targets.add(target);
+        TestResizeObserver.instances.add(this);
+    });
+    readonly unobserve = vi.fn((target: Element) => this.targets.delete(target));
+    readonly disconnect = vi.fn(() => {
+        this.targets.clear();
+        TestResizeObserver.instances.delete(this);
+    });
+    private readonly targets = new Set<Element>();
+
+    constructor(private readonly callback: ResizeObserverCallback = () => {}) {}
+
+    /**
+     * The browser's initial delivery: every connected observer reports each target it
+     * observes, after layout and before paint. A real observer always makes this
+     * delivery; a test calls it where that frame would run.
+     */
+    static deliverInitial(): void {
+        for (const ro of [...TestResizeObserver.instances]) {
+            const entries = [...ro.targets].map((target) => ({ target }) as ResizeObserverEntry);
+            if (entries.length) ro.callback(entries, ro as unknown as ResizeObserver);
+        }
+    }
 }
 
 class TestIntersectionObserver {

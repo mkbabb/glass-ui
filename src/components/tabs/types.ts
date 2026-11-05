@@ -23,7 +23,7 @@ export interface SegmentedTabOption<V extends string = string> {
     controls?: string;
 }
 
-/** The two materials: `pill` is the default glass eyeglass; `underline` is the paper ink hairline. */
+/** The two materials: `pill` is the default glass capsule; `underline` is the paper ink hairline. */
 export type SegmentedTabsVariant = "pill" | "underline";
 
 /** The interaction semantic, independent of material. `toggle` exposes a
@@ -61,10 +61,9 @@ export interface SegmentedTabsProps<V extends string = string> {
     /** Accessible name shared by the desktop strip and responsive Select. */
     ariaLabel?: string;
     /**
-     * The material — `pill` (DEFAULT, the glass eyeglass) or `underline` (the paper
-     * ink-hairline rule). TWO, and the eyeglass is not a third: it is what `pill`
-     * IS. A "million variants that are essentially the same thing" is the failure
-     * mode this axis exists to refuse.
+     * The material — `pill` (DEFAULT, the glass capsule) or `underline` (the paper
+     * ink-hairline rule). TWO. A "million variants that are essentially the same
+     * thing" is the failure mode this axis exists to refuse.
      */
     variant?: SegmentedTabsVariant;
     /**
@@ -86,11 +85,11 @@ export interface SegmentedTabsProps<V extends string = string> {
      */
     responsive?: boolean | SegmentedTabsResponsive<V>;
     /**
-     * Motion weight. `full` (default) lets the pill indicator follow a pointer,
-     * squash with drag velocity, and settle to the nearest tab. Drag supplements the
+     * Motion weight. `full` (default) lets the pill indicator follow a pointer
+     * and settle to the nearest tab, at its own size. Drag supplements the
      * fully operable click and keyboard path; it is never the sole selection method.
      * `reduced` and `off` use the click-only strip while preserving roving focus.
-     * Underline has no deformable indicator. Reduced-motion preference forces
+     * Underline has no draggable indicator. Reduced-motion preference forces
      * `full → reduced`.
      */
     motion?: Motion;

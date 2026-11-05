@@ -10,6 +10,7 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { ref } from "vue";
 import { useCanvas2D } from "@glass/composables/glass/canvas2d/useCanvas2D";
+import { GLASS_FIELD_PAINT_EVENT } from "@glass/composables/glass/fieldPaint";
 
 let rafQueue: Array<() => void>;
 let docListeners: Record<string, Array<(e: any) => void>>;
@@ -37,6 +38,8 @@ function makeCanvas(ctx: object) {
         height: 0,
         parentElement: null,
         getBoundingClientRect: () => ({ width: 100, height: 50, left: 0, top: 0 }),
+        // The lifecycle announces each drawn frame on the canvas (GLASS_FIELD_PAINT_EVENT).
+        dispatchEvent: vi.fn(() => true),
     } as unknown as HTMLCanvasElement;
 }
 
@@ -152,6 +155,13 @@ describe("useCanvas2D — the Canvas2D substrate park/freeze contract", () => {
         // the live loop draws frames as the queue is pumped (delta-asserted so the
         // presize layout-settle rAFs sharing the queue don't skew the count).
         expect(runFrames(() => frames, 5)).toBeGreaterThan(0);
+        // B7c C3-4: every drawn frame is announced on the canvas, so a glass surface
+        // over the field samples on the paint instead of running its own frame loop.
+        const announced = (
+            canvas.value!.dispatchEvent as unknown as ReturnType<typeof vi.fn>
+        ).mock.calls.map(([event]) => (event as Event).type);
+        expect(announced.length).toBe(frames);
+        expect(new Set(announced)).toEqual(new Set([GLASS_FIELD_PAINT_EVENT]));
 
         // the 3-reason suspend model: both held → parked, isRunning false.
         handle.suspend("off-screen");

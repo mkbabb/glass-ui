@@ -164,9 +164,12 @@ describe.skipIf(!existsSync(COMPONENTS))("emitted component utilities", () => {
         // is empty for the wrong reason and this case greens over nothing. Assert there is
         // a subject before judging it.
         expect(others.length).toBeGreaterThan(0);
-        const offenders = others.filter(
-            (value) => value !== "0s" && !/^var\(--duration-[a-z-]+\)$/.test(value),
-        );
+        // The house clock may be tempo-scaled: `sheet-animate` (U/B7b X3, now emitted)
+        // reads `calc(var(--duration-panel) * var(--motion-tempo))`. That is the clock
+        // family, not a literal.
+        const houseClock =
+            /^(?:var\(--duration-[a-z-]+\)|calc\(var\(--duration-[a-z-]+\) \* var\(--motion-tempo\)\))$/;
+        const offenders = others.filter((value) => value !== "0s" && !houseClock.test(value));
         expect(offenders).toEqual([]);
     });
 

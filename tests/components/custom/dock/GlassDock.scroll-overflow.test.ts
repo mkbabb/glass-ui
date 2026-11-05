@@ -1,6 +1,8 @@
 import { mount } from "@vue/test-utils";
 import { describe, expect, it } from "vitest";
+import { h, nextTick } from "vue";
 
+import DockControl from "@glass/components/dock/DockControl.vue";
 import GlassDock from "@glass/components/dock/GlassDock.vue";
 
 /**
@@ -39,13 +41,26 @@ describe("GlassDock lattice port — one run, both axes", () => {
         }
     });
 
-    it("the run declares the toolbar semantics its roving tabindex promises", () => {
+    // A run of declared seats claims the toolbar its roving tabindex promises (10.1.2: an
+    // undeclared child voids the claim, `g-dock-seat-rule.test.ts`).
+    it("the run declares the toolbar semantics its roving tabindex promises", async () => {
         for (const orientation of ["horizontal", "vertical"] as const) {
-            const run = mount(GlassDock, { props: { orientation } }).get(".dock-run");
+            const wrapper = mount(GlassDock, {
+                props: { orientation },
+                slots: {
+                    default: () => [
+                        h(DockControl, { "aria-label": "a" }),
+                        h(DockControl, { "aria-label": "b" }),
+                    ],
+                },
+            });
+            await nextTick();
+            const run = wrapper.get(".dock-run");
             expect(run.attributes("role")).toBe("toolbar");
             // The arrow-key pair `useDockRun` binds follows this attribute; announcing
             // a horizontal toolbar that answers ArrowUp/Down is the defect it prevents.
             expect(run.attributes("aria-orientation")).toBe(orientation);
+            wrapper.unmount();
         }
     });
 

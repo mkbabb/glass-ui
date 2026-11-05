@@ -39,6 +39,18 @@
 // such pass: from DOM events alone a press on a control that just arrived looks the
 // same as race (b), so those still defer until settle.
 //
+// THE APPROACH SCOPE [atlas U/B7 D-5]. Race (b) needs a hover approach: a fine pointer
+// arrived from outside the dock and its arrival opened the dock, so the layer swapped
+// under a pointer that was aimed at nothing in the new layer. The mid-morph deferral
+// is scoped to that case. When the expand was opened any other way (the owner's
+// `expand()`, a press inside the dock, a touch or pen pointer, which has no hover), a
+// press that starts on an arriving control and clicks the same control is a reader
+// aiming at that control, and it passes. On 10.1.1 it was deferred for the whole
+// 840 ms settle window: a phone sheet opened from a trigger dropped every row tap for
+// its first ~800 ms. A click whose identity changed under the pointer is still
+// swallowed in every case (race (a)). A morph the guard saw no flip for keeps the
+// deferral.
+//
 // This makes the consumer's interim arms (the `@touchend.prevent` +
 // 320ms capture-phase guard keyed off the exposed `expanded` ref) UNNECESSARY: the
 // guard lives inside GlassDock. The exposed `expanded` ref STAYS exposed (a
@@ -58,6 +70,10 @@ export interface DockClickIntegrity {
     onClickCapture: (event: MouseEvent) => void;
     /** Mark the collapsed→expanded flip so the settle window opens (call on expand). */
     markExpandFlip: () => void;
+    /** `pointerenter` on the dock root — arms the approach scope for a fine pointer. */
+    onPointerEnter: (event: PointerEvent) => void;
+    /** `pointerleave` on the dock root — the pointer is no longer approaching. */
+    onPointerLeave: () => void;
     /** The outer pane retained for the witnessed press, or null. */
     pressKeepaliveLayer: Readonly<Ref<"full" | null>>;
 }
@@ -94,6 +110,12 @@ export function useDockClickIntegrity(
     let settleDeadline = 0;
     let settleTimer: ReturnType<typeof setTimeout> | null = null;
     const pressKeepaliveLayer = ref<"full" | null>(null);
+    // The approach scope: a fine pointer is inside the dock and has not pressed since it
+    // entered. A flip taken in that state was opened by the approach (hover).
+    let approaching = false;
+    // Did the current expand flip come from an approach? `true` until a flip is seen, so
+    // a morph with no witnessed origin keeps the deferral.
+    let flipByApproach = true;
     let pressControl: HTMLElement | null = null;
     const inertedBranches: Array<{ element: HTMLElement; wasInert: boolean }> = [];
 
@@ -141,6 +163,7 @@ export function useDockClickIntegrity(
         expand path — a tap-expand or a hover/focus expand). The window is the floor
         backstop; `[data-morphing]` is the live primary. */
     function markExpandFlip(): void {
+        flipByApproach = approaching;
         settleDeadline = now() + MORPH_SETTLE_MS;
         clearSettleTimer();
         // A timer is NOT strictly needed for the decision (the click handler reads the
@@ -172,7 +195,16 @@ export function useDockClickIntegrity(
         return !!root && root.hasAttribute("data-morphing");
     }
 
+    function onPointerEnter(event: PointerEvent): void {
+        approaching = event.pointerType === "mouse";
+    }
+
+    function onPointerLeave(): void {
+        approaching = false;
+    }
+
     function onPointerDownCapture(event: PointerEvent): void {
+        approaching = false;
         clearPressKeepalive();
         pressTarget = event.target;
         // A press that BEGINS while the box is still morphing is a race by
@@ -238,7 +270,12 @@ export function useDockClickIntegrity(
         // still must match.
         const inPersistent =
             pressTarget instanceof Element && pressTarget.closest(".dock-persistent") !== null;
-        if ((!pressedDuringMorphSnapshot || inPersistent) && sameControlIdentity(event.target)) {
+        // THE APPROACH SCOPE: a mid-morph press is a race only when an approach opened
+        // the dock; otherwise a same-control press is the reader's aim.
+        if (
+            (!pressedDuringMorphSnapshot || inPersistent || !flipByApproach) &&
+            sameControlIdentity(event.target)
+        ) {
             pressTarget = null;
             return;
         }
@@ -264,6 +301,8 @@ export function useDockClickIntegrity(
         onPointerCancelCapture,
         onClickCapture,
         markExpandFlip,
+        onPointerEnter,
+        onPointerLeave,
         pressKeepaliveLayer: readonly(pressKeepaliveLayer),
     };
 }

@@ -13,7 +13,7 @@ import ModalOverlay from "../dialog/ModalOverlay.vue";
 import type { Motion, Surface } from "../_shared/axes";
 import { useMotionAxis } from "../_shared/useMotionAxis";
 import { surfaceClass } from "../_shared/surface/resolve";
-import { useModalShortcutBarrier } from "../_shared/overlay";
+import { returnFocusQuietly, useModalShortcutBarrier } from "../_shared/overlay";
 import {
     scrimDetentOpacity,
     scrimOpacity,
@@ -102,8 +102,14 @@ const SIDE_BORDER: Record<SidePlacement, string> = {
     right: "border-l",
 };
 
+// POSITION IS IDENTITY, stated as a utility the way `DialogContent` states it. The
+// material classes author `position: relative` for their own rims (material.css,
+// ladder.css) at 0,1,0 in `@layer components`, and the sheet's `position: fixed` sat
+// in a `:where()` rule at 0,0,0 in the same layer, so every sheet rendered in document
+// flow, below the fold (atlas G-1). The `fixed` utility rides `@layer utilities`, which
+// outranks every material rule by layer, not by a specificity race.
 const contentClass = computed(() =>
-    cn(SIDE_BORDER[props.side], surfaceClass("floating"), props.class),
+    cn("fixed", SIDE_BORDER[props.side], surfaceClass("floating"), props.class),
 );
 
 const dialogRoot = injectDialogRootContext();
@@ -262,6 +268,7 @@ watch(
     },
     { flush: "sync" },
 );
+const onCloseAutoFocus = returnFocusQuietly(() => dialogRoot.triggerElement.value);
 
 const forwarded = useForwardPropsEmits(delegatedProps, emits);
 
@@ -302,6 +309,7 @@ const contentStyle = computed<CSSProperties>(() => ({
             :style="contentStyle"
             :data-surface="props.surface"
             data-slot="sheet-content"
+            @close-auto-focus="onCloseAutoFocus"
             :data-side="props.side"
             :data-modal="dialogRoot.modal.value ? undefined : 'false'"
             :data-detents="detented ? '' : undefined"

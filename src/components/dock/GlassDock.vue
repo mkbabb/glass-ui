@@ -30,7 +30,7 @@ import { computed, nextTick, ref, useId, useTemplateRef, watch } from "vue";
 import { FOCUSABLE_SELECTOR } from "../_shared/focus";
 import { useGlassBackdropLuminance } from "../../composables/glass/useGlassBackdropLuminance";
 import { OPEN_DISMISSABLE_LAYER_SELECTOR } from "./constants";
-import { provideDockContext } from "./composables/dockContext";
+import { DockFace, provideDockContext } from "./composables/dockContext";
 import { useDockState } from "./composables/useDockState";
 import { useDockMorphOrchestrator } from "./composables/useDockMorph";
 import { useDockExpandedSize } from "./composables/dockMorphMeasure";
@@ -83,6 +83,9 @@ defineOptions({ inheritAttrs: false });
 const props = withDefaults(defineProps<DockProps>(), {
     backdropMode: "live",
     collapse: "closed",
+    expandOn: "hover",
+    anchor: "center",
+    collapsedLabel: "Expand dock",
 });
 
 /* The resolved shell-prop computeds — shape/orientation, the collapse surface
@@ -106,7 +109,7 @@ const statusEl = useTemplateRef<HTMLElement>("statusEl");
    the port scrolls, and the common ancestor the cut-cap timeline scopes to. Reach,
    roving tabindex and the announcement all read the SAME lattice arithmetic, so they
    live in one composable rather than three that must agree. */
-useDockRun({ runEl: fullEl, statusEl, orientation });
+const { toolbar } = useDockRun({ runEl: fullEl, statusEl, orientation });
 
 /* Wire the sampled-luminance observer ON for
    the dock by default. It writes `--glass-backdrop-luma` + derives the
@@ -155,6 +158,7 @@ const {
 } = useDockState({
     rootEl: dockEl,
     alwaysExpanded,
+    expandOn: computed(() => props.expandOn),
     initialExpanded: !startCollapsed.value,
     isTransitioning,
     dockId,
@@ -170,15 +174,16 @@ const {
    as `data-held` and what a descendant reads to co-answer the same hand. The
    posture count is reached through `keepOpen`/`release` and is deliberately not
    published as a flag — nothing should paint off "a popover is open". */
+const visualExpanded = computed(() => alwaysExpanded.value || expanded.value);
+
 provideDockContext({
     id: dockId,
     orientation,
     keepOpen,
     release,
     held: graspHeld,
+    expanded: visualExpanded,
 });
-
-const visualExpanded = computed(() => alwaysExpanded.value || expanded.value);
 
 /* The SPINE plate owns clipping. Portaled menu and search surfaces remain outside the
    dock's layout, while `.glass-dock` uses layout containment without paint clipping. */
@@ -191,14 +196,17 @@ const visualExpanded = computed(() => alwaysExpanded.value || expanded.value);
    [2026-08-24 · BK #47 W7 MORPH] The endpoint-poisoning cure lives inside
    `dockMorphMeasure` — a posture flip no longer writes an endpoint from a root that has
    not laid out in that posture. Nothing is needed HERE: see the composable for why the
-   spec's proposed one-frame hold is the wrong mechanism for the right defect. */
-useDockExpandedSize({
+   spec's proposed one-frame hold is the wrong mechanism for the right defect.
+
+   [2026-10-21 · 10.1.2 · O-101] `measure` goes to the morph orchestrator below, which
+   calls it when it arms (post-flush, before `[data-morphing]`), so an expand reserves
+   the box of the pane it opens onto, not a span latched before the pane changed. */
+const { measure } = useDockExpandedSize({
     rootEl: dockEl,
     contentEl: layersEl,
     expandedEl: fullEl,
     collapsedEl: summaryEl,
     axis: orientation,
-    expanded: visualExpanded,
 });
 
 /* The dock morph orchestrator owns the built-in collapsed↔expanded pair and writes
@@ -226,6 +234,7 @@ const {
     onMorphActiveChange: (active) => {
         isTransitioning.value = active;
     },
+    measure,
 });
 
 const summaryIsDisclosure = computed(() => outerCurrentLayer.value === "summary");
@@ -259,17 +268,41 @@ async function onSummaryKeydown(event: KeyboardEvent) {
 // so it must not eat the collapse. By SCOPE: the matched layer must live INSIDE
 // `fullEl`. `closest()` walks the whole ancestor chain, so a dock hosted inside an open
 // Dialog would otherwise match the DIALOG and never Escape-collapse.
-async function onFullKeydown(event: KeyboardEvent) {
+function onFullKeydown(event: KeyboardEvent): void {
     if (event.key !== "Escape") return;
     const layer = (event.target as Element | null)?.closest?.(
         OPEN_DISMISSABLE_LAYER_SELECTOR,
     );
     if (layer && fullEl.value?.contains(layer)) return;
     collapse();
+}
+
+/* THE COLLAPSE HANDS FOCUS TO THE SUMMARY. On the collapse edge the expanded face goes
+   inert and every overlay its seats opened closes (`useDockParticipation`'s `close`,
+   stamped `data-glass-dock-face`).
+   Focus held in either place has nowhere left to stand: the face's controls are inert,
+   and an overlay's own focus return aims at its trigger, which sits in that same inert
+   face, so the engine drops it to <body>. Where focus stood is read on the edge itself
+   (a `pre` watcher, before the patch that writes `inert`), and once the summary is live
+   it takes focus, as the Escape path always gave it. One path for every collapse:
+   Escape, `collapse()`, and the collapse-owned overlay close. Focus anywhere else (the
+   persistent region, the page) is not the dock's and is left where it is. The
+   overlay's later return to its inert trigger is a no-op on an inert element. An
+   overlay a `#persistent` control opened is not the face's: it stays open, focus in it
+   stays, and taking it would send its own focus return to a live trigger and re-expand
+   the dock (critic-3 D-1). */
+watch(visualExpanded, async (isExpanded, was) => {
+    if (!was || isExpanded) return;
+    const active = document.activeElement;
+    const held =
+        (!!active && !!fullEl.value?.contains(active)) ||
+        active?.closest("[data-glass-dock-face]")?.getAttribute("data-glass-dock-owner") ===
+            dockId;
+    if (!held) return;
     await nextTick();
     const summary = summaryEl.value;
     if (summary && !summary.hasAttribute("inert")) summary.focus({ preventScroll: true });
-}
+});
 
 /* The CLICK-INTEGRITY guard. Scopes the collapsed-tap / hover-
    approach pass-through to the TAPPED ELEMENT'S IDENTITY (captured at pointerdown)
@@ -285,6 +318,8 @@ const {
     onPointerCancelCapture,
     onClickCapture,
     markExpandFlip,
+    onPointerEnter,
+    onPointerLeave,
     pressKeepaliveLayer,
 } = useDockClickIntegrity({
     rootEl: dockEl,
@@ -343,11 +378,14 @@ defineExpose({
             { expanded: visualExpanded, collapsed: !visualExpanded, pinned: isPinned, 'fit-content': fitContent, 'always-expanded': alwaysExpanded },
         ]"
         :data-backdrop-mode="props.backdropMode"
+        :data-anchor="props.anchor === 'center' ? undefined : props.anchor"
         :data-held="graspHeld || undefined"
         @mouseenter="onMouseEnter"
         @mouseleave="onMouseLeave($event)"
         @focusin="onFocusIn"
         @focusout="onFocusOut"
+        @pointerenter="onPointerEnter"
+        @pointerleave="onPointerLeave"
         @pointerdown.capture="onPointerDownCapture"
         @pointercancel.capture="onPointerCancelCapture"
         @click.capture="onClickCapture"
@@ -448,9 +486,11 @@ defineExpose({
                 cut-cap timeline scopes to. Interposing a wrapper would make every
                 consumer's seats grandchildren of the flex run and buy nothing.
 
-                `role="toolbar"` + `aria-orientation` are the semantics the seat run
-                always had and never declared (role present on 4/14 docks; the arrow-key
-                contract it promises is `useDockRun`'s roving tabindex). No `aria-label`
+                `role="toolbar"` + `aria-orientation` are claimed only while every child
+                of the run is a declared seat, glass's DockSeparator and reka's form
+                `<select>` aside (`useDockRun`'s `toolbar`; atlas G-4, b-ii):
+                the arrow-key contract the role promises is the roving tabindex, and a run
+                holding an undeclared control does not keep it. No `aria-label`
                 is minted here: an unlabelled toolbar announces as "toolbar", which is
                 honest, whereas a hardcoded generic name would OVERRIDE whatever the
                 consumer put on the dock root via `$attrs` and read as the library's
@@ -459,8 +499,8 @@ defineExpose({
             <div
                 ref="fullEl"
                 :id="`${dockId}-full`"
-                role="toolbar"
-                :aria-orientation="orientation"
+                :role="toolbar ? 'toolbar' : undefined"
+                :aria-orientation="toolbar ? orientation : undefined"
                 :class="['dock-layer dock-layer--full dock-run', {
                     'is-active': outerCurrentLayer === 'full',
                     'is-leaving': outerLeavingLayer === 'full' || (pressKeepaliveLayer === 'full' && outerCurrentLayer !== 'full'),
@@ -470,7 +510,7 @@ defineExpose({
                 tabindex="-1"
                 @keydown="onFullKeydown"
             >
-                <slot />
+                <DockFace><slot /></DockFace>
             </div>
             <div
                 ref="summaryEl"
@@ -482,7 +522,7 @@ defineExpose({
                 :inert="(outerCurrentLayer !== 'summary') || undefined"
                 :role="summaryIsDisclosure ? 'button' : undefined"
                 :tabindex="summaryIsDisclosure ? 0 : undefined"
-                :aria-label="summaryIsDisclosure ? 'Expand dock' : undefined"
+                :aria-label="summaryIsDisclosure ? props.collapsedLabel : undefined"
                 :aria-expanded="summaryIsDisclosure ? 'false' : undefined"
                 :aria-controls="summaryIsDisclosure ? `${dockId}-full` : undefined"
                 @focusin.stop

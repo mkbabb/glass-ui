@@ -117,3 +117,84 @@ describe("GlassDock click integrity — a press begun mid-morph", () => {
         wrapper.unmount();
     });
 });
+
+// atlas U/B7 D-5 — the deferral is scoped to an expand an approach opened. A phone sheet
+// opened by its owner (or by a press inside the dock) is aimed at, not raced: a row
+// pressed and clicked mid-morph is a genuine activation. 10.1.1 swallowed it for the
+// whole 840 ms settle window.
+describe("GlassDock click integrity — the approach scope", () => {
+    afterEach(() => {
+        document.body.innerHTML = "";
+    });
+
+    function mountClosed() {
+        const onFull = vi.fn();
+        const dockRef = { value: null as null | { expand: () => void } };
+        const Host = defineComponent({
+            setup() {
+                return () =>
+                    h(
+                        GlassDock,
+                        {
+                            collapse: "closed",
+                            orientation: "vertical",
+                            ref: (r: unknown) => (dockRef.value = r as { expand: () => void }),
+                        },
+                        {
+                            default: () => [h("button", { "data-testid": "full", onClick: onFull }, "Row")],
+                            collapsed: () => h("button", { "data-testid": "summary" }, "≡"),
+                        },
+                    );
+            },
+        });
+        const wrapper = mount(Host, { attachTo: document.body });
+        return { wrapper, onFull, dockRef };
+    }
+
+    function pointer(el: Element, type: string, pointerType: string) {
+        const event = new Event(type, { bubbles: type !== "pointerenter" && type !== "pointerleave", cancelable: true });
+        Object.defineProperty(event, "pointerType", { value: pointerType });
+        el.dispatchEvent(event);
+    }
+
+    it("passes a mid-morph row tap after the owner opened the dock", async () => {
+        const { wrapper, onFull, dockRef } = mountClosed();
+        await wrapper.vm.$nextTick();
+        dockRef.value!.expand();
+        await wrapper.vm.$nextTick();
+        const root = wrapper.get<HTMLElement>(".glass-dock").element;
+        root.setAttribute("data-morphing", "");
+        const row = wrapper.get<HTMLElement>("[data-testid='full']").element;
+        pointer(row, "pointerdown", "touch");
+        row.click();
+        expect(onFull).toHaveBeenCalledOnce();
+        wrapper.unmount();
+    });
+
+    it("still defers a mid-morph press after a hover approach opened the dock", async () => {
+        const { wrapper, onFull, dockRef } = mountClosed();
+        await wrapper.vm.$nextTick();
+        const root = wrapper.get<HTMLElement>(".glass-dock").element;
+        pointer(root, "pointerenter", "mouse");
+        dockRef.value!.expand();
+        await wrapper.vm.$nextTick();
+        root.setAttribute("data-morphing", "");
+        const row = wrapper.get<HTMLElement>("[data-testid='full']").element;
+        pointer(row, "pointerdown", "mouse");
+        row.click();
+        expect(onFull).not.toHaveBeenCalled();
+        wrapper.unmount();
+    });
+
+    it("still swallows a mid-morph click that lands on a different control", async () => {
+        const { wrapper, onFull, dockRef } = mountClosed();
+        await wrapper.vm.$nextTick();
+        dockRef.value!.expand();
+        await wrapper.vm.$nextTick();
+        wrapper.get<HTMLElement>(".glass-dock").element.setAttribute("data-morphing", "");
+        pointer(wrapper.get("[data-testid='summary']").element, "pointerdown", "touch");
+        wrapper.get<HTMLElement>("[data-testid='full']").element.click();
+        expect(onFull).not.toHaveBeenCalled();
+        wrapper.unmount();
+    });
+});

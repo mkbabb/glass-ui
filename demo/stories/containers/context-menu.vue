@@ -3,7 +3,7 @@ import StoryPage from "../../chassis/page/StoryPage.vue";
 import StorySection from "../../chassis/section/StorySection.vue";
 import { computed, ref } from "vue";
 import {
-    DropdownMenu,
+    ContextMenu,
     DropdownMenuCheckboxItem,
     DropdownMenuContent,
     DropdownMenuItem,
@@ -42,7 +42,7 @@ const canvasStyle = computed(() => {
             <p class="text-small text-muted-foreground">
                 Right-click, long-press, or focus the paper and press Shift+F10.
             </p>
-            <DropdownMenu trigger="context">
+            <ContextMenu>
                 <DropdownMenuTrigger as-child>
                     <button
                         type="button"
@@ -93,7 +93,7 @@ const canvasStyle = computed(() => {
                         <DropdownMenuShortcut>⌘⌫</DropdownMenuShortcut>
                     </DropdownMenuItem>
                 </DropdownMenuContent>
-            </DropdownMenu>
+            </ContextMenu>
         </StorySection>
     </StoryPage>
 </template>

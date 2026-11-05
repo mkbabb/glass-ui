@@ -104,9 +104,8 @@ const selection = useSelectionGroup<{ value: SelectionValue; disabled: boolean }
      * `ResizeObserver` attaches unconditionally (that is its Safari-identical
      * guarantee) and `updateSingleSlider` keeps running rect measures into a
      * `singleSliderStyle` this component never reads. Economizing that dead measure
-     * is the engine's own file to change, not a caller's: routed RT-84O → #71
-     * W-EYEGLASS, which holds 169 of that file's 204 changed lines in flight.~~
-     * [2026-08-08 · BK #71 W-EYEGLASS lands RT-84O: it now silences the measure too.
+     * is the engine's own file to change, not a caller's: routed RT-84O → #71.~~
+     * [2026-08-08 · BK #71 lands RT-84O: it now silences the measure too.
      * `updateSingleSlider` returns before its first `getBoundingClientRect()` when
      * `indicatorRef` is null, so this component's mounts and resizes force no layout
      * at all. The `ResizeObserver` still attaches unconditionally — the guarantee

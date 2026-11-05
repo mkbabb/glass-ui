@@ -45,7 +45,7 @@
         cursor: pointer;
         border: none;
         background: transparent;
-        border-radius: var(--dock-control-radius, var(--radius-pill));
+        border-radius: var(--dock-control-radius, var(--radius-circle));
         /* Foreground base routes through `--dock-fg-on-aurora` (defaults to
            `--foreground`, byte-identical to before) so a consumer floating the
            dock over an aurora can lift contrast per-backdrop. The muted icon
@@ -109,10 +109,13 @@
            (the per-control `--dock-icon-hover-bg` still wins if a consumer set it),
            so the whole dock-control family shares ONE glass-translucent hover fill.
            One source per state across icon/tab/picker (no four-vocabulary drift). */
+        /* NO HOVER SCALE (U/B8r I-2; atlas register MO-09; the owner's order of
+           2026-10-19, "less flashy"). A hover answers with the fill and the gleam, never
+           with size: the 1.1 lift deformed the atlas figure dock's Table view toggle
+           under the pointer in every engine. The press keeps its spring. */
         &:hover:not(:disabled):not([aria-disabled="true"]) {
             background: var(--dock-icon-hover-bg, var(--dock-control-hover-bg));
             color: var(--btn-hover-color, var(--foreground));
-            scale: var(--scale-hover-dock);
         }
 
         /* The iOS press DARKEN-plus-shrink. Press lands the

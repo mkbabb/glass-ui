@@ -284,3 +284,29 @@ describe("the deleted registers are deleted, not orphaned", () => {
         );
     });
 });
+
+describe("U/B8 PF — the backdropMode axis: a plate over a still field samples nothing", () => {
+    /* RED before: Surface had no backdrop axis, so a full-width in-flow plate (atlas
+       StoryCard, 1296 px wide, up to 2,600 px tall) re-filtered its backdrop on every
+       scroll frame. The desktop paint trace put the scroll drops there: with the plate's
+       filter withheld, /usf fell from 35 to 8 dropped frames per walk and /ecf from 22
+       to 2 (out/b8-pf/trace). Mutation: drop the attribute or the CSS rule and this reds. */
+    it("a static plate stamps data-backdrop-mode; a live plate stamps nothing", () => {
+        const still = mount(Surface, { props: { tier: "quiet", surface: "veil", backdropMode: "static" } });
+        expect(still.attributes("data-backdrop-mode")).toBe("static");
+        expect(mount(Surface, { props: { surface: "veil" } }).attributes("data-backdrop-mode")).toBeUndefined();
+    });
+
+    it("the static rule withholds the filter on every decoration, both prefixes", () => {
+        const axis = stripComments(src("styles/glass/surface-axis.css"));
+        expect(axis).toMatch(
+            /\[data-surface\]\[data-backdrop-mode="static"\]\s*\{[^}]*-webkit-backdrop-filter:\s*none;[^}]*backdrop-filter:\s*none/,
+        );
+    });
+
+    it("Card forwards the axis to its Surface", async () => {
+        const { Card } = await import("@glass/components/card");
+        const card = mount(Card, { props: { tier: "quiet", surface: "veil", backdropMode: "static" } });
+        expect(card.attributes("data-backdrop-mode")).toBe("static");
+    });
+});

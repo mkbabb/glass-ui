@@ -60,16 +60,12 @@
         /* Uses the FAMILY hover/active token pair (glass-translucent
            foreground-over-transparent — the same intent as a surface-tint-8/10 ladder).
            ONE grammar across icon/tab/picker.
-           The hover MOTION channel is UNIFIED: the
-           `--scale-hover-dock` lift fires here (on all four control members, not only
-           icon + dropdown), so all four lift on hover as ONE register —
-           the bg cross-fade (glass-tier), the scale, and the specular gleam read
-           together BEFORE click. The transform rides `--dock-press-spring`
-           (`--spring-press`) per the easing doctrine. */
+           The hover register is the bg cross-fade (glass-tier) and the specular
+           gleam. It never scales (U/B8r I-2, atlas MO-09): the `--scale-hover-dock`
+           lift is deleted with its token, as the trigger family's was before it. */
         &:hover:not(:disabled):not([aria-disabled="true"]) {
             background: var(--dock-control-hover-bg);
             color: var(--foreground);
-            scale: var(--scale-hover-dock);
         }
 
         /* The iOS press darken-plus-shrink (see the icon-button). */
@@ -111,7 +107,7 @@
      * wider padding, the slightly-stronger base tint that distinguishes it from the
      * secondary tier) and inherits the plain de-red'd dock-control glass hover
      * register from the base `.dock-tab-button` rule above (bg → `--dock-control-
-     * hover-bg`, scale → `--scale-hover-dock`, the specular gleam — the SAME register
+     * hover-bg`, the specular gleam, no scale — the SAME register
      * `.dock-icon-button` speaks). No grain, no phase-radial, no rest-halo. The
      * <DockTabButton> auto-attach of `btn-audacious` is removed (the utility is gone).
      */

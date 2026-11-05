@@ -187,6 +187,10 @@ export const CURATED = {
     // the `BlobConfig` shape + hero preset WITHOUT Blob.vue's value.js `/color` eager
     // weight (~−33 KiB), the established dynamic color-leaf discipline.
     "blob-config": "src/components/blob/config.ts",
+    // U/B8 PF (G-M1-3b) — `DockTrigger` on its own door, out of `./dock`. It carries reka's
+    // Select/Popover/DropdownMenu triggers; a consumer that renders `GlassDock` in its shell
+    // and triggers only in lazy menus kept them in its entry while `dist/dock.js` was one module.
+    "dock-trigger": "src/components/dock/trigger.ts",
 };
 
 // Additional composable entries whose source is not a curated root barrel.
@@ -216,14 +220,12 @@ export const CSS_FONT_EXPORTS = {
     // Q060 / ATLAS-N C4 — Tailwind v4 registration only: the @theme aliases
     // and dark variant, without the component cascade or resolved base tokens.
     "./styles/theme": "./dist/styles/theme.css",
-    // BJ.W4-TYPEDSEAM — the component-only entry. `./dist/glass-ui.css` (the raw
-    // SFC bundle) emits the `.track-well` / `.track-flow` / `.glass-value-mark(s)`
-    // classes with ZERO rules for the shared structure behind them, so an installed
-    // consumer importing this entry lost groove/clip/radius/flow-band/marks. The
-    // target is the GENERATED packed manifest `dist/component-styles.css`. Its
-    // invariant is the PARTITION, not a sequence: every shared register partial is
-    // folded in and the SFC bundle is LAST (so a component rule can still override a
-    // register). Relative order among the partials is a build artifact — they declare
+    // BJ.W4-TYPEDSEAM — the component-only entry. The SFC sheets emit the
+    // `.track-well` / `.track-flow` / `.glass-value-mark(s)` classes with ZERO rules
+    // for the shared structure behind them, so this entry is the GENERATED packed
+    // manifest `dist/component-styles.css`, which folds every shared register
+    // partial. Since U/B7b X3 the SFC sheets ride their chunks and are not folded
+    // here. Relative order among the partials is a build artifact — they declare
     // disjoint selectors. Canonical `./styles` reaches the same partials through its
     // own cascade and does NOT import the manifest (no duplicate rule; a consumer
     // needs exactly one style entry).

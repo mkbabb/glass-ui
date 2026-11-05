@@ -441,32 +441,27 @@
        plate and port — ZERO new DOM), `scroll-timeline: --dock-run` on the port, and
        `animation-timeline: --dock-run` on the plate. The anonymous form the obvious
        draft reaches for — `animation-timeline: scroll(self inline)` on the plate —
-       measured 9999px INERT in both engines, because the plate is a
+       measured INERT in both engines, because the plate is a
        `position: absolute` overlay SIBLING of the port and scroll timelines resolve
        DOWN, never up. `styles/scroll-driven.css` documents that trap already.
 
-       `from` IS 50%, and that specific value is the ruling. `50%` resolves to the
-       stadium's own corner, so the pill's rest keyframe is exact with no plate-height
-       token to couple to; the rejected `from: 9999px` is pinned by the half-box clamp
-       until t=0.9988 (measured: t=0.999 still reads 25.98px), i.e. an animation that
-       does nothing until it snaps. The finite shapes keyframe from their literal rests,
-       where no clamp is in play.
+       Every shape keyframes from its own finite rest, where no clamp is in play. The
+       pill shape's rest is `--radius-dock` (the 1rem pill rung since U/B7); a rest the
+       engine clamps would hold until the end of the range and then snap.
 
        TWO RUNGS DOWN, ON THE SERIES — never a hand-picked number. The corner series is
-       4 · 10 · 16 · 24 · stadium, and every value below is that series by name:
-       stadium → 16 (`--radius-card`), card 24 → 10 (`--radius-lg`), rounded 16 → 4
-       (`--radius-xs`). Plain `border-radius` only: `corner-shape: squircle` measured
+       4 · 10 · 16 · 24, and every value below is that series by name: pill 16 → 4
+       (`--radius-xs`), card 24 → 10 (`--radius-lg`), rounded 16 → 4 (`--radius-xs`). Plain `border-radius` only: `corner-shape: squircle` measured
        FALSE on real Safari 26.4, and this is a contract mark, not an enhancement.
 
        MAGNITUDE, honestly: ~226.6px² of silhouette per edge (28·56 − 2(16² − π16²/4)
        against π·28²/2), never the ~700 an earlier draft claimed. */
     .glass-dock {
         timeline-scope: --dock-run;
-        /* The rest corner and its two-rung drop, per shape. `50%` is the stadium's
-           resolved corner (see above); the finite shapes name their own rest so the
-           keyframe never has to guess at a box height. */
-        --dock-cap-rest: 50%;
-        --dock-cap-cut: var(--radius-card);
+        /* The rest corner and its two-rung drop, per shape. Each shape names its own
+           finite rest so the keyframe never has to guess at a box height. */
+        --dock-cap-rest: var(--radius-dock);
+        --dock-cap-cut: var(--radius-xs);
     }
 
     .glass-dock.shape-rounded {

@@ -61,8 +61,7 @@ const DOCK = springPreset("dock");
  *
  * `NO_TOKEN_CAP` is the no-token floor, not a second authority: it is held in
  * lockstep with the token by a unit case that reads the declared value out of
- * `tokens/scale-paper.css`. Same shape as `DEFAULT_INDICATOR_MAX_STRETCH` in
- * `useSelectionIndicator.ts`.
+ * `tokens/scale-paper.css`.
  */
 const NO_TOKEN_CAP = 1.08;
 

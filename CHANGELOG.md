@@ -1,5 +1,595 @@
 # Changelog
 
+## 10.2.0 (proposed by atlas U/B7)
+
+Merged on local branch `u/b7-glass` (off `release/10.1.1` bbf176f02, with the published `v10.1.2` merged in) from `u/b7-glass-shape` (rows B7-G1 to B7-G6) and `u/b7-glass-perf` (rows B7-G7 to B7-G9). Row numbers follow the relay letter.
+
+### The figure dock's hover and corner (`u/b8r-glass`, U/B8r I-2 and I-3)
+
+- **No dock control scales on hover (I-2).** `.dock-icon-button` and `.dock-tab-button`
+  answered a hover with `scale: 1.1`, so atlas's figure-dock Table view toggle grew under
+  the pointer in Chromium, Firefox and WebKit (atlas register MO-09: no hover scale; the
+  owner's order of 2026-10-19). A hover now changes the fill and the gleam only; the press
+  keeps its spring. The token `--scale-hover-dock` is deleted with its last two readers.
+  Breaking for a consumer that set or read it: delete the declaration. No alias.
+- **A closed dock with a persistent control keeps the bar corner (I-3).** A closed
+  horizontal dock was always `--radius-circle` (50%). With a `#persistent` control beside
+  the summary the box is two cells wide (atlas's 100 x 52 figure dock), so 50% drew an
+  oval, a full-radius box over 40 px (atlas register F-20). That dock now takes
+  `--radius-dock` (16 px), the corner it wears open. A dock of one cell stays a circle.
+  Witnesses: `tests/components/custom/dock/dock-hover-corner.test.ts` (4 tests, 3 red on
+  c3b73337a), `tests/styles/engage-ladder.test.ts` (the hover budget now names no
+  exceedance), and atlas `src/charts/frame/PlateDock.browser.spec.ts` in three engines.
+
+### Root items (`u/b7d-glass-register`, U/B7d M3)
+
+- **A collapsed dock's progress rim has length (D-08).** The rule that centres the
+  collapsed pill's one glyph (`.dock-persistent > *`) also caught the out-of-flow
+  `ScrollProgressRim`. `place-self: center` shrank it to 0 x 0 at the pill's centre, so the
+  vertical track measured 3 x 0 px and the collapsed rail painted no progress while
+  `aria-valuenow` ran. The rim now stretches: 44 x 44 box, 3 x 28 px track. Witness:
+  `tests/components/dock/collapsed-rim-fills-pill.test.ts`.
+- **A press on the grabbable indicator moves nothing (O-4).** `useDragMorph` read its origin
+  from the spring before the `Draggable` seated the spring at the pointer, so the first follow
+  delta was the pointer's whole client coordinate. Re-clicking the active tab threw the
+  indicator 635 px right in one frame on atlas's /sci strip, past the strip's end, and a drag
+  ran one client coordinate ahead of the pointer. The spring and the snap centres now share
+  one space, the surface's centre. A release already on its centre had no frame after it, so
+  the gesture never finished and in Chromium the offset stayed; the release now commits
+  itself. The snap centres are read at each press, so a re-flow cannot pull a click to where
+  the tab used to be. `DockLayerGroup` shares the fix. Witnesses:
+  `tests/composables/motion/useDragMorph.grab.test.ts`,
+  `tests-visual/SegmentedTabs.glide.spec.ts`.
+- **A drag out and back, released on its start, finishes the gesture (O-4).** The pointer is
+  still moving at such a release, so the `Draggable` re-seats the spring there with the release
+  velocity and aims it at the snap centre it already sits on. keyframes.js reads that as an
+  unchanged target, so the spring stayed unsettled and never ticked: the indicator kept
+  `transition-property: none`, and on atlas /vft-germination the next tab click landed with no
+  glide (1 frame in Firefox). `useDragMorph` now settles such a release in place. Witnesses:
+  `tests/composables/motion/useDragMorph.grab.test.ts` (1 new, red before) and
+  `tests-visual/SegmentedTabs.glide.spec.ts` (2 new, 8 of 8 red before in C and F).
+
+### Root items (`u/b7-glass`, U/B7c C3)
+
+Built by the atlas formation's B7c pass on `u/b7-glass` after the B7b land (79a9e3eea).
+No version bump. Each row has a test that fails on 79a9e3eea and passes here.
+
+- **A modal holds the page through the root, never `body` (C3-1).** reka's
+  `DialogOverlay` takes `useBodyScrollLock`, which writes `overflow: hidden`, a padding
+  compensation and `pointer-events` onto `body`. Under a consumer root with
+  `overflow-x: clip`, that makes `body` the scroller while a modal is open: atlas's
+  homepage school finder (a modal `CommandDialog`) broke the body-free rule in 4 of 4
+  cells per engine. `ModalOverlay` now mounts its own scrim (`ModalScrim`: reka's
+  `DialogOverlayImpl` without the body lock) under reka's `Presence`, and the scrim holds
+  the one counted root lock (`_shared/overlay/root-scroll-lock.ts`), which
+  ExpandableContainer already used. The two compose when they close out of order. The
+  root's `scrollbar-gutter: stable` keeps the layout still. One `body` write stays:
+  reka's `DismissableLayer` sets `body` `pointer-events: none` while a modal is open (the
+  page behind takes no pointer), and with the body lock gone the consumer's own inline
+  value comes back on close. Witnesses:
+  `tests/components/dialog/modal-root-lock.test.ts` (5 of 5 fail before; the two
+  pointer-events arms fail there on their overflow assertion, and pin the guard) and
+  `tests-visual/CommandDialog.b7c.spec.ts` (Chromium and Firefox; red before in Chromium).
+- **A palette group keeps its content height (C3-2).** reka's `ComboboxContent` renders
+  the `CommandList` as an inline flex column, and `.command__group { overflow: hidden }`
+  dropped each group's automatic minimum height to 0, so a long list shrank every group
+  to fit. The palette's short "Dashboards" group measured 46 px of its 341 px, with its
+  heading under "School units" and its rows unreachable. The group is now `flex: none`
+  and the list scrolls. Witnesses: `tests/components/command/group-flex.test.ts` and the
+  browser spec above.
+- **`ContextMenu` is its own root (C3-3).** The menu parts dispatched through one table
+  that imported all 28 reka menu primitives, so every `DropdownMenu` consumer bundled the
+  ContextMenu family. Each root now provides its own family table; the parts import
+  neither. Measured in a minimal Vite consumer built against `dist`: the four-part
+  `/menu` import is 228,799 → 219,566 B of JS (brotli 66,983 → 66,112), and a
+  dock-plus-menu import is 278,801 → 269,007 B (brotli 80,853 → 79,840). Witness:
+  `tests/components/menu/click-family-graph.test.ts` (14 of 15 fail before).
+- **The live backdrop observer runs no frame loop (C3-4).** `useGlassBackdropLuminance`
+  requested an animation frame every frame for as long as a field canvas existed, in
+  order to take a 4 Hz sample. The shared canvas lifecycle now announces each frame it
+  draws (`GLASS_FIELD_PAINT_EVENT` on the canvas, internal). The observer samples,
+  throttled to 4 Hz with a trailing sample, on a paint of its own field, a scroll, a root
+  class or `data-theme` change, a colour-scheme change, or a transition or animation
+  that ends on the field. It does nothing while the field is still. Witnesses:
+  `tests/composables/glass/useGlassBackdropLuminance.live.test.ts` (3 of 4 fail before;
+  126 frame requests in 2 s at rest before, 0 after) and the announcement case in
+  `tests/composables/glass/canvas2d/useCanvas2D.test.ts`.
+- **A press control at rest reads no computed style (C3-5).** Z0's /sci phone profile put
+  248 ms of load on `effectiveCap`'s `getComputedStyle`, one read per `Button` after its
+  template ref bound, plus a second render. At rest the stretch is 1 whatever the cap, so
+  the cap getter returns 1 without touching the element until a press moves the spring.
+  Every spring also read `--motion-tempo` off `:root` at construction; that read is now
+  shared by every construction in one task. Witness: `tests/composables/motion/press.test.ts`
+  (2 cases fail before: the element read, and 12 root reads for 12 controls, now 1).
+- **`SHEET_QUERY` is module-private.** 87494c6d4 exported it with no reader, which left
+  G-OVERFIT's export-reach arm red at 79a9e3eea.
+
+### Opaque sheets (`u/b7b-glass-dock`, U/B7b M1)
+
+- **Select sheet form is opaque (D-6).** Below 30rem the Select listbox opens as a
+  full-width sheet at the viewport foot; it now wears the surface axis's opaque rung
+  (`data-surface="opaque"`: solid `--card`, no backdrop), so the page no longer reads
+  through its rows. The anchored form above 30rem is unchanged (glass).
+- **A dock menu at sheet width is opaque (D-6, U/B7b L).** Below 30rem a
+  `DropdownMenuContent` opened from a dock (the `data-glass-dock-portal` stamp) covers
+  the page as a sheet, so it wears the same opaque rung. The register decides from the
+  dock stamp and the viewport; `DropdownMenuContent` carries no `surface` prop, as the
+  BK #66 contract (`public-contracts.test-d.ts`) states. The Select and the menu read
+  the width through one `useSheetWidth` in `_shared/overlay`.
+- Witness: `tests/components/select/sheet-opaque.test.ts` (Select: 2 of 4 fail on 1dc80a3d6; dock menu: fails on d44311a30).
+- **A closed sheet lets go of the page when it leaves the screen (O-11, O-19; repair
+  round 1).** `useSpringMount` held `present` until the exit spring settled: the `panel`
+  preset is underdamped (ζ 0.71) and its tail rang until the velocity fell under 1e-3
+  units/s, 1.5–1.9 s after the sheet had left the screen. Through that window the scrim
+  stayed mounted and reka kept the body scroll-locked, so a reader's next scroll or tap on
+  the page did nothing (served /bead at 390, 16 of 16 closes; the O-11 census found 3
+  cells of 72 still locked at 4.7 s). The hold now ends when the position reaches the
+  dismissed edge (within 1e-3 of 1, under a pixel). The drag-dismiss callback still waits
+  for the settle.
+- Witness: `tests/composables/useSpringMount.test.ts`, "releases present on the frame the
+  exit reaches its dismissed edge" (37 frames late before, at most 1 after).
+
+### Quiet focus return (U/B7b L)
+
+- **A closing sheet or dialog returns focus without scrolling (O-11, O-19).** reka answers
+  close-auto-focus with a bare `triggerElement.focus()`. WebKit records the nearest focusable
+  ancestor as the trigger when a clicked button takes no focus, so the bare focus scrolled the page
+  to it: the served B7b census measured the phone "Source & method" sheet moving the page up 16 to
+  1,384 px in 36 of 156 closes. `SheetContent` and `DialogContent` now answer the event themselves
+  (`returnFocusQuietly` in `_shared/overlay`): the same element, with `preventScroll`. A consumer that
+  cancels the event keeps its say. Witness: `tests/components/sheet/sheet-return-focus.test.ts`.
+
+### Shape, glide and the dropdown system (`u/b7-glass-shape`)
+
+Proposed by the atlas formation (U/B7, the owner's order of 2026-10-19 in sci-report `atlas/docs/tranches/U/owner-2026-10-19/ORDER.md`). Local branch `u/b7-glass-shape`; no version bump. Engine witnesses: `tests-visual/b7-shape.config.ts`, Chromium and Firefox.
+
+- **SegmentedTabs: one quiet glide (B7-G1).** One object moves, the indicator, in one
+  monotone leg at its own size; labels change colour on `--duration-fast` with no delay;
+  hover is colour only; a press does not squish. `eyeglass.ts` and its arm in
+  `useSelectionIndicator` are deleted. Witness: `tests-visual/SegmentedTabs.glide.spec.ts`
+  (an adjacent and a far hop sampled every frame, width and height within 0.5 px, x
+  monotone, strip edge fixed, pressed tab at scale 1; hover moves colour only). On the
+  `v10.1.1` tag all 6 cells fail (indicator width up to 167.2 px in transit; hover scale
+  1.015); here all 6 pass. Gate: `tests/gates/tabs-seam.test.ts` arm (e) now asserts the
+  absence.
+
+- **DockLayerGroup glides; the velocity stretch law is deleted (B7-G2).** A layer switch
+  writes geometry only: no `--stretch`, no `--motion-weight` boost, and no computed-style
+  read for the cap. Witness: `tests/components/custom/dock/DockLayerGroup.glide.test.ts`
+  (fails on `v10.1.1`: the indicator carried `--stretch: 1` after a switch).
+
+- **Hover and press without scale on the capsule register and the ToggleGroup (B7-G3).**
+  Witness: `tests-visual/press-scale.spec.ts` (hover on a ToggleGroupItem and an action
+  Chip, and a held ToggleGroupItem press, all at computed scale 1). On `v10.1.1` all 6 cells
+  fail (hover 1.015, press 0.97); here all 6 pass.
+
+- **Radius scales with size (B7-G4).** `--radius-pill: 1rem`, `--radius-circle: 50%`, and a
+  circle / stadium / corner disposition for all 91 uses in 43 files (the table is in the
+  U/B7 lane doc, sci-report `atlas/docs/tranches/U/build/B7-GLASS-SHAPE.md`). Witness:
+  `tests-visual/radius-scale.spec.ts`, light and dark: 8 circles compute 50%, a 24 px chip
+  stays a stadium, a 44 px bar and a 40 px field show 16 px corners. On `v10.1.1` all 44
+  cells fail; here all 44 pass.
+
+- **Per-figure dock props (B7-G5).** `expandOn="press"`: hover, focus-in and the idle timer
+  are inert; a press or Enter/Space on the summary opens the dock pinned; Escape, a press
+  outside, or focus leaving the dock and its portals closes it. `anchor="start" | "end"`:
+  the size morph and the rigid-content counter-scale pivot on that edge (logical, mirrored
+  under `dir="rtl"`). `collapsedLabel`: the summary disclosure's accessible name. Witness:
+  `tests/components/custom/dock/GlassDock.figure-props.test.ts` (4 of its 10 cases fail on
+  `v10.1.1`; the default cases pass on both). The dock README props table is brought up to
+  the shipped surface.
+
+- **One dropdown system (B7-G6).** D-1: the side sheet stays fixed to the viewport inside a
+  consumer cascade layer (`Sheet.position.spec.ts`: passes on `v10.1.1`, where the cure
+  shipped, and fails 4 of 4 against the `v10.1.0` `SheetContent`). D-2: no glass overlay
+  writes `overflow` onto `body`; DropdownMenu is non-modal by default, Select takes no lock,
+  ExpandableContainer locks the root, and the root keeps a stable gutter, so a sticky filter
+  row and its menu hold their place (`DropdownMenu.scroll-lock.spec.ts`). D-3: a Select
+  listbox is as tall as the room it opened into, with no fixed clamp (`Select.bound.spec.ts`).
+  The sizing law (collision avoidance on both axes, 16px padding, at most
+  `min(22rem, 100vw - 2rem)` wide, internal scroll, card radius) holds for DropdownMenu,
+  Select and Popover (`overlay-sizing.spec.ts`). Below 30rem the Select opens as a bottom
+  sheet at full width. On `v10.1.1` 16 of the 22 cells fail; all 22 pass here.
+
+- **Large controls are bars (B7-G4).** A Button, ToggleGroupItem or SegmentedTabs strip
+  past its rung takes the 12px `--radius-bar`; one on its rung stays a stadium. One
+  ResizeObserver per control (`_shared/shape/useBarShape.ts`) keeps the attribute live.
+  Witness: `tests-visual/radius-scale.spec.ts` (the bar cases), light and dark, Chromium
+  and Firefox: 16 of 20 cells fail on `v10.1.1`; the four single-line Button cells pass on
+  both and guard the stadium. All 20 pass here.
+
+### Styles, aurora and the dock hit box (`u/b7-glass-perf`)
+
+Built by the atlas formation on local branch `u/b7-glass-perf` off `release/10.1.1`
+bbf176f02. Nothing pushed or tagged; glass owns the version and may take, re-author or
+decline each row (relay rows B7-G7 to B7-G9).
+
+- **Per-component sheets leave the `/styles` entry (B7-G7, atlas F5).** Configurator,
+  MusicStaff, Metric, the Deck substrate, Carousel and SortableList import their own sheet
+  from script. The library build keeps that import external
+  (`vite.component-sheets.ts`), so `dist/<component>.js` carries
+  `import "./components/<component>/styles.css"` and a consumer's bundler loads the sheet
+  with the chunk that renders the component. A Tailwind consumer entry of
+  `@import "tailwindcss"; @import "tw-animate-css"; @import "@mkbabb/glass-ui/styles";`
+  compiles to 322,821 B decoded, down from 353,516 B (−30,695 B; brotli 46,200 → 42,052 B).
+  `@source "../*.js"` stays on the core entry: excluding the moved components' chunks from
+  it would save a further 2.0 KB but drop `.shadow-cartoon`, which only that scan emits
+  (Configurator's preset chips). Witness: `tests/styles/component-sheets.test.ts`.
+- **Aurora engines load on arm, one backend at a time (B7-G8, atlas F6).** `runtime.ts`
+  imports `glSetup` and `wgpuSetup` with `import()`, and `createGpuSubstrate` takes an
+  optional `prepare(backend)` it awaits before that backend's setup runs. `dist/aurora.js`
+  drops from 203,503 B to 27,037 B (brotli 52,758 → 8,305 B); the WebGPU path
+  (48,759 B) and the WebGL 2 path (116,450 B) are separate chunks, fetched only when that
+  backend arms. A `"css"` substrate fetches neither. Witnesses:
+  `tests/components/custom/aurora/engine-split.test.ts`, the `prepare` case in
+  `tests/composables/glass/webgpu/useWebGPUCanvas.test.ts`.
+- **The aurora ground is encoded once per palette and preset (B7-G8, atlas O-16).**
+  `Aurora.vue` keys the fallback ground on the new `auroraGroundKey(config)` (palette,
+  softmax, value variance and each nucleus's shape, without positions). A config change
+  that only moves nuclei encodes nothing and writes nothing to `.aurora-placeholder`; the
+  nuclei move on the GPU path only. A palette or preset change writes the new ground to a
+  second layer that fades in over the first in `--duration-fast` (a cut under reduced
+  motion), with the outgoing layer opaque beneath it. On 10.1.1 every config change
+  re-encoded the PNG and swapped `background-image`: 30 to 2,183 rewrites per route pass
+  in atlas (R-INTERACT §5). Witness: `tests/components/custom/aurora/ground-encode.test.ts`
+  (substrate forced to WebGL; 12 nucleus moves, 1 encode, 0 style writes).
+- **A vertical dock's seats are inside its hit box while it morphs (B7-G9, atlas D-5).**
+  The first expand of a vertical dock took its expanded endpoint from the run while the
+  run was squeezed to the collapsed box, so `[data-morphing]` reserved the collapsed box
+  (58 px in the witness) and every seat below it hit-tested to the page until the spring
+  settled. The cure sits in the measure, not in `layers.css`: the
+  `block-size: var(--dock-expanded-px)` rule there was right and its input was wrong.
+  B7 cured it with a `scrollHeight` read clamped at `max-block-size`. With 10.1.2 merged
+  in, that read is gone: 10.1.2's measure lays the run out at rest in the expanded posture
+  (O-101), which yields the same capped span. The D-5 unit arms in `dockMorphMeasure.test.ts`
+  now run on 10.1.2's layout model, and `tests-visual/u-b7.spec.ts` D-5 is the engine witness.
+- **Click-integrity defers a mid-morph press only after a hover approach (B7-G9, atlas
+  D-5).** The deferral exists for race (b): a fine pointer arrives, its arrival opens the
+  dock, and the layer swaps under it. It now applies only to an expand opened that way.
+  An expand opened by the owner's `expand()`, a press inside the dock, or a touch or pen
+  pointer lets a press that starts and clicks on the same arriving control through. A
+  click that lands on a different control than it pressed is still swallowed. On 10.1.1 a
+  phone sheet dropped every row tap for its first ~800 ms.
+- **The vertical run keeps the wheel at its ends in Firefox.** Firefox ignores
+  `overscroll-behavior: contain` once a wheel transaction lapses, and the page behind an
+  expanded dock scrolled 840 px in the witness. `useDockRun` declines a wheel that pushes
+  past the end the run rests at, on its own axis, while the run overflows. Chromium was
+  already contained; arrows, drag and clicks were already correct in both engines.
+- Witnesses: `tests/components/custom/dock/dockMorphMeasure.test.ts`,
+  `GlassDock.click-integrity.test.ts`, `GlassDock.run-wheel.test.ts`; engine:
+  `tests-visual/u-b7.spec.ts` (`tests-visual/u-b7/playwright.config.ts`, Chromium desk and
+  coarse, Firefox desk and phone).
+- **The aurora WebGL path, measured (R-INTERACT §7).** `tests-visual/u-b7/witness/aurora-webgl.mjs`
+  runs Chrome for Testing 149 headless on ANGLE Metal (the named GPU witness) and arms the
+  live field: WebGL 2 forced and WebGPU both report `ready` with `data-aurora-substrate=
+  "webgl"`. Over 12 scroll steps on the scroll-leaned harness, 10.1.1 encoded the ground
+  12 times and wrote the placeholder 15 times; this branch encodes 0 and writes 0. One
+  run per tree at 1-minute load ≈ 25: main-thread time per step, median, WebGL 2
+  7.6 → 7.6 ms, WebGPU 11.2 → 8.8 ms.
+
+### Package closure, the cartoon shadow and the entry diet (`u/b7-glass`, U/B7b X3)
+
+Built by the atlas formation's B7b pass on `u/b7-glass` after the G1 and G2 merge. No
+version bump. Each row has a test that fails on b54f5e13d and passes here.
+
+- **`verify:package` walks the sheets a published chunk imports.** The F5 split moved six
+  component sheets (and the four deck partials) to script imports, and the packed-CSS
+  check then called all of them unreachable, because the CSS closure was seeded from the
+  `exports` sheets alone. `scriptCssEntries` now walks every chunk reachable from a code
+  export and seeds the closure with each `.css` it imports; a chunk import that does not
+  resolve fails the package. The style closure also stopped publishing
+  `components/_shared/field/control.css`: `NumberFieldInput.vue` imports
+  `../_shared/field/control` (the `.ts` module), and the CSS-first resolver read that
+  specifier as the sheet beside it. Script specifiers now resolve the way the bundler
+  resolves them (exact path, then `.ts`, `.js`, `.vue`, then a directory index). The
+  sheet's rules still ship through its `<style src>` in the SFC bundle. Witnesses:
+  `tests/public-surface.spec.ts` (a fixture chunk and its sheet; the built `dist` walks
+  every shipped sheet: 115 of 126 before, 125 of 125 after) and
+  `tests/styles/component-sheets.test.ts`.
+
+- **The utility emit carries glass-ui's own `@utility` classes.** `dist/styles/components.css`
+  is compiled from the class tokens the shipped chunks carry, but its compile context held
+  the `@theme` and nothing else, so a token naming a glass `@utility` compiled to nothing:
+  `shadow-cartoon` (the Configurator preset chips), `glass-plate`, `sheet-animate`,
+  `table-head`, `text-mono-caption`, `transition-control` and `transition-disclosure`.
+  They reached a consumer only through the `@source "../*.js"` scan. The emit now
+  compiles with every `@utility` in the style closure, and with tw-animate-css by
+  `@reference` so `sheet-animate` resolves its `@apply`. A token that names a
+  tw-animate-css utility is not safelisted: the consumer imports that peer itself. The
+  emitted `.table-cell`, `.text-caption`, `.text-small` and `.text-micro` now carry the
+  glass definition as well, which is what a consumer's own build already produced from
+  the same `@utility`. `components.css` grows 23,129 → 25,633 B. Witness:
+  `tests/styles/emitted-own-utilities.test.ts` (7 names missing before, 0 after).
+  `emitted-utility-vars` accepts a tempo-scaled house clock
+  (`calc(var(--duration-panel) * var(--motion-tempo))`) as a clock, not a literal.
+
+- **SFC styles load with their component; `dist/glass-ui.css` is gone.** Library mode
+  folded every SFC `<style>` into one `glass-ui.css`, and the build imported it into
+  `dist/styles/index.css`, so every `/styles` consumer paid for the status dot, timeline,
+  pager-dot goo, progress, data table and the rest on first paint. The build now sets
+  `cssCodeSplit`; `componentSheets` writes `import "./<chunk>.css";` at the head of each
+  of the 25 chunks that own styles and opens each sheet with the layer order `/styles`
+  declares. Every rule still sits in `@layer components`. `foldSfcBundle` is deleted;
+  the utility emit scans the chunk sheets; `component-styles.css` (`./styles.css`) folds
+  the three shared registers only. Consumer entry (Tailwind, tw-animate-css and
+  `/styles`, decoded and minified): 325,055 → 282,605 B, brotli 42,092 → 36,548. Against
+  b54f5e13d (322,551 B, brotli 42,129) the X3 rows together save 39,946 B. Witness:
+  `tests/styles/sfc-sheets.test.ts` (3 cases fail on b54f5e13d: the entry imports
+  `glass-ui.css`, 16 scope ids load with no chunk import, no chunk sheet opens with the
+  layer order).
+
+- **Declarations drop side-effect stylesheet imports.** vue-tsc copied each F5
+  component's `import "./styles.css";` into its `.vue.d.ts` (14 files), and an installed
+  consumer's TypeScript failed with TS2882. `flatten-subpath-types` now removes a
+  side-effect `.css` import from every declaration; the runtime chunk keeps it. Found when
+  `verify:package` first reached its install arm on this branch. Witness:
+  `tests/public-surface.spec.ts` "keeps side-effect stylesheet imports out of the
+  declarations" (14 files before, 0 after).
+
+- **`verify:package` loads a stylesheet as an empty module in its install arm.** The
+  arm imports every public code specifier in plain Node; since F5 a component chunk
+  imports its sheet, and the arm failed with `ERR_UNKNOWN_FILE_EXTENSION` on the root
+  barrel. Resolution still runs, so a chunk that imports a sheet the package omits still
+  fails. MIGRATION records the consumer side.
+
+## 10.1.2 — 2026-10-27
+
+Two changes. Atlas G-4, arm (b-ii), the declared seat marker, by owner-delegate ruling
+(records: `docs/tranches/BL/audit/INBOUND.md` O-102d;
+`docs/tranches/BK/coordination/ATLAS-TO-GLASS-2026-10-17-U-BATCH.md` G-3/G-4 and its
+addendum 1). And value.js O-101, the dock's stale expanded endpoint (records: INBOUND
+O-101, O-101a; `docs/tranches/BK/coordination/valuejs-outbound-2026-10-19-dock-stale-expanded-endpoint.md`).
+`MIGRATION.md` §10.1.2 says what a consumer with its own dock seats must do.
+
+- **A morph reserves the box it settles at, whenever the pane changes (O-101).** The
+  expanded endpoint (`--dock-expanded-px`, which `[data-morphing]` reserves as the dock's
+  inline size, or block size on a vertical dock) was latched while the dock was
+  expanded. A consumer breakpoint that changed the full pane while the dock was collapsed
+  left it at the old pane's span, and the next expand reserved that. value.js measured a
+  508px dock at a 390px viewport, with the document scrolling for 51 to 386 frames until
+  the morph settled and snapped to 188. A pane that changed while a morph was in flight
+  did the same: the measure skipped every capture under `[data-morphing]`.
+
+  Now neither endpoint is latched. Each is the root's box at rest in its posture, read
+  from the live layout on every capture: `useDockExpandedSize` lays the root out with
+  that posture's pane in flow and the other pane out of flow, with the morph's
+  reservation lifted (`--dock-expanded-px` made invalid inline, so the `[data-morphing]`
+  size rule computes to `auto`), reads it, and restores everything in the same task. So
+  whatever constrains or stretches the root at rest (the host's width, a consumer's
+  width) applies to the endpoint, mid-morph included. The one thing kept is each
+  posture's chrome (the root less its pane: padding, border, gaps, persistent regions),
+  read from a root at rest in that posture. Where the current DOM's chrome differs (the
+  padding interpolates mid-morph, and `.collapsed` rules apply while the expanded
+  endpoint is read from a collapsed dock), the difference goes on the pane's end margin
+  and the root is read again, so a content-sized root takes it and a host-bound one does
+  not. The expanded endpoint is read in both postures, since a morph reserves it in both
+  directions. The collapsed endpoint is read while collapsed and kept while expanded,
+  and every collapse re-reads it when it arms. The run's scroll offset is restored after
+  a read that moved it, since WebKit clamps it in the forced layout and keeps the clamped
+  value. At rest expanded the read changes no layout at all.
+
+  The capture runs on a ResizeObserver hit on the root, its parent (a morphing root is
+  held at its reservation, so only the host moves), the layers, both panes and every
+  pane's direct child; on a MutationObserver record in either pane; on a window resize,
+  in the resize step before the frame lays out; when fonts are ready; and when the morph
+  arms, after the patch. The posture is the DOM's (the full pane's `.is-active`), not the
+  posture ref, so the W7 guard holds by construction: no endpoint is read from a box laid
+  out in the other posture, and the pre-flush posture flip is not a capture. Nothing is
+  clipped, no overflow is hidden, and nothing is overridden.
+
+  Witnesses: unit `tests/components/custom/dock/dockMorphMeasure.test.ts`, on a layout
+  model that obeys the overrides the measure sets: "the morph reserves the expanded box
+  of the pane patched in with the expand", "re-reads the expanded endpoint when the pane
+  changes while collapsed", "retargets the reserved endpoint when the pane changes
+  mid-morph", "a reversed morph reserves the expanded box of the pane it opens onto",
+  "follows a host that narrows while the dock is {expanding, collapsing}", "reads the
+  expanded endpoint with the expanded posture's chrome while collapsed" and "a capture
+  keeps the run's scroll position". Engine:
+  `tests-visual/release-10-1-2.spec.ts` "O-101 · {horizontal, vertical} · {pinned,
+  collapsed, reversal, mid-expand}" (scene `stale-endpoint`: 12 seats at 768px and above,
+  3 below, the dock in flow; `?axis=vertical` for the vertical dock), each at 1440->390
+  and 390->1440, 16 cells per engine. `pinned` and `collapsed` change the pane while the
+  dock is collapsed and expand in the breakpoint's render or after it. They assert that
+  `--dock-expanded-px` on the first morphing frame equals the settled size (+-1 px).
+  `reversal` changes the pane 60 ms into a collapse and expands again. `mid-expand`
+  changes it 60 ms into an expand. They assert that every morphing frame after the change
+  reserves the settled size (+-1 px). Every cell asserts that no sampled frame has the
+  document scrolling on the morph axis. In Chromium and Playwright WebKit 2287 all 16 are
+  RED on 10.1.1: 592px reserved for a 160px dock at 1440->390, with the document at
+  `scrollWidth` 491 for `clientWidth` 390, 160 reserved for 592 at 390->1440, and 584
+  for 152 (and back) on the vertical dock. The `reversal` and `mid-expand` cells are RED
+  on the first 10.1.2 cure, which measured only when a morph armed with none in flight.
+
+  "O-101a · a host change during the morph · {collapsed, reversal, mid-expand}" (scene
+  `overflow`: a constant 20-seat pane with a natural span of 960px, so the run scrolls at
+  390 and fits at 1440) changes the HOST, not the pane, at 1440->390 and 390->1440: 6
+  cells per engine, the same assertions. All 6 are RED on 10.1.1 in Chromium, and the
+  4 `reversal` and `mid-expand` cells are RED on the round-1 cure (per-posture frames,
+  `74a679351`) in Chromium and WebKit 2287: 976 reserved for 390 with the document at
+  `scrollWidth` 683 for 390 (49 to 56 frames), and 390 reserved for 976, then a 586 px
+  snap at settle. A frame counts as reserving the settled size only when its reservation
+  is a length within 1px of it, so a missing reservation fails.
+  "O-101 · a capture keeps a scrolled run's scroll position (390, 1440)" (scene
+  `scroll`: an always-open dock whose run scrolls) scrolls the run to an interior rest,
+  then changes one seat's text and widens another: the offset stays, and the resize moves
+  it only by the engine's own re-snap. It is GREEN on 10.1.1 and RED on the round-1 cure
+  in WebKit 2287, whose `max-content` read reset the run from 312 to 72 at 390 and to 0
+  at 1440. On 10.1.2 all 22 O-101 and O-101a cells, both scroll cells and the 10.1.1
+  spec are GREEN in Chromium and WebKit 2287 (77 of 77 per engine, the two disabled
+  trigger cells and the four disabled-paint cells below included).
+
+- **The dock run roves only declared seats.** A direct child of the run is a seat when it
+  carries `data-glass-dock-seat`. `DockControl` and `DockTrigger` set it, and so does
+  `DockBackgroundToggle`, which renders a `DockControl`. The run writes `tabIndex` only
+  into declared seats and claims Arrow/Home/End only when they are pressed inside one.
+  Every other child keeps its natural tab stop and its own keys. 10.1.1 inferred a seat
+  from focusability (`isRovedSeat` in `useDockRun.ts`). That inference is deleted, with no
+  alias. It had written `-1` onto atlas's filter trigger, gear, provenance handle, year range
+  and dark toggle, which dropped them from the Tab order.
+- **A declared seat stays focusable.** A disabled `DockTrigger` (its own `disabled`, or a
+  disabled `Select` root's) renders `aria-disabled="true"` and blocks its own activation,
+  as `DockControl` always has, never the native `disabled` attribute. A native-disabled
+  seat cannot take focus, so one holding the run's stop took every declared seat out of
+  the Tab order, and one mid-run stopped the arrow keys at it. 10.1.1 skipped a
+  native-disabled trigger through the focusability inference this release deletes. On
+  10.1.2 a disabled trigger is a present-but-disabled stop, reachable by Tab and arrows
+  and announced as disabled, like a disabled `DockControl`. It paints disabled as one
+  too: the dock's disabled paint and the trigger hover and press rules key on
+  `.dock-trigger[aria-disabled="true"]`, so it reads `opacity: var(--opacity-disabled)`
+  and `cursor: not-allowed`, and a hover or press leaves its fill and scale at rest.
+- **`role="toolbar"` only over an all-declared run.** The run claims `role="toolbar"` and
+  `aria-orientation` only while every direct child is a declared seat. Glass's own
+  `<DockSeparator>` (class `dock-separator`) does not void the claim, since a toolbar may
+  hold separators (APG), and neither does reka's form `<select>`, by its exact shape
+  `select[aria-hidden="true"][tabindex="-1"]`, the native `<select>` reka renders beside a
+  `DockTrigger for="select"` whose `Select` has a `name` inside a `<form>`, which no user
+  reaches. Any other child is undeclared, a consumer's focusable `role="separator"`
+  splitter and an `aria-hidden` control or wrapper that still holds a Tab stop included. A
+  run with any undeclared child claims no role. Its declared seats still share one stop
+  and rove by arrow. The claim is re-derived when children, markers, `aria-current`, or a
+  direct undeclared child's `aria-hidden` or `tabindex` change.
+- **The contract**, for consumers that measure it (atlas: 8 routes x 390/1440 x 3 engines;
+  value.js and the other siblings marking their own seats):
+  1. A seat is a direct child of `.dock-run` with the attribute `data-glass-dock-seat`
+     (any value; glass writes `""`). It has no other test. A declared seat must stay
+     focusable: a disabled seat carries `aria-disabled="true"` and blocks its own
+     activation, never the native `disabled` attribute, which would leave the run's stop
+     on an element that cannot take focus.
+  2. Declared seats share one tab stop: the focused seat, else the `aria-current` seat,
+     else the first. Arrow keys (Left/Right horizontal, Up/Down vertical), Home and End
+     move between declared seats only, with no wrap.
+  3. The run writes nothing into an undeclared child and claims no key pressed inside
+     one. A plain button, a trigger, a `[role=button][tabindex]` handle, an input, a
+     composite (RadioGroup, ToggleGroup) seated directly, or a container holding any of
+     these keeps its own tab stop and its own arrows. A child that drops the attribute
+     while mounted gets back the `tabindex` it carried before the run first wrote to it
+     (none, or its authored value).
+  4. `.dock-run` carries `role="toolbar"` (and `aria-orientation`) when it has at least
+     one declared seat and every child is declared, except glass's `<DockSeparator>` (a
+     child with class `dock-separator`) and reka's form `<select>` (a child matching
+     `select[aria-hidden="true"][tabindex="-1"]`, beside a named `Select`'s trigger).
+     Otherwise it carries no role.
+- **Build path.** Branch `release/10.1.2` (worktree `.claude/worktrees/release-10.1.2`).
+  `npm ci && npm run build` writes `dist/`, and `npm pack` writes
+  `mkbabb-glass-ui-10.1.2.tgz` for a consumer install before the registry carries 10.1.2.
+- **Witnesses.** Unit: `tests/components/custom/dock/g-dock-seat-rule.test.ts` and
+  `crit-seat-cx.test.ts`, on the (b-ii) contract, 13 of 19 RED on 10.1.1 and 19 of 19 GREEN.
+  The 6 that pass on both are regression arms: the declared crit arm, the all-declared toolbar,
+  the form-seated select trigger (10.1.1 claimed the role over every run) and the three
+  composites. Seven more pin a disabled `DockTrigger` as a focusable seat (each arm:
+  a disabled `Select` root, a disabled select, dropdown and popover trigger; the arrows
+  passing a disabled trigger mid-run; a disabled popover trigger not opening; an enabled
+  trigger carrying neither state). 5 of the 7 are RED on the round-2 cut `53c68dab7`, which
+  rendered the native `disabled`; the last two are regression arms. Engine: `tests-visual/release-10-1-2.spec.ts` (harness
+  `tests-visual/release-10-1-2/`) at 1440 and 390, in Chromium (`chromium-headless-new`)
+  and Playwright WebKit 2287 (`tests-visual/webkit-2287.config.ts`): "the atlas shapes
+  seated in a run are all Tab-reachable", "arrows rove only the declared seats", "a run
+  with an undeclared child claims no toolbar role", "a focusable splitter is undeclared: its
+  own stop, no toolbar role", "an aria-hidden wrapper around a Tab stop voids the toolbar
+  claim", "a DockTrigger for=select in a form keeps an all-declared run's toolbar" (10.1.1
+  roved ArrowRight onto reka's hidden `<select>`), "the toolbar claim follows a child's
+  aria-hidden and tabindex in place", "a child that drops its declaration is Tab-reachable
+  again", and two regression arms, "an all-declared run is one toolbar stop" and "a
+  RadioGroup and a ToggleGroup seated directly keep their arrows". Two more pin the
+  focusable disabled seat: "a disabled DockTrigger holding the stop keeps the run in the
+  Tab order" (scene `disabled-first`: a disabled `Select`'s trigger ahead of two
+  `DockControl`s; the walk is `seat-0, after`, and ArrowRight reaches `seat-1`) and "the
+  arrows pass a disabled DockTrigger mid-run" (scene `disabled-mid`: a disabled dropdown
+  trigger between two `DockControl`s; `seat-0 -> seat-1 -> seat-2`). Both are RED on
+  `53c68dab7` in Chromium and WebKit 2287 at both widths: the walk skipped the dock
+  (`after`, then `BODY`) and the arrows stayed on `seat-0`. Four more read the disabled
+  trigger's paint, at 1440 and 390 in light and dark: "a disabled DockTrigger paints
+  disabled and takes no hover or press fill" (scene `disabled-paint`: a disabled select,
+  dropdown and popover trigger, and an enabled trigger whose hover fill shows the pointer
+  reaches the run). All four are RED on `abd829944` in Chromium and WebKit 2287, where the
+  paint keyed on `:disabled`: opacity 1 for 0.5, cursor `pointer`, and the enabled hover
+  and press fills. Every atlas shape, the year-range input
+  pair included, is seated directly in the run, the shape 10.1.1 broke. The lattice roving tests and the toolbar test now seat
+  declared controls.
+
+## 10.1.1 — 2026-10-19
+
+Four cures, one guarded row and one owner-ruled addition. Asked by the atlas consumer (U batch
+G-1 to G-3, `docs/tranches/BK/coordination/ATLAS-TO-GLASS-2026-10-17-U-BATCH.md` and its
+addendum) and by the owner through value.js (records: `docs/tranches/BL/audit/INBOUND.md`
+O-99, O-99a, O-102, O-102b, O-102c). `MIGRATION.md` §10.1.1 lists the behaviour a consumer may
+notice. Each witness below fails on the 10.1.0 bytes and passes on these, with two
+exceptions. The O-102 (6) guard's non-menu cells pass on both; its menu cells fail on 10.1.0,
+because the menu had no z rung there (G-2). The O-102 (3) `#persistent` boundary passes on
+both, because 10.1.0 closed nothing on a collapse. The engine
+witnesses are `tests-visual/release-10-1-1.spec.ts` (harness `tests-visual/release-10-1-1/`),
+run in Chromium (desk and coarse projects) and Playwright WebKit 2287
+(`tests-visual/webkit-2287.config.ts`; 2311 crashes on any dock page, atlas N-1), at 1440
+and 390 where width matters.
+
+- **Sheet renders fixed, not in document flow (G-1).** `.glass-floating` sets
+  `position: relative` at 0,1,0, and the sheet's `position: fixed` sat in a `:where()` rule
+  at 0,0,0 in the same layer, so every sheet opened at the end of the page. `SheetContent`
+  now carries the `fixed` utility, as `DialogContent` does, and the `:where()` rule no
+  longer declares a position. Witness: `tests/components/sheet/sheet-position.test.ts`;
+  engine: "G-1 · an open sheet is fixed and inside the viewport".
+- **Menus and submenus paint above the dock (G-2).** The z rung is now a fact of the overlay
+  role, written once in `overlayContentAttrs` (`menu` and `panel` → `z-popover`, `hint` →
+  `z-tooltip`). Menus and submenus had none and opened under `--z-dock`; Popover and Tooltip
+  no longer spell their own. Witness: `tests/components/menu/menu-z-rung.test.ts`; engine:
+  "G-2 · a menu and its submenu paint above the dock's rung" (5 of 5 hit points on each).
+- **A composite in a dock seat keeps its tab stop and its arrows (G-3).** The run roves a
+  seat only when the seat is its own control: sequentially focusable or carrying a
+  `tabindex`, and holding no control of its own. It writes into nothing else. It used to
+  write `tabIndex` onto a container seat's first focusable descendant and claim arrows
+  pressed inside it, so a nested ToggleGroup had no tab stop and lost ArrowRight to the
+  next seat; a composite root seated directly (RadioGroup, whose reka root renders its own
+  `tabindex`) lost its arrows the same way. A container seat's accessible name is still
+  read from its first control. The `role="toolbar"` shape (G-4) is unchanged and left to
+  the owner; both of its arms extend this predicate. Witnesses:
+  `tests/components/custom/dock/g-dock-seat-rule.test.ts`, `crit-seat-cx.test.ts`; engine:
+  "G-3 · a composite in a container seat keeps its tab stop and its arrows" and "G-3 · a
+  composite seated directly in the run keeps its arrows".
+- **Collapsing the dock closes the dropdowns and popovers its seats opened (O-102 (3)).**
+  The dock context publishes its posture (`expanded`), and `useDockParticipation` takes a
+  `close`: on the collapse edge each overlay that states one closes. Three do: Popover at
+  its root, the menu and the Select through their reka root contexts. A hint (Tooltip),
+  a submenu (closed with its menu) and the command list state none. One path, no timer,
+  and an expand opens nothing back. Focus held in the expanded face or in a closed
+  overlay moves to the dock's summary on the same edge, as the Escape path always did
+  (the overlay's own return aims at its trigger, inert in the collapsed face, and fell
+  to `<body>`); the Escape path now rides that one hand-off. Only the face's overlays
+  close: the dock renders its default slot inside a `DockFace` scope (no DOM), and an
+  overlay states `close` only under it. A popover opened from `#persistent` or
+  `#persistent-end`, whose trigger stays painted and live when collapsed, stays open and
+  keeps its focus, and the dock stays collapsed. Witness:
+  `tests/components/custom/dock/GlassDock.collapse-closes-overlays.test.ts`; engine:
+  "O-102(3) · a dropdown / a popover / a select opened from a seat closes when the dock
+  collapses", "O-102(3) · a collapse-closed menu hands focus to the summary" and "O-102(3)
+  · a popover opened from #persistent outlives the collapse, and the dock stays collapsed".
+- **Skeleton `shimmer` (owner ruling, O-102b (3)).** One prop. A sheen of one fixed period
+  travels across the shape in place of the breathe, on the shared `--duration-shimmer-fast`
+  clock, `linear`, compositor-only. Its profile has no transparent run, so a narrow tile
+  carries moving ink for the whole cycle. Ink only: the foreground at the `--ink-seam` rung, no
+  hue. Static under `prefers-reduced-motion`, paused while the tile is off-screen or the
+  document is hidden, absent under forced colors. The sheen layer is anchored and sized on the same physical axis
+  it travels, so under `dir="rtl"` it covers the tile through the whole cycle, with no seam
+  and no flat chip. The A-9 decline note in `Skeleton.vue` now
+  records the ruling. Demo: Feedback › Skeleton › shimmer. Engine: "Skeleton · shimmer
+  travels…", "…the shimmer layer covers the tile through its whole cycle (ltr, rtl)" and
+  "…holds still under reduced motion".
+- **Floats opened from a dock seat portal out of the run (O-102 (6), a guard).** The plate
+  clipped in frame 12.51.30 was fourier's timeline caret, an absolutely positioned float
+  inside the dock run. The run is a scroll port (`dock/styles/run.css`) and clips its
+  cross axis, so a consumer's own float inside it is cut. Fourier cured its caret by
+  moving it to glass's portalled Tooltip (976a704). The owner-delegate closed the row on
+  that cure (O-102c), on condition that every glass float a seat may host portals by
+  default, outside the run. Each already portals, so this row changes no source. 10.1.1
+  ships the guard for that condition. On 10.1.0 its non-menu cells pass and its menu cells
+  fail at both widths in every engine project: the portalled menu's lower corners sat under
+  the dock, because the menu had no z rung (G-2). Tooltip, Popover, its
+  hover arm (HoverCard), DropdownMenu and its submenu, and the Select content are each
+  opened from a seat with no portal prop. Each lands outside `.dock-run`, unclipped at 390
+  and 1440, and so does Popover with `portal: false`. Guard:
+  `tests/components/custom/dock/GlassDock.seat-floats-portal.test.ts`; engine: "O-102(6)
+  · a … opened from a seat is portalled out of the run and not clipped". A run that
+  stops clipping overhang is the dock-run geometry of 10.2.0 (D2).
+
 ## 10.1.0 — 2026-09-24
 
 Two additive Configurator features, no break; `MIGRATION.md` is untouched. Both were asked for

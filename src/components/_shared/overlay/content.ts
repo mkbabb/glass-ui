@@ -33,6 +33,20 @@ const ROLE_REVEAL: Record<OverlayRole, "tooltip" | "menu" | "overlay"> = {
     panel: "overlay",
 };
 
+/**
+ * Role → the z rung it paints at. The rung is a fact of the ROLE, so it is
+ * stated here once and no content component spells it. A menu carried none at
+ * all while the popover and the hint each spelled their own, so a dropdown
+ * opened from a dock seat painted at `z-index: auto`, under `--z-dock` (atlas
+ * G-2). A menu is an anchored materialization of the same register as the
+ * popover panel, and it takes the same rung; a hint takes the tooltip rung.
+ */
+const ROLE_Z: Record<OverlayRole, "z-tooltip" | "z-popover"> = {
+    hint: "z-tooltip",
+    menu: "z-popover",
+    panel: "z-popover",
+};
+
 export interface OverlayAttrs extends DockPortalAttrs {
     class: string;
     "data-slot": string;
@@ -57,6 +71,7 @@ export function overlayContentAttrs(o: {
         class: cn(
             surfaceClass("floating"),
             "glass-overlay-plate glass-reveal",
+            ROLE_Z[o.role],
             o.class,
         ),
         "data-slot": o.slot,
