@@ -34,6 +34,17 @@
 //   e4  a run overrun by less than its reserve (the dock capped 4 px under its content)
 //       scrolls exactly that overrun and keeps its focused, hovered end seat's whole ring
 //       (WebKit RED: its end padding was not overflow until the seats passed it)
+//
+// Critique round 4 (critique-4.md), RED on the round-4 tip 463b0e42a (f1 and f2 on
+// v10.1.4 as well), GREEN after:
+//   f1  (O-133) a SegmentedTabs under a fixed z:1 header: the header paints over it,
+//       both variants; inside, the labels paint over the indicator at rest and mid-glide
+//   f2  (O-150 R-t-1) Table row and header rules paint in `--border`, light and dark
+//   h1  (H1) an overflowing run at mid-scroll, a hovered seat cut by its trailing clip:
+//       no point past the plate's corner arc hits a seat, house and cockpit
+//   h2  (H2) a labelled DockTrigger adds no reserve: the run's room is the icon dock's
+//   h3  (H3) a ticking seat label constructs no ResizeObserver
+//   h4  (H4) with no ResizeObserver the plate still rests at half its block extent
 import { expect, test, type Page } from "@playwright/test";
 
 async function open(page: Page, query: string): Promise<void> {
@@ -697,3 +708,241 @@ e2(390);
 e2(1440);
 e3(390);
 e4(1440);
+
+/* ── f1-f2, h1-h4 · critique round 4 (docs/release-10.1.5/critique-4.md) ─────────── */
+
+/** f1 (O-133): the strip's tab rung ranks inside the strip, never in the host's context. */
+test("f1 a SegmentedTabs under a fixed z:1 header paints beneath it; its labels paint over the indicator", async ({
+    page,
+}) => {
+    await page.setViewportSize({ width: 390, height: 800 });
+    for (const variant of ["pill", "underline"]) {
+        await open(page, `scene=segtabs&variant=${variant}`);
+        const read = await page.evaluate(async () => {
+            const raf2 = () => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+            const tabs = [...document.querySelectorAll<HTMLElement>(".segmented-tab")];
+            const indicator = document.querySelector<HTMLElement>(".segmented-indicator");
+            // Inside the strip: each label's rung over the indicator's, read at rest and
+            // two frames into a glide to the third tab.
+            const order = () => ({
+                tab: tabs.map((t) => getComputedStyle(t).zIndex),
+                indicator: indicator ? getComputedStyle(indicator).zIndex : null,
+            });
+            const rest = order();
+            tabs[2]!.click();
+            await raf2();
+            const glide = order();
+            await new Promise((r) => setTimeout(r, 600));
+            // Under the header: scroll the strip beneath it and hit-test a tab.
+            const b = tabs[1]!.getBoundingClientRect();
+            window.scrollTo(0, b.top + window.scrollY - 40);
+            await raf2();
+            const c = tabs[1]!.getBoundingClientRect();
+            const under = document.elementFromPoint(c.left + c.width / 2, c.top + c.height / 2) as HTMLElement;
+            return { rest, glide, underTop: under.dataset.witness ?? under.className.toString(), tabTop: c.top };
+        });
+        const cell = `${variant} (${JSON.stringify(read)})`;
+        expect(read.tabTop, `${cell}: the tab lies under the header`).toBeLessThan(80);
+        expect(read.underTop, `${cell}: the fixed header paints over the strip`).toBe("header");
+        for (const at of [read.rest, read.glide]) {
+            expect(at.indicator, `${cell}: an indicator`).not.toBeNull();
+            for (const z of at.tab) {
+                expect(Number(z), `${cell}: the label's rung is over the indicator's`).toBeGreaterThan(Number(at.indicator));
+            }
+        }
+    }
+});
+
+/** f2 (O-150 R-t-1): the table's rules are the glass hairline, never the text colour. */
+test("f2 Table row and header rules paint in --border, light and dark", async ({ page }) => {
+    await open(page, "scene=table");
+    for (const dark of [false, true]) {
+        const read = await page.evaluate((dark) => {
+            document.documentElement.classList.toggle("dark", dark);
+            const border = getComputedStyle(document.querySelector('[data-witness="probe-border"]')!).borderTopColor;
+            return {
+                border,
+                rules: [...document.querySelectorAll<HTMLElement>("tr[data-witness], thead tr")].map((el) => {
+                    const cs = getComputedStyle(el);
+                    return { id: el.dataset.witness, width: cs.borderBottomWidth, colour: cs.borderBottomColor, text: cs.color };
+                }),
+            };
+        }, dark);
+        expect(read.border, "the probe resolves --border").not.toBe("");
+        expect(read.rules.filter((r) => r.width === "1px").length, "the header and body rows rule").toBeGreaterThan(2);
+        for (const rule of read.rules) {
+            const cell = `${dark ? "dark" : "light"} ${rule.id} (${JSON.stringify(read)})`;
+            expect(rule.colour, `${cell}: the rule is --border`).toBe(read.border);
+        }
+    }
+});
+
+/**
+ * h1 (H1): the run's clip follows the plate's cut corner. An overflowing run is scrolled
+ * so a seat straddles its trailing clip at mid-run (every corner cut), and the seat is
+ * hovered. Paint is read twice at 2x, with the run's seats shown and hidden: every device
+ * pixel in a plate corner's square lying more than 0.75 px past the corner's arc must
+ * paint the same in both, so no seat ink lies outside the plate. (Hit testing is no
+ * witness here: Chromium hit-tests a scroller's descendants against its rectangle, not
+ * its rounded clip.)
+ */
+test.describe("h1 at 2x", () => {
+    test.use({ deviceScaleFactor: 2 });
+    for (const preset of ["house", "cockpit"] as const) {
+        test(`h1 ${preset} at 390: a seat cut by the trailing clip paints nothing past the plate's corner arc`, async ({
+            page,
+        }) => {
+            await page.setViewportSize({ width: 390, height: 400 });
+            const kinds = ["tab:Home", ...Array(6).fill("icon"), "tab:Settings", "tab:Library", "icon", "icon", "tab:Profile"];
+            await openSeats(page, `maxw=360&kinds=${encodeURIComponent(kinds.join(","))}${preset === "cockpit" ? "&preset=cockpit" : ""}`);
+            for (const target of ["S8", "S9"]) {
+                await page.evaluate((target) => {
+                    const run = document.querySelector<HTMLElement>(".dock-run.is-active")!;
+                    run.style.scrollSnapType = "none";
+                    const seat = document.querySelector<HTMLElement>(`[data-witness="${target}"]`)!;
+                    const r = run.getBoundingClientRect();
+                    const b = seat.getBoundingClientRect();
+                    run.scrollLeft += b.left + b.width / 2 - r.right;
+                }, target);
+                await settle(page, 300);
+                const b = (await page.locator(`[data-witness="${target}"]`).boundingBox())!;
+                const r = (await page.locator(".dock-run.is-active").boundingBox())!;
+                await page.mouse.move(Math.min(b.x + 6, r.x + r.width - 6), b.y + b.height / 2);
+                await settle(page, 450);
+                const geo = await page.evaluate((target) => {
+                    const run = document.querySelector<HTMLElement>(".dock-run.is-active")!;
+                    const plate = document.querySelector<HTMLElement>(".glass-dock > .dock-plate")!;
+                    const p = plate.getBoundingClientRect();
+                    const cs = getComputedStyle(plate);
+                    return {
+                        hovered: document.querySelector(`[data-witness="${target}"]`)!.matches(":hover"),
+                        scroll: run.scrollLeft,
+                        range: run.scrollWidth - run.clientWidth,
+                        plate: [p.left, p.top, p.right, p.bottom],
+                        radii: [cs.borderTopLeftRadius, cs.borderTopRightRadius, cs.borderBottomRightRadius, cs.borderBottomLeftRadius].map(Number.parseFloat),
+                        run: getComputedStyle(run).borderTopRightRadius,
+                    };
+                }, target);
+                const cell = `${preset} ${target} (${JSON.stringify(geo)})`;
+                expect(geo.hovered, `${cell}: the seat is hovered`).toBe(true);
+                expect(geo.scroll, `${cell}: scrolled mid-run`).toBeGreaterThan(0);
+                expect(geo.scroll, `${cell}: scrolled mid-run`).toBeLessThan(geo.range);
+                for (const rad of geo.radii) expect(rad, `${cell}: every corner is cut`).toBeLessThan(20);
+                const [l, t, rr, bb] = geo.plate;
+                const clip = { x: Math.floor(l) - 2, y: Math.floor(t) - 2, width: Math.ceil(rr - l) + 4, height: Math.ceil(bb - t) + 4 };
+                const shown = (await page.screenshot({ clip })).toString("base64");
+                await page.evaluate(() => {
+                    for (const k of document.querySelector(".dock-run.is-active")!.children) (k as HTMLElement).style.visibility = "hidden";
+                });
+                await settle(page, 100);
+                const hidden = (await page.screenshot({ clip })).toString("base64");
+                await page.evaluate(() => {
+                    for (const k of document.querySelector(".dock-run.is-active")!.children) (k as HTMLElement).style.visibility = "";
+                });
+                const read = await page.evaluate(
+                    async ({ shown, hidden, clip, geo }) => {
+                        const load = async (b64: string) => {
+                            const img = new Image();
+                            img.src = `data:image/png;base64,${b64}`;
+                            await img.decode();
+                            const c = document.createElement("canvas");
+                            c.width = img.naturalWidth;
+                            c.height = img.naturalHeight;
+                            const ctx = c.getContext("2d")!;
+                            ctx.drawImage(img, 0, 0);
+                            return ctx.getImageData(0, 0, c.width, c.height);
+                        };
+                        const a = await load(shown);
+                        const z = await load(hidden);
+                        const dpr = a.width / clip.width;
+                        const [l, t, r, b] = geo.plate;
+                        const corners = [
+                            [l, t, 1, 1],
+                            [r, t, -1, 1],
+                            [r, b, -1, -1],
+                            [l, b, 1, -1],
+                        ] as const;
+                        let probed = 0;
+                        const ink: number[][] = [];
+                        for (let py = 0; py < a.height; py++) {
+                            for (let px = 0; px < a.width; px++) {
+                                const x = clip.x + (px + 0.5) / dpr;
+                                const y = clip.y + (py + 0.5) / dpr;
+                                corners.forEach(([x0, y0, sx, sy], i) => {
+                                    const rad = geo.radii[i]!;
+                                    const dx = (x - x0) * sx;
+                                    const dy = (y - y0) * sy;
+                                    if (dx < 0 || dy < 0 || dx > rad || dy > rad) return;
+                                    if (Math.hypot(rad - dx, rad - dy) <= rad + 0.75) return;
+                                    probed += 1;
+                                    const o = (py * a.width + px) * 4;
+                                    const d = Math.max(
+                                        Math.abs(a.data[o]! - z.data[o]!),
+                                        Math.abs(a.data[o + 1]! - z.data[o + 1]!),
+                                        Math.abs(a.data[o + 2]! - z.data[o + 2]!),
+                                    );
+                                    if (d > 6) ink.push([+x.toFixed(2), +y.toFixed(2), d]);
+                                });
+                            }
+                        }
+                        return { probed, count: ink.length, ink: ink.slice(0, 6) };
+                    },
+                    { shown, hidden, clip, geo },
+                );
+                expect(read.probed, `${cell}: device pixels past the arcs were read`).toBeGreaterThan(0);
+                expect(read.count, `${cell}: no seat ink past the plate's arc (${JSON.stringify(read)})`).toBe(0);
+            }
+        });
+    }
+});
+
+/** The run's reserve on its scroll axis, as painted: its leading padding. */
+function runReserve(page: Page): Promise<number> {
+    return page.evaluate(() =>
+        Number.parseFloat(getComputedStyle(document.querySelector<HTMLElement>(".dock-run.is-active")!).paddingInlineStart),
+    );
+}
+
+/** h2 (H2): a seat whose hover scale is off reserves no hover overhang. */
+test("h2 at 844: a labelled DockTrigger adds no reserve; the run's room is the icon dock's", async ({ page }) => {
+    await page.setViewportSize({ width: 844, height: 800 });
+    await openSeats(page, "kinds=icon,icon");
+    const icons = await runReserve(page);
+    await openSeats(page, "kinds=trigger:A long labelled menu trigger,icon,icon");
+    const trigger = page.locator('[data-witness="S1"]');
+    expect(
+        await trigger.evaluate((el) => (el as HTMLElement).offsetWidth),
+        "the trigger is wider than every icon seat",
+    ).toBeGreaterThan(132);
+    const withTrigger = await runReserve(page);
+    expect(withTrigger, `the trigger's dock reserves ${withTrigger}, the icon dock ${icons}`).toBe(icons);
+    expect(icons, "the icon dock reserves the ring and the icon's overhang").toBeGreaterThan(0);
+});
+
+/** h3 (H3): a seat's label text changing re-observes nothing. */
+test("h3 a ticking seat label constructs no ResizeObserver", async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 800 });
+    await openSeats(page, "kinds=icon,live,icon");
+    const read = await page.evaluate(async () => {
+        const w = window as unknown as { __roMade: () => number; __tick: { value: number } };
+        const before = w.__roMade();
+        for (let i = 0; i < 20; i++) {
+            w.__tick.value += 1;
+            await new Promise((r) => setTimeout(r, 40));
+        }
+        return { before, after: w.__roMade() };
+    });
+    expect(read.before, "the dock observes").toBeGreaterThan(0);
+    expect(read.after, `20 label ticks (${JSON.stringify(read)})`).toBe(read.before);
+    expectNoReach(await readPlate(page), "after the ticks");
+});
+
+/** h4 (H4): the rest corner is measured when the dock attaches, observer or not. */
+test("h4 with no ResizeObserver the plate rests at half its block extent", async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 800 });
+    await openSeats(page, "noro=1&kinds=icon,icon,icon");
+    expect(await page.evaluate(() => typeof ResizeObserver), "no ResizeObserver").toBe("undefined");
+    const read = await readPlate(page);
+    expectRestCorner(read, "no ResizeObserver");
+    expectNoReach(read, "no ResizeObserver");
+});

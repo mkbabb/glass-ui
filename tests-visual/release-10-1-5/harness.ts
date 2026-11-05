@@ -17,6 +17,8 @@ import Slider from "../../src/components/slider/Slider.vue";
 import Input from "../../src/components/input/Input.vue";
 import Button from "../../src/components/button/Button.vue";
 import CardDescription from "../../src/components/card/CardDescription.vue";
+import SegmentedTabs from "../../src/components/tabs/SegmentedTabs.vue";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../../src/components/table";
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -29,6 +31,26 @@ import {
 const params = new URLSearchParams(location.search);
 const scene = params.get("scene") ?? "";
 const w = window as unknown as Record<string, unknown>;
+
+// `?noro=1` mounts with no ResizeObserver; otherwise every construction is counted
+// (`window.__roMade()`), so a witness can read whether a content change rebuilds one.
+if (params.get("noro") === "1") delete (window as unknown as { ResizeObserver?: unknown }).ResizeObserver;
+{
+    const RO = window.ResizeObserver;
+    let made = 0;
+    if (RO) {
+        window.ResizeObserver = class extends RO {
+            constructor(cb: ResizeObserverCallback) {
+                super(cb);
+                made += 1;
+            }
+        };
+    }
+    w.__roMade = () => made;
+}
+/** A ticking label (`live` seats): `window.__tick.value += 1` changes its text. */
+const tick = ref(0);
+w.__tick = tick;
 
 /** A 24px glyph, as a consumer's icon component renders one inside its control. */
 const glyph = () =>
@@ -96,10 +118,12 @@ const scenes: Record<string, Component> = {
             );
     }),
 
-    // Critique round 2: a dock of mixed seats. `?kinds=` a comma list of `icon` and
-    // `tab:<label>` (each seat `data-witness="S<i>"`), `?persistent=1` adds a seat in each
-    // persistent region (`lead`, `tail`), `?orientation=vertical` a vertical dock in a
-    // `?stageH=` tall column, `?maxw=` a max inline size and `?fit=0` drops fitContent.
+    // Critique round 2: a dock of mixed seats. `?kinds=` a comma list of `icon`,
+    // `tab:<label>`, `trigger:<label>` (a labelled DockTrigger) and `live` (a tab whose
+    // label ticks with `__tick`), each seat `data-witness="S<i>"`; `?persistent=1` adds a
+    // seat in each persistent region (`lead`, `tail`), `?orientation=vertical` a vertical
+    // dock in a `?stageH=` tall column, `?maxw=` a max inline size, `?fit=0` drops
+    // fitContent and `?preset=` sets the dock's `data-preset`.
     seats: defineComponent(() => {
         const orientation = (params.get("orientation") ?? "horizontal") as "horizontal" | "vertical";
         const kinds = (params.get("kinds") ?? "icon,icon,icon").split(",");
@@ -121,12 +145,26 @@ const scenes: Record<string, Component> = {
                             fitContent: params.get("fit") !== "0",
                             collapse: false,
                             orientation,
+                            "data-preset": params.get("preset") ?? undefined,
                             style: params.get("maxw") ? `max-inline-size:${params.get("maxw")}px` : undefined,
                         },
                         {
                             default: () =>
                                 kinds.map((k, i) =>
-                                    k.startsWith("tab:")
+                                    k.startsWith("trigger:")
+                                        ? h(DropdownMenu, { modal: false }, () => [
+                                              h(DockTrigger, { for: "dropdown", "data-witness": `S${i + 1}` }, () => [
+                                                  glyph(),
+                                                  h("span", k.slice(8)),
+                                              ]),
+                                              h(DropdownMenuContent, () => [h(DropdownMenuItem, () => "Home")]),
+                                          ])
+                                        : k === "live"
+                                          ? h(DockControl, { shape: "tab", "data-witness": `S${i + 1}` }, () => [
+                                                glyph(),
+                                                h("span", `Tick ${tick.value}`),
+                                            ])
+                                          : k.startsWith("tab:")
                                         ? h(DockControl, { shape: "tab", "data-witness": `S${i + 1}` }, () => [
                                               glyph(),
                                               h("span", k.slice(4)),
@@ -292,6 +330,56 @@ const scenes: Record<string, Component> = {
                             h("span", { "data-witness": "label" }, "Visualize"),
                         ]),
                     ]),
+                ]),
+            ]),
+    ),
+
+    // A SegmentedTabs (`?variant=pill|underline`) in an unpositioned host, under a
+    // `position: fixed; z-index: 1` header the page scrolls it beneath.
+    segtabs: defineComponent(() => {
+        const value = ref("a");
+        w.__seg = value;
+        return () =>
+            h("div", [
+                h("header", {
+                    "data-witness": "header",
+                    style: "position:fixed;inset-block-start:0;inset-inline:0;block-size:80px;z-index:1;background:rgb(200,30,30)",
+                }),
+                h("div", { style: "block-size:300px" }),
+                h("div", { "data-witness": "host", style: "padding:16px" }, [
+                    h(SegmentedTabs, {
+                        variant: (params.get("variant") ?? "pill") as "pill" | "underline",
+                        modelValue: value.value,
+                        "onUpdate:modelValue": (v: string) => (value.value = v),
+                        options: [
+                            { label: "Alpha", value: "a" },
+                            { label: "Beta", value: "b" },
+                            { label: "Gamma", value: "c" },
+                        ],
+                    }),
+                ]),
+                h("div", { style: "block-size:2000px" }),
+            ]);
+    }),
+
+    // A Table with a header row and three body rows, beside a probe span bordered in
+    // `--border` (the resolved token, as a colour).
+    table: defineComponent(
+        () => () =>
+            h("div", { style: "padding:24px" }, [
+                h("span", { "data-witness": "probe-border", style: "border:1px solid var(--border)" }, "x"),
+                h(Table, () => [
+                    h(TableHeader, { "data-witness": "thead" }, () => [
+                        h(TableRow, { "data-witness": "hrow" }, () => [h(TableHead, () => "A"), h(TableHead, () => "B")]),
+                    ]),
+                    h(TableBody, () =>
+                        [1, 2, 3].map((n) =>
+                            h(TableRow, { "data-witness": `row${n}` }, () => [
+                                h(TableCell, () => `a${n}`),
+                                h(TableCell, () => `b${n}`),
+                            ]),
+                        ),
+                    ),
                 ]),
             ]),
     ),
