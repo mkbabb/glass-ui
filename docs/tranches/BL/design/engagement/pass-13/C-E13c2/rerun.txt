@@ -1,0 +1,13 @@
+# C-E13-complete-2 WK-R (added, NOT part of held-wk.txt): every held cell that FAILED at a 1-min load >= 8 in WK-1, re-run twice by the same
+# run.sh stage forms (rr- keeps gate8; paint's trailing args are ignored by its stage form and only name the log), cand13 rounds first, then
+# cand11's controls beside them. Named acquisitions WK-R1 (and WK-R2.. if WK-R1's 80-min rule leaves stages), each guarded --exclusive webkit --timeout 90.
+paint webkit --rerun 1
+rr-cand13-ce11 webkit --only exit-side --round 3
+rr-cand13-ca11 webkit --only exit-side --r 3
+paint webkit --rerun 2
+rr-cand13-ce11 webkit --only exit-side --round 4
+rr-cand13-ca11 webkit --only exit-side --r 4
+rr-cand11-ce11 webkit --only exit-side --round 2
+rr-cand11-ca11 webkit --only exit-side --r 2
+rr-cand11-ce11 webkit --only exit-side --round 3
+rr-cand11-ca11 webkit --only exit-side --r 3
