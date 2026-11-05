@@ -145,7 +145,8 @@ function writeVeilCentre(): void {
 // two custom properties, no layout read. `--loupe-x` is the value point in TRACK
 // coordinates, the thumb's centre on the lane (`d/2 + p·(track − d)`, styles.css THE
 // LANE), and the lens fill ends at the thumb's trailing edge, as the real fill does
-// [10.1.5 critique D1: at `p·track` both sat off the thumb]: the clone is laid out at 3× and transformed down by k/3, so
+// (at `p·track` both would sit off the thumb): the clone is laid out at 3× and
+// transformed down by k/3, so
 // `LENS/2 − k·x` puts that point dead centre at every k (the two scales cancel).
 // Horizontal only: a vertical scrubber's finger does not occlude its own value point.
 // THE ONE PREDICATE. Scrubber-only comes free — `grasping` opens only for a graspable
@@ -346,7 +347,7 @@ onMounted(() => {
                 handle. A class that is never applied cannot be un-applied wrongly.
             -->
             <!--
-                THE LANE (O-129 r5). reka places the range by percentages of its
+                THE LANE. reka places the range by percentages of its
                 containing block and the thumb by `contain` alignment, whose leading edge
                 travels `p·(track − thumb)`. The lane is the track less one thumb
                 diameter, so the range's percentages land on the thumb's travel, and the

@@ -147,20 +147,18 @@
    writes the range's two offsets as percentages of this box, so the fill is
    `d + p·(track − d)`: one thumb diameter at min, the whole track at max, and its
    leading end always the thumb's trailing edge (`contain` alignment puts the thumb at
-   `p·(track − d)`). [2026-11-04 · 10.1.5 · O-129 r5] At 10.1.4 the fill was `p·track`
-   and the thumb painted nothing, so the minimum painted a bare track (fourier /morph
-   'Morph' at 50 of 50..800) and the maximum an inert full bar (value's 'Zones' 6/6).
-   The spectrum's range paints no fill, so its lane is the whole track.
+   `p·(track − d)`). A fill of `p·track` with no thumb would paint a bare track at the
+   minimum and an inert full bar at the maximum. The spectrum's range paints no fill,
+   so its lane is the whole track.
    THE MARKS RIDE THE SAME LANE. A value mark is the thumb's CENTRE at that value,
    `d/2 + p·(track − d)`, so the marks register (`glass/value-marks.css`, `inset: 0`)
    is inset by half a diameter at both ends of the main axis: its `p·box` lands on that
    centre, inverted and RTL included (the inset is symmetric). The inset is the
-   register's own `--value-mark-inset`, set here: [10.1.5 critique 2 E4] ~~a
-   `.glass-value-marks` rule in this sheet~~ named the register's selector, which
-   enrolled this whole stylesheet into the component-only `./styles.css` entry
-   (`scripts/gen-component-styles.mjs`). [10.1.5 critique D1] At
-   `inset: 0` a mark sat at `p·track`, up to half a diameter off the thumb, and a mark
-   near min was already under the fill at min. */
+   register's own `--value-mark-inset`, set here on the slider's own selector: a rule
+   naming `.glass-value-marks` in this sheet would enrol the whole stylesheet into the
+   component-only `./styles.css` entry (`scripts/gen-component-styles.mjs`). At
+   `inset: 0` a mark would sit at `p·track`, up to half a diameter off the thumb, and a
+   mark near min would already lie under the fill at min. */
 .slider-lane {
     position: absolute;
     inset: 0;
@@ -207,9 +205,8 @@
    on the cross axis by the root's own `align-items: center`. It is the same object at
    min, mid and max, so the value's end is visible at both extremes. Its paint is the
    switch thumb's (`--card` over `--shadow-sm`), the house's one knob. Keyboard focus does
-   not ring it — it ribbons the TRACK, below.
-   [2026-11-04 · 10.1.5 · O-129 r5] ~~`width: 0; opacity: 0` — the invisible thumb~~:
-   with no thumb and a fill of `p·track`, both extremes lost the handle. */
+   not ring it — it ribbons the TRACK, below. The thumb is always painted: without it,
+   both extremes lose the handle. */
 .slider-thumb {
     display: block;
     width: var(--slider-thumb-size, 1rem);
@@ -294,8 +291,8 @@
 }
 
 /* The disabled register dims the scrubber's whole value: the fill and the disc
-   inscribed in it. [10.1.5 critique D3] The thumb is new paint in 10.1.5 and painted at
-   full strength on a half-strength fill. */
+   inscribed in it, so the thumb never paints at full strength on a half-strength
+   fill. */
 .glass-slider[data-disabled] .slider-range,
 .glass-slider[data-disabled]:not([data-variant="spectrum"]) .slider-thumb {
     opacity: var(--opacity-disabled);
