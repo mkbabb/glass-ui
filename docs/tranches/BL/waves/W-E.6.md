@@ -175,3 +175,9 @@ process.exitCode = fails ? 1 : 0;
 ```
 
 After the wave the fixture scene's chips use the new API (`selectable`, `removable`); the probe's selectors (`data-probe`) do not change.
+
+## Addendum O-158 (value.js, 2026-11-05): the bare Badge
+
+value.js shows the outline Featured Badge on phone-width Browse cards (coarse pointer, card under 30rem) as its gold glyph alone. It does this by zeroing `min-inline-size`, padding, `box-shadow` and background on `.featured-badge` and hiding the label (value `demo/palettes/inspector/PaletteInspector.vue`, commit 3e01d2714). The ringed glyph was a 29 px chip, made from the `:where(.badge-atom)` 1lh floor plus the rim, and at 390 px it truncated the palette name.
+
+W-CHIP gives Badge a mark-only form: no plate, no ring and no 1lh floor. The glyph sits at the text's cap height, and the accessible label stays. It has to be one variant on the existing size or appearance axis, not a parallel component. Its gate shows a bare Badge in a 390 coarse card measuring the glyph's own box, in Chromium and WebKit. value adopts it at its next repin and deletes the override.
