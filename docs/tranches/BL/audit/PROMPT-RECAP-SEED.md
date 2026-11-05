@@ -55,3 +55,13 @@ unaddressed registry row with an owning wave. The tranche prompt corpora live be
 - N-13 (owner, 2026-09-23, relayed in O-62): "why are our docks grayed out, too"; earlier (fourier OA-43): "why is the controls items, these sidebars and elements, so gray and grayed out?"
 - N-14 (owner, 2026-09-23, relayed in O-63): "buttons in the dock are clipped on hover and select like this".
 - N-15 (owner, relayed in O-64 from keyframes.js OA-41 and OA-48): "the dock transitions and animations from small to large are blurry, slow, and jittery--not smooth and ios 27 loke"; "all of the dock transitions still are awful and blurry".
+- N-16 (owner, 2026-11-05, relayed by value.js `value-js-e7` to all sessions; binds every design seat): *"eliminate any small bits of text or items--suffuse no ai-markers or senseless markup, design, or over-lit and over engineered color, text, or item. KISS. Have a sense of glass proprotion. Trenchant."* and *"Have a sense of proportion. Breathe of life."* Read as rules:
+  1. Cut, don't add: each small caption, tag, badge, dot or ornament earns its place or goes.
+  2. No AI tells: no gratuitous glow, sparkle, sheen, gradient-on-everything, stacked hairlines or meta captions.
+  3. One focal ink per view, with accent used sparingly. Identity colours are owner rulings.
+  4. Glass proportion: the library's own materials, spacing and type scale; fewer, larger, calmer elements.
+  5. Every control reads without a guess.
+  6. Motion breathes: spring in and out, no snaps, reduced motion honoured, no frame over budget.
+  7. The test is whether a master designer would keep the element.
+
+  It is the bar for 10.1.5 and 10.2.0. The dock's rest and collapse shape (O-155, OD-16) is the named example.
