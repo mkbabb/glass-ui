@@ -291,3 +291,4 @@ W-J.2's `slider.mjs` is in `W-J.2.md` appendix A.
 
 ## Addendum (2026-11-04): INBOUND O-142
 O-142 is value.js O-67 TILE-PRIMITIVE (§1's inbound row), booked under a glass id. kf's gate: `tiles.mjs` ×2 on dev and gh-pages with its `.preset-cell` and `.specimen-tile` radius rules deleted: every multi-line selectable tile computes `--radius-field` from `ToggleGroup shape="cell"` and keeps radio semantics and roving focus.
+O-151 is value.js O-65 (FW14H-OA50, §1's inbound row), booked under a glass id; fourier's gate: `admin-row.css` retires onto the list row, one-line actions stay stadiums and wrapped ones take A1.

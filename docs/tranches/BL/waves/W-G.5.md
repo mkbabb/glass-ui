@@ -203,3 +203,6 @@ R.done();
 ```
 
 HEAD output: `FAIL … {"p3":true,"cfg":[{"cls":"goo-blob-canvas","colorSpace":"(default srgb)","format":"bgra8unorm"},{"cls":"goo-blob-canvas","colorSpace":"(default srgb)","format":"bgra8unorm"}]}`.
+
+## Addendum (2026-11-04): INBOUND O-153
+`setMood()` and `pulse()` on a demand-parked Blob wake the renderer for the motion they start, through the one scheduler O-104a's config redraw and O-112 (2)'s restore redraw use; the config half of the ask is §1's R2-03-06 row. Gate: value's HeroBlob on a quiescent engine: a `pulse()` (the save drip) and a `setMood()` paint on the next frame, and a config edit yields one new frame, ×2.
