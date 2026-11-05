@@ -1,0 +1,44 @@
+src/components/dock/composables/dockMorphMeasure.ts:236:      * THE PLATE'S CROSS EXTENT, `--dock-plate-cross-px` (O-129 r1, O-123 OD-5): the
+src/components/dock/composables/dockMorphMeasure.ts:258:      * (10.1.5 critique 2 E1, E2; W-0.8 §11, OD-13). A hovered seat's ink past its layout
+src/components/dock/composables/useDockRun.ts:214:      * seat's ink (its hover overhang and ring), never room for the seat. [10.1.5 fix
+src/components/dock/composables/useDockRun.ts:215:      * round 3] ~~The port's padding box~~ counted a seat that had overflowed into the
+src/components/dock/styles/run.css:129:            `ring·s` (the run rule below says why a scroll port needs it). [10.1.5
+src/components/dock/styles/run.css:130:            critique 2 E1, E2] The extent is the LARGEST declared seat's on that axis,
+src/components/dock/styles/run.css:133:            is `m·P − gap`, so ~~`--dock-seat`~~ (the 44 px icon cell) under-reserved any
+src/components/dock/styles/run.css:135:            at 390) and cut the plate, and its focused ring clipped (OD-17). Declared on
+src/components/dock/styles/run.css:142:            THE SCROLL STEP, on the scroll axis only. [10.1.5 fix round 3] WebKit's
+src/components/dock/styles/run.css:146:            into it before it moves. ~~The bare ink~~ (10 px, round(up) of 9.6) left
+src/components/dock/styles/run.css:186:     /* THE ROOM FOR THE RESERVE, on the scroll axis. [10.1.5 critique 2 E3] The run
+src/components/dock/styles/run.css:189:        the dock owns, never on a neighbour: ~~the bare slot~~ laid the clip 6.6 px over
+src/components/dock/styles/run.css:195:        the region and the run's CLIP, as it did before the reserve (~~`max(gap,
+src/components/dock/styles/run.css:196:        reserve)`~~ left the clip flush with the lead seat, and Chromium's hit point
+src/components/dock/styles/run.css:203:        scroll-axis margins (~~`shell-regions.css`'s `.dock-persistent + .dock-layers`
+src/components/dock/styles/run.css:204:        gap~~ moved here; `morph.css`'s empty-summary collapse still zeroes it). */
+src/components/dock/styles/run.css:351:         /* [2026-11-04 · 10.1.5 · O-129 r1, O-123 OD-5] THE RESERVE IS ON BOTH AXES, and
+src/components/dock/styles/run.css:368:            at the house geometry. The reserve is that sum. [10.1.5 critique D4]
+src/components/dock/styles/run.css:369:            ~~`max(ring, seat·(s − 1)/2)`~~ = 4 px clipped that ring by 2.4 px on the
+src/components/dock/styles/run.css:371:            [10.1.5 critique 2 E1, E2] The overhang is the LARGEST seat's, per axis:
+src/components/dock/styles/run.css:373:            head of this file. ~~`--dock-seat · (s − 1)/2`~~ sized it from the icon cell. */
+src/components/dock/styles/run.css:390:     /* THE TRAILING RESERVE IS A BOX, not padding, on a horizontal run. [10.1.5 fix
+src/components/dock/styles/run.css:400:        The vertical run keeps its block-end padding: ~~the same spacer, rotated~~ moved
+src/components/dock/styles/run.css:402:        an ancestor `zoom` in WebKit (release-10-1-3 D-1, critique-7). */
+src/components/dock/styles/run.css:442:         /* [2026-11-04 · 10.1.5 · O-129 r1] ~~The reserve rotates with the port: block
+src/components/dock/styles/run.css:443:            padding zeroed, inline padding taken~~ — the reserve is now on BOTH axes in the
+src/components/dock/styles/run.css:591:        ResizeObserver border box. [2026-11-04 · 10.1.5 · O-129 r1, O-123 OD-5]
+src/components/dock/styles/run.css:592:        ~~`from` is 50%, which "resolves to the stadium's own corner"~~ — false: a
+src/components/dock/styles/run.css:628:     /* [2026-11-04 · 10.1.5 · O-129 r2, O-123 OD-1] THE TIMELINE IS NAMED ONLY ON THE
+src/components/dock/styles/shell-regions.css:49:     /* [10.1.5 critique 2 E3] ~~`.dock-persistent + .dock-layers { margin-inline-start:
+src/components/dock/styles/shell-regions.css:50:        var(--dock-layer-gap) }`~~ and its vertical twin moved to `run.css` (THE ROOM FOR
+src/components/slider/Slider.vue:148: // [10.1.5 critique D1: at `p·track` both sat off the thumb]: the clone is laid out at 3× and transformed down by k/3, so
+src/components/slider/Slider.vue:349:                 THE LANE (O-129 r5). reka places the range by percentages of its
+src/components/slider/styles.css:150:    `p·(track − d)`). [2026-11-04 · 10.1.5 · O-129 r5] At 10.1.4 the fill was `p·track`
+src/components/slider/styles.css:158:    register's own `--value-mark-inset`, set here: [10.1.5 critique 2 E4] ~~a
+src/components/slider/styles.css:159:    `.glass-value-marks` rule in this sheet~~ named the register's selector, which
+src/components/slider/styles.css:161:    (`scripts/gen-component-styles.mjs`). [10.1.5 critique D1] At
+src/components/slider/styles.css:211:    [2026-11-04 · 10.1.5 · O-129 r5] ~~`width: 0; opacity: 0` — the invisible thumb~~:
+src/components/slider/styles.css:297:    inscribed in it. [10.1.5 critique D3] The thumb is new paint in 10.1.5 and painted at
+src/styles/tokens/light-dark.css:21:         /* THE TYPE TAKES THE NO-ZOOM FLOOR, NOT THE COMFORT SCALE. [2026-11-04 · 10.1.5
+src/styles/tokens/light-dark.css:22:            · O-129 r6] ~~`--control-text: calc(var(--type-small) * var(--ui-scale))` under
+src/styles/tokens/light-dark.css:23:            the coarse 1.5×~~ painted 21px field text in a 54px bar at 390 (value.js
+src/styles/tokens/light-dark.css:31:            [10.1.5 critique D2] ~~`--control-text-sm: max(var(--type-caption), 1rem)`~~
+src/styles/tokens/sizing.css:72:        [2026-11-04 · 10.1.5 · O-129 r7] The menu row had no gap at all: fourier's nav
