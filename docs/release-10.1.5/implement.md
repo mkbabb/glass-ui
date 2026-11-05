@@ -240,3 +240,88 @@ restored to HEAD after).
 
 The c1 RED arm fails on its mark read before it reaches the loupe read; the loupe half is
 shown GREEN only, by the lane law it asserts.
+
+## Fix round 4 (critique-4.md: O-133, O-150 R-t-1, H1 to H6)
+
+Seat: claude-opus-5-5. Every browser run was admitted by `guarded` (WebKit 2287 under
+`--exclusive webkit`, which queued once for the lock and then ran).
+
+### Cures
+
+- **O-133.** `tabs/styles/segmented.css`: `.segmented-tabs { isolation: isolate }`, so the
+  strip is its own stacking context in every variant, and `.segmented-tab` takes
+  `z-index: 1`, one rung over the indicator's `0`. The drag lift (`tabs/styles/drag.css`)
+  goes to `2`, still over the labels, now inside the strip.
+- **O-150 R-t-1.** `TableRow.vue` `border-b border-border`, `TableHeader.vue`
+  `[&_tr]:border-b [&_tr]:border-border`. No token moved.
+- **H1.** `dock/styles/run.css`, THE RUN'S CLIP: the active run animates its own corners on
+  the cap's timeline (`gl-dock-clip-{inline,block}-{start,end}`). On a scroll-axis edge
+  that is the plate's edge (`--dock-run-edge-*`, 0 beside a persistent region) the corner
+  is the plate's corner less the run's inset from the plate (`--dock-run-inset`) on the
+  scroll axis, and `50%` of the run on the cross axis. With nothing to scroll the
+  timeline is inactive and the run clips to its padding box, so rest geometry and every
+  rest witness are unchanged. Hit testing does not follow a scroller's rounded clip in
+  Chromium, so h1 reads paint: two 2x frames with the seats shown and hidden must agree
+  on every device pixel more than 0.75 px past a plate corner's arc.
+- **H2.** `dockMorphMeasure.ts` measures `[data-glass-dock-seat]:not(.dock-trigger)`: a
+  `<DockTrigger>` never hover-scales, so it reserves only its ring, which the reserve
+  holds for every seat. The labelled-trigger dock's reserve is now the icon dock's
+  (Chromium and WebKit: 8 px; it was 19). **Ruled, not cured: the open seat's 5 px.** The
+  open seat does hover-scale, so its ink is real and the reserve must hold it. A run
+  whose room did not change on open would have to reserve the open seat's `m·P − gap`
+  in every dock, open or not: at the house geometry that widens every dock at rest by
+  2 × (12 − 8) px and moves every end seat 4 px off the plate's edge, against v10.1.4.
+  The 5 px follows the open seat's own width transition (one spring, the same clock), and
+  it moves the run only beside a persistent region. The patch accepts it; W-0.8 owns the
+  run's room when it re-derives the lattice.
+- **H3.** The seat ResizeObserver is made once per attach, when the first seat joins, and
+  a pane mutation diffs `querySelectorAll` against the observed set (unobserve the gone,
+  observe the new). A ticking label constructs nothing (both engines: 4 → 4 over 20
+  ticks; it was 4 → 24).
+- **H4.** `observeCross` publishes `--dock-plate-cross-px` from the plate's layout box
+  (`offset*`) when the dock attaches, then from the ResizeObserver; the seats likewise
+  from `offset*` as they join. With no ResizeObserver the plate rests at half its block
+  extent (28 px on a 56 px plate; it was 0px).
+- **H5.** `--dock-run-step-*` and their prose are deleted; the reserve is the bare ink,
+  rounded up. e1 to e4 hold in both engines on the spacer alone.
+- **H6.** Every comment line the patch added in `src/` now states what the code does: no
+  process ids, no struck history (`git diff -U0 v10.1.4 -- src` additions carry none of
+  `10.1.5`, `O-1xx`, `OD-`, `critique`, `fix round`, `W-0.8`, `~~` or a dated tag).
+
+Tokens: no existing token value moved. New, each internal to the dock's run clip:
+`--dock-run-edge-start`, `--dock-run-edge-end`, `--dock-run-inset`,
+`--dock-run-corner-rest`, `--dock-run-corner-cut`. Deleted (added earlier in this patch,
+never shipped): `--dock-run-step-inline`, `--dock-run-step-block`.
+
+### Witnesses (release-10-1-5.spec.ts f1, f2, h1 to h4)
+
+RED arm: the round-4 tip `463b0e42a`'s `src/` under the new spec and harness
+(`scripts/witness-fix-4.sh`); f1 and f2 read the same on v10.1.4, whose files they touch
+are unchanged at that tip.
+
+| cell | Chromium 463b0e42a | Chromium fix 4 | WebKit 2287 463b0e42a | WebKit 2287 fix 4 |
+|---|---|---|---|---|
+| f1 underline under a z:1 fixed header; labels over the indicator at rest and mid-glide | RED (top hit `segmented-tab`, tab z 10) | GREEN | RED | GREEN |
+| f2 Table rules = `--border`, light and dark | RED (`rgb(28, 25, 23)`) | GREEN | RED | GREEN |
+| h1 house, seat ink past the cut arc | RED (4 px², Δ 25 to 31) | GREEN | RED (4) | GREEN |
+| h1 cockpit | RED (26) | GREEN | RED (20) | GREEN |
+| h2 labelled trigger's reserve = icon dock's | RED (19 vs 8) | GREEN | RED (19 vs 8) | GREEN |
+| h3 ResizeObserver constructions over 20 ticks | RED (4 → 24) | GREEN | RED (4 → 24) | GREEN |
+| h4 no ResizeObserver: rest corner = h/2 | RED (0px) | GREEN | RED (0px) | GREEN |
+
+### Gates
+
+| gate | result |
+|---|---|
+| release-10-1-5 (g1 to g5, c1 to c4, e1 to e4, f1, f2, h1 to h4), Chromium | 32/32 |
+| release-10-1-5, WebKit 2287 | 32/32 |
+| g6 release-10-1-4 | Chromium 23/23; WebKit 15 passed, 8 skipped (page.pdf) |
+| g6 release-10-1-3 | Chromium 60/60; WebKit 58 passed, 2 skipped (CDP swipe) |
+| `npm run typecheck` | exit 0 |
+| `npm run build`, `npm run demo:dist:build` | exit 0, exit 0 |
+| `npx vitest run --maxWorkers=2` | 247/247 files; 2397 passed, 10 expected fail, 1 skipped |
+| `npm run verify:package` | ratchet refused +2851 B (2948633 > 2945782); rebound on the committed tree, then terminal CLEAN, version 10.1.5 |
+
+`g-dock-lattice.test.ts` moved with the law (no step in the reserve; the run's clip
+keyframes join the cap's as the band's animated radii, on the cap's endpoints and
+timeline).
