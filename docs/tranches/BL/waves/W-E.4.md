@@ -317,3 +317,5 @@ process.exitCode = fails ? 1 : 0;
 ```
 
 E4-G14 is added to the wired spec from the G3 `pop` cell. The fixture's `pop` scene gains a `short=1` arm whose body is the text "Popover body" alone (the G3 native-host scene's body). The gate opens `s=pop&short=1&edge=mid&auto=pop` and compares the plate's width with the `max-content` width of that text plus the two pads. At HEAD the G3 cell with the same body reads a 336 px plate.
+
+**Addendum (2026-11-05), INBOUND O-154 (value.js OD-11), a witness for G1.** A floating status on the tooltip rung (value's invalid-colour badge, teleported beside the dock colour field) paints under that field's open help Popover today, because `--z-tooltip` 120 < `--z-popover` 130. Under the host-relative z this wave lands, the status paints above the overlay it sits beside or inside. Witness: value.js `ColorInput.vue`, badge visible over the open help popover, both engines.
