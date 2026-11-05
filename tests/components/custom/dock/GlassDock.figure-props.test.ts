@@ -7,8 +7,6 @@
 // pass on both (they guard that existing docks are unchanged).
 import { mount } from "@vue/test-utils";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { readFileSync } from "node:fs";
-import { join } from "node:path";
 import { h, nextTick } from "vue";
 
 import GlassDock from "@glass/components/dock/GlassDock.vue";
@@ -111,20 +109,13 @@ describe("GlassDock anchor", () => {
         expect(w.attributes("data-anchor")).toBeUndefined();
     });
 
-    // The pin itself is layout, which jsdom cannot do: the engine witness is
-    // `tests-visual/u-b7.spec.ts` ("anchor · …"), which lays the dock in a flex and a
-    // grid row with free space in Chromium and WebKit and measures the edge gap.
-    it("end: the root carries the anchor, and the origin stays measured", () => {
-        const w = mountDock({ anchor: "end" });
-        expect(w.attributes("data-anchor")).toBe("end");
-        const css = readFileSync(
-            join(process.cwd(), "src/components/dock/styles/layers.css"),
-            "utf8",
-        ).replace(/\/\*[\s\S]*?\*\//g, "");
-        // The morph's origin is the measured fixed point (`--dock-morph-origin`), never a
-        // declared edge: no anchor rule sets `transform-origin`.
-        expect(css).not.toMatch(/\[data-anchor="[a-z]+"\][^{]*\{[^}]*transform-origin/);
-        expect(css).toMatch(/\.glass-dock\[data-morphing\]:not\(\.vertical\)\s*\{\s*transform-origin:\s*var\(--dock-morph-origin\) center;/);
+    // What `anchor` means in paint (the named edge holds through expand and collapse)
+    // is layout, which jsdom cannot do: the engine witness is `tests-visual/u-b7.spec.ts`
+    // ("anchor · …") in Chromium and WebKit.
+    it("start/end: the root carries data-anchor", () => {
+        for (const anchor of ["start", "end"] as const) {
+            expect(mountDock({ anchor }).attributes("data-anchor")).toBe(anchor);
+        }
     });
 });
 

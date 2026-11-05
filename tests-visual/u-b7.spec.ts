@@ -178,72 +178,97 @@ test.describe("U/B7", () => {
     });
 });
 
-// ── anchor · the figure dock pins to the named edge of its container ────────────────
+// ── anchor · the named edge holds through expand and collapse; the dock never moves ──
 const rectOf = (page: Page, sel: string) =>
     page.evaluate((s) => {
         const r = document.querySelector<HTMLElement>(s)!.getBoundingClientRect();
-        return { left: r.left, right: r.right, top: r.top, bottom: r.bottom, width: r.width, height: r.height };
+        return { left: r.left, right: r.right, width: r.width };
     }, sel);
 
+/** Sample the dock's painted inline edges every frame for `ms`, starting now. */
+const traceEdges = (page: Page, ms: number) =>
+    page.evaluate(
+        (ms) =>
+            new Promise<{ left: number; right: number }[]>((resolve) => {
+                const dock = document.querySelector<HTMLElement>('[data-probe="dock"]')!;
+                const out: { left: number; right: number }[] = [];
+                const t0 = performance.now();
+                const tick = () => {
+                    const r = dock.getBoundingClientRect();
+                    out.push({ left: r.left, right: r.right });
+                    if (performance.now() - t0 < ms) requestAnimationFrame(tick);
+                    else resolve(out);
+                };
+                requestAnimationFrame(tick);
+            }),
+        ms,
+    );
+
+/** Open the press-only figure dock, then close it with a press outside, tracing both morphs. */
+async function expandAndCollapse(page: Page, touch: boolean) {
+    const opening = traceEdges(page, 900);
+    const handle = page.locator('[data-probe="handle"]');
+    if (touch) await handle.tap();
+    else await handle.click();
+    const open = await opening;
+    await page.waitForTimeout(300);
+    const expanded = await rectOf(page, '[data-probe="dock"]');
+    const closing = traceEdges(page, 900);
+    if (touch) await page.touchscreen.tap(5, 5);
+    else await page.mouse.click(5, 5);
+    const close = await closing;
+    await page.waitForTimeout(300);
+    const collapsed = await rectOf(page, '[data-probe="dock"]');
+    return { frames: [...open, ...close], expanded, collapsed };
+}
+
 test.describe("anchor", () => {
-    const cells: { box: "flex" | "grid"; anchor: "start" | "end"; dir: "ltr" | "rtl"; orientation: "horizontal" | "vertical" }[] = [];
-    for (const box of ["flex", "grid"] as const)
-        for (const anchor of ["start", "end"] as const) {
-            cells.push({ box, anchor, dir: "ltr", orientation: "horizontal" });
-            cells.push({ box, anchor, dir: "ltr", orientation: "vertical" });
-        }
-    cells.push({ box: "flex", anchor: "end", dir: "rtl", orientation: "horizontal" });
+    const cells = [
+        { anchor: "start", justify: "flex-start", dir: "ltr", edge: "left" },
+        { anchor: "end", justify: "flex-end", dir: "ltr", edge: "right" },
+        { anchor: "end", justify: "flex-end", dir: "rtl", edge: "left" },
+    ] as const;
     for (const c of cells) {
-        test(`anchor · ${c.anchor} in a ${c.box} ${c.orientation === "vertical" ? "column" : "row"} (${c.dir}) with free space pins the dock to that edge`, async ({ page }) => {
-            await open(page, `scene=figure-row&box=${c.box}&anchor=${c.anchor}&dir=${c.dir}&orientation=${c.orientation}`);
+        test(`anchor · an anchor="${c.anchor}" dock at its row's ${c.anchor} (${c.dir}) keeps that edge through expand and collapse`, async ({
+            page,
+        }, info) => {
+            await open(page, `scene=figure-row&anchor=${c.anchor}&justify=${c.justify}&dir=${c.dir}`);
             await page.waitForTimeout(400);
             const row = await rectOf(page, '[data-probe="row"]');
-            const dock = await rectOf(page, '[data-probe="dock"]');
-            let near: number;
-            let far: number;
-            if (c.orientation === "vertical") {
-                near = c.anchor === "end" ? row.bottom - dock.bottom : dock.top - row.top;
-                far = c.anchor === "end" ? dock.top - row.top : row.bottom - dock.bottom;
-            } else {
-                // The inline end is the right in ltr and the left in rtl.
-                const atRight = (c.anchor === "end") === (c.dir === "ltr");
-                near = atRight ? row.right - dock.right : dock.left - row.left;
-                far = atRight ? dock.left - row.left : row.right - dock.right;
-            }
-            const at = JSON.stringify({ row, dock });
-            expect(Math.abs(near), `the anchored edge sits on the container's edge: ${at}`).toBeLessThan(1.5);
-            expect(far, `the free space is on the other side: ${at}`).toBeGreaterThan(100);
+            const before = await rectOf(page, '[data-probe="dock"]');
+            const { frames, expanded, collapsed } = await expandAndCollapse(page, !!info.project.use.hasTouch);
+            const drift = Math.max(...frames.map((f) => Math.abs(f[c.edge] - before[c.edge])));
+            const at = JSON.stringify({ row, before, expanded, collapsed, drift });
+            expect(Math.abs(before[c.edge] - row[c.edge]), `laid at the row's ${c.anchor}: ${at}`).toBeLessThan(1.5);
+            expect(expanded.width, `the dock expanded: ${at}`).toBeGreaterThan(before.width + 40);
+            expect(Math.abs(collapsed.width - before.width), `the dock collapsed again: ${at}`).toBeLessThan(1.5);
+            expect(drift, `the ${c.edge} edge holds across both morphs: ${at}`).toBeLessThan(2);
         });
     }
 
-    test("anchor · atlas's figure lane holds its end edge through the press expand", async ({ page }, info) => {
+    test("anchor · the prop never moves the dock: start, end and center lay out alike", async ({ page }) => {
+        const boxes: Record<string, { left: number; right: number; width: number }> = {};
+        for (const anchor of ["center", "start", "end"]) {
+            await open(page, `scene=figure-row&anchor=${anchor}&justify=normal&wrap=0`);
+            await page.waitForTimeout(400);
+            boxes[anchor] = await rectOf(page, '[data-probe="dock"]');
+        }
+        for (const anchor of ["start", "end"]) {
+            expect(Math.abs(boxes[anchor].left - boxes.center.left), `${anchor} vs center: ${JSON.stringify(boxes)}`).toBeLessThan(0.5);
+        }
+    });
+
+    test("anchor · atlas's figure lane holds its end edge through expand and collapse", async ({ page }, info) => {
         await open(page, "scene=figure-atlas");
         await page.waitForTimeout(400);
         const control = await rectOf(page, '[data-probe="control"]');
         const before = await rectOf(page, '[data-probe="dock"]');
-        const trace = page.evaluate(
-            () =>
-                new Promise<number[]>((resolve) => {
-                    const dock = document.querySelector<HTMLElement>('[data-probe="dock"]')!;
-                    const out: number[] = [];
-                    const t0 = performance.now();
-                    const tick = () => {
-                        out.push(dock.getBoundingClientRect().right);
-                        if (performance.now() - t0 < 900) requestAnimationFrame(tick);
-                        else resolve(out);
-                    };
-                    requestAnimationFrame(tick);
-                }),
-        );
-        const handle = page.locator('[data-probe="handle"]');
-        if (info.project.use.hasTouch) await handle.tap();
-        else await handle.click();
-        const rights = await trace;
-        await page.waitForTimeout(300);
-        const after = await rectOf(page, '[data-probe="dock"]');
-        const drift = Math.max(...rights.map((r) => Math.abs(r - before.right)));
-        expect(Math.abs(before.right - control.right), "the collapsed handle sits at the lane's end").toBeLessThan(1.5);
-        expect(after.width, "the dock expanded").toBeGreaterThan(before.width + 40);
-        expect(drift, "the end edge holds across the morph").toBeLessThan(2);
+        const { frames, expanded, collapsed } = await expandAndCollapse(page, !!info.project.use.hasTouch);
+        const drift = Math.max(...frames.map((f) => Math.abs(f.right - before.right)));
+        const at = JSON.stringify({ control, before, expanded, collapsed, drift });
+        expect(Math.abs(before.right - control.right), `the collapsed handle sits at the lane's end: ${at}`).toBeLessThan(1.5);
+        expect(expanded.width, `the dock expanded: ${at}`).toBeGreaterThan(before.width + 40);
+        expect(Math.abs(collapsed.width - before.width), `the dock collapsed again: ${at}`).toBeLessThan(1.5);
+        expect(drift, `the end edge holds across both morphs: ${at}`).toBeLessThan(2);
     });
 });

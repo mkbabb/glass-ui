@@ -123,13 +123,12 @@ Each change below is a clean break with no alias.
   the pill radius on a box taller than 32 px should switch to `--radius-circle`.
 - **`GlassDock` gains `expandOn`, `anchor` and `collapsedLabel`.** These are additive, and
   each one defaults to the old behaviour (`"hover"`, `"center"` and `"Expand dock"`).
-  The new types `DockExpandOn` and `DockAnchor` are exported. With `anchor="start"` or
-  `anchor="end"`, the root carries `data-anchor`, and the dock pins itself to that edge
-  of a flex or grid container: the anchored side's margin is zero and the free space
-  goes to the far side. On a vertical dock the pin is on the block axis, and with
-  `dir="rtl"` the inline edges swap. The dock's morph grows from the edge it is laid at,
-  so the dock, its `#persistent` group and its panes all hold that edge while it opens
-  and closes.
+  The new types `DockExpandOn` and `DockAnchor` are exported. `anchor` names the edge
+  that stays put while the dock opens and closes, and it changes nothing else, since the
+  dock never moves itself inside its container. With `anchor="start"` or `anchor="end"`
+  the root carries `data-anchor`, which your own CSS can key on. The dock's morph grows
+  from whichever edge your layout places it at, because its origin is measured when the
+  morph starts, so the dock, its `#persistent` group and its panes all hold that edge.
 - **There is one dropdown system.**
   - `DropdownMenu` now defaults to `modal: false`. Pass `modal` for a menu that must
     make the rest of the page inert, and a modal menu still takes reka's body scroll

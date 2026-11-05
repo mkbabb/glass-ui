@@ -106,28 +106,6 @@
         will-change: transform;
     }
 
-    /* `anchor` (the GlassDock prop) pins the dock to that edge of a flex or grid
-       container: the free space goes to ONE auto margin, on the far side, and the
-       anchored side is zero. Each rule owns both margins of its axis, since the base
-       `.glass-dock { margin: 0 auto }` centres it with an auto margin on each side,
-       and a single added auto margin would leave it centred. The morph's origin is not
-       declared here: it is measured (below), so the edge the dock is laid at is the
-       edge the scale holds, and a declared origin that disagreed with the layout would
-       paint a first frame away from the collapsed box. Logical, so `dir="rtl"`
-       mirrors the inline edge. */
-    .glass-dock[data-anchor="end"]:not(.vertical) {
-        margin-inline: auto 0;
-    }
-    .glass-dock[data-anchor="start"]:not(.vertical) {
-        margin-inline: 0 auto;
-    }
-    .glass-dock[data-anchor="end"].vertical {
-        margin-block: auto 0;
-    }
-    .glass-dock[data-anchor="start"].vertical {
-        margin-block: 0 auto;
-    }
-
     /* [2026-10-28 · 10.1.3 · O-110] ~~`transform-origin: center center`~~ — the scale
        grows from the morph's measured origin (`--dock-morph-origin`, the fixed point of
        the painted box and the reserved one, `useDockExpandedSize`'s `anchor`): the

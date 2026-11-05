@@ -101,11 +101,14 @@ export interface DockProps {
      */
     expandOn?: DockExpandOn;
     /**
-     * The edge the dock is pinned to in a flex or grid container. `"center"` (default)
-     * adds nothing; `"end"` pins the inline end (the block end on a vertical dock) with
-     * an auto margin, so the box grows toward the start; `"start"` the reverse. Logical:
-     * `dir="rtl"` mirrors it. The morph's origin is measured from layout when it starts,
-     * so the size morph and the rigid content hold whichever edge the dock is laid at.
+     * The edge that stays put while the dock opens and closes: `"start"`, `"end"`, or
+     * `"center"` (default). It names the edge and changes nothing else. The dock never
+     * moves itself inside its container, and the morph's origin is measured from layout
+     * when it starts, so the dock already holds whichever edge your layout lays it at.
+     * The dock centres itself in its own box with auto inline margins, so place it with
+     * a wrapper sized to its content (a `display: flex` box at the end of a row, say).
+     * A value other than `"center"` is written to the root as `data-anchor`, so your
+     * own CSS can key on it.
      */
     anchor?: DockAnchor;
     /**

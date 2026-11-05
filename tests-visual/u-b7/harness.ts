@@ -91,11 +91,11 @@ const auroraScroll = defineComponent(() => {
 });
 
 /** A press-only figure dock (`anchor`, static backdrop), its summary a 44 px handle. */
-const figureDock = (anchor: string, orientation: "horizontal" | "vertical" = "horizontal") =>
+const figureDock = (anchor: string) =>
     h(
         GlassDock,
         {
-            orientation,
+            orientation: "horizontal",
             collapse: "closed",
             expandOn: "press",
             anchor,
@@ -114,18 +114,27 @@ const figureDock = (anchor: string, orientation: "horizontal" | "vertical" = "ho
     );
 
 const scenes: Record<string, Component> = {
-    // anchor · a figure dock in a 720 px flex or grid row (or a 480 px column for a
-    // vertical dock) with free space; `dir=rtl` mirrors the row.
-    "figure-row": defineComponent(() => () => {
-        const vertical = params.get("orientation") === "vertical";
-        const box = params.get("box") === "grid" ? "display:grid" : vertical ? "display:flex;flex-direction:column" : "display:flex";
-        const size = vertical ? "block-size:480px;inline-size:120px" : "inline-size:720px";
-        return h("div", { style: "padding:24px", dir: params.get("dir") ?? "ltr" }, [
-            h("div", { "data-probe": "row", style: `${box};${size};outline:1px dashed gray` }, [
-                figureDock(params.get("anchor") ?? "end", vertical ? "vertical" : "horizontal"),
-            ]),
-        ]);
-    }),
+    // anchor · a figure dock in a flex row (720 px, or the viewport less its padding), placed by the row's own
+    // `justify-content` (`start`, `end` or `center`) through a content-sized wrapper,
+    // as atlas places its figure docks (the dock centres itself in its own box with auto
+    // inline margins, so the wrapper is what the row places); `wrap=0` lays the dock in the
+    // row itself, with free space on both sides; `dir=rtl` mirrors the row.
+    "figure-row": defineComponent(() => () =>
+        h("div", { style: "padding:24px", dir: params.get("dir") ?? "ltr" }, [
+            h(
+                "div",
+                {
+                    "data-probe": "row",
+                    style: `display:flex;justify-content:${params.get("justify") ?? "center"};inline-size:min(720px, 100vw - 48px);outline:1px dashed gray`,
+                },
+                [
+                    params.get("wrap") === "0"
+                        ? figureDock(params.get("anchor") ?? "center")
+                        : h("div", { style: "display:flex" }, [figureDock(params.get("anchor") ?? "center")]),
+                ],
+            ),
+        ]),
+    ),
     // anchor · atlas's figure lane: a content-sized flex-end wrapper in a flex-end control.
     "figure-atlas": defineComponent(() => () =>
         h("div", { style: "padding:24px;display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:1rem;inline-size:min(900px,100% - 48px)" }, [
