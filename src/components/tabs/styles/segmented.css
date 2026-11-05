@@ -44,6 +44,10 @@
 /* ── The PILL track (the glass material — DEFAULT) ── */
 @layer components {
     .segmented-tabs {
+        /* The strip is its own stacking context, so the tab-over-indicator order below is
+           internal to it and its rungs never rank in the host's context: a consumer's
+           `z-index: 1` fixed header paints over the strip whatever material it wears. */
+        isolation: isolate;
         --bouncy-track-trim: 0.1875rem;
         /* The iOS-27 stadium register. The pill reads the role-bearing
            `--radius-tab` (= --radius-pill = 9999px) — on a short pill box this clamps to
@@ -267,7 +271,8 @@
     /* ── The tab buttons ── */
     .segmented-tab {
         position: relative;
-        z-index: 10;
+        /* One rung over the indicator (`z-index: 0`), inside the strip's own context. */
+        z-index: 1;
         border: none;
         background: none;
         font-weight: 500;
