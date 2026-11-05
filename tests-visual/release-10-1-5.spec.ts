@@ -31,9 +31,9 @@
 //   E4 is the vitest arm tests/styles/typed-track-seam.test.ts, read after a build
 //
 // Fix round 3 (the fix-2 WebKit e3 cell at coarse 390), RED on cc7ea13b3, GREEN after:
-//   e4  an overflowing run scrolled to its end keeps a focused, hovered end seat's whole
-//       ring, horizontal beside both persistent regions and vertical (WebKit RED: the
-//       end padding was not scrollable overflow)
+//   e4  a run overrun by less than its reserve (the dock capped 4 px under its content)
+//       scrolls exactly that overrun and keeps its focused, hovered end seat's whole ring
+//       (WebKit RED: its end padding was not overflow until the seats passed it)
 import { expect, test, type Page } from "@playwright/test";
 
 async function open(page: Page, query: string): Promise<void> {
@@ -659,30 +659,26 @@ function e3(width: number): void {
 }
 
 /**
- * E4: an overflowing run scrolled to its end still holds its end seat's whole ink. The
- * trailing reserve must be scrollable overflow: WebKit drops a flex scroller's end
- * padding from it, so at the end the last seat met the clip and a focused, hovered one
- * lost its trailing ring and overhang. Horizontal (beside both persistent regions) and
- * vertical.
+ * E4: a run whose seats overrun its port by LESS THAN the reserve scrolls that overrun,
+ * and its focused, hovered end seat keeps its whole ring. WebKit counted a flex
+ * scroller's end padding as overflow only once the seats passed the padding box, so such
+ * a run read no reach, could not scroll, and its end seat's ink was cut by the overrun
+ * (the fix-2 e3 cell at coarse 390 was this case at 0.94 px). The overrun is set here: the
+ * dock is capped 4 px under its own content width.
  */
 function e4(width: number): void {
-    test(`e4 at ${width}: an overflowing run at its end keeps the end seat's whole ring`, async ({ page }) => {
+    test(`e4 at ${width}: a run overrun by less than its reserve scrolls it and keeps the end seat's ring`, async ({
+        page,
+    }) => {
         await page.setViewportSize({ width, height: 844 });
-        const icons = Array(12).fill("icon").join(",");
-        for (const query of [
-            `fit=0&maxw=360&persistent=1&kinds=${icons}`,
-            `orientation=vertical&stageH=360&kinds=${icons}`,
-        ]) {
-            await openSeats(page, query);
-            const range = await page.evaluate(() => {
-                const run = document.querySelector<HTMLElement>(".dock-run.is-active")!;
-                run.scrollTo({ left: run.scrollWidth, top: run.scrollHeight, behavior: "instant" });
-                return Math.max(run.scrollWidth - run.clientWidth, run.scrollHeight - run.clientHeight);
-            });
-            expect(range, `${width} ${query}: the run overflows`).toBeGreaterThan(0);
-            await settle(page, 400);
-            await expectFocusedRingWhole(page, "S12");
-        }
+        const kinds = "persistent=1&kinds=icon,icon,tab:Settings";
+        await openSeats(page, kinds);
+        const natural = await page.evaluate(
+            () => document.querySelector<HTMLElement>(".glass-dock")!.getBoundingClientRect().width,
+        );
+        await openSeats(page, `${kinds}&maxw=${Math.floor(natural) - 4}`);
+        await expectHonestReach(page, `${width} capped 4 px under ${natural}`);
+        await expectFocusedRingWhole(page, "S3");
     });
 }
 
