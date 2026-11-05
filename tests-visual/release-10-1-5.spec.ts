@@ -30,10 +30,11 @@
 //       at rest and scrolled; the edge seats keep their ring
 //   E4 is the vitest arm tests/styles/typed-track-seam.test.ts, read after a build
 //
-// Fix round 3 (the fix-2 WebKit e3 cell at coarse 390), RED on cc7ea13b3, GREEN after:
-//   e4  a run overrun by less than its reserve (the dock capped 4 px under its content)
-//       scrolls exactly that overrun and keeps its focused, hovered end seat's whole ring
-//       (WebKit RED: its end padding was not overflow until the seats passed it)
+// Fix round 3 (the fix-2 WebKit e3 cell at coarse 390), restated by fix round 5 (K3, r1
+// holds at every width):
+//   e4  a run whose seats all show but overrun its port less the reserve (the dock capped
+//       4 px under its content) scrolls nothing, rests round, and keeps its focused end
+//       seat's whole ring
 //
 // Critique round 4 (critique-4.md), RED on the round-4 tip 463b0e42a (f1 and f2 on
 // v10.1.4 as well), GREEN after:
@@ -45,6 +46,14 @@
 //   h2  (H2) a labelled DockTrigger adds no reserve: the run's room is the icon dock's
 //   h3  (H3) a ticking seat label constructs no ResizeObserver
 //   h4  (H4) with no ResizeObserver the plate still rests at half its block extent
+//
+// Critique round 5 (critique-5.md), RED on the round-5 tip 5836adb5f, GREEN after:
+//   k1  (K1) the house run at 320: End, focus() and hover-then-focus land the end seat
+//       flush at the run's end with its ring whole; Home lands the first seat at 0
+//   k2  (K2) a vertical run that overflows clips square at a flush edge: a wide end seat
+//       focused and hovered there keeps its whole ring; mid-run the clip rounds
+//   k3  (K3) a viewport-capped dock at 320 whose seats all show has nothing to scroll,
+//       rests at four corners of half its extent, and keeps its focused end seats' rings
 import { expect, test, type Page } from "@playwright/test";
 
 async function open(page: Page, query: string): Promise<void> {
@@ -130,12 +139,11 @@ function expectNoReach(read: PlateRead, cell: string): void {
 }
 
 /**
- * The run scrolls exactly what it hides: its reach equals how far its seats and the
- * reserve past them overrun the port at its leading rest, to the engine's whole-pixel
- * scroll extent. A run that fits reads no reach (`expectNoReach`); one whose seats do not
- * fit in an engine's font metrics reads that overrun, never 0 (WebKit's dropped end
- * padding hid it) and never more (a seat's engagement scale is not reach). Read with the
- * pointer off and the run at its leading rest.
+ * The run scrolls exactly what it hides. A run whose seats' span fits its port reads no
+ * reach (the reserve yields to the room left); one whose seats do not fit in an engine's
+ * font metrics reads the seats' overrun plus both reserves, never 0 (WebKit's dropped
+ * end padding hid it) and never more (a seat's engagement scale is not reach). Read with
+ * the pointer off and the run at its leading rest.
  */
 async function expectHonestReach(page: Page, cell: string): Promise<void> {
     await pointerOff(page);
@@ -143,13 +151,14 @@ async function expectHonestReach(page: Page, cell: string): Promise<void> {
     const read = await page.evaluate(() => {
         const run = document.querySelector<HTMLElement>(".dock-run.is-active")!;
         run.scrollTo({ left: 0, top: 0, behavior: "instant" });
-        const port = run.getBoundingClientRect();
         const reserve = Number.parseFloat(getComputedStyle(run).paddingInlineStart);
-        const seats = [...run.children].map((k) => k.getBoundingClientRect());
-        const last = seats[seats.length - 1]!;
+        const seats = [...run.children] as HTMLElement[];
+        const span = seats.at(-1)!.offsetLeft + seats.at(-1)!.offsetWidth - seats[0]!.offsetLeft;
         return {
             reach: run.scrollWidth - run.clientWidth,
-            overrun: Math.max(0, last.right + reserve - port.right),
+            overrun: span <= run.clientWidth ? 0 : span + 2 * reserve - run.clientWidth,
+            span,
+            port: run.clientWidth,
             reserve,
         };
     });
@@ -670,15 +679,13 @@ function e3(width: number): void {
 }
 
 /**
- * E4: a run whose seats overrun its port by LESS THAN the reserve scrolls that overrun,
- * and its focused, hovered end seat keeps its whole ring. WebKit counted a flex
- * scroller's end padding as overflow only once the seats passed the padding box, so such
- * a run read no reach, could not scroll, and its end seat's ink was cut by the overrun
- * (the fix-2 e3 cell at coarse 390 was this case at 0.94 px). The overrun is set here: the
- * dock is capped 4 px under its own content width.
+ * E4: a run whose seats show but overrun its port less the reserve (the dock capped 4 px
+ * under its own content width) has nothing to scroll: the reserve yields to the room the
+ * seats leave (critique round 5, K3), the plate rests round, and the keyboard-focused end
+ * seat keeps its whole ring.
  */
 function e4(width: number): void {
-    test(`e4 at ${width}: a run overrun by less than its reserve scrolls it and keeps the end seat's ring`, async ({
+    test(`e4 at ${width}: a run whose seats all show, capped under its reserve, scrolls nothing and keeps the end seat's ring`, async ({
         page,
     }) => {
         await page.setViewportSize({ width, height: 844 });
@@ -688,8 +695,14 @@ function e4(width: number): void {
             () => document.querySelector<HTMLElement>(".glass-dock")!.getBoundingClientRect().width,
         );
         await openSeats(page, `${kinds}&maxw=${Math.floor(natural) - 4}`);
-        await expectHonestReach(page, `${width} capped 4 px under ${natural}`);
-        await expectFocusedRingWhole(page, "S3");
+        const rest = await readPlate(page);
+        expectNoReach(rest, `${width} capped 4 px under ${natural}`);
+        expectRestCorner(rest, `${width} capped 4 px under ${natural}`);
+        await page.keyboard.press("Shift");
+        await page.locator('[data-witness="S3"]').focus();
+        await settle(page, 400);
+        await expectRingInsideRun(page, "S3", `${width} capped`);
+        expectNoReach(await readPlate(page), `${width} capped, S3 focused`);
     });
 }
 
@@ -946,3 +959,227 @@ test("h4 with no ResizeObserver the plate rests at half its block extent", async
     expectRestCorner(read, "no ResizeObserver");
     expectNoReach(read, "no ResizeObserver");
 });
+
+/* ── k1-k3 · critique round 5 (docs/release-10.1.5/critique-5.md) ────────────────────
+   RED on the round-5 tip 5836adb5f, GREEN after. */
+
+const HOUSE_RUN = ["tab:Home", ...Array.from({ length: 10 }, () => "icon"), "tab:Settings"].join(",");
+
+/** The active run's scroll position and its terminal. */
+function runAt(page: Page): Promise<{ pos: number; max: number }> {
+    return page.evaluate(() => {
+        const run = document.querySelector<HTMLElement>(".dock-run.is-active")!;
+        const vertical = run.closest(".glass-dock")!.classList.contains("vertical");
+        return vertical
+            ? { pos: run.scrollTop, max: run.scrollHeight - run.clientHeight }
+            : { pos: run.scrollLeft, max: run.scrollWidth - run.clientWidth };
+    });
+}
+
+/**
+ * A focused seat's ring (its transformed box grown by `(outline-width + outline-offset) ×
+ * scale`) lies inside the run's padding box, its scroll clip. Where the run's corners
+ * round, `expectRunSquare` is asserted first, or the run hides nothing (its timeline is
+ * inactive and it clips square).
+ */
+async function expectRingInsideRun(page: Page, witness: string, cell: string): Promise<void> {
+    const read = await page.locator(`[data-witness="${witness}"]`).evaluate((el) => {
+        const run = el.closest<HTMLElement>(".dock-run")!;
+        const cs = getComputedStyle(el);
+        const s = cs.scale === "none" ? 1 : Number.parseFloat(cs.scale);
+        const ink = (Number.parseFloat(cs.outlineWidth) + Number.parseFloat(cs.outlineOffset)) * s;
+        const r = el.getBoundingClientRect();
+        const p = run.getBoundingClientRect();
+        return {
+            focusVisible: el.matches(":focus-visible"),
+            outline: cs.outlineStyle,
+            ink: +ink.toFixed(2),
+            past: {
+                l: +(p.left - (r.left - ink)).toFixed(2),
+                r: +(r.right + ink - (p.left + run.clientWidth)).toFixed(2),
+                t: +(p.top - (r.top - ink)).toFixed(2),
+                b: +(r.bottom + ink - (p.top + run.clientHeight)).toFixed(2),
+            },
+            seat: [r.left, r.right, r.top, r.bottom].map((v) => +v.toFixed(2)),
+        };
+    });
+    const at = `${cell} ${witness} (${JSON.stringify(read)})`;
+    expect(read.focusVisible, `${at}: keyboard focus`).toBe(true);
+    expect(read.outline, `${at}: the ring paints`).not.toBe("none");
+    for (const [side, past] of Object.entries(read.past)) {
+        expect(past, `${at}: ring inside the run (${side})`).toBeLessThanOrEqual(0.5);
+    }
+}
+
+/**
+ * The run's two corners on its `edge` of the scroll axis are square: a radius with a
+ * zero component (`0px`, or `0px 50%` beside a persistent region) draws no arc.
+ */
+async function expectRunSquare(page: Page, edge: "start" | "end", cell: string): Promise<void> {
+    const corners = await page.evaluate((edge) => {
+        const run = document.querySelector<HTMLElement>(".dock-run.is-active")!;
+        const rc = getComputedStyle(run);
+        const vertical = run.closest(".glass-dock")!.classList.contains("vertical");
+        const pick = vertical
+            ? edge === "start"
+                ? [rc.borderTopLeftRadius, rc.borderTopRightRadius]
+                : [rc.borderBottomLeftRadius, rc.borderBottomRightRadius]
+            : edge === "start"
+              ? [rc.borderTopLeftRadius, rc.borderBottomLeftRadius]
+              : [rc.borderTopRightRadius, rc.borderBottomRightRadius];
+        return pick;
+    }, edge);
+    for (const c of corners) {
+        const parts = c.split(" ").map((v) => Number.parseFloat(v));
+        expect(Math.min(...parts), `${cell}: the run's ${edge} corner at a flush edge is square (${corners})`).toBe(0);
+    }
+}
+
+/** Read after a reach's glide settles (the DOCK spring is well under a second). */
+async function settleReach(page: Page): Promise<void> {
+    await settle(page, 1500);
+}
+
+/**
+ * k1 (K1): the reach lands an end seat flush at its terminal, and a hovered seat that
+ * rests in view is not reach. The house run at 320 (a wide leading tab, ten icons, a
+ * wide trailing tab, both persistent regions) overflows; `End`, `focus()` and
+ * hover-then-focus on the end seat each settle at the run's end with the seat's ring
+ * whole, and `Home` brings the first seat back to 0.
+ */
+function k1(): void {
+    test("k1 at 320: End, focus() and hover+focus land the end seat flush with its ring whole; Home lands the first", async ({
+        page,
+    }) => {
+        await page.setViewportSize({ width: 320, height: 800 });
+        const q = `kinds=${HOUSE_RUN}&persistent=1&maxw=290`;
+
+        // End from the first seat.
+        await openSeats(page, q);
+        await page.keyboard.press("Shift");
+        await page.locator('[data-witness="S1"]').focus();
+        await settle(page, 300);
+        await page.keyboard.press("End");
+        await settleReach(page);
+        let at = await runAt(page);
+        expect(at.max, "the run overflows").toBeGreaterThan(0);
+        expect(at.pos, `End lands at the run's end (${JSON.stringify(at)})`).toBeGreaterThanOrEqual(at.max - 1);
+        await expectRunSquare(page, "end", "End");
+        await expectRingInsideRun(page, "S12", "End");
+
+        // Home back to the first seat.
+        await page.keyboard.press("Home");
+        await settleReach(page);
+        at = await runAt(page);
+        expect(at.pos, `Home lands at 0 (${JSON.stringify(at)})`).toBeLessThanOrEqual(1);
+        await expectRunSquare(page, "start", "Home");
+        await expectRingInsideRun(page, "S1", "Home");
+
+        // focus() from the start.
+        await openSeats(page, q);
+        await page.keyboard.press("Shift");
+        await page.locator('[data-witness="S12"]').focus();
+        await settleReach(page);
+        at = await runAt(page);
+        expect(at.pos, `focus() lands at the run's end (${JSON.stringify(at)})`).toBeGreaterThanOrEqual(at.max - 1);
+        await expectRingInsideRun(page, "S12", "focus()");
+
+        // Flush at the end, the pointer on the end seat, then focus: the run holds.
+        await openSeats(page, q);
+        await page.evaluate(() => {
+            const run = document.querySelector<HTMLElement>(".dock-run.is-active")!;
+            run.scrollLeft = run.scrollWidth;
+        });
+        await settle(page, 500);
+        const flush = await runAt(page);
+        await page.locator('[data-witness="S12"]').hover();
+        await settle(page, 400);
+        await page.keyboard.press("Shift");
+        await page.locator('[data-witness="S12"]').focus();
+        await settleReach(page);
+        at = await runAt(page);
+        expect(
+            at.pos,
+            `hover then focus holds the run at its end (${JSON.stringify({ flush, at })})`,
+        ).toBeGreaterThanOrEqual(at.max - 1);
+        await expectRingInsideRun(page, "S12", "hover+focus");
+    });
+}
+
+/**
+ * k2 (K2): a vertical run that overflows clips square at an edge it is flush against, so
+ * a wide end seat focused and hovered there keeps its whole ring, as it does on a run
+ * that fits; the cut corner still rounds once the run travels (h1).
+ */
+test("k2 vertical: a wide tab at a flush edge keeps its whole ring, at the start and at the end", async ({ page }) => {
+    await page.setViewportSize({ width: 1280, height: 800 });
+    await openSeats(page, `kinds=${HOUSE_RUN}&orientation=vertical&stageH=360`);
+    expect((await runAt(page)).max, "the vertical run overflows").toBeGreaterThan(0);
+    await page.keyboard.press("Shift");
+    await page.locator('[data-witness="S1"]').focus();
+    await page.locator('[data-witness="S1"]').hover();
+    await settle(page, 600);
+    expect((await runAt(page)).pos, "the run rests at 0").toBe(0);
+    await expectRunSquare(page, "start", "flush at the start");
+    await expectRingInsideRun(page, "S1", "flush at the start");
+
+    await page.keyboard.press("End");
+    await settleReach(page);
+    const at = await runAt(page);
+    expect(at.pos, `End lands at the end (${JSON.stringify(at)})`).toBeGreaterThanOrEqual(at.max - 1);
+    await page.locator('[data-witness="S12"]').hover();
+    await settle(page, 600);
+    await expectRunSquare(page, "end", "flush at the end");
+    await expectRingInsideRun(page, "S12", "flush at the end");
+
+    // Mid-run, both edges are cut: the clip rounds (the plate's cut corner, h1).
+    await pointerOff(page);
+    await page.evaluate(() => {
+        const run = document.querySelector<HTMLElement>(".dock-run.is-active")!;
+        run.style.scrollSnapType = "none";
+        run.scrollTop = (run.scrollHeight - run.clientHeight) / 2;
+    });
+    await settle(page, 300);
+    const mid = await page.evaluate(() => getComputedStyle(document.querySelector<HTMLElement>(".dock-run.is-active")!).borderTopLeftRadius);
+    expect(mid, "mid-run the clip rounds to the cut").not.toMatch(/^0px( 0px)?$/);
+});
+
+/**
+ * k3 (K3): a viewport-capped dock whose seats all show scrolls nothing at 320, fine and
+ * coarse: the reserve yields to the room the seats leave, the plate rests at four
+ * corners of half its block extent, and the keyboard-focused end seats keep their ring.
+ */
+function k3(): void {
+    test("k3 at 320: a capped dock whose seats all show has nothing to scroll and rests round", async ({ page }) => {
+        await page.setViewportSize({ width: 320, height: 800 });
+        await openSeats(page, "kinds=tab:Home,icon,icon,tab:Settings");
+        const read = await readPlate(page);
+        expect(read.w, "the dock is capped by the viewport").toBeGreaterThanOrEqual(316);
+        const seats = await page.evaluate(() => {
+            const run = document.querySelector<HTMLElement>(".dock-run.is-active")!;
+            const k = [...run.children] as HTMLElement[];
+            return { span: k.at(-1)!.offsetLeft + k.at(-1)!.offsetWidth - k[0]!.offsetLeft, port: run.clientWidth };
+        });
+        expect(seats.span, `every seat shows (${JSON.stringify(seats)})`).toBeLessThanOrEqual(seats.port);
+        expectNoReach(read, "320 rest");
+        expectRestCorner(read, "320 rest");
+        for (const seat of ["S1", "S4"]) {
+            await page.keyboard.press("Shift");
+            await page.locator(`[data-witness="${seat}"]`).focus();
+            await settle(page, 400);
+            await expectRingInsideRun(page, seat, "320 focus");
+            const focused = await readPlate(page);
+            expectNoReach(focused, `320 focus ${seat}`);
+            expectRestCorner(focused, `320 focus ${seat}`);
+        }
+    });
+}
+
+test.describe("critique 5, coarse phone", () => {
+    test.use({ hasTouch: true, isMobile: true, viewport: { width: 390, height: 844 } });
+    k1();
+    k3();
+});
+
+k1();
+k3();
