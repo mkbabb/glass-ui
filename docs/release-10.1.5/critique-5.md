@@ -192,110 +192,34 @@ r1 holds only above the width where every seat plus both reserves fit.
 
 ## Not defects, recorded
 
-NOT### K1: the reach lands a narrow run's end seat short of flush, so the focused end seat is cut (regression, medium, both engines)
+- **RTL reach scrolls the wrong way (pre-existing).** In an overflowing RTL run, focusing
+  a seat that is cut at the inline-end side writes a positive `scrollLeft`, which clamps
+  to 0, so the seat leaves the port:
+  - Chromium, 390, mid-run `S10`: `sl −167 → 0`, the seat at x = −156
+  - the same on v10.1.4 in both engines (`r5-runclip-*` RTL rows)
+  - `anchorFor` and `writeScroll` carry no RTL sign
 
-- **Probes:** `r5c far reach` (the run at 0; the end seat `S12` reached by `focus()` after
-  a key, and by `End` from `S1`) and `r5b end reach` (the run flush at its end; `S12`
-  focused with and without the pointer on it). Both are read after the glide settles
-  (1.5 s, traced every 250 ms).
-- **Scene:** the house geometry at 320 (`maxw=290`), `tab:Home`, ten icons and
-  `tab:Settings`, with both persistent regions. Rows:
-  `critic-5/{chromium-headless-new,webkit}/r5{b,c}-*.json` and the same under `v1014/`.
-
-| trigger | engine | pointer | 10.1.5 run lands / max | end seat past the clip | ring cut | v10.1.4 lands / max |
-|---|---|---|---|---|---|---|
-| `End` key | Chromium | fine | 503 / 516 | 3.3 px | 7.28 px | 496 / 496 (flush) |
-| `End` key | Chromium | coarse | 537 / 564 | 17.3 px | 21.28 px | 544 / 544 (flush) |
-| `End` key or `focus()` | WebKit 2287 | fine | 505 / 521 | 5.9 px | 9.94 px | 501 / 501 (flush) |
-| `End` key or `focus()` | WebKit 2287 | coarse | 539 / 569 | 19.9 px | 23.94 px | 549 / 549 (flush) |
-| hover then focus, run already flush | Chromium | fine | glides 516 → 503 | 8.3 px | 12.74 px | holds 496 |
-| hover then focus, run already flush | Chromium | coarse | glides 564 → 537 | 22.3 px | 26.74 px | holds 544 |
-| hover then focus, run already flush | WebKit | fine | glides 521 → 505 | 11.2 px | 15.56 px | holds 505 |
-| hover then focus, run already flush | WebKit | coarse | glides 569 → 539 | 25.2 px | 29.56 px | holds 554 |
-
-The same scenes at 390 and 844, the cockpit preset at 320, the icon-only run and the run
-with no persistent region all land flush with no ring cut in both engines. At v10.1.4 the
-flush end seat already lost 3.9 to 4.3 px of ring to the rectangular clip. Fix 4 cures
-that whenever the run reaches flush.
-
-**Cause, read from `useDockRun.ts`.** `anchorFor` is `i·P + [open]·(m−1)·P − P/2`,
-clamped to `[0, scrollMax]`. It assumes every seat is one pitch.
-- A leading `tab:Home` is 87 px against `P = 48`, so the end seat's anchor (11·48 − 24
-  = 504) sits short of its real position.
-- At v10.1.4, `scrollMax` (496) was under the anchor, and the clamp made the end flush.
-- The branch's run is longer by twice the reserve (the inline padding and the trailing
-  spacer, 10 px each here), so `scrollMax` is 516 and the clamp no longer reaches.
-
-The second trigger is `occluded()`. It reads `getBoundingClientRect()`, which includes
-the seat's hover `scale`, against the port less the reserve. So a fully visible end seat
-under the pointer counts as occluded, and focusing it fires the same short anchor. That
-breaks the OD-5 law the patch states in `run.css`: a seat's engagement scale never counts
-as reach.
-
-**Cure direction.** The reach brings the seat's measured box inside the port less the
-reserve:
-- the anchor from the seat's layout offset in the run (`offsetLeft`), not `i·P`, or at
-  least `scrollMax` for the last seat
-- `occluded()` from the layout box (`offsetLeft`/`offsetWidth` against `scrollLeft`), not
-  the transformed rect
-
-**Gate.** At 320, fine and coarse, both engines, with a wide leading tab and both
-persistent regions: `End`, `focus()` and hover+focus on the end seat each settle at
-`scrollMax` with the seat's ring whole. The same holds for the first seat.
-
-### K2: on a vertical run that overflows, the rounded clip cuts a wide leading seat's ring and fill (regression, low-medium, both engines)
-
-`r5-runclip-*.json`, vertical dock `tab:Home, ten icons, tab:Settings`, `stageH=360`, run at
-0, `S1` focused and hovered:
-
-| | ring outside the run's clip |
-|---|---|
-| 10.1.5 Chromium | 14.51 px (fine and coarse) |
-| 10.1.5 WebKit | 14.83 px (fine and coarse); the same 14.83 on `S12` at the run's end |
-| v10.1.4 Chromium / WebKit | 6.29 / 6.31 px |
-
-The run's block-start clip is `50% 61.3px`, a 64 × 61 px ellipse. That is
-`--dock-cap-rest − --dock-run-inset` on the scroll axis and `50%` on the cross axis. The
-seat it cuts is the 120 px label tab that spans the 132 px plate, so the clip also takes
-the corners of the tab's fill.
-
-The same dock with nothing to scroll leaves its timeline inactive, so it paints the seat
-and ring whole. The same posture then paints two ways, depending on whether the run
-overflows. The icon-only vertical dock reads 0.
-
-H1's cure needs the clip's corner only where the plate is CUT (the `to` keyframe). The
-plate's REST corner is not a cut, and at the house geometry the seat fill lies inside the
-rest arc anyway (the max is 0.61 px, all at cut corners).
-
-**Cure direction:** the clip's `from` keyframe is square (or no larger than the cut), so
-the rest edge clips as it did at v10.1.4 and only the cut corner rounds.
-
-**Gate:** the vertical tab dock above, run at 0 and at its end: the end seats' rings are
-whole, in both engines.
-
-### K3: at 320 coarse a viewport-capped dock whose seats all show still scrolls and cuts its trailing cap at rest (low, both engines; ruling asked)
-
-`dock-postures-coarse-320.json` and `r4-press-rtl-coarse.json`: `tab:Home, icon, icon,
-tab:Settings`, coarse, 320 wide. The plate is 320 × 60.
-
-| engine | run `sw/cw` | corners |
-|---|---|---|
-| Chromium | 320/316 | `30 / 28.92 / 28.92 / 30` |
-| WebKit | 325/316 | `30 / 27.58 / 27.58 / 30` |
-
-The seats span 300.3 px inside a 316 px port, so no seat is hidden. Only the
-10 px trailing reserve overflows.
-
-- r1's text: "cure it so a run that hides nothing has nothing to scroll."
-- Fix 3 (e4) ruled the opposite: a sub-reserve overrun scrolls exactly the overrun, to
-  keep the end seat's ring.
-- g1 gates only 390, 844 and desktop.
-
-On a fine pointer WebKit reads 317/316 (corner 27.75 against 28, within g1's 0.5 px) and
-Chromium 316/316. I report it so the orchestrator rules which law holds at 320. If r1
-holds, the cure is that the reserve's overrun is room the dock grows into (the plate
-widens by up to the reserve) rather than scroll. If e4 holds, the patch should state that
-r1 holds only above the width where every seat plus both reserves fit.
+  This is not a 10.1.5 regression and none of r1 to r7 names it. W-0.8 or a later patch
+  should own it.
+- **H2's open-seat slide** is ruled in `implement.md`, and it reproduces as ruled:
+  lead → S1 53 → 58 px on open with `#persistent`, in both engines.
+- **`ResizeObserver loop completed`.** Vite relayed it five times at the end of each
+  `r5 run clip` cell, in both engines. `r5d` reads the page's own error list across the
+  same scene kinds, on the branch and on v10.1.4, and finds none in either engine. It is
+  unattributed, and the warning is benign.
+- **critic-4's `r4-edgezoom` metric** still reads 2.21 px on cockpit (both engines). It
+  measures against a straight clip line, so it is blind to the run's rounded clip. The
+  shape-aware r5 metric is the record for H1.
+- **`<Input>` and `<Textarea>` at 14 px on coarse 390** (critique-3 S4). This is
+  unchanged and out of r6's scope.
+- **SegmentedTabs hit test.** On the draggable pill, `elementsFromPoint` returns the
+  indicator over the active tab because that tab is `pointer-events: none` (drag.css, the
+  grab bootstrap). That is a hit-test artefact, not paint order. The underline strip
+  reads `segmented-tab` over `segmented-indicator` at rest, hover and press, and the drag
+  lift (z 2) is over the labels.
+- **The v10.1.4 arm's fill-past-plate column** reads 0 because its plate radius is the
+  per-axis `50%`, which the shape reader does not parse. Critique-4's frames remain the
+  v10.1.4 record for H1.
 
 ## What held (refutation attempts that failed)
 
