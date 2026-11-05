@@ -29,6 +29,10 @@
 //   e3  (E3) beside both persistent regions: the run's clip and hit stop at their seats,
 //       at rest and scrolled; the edge seats keep their ring
 //   E4 is the vitest arm tests/styles/typed-track-seam.test.ts, read after a build
+//
+// Fix round 3 (the fix-2 WebKit e3 cell at coarse 390), RED on 3d811caba, GREEN after:
+//   e4  a focused, hovered end seat: the run's end padding holds its whole ink plus the
+//       1px whole-pixel scroll step, horizontal and vertical
 import { expect, test, type Page } from "@playwright/test";
 
 async function open(page: Page, query: string): Promise<void> {
@@ -623,12 +627,55 @@ function e3(width: number): void {
     });
 }
 
+/**
+ * E4: the run's end padding past its last seat holds that seat's whole ink (hover
+ * overhang + scaled ring) plus one whole pixel, the step a whole-pixel scroll offset
+ * (WebKit) can fall short of a fractional end by. Read from the focused, hovered seat's
+ * own transformed box, so it binds in an engine whose scroll offset is fractional too.
+ */
+function e4(width: number): void {
+    test(`e4 at ${width}: the run's end padding holds a focused, hovered end seat's ink and the scroll step`, async ({
+        page,
+    }) => {
+        await page.setViewportSize({ width, height: 844 });
+        for (const [query, seat, vertical] of [
+            ["persistent=1&kinds=tab:Home,icon,tab:Settings", "S3", false],
+            ["kinds=tab:Home,icon,tab:Settings&orientation=vertical", "S3", true],
+        ] as const) {
+            await openSeats(page, query);
+            const el = page.locator(`[data-witness="${seat}"]`);
+            await page.keyboard.press("Shift");
+            await el.focus();
+            await el.hover();
+            await settle(page, 600);
+            const read = await el.evaluate((node, vertical) => {
+                const cs = getComputedStyle(node);
+                const s = cs.scale === "none" ? 1 : Number.parseFloat(cs.scale);
+                const ring = (Number.parseFloat(cs.outlineWidth) + Number.parseFloat(cs.outlineOffset)) * s;
+                const r = node.getBoundingClientRect();
+                const extent = vertical ? r.height : r.width;
+                const overhang = (extent - extent / s) / 2;
+                const run = node.closest<HTMLElement>(".dock-run")!;
+                const pad = Number.parseFloat(
+                    getComputedStyle(run)[vertical ? "paddingBottom" : "paddingRight"],
+                );
+                return { s, ring, overhang, ink: overhang + ring, pad };
+            }, vertical);
+            const cell = `${width} ${query} (${JSON.stringify(read)})`;
+            expect(read.s, `${cell}: hover-scaled`).toBeGreaterThan(1);
+            expect(read.pad - read.ink, `${cell}: end padding past the ink`).toBeGreaterThanOrEqual(1 - 0.01);
+            await pointerOff(page);
+        }
+    });
+}
+
 test.describe("critique 2, coarse phone", () => {
     test.use({ hasTouch: true, isMobile: true, viewport: { width: 390, height: 844 } });
     e1(390);
     e1(844);
     e2(390);
     e3(390);
+    e4(390);
 });
 
 e1(390);
@@ -636,3 +683,4 @@ e1(1440);
 e2(390);
 e2(1440);
 e3(390);
+e4(1440);
