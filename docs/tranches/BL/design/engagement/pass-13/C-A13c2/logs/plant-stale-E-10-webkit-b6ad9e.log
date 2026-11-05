@@ -1,0 +1,11 @@
+# C-A13c plant-stale-E-10 webkit · 2026-11-04 20:43:45 · load { 25.32 24.04 21.37 } · harness f2cc94e3fa86 · --part hg13 --hg13 anim
+# E-10 · CK-20 no one-frame discontinuity on an engagement path
+# target /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p14/C-A13c2/wt/.ca13out/builds/plant-stale · engine webkit · lock wait 0.0 s · other headless processes: chromium 9, webkit 0 · load 24.8/24.0/21.4 at start
+# scene app: harness scenes/App.vue (sha1 9e34ffa5714e)
+# webkit 26.5 (Playwright WebKit, not Safari; real Safari UNMEASURED (owner's safaridriver checkbox))
+  FAIL       E-10 slider anim · css-transition scale · C runs css-transition scale from frame 2 (C's painted centre moved 1.02, 0.06 px across the mutation's frame); an unrelated 40 px block appended after C on frame 14 · translate glides on the root in the next 6 frames 6 (clock 210 ms) (bound 0) · the root's painted step on the mutation's frame 7.21, 0.40 against the frame before 0.38, 0.02: 6.83 px off its own motion (bound ≤ 0.5) · errors 0 · load 24.8/24.0/21.4
+  FAIL       E-10 slider anim · waapi translate · C runs waapi translate from frame 2 (C's painted centre moved 0.00, 1.50 px across the mutation's frame); an unrelated 40 px block appended after C on frame 14 · translate glides on the root in the next 6 frames 6 (clock 210 ms) (bound 0) · the root's painted step on the mutation's frame 0.00, -18.50 against the frame before 0.00, 1.90: 20.40 px off its own motion (bound ≤ 0.5) · errors 0 · load 25.0/24.0/21.4
+  FAIL       E-10 slider anim · waapi rotate · C runs waapi rotate from frame 2 (C's painted centre moved -0.06, 0.63 px across the mutation's frame); an unrelated 40 px block appended after C on frame 14 · translate glides on the root in the next 6 frames 6 (clock 210 ms) (bound 0) · the root's painted step on the mutation's frame 0.60, -7.74 against the frame before -0.07, 0.75: 8.52 px off its own motion (bound ≤ 0.5) · errors 0 · load 25.0/24.0/21.4
+E-10 webkit FAIL · 0 pass, 3 fail, 0 unmeasured of 3 gating cells (0 reported) · load 24.8/24.0/21.4 at start, 25.0/24.0/21.4 at end
+# exit 1 · 2026-11-04 20:43:55 · load { 24.99 24.00 21.38 }
+# end · 2026-11-04 20:43:55 · load { 24.99 24.00 21.38 } · harness f2cc94e3fa86

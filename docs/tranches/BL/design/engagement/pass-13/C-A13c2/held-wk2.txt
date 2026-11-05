@@ -1,0 +1,34 @@
+# C-A13-complete HELD LIST (runnable unchanged by the next completion): guarded REFUSED at 2026-11-04 13:13:09-10 with
+# "kernel zone data.kalloc.1024 at 8.47M (panics near 20.8M; heavy and browser runs stop at 8M): reboot the Mac" (logs/all.log).
+# Run as acquisition WK-2 (guarded --exclusive webkit --timeout 90 -- zsh wk-run.sh held-wk2.txt WK-2), then the gates (guarded --timeout 75 -- zsh gates.sh).
+# Builds are reproducible by builds.sh (the trees of record are in logs/builds.log).
+plant-level-E-10 webkit --part hg13 --hg13 xf
+plant-child-E-10 webkit --part hg13 --hg13 kind
+plant-stale-E-10 webkit --part hg13 --hg13 anim
+plant-noown-E-10 webkit --part hg13 --hg13 reentry
+plant-typedom-E-11 webkit --part forms,census
+plant-reachzero-E-11 webkit --part reachin
+cand8-ca9idle webkit
+cand13-ca9idle webkit
+cand13-loop webkit
+rr-cand13-ce11 webkit --only exit-side --round 1
+rr-cand11-ce11 webkit --only exit-side --round 1
+rr-cand13-ca11 webkit --only exit-side --r 1
+rr-cand13-ce11 webkit --only exit-side --round 2
+rr-cand13-ca11 webkit --only exit-side --r 2
+cand13-ca12 webkit --only xf,kind,anchor,errs
+cand13-ce12 webkit
+cand13-origin webkit
+cand13-ca11 webkit --only side,clock,reverse,wheel,release-mid,exit-side,rerender,hostglide,repress,reach
+cand13-ca11 webkit --only loud
+cand13-ce11 webkit --only side,clock,reverse,wheel,release-mid,rerender,reach,repress,press-line,noroom,still
+cand13-ce11 webkit --only loudx,relclock
+cand13-ce11 webkit --only side,clock --tfs trackzoom,htmlzoom,zoom25
+cand13-e11v webkit
+cand13-vals webkit
+cand13-ce9 webkit --only stack,lensdlg,anc
+cand13-ce9c webkit --only lensfilm
+cand13-tip webkit
+cand13-cap webkit
+glance-cand13 webkit
+# then: gates.sh (build, typecheck, demo:dist:build, vitest --maxWorkers=2) on cand13

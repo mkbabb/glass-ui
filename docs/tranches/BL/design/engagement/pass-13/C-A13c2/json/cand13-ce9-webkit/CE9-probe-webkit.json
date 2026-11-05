@@ -1,0 +1,67 @@
+{
+ "id": "CE9-probe",
+ "engine": "webkit",
+ "version": "26.5",
+ "target": {
+  "build": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p14/C-A13c2/wt/.ca13out/builds/cand13"
+ },
+ "loadStart": "21.2/18.5/17.7",
+ "loadEnd": "20.6/18.5/17.7",
+ "verdict": "PASS",
+ "cells": [
+  {
+   "name": "CE9 stack · keyboard",
+   "status": "REPORT",
+   "line": "engaged true, promoted false, lens shown false · a later positioned red sibling over the track's right part: its inner region red 100.0 % at rest, 100.0 % engaged (the sibling paints OVER the engaged body) · frames cand13-webkit-stack-keyboard-{rest,engaged}.png",
+   "load": "21.1/18.5/17.7"
+  },
+  {
+   "name": "CE9 stack · fine",
+   "status": "REPORT",
+   "line": "engaged true, promoted false, lens shown true · a later positioned red sibling over the track's right part: its inner region red 100.0 % at rest, 100.0 % engaged (the sibling paints OVER the engaged body) · frames cand13-webkit-stack-fine-{rest,engaged}.png",
+   "load": "21.1/18.5/17.7"
+  },
+  {
+   "name": "CE9 anc none · keyboard",
+   "status": "REPORT",
+   "line": "reference ×1.014 (promoted false)",
+   "load": "21.0/18.5/17.7"
+  },
+  {
+   "name": "CE9 anc skew · keyboard",
+   "status": "REPORT",
+   "line": "promoted false · the scroller transform: skewX(10deg) · engaged over released ×1.015 against ×1.014 · ratio of ratios 1.001 (inside 0.90..1.10)",
+   "load": "21.0/18.5/17.7"
+  },
+  {
+   "name": "CE9 anc mask · keyboard",
+   "status": "REPORT",
+   "line": "promoted false · the scroller mask-image: linear-gradient(to right, black 40%, transparent 95%); -webkit-mask-image: linear-gradient(to right, black 40%, transparent 95%) · engaged over released ×1.012 against ×1.014 · ratio of ratios 0.998 (inside 0.90..1.10)",
+   "load": "19.7/18.3/17.6"
+  },
+  {
+   "name": "CE9 anc zoom · keyboard",
+   "status": "REPORT",
+   "line": "promoted false · the scroller zoom: 0.8 · engaged over released ×0.977 against ×1.014 · ratio of ratios 0.963 (inside 0.90..1.10)",
+   "load": "19.7/18.3/17.6"
+  },
+  {
+   "name": "CE9 anc persp · keyboard",
+   "status": "REPORT",
+   "line": "promoted false · the scroller transform: perspective(500px) rotateY(25deg) · engaged over released ×1.106 against ×1.014 · ratio of ratios 1.091 (inside 0.90..1.10)",
+   "load": "20.6/18.5/17.7"
+  },
+  {
+   "name": "CE9 anc blend · keyboard",
+   "status": "REPORT",
+   "line": "promoted false · the scroller mix-blend-mode: difference · engaged over released ×1.117 against ×1.014 · ratio of ratios 1.102 (OUTSIDE 0.90..1.10)",
+   "load": "20.6/18.5/17.7"
+  },
+  {
+   "name": "CE9 lens dialog · fine",
+   "status": "PASS",
+   "line": "the Dialog's slider held · band ×1.600 (k max 1.6) · pinned edge Δ 0.0 px · the lens is the topmost element at its centre true · popover-open true",
+   "load": "20.6/18.5/17.7"
+  }
+ ]
+}
