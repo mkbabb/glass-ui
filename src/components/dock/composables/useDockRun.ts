@@ -1,9 +1,8 @@
 // The dock RUN — reach, roving tabindex, and the live-region announcement.
 //
 // [2026-08-24 · BK #47 W3 LATTICE + W6 REACH/KEYBOARD] One composable owns the three
-// behaviours the lattice makes closed-form, because all three are the same arithmetic
-// read three ways: where a seat rests, which seat holds the tab stop, and what the
-// user is told when the dock moves under them.
+// behaviours that read the run's seats: where a seat rests, which seat holds the tab
+// stop, and what the user is told when the dock moves under them.
 //
 // WHAT IS *NOT* HERE, and why that is the point. No flick projector, no detent table,
 // no item census, no bias filter, no rubber band, no per-detent damping. The run is a
@@ -14,19 +13,14 @@
 // takes reach and `overscroll-behavior` with it. What remains for JS is exactly the
 // part the platform has no opinion about: WHICH seat to bring into view, and when.
 //
-// THE ANCHOR. Seat i (1-based) rests at
-//
-//     (i−1)·P + [openIdx < i]·(m−1)·P − P/2      clamped to [0, scrollMax]
-//
-// P = `--dock-pitch`, m = `--dock-open-pitches`. The first term is the lattice; the
-// second is the open seat's extra (m−1) pitches pushing every LATER seat along — drop
-// it and reach is wrong for every seat after the open one, which is the mutation that
-// bites G-DOCK-REACH. The −P/2 term is the modular correction: with `scroll-padding:
-// P/2` an interior rest is ≡ P/2 (mod P), so the anchor computed WITHOUT it is not a
-// snap position and the engine drags the glide off it the moment it settles.
-//
-// The clamp is what makes the terminals flush (0 and scrollMax, ≡ 0 mod P by
-// definition) rather than half-peeked — completeness at the ends, peek in the middle.
+// THE ANCHOR. A seat rests where the platform's own snap puts it: its start on the
+// scroll axis, measured from the seat's LAYOUT box (`offsetLeft`/`offsetTop`; the run
+// is positioned, so it is the seats' offset parent and the offset is in the run's
+// scroll coordinates), less the run's `scroll-padding` start (`P/2` plus the run's
+// reserve, run.css), clamped to [0, scrollMax]. A label-wide tab or the open seat is
+// wider than one pitch, so the seat's measured start, not `i·P`, is the start the snap
+// reads. The clamp makes the terminals flush (0 and scrollMax): completeness at the
+// ends, peek in the middle.
 
 import { onMounted, onUnmounted, ref, watch, type ComputedRef, type Ref } from "vue";
 
@@ -59,19 +53,12 @@ export interface UseDockRunReturn {
     toolbar: Readonly<Ref<boolean>>;
 }
 
-/** Read a registered custom property off `el` as a finite number of px (or units). */
-function readScalar(el: HTMLElement, prop: string): number {
-    const raw = getComputedStyle(el).getPropertyValue(prop).trim();
-    const n = Number.parseFloat(raw);
-    return Number.isFinite(n) ? n : 0;
-}
-
 /**
  * The run's SEATS — its direct element children, in document order. Direct children
  * only: a seat is a lattice cell, and a focusable descendant *inside* one (a menu item
  * in an open popover, an input in the search slot) is not a second seat. Taking
- * `querySelectorAll` here would put the tab stop inside a seat and desynchronise the
- * roving index from the pitch index the anchor is computed from.
+ * `querySelectorAll` here would put the tab stop inside a seat that the snap never
+ * aligns.
  */
 function seatsOf(run: HTMLElement): HTMLElement[] {
     return Array.from(run.children).filter(
@@ -183,25 +170,30 @@ export function useDockRun(options: UseDockRunOptions): UseDockRunReturn {
             : run.scrollWidth - run.clientWidth;
     }
 
-    /** The closed-form anchor for `seat`. See the header for the derivation. */
+    /**
+     * The seat's extent on the scroll axis, `[start, end]`, from its layout box: the
+     * hover `scale` and the morph's `scale` never reach `offset*`, so an engaged seat
+     * measures where it rests.
+     */
+    function extentOf(seat: HTMLElement): [number, number] {
+        return vertical()
+            ? [seat.offsetTop, seat.offsetTop + seat.offsetHeight]
+            : [seat.offsetLeft, seat.offsetLeft + seat.offsetWidth];
+    }
+
+    /** The run's reserve: its leading padding on the scroll axis (run.css `--dock-run-reserve-*`). */
+    function reserveOf(run: HTMLElement): number {
+        const style = getComputedStyle(run);
+        return Number.parseFloat(vertical() ? style.paddingBlockStart : style.paddingInlineStart) || 0;
+    }
+
+    /** The snap position of `seat`, clamped to the run's terminals. See the header. */
     function anchorFor(run: HTMLElement, seat: HTMLElement): number {
-        const seats = seatsOf(run);
-        const i = seats.indexOf(seat);
-        if (i < 0) return scrollPos(run);
-
-        const pitch = readScalar(run, "--dock-pitch");
-        // A zero pitch means the dock has not painted (jsdom, an engine that dropped
-        // the registration). There is no lattice to anchor to, so hold position — a
-        // guessed anchor would move the port to an arbitrary offset, which is worse
-        // than not reaching at all.
-        if (pitch <= 0) return scrollPos(run);
-
-        const m = Math.max(1, readScalar(run, "--dock-open-pitches"));
-        const openIdx = openIndexOf(seats);
-        const openExtra = openIdx >= 0 && openIdx < i ? (m - 1) * pitch : 0;
-
-        const raw = i * pitch + openExtra - pitch / 2;
-        return Math.min(Math.max(raw, 0), scrollMax(run));
+        const style = getComputedStyle(run);
+        const padding =
+            Number.parseFloat(vertical() ? style.scrollPaddingBlockStart : style.scrollPaddingInlineStart) || 0;
+        const [start] = extentOf(seat);
+        return Math.min(Math.max(start - padding, 0), scrollMax(run));
     }
 
     /**
@@ -209,27 +201,22 @@ export function useDockRun(options: UseDockRunOptions): UseDockRunReturn {
      * not on absence: a seat cut by the peek is exactly the case the lattice creates on
      * purpose at every interior rest, and it is exactly the case a user cannot click.
      *
-     * FULLY INSIDE means inside the port LESS THE RUN'S RESERVE on the scroll axis (the
-     * run's leading padding, run.css `--dock-run-reserve-*`): the reserve is room for a
-     * seat's ink (its hover overhang and ring), never room for the seat. The padding
-     * box would count a seat that has overflowed into the trailing reserve as in view,
-     * and WebKit's own focus reveal agrees with it, so a focused end seat of a run that
-     * overflows by less than the reserve would never be reached and its ring would
-     * paint past the clip.
+     * FULLY INSIDE means the seat's layout box lies inside the port LESS THE RUN'S
+     * RESERVE on the scroll axis: the reserve is room for a seat's ink (its hover
+     * overhang and ring), never room for the seat. The layout box, never the transformed
+     * rect: a seat's own engagement scale is not reach, so a hovered seat that rests in
+     * view is in view.
      */
     function occluded(run: HTMLElement, seat: HTMLElement): boolean {
-        const port = run.getBoundingClientRect();
-        const box = seat.getBoundingClientRect();
-        const style = getComputedStyle(run);
-        const reserve =
-            Number.parseFloat(vertical() ? style.paddingBlockStart : style.paddingInlineStart) || 0;
-        // Sub-pixel tolerance: a flush seat routinely measures a fraction outside its
-        // port under fractional device ratios, and reaching for it would glide by ~0px
-        // on every focus — motion with no cause.
+        const pos = scrollPos(run);
+        const port = vertical() ? run.clientHeight : run.clientWidth;
+        const reserve = reserveOf(run);
+        const [start, end] = extentOf(seat);
+        // Sub-pixel tolerance: `offset*` and the scroll offset round to whole pixels,
+        // and reaching for a seat that is flush within that would glide by ~0px on
+        // every focus — motion with no cause.
         const slack = 1;
-        return vertical()
-            ? box.top < port.top + reserve - slack || box.bottom > port.bottom - reserve + slack
-            : box.left < port.left + reserve - slack || box.right > port.right - reserve + slack;
+        return start < pos + reserve - slack || end > pos + port - reserve + slack;
     }
 
     function announce(seat: HTMLElement): void {
@@ -410,8 +397,8 @@ export function useDockRun(options: UseDockRunOptions): UseDockRunReturn {
         // when a direct child's `aria-hidden` or `tabindex` moves it into or out of the
         // `FORM_SELECT` shape the toolbar claim waives. Re-derive the tab stop and the
         // claim on those, and on nothing else: no scroll listener, no resize observer,
-        // because the lattice makes both irrelevant (the anchor is arithmetic, not a
-        // measurement). A `tabindex` record on a declared seat is the run's own write and
+        // because reach reads the seat's layout box when it fires and holds nothing
+        // between reaches. A `tabindex` record on a declared seat is the run's own write and
         // one deeper in the tree is a seat's interior; neither feeds the claim, and
         // reacting to the first would loop.
         mo = new MutationObserver((records) => {

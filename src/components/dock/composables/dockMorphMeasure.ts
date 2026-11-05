@@ -185,6 +185,7 @@ export function useDockExpandedSize(
         const summary = collapsedEl.value;
         if (!root || !contentEl.value || !full || !summary) return;
 
+        publishYield(root, full);
         const a = axis.value;
         const expanded = full.classList.contains("is-active");
         if (!root.hasAttribute("data-morphing")) {
@@ -210,6 +211,36 @@ export function useDockExpandedSize(
             "--dock-expanded-px",
             `${Math.max(expandedPx, collapsedPx ?? 0)}px`,
         );
+    }
+
+    /*
+     * WHETHER THE RUN'S SEATS FIT ITS PORT, `--dock-run-yield` (run.css, THE RESERVE
+     * YIELDS): 1 when the seats' span on a horizontal run is no longer than the port,
+     * so the run's two reserve boxes shrink into the room the seats leave and a run that
+     * hides nothing scrolls nothing; 0 when the seats overflow, so both reserves hold and
+     * scroll. The span is read from the seats' layout boxes (`offset*`), and neither it
+     * nor the port depends on the yield, so the flag is a pure reading of the layout. A
+     * vertical run keeps its padding reserve and never yields. It is read wherever an
+     * endpoint is, since the same observers see the port and the seats change.
+     */
+    let yieldPublished = "";
+
+    function publishYield(root: HTMLElement, run: HTMLElement): void {
+        let fits = false;
+        if (axis.value === "horizontal") {
+            let start = Infinity;
+            let end = -Infinity;
+            for (const seat of run.children) {
+                if (!(seat instanceof HTMLElement) || seat.offsetParent !== run) continue;
+                start = Math.min(start, seat.offsetLeft);
+                end = Math.max(end, seat.offsetLeft + seat.offsetWidth);
+            }
+            fits = end > start && end - start <= run.clientWidth;
+        }
+        const value = fits ? "1" : "0";
+        if (value === yieldPublished) return;
+        yieldPublished = value;
+        root.style.setProperty("--dock-run-yield", value);
     }
 
     /**
@@ -336,6 +367,7 @@ export function useDockExpandedSize(
         mutations = null;
         seatBoxes.clear();
         seatsPublished = "";
+        yieldPublished = "";
         const root = rootEl.value;
         if (!root) return;
         if (typeof ResizeObserver !== "undefined") {

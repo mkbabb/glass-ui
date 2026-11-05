@@ -36,7 +36,7 @@ import { useDockMorphOrchestrator } from "./composables/useDockMorph";
 import { useDockExpandedSize } from "./composables/dockMorphMeasure";
 import { useDockShellProps, type DockProps } from "./composables/useDockShellProps";
 import { useDockClickIntegrity } from "./composables/useDockClickIntegrity";
-// [2026-08-24 · BK #47 W3 LATTICE + W6] The run: reach on the −P/2 lattice anchor via
+// [2026-08-24 · BK #47 W3 LATTICE + W6] The run: reach to the seat's snap position via
 // subtree capture, roving tabindex, and the live-region announcement.
 // ~~useDockOverflowFit — an RO measuring the full layer's inline overflow to toggle
 // `[data-dock-overflow]`, so overflow.css's scroll track + FadingScroll mask engaged
@@ -104,8 +104,8 @@ const statusEl = useTemplateRef<HTMLElement>("statusEl");
 
 /* THE RUN. The full face IS the run — the box whose children are the seats, the box
    the port scrolls, and the common ancestor the cut-cap timeline scopes to. Reach,
-   roving tabindex and the announcement all read the SAME lattice arithmetic, so they
-   live in one composable rather than three that must agree. */
+   roving tabindex and the announcement all read the SAME seat list, so they live in
+   one composable rather than three that must agree. */
 const { toolbar } = useDockRun({ runEl: fullEl, statusEl, orientation });
 
 /* Wire the sampled-luminance observer ON for

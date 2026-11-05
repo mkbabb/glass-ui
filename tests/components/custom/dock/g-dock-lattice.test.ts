@@ -234,8 +234,8 @@ describe("G-DOCK-BUDGET — the run is the sole flexible member, and the surface
 describe("G-DOCK-RUN — the platform is the detent engine", () => {
     /**
      * The pitch pair is `@property`-REGISTERED, and registration is load-bearing rather
-     * than tidy: `useDockRun.anchorFor` reads both through `getComputedStyle`, and an
-     * unregistered custom property hands JS back the literal author text
+     * than tidy: a reader of either through `getComputedStyle` (a probe, a gate) gets an
+     * unregistered custom property's literal author text
      * (`calc(var(--dock-seat) + var(--dock-run-gap))`) which `parseFloat` reads as NaN.
      * Registered, the same read resolves to a used length. The `<number>` on
      * `--dock-open-pitches` is what keeps `m` an integer count rather than a string.
@@ -381,47 +381,32 @@ describe("G-DOCK-RUN — the platform is the detent engine", () => {
 // G-DOCK-REACH
 // ═════════════════════════════════════════════════════════════════════════════
 
-describe("G-DOCK-REACH — the anchor is closed-form, and its geometry ships with it", () => {
+describe("G-DOCK-REACH — the anchor is the seat's snap position, read from its layout box", () => {
     /**
-     * THE PAIRING LAW — the arm this seat exists for, and the one defect it was authored
-     * in response to.
-     *
-     * Between W3 and W4 the tree carried the `openExtra` term — `[openIdx < i]·(m−1)·P` —
-     * in `useDockRun.anchorFor` while `--dock-open-seat` had **zero consumers**:
-     * arithmetic for a geometry no rule produced. On any dock whose seats carry
-     * `aria-current` (which `RouterLink` sets natively) reach overshot by exactly
-     * `(m−1)·P` for every seat after the open one — a silent, correct-looking miss.
-     *
-     * So the invariant is stated as a BICONDITIONAL rather than as two independent
-     * assertions: the term and the rule ship together or neither ships. Delete the CSS
-     * and this REDs; delete the term and GF-DOCK's own stated mutation ("drop the
-     * `(m−1)·P` term → RED for every seat after the open one") REDs the arm below it.
+     * The open seat is `m·P − gap` wide by declaration, so every seat after it sits
+     * `(m−1)·P` further along the run.
      */
-    it("the openExtra term and the open-seat rule are the same act", () => {
-        const js = read(`${DOCK}/composables/useDockRun.ts`);
+    it("the open seat's width is authored from the pitch", () => {
         const css = declarations(`${STYLES}/run.css`);
-        const termShipped = /\(m - 1\)\s*\*\s*pitch/.test(js);
-        const geometryShipped = /inline-size:\s*var\(--dock-open-seat\)/.test(css);
-        expect(
-            geometryShipped,
-            "the anchor pushes every later seat by (m−1)·P; a rule must make the open seat that wide",
-        ).toBe(termShipped);
-        // …and the width is authored from the pitch, never measured back off the DOM.
+        expect(css).toMatch(/inline-size:\s*var\(--dock-open-seat\)/);
         expect(css).toMatch(
             /--dock-open-seat:\s*calc\(\s*var\(--dock-open-pitches\) \* var\(--dock-pitch\) - var\(--dock-run-gap\)\s*\)/,
         );
     });
 
     /**
-     * THE MODULAR CORRECTION, in the JS half. With `scroll-padding: P/2` an interior rest
-     * is ≡ P/2 (mod P), so an anchor computed without the −P/2 term is not a snap position
-     * and the engine drags the glide off it the instant it settles. Both prior arms of the
-     * adjudication shipped a gate asserting ≡ 0 — a gate that REDs the design it protects.
+     * The anchor is where the platform's snap puts the seat: its start from its layout
+     * box, less the run's `scroll-padding` start, clamped to the real terminals. A
+     * label-wide tab is wider than one pitch, so `i·P` lands a narrow run's end seat
+     * short of flush (critique-5 K1). Occlusion reads the same layout box, never the
+     * transformed rect: a seat's hover scale is not reach.
      */
-    it("the anchor carries the −P/2 term and clamps to the real terminals", () => {
+    it("the anchor and the occlusion read the seat's layout box, and the anchor clamps to the terminals", () => {
         const js = read(`${DOCK}/composables/useDockRun.ts`);
-        expect(js).toMatch(/i \* pitch \+ openExtra - pitch \/ 2/);
-        expect(js).toMatch(/Math\.min\(Math\.max\(raw, 0\), scrollMax\(run\)\)/);
+        expect(js).toMatch(/seat\.offsetLeft, seat\.offsetLeft \+ seat\.offsetWidth/);
+        expect(js).toMatch(/style\.scrollPaddingInlineStart/);
+        expect(js).toMatch(/Math\.min\(Math\.max\(start - padding, 0\), scrollMax\(run\)\)/);
+        expect(js).not.toMatch(/getBoundingClientRect/);
     });
 
     /** `touch-action: auto` on the run gives the gesture back to the document. */
