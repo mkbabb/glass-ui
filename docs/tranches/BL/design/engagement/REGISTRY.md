@@ -3655,3 +3655,116 @@ Pass 14 cannot be clean. CK-01 and CK-17 need F-17 in D5's base, and F-17 follow
 - passes 15 and 16 both clean.
 
 If pass 14 reaches the fixed point, D5 runs no further build pass until F-16 and F-17 land. **The R-K1-c vehicle moves with this registry: after pass 16 at the earliest.** atlas's M-7 stays until then.
+
+---
+
+# D5 · pass 13 · completion 2: cand13 at 18/27 on both critics, CK-16 and CK-27 closed on both critics' held cells, NOT CLEAN, the count stays 0
+
+Everything above this line is left as written. This part closes the rest of the completion (§P13c-8.0 wave c4b). It scores only what a seat measured, and it rules only on CK-16, CK-27 and the WebKit paths the held lists bore on.
+
+| field | value |
+|---|---|
+| seat | D5 pass-13 completion-2 agglomeration (§P13c-8.0 c4b) |
+| model | `claude-opus-5-5`, asserted from own system identity |
+| HEAD | `c952c5938`, docs only past P-E12's build base `d94e413dd` (`git diff --stat d94e413dd HEAD -- src tests demo` prints nothing). `release/10.1.1`..`10.1.4` are not ancestors (`git merge-base --is-ancestor`, exit 1 each). The base did not move; F5‴ carries |
+| the candidate's bytes | `P-E13.patch` **`ffa64fc4054bf5368000f29bd3930b47743f115f`** (this seat's `shasum`). Src tree `30f51077c3ec`, read back by both c3b seats against their parents' `logs/builds.log` (every tree line equal) |
+| inputs, read in full | `pass-13/C-A13-complete-2.md`, `pass-13/C-E13-complete-2.md`; this file's "completion" part (§P13c-0..§P13c-8), pass-13 part (§P13-0..§P13-8) and §P1-6; `pass-14/P-E14.md` §S14-0, §S14-a, §S14-c, §S14-f..§S14-j and the FOLD section; `C-E13c2/rerun.txt`. Spot reads of the held cells' own logs: `C-A13c2/logs/cand13-ca9idle-webkit.log`, `cand13-loop-webkit.log`, `plant-reachzero-E-11-webkit-35c128.log`, `rr-cand11-ce11-webkit-0fae8f.log`; `C-E13c2/logs/plant-reachzero-e11-webkit-35c128.log`. Each matches its report's figure |
+| left unread, stated | the pass-12 part and passes 1-11 beyond §P1-6; §S14-b, §S14-d and §S14-e beyond what §S14-0 and the FOLD carry; every other c3b log, JSON and frame. No ruling below rests on an unread part: CK-16 and CK-27 rest on the cells read above, and the formulation is ruled only against the members the held cells add |
+| instruments | none that measure. `shasum` of the patch and the held lists (`held-wk2.txt` `7d1ea6f3d4e4…`, `held-wk.txt` `c4254b79984c…`, `rerun.txt` `3478136035c9…`), the ancestry checks, `git log -p` on `waves/W-0.1.md` and `W-0.8.md` since `9304400e4`. Every number cites the seat that measured it (P-3) |
+| fences | no source edit, no git write; this part and the FOLD section of `pass-14/P-E14.md` are the only writes. No browser ran. Nothing under `~/.claude` was read |
+| engines | Chromium 149.0.7827.55 and Playwright WebKit 26.5 (playwright 1.61.1), headless shell, no GPU arguments. Playwright WebKit is not Safari. Real Safari: **UNMEASURED (owner's safaridriver checkbox)** |
+| rulings in force | O-103d (1)-(4); O-103f; Q-1 (c) and Q-4 (b) as defaults; O-118 (3); O-87. `../../audit/INBOUND.md` re-read at this seat's start (mtime 2026-11-04 23:02, last row **O-153**; there is no O-149 row). A scan of O-134..O-153 for `D5`, `CK-<n>`, `engage`, `stage.ts`, `settle.ts`, `cand13` and `loupe` finds none. `../../FORMATION-PROGRESS.md` re-read to its 2026-11-05 01:1x line (C-A13-complete-2 done, c4b running). F-16: not published (`W-0.1.md`'s commits since `9304400e4` carry no D5, F-16 or lean line). F-17: not published (`../dock/REGISTRY.md` has no D2 pass-13 part; D2 pass 13 is running). Nothing to fold |
+
+Short citations: `CA13c2 §n` and `CE13c2 §n` are the two c3b reports' sections.
+
+## P13c2-0 · In brief
+
+**Seats' completeness.** **C-A13-complete-2 COMPLETE**: all 29 stages of `C-A13c/held-wk2.txt` ran, as three named acquisitions (WK-2a, WK-2b, and WK-2c, which re-ran in full the one stage the 90-minute timeout killed in its load gate before it measured anything), then `gates.sh`. No refusal. **C-E13-complete-2 COMPLETE on its held list**: all 23 stages of `C-E13c/held-wk.txt` ran in one acquisition. No refusal. Its added re-run list `C-E13c2/rerun.txt` (10 stages, the load law's re-reads) was never admitted to the WebKit lock in 92 min and was stopped before admission. Nothing of it ran (CE13c2 §3 item 2). That list is placed in §P13c2-5; it was an addition, not a held cell.
+
+| candidate | built as | critics | rows closed / applicable (both critics) | completion | status |
+|---|---|---|---:|---:|---|
+| **A+E** | `P-E13.patch` `ffa64fc4…`, src tree `30f51077c3ec` | C-A13 **18/27** (C-A13c + C-A13c2); C-E13 **18/27** (C-E13c + C-E13c2) | **18/27 = 67 %** | 16/27, two rows held | **ADVANCE, NOT CLEAN.** The ceiling §P13c-0 named for these bytes, reached |
+
+**Pass 13 is not a clean pass. The clean-pass count stays 0.** The score series: 52 % (pass 4), 37 %, 67 %, 78 %, 78 %, 81 %, 78 %, 78 %, 74 % (pass 12), **67 % (pass 13, complete)**.
+
+**The fixed point is not reached, and these bytes cannot reach it** (§P13c-0, unchanged). CK-04, 09, 20, 21, 22 and CK-25's lens clause carry counterexamples on these bytes in both engines, and no held cell bore on CK-04, 09, 21 or 22.
+
+1. **CK-16 closes on both critics.** C-A13c2 reads WebKit at the bar beside `cand8` in the same run: rest 0.0 / 0.0 rAF / RO per s on both; engaged idle cand13 **59.9 / 59.9** against cand8 60.2 / 60.2, the display's 60 Hz (load 19.5-21.6). `cand13-loop` 2/0: 0.0/s on every window after release. With C-A13c's Chromium reading (119.9 / 119.9 against 120.4 / 120.3) and C-E13c's both-engine reading, the row closes (CA13c2 §1).
+2. **CK-27 closes on both critics.** C-A13c2 reads all six plants red in WebKit, each on its own cells, with counts equal to P-E13-complete's: `level` 45/13, `child` 6/12, `stale` 0/3, `noown` 1/1, `typedom` 57/56, `reachzero` 3/1 (CA13c2 §1). C-E13c2 reads `plant-reachzero-e11 --part reachin` red, 3/1, the fail being `--space-section nonsense` held ×0.0000 against one `console.error` (CE13c2 §0 item 1). Both critics now read every plant they carry red in both engines.
+3. **CK-20's WebKit exit-side: the regression stands, and the cell's instrument is now a defect of record.** Every exit-side read in both seats ran at a 1-min load of 11.4-28.0. Each `rr-` gate waited its full 900 s and then measured anyway (CA13c2 §2, CE13c2 §0 item 2). Under that load:
+   - cand13 fails **9 of 10** reads (CA13c2: 4 of 5 rounds and the `ca11` path stage; CE13c2: 4 of 4). The worst is `ca11 zoom125` **100.0 px** against 18.6 + 4 (CE13c2).
+   - cand11 fails **1 of 6** cells: `rr-cand11-ce11` round 1 zoom125 **91.8 px** at load 17.6 (CA13c2; this seat read the log line). That is cand11's first fail on record. CE13c2 read cand11's four cells clean at the same loads.
+
+   §P13c-4's ruling rests on reads below load 8 (H13c 3/3, E13c 2/2, cand11 6/6). Every read here is graded NOT-REPRODUCED by the load law, so none refutes those reads on their path. **The ruling stands.** The one sentence it corrects is §P13c-0 finding 6's "It never fails on cand11": it never fails below load 8, and it failed once at 17.6 (§P13c2-3).
+4. **CK-25 stays OPEN, now with WebKit frames from both critics.** CAP 18/0 on both. Both sheets read flat and deft under O-87: one ring, no glow, no added lighting layer. Both WebKit frames show the loupe under `rotate: 10deg` as a broken object (a pill about four times its height, hung below the track, its readout a column). CE13c2 reads ×4.3571 in WebKit, equal to Chromium to the fourth decimal, against cand12's ×1.0600 (CA13c2 §3, CE13c2 §2). D3's ambient clause stands as before.
+5. **No new WebKit counterexample** on the pass-12 and pass-11 critics' paths, on either critic (CA13c2 §0 item 5, CE13c2 §0 item 4). The two WebKit reads on the built candidate are members S14 already carries: the lens (M4) and the script carry (max 38.63 px, cand12 0.00; M5).
+6. **The gates pass on cand13, reproduced by a critic for the first time** (CA13c2 §0 item 6): build, typecheck and `demo:dist:build` exit 0; vitest `--maxWorkers=2` 247 files, 2454 passed, 10 expected fail, 1 skipped.
+
+## P13c2-1 · Registry
+
+| id | family | status after completion 2 | carries forward |
+|---|---|---|---|
+| **A+E** | the declared register with the engaged stage | ADVANCE, the one convergence candidate; `cand13` **18/27** on both critics; `cand12` 20/27 | P-E14 on P-E13 under S14 (§P13c-6, §P13c-8.1), unchanged |
+| (c), D5-B, D5-B (door), D5-C, D5-D, D5-X1..X3 | — | as §P13c-1 | unchanged |
+
+## P13c2-2 · The candidate, row by row
+
+Rows not listed stand as §P13c-2 ruled them. No row closed there reopens here.
+
+| row | C-A13 | C-E13 | ruled | reason |
+|---|---|---|---|---|
+| **CK-16** | CLOSED (Chromium, C-A13c; WebKit, C-A13c2) | CLOSED (both engines, C-E13c) | **CLOSED** | item 1 |
+| **CK-27** | CLOSED (six plants, Chromium C-A13c, WebKit C-A13c2) | CLOSED (every plant both engines; `reachzero` WebKit C-E13c2) | **CLOSED** | item 2 |
+| CK-12 | CLOSED | CLOSED; WebKit crest 2/0 (C-E13c2) | **CLOSED** | the held crest read, unchanged |
+| CK-20 | OPEN | OPEN | **OPEN** | §P13c-2's members; the exit-side regression stands (item 3) |
+| CK-23 | CLOSED | CLOSED; WebKit `rec` at the floor per record, 0 residue after release (C-E13c2) | **CLOSED** | unchanged |
+| CK-25 | OPEN ◇ and D5's | OPEN ◇ and D5's | **OPEN** | item 4 |
+
+**Closed: 18 of 27** (CK-02, 03, 05, 06, 07, 08, 10, 11, 12, 13, 14, 15, 16, 18, 23, 24, 26, 27). **Open: 9.** Held by D2 or D3: CK-01, 17, 19. D5's own, with counterexamples on these bytes: CK-04, 09, 20, 21, 22. Both: CK-25.
+
+## P13c2-3 · Where the seats differ, and the ruling
+
+| item | one side | the other | ruling |
+|---|---|---|---|
+| cand11 on the WebKit exit-side cell | CA13c2: `rr-cand11-ce11` r1 zoom125 91.8 px at load 17.6 | CE13c2: cand11 4/4 clean at 11.4-28.0; H13c: 6/6 clean below load 8 | **Both stand on their own loads.** The 91.8 px read is NOT-REPRODUCED by the load law and does not refute the below-8 reads. It shows that above load 8 the cell does not reliably separate cand13 from cand11. The regression stays ruled on the below-8 record, and §P13c-0 finding 6's "never fails on cand11" now reads "never below load 8" |
+| whether CE13c2's 4/4 confirms the regression | CE13c2 §0 item 2: "the parent's 5-of-5 regression in kind" | CA13c2 §2: "neither confirms nor refutes" | **CA13c2's grading is the rule's.** A read above load 8 is NOT-REPRODUCED and confirms nothing. The regression stands on the below-8 record alone |
+| `level`'s thirteenth fail in WebKit | CA13c2: `xf · outside · perspective rotateX 25deg`, 9.0 px over 16.7 ms against 6.5, a skipped frame at load 22.2 | the same cell passes on the same plant in Chromium (5.4 px, load 15.5) and in WebKit at P-E13-complete (5.4 px, load 13.9) | **Not scored.** It is not a plant cell and was seen only under load. It is NOT-REPRODUCED. It sits inside M2's range and adds no member |
+| `ce9 anc blend` (REPORT) | CA13c2: ratio 1.102, outside 0.90..1.10, at load 20.6 | Chromium 1.041 (C-A13c) | **Recorded only.** A REPORT cell under load scores no row (§P13c2-5 item 3) |
+| `promoted` on the idle cell (REPORT) | cand8 `promoted true` | cand13 `promoted false` | **Not a CK-16 term.** cand13 promotes only the loupe (O-103f retired the promoted construction). It is a consumer-visible path CK-22 names, so S14's MIGRATION list states it (§P13c2-5 item 4) |
+
+**No held cell refutes a reading above this part on the same path.** §P13c-6's base (P-E13) and §P13c-8.1's formulation (S14) are unchanged.
+
+## P13c2-4 · The floor, D2 and D3
+
+No floor seat ran: none of §P12-8.2's triggers fired (the base did not move; F-16 and F-17 are not published). **D2** is running its pass 13 (`../dock/pass-13/` holds its builder's records; no pass-13 part in `../dock/REGISTRY.md`). Its earliest convergence stays its pass 14's close, so F-17 cannot come before then. **D3**: unchanged for D5; no D3 hunk is published. Rows that cannot close inside D5: CK-01, CK-17, CK-19 and CK-25's ambient clause, as §P13c-7.
+
+## P13c2-5 · Defect classes (recorded; no CK row added), each placed
+
+§P13c-5's classes stand as placed. New in completion 2:
+
+| # | class | source | placed at | owner of the cure |
+|---|---|---|---|---|
+| 1 | **A load gate that gives up and measures anyway.** `run.sh`'s `rr-` gate waits at most 900 s for a 1-min load below 8, then runs. On a busy machine a "below load 8" re-read silently becomes an under-load read. All ten `rr-` stages of this completion ran that way | CA13c2 §4 item 1, §2; CE13c2 §0 item 2 | CK-20's exit-side instrument (M17); class 6 of §P13c-5, as (h) | **H14**: the exit-side cell refuses to grade above its load bound. It keeps the cell UNMEASURED and says so, or it waits again, and it prints cand11's reading at the same load beside cand13's in the same run. S14's M17 states load as part of its range (FOLD) |
+| 2 | **A runner start rule that ignores a stage's own gate.** `wk-run.sh` starts no stage after 80 min. A stage whose load gate can take 15 min, started at 76 min, was killed by the 90-minute timeout before it measured | CA13c2 §5 | class 6, as (i) | **H14** and the driver: the start cutoff is 90 min less the stage's longest run and its gate. A killed stage that measured nothing is re-run, never scored |
+| 3 | **A REPORT cell outside its band under load** (`ce9 anc blend`, 1.102 in WebKit) | CA13c2 §4 item 3 | instruments | **H14**, if it adopts the cell as gating: read below the load bound, with a plant |
+| 4 | **The host's top-layer status as a MIGRATION fact.** cand13 promotes the loupe only, and cand8 promoted the host. CK-22 names "the top-layer promotion's effect on `:first-child`/`+`/`~`", and S14-g's seven MIGRATION rows do not state it | CA13c2 §4 item 4 | CK-22 | **P-E14**: a MIGRATION row (FOLD) |
+| 5 | **The load law's re-reads, unadmitted.** `C-E13c2/rerun.txt` (the lens and script-carry paint twice; cand13's `ce11` and `ca11` exit-side twice each; cand11's controls twice each) waited 92 min behind about five `--exclusive webkit` runs at load 15-19 and was stopped before admission. At that load its `rr-` gates could not have held | CE13c2 §3 item 2 | M4, M5, M17 | **H14** runs `rerun.txt`'s ten stages unchanged as the WebKit reads of its M4, M5 and M17 cells, after it cures item 1's gate, so the exit-side rounds are either below load 8 or UNMEASURED. It is not a further completion seat: the members are S14 rows H14 builds anyway, and the row each bears on (CK-20, CK-25) is open on other counterexamples |
+| 6 | **Process.** WebKit lock waits of 84.4, 95.4 and 30.7 min (C-A13c2) and 2.2 min (C-E13c2's held list), then 92 min unadmitted (its re-runs). The 1-min load sat at 11-36. No `guarded` call refused or warned of the zone. Both c3b worktrees are removed; `p14/` holds no c3b directory | CA13c2 §5, CE13c2 §3 | records | the orchestrator: commit this part and the FOLD (both c3b reports and their records are tracked at HEAD `c952c5938`); plan every H14 and P-E14 WebKit list as named acquisitions with item 2's cutoff |
+
+## P13c2-6 · The base and the formulation
+
+**The base of P-E14 stays P-E13** (§P13c-6), and **the formulation stays S14** (§P13c-8.1, `pass-14/P-E14.md`). No held cell refutes a reading on the same path. Every member the held cells add was already a member of §S14-c. Each one is folded with its range in `pass-14/P-E14.md` §S14-FOLD, which this seat closes.
+
+## P13c2-7 · The next step
+
+The checklist stays **CK-01..CK-27, unchanged**. Critics may not add rows. The pass-13 completion is closed. Pass 14 continues at §P13c-8.2 from wave 1b, on S14 as written plus its FOLD:
+
+| wave | seat | note from this part |
+|---|---|---|
+| 1b | **S14 challenge** | as §P13c-8.2. It also attacks the FOLD rows (M17's load range; MIGRATION row 8) |
+| 2 | **H14** | as §P13c-8.2, plus §P13c2-5 items 1, 2, 3 and 5: the exit-side gate that does not proceed, the runner's start cutoff, `rerun.txt` as M4, M5 and M17's WebKit reads. This seat ran no browser and holds no WebKit lock, so H14's and P-E14's browser stages may start once the challenge has folded |
+| 3, 4, 5 | P-E14 part B, C-A14 and C-E14, agglomeration | as §P13c-8.2. Each critic drives both completion-2 critics' WebKit paths and reads CK-16 beside `cand8` in the same run |
+
+Machine law as §P13c-8.2. The precondition is the guard's admission. An armed zone flag that still admits runs is a warning. A refused run stops that seat's runs, and the seat returns PARTIAL with its list unrun.
+
+**Convergence criterion: unchanged** (§P13c-8.3). The clean-pass count after pass 13 is **0**. D5's convergence comes at **the close of pass 16 at the earliest**, as §P13c-8.3 states. **The R-K1-c vehicle moves with this registry: after pass 16 at the earliest.** atlas's M-7 stays until then.
