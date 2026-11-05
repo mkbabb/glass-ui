@@ -235,3 +235,6 @@ The `b` page, W-G.7's one-Button consumer (its G7-G8 reads it):
 - `src/b.js`: `import "./b.css"; import { createApp, h } from "vue"; import { Button } from "@mkbabb/glass-ui/button"; createApp({ render: () => h(Button, null, () => "One") }).mount("#app");`
 
 W-G.3's dock fixture (`c=dock`) and W-G.5's `c=blob` use the `h` page.
+
+## Addendum (2026-11-04): value.js O-99 R-3 (INBOUND O-136)
+`useScrollTrigger`'s synchronous first layout at mount (`scrollReader` `position`, 17.4 ms in value's boot task, called by first-paint pane primitives and `card`) is a member of this wave's law. Gate: value's boot-task profile (`W12U-evidence/o5c/boot-profile-r1.txt` instrument) shows no layout forced from `scrollReader` inside the boot task.

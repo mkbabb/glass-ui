@@ -178,3 +178,6 @@ expect(deckIndex()).toBe(3);                                                    
 ```
 
 W5, Chromium, a consumer page with `<CommandDialog v-model="picked" v-model:open="open" @update:open="v => events.push('open=' + v)">` (the R5-02 harness's `CmdOnly.vue`): open via a button, press Escape; reopen, Escape; reopen, ArrowDown, Enter. Reading: `{"esc1":["open=false","open=false"],"esc2":["open=false","open=false"],"kbdPick":["open=false","open=false"],"errs":[]}`.
+
+## Addendum (2026-11-04): INBOUND O-140
+O-140 is value.js O-72 (TOOLTIP-REVEAL-STATE) re-sent and booked under a glass id; it is R4-01-18, cured by §3 item 8 and witnessed by W1. A dock-seat tooltip (W-I.1's row 9, if D2 adopts it) renders through the same Tooltip and inherits the vocabulary. kf's gate: `gaps.mjs` leg B reads the content entering (first painted frame below opacity 1, a running animation) ×2.

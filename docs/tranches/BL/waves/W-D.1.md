@@ -270,3 +270,6 @@ process.exitCode = hits.length ? 1 : 0;
 ```
 
 HEAD and the converged tree, each exit 1: `one-name: 1 names denote a runtime symbol on one entry and a type on another` / `Surface: runtime on ./surface; type-only on . ./axes`.
+
+## Addendum (2026-11-04): INBOUND O-93 (O-141)
+O-93 ALERT-SKELETON-SUBPATHS (no `./alert` or `./skeleton` key; both have a module door) is answered by the door rule here, with O-104 R-7 (`./accordion`) and O-99 Q-6. kf's gate: on the 11.0.0 pin `@mkbabb/glass-ui/alert` and `@mkbabb/glass-ui/skeleton` resolve, or the converged record states root-only with its reason.

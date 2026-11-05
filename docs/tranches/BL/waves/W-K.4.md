@@ -191,3 +191,6 @@ for (const [cell, o] of cells) await safe(`K4-G6 handle ${cell}`, async () => {
 });
 done(eng);
 ```
+
+## Addendum (2026-11-04): INBOUND O-92 (O-141)
+O-92 FOCUS-REGISTER (two focus registers: `.popover-content:focus-visible`'s `box-shadow: var(--focus-ring-shadow)` halo at `utilities/base.css:87-89` beside `.focus-ring`'s outline) closes on §3 item 1: that halo is one of the `--focus-ring-shadow` readers moved onto the one outline. kf's gate: every focusable overlay computes the `.focus-ring` outline and no `box-shadow` focus carrier, both engines.

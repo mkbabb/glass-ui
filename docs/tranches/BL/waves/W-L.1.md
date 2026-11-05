@@ -300,3 +300,7 @@ Gate **L1-G22**: vitest, a row `{ "Other U.S. states": 4 }` with that key render
 | `rowKey: "a.id"` reading a nested id | `getRowId: (row) => row.a.id` |
 
 Consumer census (read-only, `src/` of each sibling): speedtest uses four dotted keys (`src/components/admin/AdminSessionsTable.vue:57,62`, `src/components/dashboard/ResultsTable.vue:69,74`), and migrates through a marked addendum in its own tranche (the consumer-updates ruling). gregg, atlas: no dotted key. Gregg's retirement on 11.0.0: G-11 needs nothing local; G-14 lets Gregg use its source labels as keys.
+
+## Addendum (2026-11-04): INBOUND O-97 and O-141 (the O-102 letter's §5)
+- **O-97 EASING-CURVE-GLYPH** (with the O-102 letter's §7, G-F3) joins §3.13: `EasingCurve` takes one variant prop for a glyph form (stroke only, 1em, `aria-hidden` unless labelled, the same strokes contract, the dot on the stroke when `progress` is set). Gate: the glyph form renders no rect, grid or caption at 1em, and its path equals the plot's for the same strokes. O-94 R-1 is §3.13's `presets?: boolean`.
+- **§5, a glyph-less StatusDot** (`StatusDot.vue:152`, `.feedback-mark[data-state="success"]::after` always draws the check). No wave owns StatusDot's states; this wave rules it by §1's rule (a consumer cannot drop the check without restyling internals). kf's gate: the editor's status dot paints no `::after` glyph at its success state and holds the 3:1 non-text floor, both themes.

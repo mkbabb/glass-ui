@@ -198,3 +198,6 @@ out.load2 = load(); fs.writeFileSync(`${CAP}/e3.json`, JSON.stringify(out, null,
 const fails = out.rows.filter((r) => !r.pass).length; console.log(`e3: ${out.rows.length} rows, ${fails} FAIL · load ${out.load} → ${out.load2}`);
 process.exitCode = fails ? 1 : 0;
 ```
+
+## Addendum (2026-11-04): INBOUND O-137, the PEEK floor measured
+§3 item 3's floor is what the Sheet measures, not a token sum: the plate's padding, the grip's operable row and the foot of the first rendered content block (its header included), plus the footer's seam and action only when a footer renders, read once per layout from a ResizeObserver and published as `--sheet-floor`. HEAD's sum (`sheet/styles.css:530-543`) counts a footer and an action keyframes' PEEK does not render, so it rests at 171 px where the header-only foot is 157 px. Ruled (b) over (a): `min(171px, foot)` would keep a second authority, and a `floor="content"` prop would be a consumer knob over a wrong floor. Gate: kf's easing and sequence PEEK rest on a row foot at 390×844 and 430×932 with 0 painted px of the next block, ×2, with no kf `min-block-size` override; E3-G3..G5 and G9 hold.
