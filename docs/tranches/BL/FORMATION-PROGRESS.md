@@ -815,3 +815,8 @@ Disk episode, one line: on 2026-11-03 the volume went from 100% (15 GiB free) to
 - 2026-11-05 08:4x · OWNER: full auth for ssh-add and any publishing needed. ssh-agent loaded (~/.ssh/id_rsa; GitHub SSH verified). 10.1.5 tags, pushes and publishes on ready_to_tag with no further ask.
 - 2026-11-05 09:2x · 10.1.5 PUBLISH NOTICE LIST (send the run id to each on publish): value-js-e7 (value, keyframes, fourier, daraksha relays), sci-report-ef (Gregg: nothing rides 10.1.5, FYI), sci-report-36 (parkway: chases 10.1.5 exact; O-156), hassio-config-6a (O-133), glass-ui-cc (relay for hassio).
 - 2026-11-05 09:24 — 10.1.5 critic 5 (95e94682b): K1/K2 regressions, K3 ruling asked. Ruled r1 in orchestrator-note-round5.md (6bc67d9da, release/10.1.5): the reserve yields to the room left; the CHANGELOG follows the owner's outward-prose rules. Fix 5 next.
+- 2026-11-05 09:35 — Owner: "Publish 11.0.0 now". This answers the U session's request to merge u/b7-glass at 373ed8aba, which carries DockTrigger in ./dock-trigger, the --scale-hover-dock deletion and ContextMenu as its own root.
+  - release/11.0.0, in worktree .claude/worktrees/release-11.0.0, is cut from master 0d987344c. Driver glass-11.0.0.js (ec032209b), run wf_5bac0619-dea: the merge seat merges 373ed8aba and then release/10.1.4, then fresh critics run, then the close. I tag and push on ready_to_tag.
+  - W-J.1 becomes 12.0.0.
+  - 10.1.5 must publish under the `v10` dist-tag when `latest` is newer; the close gets this in orchestrator-note-dist-tag.md (ce9c62c70).
+  - The master fast-forward to release/11.0.0 follows its publish. The 10.1.5 cures then forward-merge as 11.0.1.
