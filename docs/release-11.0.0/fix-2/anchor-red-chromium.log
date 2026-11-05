@@ -1,0 +1,29 @@
+
+Running 1 test using 1 worker
+
+  ✘  1 [chromium-desk] › tests-visual/u-b7.spec.ts:249:5 › anchor › anchor · the prop never moves the dock: start, end and center lay out alike (1.9s)
+
+
+  1) [chromium-desk] › tests-visual/u-b7.spec.ts:249:5 › anchor › anchor · the prop never moves the dock: start, end and center lay out alike 
+
+    Error: start vs center: {"center":{"left":356,"right":412,"width":56},"start":{"left":24,"right":80,"width":56},"end":{"left":688,"right":744,"width":56}}
+
+    expect(received).toBeLessThan(expected)
+
+    Expected: < 0.5
+    Received:   332
+
+      255 |         }
+      256 |         for (const anchor of ["start", "end"]) {
+    > 257 |             expect(Math.abs(boxes[anchor].left - boxes.center.left), `${anchor} vs center: ${JSON.stringify(boxes)}`).toBeLessThan(0.5);
+          |                                                                                                                       ^
+      258 |         }
+      259 |     });
+      260 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/tests-visual/u-b7.spec.ts:257:119
+
+    Error Context: tests-visual/test-results/u-b7-anchor-anchor-·-the-p-39aad-nd-and-center-lay-out-alike-chromium-desk/error-context.md
+
+  1 failed
+    [chromium-desk] › tests-visual/u-b7.spec.ts:249:5 › anchor › anchor · the prop never moves the dock: start, end and center lay out alike 
+EXIT 1

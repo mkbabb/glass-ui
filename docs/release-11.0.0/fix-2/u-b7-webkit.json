@@ -1,0 +1,943 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "docs/release-11.0.0/u-line-webkit.config.ts",
+      "--project=webkit-desk",
+      "--project=webkit-phone",
+      "--workers=1"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/docs/release-11.0.0/u-line-webkit.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-desk",
+        "name": "webkit-desk",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "u-b7.spec.ts"
+        ],
+        "timeout": 90000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-phone",
+        "name": "webkit-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "u-b7.spec.ts"
+        ],
+        "timeout": 90000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "SegmentedTabs.glide.spec.ts",
+          "Sheet.position.spec.ts",
+          "DropdownMenu.scroll-lock.spec.ts",
+          "Select.bound.spec.ts",
+          "overlay-sizing.spec.ts",
+          "radius-scale.spec.ts",
+          "press-scale.spec.ts",
+          "CommandDialog.b7c.spec.ts"
+        ],
+        "timeout": 90000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "docs/release-11.0.0/fix-2/u-b7-webkit.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npx vite --host 127.0.0.1 --port 7953 --strictPort",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/",
+      "url": "http://127.0.0.1:7953",
+      "reuseExistingServer": false,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "u-b7.spec.ts",
+      "file": "u-b7.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "U/B7",
+          "file": "u-b7.spec.ts",
+          "line": 34,
+          "column": 6,
+          "specs": [
+            {
+              "title": "D-5 · a seat pressed mid-morph after an owner-opened expand is hit and activated",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit-desk",
+                  "projectName": "webkit-desk",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1556,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-05T17:07:57.447Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8ead4689f60e929aa832-044bf444c5871eb2c185",
+              "file": "u-b7.spec.ts",
+              "line": 36,
+              "column": 5
+            },
+            {
+              "title": "run · the wheel reaches every seat, returns to the top, and never scrolls the page",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit-desk",
+                  "projectName": "webkit-desk",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 13856,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-05T17:07:59.417Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8ead4689f60e929aa832-ac213c64db39a46eec46",
+              "file": "u-b7.spec.ts",
+              "line": 68,
+              "column": 5
+            },
+            {
+              "title": "run · the arrows walk every seat once, in order, each one in view",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit-desk",
+                  "projectName": "webkit-desk",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 5258,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-05T17:08:13.284Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8ead4689f60e929aa832-fe1252ba2bec78fd9477",
+              "file": "u-b7.spec.ts",
+              "line": 97,
+              "column": 5
+            },
+            {
+              "title": "run · every seat is clickable once reached",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit-desk",
+                  "projectName": "webkit-desk",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 6777,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-05T17:08:18.547Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8ead4689f60e929aa832-ac11461687a04b401cd9",
+              "file": "u-b7.spec.ts",
+              "line": 113,
+              "column": 5
+            },
+            {
+              "title": "run · a touch drag pans the run and not the page",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "CDP touch input: Chromium coarse only",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/tests-visual/u-b7.spec.ts",
+                        "line": 128,
+                        "column": 14
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "webkit-desk",
+                  "projectName": "webkit-desk",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "skipped",
+                      "duration": 302,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-05T17:08:25.329Z",
+                      "annotations": [
+                        {
+                          "type": "skip",
+                          "description": "CDP touch input: Chromium coarse only",
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/tests-visual/u-b7.spec.ts",
+                            "line": 128,
+                            "column": 14
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "8ead4689f60e929aa832-5e44ad6bc4b2087d26f4",
+              "file": "u-b7.spec.ts",
+              "line": 127,
+              "column": 5
+            },
+            {
+              "title": "F6 · twelve scroll steps write nothing to the aurora ground",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit-desk",
+                  "projectName": "webkit-desk",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2659,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-05T17:08:25.636Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8ead4689f60e929aa832-b9625e1ab614373b070c",
+              "file": "u-b7.spec.ts",
+              "line": 160,
+              "column": 5
+            },
+            {
+              "title": "D-5 · a seat pressed mid-morph after an owner-opened expand is hit and activated",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit-phone",
+                  "projectName": "webkit-phone",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1404,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-05T17:08:44.486Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8ead4689f60e929aa832-d258a5b2fa6758b00b57",
+              "file": "u-b7.spec.ts",
+              "line": 36,
+              "column": 5
+            },
+            {
+              "title": "run · the wheel reaches every seat, returns to the top, and never scrolls the page",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit-phone",
+                  "projectName": "webkit-phone",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 13821,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-05T17:08:46.130Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8ead4689f60e929aa832-b80da2c1846313435b0e",
+              "file": "u-b7.spec.ts",
+              "line": 68,
+              "column": 5
+            },
+            {
+              "title": "run · the arrows walk every seat once, in order, each one in view",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit-phone",
+                  "projectName": "webkit-phone",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 5077,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-05T17:08:59.959Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8ead4689f60e929aa832-be24feaebebd4d9cc8fb",
+              "file": "u-b7.spec.ts",
+              "line": 97,
+              "column": 5
+            },
+            {
+              "title": "run · every seat is clickable once reached",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit-phone",
+                  "projectName": "webkit-phone",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 6020,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-05T17:09:05.041Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8ead4689f60e929aa832-23fd86a1143b7fe4f1a0",
+              "file": "u-b7.spec.ts",
+              "line": 113,
+              "column": 5
+            },
+            {
+              "title": "run · a touch drag pans the run and not the page",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "CDP touch input: Chromium coarse only",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/tests-visual/u-b7.spec.ts",
+                        "line": 128,
+                        "column": 14
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "webkit-phone",
+                  "projectName": "webkit-phone",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "skipped",
+                      "duration": 186,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-05T17:09:11.065Z",
+                      "annotations": [
+                        {
+                          "type": "skip",
+                          "description": "CDP touch input: Chromium coarse only",
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/tests-visual/u-b7.spec.ts",
+                            "line": 128,
+                            "column": 14
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "8ead4689f60e929aa832-cac168fc2cb4385c595a",
+              "file": "u-b7.spec.ts",
+              "line": 127,
+              "column": 5
+            },
+            {
+              "title": "F6 · twelve scroll steps write nothing to the aurora ground",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit-phone",
+                  "projectName": "webkit-phone",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2415,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-05T17:09:11.255Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8ead4689f60e929aa832-c446d05059476cc911da",
+              "file": "u-b7.spec.ts",
+              "line": 160,
+              "column": 5
+            }
+          ]
+        },
+        {
+          "title": "anchor",
+          "file": "u-b7.spec.ts",
+          "line": 225,
+          "column": 6,
+          "specs": [
+            {
+              "title": "anchor · an anchor=\"start\" dock at its row's start (ltr) keeps that edge through expand and collapse",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit-desk",
+                  "projectName": "webkit-desk",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3523,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-05T17:08:28.300Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8ead4689f60e929aa832-4f0de7b5db63deab489d",
+              "file": "u-b7.spec.ts",
+              "line": 232,
+              "column": 9
+            },
+            {
+              "title": "anchor · an anchor=\"end\" dock at its row's end (ltr) keeps that edge through expand and collapse",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit-desk",
+                  "projectName": "webkit-desk",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3438,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-05T17:08:31.830Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8ead4689f60e929aa832-975a77bd033904694da9",
+              "file": "u-b7.spec.ts",
+              "line": 232,
+              "column": 9
+            },
+            {
+              "title": "anchor · an anchor=\"end\" dock at its row's end (rtl) keeps that edge through expand and collapse",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit-desk",
+                  "projectName": "webkit-desk",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3392,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-05T17:08:35.290Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8ead4689f60e929aa832-e6a8b684eae10443d095",
+              "file": "u-b7.spec.ts",
+              "line": 232,
+              "column": 9
+            },
+            {
+              "title": "anchor · the prop never moves the dock: start, end and center lay out alike",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit-desk",
+                  "projectName": "webkit-desk",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2023,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-05T17:08:38.688Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8ead4689f60e929aa832-09b7346c46fb5abd722c",
+              "file": "u-b7.spec.ts",
+              "line": 249,
+              "column": 5
+            },
+            {
+              "title": "anchor · atlas's figure lane holds its end edge through expand and collapse",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit-desk",
+                  "projectName": "webkit-desk",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3338,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-05T17:08:40.716Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8ead4689f60e929aa832-b3951cbf9127498a9acb",
+              "file": "u-b7.spec.ts",
+              "line": 261,
+              "column": 5
+            },
+            {
+              "title": "anchor · an anchor=\"start\" dock at its row's start (ltr) keeps that edge through expand and collapse",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit-phone",
+                  "projectName": "webkit-phone",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3184,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-05T17:09:13.674Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8ead4689f60e929aa832-bb0a48a242506a7babfd",
+              "file": "u-b7.spec.ts",
+              "line": 232,
+              "column": 9
+            },
+            {
+              "title": "anchor · an anchor=\"end\" dock at its row's end (ltr) keeps that edge through expand and collapse",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit-phone",
+                  "projectName": "webkit-phone",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3155,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-05T17:09:16.864Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8ead4689f60e929aa832-fe7466884e9fa5ef7616",
+              "file": "u-b7.spec.ts",
+              "line": 232,
+              "column": 9
+            },
+            {
+              "title": "anchor · an anchor=\"end\" dock at its row's end (rtl) keeps that edge through expand and collapse",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit-phone",
+                  "projectName": "webkit-phone",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3250,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-05T17:09:20.024Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8ead4689f60e929aa832-ed1ea33916177bc4454f",
+              "file": "u-b7.spec.ts",
+              "line": 232,
+              "column": 9
+            },
+            {
+              "title": "anchor · the prop never moves the dock: start, end and center lay out alike",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit-phone",
+                  "projectName": "webkit-phone",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2265,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-05T17:09:23.279Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8ead4689f60e929aa832-acac49f10ae59c124c50",
+              "file": "u-b7.spec.ts",
+              "line": 249,
+              "column": 5
+            },
+            {
+              "title": "anchor · atlas's figure lane holds its end edge through expand and collapse",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit-phone",
+                  "projectName": "webkit-phone",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3364,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-05T17:09:25.552Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8ead4689f60e929aa832-77e19d116d7c72842d51",
+              "file": "u-b7.spec.ts",
+              "line": 261,
+              "column": 5
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-05T17:07:55.101Z",
+    "duration": 93862.93299999999,
+    "expected": 20,
+    "skipped": 2,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}
