@@ -59,7 +59,7 @@ changes come first, each with what to do.
   `--radius-dock`) to draw a circle on a box taller than 32 px, switch to
   `--radius-circle`.
 
-- **Wide or wrapping controls take bar corners.** A `Button`, `ToggleGroupItem` or
+- **Wide or wrapping controls now take bar corners.** A `Button`, `ToggleGroupItem` or
   `SegmentedTabs` whose label wraps, that is taller than its size, or that is wider than
   20rem carries `data-shape="bar"` and the new `--radius-bar` (12 px). If your CSS keyed
   on such a control's round corner, select `[data-shape="bar"]` instead.
@@ -86,7 +86,7 @@ changes come first, each with what to do.
   - Markup that uses glass class names without rendering the component (copied markup,
     server-rendered HTML) loses those rules. Render the component or import its module.
   - Code run in plain Node that imports a component subpath or the root now meets a
-    `.css` import. Let your test runner transform glass-ui (vitest:
+    `.css` import. Let your test runner transform glass-ui (in vitest, set
     `server.deps.inline: [/@mkbabb\/glass-ui/]`) or register a loader that maps `.css`
     to an empty module. Composable and utility subpaths are unaffected.
 
@@ -101,21 +101,21 @@ changes come first, each with what to do.
 
 ### New
 
-- **Per-figure docks.** `GlassDock` takes `expandOn="press"` (only a press or
-  Enter/Space on the summary opens it; Escape, a press outside or focus leaving closes
-  it), `anchor="start" | "end"` (pins the dock to that edge of a flex or grid container,
-  so it grows toward the other side) and `collapsedLabel` (the summary's accessible
-  name, such as "Tools for Fund balance by year"). New types `DockExpandOn` and
-  `DockAnchor`.
-- **`backdropMode` on `Card` and `Surface`.** `"static"` keeps the plate's colour, edge
-  and rim and skips the backdrop blur, for plates that sit over a still background.
-  `"live"` (the default) is unchanged.
-- **`STILL_FIELD` from `@mkbabb/glass-ui/aurora`.** Spread it last over a field config
-  to stop the drift and the moving grain; the field paints once and rests.
-- **`auroraGroundKey(config)`**, and an optional `prepare(backend)` on the GPU
-  substrate options.
-- **`--hover-ink-mix`** (45%), the weight an inactive label moves toward the
-  foreground on hover.
+- **`GlassDock` can serve one dock per figure.** With `expandOn="press"` the dock opens
+  only on a press or Enter/Space on its summary, and Escape, a press outside or focus
+  leaving it closes it again. With `anchor="start"` or `anchor="end"` the dock pins
+  itself to that edge of a flex or grid container and grows toward the other side.
+  `collapsedLabel` names the summary for screen readers, for example "Tools for Fund
+  balance by year". The new types `DockExpandOn` and `DockAnchor` describe the first two.
+- **`Card` and `Surface` take a `backdropMode` prop.** Set it to `"static"` for a plate
+  that sits over a still background: the plate keeps its colour, edge and rim and skips
+  the backdrop blur. The default, `"live"`, behaves as before.
+- **`@mkbabb/glass-ui/aurora` exports `STILL_FIELD`.** Spread it last over a field
+  config to stop the drift and the moving grain, and the field paints once and rests.
+- **The aurora module also exports `auroraGroundKey(config)`,** and the GPU substrate
+  options accept an optional `prepare(backend)` callback.
+- **A new token, `--hover-ink-mix` (45%), sets how far an inactive label moves toward
+  the foreground colour on hover.**
 
 ### Fixes
 
@@ -137,7 +137,7 @@ changes come first, each with what to do.
   and a wheel at the end of an expanded dock no longer scrolls the page in Firefox.
 - Toggle groups, chips and tabs no longer scale on hover or press.
 
-### Lighter and faster
+### Smaller and faster pages
 
 - The aurora loads its WebGPU or WebGL engine only when that backend starts:
   `aurora.js` drops from about 204 KB to 27 KB.
