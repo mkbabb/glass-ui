@@ -6,6 +6,7 @@ Branch `release/11.0.0`, from master `0d987344c`. Two `--no-ff` merges, history 
 2. `4af838a60` — `release/10.1.4` (tag `v10.1.4`, carrying `v10.1.3` and `v10.1.2`). Five
    conflicts, resolved below; version, keyframes range and CHANGELOG in the same commit.
 3. `6fc179766` — `.bundle-ratchet` rebound from the committed-tree build of `4af838a60`.
+4. `3b587a44f` — this record; `a858969c8` — the 11.0.0 CHANGELOG entry rewritten in full sentences per the orchestrator note `e85ca3a2f` (the CHANGELOG is not packed, so the ratchet holds).
 
 10.1.5 is not merged.
 
