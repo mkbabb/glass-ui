@@ -246,15 +246,33 @@ test.describe("anchor", () => {
         });
     }
 
-    test("anchor · the prop never moves the dock: start, end and center lay out alike", async ({ page }) => {
-        const boxes: Record<string, { left: number; right: number; width: number }> = {};
+    // The prop is a data-anchor hook only: in a free-space row, where the dock's own auto
+    // margins centre it, start, end and center rest alike AND open alike, growing on both
+    // sides. This is what the docstring, README, CHANGELOG and MIGRATION now say.
+    test("anchor · the prop moves neither the dock nor its morph: start, end and center rest and open alike", async ({
+        page,
+    }, info) => {
+        type Box = { left: number; right: number; width: number };
+        const runs: Record<string, { rest: Box; expanded: Box; attr: string | null }> = {};
         for (const anchor of ["center", "start", "end"]) {
             await open(page, `scene=figure-row&anchor=${anchor}&justify=normal&wrap=0`);
             await page.waitForTimeout(400);
-            boxes[anchor] = await rectOf(page, '[data-probe="dock"]');
+            const rest = await rectOf(page, '[data-probe="dock"]');
+            const attr = await page.locator('[data-probe="dock"]').getAttribute("data-anchor");
+            const { expanded } = await expandAndCollapse(page, !!info.project.use.hasTouch);
+            runs[anchor] = { rest, expanded, attr };
         }
+        const at = JSON.stringify(runs);
+        expect(runs.center.attr, `center writes no hook: ${at}`).toBeNull();
+        expect(runs.center.rest.left - runs.center.expanded.left, `a centred dock grows at its start: ${at}`).toBeGreaterThan(10);
+        expect(runs.center.expanded.right - runs.center.rest.right, `a centred dock grows at its end: ${at}`).toBeGreaterThan(10);
         for (const anchor of ["start", "end"]) {
-            expect(Math.abs(boxes[anchor].left - boxes.center.left), `${anchor} vs center: ${JSON.stringify(boxes)}`).toBeLessThan(0.5);
+            expect(runs[anchor].attr, `${anchor} is written as data-anchor: ${at}`).toBe(anchor);
+            for (const k of ["rest", "expanded"] as const) {
+                for (const e of ["left", "right"] as const) {
+                    expect(Math.abs(runs[anchor][k][e] - runs.center[k][e]), `${anchor} ${k} ${e} vs center: ${at}`).toBeLessThan(0.5);
+                }
+            }
         }
     });
 

@@ -92,7 +92,7 @@ Of that, only `MIGRATION.md` ships. `package.json` declares `files: ["dist", "MI
 
 ```bash
 npm run dev             # storybook demo (multi-page, dock + carousel navigation)
-npm run build           # library → dist/glass-ui.js + glass-ui.css + index.d.ts + per-subpath chunks
+npm run build           # library → dist/glass-ui.js + index.d.ts + per-subpath chunks
 npm run typecheck       # vue-tsc --noEmit
 npm run profile:bundle  # inspect bundle sizes and exact value.js capability imports
 ```

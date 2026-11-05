@@ -101,14 +101,14 @@ export interface DockProps {
      */
     expandOn?: DockExpandOn;
     /**
-     * The edge that stays put while the dock opens and closes: `"start"`, `"end"`, or
-     * `"center"` (default). It names the edge and changes nothing else. The dock never
-     * moves itself inside its container, and the morph's origin is measured from layout
-     * when it starts, so the dock already holds whichever edge your layout lays it at.
-     * The dock centres itself in its own box with auto inline margins, so place it with
-     * a wrapper sized to its content (a `display: flex` box at the end of a row, say).
-     * A value other than `"center"` is written to the root as `data-anchor`, so your
-     * own CSS can key on it.
+     * A `data-anchor` hook for your own CSS: `"start"`, `"end"`, or `"center"`
+     * (default). A value other than `"center"` is written to the root as
+     * `data-anchor`, and that is all the prop does. It does not move the dock or change
+     * its morph. The morph's origin is measured from layout when it starts, so the dock
+     * grows from whichever edge your layout lays it at, and a dock your layout centres
+     * grows on both sides whatever `anchor` says. The dock centres itself in its own box
+     * with auto inline margins, so to hold it at an edge, place it in a wrapper sized to
+     * its content (a `display: flex` box at the end of a row, say).
      */
     anchor?: DockAnchor;
     /**

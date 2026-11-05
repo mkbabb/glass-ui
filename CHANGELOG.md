@@ -103,10 +103,11 @@ changes come first, each with what to do.
 
 - **`GlassDock` can serve one dock per figure.** With `expandOn="press"` the dock opens
   only on a press or Enter/Space on its summary, and Escape, a press outside or focus
-  leaving it closes it again. `anchor="start"` or `anchor="end"` names the edge that
-  stays put while the dock opens and closes. It does not move the dock: the dock already
-  grows from whichever edge your layout places it at, and `anchor` is written to the
-  root as `data-anchor` so your own CSS can key on it.
+  leaving it closes it again. `anchor="start"` or `anchor="end"` writes `data-anchor` to
+  the root so your own CSS can key on it, and it does nothing more. It does not move the
+  dock or change how it opens. The dock always grows from the edge your layout places it
+  at, so to keep its end edge still, place it at the end of its row with a wrapper sized
+  to its content. A dock your layout centres grows on both sides, whatever `anchor` says.
   `collapsedLabel` names the summary for screen readers, for example "Tools for Fund
   balance by year". The new types `DockExpandOn` and `DockAnchor` describe the first two.
 - **`Card` and `Surface` take a `backdropMode` prop.** Set it to `"static"` for a plate

@@ -49,6 +49,17 @@ describe.skipIf(!existsSync(join(DIST, ENTRY)))("SFC sheets ride their chunks (U
         expect(scoped).toEqual([]);
     });
 
+    it("has the shipped README name only files the build emits", () => {
+        // README.md ships in every install; its build line once still promised the removed bundle.
+        const line = readFileSync(join(process.cwd(), "README.md"), "utf8")
+            .split("\n")
+            .find((l) => /^npm run build\s/.test(l));
+        expect(line).toBeTruthy();
+        const named = [...(line as string).matchAll(/(?:dist\/)?([\w.-]+\.(?:js|css|d\.ts))\b/g)].map((m) => m[1]);
+        expect(named.length).toBeGreaterThan(0);
+        expect(named.filter((file) => !existsSync(join(DIST, file)))).toEqual([]);
+    });
+
     it("has the chunk that owns each scope id import the sheet that styles it", () => {
         const sheets = readdirSync(DIST).filter((f) => f.endsWith(".css"));
         const scopeIds = new Set<string>();
