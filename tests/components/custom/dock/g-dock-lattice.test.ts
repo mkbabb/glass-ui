@@ -728,14 +728,21 @@ describe("G-DOCK-MATERIAL — the focus ring composes instead of competing", () 
         // The reserve is the composed ink of a focused, hovered seat: its hover overhang
         // PLUS its ring, which scales with it (O-129 r1, O-123 OD-5: a seat's engagement
         // scale never counts as reach; 10.1.5 critique D4: the two inks add), and the
-        // overhang is the LARGEST seat's on each axis (10.1.5 critique 2 E1, E2).
+        // overhang is the LARGEST seat's on each axis (10.1.5 critique 2 E1, E2), plus
+        // the scroll step: WebKit's whole-pixel scroll offset falls up to 1 px short of a
+        // fractional end (10.1.5 fix round 3), 1px on the scroll axis, 0 on the cross.
         for (const side of ["inline", "block"]) {
             expect(run).toMatch(
                 new RegExp(
-                    `--dock-run-reserve-${side}:\\s*round\\(\\s*up,\\s*var\\(--dock-seat-max-${side}-px\\) \\* \\(var\\(--scale-hover-dock\\) - 1\\) / 2 \\+\\s*var\\(--dock-ring-reserve\\) \\* var\\(--scale-hover-dock\\),\\s*1px\\s*\\)`,
+                    `--dock-run-reserve-${side}:\\s*round\\(\\s*up,\\s*var\\(--dock-seat-max-${side}-px\\) \\* \\(var\\(--scale-hover-dock\\) - 1\\) / 2 \\+\\s*var\\(--dock-ring-reserve\\) \\* var\\(--scale-hover-dock\\) \\+ var\\(--dock-run-step-${side}\\),\\s*1px\\s*\\)`,
                 ),
             );
         }
+
+        expect(run).toMatch(/\.glass-dock \{[^{}]*--dock-run-step-inline:\s*1px;\s*--dock-run-step-block:\s*0px;/);
+        expect(run).toMatch(
+            /\.glass-dock\.vertical \{[^{}]*--dock-run-step-inline:\s*0px;\s*--dock-run-step-block:\s*1px;/,
+        );
 
         // 2. ONE OWNER. The vertical rotation swaps the AXIS, not the box model; a
         //    restatement there is the two-owners defect the R1 cure struck in
