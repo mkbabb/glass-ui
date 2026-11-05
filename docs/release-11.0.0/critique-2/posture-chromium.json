@@ -1,0 +1,1667 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "docs/release-11.0.0/critique-2/posture.config.ts",
+      "--project=chromium-1440-fine",
+      "--project=chromium-390-coarse",
+      "--workers=1"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/docs/release-11.0.0/critique-2/posture.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/docs/release-11.0.0/critique-2",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-1440-fine",
+        "name": "chromium-1440-fine",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/docs/release-11.0.0/critique-2",
+        "testIgnore": [],
+        "testMatch": [
+          "posture.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-390-coarse",
+        "name": "chromium-390-coarse",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/docs/release-11.0.0/critique-2",
+        "testIgnore": [],
+        "testMatch": [
+          "posture.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-1440-fine",
+        "name": "webkit-1440-fine",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/docs/release-11.0.0/critique-2",
+        "testIgnore": [],
+        "testMatch": [
+          "posture.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-390-coarse",
+        "name": "webkit-390-coarse",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/docs/release-11.0.0/critique-2",
+        "testIgnore": [],
+        "testMatch": [
+          "posture.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/docs/release-11.0.0/critique-2/posture-chromium.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npx vite --host 127.0.0.1 --port 7955 --strictPort",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/",
+      "url": "http://127.0.0.1:7955",
+      "reuseExistingServer": false,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "posture.spec.ts",
+      "file": "posture.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "horizontal page dock: collapsed → expanded → collapsed → pinned",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "expanded class",
+                  "description": "\"fixed bottom-4 glass-dock horizontal shape-pill expanded\""
+                },
+                {
+                  "type": "expanded hits",
+                  "description": "[{\"seat\":\"Home\",\"w\":40,\"h\":40,\"hit\":true},{\"seat\":\"Search\",\"w\":40,\"h\":40,\"hit\":true},{\"seat\":\"Library\",\"w\":40,\"h\":40,\"hit\":true},{\"seat\":\"Settings\",\"w\":40,\"h\":40,\"hit\":true},{\"seat\":\"Profile\",\"w\":40,\"h\":40,\"hit\":true}]"
+                },
+                {
+                  "type": "left class",
+                  "description": "\"fixed bottom-4 glass-dock horizontal shape-pill collapsed\""
+                },
+                {
+                  "type": "focus class",
+                  "description": "\"fixed bottom-4 glass-dock horizontal shape-pill expanded pinned\""
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium-1440-fine",
+              "projectName": "chromium-1440-fine",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 7574,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-05T19:35:28.253Z",
+                  "annotations": [
+                    {
+                      "type": "expanded class",
+                      "description": "\"fixed bottom-4 glass-dock horizontal shape-pill expanded\""
+                    },
+                    {
+                      "type": "expanded hits",
+                      "description": "[{\"seat\":\"Home\",\"w\":40,\"h\":40,\"hit\":true},{\"seat\":\"Search\",\"w\":40,\"h\":40,\"hit\":true},{\"seat\":\"Library\",\"w\":40,\"h\":40,\"hit\":true},{\"seat\":\"Settings\",\"w\":40,\"h\":40,\"hit\":true},{\"seat\":\"Profile\",\"w\":40,\"h\":40,\"hit\":true}]"
+                    },
+                    {
+                      "type": "left class",
+                      "description": "\"fixed bottom-4 glass-dock horizontal shape-pill collapsed\""
+                    },
+                    {
+                      "type": "focus class",
+                      "description": "\"fixed bottom-4 glass-dock horizontal shape-pill expanded pinned\""
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "936f72236cd7232f418f-81069d6335a96aa98556",
+          "file": "posture.spec.ts",
+          "line": 63,
+          "column": 5
+        },
+        {
+          "title": "horizontal page dock collapse=open: rest posture works",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "class",
+                  "description": "\"fixed bottom-4 glass-dock horizontal shape-pill expanded\""
+                },
+                {
+                  "type": "rest hits",
+                  "description": "[{\"seat\":\"Home\",\"w\":40,\"h\":40,\"hit\":true},{\"seat\":\"Search\",\"w\":40,\"h\":40,\"hit\":true},{\"seat\":\"Library\",\"w\":40,\"h\":40,\"hit\":true},{\"seat\":\"Settings\",\"w\":40,\"h\":40,\"hit\":true},{\"seat\":\"Profile\",\"w\":40,\"h\":40,\"hit\":true}]"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium-1440-fine",
+              "projectName": "chromium-1440-fine",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1405,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-05T19:35:36.014Z",
+                  "annotations": [
+                    {
+                      "type": "class",
+                      "description": "\"fixed bottom-4 glass-dock horizontal shape-pill expanded\""
+                    },
+                    {
+                      "type": "rest hits",
+                      "description": "[{\"seat\":\"Home\",\"w\":40,\"h\":40,\"hit\":true},{\"seat\":\"Search\",\"w\":40,\"h\":40,\"hit\":true},{\"seat\":\"Library\",\"w\":40,\"h\":40,\"hit\":true},{\"seat\":\"Settings\",\"w\":40,\"h\":40,\"hit\":true},{\"seat\":\"Profile\",\"w\":40,\"h\":40,\"hit\":true}]"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "936f72236cd7232f418f-495583467ab384286a82",
+          "file": "posture.spec.ts",
+          "line": 95,
+          "column": 9
+        },
+        {
+          "title": "horizontal page dock collapse=false: rest posture works",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "class",
+                  "description": "\"fixed bottom-4 glass-dock horizontal shape-pill expanded pinned always-expanded\""
+                },
+                {
+                  "type": "rest hits",
+                  "description": "[{\"seat\":\"Home\",\"w\":40,\"h\":40,\"hit\":true},{\"seat\":\"Search\",\"w\":40,\"h\":40,\"hit\":true},{\"seat\":\"Library\",\"w\":40,\"h\":40,\"hit\":true},{\"seat\":\"Settings\",\"w\":40,\"h\":40,\"hit\":true},{\"seat\":\"Profile\",\"w\":40,\"h\":40,\"hit\":true}]"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium-1440-fine",
+              "projectName": "chromium-1440-fine",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1426,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-05T19:35:37.423Z",
+                  "annotations": [
+                    {
+                      "type": "class",
+                      "description": "\"fixed bottom-4 glass-dock horizontal shape-pill expanded pinned always-expanded\""
+                    },
+                    {
+                      "type": "rest hits",
+                      "description": "[{\"seat\":\"Home\",\"w\":40,\"h\":40,\"hit\":true},{\"seat\":\"Search\",\"w\":40,\"h\":40,\"hit\":true},{\"seat\":\"Library\",\"w\":40,\"h\":40,\"hit\":true},{\"seat\":\"Settings\",\"w\":40,\"h\":40,\"hit\":true},{\"seat\":\"Profile\",\"w\":40,\"h\":40,\"hit\":true}]"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "936f72236cd7232f418f-524f012c9de90c27bbed",
+          "file": "posture.spec.ts",
+          "line": 95,
+          "column": 9
+        },
+        {
+          "title": "vertical page dock: collapsed → expanded → collapsed → pinned",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "expanded class",
+                  "description": "\"fixed left-4 top-24 glass-dock vertical shape-pill expanded\""
+                },
+                {
+                  "type": "expanded hits",
+                  "description": "[{\"seat\":\"Home\",\"w\":40,\"h\":40,\"hit\":true},{\"seat\":\"Search\",\"w\":40,\"h\":40,\"hit\":true},{\"seat\":\"Library\",\"w\":40,\"h\":40,\"hit\":true},{\"seat\":\"Settings\",\"w\":40,\"h\":40,\"hit\":true},{\"seat\":\"Profile\",\"w\":40,\"h\":40,\"hit\":true}]"
+                },
+                {
+                  "type": "left class",
+                  "description": "\"fixed left-4 top-24 glass-dock vertical shape-pill collapsed\""
+                },
+                {
+                  "type": "focus class",
+                  "description": "\"fixed left-4 top-24 glass-dock vertical shape-pill expanded pinned\""
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium-1440-fine",
+              "projectName": "chromium-1440-fine",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 7415,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-05T19:35:38.854Z",
+                  "annotations": [
+                    {
+                      "type": "expanded class",
+                      "description": "\"fixed left-4 top-24 glass-dock vertical shape-pill expanded\""
+                    },
+                    {
+                      "type": "expanded hits",
+                      "description": "[{\"seat\":\"Home\",\"w\":40,\"h\":40,\"hit\":true},{\"seat\":\"Search\",\"w\":40,\"h\":40,\"hit\":true},{\"seat\":\"Library\",\"w\":40,\"h\":40,\"hit\":true},{\"seat\":\"Settings\",\"w\":40,\"h\":40,\"hit\":true},{\"seat\":\"Profile\",\"w\":40,\"h\":40,\"hit\":true}]"
+                    },
+                    {
+                      "type": "left class",
+                      "description": "\"fixed left-4 top-24 glass-dock vertical shape-pill collapsed\""
+                    },
+                    {
+                      "type": "focus class",
+                      "description": "\"fixed left-4 top-24 glass-dock vertical shape-pill expanded pinned\""
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "936f72236cd7232f418f-f46bb6fb6b1835c83f92",
+          "file": "posture.spec.ts",
+          "line": 63,
+          "column": 5
+        },
+        {
+          "title": "vertical page dock collapse=open: rest posture works",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "class",
+                  "description": "\"fixed left-4 top-24 glass-dock vertical shape-pill expanded\""
+                },
+                {
+                  "type": "rest hits",
+                  "description": "[{\"seat\":\"Home\",\"w\":40,\"h\":40,\"hit\":true},{\"seat\":\"Search\",\"w\":40,\"h\":40,\"hit\":true},{\"seat\":\"Library\",\"w\":40,\"h\":40,\"hit\":true},{\"seat\":\"Settings\",\"w\":40,\"h\":40,\"hit\":true},{\"seat\":\"Profile\",\"w\":40,\"h\":40,\"hit\":true}]"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium-1440-fine",
+              "projectName": "chromium-1440-fine",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1424,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-05T19:35:46.273Z",
+                  "annotations": [
+                    {
+                      "type": "class",
+                      "description": "\"fixed left-4 top-24 glass-dock vertical shape-pill expanded\""
+                    },
+                    {
+                      "type": "rest hits",
+                      "description": "[{\"seat\":\"Home\",\"w\":40,\"h\":40,\"hit\":true},{\"seat\":\"Search\",\"w\":40,\"h\":40,\"hit\":true},{\"seat\":\"Library\",\"w\":40,\"h\":40,\"hit\":true},{\"seat\":\"Settings\",\"w\":40,\"h\":40,\"hit\":true},{\"seat\":\"Profile\",\"w\":40,\"h\":40,\"hit\":true}]"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "936f72236cd7232f418f-c6ab0f20bf6b7a8e195e",
+          "file": "posture.spec.ts",
+          "line": 95,
+          "column": 9
+        },
+        {
+          "title": "vertical page dock collapse=false: rest posture works",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "class",
+                  "description": "\"fixed left-4 top-24 glass-dock vertical shape-pill expanded pinned always-expanded\""
+                },
+                {
+                  "type": "rest hits",
+                  "description": "[{\"seat\":\"Home\",\"w\":40,\"h\":40,\"hit\":true},{\"seat\":\"Search\",\"w\":40,\"h\":40,\"hit\":true},{\"seat\":\"Library\",\"w\":40,\"h\":40,\"hit\":true},{\"seat\":\"Settings\",\"w\":40,\"h\":40,\"hit\":true},{\"seat\":\"Profile\",\"w\":40,\"h\":40,\"hit\":true}]"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium-1440-fine",
+              "projectName": "chromium-1440-fine",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1406,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-05T19:35:47.703Z",
+                  "annotations": [
+                    {
+                      "type": "class",
+                      "description": "\"fixed left-4 top-24 glass-dock vertical shape-pill expanded pinned always-expanded\""
+                    },
+                    {
+                      "type": "rest hits",
+                      "description": "[{\"seat\":\"Home\",\"w\":40,\"h\":40,\"hit\":true},{\"seat\":\"Search\",\"w\":40,\"h\":40,\"hit\":true},{\"seat\":\"Library\",\"w\":40,\"h\":40,\"hit\":true},{\"seat\":\"Settings\",\"w\":40,\"h\":40,\"hit\":true},{\"seat\":\"Profile\",\"w\":40,\"h\":40,\"hit\":true}]"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "936f72236cd7232f418f-4e38064e8c2576e43ce0",
+          "file": "posture.spec.ts",
+          "line": 95,
+          "column": 9
+        },
+        {
+          "title": "figure dock (atlas lane): press opens, Escape / press outside / focus exit close; end edge holds",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "rest",
+                  "description": "{\"ctl\":{\"left\":680,\"right\":876,\"top\":24,\"bottom\":80,\"width\":196,\"height\":56},\"rest\":{\"left\":820,\"right\":876,\"top\":24,\"bottom\":80,\"width\":56,\"height\":56}}"
+                },
+                {
+                  "type": "open",
+                  "description": "{\"open1\":{\"left\":716,\"right\":876,\"top\":24,\"bottom\":80,\"width\":160,\"height\":56},\"drift\":0}"
+                },
+                {
+                  "type": "figure hits",
+                  "description": "[{\"seat\":\"Options\",\"w\":40,\"h\":40,\"hit\":true},{\"seat\":\"Download\",\"w\":40,\"h\":40,\"hit\":true},{\"seat\":\"Enlarge\",\"w\":40,\"h\":40,\"hit\":true}]"
+                },
+                {
+                  "type": "shift-tab lands in dock",
+                  "description": "true"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium-1440-fine",
+              "projectName": "chromium-1440-fine",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 7220,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-05T19:35:49.113Z",
+                  "annotations": [
+                    {
+                      "type": "rest",
+                      "description": "{\"ctl\":{\"left\":680,\"right\":876,\"top\":24,\"bottom\":80,\"width\":196,\"height\":56},\"rest\":{\"left\":820,\"right\":876,\"top\":24,\"bottom\":80,\"width\":56,\"height\":56}}"
+                    },
+                    {
+                      "type": "open",
+                      "description": "{\"open1\":{\"left\":716,\"right\":876,\"top\":24,\"bottom\":80,\"width\":160,\"height\":56},\"drift\":0}"
+                    },
+                    {
+                      "type": "figure hits",
+                      "description": "[{\"seat\":\"Options\",\"w\":40,\"h\":40,\"hit\":true},{\"seat\":\"Download\",\"w\":40,\"h\":40,\"hit\":true},{\"seat\":\"Enlarge\",\"w\":40,\"h\":40,\"hit\":true}]"
+                    },
+                    {
+                      "type": "shift-tab lands in dock",
+                      "description": "true"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "936f72236cd7232f418f-f21ac74e715959d7bc99",
+          "file": "posture.spec.ts",
+          "line": 107,
+          "column": 1
+        },
+        {
+          "title": "anchor=end in a free row: does the named edge stay put?",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "row",
+                  "description": "{\"rest\":{\"left\":356,\"right\":412,\"top\":24,\"bottom\":80,\"width\":56,\"height\":56},\"after\":{\"left\":304,\"right\":464,\"top\":24,\"bottom\":80,\"width\":160,\"height\":56},\"drift\":52,\"grew\":104}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium-1440-fine",
+              "projectName": "chromium-1440-fine",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 1561,
+                  "error": {
+                    "message": "Error: the named end edge drift through the expand\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m2\u001b[39m\nReceived:   \u001b[31m52\u001b[39m",
+                    "stack": "Error: the named end edge drift through the expand\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m2\u001b[39m\nReceived:   \u001b[31m52\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/docs/release-11.0.0/critique-2/posture.spec.ts:206:76",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/docs/release-11.0.0/critique-2/posture.spec.ts",
+                      "column": 76,
+                      "line": 206
+                    },
+                    "snippet": "  204 |         note(\"row\", { rest, after, drift, grew: after.width - rest.width });\n  205 |         expect(after.width, \"expanded\").toBeGreaterThan(rest.width + 40);\n> 206 |         expect(drift, `the named ${anchor} edge drift through the expand`).toBeLessThan(2);\n      |                                                                            ^\n  207 |     });\n  208 | }\n  209 |"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/docs/release-11.0.0/critique-2/posture.spec.ts",
+                        "column": 76,
+                        "line": 206
+                      },
+                      "message": "Error: the named end edge drift through the expand\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m2\u001b[39m\nReceived:   \u001b[31m52\u001b[39m\n\n  204 |         note(\"row\", { rest, after, drift, grew: after.width - rest.width });\n  205 |         expect(after.width, \"expanded\").toBeGreaterThan(rest.width + 40);\n> 206 |         expect(drift, `the named ${anchor} edge drift through the expand`).toBeLessThan(2);\n      |                                                                            ^\n  207 |     });\n  208 | }\n  209 |\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/docs/release-11.0.0/critique-2/posture.spec.ts:206:76"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-05T19:35:56.338Z",
+                  "annotations": [
+                    {
+                      "type": "row",
+                      "description": "{\"rest\":{\"left\":356,\"right\":412,\"top\":24,\"bottom\":80,\"width\":56,\"height\":56},\"after\":{\"left\":304,\"right\":464,\"top\":24,\"bottom\":80,\"width\":160,\"height\":56},\"drift\":52,\"grew\":104}"
+                    }
+                  ],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/test-results/posture-anchor-end-in-a-fr-965ef-es-the-named-edge-stay-put--chromium-1440-fine/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/docs/release-11.0.0/critique-2/posture.spec.ts",
+                    "column": 76,
+                    "line": 206
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "936f72236cd7232f418f-4e4a263ba9958e2c6cb1",
+          "file": "posture.spec.ts",
+          "line": 179,
+          "column": 5
+        },
+        {
+          "title": "anchor=start in a free row: does the named edge stay put?",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "row",
+                  "description": "{\"rest\":{\"left\":356,\"right\":412,\"top\":24,\"bottom\":80,\"width\":56,\"height\":56},\"after\":{\"left\":304,\"right\":464,\"top\":24,\"bottom\":80,\"width\":160,\"height\":56},\"drift\":52,\"grew\":104}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium-1440-fine",
+              "projectName": "chromium-1440-fine",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 1585,
+                  "error": {
+                    "message": "Error: the named start edge drift through the expand\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m2\u001b[39m\nReceived:   \u001b[31m52\u001b[39m",
+                    "stack": "Error: the named start edge drift through the expand\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m2\u001b[39m\nReceived:   \u001b[31m52\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/docs/release-11.0.0/critique-2/posture.spec.ts:206:76",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/docs/release-11.0.0/critique-2/posture.spec.ts",
+                      "column": 76,
+                      "line": 206
+                    },
+                    "snippet": "  204 |         note(\"row\", { rest, after, drift, grew: after.width - rest.width });\n  205 |         expect(after.width, \"expanded\").toBeGreaterThan(rest.width + 40);\n> 206 |         expect(drift, `the named ${anchor} edge drift through the expand`).toBeLessThan(2);\n      |                                                                            ^\n  207 |     });\n  208 | }\n  209 |"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/docs/release-11.0.0/critique-2/posture.spec.ts",
+                        "column": 76,
+                        "line": 206
+                      },
+                      "message": "Error: the named start edge drift through the expand\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m2\u001b[39m\nReceived:   \u001b[31m52\u001b[39m\n\n  204 |         note(\"row\", { rest, after, drift, grew: after.width - rest.width });\n  205 |         expect(after.width, \"expanded\").toBeGreaterThan(rest.width + 40);\n> 206 |         expect(drift, `the named ${anchor} edge drift through the expand`).toBeLessThan(2);\n      |                                                                            ^\n  207 |     });\n  208 | }\n  209 |\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/docs/release-11.0.0/critique-2/posture.spec.ts:206:76"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-05T19:35:58.224Z",
+                  "annotations": [
+                    {
+                      "type": "row",
+                      "description": "{\"rest\":{\"left\":356,\"right\":412,\"top\":24,\"bottom\":80,\"width\":56,\"height\":56},\"after\":{\"left\":304,\"right\":464,\"top\":24,\"bottom\":80,\"width\":160,\"height\":56},\"drift\":52,\"grew\":104}"
+                    }
+                  ],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/test-results/posture-anchor-start-in-a--ae964-es-the-named-edge-stay-put--chromium-1440-fine/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/docs/release-11.0.0/critique-2/posture.spec.ts",
+                    "column": 76,
+                    "line": 206
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "936f72236cd7232f418f-9f02fbda75cc099d1730",
+          "file": "posture.spec.ts",
+          "line": 179,
+          "column": 5
+        },
+        {
+          "title": "kbd horizontal fresh: Tab to the summary, Enter expands it",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "active",
+                  "description": "{\"tag\":\"DIV\",\"label\":\"Expand dock\",\"inDock\":true}"
+                },
+                {
+                  "type": "class",
+                  "description": "\"fixed bottom-4 glass-dock horizontal shape-pill expanded pinned\""
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium-1440-fine",
+              "projectName": "chromium-1440-fine",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2698,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-05T19:36:00.210Z",
+                  "annotations": [
+                    {
+                      "type": "active",
+                      "description": "{\"tag\":\"DIV\",\"label\":\"Expand dock\",\"inDock\":true}"
+                    },
+                    {
+                      "type": "class",
+                      "description": "\"fixed bottom-4 glass-dock horizontal shape-pill expanded pinned\""
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "936f72236cd7232f418f-4b8a4d73e072dbf7e5ef",
+          "file": "posture.spec.ts",
+          "line": 213,
+          "column": 9
+        },
+        {
+          "title": "kbd horizontal after a hover-click-leave cycle: Tab to the summary, Enter expands it",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "active",
+                  "description": "{\"tag\":\"DIV\",\"label\":\"Expand dock\",\"inDock\":true}"
+                },
+                {
+                  "type": "class",
+                  "description": "\"fixed bottom-4 glass-dock horizontal shape-pill expanded pinned\""
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium-1440-fine",
+              "projectName": "chromium-1440-fine",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 8198,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-05T19:36:02.985Z",
+                  "annotations": [
+                    {
+                      "type": "active",
+                      "description": "{\"tag\":\"DIV\",\"label\":\"Expand dock\",\"inDock\":true}"
+                    },
+                    {
+                      "type": "class",
+                      "description": "\"fixed bottom-4 glass-dock horizontal shape-pill expanded pinned\""
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "936f72236cd7232f418f-f71f4b18667c1b232926",
+          "file": "posture.spec.ts",
+          "line": 213,
+          "column": 9
+        },
+        {
+          "title": "kbd vertical fresh: Tab to the summary, Enter expands it",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "active",
+                  "description": "{\"tag\":\"DIV\",\"label\":\"Expand dock\",\"inDock\":true}"
+                },
+                {
+                  "type": "class",
+                  "description": "\"fixed left-4 top-24 glass-dock vertical shape-pill expanded pinned\""
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium-1440-fine",
+              "projectName": "chromium-1440-fine",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2650,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-05T19:36:11.189Z",
+                  "annotations": [
+                    {
+                      "type": "active",
+                      "description": "{\"tag\":\"DIV\",\"label\":\"Expand dock\",\"inDock\":true}"
+                    },
+                    {
+                      "type": "class",
+                      "description": "\"fixed left-4 top-24 glass-dock vertical shape-pill expanded pinned\""
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "936f72236cd7232f418f-2ddf23401cc626862742",
+          "file": "posture.spec.ts",
+          "line": 213,
+          "column": 9
+        },
+        {
+          "title": "kbd vertical after a hover-click-leave cycle: Tab to the summary, Enter expands it",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "active",
+                  "description": "{\"tag\":\"DIV\",\"label\":\"Expand dock\",\"inDock\":true}"
+                },
+                {
+                  "type": "class",
+                  "description": "\"fixed left-4 top-24 glass-dock vertical shape-pill expanded pinned\""
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium-1440-fine",
+              "projectName": "chromium-1440-fine",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 8181,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-05T19:36:13.842Z",
+                  "annotations": [
+                    {
+                      "type": "active",
+                      "description": "{\"tag\":\"DIV\",\"label\":\"Expand dock\",\"inDock\":true}"
+                    },
+                    {
+                      "type": "class",
+                      "description": "\"fixed left-4 top-24 glass-dock vertical shape-pill expanded pinned\""
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "936f72236cd7232f418f-4ac6d4e6a298cbdee00d",
+          "file": "posture.spec.ts",
+          "line": 213,
+          "column": 9
+        },
+        {
+          "title": "horizontal page dock: collapsed → expanded → collapsed → pinned",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "expanded class",
+                  "description": "\"fixed bottom-4 glass-dock horizontal shape-pill expanded pinned\""
+                },
+                {
+                  "type": "expanded hits",
+                  "description": "[{\"seat\":\"Home\",\"w\":44,\"h\":44,\"hit\":true},{\"seat\":\"Search\",\"w\":44,\"h\":44,\"hit\":true},{\"seat\":\"Library\",\"w\":44,\"h\":44,\"hit\":true},{\"seat\":\"Settings\",\"w\":44,\"h\":44,\"hit\":true},{\"seat\":\"Profile\",\"w\":44,\"h\":44,\"hit\":true}]"
+                },
+                {
+                  "type": "left class",
+                  "description": "\"fixed bottom-4 glass-dock horizontal shape-pill expanded pinned\""
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium-390-coarse",
+              "projectName": "chromium-390-coarse",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 6337,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-05T19:36:22.255Z",
+                  "annotations": [
+                    {
+                      "type": "expanded class",
+                      "description": "\"fixed bottom-4 glass-dock horizontal shape-pill expanded pinned\""
+                    },
+                    {
+                      "type": "expanded hits",
+                      "description": "[{\"seat\":\"Home\",\"w\":44,\"h\":44,\"hit\":true},{\"seat\":\"Search\",\"w\":44,\"h\":44,\"hit\":true},{\"seat\":\"Library\",\"w\":44,\"h\":44,\"hit\":true},{\"seat\":\"Settings\",\"w\":44,\"h\":44,\"hit\":true},{\"seat\":\"Profile\",\"w\":44,\"h\":44,\"hit\":true}]"
+                    },
+                    {
+                      "type": "left class",
+                      "description": "\"fixed bottom-4 glass-dock horizontal shape-pill expanded pinned\""
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "936f72236cd7232f418f-c91ac3ae8789c8092692",
+          "file": "posture.spec.ts",
+          "line": 63,
+          "column": 5
+        },
+        {
+          "title": "horizontal page dock collapse=open: rest posture works",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "class",
+                  "description": "\"fixed bottom-4 glass-dock horizontal shape-pill expanded\""
+                },
+                {
+                  "type": "rest hits",
+                  "description": "[{\"seat\":\"Home\",\"w\":44,\"h\":44,\"hit\":true},{\"seat\":\"Search\",\"w\":44,\"h\":44,\"hit\":true},{\"seat\":\"Library\",\"w\":44,\"h\":44,\"hit\":true},{\"seat\":\"Settings\",\"w\":44,\"h\":44,\"hit\":true},{\"seat\":\"Profile\",\"w\":44,\"h\":44,\"hit\":true}]"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium-390-coarse",
+              "projectName": "chromium-390-coarse",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1396,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-05T19:36:28.666Z",
+                  "annotations": [
+                    {
+                      "type": "class",
+                      "description": "\"fixed bottom-4 glass-dock horizontal shape-pill expanded\""
+                    },
+                    {
+                      "type": "rest hits",
+                      "description": "[{\"seat\":\"Home\",\"w\":44,\"h\":44,\"hit\":true},{\"seat\":\"Search\",\"w\":44,\"h\":44,\"hit\":true},{\"seat\":\"Library\",\"w\":44,\"h\":44,\"hit\":true},{\"seat\":\"Settings\",\"w\":44,\"h\":44,\"hit\":true},{\"seat\":\"Profile\",\"w\":44,\"h\":44,\"hit\":true}]"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "936f72236cd7232f418f-82796e6498384858b0d7",
+          "file": "posture.spec.ts",
+          "line": 95,
+          "column": 9
+        },
+        {
+          "title": "horizontal page dock collapse=false: rest posture works",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "class",
+                  "description": "\"fixed bottom-4 glass-dock horizontal shape-pill expanded pinned always-expanded\""
+                },
+                {
+                  "type": "rest hits",
+                  "description": "[{\"seat\":\"Home\",\"w\":44,\"h\":44,\"hit\":true},{\"seat\":\"Search\",\"w\":44,\"h\":44,\"hit\":true},{\"seat\":\"Library\",\"w\":44,\"h\":44,\"hit\":true},{\"seat\":\"Settings\",\"w\":44,\"h\":44,\"hit\":true},{\"seat\":\"Profile\",\"w\":44,\"h\":44,\"hit\":true}]"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium-390-coarse",
+              "projectName": "chromium-390-coarse",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1404,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-05T19:36:30.068Z",
+                  "annotations": [
+                    {
+                      "type": "class",
+                      "description": "\"fixed bottom-4 glass-dock horizontal shape-pill expanded pinned always-expanded\""
+                    },
+                    {
+                      "type": "rest hits",
+                      "description": "[{\"seat\":\"Home\",\"w\":44,\"h\":44,\"hit\":true},{\"seat\":\"Search\",\"w\":44,\"h\":44,\"hit\":true},{\"seat\":\"Library\",\"w\":44,\"h\":44,\"hit\":true},{\"seat\":\"Settings\",\"w\":44,\"h\":44,\"hit\":true},{\"seat\":\"Profile\",\"w\":44,\"h\":44,\"hit\":true}]"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "936f72236cd7232f418f-acf2d613e992f3466b2d",
+          "file": "posture.spec.ts",
+          "line": 95,
+          "column": 9
+        },
+        {
+          "title": "vertical page dock: collapsed → expanded → collapsed → pinned",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "expanded class",
+                  "description": "\"fixed left-4 top-24 glass-dock vertical shape-pill expanded pinned\""
+                },
+                {
+                  "type": "expanded hits",
+                  "description": "[{\"seat\":\"Home\",\"w\":44,\"h\":44,\"hit\":true},{\"seat\":\"Search\",\"w\":44,\"h\":44,\"hit\":true},{\"seat\":\"Library\",\"w\":44,\"h\":44,\"hit\":true},{\"seat\":\"Settings\",\"w\":44,\"h\":44,\"hit\":true},{\"seat\":\"Profile\",\"w\":44,\"h\":44,\"hit\":true}]"
+                },
+                {
+                  "type": "left class",
+                  "description": "\"fixed left-4 top-24 glass-dock vertical shape-pill collapsed\""
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium-390-coarse",
+              "projectName": "chromium-390-coarse",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 6359,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-05T19:36:31.477Z",
+                  "annotations": [
+                    {
+                      "type": "expanded class",
+                      "description": "\"fixed left-4 top-24 glass-dock vertical shape-pill expanded pinned\""
+                    },
+                    {
+                      "type": "expanded hits",
+                      "description": "[{\"seat\":\"Home\",\"w\":44,\"h\":44,\"hit\":true},{\"seat\":\"Search\",\"w\":44,\"h\":44,\"hit\":true},{\"seat\":\"Library\",\"w\":44,\"h\":44,\"hit\":true},{\"seat\":\"Settings\",\"w\":44,\"h\":44,\"hit\":true},{\"seat\":\"Profile\",\"w\":44,\"h\":44,\"hit\":true}]"
+                    },
+                    {
+                      "type": "left class",
+                      "description": "\"fixed left-4 top-24 glass-dock vertical shape-pill collapsed\""
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "936f72236cd7232f418f-47eb9c254aca16d9ba7a",
+          "file": "posture.spec.ts",
+          "line": 63,
+          "column": 5
+        },
+        {
+          "title": "vertical page dock collapse=open: rest posture works",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "class",
+                  "description": "\"fixed left-4 top-24 glass-dock vertical shape-pill expanded\""
+                },
+                {
+                  "type": "rest hits",
+                  "description": "[{\"seat\":\"Home\",\"w\":44,\"h\":44,\"hit\":true},{\"seat\":\"Search\",\"w\":44,\"h\":44,\"hit\":true},{\"seat\":\"Library\",\"w\":44,\"h\":44,\"hit\":true},{\"seat\":\"Settings\",\"w\":44,\"h\":44,\"hit\":true},{\"seat\":\"Profile\",\"w\":44,\"h\":44,\"hit\":true}]"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium-390-coarse",
+              "projectName": "chromium-390-coarse",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1413,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-05T19:36:37.841Z",
+                  "annotations": [
+                    {
+                      "type": "class",
+                      "description": "\"fixed left-4 top-24 glass-dock vertical shape-pill expanded\""
+                    },
+                    {
+                      "type": "rest hits",
+                      "description": "[{\"seat\":\"Home\",\"w\":44,\"h\":44,\"hit\":true},{\"seat\":\"Search\",\"w\":44,\"h\":44,\"hit\":true},{\"seat\":\"Library\",\"w\":44,\"h\":44,\"hit\":true},{\"seat\":\"Settings\",\"w\":44,\"h\":44,\"hit\":true},{\"seat\":\"Profile\",\"w\":44,\"h\":44,\"hit\":true}]"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "936f72236cd7232f418f-3ce5060fd1cd4914dfb9",
+          "file": "posture.spec.ts",
+          "line": 95,
+          "column": 9
+        },
+        {
+          "title": "vertical page dock collapse=false: rest posture works",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "class",
+                  "description": "\"fixed left-4 top-24 glass-dock vertical shape-pill expanded pinned always-expanded\""
+                },
+                {
+                  "type": "rest hits",
+                  "description": "[{\"seat\":\"Home\",\"w\":44,\"h\":44,\"hit\":true},{\"seat\":\"Search\",\"w\":44,\"h\":44,\"hit\":true},{\"seat\":\"Library\",\"w\":44,\"h\":44,\"hit\":true},{\"seat\":\"Settings\",\"w\":44,\"h\":44,\"hit\":true},{\"seat\":\"Profile\",\"w\":44,\"h\":44,\"hit\":true}]"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium-390-coarse",
+              "projectName": "chromium-390-coarse",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1402,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-05T19:36:39.260Z",
+                  "annotations": [
+                    {
+                      "type": "class",
+                      "description": "\"fixed left-4 top-24 glass-dock vertical shape-pill expanded pinned always-expanded\""
+                    },
+                    {
+                      "type": "rest hits",
+                      "description": "[{\"seat\":\"Home\",\"w\":44,\"h\":44,\"hit\":true},{\"seat\":\"Search\",\"w\":44,\"h\":44,\"hit\":true},{\"seat\":\"Library\",\"w\":44,\"h\":44,\"hit\":true},{\"seat\":\"Settings\",\"w\":44,\"h\":44,\"hit\":true},{\"seat\":\"Profile\",\"w\":44,\"h\":44,\"hit\":true}]"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "936f72236cd7232f418f-7e6bdb2d3533128c0c7d",
+          "file": "posture.spec.ts",
+          "line": 95,
+          "column": 9
+        },
+        {
+          "title": "figure dock (atlas lane): press opens, Escape / press outside / focus exit close; end edge holds",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "rest",
+                  "description": "{\"ctl\":{\"left\":122,\"right\":318,\"top\":24,\"bottom\":96,\"width\":196,\"height\":72},\"rest\":{\"left\":258,\"right\":318,\"top\":24,\"bottom\":96,\"width\":60,\"height\":72}}"
+                },
+                {
+                  "type": "open",
+                  "description": "{\"open1\":{\"left\":146,\"right\":318,\"top\":24,\"bottom\":96,\"width\":172,\"height\":72},\"drift\":0}"
+                },
+                {
+                  "type": "figure hits",
+                  "description": "[{\"seat\":\"Options\",\"w\":44,\"h\":44,\"hit\":true},{\"seat\":\"Download\",\"w\":44,\"h\":44,\"hit\":true},{\"seat\":\"Enlarge\",\"w\":44,\"h\":44,\"hit\":true}]"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium-390-coarse",
+              "projectName": "chromium-390-coarse",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4426,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-05T19:36:40.666Z",
+                  "annotations": [
+                    {
+                      "type": "rest",
+                      "description": "{\"ctl\":{\"left\":122,\"right\":318,\"top\":24,\"bottom\":96,\"width\":196,\"height\":72},\"rest\":{\"left\":258,\"right\":318,\"top\":24,\"bottom\":96,\"width\":60,\"height\":72}}"
+                    },
+                    {
+                      "type": "open",
+                      "description": "{\"open1\":{\"left\":146,\"right\":318,\"top\":24,\"bottom\":96,\"width\":172,\"height\":72},\"drift\":0}"
+                    },
+                    {
+                      "type": "figure hits",
+                      "description": "[{\"seat\":\"Options\",\"w\":44,\"h\":44,\"hit\":true},{\"seat\":\"Download\",\"w\":44,\"h\":44,\"hit\":true},{\"seat\":\"Enlarge\",\"w\":44,\"h\":44,\"hit\":true}]"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "936f72236cd7232f418f-044b1801a9c78b7d31a1",
+          "file": "posture.spec.ts",
+          "line": 107,
+          "column": 1
+        },
+        {
+          "title": "anchor=end in a free row: does the named edge stay put?",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "row",
+                  "description": "{\"rest\":{\"left\":141,\"right\":201,\"top\":24,\"bottom\":84,\"width\":60,\"height\":60},\"after\":{\"left\":85,\"right\":257,\"top\":24,\"bottom\":84,\"width\":172,\"height\":60},\"drift\":56,\"grew\":112}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium-390-coarse",
+              "projectName": "chromium-390-coarse",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 1567,
+                  "error": {
+                    "message": "Error: the named end edge drift through the expand\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m2\u001b[39m\nReceived:   \u001b[31m56\u001b[39m",
+                    "stack": "Error: the named end edge drift through the expand\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m2\u001b[39m\nReceived:   \u001b[31m56\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/docs/release-11.0.0/critique-2/posture.spec.ts:206:76",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/docs/release-11.0.0/critique-2/posture.spec.ts",
+                      "column": 76,
+                      "line": 206
+                    },
+                    "snippet": "  204 |         note(\"row\", { rest, after, drift, grew: after.width - rest.width });\n  205 |         expect(after.width, \"expanded\").toBeGreaterThan(rest.width + 40);\n> 206 |         expect(drift, `the named ${anchor} edge drift through the expand`).toBeLessThan(2);\n      |                                                                            ^\n  207 |     });\n  208 | }\n  209 |"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/docs/release-11.0.0/critique-2/posture.spec.ts",
+                        "column": 76,
+                        "line": 206
+                      },
+                      "message": "Error: the named end edge drift through the expand\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m2\u001b[39m\nReceived:   \u001b[31m56\u001b[39m\n\n  204 |         note(\"row\", { rest, after, drift, grew: after.width - rest.width });\n  205 |         expect(after.width, \"expanded\").toBeGreaterThan(rest.width + 40);\n> 206 |         expect(drift, `the named ${anchor} edge drift through the expand`).toBeLessThan(2);\n      |                                                                            ^\n  207 |     });\n  208 | }\n  209 |\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/docs/release-11.0.0/critique-2/posture.spec.ts:206:76"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-05T19:36:45.096Z",
+                  "annotations": [
+                    {
+                      "type": "row",
+                      "description": "{\"rest\":{\"left\":141,\"right\":201,\"top\":24,\"bottom\":84,\"width\":60,\"height\":60},\"after\":{\"left\":85,\"right\":257,\"top\":24,\"bottom\":84,\"width\":172,\"height\":60},\"drift\":56,\"grew\":112}"
+                    }
+                  ],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/test-results/posture-anchor-end-in-a-fr-965ef-es-the-named-edge-stay-put--chromium-390-coarse/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/docs/release-11.0.0/critique-2/posture.spec.ts",
+                    "column": 76,
+                    "line": 206
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "936f72236cd7232f418f-167d80635d51c9cecef4",
+          "file": "posture.spec.ts",
+          "line": 179,
+          "column": 5
+        },
+        {
+          "title": "anchor=start in a free row: does the named edge stay put?",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "row",
+                  "description": "{\"rest\":{\"left\":141,\"right\":201,\"top\":24,\"bottom\":84,\"width\":60,\"height\":60},\"after\":{\"left\":85,\"right\":257,\"top\":24,\"bottom\":84,\"width\":172,\"height\":60},\"drift\":56,\"grew\":112}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium-390-coarse",
+              "projectName": "chromium-390-coarse",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 1564,
+                  "error": {
+                    "message": "Error: the named start edge drift through the expand\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m2\u001b[39m\nReceived:   \u001b[31m56\u001b[39m",
+                    "stack": "Error: the named start edge drift through the expand\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m2\u001b[39m\nReceived:   \u001b[31m56\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/docs/release-11.0.0/critique-2/posture.spec.ts:206:76",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/docs/release-11.0.0/critique-2/posture.spec.ts",
+                      "column": 76,
+                      "line": 206
+                    },
+                    "snippet": "  204 |         note(\"row\", { rest, after, drift, grew: after.width - rest.width });\n  205 |         expect(after.width, \"expanded\").toBeGreaterThan(rest.width + 40);\n> 206 |         expect(drift, `the named ${anchor} edge drift through the expand`).toBeLessThan(2);\n      |                                                                            ^\n  207 |     });\n  208 | }\n  209 |"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/docs/release-11.0.0/critique-2/posture.spec.ts",
+                        "column": 76,
+                        "line": 206
+                      },
+                      "message": "Error: the named start edge drift through the expand\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m2\u001b[39m\nReceived:   \u001b[31m56\u001b[39m\n\n  204 |         note(\"row\", { rest, after, drift, grew: after.width - rest.width });\n  205 |         expect(after.width, \"expanded\").toBeGreaterThan(rest.width + 40);\n> 206 |         expect(drift, `the named ${anchor} edge drift through the expand`).toBeLessThan(2);\n      |                                                                            ^\n  207 |     });\n  208 | }\n  209 |\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/docs/release-11.0.0/critique-2/posture.spec.ts:206:76"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-05T19:36:47.033Z",
+                  "annotations": [
+                    {
+                      "type": "row",
+                      "description": "{\"rest\":{\"left\":141,\"right\":201,\"top\":24,\"bottom\":84,\"width\":60,\"height\":60},\"after\":{\"left\":85,\"right\":257,\"top\":24,\"bottom\":84,\"width\":172,\"height\":60},\"drift\":56,\"grew\":112}"
+                    }
+                  ],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/test-results/posture-anchor-start-in-a--ae964-es-the-named-edge-stay-put--chromium-390-coarse/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/docs/release-11.0.0/critique-2/posture.spec.ts",
+                    "column": 76,
+                    "line": 206
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "936f72236cd7232f418f-8409aca6c14d7d5cdb32",
+          "file": "posture.spec.ts",
+          "line": 179,
+          "column": 5
+        },
+        {
+          "title": "kbd horizontal fresh: Tab to the summary, Enter expands it",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "keyboard cell: fine pointer only",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/docs/release-11.0.0/critique-2/posture.spec.ts",
+                    "line": 214,
+                    "column": 18
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "chromium-390-coarse",
+              "projectName": "chromium-390-coarse",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 45,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-05T19:36:48.985Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "keyboard cell: fine pointer only",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/docs/release-11.0.0/critique-2/posture.spec.ts",
+                        "line": 214,
+                        "column": 18
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "936f72236cd7232f418f-d8e0bbbee682f1093d3a",
+          "file": "posture.spec.ts",
+          "line": 213,
+          "column": 9
+        },
+        {
+          "title": "kbd horizontal after a hover-click-leave cycle: Tab to the summary, Enter expands it",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "keyboard cell: fine pointer only",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/docs/release-11.0.0/critique-2/posture.spec.ts",
+                    "line": 214,
+                    "column": 18
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "chromium-390-coarse",
+              "projectName": "chromium-390-coarse",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 36,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-05T19:36:49.130Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "keyboard cell: fine pointer only",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/docs/release-11.0.0/critique-2/posture.spec.ts",
+                        "line": 214,
+                        "column": 18
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "936f72236cd7232f418f-6b2874915a7bdf0bf758",
+          "file": "posture.spec.ts",
+          "line": 213,
+          "column": 9
+        },
+        {
+          "title": "kbd vertical fresh: Tab to the summary, Enter expands it",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "keyboard cell: fine pointer only",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/docs/release-11.0.0/critique-2/posture.spec.ts",
+                    "line": 214,
+                    "column": 18
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "chromium-390-coarse",
+              "projectName": "chromium-390-coarse",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 36,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-05T19:36:49.172Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "keyboard cell: fine pointer only",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/docs/release-11.0.0/critique-2/posture.spec.ts",
+                        "line": 214,
+                        "column": 18
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "936f72236cd7232f418f-ccd6d6686d6e8364a649",
+          "file": "posture.spec.ts",
+          "line": 213,
+          "column": 9
+        },
+        {
+          "title": "kbd vertical after a hover-click-leave cycle: Tab to the summary, Enter expands it",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "keyboard cell: fine pointer only",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/docs/release-11.0.0/critique-2/posture.spec.ts",
+                    "line": 214,
+                    "column": 18
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "chromium-390-coarse",
+              "projectName": "chromium-390-coarse",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 35,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-05T19:36:49.213Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "keyboard cell: fine pointer only",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/docs/release-11.0.0/critique-2/posture.spec.ts",
+                        "line": 214,
+                        "column": 18
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "936f72236cd7232f418f-22a8ad06d3a576c296be",
+          "file": "posture.spec.ts",
+          "line": 213,
+          "column": 9
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-05T19:35:26.920Z",
+    "duration": 82386.449,
+    "expected": 18,
+    "skipped": 4,
+    "unexpected": 4,
+    "flaky": 0
+  }
+}
