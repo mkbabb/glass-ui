@@ -521,3 +521,5 @@ process.exitCode = bad.length ? 1 : 0;
 
 At `e64da115` it prints the 19 lines of H1-G23's HEAD reading and `plate reads 27, outside the plate surfaces 19`, exit 1.
 
+
+**Addendum (2026-11-04), INBOUND O-146 R-2 (value O-98 R-2, re-asked).** The card's boundary against the page clears 3:1 non-text in light and dark (a fill step or an edge), with no identity hue moved. GAB-1 (plate against page) stays as ruled. It moves every consumer's surface, so it lands here, on the painted composite, and not in 10.2.0. Gate: fourier's HLG-37 (`--card` against `--background`, 1.000:1 today) clears 3:1 ×2 on the 11.0.0 pin.

@@ -192,3 +192,6 @@ out.load2 = load(); fs.writeFileSync(`${CAP}/e5.json`, JSON.stringify(out, null,
 const fails = out.rows.filter((r) => !r.pass).length; console.log(`e5: ${out.rows.length} rows, ${fails} FAIL · load ${out.load} → ${out.load2}`);
 process.exitCode = fails ? 1 : 0;
 ```
+
+## Addendum (2026-11-04): INBOUND O-90 / O-145, pulled into 10.2.0
+O-90 TOAST-FOCUS-PROXY lands in 10.2.0, ahead of this wave, by the delegate's accepted placement (O-103): no focusable node sits inside an aria-hidden subtree. The head and tail proxies are reka's `Toast/FocusProxy` (`VisuallyHidden`, `tabindex="0"`); the cure is glass's own Toaster render over them, or a reka bump that fixes them, never an axe exclusion. Gate: axe `aria-hidden-focus` reads 0 on a bare Toaster with no toast and with one toast open, F6 and Tab still reach the viewport, and fourier's admin keystones (its producer-held rows 4-7) run GREEN ×2.
