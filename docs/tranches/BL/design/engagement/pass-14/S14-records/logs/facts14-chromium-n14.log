@@ -1,0 +1,8 @@
+# facts14 chromium · 2026-11-05T01:36:27.270Z · load 18.67/17.92/18.51
+# browser 149.0.7827.55
+## N14 a paused translate probe or glide on the last box of a scroller at its end, toward the start: does the offset clamp · load 18.67/17.92/18.51
+probe -40px: scrollTop 420 → during 420 → after 420
+probe 40px: scrollTop 420 → during 420 → after 420
+glide first keyframe -40px: scrollTop 420 → at start 420 → after the glide 420
+## end N14 · load 18.67/17.92/18.51
+# end · load 18.67/17.92/18.51

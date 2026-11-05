@@ -1,0 +1,14 @@
+[guarded] waiting for headroom (load 42 > 36)
+# facts14 chromium · 2026-11-05T00:42:56.068Z · load 34.43/32.81/25.35
+# browser 149.0.7827.55
+## N12 the offset chain: offsetParent under a transformed card, transforms ignored, scroll, sub-pixel · load 34.43/32.81/25.35
+static card: offsetParent chain h>g>BODY · sum 110,131 · after scrollTop 50 110,131 · rect 110.250,81.250 · h.offsetParent g
+rotate 10deg card: offsetParent chain h>c>g>BODY · sum 110,132 · after scrollTop 50 110,132 · rect 110.267,30.856 · h.offsetParent c
+transform perspective card: offsetParent chain h>c>g>BODY · sum 110,132 · after scrollTop 50 110,132 · rect 97.996,80.056 · h.offsetParent c
+translate card: offsetParent chain h>c>g>BODY · sum 110,132 · after scrollTop 50 110,132 · rect 140.250,93.250 · h.offsetParent c
+positioned card: offsetParent chain h>c>g>BODY · sum 110,132 · after scrollTop 50 110,132 · rect 110.250,81.250 · h.offsetParent c
+## end N12 · load 34.43/32.81/25.35
+## N13 a write in the resize step is laid out in the same rendering update (a second observation round before the next frame) · load 34.43/32.81/25.35
+f1:p:10 · f1:c:10 · f3:p:10 · f3:wrote c 37px in the resize step · f3:c:37 · f4:p:37
+## end N13 · load 34.43/32.81/25.35
+# end · load 34.43/32.81/25.35

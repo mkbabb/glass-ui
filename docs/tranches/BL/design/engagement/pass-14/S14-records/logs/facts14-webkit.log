@@ -1,0 +1,211 @@
+[guarded] waiting for the 'webkit' lock
+# facts14 webkit · 2026-11-05T03:27:16.749Z · load 23.30/21.60/20.46
+# browser 26.5
+## N1 layout read by paused replace animations, per carrier kind · load 23.30/21.60/20.46
+control (no carrier) host centre 230.516,170.500
+none: painted 230.516,170.500 · neutralized 230.516,170.500 · |neutralized − control| 0.000 EQUAL · restored 0.000 · records 0 · anims 0→0 · times →
+rotate 10deg (sheet): painted 241.599,162.811 · neutralized 230.516,170.500 · |neutralized − control| 0.000 EQUAL · restored 0.000 · records 0 · anims 0→0 · times →
+inline translate: painted 260.516,183.000 · neutralized 230.516,170.500 · |neutralized − control| 0.000 EQUAL · restored 0.000 · records 0 · anims 0→0 · times →
+perspective(400px) rotateX(40deg) origin 50% 0: painted 225.187,162.261 · neutralized 230.516,170.500 · |neutralized − control| 0.000 EQUAL · restored 0.000 · records 0 · anims 0→0 · times →
+css transition scale mid-flight: painted 232.010,172.297 · neutralized 230.516,170.500 · |neutralized − control| 0.000 EQUAL · restored 0.000 · records 0 · anims 1→1 · times 302.000→302.000
+@keyframes translate running: painted 230.516,136.500 · neutralized 230.516,170.500 · |neutralized − control| 0.000 EQUAL · restored 0.020 · records 0 · anims 1→1 · times 300.000→300.000
+waapi add translate running: painted 237.866,170.500 · neutralized 230.516,170.500 · |neutralized − control| 0.000 EQUAL · restored 0.000 · records 0 · anims 1→1 · times 294.000→294.000
+nested: g rotate 15deg, c scale 0.8: painted 262.868,167.034 · neutralized 230.516,170.500 · |neutralized − control| 0.000 EQUAL · restored 0.000 · records 0 · anims 0→0 · times →
+host own scale 1.06 + add translate (a glide): painted 242.523,177.500 · neutralized 230.516,170.500 · |neutralized − control| 0.000 EQUAL · restored 0.000 · records 0 · anims 1→1 · times 0.000→0.000
+!important sheet transform: painted 241.599,162.811 · neutralized 241.599,162.811 · |neutralized − control| 13.490 DIFFERS · restored 0.000 · records 0 · anims 0→0 · times →
+inline !important rotate: painted 241.599,162.811 · neutralized 241.599,162.811 · |neutralized − control| 13.490 DIFFERS · restored 0.000 · records 0 · anims 0→0 · times →
+## end N1 · load 23.30/21.60/20.46
+## N1c the layout read inside a scroller at its end whose overflow a transform extends · load 23.30/21.60/20.46
+translate 0 300px · overflow-anchor auto: scrollTop 800 (scrollHeight 1000) → during 500 (700) → after cancel 500 (1000) → two frames later 500 · scroll events 1 · MOVED -300
+translate 0 300px · overflow-anchor none: scrollTop 800 (scrollHeight 1000) → during 500 (700) → after cancel 500 (1000) → two frames later 500 · scroll events 1 · MOVED -300
+scale 2 origin top · overflow-anchor auto: scrollTop 600 (scrollHeight 800) → during 500 (700) → after cancel 500 (800) → two frames later 500 · scroll events 1 · MOVED -100
+scale 2 origin top · overflow-anchor none: scrollTop 600 (scrollHeight 800) → during 500 (700) → after cancel 500 (800) → two frames later 500 · scroll events 1 · MOVED -100
+rotate 30deg · overflow-anchor auto: scrollTop 568 (scrollHeight 768) → during 500 (700) → after cancel 500 (768) → two frames later 500 · scroll events 1 · MOVED -68
+rotate 30deg · overflow-anchor none: scrollTop 568 (scrollHeight 768) → during 500 (700) → after cancel 500 (768) → two frames later 500 · scroll events 1 · MOVED -68
+## end N1c · load 23.30/21.60/20.46
+## N2 the resize step against rAF callbacks before and after the stage's, and moves with no record · load 23.30/21.60/20.46
+order (first 40): A1 S1 B1 RO1 A2 S2 B2 RO2 A3 S3 B3 RO3 A4 S4 B4 RO4 A5 S5 B5 RO5 A6 S6 B6 RO6 A7 S7 B7 RO7 A8 S8 B8 RO8 A9 S9 B9 RO9 A10 S10 B10 RO10
+RO after every rAF callback of its frame: true
+frame 4: h moved before S (10.00); marker moved before S (10.00)
+frame 7: h moved between S and RO (25.00); marker moved between S and RO (25.00)
+frame 11: marker moved before S (60.00)
+frame 15: marker moved before S (40.00)
+frame 19: marker moved before S (40.00)
+frame 23: marker moved before S (30.00)
+## end N2 · load 23.30/21.60/20.46
+## N3 scroll offsets, anchoring and the clamp at the resize step · load 23.30/21.60/20.46
+scrollTo(0, 100.5) → scrollTop 100
+scrollTop = 33.25 → 33
+insert above (anchoring): before top 80 scrollTop 420 scrollHeight 820 · at the resize step top 80 scrollTop 460 scrollHeight 860
+remove below (clamp): before top -20 scrollTop 520 scrollHeight 820 · at the resize step top 20 scrollTop 480 scrollHeight 780
+## end N3 · load 22.15/21.39/20.39
+## N4 a declared registered read under transition: all, at load and after a runtime token change · load 22.15/21.39/20.39
+transition: none: load 0.21s (inline write 0.21s) · +60ms 0.21s · token → 0.5s: +0 0.5s (inline 0.5s) · +100 0.5s · +500 0.5s
+transition: all 300ms linear: load 0.21s (inline write 0.21s) · +60ms 0.21s · token → 0.5s: +0 0.21s (inline 0.21s) · +100 0.290233s · +500 0.5s
+transition-property: all; transition-duration: 150ms: load 0.21s (inline write 0.21s) · +60ms 0.21s · token → 0.5s: +0 0.21s (inline 0.5s) · +100 0.458193s · +500 0.5s
+## end N4 · load 22.15/21.39/20.39
+## N5 the union syntax with an ident initial: accepted, math, refusal · load 22.15/21.39/20.39
+0.21s: union "0.21s" · plain <time> "0.21s"
+210ms: union "0.21s" · plain <time> "0.21s"
+calc(0.1s + 110ms): union "0.21s" · plain <time> "0.21s"
+0.1s + 110ms: union "stage-unset" · plain <time> "-1s"
+-0.21s: union "-0.21s" · plain <time> "-0.21s"
+calc(0.21s * -1): union "-0.21s" · plain <time> "-0.21s"
+0s: union "0s" · plain <time> "0s"
+nonsense: union "stage-unset" · plain <time> "-1s"
+1: union "stage-unset" · plain <time> "-1s"
+initial: union "stage-unset" · plain <time> "-1s"
+<number> | ident, calc(1 + (1 + 0.06 - 1) * 1): "1.06" · <length> | ident of an unset var: "stage-unset"
+## end N5 · load 22.15/21.39/20.39
+## N6 the glide's current offset from getComputedTiming().progress under the dock easing · load 22.15/21.39/20.39
+t 0: progress 0.00000 · 40·(1−p) 40.000 · painted left 40.000 · computed translate 40
+t 50: progress 0.02351 · 40·(1−p) 39.060 · painted left 39.060 · computed translate 39.059776
+t 100: progress 0.07841 · 40·(1−p) 36.864 · painted left 36.864 · computed translate 36.863686
+t 250: progress 0.31934 · 40·(1−p) 27.226 · painted left 27.226 · computed translate 27.226381
+t 400: progress 0.56383 · 40·(1−p) 17.447 · painted left 17.447 · computed translate 17.446627
+t 600: progress 0.79598 · 40·(1−p) 8.161 · painted left 8.161 · computed translate 8.160974
+t 800: progress 0.92100 · 40·(1−p) 3.160 · painted left 3.160 · computed translate 3.160153
+t 950: progress 0.96677 · 40·(1−p) 1.329 · painted left 1.329 · computed translate 1.329176
+t 999: progress 0.99869 · 40·(1−p) 0.053 · painted left 0.053 · computed translate 0.052582
+worst |40·(1−progress) − painted| 0.0000 px
+## end N6 · load 22.15/21.39/20.39
+## N7 the consumer's expression for --scale-engage declared as the read, against the consumer's scale · load 22.15/21.39/20.39
+1.06: consumer scale "1.06" · declared read of the consumer's expression "1.06" · read of the bare token "1.06"
+calc(1.06): consumer scale "1.06" · declared read of the consumer's expression "1.06" · read of the bare token "1.06"
+1 + 0.06: consumer scale "1.06" · declared read of the consumer's expression "1.06" · read of the bare token "stage-unset"
+2 * 0.53: consumer scale "1.06" · declared read of the consumer's expression "1.06" · read of the bare token "stage-unset"
+106%: consumer scale "none" · declared read of the consumer's expression "stage-unset" · read of the bare token "stage-unset"
+abs(-1.06): consumer scale "1.06" · declared read of the consumer's expression "1.06" · read of the bare token "1.06"
+nonsense: consumer scale "none" · declared read of the consumer's expression "stage-unset" · read of the bare token "stage-unset"
+0.95: consumer scale "0.95" · declared read of the consumer's expression "0.95" · read of the bare token "0.95"
+## end N7 · load 22.15/21.39/20.39
+## N9 a root-substituted clock, an ancestor override, tempo 0 and -1 · load 22.15/21.39/20.39
+root --t 1, ancestor {}: host transition-duration 0.21s · declared read of var(--d) "0.21s" · read of var(--s) 0.21s × host --t 1
+root --t 1, ancestor {--s: 0.5s; --t: 2;}: host transition-duration 0.21s · declared read of var(--d) "0.21s" · read of var(--s) 0.5s × host --t 2
+root --t 0, ancestor {}: host transition-duration 0s · declared read of var(--d) "0s" · read of var(--s) 0.21s × host --t 0
+root --t -1, ancestor {}: host transition-duration 0s · declared read of var(--d) "-0.21s" · read of var(--s) 0.21s × host --t -1
+root --t 2, ancestor {--t: 1;}: host transition-duration 0.42s · declared read of var(--d) "0.42s" · read of var(--s) 0.21s × host --t 1
+## end N9 · load 22.15/21.39/20.39
+## N11 a step outside and inside a projective carrier: Newton per iteration against the chord step · load 22.15/21.39/20.39
+P 200 θ 25 M 40 host -150: outside step 40.00 px · chord 0.465 · Newton k1..4 3.082 / 0.027 / 0.000 / 0.000 · inside −Δ 0.000
+P 200 θ 25 M 40 host 0: outside step 40.00 px · chord 0.212 · Newton k1..4 2.098 / 0.014 / 0.000 / 0.000 · inside −Δ 0.000
+P 200 θ 25 M 40 host 150: outside step 40.00 px · chord 0.063 · Newton k1..4 1.214 / 0.012 / 0.000 / 0.000 · inside −Δ 0.000
+P 200 θ 25 M 120 host -150: outside step 120.00 px · chord 8.936 · Newton k1..4 23.655 / 1.370 / 0.008 / 0.000 · inside −Δ 0.000
+P 200 θ 25 M 120 host 0: outside step 120.00 px · chord 4.347 · Newton k1..4 16.398 / 0.442 / 0.002 / 0.000 · inside −Δ 0.000
+P 200 θ 25 M 120 host 150: outside step 120.00 px · chord 1.092 · Newton k1..4 8.381 / 0.113 / 0.001 / 0.000 · inside −Δ 0.000
+P 200 θ 25 M 200 host -150: outside step 200.00 px · chord 30.861 · Newton k1..4 57.911 / 8.260 / 0.231 / 0.001 · inside −Δ 0.000
+P 200 θ 25 M 200 host 0: outside step 200.00 px · chord 16.333 · Newton k1..4 41.416 / 2.708 / 0.020 / 0.000 · inside −Δ 0.000
+P 200 θ 25 M 200 host 150: outside step 200.00 px · chord 4.287 · Newton k1..4 21.242 / 0.443 / 0.004 / 0.000 · inside −Δ 0.000
+P 200 θ 40 M 40 host -150: outside step 40.00 px · chord 1.148 · Newton k1..4 4.863 / 0.105 / 0.000 / 0.000 · inside −Δ 0.000
+P 200 θ 40 M 40 host 0: outside step 40.00 px · chord 0.265 · Newton k1..4 2.408 / 0.032 / 0.000 / 0.000 · inside −Δ 0.000
+P 200 θ 40 M 40 host 150: outside step 40.00 px · chord 0.169 · Newton k1..4 2.093 / 0.047 / 0.001 / 0.000 · inside −Δ 0.000
+P 200 θ 40 M 120 host -150: outside step 120.00 px · chord 18.444 · Newton k1..4 34.707 / 4.940 / 0.141 / 0.000 · inside −Δ 0.000
+P 200 θ 40 M 120 host 0: outside step 120.00 px · chord 4.841 · Newton k1..4 17.493 / 0.609 / 0.006 / 0.000 · inside −Δ 0.000
+P 200 θ 40 M 120 host 150: outside step 120.00 px · chord 2.867 · Newton k1..4 13.953 / 0.230 / 0.006 / 0.000 · inside −Δ 0.000
+P 200 θ 40 M 200 host -150: outside step 200.00 px · chord 55.777 · Newton k1..4 80.620 / 25.140 / 4.282 / 0.177 · inside −Δ 0.000
+P 200 θ 40 M 200 host 0: outside step 200.00 px · chord 17.646 · Newton k1..4 43.391 / 3.250 / 0.044 / 0.000 · inside −Δ 0.000
+P 200 θ 40 M 200 host 150: outside step 200.00 px · chord 12.898 · Newton k1..4 37.784 / 0.185 / 0.004 / 0.000 · inside −Δ 0.000
+P 200 θ 60 M 40 host -150: outside step 40.00 px · chord 3.215 · Newton k1..4 8.233 / 0.538 / 0.005 / 0.000 · inside −Δ 0.000
+P 200 θ 60 M 40 host 0: outside step 40.00 px · chord 1.083 · Newton k1..4 6.411 / 0.903 / 0.124 / 0.017 · inside −Δ 0.000
+P 200 θ 60 M 40 host 150: outside step 40.00 px · chord 4.890 · Newton k1..4 10.294 / 0.310 / 0.003 / 0.000 · inside −Δ 0.000
+P 200 θ 60 M 120 host -150: outside step 120.00 px · chord 37.815 · Newton k1..4 51.996 / 19.039 / 4.749 / 0.476 · inside −Δ 0.000
+P 200 θ 60 M 120 host 0: outside step 120.00 px · chord 4.999 · Newton k1..4 22.243 / 3.210 / 0.425 / 0.056 · inside −Δ 0.000
+P 200 θ 60 M 120 host 150: outside step 120.00 px · chord 168.360 · Newton k1..4 182.902 / 47.507 / 4.931 / 0.016 · inside −Δ 0.000
+P 200 θ 60 M 200 host -150: outside step 200.00 px · chord 95.176 · Newton k1..4 111.876 / 68.674 / 49.136 / 42.418 · inside −Δ 0.000
+P 200 θ 60 M 200 host 0: outside step 200.00 px · chord 11.544 · Newton k1..4 41.839 / 6.232 / 0.802 / 0.100 · inside −Δ 0.000
+P 200 θ 60 M 200 host 150: outside step 200.00 px · chord 436.278 · Newton k1..4 1362.341 / 433.645 / 1374.538 / 532.125 · inside −Δ 0.000
+P 400 θ 25 M 40 host -150: outside step 40.00 px · chord 0.144 · Newton k1..4 1.712 / 0.005 / 0.000 / 0.000 · inside −Δ 0.000
+P 400 θ 25 M 40 host 0: outside step 40.00 px · chord 0.103 · Newton k1..4 1.448 / 0.004 / 0.000 / 0.000 · inside −Δ 0.000
+P 400 θ 25 M 40 host 150: outside step 40.00 px · chord 0.068 · Newton k1..4 1.184 / 0.003 / 0.000 / 0.000 · inside −Δ 0.000
+P 400 θ 25 M 120 host -150: outside step 120.00 px · chord 3.200 · Newton k1..4 13.980 / 0.250 / 0.000 / 0.000 · inside −Δ 0.000
+P 400 θ 25 M 120 host 0: outside step 120.00 px · chord 2.317 · Newton k1..4 11.884 / 0.154 / 0.000 / 0.000 · inside −Δ 0.000
+P 400 θ 25 M 120 host 150: outside step 120.00 px · chord 1.548 · Newton k1..4 9.716 / 0.088 / 0.000 / 0.000 · inside −Δ 0.000
+P 400 θ 25 M 200 host -150: outside step 200.00 px · chord 12.477 · Newton k1..4 35.931 / 1.665 / 0.005 / 0.000 · inside −Δ 0.000
+P 400 θ 25 M 200 host 0: outside step 200.00 px · chord 9.254 · Newton k1..4 30.835 / 1.016 / 0.002 / 0.000 · inside −Δ 0.000
+P 400 θ 25 M 200 host 150: outside step 200.00 px · chord 6.328 · Newton k1..4 25.432 / 0.558 / 0.001 / 0.000 · inside −Δ 0.000
+P 400 θ 40 M 40 host -150: outside step 40.00 px · chord 0.405 · Newton k1..4 2.871 / 0.021 / 0.000 / 0.000 · inside −Δ 0.000
+P 400 θ 40 M 40 host 0: outside step 40.00 px · chord 0.233 · Newton k1..4 2.184 / 0.012 / 0.000 / 0.000 · inside −Δ 0.000
+P 400 θ 40 M 40 host 150: outside step 40.00 px · chord 0.107 · Newton k1..4 1.500 / 0.008 / 0.000 / 0.000 · inside −Δ 0.000
+P 400 θ 40 M 120 host -150: outside step 120.00 px · chord 7.991 · Newton k1..4 22.313 / 1.125 / 0.005 / 0.000 · inside −Δ 0.000
+P 400 θ 40 M 120 host 0: outside step 120.00 px · chord 4.850 · Newton k1..4 17.295 / 0.503 / 0.001 / 0.000 · inside −Δ 0.000
+P 400 θ 40 M 120 host 150: outside step 120.00 px · chord 2.262 · Newton k1..4 11.809 / 0.174 / 0.001 / 0.000 · inside −Δ 0.000
+P 400 θ 40 M 200 host -150: outside step 200.00 px · chord 28.084 · Newton k1..4 55.020 / 6.940 / 0.148 / 0.000 · inside −Δ 0.000
+P 400 θ 40 M 200 host 0: outside step 200.00 px · chord 18.097 · Newton k1..4 43.629 / 3.190 / 0.025 / 0.000 · inside −Δ 0.000
+P 400 θ 40 M 200 host 150: outside step 200.00 px · chord 8.944 · Newton k1..4 30.409 / 1.018 / 0.004 / 0.000 · inside −Δ 0.000
+P 400 θ 60 M 40 host -150: outside step 40.00 px · chord 1.365 · Newton k1..4 5.291 / 0.129 / 0.000 / 0.000 · inside −Δ 0.000
+P 400 θ 60 M 40 host 0: outside step 40.00 px · chord 0.616 · Newton k1..4 3.562 / 0.045 / 0.000 / 0.000 · inside −Δ 0.000
+P 400 θ 60 M 40 host 150: outside step 40.00 px · chord 0.149 · Newton k1..4 1.832 / 0.022 / 0.000 / 0.000 · inside −Δ 0.000
+P 400 θ 60 M 120 host -150: outside step 120.00 px · chord 21.167 · Newton k1..4 37.370 / 6.345 / 0.261 / 0.001 · inside −Δ 0.000
+P 400 θ 60 M 120 host 0: outside step 120.00 px · chord 11.179 · Newton k1..4 26.617 / 2.036 / 0.019 / 0.000 · inside −Δ 0.000
+P 400 θ 60 M 120 host 150: outside step 120.00 px · chord 2.712 · Newton k1..4 13.114 / 0.296 / 0.003 / 0.000 · inside −Δ 0.000
+P 400 θ 60 M 200 host -150: outside step 200.00 px · chord 62.152 · Newton k1..4 85.846 / 30.931 / 7.442 / 0.680 · inside −Δ 0.000
+P 400 θ 60 M 200 host 0: outside step 200.00 px · chord 37.176 · Newton k1..4 64.152 / 11.681 / 0.567 / 0.003 · inside −Δ 0.000
+P 400 θ 60 M 200 host 150: outside step 200.00 px · chord 10.298 · Newton k1..4 32.959 / 1.425 / 0.014 / 0.000 · inside −Δ 0.000
+P 600 θ 25 M 40 host -150: outside step 40.00 px · chord 0.069 · Newton k1..4 1.183 / 0.002 / 0.000 / 0.000 · inside −Δ 0.000
+P 600 θ 25 M 40 host 0: outside step 40.00 px · chord 0.055 · Newton k1..4 1.062 / 0.002 / 0.000 / 0.000 · inside −Δ 0.000
+P 600 θ 25 M 40 host 150: outside step 40.00 px · chord 0.043 · Newton k1..4 0.942 / 0.001 / 0.000 / 0.000 · inside −Δ 0.000
+P 600 θ 25 M 120 host -150: outside step 120.00 px · chord 1.616 · Newton k1..4 9.901 / 0.085 / 0.000 / 0.000 · inside −Δ 0.000
+P 600 θ 25 M 120 host 0: outside step 120.00 px · chord 1.308 · Newton k1..4 8.906 / 0.063 / 0.000 / 0.000 · inside −Δ 0.000
+P 600 θ 25 M 120 host 150: outside step 120.00 px · chord 1.028 · Newton k1..4 7.896 / 0.045 / 0.000 / 0.000 · inside −Δ 0.000
+P 600 θ 25 M 200 host -150: outside step 200.00 px · chord 6.628 · Newton k1..4 25.993 / 0.580 / 0.001 / 0.000 · inside −Δ 0.000
+P 600 θ 25 M 200 host 0: outside step 200.00 px · chord 5.424 · Newton k1..4 23.486 / 0.422 / 0.000 / 0.000 · inside −Δ 0.000
+P 600 θ 25 M 200 host 150: outside step 200.00 px · chord 4.307 · Newton k1..4 20.909 / 0.296 / 0.000 / 0.000 · inside −Δ 0.000
+P 600 θ 40 M 40 host -150: outside step 40.00 px · chord 0.203 · Newton k1..4 2.027 / 0.008 / 0.000 / 0.000 · inside −Δ 0.000
+P 600 θ 40 M 40 host 0: outside step 40.00 px · chord 0.143 · Newton k1..4 1.709 / 0.006 / 0.000 / 0.000 · inside −Δ 0.000
+P 600 θ 40 M 40 host 150: outside step 40.00 px · chord 0.094 · Newton k1..4 1.390 / 0.004 / 0.000 / 0.000 · inside −Δ 0.000
+P 600 θ 40 M 120 host -150: outside step 120.00 px · chord 4.362 · Newton k1..4 16.356 / 0.410 / 0.001 / 0.000 · inside −Δ 0.000
+P 600 θ 40 M 120 host 0: outside step 120.00 px · chord 3.165 · Newton k1..4 13.908 / 0.249 / 0.000 / 0.000 · inside −Δ 0.000
+P 600 θ 40 M 120 host 150: outside step 120.00 px · chord 2.111 · Newton k1..4 11.353 / 0.138 / 0.000 / 0.000 · inside −Δ 0.000
+P 600 θ 40 M 200 host -150: outside step 200.00 px · chord 16.519 · Newton k1..4 41.554 / 2.693 / 0.015 / 0.000 · inside −Δ 0.000
+P 600 θ 40 M 200 host 0: outside step 200.00 px · chord 12.338 · Newton k1..4 35.736 / 1.640 / 0.005 / 0.000 · inside −Δ 0.000
+P 600 θ 40 M 200 host 150: outside step 200.00 px · chord 8.472 · Newton k1..4 29.494 / 0.888 / 0.002 / 0.000 · inside −Δ 0.000
+P 600 θ 60 M 40 host -150: outside step 40.00 px · chord 0.732 · Newton k1..4 3.857 / 0.048 / 0.000 / 0.000 · inside −Δ 0.000
+P 600 θ 60 M 40 host 0: outside step 40.00 px · chord 0.453 · Newton k1..4 3.039 / 0.026 / 0.000 / 0.000 · inside −Δ 0.000
+P 600 θ 60 M 40 host 150: outside step 40.00 px · chord 0.235 · Newton k1..4 2.199 / 0.013 / 0.000 / 0.000 · inside −Δ 0.000
+P 600 θ 60 M 120 host -150: outside step 120.00 px · chord 13.112 · Newton k1..4 28.883 / 2.649 / 0.029 / 0.000 · inside −Δ 0.000
+P 600 θ 60 M 120 host 0: outside step 120.00 px · chord 8.770 · Newton k1..4 23.419 / 1.322 / 0.007 / 0.000 · inside −Δ 0.000
+P 600 θ 60 M 120 host 150: outside step 120.00 px · chord 4.842 · Newton k1..4 17.297 / 0.510 / 0.002 / 0.000 · inside −Δ 0.000
+P 600 θ 60 M 200 host -150: outside step 200.00 px · chord 42.541 · Newton k1..4 69.043 / 15.005 / 1.079 / 0.007 · inside −Δ 0.000
+P 600 θ 60 M 200 host 0: outside step 200.00 px · chord 30.389 · Newton k1..4 57.419 / 8.023 / 0.214 / 0.000 · inside −Δ 0.000
+P 600 θ 60 M 200 host 150: outside step 200.00 px · chord 18.043 · Newton k1..4 43.585 / 3.188 / 0.026 / 0.000 · inside −Δ 0.000
+WORST: inside −Δ 0.000 · chord 436.278 · Newton k1 1362.341 k2 433.645 k3 1374.538 k4 532.125
+## end N11 · load 22.15/21.39/20.39
+## N8 the probe map's axis lengths against the bounding-box ratio, per carrier and track aspect · load 22.15/21.39/20.39
+300×6 none: axis lengths 1.0000 / 1.0000 · bbox ratio 1.0000 / 1.0000
+300×6 rotate(10deg): axis lengths 1.0000 / 1.0000 · bbox ratio 0.9883 / 9.6672
+300×6 rotate(10deg) scale(0.8): axis lengths 0.8000 / 0.8000 · bbox ratio 0.7906 / 7.7338
+300×6 skewX(15deg): axis lengths 1.0000 / 1.0353 · bbox ratio 1.0054 / 1.0000
+300×6 rotate(90deg): axis lengths 1.0000 / 1.0000 · bbox ratio 0.0200 / 50.0000
+300×6 perspective(400px) rotateX(40deg): axis lengths 1.0048 / 0.8187 · bbox ratio 1.0048 / 0.7661
+300×6 scale(1.25): axis lengths 1.2500 / 1.2500 · bbox ratio 1.2500 / 1.2500
+140×76 none: axis lengths 1.0000 / 1.0000 · bbox ratio 1.0000 / 1.0000
+140×76 rotate(10deg): axis lengths 1.0000 / 1.0000 · bbox ratio 1.0791 / 1.3047
+140×76 rotate(10deg) scale(0.8): axis lengths 0.8000 / 0.8000 · bbox ratio 0.8633 / 1.0437
+140×76 skewX(15deg): axis lengths 1.0000 / 1.0353 · bbox ratio 1.1455 / 1.0000
+140×76 rotate(90deg): axis lengths 1.0000 / 1.0000 · bbox ratio 0.5429 / 1.8421
+140×76 perspective(400px) rotateX(40deg): axis lengths 1.0650 / 0.8285 · bbox ratio 1.0650 / 0.7689
+140×76 scale(1.25): axis lengths 1.2500 / 1.2500 · bbox ratio 1.2500 / 1.2500
+20×20 none: axis lengths 1.0000 / 1.0000 · bbox ratio 1.0000 / 1.0000
+20×20 rotate(10deg): axis lengths 1.0000 / 1.0000 · bbox ratio 1.1585 / 1.1585
+20×20 rotate(10deg) scale(0.8): axis lengths 0.8000 / 0.8000 · bbox ratio 0.9268 / 0.9268
+20×20 skewX(15deg): axis lengths 1.0000 / 1.0353 · bbox ratio 1.2680 / 1.0000
+20×20 rotate(90deg): axis lengths 1.0000 / 1.0000 · bbox ratio 1.0000 / 1.0000
+20×20 perspective(400px) rotateX(40deg): axis lengths 1.0043 / 0.8193 · bbox ratio 1.0163 / 0.7662
+20×20 scale(1.25): axis lengths 1.2500 / 1.2500 · bbox ratio 1.2500 / 1.2500
+## end N8 · load 22.15/21.39/20.39
+## N12 the offset chain: offsetParent under a transformed card, transforms ignored, scroll, sub-pixel · load 22.15/21.39/20.39
+static card: offsetParent chain h>g>BODY · sum 110,131 · after scrollTop 50 110,131 · rect 110.250,81.250 · h.offsetParent g
+rotate 10deg card: offsetParent chain h>c>g>BODY · sum 110,132 · after scrollTop 50 110,132 · rect 110.267,30.856 · h.offsetParent c
+transform perspective card: offsetParent chain h>c>g>BODY · sum 110,132 · after scrollTop 50 110,132 · rect 97.996,80.056 · h.offsetParent c
+translate card: offsetParent chain h>c>g>BODY · sum 110,132 · after scrollTop 50 110,132 · rect 140.250,93.250 · h.offsetParent c
+positioned card: offsetParent chain h>c>g>BODY · sum 110,132 · after scrollTop 50 110,132 · rect 110.250,81.250 · h.offsetParent c
+## end N12 · load 22.15/21.39/20.39
+## N13 a write in the resize step is laid out in the same rendering update (a second observation round before the next frame) · load 22.15/21.39/20.39
+f1:p:10 · f1:c:10 · f3:p:10 · f3:wrote c 37px in the resize step · f3:c:37 · f4:p:37
+## end N13 · load 22.15/21.39/20.39
+## N14 a paused translate probe or glide on the last box of a scroller at its end, toward the start: does the offset clamp · load 22.15/21.39/20.39
+probe -40px: scrollTop 420 → during 420 → after 420
+probe 40px: scrollTop 420 → during 420 → after 420
+glide first keyframe -40px: scrollTop 420 → at start 420 → after the glide 420
+## end N14 · load 22.15/21.39/20.39
+# end · load 22.15/21.39/20.39
