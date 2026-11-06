@@ -39,7 +39,7 @@ if [[ $MODE == red-only || $MODE == g6 ]]; then
   trap restore EXIT INT TERM
   git checkout $RED -- $FILES
   sleep 3
-  run red-fd1c2443a release-10-1-5.spec.ts " m[1-4] | m3 "
+  run red-fd1c2443a release-10-1-5.spec.ts " m[1-5] | m3 "
   restore
 fi
 git status --short src | tee -a $L/witness-$ENGINE.txt
