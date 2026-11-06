@@ -835,3 +835,4 @@ Disk episode, one line: on 2026-11-03 the volume went from 100% (15 GiB free) to
 - 2026-11-05 19:28 — 10.1.5 critic 6 is measured: fix 5 holds, and there is one defect (L1, a cut cap left at rest after the overflow vanishes, already present on 10.1.4). Fix 7 is running. orchestrator-note-round7.md puts the unwitnessed inbounds (O-157, O-159 to O-162, O-165 to O-167) in scope.
 - 2026-11-05 19:40 — INBOUND O-168: Gregg's springs and data-viz entrance register. (1) The CSS twins already ship. (2) The register is a W-F.1 addendum, delivered in 11.1.0.
 - 2026-11-05 20:15 — INBOUND O-169: the dock's border progress goes to a W-I.1 addendum, delivered in 11.1.0. The utility and filter docks are existing API.
+- 2026-11-05 20:20 — INBOUND O-170: fourier's collapse="open" dock goes into the W-0.8 census. Its README fix duplicates O-159 in 10.1.5.
