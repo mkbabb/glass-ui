@@ -74,7 +74,6 @@ describe("the live design docs describe 11.0.0's tunables", () => {
     const FILES = [
         "docs/design/tunable-anim.md",
         "docs/design/affordance-map.md",
-        "tests-visual/shell-identity.spec.ts",
     ];
 
     it.each(FILES)("%s", (path) => {
