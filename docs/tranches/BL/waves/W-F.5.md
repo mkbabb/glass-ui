@@ -180,3 +180,26 @@ if (want('G7')) {
 }
 R.done();
 ```
+
+## Addendum O-173 G1 (keyframes and value via value-js-e7, owner order 2026-11-05 eve): `lateral` becomes a card swap
+
+The owner's words: "transitions between views ... should be well defined and all height and width facilities fully animated ... not fade in and out unless necessary and stacked with a card swapping animation."
+
+Amend `lateral` in `src/styles/view-transition.css`. There is no fifth type. Consumers type a swap `lateral` and set `--route-direction`, the sign of the destination index minus the source index in dock order. The amendment:
+1. **Root.** The lateral root pair loses `gl-vt-route-out`/`-in`, so the page doesn't fade. The world push is cut.
+2. **`gl-route-window`.** The whole-clock cross-fade goes. Both halves stay opaque, and new stacks above old.
+   - Old recedes in place: scale 1 → `--route-card-recede` (0.94), a `--route-card-sink` (1.5%) block translate, and brightness 1 → 0.92.
+   - New enters from `calc(var(--route-direction) * var(--route-card-travel, min(6rem, 24vw)))`, with scale 0.98 → 1.
+   - When the direction is 0, it is scale and recede only.
+3. **Clocks.** One SPRING_PRESETS spring drives the window and `gl-route-sheet` groups, dialled back per the owner's motion order: less bounce, and a duration proportional to the travel. The dock and `.gl-route-chrome` are excluded; they are O-171 R-2 (W-0.8) and R-1 (W-F.4).
+4. **Fades.** The opacity cross-fade stays only on `gl-route-label` and on unpartnered named elements, on `--route-inhale-clock`.
+5. **Reduced motion.** There are zero animations.
+
+Gates, in Chromium and WebKit, light and dark, using `document.getAnimations()` on the view-transition pseudos mid-swap:
+- The root and window carry 0 opacity keyframes.
+- The new window's translate is signed by `--route-direction`.
+- The window and sheet groups animate their size whenever the rects differ.
+- Reduced motion shows 0 animations.
+- Frame-time p95 is at most 16.7 ms at 1440@2 (headless shell, ANGLE Metal).
+
+Delivered in the 11.1.0 feature run.

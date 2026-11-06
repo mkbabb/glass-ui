@@ -128,3 +128,16 @@ out.load2 = load(); fs.writeFileSync(`${CAP}/e11.json`, JSON.stringify(out, null
 ```
 
 After the wave, G2 measures each per-platform fallback family whose `local()` face the runner has, and records the ones it lacks as absent rather than passing. Which faces a CI runner has is read on the runner, not assumed.
+
+## Addendum O-173 G2 (keyframes via value-js-e7, 2026-11-05): fonts as files
+
+`publishStyleAssets` in `vite.config.ts` base64-inlines all four woff2 subsets into `dist/styles/fonts.css`: Plus Jakarta Sans, two subsets, and Fira Code, two subsets. A consumer importing `@mkbabb/glass-ui/styles/fonts` therefore pays about 131 KB of render-blocking CSS. keyframes' entry CSS is 591 KB raw and 182 KB gzipped, and Fira Code is never in a first view.
+
+The cure is that `fonts.css` keeps `url(...)` references to the woff2 files shipped under `dist/fonts/` (already exported as `./fonts/*`). The descriptors and unicode-range stay the same, so consumer bundlers hash the files. The latin Jakarta file path becomes a named export so a consumer can preload it. This is one font path, matching this wave's own "one path, preloaded". O-163's IBM Plex Sans subpath ships the same way.
+
+Gates:
+- A consumer's entry CSS carries 0 data-URI bytes.
+- `document.fonts.check` passes for Jakarta 400 and 600 and for Fira Code once each is used.
+- CLS is at most 0.01.
+
+Delivered in the 11.1.0 feature run.
