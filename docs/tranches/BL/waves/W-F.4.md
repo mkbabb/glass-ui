@@ -162,3 +162,23 @@ if (want('G5')) {
 }
 R.done();
 ```
+
+## Addendum O-171 R-1 (value.js, owner order 2026-11-05 eve): the menu plate grows from its trigger
+
+The owner's words: "transitions between views ... should be well defined and all heigh and width facillities fully animated. The transition animations should be better defined and not fade in and out unless necessary." The frame is value.js `docs/tranches/X/evidence/owner-2026-11-05-eve/view-menu-transition.png`.
+
+Today `data-reveal="menu"` (SelectContent `src/components/select/SelectContent.vue:80-84`, `.glass-reveal`) opens with the uniform bloom (scale 0.94→1, blur, fade) and closes on a fade-led exit. Under W-EXTENT-OWNED, the menu plate opens as geometry anchored on its trigger:
+- The transform origin is the trigger edge the plate sits on, from reka's side and align.
+- The block size runs from the trigger's height to the plate's own on `--spring-bloom`.
+- The rows are laid out at their final size; only the plate edge travels.
+- There is no blur channel. Opacity holds at 1, and on close it cuts only below the route's opacity cut (0.9).
+
+Choose clip-path inset() or plate scale with counter-held rows, whichever keeps the rows still and sharp, and use only that one mechanism.
+
+Gates, in Chromium and WebKit, light and dark:
+- The first rAF frame after open puts the plate's inline-start and block-start within 1 px of the trigger edge.
+- Opacity is 1 on every sampled open frame.
+- Settle is within `--spring-bloom-duration`.
+- Reduced motion uses the 120 ms cut.
+
+Delivered in the 11.1.0 feature run.
