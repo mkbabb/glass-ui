@@ -249,3 +249,23 @@ out.load2 = load(); fs.writeFileSync(`${CAP}/e2-${eng}.json`, JSON.stringify(out
 const fails = out.rows.filter((r) => !r.pass).length; console.log(`e2 ${eng}: ${out.rows.length} rows, ${fails} FAIL · load ${out.load} → ${out.load2}`);
 process.exitCode = fails ? 1 : 0;
 ```
+
+## Addendum O-184 (Gregg, atlas and sci via sci-report-ef, owner order 2026-11-06 13:20): rounded table containers
+
+The owner's words: "Round the data corners a bit for the tabular views."
+
+Today `.data-table` sets `overflow: hidden` with no radius. Only its card form is rounded.
+
+The table container takes the library's card radius token (`--radius-card`) and sits on the glass plate's material, with no added border stack. The header row and the last row are clipped to that radius, including:
+- a sticky header;
+- horizontal scroll inside the container;
+- a plain `<table>` a consumer wraps in the container.
+
+The radius and clip live on one element, so DataTable and a consumer's plain table share a single mechanism.
+
+Gates, in Chromium and WebKit, at 390 and 1440:
+- No header or body cell paints outside the container's rounded outline, at rest, with the header stuck mid-scroll, and with horizontal scroll at both ends.
+- Corner pixels outside the radius show the page ground.
+- No border is doubled at the container edge.
+
+Delivered in the 11.1.0 feature run.

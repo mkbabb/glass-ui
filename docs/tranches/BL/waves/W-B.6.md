@@ -62,3 +62,26 @@ None: no published surface changes. A DELETE ruling on C-7 removes behaviour, no
 ## 8 · Ledger rows
 
 C-5 (RETIRE; FOLD → W-H.1), C-6 (RETIRE), C-7 (KEEP, OW-4), #51's decide items; the conditional census gap ("if C-6 is BUILD, an out-of-gamut value has no family", `CENSUS.md:264`) closes, since C-6 is RETIRE.
+
+## Addendum O-183 (Gregg, atlas and sci via sci-report-ef, owner order 2026-11-06 13:20): HandMark as the heading mark
+
+The owner's words: "suffuse better design hiereachy and markup in the hero with a highlight, underline, or the like--and the other headers too."
+
+The component already ships. `@mkbabb/glass-ui/handmark` `<HandMark shape="underline" | "highlight">` draws one mark per line rect, so a wrapped phrase keeps it on every line. It also lands at rest under reduced motion. Consumers adopt it now.
+
+This addendum closes the gaps the request names:
+1. **Focal ink.** The default colour is the page's focal-ink token, not `currentColor`. The `color` prop still overrides it, and the highlight still takes a hue. There is no fixed hue anywhere.
+2. **Motion.** The draw duration and easing come from a SPRING_PRESETS row (`present`) instead of the component's own `markDuration`/`minJerk` clock. That is one clock with the rest of the library.
+3. **In view.** A `trigger="in-view"` option draws the mark when the heading enters the viewport, through the library's existing scroll-trigger composable. It draws once by default, and `retrigger` redraws on each entry.
+4. **Print.** In print the mark renders at its final state with no animation.
+5. **Scale.** It works at hero and section-header scale, and the nib follows the font size.
+
+Gates, in Chromium and WebKit, light and dark:
+- A wrapped hero phrase shows the mark on both lines.
+- The mark's colour equals the focal-ink token when no prop is given.
+- The draw time equals the `present` preset's duration.
+- An in-view mark draws only after entry.
+- Print and reduced motion show the final state at frame 0.
+- No mark carries a glow, a sheen or a shadow.
+
+Delivered in the 11.1.0 feature run.
