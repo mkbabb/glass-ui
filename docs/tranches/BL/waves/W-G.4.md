@@ -201,3 +201,27 @@ R.done();
 HEAD output: `light {"dmax255":3,"movedPct":6.94,"meanC":0.0231,"meanL":0.9182}`, `dark {"dmax255":9,"movedPct":67.94,"meanC":0.0184,"meanL":0.3364}`, both FAIL. (The run at this seat applied the ≥ 25 % moved clause to both themes and had no L clause; the verdicts are the same under the gate as written.)
 
 **Addendum (2026-11-04), INBOUND O-130 (2)–(4), value.js's aurora palette.** Gates on the greenfield's one config layer (which replaces `resolveAtoms`): **(2)** the seed is a stop by construction (an odd stop count with the seed at the centre, or a seed-anchored stop), and the symmetric seam is kept; gate: the nearest palette stop to the seed is ΔE_ok ≤ 0.01. **(3)** the tonemap on an LDR palette is the identity below the clip: gate: stop L above 0.7 holds within 0.005, and chroma near white within 10% of the seed's. **(4)** temperatureShift's cool pull does not stack with the analogous walk: gate: served hue error ≤ 2° on red and violet seeds (efflorescence, tomato, rebeccapurple), as on green, teal and blue.
+
+## Addendum O-174 (2) and (3) (value.js aurora lane, 2026-11-05 eve): amplitude in OKLab, and zone contrast
+
+The owner's words: "Aurora background colors need fixing as they're too dark--the aurora swirl and blobs are not properly visible with H value perturbed colors."
+
+Prod measurements from one run, with the second run owed (headless shell, ANGLE Metal):
+- Dark: field L p05/p50/p95 of 0.31/0.34/0.43, C p50 of 0.09–0.11, L sd of 0.046–0.065, and hue sd of 7.2° (default seed) or 1.2° (145).
+- Light: L p50 of 0.74–0.75 and L sd of 0.025–0.031.
+
+The evidence, on the value host, is `~/.dev-logs/o1105/aurora/` (r1.json, grid.json, sweep.json, frames).
+
+**(2) Perceptual-amplitude-invariant modulation (provisional).** valueVariance, breath and the swirl lean multiply in linear light. Their visible ΔL is about L·((1+k)^⅓ − 1), so the breath reads weaker in dark: an inferred 0.38× light at the old dark mean, and 0.62× at value's new dark p50 of 0.49.
+
+value is measuring the served frame-to-frame L delta over one 26 s breath, dark against light, same seed, twice. At ≥ 0.8× it withdraws the ask; below that it sends the number.
+
+If it stands, the modulation applies in OKLab L as an additive ΔL. That is one law, with no `modulationSpace` option. The gate is the served breath L delta within 0.8–1.25× between light and dark on the same seed.
+
+**(3) Zone contrast.** The served hue structure comes from zone weighting and linear-light mixing, not from the stop spread. At hueSpread 14 the stops span about 46°, yet the served hue sd is 7.2°, and 1.2–1.8° on green. Widening hueSpread trades directly against OD-12's dominant-hue ≤ 7° gate.
+
+The cure is `zones.contrast`, which spreads palette ids across the nuclei. It raises L sd and hue sd without walking the hue away from the seed stop.
+
+The gate is hue sd ≥ 10° with dominant-hue error ≤ 7° on value's 12 OD-12 seeds, in both schemes.
+
+**Joint with W-G.5b G-AURORA.** A brighter dark ground lowers the bead's L contrast against the field, from about 0.39 to about 0.24 on the default seed. G-AURORA reads value's served bead-versus-field dL/dC cell, run twice at the default, 145 and 265 seeds plus a hue-perturbed seed, in both schemes. Its thresholds are agreed with value's blob lane.

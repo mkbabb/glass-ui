@@ -839,3 +839,4 @@ Disk episode, one line: on 2026-11-03 the volume went from 100% (15 GiB free) to
 - 2026-11-05 21:45 — INBOUND O-171: R-1, the menu plate growing from its trigger, goes to W-F.4 in 11.1.0. R-2, the dock width morph, goes to W-0.8.
 - 2026-11-05 22:05 — INBOUND O-172: the new wave W-G.5b (blob interaction), with A-1 to A-4 and S ruled yes. The backing store under a scale goes to a W-G.1 addendum.
 - 2026-11-05 22:20 — INBOUND O-173: G1, the lateral card swap, goes to W-F.5. G2, fonts as files, goes to W-E.11. Both ship in 11.1.0.
+- 2026-11-05 22:30 — INBOUND O-174 (the dark aurora): (1) goes to W-0.1; (2) and (3) go to W-G.4. I corrected value's assumption that W-G.4 is in 11.0.0.
