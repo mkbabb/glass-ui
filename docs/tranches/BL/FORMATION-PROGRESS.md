@@ -848,3 +848,4 @@ Disk episode, one line: on 2026-11-03 the volume went from 100% (15 GiB free) to
 - 2026-11-06 01:36 — 11.0.0 critic 3 is measured: no behaviour defect, every gate green. Two text defects remain (internal ids in MIGRATION and README; stale token docs). Fix 4 is running.
 - 2026-11-06 01:39 — 10.1.5 fix 7 is measured: L1 is cured (121a8bb55, data-run-fits). It did not take up the round-6 and round-7 notes (vertical yield, inbounds). Critic 7 is running and reads them all.
 - 2026-11-06 01:45 — INBOUND O-181 (the Slider emits once per frame) goes to W-F.2, in 11.1.0.
+- 2026-11-06 03:05 — 11.0.0 fix 4: the text cures are done. The run stopped as fix-not-measured, but only because the seat gave up a 98-minute WebKit queue for a comment change in a dead spec. I accepted that, ruled the dead spec deleted (orchestrator-note-round4.md), and resumed wf_5bac0619-dea with acceptUnmeasured fix-4.
