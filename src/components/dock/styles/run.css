@@ -406,6 +406,18 @@
         --dock-run-yield: 1;
     }
 
+    /* THE VERTICAL RESERVE YIELDS TOO, as padding. The vertical run keeps its block
+       reserve as padding (above: a rotated spacer box moves a bottom-anchored dock's
+       leaving summary under an ancestor `zoom` in WebKit), and the run's border box is
+       fixed by its margins, not its padding, so shrinking the padding leaves the port
+       where it is. Under `data-run-fits` each end's reserve is the smaller of the reserve
+       and half the room the seats leave, `--dock-run-room-block` (dockMorphMeasure.ts,
+       from the same reading that sets the flag), so the flag and `scrollHeight =
+       clientHeight` are one fact. */
+    .glass-dock.vertical[data-run-fits] .dock-run {
+        padding-block: min(var(--dock-run-reserve-block), var(--dock-run-room-block, 0px));
+    }
+
     .glass-dock:not(.vertical) .dock-run:has(> *) {
         padding-inline-end: 0;
     }
@@ -433,6 +445,20 @@
     .glass-dock .dock-run > * {
         scroll-snap-align: start;
         flex: 0 0 auto;
+    }
+
+    /* A LAYER GROUP IN THE RUN IS A FRAME, NOT A SEAT. Its active face's seats are the
+       snap targets, so the run rests where the lattice says: the first seat's start less
+       the scroll padding, clamped to 0, with the leading reserve whole. As one snap area
+       wider than the port, the group let Chromium rest the run on an arbitrary covering
+       offset (8 px at a 260 px cap), which cut the leading corner and the first seat's
+       ring. */
+    .glass-dock .dock-run > .dock-layer-group {
+        scroll-snap-align: none;
+    }
+
+    .glass-dock .dock-run > .dock-layer-group .dock-face.is-active > .dock-face-content > * {
+        scroll-snap-align: start;
     }
 
     /* ── THE VERTICAL DOCK — the same lattice, rotated ───────────────────────────
@@ -636,21 +662,23 @@
     /* THE TIMELINE IS NAMED ONLY ON THE RUN THAT PAINTS. A collapsed dock's full pane
        stays laid out (absolute, inset 0, layers.css) inside the collapsed box and
        still scrolls, so a timeline on every `.dock-run` would cut the collapsed
-       plate's trailing corners to `--dock-cap-cut` on its circle. Gated on the pane's
-       own `is-active` (the DOM posture the morph and the measure both read), the
-       collapsed dock names no `--dock-run` timeline, the plate's animations are
-       inactive, and it paints its rest corner: a circle.
+       plate's trailing corners to `--dock-cap-cut` on its circle. The timeline is
+       gated on the pane's own `is-active` (the DOM posture the morph and the measure
+       both read). That alone does not round the collapsed plate: an inactive timeline
+       holds what it last resolved (Chromium keeps the cut of a run collapsed while
+       scrolled), so the collapsed dock also takes the cap's animations off (THE CAP
+       RUNS ONLY ON A RUN THAT HIDES SOMETHING, below) and paints its rest corner: a
+       circle.
 
        THE RUN'S CLIP FOLLOWS THE PLATE'S CORNER, on the same timeline. The reserve's
        hand-back lays the run's scroll clip `--dock-run-inset` inside the plate's edge
        (0 to 1 px at the house and cockpit geometries), so while the cap is cut, a seat
        the clip crosses there would keep the square ends of its fill past the plate's
        arc. Each scroll-axis edge of the run that is the plate's own edge
-       (`--dock-run-edge-*`) rounds its clip to the plate's corner less that inset on
-       the scroll axis and half the run's extent (`50%`) on the cross axis: the clip
-       meets the plate's arc no further out than the plate does wherever a seat's fill
-       reaches, and the cross axis keeps its ring room. An edge beside a persistent
-       region lies a whole seat inside the plate and stays square.
+       (`--dock-run-edge-*`) rounds its clip to a circle of the plate's corner less that
+       inset, concentric with the plate's arc: the clip meets the plate's arc no further
+       out than the plate does wherever a seat's fill reaches. An edge beside a
+       persistent region lies a whole seat inside the plate and stays square.
 
        AN EDGE THE RUN IS FLUSH AGAINST CLIPS SQUARE, as a run with nothing to scroll
        does (its animations are off and it clips to its padding box). The clip's
@@ -751,9 +779,10 @@
        reading of "the seats fit the port") takes both the plate's and the run's
        scroll-driven animations off, so a run that hides nothing paints its rest corner
        and clips square. When the seats overflow again the animations re-apply and bind
-       to the timeline afresh. */
-    .glass-dock[data-run-fits] .dock-plate,
-    .glass-dock[data-run-fits] .dock-run.is-active {
+       to the timeline afresh. A collapsed dock's run is not the visible run, so it
+       hides nothing either, and its plate is the circle. */
+    .glass-dock:is([data-run-fits], .collapsed) .dock-plate,
+    .glass-dock:is([data-run-fits], .collapsed) .dock-run {
         animation: none;
     }
 
@@ -833,20 +862,22 @@
 }
 
 /* The run's clip, on the plate's timeline (THE RUN'S CLIP, above): square where the run
-   is flush, then the plate's corner less the run's inset on the scroll axis and half the
-   run's extent on the cross axis, and square on an edge that is not the plate's. */
+   is flush, then a circle of the plate's corner less the run's inset, concentric with the
+   plate's own, and square on an edge that is not the plate's. Every radius is a length:
+   a percentage resolves per axis (the r1 law), and `50%` of the run's cross extent drew
+   an ellipse against the plate's circle. */
 @keyframes gl-dock-clip-inline-start {
     from {
         border-start-start-radius: 0;
         border-end-start-radius: 0;
     }
     1% {
-        border-start-start-radius: calc(var(--dock-run-edge-start) * var(--dock-run-corner-rest)) 50%;
-        border-end-start-radius: calc(var(--dock-run-edge-start) * var(--dock-run-corner-rest)) 50%;
+        border-start-start-radius: calc(var(--dock-run-edge-start) * var(--dock-run-corner-rest));
+        border-end-start-radius: calc(var(--dock-run-edge-start) * var(--dock-run-corner-rest));
     }
     to {
-        border-start-start-radius: calc(var(--dock-run-edge-start) * var(--dock-run-corner-cut)) 50%;
-        border-end-start-radius: calc(var(--dock-run-edge-start) * var(--dock-run-corner-cut)) 50%;
+        border-start-start-radius: calc(var(--dock-run-edge-start) * var(--dock-run-corner-cut));
+        border-end-start-radius: calc(var(--dock-run-edge-start) * var(--dock-run-corner-cut));
     }
 }
 
@@ -856,12 +887,12 @@
         border-end-end-radius: 0;
     }
     1% {
-        border-start-end-radius: calc(var(--dock-run-edge-end) * var(--dock-run-corner-rest)) 50%;
-        border-end-end-radius: calc(var(--dock-run-edge-end) * var(--dock-run-corner-rest)) 50%;
+        border-start-end-radius: calc(var(--dock-run-edge-end) * var(--dock-run-corner-rest));
+        border-end-end-radius: calc(var(--dock-run-edge-end) * var(--dock-run-corner-rest));
     }
     to {
-        border-start-end-radius: calc(var(--dock-run-edge-end) * var(--dock-run-corner-cut)) 50%;
-        border-end-end-radius: calc(var(--dock-run-edge-end) * var(--dock-run-corner-cut)) 50%;
+        border-start-end-radius: calc(var(--dock-run-edge-end) * var(--dock-run-corner-cut));
+        border-end-end-radius: calc(var(--dock-run-edge-end) * var(--dock-run-corner-cut));
     }
 }
 
@@ -871,12 +902,12 @@
         border-start-end-radius: 0;
     }
     1% {
-        border-start-start-radius: 50% calc(var(--dock-run-edge-start) * var(--dock-run-corner-rest));
-        border-start-end-radius: 50% calc(var(--dock-run-edge-start) * var(--dock-run-corner-rest));
+        border-start-start-radius: calc(var(--dock-run-edge-start) * var(--dock-run-corner-rest));
+        border-start-end-radius: calc(var(--dock-run-edge-start) * var(--dock-run-corner-rest));
     }
     to {
-        border-start-start-radius: 50% calc(var(--dock-run-edge-start) * var(--dock-run-corner-cut));
-        border-start-end-radius: 50% calc(var(--dock-run-edge-start) * var(--dock-run-corner-cut));
+        border-start-start-radius: calc(var(--dock-run-edge-start) * var(--dock-run-corner-cut));
+        border-start-end-radius: calc(var(--dock-run-edge-start) * var(--dock-run-corner-cut));
     }
 }
 
@@ -886,11 +917,11 @@
         border-end-end-radius: 0;
     }
     1% {
-        border-end-start-radius: 50% calc(var(--dock-run-edge-end) * var(--dock-run-corner-rest));
-        border-end-end-radius: 50% calc(var(--dock-run-edge-end) * var(--dock-run-corner-rest));
+        border-end-start-radius: calc(var(--dock-run-edge-end) * var(--dock-run-corner-rest));
+        border-end-end-radius: calc(var(--dock-run-edge-end) * var(--dock-run-corner-rest));
     }
     to {
-        border-end-start-radius: 50% calc(var(--dock-run-edge-end) * var(--dock-run-corner-cut));
-        border-end-end-radius: 50% calc(var(--dock-run-edge-end) * var(--dock-run-corner-cut));
+        border-end-start-radius: calc(var(--dock-run-edge-end) * var(--dock-run-corner-cut));
+        border-end-end-radius: calc(var(--dock-run-edge-end) * var(--dock-run-corner-cut));
     }
 }

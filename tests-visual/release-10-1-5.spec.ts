@@ -1292,3 +1292,363 @@ test.describe("critique 6, coarse phone", () => {
 });
 
 l1();
+
+/* ── m · critique round 7 (docs/release-10.1.5/critique-7.md M1 to M4) ──────────────
+   RED on the round-7 tip fd1c2443a (and v10.1.4), GREEN after. They drive the round-7
+   harness `release-10-1-5/critic-7.html`, which composes the inbound rows' docks
+   (`?kinds=` seats, `?collapse=`, `?backdrop=`, `?ink=`, `?dark=`, `window.__clicks`). */
+
+async function open7(page: Page, query: string): Promise<void> {
+    await page.goto(`/tests-visual/release-10-1-5/critic-7.html?${query}`);
+    await page.waitForFunction(() => (window as unknown as { __ready?: boolean }).__ready);
+    await page.evaluate(() => document.fonts.ready);
+    if (test.info().project.use.isMobile) await expectCoarse(page);
+    await settle(page);
+}
+
+type Dock7 = { expand(): void; collapse(): void };
+
+/** The plate's four corners and box, read every frame for `ms` from now. */
+function plateFrames(page: Page, ms: number): Promise<{ w: number; h: number; radii: string[] }[]> {
+    return page.evaluate(
+        (ms) =>
+            new Promise((res) => {
+                const out: { w: number; h: number; radii: string[] }[] = [];
+                const plate = document.querySelector<HTMLElement>(".glass-dock > .dock-plate")!;
+                const t0 = performance.now();
+                const step = () => {
+                    const cs = getComputedStyle(plate);
+                    out.push({
+                        w: plate.offsetWidth,
+                        h: plate.offsetHeight,
+                        radii: [cs.borderTopLeftRadius, cs.borderTopRightRadius, cs.borderBottomRightRadius, cs.borderBottomLeftRadius],
+                    });
+                    if (performance.now() - t0 < ms) requestAnimationFrame(step);
+                    else res(out);
+                };
+                requestAnimationFrame(step);
+            }),
+        ms,
+    );
+}
+
+/** A circle's four corners: one length each, half the plate's shorter extent. */
+function expectCircleFrame(f: { w: number; h: number; radii: string[] }, at: string): void {
+    const half = Math.min(f.w, f.h) / 2;
+    for (const r of f.radii) {
+        expect(r, `${at}: corner ${r} is one length (${JSON.stringify(f)})`).toMatch(/^[\d.]+px$/);
+        expect(Math.abs(Number.parseFloat(r) - half), `${at}: corner ${r} = half the extent ${half} (${JSON.stringify(f)})`).toBeLessThanOrEqual(0.5);
+    }
+}
+
+function m1(): void {
+    for (const [width, pos] of [[390, "mid"], [390, "end"], [1440, "end"]] as const) {
+        test(`m1 at ${width}: a collapse from a run scrolled to its ${pos} seals round`, async ({ page }) => {
+            await page.setViewportSize({ width, height: 800 });
+            await open7(page, "scene=dock&collapse=closed&maxw=220&kinds=" + encodeURIComponent("tab:Home,icon,icon,icon,icon,icon,icon,icon,tab:Settings"));
+            await page.mouse.move(2, 2);
+            await page.evaluate(() => (window as unknown as { __dock: Dock7 }).__dock.expand());
+            await settle(page, 1500);
+            expect((await runAt(page)).max, "the capped run overflows").toBeGreaterThan(0);
+            await scrollRun(page, pos);
+            expect((await runAt(page)).pos, "the run is scrolled off 0").toBeGreaterThan(0);
+            const frames = plateFrames(page, 1600);
+            await page.evaluate(() => (window as unknown as { __dock: Dock7 }).__dock.collapse());
+            const f = await frames;
+            for (const [i, fr] of f.slice(Math.floor(f.length * 0.8)).entries()) expectCircleFrame(fr, `last 20% of the collapse, frame ${i}`);
+            await settle(page, 1200);
+            expect(await page.evaluate(() => document.querySelector(".glass-dock")!.classList.contains("collapsed"))).toBe(true);
+            expectCircleFrame((await plateFrames(page, 0))[0]!, "collapsed, +1.2 s");
+            // Expanded again, the run's honest cap returns.
+            await page.evaluate(() => (window as unknown as { __dock: Dock7 }).__dock.expand());
+            await settle(page, 1500);
+            const read = await readPlate(page);
+            const sl = (await runAt(page)).pos;
+            if (sl > 0) expect(read.radii.some((r) => Math.abs(Number.parseFloat(r) - read.h / 2) > 0.5), `re-expanded at ${sl}: the cut returns (${JSON.stringify(read)})`).toBe(true);
+        });
+    }
+}
+
+/** M2: a vertical run whose seats fit has nothing to scroll; the flag says so too. */
+function m2(): void {
+    test("m2 a vertical run whose seats fit scrolls nothing, across the fit edge", async ({ page }) => {
+        test.setTimeout(240_000);
+        await page.setViewportSize({ width: 600, height: 900 });
+        const bad: unknown[] = [];
+        let fitted = 0;
+        for (let stageH = 300; stageH <= 372; stageH += 4) {
+            await open7(page, `scene=dock&orientation=vertical&stageH=${stageH}&kinds=icon,icon,icon,icon,icon,icon`);
+            await page.mouse.move(590, 890);
+            const r = await page.evaluate(() => {
+                const dock = document.querySelector<HTMLElement>(".glass-dock")!;
+                const run = dock.querySelector<HTMLElement>(".dock-run")!;
+                const k = [...run.children] as HTMLElement[];
+                const span = k.at(-1)!.offsetTop + k.at(-1)!.offsetHeight - k[0]!.offsetTop;
+                return { fits: dock.hasAttribute("data-run-fits"), sh: run.scrollHeight, ch: run.clientHeight, span };
+            });
+            if (r.span <= r.ch) fitted += 1;
+            if ((r.fits || r.span <= r.ch) && r.sh > r.ch) bad.push({ stageH, ...r });
+        }
+        expect(fitted, "the sweep crosses the fit edge").toBeGreaterThan(2);
+        expect(bad, "no row whose seats fit (or flagged fits) scrolls").toEqual([]);
+    });
+}
+
+/** M4: a run whose one child is a layer group wider than the port rests at 0. */
+function m4(): void {
+    for (const width of [390, 1440]) {
+        test(`m4 at ${width}: a layered overflowing run rests at its start, the leading corner round`, async ({ page }) => {
+            await page.setViewportSize({ width, height: 800 });
+            await open7(page, "scene=layers&maxw=260");
+            await page.mouse.move(2, 2);
+            await settle(page, 600);
+            const r = await page.evaluate(() => {
+                const run = document.querySelector<HTMLElement>(".dock-run")!;
+                const plate = document.querySelector<HTMLElement>(".glass-dock > .dock-plate")!;
+                const cs = getComputedStyle(plate);
+                return { sl: run.scrollLeft, sw: run.scrollWidth, cw: run.clientWidth, h: plate.offsetHeight, lead: [cs.borderTopLeftRadius, cs.borderBottomLeftRadius] };
+            });
+            expect(r.sw, "the layered run overflows").toBeGreaterThan(r.cw);
+            expect(r.sl, `rests at 0 (${JSON.stringify(r)})`).toBe(0);
+            for (const c of r.lead) expect(Math.abs(Number.parseFloat(c) - r.h / 2), `leading corner ${c} at rest (${JSON.stringify(r)})`).toBeLessThanOrEqual(0.5);
+        });
+    }
+}
+
+/** M3 · O-157: a static plate paints from the ancestor's veil ink, both themes. */
+function m3StaticInk(): void {
+    test("m3 O-157 a static-backdrop plate follows --glass-veil-ink, light and dark", async ({ page }) => {
+        await page.setViewportSize({ width: 1440, height: 600 });
+        for (const dark of ["0", "1"]) {
+            const bg: Record<string, string> = {};
+            for (const ink of ["", "oklch(55% 0.2 145)", "oklch(55% 0.2 25)"]) {
+                await open7(page, `scene=dock&collapse=false&backdrop=static&dark=${dark}&kinds=icon,icon,icon${ink ? "&ink=" + encodeURIComponent(ink) : ""}`);
+                bg[ink || "none"] = await page.evaluate(() => {
+                    const plate = document.querySelector<HTMLElement>(".glass-dock > .dock-plate")!;
+                    const c = document.createElement("canvas");
+                    c.width = c.height = 1;
+                    const g = c.getContext("2d")!;
+                    const cs = getComputedStyle(plate);
+                    // The plate's painted ink: its image layer (the veil) over its colour.
+                    g.fillStyle = cs.backgroundColor;
+                    g.fillRect(0, 0, 1, 1);
+                    const m = cs.backgroundImage.match(/linear-gradient\((.+?\)), /);
+                    if (m) {
+                        g.fillStyle = m[1]!;
+                        g.fillRect(0, 0, 1, 1);
+                    }
+                    return [...g.getImageData(0, 0, 1, 1).data].join(",");
+                });
+            }
+            const [none, green, red] = [bg.none!, bg["oklch(55% 0.2 145)"]!, bg["oklch(55% 0.2 25)"]!];
+            expect(new Set([none, green, red]).size, `dark ${dark}: the three inks paint three plates (${JSON.stringify(bg)})`).toBe(3);
+            const [gr, gg] = green.split(",").map(Number);
+            const [rr, rg] = red.split(",").map(Number);
+            expect(gg! - gr!, `dark ${dark}: the green ink greens the plate (${green})`).toBeGreaterThan(rg! - rr!);
+            expect(green.endsWith(",255") && red.endsWith(",255"), "the static plate is opaque").toBe(true);
+        }
+    });
+}
+
+/** M3 · O-161: a tap on a coarse pointer leaves no hover paint on a dock seat or the toggle. */
+function m3TouchHover(): void {
+    test("m3 O-161 a tap leaves no hover paint on the DarkModeToggle or a DockControl", async ({ page }) => {
+        await page.setViewportSize({ width: 390, height: 844 });
+        await open7(page, "scene=dock&collapse=false&kinds=icon,icon,dmt");
+        const look = (id: string) =>
+            page.evaluate((id) => {
+                const el = document.querySelector<HTMLElement>(`[data-witness="${id}"]`)!;
+                const s = getComputedStyle(el);
+                return `${s.backgroundColor} ${s.opacity} ${s.scale}`;
+            }, id);
+        for (const id of ["S3", "S1"]) {
+            const before = await look(id);
+            await page.locator(`[data-witness="${id}"]`).tap();
+            await settle(page, 800);
+            expect(await look(id), `${id}: after the tap it paints as at rest`).toBe(before);
+        }
+    });
+}
+
+/** M3 · O-162 and O-177 (Tab): the folded face's ring and its keyboard reopen. */
+function m3Summary(): void {
+    test("m3 O-162 the folded summary's ring follows the pill after Escape", async ({ page }) => {
+        await page.setViewportSize({ width: 1440, height: 800 });
+        await open7(page, "scene=dock&collapse=closed&kinds=icon,icon,icon");
+        await page.mouse.move(2, 790);
+        await page.evaluate(() => (window as unknown as { __dock: Dock7 }).__dock.expand());
+        await settle(page, 1300);
+        await page.locator('[data-witness="S1"]').focus();
+        await page.keyboard.press("Escape");
+        await settle(page, 1600);
+        const r = await page.evaluate(() => {
+            const el = document.activeElement as HTMLElement;
+            const s = getComputedStyle(el);
+            const plate = document.querySelector<HTMLElement>(".glass-dock > .dock-plate")!;
+            return {
+                summary: el.classList.contains("dock-layer--summary"),
+                fv: el.matches(":focus-visible"),
+                collapsed: document.querySelector(".glass-dock")!.classList.contains("collapsed"),
+                outline: s.outlineStyle,
+                radius: [s.borderTopLeftRadius, s.borderTopRightRadius, s.borderBottomRightRadius, s.borderBottomLeftRadius],
+                plate: getComputedStyle(plate).borderTopLeftRadius,
+            };
+        });
+        expect(r.summary && r.fv && r.collapsed, `Escape folds and focus stands on the summary (${JSON.stringify(r)})`).toBe(true);
+        expect(r.outline, "the dock's ring, not the UA's").toBe("solid");
+        for (const c of r.radius) expect(c, `the ring's corner is the plate's (${JSON.stringify(r)})`).toBe(r.plate);
+    });
+
+    test("m3 O-177 Tab onto the folded face expands the dock and lands on a seat", async ({ page }) => {
+        await page.setViewportSize({ width: 1440, height: 800 });
+        await open7(page, "scene=dock&collapse=closed&kinds=icon,icon,icon");
+        await page.mouse.move(2, 790);
+        await page.locator("body").focus();
+        for (let i = 0; i < 4; i += 1) {
+            await page.keyboard.press("Tab");
+            if (await page.evaluate(() => !!document.activeElement?.closest(".glass-dock"))) break;
+        }
+        await settle(page, 1500);
+        const r = await page.evaluate(() => ({
+            expanded: document.querySelector(".glass-dock")!.classList.contains("expanded"),
+            onSeat: !!document.activeElement?.closest(".dock-run [data-witness]"),
+            active: (document.activeElement as HTMLElement | null)?.dataset.witness ?? document.activeElement?.className,
+        }));
+        expect(r.expanded, `Tab expands (${JSON.stringify(r)})`).toBe(true);
+        expect(r.onSeat, `focus lands on a seat (${JSON.stringify(r)})`).toBe(true);
+    });
+}
+
+/** M3 · O-176: a dock mounted open idles shut; again after a remount. */
+function m3OpenIdle(): void {
+    test("m3 O-176 a collapse=open dock left untouched idles shut, and after a remount", async ({ page }) => {
+        test.setTimeout(90_000);
+        await page.setViewportSize({ width: 1440, height: 800 });
+        await page.mouse.move(2, 790);
+        await open7(page, "scene=dock&collapse=open&kinds=tab:Home,icon,icon");
+        const collapsed = () => page.evaluate(() => document.querySelector(".glass-dock")!.classList.contains("collapsed"));
+        expect(await collapsed(), "mounts open").toBe(false);
+        await page.waitForTimeout(6000);
+        expect(await collapsed(), "idles shut after DOCK_COLLAPSE_DELAY_MS and the settle").toBe(true);
+        await page.evaluate(() => ((window as unknown as { __key: { value: number } }).__key.value += 1));
+        await settle(page, 300);
+        expect(await collapsed(), "remounts open").toBe(false);
+        await page.waitForTimeout(6000);
+        expect(await collapsed(), "the remount idles shut").toBe(true);
+    });
+}
+
+/** M3 · O-177: a press on a seat during the expand activates it exactly once. */
+function m3PressMidExpand(): void {
+    test("m3 O-177 a press during the expand activates its seat once", async ({ page }) => {
+        test.setTimeout(120_000);
+        await page.setViewportSize({ width: 1440, height: 800 });
+        const coarse = !!test.info().project.use.isMobile;
+        const rows: unknown[] = [];
+        for (const delay of [0, 100, 240, 480]) {
+            await open7(page, "scene=dock&collapse=closed&kinds=tab:Home,icon,icon,icon");
+            if (!coarse) await page.mouse.move(2, 790);
+            const sum = (await page.locator(".dock-layer--summary").boundingBox())!;
+            if (coarse) await page.touchscreen.tap(sum.x + sum.width / 2, sum.y + sum.height / 2);
+            else await page.mouse.click(sum.x + sum.width / 2, sum.y + sum.height / 2);
+            await page.waitForTimeout(delay);
+            const at = await page.evaluate(() => {
+                const r = document.querySelector<HTMLElement>('[data-witness="S2"]')!.getBoundingClientRect();
+                return { x: r.left + r.width / 2, y: r.top + r.height / 2, morphing: document.querySelector(".glass-dock")!.hasAttribute("data-morphing") };
+            });
+            if (coarse) await page.touchscreen.tap(at.x, at.y);
+            else await page.mouse.click(at.x, at.y);
+            await page.waitForTimeout(1500);
+            rows.push({ delay, morphing: at.morphing, clicks: await page.evaluate(() => (window as unknown as { __clicks: Record<string, number> }).__clicks.S2 ?? 0) });
+        }
+        expect(rows.some((r) => (r as { morphing: boolean }).morphing), `a press lands mid-morph (${JSON.stringify(rows)})`).toBe(true);
+        for (const r of rows) expect((r as { clicks: number }).clicks, `exactly once (${JSON.stringify(rows)})`).toBe(1);
+    });
+}
+
+/** M3 · O-167: the dock Slider's dark fill is a calm ink; a drag tracks the pointer. */
+function m3DockSlider(): void {
+    test("m3 O-167 the dock Slider's fill is a calm ink in dark and its thumb tracks the drag", async ({ page }) => {
+        await page.setViewportSize({ width: 1440, height: 800 });
+        const kinds = encodeURIComponent("tab:Home,sep,slider,icon,dmt");
+        const fill = () =>
+            page.evaluate(() => {
+                const c = document.createElement("canvas");
+                c.width = c.height = 1;
+                const g = c.getContext("2d")!;
+                g.fillStyle = getComputedStyle(document.querySelector(".slider-range")!).backgroundColor;
+                g.fillRect(0, 0, 1, 1);
+                return [...g.getImageData(0, 0, 1, 1).data];
+            });
+        await open7(page, `scene=dock&backdrop=static&collapse=false&dark=1&kinds=${kinds}`);
+        const [r, g, b, a] = await fill();
+        // No warm stain: a near-neutral ink (channel spread) at a quiet alpha.
+        expect(Math.max(r!, g!, b!) - Math.min(r!, g!, b!), `dark fill ${[r, g, b, a]} is neutral`).toBeLessThanOrEqual(16);
+        expect(a!, `dark fill ${[r, g, b, a]} is quiet`).toBeLessThanOrEqual(80);
+        await open7(page, `scene=dock&backdrop=static&collapse=false&dark=0&step=1&kinds=${kinds}`);
+        await page.mouse.move(2, 790);
+        if (test.info().project.use.isMobile) return;
+        const th = (await page.locator(".slider-thumb").boundingBox())!;
+        let x = th.x + th.width / 2;
+        const y = th.y + th.height / 2;
+        await page.mouse.move(x, y);
+        await page.mouse.down();
+        const lag: number[] = [];
+        for (let i = 0; i < 12; i += 1) {
+            x += 4;
+            await page.mouse.move(x, y);
+            const c = await page.evaluate(() => {
+                const t = document.querySelector<HTMLElement>(".slider-thumb")!.getBoundingClientRect();
+                return t.left + t.width / 2;
+            });
+            lag.push(+(x - c).toFixed(2));
+        }
+        await page.mouse.up();
+        // Within the step's rounding (120 steps over the lane): no trailing input step.
+        for (const d of lag) expect(Math.abs(d), `thumb centre vs pointer, per move (${lag})`).toBeLessThanOrEqual(1);
+    });
+}
+
+function m(): void {
+    m1();
+    m2();
+    m4();
+    m3StaticInk();
+    m3Summary();
+    m3OpenIdle();
+    m3PressMidExpand();
+    m3DockSlider();
+}
+
+test.describe("critique 7, coarse phone", () => {
+    test.use({ hasTouch: true, isMobile: true, viewport: { width: 390, height: 844 } });
+    m();
+    m3TouchHover();
+});
+
+m();
+
+/* M3 · O-159 and O-160, read from the source (no browser state). */
+test("m3 O-159 the dock README names every DockProps member and no other", async () => {
+    const { readFileSync } = await import("node:fs");
+    const root = new URL("../src/components/dock/", import.meta.url);
+    const props = readFileSync(new URL("composables/useDockShellProps.ts", root), "utf8");
+    const body = props.slice(props.indexOf("export interface DockProps {"), props.indexOf("/** The resolved shell-prop"));
+    const members = [...body.matchAll(/^ {4}(\w+)\?:/gm)].map((m) => m[1]).sort();
+    const readme = readFileSync(new URL("README.md", root), "utf8");
+    const table = readme.slice(readme.indexOf("## GlassDock props"), readme.indexOf("## Slots"));
+    const named = [...table.matchAll(/^\| `(\w+)` \|/gm)].map((m) => m[1]).sort();
+    expect(named).toEqual(members);
+    const delay = readFileSync(new URL("constants.ts", root), "utf8").match(/DOCK_COLLAPSE_DELAY_MS = (\d+)/)![1];
+    expect(readme, "the idle window is the constant's").toContain(`(${delay} ms)`);
+});
+
+test("m3 O-160 no cut-cap or clip keyframe carries a percentage radius", async () => {
+    const { readFileSync } = await import("node:fs");
+    const css = readFileSync(new URL("../src/components/dock/styles/run.css", import.meta.url), "utf8");
+    const frames = [...css.matchAll(/@keyframes (gl-dock-(?:cap|clip)-[\w-]+) \{([\s\S]*?)\n\}/g)];
+    expect(frames.length).toBe(8);
+    for (const [, name, body] of frames) {
+        for (const decl of body!.matchAll(/radius:\s*([^;]+);/g)) expect(decl[1], `${name}`).not.toMatch(/%/);
+    }
+});

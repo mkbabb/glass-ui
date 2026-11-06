@@ -108,11 +108,16 @@
         /* The hover reads the FAMILY token `--dock-control-hover-bg`
            (the per-control `--dock-icon-hover-bg` still wins if a consumer set it),
            so the whole dock-control family shares ONE glass-translucent hover fill.
-           One source per state across icon/tab/picker (no four-vocabulary drift). */
-        &:hover:not(:disabled):not([aria-disabled="true"]) {
-            background: var(--dock-icon-hover-bg, var(--dock-control-hover-bg));
-            color: var(--btn-hover-color, var(--foreground));
-            scale: var(--scale-hover-dock);
+           One source per state across icon/tab/picker (no four-vocabulary drift).
+           Gated on a pointer that hovers: a touch `:hover` sticks to the tapped seat, so
+           an ungated fill and lift stayed painted after a tap (O-161). The tab, trigger,
+           switcher and DarkModeToggle hovers take the same gate. */
+        @media (hover: hover) {
+            &:hover:not(:disabled):not([aria-disabled="true"]) {
+                background: var(--dock-icon-hover-bg, var(--dock-control-hover-bg));
+                color: var(--btn-hover-color, var(--foreground));
+                scale: var(--scale-hover-dock);
+            }
         }
 
         /* The iOS press DARKEN-plus-shrink. Press lands the

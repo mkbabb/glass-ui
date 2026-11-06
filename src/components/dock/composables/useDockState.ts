@@ -561,6 +561,12 @@ export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
         syncDerived();
     }
 
+    /* A dock that mounts open (`collapse="open"`) arms the one idle window at mount, as
+       any open dock arms it when the pointer or focus leaves: "both collapse after the
+       one idle window". An interaction before it lapses clears or re-arms it through the
+       same handlers. */
+    if (state.value === "hover") scheduleCollapse();
+
     // Cleanup
     onUnmounted(() => {
         clearTimer();

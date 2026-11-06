@@ -66,10 +66,12 @@
            the bg cross-fade (glass-tier), the scale, and the specular gleam read
            together BEFORE click. The transform rides `--dock-press-spring`
            (`--spring-press`) per the easing doctrine. */
-        &:hover:not(:disabled):not([aria-disabled="true"]) {
-            background: var(--dock-control-hover-bg);
-            color: var(--foreground);
-            scale: var(--scale-hover-dock);
+        @media (hover: hover) {
+            &:hover:not(:disabled):not([aria-disabled="true"]) {
+                background: var(--dock-control-hover-bg);
+                color: var(--foreground);
+                scale: var(--scale-hover-dock);
+            }
         }
 
         /* The iOS press darken-plus-shrink (see the icon-button). */
@@ -141,15 +143,17 @@
         box-shadow: var(--border-hairline);
     }
 
-    .dock-tab-button[data-tier="secondary"]:hover:not(:disabled):not([aria-disabled="true"]),
-    .dock-icon-button[data-tier="secondary"]:hover:not(:disabled):not([aria-disabled="true"]) {
-        background: color-mix(in srgb, var(--card) 65%, transparent);
-        /* The composed PAIR, never the lit leg alone. `--glass-rim-top` is half of
-           `--glass-material-rim`: read on its own it puts a catch-light on the
-           key-facing edge with nothing grounding the opposite one, which is a halo, not
-           a key. Every surface in the library reads the pair by its one name. */
-        box-shadow:
-            var(--glass-material-rim),
-            0 0.5px 0 0 rgb(0 0 0 / 0.06);
+    @media (hover: hover) {
+        .dock-tab-button[data-tier="secondary"]:hover:not(:disabled):not([aria-disabled="true"]),
+        .dock-icon-button[data-tier="secondary"]:hover:not(:disabled):not([aria-disabled="true"]) {
+            background: color-mix(in srgb, var(--card) 65%, transparent);
+            /* The composed PAIR, never the lit leg alone. `--glass-rim-top` is half of
+               `--glass-material-rim`: read on its own it puts a catch-light on the
+               key-facing edge with nothing grounding the opposite one, which is a halo, not
+               a key. Every surface in the library reads the pair by its one name. */
+            box-shadow:
+                var(--glass-material-rim),
+                0 0.5px 0 0 rgb(0 0 0 / 0.06);
+        }
     }
 }

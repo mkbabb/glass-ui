@@ -196,6 +196,16 @@
         );
         aspect-ratio: 1;
         justify-content: center;
+        /* The folded face is the pill's own shape: its corner is the plate's rest corner
+           (`--dock-cap-rest`, run.css), so its keyboard ring follows the pill. */
+        border-radius: var(--dock-cap-rest);
+    }
+
+    /* The folded face's keyboard ring is the dock seats' ring (index.css), on the
+       pill's corner, never the UA's square one. */
+    .glass-dock .dock-layer--summary:focus-visible {
+        outline: var(--dock-ring-width) solid var(--dock-ring-color);
+        outline-offset: var(--dock-ring-offset);
     }
 
     /* The collapsed/summary glyph appears WITH the pill, no added

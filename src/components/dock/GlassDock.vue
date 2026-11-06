@@ -238,19 +238,42 @@ const {
 });
 
 const summaryIsDisclosure = computed(() => outerCurrentLayer.value === "summary");
-async function onSummaryKeydown(event: KeyboardEvent) {
-    if (!summaryIsDisclosure.value || !["Enter", " "].includes(event.key)) return;
-    event.preventDefault();
-    onClickCollapsed();
+/** Once the expand has patched the full face live, focus its first seat. The full face
+    is the fallback focus target (it carries `tabindex="-1"`): a dock whose expanded face
+    holds NO focusable descendant would otherwise no-op to <body>, and the summary goes
+    inert on expand — a keyboard trap. */
+async function focusFirstSeat(): Promise<void> {
     await nextTick();
-    // The full face is the fallback focus target (it carries `tabindex="-1"`): a dock
-    // whose expanded face holds NO focusable descendant would otherwise no-op to
-    // <body>, and the summary goes inert on expand — a keyboard trap.
     (
         fullEl.value?.querySelector<HTMLElement>(FOCUSABLE_SELECTOR) ?? fullEl.value
     )?.focus({
         preventScroll: true,
     });
+}
+
+async function onSummaryKeydown(event: KeyboardEvent) {
+    if (!summaryIsDisclosure.value || !["Enter", " "].includes(event.key)) return;
+    event.preventDefault();
+    onClickCollapsed();
+    await focusFirstSeat();
+}
+
+/* KEYBOARD FOCUS ON THE FOLDED FACE REOPENS THE DOCK ("reopen on pointer or focus").
+   Tab onto the summary expands the dock as focus anywhere in it does (`onFocusIn`,
+   called here so the expand is queued before the hand-off's tick), and hands focus to the first seat before the summary goes inert, as
+   Enter does. Two focuses are not the user's reach and do not expand: the collapse's
+   own hand-off (the watcher below puts focus here as the dock folds), and a pointer
+   press on the summary, whose click is the disclosure (`onClickCollapsed`). */
+let summaryFocusFromCollapse = false;
+function onSummaryFocusIn(event: FocusEvent): void {
+    const reach =
+        !summaryFocusFromCollapse &&
+        summaryIsDisclosure.value &&
+        !!summaryEl.value?.matches(":focus-visible");
+    event.stopPropagation();
+    if (!reach) return;
+    onFocusIn();
+    void focusFirstSeat();
 }
 
 // Escape belongs to the innermost owner. The gate is STRUCTURAL, not `defaultPrevented`:
@@ -301,7 +324,10 @@ watch(visualExpanded, async (isExpanded, was) => {
     if (!held) return;
     await nextTick();
     const summary = summaryEl.value;
-    if (summary && !summary.hasAttribute("inert")) summary.focus({ preventScroll: true });
+    if (!summary || summary.hasAttribute("inert")) return;
+    summaryFocusFromCollapse = true;
+    summary.focus({ preventScroll: true });
+    summaryFocusFromCollapse = false;
 });
 
 /* The CLICK-INTEGRITY guard. Scopes the collapsed-tap / hover-
@@ -521,7 +547,7 @@ defineExpose({
                 :aria-label="summaryIsDisclosure ? 'Expand dock' : undefined"
                 :aria-expanded="summaryIsDisclosure ? 'false' : undefined"
                 :aria-controls="summaryIsDisclosure ? `${dockId}-full` : undefined"
-                @focusin.stop
+                @focusin="onSummaryFocusIn"
                 @keydown="onSummaryKeydown"
                 @click="onClickCollapsed"
             >

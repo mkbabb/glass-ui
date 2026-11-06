@@ -119,11 +119,15 @@
        notch brighter at the grazing edge than the global whisper — so it is declared
        once here, for every capsule composer, rather than re-declared by each of them.
        The dark arm rides softer; both live at `tokens/property-regs-specular.css`. */
-    .glass-capsule-hover:hover {
-        --glass-specular-intensity-hover: var(--glass-specular-capsule-hover);
-        /* the 1.5% press-ready lift (the lift is hover-only; the drag-lift carries no
-           scale of its own — the translate/squish are the morph primitive's writes) */
-        scale: 1.015;
+    /* Hover paint needs a pointer that hovers: on touch, `:hover` sticks to the last
+       tapped element, so an ungated lift would stay lit after the tap (O-161). */
+    @media (hover: hover) {
+        .glass-capsule-hover:hover {
+            --glass-specular-intensity-hover: var(--glass-specular-capsule-hover);
+            /* the 1.5% press-ready lift (the lift is hover-only; the drag-lift carries no
+               scale of its own — the translate/squish are the morph primitive's writes) */
+            scale: 1.015;
+        }
     }
     .glass-capsule-hover:not([data-press-armed]):active {
         /* the --scale-press snap */

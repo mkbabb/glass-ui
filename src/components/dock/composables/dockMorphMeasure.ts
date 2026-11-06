@@ -226,7 +226,8 @@ export function useDockExpandedSize(
      * is read from the seats' layout boxes (`offset*`), and neither it nor the port
      * depends on the yield, so the flag is a pure reading of the layout. It is read
      * wherever an endpoint is, since the same observers see the port and the seats
-     * change.
+     * change. On a vertical run whose seats fit it also writes `--dock-run-room-block`,
+     * half the room they leave, which the run's block reserve yields to.
      */
     let yieldPublished = "";
 
@@ -241,10 +242,17 @@ export function useDockExpandedSize(
             end = Math.max(end, offset + (horizontal ? seat.offsetWidth : seat.offsetHeight));
         }
         const port = horizontal ? run.clientWidth : run.clientHeight;
-        const value = end > start && end - start <= port ? "1" : "0";
+        const fits = end > start && end - start <= port;
+        // The vertical reserve yields as padding (run.css THE VERTICAL RESERVE YIELDS
+        // TOO): half the room the seats leave in the port. The port is the run's padding
+        // box, which its margins fix, so the padding this writes does not move it.
+        const room = !horizontal && fits ? `${Math.floor(((port - (end - start)) / 2) * 100) / 100}px` : "";
+        const value = `${fits ? "1" : "0"} ${room}`;
         if (value === yieldPublished) return;
         yieldPublished = value;
-        root.toggleAttribute("data-run-fits", value === "1");
+        if (room) root.style.setProperty("--dock-run-room-block", room);
+        else root.style.removeProperty("--dock-run-room-block");
+        root.toggleAttribute("data-run-fits", fits);
     }
 
     /**

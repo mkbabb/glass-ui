@@ -80,6 +80,29 @@ function getRootEl(): HTMLElement | null {
 
 const { isHeld } = useDockHold(getRootEl);
 
+/* THE GRAB IS TAKEN AT THE PRESS (O-167). With `contain` alignment reka 2.10 records
+   the thumb's grab offset, `clientX − thumb.left`, on the FIRST `pointermove` of a
+   thumb drag rather than at the press, so the offset carries that first move's travel
+   and the thumb trails the pointer by it for the whole drag (4 px per 4 px step,
+   measured). This handler runs after reka's own `pointerdown` (the merged `onX` chain
+   lands last, above), once the thumb holds the pointer capture, and hands reka one
+   `pointermove` at the press point: the offset is then the true grab, the value does
+   not move, and every later move tracks the pointer 1:1 on the same frame. */
+function onPointerDown(event: PointerEvent): void {
+    const thumb = (event.target as Element | null)?.closest?.<HTMLElement>(".slider-thumb");
+    if (!thumb || !thumb.hasPointerCapture(event.pointerId)) return;
+    thumb.dispatchEvent(
+        new PointerEvent("pointermove", {
+            bubbles: true,
+            clientX: event.clientX,
+            clientY: event.clientY,
+            pointerId: event.pointerId,
+            pointerType: event.pointerType,
+            isPrimary: event.isPrimary,
+        }),
+    );
+}
+
 const loupeRef = useTemplateRef<HTMLElement>("loupeRef");
 
 /* The weight-train velocity bridge. Writes the bounded `--atom-drag-v` and the ONE
@@ -279,6 +302,7 @@ onMounted(() => {
         :data-motion="motionAxis.dataMotion.value"
         :style="hostStyle"
         v-bind="forwarded"
+        @pointerdown="onPointerDown"
     >
         <!--
             The focus veil — the world's half of the grasp, TELEPORTED to `<body>`.

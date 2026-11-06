@@ -134,11 +134,27 @@
 }
 
 /* The fill COMPOSES `.glass-liquid-fill`; this bridges the slider's one consumer
-   colour input onto the register's tint knob. */
+   colour input onto the register's tint knob. `--slider-fill-ink` is the library's
+   default under it, read by the fill and the loupe's fill alike.
+   THE DARK DEFAULT IS A CALM INK (O-167). The warm capsule floor's dark peer
+   (`oklch(0.42 0.06 75)`) is a floor, not a value: laid on a dark dock plate as a fill
+   it read as a brown stain. On the dark canvas the fill is the foreground's own ink at a
+   quiet strength, neutral and below the thumb's light, so the value reads without an
+   over-lit colour. A consumer's `--slider-range-bg` still wins in both themes. */
+.glass-slider,
+.glass-loupe {
+    --slider-fill-ink: var(--glass-capsule-warm);
+}
+
+.dark .glass-slider,
+.dark .glass-loupe {
+    --slider-fill-ink: color-mix(in oklab, var(--foreground) 22%, transparent);
+}
+
 .slider-range {
     position: absolute;
     height: 100%;
-    --liquid-fill-tint: var(--slider-range-bg, var(--glass-capsule-warm));
+    --liquid-fill-tint: var(--slider-range-bg, var(--slider-fill-ink));
 }
 
 /* THE LANE — the range's containing block (Slider.vue). On the scrubber it is the track
@@ -558,7 +574,7 @@
     inset-block: 0;
     inset-inline-start: 0;
     inline-size: var(--loupe-fill-w, 0px);
-    background: var(--slider-range-bg, var(--glass-capsule-warm));
+    background: var(--slider-range-bg, var(--slider-fill-ink));
 }
 
 /* The value mark is PURE SIGNAL — full-strength ink on the housing's own axis, never

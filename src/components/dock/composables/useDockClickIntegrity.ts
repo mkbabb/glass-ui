@@ -39,6 +39,15 @@
 // such pass: from DOM events alone a press on a control that just arrived looks the
 // same as race (b), so those still defer until settle.
 //
+// THE RE-AIM ARM [10.1.5 · O-177]. Race (b) is a STATIONARY pointer: the hover dwell
+// expanded the dock under it and the press lands where the pointer already was. A press
+// made after the flip by intent was aimed at the arriving layout, so it is not the race
+// even while the morph is in flight: it activates its seat once, like a press at rest.
+// Two readings say so. A flip a press caused (a click or tap on the folded face) has no
+// stationary pointer to race, so every later press is a new one. A flip the hover dwell
+// caused races only a press at the pointer's flip position: one the pointer travelled
+// more than `REAIM_PX` from there to make was re-aimed.
+//
 // This makes the consumer's interim arms (the `@touchend.prevent` +
 // 320ms capture-phase guard keyed off the exposed `expanded` ref) UNNECESSARY: the
 // guard lives inside GlassDock. The exposed `expanded` ref STAYS exposed (a
@@ -48,6 +57,9 @@
 
 import { onBeforeUnmount, readonly, ref, watch, type Ref } from "vue";
 import { MORPH_SETTLE_MS } from "../constants";
+
+/** A press this far (CSS px) from the pointer's position at the flip was re-aimed. */
+const REAIM_PX = 6;
 
 export interface DockClickIntegrity {
     /** Capture-phase `pointerdown` handler — records the press-time element + state. */
@@ -94,6 +106,36 @@ export function useDockClickIntegrity(
     let settleDeadline = 0;
     let settleTimer: ReturnType<typeof setTimeout> | null = null;
     const pressKeepaliveLayer = ref<"full" | null>(null);
+    // The last pointer position the root saw, and where it was at the latest flip.
+    let pointerAt: { x: number; y: number } | null = null;
+    let flipAt: { x: number; y: number } | null = null;
+    // When the latest click reached the root, and whether the latest flip followed one.
+    let lastClickAt = -Infinity;
+    let flipByPress = false;
+    let flipped = false;
+
+    function onPointerMove(event: PointerEvent): void {
+        pointerAt = { x: event.clientX, y: event.clientY };
+    }
+
+    watch(
+        rootEl,
+        (root, _, onCleanup) => {
+            if (!root) return;
+            root.addEventListener("pointermove", onPointerMove, { capture: true, passive: true });
+            onCleanup(() => root.removeEventListener("pointermove", onPointerMove, true));
+        },
+        { immediate: true, flush: "sync" },
+    );
+
+    /** Was this press aimed after the flip: begun away from where the pointer stood? */
+    function reAimed(event: PointerEvent): boolean {
+        // No flip witnessed: the guard holds. A flip with the pointer outside the dock
+        // means the press travelled to it.
+        if (!flipped) return false;
+        if (flipByPress || !flipAt) return true;
+        return Math.hypot(event.clientX - flipAt.x, event.clientY - flipAt.y) > REAIM_PX;
+    }
     let pressControl: HTMLElement | null = null;
     const inertedBranches: Array<{ element: HTMLElement; wasInert: boolean }> = [];
 
@@ -141,6 +183,10 @@ export function useDockClickIntegrity(
         expand path — a tap-expand or a hover/focus expand). The window is the floor
         backstop; `[data-morphing]` is the live primary. */
     function markExpandFlip(): void {
+        flipped = true;
+        flipAt = pointerAt;
+        // The flip runs in the watcher flush after the click that caused it.
+        flipByPress = now() - lastClickAt < 100;
         settleDeadline = now() + MORPH_SETTLE_MS;
         clearSettleTimer();
         // A timer is NOT strictly needed for the decision (the click handler reads the
@@ -175,11 +221,13 @@ export function useDockClickIntegrity(
     function onPointerDownCapture(event: PointerEvent): void {
         clearPressKeepalive();
         pressTarget = event.target;
+        pointerAt = { x: event.clientX, y: event.clientY };
         // A press that BEGINS while the box is still morphing is a race by
         // construction (the approach-hover already swapped the layer, but the layout
         // is unstable — the control under the finger is mid-flight). Recorded so the
         // click decision can DEFER it regardless of identity.
-        pressedDuringMorph = morphInFlight();
+        // A press re-aimed after the flip is not the race (THE RE-AIM ARM, above).
+        pressedDuringMorph = morphInFlight() && !reAimed(event);
     }
 
     watch(visualExpanded, (expanded, wasExpanded) => {
@@ -209,6 +257,7 @@ export function useDockClickIntegrity(
     }
 
     function onClickCapture(event: MouseEvent): void {
+        lastClickAt = now();
         clearPressKeepalive();
         const pressedDuringMorphSnapshot = pressedDuringMorph;
         pressedDuringMorph = false;
