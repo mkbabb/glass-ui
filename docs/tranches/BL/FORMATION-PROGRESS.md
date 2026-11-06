@@ -833,3 +833,4 @@ Disk episode, one line: on 2026-11-03 the volume went from 100% (15 GiB free) to
 - 2026-11-05 19:00 — INBOUND O-165 (daraksha's hover ellipse witness, value's O-159) is added to 10.1.5's inbound-O-156.md.
 - 2026-11-05 19:12 — INBOUND O-166 (G10: the leading-end square plate) and O-167 (G11: the dock Slider stain and jerk) go to 10.1.5 (inbound-O-166.md). The morph smoothing goes to W-0.8 and the D2 bar. G1 is owner-visible until 10.1.5 publishes.
 - 2026-11-05 19:28 — 10.1.5 critic 6 is measured: fix 5 holds, and there is one defect (L1, a cut cap left at rest after the overflow vanishes, already present on 10.1.4). Fix 7 is running. orchestrator-note-round7.md puts the unwitnessed inbounds (O-157, O-159 to O-162, O-165 to O-167) in scope.
+- 2026-11-05 19:40 — INBOUND O-168: Gregg's springs and data-viz entrance register. (1) The CSS twins already ship. (2) The register is a W-F.1 addendum, delivered in 11.1.0.

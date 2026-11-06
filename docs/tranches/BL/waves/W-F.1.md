@@ -294,3 +294,21 @@ R.done();
 ```
 
 When W-F.2 moves the accordion onto the grid-rows transition, G9's accordion case reads `grid-template-rows` on the same element; the bound is unchanged.
+
+## Addendum O-168 (Gregg via sci-report-ef, owner order 2026-11-05): the data-viz entrance register
+
+The owner's order, verbatim: "Gregg and other items in their animations need their springs dialed slightly back with a sense of proportion--with better and more suffusal of animation--refer to the breath of life and movement of momentum edicts in glass for reference to ios 27's glass language. Refine and design more animations herein--with communication to SCI and glass and any other ancilliary instances hereof."
+
+Gregg is moving every spring onto `springPreset()`. It is dropping its own arrive (ζ 0.58) and hero landing (ζ 0.55) springs, and it is adopting vReveal, useScrollTrigger, useLiquidReveal and useSpringMount. It asks whether glass has a register for data-viz entrances: marks landing in a stagger, a bar growing from its baseline, a map ripple.
+
+W-SPRING-ONE answers this with a single named entrance register over the existing presets, not new springs:
+- **Mark landing** is `present`.
+- **A bar or area growing from its baseline** is `panel`, on the bar's own axis, scaling from the baseline with no overshoot past the value.
+- **A ripple or radial field** is `bloom`.
+- **Stagger spacing** is one token and one `useStagger` default, capped so that the total cascade stays inside one `panel` duration.
+
+The register lives in `docs/canon/motion-system.md` with a demo story, and each entry has a CSS twin (`--spring-*`) and a JS twin (`springPreset`).
+
+The gate is a chart story landing marks, bars and a ripple in both engines, with the cascade's total duration measured against the cap.
+
+Gregg sends any gaps as rows with repros. Its question (1) is already met: all six presets ship as CSS twins in 10.1.4, in `dist/styles/tokens/scheme-spring.css` through `@mkbabb/glass-ui/styles`.
