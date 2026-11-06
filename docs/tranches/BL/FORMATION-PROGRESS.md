@@ -842,3 +842,4 @@ Disk episode, one line: on 2026-11-03 the volume went from 100% (15 GiB free) to
 - 2026-11-05 22:30 — INBOUND O-174 (the dark aurora): (1) goes to W-0.1; (2) and (3) go to W-G.4. I corrected value's assumption that W-G.4 is in 11.0.0.
 - 2026-11-05 22:34 — 11.0.0 fix 3 is done (the anchor prose, and README dist/glass-ui.css). Critic 3 is running.
 - 2026-11-05 22:45 — INBOUND O-175 (dark-shadow glow, the class as the mode, the shadow-token surface) goes to W-C.5, in 11.1.0.
+- 2026-11-05 22:50 — INBOUND O-176 and O-177 (parkway G8 and G14) go to 10.1.5. O-178 (G12, the popover reference) goes to W-E.4 and O-179 (G13, the sheet skew) to W-E.3, both in 11.1.0. Parkway asked for 10.1.5 by 06:30 on Nov 6; I answered no.

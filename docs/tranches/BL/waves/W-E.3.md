@@ -201,3 +201,11 @@ process.exitCode = fails ? 1 : 0;
 
 ## Addendum (2026-11-04): INBOUND O-137, the PEEK floor measured
 §3 item 3's floor is what the Sheet measures, not a token sum: the plate's padding, the grip's operable row and the foot of the first rendered content block (its header included), plus the footer's seam and action only when a footer renders, read once per layout from a ResizeObserver and published as `--sheet-floor`. HEAD's sum (`sheet/styles.css:530-543`) counts a footer and an action keyframes' PEEK does not render, so it rests at 171 px where the header-only foot is 157 px. Ruled (b) over (a): `min(171px, foot)` would keep a second authority, and a `floor="content"` prop would be a consumer knob over a wrong floor. Gate: kf's easing and sequence PEEK rest on a row foot at 390×844 and 430×932 with 0 painted px of the next block, ×2, with no kf `min-block-size` override; E3-G3..G5 and G9 hold.
+
+## Addendum O-179 (parkway NPIG-G13 via sci-report-36, 2026-11-05): the sheet's entry shear
+
+The owner likes a matrix or skew shear as a side sheet enters. Side sheets take a `--sheet-enter-skew` token: the shear angle at the start of entry, which springs to 0 on the sheet's own preset. The default is 0, so the shear is opt-in per consumer. It is a transform only, with no layout cost, and under reduced motion there is no shear.
+
+Gate, in both engines: with the token set, the sheet's first entry frame carries the skew and the settled frame carries none. Content stays legible throughout. N-16 judges the default.
+
+Delivered in the 11.1.0 feature run.
