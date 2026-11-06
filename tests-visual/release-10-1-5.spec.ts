@@ -60,6 +60,7 @@
 //   l1  (L1) a run whose overflow vanishes while it is scrolled (to its end, or mid) rests
 //       round: a lifted cap, a viewport resize 390 → 844, and a vertical run's stage grown
 import { expect, test, type Page } from "@playwright/test";
+import { PNG } from "pngjs";
 
 async function open(page: Page, query: string): Promise<void> {
     await page.goto(`/tests-visual/release-10-1-5/harness.html?${query}`);
@@ -1620,8 +1621,87 @@ function m3DockSlider(): void {
     });
 }
 
+/** M5 · O-182: in dark no dock casts light past its plate; the shadow is a dark. */
+function m5(): void {
+    for (const [name, q] of [
+        ["horizontal", "collapse=false&kinds=tab:Home,icon,icon,icon"],
+        ["vertical", "collapse=false&orientation=vertical&stageH=420&kinds=icon,icon,icon,icon"],
+        ["collapsed", "collapse=closed&kinds=icon,icon,icon"],
+    ] as const) {
+        test(`m5 O-182 ${name}: in dark nothing past the plate is lighter than the ground`, async ({ page }) => {
+            for (const width of [390, 1440]) {
+                await page.setViewportSize({ width, height: 800 });
+                await open7(page, `scene=dock&${q}&dark=1&bg=${encodeURIComponent("var(--background)")}`);
+                await page.mouse.move(2, 790);
+                // Room for the whole 24 px band inside the page, on the flat ground.
+                await page.evaluate(() => {
+                    const stage = document.querySelector<HTMLElement>(".glass-dock")!.parentElement!;
+                    stage.style.padding = "40px";
+                    stage.style.background = "var(--background)";
+                });
+                await settle(page, 500);
+                const pb = await page.evaluate(() => {
+                    const r = document.querySelector<HTMLElement>(".glass-dock > .dock-plate")!.getBoundingClientRect();
+                    return { x: r.left, y: r.top, w: r.width, h: r.height };
+                });
+                const B = 24;
+                const clip = { x: pb.x - B, y: pb.y - B, width: pb.w + 2 * B, height: pb.h + 2 * B };
+                const png = PNG.sync.read(await page.screenshot({ clip, scale: "css" }));
+                const lum = (i: number) => 0.2126 * png.data[i]! + 0.7152 * png.data[i + 1]! + 0.0722 * png.data[i + 2]!;
+                const ground = lum(0);
+                let lighter = 0;
+                let worst = 0;
+                for (let y = 0; y < png.height; y += 1)
+                    for (let x = 0; x < png.width; x += 1) {
+                        if (x >= B - 1 && x < png.width - B + 1 && y >= B - 1 && y < png.height - B + 1) continue;
+                        const d = lum((y * png.width + x) * 4) - ground;
+                        if (d > 1.5) lighter += 1;
+                        worst = Math.max(worst, d);
+                    }
+                if (process.env.M5_DUMP) (await import("node:fs")).writeFileSync(`${process.env.M5_DUMP}/m5-${name}-${width}-${test.info().project.name}.png`, PNG.sync.write(png));
+                expect(lighter, `${name} ${width}: band pixels lighter than the ground ${ground.toFixed(1)} (worst +${worst.toFixed(1)})`).toBe(0);
+                const L = await page.evaluate(() => {
+                    const read = (bg: string) => {
+                        const el = document.createElement("span");
+                        el.style.background = bg;
+                        document.body.append(el);
+                        const c = getComputedStyle(el).backgroundColor;
+                        el.remove();
+                        const cv = document.createElement("canvas");
+                        cv.width = cv.height = 1;
+                        const g = cv.getContext("2d")!;
+                        g.fillStyle = c;
+                        g.fillRect(0, 0, 1, 1);
+                        const [r, gg, b] = g.getImageData(0, 0, 1, 1).data;
+                        return 0.2126 * r! + 0.7152 * gg! + 0.0722 * b!;
+                    };
+                    return { shadow: read("var(--shadow-color)"), ground: read("var(--background)") };
+                });
+                expect(L.shadow, `${name} ${width}: the shadow is no lighter than the ground (${JSON.stringify(L)})`).toBeLessThanOrEqual(L.ground);
+            }
+        });
+    }
+
+    test("m5 O-182 light: the shadow is still the foreground", async ({ page }) => {
+        await open7(page, "scene=dock&collapse=false&kinds=icon,icon");
+        const same = await page.evaluate(() => {
+            const read = (bg: string) => {
+                const el = document.createElement("span");
+                el.style.background = bg;
+                document.body.append(el);
+                const c = getComputedStyle(el).backgroundColor;
+                el.remove();
+                return c;
+            };
+            return [read("var(--shadow-color)"), read("var(--foreground)")];
+        });
+        expect(same[0]).toBe(same[1]);
+    });
+}
+
 function m(): void {
     m1();
+    m5();
     m2();
     m4();
     m3StaticInk();
