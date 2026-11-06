@@ -1,0 +1,50 @@
+{
+ "id": "E-10",
+ "engine": "chromium",
+ "version": "149.0.7827.55",
+ "target": {
+  "fixture": true,
+  "fault": "e10-traillate"
+ },
+ "loadStart": "19.4/20.4/19.0",
+ "loadEnd": "20.6/20.7/19.1",
+ "verdict": "FAIL",
+ "cells": [
+  {
+   "name": "E-10 clipstale trail · wheel-over · engaged",
+   "status": "FAIL",
+   "line": "keyboard engaged, the scroller wheeled with the pointer over the control (6 × 8 px) · per film frame, the red spacer's last row to the root's first row, against its median · engaged: 44 of 44 frames read (9 with the spacer moving), distance median 1 px, worst 15 px off (frame:Δ 5:7 6:11 7:12 8:14 9:15 10:13 11:4), scrolled 48 px, promoted true | 45 of 45 frames read (7 with the spacer moving), distance median 1 px, worst 17 px off (frame:Δ 6:12 7:15 8:17 9:16 10:15 11:6), scrolled 48 px, promoted true | 45 of 45 frames read (7 with the spacer moving), distance median 1 px, worst 19 px off (frame:Δ 6:5 7:9 8:11 9:18 10:19 11:8), scrolled 48 px, promoted true · bound ≤ the released films' worst 0 + 1 = 1 px; 3 of 3 engaged films over it",
+   "load": "21.4/20.8/19.1"
+  },
+  {
+   "name": "E-10 clipstale trail · wheel-over · released",
+   "status": "REPORT",
+   "line": "35 of 35 frames read (5 with the spacer moving), distance median 1 px, worst 0 px off, scrolled 48 px | 34 of 34 frames read (4 with the spacer moving), distance median 1 px, worst 0 px off, scrolled 48 px | 34 of 34 frames read (4 with the spacer moving), distance median 1 px, worst 0 px off, scrolled 48 px",
+   "load": "21.4/20.8/19.1"
+  },
+  {
+   "name": "E-10 clipstale trail · wheel-away · engaged",
+   "status": "FAIL",
+   "line": "keyboard engaged, the scroller wheeled with the pointer over its content beside the control (6 × 8 px) · per film frame, the red spacer's last row to the root's first row, against its median · engaged: 43 of 43 frames read (7 with the spacer moving), distance median 1 px, worst 18 px off (frame:Δ 5:15 6:18 7:18 8:17 9:14 10:5), scrolled 48 px, promoted true | 44 of 44 frames read (8 with the spacer moving), distance median 1 px, worst 21 px off (frame:Δ 5:7 6:14 7:17 8:16 9:21 10:12 11:2), scrolled 48 px, promoted true | 44 of 44 frames read (9 with the spacer moving), distance median 1 px, worst 18 px off (frame:Δ 5:7 6:14 7:17 8:18 9:15 10:12 11:3), scrolled 48 px, promoted true · bound ≤ the released films' worst 0 + 1 = 1 px; 3 of 3 engaged films over it",
+   "load": "23.4/21.2/19.3"
+  },
+  {
+   "name": "E-10 clipstale trail · wheel-away · released",
+   "status": "REPORT",
+   "line": "34 of 34 frames read (4 with the spacer moving), distance median 1 px, worst 0 px off, scrolled 48 px | 34 of 34 frames read (4 with the spacer moving), distance median 1 px, worst 0 px off, scrolled 48 px | 34 of 34 frames read (4 with the spacer moving), distance median 1 px, worst 0 px off, scrolled 48 px",
+   "load": "23.4/21.2/19.3"
+  },
+  {
+   "name": "E-10 clipstale trail · page · engaged",
+   "status": "FAIL",
+   "line": "keyboard engaged, the page wheeled with the pointer outside the scroller (6 × 8 px) · per film frame, the red spacer's last row to the root's first row, against its median · engaged: 44 of 44 frames read (8 with the spacer moving), distance median 1 px, worst 20 px off (frame:Δ 5:7 6:14 7:16 8:15 9:20 10:12 11:3), scrolled 48 px, promoted true | 44 of 44 frames read (9 with the spacer moving), distance median 1 px, worst 18 px off (frame:Δ 5:7 6:14 7:18 8:18 9:15 10:12 11:3), scrolled 48 px, promoted true | 43 of 43 frames read (7 with the spacer moving), distance median 1 px, worst 19 px off (frame:Δ 5:15 6:18 7:19 8:19 9:16 10:4), scrolled 48 px, promoted true · bound ≤ the released films' worst 0 + 1 = 1 px; 3 of 3 engaged films over it",
+   "load": "20.6/20.7/19.1"
+  },
+  {
+   "name": "E-10 clipstale trail · page · released",
+   "status": "REPORT",
+   "line": "33 of 33 frames read (4 with the spacer moving), distance median 1 px, worst 0 px off, scrolled 48 px | 34 of 34 frames read (4 with the spacer moving), distance median 1 px, worst 0 px off, scrolled 48 px | 34 of 34 frames read (4 with the spacer moving), distance median 1 px, worst 0 px off, scrolled 48 px",
+   "load": "20.6/20.7/19.1"
+  }
+ ]
+}

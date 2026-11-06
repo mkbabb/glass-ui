@@ -1,0 +1,22 @@
+# C3 · 2026-11-05 06:49:35 · admitted · load { 14.08 15.44 16.79 }
+  start 06:49:35 · +0 min · st-E-10 chromium
+  end   07:10:19 · st-E-10 chromium · OK     E-10 chromium fault   e10-twoengaged (CK-15 (H4): on the hand-off the outgoing slider keeps its engagement for 250 ms after the incoming one takes it: two engaged  · # exit 143 · 2026-11-05 07:10:19 · load { 9.47 10.93 12.55 } · st-E-10-chromium.log
+  start 07:10:19 · +20 min · st-E-6 chromium
+  end   07:11:38 · st-E-6 chromium · selftest: 8 runs, 0 N/A; every witness passes its fixture, fails each planted violation on the planted cell, and passes each control, in every engine with an input for it · # exit 0 · 2026-11-05 07:11:38 · load { 14.30 12.11 12.86 } · st-E-6-chromium.log
+  start 07:11:38 · +22 min · fx-E-10 chromium --part hostglide
+  end   07:12:29 · fx-E-10 chromium · E-10 chromium FAIL · 23 pass, 3 fail, 0 unmeasured of 26 gating cells (0 reported) · load 14.3/12.1/12.9 at start, 15.8/12.7/13.0 at end · # exit 1 · 2026-11-05 07:12:29 · load { 15.84 12.70 13.01 } · fx-E-10-chromium-23cd0b.log
+  start 07:12:29 · +22 min · st-E-7 chromium
+  end   07:12:45 · st-E-7 chromium · selftest: 7 runs, 0 N/A; every witness passes its fixture, fails each planted violation on the planted cell, and passes each control, in every engine with an input for it · # exit 0 · 2026-11-05 07:12:45 · load { 12.93 12.20 12.83 } · st-E-7-chromium.log
+  start 07:12:45 · +23 min · st-E-13 chromium
+  end   07:24:34 · st-E-13 chromium · selftest: 8 runs, 0 N/A; every witness passes its fixture, fails each planted violation on the planted cell, and passes each control, in every engine with an input for it · # exit 0 · 2026-11-05 07:24:34 · load { 14.17 13.72 13.31 } · st-E-13-chromium.log
+/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-14/H14-records/run.sh:51: parse error near `)'
+  start 07:24:34 · +34 min · probe-zoom-units chromium
+  end   07:24:35 · probe-zoom-units chromium ·  · # exit 0 · 2026-11-05 07:24:34 · load { 14.87 13.87 13.37 } · probe-zoom-units-chromium.log
+  start 07:24:35 · +35 min · st-E-11 chromium
+  end   08:05:54 · st-E-11 chromium · OK     E-11 chromium fault   e11-silent (CK-21: the engagement reads --fx-scale-engage at runtime and, when it is unreadable, degrades to no grow with no console.error) e · # exit 143 · 2026-11-05 08:05:54 · load { 16.44 19.03 17.75 } · st-E-11-chromium.log
+  start 08:05:54 · +76 min · fx-E-10 chromium --part hostglide
+  end   08:06:49 · fx-E-10 chromium · E-10 chromium PASS · 26 pass, 0 fail, 0 unmeasured of 26 gating cells (0 reported) · load 15.9/18.9/17.7 at start, 19.2/19.2/17.9 at end · # exit 0 · 2026-11-05 08:06:49 · load { 19.16 19.16 17.86 } · fx-E-10-chromium-23cd0b-080554.log
+  start 08:06:49 · +77 min · fx-E-10 chromium --part hostglide
+  end   08:07:41 · fx-E-10 chromium · E-10 chromium PASS · 26 pass, 0 fail, 0 unmeasured of 26 gating cells (0 reported) · load 18.8/19.1/17.8 at start, 18.0/18.8/17.8 at end · # exit 0 · 2026-11-05 08:07:41 · load { 18.05 18.79 17.80 } · fx-E-10-chromium-23cd0b-080649.log
+  HELD at the cutoff (+78 min, est 40) · st-E-11 chromium
+# C3 · 2026-11-05 08:07:41 · done · load { 18.05 18.79 17.80 } · left 17

@@ -1,0 +1,62 @@
+{
+ "id": "E-5",
+ "engine": "chromium",
+ "version": "149.0.7827.55",
+ "target": {
+  "fixture": true,
+  "fault": "e9-dark"
+ },
+ "loadStart": "19.6/18.7/16.7",
+ "loadEnd": "22.3/19.4/17.0",
+ "verdict": "FAIL",
+ "cells": [
+  {
+   "name": "E-5 pop sustain light",
+   "status": "PASS",
+   "line": "3 of 3 reads sustain (the three-read rule: all must) · the press light's distance from rest at +200 ms → +1200 ms over [background-color]: read 1 0.185 → 0.185 ×1.00 · landed by +200 ms (read at +201.5: 0.185 of the landed 0.185 = ×1.00, bound ≥ ×0.9; onset at half +50 ms (read at +50.5); [+25 0.15 +50 0.75 +75 1.00 +100 1.00 +125 1.00 +150 1.00 +175 1.00 +200 1.00]) · clock from the first touchstart, 25.5 ms after the send · read 2 0.185 → 0.185 ×1.00 · landed by +200 ms (read at +203: 0.185 of the landed 0.185 = ×1.00, bound ≥ ×0.9; onset at half +50 ms (read at +50); [+25 0.46 +50 0.90 +75 1.00 +100 1.00 +125 1.00 +150 1.00 +175 1.00 +200 1.00]) · clock from the first touchstart, 29.0 ms after the send · read 3 0.185 → 0.185 ×1.00 · landed by +200 ms (read at +201.5: 0.185 of the landed 0.185 = ×1.00, bound ≥ ×0.9; onset at half +50 ms (read at +52.5); [+25 0.15 +50 0.77 +75 1.00 +100 1.00 +125 1.00 +150 1.00 +175 1.00 +200 1.00]) · clock from the first touchstart, 21.5 ms after the send (bound ≥ ×0.95 on every read, and landed by +200 ms on every read)",
+   "load": "19.1/18.7/16.7"
+  },
+  {
+   "name": "E-5 pop press light",
+   "status": "PASS",
+   "line": ":active true · Δscale -0.040 · touch-changed [background-color] · hover-changed [background-color] · press-only [background-color]",
+   "load": "19.1/18.7/16.7"
+  },
+  {
+   "name": "E-5 pop sustain(PRM) light",
+   "status": "FAIL",
+   "line": "0 of 3 reads sustain (the three-read rule: all must) · the press light's distance from rest at +200 ms → +1200 ms over []: read 1 NOT DRIVEN (no press-only property at +1200 ms) · read 2 NOT DRIVEN (no press-only property at +1200 ms) · read 3 NOT DRIVEN (no press-only property at +1200 ms) (bound ≥ ×0.95 on every read, and landed by +200 ms on every read)",
+   "load": "19.1/18.7/16.7"
+  },
+  {
+   "name": "E-5 pop press-light(PRM) light",
+   "status": "FAIL",
+   "line": ":active true · Δscale 0.000 · touch-changed [background-color] · hover-changed [background-color] · press-only [] (bound ≥ 1 press-only property under reduce)",
+   "load": "19.1/18.7/16.7"
+  },
+  {
+   "name": "E-5 pop sustain dark",
+   "status": "PASS",
+   "line": "3 of 3 reads sustain (the three-read rule: all must) · the press light's distance from rest at +200 ms → +1200 ms over [background-color]: read 1 0.179 → 0.179 ×1.00 · landed by +200 ms (read at +200.60009765625: 0.179 of the landed 0.179 = ×1.00, bound ≥ ×0.9; onset at half +50 ms (read at +50.60009765625); [+25 0.46 +50 0.91 +75 1.00 +100 1.00 +125 1.00 +150 1.00 +175 1.00 +200 1.00]) · clock from the first touchstart, 25.4 ms after the send · read 2 0.179 → 0.179 ×1.00 · landed by +200 ms (read at +201.89990234375: 0.179 of the landed 0.179 = ×1.00, bound ≥ ×0.9; onset at half +50 ms (read at +53.89990234375); [+25 0.46 +50 1.00 +75 1.00 +100 1.00 +125 1.00 +150 1.00 +175 1.00 +200 1.00]) · clock from the first touchstart, 30.1 ms after the send · read 3 0.179 → 0.179 ×1.00 · landed by +200 ms (read at +201: 0.179 of the landed 0.179 = ×1.00, bound ≥ ×0.9; onset at half +50 ms (read at +51); [+25 0.46 +50 0.91 +75 1.00 +100 1.00 +125 1.00 +150 1.00 +175 1.00 +200 1.00]) · clock from the first touchstart, 32.0 ms after the send (bound ≥ ×0.95 on every read, and landed by +200 ms on every read)",
+   "load": "22.3/19.4/17.0"
+  },
+  {
+   "name": "E-5 pop press dark",
+   "status": "PASS",
+   "line": ":active true · Δscale -0.040 · touch-changed [background-color] · hover-changed [background-color] · press-only [background-color]",
+   "load": "22.3/19.4/17.0"
+  },
+  {
+   "name": "E-5 pop sustain(PRM) dark",
+   "status": "FAIL",
+   "line": "0 of 3 reads sustain (the three-read rule: all must) · the press light's distance from rest at +200 ms → +1200 ms over []: read 1 NOT DRIVEN (no press-only property at +1200 ms) · read 2 NOT DRIVEN (no press-only property at +1200 ms) · read 3 NOT DRIVEN (no press-only property at +1200 ms) (bound ≥ ×0.95 on every read, and landed by +200 ms on every read)",
+   "load": "22.3/19.4/17.0"
+  },
+  {
+   "name": "E-5 pop press-light(PRM) dark",
+   "status": "FAIL",
+   "line": ":active true · Δscale 0.000 · touch-changed [background-color] · hover-changed [background-color] · press-only [] (bound ≥ 1 press-only property under reduce)",
+   "load": "22.3/19.4/17.0"
+  }
+ ]
+}

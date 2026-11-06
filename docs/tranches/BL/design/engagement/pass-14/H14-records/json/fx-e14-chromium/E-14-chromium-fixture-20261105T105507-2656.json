@@ -1,0 +1,116 @@
+{
+ "id": "E-14",
+ "engine": "chromium",
+ "version": "149.0.7827.55",
+ "target": {
+  "fixture": true,
+  "fault": null
+ },
+ "loadStart": "20.2/17.4/16.1",
+ "loadEnd": "19.9/17.6/16.2",
+ "verdict": "FAIL",
+ "cells": [
+  {
+   "name": "M10 a sub-pixel step · 0.4 px insert · STATED LIMIT (≤ 1 px, no glide owed)",
+   "status": "PASS",
+   "line": "the act on frame 8 · paint moved 0.0, 0.4 px in all; on the act's frame 0.00, 0.39 = 0.39 px (bound ≤ 0.50) · largest move over any 16.7 ms 0.4 px at +17 ms (bound 1.1) · glides 0 · scrollY 35 → 35 → 35, scroller 0 → 0 → 0 · path [0.0,0.0 0.0,0.4 0.0,0.4 0.0,0.4 0.0,0.4] · errors 0 · the limit: the act's frame ≤ 1 px",
+   "load": "20.2/17.4/16.1"
+  },
+  {
+   "name": "M10 a sub-pixel step · 0.4 px insert, fractional layout · STATED LIMIT (≤ 1 px, no glide owed)",
+   "status": "PASS",
+   "line": "the act on frame 8 · paint moved 0.0, 0.4 px in all; on the act's frame 0.00, 0.39 = 0.39 px (bound ≤ 0.50) · largest move over any 16.7 ms 0.4 px at +17 ms (bound 1.1) · glides 0 · scrollY 0 → 0 → 0, scroller 0 → 0 → 0 · path [0.0,0.0 0.0,0.4 0.0,0.4 0.0,0.4 0.0,0.4] · errors 0 · the limit: the act's frame ≤ 1 px",
+   "load": "19.6/17.3/16.1"
+  },
+  {
+   "name": "M10 a link joins the chain · will-change: transform on a bordered G (X1, Y1)",
+   "status": "PASS",
+   "line": "the act on frame 8 · paint moved 0.0, 0.0 px in all; on the act's frame 0.00, 0.00 = 0.00 px (bound ≤ 0.50) · largest move over any 16.7 ms 0.0 px at +NaN ms (bound 1.0) · glides 0 · scrollY 38 → 38 → 38, scroller 0 → 0 → 0 · path [0.0,0.0 0.0,0.0 0.0,0.0 0.0,0.0 0.0,0.0] · errors 0 · bound: ≤ 1 px on the act's frame (the rounding), no glide",
+   "load": "19.6/17.3/16.1"
+  },
+  {
+   "name": "M10 a link joins the chain · contain: paint on a bordered G (X1, Y1)",
+   "status": "PASS",
+   "line": "the act on frame 8 · paint moved 0.0, 0.0 px in all; on the act's frame 0.00, 0.00 = 0.00 px (bound ≤ 0.50) · largest move over any 16.7 ms 0.0 px at +NaN ms (bound 1.0) · glides 0 · scrollY 38 → 38 → 38, scroller 0 → 0 → 0 · path [0.0,0.0 0.0,0.0 0.0,0.0 0.0,0.0 0.0,0.0] · errors 0 · bound: ≤ 1 px on the act's frame (the rounding), no glide",
+   "load": "19.6/17.3/16.1"
+  },
+  {
+   "name": "M10 a link joins the chain · filter: blur(0) on a bordered G (X1, Y1)",
+   "status": "PASS",
+   "line": "the act on frame 8 · paint moved 0.0, 0.0 px in all; on the act's frame 0.00, 0.00 = 0.00 px (bound ≤ 0.50) · largest move over any 16.7 ms 0.0 px at +NaN ms (bound 1.0) · glides 0 · scrollY 38 → 38 → 38, scroller 0 → 0 → 0 · path [0.0,0.0 0.0,0.0 0.0,0.0 0.0,0.0 0.0,0.0] · errors 0 · bound: ≤ 1 px on the act's frame (the rounding), no glide",
+   "load": "19.6/17.3/16.1"
+  },
+  {
+   "name": "M10 a link joins the chain · perspective: 500px on a bordered G (X1, Y1)",
+   "status": "PASS",
+   "line": "the act on frame 8 · paint moved 0.0, 0.0 px in all; on the act's frame 0.00, 0.00 = 0.00 px (bound ≤ 0.50) · largest move over any 16.7 ms 0.0 px at +NaN ms (bound 1.0) · glides 0 · scrollY 38 → 38 → 38, scroller 0 → 0 → 0 · path [0.0,0.0 0.0,0.0 0.0,0.0 0.0,0.0 0.0,0.0] · errors 0 · bound: ≤ 1 px on the act's frame (the rounding), no glide",
+   "load": "19.8/17.4/16.2"
+  },
+  {
+   "name": "M10 a link joins the chain · will-change: transform, fractional layout on a bordered G (X1, Y1)",
+   "status": "PASS",
+   "line": "the act on frame 8 · paint moved 0.0, 0.0 px in all; on the act's frame 0.00, 0.00 = 0.00 px (bound ≤ 0.50) · largest move over any 16.7 ms 0.0 px at +NaN ms (bound 1.0) · glides 0 · scrollY 0 → 0 → 0, scroller 0 → 0 → 0 · path [0.0,0.0 0.0,0.0 0.0,0.0 0.0,0.0 0.0,0.0] · errors 0 · bound: ≤ 1 px on the act's frame (the rounding), no glide",
+   "load": "19.8/17.4/16.2"
+  },
+  {
+   "name": "M10 a link joins the chain · offset-path: path('M0 0') (X1 (d)) on a bordered G (X1, Y1)",
+   "status": "FAIL",
+   "line": "the act on frame 8 · paint moved -350.0, -973.0 px in all; on the act's frame -350.00, -973.00 = 1034.04 px (bound ≤ 0.50) · largest move over any 16.7 ms 1017.6 px at +17 ms (bound 156.9) · glides 0 · scrollY 38 → 38 → 38, scroller 0 → 0 → 0 · path [0.0,0.0 -350.0,-973.0 -350.0,-973.0 -350.0,-973.0 -350.0,-973.0] · errors 0 · bound: ≤ 1 px on the act's frame (the rounding), no glide",
+   "load": "19.8/17.4/16.2"
+  },
+  {
+   "name": "M10 a link joins the chain · will-change: transform, class-applied on a bordered G (X1, Y1)",
+   "status": "PASS",
+   "line": "the act on frame 8 · paint moved 0.0, 0.0 px in all; on the act's frame 0.00, 0.00 = 0.00 px (bound ≤ 0.50) · largest move over any 16.7 ms 0.0 px at +NaN ms (bound 1.0) · glides 0 · scrollY 38 → 38 → 38, scroller 0 → 0 → 0 · path [0.0,0.0 0.0,0.0 0.0,0.0 0.0,0.0 0.0,0.0] · errors 0 · bound: ≤ 1 px on the act's frame (the rounding), no glide",
+   "load": "19.8/17.4/16.2"
+  },
+  {
+   "name": "M10 a link joins the chain · filter: blur(0), transition-applied (filter 200ms) on a bordered G (X1, Y1)",
+   "status": "PASS",
+   "line": "the act on frame 8 · paint moved 0.0, 0.0 px in all; on the act's frame 0.00, 0.00 = 0.00 px (bound ≤ 0.50) · largest move over any 16.7 ms 0.0 px at +NaN ms (bound 1.0) · glides 0 · scrollY 38 → 38 → 38, scroller 0 → 0 → 0 · path [0.0,0.0 0.0,0.0 0.0,0.0 0.0,0.0 0.0,0.0] · errors 0 · bound: ≤ 1 px on the act's frame (the rounding), no glide",
+   "load": "20.3/17.5/16.2"
+  },
+  {
+   "name": "M10 a link joins the chain · filter: blur(0), class-applied, fractional layout on a bordered G (X1, Y1)",
+   "status": "PASS",
+   "line": "the act on frame 8 · paint moved 0.0, 0.0 px in all; on the act's frame 0.00, 0.00 = 0.00 px (bound ≤ 0.50) · largest move over any 16.7 ms 0.0 px at +NaN ms (bound 1.0) · glides 0 · scrollY 0 → 0 → 0, scroller 0 → 0 → 0 · path [0.0,0.0 0.0,0.0 0.0,0.0 0.0,0.0 0.0,0.0] · errors 0 · bound: ≤ 1 px on the act's frame (the rounding), no glide",
+   "load": "20.3/17.5/16.2"
+  },
+  {
+   "name": "M10 a link joins the chain · position: relative (control) on a bordered G (X1, Y1)",
+   "status": "PASS",
+   "line": "the act on frame 8 · paint moved 0.0, 0.0 px in all; on the act's frame 0.00, 0.00 = 0.00 px (bound ≤ 0.50) · largest move over any 16.7 ms 0.0 px at +NaN ms (bound 1.0) · glides 0 · scrollY 38 → 38 → 38, scroller 0 → 0 → 0 · path [0.0,0.0 0.0,0.0 0.0,0.0 0.0,0.0 0.0,0.0] · errors 0 · bound: ≤ 1 px on the act's frame (the rounding), no glide",
+   "load": "20.3/17.5/16.2"
+  },
+  {
+   "name": "M10 a link joins the chain · an instant scale 0.9 on a bordered G (X1 (a): carried with G)",
+   "status": "PASS",
+   "line": "scrollY 38 → 38, scroller 0 → 0 · the carrier moved 70.0 px over 30 engaged frames · the root's centre off where its box carries it: max 0.00 px, frames over 2 px 0 (bound ≤ 0.50) · glides started 0 (bound ≤ 0) · errors 0",
+   "load": "19.9/17.5/16.2"
+  },
+  {
+   "name": "M10 a link joins the chain · an instant scale 0.9 on a bordered G, fractional layout (X1 (a): carried with G)",
+   "status": "PASS",
+   "line": "scrollY 0 → 0, scroller 0 → 0 · the carrier moved 70.0 px over 30 engaged frames · the root's centre off where its box carries it: max 0.00 px, frames over 2 px 0 (bound ≤ 0.50) · glides started 0 (bound ≤ 0) · errors 0",
+   "load": "19.9/17.5/16.2"
+  },
+  {
+   "name": "M25 another ResizeObserver, created before the hold, inserts 40 px above the root in its callback · STATED LIMIT (cut ≤ the write)",
+   "status": "PASS",
+   "line": "the act on frame 8 · paint moved 0.0, 39.8 px in all; on the act's frame 0.00, 40.00 = 40.00 px (bound ≤ 0.50) · largest move over any 16.7 ms 35.7 px at +25 ms (bound 7.0) · glides 1 (350 ms) · scrollY 35 → 35 → 35, scroller 0 → 0 → 0 · path [0.0,0.0 0.0,40.0 0.0,0.0 0.0,3.1 0.0,6.7] · errors 0 · the limit: a cut ≤ the write (40 px) + 0.5",
+   "load": "19.9/17.5/16.2"
+  },
+  {
+   "name": "M25 another ResizeObserver, created after the hold, inserts 40 px above the root in its callback · STATED LIMIT (cut ≤ the write)",
+   "status": "PASS",
+   "line": "the act on frame 8 · paint moved 0.0, 39.8 px in all; on the act's frame 0.00, 40.00 = 40.00 px (bound ≤ 0.50) · largest move over any 16.7 ms 36.4 px at +24 ms (bound 7.0) · glides 1 (350 ms) · scrollY 35 → 35 → 35, scroller 0 → 0 → 0 · path [0.0,0.0 0.0,40.0 0.0,0.0 0.0,2.7 0.0,5.6] · errors 0 · the limit: a cut ≤ the write (40 px) + 0.5",
+   "load": "19.9/17.5/16.2"
+  },
+  {
+   "name": "M25 another ResizeObserver, created before the hold, writing in a second delivery round, inserts 40 px above the root in its callback · STATED LIMIT (cut ≤ the write)",
+   "status": "PASS",
+   "line": "the act on frame 8 · paint moved 0.0, 39.8 px in all; on the act's frame 0.00, 40.00 = 40.00 px (bound ≤ 0.50) · largest move over any 16.7 ms 32.0 px at +26 ms (bound 7.0) · glides 1 (350 ms) · scrollY 35 → 35 → 35, scroller 0 → 0 → 0 · path [0.0,0.0 0.0,40.0 0.0,0.0 0.0,3.4 0.0,6.1] · errors 0 · the limit: a cut ≤ the write (40 px) + 0.5",
+   "load": "19.9/17.6/16.2"
+  }
+ ]
+}

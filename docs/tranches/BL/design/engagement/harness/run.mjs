@@ -14,6 +14,7 @@ export const WITNESSES = [
   ["E-1", "e1-census.mjs"], ["E-2", "e2-commit.mjs"], ["E-3", "e3-slider.mjs"], ["E-4", "e4-momentum.mjs"],
   ["E-5", "e5-touch.mjs"], ["E-6", "e6-idle.mjs"], ["E-7", "e7-one-writer.mjs"], ["E-8", "e8-clock.mjs"], ["E-9", "e9-prm.mjs"],
   ["E-10", "e10-continuity.mjs"], ["E-11", "e11-fail-loud.mjs"], ["E-12", "e12-floor.mjs"], ["E-13", "e13-loupe.mjs"],
+  ["E-14", "e14-s14.mjs"],
 ];
 const VERDICT = / (PASS|FAIL|UNMEASURED) · \d+ pass/;
 function spawn(file, argv) {

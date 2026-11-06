@@ -18,7 +18,7 @@
 //   node e7-one-writer.mjs --build <dir> --wt <worktree> [--unowned data-press] | --fixture [--fault e7-veil|e7-two|e7-spread|e7-held] [--engine webkit]
 import fs from "node:fs";
 import path from "node:path";
-import { witness, openPage, scenesFor, center, HERE, parseArgs } from "./lib.mjs";
+import { witness, openPage, scenesFor, center, HERE, parseArgs, srcTree } from "./lib.mjs";
 
 const OWNER = "src/composables/motion/engage/";
 export const ATTRS = ["engaged", "held", "press", "commit"];
@@ -51,6 +51,12 @@ export function writers(wt) {
 // UNMEASURED on the static arm, and C-A9's first WebKit E-7 was lost that way
 const argv0 = parseArgs();
 if (!argv0.fixture && typeof argv0.wt !== "string") { console.log("E-7 HARNESS ERROR: REFUSED, no --wt given: the static arm reads the build's source tree (`--build <dir> --wt <worktree>`)"); process.exit(2); }
+// H14 (class 6 (f), CE13c §4 item 2): the static arm reads the --wt tree, which must be the tree the build was made from (build.mjs
+// records it in src-tree.json); a worktree that holds another tree (a later build's patch applied, or none) is REFUSED, exit 2
+if (!argv0.fixture) { let rec = null; try { rec = JSON.parse(fs.readFileSync(path.join(path.resolve(argv0.build), "src-tree.json"), "utf8")).tree; } catch {}
+  const now = srcTree(path.resolve(argv0.wt));
+  if (rec !== now) { console.log(`E-7 HARNESS ERROR: REFUSED, the worktree's src tree ${now} is not the build's ${rec ?? "(none recorded: a build from before H14)"}: the static arm would read another tree than the one built`); process.exit(2); }
+  console.log(`# E-7 static arm: the worktree holds the build's src tree ${now}`); }
 await witness("E-7", "one writer of data-engaged, meaning held", async ({ a, E, T, cell, guard, idx }) => {
   const wt = a.fixture ? path.join(HERE, "fixtures", "e7", TREES[a.fault] ?? "clean") : path.resolve(a.wt);
   const unowned = new Set(typeof a.unowned === "string" ? a.unowned.split(",") : []);

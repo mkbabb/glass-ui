@@ -13,7 +13,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { pathToFileURL } from "node:url";
-import { HERE, parseArgs } from "./lib.mjs";
+import { HERE, parseArgs, srcTree } from "./lib.mjs";
 
 const a = parseArgs(process.argv.slice(3));
 const wt = path.resolve(process.argv[2] ?? "");
@@ -57,4 +57,6 @@ await vite.build({
 });
 const sha1 = (await import("node:crypto")).createHash("sha1").update(fs.readFileSync(app)).digest("hex").slice(0, 12);
 fs.writeFileSync(path.join(outDir, "scene-app.json"), JSON.stringify({ app: typeof a.app === "string" ? app : "scenes/App.vue", fork: typeof a.app === "string", sha1 }));
-console.log(`${outDir} · ${dirs.length} component directories (${withIndex.length} with an index.ts mapped for the member walk) · declaration ${declPath}#${declName} · scene app ${typeof a.app === "string" ? `FORK ${app}` : "harness"} ${sha1}`);
+// H14 (class 6 (f)): the src tree the build was made from, read back by E-7's static arm against its --wt
+const tree = srcTree(wt); fs.writeFileSync(path.join(outDir, "src-tree.json"), JSON.stringify({ wt, tree }));
+console.log(`${outDir} · src tree ${tree} · ${dirs.length} component directories (${withIndex.length} with an index.ts mapped for the member walk) · declaration ${declPath}#${declName} · scene app ${typeof a.app === "string" ? `FORK ${app}` : "harness"} ${sha1}`);

@@ -1,0 +1,16 @@
+# H14 fxp-e14-velreset chromium · 2026-11-05 05:14:25 · load { 15.27 14.55 16.56 } · harness 3608357c13c4 · --only M27
+# E-14 · S14's members at their ranges (P-E14 §S14-c)
+# target fixture fault e14-velreset · engine chromium · lock wait 0.0 s (the deadline 5400 s counts from here) · other headless processes: chromium 12, webkit 2 · load 15.3/14.5/16.6 at start
+# chromium 149.0.7827.55
+# held control: scene slider root [data-e~="root"] thumb [data-e~="thumb"] engaged [data-held], [data-kbd]; clock token --spring-press-settle; cells M27
+  PASS       M27 a train of inserts above the root · 16 px every frame for 12 frames · glides 1 (bound ≤ 2: the onset, carried after) · on each insert's frame the break of the root's own motion, less the running glide's own change of velocity, [0.00 17.22 0.00 0.00 0.00 0.00 0.00 0.00 0.07 0.05 0.00 0.01] px (bound ≤ 0.5 at the onset) · errors 0 · load 16.0/14.7/16.6
+  FAIL       M27 a train of inserts above the root · 16 px every second frame, 6 steps · glides 6 (bound ≥ 6: each step glided) · on each insert's frame the break of the root's own motion, less the running glide's own change of velocity, [0.00 0.00 0.00 0.00 1.03 0.29] px (bound ≤ 0.5 each) · errors 0 · load 16.0/14.7/16.6
+  PASS       M27 a train of inserts above the root · 8 px every frame for 12 frames · glides 1 (bound ≤ 2: the onset, carried after) · on each insert's frame the break of the root's own motion, less the running glide's own change of velocity, [0.00 8.60 0.00 0.01 0.00 0.00 0.01 0.00 0.04 0.03 0.00 0.01] px (bound ≤ 0.5 at the onset) · errors 0 · load 16.0/14.7/16.6
+  PASS       M27 a train of inserts above the root · 40 px every second frame, 6 steps · glides 6 (bound ≥ 6: each step glided) · on each insert's frame the break of the root's own motion, less the running glide's own change of velocity, [0.00 0.00 0.00 0.00 0.00 0.00] px (bound ≤ 0.5 each) · errors 0 · load 17.3/15.0/16.7
+  PASS       M27 a slow margin ramp above C · 0.2 px a frame · glides over the ramp 0 (bound ≤ 2: the onset and one uneven frame; Y8 reads 0-1 at ≤ 200 px/s) · errors 0 · load 17.3/15.0/16.7
+  PASS       M27 a slow margin ramp above C · 0.5 px a frame · glides over the ramp 0 (bound ≤ 2: the onset and one uneven frame; Y8 reads 0-1 at ≤ 200 px/s) · errors 0 · load 17.3/15.0/16.7
+  PASS       M27 a slow margin ramp above C · 1 px a frame · glides over the ramp 0 (bound ≤ 2: the onset and one uneven frame; Y8 reads 0-1 at ≤ 200 px/s) · errors 0 · load 17.3/15.0/16.7
+  PASS       M27 a slow margin ramp above C · 2 px a frame · glides over the ramp 1 (bound ≤ 2: the onset and one uneven frame; Y8 reads 0-1 at ≤ 200 px/s) · errors 0 · load 16.5/14.9/16.6
+E-14 chromium FAIL · 7 pass, 1 fail, 0 unmeasured of 8 gating cells (0 reported) · load 15.3/14.5/16.6 at start, 16.5/14.9/16.6 at end
+# exit 1 · 2026-11-05 05:14:37 · load { 16.50 14.87 16.65 }
+# end · 2026-11-05 05:14:37 · load { 16.50 14.87 16.65 } · harness 3608357c13c4

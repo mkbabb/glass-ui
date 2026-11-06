@@ -1,0 +1,26 @@
+{
+ "id": "E-14",
+ "engine": "chromium",
+ "version": "149.0.7827.55",
+ "target": {
+  "fixture": true,
+  "fault": "e14-nozoom"
+ },
+ "loadStart": "17.4/18.4/18.2",
+ "loadEnd": "17.4/18.4/18.2",
+ "verdict": "FAIL",
+ "cells": [
+  {
+   "name": "M22 a zoom change during the hold · G's zoom 1 → 1.25",
+   "status": "FAIL",
+   "line": "the act on frame 8 · paint moved 57.0, 71.5 px in all; on the act's frame 57.00, 71.50 = 91.44 px (bound ≤ 50.85) · largest move over any 16.7 ms 91.1 px at +17 ms (bound 14.8) · glides 0 (moved ≥ 5 px, no glide) · scrollY 35 → 35 → 35, scroller 0 → 0 → 0 · path [0.0,0.0 57.0,71.5 57.0,71.5 57.0,71.5 57.0,71.5] · errors 0",
+   "load": "17.4/18.4/18.2"
+  },
+  {
+   "name": "M22 a zoom change during the hold · a box before C, zoom 1 → 1.25",
+   "status": "PASS",
+   "line": "the act on frame 8 · paint moved 0.0, 10.0 px in all; on the act's frame 0.00, 0.00 = 0.00 px (bound ≤ 0.50) · largest move over any 16.7 ms 1.5 px at +33 ms (bound 2.5) · glides 1 (350 ms) · scrollY 75 → 75 → 75, scroller 0 → 0 → 0 · path [0.0,0.0 0.0,0.0 0.0,0.8 0.0,1.5 0.0,2.3] · errors 0",
+   "load": "17.4/18.4/18.2"
+  }
+ ]
+}

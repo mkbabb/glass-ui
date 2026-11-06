@@ -1,0 +1,20 @@
+# H14 head-e14 chromium · 2026-11-05 05:55:28 · load { 21.51 18.03 16.42 } · harness e7e05e18a3ef · --only M11,M30
+# E-14 · S14's members at their ranges (P-E14 §S14-c)
+# target /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p14/H14/wt/.h14out/builds/head · engine chromium · lock wait 0.0 s (the deadline 5400 s counts from here) · other headless processes: chromium 8, webkit 2 · load 21.5/18.0/16.4 at start
+# scene app: harness scenes/App.vue (sha1 912fecf0a1aa)
+# chromium 149.0.7827.55
+# held control: scene slider root .glass-slider thumb [role="slider"] engaged [data-engaged], [data-held]; clock token --spring-dock-settle; cells M11,M30
+  PASS       M11 the host's own width 300 → 380 · start-aligned (b.5) · drive pointer (the keyboard did not engage this build) · grow ×1.0000 · the start edge (fixed in layout) moved 0.00 px in paint on the act's frame (bound 0.50 = 0.5 + the grow's share 0.00) · glides at the change 0 (bound 0) · width 300.0 → 380.0 → 380.0 · errors 0 · load 21.5/18.0/16.4
+  PASS       M11 the host's own width 300 → 380 · centre-aligned (b.5) · drive pointer (the keyboard did not engage this build) · grow ×1.0000 · the centre (fixed in layout) moved 0.00 px in paint on the act's frame (bound 0.50 = 0.5 + the grow's share 0) · glides at the change 0 (bound 0) · width 300.0 → 380.0 → 380.0 · errors 0 · load 20.6/17.9/16.4
+  PASS       M11 the host's own width 300 → 380 · end-aligned (b.5) · drive pointer (the keyboard did not engage this build) · grow ×1.0000 · the end edge (fixed in layout) moved 0.00 px in paint on the act's frame (bound 0.50 = 0.5 + the grow's share 0.00) · glides at the change 0 (bound 0) · width 300.0 → 380.0 → 380.0 · errors 0 · load 20.6/17.9/16.4
+  UNMEASURED M30 the held root's transition: all 300ms linear allow-discrete · the class arrives 40 ms before the hold · NOT DRIVEN: the root was not engaged · load 20.4/17.9/16.4
+  UNMEASURED M30 the held root's transition: all 300ms linear · the clock token changed at runtime 60 ms before the act · NOT DRIVEN: the root was not engaged · load 20.4/17.9/16.4
+  UNMEASURED M30 the held root's transition-property: all; 150ms · the clock token changed at runtime · NOT DRIVEN: the root was not engaged · load 20.4/17.9/16.4
+  UNMEASURED M30 the held root's no transition (control) · the clock token changed at runtime · NOT DRIVEN: the root was not engaged · load 20.4/17.9/16.4
+  PASS       M30 Chip's static → selectable switch, held 40 ms after it (X9) · the host after the switch <button>, the press reached it: true · errors 0 (bound 0: no false loud refusal) · load 21.1/18.1/16.5
+  PASS       M30 Chip's selectable → static switch, held 40 ms after it (X9) · the host after the switch <span>, static (no hold owed) · errors 0 (bound 0: no false loud refusal) · load 21.1/18.1/16.5
+  UNMEASURED M11 the NumberField scrub 9 → 10 · flex-start row · field-sizing content (b.5; class 6 (e)) · NOT DRIVEN: this build has no scrub (no --scrub-pitch on the input) · load 21.1/18.1/16.5
+  UNMEASURED M11 the NumberField scrub 9 → 10 · center row · field-sizing content (b.5; class 6 (e)) · NOT DRIVEN: this build has no scrub (no --scrub-pitch on the input) · load 21.1/18.1/16.5
+E-14 chromium PASS · 5 pass, 0 fail, 6 unmeasured of 11 gating cells (0 reported) · load 21.5/18.0/16.4 at start, 21.1/18.1/16.5 at end
+# exit 0 · 2026-11-05 05:55:44 · load { 21.07 18.08 16.47 }
+# end · 2026-11-05 05:55:44 · load { 21.07 18.08 16.47 } · harness e7e05e18a3ef

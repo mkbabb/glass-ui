@@ -1,0 +1,13 @@
+# WK2 · 2026-11-05 15:35:11 · admitted · load { 9.98 12.77 12.52 }
+  start 15:35:11 · +0 min · probe-waitc webkit
+  end   16:02:47 · probe-waitc webkit ·  · # exit 0 · 2026-11-05 16:02:47 · load { 13.14 10.79 11.19 } · probe-waitc-webkit.log
+  start 16:02:47 · +27 min · fx-e14 webkit --only M9,M24,M26 --rerun 5
+  end   16:03:12 · fx-e14 webkit · E-14 webkit PASS · 13 pass, 0 fail, 0 unmeasured of 13 gating cells (0 reported) · load 13.1/10.8/11.2 at start, 14.2/11.2/11.3 at end · # exit 0 · 2026-11-05 16:03:12 · load { 14.24 11.22 11.33 } · fx-e14-webkit-f397c3.log
+  start 16:03:12 · +28 min · fx-E-11 webkit
+  end   16:21:04 · fx-E-11 webkit · E-11 webkit PASS · 176 pass, 0 fail, 1 unmeasured of 177 gating cells (6 reported) · load 14.2/11.2/11.3 at start, 11.7/10.7/10.5 at end · # exit 0 · 2026-11-05 16:21:04 · load { 11.68 10.68 10.47 } · fx-E-11-webkit.log
+  start 16:21:04 · +45 min · st-E-11 webkit --faults e11-silent,e11-unread,e11-noise,e11-rename,e11-crestsilent
+  end   16:42:52 · st-E-11 webkit · selftest: 5 runs, 0 N/A; every witness passes its fixture, fails each planted violation on the planted cell, and passes each control, in every engine with an input for it · # exit 0 · 2026-11-05 16:42:52 · load { 29.75 28.00 22.95 } · st-E-11-webkit-5d0ca3.log
+  start 16:42:52 · +67 min · st-E-11 webkit --faults e11-travelthrow,e11-travellist,e11-travelunit
+  end   16:51:00 · st-E-11 webkit · selftest: 3 runs, 0 N/A; every witness passes its fixture, fails each planted violation on the planted cell, and passes each control, in every engine with an input for it · # exit 0 · 2026-11-05 16:51:00 · load { 17.92 19.88 21.05 } · st-E-11-webkit-f63a3d.log
+  HELD at the cutoff (+75 min, est 30) · st-E-11 webkit --faults e11-narrowread,e11-typedom,e11-reachzero
+# WK2 · 2026-11-05 16:51:00 · done · load { 17.92 19.88 21.05 } · left 31

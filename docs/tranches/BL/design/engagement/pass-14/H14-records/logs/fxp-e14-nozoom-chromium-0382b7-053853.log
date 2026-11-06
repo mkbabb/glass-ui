@@ -1,0 +1,10 @@
+# H14 fxp-e14-nozoom chromium · 2026-11-05 05:38:53 · load { 15.67 14.83 14.78 } · harness 5d544e7e7932 · --only M22
+# E-14 · S14's members at their ranges (P-E14 §S14-c)
+# target fixture fault e14-nozoom · engine chromium · lock wait 0.0 s (the deadline 5400 s counts from here) · other headless processes: chromium 8, webkit 2 · load 15.7/14.8/14.8 at start
+# chromium 149.0.7827.55
+# held control: scene slider root [data-e~="root"] thumb [data-e~="thumb"] engaged [data-held], [data-kbd], [data-held]; clock token --spring-press-settle; cells M22
+  FAIL       M22 a zoom change during the hold · G's zoom 1 → 1.25 · the act on frame 8 · paint moved 57.0, 71.5 px in all; on the act's frame 57.00, 71.50 = 91.44 px (bound ≤ 50.85) · largest move over any 16.7 ms 91.1 px at +17 ms (bound 14.8) · glides 0 (moved ≥ 5 px, no glide) · scrollY 35 → 35 → 35, scroller 0 → 0 → 0 · path [0.0,0.0 57.0,71.5 57.0,71.5 57.0,71.5 57.0,71.5] · errors 0 · load 15.7/14.8/14.8
+  PASS       M22 a zoom change during the hold · a box before C, zoom 1 → 1.25 · the act on frame 8 · paint moved 0.0, 10.0 px in all; on the act's frame 0.00, 0.00 = 0.00 px (bound ≤ 0.50) · largest move over any 16.7 ms 1.5 px at +33 ms (bound 2.5) · glides 1 (350 ms) · scrollY 75 → 75 → 75, scroller 0 → 0 → 0 · path [0.0,0.0 0.0,0.0 0.0,0.8 0.0,1.5 0.0,2.3] · errors 0 · load 15.7/14.8/14.8
+E-14 chromium FAIL · 1 pass, 1 fail, 0 unmeasured of 2 gating cells (0 reported) · load 15.7/14.8/14.8 at start, 16.7/15.1/14.9 at end
+# exit 1 · 2026-11-05 05:38:57 · load { 16.66 15.05 14.86 }
+# end · 2026-11-05 05:38:57 · load { 16.66 15.05 14.86 } · harness 5d544e7e7932

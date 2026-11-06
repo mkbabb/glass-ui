@@ -1,0 +1,11 @@
+# H14 st-cap webkit · 2026-11-05 17:58:20 · load { 14.51 13.74 12.68 } · harness e9f74d676786 · 
+OK     CAP webkit   clean exit 0 · CAP webkit PASS · 4 pass, 0 fail, 0 unmeasured of 4 gating cells (0 reported) · load 14.5/13.7/12.7 at start, 13.0/13.4/12.6 at end
+OK     CAP webkit   fault   cap-nocommit (CK-25 (H3 capture): a touch tap does not commit the control: the coarse 'committed' frame must say NOT COMMITTED, never show a frame as a commit) exit 1
+         first planted FAIL: FAIL       CAP pop coarse light committed · webkit: short tap, state "off" → "off": NOT COMMITTED, the frame is labelled so · load 11.9/13.2/12.5
+OK     CAP webkit   fault   cap-ladder (CK-25 (H5, C-A4's ca4-ladder): on a fine pointer the press paints lighter than the hover it follows (the press wash under the hover rung, C-A4 §0.3)) exit 1
+         first planted FAIL: FAIL       CAP pop ladder fine light · webkit: inset paint L rest 0.5959 (rgb(216, 219, 226)) · hover 0.5478 (rgb(207, 211, 220); darker by 0.0481) · hover+press 0.6877 (rgb(230, 232, 238), data-state off) · released, still hovered 0.2969 ·
+OK     CAP webkit   fault   cap-ladderhit (CK-25 (H6, REGISTRY §P5-7 item 10): a transparent layer sits over the control, so the ladder's pointer never reaches it; a hit test that misses must FAIL the ladder as unread, never pass it as a hover that paints no rung) exit 1
+         first planted FAIL: FAIL       CAP pop ladder fine light · webkit: UNREAD: the pointer at (71, 112) hits span[cover].fx-cover, not the target (the ladder is read only through a hit on the trigger) · load 11.6/13.0/12.5
+selftest: 4 runs, 0 N/A; every witness passes its fixture, fails each planted violation on the planted cell, and passes each control, in every engine with an input for it
+# exit 0 · 2026-11-05 17:59:16 · load { 12.12 13.09 12.50 }
+# end · 2026-11-05 17:59:16 · load { 12.12 13.09 12.50 } · harness e9f74d676786

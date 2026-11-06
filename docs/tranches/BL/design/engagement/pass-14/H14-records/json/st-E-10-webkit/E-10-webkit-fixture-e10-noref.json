@@ -1,0 +1,26 @@
+{
+ "id": "E-10",
+ "engine": "webkit",
+ "version": "26.5",
+ "target": {
+  "fixture": true,
+  "fault": "e10-noref"
+ },
+ "loadStart": "12.2/10.6/10.4",
+ "loadEnd": "11.6/10.5/10.4",
+ "verdict": "FAIL",
+ "cells": [
+  {
+   "name": "E-10 slider2 hand-off drop",
+   "status": "FAIL",
+   "line": "NO REFERENCE: the hand-off is graded against the single slider scene's own release, and this run read none (no single scene in the run: --scenes slider2); run it with the slider scene (--scenes slider,slider2)",
+   "load": "11.6/10.5/10.4"
+  },
+  {
+   "name": "E-10 slider2 hand-off rev",
+   "status": "FAIL",
+   "line": "NO REFERENCE: the hand-off is graded against the single slider scene's own release, and this run read none (no single scene in the run: --scenes slider2); run it with the slider scene (--scenes slider,slider2)",
+   "load": "11.6/10.5/10.4"
+  }
+ ]
+}

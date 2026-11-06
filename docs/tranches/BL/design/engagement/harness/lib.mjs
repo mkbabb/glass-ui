@@ -9,6 +9,7 @@ import path from "node:path";
 import http from "node:http";
 import { execSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
+import { createHash } from "node:crypto";
 import { WkTouch } from "./wktouch.mjs";
 
 export const HERE = path.dirname(fileURLToPath(import.meta.url));
@@ -25,6 +26,15 @@ export function parseArgs(argv = process.argv.slice(2)) {
     else { a[k.slice(2)] = n; i++; }
   }
   return a;
+}
+/** H14 (class 6 (f)): a content hash of <wt>/src (every file, sorted by path): build.mjs records it with the build, and E-7's static
+ *  arm refuses a worktree whose src no longer holds the tree the build was made from (CE13c §4 item 2) */
+export function srcTree(wt) {
+  const h = createHash("sha1"); const files = [];
+  const walk = (d) => { for (const e of fs.readdirSync(d, { withFileTypes: true })) { const p = path.join(d, e.name); if (e.isDirectory()) walk(p); else if (e.isFile()) files.push(p); } };
+  walk(path.join(wt, "src")); files.sort();
+  for (const p of files) { h.update(path.relative(wt, p)); h.update("\0"); h.update(fs.readFileSync(p)); h.update("\0"); }
+  return `${h.digest("hex").slice(0, 12)} (${files.length} files)`;
 }
 export const load = () => os.loadavg().map((x) => x.toFixed(1)).join("/");
 export const f = (x, n = 3) => (typeof x === "number" && Number.isFinite(x) ? x.toFixed(n) : String(x));
@@ -386,12 +396,14 @@ export async function witness(id, title, body, defaultDeadlineS = 1500) {
   const engine = a.engine === "webkit" ? "webkit" : "chromium";
   // H4: a witness that reads each cell several times (E-5's three-read rule) carries its own default deadline
   const deadline = +(a.deadline ?? defaultDeadlineS) * 1000;
-  const dog = setTimeout(() => { console.log(`${id} ${engine} HARNESS ERROR · deadline ${deadline / 1000} s passed (hang) · load ${load()}`); process.exit(2); }, deadline);
-  dog.unref();
+  // H14 (REGISTRY §P13c-5 class 6 (c)): the deadline counts from ADMISSION, after the shared harness lock is taken (guarded's
+  // admission precedes the process), so a wait for another seat's run never eats the witness's own budget (CE13c §4 item 1)
   const waited = await acquireLock();
+  const dog = setTimeout(() => { console.log(`${id} ${engine} HARNESS ERROR · deadline ${deadline / 1000} s passed after admission (hang) · load ${load()}`); process.exit(2); }, deadline);
+  dog.unref();
   const loadStart = load();
   console.log(`# ${id} · ${title}`);
-  console.log(`# target ${a.fixture ? `fixture${a.fault ? ` fault ${a.fault}` : ""}` : a.build} · engine ${engine} · lock wait ${waited.toFixed(1)} s · ${browserCensus()} · load ${loadStart} at start`);
+  console.log(`# target ${a.fixture ? `fixture${a.fault ? ` fault ${a.fault}` : ""}` : a.build} · engine ${engine} · lock wait ${waited.toFixed(1)} s (the deadline ${deadline / 1000} s counts from here) · ${browserCensus()} · load ${loadStart} at start`);
   const cells = [];
   const cell = (name, status, line) => {
     const l = `  ${status.padEnd(10)} ${name} · ${line} · load ${load()}`;
@@ -446,7 +458,10 @@ export async function witness(id, title, body, defaultDeadlineS = 1500) {
   const verdict = nf ? "FAIL" : np ? "PASS" : "UNMEASURED";
   if (typeof a.out === "string") {
     fs.mkdirSync(a.out, { recursive: true });
-    fs.writeFileSync(path.join(a.out, `${id}-${engine}${a.fixture ? `-fixture${a.fault ? `-${a.fault}` : ""}` : ""}.json`), JSON.stringify({ id, engine, version: E.version, target: a.fixture ? { fixture: true, fault: a.fault ?? null } : { build: a.build }, loadStart, loadEnd: load(), verdict, cells }, null, 1));
+    // H14 (class 6 (d)): a later read of the same stage never overwrites an earlier one's JSON: the name takes the time when taken
+    let jf = path.join(a.out, `${id}-${engine}${a.fixture ? `-fixture${a.fault ? `-${a.fault}` : ""}` : ""}.json`);
+    if (fs.existsSync(jf)) jf = jf.replace(/\.json$/, `-${new Date().toISOString().replace(/[-:]/g, "").slice(0, 15)}-${process.pid}.json`);
+    fs.writeFileSync(jf, JSON.stringify({ id, engine, version: E.version, target: a.fixture ? { fixture: true, fault: a.fault ?? null } : { build: a.build }, loadStart, loadEnd: load(), verdict, cells }, null, 1));
   }
   console.log(`${id} ${engine} ${verdict} · ${np} pass, ${nf} fail, ${nu} unmeasured of ${gating.length} gating cells (${cells.length - gating.length} reported) · load ${loadStart} at start, ${load()} at end`);
   process.exit(verdict === "FAIL" ? 1 : verdict === "PASS" ? 0 : 3);
@@ -456,14 +471,14 @@ export async function witness(id, title, body, defaultDeadlineS = 1500) {
 export const BOUNCE = 0.002, TRAVEL = 4, OVERSHOOT = 0.5; // D4 tile/harness/measure.mjs:403, unchanged
 // CK-02 (pass 2): the commit passes by ONE arm. (i) travel: a body that travels ≥ TRAVEL px and overshoots its landing by
 // ≥ OVERSHOOT px. (ii) a geometric pop on the PAINTED FACE whose excursion exceeds FACE_PX px (the scale channel's
-// legible floor, control-bit.css:284-293), with the bounce arm (a trough ≥ BOUNCE below the settle): admissible only
-// when the owner rules Q-5's channel that way (`--commit-arms i,ii,iii`); the default is i,iii (the spring table's law,
-// springPresets.ts:55-57). (iii) light: on the commit edge the face's luminance rises ≥ LIGHT_RISE above its committed
+// legible floor, control-bit.css:284-293), with the bounce arm (a trough ≥ BOUNCE below the settle). H14 (class 6 (a)): the
+// default arms are O-103d (1)'s: Q-5 = arm (ii), the geometric pop; route B (the light, arm iii) RETIRES. `--commit-arms`
+// still names a set, and a run that admits (iii) says it is not O-103d (1)'s. (iii) light: on the commit edge the face's luminance rises ≥ LIGHT_RISE above its committed
 // rest and decays to it (the last REST_MS within LIGHT_REST), and a light animation on the face ran on an
 // ENGAGE_ENVELOPES row's clock (its attack or its release); the committed state's own fill change (a
 // monotonic step to the new rest) has no rise above that rest and does not count.
 export const FACE_PX = 0.8, LIGHT_RISE = 0.01, LIGHT_REST = 0.004, REST_MS = 150;
-export const DEFAULT_ARMS = ["i", "iii"];
+export const DEFAULT_ARMS = ["i", "ii"];
 export const medianDt = (fr) => { const d = fr.slice(1).map((x, k) => x.t - fr[k].t).sort((p, q) => p - q); return d.length ? d[d.length >> 1] : 0; };
 /** the envelope clocks a light commit may run on: every row's attack and release (ms) */
 export const envelopeClocks = (env) => (env ?? []).flatMap((r) => [r.attackMs, r.releaseMs]);

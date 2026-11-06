@@ -1,0 +1,11 @@
+# H14 st-cap chromium · 2026-11-05 10:57:03 · load { 17.62 18.12 17.78 } · harness a499d42408d5 · 
+OK     CAP chromium clean exit 0 · CAP chromium PASS · 4 pass, 0 fail, 0 unmeasured of 4 gating cells (0 reported) · load 17.6/18.1/17.8 at start, 19.2/18.4/17.9 at end
+OK     CAP chromium fault   cap-nocommit (CK-25 (H3 capture): a touch tap does not commit the control: the coarse 'committed' frame must say NOT COMMITTED, never show a frame as a commit) exit 1
+         first planted FAIL: FAIL       CAP pop coarse light committed · chromium: short tap, state "off" → "off": NOT COMMITTED, the frame is labelled so · load 20.2/18.7/18.0
+OK     CAP chromium fault   cap-ladder (CK-25 (H5, C-A4's ca4-ladder): on a fine pointer the press paints lighter than the hover it follows (the press wash under the hover rung, C-A4 §0.3)) exit 1
+         first planted FAIL: FAIL       CAP pop ladder fine light · chromium: inset paint L rest 0.5979 (rgb(216, 219, 226)) · hover 0.5496 (rgb(207, 211, 220); darker by 0.0483) · hover+press 0.6910 (rgb(230, 232, 238), data-state off) · released, still hovered 0.2973
+OK     CAP chromium fault   cap-ladderhit (CK-25 (H6, REGISTRY §P5-7 item 10): a transparent layer sits over the control, so the ladder's pointer never reaches it; a hit test that misses must FAIL the ladder as unread, never pass it as a hover that paints no rung) exit 1
+         first planted FAIL: FAIL       CAP pop ladder fine light · chromium: UNREAD: the pointer at (71, 113) hits span[cover].fx-cover, not the target (the ladder is read only through a hit on the trigger) · load 17.4/18.1/17.8
+selftest: 4 runs, 0 N/A; every witness passes its fixture, fails each planted violation on the planted cell, and passes each control, in every engine with an input for it
+# exit 0 · 2026-11-05 10:57:49 · load { 16.95 18.01 17.76 }
+# end · 2026-11-05 10:57:49 · load { 16.95 18.01 17.76 } · harness a499d42408d5

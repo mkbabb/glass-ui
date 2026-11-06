@@ -1,0 +1,41 @@
+# WK4 · 2026-11-05 20:45:45 · admitted · load { 9.54 11.14 11.85 }
+  start 20:45:45 · +0 min · fx-E-10 webkit --part hg13
+  end   20:49:43 · fx-E-10 webkit · E-10 webkit PASS · 90 pass, 0 fail, 0 unmeasured of 90 gating cells (3 reported) · load 9.5/11.1/11.8 at start, 10.8/11.5/11.9 at end · # exit 0 · 2026-11-05 20:49:42 · load { 10.81 11.52 11.89 } · fx-E-10-webkit-da1764.log
+  start 20:49:43 · +3 min · cand13-hg13 webkit
+  end   20:54:02 · cand13-hg13 webkit · E-10 webkit PASS · 90 pass, 0 fail, 0 unmeasured of 90 gating cells (3 reported) · load 10.8/11.5/11.9 at start, 10.0/11.1/11.6 at end · # exit 0 · 2026-11-05 20:54:02 · load { 10.01 11.10 11.61 } · cand13-hg13-webkit.log
+  start 20:54:02 · +8 min · cand12-hg13 webkit
+  end   20:58:21 · cand12-hg13 webkit · E-10 webkit FAIL · 43 pass, 47 fail, 0 unmeasured of 90 gating cells (3 reported) · load 10.0/11.1/11.6 at start, 8.8/10.2/11.1 at end · # exit 1 · 2026-11-05 20:58:21 · load { 8.76 10.23 11.10 } · cand12-hg13-webkit.log
+  start 20:58:21 · +12 min · fx-E-10 webkit
+  end   21:10:25 · fx-E-10 webkit · E-10 webkit PASS · 202 pass, 0 fail, 0 unmeasured of 202 gating cells (31 reported) · load 8.8/10.2/11.1 at start, 9.9/10.3/10.6 at end · # exit 0 · 2026-11-05 21:10:25 · load { 9.85 10.28 10.65 } · fx-E-10-webkit.log
+  start 21:10:25 · +24 min · paint webkit --rerun 1
+  end   21:10:44 · paint webkit ·  · # exit 3 · 2026-11-05 21:10:44 · load { 9.82 10.27 10.64 } · paint-webkit-42bc81.log
+  start 21:10:44 · +24 min · rr-cand13-ce11 webkit --only exit-side --round 3
+  end   21:13:34 · rr-cand13-ce11 webkit ·  · # exit 1 · 2026-11-05 21:13:34 · load { 9.35 10.00 10.48 } · rr-cand13-ce11-webkit-cfd2c8.log
+  start 21:13:34 · +27 min · rr-cand13-ca11 webkit --only exit-side --r 3
+  end   21:14:40 · rr-cand13-ca11 webkit ·  · # exit 0 · 2026-11-05 21:14:40 · load { 8.80 9.75 10.35 } · rr-cand13-ca11-webkit-11fe11.log
+  start 21:14:40 · +28 min · paint webkit --rerun 2
+  end   21:14:59 · paint webkit ·  · # exit 3 · 2026-11-05 21:14:59 · load { 9.43 9.83 10.36 } · paint-webkit-c31b1c.log
+  start 21:14:59 · +29 min · rr-cand13-ce11 webkit --only exit-side --round 4
+  end   21:15:33 · rr-cand13-ce11 webkit ·  · # exit 1 · 2026-11-05 21:15:33 · load { 7.55 9.30 10.15 } · rr-cand13-ce11-webkit-ab315a.log
+  start 21:15:33 · +29 min · rr-cand13-ca11 webkit --only exit-side --r 4
+  end   21:15:49 · rr-cand13-ca11 webkit ·  · # exit 0 · 2026-11-05 21:15:49 · load { 9.91 9.70 10.27 } · rr-cand13-ca11-webkit-ec5f8d.log
+  start 21:15:49 · +30 min · rr-cand11-ce11 webkit --only exit-side --round 2
+  end   21:20:50 · rr-cand11-ce11 webkit ·   UNMEASURED rr-cand11-ce11 · the load gate was not met in 300 s: the exit-side cell is not graded above a 1-minute load of 8 (S14 M17's range); nothing ran · load { 13.3 ·  · rr-cand11-ce11-webkit-453e55.log
+  start 21:20:50 · +35 min · rr-cand11-ca11 webkit --only exit-side --r 2
+  end   21:25:52 · rr-cand11-ca11 webkit ·  · # exit 1 · 2026-11-05 21:25:52 · load { 10.57 11.35 11.17 } · rr-cand11-ca11-webkit-acdffa.log
+  start 21:25:52 · +40 min · rr-cand11-ce11 webkit --only exit-side --round 3
+  end   21:26:42 · rr-cand11-ce11 webkit ·  · # exit 0 · 2026-11-05 21:26:42 · load { 6.09 10.06 10.71 } · rr-cand11-ce11-webkit-cfd2c8.log
+  start 21:26:42 · +40 min · rr-cand11-ca11 webkit --only exit-side --r 3
+  end   21:26:57 · rr-cand11-ca11 webkit ·  · # exit 0 · 2026-11-05 21:26:57 · load { 7.81 10.21 10.75 } · rr-cand11-ca11-webkit-11fe11.log
+  start 21:26:57 · +41 min · st-E-10 webkit --faults e10-snap,e10-veildip,e10-escsnap,e10-rerender,e10-teleport,e10-teleportin,e10-twoengaged,e10-relayout,e10-stale,e10-staleresize,e10-ratio1
+  end   21:43:14 · st-E-10 webkit · selftest: 11 runs, 0 N/A; every witness passes its fixture, fails each planted violation on the planted cell, and passes each control, in every engine with an input for i · # exit 0 · 2026-11-05 21:43:14 · load { 10.10 9.84 10.15 } · st-E-10-webkit-4352f5.log
+  start 21:43:14 · +57 min · rr-cand11-ce11 webkit --only exit-side --round 2 --retry 1
+  end   21:44:14 · rr-cand11-ce11 webkit ·  · # exit 0 · 2026-11-05 21:44:14 · load { 9.67 9.71 10.08 } · rr-cand11-ce11-webkit-5d435b.log
+  start 21:44:14 · +58 min · st-E-10 webkit --faults e10-clipratio,e10-noref,e10-clipratioptr,e10-clipvanish,e10-prmrebound,e10-clipouter,e10-rectclip-feather,e10-rectclip-radius,e10-rectclip-scale,e10-rectclip-film,e10-layoutplace
+  end   21:50:58 · st-E-10 webkit · selftest: 11 runs, 0 N/A; every witness passes its fixture, fails each planted violation on the planted cell, and passes each control, in every engine with an input for i · # exit 0 · 2026-11-05 21:50:58 · load { 10.07 10.76 10.50 } · st-E-10-webkit-d3cd4e.log
+  start 21:50:58 · +65 min · st-E-10 webkit --faults e10-featherunder,e10-ancpromote,e10-dlgpromote,e10-traillate,e10-glidescale,e10-lensswap,e10-lenszero,e10-lensfast,e10-lensnohyst,e10-lensfixed,e10-lensreducetravel
+  end   22:04:06 · st-E-10 webkit · selftest: 11 runs, 1 N/A; every witness passes its fixture, fails each planted violation on the planted cell, and passes each control, in every engine with an input for i · # exit 0 · 2026-11-05 22:04:06 · load { 15.44 13.09 11.97 } · st-E-10-webkit-09710c.log
+  start 22:04:07 · +78 min · st-E-3 webkit --final
+  end   22:09:42 · st-E-3 webkit · selftest: 12 runs, 0 N/A; every witness passes its fixture, fails each planted violation on the planted cell, and passes each control, in every engine with an input for i · # exit 0 · 2026-11-05 22:09:42 · load { 11.16 12.34 11.89 } · st-E-3-webkit-417b08.log
+  HELD at the cutoff (+83 min, est 15) · st-E-10 webkit --faults e10-lenszoom,e10-hostglideratio,e10-hostglideone,e10-hostglideframe,e10-reachframe,e10-hostglidelayout,e10-hostglidelevel,e10-hostglidechild,e10-hostglidestale,e10-reenter,e10-lenslate
+# WK4 · 2026-11-05 22:09:42 · done · load { 11.16 12.34 11.89 } · left 2

@@ -1,0 +1,12 @@
+# H14 fxp-e14-noimportant chromium · 2026-11-05 05:39:26 · load { 14.33 14.65 14.72 } · harness 5d544e7e7932 · --only M26
+# E-14 · S14's members at their ranges (P-E14 §S14-c)
+# target fixture fault e14-noimportant · engine chromium · lock wait 0.0 s (the deadline 5400 s counts from here) · other headless processes: chromium 8, webkit 2 · load 14.3/14.7/14.7 at start
+# chromium 149.0.7827.55
+# held control: scene slider root [data-e~="root"] thumb [data-e~="thumb"] engaged [data-held], [data-kbd], [data-held]; clock token --spring-press-settle; cells M26
+  FAIL       M26 sheet translate: 10px 0 !important on the held root · errors naming the translate or !important at the hold: 0 (bound exactly 1: refused loud, once) · no error · glides 1 · load 13.7/14.5/14.7
+  FAIL       M26 inline translate: 0 0 !important on the held root · errors naming the translate or !important at the hold: 0 (bound exactly 1: refused loud, once) · no error · glides 1 · load 13.7/14.5/14.7
+  FAIL       M26 translate: none !important on the held root · errors naming the translate or !important at the hold: 0 (bound exactly 1: refused loud, once) · no error · glides 1 · load 13.7/14.5/14.7
+  PASS       M26 transform: rotate(2deg) !important (control) on the held root · errors naming the translate or !important at the hold: 0 (bound 0: the control's probe moves) · no error · glides 1 · load 13.7/14.5/14.7
+E-14 chromium FAIL · 1 pass, 3 fail, 0 unmeasured of 4 gating cells (0 reported) · load 14.3/14.7/14.7 at start, 13.7/14.5/14.7 at end
+# exit 1 · 2026-11-05 05:39:31 · load { 13.66 14.51 14.67 }
+# end · 2026-11-05 05:39:31 · load { 13.66 14.51 14.67 } · harness 5d544e7e7932

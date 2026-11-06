@@ -1,0 +1,31 @@
+# C6 · 2026-11-05 10:49:54 · admitted · load { 27.01 20.63 17.52 }
+  start 10:49:54 · +0 min · st-E-8 chromium
+  end   10:51:21 · st-E-8 chromium · selftest: 5 runs, 0 N/A; every witness passes its fixture, fails each planted violation on the planted cell, and passes each control, in every engine with an input for it · # exit 0 · 2026-11-05 10:51:21 · load { 30.93 23.68 19.00 } · st-E-8-chromium.log
+  start 10:51:21 · +1 min · st-E-9 chromium
+  end   10:57:03 · st-E-9 chromium · selftest: 9 runs, 0 N/A; every witness passes its fixture, fails each planted violation on the planted cell, and passes each control, in every engine with an input for it · # exit 0 · 2026-11-05 10:57:03 · load { 17.62 18.12 17.78 } · st-E-9-chromium.log
+  start 10:57:03 · +7 min · st-cap chromium
+  end   10:57:49 · st-cap chromium · selftest: 4 runs, 0 N/A; every witness passes its fixture, fails each planted violation on the planted cell, and passes each control, in every engine with an input for it · # exit 0 · 2026-11-05 10:57:49 · load { 16.95 18.01 17.76 } · st-cap-chromium.log
+  start 10:57:49 · +7 min · fx-E-10 chromium
+  end   11:07:42 · fx-E-10 chromium · E-10 chromium PASS · 207 pass, 0 fail, 0 unmeasured of 207 gating cells (26 reported) · load 17.0/18.0/17.8 at start, 17.3/17.0/17.2 at end · # exit 0 · 2026-11-05 11:07:42 · load { 17.25 16.98 17.21 } · fx-E-10-chromium.log
+  start 11:07:42 · +17 min · st-E-10 chromium --faults e10-snap,e10-veildip,e10-escsnap,e10-rerender,e10-teleport,e10-teleportin,e10-twoengaged,e10-relayout,e10-stale,e10-staleresize,e10-ratio1
+  end   11:23:08 · st-E-10 chromium · selftest: 11 runs, 0 N/A; every witness passes its fixture, fails each planted violation on the planted cell, and passes each control, in every engine with an input for i · # exit 0 · 2026-11-05 11:23:08 · load { 16.44 17.32 17.21 } · st-E-10-chromium-4352f5.log
+  start 11:23:08 · +33 min · st-E-10 chromium --faults e10-clipratio,e10-noref,e10-clipratioptr,e10-clipvanish,e10-prmrebound,e10-clipouter,e10-rectclip-feather,e10-rectclip-radius,e10-rectclip-scale,e10-rectclip-film,e10-layoutplace
+  end   11:29:17 · st-E-10 chromium · selftest: 11 runs, 0 N/A; every witness passes its fixture, fails each planted violation on the planted cell, and passes each control, in every engine with an input for i · # exit 0 · 2026-11-05 11:29:17 · load { 27.37 21.53 19.23 } · st-E-10-chromium-d3cd4e.log
+  start 11:29:17 · +39 min · st-E-10 chromium --faults e10-featherunder,e10-ancpromote,e10-dlgpromote,e10-traillate,e10-glidescale,e10-lensswap,e10-lenszero,e10-lensfast,e10-lensnohyst,e10-lensfixed,e10-lensreducetravel
+  end   11:39:20 · st-E-10 chromium · selftest: 11 runs, 0 N/A; every witness passes its fixture, fails each planted violation on the planted cell, and passes each control, in every engine with an input for i · # exit 0 · 2026-11-05 11:39:20 · load { 17.44 19.16 18.85 } · st-E-10-chromium-09710c.log
+  start 11:39:20 · +49 min · st-E-10 chromium --faults e10-lenszoom,e10-hostglideratio,e10-hostglideone,e10-hostglideframe,e10-reachframe,e10-hostglidelayout,e10-hostglidelevel,e10-hostglidechild,e10-hostglidestale,e10-reenter,e10-lenslate
+  end   11:47:59 · st-E-10 chromium · selftest: 1 of 11 runs BROKEN or UNREAD (0 N/A) · # exit 1 · 2026-11-05 11:47:59 · load { 18.19 19.54 19.56 } · st-E-10-chromium-1b36f2.log
+  start 11:47:59 · +58 min · fx-e14 chromium
+  end   11:50:56 · fx-e14 chromium · E-14 chromium PASS · 117 pass, 0 fail, 0 unmeasured of 117 gating cells (5 reported) · load 18.2/19.5/19.6 at start, 21.0/19.4/19.4 at end · # exit 0 · 2026-11-05 11:50:56 · load { 20.99 19.40 19.43 } · fx-e14-chromium-114759.log
+  start 11:50:56 · +61 min · st-E-10 chromium --faults e10-hostglidelevel
+  end   11:52:58 · st-E-10 chromium · selftest: 1 of 1 runs BROKEN or UNREAD (0 N/A) · # exit 1 · 2026-11-05 11:52:58 · load { 20.27 19.10 19.27 } · st-E-10-chromium-6c4c67.log
+  start 11:52:58 · +63 min · st-E-14 chromium
+  end   11:58:36 · st-E-14 chromium · BROKEN E-14 chromium fault   e14-recorddriven (CK-20 (H14, finding 3; cand13's construction): the record-driven glide (a MutationObserver on every record kind, painted −  · # exit 143 · 2026-11-05 11:58:36 · load { 17.12 17.62 18.43 } · st-E-14-chromium-115258.log
+  start 11:58:36 · +68 min · fx-E-10 chromium --part hg13
+  end   12:01:39 · fx-E-10 chromium · E-10 chromium PASS · 90 pass, 0 fail, 0 unmeasured of 90 gating cells (3 reported) · load 17.1/17.6/18.4 at start, 15.3/17.2/18.1 at end · # exit 0 · 2026-11-05 12:01:39 · load { 15.27 17.19 18.13 } · fx-E-10-chromium-da1764-115836.log
+  start 12:01:39 · +71 min · st-E-10 chromium --faults e10-hostglidelevel
+  end   12:03:33 · st-E-10 chromium · selftest: 1 runs, 0 N/A; every witness passes its fixture, fails each planted violation on the planted cell, and passes each control, in every engine with an input for it · # exit 0 · 2026-11-05 12:03:33 · load { 22.08 17.98 18.27 } · st-E-10-chromium-6c4c67-120139.log
+  start 12:03:33 · +73 min · st-E-14 chromium
+  end   12:08:18 · st-E-14 chromium · selftest: 11 runs, 1 N/A; every witness passes its fixture, fails each planted violation on the planted cell, and passes each control, in every engine with an input for i · # exit 0 · 2026-11-05 12:08:18 · load { 24.80 23.28 20.74 } · st-E-14-chromium-120333.log
+  HELD at the cutoff (+78 min, est 25) · st-E-2 chromium
+# C6 · 2026-11-05 12:08:18 · done · load { 24.80 23.28 20.74 } · left 5

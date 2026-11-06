@@ -1,0 +1,26 @@
+{
+ "id": "E-10",
+ "engine": "webkit",
+ "version": "26.5",
+ "target": {
+  "fixture": true,
+  "fault": "e10-reenter"
+ },
+ "loadStart": "22.7/22.3/19.6",
+ "loadEnd": "22.5/22.3/19.6",
+ "verdict": "FAIL",
+ "cells": [
+  {
+   "name": "E-10 slider reentry · a still hold, 1000 ms, no harness mutation",
+   "status": "PASS",
+   "line": "records delivered to any MutationObserver in the window that the harness did not make: 0 in 0 deliveries (bound 0) · none · all deliveries 0 (0 records) · errors 0",
+   "load": "22.5/22.3/19.6"
+  },
+  {
+   "name": "E-10 slider reentry · a 40 px block inserted before C, then 40 frames",
+   "status": "FAIL",
+   "line": "records delivered to any MutationObserver in the window that the harness did not make: 32 in 22 deliveries (bound 0) · observer [body childList,subtree,attributes,characterData] 22 deliveries, 32 records: 2× attributes:style on span (in host); 5× attributes:style on div.fx-slider.engage-held (in host); 25× attributes:style on div.fx-loupe.anch · all deliveries 23 (33 records) · errors 0",
+   "load": "22.5/22.3/19.6"
+  }
+ ]
+}

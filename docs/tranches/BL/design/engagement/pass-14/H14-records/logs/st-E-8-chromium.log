@@ -1,0 +1,12 @@
+# H14 st-E-8 chromium · 2026-11-05 10:49:54 · load { 27.01 20.63 17.52 } · harness a499d42408d5 · 
+OK     E-8 chromium clean exit 0 · E-8 chromium PASS · 9 pass, 0 fail, 0 unmeasured of 9 gating cells (0 reported) · load 27.0/20.6/17.5 at start, 28.4/21.2/17.8 at end
+OK     E-8 chromium fault   e8-drift (the emitted --engage-press-drain-attack is 56ms against its row's 55) exit 1
+         first planted FAIL: FAIL       E-8 mirror · 2 rows, 4 --engage-* tokens on :root · drift [--engage-press-drain-attack 56ms (56ms) ≠ 55ms] · orphans [] · load 29.7/21.6/17.9
+OK     E-8 chromium control e8-units (CONTROL, must PASS: a token spelled .18s (a minifier's respelling of 180ms, as the HEAD build does) equals its 180 ms row) exit 0
+OK     E-8 chromium fault   e8-literal (the control's press transition spells 230ms, a literal no token carries) exit 1
+         first planted FAIL: FAIL       E-8 literal pop · 10 animation(s) ran [background-color@55ms, scale@230ms, script@350ms, script@60ms, script@180ms] against 6 clock tokens · minted [CSSTransition scale 230ms on ctl engage-pressed] · load 32.9/23.3/18.7
+OK     E-8 chromium fault   e8-prmliteral (the reduce arm's authorization row (the class rule that outranks the PRM fallback) spells its press transition 100ms, a literal no token carries (H-9; H3: an authorized row is graded, not exempt)) exit 1
+         first planted FAIL: FAIL       E-8 literal pop PRM · 6 animation(s) ran [background-color@100ms, script@60ms, script@180ms] against 6 clock tokens · minted [CSSTransition background-color 100ms on ctl engage-pressed] · load 29.9/23.2/18.8
+selftest: 5 runs, 0 N/A; every witness passes its fixture, fails each planted violation on the planted cell, and passes each control, in every engine with an input for it
+# exit 0 · 2026-11-05 10:51:21 · load { 30.93 23.68 19.00 }
+# end · 2026-11-05 10:51:21 · load { 30.93 23.68 19.00 } · harness a499d42408d5

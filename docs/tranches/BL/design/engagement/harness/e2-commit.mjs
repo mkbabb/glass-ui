@@ -8,8 +8,9 @@
 //   commit         passes by ONE admitted arm (lib.mjs commitArms): (i) a body's travel with an overshoot; (ii) a
 //                  geometric pop whose excursion on the painted face exceeds 0.8 px, with a bounce; (iii) a light
 //                  commit: the face's luminance rises above its committed rest and decays to it on an
-//                  ENGAGE_ENVELOPES row's clock. Admitted arms default to i,iii: (ii) waits on the owner's Q-5 ruling
-//                  (`--commit-arms i,ii,iii` admits it; every line prints all three readings either way). Paths, each
+//                  ENGAGE_ENVELOPES row's clock. Admitted arms default to i,ii, O-103d (1)'s (H14, class 6 (a)): Q-5 = arm
+//                  (ii), the geometric pop; route B, the light (iii), RETIRES. `--commit-arms` still names a set (every line
+//                  prints all three readings either way); a set with (iii) is not O-103d (1)'s and says so. Paths, each
 //                  gating: keyboard (Tab in from the sentinel, then the scene's key or keys; the pointer never moves),
 //                  programmatic (__e.commit() with focus parked after), pointer (press 150 ms, read from the release),
 //                  tap on a coarse pointer
@@ -53,7 +54,8 @@ await witness("E-2", "CK-02 the commit, by one arm, on a commit that happened", 
   const only = typeof a.scenes === "string" ? a.scenes.split(",") : null;
   const themes = typeof a.themes === "string" ? a.themes.split(",") : ["light", "dark"];
   const arms = typeof a["commit-arms"] === "string" ? a["commit-arms"].split(",") : DEFAULT_ARMS;
-  console.log(`# admitted commit arms: ${arms.join(",")}${arms.includes("ii") ? " (arm ii admitted: the owner's Q-5 ruling must be cited by the run)" : " (arm ii printed, not admitted: Q-5 unruled, springPresets.ts:55-57 stands)"}`);
+  const o103 = arms.length === 2 && arms.includes("i") && arms.includes("ii");
+  console.log(`# admitted commit arms: ${arms.join(",")}${o103 ? " (O-103d (1): Q-5 = arm ii, the geometric pop; route B, arm iii, RETIRED)" : ` (NOT O-103d (1)'s set i,ii: ${arms.includes("iii") ? "arm iii, the retired light, admitted" : "arm ii not admitted"}; not a scoring read)`}`);
   const film = (P, m, ms = 800) => P.page.evaluate(([o]) => window.__film(o), [{ target: '[data-e~="target"]', body: '[data-e~="body"]', face: m.face ? '[data-e~="face"]' : '[data-e~="target"]', ms }]);
   const state = (P) => P.page.evaluate(() => JSON.stringify(window.__e.state?.() ?? null));
   const env = (P) => P.page.evaluate(() => window.__e.envelopes ?? []);

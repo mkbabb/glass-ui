@@ -1,0 +1,62 @@
+{
+ "id": "E-14",
+ "engine": "chromium",
+ "version": "149.0.7827.55",
+ "target": {
+  "fixture": true,
+  "fault": "e14-rawsum"
+ },
+ "loadStart": "11.7/14.0/16.5",
+ "loadEnd": "11.2/13.8/16.4",
+ "verdict": "PASS",
+ "cells": [
+  {
+   "name": "M10 a sub-pixel step · 0.4 px insert · STATED LIMIT (≤ 1 px, no glide owed)",
+   "status": "PASS",
+   "line": "the act on frame 8 · paint moved 0.0, 0.4 px in all; on the act's frame 0.00, 0.39 = 0.39 px (bound ≤ 0.50) · largest move over any 16.7 ms 0.4 px at +17 ms (bound 1.1) · glides 0 · scrollY 35 → 35 → 35, scroller 0 → 0 → 0 · path [0.0,0.0 0.0,0.4 0.0,0.4 0.0,0.4 0.0,0.4] · errors 0 · the limit: the act's frame ≤ 1 px",
+   "load": "11.7/14.0/16.5"
+  },
+  {
+   "name": "M10 a sub-pixel step · 0.4 px insert, fractional layout · STATED LIMIT (≤ 1 px, no glide owed)",
+   "status": "PASS",
+   "line": "the act on frame 8 · paint moved 0.0, 0.4 px in all; on the act's frame 0.00, 0.39 = 0.39 px (bound ≤ 0.50) · largest move over any 16.7 ms 0.0 px at +NaN ms (bound 1.1) · glides 0 · scrollY 0 → 0 → 0, scroller 0 → 0 → 0 · path [0.0,0.0 0.0,0.4 0.0,0.4 0.0,0.4 0.0,0.4] · errors 0 · the limit: the act's frame ≤ 1 px",
+   "load": "11.7/14.0/16.5"
+  },
+  {
+   "name": "M10 a link joins the chain · will-change: transform on a bordered G (X1, Y1)",
+   "status": "PASS",
+   "line": "the act on frame 8 · paint moved 0.0, 0.0 px in all; on the act's frame 0.00, 0.00 = 0.00 px (bound ≤ 0.50) · largest move over any 16.7 ms 0.0 px at +NaN ms (bound 1.0) · glides 0 · scrollY 38 → 38 → 38, scroller 0 → 0 → 0 · path [0.0,0.0 0.0,0.0 0.0,0.0 0.0,0.0 0.0,0.0] · errors 0 · bound: ≤ 1 px on the act's frame (the rounding), no glide",
+   "load": "11.3/13.9/16.4"
+  },
+  {
+   "name": "M10 a link joins the chain · contain: paint on a bordered G (X1, Y1)",
+   "status": "PASS",
+   "line": "the act on frame 8 · paint moved 0.0, 0.0 px in all; on the act's frame 0.00, 0.00 = 0.00 px (bound ≤ 0.50) · largest move over any 16.7 ms 0.0 px at +NaN ms (bound 1.0) · glides 0 · scrollY 38 → 38 → 38, scroller 0 → 0 → 0 · path [0.0,0.0 0.0,0.0 0.0,0.0 0.0,0.0 0.0,0.0] · errors 0 · bound: ≤ 1 px on the act's frame (the rounding), no glide",
+   "load": "11.3/13.9/16.4"
+  },
+  {
+   "name": "M10 a link joins the chain · filter: blur(0) on a bordered G (X1, Y1)",
+   "status": "PASS",
+   "line": "the act on frame 8 · paint moved 0.0, 0.0 px in all; on the act's frame 0.00, 0.00 = 0.00 px (bound ≤ 0.50) · largest move over any 16.7 ms 0.0 px at +NaN ms (bound 1.0) · glides 0 · scrollY 38 → 38 → 38, scroller 0 → 0 → 0 · path [0.0,0.0 0.0,0.0 0.0,0.0 0.0,0.0 0.0,0.0] · errors 0 · bound: ≤ 1 px on the act's frame (the rounding), no glide",
+   "load": "11.3/13.9/16.4"
+  },
+  {
+   "name": "M10 a link joins the chain · perspective: 500px on a bordered G (X1, Y1)",
+   "status": "PASS",
+   "line": "the act on frame 8 · paint moved 0.0, 0.0 px in all; on the act's frame 0.00, 0.00 = 0.00 px (bound ≤ 0.50) · largest move over any 16.7 ms 0.0 px at +NaN ms (bound 1.0) · glides 0 · scrollY 38 → 38 → 38, scroller 0 → 0 → 0 · path [0.0,0.0 0.0,0.0 0.0,0.0 0.0,0.0 0.0,0.0] · errors 0 · bound: ≤ 1 px on the act's frame (the rounding), no glide",
+   "load": "11.3/13.9/16.4"
+  },
+  {
+   "name": "M10 a link joins the chain · will-change: transform, fractional layout on a bordered G (X1, Y1)",
+   "status": "PASS",
+   "line": "the act on frame 8 · paint moved 0.0, 0.0 px in all; on the act's frame 0.00, 0.00 = 0.00 px (bound ≤ 0.50) · largest move over any 16.7 ms 0.0 px at +NaN ms (bound 1.0) · glides 0 · scrollY 0 → 0 → 0, scroller 0 → 0 → 0 · path [0.0,0.0 0.0,0.0 0.0,0.0 0.0,0.0 0.0,0.0] · errors 0 · bound: ≤ 1 px on the act's frame (the rounding), no glide",
+   "load": "11.2/13.8/16.4"
+  },
+  {
+   "name": "M10 a link joins the chain · position: relative (control) on a bordered G (X1, Y1)",
+   "status": "PASS",
+   "line": "the act on frame 8 · paint moved 0.0, 0.0 px in all; on the act's frame 0.00, 0.00 = 0.00 px (bound ≤ 0.50) · largest move over any 16.7 ms 0.0 px at +NaN ms (bound 1.0) · glides 0 · scrollY 38 → 38 → 38, scroller 0 → 0 → 0 · path [0.0,0.0 0.0,0.0 0.0,0.0 0.0,0.0 0.0,0.0] · errors 0 · bound: ≤ 1 px on the act's frame (the rounding), no glide",
+   "load": "11.2/13.8/16.4"
+  }
+ ]
+}

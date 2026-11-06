@@ -1,0 +1,12 @@
+# H14 fxp-e14-subtreewait chromium · 2026-11-05 05:39:32 · load { 13.66 14.51 14.67 } · harness 5d544e7e7932 · --only M29
+# E-14 · S14's members at their ranges (P-E14 §S14-c)
+# target fixture fault e14-subtreewait · engine chromium · lock wait 0.0 s (the deadline 5400 s counts from here) · other headless processes: chromium 8, webkit 2 · load 12.9/14.3/14.6 at start
+# chromium 149.0.7827.55
+# held control: scene slider root [data-e~="root"] thumb [data-e~="thumb"] engaged [data-held], [data-kbd], [data-held]; clock token --spring-press-settle; cells M29
+  PASS       M29 the released host's subtree holds a paused finite animation · rAF callbacks a second at rest before the hold 0, after release + the clock 350 ms + 700 ms: 0 (bound ≤ the rest's) · the root still on the stage (data-engage-stage) false · errors 0 · load 12.9/14.3/14.6
+  PASS       M29 the released host's subtree holds a view() timeline animation · rAF callbacks a second at rest before the hold 0, after release + the clock 350 ms + 700 ms: 0 (bound ≤ the rest's) · the root still on the stage (data-engage-stage) false · errors 0 · load 12.3/14.2/14.5
+  FAIL       M29 the released host's subtree holds a 10 s finite animation · rAF callbacks a second at rest before the hold 0, after release + the clock 350 ms + 700 ms: 120 (bound ≤ the rest's) · the root still on the stage (data-engage-stage) false · errors 0 · load 12.2/14.1/14.5
+  PASS       M29 the released host's subtree holds nothing (control) · rAF callbacks a second at rest before the hold 0, after release + the clock 350 ms + 700 ms: 0 (bound ≤ the rest's) · the root still on the stage (data-engage-stage) false · errors 0 · load 11.9/14.0/14.5
+E-14 chromium FAIL · 3 pass, 1 fail, 0 unmeasured of 4 gating cells (0 reported) · load 12.9/14.3/14.6 at start, 11.9/14.0/14.5 at end
+# exit 1 · 2026-11-05 05:39:49 · load { 11.90 14.04 14.50 }
+# end · 2026-11-05 05:39:49 · load { 11.90 14.04 14.50 } · harness 5d544e7e7932

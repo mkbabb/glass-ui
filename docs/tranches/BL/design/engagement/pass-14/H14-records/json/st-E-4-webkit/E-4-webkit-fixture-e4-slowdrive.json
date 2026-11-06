@@ -1,0 +1,32 @@
+{
+ "id": "E-4",
+ "engine": "webkit",
+ "version": "26.5",
+ "target": {
+  "fixture": true,
+  "fault": "e4-slowdrive"
+ },
+ "loadStart": "13.4/11.5/11.3",
+ "loadEnd": "11.6/11.4/11.3",
+ "verdict": "PASS",
+ "cells": [
+  {
+   "name": "E-4 slider fling carries velocity",
+   "status": "PASS",
+   "line": "axis x, page frame · 5 reads, every one must pass: [1: carry 91.62 / settle 95.82 px @ fling 988 px/s, re-driven after 0 px/s (carry 0.00 px) pass · 2: carry 92.06 / settle 95.77 px @ fling 1096 px/s pass · 3: carry 91.60 / settle 95.77 px @ fling 1231 px/s pass · 4: carry 92.20 / settle 95.77 px @ fling 1379 px/s pass · 5: carry 92.00 / settle 95.77 px @ fling 1333 px/s pass] (5 of 5 pass) · read 1 in full: fling: carry 91.62 px, settles 90.78 px past release · still: carry 0.00 px, settles -5.04 px · difference: carry 91.62 px, settle 95.82 px (bound: either ≥ 4, both at rest, on every read whose fling the rule measured ≥ 100 px/s; such a fling carrying 0.00 px fails by name; a drive under 100 px/s is re-driven up to 2 times and, still under it, UNGRADED) · body opacity ≥ 1.000 · 120 frames, median 17.0 ms",
+   "load": "12.3/11.5/11.3"
+  },
+  {
+   "name": "E-4 slider release continuity",
+   "status": "PASS",
+   "line": "over 5 reads, each against its own drive (18.7/65.9, 23.4/65.9, 22.4/65.8, 27.6/65.9, 24.4/65.9 px; 0 over) · read 1: largest one-frame move on release: fling 18.7 px, still 0.8 px · during the drive: fling 42.5 px, still 42.6 px (bound ≤ drive × 1.5 + 2 = 65.9 px)",
+   "load": "12.3/11.5/11.3"
+  },
+  {
+   "name": "E-4 slider release PRM",
+   "status": "PASS",
+   "line": "reduce · moved 120.0 px · fling: carry 0.00 px, settles 0.00 px past release, overshoot past its rest 0.00 px, at rest true (bound: at rest within 2000 ms, overshoot ≤ 0.5 px) · largest one-frame jump 0.0 px",
+   "load": "11.6/11.4/11.3"
+  }
+ ]
+}

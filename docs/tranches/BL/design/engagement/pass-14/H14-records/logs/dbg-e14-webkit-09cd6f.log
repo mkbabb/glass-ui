@@ -1,0 +1,14 @@
+# H14 dbg-e14 webkit · 2026-11-05 14:25:13 · load { 20.85 21.46 19.17 } · harness dfe9d9407b9b · --only M24
+# E-14 · S14's members at their ranges (P-E14 §S14-c)
+# target fixture · engine webkit · lock wait 0.0 s (the deadline 5400 s counts from here) · other headless processes: chromium 4, webkit 0 · load 20.9/21.5/19.2 at start
+# webkit 26.5 (Playwright WebKit, not Safari; real Safari UNMEASURED (owner's safaridriver checkbox))
+# held control: scene slider root [data-e~="root"] thumb [data-e~="thumb"] engaged [data-held], [data-kbd], [data-held]; clock token --spring-press-settle; cells M24
+  debug M24 scroll-snap y mandatory, align center: the snapped item grows 300 → 400 px below the root [{"kind":null,"dS":"0,50 0,0","eng":false,"rng":"false,false","same":true,"link":true}]
+  FAIL       M24 scroll-snap y mandatory, align center: the snapped item grows 300 → 400 px below the root · STATED LIMIT in webkit (W-2: the re-snap lands after the resize observation of the frame whose range changed): cut on the act's frame 50.00 px (bound ≤ the move 50.0 + 0.5), the next frame 50.00 px from where it was painted (bound ≤ 0.5), glided false · load 20.9/21.5/19.2
+  debug M24 scroll-snap y mandatory, align end: the snapped item grows 300 → 400 px below the root [{"kind":null,"dS":"0,100 0,0","eng":false,"rng":"false,false","same":true,"link":true}]
+  FAIL       M24 scroll-snap y mandatory, align end: the snapped item grows 300 → 400 px below the root · STATED LIMIT in webkit (W-2: the re-snap lands after the resize observation of the frame whose range changed): cut on the act's frame 100.00 px (bound ≤ the move 100.0 + 0.5), the next frame 100.00 px from where it was painted (bound ≤ 0.5), glided false · load 20.9/21.5/19.2
+  debug M24 scroll-snap y mandatory, align start: the snapped item grows 300 → 400 px below the root null
+  PASS       M24 scroll-snap y mandatory, align start: the snapped item grows 300 → 400 px below the root · the act on frame 8 · paint moved 0.0, 0.0 px in all; on the act's frame 0.00, 0.00 = 0.00 px (bound ≤ 0.50) · largest move over any 16.7 ms 0.0 px at +NaN ms (bound 1.0) · glides 0 · scrollY 0 → 0 → 0, scroller 600 → 600 → 600 · path [0.0,0.0 0.0,0.0 0.0,0.0 0.0,0.0 0.0,0.0] · errors 0 · load 20.9/21.5/19.2
+E-14 webkit FAIL · 1 pass, 2 fail, 0 unmeasured of 3 gating cells (0 reported) · load 20.9/21.5/19.2 at start, 20.9/21.5/19.2 at end
+# exit 1 · 2026-11-05 14:25:20 · load { 20.95 21.47 19.19 }
+# end · 2026-11-05 14:25:20 · load { 20.95 21.47 19.19 } · harness 7a04023c4f72

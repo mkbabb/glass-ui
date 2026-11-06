@@ -1,0 +1,104 @@
+{
+ "id": "E-10",
+ "engine": "webkit",
+ "version": "26.5",
+ "target": {
+  "fixture": true,
+  "fault": "e10-ancpromote"
+ },
+ "loadStart": "13.6/11.4/10.7",
+ "loadEnd": "9.4/10.6/10.5",
+ "verdict": "FAIL",
+ "cells": [
+  {
+   "name": "E-10 clipstale anc none · keyboard",
+   "status": "REPORT",
+   "line": "keyboard engaged (promoted true) · the reference: visibility over the scroller's region engaged over released ×1.008 (the grow's own gain)",
+   "load": "13.0/11.4/10.7"
+  },
+  {
+   "name": "E-10 clipstale anc opacity · keyboard",
+   "status": "FAIL",
+   "line": "keyboard engaged (promoted true) · the scroller opacity 0.5 · visibility engaged over released ×2.059 against ×1.008 with nothing set · ratio of ratios 2.043 (two-sided bound 0.9..1.1: an in-place body reads 1)",
+   "load": "13.0/11.4/10.7"
+  },
+  {
+   "name": "E-10 clipstale anc filter · keyboard",
+   "status": "REPORT",
+   "line": "keyboard engaged (promoted true) · the scroller filter invert(1) · visibility engaged over released ×0.134 against ×1.008 with nothing set · ratio of ratios 0.133 (two-sided bound 0.9..1.1: an in-place body reads 1) · REPORT in webkit keyboard: an in-place body's filter read scatters past the bound here (ANC_REPORT, ../pass-9/H9.md §2); this read is outside it",
+   "load": "12.5/11.3/10.7"
+  },
+  {
+   "name": "E-10 clipstale anc clippath · keyboard",
+   "status": "FAIL",
+   "line": "keyboard engaged (promoted true) · the scroller clipPath inset(0 45% 0 0) · visibility engaged over released ×1.670 against ×1.008 with nothing set · ratio of ratios 1.657 (two-sided bound 0.9..1.1: an in-place body reads 1)",
+   "load": "12.5/11.3/10.7"
+  },
+  {
+   "name": "E-10 clipstale anc rotate · keyboard",
+   "status": "REPORT",
+   "line": "keyboard engaged (promoted true) · the scroller rotate 3deg · visibility engaged over released ×1.005 against ×1.008 with nothing set · ratio of ratios 0.997 (two-sided bound 0.9..1.1: an in-place body reads 1) · REPORT in webkit keyboard: an in-place body's rotate read scatters past the bound here (ANC_REPORT, ../pass-9/H9.md §2); this read is inside it",
+   "load": "11.7/11.1/10.7"
+  },
+  {
+   "name": "E-10 clipstale anc none · touch",
+   "status": "REPORT",
+   "line": "touch engaged (promoted true) · the pointer aimed at the thumb's painted centre hit the slider · the reference: visibility over the scroller's region engaged over released ×1.128 (the grow's own gain)",
+   "load": "10.9/11.0/10.6"
+  },
+  {
+   "name": "E-10 clipstale anc opacity · touch",
+   "status": "FAIL",
+   "line": "touch engaged (promoted true) · the pointer aimed at the thumb's painted centre hit the slider · the scroller opacity 0.5 · visibility engaged over released ×2.310 against ×1.128 with nothing set · ratio of ratios 2.047 (two-sided bound 0.9..1.1: an in-place body reads 1)",
+   "load": "10.9/11.0/10.6"
+  },
+  {
+   "name": "E-10 clipstale anc filter · touch",
+   "status": "REPORT",
+   "line": "touch engaged (promoted true) · the pointer aimed at the thumb's painted centre hit the slider · the scroller filter invert(1) · visibility engaged over released ×0.131 against ×1.128 with nothing set · ratio of ratios 0.116 (two-sided bound 0.9..1.1: an in-place body reads 1) · REPORT in webkit touch: an in-place body's filter read scatters past the bound here (ANC_REPORT, ../pass-9/H9.md §2); this read is outside it",
+   "load": "10.5/10.9/10.6"
+  },
+  {
+   "name": "E-10 clipstale anc clippath · touch",
+   "status": "FAIL",
+   "line": "touch engaged (promoted true) · the pointer aimed at the thumb's painted centre hit the slider · the scroller clipPath inset(0 45% 0 0) · visibility engaged over released ×2.059 against ×1.128 with nothing set · ratio of ratios 1.825 (two-sided bound 0.9..1.1: an in-place body reads 1)",
+   "load": "9.9/10.8/10.5"
+  },
+  {
+   "name": "E-10 clipstale anc rotate · touch",
+   "status": "PASS",
+   "line": "touch engaged (promoted true) · the pointer aimed at the thumb's painted centre hit the slider · the scroller rotate 3deg · visibility engaged over released ×1.125 against ×1.128 with nothing set · ratio of ratios 0.997 (two-sided bound 0.9..1.1: an in-place body reads 1)",
+   "load": "9.7/10.7/10.5"
+  },
+  {
+   "name": "E-10 clipstale anc none · fine",
+   "status": "REPORT",
+   "line": "fine engaged (promoted true) · the pointer aimed at the thumb's painted centre hit the slider · the reference: visibility over the scroller's region engaged over released ×1.128 (the grow's own gain)",
+   "load": "9.7/10.7/10.5"
+  },
+  {
+   "name": "E-10 clipstale anc opacity · fine",
+   "status": "FAIL",
+   "line": "fine engaged (promoted true) · the pointer aimed at the thumb's painted centre hit the slider · the scroller opacity 0.5 · visibility engaged over released ×2.310 against ×1.128 with nothing set · ratio of ratios 2.047 (two-sided bound 0.9..1.1: an in-place body reads 1)",
+   "load": "9.6/10.7/10.5"
+  },
+  {
+   "name": "E-10 clipstale anc filter · fine",
+   "status": "REPORT",
+   "line": "fine engaged (promoted true) · the pointer aimed at the thumb's painted centre hit the slider · the scroller filter invert(1) · visibility engaged over released ×0.131 against ×1.128 with nothing set · ratio of ratios 0.116 (two-sided bound 0.9..1.1: an in-place body reads 1) · REPORT in webkit fine: an in-place body's filter read scatters past the bound here (ANC_REPORT, ../pass-9/H9.md §2); this read is outside it",
+   "load": "9.6/10.7/10.5"
+  },
+  {
+   "name": "E-10 clipstale anc clippath · fine",
+   "status": "FAIL",
+   "line": "fine engaged (promoted true) · the pointer aimed at the thumb's painted centre hit the slider · the scroller clipPath inset(0 45% 0 0) · visibility engaged over released ×2.059 against ×1.128 with nothing set · ratio of ratios 1.825 (two-sided bound 0.9..1.1: an in-place body reads 1)",
+   "load": "9.4/10.6/10.5"
+  },
+  {
+   "name": "E-10 clipstale anc rotate · fine",
+   "status": "PASS",
+   "line": "fine engaged (promoted true) · the pointer aimed at the thumb's painted centre hit the slider · the scroller rotate 3deg · visibility engaged over released ×1.125 against ×1.128 with nothing set · ratio of ratios 0.997 (two-sided bound 0.9..1.1: an in-place body reads 1)",
+   "load": "9.4/10.6/10.5"
+  }
+ ]
+}

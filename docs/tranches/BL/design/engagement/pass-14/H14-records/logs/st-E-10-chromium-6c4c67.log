@@ -1,0 +1,10 @@
+# H14 st-E-10 chromium · 2026-11-05 11:50:56 · load { 20.99 19.40 19.43 } · harness bb40630fbe43 · --faults e10-hostglidelevel
+BROKEN E-10 chromium fault   e10-hostglidelevel (CK-20 (H13, REGISTRY §P12-7 item 2; the pass-12 ownScale): the map from a translate to its paint read as its axis lengths alone, so under a rotation, a skew or a rotating matrix the glide is laid level and starts off where the root was painted) exit 2
+         # chromium 149.0.7827.55
+         HARNESS ERROR page.waitForFunction: Timeout 60000ms exceeded. |     at openPage (/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/harness/lib.mjs:362:14) |     at async sceneIndex (/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/harness/lib.mjs:373:13)
+         E-10 chromium HARNESS ERROR · page.waitForFunction: Timeout 60000ms exceeded. · load 20.3/19.1/19.3
+         
+engine-closed re-runs (1): E-10 chromium e10-hostglidelevel: reproduced
+selftest: 1 of 1 runs BROKEN or UNREAD (0 N/A)
+# exit 1 · 2026-11-05 11:52:58 · load { 20.27 19.10 19.27 }
+# end · 2026-11-05 11:52:58 · load { 20.27 19.10 19.27 } · harness bb40630fbe43

@@ -1,0 +1,338 @@
+{
+ "id": "E-11",
+ "engine": "webkit",
+ "version": "26.5",
+ "target": {
+  "fixture": true,
+  "fault": "e11-narrowread"
+ },
+ "loadStart": "30.0/25.9/23.3",
+ "loadEnd": "17.6/19.8/21.1",
+ "verdict": "FAIL",
+ "cells": [
+  {
+   "name": "E-11 clipstale travel loud · clean · side",
+   "status": "UNMEASURED",
+   "line": "NOT DRIVEN · clean page · side changes 1, the row none · travel none against CSS's clock NaN ms (to the ms: false) · console/page errors 3 ([fixture] --engage-control-engage-release is unreadable (\"calc(90ms * 2)\"): the clock it times cannot run) · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px",
+   "load": "26.8/25.4/23.1"
+  },
+  {
+   "name": "E-11 clipstale travel loud · clean · rerender",
+   "status": "UNMEASURED",
+   "line": "NOT DRIVEN · clean page · a 40 px block inserted before the rest box · travel none against CSS's clock NaN ms (to the ms: false) · console/page errors 2 ([fixture] --engage-control-engage-release is unreadable (\"calc(90ms * 2)\"): the clock it times cannot run) · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px",
+   "load": "26.8/25.4/23.1"
+  },
+  {
+   "name": "E-11 clipstale travel loud · clean · carry",
+   "status": "UNMEASURED",
+   "line": "NOT DRIVEN · clean page · a fling released · travel none against CSS's clock NaN ms (to the ms: false) · console/page errors 2 ([fixture] --engage-control-engage-release is unreadable (\"calc(90ms * 2)\"): the clock it times cannot run) · the later hold: engaged true, lens shown true (opacity 1.00), pinned 0.0 px",
+   "load": "25.8/25.2/23.1"
+  },
+  {
+   "name": "E-11 clipstale travel loud · tokens",
+   "status": "UNMEASURED",
+   "line": "NOT DRIVEN: the clean side page shows no running animation on the lens on a declared row's clock, so the travel's tokens cannot be read from it",
+   "load": "25.8/25.2/23.1"
+  },
+  {
+   "name": "E-11 pop token forms · --engage-control-engage-release calc(90ms + 90ms) · commit",
+   "status": "FAIL",
+   "line": "THROWS · --engage-control-engage-release: calc(90ms + 90ms) on <html> before the first script (the default \"calc(90ms * 2)\" = 0.18s) · CSS reads the form 0.18s · console errors naming the token 2 (\"[fixture] --engage-control-engage-release is unreadable (\"calc(90ms + 90ms)\"): the clock it times cannot run\") (clean page 2), uncaught 1",
+   "load": "24.6/25.0/23.0"
+  },
+  {
+   "name": "E-11 pop token forms · --engage-control-engage-release calc(90ms * 2) · commit",
+   "status": "FAIL",
+   "line": "THROWS · --engage-control-engage-release: calc(90ms * 2) on <html> before the first script (the default \"calc(90ms * 2)\" = 0.18s) · CSS reads the form 0.18s · console errors naming the token 2 (\"[fixture] --engage-control-engage-release is unreadable (\"calc(90ms * 2)\"): the clock it times cannot run\") (clean page 2), uncaught 1",
+   "load": "24.6/25.0/23.0"
+  },
+  {
+   "name": "E-11 pop token forms · --engage-control-engage-release min(180ms, 100s) · commit",
+   "status": "FAIL",
+   "line": "THROWS · --engage-control-engage-release: min(180ms, 100s) on <html> before the first script (the default \"calc(90ms * 2)\" = 0.18s) · CSS reads the form 0.18s · console errors naming the token 2 (\"[fixture] --engage-control-engage-release is unreadable (\"min(180ms, 100s)\"): the clock it times cannot run\") (clean page 2), uncaught 1",
+   "load": "24.6/25.0/23.0"
+  },
+  {
+   "name": "E-11 pop token forms · --engage-control-engage-release max(180ms, 1ms) · commit",
+   "status": "FAIL",
+   "line": "THROWS · --engage-control-engage-release: max(180ms, 1ms) on <html> before the first script (the default \"calc(90ms * 2)\" = 0.18s) · CSS reads the form 0.18s · console errors naming the token 2 (\"[fixture] --engage-control-engage-release is unreadable (\"max(180ms, 1ms)\"): the clock it times cannot run\") (clean page 2), uncaught 1",
+   "load": "23.5/24.7/22.9"
+  },
+  {
+   "name": "E-11 pop token forms · --engage-control-engage-release clamp(1ms, 180ms, 100s) · commit",
+   "status": "FAIL",
+   "line": "THROWS · --engage-control-engage-release: clamp(1ms, 180ms, 100s) on <html> before the first script (the default \"calc(90ms * 2)\" = 0.18s) · CSS reads the form 0.18s · console errors naming the token 2 (\"[fixture] --engage-control-engage-release is unreadable (\"clamp(1ms, 180ms, 100s)\"): the clock it times cannot run\") (clean page 2), uncaught 1",
+   "load": "23.5/24.7/22.9"
+  },
+  {
+   "name": "E-11 pop token forms · --engage-control-engage-release calc(var(--h13-undefined, 180ms)) · commit",
+   "status": "FAIL",
+   "line": "THROWS · --engage-control-engage-release: calc(var(--h13-undefined, 180ms)) on <html> before the first script (the default \"calc(90ms * 2)\" = 0.18s) · CSS reads the form 0.18s · console errors naming the token 2 (\"[fixture] --engage-control-engage-release is unreadable (\"calc(180ms)\"): the clock it times cannot run\") (clean page 2), uncaught 1",
+   "load": "23.5/24.7/22.9"
+  },
+  {
+   "name": "E-11 pop token forms · --engage-control-engage-release round(nearest, 180ms, 1ms) · commit",
+   "status": "FAIL",
+   "line": "THROWS · --engage-control-engage-release: round(nearest, 180ms, 1ms) on <html> before the first script (the default \"calc(90ms * 2)\" = 0.18s) · CSS reads the form 0.18s · console errors naming the token 2 (\"[fixture] --engage-control-engage-release is unreadable (\"round(nearest, 180ms, 1ms)\"): the clock it times cannot run\") (clean page 2), uncaught 1",
+   "load": "23.5/24.7/22.9"
+  },
+  {
+   "name": "E-11 pop token forms · --engage-control-engage-release abs(-180ms) · commit",
+   "status": "FAIL",
+   "line": "THROWS · --engage-control-engage-release: abs(-180ms) on <html> before the first script (the default \"calc(90ms * 2)\" = 0.18s) · CSS reads the form 0.18s · console errors naming the token 2 (\"[fixture] --engage-control-engage-release is unreadable (\"abs(-180ms)\"): the clock it times cannot run\") (clean page 2), uncaught 1",
+   "load": "22.6/24.5/22.9"
+  },
+  {
+   "name": "E-11 pop token forms · --engage-control-engage-release 0.18S · commit",
+   "status": "FAIL",
+   "line": "THROWS · --engage-control-engage-release: 0.18S on <html> before the first script (the default \"calc(90ms * 2)\" = 0.18s) · CSS reads the form 0.18s · console errors naming the token 2 (\"[fixture] --engage-control-engage-release is unreadable (\"0.18S\"): the clock it times cannot run\") (clean page 2), uncaught 1",
+   "load": "22.6/24.5/22.9"
+  },
+  {
+   "name": "E-11 pop token forms · --engage-control-engage-attack calc(30ms + 30ms) · commit",
+   "status": "FAIL",
+   "line": "THROWS · --engage-control-engage-attack: calc(30ms + 30ms) on <html> before the first script (the default \"60ms\" = 0.06s) · CSS reads the form 0.06s · console errors naming the token 0 (clean page 0), uncaught 1",
+   "load": "22.6/24.5/22.9"
+  },
+  {
+   "name": "E-11 pop token forms · --engage-control-engage-attack calc(30ms * 2) · commit",
+   "status": "FAIL",
+   "line": "THROWS · --engage-control-engage-attack: calc(30ms * 2) on <html> before the first script (the default \"60ms\" = 0.06s) · CSS reads the form 0.06s · console errors naming the token 0 (clean page 0), uncaught 1",
+   "load": "22.2/24.4/22.9"
+  },
+  {
+   "name": "E-11 pop token forms · --engage-control-engage-attack min(60ms, 100s) · commit",
+   "status": "FAIL",
+   "line": "THROWS · --engage-control-engage-attack: min(60ms, 100s) on <html> before the first script (the default \"60ms\" = 0.06s) · CSS reads the form 0.06s · console errors naming the token 0 (clean page 0), uncaught 1",
+   "load": "22.2/24.4/22.9"
+  },
+  {
+   "name": "E-11 pop token forms · --engage-control-engage-attack max(60ms, 1ms) · commit",
+   "status": "FAIL",
+   "line": "THROWS · --engage-control-engage-attack: max(60ms, 1ms) on <html> before the first script (the default \"60ms\" = 0.06s) · CSS reads the form 0.06s · console errors naming the token 0 (clean page 0), uncaught 1",
+   "load": "22.2/24.4/22.9"
+  },
+  {
+   "name": "E-11 pop token forms · --engage-control-engage-attack clamp(1ms, 60ms, 100s) · commit",
+   "status": "FAIL",
+   "line": "THROWS · --engage-control-engage-attack: clamp(1ms, 60ms, 100s) on <html> before the first script (the default \"60ms\" = 0.06s) · CSS reads the form 0.06s · console errors naming the token 0 (clean page 0), uncaught 1",
+   "load": "22.9/24.5/22.9"
+  },
+  {
+   "name": "E-11 pop token forms · --engage-control-engage-attack calc(var(--h13-undefined, 60ms)) · commit",
+   "status": "FAIL",
+   "line": "THROWS · --engage-control-engage-attack: calc(var(--h13-undefined, 60ms)) on <html> before the first script (the default \"60ms\" = 0.06s) · CSS reads the form 0.06s · console errors naming the token 0 (clean page 0), uncaught 1",
+   "load": "22.9/24.5/22.9"
+  },
+  {
+   "name": "E-11 pop token forms · --engage-control-engage-attack round(nearest, 60ms, 1ms) · commit",
+   "status": "FAIL",
+   "line": "THROWS · --engage-control-engage-attack: round(nearest, 60ms, 1ms) on <html> before the first script (the default \"60ms\" = 0.06s) · CSS reads the form 0.06s · console errors naming the token 0 (clean page 0), uncaught 1",
+   "load": "22.9/24.5/22.9"
+  },
+  {
+   "name": "E-11 pop token forms · --engage-control-engage-attack abs(-60ms) · commit",
+   "status": "FAIL",
+   "line": "THROWS · --engage-control-engage-attack: abs(-60ms) on <html> before the first script (the default \"60ms\" = 0.06s) · CSS reads the form 0.06s · console errors naming the token 0 (clean page 0), uncaught 1",
+   "load": "22.3/24.4/22.9"
+  },
+  {
+   "name": "E-11 pop token forms · --engage-control-engage-attack 0.06S · commit",
+   "status": "FAIL",
+   "line": "THROWS · --engage-control-engage-attack: 0.06S on <html> before the first script (the default \"60ms\" = 0.06s) · CSS reads the form 0.06s · console errors naming the token 0 (clean page 0), uncaught 1",
+   "load": "22.3/24.4/22.9"
+  },
+  {
+   "name": "E-11 slider token forms · --fx-scale-engage calc(1.06 + 0) · hold",
+   "status": "FAIL",
+   "line": "REFUSED A FORM ITS CONSUMER TAKES · --fx-scale-engage: calc(1.06 + 0) on <html> before the first script (the default \"1.06\" = 1.06) · CSS reads the form 1.06 · console errors naming the token 1 (\"[fixture] --fx-scale-engage is unreadable (\"calc(1.06 + 0)\"): the engagement cannot size its grow\") (clean page 0), uncaught 0 · engaged 381.6 × 21.2 against clean 381.6 × 21.2 (bound max(1 px, 1.5 %))",
+   "load": "21.0/24.1/22.8"
+  },
+  {
+   "name": "E-11 slider token forms · --fx-scale-engage min(1.06, 100) · hold",
+   "status": "FAIL",
+   "line": "REFUSED A FORM ITS CONSUMER TAKES · --fx-scale-engage: min(1.06, 100) on <html> before the first script (the default \"1.06\" = 1.06) · CSS reads the form 1.06 · console errors naming the token 1 (\"[fixture] --fx-scale-engage is unreadable (\"min(1.06, 100)\"): the engagement cannot size its grow\") (clean page 0), uncaught 0 · engaged 381.6 × 21.2 against clean 381.6 × 21.2 (bound max(1 px, 1.5 %))",
+   "load": "21.0/24.1/22.8"
+  },
+  {
+   "name": "E-11 slider token forms · --fx-scale-engage max(1.06, 0) · hold",
+   "status": "FAIL",
+   "line": "REFUSED A FORM ITS CONSUMER TAKES · --fx-scale-engage: max(1.06, 0) on <html> before the first script (the default \"1.06\" = 1.06) · CSS reads the form 1.06 · console errors naming the token 1 (\"[fixture] --fx-scale-engage is unreadable (\"max(1.06, 0)\"): the engagement cannot size its grow\") (clean page 0), uncaught 0 · engaged 381.6 × 21.2 against clean 381.6 × 21.2 (bound max(1 px, 1.5 %))",
+   "load": "21.0/24.1/22.8"
+  },
+  {
+   "name": "E-11 slider token forms · --fx-scale-engage clamp(0, 1.06, 100) · hold",
+   "status": "FAIL",
+   "line": "REFUSED A FORM ITS CONSUMER TAKES · --fx-scale-engage: clamp(0, 1.06, 100) on <html> before the first script (the default \"1.06\" = 1.06) · CSS reads the form 1.06 · console errors naming the token 1 (\"[fixture] --fx-scale-engage is unreadable (\"clamp(0, 1.06, 100)\"): the engagement cannot size its grow\") (clean page 0), uncaught 0 · engaged 381.6 × 21.2 against clean 381.6 × 21.2 (bound max(1 px, 1.5 %))",
+   "load": "21.0/24.1/22.8"
+  },
+  {
+   "name": "E-11 slider token forms · --fx-scale-engage calc(var(--h13-undefined, 1.06)) · hold",
+   "status": "FAIL",
+   "line": "REFUSED A FORM ITS CONSUMER TAKES · --fx-scale-engage: calc(var(--h13-undefined, 1.06)) on <html> before the first script (the default \"1.06\" = 1.06) · CSS reads the form 1.06 · console errors naming the token 1 (\"[fixture] --fx-scale-engage is unreadable (\"calc(1.06)\"): the engagement cannot size its grow\") (clean page 0), uncaught 0 · engaged 381.6 × 21.2 against clean 381.6 × 21.2 (bound max(1 px, 1.5 %))",
+   "load": "20.8/24.0/22.7"
+  },
+  {
+   "name": "E-11 slider token forms · --fx-scale-engage abs(-1.06) · hold",
+   "status": "FAIL",
+   "line": "REFUSED A FORM ITS CONSUMER TAKES · --fx-scale-engage: abs(-1.06) on <html> before the first script (the default \"1.06\" = 1.06) · CSS reads the form 1.06 · console errors naming the token 1 (\"[fixture] --fx-scale-engage is unreadable (\"abs(-1.06)\"): the engagement cannot size its grow\") (clean page 0), uncaught 0 · engaged 381.6 × 21.2 against clean 381.6 × 21.2 (bound max(1 px, 1.5 %))",
+   "load": "20.8/24.0/22.7"
+  },
+  {
+   "name": "E-11 slider token forms · --fx-scale-engage 1.06E0 · hold",
+   "status": "FAIL",
+   "line": "REFUSED A FORM ITS CONSUMER TAKES · --fx-scale-engage: 1.06E0 on <html> before the first script (the default \"1.06\" = 1.06) · CSS reads the form 1.06 · console errors naming the token 1 (\"[fixture] --fx-scale-engage is unreadable (\"1.06E0\"): the engagement cannot size its grow\") (clean page 0), uncaught 0 · engaged 381.6 × 21.2 against clean 381.6 × 21.2 (bound max(1 px, 1.5 %))",
+   "load": "20.8/24.0/22.7"
+  },
+  {
+   "name": "E-11 slider token forms · --fx-gutter calc(8px + 8px) · hold",
+   "status": "FAIL",
+   "line": "REFUSED A FORM ITS CONSUMER TAKES · --fx-gutter: calc(8px + 8px) on <html> before the first script (the default \"16px\" = 16px) · CSS reads the form 16px · console errors naming the token 1 (\"[fixture] --fx-gutter is unreadable: the reach paints nothing (no inline grow)\") (clean page 0), uncaught 0 · engaged 360.0 × 21.2 against clean 381.6 × 21.2 (bound max(1 px, 1.5 %))",
+   "load": "19.8/23.7/22.6"
+  },
+  {
+   "name": "E-11 slider token forms · --fx-gutter max(16px, 0px) · hold",
+   "status": "FAIL",
+   "line": "REFUSED A FORM ITS CONSUMER TAKES · --fx-gutter: max(16px, 0px) on <html> before the first script (the default \"16px\" = 16px) · CSS reads the form 16px · console errors naming the token 1 (\"[fixture] --fx-gutter is unreadable: the reach paints nothing (no inline grow)\") (clean page 0), uncaught 0 · engaged 360.0 × 21.2 against clean 381.6 × 21.2 (bound max(1 px, 1.5 %))",
+   "load": "19.8/23.7/22.6"
+  },
+  {
+   "name": "E-11 slider token forms · --fx-gutter clamp(0px, 16px, 9999px) · hold",
+   "status": "FAIL",
+   "line": "REFUSED A FORM ITS CONSUMER TAKES · --fx-gutter: clamp(0px, 16px, 9999px) on <html> before the first script (the default \"16px\" = 16px) · CSS reads the form 16px · console errors naming the token 1 (\"[fixture] --fx-gutter is unreadable: the reach paints nothing (no inline grow)\") (clean page 0), uncaught 0 · engaged 360.0 × 21.2 against clean 381.6 × 21.2 (bound max(1 px, 1.5 %))",
+   "load": "19.8/23.7/22.6"
+  },
+  {
+   "name": "E-11 slider token forms · --fx-gutter min(16px, 9999px) · hold",
+   "status": "FAIL",
+   "line": "REFUSED A FORM ITS CONSUMER TAKES · --fx-gutter: min(16px, 9999px) on <html> before the first script (the default \"16px\" = 16px) · CSS reads the form 16px · console errors naming the token 1 (\"[fixture] --fx-gutter is unreadable: the reach paints nothing (no inline grow)\") (clean page 0), uncaught 0 · engaged 360.0 × 21.2 against clean 381.6 × 21.2 (bound max(1 px, 1.5 %))",
+   "load": "19.3/23.5/22.6"
+  },
+  {
+   "name": "E-11 slider token forms · --fx-gutter calc(var(--h13-undefined, 16px)) · hold",
+   "status": "FAIL",
+   "line": "REFUSED A FORM ITS CONSUMER TAKES · --fx-gutter: calc(var(--h13-undefined, 16px)) on <html> before the first script (the default \"16px\" = 16px) · CSS reads the form 16px · console errors naming the token 1 (\"[fixture] --fx-gutter is unreadable: the reach paints nothing (no inline grow)\") (clean page 0), uncaught 0 · engaged 360.0 × 21.2 against clean 381.6 × 21.2 (bound max(1 px, 1.5 %))",
+   "load": "19.3/23.5/22.6"
+  },
+  {
+   "name": "E-11 slider token forms · --fx-gutter calc(1rem) · hold",
+   "status": "FAIL",
+   "line": "REFUSED A FORM ITS CONSUMER TAKES · --fx-gutter: calc(1rem) on <html> before the first script (the default \"16px\" = 16px) · CSS reads the form 16px · console errors naming the token 1 (\"[fixture] --fx-gutter is unreadable: the reach paints nothing (no inline grow)\") (clean page 0), uncaught 0 · engaged 360.0 × 21.2 against clean 381.6 × 21.2 (bound max(1 px, 1.5 %))",
+   "load": "19.3/23.5/22.6"
+  },
+  {
+   "name": "E-11 census · pop",
+   "status": "FAIL",
+   "line": "default tokens, the act (rest, Tab, commit, hover, press) · engagement errors 4: [fixture] --engage-control-engage-release is unreadable (\"calc(90ms * 2)\"): the clock it times cannot run · other console errors 2 (pageerror: TypeError: Type error)",
+   "load": "20.9/23.8/22.7"
+  },
+  {
+   "name": "E-11 census · travel",
+   "status": "FAIL",
+   "line": "default tokens, the act (rest, Tab, commit, hover, press) · engagement errors 2: [fixture] --engage-control-engage-release is unreadable (\"calc(90ms * 2)\"): the clock it times cannot run · other console errors 0",
+   "load": "20.9/23.8/22.7"
+  },
+  {
+   "name": "E-11 census · rest",
+   "status": "FAIL",
+   "line": "default tokens, the act (rest, Tab, commit, hover, press) · engagement errors 4: [fixture] --engage-control-engage-release is unreadable (\"calc(90ms * 2)\"): the clock it times cannot run · other console errors 2 (pageerror: TypeError: Type error)",
+   "load": "19.7/23.5/22.6"
+  },
+  {
+   "name": "E-11 census · act",
+   "status": "FAIL",
+   "line": "default tokens, the act (rest, Tab, commit, hover, press) · engagement errors 4: [fixture] --engage-control-engage-release is unreadable (\"calc(90ms * 2)\"): the clock it times cannot run · other console errors 2 (pageerror: TypeError: Type error)",
+   "load": "19.7/23.5/22.6"
+  },
+  {
+   "name": "E-11 census · slider",
+   "status": "FAIL",
+   "line": "default tokens, the act (rest, Tab, commit, hover, press, a hold) · engagement errors 2: [fixture] --engage-control-engage-release is unreadable (\"calc(90ms * 2)\"): the clock it times cannot run · other console errors 0",
+   "load": "18.7/23.2/22.5"
+  },
+  {
+   "name": "E-11 census · slider2",
+   "status": "FAIL",
+   "line": "default tokens, the act (rest, Tab, commit, hover, press) · engagement errors 2: [fixture] --engage-control-engage-release is unreadable (\"calc(90ms * 2)\"): the clock it times cannot run · other console errors 0",
+   "load": "14.5/21.8/22.0"
+  },
+  {
+   "name": "E-11 census · restale",
+   "status": "FAIL",
+   "line": "default tokens, the act (rest, Tab, commit, hover, press) · engagement errors 2: [fixture] --engage-control-engage-release is unreadable (\"calc(90ms * 2)\"): the clock it times cannot run · other console errors 0",
+   "load": "14.5/21.8/22.0"
+  },
+  {
+   "name": "E-11 census · clipstale",
+   "status": "FAIL",
+   "line": "default tokens, the act (rest, Tab, commit, hover, press, a hold) · engagement errors 2: [fixture] --engage-control-engage-release is unreadable (\"calc(90ms * 2)\"): the clock it times cannot run · other console errors 0",
+   "load": "13.6/21.5/21.9"
+  },
+  {
+   "name": "E-11 census · presented",
+   "status": "FAIL",
+   "line": "default tokens, the act (rest, Tab, commit, hover, press, the plate) · engagement errors 3: [fixture] --engage-control-engage-release is unreadable (\"calc(90ms * 2)\"): the clock it times cannot run · other console errors 0",
+   "load": "13.6/21.5/21.9"
+  },
+  {
+   "name": "E-11 census · capsule",
+   "status": "FAIL",
+   "line": "default tokens, the act (rest, Tab, commit, hover, press) · engagement errors 1: [fixture] --engage-control-engage-release is unreadable (\"calc(90ms * 2)\"): the clock it times cannot run · other console errors 0",
+   "load": "17.4/21.6/21.9"
+  },
+  {
+   "name": "E-11 census · vsheet",
+   "status": "FAIL",
+   "line": "default tokens, the act (rest, Tab, commit, hover, press) · engagement errors 1: [fixture] --engage-control-engage-release is unreadable (\"calc(90ms * 2)\"): the clock it times cannot run · other console errors 0",
+   "load": "13.9/20.3/21.4"
+  },
+  {
+   "name": "E-11 census · strip",
+   "status": "FAIL",
+   "line": "default tokens, the act (rest, Tab, commit, hover, press) · engagement errors 1: [fixture] --engage-control-engage-release is unreadable (\"calc(90ms * 2)\"): the clock it times cannot run · other console errors 0",
+   "load": "13.4/19.6/21.1"
+  },
+  {
+   "name": "E-11 census · modal",
+   "status": "FAIL",
+   "line": "default tokens, the act (rest, Tab, commit, hover, press) · engagement errors 1: [fixture] --engage-control-engage-release is unreadable (\"calc(90ms * 2)\"): the clock it times cannot run · other console errors 0",
+   "load": "22.1/21.0/21.6"
+  },
+  {
+   "name": "E-11 census · s6",
+   "status": "FAIL",
+   "line": "default tokens, the act (rest, Tab, commit, hover, press) · engagement errors 1: [fixture] --engage-control-engage-release is unreadable (\"calc(90ms * 2)\"): the clock it times cannot run · other console errors 0",
+   "load": "23.1/21.2/21.7"
+  },
+  {
+   "name": "E-11 census · passive",
+   "status": "FAIL",
+   "line": "default tokens, the act (rest, Tab, commit, hover, press) · engagement errors 1: [fixture] --engage-control-engage-release is unreadable (\"calc(90ms * 2)\"): the clock it times cannot run · other console errors 0",
+   "load": "23.1/21.2/21.7"
+  },
+  {
+   "name": "E-11 census · field",
+   "status": "FAIL",
+   "line": "default tokens, the act (rest, Tab, commit, hover, press) · engagement errors 1: [fixture] --engage-control-engage-release is unreadable (\"calc(90ms * 2)\"): the clock it times cannot run · other console errors 0",
+   "load": "23.1/21.2/21.7"
+  },
+  {
+   "name": "E-11 census · ambient",
+   "status": "FAIL",
+   "line": "default tokens, the act (rest, Tab, commit, hover, press) · engagement errors 1: [fixture] --engage-control-engage-release is unreadable (\"calc(90ms * 2)\"): the clock it times cannot run · other console errors 0",
+   "load": "21.8/21.0/21.6"
+  },
+  {
+   "name": "E-11 census · slop",
+   "status": "FAIL",
+   "line": "default tokens, the act (rest, Tab, commit, hover, press) · engagement errors 1: [fixture] --engage-control-engage-release is unreadable (\"calc(90ms * 2)\"): the clock it times cannot run · other console errors 0",
+   "load": "18.1/20.2/21.3"
+  },
+  {
+   "name": "E-11 census · restloop",
+   "status": "FAIL",
+   "line": "default tokens, the act (rest, Tab, commit, hover, press) · engagement errors 1: [fixture] --engage-control-engage-release is unreadable (\"calc(90ms * 2)\"): the clock it times cannot run · other console errors 0",
+   "load": "17.6/19.8/21.1"
+  }
+ ]
+}

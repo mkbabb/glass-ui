@@ -1,0 +1,11 @@
+# H14 fxp-e14-norange chromium · 2026-11-05 05:13:59 · load { 12.51 14.03 16.45 } · harness 3608357c13c4 · --only M24
+# E-14 · S14's members at their ranges (P-E14 §S14-c)
+# target fixture fault e14-norange · engine chromium · lock wait 0.0 s (the deadline 5400 s counts from here) · other headless processes: chromium 13, webkit 2 · load 12.5/14.0/16.4 at start
+# chromium 149.0.7827.55
+# held control: scene slider root [data-e~="root"] thumb [data-e~="thumb"] engaged [data-held], [data-kbd]; clock token --spring-press-settle; cells M24
+  PASS       M24 scroll-snap y mandatory, align center: the snapped item grows 300 → 400 px below the root · the act on frame 8 · paint moved 0.0, 0.0 px in all; on the act's frame 0.00, 0.00 = 0.00 px (bound ≤ 0.50) · largest move over any 16.7 ms 0.0 px at +NaN ms (bound 1.0) · glides 0 · scrollY 0 → 0 → 0, scroller 600 → 600 → 600 · path [0.0,0.0 0.0,0.0 0.0,0.0 0.0,0.0 0.0,0.0] · errors 0 · load 12.2/14.0/16.4
+  PASS       M24 scroll-snap y mandatory, align end: the snapped item grows 300 → 400 px below the root · the act on frame 8 · paint moved 0.0, 0.0 px in all; on the act's frame 0.00, 0.00 = 0.00 px (bound ≤ 0.50) · largest move over any 16.7 ms 0.0 px at +NaN ms (bound 1.0) · glides 0 · scrollY 0 → 0 → 0, scroller 600 → 600 → 600 · path [0.0,0.0 0.0,0.0 0.0,0.0 0.0,0.0 0.0,0.0] · errors 0 · load 12.2/14.0/16.4
+  PASS       M24 scroll-snap y mandatory, align start: the snapped item grows 300 → 400 px below the root · the act on frame 8 · paint moved 0.0, 0.0 px in all; on the act's frame 0.00, 0.00 = 0.00 px (bound ≤ 0.50) · largest move over any 16.7 ms 0.0 px at +NaN ms (bound 1.0) · glides 0 · scrollY 0 → 0 → 0, scroller 600 → 600 → 600 · path [0.0,0.0 0.0,0.0 0.0,0.0 0.0,0.0 0.0,0.0] · errors 0 · load 12.2/14.0/16.4
+E-14 chromium PASS · 3 pass, 0 fail, 0 unmeasured of 3 gating cells (0 reported) · load 12.5/14.0/16.4 at start, 12.2/14.0/16.4 at end
+# exit 0 · 2026-11-05 05:14:04 · load { 12.23 13.95 16.41 }
+# end · 2026-11-05 05:14:04 · load { 12.23 13.95 16.41 } · harness 3608357c13c4

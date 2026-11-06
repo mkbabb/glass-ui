@@ -1,0 +1,37 @@
+# C2 · 2026-11-05 05:53:57 · admitted · load { 16.76 16.26 15.67 }
+  start 05:53:57 · +0 min · cand13-e14 chromium --only M10,M11,M25,M30
+  end   05:54:44 · cand13-e14 chromium · E-14 chromium FAIL · 22 pass, 6 fail, 0 unmeasured of 28 gating cells (0 reported) · load 17.4/16.4/15.7 at start, 20.2/17.4/16.1 at end · # exit 1 · 2026-11-05 05:54:44 · load { 20.18 17.40 16.14 } · cand13-e14-chromium-b6e450.log
+  start 05:54:44 · +0 min · fx-e14 chromium --only M10,M25
+  end   05:55:07 · fx-e14 chromium · E-14 chromium FAIL · 16 pass, 1 fail, 0 unmeasured of 17 gating cells (0 reported) · load 20.2/17.4/16.1 at start, 19.9/17.6/16.2 at end · # exit 1 · 2026-11-05 05:55:07 · load { 19.95 17.56 16.23 } · fx-e14-chromium-6facc7.log
+  start 05:55:07 · +1 min · cand12-e14 chromium --only M11,M30
+  end   05:55:28 · cand12-e14 chromium · E-14 chromium PASS · 11 pass, 0 fail, 0 unmeasured of 11 gating cells (0 reported) · load 19.9/17.6/16.2 at start, 21.5/18.0/16.4 at end · # exit 0 · 2026-11-05 05:55:28 · load { 21.51 18.03 16.42 } · cand12-e14-chromium-fae1c8.log
+  start 05:55:28 · +1 min · head-e14 chromium --only M11,M30
+  end   05:55:44 · head-e14 chromium · E-14 chromium PASS · 5 pass, 0 fail, 6 unmeasured of 11 gating cells (0 reported) · load 21.5/18.0/16.4 at start, 21.1/18.1/16.5 at end · # exit 0 · 2026-11-05 05:55:44 · load { 21.07 18.08 16.47 } · head-e14-chromium-fae1c8.log
+  start 05:56:15 · +2 min · fx-e14 chromium --only M10
+  end   05:56:34 · fx-e14 chromium · E-14 chromium PASS · 13 pass, 0 fail, 1 unmeasured of 14 gating cells (0 reported) · load 21.3/18.5/16.7 at start, 20.2/18.4/16.7 at end · # exit 0 · 2026-11-05 05:56:34 · load { 20.23 18.41 16.69 } · fx-e14-chromium-50ad5e.log
+  start 05:56:34 · +2 min · cand13-e14 chromium --only M10
+  end   05:56:56 · cand13-e14 chromium · E-14 chromium FAIL · 11 pass, 2 fail, 1 unmeasured of 14 gating cells (0 reported) · load 20.2/18.4/16.7 at start, 17.7/17.9/16.5 at end · # exit 1 · 2026-11-05 05:56:56 · load { 17.69 17.92 16.55 } · cand13-e14-chromium-50ad5e.log
+  start 05:57:11 · +3 min · fx-e14 chromium --only M10
+  end   05:57:31 · fx-e14 chromium · E-14 chromium PASS · 14 pass, 0 fail, 0 unmeasured of 14 gating cells (0 reported) · load 18.9/18.2/16.7 at start, 20.4/18.5/16.8 at end · # exit 0 · 2026-11-05 05:57:31 · load { 20.36 18.54 16.83 } · fx-e14-chromium-50ad5e-055711.log
+  start 05:58:41 · +4 min · fx-e14 chromium
+  end   06:01:37 · fx-e14 chromium · E-14 chromium PASS · 117 pass, 0 fail, 0 unmeasured of 117 gating cells (5 reported) · load 18.8/18.0/16.7 at start, 18.6/18.4/17.2 at end · # exit 0 · 2026-11-05 06:01:37 · load { 18.63 18.42 17.16 } · fx-e14-chromium-055841.log
+  start 06:01:37 · +7 min · cand13-e14 chromium
+  end   06:05:15 · cand13-e14 chromium · E-14 chromium FAIL · 68 pass, 61 fail, 0 unmeasured of 129 gating cells (5 reported) · load 18.6/18.4/17.2 at start, 20.2/19.2/17.7 at end · # exit 1 · 2026-11-05 06:05:15 · load { 20.18 19.18 17.75 } · cand13-e14-chromium-060137.log
+  start 06:05:15 · +11 min · cand12-e14 chromium
+  end   06:08:53 · cand12-e14 chromium · E-14 chromium FAIL · 94 pass, 35 fail, 0 unmeasured of 129 gating cells (5 reported) · load 20.2/19.2/17.7 at start, 19.8/19.1/18.0 at end · # exit 1 · 2026-11-05 06:08:53 · load { 19.77 19.06 18.02 } · cand12-e14-chromium-060515.log
+  start 06:08:53 · +14 min · head-e14 chromium
+  end   06:13:30 · head-e14 chromium · E-14 chromium FAIL · 67 pass, 46 fail, 16 unmeasured of 129 gating cells (5 reported) · load 19.8/19.1/18.0 at start, 15.9/18.3/18.0 at end · # exit 1 · 2026-11-05 06:13:29 · load { 15.93 18.32 18.03 } · head-e14-chromium-060853.log
+  start 06:13:30 · +19 min · st-E-14 chromium
+  end   06:18:12 · st-E-14 chromium · selftest: 11 runs, 1 N/A; every witness passes its fixture, fails each planted violation on the planted cell, and passes each control, in every engine with an input for i · # exit 0 · 2026-11-05 06:18:12 · load { 19.13 18.58 18.24 } · st-E-14-chromium-061330.log
+  start 06:18:12 · +24 min · fx-E-10 chromium --part hg13
+  end   06:21:15 · fx-E-10 chromium · E-10 chromium PASS · 90 pass, 0 fail, 0 unmeasured of 90 gating cells (3 reported) · load 18.8/18.5/18.2 at start, 22.9/19.5/18.6 at end · # exit 0 · 2026-11-05 06:21:14 · load { 22.91 19.48 18.60 } · fx-E-10-chromium-da1764.log
+  start 06:21:15 · +27 min · cand13-hg13 chromium
+  end   06:24:37 · cand13-hg13 chromium · E-10 chromium FAIL · 89 pass, 1 fail, 0 unmeasured of 90 gating cells (3 reported) · load 22.9/19.5/18.6 at start, 21.8/20.0/19.0 at end · # exit 1 · 2026-11-05 06:24:37 · load { 21.79 20.00 18.95 } · cand13-hg13-chromium.log
+  start 06:24:37 · +30 min · cand12-hg13 chromium
+  end   06:28:01 · cand12-hg13 chromium · E-10 chromium FAIL · 43 pass, 47 fail, 0 unmeasured of 90 gating cells (3 reported) · load 20.8/19.8/18.9 at start, 20.7/21.4/19.9 at end · # exit 1 · 2026-11-05 06:28:01 · load { 20.67 21.41 19.87 } · cand12-hg13-chromium.log
+  start 06:28:01 · +34 min · st-E-2 chromium
+  end   06:45:23 · st-E-2 chromium · selftest: 14 runs, 0 N/A; every witness passes its fixture, fails each planted violation on the planted cell, and passes each control, in every engine with an input for i · # exit 0 · 2026-11-05 06:45:23 · load { 15.66 15.79 17.29 } · st-E-2-chromium.log
+  start 06:45:23 · +51 min · st-E-3 chromium
+  end   06:49:31 · st-E-3 chromium · selftest: 12 runs, 0 N/A; every witness passes its fixture, fails each planted violation on the planted cell, and passes each control, in every engine with an input for i · # exit 0 · 2026-11-05 06:49:31 · load { 14.18 15.48 16.81 } · st-E-3-chromium.log
+  HELD at the cutoff (+55 min, est 70) · st-E-10 chromium
+# C2 · 2026-11-05 06:49:31 · done · load { 14.18 15.48 16.81 } · left 12

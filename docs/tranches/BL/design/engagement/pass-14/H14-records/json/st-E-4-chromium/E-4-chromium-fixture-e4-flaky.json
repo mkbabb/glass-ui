@@ -1,0 +1,74 @@
+{
+ "id": "E-4",
+ "engine": "chromium",
+ "version": "149.0.7827.55",
+ "target": {
+  "fixture": true,
+  "fault": "e4-flaky"
+ },
+ "loadStart": "13.8/15.8/15.4",
+ "loadEnd": "15.9/16.0/15.5",
+ "verdict": "FAIL",
+ "cells": [
+  {
+   "name": "E-4 slider fling carries velocity",
+   "status": "PASS",
+   "line": "axis x, page frame · 5 reads, every one must pass: [1: carry 94.13 / settle 96.15 px @ fling 1093 px/s pass · 2: carry 94.11 / settle 96.14 px @ fling 1093 px/s pass · 3: carry 93.98 / settle 96.12 px @ fling 1065 px/s pass · 4: carry 94.11 / settle 96.10 px @ fling 1028 px/s pass · 5: carry 94.13 / settle 96.15 px @ fling 1028 px/s pass] (5 of 5 pass) · read 1 in full: fling: carry 94.13 px, settles 91.11 px past release · still: carry 0.00 px, settles -5.04 px · difference: carry 94.13 px, settle 96.15 px (bound: either ≥ 4, both at rest, on every read whose fling the rule measured ≥ 100 px/s; such a fling carrying 0.00 px fails by name; a drive under 100 px/s is re-driven up to 2 times and, still under it, UNGRADED) · body opacity ≥ 1.000 · 240 frames, median 8.3 ms",
+   "load": "15.3/16.0/15.4"
+  },
+  {
+   "name": "E-4 slider release continuity",
+   "status": "PASS",
+   "line": "over 5 reads, each against its own drive (12.3/65.9, 12.5/65.9, 13.0/65.9, 14.9/65.9, 12.4/65.9 px; 0 over) · read 1: largest one-frame move on release: fling 12.3 px, still 0.5 px · during the drive: fling 42.6 px, still 42.6 px (bound ≤ drive × 1.5 + 2 = 65.9 px)",
+   "load": "15.3/16.0/15.4"
+  },
+  {
+   "name": "E-4 slider release PRM",
+   "status": "PASS",
+   "line": "reduce · moved 120.0 px · fling: carry 0.00 px, settles 0.00 px past release, overshoot past its rest 0.00 px, at rest true (bound: at rest within 2000 ms, overshoot ≤ 0.5 px) · largest one-frame jump 0.0 px",
+   "load": "15.1/15.9/15.4"
+  },
+  {
+   "name": "E-4 vsheet fling carries velocity",
+   "status": "PASS",
+   "line": "axis y, dir −1, page frame · [carry 132.58 / settle 150.00 px @ fling 929 px/s] · fling: carry 132.58 px, settles 130.00 px past release · still: carry 0.00 px, settles -20.00 px · difference: carry 132.58 px, settle 150.00 px (bound: either ≥ 4, both at rest, on every read whose fling the rule measured ≥ 100 px/s; such a fling carrying 0.00 px fails by name; a drive under 100 px/s is re-driven up to 2 times and, still under it, UNGRADED) · body opacity ≥ 1.000 · 240 frames, median 8.3 ms",
+   "load": "15.4/16.0/15.4"
+  },
+  {
+   "name": "E-4 vsheet release continuity",
+   "status": "PASS",
+   "line": "largest one-frame move on release: fling 13.3 px, still 1.4 px · during the drive: fling 40.0 px, still 40.0 px (bound ≤ drive × 1.5 + 2 = 62.0 px)",
+   "load": "15.4/16.0/15.4"
+  },
+  {
+   "name": "E-4 vsheet repeat landing",
+   "status": "FAIL",
+   "line": "EQUAL VELOCITIES ON DIFFERENT DETENTS: runs 4 and 5: 1015 and 1015 px/s land at -289.0 and -139.0 px · ORDER INVERTED (a faster run lands short: not a function of velocity): run 4 at 1015 px/s lands at -289.0 px, short of run 1 at 929 px/s at -139.0 px; run 2 at 914 px/s lands at -289.0 px, short of run 3 at 866 px/s at -139.0 px; run 4 at 1015 px/s lands at -289.0 px, short of run 3 at 866 px/s at -139.0 px · 8 fling runs, the same drive: 1: v 929 px/s (80 px / 86.1 ms over 4 samples), carry 132.58, land -139.0 · 2: v 914 px/s (80 px / 87.5 ms over 4 samples), carry 17.59, land -289.0 · 3: v 866 px/s (80 px / 92.4 ms over 4 samples), carry 132.50, land -139.0 · 4: v 1015 px/s (80 px / 78.8 ms over 4 samples), carry 21.25, land -289.0 · 5: v 1015 px/s (80 px / 78.8 ms over 4 samples), carry 132.75, land -139.0 · 6: v 857 px/s (80 px / 93.3 ms over 4 samples), carry 18.30, land -289.0 · 7: v 996 px/s (80 px / 80.3 ms over 4 samples), carry 132.73, land -139.0 · 8: v 903 px/s (80 px / 88.6 ms over 4 samples), carry 18.05, land -289.0 · by landing: land -289.0 px: 4 run(s) at 914, 1015, 857, 903 px/s · land -139.0 px: 4 run(s) at 929, 866, 1015, 996 px/s · (bound: two runs the event clock cannot tell apart (|Δv| ≤ the sum of their ±2q/dt bands, q 0.1 ms) land within 2 px, and no faster run lands short of a slower one; a fling ≥ 100 px/s carries > 0.00 px; velocity: the release rule's chord over 100 ms, ring 8, replicated from the page's input events)",
+   "load": "15.4/15.9/15.4"
+  },
+  {
+   "name": "E-4 vsheet release PRM",
+   "status": "PASS",
+   "line": "reduce · moved 250.0 px · fling: carry 0.00 px, settles 0.00 px past release, overshoot past its rest 0.00 px, at rest true (bound: at rest within 2000 ms, overshoot ≤ 0.5 px) · largest one-frame jump 130.0 px",
+   "load": "15.4/15.9/15.4"
+  },
+  {
+   "name": "E-4 strip fling carries velocity",
+   "status": "PASS",
+   "line": "axis x, dir −1, touch, page frame · [carry 479.00 / settle 600.00 px @ fling 1500 px/s] · fling: carry 479.00 px, settles 479.00 px past release · still: carry 0.00 px, settles -121.00 px · difference: carry 479.00 px, settle 600.00 px (bound: either ≥ 4, both at rest, on every read whose fling the rule measured ≥ 100 px/s; such a fling carrying 0.00 px fails by name; a drive under 100 px/s is re-driven up to 2 times and, still under it, UNGRADED) · body opacity ≥ 1.000 · 241 frames, median 8.3 ms",
+   "load": "15.9/16.0/15.5"
+  },
+  {
+   "name": "E-4 strip release continuity",
+   "status": "REPORT",
+   "line": "the platform's own scroll fling (CK-18: the Carousel is the platform's, stated), reported not gated · largest one-frame move on release: fling 39.0 px, still 9.0 px · during the drive: fling 56.0 px, still 56.0 px (bound ≤ drive × 1.5 + 2 = 86.0 px)",
+   "load": "15.9/16.0/15.5"
+  },
+  {
+   "name": "E-4 strip release PRM",
+   "status": "PASS",
+   "line": "reduce · moved 121.0 px · fling: carry 479.00 px, settles 479.00 px past release, overshoot past its rest 0.00 px, at rest true (bound: at rest within 2000 ms, overshoot ≤ 0.5 px) · largest one-frame jump 39.0 px",
+   "load": "15.9/16.0/15.5"
+  }
+ ]
+}

@@ -1,0 +1,68 @@
+{
+ "id": "E-14",
+ "engine": "webkit",
+ "version": "26.5",
+ "target": {
+  "fixture": true,
+  "fault": "e14-recorddriven"
+ },
+ "loadStart": "11.0/11.4/12.8",
+ "loadEnd": "9.3/11.0/12.6",
+ "verdict": "FAIL",
+ "cells": [
+  {
+   "name": "M5 script-animated ancestor · ramp 80 px / 500 ms · the page loop requested before the hold",
+   "status": "FAIL",
+   "line": "scrollY 34 → 34, scroller 0 → 0 · the carrier moved 80.0 px over 60 engaged frames · the root's centre off where its box carries it: max 10.57 px, frames over 2 px 33 (bound ≤ 0.50) · glides started 30 (bound ≤ 0) · errors 0",
+   "load": "10.6/11.3/12.8"
+  },
+  {
+   "name": "M5 script-animated ancestor · ramp 80 px / 500 ms · the page loop requested after the hold",
+   "status": "FAIL",
+   "line": "scrollY 34 → 34, scroller 0 → 0 · the carrier moved 80.0 px over 60 engaged frames · the root's centre off where its box carries it: max 10.76 px, frames over 2 px 33 (bound ≤ 0.50) · glides started 30 (bound ≤ 0) · errors 0",
+   "load": "10.6/11.3/12.8"
+  },
+  {
+   "name": "M5 script-animated ancestor · sine 80 px / 200 ms · the page loop requested before the hold",
+   "status": "FAIL",
+   "line": "scrollY 34 → 34, scroller 0 → 0 · the carrier moved 80.0 px over 60 engaged frames · the root's centre off where its box carries it: max 102.47 px, frames over 2 px 54 (bound ≤ 0.50) · glides started 54 (bound ≤ 0) · errors 0",
+   "load": "10.0/11.2/12.7"
+  },
+  {
+   "name": "M5 script-animated ancestor · sine 80 px / 200 ms · the page loop requested after the hold",
+   "status": "FAIL",
+   "line": "scrollY 34 → 34, scroller 0 → 0 · the carrier moved 80.0 px over 60 engaged frames · the root's centre off where its box carries it: max 102.12 px, frames over 2 px 54 (bound ≤ 0.50) · glides started 54 (bound ≤ 0) · errors 0",
+   "load": "10.0/11.2/12.7"
+  },
+  {
+   "name": "M5 script-animated ancestor · sine 80 px / 600 ms · the page loop requested before the hold",
+   "status": "FAIL",
+   "line": "scrollY 34 → 34, scroller 0 → 0 · the carrier moved 80.0 px over 60 engaged frames · the root's centre off where its box carries it: max 52.39 px, frames over 2 px 54 (bound ≤ 0.50) · glides started 54 (bound ≤ 0) · errors 0",
+   "load": "10.0/11.2/12.7"
+  },
+  {
+   "name": "M5 script-animated ancestor · sine 20 px / 600 ms · the page loop requested before the hold",
+   "status": "FAIL",
+   "line": "scrollY 34 → 34, scroller 0 → 0 · the carrier moved 20.0 px over 60 engaged frames · the root's centre off where its box carries it: max 13.26 px, frames over 2 px 48 (bound ≤ 0.50) · glides started 48 (bound ≤ 0) · errors 0",
+   "load": "9.8/11.1/12.7"
+  },
+  {
+   "name": "M5 script-animated ancestor · scale / 200 ms · the page loop requested before the hold",
+   "status": "FAIL",
+   "line": "scrollY 34 → 34, scroller 0 → 0 · the carrier moved 90.6 px over 60 engaged frames · the root's centre off where its box carries it: max 9.23 px, frames over 2 px 15 (bound ≤ 0.50) · glides started 12 (bound ≤ 0) · errors 0",
+   "load": "9.8/11.1/12.7"
+  },
+  {
+   "name": "M5 script-animated ancestor · member-scale / 200 ms · the page loop requested before the hold",
+   "status": "FAIL",
+   "line": "scrollY 34 → 34, scroller 0 → 0 · the carrier moved 90.6 px over 60 engaged frames · the root's centre off where its box carries it: max 9.18 px, frames over 2 px 15 (bound ≤ 0.50) · glides started 12 (bound ≤ 0) · errors 0",
+   "load": "9.3/11.0/12.6"
+  },
+  {
+   "name": "M5 script-animated ancestor · parallax · the page loop requested before the hold",
+   "status": "FAIL",
+   "line": "scrollY 34 → 274, scroller 0 → 0 · the carrier moved 170.4 px over 60 engaged frames · the root's centre off where its box carries it: max 28.26 px, frames over 2 px 34 (bound ≤ 0.50) · glides started 30 (bound ≤ 0) · errors 0",
+   "load": "9.3/11.0/12.6"
+  }
+ ]
+}

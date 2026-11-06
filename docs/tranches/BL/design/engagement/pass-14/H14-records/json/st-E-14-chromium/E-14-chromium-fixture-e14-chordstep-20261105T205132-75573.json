@@ -1,0 +1,50 @@
+{
+ "id": "E-14",
+ "engine": "chromium",
+ "version": "149.0.7827.55",
+ "target": {
+  "fixture": true,
+  "fault": "e14-chordstep"
+ },
+ "loadStart": "8.2/11.7/12.7",
+ "loadEnd": "8.0/11.6/12.6",
+ "verdict": "FAIL",
+ "cells": [
+  {
+   "name": "M2 perspective outside · P 200 θ 60 · insert 200 · host -150 px · STATED LIMIT (N11: ≤ 42.5 px after 4 iterations)",
+   "status": "REPORT",
+   "line": "the limit's corner (N11 on its own scene: 42.5 px); this scene's read · the act on frame 8 · paint moved -0.0, 200.0 px in all; on the act's frame -0.38, 141.79 = 141.79 px (bound ≤ 0.50) · largest move over any 16.7 ms 22.7 px at +167 ms (bound 301.4 = moved × peak × the map's stretch 9.961 + 1) · glides 1 (350 ms) · scrollY 140 → 140 → 140, scroller 0 → 0 → 0 · path [0.0,0.0 -0.4,141.8 -0.4,142.5 -0.3,143.4 -0.3,144.5] · errors 0",
+   "load": "8.2/11.7/12.7"
+  },
+  {
+   "name": "M2 perspective outside · P 200 θ 60 · insert 200 · host 150 px · STATED LIMIT (N11: Newton diverges)",
+   "status": "REPORT",
+   "line": "the limit's corner (N11 on its own scene: diverges); this scene's read · the act on frame 8 · paint moved 0.0, 200.0 px in all; on the act's frame -1.77, 52.66 = 52.69 px (bound ≤ 0.50) · largest move over any 16.7 ms 58.5 px at +17 ms (bound 66.6 = moved × peak × the map's stretch 2.175 + 1) · glides 1 (350 ms) · scrollY 104 → 104 → 104, scroller 0 → 0 → 0 · path [0.0,0.0 -1.8,52.7 -2.1,59.3 -2.4,66.0 -2.9,73.4] · errors 0",
+   "load": "8.2/11.7/12.7"
+  },
+  {
+   "name": "M2 perspective outside · P 400 θ 60 · insert 200 · host -150 px · STATED LIMIT (N11: ≤ 0.7 px after 4 iterations)",
+   "status": "REPORT",
+   "line": "the limit's corner (N11 on its own scene: 0.7 px); this scene's read · the act on frame 8 · paint moved -0.0, 200.0 px in all; on the act's frame -0.10, 89.04 = 89.04 px (bound ≤ 0.50) · largest move over any 16.7 ms 87.9 px at +17 ms (bound 302.1 = moved × peak × the map's stretch 9.985 + 1) · glides 1 (350 ms) · scrollY 128 → 128 → 128, scroller 0 → 0 → 0 · path [0.0,0.0 -0.1,89.0 -0.1,92.2 -0.1,95.7 -0.1,100.2] · errors 0",
+   "load": "8.2/11.7/12.7"
+  },
+  {
+   "name": "M2 perspective outside · P 600 θ 25 · insert 40 · host -150 px",
+   "status": "PASS",
+   "line": "the act on frame 8 · paint moved 0.0, 40.0 px in all; on the act's frame -0.00, 0.10 = 0.10 px (bound ≤ 0.50) · largest move over any 16.7 ms 6.0 px at +67 ms (bound 7.2 = moved × peak × the map's stretch 1.032 + 1) · glides 1 (350 ms) · scrollY 62 → 62 → 62, scroller 0 → 0 → 0 · path [0.0,0.0 -0.0,0.1 -0.0,3.1 -0.0,6.1 -0.0,9.0] · errors 0",
+   "load": "8.0/11.6/12.6"
+  },
+  {
+   "name": "M2 perspective outside · P 600 θ 60 · insert 200 · host 150 px",
+   "status": "FAIL",
+   "line": "the act on frame 8 · paint moved -0.0, 200.0 px in all; on the act's frame -0.06, 35.85 = 35.85 px (bound ≤ 0.50) · largest move over any 16.7 ms 43.7 px at +17 ms (bound 51.9 = moved × peak × the map's stretch 1.686 + 1) · glides 1 (350 ms) · scrollY 0 → 0 → 0, scroller 0 → 0 → 0 · path [0.0,0.0 -0.1,35.9 -0.1,43.8 -0.1,52.7 -0.2,63.4] · errors 0",
+   "load": "8.0/11.6/12.6"
+  },
+  {
+   "name": "M2 perspective outside · P 200 θ 25 · insert 200 · host 150 px",
+   "status": "FAIL",
+   "line": "the act on frame 8 · paint moved 0.0, 200.0 px in all; on the act's frame -0.27, 22.90 = 22.90 px (bound ≤ 0.50) · largest move over any 16.7 ms 27.9 px at +118 ms (bound 43.3 = moved × peak × the map's stretch 1.402 + 1) · glides 1 (350 ms) · scrollY 85 → 85 → 85, scroller 0 → 0 → 0 · path [0.0,0.0 -0.3,22.9 -0.3,32.8 -0.2,43.5 -0.2,54.0] · errors 0",
+   "load": "8.0/11.6/12.6"
+  }
+ ]
+}

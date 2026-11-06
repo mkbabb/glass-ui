@@ -70,6 +70,8 @@ import REKA from "./reka";
 
 const qs = new URLSearchParams(location.search);
 const scene = qs.get("scene") ?? "__index";
+// H14 (E-14 M30, X9): the chip scene's mode, switchable at runtime through __e.chipMode (Chip's static ↔ selectable re-mount)
+const chipMode = ref<any>(qs.get("chipmode") ?? "selectable");
 const on = qs.get("on") === "1";
 const phone = qs.get("phone") === "1";
 // H9 (CK-20, C-A8's dlg): `&slider=1` puts one Slider in the presented Dialog (E-10's dlg cells); without it the
@@ -278,6 +280,7 @@ onMounted(async () => {
     ready: true, kind: "build", scene, index: INDEX, sceneOfDir: SCENE_OF_DIR, dirs: DIRS, decl: DECL,
     rungs: ENGAGE_LADDER.map((r) => r.rung), envelopes: ENGAGE_ENVELOPES.map((r) => ({ role: r.role, attackMs: r.attackMs, releaseMs: r.releaseMs })),
     commit: () => commit[base]?.(),
+    chipMode: (m: string) => (chipMode.value = m),
     limit: () => LIMIT[scene]?.() ?? null,
     state: () => (STATE[base] ? JSON.parse(JSON.stringify(STATE[base]())) : null),
     members,
@@ -341,7 +344,7 @@ onMounted(async () => {
       <Accordion v-else-if="scene === 'accordion'" v-model="acc" type="single" collapsible style="width:320px">
         <AccordionItem value="one"><AccordionTrigger>One</AccordionTrigger><AccordionContent>Body one</AccordionContent></AccordionItem>
       </Accordion>
-      <Chip v-else-if="scene === 'chip'" mode="selectable" v-model="chip">Probe</Chip>
+      <Chip v-else-if="scene === 'chip'" :mode="chipMode" v-model="chip">Probe</Chip>
       <Chip v-else-if="scene === 'chipaction'" mode="action" @click="clicks++">Probe</Chip>
       <Button v-else-if="scene === 'button'" @click="clicks++">Probe</Button>
       <ToggleGroup v-else-if="scene === 'toggle'" type="single" v-model="tg" aria-label="Probe">

@@ -1,0 +1,6 @@
+# H14 st-E-10 chromium · 2026-11-05 12:01:39 · load { 15.27 17.19 18.13 } · harness 5524833ef896 · --faults e10-hostglidelevel
+OK     E-10 chromium fault   e10-hostglidelevel (CK-20 (H13, REGISTRY §P12-7 item 2; the pass-12 ownScale): the map from a translate to its paint read as its axis lengths alone, so under a rotation, a skew or a rotating matrix the glide is laid level and starts off where the root was painted) exit 1
+         first planted FAIL: FAIL       E-10 slider xf · outside · rotate 10deg · the act on frame 8 · the root's paint moved 0.0, 40.0 px in all (40.00); on the act's frame 6.95, 0.61 = 6.97 px from where it was painted (bound ≤ 0.5) · largest move over any 16.7 ms 6.
+selftest: 1 runs, 0 N/A; every witness passes its fixture, fails each planted violation on the planted cell, and passes each control, in every engine with an input for it
+# exit 0 · 2026-11-05 12:03:33 · load { 22.08 17.98 18.27 }
+# end · 2026-11-05 12:03:33 · load { 22.08 17.98 18.27 } · harness 5524833ef896

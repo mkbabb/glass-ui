@@ -1,0 +1,32 @@
+{
+ "id": "E-10",
+ "engine": "chromium",
+ "version": "149.0.7827.55",
+ "target": {
+  "fixture": true,
+  "fault": "e10-lenslate"
+ },
+ "loadStart": "14.2/19.0/19.4",
+ "loadEnd": "18.2/19.5/19.6",
+ "verdict": "FAIL",
+ "cells": [
+  {
+   "name": "E-10 clipstale lensfilm · marker",
+   "status": "REPORT",
+   "line": "a fine hold, twelve 8 px wheel ticks over the thumb, the card untransformed; a blue block in the scroller (the control), the track red, one column · per film 48/48 frames read, 9 moving, scrolled -96 px, median 6 px, worst off 0 px, 0 frames > 2 px off | 48/48 frames read, 10 moving, scrolled -96 px, median 6 px, worst off 0 px, 0 frames > 2 px off | 48/48 frames read, 10 moving, scrolled -96 px, median 6 px, worst off 0 px, 0 frames > 2 px off",
+   "load": "13.2/18.7/19.3"
+  },
+  {
+   "name": "E-10 clipstale lensfilm · none",
+   "status": "FAIL",
+   "line": "a fine hold, twelve 8 px wheel ticks over the thumb, the card untransformed; the lens blue, the track red, one column · per film 48/48 frames read, 9 moving, scrolled -96 px, median 2 px, worst off 8 px, 6 frames > 2 px off [3:8 4:8 5:8 6:8 8:8 10:8] | 48/48 frames read, 10 moving, scrolled -96 px, median 2 px, worst off 8 px, 3 frames > 2 px off [4:8 5:8 10:8] | 47/47 frames read, 10 moving, scrolled -96 px, median 2 px, worst off 8 px, 5 frames > 2 px off [2:8 3:8 4:8 7:8 9:8] · bound: every film's worst ≤ the marker's 0 + 2 px (CK-25's 2 px; one tick behind is 8)",
+   "load": "16.9/19.4/19.5"
+  },
+  {
+   "name": "E-10 clipstale lensfilm · scale",
+   "status": "FAIL",
+   "line": "a fine hold, twelve 8 px wheel ticks over the thumb, the card under scale 0.8; the lens blue, the track red, one column · per film 48/48 frames read, 10 moving, scrolled -96 px, median 1 px, worst off 8 px, 5 frames > 2 px off [0:2 1:2 2:6 3:7 4:2 5:8 8:6 9:2 10:8] | 48/48 frames read, 10 moving, scrolled -96 px, median 1 px, worst off 8 px, 5 frames > 2 px off [0:2 1:2 2:8 3:6 5:2 6:8 7:6 8:7 9:2 10:2] | 48/48 frames read, 10 moving, scrolled -96 px, median 1 px, worst off 8 px, 6 frames > 2 px off [0:2 1:8 5:8 6:8 7:6 9:8 10:8] · bound: every film's worst ≤ the marker's 0 + 2 px (CK-25's 2 px; one tick behind is 8)",
+   "load": "18.2/19.5/19.6"
+  }
+ ]
+}

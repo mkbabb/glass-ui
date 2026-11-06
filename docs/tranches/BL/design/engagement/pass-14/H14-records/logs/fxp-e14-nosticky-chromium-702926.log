@@ -1,0 +1,11 @@
+# H14 fxp-e14-nosticky chromium · 2026-11-05 05:13:54 · load { 11.16 13.80 16.38 } · harness 3608357c13c4 · --only M23
+# E-14 · S14's members at their ranges (P-E14 §S14-c)
+# target fixture fault e14-nosticky · engine chromium · lock wait 0.0 s (the deadline 5400 s counts from here) · other headless processes: chromium 9, webkit 2 · load 11.2/13.8/16.4 at start
+# chromium 149.0.7827.55
+# held control: scene slider root [data-e~="root"] thumb [data-e~="thumb"] engaged [data-held], [data-kbd]; clock token --spring-press-settle; cells M23
+  PASS       M23 G sticky top 0 · page scrolled 8 px a frame across the stick · scrollY 0 → 192, scroller 0 → 0 · the carrier moved 192.0 px over 40 engaged frames · the root's centre off where its box carries it: max 0.00 px, frames over 2 px 0 (bound ≤ 0.50) · glides started 0 (bound ≤ 0) · errors 0 · load 11.2/13.8/16.4
+  FAIL       M23 G sticky top 0 · scroller scrolled 8 px a frame across the stick · scrollY 0 → 0, scroller 0 → 192 · the carrier moved 150.0 px over 40 engaged frames · the root's centre off where its box carries it: max 6.00 px, frames over 2 px 1 (bound ≤ 0.50) · glides started 2 (bound ≤ 0) · errors 0 · load 12.5/14.0/16.4
+  PASS       M23 an insert above an unstuck sticky G (layout, a step) · the act on frame 8 · paint moved 0.0, 40.0 px in all; on the act's frame 0.00, 0.00 = 0.00 px (bound ≤ 0.50) · largest move over any 16.7 ms 6.0 px at +58 ms (bound 7.0) · glides 1 (350 ms) · scrollY 35 → 35 → 35, scroller 0 → 0 → 0 · path [0.0,0.0 0.0,0.0 0.0,3.0 0.0,6.0 0.0,8.8] · errors 0 · load 12.5/14.0/16.4
+E-14 chromium FAIL · 2 pass, 1 fail, 0 unmeasured of 3 gating cells (0 reported) · load 11.2/13.8/16.4 at start, 12.5/14.0/16.4 at end
+# exit 1 · 2026-11-05 05:13:59 · load { 12.51 14.03 16.45 }
+# end · 2026-11-05 05:13:59 · load { 12.51 14.03 16.45 } · harness 3608357c13c4

@@ -1,0 +1,26 @@
+{
+ "id": "E-10",
+ "engine": "chromium",
+ "version": "149.0.7827.55",
+ "target": {
+  "fixture": true,
+  "fault": "e10-featherunder"
+ },
+ "loadStart": "27.3/21.6/19.3",
+ "loadEnd": "23.9/21.2/19.1",
+ "verdict": "FAIL",
+ "cells": [
+  {
+   "name": "E-10 clipstale clip feather · keyboard",
+   "status": "FAIL",
+   "line": "keyboard engaged (promoted false) · the scroller's feather: linear-gradient(rgba(0, 0, 0, 0) 0px, rgb(0, 0, 0) 40px, rgb(0, 0, 0)  · --fade-start — · the control 4 px inside its feathered top edge · visibility in the scroller's top 28 px, engaged over released: ×0.473 feathered, ×1.117 unfeathered (the grow's own gain) · ratio of ratios 0.424 · two-sided bound 0.9..1.1 × ×1.117 = ×1.005..×1.228 (an in-place body reads 1; H9: under-paint fails as over-paint does)",
+   "load": "26.1/21.5/19.2"
+  },
+  {
+   "name": "E-10 clipstale clip feather · touch",
+   "status": "FAIL",
+   "line": "touch engaged (promoted false) · the scroller's feather: linear-gradient(rgba(0, 0, 0, 0) 0px, rgb(0, 0, 0) 40px, rgb(0, 0, 0)  · --fade-start — · the control 4 px inside its feathered top edge · visibility in the scroller's top 28 px, engaged over released: ×0.516 feathered, ×1.196 unfeathered (the grow's own gain) · ratio of ratios 0.432 · two-sided bound 0.9..1.1 × ×1.196 = ×1.076..×1.316 (an in-place body reads 1; H9: under-paint fails as over-paint does)",
+   "load": "23.9/21.2/19.1"
+  }
+ ]
+}

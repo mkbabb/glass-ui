@@ -1,0 +1,9 @@
+# H14 st-E-14 chromium · 2026-11-05 11:52:58 · load { 20.27 19.10 19.27 } · harness bb40630fbe43 · 
+BROKEN E-14 chromium clean exit 2 · E-14 chromium HARNESS ERROR · page.waitForFunction: Timeout 60000ms exceeded. · load 18.6/18.7/19.1 · REPRODUCED on re-run: engine closed during the first run (E-14 chromium HARNESS ERROR · page.waitForFunction: Timeout 60000ms exceeded. · load 18.5/18.6/19.1; load 18.6/18.7/19.1 at the re-run's end)
+BROKEN E-14 chromium fault   e14-recorddriven (CK-20 (H14, finding 3; cand13's construction): the record-driven glide (a MutationObserver on every record kind, painted − now at the record) glides a script-animated card's every style write: the held root comes apart from what carries it) exit 2
+         # chromium 149.0.7827.55
+         HARNESS ERROR page.waitForFunction: Timeout 60000ms exceeded. |     at openPage (/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/harness/lib.mjs:362:14) |     at async sceneIndex (/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/harness/lib.mjs:373:13)
+         E-14 chromium HARNESS ERROR · page.waitForFunction: Timeout 60000ms exceeded. · load 15.7/16.9/18.3
+         
+# exit 143 · 2026-11-05 11:58:36 · load { 17.12 17.62 18.43 }
+# end · 2026-11-05 11:58:36 · load { 17.12 17.62 18.43 } · harness 5524833ef896
