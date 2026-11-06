@@ -415,3 +415,64 @@ recorded in that file. The full g7 run passed it.
 - The RTL reach direction (critique-5's not-defects list) is unchanged: `scrollPos`
   and `writeScroll` carry no RTL sign.
 - O-157 (inbound during this round) is not in this round's scope.
+
+## Fix round 6 (critique-6.md: L1)
+
+Seat: claude-opus-5-5. Every browser run was admitted by `guarded` (WebKit 2287 under
+`--exclusive webkit`). The Chromium try run queued about 70 minutes for a browser slot,
+and each WebKit run waited for the machine-wide WebKit lock. Those were waits, not
+refusals. Records `docs/release-10.1.5/fix-6/`; scripts `scripts/witness-fix-6.sh` (the
+branch, g6, then the RED arm: the `src` files this round changed checked out from the
+round-6 tip `4c9c15008` and restored to HEAD after), `scripts/gates-fix-6.sh` and
+`scripts/d1-ab-fix-6.sh`.
+
+### Cure
+
+- **L1, the cap after the overflow vanishes.** An inactive scroll timeline does not
+  release what it last resolved: Chromium keeps the leading arm at progress 1, and WebKit
+  keeps whichever arm last resolved. So a run whose overflow vanished while it was
+  scrolled rested cut with nothing to scroll. `dockMorphMeasure.ts` `publishYield` now
+  writes `data-run-fits` on the dock root, on both axes: present when the seats' span
+  along the scroll axis, read from their layout boxes, is no longer than the port. It is
+  the one reading of "the seats fit", and `run.css` consumes it twice:
+  - `.glass-dock[data-run-fits]` sets `--dock-run-yield: 1` (the K3 reserve yield,
+    horizontal only, as before), and
+  - `.glass-dock[data-run-fits] .dock-plate` and `… .dock-run.is-active` take
+    `animation: none`, so the plate paints its rest corner and the run clips square.
+
+  When the seats overflow again, the animations re-apply and bind to the timeline
+  afresh. The root no longer carries `--dock-run-yield` as an inline style. The
+  attribute is its input, so there is one flag, not two. Two `run.css` comments that
+  said an inactive timeline restores the base corner are corrected.
+
+Tokens: no token value moved and no token added. `--dock-run-yield` (fix 5, internal)
+is now derived from the attribute. No export was removed or renamed.
+
+### Witness (release-10-1-5.spec.ts l1, fine and coarse)
+
+| cell | Chromium 4c9c15008 | Chromium fix 6 | WebKit 2287 4c9c15008 | WebKit 2287 fix 6 |
+|---|---|---|---|---|
+| 390, cap 200 → 1000, run at end / mid, house tabs and 6 icons: four corners of `h/2`, `sw = cw`, every seat shows, at 300 ms and 1.5 s | RED 8/8 (`16 30 30 16`, `16 28 28 16` coarse/fine) | GREEN | RED 8/8 (e.g. `25.98 20.02 20.02 25.98`, `24.31 30 30 24.31`) | GREEN |
+| 390 → 844 resize, cap `100vw − 30px`, run at end | RED (`16 30 30 16` at 539/539) | GREEN | RED | GREEN |
+| vertical, stage 240 → 860, run at end: four corners of `w/2`, every seat shows | RED (`16 16 34 34`) | GREEN | RED | GREEN |
+
+### Gates
+
+| gate | result |
+|---|---|
+| release-10-1-5, Chromium | 49/49 |
+| release-10-1-5, WebKit 2287 | 49/49 |
+| g6 release-10-1-4 | Chromium 23/23; WebKit 15 passed, 8 skipped (`page.pdf`) |
+| g6 release-10-1-3 | Chromium 60/60; WebKit 57 passed, 2 skipped (CDP swipe), 1 failed: D-1 (critique-7), bottom-anchored under zoom 1.25, the leaving summary's largest frame step 2.23 px against `< 2`. It is not this round's. `d1-ab-fix-6.sh` repeated the cell 6 times on each tree under the same load (about 26 to 38): the round-6 tip's `src` fails 6/6 (2.23 to 2.44 px), the branch 5/6 (2.37 to 2.45 px), with the same step values. A one-frame step under a loaded machine. Critique 6 had it GREEN at lower load |
+| `npm run typecheck` | exit 0 |
+| `npm run build`, `npm run demo:dist:build` | exit 0, exit 0 |
+| `npx vitest run --maxWorkers=2` | 247/247 files; 2397 passed, 10 expected fail, 1 skipped |
+| `npm run verify:package` | ratchet refused +214 B (2949687 > 2949473); rebound on the committed tree, then terminal CLEAN, version 10.1.5 |
+
+### Not cured here
+
+- A vertical run whose seats fit still keeps its padding reserve (the orchestrator's
+  round-6 ruling 1, the vertical yield). It was not in this round's defect list. Under
+  `data-run-fits`, such a run now paints its rest corner on both axes. l1's vertical cell
+  read `sh = ch` (718/718), so its stage leaves room for the reserve.
+- The RTL reach sign, as recorded.

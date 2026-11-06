@@ -1,0 +1,917 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "tests-visual/webkit-2287.config.ts",
+      "--project=webkit",
+      "release-10-1-5.spec.ts",
+      "--grep",
+      " l1 ",
+      "--workers=1"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/webkit-2287.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-headless-new",
+        "name": "chromium-headless-new",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "coarse-touch",
+        "name": "coarse-touch",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "safari-webgl.spec.ts",
+          "aurora-swraster.spec.ts",
+          "release-10-1-1.spec.ts",
+          "release-10-1-2.spec.ts",
+          "release-10-1-3.spec.ts",
+          "release-10-1-4.spec.ts",
+          "release-10-1-5.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/docs/release-10.1.5/fix-6/red-4c9c15008-webkit.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5281",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/",
+      "url": "http://localhost:5281",
+      "reuseExistingServer": true,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "release-10-1-5.spec.ts",
+      "file": "release-10-1-5.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "l1 a cap lifted under a run scrolled to its end rests round (tab:Home,icon,icon,icon,tab:Settings)",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 6,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 2471,
+                  "error": {
+                    "message": "Error: end, 300 ms after the lift ({\"cls\":\"glass-dock horizontal shape-pill expanded pinned fit-content always-expanded\",\"w\":368.9375,\"h\":56,\"radii\":[\"24.591717px\",\"19.408283px\",\"19.408283px\",\"24.591717px\"],\"runs\":[{\"sw\":365,\"cw\":365,\"sh\":54,\"ch\":54,\"active\":true}]}): corner 24.591717px = half the cross extent 28\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.5\u001b[39m\nReceived:    \u001b[31m3.408283000000001\u001b[39m",
+                    "stack": "Error: end, 300 ms after the lift ({\"cls\":\"glass-dock horizontal shape-pill expanded pinned fit-content always-expanded\",\"w\":368.9375,\"h\":56,\"radii\":[\"24.591717px\",\"19.408283px\",\"19.408283px\",\"24.591717px\"],\"runs\":[{\"sw\":365,\"cw\":365,\"sh\":54,\"ch\":54,\"active\":true}]}): corner 24.591717px = half the cross extent 28\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.5\u001b[39m\nReceived:    \u001b[31m3.408283000000001\u001b[39m\n    at expectRoundAtRest (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:1222:109)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:1251:17",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                      "column": 109,
+                      "line": 1222
+                    },
+                    "snippet": "  1220 |     for (const r of read.radii) {\n  1221 |         expect(r, `${at}: corner ${r} is one length`).toMatch(/^-?[\\d.]+px$/);\n> 1222 |         expect(Math.abs(Number.parseFloat(r) - half), `${at}: corner ${r} = half the cross extent ${half}`).toBeLessThanOrEqual(0.5);\n       |                                                                                                             ^\n  1223 |     }\n  1224 |     const fit = await page.evaluate(() => {\n  1225 |         const run = document.querySelector<HTMLElement>(\".dock-run.is-active\")!;"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                        "column": 109,
+                        "line": 1222
+                      },
+                      "message": "Error: end, 300 ms after the lift ({\"cls\":\"glass-dock horizontal shape-pill expanded pinned fit-content always-expanded\",\"w\":368.9375,\"h\":56,\"radii\":[\"24.591717px\",\"19.408283px\",\"19.408283px\",\"24.591717px\"],\"runs\":[{\"sw\":365,\"cw\":365,\"sh\":54,\"ch\":54,\"active\":true}]}): corner 24.591717px = half the cross extent 28\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.5\u001b[39m\nReceived:    \u001b[31m3.408283000000001\u001b[39m\n\n  1220 |     for (const r of read.radii) {\n  1221 |         expect(r, `${at}: corner ${r} is one length`).toMatch(/^-?[\\d.]+px$/);\n> 1222 |         expect(Math.abs(Number.parseFloat(r) - half), `${at}: corner ${r} = half the cross extent ${half}`).toBeLessThanOrEqual(0.5);\n       |                                                                                                             ^\n  1223 |     }\n  1224 |     const fit = await page.evaluate(() => {\n  1225 |         const run = document.querySelector<HTMLElement>(\".dock-run.is-active\")!;\n    at expectRoundAtRest (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:1222:109)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:1251:17"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-06T04:18:55.816Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/test-results/release-10-1-5-l1-a-cap-li-14263-con-icon-icon-tab-Settings--webkit/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                    "column": 109,
+                    "line": 1222
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-a3be1e24668d3a227222",
+          "file": "release-10-1-5.spec.ts",
+          "line": 1241,
+          "column": 13
+        },
+        {
+          "title": "l1 a cap lifted under a run scrolled to its mid rests round (tab:Home,icon,icon,icon,tab:Settings)",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 7,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 2476,
+                  "error": {
+                    "message": "Error: mid, 300 ms after the lift ({\"cls\":\"glass-dock horizontal shape-pill expanded pinned fit-content always-expanded\",\"w\":368.9375,\"h\":56,\"radii\":[\"24.591717px\",\"28px\",\"28px\",\"24.591717px\"],\"runs\":[{\"sw\":365,\"cw\":365,\"sh\":54,\"ch\":54,\"active\":true}]}): corner 24.591717px = half the cross extent 28\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.5\u001b[39m\nReceived:    \u001b[31m3.408283000000001\u001b[39m",
+                    "stack": "Error: mid, 300 ms after the lift ({\"cls\":\"glass-dock horizontal shape-pill expanded pinned fit-content always-expanded\",\"w\":368.9375,\"h\":56,\"radii\":[\"24.591717px\",\"28px\",\"28px\",\"24.591717px\"],\"runs\":[{\"sw\":365,\"cw\":365,\"sh\":54,\"ch\":54,\"active\":true}]}): corner 24.591717px = half the cross extent 28\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.5\u001b[39m\nReceived:    \u001b[31m3.408283000000001\u001b[39m\n    at expectRoundAtRest (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:1222:109)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:1251:17",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                      "column": 109,
+                      "line": 1222
+                    },
+                    "snippet": "  1220 |     for (const r of read.radii) {\n  1221 |         expect(r, `${at}: corner ${r} is one length`).toMatch(/^-?[\\d.]+px$/);\n> 1222 |         expect(Math.abs(Number.parseFloat(r) - half), `${at}: corner ${r} = half the cross extent ${half}`).toBeLessThanOrEqual(0.5);\n       |                                                                                                             ^\n  1223 |     }\n  1224 |     const fit = await page.evaluate(() => {\n  1225 |         const run = document.querySelector<HTMLElement>(\".dock-run.is-active\")!;"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                        "column": 109,
+                        "line": 1222
+                      },
+                      "message": "Error: mid, 300 ms after the lift ({\"cls\":\"glass-dock horizontal shape-pill expanded pinned fit-content always-expanded\",\"w\":368.9375,\"h\":56,\"radii\":[\"24.591717px\",\"28px\",\"28px\",\"24.591717px\"],\"runs\":[{\"sw\":365,\"cw\":365,\"sh\":54,\"ch\":54,\"active\":true}]}): corner 24.591717px = half the cross extent 28\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.5\u001b[39m\nReceived:    \u001b[31m3.408283000000001\u001b[39m\n\n  1220 |     for (const r of read.radii) {\n  1221 |         expect(r, `${at}: corner ${r} is one length`).toMatch(/^-?[\\d.]+px$/);\n> 1222 |         expect(Math.abs(Number.parseFloat(r) - half), `${at}: corner ${r} = half the cross extent ${half}`).toBeLessThanOrEqual(0.5);\n       |                                                                                                             ^\n  1223 |     }\n  1224 |     const fit = await page.evaluate(() => {\n  1225 |         const run = document.querySelector<HTMLElement>(\".dock-run.is-active\")!;\n    at expectRoundAtRest (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:1222:109)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:1251:17"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-06T04:18:58.910Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/test-results/release-10-1-5-l1-a-cap-li-a52de-con-icon-icon-tab-Settings--webkit/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                    "column": 109,
+                    "line": 1222
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-200b4be583e15b741835",
+          "file": "release-10-1-5.spec.ts",
+          "line": 1241,
+          "column": 13
+        },
+        {
+          "title": "l1 a cap lifted under a run scrolled to its end rests round (icon,icon,icon,icon,icon,icon)",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 8,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 2447,
+                  "error": {
+                    "message": "Error: end, 300 ms after the lift ({\"cls\":\"glass-dock horizontal shape-pill expanded pinned fit-content always-expanded\",\"w\":304,\"h\":56,\"radii\":[\"22.461538px\",\"21.538462px\",\"21.538462px\",\"22.461538px\"],\"runs\":[{\"sw\":294,\"cw\":294,\"sh\":54,\"ch\":54,\"active\":true}]}): corner 22.461538px = half the cross extent 28\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.5\u001b[39m\nReceived:    \u001b[31m5.538461999999999\u001b[39m",
+                    "stack": "Error: end, 300 ms after the lift ({\"cls\":\"glass-dock horizontal shape-pill expanded pinned fit-content always-expanded\",\"w\":304,\"h\":56,\"radii\":[\"22.461538px\",\"21.538462px\",\"21.538462px\",\"22.461538px\"],\"runs\":[{\"sw\":294,\"cw\":294,\"sh\":54,\"ch\":54,\"active\":true}]}): corner 22.461538px = half the cross extent 28\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.5\u001b[39m\nReceived:    \u001b[31m5.538461999999999\u001b[39m\n    at expectRoundAtRest (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:1222:109)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:1251:17",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                      "column": 109,
+                      "line": 1222
+                    },
+                    "snippet": "  1220 |     for (const r of read.radii) {\n  1221 |         expect(r, `${at}: corner ${r} is one length`).toMatch(/^-?[\\d.]+px$/);\n> 1222 |         expect(Math.abs(Number.parseFloat(r) - half), `${at}: corner ${r} = half the cross extent ${half}`).toBeLessThanOrEqual(0.5);\n       |                                                                                                             ^\n  1223 |     }\n  1224 |     const fit = await page.evaluate(() => {\n  1225 |         const run = document.querySelector<HTMLElement>(\".dock-run.is-active\")!;"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                        "column": 109,
+                        "line": 1222
+                      },
+                      "message": "Error: end, 300 ms after the lift ({\"cls\":\"glass-dock horizontal shape-pill expanded pinned fit-content always-expanded\",\"w\":304,\"h\":56,\"radii\":[\"22.461538px\",\"21.538462px\",\"21.538462px\",\"22.461538px\"],\"runs\":[{\"sw\":294,\"cw\":294,\"sh\":54,\"ch\":54,\"active\":true}]}): corner 22.461538px = half the cross extent 28\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.5\u001b[39m\nReceived:    \u001b[31m5.538461999999999\u001b[39m\n\n  1220 |     for (const r of read.radii) {\n  1221 |         expect(r, `${at}: corner ${r} is one length`).toMatch(/^-?[\\d.]+px$/);\n> 1222 |         expect(Math.abs(Number.parseFloat(r) - half), `${at}: corner ${r} = half the cross extent ${half}`).toBeLessThanOrEqual(0.5);\n       |                                                                                                             ^\n  1223 |     }\n  1224 |     const fit = await page.evaluate(() => {\n  1225 |         const run = document.querySelector<HTMLElement>(\".dock-run.is-active\")!;\n    at expectRoundAtRest (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:1222:109)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:1251:17"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-06T04:19:01.982Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/test-results/release-10-1-5-l1-a-cap-li-befd6-n-icon-icon-icon-icon-icon--webkit/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                    "column": 109,
+                    "line": 1222
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-3c93d3d519a9437b71dd",
+          "file": "release-10-1-5.spec.ts",
+          "line": 1241,
+          "column": 13
+        },
+        {
+          "title": "l1 a cap lifted under a run scrolled to its mid rests round (icon,icon,icon,icon,icon,icon)",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 9,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 2487,
+                  "error": {
+                    "message": "Error: mid, 300 ms after the lift ({\"cls\":\"glass-dock horizontal shape-pill expanded pinned fit-content always-expanded\",\"w\":304,\"h\":56,\"radii\":[\"22.461538px\",\"28px\",\"28px\",\"22.461538px\"],\"runs\":[{\"sw\":294,\"cw\":294,\"sh\":54,\"ch\":54,\"active\":true}]}): corner 22.461538px = half the cross extent 28\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.5\u001b[39m\nReceived:    \u001b[31m5.538461999999999\u001b[39m",
+                    "stack": "Error: mid, 300 ms after the lift ({\"cls\":\"glass-dock horizontal shape-pill expanded pinned fit-content always-expanded\",\"w\":304,\"h\":56,\"radii\":[\"22.461538px\",\"28px\",\"28px\",\"22.461538px\"],\"runs\":[{\"sw\":294,\"cw\":294,\"sh\":54,\"ch\":54,\"active\":true}]}): corner 22.461538px = half the cross extent 28\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.5\u001b[39m\nReceived:    \u001b[31m5.538461999999999\u001b[39m\n    at expectRoundAtRest (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:1222:109)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:1251:17",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                      "column": 109,
+                      "line": 1222
+                    },
+                    "snippet": "  1220 |     for (const r of read.radii) {\n  1221 |         expect(r, `${at}: corner ${r} is one length`).toMatch(/^-?[\\d.]+px$/);\n> 1222 |         expect(Math.abs(Number.parseFloat(r) - half), `${at}: corner ${r} = half the cross extent ${half}`).toBeLessThanOrEqual(0.5);\n       |                                                                                                             ^\n  1223 |     }\n  1224 |     const fit = await page.evaluate(() => {\n  1225 |         const run = document.querySelector<HTMLElement>(\".dock-run.is-active\")!;"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                        "column": 109,
+                        "line": 1222
+                      },
+                      "message": "Error: mid, 300 ms after the lift ({\"cls\":\"glass-dock horizontal shape-pill expanded pinned fit-content always-expanded\",\"w\":304,\"h\":56,\"radii\":[\"22.461538px\",\"28px\",\"28px\",\"22.461538px\"],\"runs\":[{\"sw\":294,\"cw\":294,\"sh\":54,\"ch\":54,\"active\":true}]}): corner 22.461538px = half the cross extent 28\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.5\u001b[39m\nReceived:    \u001b[31m5.538461999999999\u001b[39m\n\n  1220 |     for (const r of read.radii) {\n  1221 |         expect(r, `${at}: corner ${r} is one length`).toMatch(/^-?[\\d.]+px$/);\n> 1222 |         expect(Math.abs(Number.parseFloat(r) - half), `${at}: corner ${r} = half the cross extent ${half}`).toBeLessThanOrEqual(0.5);\n       |                                                                                                             ^\n  1223 |     }\n  1224 |     const fit = await page.evaluate(() => {\n  1225 |         const run = document.querySelector<HTMLElement>(\".dock-run.is-active\")!;\n    at expectRoundAtRest (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:1222:109)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:1251:17"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-06T04:19:05.047Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/test-results/release-10-1-5-l1-a-cap-li-09815-n-icon-icon-icon-icon-icon--webkit/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                    "column": 109,
+                    "line": 1222
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-85ad51ac4035cffdb65f",
+          "file": "release-10-1-5.spec.ts",
+          "line": 1241,
+          "column": 13
+        },
+        {
+          "title": "l1 a viewport resize 390 → 844 under a run scrolled to its end rests round",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 10,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 3001,
+                  "error": {
+                    "message": "Error: 844, 300 ms after the resize ({\"cls\":\"glass-dock horizontal shape-pill expanded pinned fit-content always-expanded\",\"w\":519.25,\"h\":56,\"radii\":[\"24.235294px\",\"19.764706px\",\"19.764706px\",\"24.235294px\"],\"runs\":[{\"sw\":515,\"cw\":515,\"sh\":54,\"ch\":54,\"active\":true}]}): corner 24.235294px = half the cross extent 28\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.5\u001b[39m\nReceived:    \u001b[31m3.7647060000000003\u001b[39m",
+                    "stack": "Error: 844, 300 ms after the resize ({\"cls\":\"glass-dock horizontal shape-pill expanded pinned fit-content always-expanded\",\"w\":519.25,\"h\":56,\"radii\":[\"24.235294px\",\"19.764706px\",\"19.764706px\",\"24.235294px\"],\"runs\":[{\"sw\":515,\"cw\":515,\"sh\":54,\"ch\":54,\"active\":true}]}): corner 24.235294px = half the cross extent 28\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.5\u001b[39m\nReceived:    \u001b[31m3.7647060000000003\u001b[39m\n    at expectRoundAtRest (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:1222:109)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:1269:9",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                      "column": 109,
+                      "line": 1222
+                    },
+                    "snippet": "  1220 |     for (const r of read.radii) {\n  1221 |         expect(r, `${at}: corner ${r} is one length`).toMatch(/^-?[\\d.]+px$/);\n> 1222 |         expect(Math.abs(Number.parseFloat(r) - half), `${at}: corner ${r} = half the cross extent ${half}`).toBeLessThanOrEqual(0.5);\n       |                                                                                                             ^\n  1223 |     }\n  1224 |     const fit = await page.evaluate(() => {\n  1225 |         const run = document.querySelector<HTMLElement>(\".dock-run.is-active\")!;"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                        "column": 109,
+                        "line": 1222
+                      },
+                      "message": "Error: 844, 300 ms after the resize ({\"cls\":\"glass-dock horizontal shape-pill expanded pinned fit-content always-expanded\",\"w\":519.25,\"h\":56,\"radii\":[\"24.235294px\",\"19.764706px\",\"19.764706px\",\"24.235294px\"],\"runs\":[{\"sw\":515,\"cw\":515,\"sh\":54,\"ch\":54,\"active\":true}]}): corner 24.235294px = half the cross extent 28\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.5\u001b[39m\nReceived:    \u001b[31m3.7647060000000003\u001b[39m\n\n  1220 |     for (const r of read.radii) {\n  1221 |         expect(r, `${at}: corner ${r} is one length`).toMatch(/^-?[\\d.]+px$/);\n> 1222 |         expect(Math.abs(Number.parseFloat(r) - half), `${at}: corner ${r} = half the cross extent ${half}`).toBeLessThanOrEqual(0.5);\n       |                                                                                                             ^\n  1223 |     }\n  1224 |     const fit = await page.evaluate(() => {\n  1225 |         const run = document.querySelector<HTMLElement>(\".dock-run.is-active\")!;\n    at expectRoundAtRest (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:1222:109)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:1269:9"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-06T04:19:08.156Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/test-results/release-10-1-5-l1-a-viewpo-8705b-lled-to-its-end-rests-round-webkit/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                    "column": 109,
+                    "line": 1222
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-e58593dadf1f08cfa3ca",
+          "file": "release-10-1-5.spec.ts",
+          "line": 1258,
+          "column": 5
+        },
+        {
+          "title": "l1 a vertical run's stage grown under a run scrolled to its end rests round",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 11,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 2380,
+                  "error": {
+                    "message": "Error: vertical, 300 ms after the stage grows ({\"cls\":\"glass-dock vertical shape-pill expanded pinned fit-content always-expanded\",\"w\":64,\"h\":720,\"radii\":[\"27.826088px\",\"27.826088px\",\"20.173914px\",\"20.173914px\"],\"runs\":[{\"sw\":54,\"cw\":54,\"sh\":718,\"ch\":718,\"active\":true}]}): corner 27.826088px = half the cross extent 32\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.5\u001b[39m\nReceived:    \u001b[31m4.173912000000001\u001b[39m",
+                    "stack": "Error: vertical, 300 ms after the stage grows ({\"cls\":\"glass-dock vertical shape-pill expanded pinned fit-content always-expanded\",\"w\":64,\"h\":720,\"radii\":[\"27.826088px\",\"27.826088px\",\"20.173914px\",\"20.173914px\"],\"runs\":[{\"sw\":54,\"cw\":54,\"sh\":718,\"ch\":718,\"active\":true}]}): corner 27.826088px = half the cross extent 32\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.5\u001b[39m\nReceived:    \u001b[31m4.173912000000001\u001b[39m\n    at expectRoundAtRest (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:1222:109)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:1283:9",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                      "column": 109,
+                      "line": 1222
+                    },
+                    "snippet": "  1220 |     for (const r of read.radii) {\n  1221 |         expect(r, `${at}: corner ${r} is one length`).toMatch(/^-?[\\d.]+px$/);\n> 1222 |         expect(Math.abs(Number.parseFloat(r) - half), `${at}: corner ${r} = half the cross extent ${half}`).toBeLessThanOrEqual(0.5);\n       |                                                                                                             ^\n  1223 |     }\n  1224 |     const fit = await page.evaluate(() => {\n  1225 |         const run = document.querySelector<HTMLElement>(\".dock-run.is-active\")!;"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                        "column": 109,
+                        "line": 1222
+                      },
+                      "message": "Error: vertical, 300 ms after the stage grows ({\"cls\":\"glass-dock vertical shape-pill expanded pinned fit-content always-expanded\",\"w\":64,\"h\":720,\"radii\":[\"27.826088px\",\"27.826088px\",\"20.173914px\",\"20.173914px\"],\"runs\":[{\"sw\":54,\"cw\":54,\"sh\":718,\"ch\":718,\"active\":true}]}): corner 27.826088px = half the cross extent 32\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.5\u001b[39m\nReceived:    \u001b[31m4.173912000000001\u001b[39m\n\n  1220 |     for (const r of read.radii) {\n  1221 |         expect(r, `${at}: corner ${r} is one length`).toMatch(/^-?[\\d.]+px$/);\n> 1222 |         expect(Math.abs(Number.parseFloat(r) - half), `${at}: corner ${r} = half the cross extent ${half}`).toBeLessThanOrEqual(0.5);\n       |                                                                                                             ^\n  1223 |     }\n  1224 |     const fit = await page.evaluate(() => {\n  1225 |         const run = document.querySelector<HTMLElement>(\".dock-run.is-active\")!;\n    at expectRoundAtRest (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:1222:109)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:1283:9"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-06T04:19:11.781Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/test-results/release-10-1-5-l1-a-vertic-e6655-lled-to-its-end-rests-round-webkit/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                    "column": 109,
+                    "line": 1222
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-9f51df777cb90ab989f1",
+          "file": "release-10-1-5.spec.ts",
+          "line": 1274,
+          "column": 5
+        }
+      ],
+      "suites": [
+        {
+          "title": "critique 6, coarse phone",
+          "file": "release-10-1-5.spec.ts",
+          "line": 1289,
+          "column": 6,
+          "specs": [
+            {
+              "title": "l1 a cap lifted under a run scrolled to its end rests round (tab:Home,icon,icon,icon,tab:Settings)",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 2710,
+                      "error": {
+                        "message": "Error: end, 300 ms after the lift ({\"cls\":\"glass-dock horizontal shape-pill expanded pinned fit-content always-expanded\",\"w\":380.9375,\"h\":60,\"radii\":[\"25.977901px\",\"20.0221px\",\"20.0221px\",\"25.977901px\"],\"runs\":[{\"sw\":377,\"cw\":377,\"sh\":58,\"ch\":58,\"active\":true}]}): corner 25.977901px = half the cross extent 30\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.5\u001b[39m\nReceived:    \u001b[31m4.022099000000001\u001b[39m",
+                        "stack": "Error: end, 300 ms after the lift ({\"cls\":\"glass-dock horizontal shape-pill expanded pinned fit-content always-expanded\",\"w\":380.9375,\"h\":60,\"radii\":[\"25.977901px\",\"20.0221px\",\"20.0221px\",\"25.977901px\"],\"runs\":[{\"sw\":377,\"cw\":377,\"sh\":58,\"ch\":58,\"active\":true}]}): corner 25.977901px = half the cross extent 30\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.5\u001b[39m\nReceived:    \u001b[31m4.022099000000001\u001b[39m\n    at expectRoundAtRest (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:1222:109)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:1251:17",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                          "column": 109,
+                          "line": 1222
+                        },
+                        "snippet": "  1220 |     for (const r of read.radii) {\n  1221 |         expect(r, `${at}: corner ${r} is one length`).toMatch(/^-?[\\d.]+px$/);\n> 1222 |         expect(Math.abs(Number.parseFloat(r) - half), `${at}: corner ${r} = half the cross extent ${half}`).toBeLessThanOrEqual(0.5);\n       |                                                                                                             ^\n  1223 |     }\n  1224 |     const fit = await page.evaluate(() => {\n  1225 |         const run = document.querySelector<HTMLElement>(\".dock-run.is-active\")!;"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                            "column": 109,
+                            "line": 1222
+                          },
+                          "message": "Error: end, 300 ms after the lift ({\"cls\":\"glass-dock horizontal shape-pill expanded pinned fit-content always-expanded\",\"w\":380.9375,\"h\":60,\"radii\":[\"25.977901px\",\"20.0221px\",\"20.0221px\",\"25.977901px\"],\"runs\":[{\"sw\":377,\"cw\":377,\"sh\":58,\"ch\":58,\"active\":true}]}): corner 25.977901px = half the cross extent 30\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.5\u001b[39m\nReceived:    \u001b[31m4.022099000000001\u001b[39m\n\n  1220 |     for (const r of read.radii) {\n  1221 |         expect(r, `${at}: corner ${r} is one length`).toMatch(/^-?[\\d.]+px$/);\n> 1222 |         expect(Math.abs(Number.parseFloat(r) - half), `${at}: corner ${r} = half the cross extent ${half}`).toBeLessThanOrEqual(0.5);\n       |                                                                                                             ^\n  1223 |     }\n  1224 |     const fit = await page.evaluate(() => {\n  1225 |         const run = document.querySelector<HTMLElement>(\".dock-run.is-active\")!;\n    at expectRoundAtRest (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:1222:109)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:1251:17"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-06T04:18:36.659Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/test-results/release-10-1-5-critique-6--159de-con-icon-icon-tab-Settings--webkit/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                        "column": 109,
+                        "line": 1222
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "ba3de8f038291be5029b-b86a7cc8e35fc7ae0af1",
+              "file": "release-10-1-5.spec.ts",
+              "line": 1241,
+              "column": 13
+            },
+            {
+              "title": "l1 a cap lifted under a run scrolled to its mid rests round (tab:Home,icon,icon,icon,tab:Settings)",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 2449,
+                      "error": {
+                        "message": "Error: mid, 300 ms after the lift ({\"cls\":\"glass-dock horizontal shape-pill expanded pinned fit-content always-expanded\",\"w\":380.9375,\"h\":60,\"radii\":[\"25.977901px\",\"30px\",\"30px\",\"25.977901px\"],\"runs\":[{\"sw\":377,\"cw\":377,\"sh\":58,\"ch\":58,\"active\":true}]}): corner 25.977901px = half the cross extent 30\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.5\u001b[39m\nReceived:    \u001b[31m4.022099000000001\u001b[39m",
+                        "stack": "Error: mid, 300 ms after the lift ({\"cls\":\"glass-dock horizontal shape-pill expanded pinned fit-content always-expanded\",\"w\":380.9375,\"h\":60,\"radii\":[\"25.977901px\",\"30px\",\"30px\",\"25.977901px\"],\"runs\":[{\"sw\":377,\"cw\":377,\"sh\":58,\"ch\":58,\"active\":true}]}): corner 25.977901px = half the cross extent 30\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.5\u001b[39m\nReceived:    \u001b[31m4.022099000000001\u001b[39m\n    at expectRoundAtRest (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:1222:109)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:1251:17",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                          "column": 109,
+                          "line": 1222
+                        },
+                        "snippet": "  1220 |     for (const r of read.radii) {\n  1221 |         expect(r, `${at}: corner ${r} is one length`).toMatch(/^-?[\\d.]+px$/);\n> 1222 |         expect(Math.abs(Number.parseFloat(r) - half), `${at}: corner ${r} = half the cross extent ${half}`).toBeLessThanOrEqual(0.5);\n       |                                                                                                             ^\n  1223 |     }\n  1224 |     const fit = await page.evaluate(() => {\n  1225 |         const run = document.querySelector<HTMLElement>(\".dock-run.is-active\")!;"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                            "column": 109,
+                            "line": 1222
+                          },
+                          "message": "Error: mid, 300 ms after the lift ({\"cls\":\"glass-dock horizontal shape-pill expanded pinned fit-content always-expanded\",\"w\":380.9375,\"h\":60,\"radii\":[\"25.977901px\",\"30px\",\"30px\",\"25.977901px\"],\"runs\":[{\"sw\":377,\"cw\":377,\"sh\":58,\"ch\":58,\"active\":true}]}): corner 25.977901px = half the cross extent 30\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.5\u001b[39m\nReceived:    \u001b[31m4.022099000000001\u001b[39m\n\n  1220 |     for (const r of read.radii) {\n  1221 |         expect(r, `${at}: corner ${r} is one length`).toMatch(/^-?[\\d.]+px$/);\n> 1222 |         expect(Math.abs(Number.parseFloat(r) - half), `${at}: corner ${r} = half the cross extent ${half}`).toBeLessThanOrEqual(0.5);\n       |                                                                                                             ^\n  1223 |     }\n  1224 |     const fit = await page.evaluate(() => {\n  1225 |         const run = document.querySelector<HTMLElement>(\".dock-run.is-active\")!;\n    at expectRoundAtRest (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:1222:109)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:1251:17"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-06T04:18:40.150Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/test-results/release-10-1-5-critique-6--c5cd4-con-icon-icon-tab-Settings--webkit/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                        "column": 109,
+                        "line": 1222
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "ba3de8f038291be5029b-22ac2cf115a061862d81",
+              "file": "release-10-1-5.spec.ts",
+              "line": 1241,
+              "column": 13
+            },
+            {
+              "title": "l1 a cap lifted under a run scrolled to its end rests round (icon,icon,icon,icon,icon,icon)",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 2425,
+                      "error": {
+                        "message": "Error: end, 300 ms after the lift ({\"cls\":\"glass-dock horizontal shape-pill expanded pinned fit-content always-expanded\",\"w\":328,\"h\":60,\"radii\":[\"24.3125px\",\"21.6875px\",\"21.6875px\",\"24.3125px\"],\"runs\":[{\"sw\":318,\"cw\":318,\"sh\":58,\"ch\":58,\"active\":true}]}): corner 24.3125px = half the cross extent 30\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.5\u001b[39m\nReceived:    \u001b[31m5.6875\u001b[39m",
+                        "stack": "Error: end, 300 ms after the lift ({\"cls\":\"glass-dock horizontal shape-pill expanded pinned fit-content always-expanded\",\"w\":328,\"h\":60,\"radii\":[\"24.3125px\",\"21.6875px\",\"21.6875px\",\"24.3125px\"],\"runs\":[{\"sw\":318,\"cw\":318,\"sh\":58,\"ch\":58,\"active\":true}]}): corner 24.3125px = half the cross extent 30\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.5\u001b[39m\nReceived:    \u001b[31m5.6875\u001b[39m\n    at expectRoundAtRest (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:1222:109)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:1251:17",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                          "column": 109,
+                          "line": 1222
+                        },
+                        "snippet": "  1220 |     for (const r of read.radii) {\n  1221 |         expect(r, `${at}: corner ${r} is one length`).toMatch(/^-?[\\d.]+px$/);\n> 1222 |         expect(Math.abs(Number.parseFloat(r) - half), `${at}: corner ${r} = half the cross extent ${half}`).toBeLessThanOrEqual(0.5);\n       |                                                                                                             ^\n  1223 |     }\n  1224 |     const fit = await page.evaluate(() => {\n  1225 |         const run = document.querySelector<HTMLElement>(\".dock-run.is-active\")!;"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                            "column": 109,
+                            "line": 1222
+                          },
+                          "message": "Error: end, 300 ms after the lift ({\"cls\":\"glass-dock horizontal shape-pill expanded pinned fit-content always-expanded\",\"w\":328,\"h\":60,\"radii\":[\"24.3125px\",\"21.6875px\",\"21.6875px\",\"24.3125px\"],\"runs\":[{\"sw\":318,\"cw\":318,\"sh\":58,\"ch\":58,\"active\":true}]}): corner 24.3125px = half the cross extent 30\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.5\u001b[39m\nReceived:    \u001b[31m5.6875\u001b[39m\n\n  1220 |     for (const r of read.radii) {\n  1221 |         expect(r, `${at}: corner ${r} is one length`).toMatch(/^-?[\\d.]+px$/);\n> 1222 |         expect(Math.abs(Number.parseFloat(r) - half), `${at}: corner ${r} = half the cross extent ${half}`).toBeLessThanOrEqual(0.5);\n       |                                                                                                             ^\n  1223 |     }\n  1224 |     const fit = await page.evaluate(() => {\n  1225 |         const run = document.querySelector<HTMLElement>(\".dock-run.is-active\")!;\n    at expectRoundAtRest (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:1222:109)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:1251:17"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-06T04:18:43.233Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/test-results/release-10-1-5-critique-6--a2155-n-icon-icon-icon-icon-icon--webkit/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                        "column": 109,
+                        "line": 1222
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "ba3de8f038291be5029b-2fc2e7529d1fd90fe2ba",
+              "file": "release-10-1-5.spec.ts",
+              "line": 1241,
+              "column": 13
+            },
+            {
+              "title": "l1 a cap lifted under a run scrolled to its mid rests round (icon,icon,icon,icon,icon,icon)",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 2466,
+                      "error": {
+                        "message": "Error: mid, 300 ms after the lift ({\"cls\":\"glass-dock horizontal shape-pill expanded pinned fit-content always-expanded\",\"w\":328,\"h\":60,\"radii\":[\"24.3125px\",\"30px\",\"30px\",\"24.3125px\"],\"runs\":[{\"sw\":318,\"cw\":318,\"sh\":58,\"ch\":58,\"active\":true}]}): corner 24.3125px = half the cross extent 30\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.5\u001b[39m\nReceived:    \u001b[31m5.6875\u001b[39m",
+                        "stack": "Error: mid, 300 ms after the lift ({\"cls\":\"glass-dock horizontal shape-pill expanded pinned fit-content always-expanded\",\"w\":328,\"h\":60,\"radii\":[\"24.3125px\",\"30px\",\"30px\",\"24.3125px\"],\"runs\":[{\"sw\":318,\"cw\":318,\"sh\":58,\"ch\":58,\"active\":true}]}): corner 24.3125px = half the cross extent 30\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.5\u001b[39m\nReceived:    \u001b[31m5.6875\u001b[39m\n    at expectRoundAtRest (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:1222:109)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:1251:17",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                          "column": 109,
+                          "line": 1222
+                        },
+                        "snippet": "  1220 |     for (const r of read.radii) {\n  1221 |         expect(r, `${at}: corner ${r} is one length`).toMatch(/^-?[\\d.]+px$/);\n> 1222 |         expect(Math.abs(Number.parseFloat(r) - half), `${at}: corner ${r} = half the cross extent ${half}`).toBeLessThanOrEqual(0.5);\n       |                                                                                                             ^\n  1223 |     }\n  1224 |     const fit = await page.evaluate(() => {\n  1225 |         const run = document.querySelector<HTMLElement>(\".dock-run.is-active\")!;"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                            "column": 109,
+                            "line": 1222
+                          },
+                          "message": "Error: mid, 300 ms after the lift ({\"cls\":\"glass-dock horizontal shape-pill expanded pinned fit-content always-expanded\",\"w\":328,\"h\":60,\"radii\":[\"24.3125px\",\"30px\",\"30px\",\"24.3125px\"],\"runs\":[{\"sw\":318,\"cw\":318,\"sh\":58,\"ch\":58,\"active\":true}]}): corner 24.3125px = half the cross extent 30\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.5\u001b[39m\nReceived:    \u001b[31m5.6875\u001b[39m\n\n  1220 |     for (const r of read.radii) {\n  1221 |         expect(r, `${at}: corner ${r} is one length`).toMatch(/^-?[\\d.]+px$/);\n> 1222 |         expect(Math.abs(Number.parseFloat(r) - half), `${at}: corner ${r} = half the cross extent ${half}`).toBeLessThanOrEqual(0.5);\n       |                                                                                                             ^\n  1223 |     }\n  1224 |     const fit = await page.evaluate(() => {\n  1225 |         const run = document.querySelector<HTMLElement>(\".dock-run.is-active\")!;\n    at expectRoundAtRest (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:1222:109)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:1251:17"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-06T04:18:46.221Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/test-results/release-10-1-5-critique-6--0467f-n-icon-icon-icon-icon-icon--webkit/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                        "column": 109,
+                        "line": 1222
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "ba3de8f038291be5029b-6974847d5f8756c28bde",
+              "file": "release-10-1-5.spec.ts",
+              "line": 1241,
+              "column": 13
+            },
+            {
+              "title": "l1 a viewport resize 390 → 844 under a run scrolled to its end rests round",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 4,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 2947,
+                      "error": {
+                        "message": "Error: 844, 300 ms after the resize ({\"cls\":\"glass-dock horizontal shape-pill expanded pinned fit-content always-expanded\",\"w\":543.25,\"h\":60,\"radii\":[\"25.887005px\",\"20.112995px\",\"20.112995px\",\"25.887005px\"],\"runs\":[{\"sw\":539,\"cw\":539,\"sh\":58,\"ch\":58,\"active\":true}]}): corner 25.887005px = half the cross extent 30\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.5\u001b[39m\nReceived:    \u001b[31m4.1129950000000015\u001b[39m",
+                        "stack": "Error: 844, 300 ms after the resize ({\"cls\":\"glass-dock horizontal shape-pill expanded pinned fit-content always-expanded\",\"w\":543.25,\"h\":60,\"radii\":[\"25.887005px\",\"20.112995px\",\"20.112995px\",\"25.887005px\"],\"runs\":[{\"sw\":539,\"cw\":539,\"sh\":58,\"ch\":58,\"active\":true}]}): corner 25.887005px = half the cross extent 30\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.5\u001b[39m\nReceived:    \u001b[31m4.1129950000000015\u001b[39m\n    at expectRoundAtRest (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:1222:109)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:1269:9",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                          "column": 109,
+                          "line": 1222
+                        },
+                        "snippet": "  1220 |     for (const r of read.radii) {\n  1221 |         expect(r, `${at}: corner ${r} is one length`).toMatch(/^-?[\\d.]+px$/);\n> 1222 |         expect(Math.abs(Number.parseFloat(r) - half), `${at}: corner ${r} = half the cross extent ${half}`).toBeLessThanOrEqual(0.5);\n       |                                                                                                             ^\n  1223 |     }\n  1224 |     const fit = await page.evaluate(() => {\n  1225 |         const run = document.querySelector<HTMLElement>(\".dock-run.is-active\")!;"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                            "column": 109,
+                            "line": 1222
+                          },
+                          "message": "Error: 844, 300 ms after the resize ({\"cls\":\"glass-dock horizontal shape-pill expanded pinned fit-content always-expanded\",\"w\":543.25,\"h\":60,\"radii\":[\"25.887005px\",\"20.112995px\",\"20.112995px\",\"25.887005px\"],\"runs\":[{\"sw\":539,\"cw\":539,\"sh\":58,\"ch\":58,\"active\":true}]}): corner 25.887005px = half the cross extent 30\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.5\u001b[39m\nReceived:    \u001b[31m4.1129950000000015\u001b[39m\n\n  1220 |     for (const r of read.radii) {\n  1221 |         expect(r, `${at}: corner ${r} is one length`).toMatch(/^-?[\\d.]+px$/);\n> 1222 |         expect(Math.abs(Number.parseFloat(r) - half), `${at}: corner ${r} = half the cross extent ${half}`).toBeLessThanOrEqual(0.5);\n       |                                                                                                             ^\n  1223 |     }\n  1224 |     const fit = await page.evaluate(() => {\n  1225 |         const run = document.querySelector<HTMLElement>(\".dock-run.is-active\")!;\n    at expectRoundAtRest (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:1222:109)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:1269:9"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-06T04:18:49.243Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/test-results/release-10-1-5-critique-6--d3784-lled-to-its-end-rests-round-webkit/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                        "column": 109,
+                        "line": 1222
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "ba3de8f038291be5029b-bb7958d6ca0b5805dc65",
+              "file": "release-10-1-5.spec.ts",
+              "line": 1258,
+              "column": 5
+            },
+            {
+              "title": "l1 a vertical run's stage grown under a run scrolled to its end rests round",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 5,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 2466,
+                      "error": {
+                        "message": "Error: vertical, 300 ms after the stage grows ({\"cls\":\"glass-dock vertical shape-pill expanded pinned fit-content always-expanded\",\"w\":68,\"h\":720,\"radii\":[\"29.666666px\",\"29.666666px\",\"20.333334px\",\"20.333334px\"],\"runs\":[{\"sw\":58,\"cw\":58,\"sh\":718,\"ch\":718,\"active\":true}]}): corner 29.666666px = half the cross extent 34\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.5\u001b[39m\nReceived:    \u001b[31m4.333334000000001\u001b[39m",
+                        "stack": "Error: vertical, 300 ms after the stage grows ({\"cls\":\"glass-dock vertical shape-pill expanded pinned fit-content always-expanded\",\"w\":68,\"h\":720,\"radii\":[\"29.666666px\",\"29.666666px\",\"20.333334px\",\"20.333334px\"],\"runs\":[{\"sw\":58,\"cw\":58,\"sh\":718,\"ch\":718,\"active\":true}]}): corner 29.666666px = half the cross extent 34\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.5\u001b[39m\nReceived:    \u001b[31m4.333334000000001\u001b[39m\n    at expectRoundAtRest (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:1222:109)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:1283:9",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                          "column": 109,
+                          "line": 1222
+                        },
+                        "snippet": "  1220 |     for (const r of read.radii) {\n  1221 |         expect(r, `${at}: corner ${r} is one length`).toMatch(/^-?[\\d.]+px$/);\n> 1222 |         expect(Math.abs(Number.parseFloat(r) - half), `${at}: corner ${r} = half the cross extent ${half}`).toBeLessThanOrEqual(0.5);\n       |                                                                                                             ^\n  1223 |     }\n  1224 |     const fit = await page.evaluate(() => {\n  1225 |         const run = document.querySelector<HTMLElement>(\".dock-run.is-active\")!;"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                            "column": 109,
+                            "line": 1222
+                          },
+                          "message": "Error: vertical, 300 ms after the stage grows ({\"cls\":\"glass-dock vertical shape-pill expanded pinned fit-content always-expanded\",\"w\":68,\"h\":720,\"radii\":[\"29.666666px\",\"29.666666px\",\"20.333334px\",\"20.333334px\"],\"runs\":[{\"sw\":58,\"cw\":58,\"sh\":718,\"ch\":718,\"active\":true}]}): corner 29.666666px = half the cross extent 34\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.5\u001b[39m\nReceived:    \u001b[31m4.333334000000001\u001b[39m\n\n  1220 |     for (const r of read.radii) {\n  1221 |         expect(r, `${at}: corner ${r} is one length`).toMatch(/^-?[\\d.]+px$/);\n> 1222 |         expect(Math.abs(Number.parseFloat(r) - half), `${at}: corner ${r} = half the cross extent ${half}`).toBeLessThanOrEqual(0.5);\n       |                                                                                                             ^\n  1223 |     }\n  1224 |     const fit = await page.evaluate(() => {\n  1225 |         const run = document.querySelector<HTMLElement>(\".dock-run.is-active\")!;\n    at expectRoundAtRest (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:1222:109)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:1283:9"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-06T04:18:52.782Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/test-results/release-10-1-5-critique-6--55a8a-lled-to-its-end-rests-round-webkit/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                        "column": 109,
+                        "line": 1222
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "ba3de8f038291be5029b-d8c707b9585eb72345be",
+              "file": "release-10-1-5.spec.ts",
+              "line": 1274,
+              "column": 5
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-06T04:18:34.816Z",
+    "duration": 39579.217,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 12,
+    "flaky": 0
+  }
+}
