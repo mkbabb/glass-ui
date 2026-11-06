@@ -1,0 +1,37 @@
+{
+ "id": "PE14 cost",
+ "engine": "webkit",
+ "version": "26.5",
+ "target": {
+  "build": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p14/PE14/wt/.pe14out/builds/cand13"
+ },
+ "loadStart": "27.3/17.3/15.6",
+ "loadEnd": "23.7/17.3/15.7",
+ "verdict": "UNMEASURED",
+ "cells": [
+  {
+   "name": "carrier · rest",
+   "status": "REPORT",
+   "line": "cand13 · a sine of 80 px / 500 ms on the slider's parent's translate for 3 s · frames 181, rAF interval median 17.00 ms, p90 18.00 ms · engaged false",
+   "load": "27.6/17.6/15.7"
+  },
+  {
+   "name": "carrier · held",
+   "status": "REPORT",
+   "line": "cand13 · a sine of 80 px / 500 ms on the slider's parent's translate for 3 s · frames 181, rAF interval median 17.00 ms, p90 17.00 ms · engaged true",
+   "load": "26.0/17.4/15.7"
+  },
+  {
+   "name": "step · inside a perspective(400px) rotateX(40deg) card · 200 px insert above the held slider",
+   "status": "REPORT",
+   "line": "cand13 · the act frame's rAF interval median 17.00 ms (max 17.00) against the frames before 17.00 ms · engaged true",
+   "load": "24.2/17.3/15.7"
+  },
+  {
+   "name": "step · outside a perspective(400px) rotateX(40deg) card · 200 px insert above the held slider",
+   "status": "REPORT",
+   "line": "cand13 · the act frame's rAF interval median 17.00 ms (max 17.00) against the frames before 17.00 ms · engaged true",
+   "load": "23.7/17.3/15.7"
+  }
+ ]
+}

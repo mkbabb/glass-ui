@@ -1,0 +1,12 @@
+# PE14 plant-nosticky-e14 webkit · 2026-11-06 10:45:33 · load { 10.50 12.76 14.27 } · harness 7e79063a4b00 · --only M23
+# E-14 · S14's members at their ranges (P-E14 §S14-c)
+# target /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p14/PE14/wt/.pe14out/builds/plant-nosticky · engine webkit · lock wait 0.0 s (the deadline 5400 s counts from here) · other headless processes: chromium 1, webkit 0 · load 10.5/12.8/14.3 at start
+# scene app: harness scenes/App.vue (sha1 912fecf0a1aa)
+# webkit 26.5 (Playwright WebKit, not Safari; real Safari UNMEASURED (owner's safaridriver checkbox))
+# held control: scene slider root .glass-slider thumb [role="slider"] engaged [data-engaged], [data-held]; clock token --spring-dock-settle; cells M23
+  FAIL       M23 G sticky top 0 · page scrolled 8 px a frame across the stick · scrollY 194 → 386, scroller 0 → 0 · the carrier moved 167.1 px over 40 engaged frames · the root's centre off where its box carries it: max 5.59 px, frames over 2 px 8 (bound ≤ 0.50) · glides started 2 (bound ≤ 0) · errors 0 · load 10.5/12.8/14.3
+  FAIL       M23 G sticky top 0 · scroller scrolled 8 px a frame across the stick · scrollY 230 → 230, scroller 0 → 192 · the carrier moved 150.0 px over 40 engaged frames · the root's centre off where its box carries it: max 6.00 px, frames over 2 px 6 (bound ≤ 0.50) · glides started 1 (bound ≤ 0) · errors 0 · load 10.9/12.8/14.3
+  PASS       M23 an insert above an unstuck sticky G (layout, a step) · the act on frame 8 · paint moved 0.0, 40.0 px in all; on the act's frame 0.00, 0.00 = 0.00 px (bound ≤ 0.50) · largest move over any 16.7 ms 5.5 px at +84 ms (bound 6.5) · glides 1 (210 ms) · scrollY 38 → 38 → 38, scroller 0 → 0 → 0 · path [0.0,0.0 0.0,0.0 0.0,2.1 0.0,6.7 0.0,11.9] · errors 0 · load 10.9/12.8/14.3
+E-14 webkit FAIL · 1 pass, 2 fail, 0 unmeasured of 3 gating cells (0 reported) · load 10.5/12.8/14.3 at start, 10.9/12.8/14.3 at end
+# exit 1 · 2026-11-06 10:45:41 · load { 10.86 12.80 14.27 }
+# end · 2026-11-06 10:45:41 · load { 10.86 12.80 14.27 } · harness 7e79063a4b00

@@ -1,0 +1,85 @@
+{
+ "id": "E9-probe",
+ "engine": "chromium",
+ "version": "149.0.7827.55",
+ "target": {
+  "build": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p14/PE14/wt/.pe14out/builds/cand14"
+ },
+ "loadStart": "15.9/19.0/20.5",
+ "loadEnd": "12.0/17.9/20.0",
+ "verdict": "FAIL",
+ "cells": [
+  {
+   "name": "E9 loop keyboard · rest",
+   "status": "REPORT",
+   "line": "rAF 0.0/s · RO callbacks 0.0/s · layouts 0.0/s · style recalcs 0.0/s · [data-engaged] 0→0 · [data-engage-stage] 0→0 · loupe 0→0 · window 3002 ms",
+   "load": "13.9/18.5/20.3"
+  },
+  {
+   "name": "E9 loop keyboard · engaged idle",
+   "status": "REPORT",
+   "line": "rAF 120.2/s · RO callbacks 120.2/s · layouts 0.0/s · style recalcs 0.0/s · [data-engaged] 1→1 · [data-engage-stage] 1→1 · loupe 0→0 · window 3004 ms",
+   "load": "13.9/18.5/20.3"
+  },
+  {
+   "name": "E9 loop keyboard · release +0..150 ms",
+   "status": "REPORT",
+   "line": "rAF 117.5/s · RO callbacks 117.5/s · layouts 731.1/s · style recalcs 731.1/s · [data-engaged] 0→0 · [data-engage-stage] 1→1 · loupe 0→0 · window 153 ms",
+   "load": "13.9/18.5/20.3"
+  },
+  {
+   "name": "E9 loop keyboard · release +150..450 ms (exit clock)",
+   "status": "REPORT",
+   "line": "rAF 26.4/s · RO callbacks 26.4/s · layouts 0.0/s · style recalcs 3.3/s · [data-engaged] 0→0 · [data-engage-stage] 1→0 · loupe 0→0 · window 303 ms",
+   "load": "13.9/18.5/20.3"
+  },
+  {
+   "name": "E9 loop keyboard · release +1.5..4.5 s",
+   "status": "REPORT",
+   "line": "rAF 0.0/s · RO callbacks 0.0/s · layouts 0.0/s · style recalcs 0.0/s · [data-engaged] 0→0 · [data-engage-stage] 0→0 · loupe 0→0 · window 3003 ms",
+   "load": "13.9/18.5/20.3"
+  },
+  {
+   "name": "E9 loop keyboard · stops at release",
+   "status": "FAIL",
+   "line": "engaged 240.4/s (> 30: the loop runs); after release +0..150 ms 235.0/s, +150..450 ms (exit clock) 52.8/s, +1.5..4.5 s 0.0/s (each ≤ 2) · [data-engage-stage] across the first window 1→1",
+   "load": "13.9/18.5/20.3"
+  },
+  {
+   "name": "E9 loop fine-hold · rest",
+   "status": "REPORT",
+   "line": "rAF 0.0/s · RO callbacks 0.0/s · layouts 0.0/s · style recalcs 0.0/s · [data-engaged] 0→0 · [data-engage-stage] 0→0 · loupe 0→0 · window 3002 ms",
+   "load": "12.0/17.9/20.0"
+  },
+  {
+   "name": "E9 loop fine-hold · held still, loupe shown",
+   "status": "REPORT",
+   "line": "rAF 239.9/s · RO callbacks 120.0/s · layouts 0.0/s · style recalcs 0.0/s · [data-engaged] 1→1 · [data-engage-stage] 1→1 · loupe 1→1 · window 3001 ms",
+   "load": "12.0/17.9/20.0"
+  },
+  {
+   "name": "E9 loop fine-hold · release +0..150 ms",
+   "status": "REPORT",
+   "line": "rAF 118.6/s · RO callbacks 118.6/s · layouts 2951.3/s · style recalcs 2964.4/s · [data-engaged] 0→0 · [data-engage-stage] 1→1 · loupe 1→1 · window 152 ms",
+   "load": "12.0/17.9/20.0"
+  },
+  {
+   "name": "E9 loop fine-hold · release +150..450 ms (exit clock)",
+   "status": "REPORT",
+   "line": "rAF 26.5/s · RO callbacks 26.5/s · layouts 3.3/s · style recalcs 49.7/s · [data-engaged] 0→0 · [data-engage-stage] 1→0 · loupe 1→0 · window 302 ms",
+   "load": "12.0/17.9/20.0"
+  },
+  {
+   "name": "E9 loop fine-hold · release +1.5..4.5 s",
+   "status": "REPORT",
+   "line": "rAF 0.0/s · RO callbacks 0.0/s · layouts 0.0/s · style recalcs 0.0/s · [data-engaged] 0→0 · [data-engage-stage] 0→0 · loupe 0→0 · window 3003 ms",
+   "load": "12.0/17.9/20.0"
+  },
+  {
+   "name": "E9 loop fine-hold · stops at release",
+   "status": "FAIL",
+   "line": "engaged 359.9/s (> 30: the loop runs); after release +0..150 ms 237.2/s, +150..450 ms (exit clock) 53.0/s, +1.5..4.5 s 0.0/s (each ≤ 2) · [data-engage-stage] across the first window 1→1",
+   "load": "12.0/17.9/20.0"
+  }
+ ]
+}

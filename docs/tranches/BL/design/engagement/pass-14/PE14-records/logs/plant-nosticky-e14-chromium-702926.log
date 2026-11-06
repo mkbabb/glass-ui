@@ -1,0 +1,12 @@
+# PE14 plant-nosticky-e14 chromium · 2026-11-06 03:19:45 · load { 17.26 20.94 21.46 } · harness 7e79063a4b00 · --only M23
+# E-14 · S14's members at their ranges (P-E14 §S14-c)
+# target /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p14/PE14/wt/.pe14out/builds/plant-nosticky · engine chromium · lock wait 0.0 s (the deadline 5400 s counts from here) · other headless processes: chromium 11, webkit 2 · load 17.3/20.9/21.5 at start
+# scene app: harness scenes/App.vue (sha1 912fecf0a1aa)
+# chromium 149.0.7827.55
+# held control: scene slider root .glass-slider thumb [role="slider"] engaged [data-engaged], [data-held]; clock token --spring-dock-settle; cells M23
+  FAIL       M23 G sticky top 0 · page scrolled 8 px a frame across the stick · scrollY 195 → 387, scroller 0 → 0 · the carrier moved 167.1 px over 40 engaged frames · the root's centre off where its box carries it: max 6.70 px, frames over 2 px 15 (bound ≤ 0.50) · glides started 2 (bound ≤ 0) · errors 0 · load 17.3/20.9/21.5
+  FAIL       M23 G sticky top 0 · scroller scrolled 8 px a frame across the stick · scrollY 230 → 230, scroller 0 → 192 · the carrier moved 150.0 px over 40 engaged frames · the root's centre off where its box carries it: max 6.00 px, frames over 2 px 13 (bound ≤ 0.50) · glides started 1 (bound ≤ 0) · errors 0 · load 17.3/20.9/21.5
+  PASS       M23 an insert above an unstuck sticky G (layout, a step) · the act on frame 8 · paint moved 0.0, 40.0 px in all; on the act's frame 0.00, 0.00 = 0.00 px (bound ≤ 0.50) · largest move over any 16.7 ms 5.5 px at +67 ms (bound 6.5) · glides 1 (210 ms) · scrollY 39 → 39 → 39, scroller 0 → 0 → 0 · path [0.0,0.0 0.0,0.0 0.0,0.6 0.0,2.0 0.0,4.0] · errors 0 · load 17.0/20.8/21.4
+E-14 chromium FAIL · 1 pass, 2 fail, 0 unmeasured of 3 gating cells (0 reported) · load 17.3/20.9/21.5 at start, 17.0/20.8/21.4 at end
+# exit 1 · 2026-11-06 03:19:51 · load { 17.00 20.83 21.41 }
+# end · 2026-11-06 03:19:51 · load { 17.00 20.83 21.41 } · harness 7e79063a4b00

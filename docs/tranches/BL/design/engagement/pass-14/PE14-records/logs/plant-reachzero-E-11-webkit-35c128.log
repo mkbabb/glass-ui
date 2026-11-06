@@ -1,0 +1,12 @@
+# PE14 plant-reachzero-E-11 webkit · 2026-11-06 10:47:15 · load { 12.82 12.83 14.12 } · harness 7e79063a4b00 · --part reachin
+# E-11 · CK-21 no silent degradation
+# target /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p14/PE14/wt/.pe14out/builds/plant-reachzero · engine webkit · lock wait 0.0 s (the deadline 5400 s counts from here) · other headless processes: chromium 5, webkit 0 · load 12.8/12.8/14.1 at start
+# scene app: harness scenes/App.vue (sha1 912fecf0a1aa)
+# webkit 26.5 (Playwright WebKit, not Safari; real Safari UNMEASURED (owner's safaridriver checkbox))
+  PASS       E-11 slider reach input · --scale-engage nonsense · --scale-engage: nonsense on <html> before the first script (expect refused) · held inline ×1.0000, block ×1.0000 (338.0 × 20.0 of rest 338.0 × 20.0; clean 350.0 × 21.2) · console errors naming the token 1 ("[glass-ui] engage stage: --scale-engage is unreadable on the host; the held control does not grow along its inline axis."), uncaught 0 · load 12.4/12.7/14.1
+  FAIL       E-11 slider reach input · --space-section nonsense · THE PAINT CONTRADICTS THE MESSAGE (a collapse) · --space-section: nonsense on <html> before the first script (expect refused) · held inline ×0.0000, block ×1.0600 (0.0 × 21.2 of rest 378.0 × 20.0; clean 350.0 × 21.2) · console errors naming the token 1 ("[glass-ui] engage stage: --space-section is unreadable on the host; the held control does not grow along its inline axis"), uncaught 0 · load 11.8/12.6/14.0
+  PASS       E-11 slider reach input · --scale-engage calc(1.06 * 1) · --scale-engage: calc(1.06 * 1) on <html> before the first script (expect taken) · held inline ×1.0355, block ×1.0600 (350.0 × 21.2 of rest 338.0 × 20.0; clean 350.0 × 21.2) · console errors naming the token 0, uncaught 0 · load 11.8/12.6/14.0
+  PASS       E-11 slider reach input · --space-section calc(10px + 10px) · --space-section: calc(10px + 10px) on <html> before the first script (expect taken) · held inline ×1.0355, block ×1.0600 (350.0 × 21.2 of rest 338.0 × 20.0; clean 350.0 × 21.2) · console errors naming the token 0, uncaught 0 · load 11.8/12.6/14.0
+E-11 webkit FAIL · 3 pass, 1 fail, 0 unmeasured of 4 gating cells (0 reported) · load 12.8/12.8/14.1 at start, 11.8/12.6/14.0 at end
+# exit 1 · 2026-11-06 10:47:26 · load { 11.77 12.60 14.02 }
+# end · 2026-11-06 10:47:26 · load { 11.77 12.60 14.02 } · harness 7e79063a4b00

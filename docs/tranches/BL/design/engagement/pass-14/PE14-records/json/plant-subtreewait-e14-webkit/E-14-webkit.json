@@ -1,0 +1,37 @@
+{
+ "id": "E-14",
+ "engine": "webkit",
+ "version": "26.5",
+ "target": {
+  "build": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p14/PE14/wt/.pe14out/builds/plant-subtreewait"
+ },
+ "loadStart": "10.7/12.5/14.0",
+ "loadEnd": "12.0/12.7/14.1",
+ "verdict": "FAIL",
+ "cells": [
+  {
+   "name": "M29 the released host's subtree holds a paused finite animation",
+   "status": "PASS",
+   "line": "rAF callbacks a second at rest before the hold 0, after release + the clock 210 ms + 700 ms: 0 (bound ≤ the rest's) · the root still on the stage (data-engage-stage) false · errors 0",
+   "load": "10.7/12.4/14.0"
+  },
+  {
+   "name": "M29 the released host's subtree holds a view() timeline animation",
+   "status": "PASS",
+   "line": "rAF callbacks a second at rest before the hold 0, after release + the clock 210 ms + 700 ms: 0 (bound ≤ the rest's) · the root still on the stage (data-engage-stage) false · errors 0",
+   "load": "12.6/12.8/14.1"
+  },
+  {
+   "name": "M29 the released host's subtree holds a 10 s finite animation",
+   "status": "FAIL",
+   "line": "rAF callbacks a second at rest before the hold 0, after release + the clock 210 ms + 700 ms: 60 (bound ≤ the rest's) · the root still on the stage (data-engage-stage) true · errors 0",
+   "load": "12.0/12.7/14.1"
+  },
+  {
+   "name": "M29 the released host's subtree holds nothing (control)",
+   "status": "PASS",
+   "line": "rAF callbacks a second at rest before the hold 0, after release + the clock 210 ms + 700 ms: 0 (bound ≤ the rest's) · the root still on the stage (data-engage-stage) false · errors 0",
+   "load": "12.0/12.7/14.1"
+  }
+ ]
+}

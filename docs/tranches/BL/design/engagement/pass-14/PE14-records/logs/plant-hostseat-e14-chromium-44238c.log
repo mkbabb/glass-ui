@@ -1,0 +1,15 @@
+# PE14 plant-hostseat-e14 chromium · 2026-11-06 03:21:21 · load { 20.21 20.28 21.10 } · harness 7e79063a4b00 · --only M30
+# E-14 · S14's members at their ranges (P-E14 §S14-c)
+# target /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p14/PE14/wt/.pe14out/builds/plant-hostseat · engine chromium · lock wait 0.0 s (the deadline 5400 s counts from here) · other headless processes: chromium 10, webkit 2 · load 20.2/20.3/21.1 at start
+# scene app: harness scenes/App.vue (sha1 912fecf0a1aa)
+# chromium 149.0.7827.55
+# held control: scene slider root .glass-slider thumb [role="slider"] engaged [data-engaged], [data-held]; clock token --spring-dock-settle; cells M30
+  PASS       M30 the held root's transition: all 300ms linear allow-discrete · the class arrives 40 ms before the hold · errors 0 (bound 0: no false refusal) · the glide ran [210] ms; the consumer's var(--spring-dock-settle) computes 210 ms · load 20.2/20.3/21.1
+  PASS       M30 the held root's transition: all 300ms linear · the clock token changed at runtime 60 ms before the act · errors 0 (bound 0: no false refusal) · the glide ran [500] ms; the consumer's var(--spring-dock-settle) computes 500 ms · load 19.3/20.1/21.0
+  PASS       M30 the held root's transition-property: all; 150ms · the clock token changed at runtime · errors 0 (bound 0: no false refusal) · the glide ran [500] ms; the consumer's var(--spring-dock-settle) computes 500 ms · load 19.3/20.1/21.0
+  PASS       M30 the held root's no transition (control) · the clock token changed at runtime · errors 0 (bound 0: no false refusal) · the glide ran [500] ms; the consumer's var(--spring-dock-settle) computes 500 ms · load 19.3/20.1/21.0
+  PASS       M30 Chip's static → selectable switch, held 40 ms after it (X9) · the host after the switch <button>, the press reached it: true · errors 0 (bound 0: no false loud refusal) · load 19.3/20.1/21.0
+  PASS       M30 Chip's selectable → static switch, held 40 ms after it (X9) · the host after the switch <span>, static (no hold owed) · errors 0 (bound 0: no false loud refusal) · load 19.6/20.1/21.0
+E-14 chromium PASS · 6 pass, 0 fail, 0 unmeasured of 6 gating cells (0 reported) · load 20.2/20.3/21.1 at start, 19.6/20.1/21.0 at end
+# exit 0 · 2026-11-06 03:21:30 · load { 19.61 20.14 21.04 }
+# end · 2026-11-06 03:21:30 · load { 19.61 20.14 21.04 } · harness 7e79063a4b00

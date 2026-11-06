@@ -1,0 +1,127 @@
+{
+ "id": "E-4",
+ "engine": "chromium",
+ "version": "149.0.7827.55",
+ "target": {
+  "build": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p14/PE14/wt/.pe14out/builds/cand14"
+ },
+ "loadStart": "13.1/13.3/12.9",
+ "loadEnd": "14.8/14.0/13.2",
+ "verdict": "PASS",
+ "cells": [
+  {
+   "name": "E-4 slider fling carries velocity",
+   "status": "PASS",
+   "line": "axis x, leading edge, page frame · 5 reads, every one must pass: [1: carry 8.62 / settle -3.85 px @ fling 616 px/s pass · 2: carry 10.71 / settle -3.74 px @ fling 822 px/s pass · 3: carry 8.25 / settle -3.74 px @ fling 587 px/s pass · 4: carry 7.81 / settle -4.06 px @ fling 550 px/s pass · 5: carry 7.79 / settle -4.12 px @ fling 549 px/s pass] (5 of 5 pass) · read 1 in full: fling: carry 8.62 px, settles -11.18 px past release · still: carry 0.00 px, settles -7.32 px · difference: carry 8.62 px, settle -3.85 px (bound: either ≥ 4, both at rest, on every read whose fling the rule measured ≥ 100 px/s; such a fling carrying 0.00 px fails by name; a drive under 100 px/s is re-driven up to 2 times and, still under it, UNGRADED) · body opacity ≥ 1.000 · 240 frames, median 8.3 ms",
+   "load": "15.7/13.9/13.1"
+  },
+  {
+   "name": "E-4 slider release continuity",
+   "status": "PASS",
+   "line": "over 5 reads, each against its own drive (3.6/67.3, 4.5/67.5, 3.6/67.5, 3.4/67.5, 3.4/67.3 px; 0 over) · read 1: largest one-frame move on release: fling 3.6 px, still 0.6 px · during the drive: fling 43.5 px, still 43.5 px (bound ≤ drive × 1.5 + 2 = 67.3 px)",
+   "load": "15.7/13.9/13.1"
+  },
+  {
+   "name": "E-4 slider release PRM",
+   "status": "PASS",
+   "line": "reduce · moved 79.2 px · fling: carry 0.00 px, settles 0.00 px past release, overshoot past its rest 0.00 px, at rest true (bound: at rest within 2000 ms, overshoot ≤ 0.5 px) · largest one-frame jump 0.0 px",
+   "load": "15.7/13.9/13.1"
+  },
+  {
+   "name": "E-4 tabsdrag fling carries velocity",
+   "status": "PASS",
+   "line": "axis x, page frame · [carry 38.75 / settle 35.63 px @ fling 1144 px/s] · fling: carry 39.96 px, settles 36.63 px past release · still: carry 1.21 px, settles 1.00 px · difference: carry 38.75 px, settle 35.63 px (bound: either ≥ 4, both at rest, on every read whose fling the rule measured ≥ 100 px/s; such a fling carrying 0.00 px fails by name; a drive under 100 px/s is re-driven up to 2 times and, still under it, UNGRADED) · body opacity ≥ 1.000 · 240 frames, median 8.3 ms",
+   "load": "15.3/13.9/13.1"
+  },
+  {
+   "name": "E-4 tabsdrag release continuity",
+   "status": "PASS",
+   "line": "largest one-frame move on release: fling 15.8 px, still 28.5 px · during the drive: fling 43.7 px, still 43.7 px (bound ≤ drive × 1.5 + 2 = 67.5 px)",
+   "load": "15.3/13.9/13.1"
+  },
+  {
+   "name": "E-4 tabsdrag repeat landing",
+   "status": "PASS",
+   "line": "3 fling runs, the same drive: 1: v 1144 px/s (80 px / 69.9 ms over 4 samples), carry 39.96, land 247.8 · 2: v 1107 px/s (80 px / 72.3 ms over 4 samples), carry 39.56, land 247.8 · 3: v 1135 px/s (80 px / 70.5 ms over 4 samples), carry 39.86, land 247.8 · by landing: land 247.8 px: 3 run(s) at 1144, 1107, 1135 px/s · (bound: two runs the event clock cannot tell apart (|Δv| ≤ the sum of their ±2q/dt bands, q 0.1 ms) land within 2 px, and no faster run lands short of a slower one; a fling ≥ 100 px/s carries > 0.00 px; velocity: the release rule's chord over 100 ms, ring 8, replicated from the page's input events)",
+   "load": "15.0/13.8/13.1"
+  },
+  {
+   "name": "E-4 tabsdrag release PRM",
+   "status": "PASS",
+   "line": "reduce · moved 156.6 px · fling: carry 0.00 px, settles 0.00 px past release, overshoot past its rest 0.00 px, at rest true (bound: at rest within 2000 ms, overshoot ≤ 0.5 px) · largest one-frame jump 36.6 px",
+   "load": "14.2/13.7/13.0"
+  },
+  {
+   "name": "E-4 sheet fling carries velocity",
+   "status": "PASS",
+   "line": "axis y, dir −1, page frame · [carry 125.41 / settle 125.00 px @ fling 895 px/s] · fling: carry 130.41 px, settles 130.00 px past release · still: carry 5.00 px, settles 5.00 px · difference: carry 125.41 px, settle 125.00 px (bound: either ≥ 4, both at rest, on every read whose fling the rule measured ≥ 100 px/s; such a fling carrying 0.00 px fails by name; a drive under 100 px/s is re-driven up to 2 times and, still under it, UNGRADED) · body opacity ≥ 1.000 · 231 frames, median 8.5 ms",
+   "load": "14.0/13.6/13.0"
+  },
+  {
+   "name": "E-4 sheet release continuity",
+   "status": "PASS",
+   "line": "largest one-frame move on release: fling 17.4 px, still 0.4 px · during the drive: fling 40.0 px, still 40.0 px (bound ≤ drive × 1.5 + 2 = 62.0 px)",
+   "load": "14.0/13.6/13.0"
+  },
+  {
+   "name": "E-4 sheet repeat landing",
+   "status": "PASS",
+   "line": "8 fling runs, the same drive: 1: v 895 px/s (80 px / 89.4 ms over 4 samples), carry 130.41, land -160.0 · 2: v 898 px/s (80 px / 89.1 ms over 4 samples), carry 130.41, land -160.0 · 3: v 846 px/s (80 px / 94.6 ms over 4 samples), carry 130.41, land -160.0 · 4: v 826 px/s (80 px / 96.9 ms over 4 samples), carry 130.41, land -160.0 · 5: v 618 px/s (40 px / 64.7 ms over 3 samples), carry 130.38, land -160.0 · 6: v 851 px/s (80 px / 94.0 ms over 4 samples), carry 130.41, land -160.0 · 7: v 612 px/s (40 px / 65.4 ms over 3 samples), carry 130.39, land -160.0 · 8: v 634 px/s (40 px / 63.1 ms over 3 samples), carry 130.38, land -160.0 · by landing: land -160.0 px: 8 run(s) at 895, 898, 846, 826, 618, 851, 612, 634 px/s · (bound: two runs the event clock cannot tell apart (|Δv| ≤ the sum of their ±2q/dt bands, q 0.1 ms) land within 2 px, and no faster run lands short of a slower one; a fling ≥ 100 px/s carries > 0.00 px; velocity: the release rule's chord over 100 ms, ring 8, replicated from the page's input events)",
+   "load": "15.9/14.1/13.2"
+  },
+  {
+   "name": "E-4 sheet release PRM",
+   "status": "PASS",
+   "line": "reduce · moved 203.1 px · fling: carry 0.00 px, settles 0.00 px past release, overshoot past its rest 0.00 px, at rest true (bound: at rest within 2000 ms, overshoot ≤ 0.5 px) · largest one-frame jump 130.0 px",
+   "load": "16.9/14.3/13.3"
+  },
+  {
+   "name": "E-4 sortable fling carries velocity",
+   "status": "PASS",
+   "line": "axis y, page frame · [carry 22.16 / settle 0.00 px @ fling 956 px/s] · fling: carry 22.16 px, settles -36.69 px past release · still: carry 0.00 px, settles -36.69 px · difference: carry 22.16 px, settle 0.00 px (bound: either ≥ 4, both at rest, on every read whose fling the rule measured ≥ 100 px/s; such a fling carrying 0.00 px fails by name; a drive under 100 px/s is re-driven up to 2 times and, still under it, UNGRADED) · body opacity ≥ 0.026 · 240 frames, median 8.3 ms",
+   "load": "15.9/14.1/13.2"
+  },
+  {
+   "name": "E-4 sortable release continuity",
+   "status": "PASS",
+   "line": "largest one-frame move on release: fling 17.5 px, still 2.5 px · during the drive: fling 40.0 px, still 40.0 px (bound ≤ drive × 1.5 + 2 = 62.0 px)",
+   "load": "15.9/14.1/13.2"
+  },
+  {
+   "name": "E-4 sortable repeat landing",
+   "status": "PASS",
+   "line": "3 fling runs, the same drive: 1: v 956 px/s (80 px / 83.7 ms over 4 samples), carry 22.16, land 201.7 · 2: v 922 px/s (80 px / 86.8 ms over 4 samples), carry 21.20, land 201.7 · 3: v 938 px/s (80 px / 85.3 ms over 4 samples), carry 21.43, land 201.7 · by landing: land 201.7 px: 3 run(s) at 956, 922, 938 px/s · (bound: two runs the event clock cannot tell apart (|Δv| ≤ the sum of their ±2q/dt bands, q 0.1 ms) land within 2 px, and no faster run lands short of a slower one; a fling ≥ 100 px/s carries > 0.00 px; velocity: the release rule's chord over 100 ms, ring 8, replicated from the page's input events)",
+   "load": "15.1/14.0/13.2"
+  },
+  {
+   "name": "E-4 sortable release PRM",
+   "status": "PASS",
+   "line": "reduce · moved 83.8 px · fling: carry 0.00 px, settles -0.50 px past release, overshoot past its rest 0.00 px, at rest true (bound: at rest within 2000 ms, overshoot ≤ 0.5 px) · largest one-frame jump 36.2 px",
+   "load": "15.1/14.0/13.2"
+  },
+  {
+   "name": "E-4 carousel fling carries velocity",
+   "status": "PASS",
+   "line": "axis x, dir −1, touch, page frame · [carry 491.00 / settle 612.00 px @ fling 1502 px/s] · fling: carry 491.00 px, settles 491.00 px past release · still: carry 0.00 px, settles -121.00 px · difference: carry 491.00 px, settle 612.00 px (bound: either ≥ 4, both at rest, on every read whose fling the rule measured ≥ 100 px/s; such a fling carrying 0.00 px fails by name; a drive under 100 px/s is re-driven up to 2 times and, still under it, UNGRADED) · body opacity ≥ 1.000 · 241 frames, median 8.3 ms",
+   "load": "15.3/14.1/13.2"
+  },
+  {
+   "name": "E-4 carousel release continuity",
+   "status": "REPORT",
+   "line": "the platform's own scroll fling (CK-18: the Carousel is the platform's, stated), reported not gated · largest one-frame move on release: fling 49.0 px, still 9.0 px · during the drive: fling 56.0 px, still 56.0 px (bound ≤ drive × 1.5 + 2 = 86.0 px)",
+   "load": "15.3/14.1/13.2"
+  },
+  {
+   "name": "E-4 carousel repeat landing",
+   "status": "PASS",
+   "line": "3 fling runs, the same drive: 1: v 1502 px/s (120 px / 79.9 ms over 5 samples), carry 491.00, land 264.0 · 2: v 1498 px/s (120 px / 80.1 ms over 5 samples), carry 491.00, land 264.0 · 3: v 1500 px/s (120 px / 80.0 ms over 5 samples), carry 491.00, land 264.0 · by landing: land 264.0 px: 3 run(s) at 1502, 1498, 1500 px/s · (bound: two runs the event clock cannot tell apart (|Δv| ≤ the sum of their ±2q/dt bands, q 0.1 ms) land within 2 px, and no faster run lands short of a slower one; a fling ≥ 100 px/s carries > 0.00 px; velocity: the release rule's chord over 100 ms, ring 8, replicated from the page's input events)",
+   "load": "14.8/14.0/13.2"
+  },
+  {
+   "name": "E-4 carousel release PRM",
+   "status": "PASS",
+   "line": "reduce · moved 121.0 px · fling: carry 491.00 px, settles 491.00 px past release, overshoot past its rest 0.00 px, at rest true (bound: at rest within 2000 ms, overshoot ≤ 0.5 px) · largest one-frame jump 49.0 px",
+   "load": "14.8/14.0/13.2"
+  }
+ ]
+}

@@ -1,0 +1,89 @@
+
+ RUN  v4.1.10 /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p14/PE14/wt
+
+(node:5489) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:6404) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+stderr | tests/components/ui/slider/release-carry.test.ts > the carry rides its own channel (F-13) > a fling's release animates the body's scale, not an added transform
+[glass-ui] engage: --spring-dock-duration (calc(var(--spring-dock-settle) * var(--motion-tempo)), at the root) is unreadable on the host; the move it clocks is not travelled. Is the glass-ui stylesheet loaded?
+
+stderr | tests/components/ui/slider/release-carry.test.ts > one carry, on the body, on the stage too (D5 pass 7, CK-05) > a mouse hold's fling carries on the body, never on the host
+[glass-ui] engage stage: the held control's translate is owned by an !important declaration (translate !important); it engages with no glide, so its place steps during the hold are cut.
+[glass-ui] engage stage: --scale-engage is unreadable on the host; the held control does not grow along its inline axis. Is the glass-ui stylesheet loaded?
+[glass-ui] engage stage: --space-section is unreadable on the host; the held control does not grow along its inline axis. Is the glass-ui stylesheet loaded?
+
+stderr | tests/components/ui/slider/release-carry.test.ts > one carry, on the body, on the stage too (D5 pass 7, CK-05) > a mouse hold's fling carries on the body, never on the host
+[glass-ui] engage: --spring-dock-duration (calc(var(--spring-dock-settle) * var(--motion-tempo)), at the root) is unreadable on the host; the move it clocks is not travelled. Is the glass-ui stylesheet loaded?
+
+stderr | tests/components/ui/slider/release-carry.test.ts > one carry, on the body, on the stage too (D5 pass 7, CK-05) > a touch hold's fling carries on the body, never on the host
+[glass-ui] engage stage: the held control's translate is owned by an !important declaration (translate !important); it engages with no glide, so its place steps during the hold are cut.
+[glass-ui] engage stage: --scale-engage is unreadable on the host; the held control does not grow along its inline axis. Is the glass-ui stylesheet loaded?
+[glass-ui] engage stage: --space-section is unreadable on the host; the held control does not grow along its inline axis. Is the glass-ui stylesheet loaded?
+
+stderr | tests/components/ui/slider/release-carry.test.ts > one carry, on the body, on the stage too (D5 pass 7, CK-05) > a touch hold's fling carries on the body, never on the host
+[glass-ui] engage: --spring-dock-duration (calc(var(--spring-dock-settle) * var(--motion-tempo)), at the root) is unreadable on the host; the move it clocks is not travelled. Is the glass-ui stylesheet loaded?
+
+ ❯ tests/components/ui/slider/release-carry.test.ts (5 tests | 3 failed) 26ms
+     × a fling's release animates the body's scale, not an added transform 14ms
+     × a mouse hold's fling carries on the body, never on the host 6ms
+     × a touch hold's fling carries on the body, never on the host 2ms
+(node:7082) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ❯ tests/gates/orphan-css-partial.test.ts (9 tests | 1 failed) 22ms
+     × every top-level style rule the reach union ships sits inside an @layer 3ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 4 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/gates/orphan-css-partial.test.ts > gate:orphan-CSS-partial — every src/ partial is reachable from a published entry via the source graph > every top-level style rule the reach union ships sits inside an @layer
+AssertionError: expected 'src/styles/utilities/engage.css\t:roo…' to be '' // Object.is equality
+
+- Expected
++ Received
+
++ src/styles/utilities/engage.css	:root::before
++ src/styles/utilities/engage.css	.engage-held::before
++ src/styles/utilities/engage.css	:where(.engage-chosen, .engage-pressed, .engage-disclosed)::before
++ src/styles/utilities/engage.css	:where(.engage-pressed, .engage-chosen, .engage-disclosed, .engage-held, .engage-dragged)::before
+
+ ❯ tests/gates/orphan-css-partial.test.ts:485:38
+    483|     // `@layer`. The datum is the set, printed by file and selector, n…
+    484|     it("every top-level style rule the reach union ships sits inside a…
+    485|         expect(unlayered.join("\n")).toBe("");
+       |                                      ^
+    486|     });
+    487|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/4]⎯
+
+ FAIL  tests/components/ui/slider/release-carry.test.ts > the carry rides its own channel (F-13) > a fling's release animates the body's scale, not an added transform
+AssertionError: expected "vi.fn()" to be called 1 times, but got 0 times
+ ❯ tests/components/ui/slider/release-carry.test.ts:63:25
+     61|         for (let k = 1; k <= 3; k++) at("pointermove", 40 * k, 120 + 1…
+     62|         at("pointerup", 120, 172, window);
+     63|         expect(animate).toHaveBeenCalledTimes(1);
+       |                         ^
+     64|         const [frames, options] = animate.mock.calls[0] as unknown as …
+     65|         expect(frames.length).toBeGreaterThan(2);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/4]⎯
+
+ FAIL  tests/components/ui/slider/release-carry.test.ts > one carry, on the body, on the stage too (D5 pass 7, CK-05) > a mouse hold's fling carries on the body, never on the host
+ FAIL  tests/components/ui/slider/release-carry.test.ts > one carry, on the body, on the stage too (D5 pass 7, CK-05) > a touch hold's fling carries on the body, never on the host
+AssertionError: expected "vi.fn()" to be called 1 times, but got 0 times
+ ❯ tests/components/ui/slider/release-carry.test.ts:115:29
+    113|         for (let k = 1; k <= 3; k++) at("pointermove", 40 * k, 120 + 1…
+    114|         at("pointerup", 120, 172, window);
+    115|         expect(bodyAnimate).toHaveBeenCalledTimes(1);
+       |                             ^
+    116|         // the stage asks the engine for the host's map with paused pr…
+    117|         expect(hostAnimate.mock.calls.filter((c) => (c as unknown[])[1…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/4]⎯
+
+
+ Test Files  2 failed | 245 passed (247)
+      Tests  4 failed | 2450 passed | 10 expected fail | 1 skipped (2465)
+   Start at  00:06:05
+   Duration  73.92s (transform 5.67s, setup 9.99s, import 34.36s, tests 25.39s, environment 44.27s)
+

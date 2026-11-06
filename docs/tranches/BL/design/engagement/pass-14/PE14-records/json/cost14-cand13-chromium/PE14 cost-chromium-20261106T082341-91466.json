@@ -1,0 +1,37 @@
+{
+ "id": "PE14 cost",
+ "engine": "chromium",
+ "version": "149.0.7827.55",
+ "target": {
+  "build": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p14/PE14/wt/.pe14out/builds/cand13"
+ },
+ "loadStart": "19.5/20.1/20.9",
+ "loadEnd": "17.4/19.6/20.7",
+ "verdict": "UNMEASURED",
+ "cells": [
+  {
+   "name": "carrier · rest",
+   "status": "REPORT",
+   "line": "cand13 · a sine of 80 px / 500 ms on the slider's parent's translate for 3 s · frames 361, rAF interval median 8.30 ms, p90 9.40 ms · per frame: layouts 1.000, recalcs 1.000, layout 0.0242 ms, recalc 0.0184 ms, script 0.0194 ms, task 0.1825 ms · engaged false",
+   "load": "18.9/20.0/20.9"
+  },
+  {
+   "name": "carrier · held",
+   "status": "REPORT",
+   "line": "cand13 · a sine of 80 px / 500 ms on the slider's parent's translate for 3 s · frames 361, rAF interval median 8.30 ms, p90 9.70 ms · per frame: layouts 11.640, recalcs 13.557, layout 0.7007 ms, recalc 0.5834 ms, script 0.1658 ms, task 1.7696 ms · engaged true",
+   "load": "18.9/20.0/20.9"
+  },
+  {
+   "name": "step · inside a perspective(400px) rotateX(40deg) card · 200 px insert above the held slider",
+   "status": "REPORT",
+   "line": "cand13 · the act frame's rAF interval median 8.30 ms (max 9.90) against the frames before 8.30 ms · CDP over the 14-frame window (insert + removal), median of 10: layouts 42.0, recalcs 46.0, layout 2.500 ms, recalc 2.945 ms, script 0.946 ms · engaged true",
+   "load": "17.7/19.7/20.7"
+  },
+  {
+   "name": "step · outside a perspective(400px) rotateX(40deg) card · 200 px insert above the held slider",
+   "status": "REPORT",
+   "line": "cand13 · the act frame's rAF interval median 8.40 ms (max 10.30) against the frames before 8.30 ms · CDP over the 14-frame window (insert + removal), median of 10: layouts 42.0, recalcs 46.0, layout 2.564 ms, recalc 2.763 ms, script 1.121 ms · engaged true",
+   "load": "17.4/19.6/20.7"
+  }
+ ]
+}

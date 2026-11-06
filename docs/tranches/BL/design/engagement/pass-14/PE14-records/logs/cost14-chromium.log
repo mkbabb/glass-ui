@@ -1,0 +1,62 @@
+# PE14 cost14 chromium · 2026-11-06 03:21:56 · load { 16.94 19.49 20.78 } · harness 7e79063a4b00 · 
+# PE14 cost · S14-h's carrier-loop and step-frame cost cells, REPORT only
+# target /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p14/PE14/wt/.pe14out/builds/cand12 · engine chromium · lock wait 0.0 s (the deadline 5400 s counts from here) · other headless processes: chromium 10, webkit 2 · load 16.9/19.5/20.8 at start
+# scene app: harness scenes/App.vue (sha1 912fecf0a1aa)
+# chromium 149.0.7827.55
+  REPORT     carrier · rest · cand12 · a sine of 80 px / 500 ms on the slider's parent's translate for 3 s · frames 361, rAF interval median 8.30 ms, p90 9.70 ms · per frame: layouts 1.000, recalcs 1.000, layout 0.0253 ms, recalc 0.0194 ms, script 0.0215 ms, task 0.1948 ms · engaged false · load 17.5/19.6/20.8
+  REPORT     carrier · held · cand12 · a sine of 80 px / 500 ms on the slider's parent's translate for 3 s · frames 361, rAF interval median 8.30 ms, p90 9.60 ms · per frame: layouts 2.947, recalcs 2.950, layout 0.2844 ms, recalc 0.1486 ms, script 0.0768 ms, task 0.7107 ms · engaged true · load 17.5/19.6/20.8
+  REPORT     step · inside a perspective(400px) rotateX(40deg) card · 200 px insert above the held slider · cand12 · the act frame's rAF interval median 8.30 ms (max 8.40) against the frames before 8.40 ms · CDP over the 14-frame window (insert + removal), median of 10: layouts 16.0, recalcs 16.0, layout 1.680 ms, recalc 2.402 ms, script 1.635 ms · engaged true · load 17.7/19.5/20.8
+  REPORT     step · outside a perspective(400px) rotateX(40deg) card · 200 px insert above the held slider · cand12 · the act frame's rAF interval median 8.30 ms (max 8.70) against the frames before 8.30 ms · CDP over the 14-frame window (insert + removal), median of 10: layouts 18.0, recalcs 18.0, layout 2.020 ms, recalc 2.435 ms, script 1.689 ms · engaged true · load 18.1/19.6/20.8
+PE14 cost chromium UNMEASURED · 0 pass, 0 fail, 0 unmeasured of 0 gating cells (4 reported) · load 16.9/19.5/20.8 at start, 18.1/19.6/20.8 at end
+# exit 3 · 2026-11-06 03:22:17 · load { 18.11 19.59 20.79 }
+# PE14 cost · S14-h's carrier-loop and step-frame cost cells, REPORT only
+# target /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p14/PE14/wt/.pe14out/builds/cand13 · engine chromium · lock wait 0.0 s (the deadline 5400 s counts from here) · other headless processes: chromium 11, webkit 2 · load 18.1/19.6/20.8 at start
+# scene app: harness scenes/App.vue (sha1 912fecf0a1aa)
+# chromium 149.0.7827.55
+  REPORT     carrier · rest · cand13 · a sine of 80 px / 500 ms on the slider's parent's translate for 3 s · frames 361, rAF interval median 8.30 ms, p90 8.70 ms · per frame: layouts 1.000, recalcs 1.000, layout 0.0302 ms, recalc 0.0227 ms, script 0.0250 ms, task 0.2313 ms · engaged false · load 19.3/19.8/20.9
+  REPORT     carrier · held · cand13 · a sine of 80 px / 500 ms on the slider's parent's translate for 3 s · frames 361, rAF interval median 8.30 ms, p90 8.70 ms · per frame: layouts 11.712, recalcs 13.645, layout 0.9231 ms, recalc 0.7756 ms, script 0.2008 ms, task 2.2856 ms · engaged true · load 20.2/20.0/20.9
+  REPORT     step · inside a perspective(400px) rotateX(40deg) card · 200 px insert above the held slider · cand13 · the act frame's rAF interval median 8.30 ms (max 9.70) against the frames before 8.30 ms · CDP over the 14-frame window (insert + removal), median of 10: layouts 42.0, recalcs 46.0, layout 3.519 ms, recalc 3.970 ms, script 1.442 ms · engaged true · load 22.3/20.4/21.1
+  REPORT     step · outside a perspective(400px) rotateX(40deg) card · 200 px insert above the held slider · cand13 · the act frame's rAF interval median 8.30 ms (max 9.40) against the frames before 8.30 ms · CDP over the 14-frame window (insert + removal), median of 10: layouts 44.0, recalcs 48.0, layout 3.867 ms, recalc 4.104 ms, script 1.926 ms · engaged true · load 23.3/20.7/21.1
+PE14 cost chromium UNMEASURED · 0 pass, 0 fail, 0 unmeasured of 0 gating cells (4 reported) · load 18.1/19.6/20.8 at start, 23.3/20.7/21.1 at end
+# exit 3 · 2026-11-06 03:22:38 · load { 23.32 20.67 21.15 }
+# PE14 cost · S14-h's carrier-loop and step-frame cost cells, REPORT only
+# target /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p14/PE14/wt/.pe14out/builds/cand14 · engine chromium · lock wait 0.0 s (the deadline 5400 s counts from here) · other headless processes: chromium 15, webkit 2 · load 23.3/20.7/21.1 at start
+# scene app: harness scenes/App.vue (sha1 912fecf0a1aa)
+# chromium 149.0.7827.55
+  REPORT     carrier · rest · cand14 · a sine of 80 px / 500 ms on the slider's parent's translate for 3 s · frames 361, rAF interval median 8.30 ms, p90 8.90 ms · per frame: layouts 1.000, recalcs 1.000, layout 0.0336 ms, recalc 0.0248 ms, script 0.0280 ms, task 0.2545 ms · engaged false · load 23.1/20.7/21.1
+  REPORT     carrier · held · cand14 · a sine of 80 px / 500 ms on the slider's parent's translate for 3 s · frames 361, rAF interval median 8.30 ms, p90 9.10 ms · per frame: layouts 27.341, recalcs 27.341, layout 1.8750 ms, recalc 1.0617 ms, script 0.2448 ms, task 3.6458 ms · engaged true · load 21.9/20.5/21.1
+  REPORT     step · inside a perspective(400px) rotateX(40deg) card · 200 px insert above the held slider · cand14 · the act frame's rAF interval median 8.30 ms (max 9.50) against the frames before 8.30 ms · CDP over the 14-frame window (insert + removal), median of 10: layouts 122.0, recalcs 129.0, layout 8.069 ms, recalc 6.130 ms, script 2.186 ms · engaged true · load 23.1/20.7/21.2
+  REPORT     step · outside a perspective(400px) rotateX(40deg) card · 200 px insert above the held slider · cand14 · the act frame's rAF interval median 8.30 ms (max 9.70) against the frames before 8.30 ms · CDP over the 14-frame window (insert + removal), median of 10: layouts 134.0, recalcs 141.0, layout 7.963 ms, recalc 5.710 ms, script 1.948 ms · engaged true · load 22.7/20.7/21.1
+PE14 cost chromium UNMEASURED · 0 pass, 0 fail, 0 unmeasured of 0 gating cells (4 reported) · load 23.3/20.7/21.1 at start, 22.7/20.7/21.1 at end
+# exit 3 · 2026-11-06 03:23:00 · load { 22.73 20.69 21.14 }
+# PE14 cost · S14-h's carrier-loop and step-frame cost cells, REPORT only
+# target /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p14/PE14/wt/.pe14out/builds/cand12 · engine chromium · lock wait 0.0 s (the deadline 5400 s counts from here) · other headless processes: chromium 15, webkit 2 · load 21.5/20.5/21.1 at start
+# scene app: harness scenes/App.vue (sha1 912fecf0a1aa)
+# chromium 149.0.7827.55
+  REPORT     carrier · rest · cand12 · a sine of 80 px / 500 ms on the slider's parent's translate for 3 s · frames 361, rAF interval median 8.30 ms, p90 9.50 ms · per frame: layouts 0.994, recalcs 1.000, layout 0.0321 ms, recalc 0.0252 ms, script 0.0280 ms, task 0.2457 ms · engaged false · load 21.5/20.5/21.1
+  REPORT     carrier · held · cand12 · a sine of 80 px / 500 ms on the slider's parent's translate for 3 s · frames 361, rAF interval median 8.30 ms, p90 9.30 ms · per frame: layouts 3.014, recalcs 3.014, layout 0.3436 ms, recalc 0.1833 ms, script 0.0914 ms, task 0.8528 ms · engaged true · load 21.8/20.6/21.1
+  REPORT     step · inside a perspective(400px) rotateX(40deg) card · 200 px insert above the held slider · cand12 · the act frame's rAF interval median 8.30 ms (max 9.80) against the frames before 8.40 ms · CDP over the 14-frame window (insert + removal), median of 10: layouts 20.0, recalcs 20.0, layout 1.757 ms, recalc 2.398 ms, script 1.906 ms · engaged true · load 20.8/20.4/21.0
+  REPORT     step · outside a perspective(400px) rotateX(40deg) card · 200 px insert above the held slider · cand12 · the act frame's rAF interval median 8.30 ms (max 9.00) against the frames before 8.40 ms · CDP over the 14-frame window (insert + removal), median of 10: layouts 20.0, recalcs 20.0, layout 1.481 ms, recalc 1.852 ms, script 1.284 ms · engaged true · load 19.5/20.1/20.9
+PE14 cost chromium UNMEASURED · 0 pass, 0 fail, 0 unmeasured of 0 gating cells (4 reported) · load 21.5/20.5/21.1 at start, 19.5/20.1/20.9 at end
+# exit 3 · 2026-11-06 03:23:21 · load { 19.45 20.10 20.92 }
+# PE14 cost · S14-h's carrier-loop and step-frame cost cells, REPORT only
+# target /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p14/PE14/wt/.pe14out/builds/cand13 · engine chromium · lock wait 0.0 s (the deadline 5400 s counts from here) · other headless processes: chromium 11, webkit 2 · load 19.5/20.1/20.9 at start
+# scene app: harness scenes/App.vue (sha1 912fecf0a1aa)
+# chromium 149.0.7827.55
+  REPORT     carrier · rest · cand13 · a sine of 80 px / 500 ms on the slider's parent's translate for 3 s · frames 361, rAF interval median 8.30 ms, p90 9.40 ms · per frame: layouts 1.000, recalcs 1.000, layout 0.0242 ms, recalc 0.0184 ms, script 0.0194 ms, task 0.1825 ms · engaged false · load 18.9/20.0/20.9
+  REPORT     carrier · held · cand13 · a sine of 80 px / 500 ms on the slider's parent's translate for 3 s · frames 361, rAF interval median 8.30 ms, p90 9.70 ms · per frame: layouts 11.640, recalcs 13.557, layout 0.7007 ms, recalc 0.5834 ms, script 0.1658 ms, task 1.7696 ms · engaged true · load 18.9/20.0/20.9
+  REPORT     step · inside a perspective(400px) rotateX(40deg) card · 200 px insert above the held slider · cand13 · the act frame's rAF interval median 8.30 ms (max 9.90) against the frames before 8.30 ms · CDP over the 14-frame window (insert + removal), median of 10: layouts 42.0, recalcs 46.0, layout 2.500 ms, recalc 2.945 ms, script 0.946 ms · engaged true · load 17.7/19.7/20.7
+  REPORT     step · outside a perspective(400px) rotateX(40deg) card · 200 px insert above the held slider · cand13 · the act frame's rAF interval median 8.40 ms (max 10.30) against the frames before 8.30 ms · CDP over the 14-frame window (insert + removal), median of 10: layouts 42.0, recalcs 46.0, layout 2.564 ms, recalc 2.763 ms, script 1.121 ms · engaged true · load 17.4/19.6/20.7
+PE14 cost chromium UNMEASURED · 0 pass, 0 fail, 0 unmeasured of 0 gating cells (4 reported) · load 19.5/20.1/20.9 at start, 17.4/19.6/20.7 at end
+# exit 3 · 2026-11-06 03:23:41 · load { 17.36 19.58 20.71 }
+# PE14 cost · S14-h's carrier-loop and step-frame cost cells, REPORT only
+# target /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p14/PE14/wt/.pe14out/builds/cand14 · engine chromium · lock wait 0.0 s (the deadline 5400 s counts from here) · other headless processes: chromium 7, webkit 2 · load 17.4/19.6/20.7 at start
+# scene app: harness scenes/App.vue (sha1 912fecf0a1aa)
+# chromium 149.0.7827.55
+  REPORT     carrier · rest · cand14 · a sine of 80 px / 500 ms on the slider's parent's translate for 3 s · frames 361, rAF interval median 8.30 ms, p90 8.60 ms · per frame: layouts 1.000, recalcs 1.000, layout 0.0196 ms, recalc 0.0144 ms, script 0.0150 ms, task 0.1448 ms · engaged false · load 17.9/19.7/20.7
+  REPORT     carrier · held · cand14 · a sine of 80 px / 500 ms on the slider's parent's translate for 3 s · frames 361, rAF interval median 8.30 ms, p90 8.50 ms · per frame: layouts 27.064, recalcs 27.064, layout 1.2983 ms, recalc 0.7305 ms, script 0.1583 ms, task 2.5217 ms · engaged true · load 18.5/19.8/20.8
+  REPORT     step · inside a perspective(400px) rotateX(40deg) card · 200 px insert above the held slider · cand14 · the act frame's rAF interval median 8.30 ms (max 8.50) against the frames before 8.30 ms · CDP over the 14-frame window (insert + removal), median of 10: layouts 122.0, recalcs 130.0, layout 6.124 ms, recalc 4.638 ms, script 1.745 ms · engaged true · load 17.3/19.5/20.7
+  REPORT     step · outside a perspective(400px) rotateX(40deg) card · 200 px insert above the held slider · cand14 · the act frame's rAF interval median 8.30 ms (max 8.40) against the frames before 8.30 ms · CDP over the 14-frame window (insert + removal), median of 10: layouts 134.0, recalcs 141.0, layout 6.505 ms, recalc 4.681 ms, script 1.642 ms · engaged true · load 16.1/19.2/20.5
+PE14 cost chromium UNMEASURED · 0 pass, 0 fail, 0 unmeasured of 0 gating cells (4 reported) · load 17.4/19.6/20.7 at start, 16.1/19.2/20.5 at end
+# exit 3 · 2026-11-06 03:24:02 · load { 16.07 19.19 20.54 }
+# end · 2026-11-06 03:24:02 · load { 16.07 19.19 20.54 } · harness 7e79063a4b00

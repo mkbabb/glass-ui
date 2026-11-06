@@ -1,0 +1,31 @@
+{
+ "id": "E-14",
+ "engine": "webkit",
+ "version": "26.5",
+ "target": {
+  "build": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p14/PE14/wt/.pe14out/builds/plant-nosticky"
+ },
+ "loadStart": "10.5/12.8/14.3",
+ "loadEnd": "10.9/12.8/14.3",
+ "verdict": "FAIL",
+ "cells": [
+  {
+   "name": "M23 G sticky top 0 · page scrolled 8 px a frame across the stick",
+   "status": "FAIL",
+   "line": "scrollY 194 → 386, scroller 0 → 0 · the carrier moved 167.1 px over 40 engaged frames · the root's centre off where its box carries it: max 5.59 px, frames over 2 px 8 (bound ≤ 0.50) · glides started 2 (bound ≤ 0) · errors 0",
+   "load": "10.5/12.8/14.3"
+  },
+  {
+   "name": "M23 G sticky top 0 · scroller scrolled 8 px a frame across the stick",
+   "status": "FAIL",
+   "line": "scrollY 230 → 230, scroller 0 → 192 · the carrier moved 150.0 px over 40 engaged frames · the root's centre off where its box carries it: max 6.00 px, frames over 2 px 6 (bound ≤ 0.50) · glides started 1 (bound ≤ 0) · errors 0",
+   "load": "10.9/12.8/14.3"
+  },
+  {
+   "name": "M23 an insert above an unstuck sticky G (layout, a step)",
+   "status": "PASS",
+   "line": "the act on frame 8 · paint moved 0.0, 40.0 px in all; on the act's frame 0.00, 0.00 = 0.00 px (bound ≤ 0.50) · largest move over any 16.7 ms 5.5 px at +84 ms (bound 6.5) · glides 1 (210 ms) · scrollY 38 → 38 → 38, scroller 0 → 0 → 0 · path [0.0,0.0 0.0,0.0 0.0,2.1 0.0,6.7 0.0,11.9] · errors 0",
+   "load": "10.9/12.8/14.3"
+  }
+ ]
+}

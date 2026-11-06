@@ -1,0 +1,36 @@
+# resumed P-E14 part B seat · 2026-11-06 09:12:40 · plan: WQ3.q (42 stages, est 298 min) as named acquisitions WK1.. by batch14.sh's cutoff (88 of 90 min); WK1 takes WQ3.q, each next WK takes the previous .held unchanged
+# WK1 queued 2026-11-06 09:12:40 · load { 20.79 38.10 30.51 } · list WQ3.q
+[guarded] waiting for the 'webkit' lock
+# WK1 guard exit 0 · 2026-11-06 11:00:16 · load { 16.51 17.49 16.83 }
+# WK2 queued 2026-11-06 11:00:16 · load { 16.51 17.49 16.83 } · list WK1.held
+[guarded] waiting for the 'webkit' lock
+/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-14/PE14-records/batch14.sh:10: no space left on device: /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-14/PE14-records/WK2.held
+/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-14/PE14-records/batch14.sh:11: no space left on device: /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-14/PE14-records/WK2.log
+/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-14/PE14-records/batch14.sh:15: no space left on device: /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-14/PE14-records/WK2.log
+/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-14/PE14-records/batch14.sh:17: no space left on device: /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-14/PE14-records/WK2.log
+/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-14/PE14-records/batch14.sh:15: no space left on device: /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-14/PE14-records/WK2.log
+/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-14/PE14-records/batch14.sh:17: no space left on device: /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-14/PE14-records/WK2.log
+/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-14/PE14-records/batch14.sh:15: no space left on device: /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-14/PE14-records/WK2.log
+/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-14/PE14-records/batch14.sh:17: no space left on device: /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-14/PE14-records/WK2.log
+/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-14/PE14-records/batch14.sh:15: no space left on device: /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-14/PE14-records/WK2.log
+/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-14/PE14-records/batch14.sh:17: no space left on device: /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-14/PE14-records/WK2.log
+/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-14/PE14-records/batch14.sh:15: no space left on device: /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-14/PE14-records/WK2.log
+/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-14/PE14-records/batch14.sh:17: no space left on device: /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-14/PE14-records/WK2.log
+/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-14/PE14-records/batch14.sh:19: no such file or directory: /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-14/PE14-records/WK2.held
+/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-14/PE14-records/batch14.sh:19: no space left on device: /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/engagement/pass-14/PE14-records/WK2.log
+OSError: [Errno 28] No space left on device
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/mkbabb/.claude/guard/guarded", line 579, in <module>
+    main()
+    ~~~~^^
+object address  : 0x105ec58c0
+object refcount : 3
+object type     : 0x101627300
+object repr     : 
+# WK2 (first queue, 11:00:16) was admitted while /System/Volumes/Data was full (ENOSPC): batch14 could not write WK2.log or any stage log, guarded died on OSError 28; no stage log or JSON exists, so nothing of WK1.held ran or measured. 2026-11-06 11:55:35 · df: 24Gi avail, 99% · WK1.held re-queued unchanged as WK2
+# WK2 queued 2026-11-06 11:55:38 · load { 21.20 17.76 17.79 } · list WK1.held
+# WK2 guard exit 0 · 2026-11-06 12:34:54 · load { 19.93 23.58 25.24 }
+# chain done 2026-11-06 12:34:54
