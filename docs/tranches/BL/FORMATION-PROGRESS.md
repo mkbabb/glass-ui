@@ -830,3 +830,4 @@ Disk episode, one line: on 2026-11-03 the volume went from 100% (15 GiB free) to
 - 2026-11-05 12:58 — INBOUND O-158 (value.js, a bare Badge variant) is placed in a W-E.6 addendum.
 - 2026-11-05 18:30 — 11.0.0 critic 2 is measured. Both sides of the merge survived, with no behaviour defect. It found two text defects: the anchor prose overclaims, and README names the removed dist/glass-ui.css. Fix 3 is running. 10.1.5 critic 6 is waiting on the shared WebKit lock.
 - 2026-11-05 18:40 — INBOUND O-159 to O-164 come from parkway's NPIG rows (the owner: all done now). G2, G3, G5 and G9 go to 10.1.5 (inbound-O-159.md, 3865b6b70). G4 (the Plex font subpath), G7 (the content-sized collapsed seat) and O-158 (the bare Badge) go to 11.1.0, a feature run launched as soon as 11.0.0 publishes.
+- 2026-11-05 19:00 — INBOUND O-165 (daraksha's hover ellipse witness, value's O-159) is added to 10.1.5's inbound-O-156.md.
