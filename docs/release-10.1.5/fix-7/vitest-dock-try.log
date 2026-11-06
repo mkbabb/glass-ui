@@ -1,0 +1,123 @@
+
+ RUN  v4.1.10 /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5
+
+ ❯ tests/components/custom/dock/GlassDock.click-integrity.test.ts (5 tests | 1 failed) 290ms
+     × still swallows a same-control press on the full layer (the swap race) 58ms
+(node:71353) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ❯ tests/components/custom/dock/GlassDock.posture.test.ts (23 tests | 1 failed) 87ms
+     × focuses the summary without expanding and keeps exactly one face reachable 12ms
+(node:71512) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/components/custom/dock/GlassDock.click-integrity.test.ts > GlassDock click integrity — a press begun mid-morph > still swallows a same-control press on the full layer (the swap race)
+AssertionError: expected "vi.fn()" to not be called at all, but actually been called 1 times
+
+Received:
+
+  1st vi.fn() call:
+
+    Array [
+      MouseEvent {
+        "AT_TARGET": 2,
+        "BUBBLING_PHASE": 3,
+        "CAPTURING_PHASE": 1,
+        "NONE": 0,
+        "_vts": 1793985837027,
+        "altKey": false,
+        "button": 0,
+        "buttons": 0,
+        "clientX": 0,
+        "clientY": 0,
+        "ctrlKey": false,
+        "detail": 0,
+        "layerX": 0,
+        "layerY": 0,
+        "metaKey": false,
+        "movementX": 0,
+        "movementY": 0,
+        "offsetX": 0,
+        "offsetY": 0,
+        "pageX": 0,
+        "pageY": 0,
+        "region": "",
+        "relatedTarget": null,
+        "screenX": 0,
+        "screenY": 0,
+        "shiftKey": false,
+        "view": null,
+        Symbol(composed): false,
+        Symbol(bubbles): true,
+        Symbol(cancelable): true,
+        Symbol(defaultPrevented): false,
+        Symbol(eventPhase): 0,
+        Symbol(timeStamp): 1063.872416,
+        Symbol(type): "click",
+        Symbol(dispatching): false,
+        Symbol(immediatePropagationStopped): false,
+        Symbol(propagationStopped): false,
+        Symbol(target): <button
+          data-testid="full"
+        >
+          Full
+        </button>,
+        Symbol(currentTarget): null,
+        Symbol(isInPassiveEventListener): false,
+      },
+    ]
+
+
+Number of calls: 1
+
+ ❯ tests/components/custom/dock/GlassDock.click-integrity.test.ts:107:28
+    105|         await control.trigger("pointerdown", { button: 0 });
+    106|         await control.trigger("click");
+    107|         expect(onFull).not.toHaveBeenCalled();
+       |                            ^
+    108|         wrapper.unmount();
+    109|     });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  tests/components/custom/dock/GlassDock.posture.test.ts > GlassDock — collapsed-face disclosure contract > focuses the summary without expanding and keeps exactly one face reachable
+AssertionError: expected <button …(1)></button> to be <div …(3)><span …(1)></span></div> // Object.is equality
+
+- Expected
++ Received
+
+- <div
+-   class="dock-layer dock-layer--summary is-leaving"
+-   id="glass-dock-v-0-summary"
+-   inert=""
++ <button
++   data-testid="full-first"
+  >
+-   
+-   <span
+-     data-testid="summary-content"
+-   >
+-     More
+-   </span>
+-   
+- </div>
++   Home
++ </button>
+
+ ❯ tests/components/custom/dock/GlassDock.posture.test.ts:284:40
+    282|         await nextTick();
+    283|
+    284|         expect(document.activeElement).toBe(summary.element);
+       |                                        ^
+    285|         expect(wrapper.find(".glass-dock").classes()).toContain("colla…
+    286|         expect(reachableFaces(wrapper)).toHaveLength(1);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  2 failed | 21 passed (23)
+      Tests  2 failed | 199 passed | 1 expected fail (202)
+   Start at  12:23:55
+   Duration  8.70s (transform 1.75s, setup 864ms, import 5.75s, tests 3.04s, environment 4.06s)
+

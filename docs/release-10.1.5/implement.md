@@ -476,3 +476,119 @@ is now derived from the attribute. No export was removed or renamed.
   `data-run-fits`, such a run now paints its rest corner on both axes. l1's vertical cell
   read `sh = ch` (718/718), so its stage leaves room for the reserve.
 - The RTL reach sign, as recorded.
+
+## Fix round 7 (critique-7.md: M1 to M4)
+
+Seat: claude-opus-5-5. Every browser run went through `guarded` (WebKit 2287 under
+`--exclusive webkit`). Records `docs/release-10.1.5/fix-7/`; scripts
+`scripts/witness-fix-7.sh` (the branch, g6, then the RED arm: the `src` files this round
+changed, checked out from the round-7 tip `fd1c2443a` and restored to HEAD after),
+`scripts/gates-fix-7.sh` and `scripts/chain-fix-7.sh`. The probe
+`release-10-1-5-fix-7-probe.spec.ts` located M4 and O-167 (2) before the cure
+(`fix-7/probe-chromium*.log`).
+
+### Cures
+
+- **M1, a collapse from a scrolled run.** `run.css`: the cap's animations come off the
+  plate and the run under `.collapsed` as well as under `data-run-fits` (one rule,
+  `:is([data-run-fits], .collapsed)`). A collapsed dock's run is not the visible run and
+  hides nothing, and an inactive timeline holds what it last resolved (Chromium kept
+  `gl-dock-cap-inline-*` at the cut). The comment that said a collapsed dock's
+  animations are inactive and paint the rest corner is corrected. Expanding again
+  re-binds the animations to the timeline, so the honest cut returns.
+- **M2, the vertical yield.** The vertical reserve stays padding (the rotated spacer box
+  moved D-1's leaving summary in WebKit) and yields as padding: `publishYield`
+  (dockMorphMeasure.ts) writes `--dock-run-room-block`, half the room the seats leave in
+  the port, from the same reading that sets `data-run-fits`, and `run.css` sets the run's
+  `padding-block` to `min(reserve, room)` under `.vertical.expanded[data-run-fits]`
+  outside a morph. The run's border box is fixed by its margins, so the port does not
+  move, and the flag and `sh = ch` are one fact. Held off through a morph: the first
+  form, ungated, moved the bottom-anchored reversal's summary glyph 4.5 px at settle
+  (10.1.3 D-1, Chromium).
+- **M4, the layered mount snap.** `run.css`: a `.dock-layer-group` child of the run is
+  `scroll-snap-align: none`, and its active face's seats are the snap targets. As one
+  snap area wider than the port the group let Chromium rest the run at `scrollLeft 8`;
+  the seats rest it at 0 (`fix-7/probe-chromium-2.log`).
+- **M3, the round-7 inbound rows:**
+  - **O-157.** `adaptive-legibility.css`: the static plate is the live plate's veil over
+    a card ground, `linear-gradient(var(--glass-veil) …), var(--card)` at the plate's own
+    `--glass-level: 1`, so the consumer's `--glass-veil-ink` reaches it and it stays
+    opaque. The root's `--glass-level: 0` still holds every other surface in the dock.
+  - **O-159.** `dock/README.md` names the six `DockProps` members (`collapse` with its
+    three values), the five slots, and the idle window `DOCK_COLLAPSE_DELAY_MS`
+    (3600 ms). The struck props are gone.
+  - **O-160.** The clip keyframes carry no percentage: the cross radius is
+    `--dock-run-cross-half`, the plate's half cross extent plus the run's hand-back past
+    the dock's padding, the length `50%` resolved to. A circle (the first form) let
+    a cut seat's ink past the plate's arc on cockpit (h1).
+  - **O-161.** The dock seats' hover paint (icon, tab and its secondary tier, the trigger
+    family, the layer switcher's tabs), `.glass-capsule-hover`'s lift and the
+    DarkModeToggle's hover are gated on `@media (hover: hover)`. A touch `:hover` sticks
+    to the tapped element, and nothing in the dock was gated before.
+  - **O-162.** `morph.css`: the summary's corner is `--dock-cap-rest` and its
+    `:focus-visible` ring is the seats' ring (`--dock-ring-*`), so the ring follows the
+    pill.
+  - **O-176.** `useDockState.ts`: a dock that mounts open arms the idle window at mount.
+  - **O-177, Tab.** `GlassDock.vue`: keyboard focus on the folded summary
+    (`:focus-visible`) expands the dock and hands focus to the first seat, as Enter does.
+    The collapse's own hand-off focus and a pointer press on the summary do not expand.
+  - **O-177, a press mid-expand.** `useDockClickIntegrity.ts`, THE RE-AIM ARM: a press
+    that begins mid-morph is the swap race only when the pointer is where it stood at the
+    flip, after a flip the hover dwell caused. After a flip a click caused, or a press
+    more than 6 px from the flip position, the press activates its seat once.
+  - **O-167 (1).** `slider/styles.css`: `--slider-fill-ink`, the fill's default under
+    `--slider-range-bg`, is the warm capsule floor in light and the foreground at 22 % in
+    dark (read by the fill and the loupe). Parkway sets nothing; a consumer that wants a
+    hue sets `--slider-range-bg`.
+  - **O-167 (2).** `Slider.vue`: reka 2.10.1 takes the thumb's grab offset on the first
+    `pointermove` of a thumb drag, so the thumb trailed by that move (4 px per 4 px step).
+    After reka's own `pointerdown` the Slider hands reka one `pointermove` at the press
+    point, so the offset is the true grab and the drag tracks 1:1 (residual under 0.5 px,
+    the step's rounding).
+
+Tokens: no existing token value moved. New, internal to the dock: `--dock-run-room-block`
+(written on the root under a fitting vertical run) and `--dock-run-cross-half`; internal to
+the slider: `--slider-fill-ink`. No export removed or renamed. The posture unit
+"focuses the summary without expanding" is restated under O-177 (Tab expands and lands on
+the first seat). The coarse cells that hovered a seat to read the worst case (g1, c4, e1,
+e2) now read the seat at rest on a touch pointer, which O-161 makes the rest.
+
+### Witnesses (release-10-1-5.spec.ts m1 to m4 and m3, fine and coarse)
+
+| cell | Chromium fd1c2443a | Chromium fix 7 | WebKit 2287 fd1c2443a | WebKit 2287 fix 7 |
+|---|---|---|---|---|
+| m1 a collapse from a run scrolled mid or to its end (390, 1440): uniform `h/2` on the last 20 % of frames and at +1.2 s; the cut returns on re-expand | RED | GREEN | GREEN (WebKit drops the effect, as critique 7 found) | GREEN |
+| m2 a vertical stage swept 300 to 372 px: no row with seats that fit, or the flag, scrolls | RED | GREEN | RED | GREEN |
+| m4 a layered overflowing run (390, 1440) rests at 0 with its leading corner round | RED | GREEN | GREEN (as critique 7 found) | GREEN |
+| m3 O-157 a static plate under no, green and red ink paints three opaque plates, the green one greener | RED | GREEN | RED | GREEN |
+| m3 O-159 the README names exactly the `DockProps` members, and the constant's idle window | RED | GREEN | RED | GREEN |
+| m3 O-160 no cut-cap or clip keyframe radius carries a `%` | RED | GREEN | RED | GREEN |
+| m3 O-161 (coarse) a tap leaves the toggle and a DockControl painting as at rest | RED | GREEN | RED | GREEN |
+| m3 O-162 after Escape the summary's ring is solid on the plate's corner | RED | GREEN | RED | GREEN |
+| m3 O-177 Tab onto the folded face expands and lands on a seat | RED | GREEN | RED | GREEN |
+| m3 O-176 a `collapse="open"` dock idles shut, and after a remount | RED | GREEN | RED | GREEN |
+| m3 O-177 a press at 0, 100, 240, 480 ms into the expand activates once | RED | GREEN | RED | GREEN |
+| m3 O-167 the dark fill is neutral and quiet; the thumb stays within 1 px of the dragged pointer | RED | GREEN | RED | GREEN |
+
+The RED arm: Chromium 27 failed of 27; WebKit 17 failed, 10 passed, the ten being m1 and m4
+(three and two cells, fine and coarse), the two rows critique 7 measured Chromium-only.
+
+### Gates
+
+| gate | result |
+|---|---|
+| release-10-1-5, Chromium | 76/76 |
+| release-10-1-5, WebKit 2287 | 76/76 |
+| g6 release-10-1-4 | Chromium 23/23; WebKit 15 passed, 8 skipped (`page.pdf`) |
+| g6 release-10-1-3 | Chromium 60/60; WebKit 58 passed, 2 skipped (CDP swipe). The first form of the M2 yield (ungated through the morph) failed the bottom-anchored D-1 reversal in Chromium (summary glyph 4.5 px at settle); gated to an expanded dock at rest, D-1 31/31 |
+| `npm run typecheck` | exit 0 |
+| `npm run build`, `npm run demo:dist:build` | exit 0, exit 0 |
+| `npx vitest run --maxWorkers=2` | 247/247 files; 2397 passed, 10 expected fail, 1 skipped |
+| `npm run verify:package` | ratchet refused +2938 B (2952625 > 2949687); rebound on the committed tree, then terminal CLEAN, version 10.1.5 (`fix-7/verify-package-2.log`; the heavy run waited 35 min at load 39 to 78 behind the zone sampler and was re-run under `--light`, which `guarded` admitted) |
+
+### Not cured here
+
+- O-182 (the owner's dock halo in dark, inbound before critique 7) was not in this round's
+  defect list.
+- `guarded` warned the kernel zone leak ARMED (inuse 43342) on the WebKit and gates runs;
+  by the owner's 2026-11-03 order it does not hold runs, and none was refused.
