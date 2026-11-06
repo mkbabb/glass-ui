@@ -1,0 +1,35 @@
+
+ RUN  v4.1.10 /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0
+
+ ❯ tests/styles/sfc-sheets.test.ts (4 tests | 1 failed) 179ms
+     × has the shipped README name only files the build emits 4ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/styles/sfc-sheets.test.ts > SFC sheets ride their chunks (U/B7b X3) > has the shipped README name only files the build emits
+AssertionError: expected [ 'glass-ui.css' ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   "glass-ui.css",
++ ]
+
+ ❯ tests/styles/sfc-sheets.test.ts:60:71
+     58|         const named = [...(line as string).matchAll(/(?:dist\/)?([\w.-…
+     59|         expect(named.length).toBeGreaterThan(0);
+     60|         expect(named.filter((file) => !existsSync(join(DIST, file)))).…
+       |                                                                       ^
+     61|     });
+     62|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 3 passed (4)
+   Start at  18:30:57
+   Duration  932ms (transform 56ms, setup 95ms, import 20ms, tests 179ms, environment 501ms)
+
