@@ -247,3 +247,9 @@ R.done();
 ```
 
 HEAD: `FAIL G1-G8 / {"toDataURL":3}`, `FAIL G1-G8 /substrates/aurora {"toDataURL":18}`, `FAIL G1-G5 {"contextsRequested":["webgl2","2d","webgl2","2d",…],"status":[{"engine":null,"attrs":["v-365c95db","auroraSubstrate"]}]}`. The loudness clause reads the story's rendered `onInitError` output, which the demo logs as `[demo] shell aurora init failed <error>` (seen at this seat for the `destroyed` case, W-G.2 §2).
+
+## Addendum O-172 (value.js, 2026-11-05): backing store under a CSS scale
+
+`backingSize.ts:47` sizes the backing store from `getBoundingClientRect`, so a host under `transform: scale(0.35)` (value's emerge) undersizes it. The one engine sizes the store from a ResizeObserver content box × DPR, taking `devicePixelContentBoxSize` where it exists; WebKit lacks it, so WebKit uses content box × DPR. It keeps the content-visibility-skip case that the current comment cites.
+
+The gate covers the blob, the aurora and the fourier field each under `scale(0.35)`. The backing store matches the unscaled content box × DPR within 1 px, in Chromium and WebKit.

@@ -72,6 +72,7 @@ Ships: band 0 in 10.2.0; bands A to L in 11.0.0.
 | W-G.3 | G | F-50 (remainder) | W-LUMA-EVENTED and W-AURORA-CLOCK: no readback, no sourceless loop, a 30 Hz clock | — |
 | W-G.4 | G | F-48 (split: aurora) | W-AURORA-GREENFIELD | — |
 | W-G.5 | G | F-48 (split: blob), F-50 (split: blob settle seam) | W-BLOB-GREENFIELD | — |
+| W-G.5b | G | O-172 | blob interaction: the membrane modes, pointer (hover, grab, fling, touch), stir(); after W-G.5 and W-G.1 | — |
 | W-G.6 | G | F-51 | the mount-path pass | — |
 | W-G.7 | G | F-52 | the shader-free aurora derive subpath, one door per binding; CSS per subpath | — |
 | W-H.1 | H | F-23, F-24 (remainder), F-75, F-21 (split: #84a), F-28 (split: X-G1's selected fill) | W-INK-COMPOSITE: ink on the composite, state separation, state fills on the fill register (D3 FL-6), PRT recession, the live dock (and D3-B's luma publisher, if D3 converges there) | D3 |

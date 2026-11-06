@@ -837,3 +837,4 @@ Disk episode, one line: on 2026-11-03 the volume went from 100% (15 GiB free) to
 - 2026-11-05 20:15 — INBOUND O-169: the dock's border progress goes to a W-I.1 addendum, delivered in 11.1.0. The utility and filter docks are existing API.
 - 2026-11-05 20:20 — INBOUND O-170: fourier's collapse="open" dock goes into the W-0.8 census. Its README fix duplicates O-159 in 10.1.5.
 - 2026-11-05 21:45 — INBOUND O-171: R-1, the menu plate growing from its trigger, goes to W-F.4 in 11.1.0. R-2, the dock width morph, goes to W-0.8.
+- 2026-11-05 22:05 — INBOUND O-172: the new wave W-G.5b (blob interaction), with A-1 to A-4 and S ruled yes. The backing store under a scale goes to a W-G.1 addendum.
