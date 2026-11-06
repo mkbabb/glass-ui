@@ -850,3 +850,4 @@ Disk episode, one line: on 2026-11-03 the volume went from 100% (15 GiB free) to
 - 2026-11-06 01:45 — INBOUND O-181 (the Slider emits once per frame) goes to W-F.2, in 11.1.0.
 - 2026-11-06 03:05 — 11.0.0 fix 4: the text cures are done. The run stopped as fix-not-measured, but only because the seat gave up a 98-minute WebKit queue for a comment change in a dead spec. I accepted that, ruled the dead spec deleted (orchestrator-note-round4.md), and resumed wf_5bac0619-dea with acceptUnmeasured fix-4.
 - 2026-11-06 09:18 — Owner order relayed by sci-report-36 (09:16): "deploy now in the interval". Glass has nothing verified and ready: 10.1.5 critic 7 and 11.0.0 critic 4 are both still running, so nothing publishes before its close passes. I replied to sci-report-36.
+- 2026-11-06 09:30 — INBOUND O-182 is the owner's dock halo. Its root is the O-175 (1) dark shadow colour, so that fix moves to 10.1.5 (inbound-O-182.md), and the blur goes to W-0.1.
