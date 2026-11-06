@@ -1,0 +1,81 @@
+
+Running 3 tests using 1 worker
+
+  ✘  1 [chromium-headless-new] › tests-visual/shell-identity.spec.ts:86:5 › shell-identity (π lane — the home-region MEASURED-BAND readback, fail-CLOSED) › S5a — the ℱ ink-mass is optically centered within ±0.5px (7.1s)
+  ✘  2 [chromium-headless-new] › tests-visual/shell-identity.spec.ts:149:5 › shell-identity (π lane — the home-region MEASURED-BAND readback, fail-CLOSED) › S5b — the home region is ONE Foundations entry, demarcated, glass-hovered (1.2s)
+  ✘  3 [chromium-headless-new] › tests-visual/shell-identity.spec.ts:218:5 › shell-identity (π lane — the home-region MEASURED-BAND readback, fail-CLOSED) › G-CLOSE — capture the home-region + hover DELTA (1.0m)
+
+
+  1) [chromium-headless-new] › tests-visual/shell-identity.spec.ts:86:5 › shell-identity (π lane — the home-region MEASURED-BAND readback, fail-CLOSED) › S5a — the ℱ ink-mass is optically centered within ±0.5px 
+
+    Error: the ℱ home control must be present
+
+    expect(locator).toHaveCount(expected) failed
+
+    Locator:  locator('a[aria-label="glass-ui home"]')
+    Expected: 1
+    Received: 0
+    Timeout:  5000ms
+
+    Call log:
+      - the ℱ home control must be present with timeout 5000ms
+      - waiting for locator('a[aria-label="glass-ui home"]')
+        14 × locator resolved to 0 elements
+           - unexpected value "0"
+
+
+      114 |
+      115 |             const link = page.locator('a[aria-label="glass-ui home"]');
+    > 116 |             await expect(link, "the ℱ home control must be present").toHaveCount(1);
+          |                                                                      ^
+      117 |             const box = (await link.boundingBox())!;
+      118 |             expect(box, "the home-control rect must be measurable").not.toBeNull();
+      119 |             // Measure the REST state (NO hover): the optical centering is a static-geometry
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/tests-visual/shell-identity.spec.ts:116:70
+
+    Error Context: tests-visual/test-results/shell-identity-shell-ident-adf75-ally-centered-within-±0-5px-chromium-headless-new/error-context.md
+
+  2) [chromium-headless-new] › tests-visual/shell-identity.spec.ts:149:5 › shell-identity (π lane — the home-region MEASURED-BAND readback, fail-CLOSED) › S5b — the home region is ONE Foundations entry, demarcated, glass-hovered 
+
+    Error: the ℱ home control must render
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      176 |         });
+      177 |
+    > 178 |         expect(dom.hasHomeF, "the ℱ home control must render").toBe(true);
+          |                                                                ^
+      179 |         expect(
+      180 |             dom.foundationsCategoryButtonCount,
+      181 |             "a redundant Foundations category DockIconButton survives (the Compass home dup — R3-12)",
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/tests-visual/shell-identity.spec.ts:178:64
+
+    Error Context: tests-visual/test-results/shell-identity-shell-ident-60438-ry-demarcated-glass-hovered-chromium-headless-new/error-context.md
+
+  3) [chromium-headless-new] › tests-visual/shell-identity.spec.ts:218:5 › shell-identity (π lane — the home-region MEASURED-BAND readback, fail-CLOSED) › G-CLOSE — capture the home-region + hover DELTA 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: locator.boundingBox: Test timeout of 60000ms exceeded.
+    Call log:
+      - waiting for locator('a[aria-label="glass-ui home"]')
+
+
+      247 |         });
+      248 |         const link = page.locator('a[aria-label="glass-ui home"]');
+    > 249 |         const lb = (await link.boundingBox())!;
+          |                                ^
+      250 |         await page.mouse.move(lb.x + lb.width / 2, lb.y + lb.height / 2);
+      251 |         await page.waitForTimeout(450);
+      252 |         await page.screenshot({
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/tests-visual/shell-identity.spec.ts:249:32
+
+    Error Context: tests-visual/test-results/shell-identity-shell-ident-f1848-the-home-region-hover-DELTA-chromium-headless-new/error-context.md
+
+  3 failed
+    [chromium-headless-new] › tests-visual/shell-identity.spec.ts:86:5 › shell-identity (π lane — the home-region MEASURED-BAND readback, fail-CLOSED) › S5a — the ℱ ink-mass is optically centered within ±0.5px 
+    [chromium-headless-new] › tests-visual/shell-identity.spec.ts:149:5 › shell-identity (π lane — the home-region MEASURED-BAND readback, fail-CLOSED) › S5b — the home region is ONE Foundations entry, demarcated, glass-hovered 
+    [chromium-headless-new] › tests-visual/shell-identity.spec.ts:218:5 › shell-identity (π lane — the home-region MEASURED-BAND readback, fail-CLOSED) › G-CLOSE — capture the home-region + hover DELTA 
