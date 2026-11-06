@@ -175,6 +175,21 @@ async function pointerOff(page: Page): Promise<void> {
     await page.mouse.move(2, 2);
 }
 
+/**
+ * Whether the pointer hovers (`(hover: hover)`). On a touch phone the seats paint no
+ * hover lift at all (O-161, critique 7): a cell that hovers a seat to read the worst case
+ * reads the seat at rest there, and asserts it is.
+ */
+function hovers(page: Page): Promise<boolean> {
+    return page.evaluate(() => matchMedia("(hover: hover)").matches);
+}
+
+/** A seat is hover-scaled where the pointer hovers, and at rest scale where it cannot. */
+async function expectHoverScale(page: Page, scale: string, what: string): Promise<void> {
+    if (await hovers(page)) expect(scale, `${what} is hover-scaled`).not.toBe("1");
+    else expect(["1", "none"], `${what} paints no hover lift on a touch pointer`).toContain(scale);
+}
+
 async function expectCoarse(page: Page): Promise<void> {
     expect(
         await page.evaluate(() => matchMedia("(pointer: coarse)").matches),
@@ -202,12 +217,11 @@ function g1(width: number): void {
         expectNoReach(rest, `${width} rest`);
         expectNoReach(hovered, `${width} hover on the trailing seat`);
         expectRestCorner(rest, `${width} rest`);
-        expect(
-            await page
-                .locator('[data-witness="Seat 3"]')
-                .evaluate((el) => getComputedStyle(el).scale),
-            "the trailing seat is hover-scaled",
-        ).not.toBe("1");
+        await expectHoverScale(
+            page,
+            await page.locator('[data-witness="Seat 3"]').evaluate((el) => getComputedStyle(el).scale),
+            "the trailing seat",
+        );
         expectRestCorner(hovered, `${width} hover on the trailing seat`);
     });
 }
@@ -564,7 +578,7 @@ async function expectFocusedRingWhole(page: Page, witness: string): Promise<void
     });
     const cell = `${witness} (${JSON.stringify(read)})`;
     expect(read.focusVisible && read.hover, `${cell}: focused and hovered`).toBe(true);
-    expect(read.scale, `${cell}: hover-scaled`).toBeGreaterThan(1);
+    await expectHoverScale(page, String(read.scale), cell);
     expect(read.outline, `${cell}: the ring paints`).not.toBe("none");
     expect(read.clips.length, `${cell}: the run clips`).toBeGreaterThan(0);
     for (const c of read.clips) {
@@ -616,10 +630,7 @@ function e1(width: number): void {
         await tab.hover();
         await settle(page, 600);
         const hovered = await readPlate(page);
-        expect(
-            await tab.evaluate((el) => getComputedStyle(el).scale),
-            "the tab is hover-scaled",
-        ).not.toBe("1");
+        await expectHoverScale(page, await tab.evaluate((el) => getComputedStyle(el).scale), "the tab");
         expectNoReach(rest, `${width} rest`);
         expectNoReach(hovered, `${width} hover on the wide tab`);
         expectRestCorner(rest, `${width} rest`);
