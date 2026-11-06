@@ -1,0 +1,260 @@
+5:— no legacy aliases, no back-compat shims (L invariant 4); every break is a one-line
+223:- **O-101: a morph reserves the size it settles at.** The dock no longer reserves an
+298:default changes carried from the O-20 and O-26 cure waves are listed under
+300:[2026-09-22 · O-23/O-32 R2 — the O-23/O-32 cure wave adds four more breaks, each marked
+459:old column is the source after the O-20 cure (the table under _Amended after 9.0.0_
+493:[2026-09-22 · O-32 §2.1 — `Metric`'s delta paints `--foreground` from 10.0.0 and reads
+678:[2026-08-29 · BK #42 W-SEARCH, landed `76b594c8`]
+683:| `SearchBar` | DELETED with its ~~`searchVariants` CVA~~ [2026-09-17 · O-20 CLOSE-DOCS · the export was `searchFieldVariants` — `searchVariants.ts` was the module and `SearchVariants` its options type; the published 8.0.0 `dist/components/search/index.d.ts` carries no `searchVariants` export] CVA. No replacement component ships: the `.input-bar` recipe (on `./styles`, which SURVIVES untouched) composes with your own input element — that recipe was always the paint; the chrome was 79 lines over it. |
+689:relay addendum in the BK coordination channel rather than a silent break: each is one
+699:[2026-09-17 · O-20 CUT-4/5 — the row was owed at the cut and is written now]
+705:Landed at `4a86570b` (BK #53 GF-FOURIER, 2026-08-12), and 9.0.0 is its first carrier:
+722:**unchanged by this cut**. The O-20 disposition ruled them CURE-NEXT-MAJOR — a ruling,
+730:[2026-09-18 · O-20 CURSOR — the expose delta had no row; measured off the two published
+756:[2026-09-17 · O-20 A-4-RIDER + B-3 — the rows were missing entirely; they are written
+767:[2026-09-22 · O-32 §1.1 — landed at `ac471032` (BK #47 W1, 2026-08-24); `git tag
+788:[2026-09-22 · O-32 AC-D-1 — the reader left at 9.0.0 and the declaration at 10.0.0; the
+795:| `--dock-max-inline-size` | Nothing reads it. 9.0.0 deleted its last reader with the per-instance inline cap (`964535cb`, BK #47 W2-W9, the W3 LATTICE, 2026-08-25; `git tag --contains` prints `v9.0.0` first), so setting it did nothing at 9.0.0. The declaration in `tokens/offsets.css` is deleted at 10.0.0 (`9d8cd728`). To bound a dock's inline size, write `max-inline-size` on the dock's class. |
+798:[2026-09-22 · O-23 L-5 — removed at `5a69ed9f` (BK #51 γ4, GF-HANDMARK, 2026-08-25);
+818:[2026-09-18 · O-26 R-8, UNRELEASED on the registry: everything from here to the end of
+860:## 8.1.0 — ~~UNRELEASED (in flight; not on the registry)~~ [2026-08-10 · BK #21: superseded
+928:[2026-09-17 · O-20 cure wave, UNRELEASED on the registry: everything from here to the
+1017:one component is deleted [2026-09-18 · O-26 R-11-RIDER — in THIS re-cut. The major's
+1041:[2026-09-18 · O-26 R-11-RIDER — the component went at this cut (`4bf53962`, part of the Φ5
+1068:[2026-09-18 · O-26 R-11-RIDER-2 — retired at this cut (`4bf53962`, the Φ5 deletion spine)
+1078:[2026-09-18 · O-26 R-11-RIDER-2 — retired at this cut (`4bf53962`, the Φ5 deletion spine)
+1087:[2026-09-18 · O-26 R-11-RIDER-2 — retired at this cut (`4bf53962`, the Φ5 deletion spine)
+1097:[2026-09-18 · O-26 R-11-RIDER-2 — retired at `bda718ac` ("W3 clean deletes"), inside this
+1110:[2026-09-18 · O-26 R-11-RIDER-2 — retired at this cut (`4bf53962`, the Φ5 deletion spine)
+1118:[2026-09-18 · O-26 R-11-RIDER-2 — retired at `bda718ac` ("the P-CLOSE-ruled pulse →
+1146:[2026-09-18 · O-26 R-11-RIDER-2 — retired at `62305f4a` ("the hero ornament dies, the ramp
+1160:[2026-09-22 · O-23 L-5 — retired at `bda718ac` ("W3 clean deletes", 2026-07-20; `git tag
+1183:[2026-09-17 · O-20 A-4-RIDER — these left the published CSS at this cut and had no row
+1232:tranche. The old spellings map by intent, not by name: `--ease-spring` and
+1239:[2026-09-17 · O-20 B-3 — the `@utility` name set of the published `./styles` closure
+1246:| `touch-hit-area` | Removed, no drop-in utility. ~~Compose it yourself — a `position: relative` host and, inside `@media (pointer: coarse)`, a centred `::before` with `min-width`/`min-height` of `var(--touch-target, 2.75rem)` and `pointer-events: none`.~~ [2026-09-18 · O-26 R-7-RIDER — that recipe was the utility's own body and it never expanded a tap target: `pointer-events: none` makes the halo inert, so the hit box stays the host's. Written now: the two doors that do work.] `--touch-target` (`2.75rem`) still ships and is still what the components read, and there are two ways to reach it. **The host as the seat, the paint on a child** — the host wears `.control-bit`, which sizes it to `max(var(--touch-target), face)` on both axes, in flow, margin box == border box, while the smaller `.control-bit__face` child carries the paint; checkbox and the radio item ship this way (`styles/glass/control-bit.css`). The absolutely-positioned `.checkbox__seat` span it replaced bled past the box and made the hit rect lie — do not reach for that form. **Or the attribute floor** — `[data-control-target]` on the host, read by the shared rule in `styles/utilities/responsive.css`: `@media (pointer: coarse){[data-control-target]{min-block-size: var(--touch-target, 2.75rem); min-inline-size: var(--touch-target, 2.75rem)}}`. That rule ships from 7.0.0; what changes at THIS cut is that Button wears the attribute unconditionally rather than icon-only (`70dc0f06`). It is a floor, not a halo: it grows the host's own box, and the paint stays small by sitting on a child — the Timeline marks are `<button data-control-target>` whose disc does not inflate. Either door; never the inert `::before`. Landed `bd93c22b`. |
+1252:[2026-09-18 · O-26 R-10-RIDER — the strike landed at BK.W-FROST (`4b1a9733`) with no row
+1262:[2026-09-18 · O-26 R-15-RIDER — a registered `@property` name is a published name, and
+1273:[2026-09-18 · O-26 R-16-RIDER — both reshapes landed at this cut (`70dc0f06`) and neither
+1286:[2026-09-17 · O-20 C-1 (the ask is value.js's AF-7) — W-ALERT (#33, `76bfae26`) landed
+1299:**The toned glyph channel was dead from 8.0.0 through 9.0.0, and paints from the O-20
+1300:cure wave on — that wave is not on the registry yet, so at 9.0.0 the glyph is still
+1307:evidence pair is in `docs/tranches/BK/execution/2026-09-17-o20-cure/C2/RECORD.md`. If
+1417:  [2026-09-22 · O-32 §2.1 — the status ink ends at 10.0.0: the delta paints
+1486:BK #86+#88 — it declares no material (0 `backdrop-filter`, 0 blur, 0 saturate), so
+1497:| added at 8.0 | `--glass-slider-track-background` (CSS `background` grammar; falls back `--muted-medium`, spectrum `--secondary`), `--glass-progress-track-background` (CSS `background` grammar; falls back to the host-relative groove ground `--track-well-recess`) [CORRECTION 2026-08-08: the second entry previously read `--glass-progress-track-color` (CSS `<color>` only; falls back `--progress-track-on-glass`). That property DIED AT BIRTH at BK #88 — a `<color>`-only grammar enforced by a source grep that cannot see a consumer, shipped with 0 writers across 7 repos — and is replaced with NO alias by `--glass-progress-track-background`. `--progress-track-on-glass` retired with it.] |
+1510:BK #88; its replacement takes the full `background` grammar, like its Slider
+1523:renamed to `.track-well` at BK #86+#88. `.track-flow` — the one indeterminate flow
+1534:partials; the groove renamed and `track-flow.css` joined the manifest at BK
+1728:`CardTier` was already folded onto the shared `surface` axis at 5.0.0 (§`BI.W-SURFACE-EXTRACT`
+1809:[2026-09-17 · O-20 B-3 — back-filled. The class left at `490cc46e`, which this cut
+1974:packed compatibility check. [2026-09-17 · O-20 CLOSE-DOCS · true of the 7.0 package line
+1977:`@mkbabb/pencil-boil` is not a peer of any kind there (retired at BK #51),
+1984:HandMark. [2026-09-17 · O-20 CLOSE-DOCS · the not-a-peer half still holds; the vendored
+2020:The BI cut removes public wrappers and aliases whose lifecycle belongs to their parent,
+2079:  be omitted by Glass consumers that do not use HandMark.~~ [2026-09-17 · O-20 HK-vite ·
+2080:  `@mkbabb/pencil-boil` is no longer a peer of any kind — it was retired at BK #51 and
+2086:The 5.0.0 cut is the joint BG/BH release: the BG visual-convergence band (the warm /
+2087:weighty / liquid iOS-27 redesign) lands alongside the BH structural reshape. **The 5.0.0
+2099:The BG visual band is a paint upgrade — no public-prop break beyond the rows below.
+2138:grammar subpath (BH.W-AXIS-GRAMMAR — the honest `/api` successor), and both are still exported
+2140:`/forms` and is still exported there. [2026-09-22 · O-23 L-5 — `./forms` split at
+2156:[2026-09-22 · O-23 L-5 — "current branch" is the branch at 2026-07-17. A sweep of every
+2173:| `AnimatedDigitMode` | type | ~~`/animated-digit`~~ removed 8.0.0 — `./animated-digit` retired at `4bf53962`; no successor (see _Deleted — `AnimatedDigit`_ under 8.0.0) [2026-09-22 · O-23 L-5] |
+2174:| `AnimatedDigitProps` | type | ~~`/animated-digit`~~ removed 8.0.0 — `./animated-digit` retired at `4bf53962`; no successor (see _Deleted — `AnimatedDigit`_ under 8.0.0) [2026-09-22 · O-23 L-5] |
+2195:| `BlendMode` | type | ~~`/handmark`~~ removed 9.0.0 — `5a69ed9f`; no successor (see _Eight `./handmark` types leave with the barrel's reshape_ under 9.0.0) [2026-09-22 · O-23 L-5] |
+2196:| `BloomUpPreset` | type | ~~`/motion`~~ removed 8.0.0 — `useBloomUp` deleted at `bda718ac`; no successor [2026-09-22 · O-23 L-5] |
+2201:| `Brush` | type | ~~`/handmark`~~ removed 9.0.0 — `5a69ed9f`; no successor (see _Eight `./handmark` types leave with the barrel's reshape_ under 9.0.0) [2026-09-22 · O-23 L-5] |
+2202:| `BrushName` | type | ~~`/handmark`~~ removed 9.0.0 — `5a69ed9f`; no successor (see _Eight `./handmark` types leave with the barrel's reshape_ under 9.0.0) [2026-09-22 · O-23 L-5] |
+2204:| `Canvas2DFrame` | type | ~~`/canvas`~~ root barrel [2026-08-10 · BK #21 — `./canvas` cut; the name never moved] |
+2205:| `Canvas2DHandle` | type | ~~`/canvas`~~ root barrel [2026-08-10 · BK #21] |
+2206:| `Canvas2DOptions` | type | ~~`/canvas`~~ root barrel [2026-08-10 · BK #21] |
+2207:| `Canvas2DSuspendReason` | type | ~~`/canvas`~~ root barrel [2026-08-10 · BK #21] |
+2209:| `CardSurface` | type | removed 7.0.0 — Card decoration folds onto `CardVariant` (/card) + the `Surface` axis (/axes) [2026-09-22 · O-23 L-5 — `CardVariant` itself left at 8.0.0 (`4a04b43c`; see _Props — `<Card>`_ under 8.0.0); the `Surface` axis (/axes) stands] |
+2214:| `ColorHarmony` | type | `/color` [2026-09-17 · O-20 CUT-4/5 — the census never listed it. It ships on `./color` at 9.0.0 (`deriveHue`'s second argument, and `DeriveBlobPaletteOptions.harmony`) and nothing is ruled against it.] |
+2215:| `ColorResolver` | type | `/color` [2026-09-17 · O-20 CUT-4/5 — the census never listed it. Ships on `./color` at 9.0.0 and is live; the O-20 disposition ruled it and `defaultBlobColorResolver` CURE-NEXT-MAJOR, which is a ruling and not an execution, so nothing has moved yet.] [2026-09-22 · register wave 10-3 — it moved: deleted at 10.0.0 with `defaultBlobColorResolver`; see _Two names leave `./color`_ under 10.0.0.] |
+2216:| `CompletionSealProps` | type | ~~`/completion-seal`~~ removed 8.0.0 — `./completion-seal` retired at `4bf53962`; no successor (see _Deleted — `CompletionSeal`_ under 8.0.0) [2026-09-22 · O-23 L-5] |
+2217:| `CompletionSealShape` | type | ~~`/completion-seal`~~ removed 8.0.0 — `./completion-seal` retired at `4bf53962`; no successor (see _Deleted — `CompletionSeal`_ under 8.0.0) [2026-09-22 · O-23 L-5] |
+2228:| `ControlSize` | type | ~~`/forms`~~ `/input` [2026-09-22 · O-23 L-5 — `./forms` split at `a8a6f66b` (8.0.0); see _Package subpaths_ under 8.0.0] |
+2229:| `Countup` | type | removed 6.0.0 — the return-type alias dropped; use `UseCountupReturn` (/motion) [2026-09-22 · O-23 L-5 — `UseCountupReturn` itself left at 8.0.0 (`bda718ac`; see _Six composables leave `./motion`, `./motion-core` and the root barrel_ under 8.0.0); the number tween is `useAnimatedNumber` (/motion)] |
+2237:| `DeriveBlobPaletteOptions` | type | `/color` [2026-09-17 · O-20 CUT-4/5 — the census never listed it. Ships on `./color` at 9.0.0 and is NOT ruled for removal; it is the options bag of `deriveBlobPalette`, which stays.] |
+2252:| `FourierFieldProps` | type | ~~`/fourier-field`~~ [2026-09-17 · O-20 CUT-4/5 — 0 hits in the 9.0.0 dist; the name was never exported from anywhere. The row was wrong when it was written, not overtaken.] |
+2253:| `FuzzySearchState` | type | ~~`/search`~~ removed 9.0.0 [2026-08-29 · BK #42 — `./search` cut whole; the engine interned, nothing republished] |
+2255:| `GlassPanelVariant` | type | removed 5.0.0 — /glass-panel retired; the tier-homonym; use `CardTier` (/card) or `SurfaceTier` (/axes) [2026-09-22 · O-23 L-5 — `CardTier` itself left at 8.0.0 (`4a04b43c`; see _Props — `<Card>`_ under 8.0.0); `SurfaceTier` (/axes) stands] |
+2256:| `HandAnimation` | type | ~~`/handmark`~~ removed 9.0.0 — `5a69ed9f`; no successor (see _Eight `./handmark` types leave with the barrel's reshape_ under 9.0.0) [2026-09-22 · O-23 L-5] |
+2257:| `HandMarkProps` | type | ~~`/handmark`~~ removed 9.0.0 — `5a69ed9f`; no successor (see _Eight `./handmark` types leave with the barrel's reshape_ under 9.0.0) [2026-09-22 · O-23 L-5] |
+2260:| `HeaderRibbonPosition` | type | removed 5.0.0 — renamed → `HeaderRibbonPlacement` (/header-ribbon) [2026-09-22 · O-23 L-5 — `HeaderRibbonPlacement` left with `./header-ribbon` at 8.0.0 (`4bf53962`; see _Deleted — `HeaderRibbon`_ under 8.0.0); no successor] |
+2261:| `HeaderRibbonProps` | type | ~~`/header-ribbon`~~ removed 8.0.0 — `./header-ribbon` retired at `4bf53962`; no successor (see _Deleted — `HeaderRibbon`_ under 8.0.0) [2026-09-22 · O-23 L-5] |
+2262:| `HighlightMatcher` | type | ~~`/motion-core`~~ removed 8.0.0 — `useTextHighlight` deleted at `bda718ac`; no successor [2026-09-22 · O-23 L-5] |
+2267:| `InkPath` | type | ~~`/handmark`~~ removed 9.0.0 — `5a69ed9f`; no successor (see _Eight `./handmark` types leave with the barrel's reshape_ under 9.0.0) [2026-09-22 · O-23 L-5] |
+2268:| `InstrumentChassisPhase` | type | removed 7.0.0 — phase → state; use `InstrumentChassisState` (/instrument-chassis) [2026-09-22 · O-23 L-5 — `InstrumentChassisState` left with `./instrument-chassis` at 8.0.0 (`4bf53962`; see _Deleted — `InstrumentChassis`_ under 8.0.0); no successor] |
+2272:| `MarkBox` | type | ~~`/handmark`~~ removed 9.0.0 — `5a69ed9f`; no successor (see _Eight `./handmark` types leave with the barrel's reshape_ under 9.0.0) [2026-09-22 · O-23 L-5] |
+2288:| `PagerWindow` | type | removed 7.0.0 — windowing math internalized; use `PagerDots` / `DeckPager` [2026-09-22 · O-23 L-5 — `DeckPager` itself left at 8.0.0 (`85c322dd`, BK #40 W-PAGER, no §8.0.0 row); `PagerDots` (/pager-dots) stands] |
+2291:| `PaperBackdropProps` | type | ~~`/paper-backdrop`~~ removed 8.0.0 — `./paper-backdrop` retired at `4bf53962`; no successor (see _Deleted — `PaperBackdrop`_ under 8.0.0) [2026-09-22 · O-23 L-5] |
+2292:| `PaperGridConfig` | type | removed 5.0.0 — renamed → `LiquidGridConfig` (/liquid-grid) [2026-09-22 · O-23 L-5 — `LiquidGridConfig` left with `./liquid-grid` at 8.0.0 (`bda718ac`; see _Deleted — `LiquidGrid`_ under 8.0.0); no successor] |
+2293:| `PaperGridHandle` | type | removed 5.0.0 — renamed → `LiquidGridHandle` (/liquid-grid) [2026-09-22 · O-23 L-5 — `LiquidGridHandle` left with `./liquid-grid` at 8.0.0 (`bda718ac`; see _Deleted — `LiquidGrid`_ under 8.0.0); no successor] |
+2299:| `SearchableItem` | type | ~~`/search`~~ removed 9.0.0 [2026-08-29 · BK #42 — `./search` cut whole; the engine interned, nothing republished] |
+2300:| `SearchIndex` | type | ~~`/search`~~ removed 9.0.0 [2026-08-29 · BK #42 — `./search` cut whole; the engine interned, nothing republished] |
+2301:| `SearchResult` | type | ~~`/search`~~ removed 9.0.0 [2026-08-29 · BK #42 — `./search` cut whole; the engine interned, nothing republished] |
+2302:| `SearchVariant` | type | ~~`/search`~~ removed 9.0.0 [2026-08-29 · BK #42 — `./search` cut whole; the engine interned, nothing republished] |
+2303:| `SearchVariants` | type | ~~`/search`~~ removed 9.0.0 [2026-08-29 · BK #42 — `./search` cut whole; the engine interned, nothing republished] |
+2323:| `TaperSpec` | type | ~~`/handmark`~~ removed 9.0.0 — `5a69ed9f`; no successor (see _Eight `./handmark` types leave with the barrel's reshape_ under 9.0.0) [2026-09-22 · O-23 L-5] |
+2337:| `UseBloomUpOptions` | type | ~~`/motion`~~ removed 8.0.0 — `useBloomUp` deleted at `bda718ac`; no successor [2026-09-22 · O-23 L-5] |
+2338:| `UseBloomUpReturn` | type | ~~`/motion`~~ removed 8.0.0 — `useBloomUp` deleted at `bda718ac`; no successor [2026-09-22 · O-23 L-5] |
+2346:| `UseCountupOptions` | type | ~~`/motion`~~ removed 8.0.0 — `useCountup` deleted at `bda718ac`; the number tween is `useAnimatedNumber` (/motion) [2026-09-22 · O-23 L-5] |
+2357:| `UseFuzzySearchOptions` | type | ~~`/search`~~ removed 9.0.0 [2026-08-29 · BK #42 — `./search` cut whole; the engine interned, nothing republished] |
+2364:| `UsePaperGridOptions` | type | removed 5.0.0 — renamed → `UseLiquidGridOptions` (/liquid-grid) [2026-09-22 · O-23 L-5 — `UseLiquidGridOptions` left with `./liquid-grid` at 8.0.0 (`bda718ac`; see _Deleted — `LiquidGrid`_ under 8.0.0); no successor] |
+2371:| `UseTextHighlightControls` | type | ~~`/motion-core`~~ removed 8.0.0 — `useTextHighlight` deleted at `bda718ac`; no successor [2026-09-22 · O-23 L-5] |
+2419:### The BG/BH visual-convergence & structural retirements
+2421:**BG.W-GOODOT-PRUNE — `GooDotMatrix` + the `/goo-dot-matrix` subpath RETIRED with
+2426:consumer since BC (the ≥2-consumer / visual-load-bearing bar; J-inv-10 / L-inv-8). At BG its
+2428:subsequently DELETED at BI.W-VIZ-DELETIONS** (the user-ordered clean-break prune of the
+2435:**BI.W-VIZ-DELETIONS — `DotFlowField` / `Concentric` / `DotMatrix` + their subpaths DELETED
+2448:zero-churn 5.1.0 flatten. It REVERSES BG.W-DOTFLOW-REBUILD (STRUCT-14): the 30+-attempt viz
+2460:**BI.W-VIRTUAL-TRUTH — the `/virtual` PUBLISHED SUBPATH RETIRED (the consumer-truth
+2491:**BI.W-BORDER-PROGRESS-RETIRE — `/border-progress` and the broad `BorderProgress` component are
+2511:**BI.W-SPEEDTEST-ONLY-PAIR — the `/scrolling-text` PUBLISHED SUBPATH + its component RETIRE-RELOCATED
+2537:`crossrepo-asks:bi` book (`docs/tranches/BI/coordination/asks-and-consumes.md`). Re-entry trigger: a real
+2568:**BG.W-GRID-AFFINE — `PaperGrid` (the viz) RENAMED to `LiquidGrid`; `/paper-grid` →
+2589:**BH.W-MOTION-AXIS — the four-boolean motion scatter → the ONE `motion` axis. Clean
+2620:**BI.W-TABS-FACTOR / P092 — `pill` remains the default and the former two-rest-state
+2627:  named eyeglass variant. [2026-08-08 · BK #71 W-EYEGLASS: still no variant, and that is
+2642:**BG.W-DEAD-SWEEP — the `selectableChipVariants` alias + the `--corner-shape-card`/
+2647:  the ONE congruent `chipVariants` recipe — BD.W-CHIP-CONGRUENT-GLASS) is DELETED. The recipe
+2670:**BG.W-DOCK-CAP-SCROLL-FADE — the `<GlassDock overflow="scroll">` opt-in RETIRED.
+2688:[2026-09-22 · O-32 AC-D-1 — true from 5.0.0 through 8.0.0 only. 9.0.0 deleted the inline
+2695:### BI.W-DOCK-FOLD — the dock control/trigger fold + the reka `ui/tabs` retire
+2722:`docs/tranches/BI/coordination/W-DOCK-FOLD-asks.md`). `useDockCtaReceive` + `cta-seat.css`
+2728:### BI.W-OVERLAY-UNION — HoverPopover + HoverCard fold onto ONE sealed `<Popover>`
+2754:peer-bump asks (`docs/tranches/BI/coordination/asks-and-consumes.md`, filed by
+2755:W-FACTOR-ASKS). Machine-locked by `proof:fold-delete` (overlay clause: retired
+2759:### BI.W-COMPOSITIONS-PRUNE — the demo storybook prunes 5 misfiled single-component demos out of the `compositions` band
+2779:### BI.W-HERO-DEMOTE — the standalone `/compositions/hero` demo is demoted to the `/compositions` section landing
+2798:### BI.W-MENU-TRIGGER — ContextMenu folds onto the Menu family as `trigger="context"`
+2825:### BI.W-MULTISELECT-FOLD — MultiSelect folds onto `<Combobox multiple>`
+2827:> [BK #81 W-PICKER, 2026-08-08 — **STRUCK IN PLACE, survivor column false.** This
+2864:### BI.W-CHIP-FOLD — one explicit `<Chip>` family
+2885:### BI.W-SURFACE-EXTRACT — `CardTier` folds onto the `surface` axis
+2904:### BI.W-CLEAR-FOLD — the dead `surface="clear"` member retired
+2906:The `surface="clear"` decoration member (BE.W-CLEAR-VARIANT — the Apple-Clear
+2925:### BI.W-DIALOG-PLACEMENT — Sheet folds onto `<Dialog placement>`; ConfirmDialog → a Dialog preset
+2955:| `ConfirmDialog` (`@mkbabb/glass-ui/confirm-dialog`) | `Dialog` preset (consumer composition) | `<ConfirmDialog v-model:open title description confirm-label destructive :loading @confirm>` → a `<Dialog v-model:open><DialogContent surface="glass" :show-close="false" @escape-key-down @interact-outside>` with a `<DialogHeader>` title/description + a `<DialogFooter>` cancel/confirm `<Button>` pair (the confirm reads `tone="destructive"` when destructive — the tone axis, see BI.W-BUTTON-TONE below; the loading guard `preventDefault`s the dismiss intents while in-flight) — the demo `feedback/confirm-dialog` story shows the full preset inline |
+2964:is the separate BA.W-SURFACE-AXIS clean break (documented above). Cross-repo: no external
+2967:(`docs/tranches/BI/coordination/asks-and-consumes.md`, filed by W-FACTOR-ASKS). Machine-
+2973:### BI.W-BUTTON-TONE — `Button.destructive` migrates off `variant` onto the `tone` axis
+2993:`BI.W-FACTOR-ASKS` on the `docs/tranches/BI/coordination/asks-and-consumes.md` roster. Machine-locked by
+2995:DEFINITION-ABSENT from the `variant` map) — jointly with `BI.W-SYNONYM-RENAMES` (the alert/badge tone
+2996:residuals). The tone byte-diff rides `W-SYNONYM-RENAMES-DELTA.md` + the B-close gestalt ceremony.
+2998:### BI.W-SYNONYM-RENAMES — the library-wide synonym-rename law (`type`/`variant` tone · `direction` · `position` · `ToastVariant`)
+3024:bump) is filed by `BI.W-FACTOR-ASKS` on `docs/tranches/BI/coordination/asks-and-consumes.md`. Machine-locked by
+3025:`proof:variant-residual` (the alert/badge tone residuals GREEN) — jointly with `BI.W-BUTTON-TONE`. The
+3026:`register`→`size` (SelectTrigger, already `size`) + `ToggleChip.variant`→`shape` (BI.W-CHIP-FOLD) rows of the
+3031:rides `W-SYNONYM-RENAMES-DELTA.md` + the B-close gestalt ceremony.
+3033:### BI.W-GLASS-DEDUP — `GlassPanel` retires onto `Card` / `<Surface>` / `.glass-resting`
+3060:(`docs/tranches/BI/coordination/asks-and-consumes.md` row 8, filed by `BI.W-FACTOR-ASKS`). The
+3068:### BI.W-XR-PRODUCER-REPAIRS — the dist `--default-transition-duration` routes through `--duration-fast` + the display/heading/title weight axis
+3097:batch (see `docs/tranches/BI/audit/visual/W-XR-PRODUCER-REPAIRS-DELTA.md`). Likewise the
+3103:**BC.W-VIZ-FOURIER — the Canvas2D fourier renderer + the three-view split RETIRED
+3122:**BC.W-VIZ-CONSTELLATION — the Canvas2D `drawOverlay` frozen-`now` handoff gate
+3138:**BC.W-RADIO-FIX / Band 6 — `<Button variant="solid">` RETIRED (clean break, no
+3146:onto the `tone` axis at BI.W-BUTTON-TONE — see below).
+3148:**BC.W-DOCK-STACK-RAIL — `<DockRail>` + `DockRailItem` RETIRED onto the macOS
+3150:code").** The AZ.W-RAIL3 divider-carousel rail (a floating strip of detached glass
+3169:border-ring primitive (progress IS the element's border; BB.W-BORDER-PROGRESS). A net-new public
+3175:ADDITIVE (4.1.0): `--instrument-dial-min-block-size-desktop` (BB.W-DESKTOP-RESERVE) — the wide-axis
+3181:CANONICALIZED (4.1.0): `--glass-opacity-{tier}` per-tier alpha — documented + gated (BB.W-CARD-TIER-ALPHA); values byte-unchanged, a consumer that re-pinned the same tier alphas (e.g. speedtest register.css) deletes its override on consume.
+3185:ADDITIVE (4.1.0, BB.W-SURFACE-AXIS-COMPLETE): the shared `Surface = "glass" | "veil" | "opaque"`
+3194:**ADDITIVE (4.1.0, BB.W-ON-GLASS-FG) — the surface-aware FOREGROUND register (the dark-theme
+3215:**BB.W-METAL-SHIMMER — the `@keyframes gold-shimmer-slide` RETIRED onto the
+3232:   `-deep` + `--color-bronze*`, the third brand metal on the W-NO-GRAY exception), the
+3236:   W-GLASS-ACCENT's `--glass-accent` rim seam.
+3240:**BA.W-TABS — the tab family standardized on ONE engine, TWO materials. Clean
+3270:**External migration re-issue (the AY W-CONSUMER ledger, re-stamped at this SHA).**
+3279:consumer's own tranche). The `proof:tabs-unified` gate retired-with-re-point onto
+3282:**CALLER HAZARD (next cut, BA.W-DEMO-AFFORDANCES) — never stack `.glass-btn` + `.btn-pill`.**
+3295:**CLEAN BREAK (next cut, BA.W-SURFACE-AXIS) — Dialog `variant` → the shared `surface` axis.**
+3304:ADDITIVE (next cut, BA.W-SURFACE-AXIS): the shared `Surface = "glass" | "veil" | "opaque"` axis
+3313:**RENDERED-BEHAVIOUR (next cut, BA.W-EMISSION) — the Select bound + the Slider size axis
+3329:ADDITIVE (next cut, BA.W-EMISSION): `<WatercolorDot>` gains a `variant?: "solid" | "ghost"`
+3334:**BA.W-PAGER — `CarouselDots` RETIRED onto `<PagerDots>` + the counter re-registers
+3336:slides deck `DeckPager` were ALREADY one register; BA.W-PAGER harvests that into ONE
+3357:**BA.W-HANDMARK — `GlassUnderline` + the `/underline` subpath RETIRED onto
+3374:   [2026-09-17 · O-20 CLOSE-DOCS · the 4.0.0 record of the brush axis, kept as that —
+3387:   [2026-09-17 · O-20 CLOSE-DOCS · true at 4.0.0 (`git show v4.0.0:package.json` carries
+3403:**AZ.W-REGISTER-IOS — the dock interactive register is DE-RED'd to the iOS
+3426:AZ tranche's breaks (the dock taxonomy + the metric `amount`→`value` rename + the
+3435:**v3.13.0** — the dock taxonomy clean break (AZ.W-DOCK-TAXONOMY, H2 arm-a):
+3456:**v3.10.0 (AY, NARROWED at AZ.W-PRUNE2)**—two zero-consumer subpaths RETIRED outright (no
+3459:`docs/tranches/AY/audit/PRUNE-LEDGER.md`). `/header-ribbon` + `/glass-panel` were retired
+3460:by the same census and RESTORED at AZ.W-PRUNE2 — the census missed their live keyframes.js
+3465:onto `<HandMark shape="underline">` (see the BA.W-HANDMARK row above; it never reached
+3468:## 2.0.0 (AI.W1 R3) — motion subpath surgery
+3470:**v2.0.0 (AI.W1 R3)**—the motion composables move off the root barrel to
+3472:AI-CARRY-GLASS-UI-KEYFRAMES-EDGE 4-tranche chronic. See the **v2.0.0**
+3479:v1.0 is the L-tranche cohort release. It freezes the public API and lands four
+3489:   a real second consumer or retires (per L invariant 8).
+3491:Per L invariant 4 (no backwards-compat shims), v1.0 ships no legacy aliases.
+3712:That hard fail is intentional. Per L invariant 4, no alias re-routes the
+3738:#### 3.2—`useVirtualSectionWindow`—REMOVED → REVERSED-at-BC → DEMO-OWNED-at-BI
+3741:  consumer claim was corrected at BI and the reduced facility now lives at
+3744:  v0.9.x. The BC reversal relied on two claimed binary consumers; BI found
+3750:  retired again at BI after the binary-consumer claim failed. `useVirtualGrid` (the
+3756:#### 3.3—`useWindowedStore`—REMOVED → REVERSED-at-BC → DELETED-at-BI
+3758:- **Status**: REMOVED in v1.0; briefly **REVERSED-at-BC**; deleted again at BI.
+3760:  mistook words' local store for a Glass package consumer. The second-pass BI
+3768:#### 3.4—`virtualSectionLayout` helpers—REMOVED → DEMO-OWNED-at-BI
+3778:  that parent and was corrected with it at BI. `findSectionOffset` is
+3941:## v2.0.0—Motion subpath surgery (AI.W1 R3)
+3943:v2.0.0 closes the **AI-CARRY-GLASS-UI-KEYFRAMES-EDGE** chronic (4-tranche
+4063:Per precept 1 (NO workarounds) + precept 2 (NO legacy code) + L invariant 4
+4144:precept 1/2 + L invariant 4, `/motion` ships no alias for the carved symbols.
+4206:Per Rα FAIL-EXPLICITLY F1 (`docs/tranches/O/research/Ralpha-legacy-code.md:85`)
+4281:## Metric consolidation — BI.W-P117
+4318:### Adaptive glass over light — the self-engage default + the sampled observer (AZ.W-ADAPTIVE-AUTO)
+4346:### The luminous-dark transmissive material + the calm-light recalibration (BA.W-DARK-MATERIAL)
+4386:### The warm-chroma floor — the neutral ladder + glass plate off gray (BA.W-NO-GRAY)
+4426:### The scroll-state edge fade — `.scroll-fade-*` → `<FadingScroll>` + `--mask-fade-width` → `--fade-scroll-width` (BA.W-FADING-SCROLL)
+4435:were RETIRED at the 4.1.0 cut — BB.W-SCROLL-FADE-RETIRE — after every consumer migrated).
+4469:### The disco CTA register retired — `btn-audacious` / `btn-audacious-gold` GONE (BA.W-GLASS-CAL, hinge H2a)
+4494:a **breaking change for direct-utility consumers** (an input to the 4.0.0-vs-3.14.0 version call at W-CLOSE).
+4496:### Per-spring duration clock minted — `--spring-<name>-duration` (BA.W-GLASS-CAL Unit 3)
+4540:`docs/tranches/L/coordination/speedtest-Y.md`):
+4648:- **Tranche plan**: `docs/tranches/L/L.md` (invariants, hard gates).
+4649:- **HEADLINE wave proof**: `docs/tranches/L/audit/W1-{A,B,C}-*.md`
+4651:- **Wire-or-retire proofs**: `docs/tranches/L/audit/W3-{A,B}-*.md`
+4653:- **Cross-repo verification**: `docs/tranches/L/coordination/speedtest-Y.md`
+4655:- **Research basis**: `docs/tranches/L/research/Rε-architectural-transpositions.md`
+4675:and moves to mainline. BA.W-ATLAS-RECONCILE folds the d6 A/B registers need-shaped. Per the
+4678:`docs/tranches/BA/audit/W-ATLAS-RECONCILE-cut-notes.md`.
+4722:intentional; see the AZ.W-METRIC-UNIFY row above (`MIGRATION.md` §3.x amount→value).
+4726:The 4.0.0 major collects the BA tranche's clean breaks (no aliases, no compat shims — the
+4733:name, never silently; the full value.js adopt is `docs/tranches/BA/audit/valuejs-adopt-book.md`).
+4735:### The disco retirement (W-GLASS-CAL / H2a) — gold survives CALM
+4748:### The tone-on-glass recompose (W-FEEDBACK-TONE)
+4750:Toast / Notification / ~~Alert~~ [2026-09-17 · Alert left the tint at 8.0.0 (W-ALERT);
+4757:### The static scroll-fade retirement (W-FADING-SCROLL)
+4764:### PresetEditorField retires onto the Configurator chassis (W-CONFIG-CHASSIS)
+4773:### The shared `surface` axis (W-SURFACE-AXIS) — incl. the Dialog break `[value.js]`
+4789:### The tabs taxonomy cut (W-TABS) `[value.js]`
+4804:### The menu-row glass default flip (W-MENU-GLASS) `[value.js]`
+4811:### The `/underline`→`/handmark` DEC-8 fold (W-HANDMARK)
+4820:### The `CarouselDots`→`PagerDots` retirement (W-PAGER)
+4827:### Dark-material token-identity NOTEs (W-DARK-MATERIAL — token re-points, not API breaks)
+4834:against the rebuilt register, but there is no API/prop break (the W-DARK-MATERIAL scope-7
+4838:### Warm-chroma-floor NOTEs (W-NO-GRAY — token re-saturation, not API breaks)
+4844:### The `--glass-blur-*` dial-back (W-GLASS-CAL B1 — token re-point, not API break)
+4852:### The `@source` re-point (W-EMISSION — consumer-wiring fix, not an API break)
+4863:Carried verbatim from AZ.W-METRIC-UNIFY (above) — a ONE-LINE `amount=`→`value=` rename per call
+4866:### `Drawer*` moves to the `/drawer` subpath (BB.W-DRAWER-ABROGATE — clean break, no alias)
+4887:### `.glass-refract` → `.glass-lens` (BB.W-LENSING — clean break, no alias)
+4906:### `.glass-lens` Chromium refraction now rides a runtime latch — arm it once (BJ.W-REFRACT-LATCH)
+4941:### Refraction gains a Tier-1 WebGL2 FLOOR — the SOTA degrade ladder (BG.W-GLASS-REFRACT-WEBGL — additive, no consumer break)
+4964:### `popover-animate` / `slide-in-from-side` → `.glass-reveal` (BB.W-LIQUID-REVEAL — clean break, no alias)
+4990:## BG — the glass standardization cut (clean breaks)
+4992:### The `--glass-blur-dock` chain RETIRES (BG.W-CLOSEFIX-9SITE — clean break, no alias)
+4996:`backdrop-blur-dock` Tailwind utility) — is RETIRED wholesale. It was orphaned at BG.W-GLASS-BLUR-PEER,
+5012:/* after (BG) — the dock reads the unified resting material */
+5016:This retire ROW is the **bbnf-buddy row-4 by-name-ask witness** of the 5.0.0-BH-B7
+5021:tree. See `docs/tranches/BH/coordination/asks-and-consumes.md` (row 4) + `proof:crossrepo-asks:bh`
+5024:### `ladder.css` / `shell.css` carves (BG.W-CLOSEFIX-9SITE — no-god-module, no consumer impact)
+5031:### The dead-composable cut (BG.W-DEAD-COMPOSABLE-CUT — clean break, no alias)
