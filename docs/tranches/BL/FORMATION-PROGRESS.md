@@ -846,3 +846,4 @@ Disk episode, one line: on 2026-11-03 the volume went from 100% (15 GiB free) to
 - 2026-11-05 22:55 — INBOUND O-180 (keyframes' scene-swap forced layout): three sites go to W-F.1 in 11.1.0, and the dock measure goes to W-0.8.
 - 2026-11-05 23:52 — D5 H14 is COMPLETE. E-14 covers S14 (clean 117/0/0 in both engines; cand13 68/61 Cr, 66/63 WK). The records are committed. P-E14 build is running.
 - 2026-11-06 01:36 — 11.0.0 critic 3 is measured: no behaviour defect, every gate green. Two text defects remain (internal ids in MIGRATION and README; stale token docs). Fix 4 is running.
+- 2026-11-06 01:39 — 10.1.5 fix 7 is measured: L1 is cured (121a8bb55, data-run-fits). It did not take up the round-6 and round-7 notes (vertical yield, inbounds). Critic 7 is running and reads them all.
