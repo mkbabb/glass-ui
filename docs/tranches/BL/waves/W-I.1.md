@@ -471,3 +471,26 @@ console.log(`VERDICT ${label}: ${fails} FAIL of ${results.filter((r) => r.pass !
 
 ## Addendum (2026-11-04): INBOUND O-129 row 9 (row 10 withdrawn by INBOUND O-148 (1))
 - **Row 9, seat tooltips.** No dock seat shows a tooltip today. Whether seats show tooltips is a matter for D2's seat grammar, and D2 rules on it before this wave lands. If D2 adopts them, DockIconButton gives each seat a `role=tooltip` on `--duration-fast`/`--spring-present`, fine pointer only. If not, the seat's accessible name alone carries the label, and the ruling is recorded in D2's REGISTRY.
+
+## Addendum O-169 (owner order 2026-11-05 20:07, relayed by value-js-e7): scroll progress drawn on the dock's border
+
+The owner's words: "for gregg, the scrollig bar progress bar should be better integrated into the dock itself, more of the actual border and not IN the ddock. Edge to edge." The frame is `~/.dev-logs/owner-2026-11-05-docks/gregg-progress-bar-into-border.png`. It shows Gregg's progress as a thin inset track inside the dock's lower padding, with its rounded ends stopping short of the edges.
+
+GlassDock gets a `progress` prop, 0..1. A consumer binds it to scroll, and the dock owns no scroll listener. The plate draws it as part of its own outline:
+- It is a hairline on the plate's border, inset 0 ± 0.5 px.
+- It runs edge to edge and follows the corner radii.
+- It uses the rim colour family, with no glow.
+- Updates are compositor-only: one custom property drives a stroke offset or a mask, and a tick causes no layout or style recalc beyond the stroke.
+- Under reduced motion the stroke still shows the value; only the transition goes.
+
+Pick whichever of the SVG path on the plate's rounded rect and the conic or border mask is crisper at 1x and 2x, and record why. Only one mechanism is allowed.
+
+Gates, in Chromium and WebKit:
+- At progress 1 the stroke lies on the border along the full width.
+- At 0.5 its length is half the traced path.
+- A scroll tick's trace shows no layout and no style recalc outside the stroke.
+- It is crisp at DPR 1 and 2.
+
+Delivered in the 11.1.0 feature run, and judged in the D2 dock design loop against N-16.
+
+The same relay asks whether the dock grammar covers small icon-only utility clusters (to-top, up, sidebar collapse) and filter-chip rows. It does: GlassDock with DockControl seats makes an icon cluster, and GlassDock hosting a SegmentedTabs or a toggle group in a seat makes a filter row, as parkway does. Any gap a consumer finds comes back as a row.
