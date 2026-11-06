@@ -54,6 +54,11 @@
 //       focused and hovered there keeps its whole ring; mid-run the clip rounds
 //   k3  (K3) a viewport-capped dock at 320 whose seats all show has nothing to scroll,
 //       rests at four corners of half its extent, and keeps its focused end seats' rings
+//
+// Critique round 6 (critique-6.md), RED on the round-6 tip 4c9c15008 (and v10.1.4), GREEN
+// after:
+//   l1  (L1) a run whose overflow vanishes while it is scrolled (to its end, or mid) rests
+//       round: a lifted cap, a viewport resize 390 → 844, and a vertical run's stage grown
 import { expect, test, type Page } from "@playwright/test";
 
 async function open(page: Page, query: string): Promise<void> {
@@ -1183,3 +1188,107 @@ test.describe("critique 5, coarse phone", () => {
 
 k1();
 k3();
+
+/* ── l1 · critique round 6: the cap after the overflow vanishes ────────────────────
+   (docs/release-10.1.5/critique-6.md L1). RED on the round-6 tip 4c9c15008, GREEN after. */
+
+/** Scroll the active run (snap and smooth scrolling off) to its end or its middle. */
+async function scrollRun(page: Page, pos: "end" | "mid"): Promise<void> {
+    await page.evaluate((pos) => {
+        const run = document.querySelector<HTMLElement>(".dock-run.is-active")!;
+        const vertical = run.closest(".glass-dock")!.classList.contains("vertical");
+        run.style.scrollSnapType = "none";
+        run.style.scrollBehavior = "auto";
+        const max = vertical ? run.scrollHeight - run.clientHeight : run.scrollWidth - run.clientWidth;
+        const to = pos === "end" ? max : Math.round(max / 2);
+        if (vertical) run.scrollTop = to;
+        else run.scrollLeft = to;
+    }, pos);
+    await settle(page, 400);
+}
+
+/**
+ * The plate rests round: every corner one length, half the plate's cross extent (its
+ * block extent horizontally, its inline extent vertically), and the run that paints has
+ * nothing to scroll on its scroll axis.
+ */
+async function expectRoundAtRest(page: Page, cell: string): Promise<void> {
+    const read = await readPlate(page);
+    const vertical = read.cls.split(/\s+/).includes("vertical");
+    const half = (vertical ? read.w : read.h) / 2;
+    const at = `${cell} (${JSON.stringify(read)})`;
+    for (const r of read.radii) {
+        expect(r, `${at}: corner ${r} is one length`).toMatch(/^-?[\d.]+px$/);
+        expect(Math.abs(Number.parseFloat(r) - half), `${at}: corner ${r} = half the cross extent ${half}`).toBeLessThanOrEqual(0.5);
+    }
+    const fit = await page.evaluate(() => {
+        const run = document.querySelector<HTMLElement>(".dock-run.is-active")!;
+        const vertical = run.closest(".glass-dock")!.classList.contains("vertical");
+        const k = [...run.children] as HTMLElement[];
+        const span = vertical
+            ? k.at(-1)!.offsetTop + k.at(-1)!.offsetHeight - k[0]!.offsetTop
+            : k.at(-1)!.offsetLeft + k.at(-1)!.offsetWidth - k[0]!.offsetLeft;
+        return { span, port: vertical ? run.clientHeight : run.clientWidth };
+    });
+    expect(fit.span, `${at}: every seat shows (${JSON.stringify(fit)})`).toBeLessThanOrEqual(fit.port);
+    const run = read.runs.find((r) => r.active)!;
+    if (!vertical) expect(run.sw, `${at}: run scrollWidth = clientWidth`).toBe(run.cw);
+}
+
+function l1(): void {
+    for (const kinds of ["tab:Home,icon,icon,icon,tab:Settings", "icon,icon,icon,icon,icon,icon"]) {
+        for (const pos of ["end", "mid"] as const) {
+            test(`l1 a cap lifted under a run scrolled to its ${pos} rests round (${kinds})`, async ({ page }) => {
+                await page.setViewportSize({ width: 390, height: 800 });
+                await openSeats(page, `kinds=${kinds}&maxw=200`);
+                expect((await runAt(page)).max, "the capped run overflows").toBeGreaterThan(0);
+                await scrollRun(page, pos);
+                expect((await runAt(page)).pos, `the run is scrolled off 0`).toBeGreaterThan(0);
+                await page.evaluate(() => {
+                    document.querySelector<HTMLElement>(".glass-dock")!.style.maxInlineSize = "1000px";
+                });
+                await page.waitForTimeout(300);
+                await expectRoundAtRest(page, `${pos}, 300 ms after the lift`);
+                await page.waitForTimeout(1200);
+                await expectRoundAtRest(page, `${pos}, 1.5 s after the lift`);
+            });
+        }
+    }
+
+    test("l1 a viewport resize 390 → 844 under a run scrolled to its end rests round", async ({ page }) => {
+        await page.setViewportSize({ width: 390, height: 800 });
+        await openSeats(page, `kinds=tab:Home,${Array.from({ length: 6 }, () => "icon").join(",")},tab:Settings&maxw=360`);
+        await page.evaluate(() => {
+            document.querySelector<HTMLElement>(".glass-dock")!.style.maxInlineSize = "calc(100vw - 30px)";
+        });
+        await settle(page, 400);
+        expect((await runAt(page)).max, "the run overflows at 390").toBeGreaterThan(0);
+        await scrollRun(page, "end");
+        await page.setViewportSize({ width: 844, height: 800 });
+        await page.waitForTimeout(300);
+        await expectRoundAtRest(page, "844, 300 ms after the resize");
+        await page.waitForTimeout(1200);
+        await expectRoundAtRest(page, "844, 1.5 s after the resize");
+    });
+
+    test("l1 a vertical run's stage grown under a run scrolled to its end rests round", async ({ page }) => {
+        await page.setViewportSize({ width: 1280, height: 900 });
+        await openSeats(page, `kinds=${Array.from({ length: 8 }, () => "icon").join(",")}&orientation=vertical&stageH=240`);
+        expect((await runAt(page)).max, "the vertical run overflows").toBeGreaterThan(0);
+        await scrollRun(page, "end");
+        await page.evaluate(() => {
+            document.querySelector<HTMLElement>('[data-witness="stage"]')!.style.blockSize = "860px";
+        });
+        await page.waitForTimeout(300);
+        await expectRoundAtRest(page, "vertical, 300 ms after the stage grows");
+        await page.waitForTimeout(1200);
+        await expectRoundAtRest(page, "vertical, 1.5 s after the stage grows");
+    });
+}
+
+test.describe("critique 6, coarse phone", () => {
+    test.use({ hasTouch: true, isMobile: true, viewport: { width: 390, height: 844 } });
+    l1();
+});
+
+l1();

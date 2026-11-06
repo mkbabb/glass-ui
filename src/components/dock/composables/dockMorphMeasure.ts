@@ -214,33 +214,37 @@ export function useDockExpandedSize(
     }
 
     /*
-     * WHETHER THE RUN'S SEATS FIT ITS PORT, `--dock-run-yield` (run.css, THE RESERVE
-     * YIELDS): 1 when the seats' span on a horizontal run is no longer than the port,
-     * so the run's two reserve boxes shrink into the room the seats leave and a run that
-     * hides nothing scrolls nothing; 0 when the seats overflow, so both reserves hold and
-     * scroll. The span is read from the seats' layout boxes (`offset*`), and neither it
-     * nor the port depends on the yield, so the flag is a pure reading of the layout. A
-     * vertical run keeps its padding reserve and never yields. It is read wherever an
-     * endpoint is, since the same observers see the port and the seats change.
+     * WHETHER THE RUN'S SEATS FIT ITS PORT, `data-run-fits` on the root: present when
+     * the seats' span along the run's scroll axis is no longer than the port. It is the
+     * one source of record for "the run hides nothing", and run.css reads it twice.
+     * On a horizontal run it sets `--dock-run-yield` to 1 (THE RESERVE YIELDS), so the
+     * two reserve boxes shrink into the room the seats leave and a run that hides
+     * nothing scrolls nothing. On either axis it takes the cut cap's scroll-driven
+     * animations off the plate and the run (THE CAP RUNS ONLY ON A RUN THAT HIDES
+     * SOMETHING), so a run whose overflow vanished while it was scrolled rests round
+     * rather than holding the keyframe its inactive timeline last resolved. The span
+     * is read from the seats' layout boxes (`offset*`), and neither it nor the port
+     * depends on the yield, so the flag is a pure reading of the layout. It is read
+     * wherever an endpoint is, since the same observers see the port and the seats
+     * change.
      */
     let yieldPublished = "";
 
     function publishYield(root: HTMLElement, run: HTMLElement): void {
-        let fits = false;
-        if (axis.value === "horizontal") {
-            let start = Infinity;
-            let end = -Infinity;
-            for (const seat of run.children) {
-                if (!(seat instanceof HTMLElement) || seat.offsetParent !== run) continue;
-                start = Math.min(start, seat.offsetLeft);
-                end = Math.max(end, seat.offsetLeft + seat.offsetWidth);
-            }
-            fits = end > start && end - start <= run.clientWidth;
+        const horizontal = axis.value === "horizontal";
+        let start = Infinity;
+        let end = -Infinity;
+        for (const seat of run.children) {
+            if (!(seat instanceof HTMLElement) || seat.offsetParent !== run) continue;
+            const offset = horizontal ? seat.offsetLeft : seat.offsetTop;
+            start = Math.min(start, offset);
+            end = Math.max(end, offset + (horizontal ? seat.offsetWidth : seat.offsetHeight));
         }
-        const value = fits ? "1" : "0";
+        const port = horizontal ? run.clientWidth : run.clientHeight;
+        const value = end > start && end - start <= port ? "1" : "0";
         if (value === yieldPublished) return;
         yieldPublished = value;
-        root.style.setProperty("--dock-run-yield", value);
+        root.toggleAttribute("data-run-fits", value === "1");
     }
 
     /**

@@ -393,13 +393,17 @@
        extent is its port. The leading reserve is a box for this too: `::before` takes
        back the leading padding by its own margin, so at full size it is the padding's
        twin and moves nothing, and the two boxes shrink as one flex pair, equally.
-       `--dock-run-yield` (0 or 1, `useDockExpandedSize`, dockMorphMeasure.ts) says
-       whether the seats fit the port; it is the flex shrink, so a run whose seats
-       overflow keeps both reserves whole and scrolls them. The boxes' declared size is
-       the reserve in either state, so the dock's own content size never reads the
-       yield. */
+       `--dock-run-yield` is the flex shrink: 1 under `data-run-fits` (the seats fit the
+       port, `useDockExpandedSize`, dockMorphMeasure.ts), 0 otherwise, so a run whose
+       seats overflow keeps both reserves whole and scrolls them. The boxes' declared
+       size is the reserve in either state, so the dock's own content size never reads
+       the yield. */
     .glass-dock {
         --dock-run-yield: 0;
+    }
+
+    .glass-dock[data-run-fits] {
+        --dock-run-yield: 1;
     }
 
     .glass-dock:not(.vertical) .dock-run:has(> *) {
@@ -649,7 +653,7 @@
        region lies a whole seat inside the plate and stays square.
 
        AN EDGE THE RUN IS FLUSH AGAINST CLIPS SQUARE, as a run with nothing to scroll
-       does (its timeline is inactive and it clips to its padding box). The clip's
+       does (its animations are off and it clips to its padding box). The clip's
        keyframes start square and reach the plate's rest corner at 1% of the pitch,
        under one pixel of travel, so at 0 the leading arm, and at the end the trailing
        arm, paints the run's square corner. A seat resting at a flush edge is a seat at
@@ -715,8 +719,8 @@
 
        Outside its range each arm holds its own end value (`fill: both`), which is what
        makes a deeply-scrolled run keep its leading cut instead of springing back. When
-       there is NOTHING to scroll the timeline is inactive and the plate paints its base
-       corner — no cap on a run that hides nothing, with no attribute asked to say so. */
+       there is NOTHING to scroll the animations are off (`data-run-fits`, below) and the
+       plate paints its base corner. */
     .glass-dock .dock-plate {
         animation:
             gl-dock-cap-inline-start linear both,
@@ -737,6 +741,20 @@
             0 var(--dock-pitch),
             calc(100% - var(--dock-pitch)) 100%;
         animation-direction: normal, reverse;
+    }
+
+    /* THE CAP RUNS ONLY ON A RUN THAT HIDES SOMETHING. An inactive scroll timeline
+       does not release what it last resolved: when a scrolled run's overflow vanishes
+       (a rotation, a resize, a lifted cap, seats leaving), Chromium keeps the leading
+       arm at progress 1 and WebKit keeps whichever arm last resolved, so the plate
+       rests cut with nothing to scroll. `data-run-fits` (dockMorphMeasure.ts, the one
+       reading of "the seats fit the port") takes both the plate's and the run's
+       scroll-driven animations off, so a run that hides nothing paints its rest corner
+       and clips square. When the seats overflow again the animations re-apply and bind
+       to the timeline afresh. */
+    .glass-dock[data-run-fits] .dock-plate,
+    .glass-dock[data-run-fits] .dock-run.is-active {
+        animation: none;
     }
 
     /* ── THE LIVE REGION ─────────────────────────────────────────────────────────
