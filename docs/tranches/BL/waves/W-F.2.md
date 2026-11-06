@@ -424,3 +424,21 @@ window.__ready = true;
 ```
 
 - `away.mjs`: `http.createServer((q, r) => { r.writeHead(200, { 'content-type': 'text/html' }); r.end('<!doctype html><title>away</title><p>away</p>'); }).listen(5963, '127.0.0.1');` (a cross-site origin, so the navigation swaps the browsing instance and the page enters bfcache).
+
+## Addendum O-181 (value.js perf lane, 2026-11-05): the Slider emits once per frame
+
+value's evidence is on branch o1105-perf, in `~/.dev-logs/o1105/perf/runs/webkit-base-r1-*.json` from `drag-probe.mjs`. A 240 Hz burst of pointermoves on the Slider lands 2 per rendering frame in WebKit and in Chromium, and each move emits `update:modelValue`. The second emit in a frame runs the consumer's whole synchronous path and is never painted. Slider drag input-frame p95 at value's HEAD is 22.5–34.5 ms at 1440 and 92–148 ms at 390@3 CPU x4.
+
+The law, using this wave's end-of-gesture helper:
+1. During a pointer drag, `update:modelValue` emits at most once per animation frame, and the latest value wins.
+2. The pending value flushes synchronously before `valueCommit`, so the commit carries the final pointer value.
+3. Keyboard steps (arrows, Page, Home and End) stay synchronous.
+
+The same frame coalescing applies to every glass control that streams a drag value. It is one helper, not a per-component timer.
+
+Gates, in Chromium and WebKit, light and dark:
+- A 240 Hz burst gives at most 1 emit per rAF.
+- The final `valueCommit` equals the last pointer position's value.
+- Keyboard steps emit synchronously.
+
+Delivered in the 11.1.0 feature run.
