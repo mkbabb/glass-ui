@@ -841,3 +841,4 @@ Disk episode, one line: on 2026-11-03 the volume went from 100% (15 GiB free) to
 - 2026-11-05 22:20 — INBOUND O-173: G1, the lateral card swap, goes to W-F.5. G2, fonts as files, goes to W-E.11. Both ship in 11.1.0.
 - 2026-11-05 22:30 — INBOUND O-174 (the dark aurora): (1) goes to W-0.1; (2) and (3) go to W-G.4. I corrected value's assumption that W-G.4 is in 11.0.0.
 - 2026-11-05 22:34 — 11.0.0 fix 3 is done (the anchor prose, and README dist/glass-ui.css). Critic 3 is running.
+- 2026-11-05 22:45 — INBOUND O-175 (dark-shadow glow, the class as the mode, the shadow-token surface) goes to W-C.5, in 11.1.0.

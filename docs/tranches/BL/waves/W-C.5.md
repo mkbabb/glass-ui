@@ -204,3 +204,25 @@ process.exitCode = verdict.every(([, ok]) => ok) ? 0 : 1;
 ```
 
 The wave's test keeps D1, D2, D4 and D5 as written, adds D1b, and replaces D3's contrast verdict with C5-G3's form. D4 imports the leaf from its hashed dist chunk (`m.n` is the minified export name at this HEAD); the test imports it from `@mkbabb/glass-ui/color` instead.
+
+## Addendum O-175 (daraksha via value-js-e7, 2026-11-05): dark shadows and the class as the mode
+
+**(1) Dark shadows glow.** `--shadow-color: var(--foreground)` (`tokens/color-radius.css:170`) resolves to the light ink under `.dark`, so every glass shadow on a night ground reads as a glow. daraksha overrides it to `oklch(18% 0.03 356)`. In dark mode the shadow colour is a dark derived from the ground, one value on the dark arm.
+
+Gate: in dark mode the shadow colour's OKLCH L is at most the ground's L, and no shadow raises the luminance of the pixels it falls on.
+
+**(2) The class is the mode.** `:root { color-scheme: light dark }` (`tokens/scheme-motion.css:29`) lets the OS preference resolve every `light-dark()` token whenever `.dark` is absent. A site whose toggle chose light while the OS is dark therefore paints its neutrals, ink, card and popover on the dark arm, while its `.dark`-keyed rules stay light. That is the owner's broken light-mode frame.
+
+The cure is one law: glass's dark mode is class-driven, so `:root` pins `color-scheme: light` and `.dark` pins `dark`. A consumer that wants the OS default sets the class from `prefers-color-scheme`, so there is no second arm. Remove daraksha's build-time `virtual:theme-tokens.css` stopgap at its repin.
+
+Gate: toggling `.dark` against the opposite OS scheme, in both directions, leaves no surface and no ink on the wrong arm, in Chromium and WebKit.
+
+**(3) Shadow tokens as consumer surface.** daraksha softens shadows through five tokens:
+- `--shadow-dock-override`
+- `--glass-shadow-resting` and `--glass-shadow-floating`
+- `--glass-under-shadow-*`
+- `--shadow-cartoon-*`
+
+Only `--glass-shadow-resting` is documented. This wave decides the set. Each one is either documented as a public token, stable within a major, or made private and removed from consumer reach. The documented set is listed in the tokens README. After (1), daraksha re-checks whether it still needs any softening.
+
+Delivered in the 11.1.0 feature run.
