@@ -312,3 +312,22 @@ The register lives in `docs/canon/motion-system.md` with a demo story, and each 
 The gate is a chart story landing marks, bars and a ripple in both engines, with the cascade's total duration measured against the cap.
 
 Gregg sends any gaps as rows with repros. Its question (1) is already met: all six presets ship as CSS twins in 10.1.4, in `dist/styles/tokens/scheme-spring.css` through `@mkbabb/glass-ui/styles`.
+
+## Addendum O-180 (keyframes kf-load via value-js-e7, 2026-11-05): no style reads on the mount path
+
+keyframes measured its into-cube scene swap at 1440, CPU 4x, on 10.1.3 (evidence: keyframes.js `docs/evidence/o1105-kf-load/L8-assay-r1.json`). The View Transition update callback runs 723–948 ms, and 247–356 ms of that is forced style and layout. Three of the four sites are glass motion and glass sampling:
+
+1. `useLiquidFlex` `maxStretch` reads `--motion-weight` and `--flex-vel` back through `getComputedStyle` inside a computed during mount, costing 70–100 ms. The writer keeps the weights it writes in JS, and the reader uses those. No computed reads style.
+2. Every `useSpring` instance reads `--motion-tempo` from `getComputedStyle(documentElement)`, so every `useLiquidPress` pressable a scene mounts pays for it, 38–68 ms in all. Tempo becomes one shared value, read once and refreshed only when its source changes (the media query or the attribute).
+3. The backdrop luma sampler (getBoundingClientRect, elementsFromPoint and getComputedStyle per glass surface) fires inside the mounting task, costing 47–56 ms. The sample moves out of the mounting task to the next frame, and the rects are read in one batch. This must stay consistent with W-G.3's evented luma.
+
+The fourth site, the GlassDock layer measure (80–110 ms), goes to W-0.8.
+
+keyframes runs the gates at the release:
+- scene-swap:commit ≤ 250 ms and total ≤ 450 ms, run twice, at 1440 CPU 4x;
+- LoAF forced style and layout in the commit ≤ 50 ms;
+- frame p95 ≤ 16.7 ms at 1440@2 on ANGLE Metal.
+
+Glass's own gate: `git grep` finds no `getComputedStyle` reachable from a computed, a spring constructor or a mount hook in `src/composables/motion` or in the sampler.
+
+Delivered in the 11.1.0 feature run.
