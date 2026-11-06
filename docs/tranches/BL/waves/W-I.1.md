@@ -476,14 +476,17 @@ console.log(`VERDICT ${label}: ${fails} FAIL of ${results.filter((r) => r.pass !
 
 The owner's words: "for gregg, the scrollig bar progress bar should be better integrated into the dock itself, more of the actual border and not IN the ddock. Edge to edge." The frame is `~/.dev-logs/owner-2026-11-05-docks/gregg-progress-bar-into-border.png`. It shows Gregg's progress as a thin inset track inside the dock's lower padding, with its rounded ends stopping short of the edges.
 
-GlassDock gets a `progress` prop, 0..1. A consumer binds it to scroll, and the dock owns no scroll listener. The plate draws it as part of its own outline:
-- It is a hairline on the plate's border, inset 0 ± 0.5 px.
-- It runs edge to edge and follows the corner radii.
-- It uses the rim colour family, with no glow.
-- Updates are compositor-only: one custom property drives a stroke offset or a mask, and a tick causes no layout or style recalc beyond the stroke.
-- Under reduced motion the stroke still shows the value; only the transition goes.
+The single mechanism is the existing `ScrollProgressRim`, given a border mode, `<ScrollProgressRim edge="border">`. GlassDock gets no new prop. Any host can use the border mode: a dock plate, a card or a sheet. That way value, keyframes and fourier can adopt it where they already show scroll progress, and there is no second component. Gregg relayed this through sci-report-ef. It drops its `--scroll-progress-rim-margin: 1.75rem` inset track.
 
-Pick whichever of the SVG path on the plate's rounded rect and the conic or border mask is crisper at 1x and 2x, and record why. Only one mechanism is allowed.
+In the border mode the progress is the host's own border, not a track inside it:
+- It is a stroke the width of the border, inset 0 ± 0.5 px.
+- It runs edge to edge and traces the host's outline, corner radii included.
+- The unfilled part is the border as it already is, so nothing is added at rest.
+- The filled part takes one focal ink from the rim family, with no glow, and moves on `--spring-dock`.
+- Updates are compositor-only: one custom property drives a stroke offset or a mask, and a tick causes no layout or style recalc beyond the stroke.
+- Under reduced motion it jumps straight to the value.
+
+Pick whichever of the SVG path on the host's rounded rect and the border mask is crisper at 1x and 2x, and record why.
 
 Gates, in Chromium and WebKit:
 - At progress 1 the stroke lies on the border along the full width.
