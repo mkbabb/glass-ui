@@ -119,7 +119,6 @@ anti-taffy bounds. NO live control (the proportion fence).
 | generic hover | `--scale-hover` | 1.08 | ≤1.10 | override |
 | press | `--scale-press` | 0.96 | ∈ [0.94,0.98] (no collapse) | override |
 | press (sm/btn) | `--scale-press-sm` | 0.97 | ∈ [0.94,0.98] | override |
-| tab squish cap | `--tab-indicator-max-stretch` | 1.08 | ≤1.20 (anti-taffy, the useLiquidFlex LOW cap) | override |
 
 ## Kind 5 — REVEAL/MORPH drive
 

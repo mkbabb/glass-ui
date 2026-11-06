@@ -117,10 +117,10 @@ test.describe("shell-identity (π lane — the home-region MEASURED-BAND readbac
             const box = (await link.boundingBox())!;
             expect(box, "the home-control rect must be measurable").not.toBeNull();
             // Measure the REST state (NO hover): the optical centering is a static-geometry
-            // property of the resting box. The hover register scales the control 1.1×
-            // (--scale-hover-dock) from its center, which perturbs the painted ink within a
-            // pre-hover clip rect — so the centering band is read at rest (the hover GLASS
-            // register is asserted separately in S5b).
+            // property of the resting box. A hover changes the control's fill and gleam
+            // (no dock control scales on hover), which would tint the ink read inside the
+            // clip rect — so the centering band is read at rest (the hover GLASS register is
+            // asserted separately in S5b).
             const buf = await page.screenshot({ clip: box });
             const probe = PNG.sync.read(buf);
             // The clip is at device pixels: derive the EFFECTIVE dpr from the buffer vs
