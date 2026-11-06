@@ -293,8 +293,8 @@ paint, so the release is a major, and the rest rides it. Two blocks written afte
 also ship in this release: _Amended after 9.0.0_ under §9.0.0 (the keyboard
 registry) and _Amended after 9.0.0_ under §8.1.0 (`darkModeSyncScript`'s `defaultDark`
 object form and write order). They are not repeated here. The non-breaking paint and
-default changes are listed under `CHANGELOG.md` 10.0.0; the one paint row below is the
-one that needs a decision from you.
+default changes are listed under `CHANGELOG.md` 10.0.0; the one paint row below is here
+because it changes what a reader sees enough to count as a break.
 
 Four more breaks are marked below: `cm-serif` leaves for `font-serif-math`, `useSidebarFollow` exempts by attribute,
 `parentId` names the direct parent, and `SegmentedTabs` goes generic (type-level:
