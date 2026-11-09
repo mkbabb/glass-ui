@@ -25,3 +25,14 @@ So W-I.8 has a second canonical case besides the theme fission: **the DockLayerG
 1. Specify the swap as one dock whose silhouette grows or shrinks on the dock spring, and whose content cross-fades inside it. Any part of the incoming layer that sits in its own plate (the tool's own control run, say) fissions out of, or fuses into, the dock on the same join spring. The A/B harness must measure it: the silhouette continuous, no % radius, the backdrop live mid-swap, and O-198 under PRM.
 2. Use value's dock on color.babb.dev (the value.js demo, read-only, or a fixture of its Tools → tool-view geometry) as the real-world witness.
 3. State the release. The swap's silhouette continuity may already partly exist in DockCrossfade (11.0.0). Say what 11.0.0 does today, measured, and what the cluster adds.
+
+## daraksha's live composition on 11.0.0 (value-js-63, 2026-11-09 evening): the fold's reference shape
+
+`daraksha` branch o1109-dock, `src/shell/SiteDock.vue` (read-only):
+- One GlassDock (`fit-content`, `collapse="closed"`, aria-label "Site").
+- Inside it, a DockLayerGroup of two faces: "pages", with four page icon seats, and "page", the page's own controls through a `#dock-page` teleport. The switcher shows only on pages that have controls, and arriving on one turns to its controls.
+- The khatam (theme toggle) in `#persistent-end`.
+- `#collapsed` holding the open page's icon, so the collapsed face is [page icon][khatam].
+- No CSS on glass internals and no `filter: url()`.
+
+The fold must say exactly how this becomes the cluster. The expected answer is that the khatam moves out of `#persistent-end` into its own theme member beside the one dock, fused at rest and while collapsed, and fissioned out to the side when the reader reaches for the dock. The one dock keeps its collapse and its layer group (R-8 ruled against this shape). Give the migration as a before-and-after template, so daraksha can adopt it without guessing.
