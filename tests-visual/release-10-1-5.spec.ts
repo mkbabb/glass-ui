@@ -1801,6 +1801,93 @@ test.describe("critique 8, coarse phone", () => {
 
 n1();
 
+/* ── p · critique round 9 (docs/release-10.1.5/critique-9.md P1, P2) ──────────────────
+   RED on the round-9 tip 51af0f9b5, GREEN after. The host resizes the dock while it
+   expands: the dock's own max inline size (horizontal) or its stage's block size
+   (vertical, into the band where the reserve yields), scheduled inside the page at
+   110 ms and at 300 ms after the expand. Every seat must hold still where the morph
+   settles. A seat's step is read net of the run's scroll, so WebKit's re-snap of a
+   shrunk snapport (critique 9 P3, v10.1.4's own) does not enter it. */
+
+type HostFrame = { morphing: boolean; s1: number; fits: boolean; over: boolean };
+
+function hostResizeFrames(page: Page, at: number, action: string, ms: number): Promise<HostFrame[]> {
+    return page.evaluate(
+        ({ at, action, ms }) =>
+            new Promise<HostFrame[]>((res) => {
+                const out: HostFrame[] = [];
+                const dock = document.querySelector<HTMLElement>(".glass-dock")!;
+                const run = dock.querySelector<HTMLElement>(".dock-run")!;
+                const s1 = document.querySelector<HTMLElement>('[data-witness="S1"]')!;
+                const v = dock.classList.contains("vertical");
+                const t0 = performance.now();
+                let done = false;
+                (window as unknown as { __dock: Dock7 }).__dock.expand();
+                const step = () => {
+                    const t = performance.now() - t0;
+                    if (!done && t >= at) {
+                        done = true;
+                        const [kind, px] = action.split(":");
+                        if (kind === "maxw") dock.style.maxInlineSize = `${px}px`;
+                        else document.querySelector<HTMLElement>('[data-witness="stage"]')!.style.blockSize = `${px}px`;
+                    }
+                    const r = s1.getBoundingClientRect();
+                    out.push({
+                        morphing: dock.hasAttribute("data-morphing"),
+                        s1: (v ? r.top + run.scrollTop : r.left + run.scrollLeft),
+                        fits: dock.hasAttribute("data-run-fits"),
+                        over: v ? run.scrollHeight > run.clientHeight : run.scrollWidth > run.clientWidth,
+                    });
+                    if (t < ms) requestAnimationFrame(step);
+                    else res(out);
+                };
+                requestAnimationFrame(step);
+            }),
+        { at, action, ms },
+    );
+}
+
+function p1(): void {
+    test("p1 a dock its host resizes mid-expand holds every seat at the settle (horizontal clamp, vertical yield band)", async ({
+        page,
+    }) => {
+        test.setTimeout(240_000);
+        const coarse = !!test.info().project.use.isMobile;
+        if (!coarse) await page.setViewportSize({ width: 1440, height: 800 });
+        const wide = encodeURIComponent("tab:Home,icon,icon,icon,icon,icon,icon,tab:Settings");
+        const four = encodeURIComponent("tab:Home,icon,icon,icon");
+        const cells: [string, string, string][] = [
+            ["h-to-220", `scene=dock&collapse=closed&kinds=${wide}`, "maxw:220"],
+            ["h4-to-200", `scene=dock&collapse=closed&kinds=${four}`, "maxw:200"],
+            [`v-to-${coarse ? 344 : 320}`, "scene=dock&collapse=closed&orientation=vertical&stageH=600&kinds=icon,icon,icon,icon,icon,icon", `stage:${coarse ? 344 : 320}`],
+        ];
+        const bad: unknown[] = [];
+        for (const [cell, query, action] of cells) {
+            for (const at of [110, 300]) {
+                await open7(page, query);
+                if (!coarse) await page.mouse.move(2, 790);
+                const fr = await hostResizeFrames(page, at, action, 1800);
+                const last = fr.findLastIndex((f) => f.morphing);
+                expect(last, `${cell}@${at}: the expand morphed`).toBeGreaterThan(0);
+                expect(last, `${cell}@${at}: the expand settled`).toBeLessThan(fr.length - 1);
+                const [a, b] = [fr[last]!, fr[last + 1]!];
+                const step = Math.abs(b.s1 - a.s1);
+                if (step > 0.5) bad.push({ cell, at, edge: "settle", step: +step.toFixed(2), a, b });
+                const end = fr.at(-1)!;
+                if (end.fits === end.over) bad.push({ cell, at, edge: "rest", flag: end.fits, overflows: end.over });
+            }
+        }
+        expect(bad, "seat steps over 0.5 px at the settle, or a rest flag that is not the layout's truth").toEqual([]);
+    });
+}
+
+test.describe("critique 9, coarse phone", () => {
+    test.use({ hasTouch: true, isMobile: true, viewport: { width: 390, height: 844 } });
+    p1();
+});
+
+p1();
+
 /* M3 · O-159 and O-160, read from the source (no browser state). */
 test("m3 O-159 the dock README names every DockProps member and no other", async () => {
     const { readFileSync } = await import("node:fs");

@@ -185,10 +185,10 @@ export function useDockExpandedSize(
         const summary = collapsedEl.value;
         if (!root || !contentEl.value || !full || !summary) return;
 
-        publishYield(root, full);
         const a = axis.value;
         const expanded = full.classList.contains("is-active");
-        if (!root.hasAttribute("data-morphing")) {
+        const morphing = root.hasAttribute("data-morphing");
+        if (!morphing) {
             const chrome = getSize(root, a) - getSize(expanded ? full : summary, a);
             if (expanded) expandedChrome = chrome;
             else collapsedChrome = chrome;
@@ -196,6 +196,15 @@ export function useDockExpandedSize(
 
         const expandedPx = keepScroll(full, () =>
             restSize(root, full, summary, a, expandedChrome),
+        );
+        // Mid-morph the run's port is laid out under the morph's chrome, so the rest port
+        // is the expanded endpoint less its chrome and the run's own edge, all at rest.
+        publishYield(
+            root,
+            full,
+            morphing && expandedChrome !== null && runEdge !== null
+                ? expandedPx - expandedChrome - runEdge
+                : undefined,
         );
         if (!expanded) {
             collapsedPx = keepScroll(full, () =>
@@ -229,19 +238,26 @@ export function useDockExpandedSize(
      * change. On a vertical run whose seats fit it also writes `--dock-run-room-block`,
      * half the room they leave, which the run's block reserve yields to.
      *
-     * IT IS THE EXPANDED RUN'S READING AT REST, held through every morph. It is read
-     * only while the full pane is the active one and no morph holds the root: at an
-     * expand's arm (post-flush, before `[data-morphing]`, the root laid out at its
-     * expanded rest), at rest expanded, and once more when a morph settles (`release`).
-     * Through an expand, a collapse and every reversal the run therefore keeps the yield
-     * it rests in at either end, so no seat moves when a morph starts or ends (O-166).
-     * While collapsed the full pane is out of flow and hidden, and the reading it held
-     * expanded stays until the next expand's arm re-reads it.
+     * IT IS THE EXPANDED RUN'S READING AT REST, in every frame. It is read only while
+     * the full pane is the active one. At rest (an expand's arm, post-flush and before
+     * `[data-morphing]`; at rest expanded; once more when a morph settles, `release`) the
+     * port is the run's own. Mid-expand the run lays out under the morph's chrome (the
+     * root's padding interpolates), so the port is the rest port instead: the expanded
+     * endpoint, which `restSize` reads with the host's constraint as at rest, less the
+     * expanded chrome and the run's edge (`runEdge`, its border box less its port), both
+     * read at rest. So a morph reads what its rest reads, and no seat moves when it
+     * starts or settles (O-166), while a host that resizes the dock mid-morph moves the
+     * flag and the room on the frame it lands, where the morph carries the change. While
+     * collapsing the full pane is out of flow, and the reading it held expanded stays
+     * until the next expand re-reads it.
      */
     let yieldPublished = "";
+    let runEdge: number | null = null;
 
-    function publishYield(root: HTMLElement, run: HTMLElement): void {
-        if (root.hasAttribute("data-morphing") || !run.classList.contains("is-active")) return;
+    function publishYield(root: HTMLElement, run: HTMLElement, restPort?: number): void {
+        if (!run.classList.contains("is-active")) return;
+        const morphing = root.hasAttribute("data-morphing");
+        if (morphing && restPort === undefined) return;
         const horizontal = axis.value === "horizontal";
         let start = Infinity;
         let end = -Infinity;
@@ -251,7 +267,9 @@ export function useDockExpandedSize(
             start = Math.min(start, offset);
             end = Math.max(end, offset + (horizontal ? seat.offsetWidth : seat.offsetHeight));
         }
-        const port = horizontal ? run.clientWidth : run.clientHeight;
+        const client = horizontal ? run.clientWidth : run.clientHeight;
+        if (!morphing) runEdge = getSize(run, axis.value) - client;
+        const port = restPort ?? client;
         const fits = end > start && end - start <= port;
         // The vertical reserve yields as padding (run.css THE VERTICAL RESERVE YIELDS
         // TOO): half the room the seats leave in the port. The port is the run's padding
@@ -390,6 +408,7 @@ export function useDockExpandedSize(
         seatBoxes.clear();
         seatsPublished = "";
         yieldPublished = "";
+        runEdge = null;
         const root = rootEl.value;
         if (!root) return;
         if (typeof ResizeObserver !== "undefined") {
