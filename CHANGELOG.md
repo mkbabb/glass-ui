@@ -1,6 +1,6 @@
 # Changelog
 
-## 11.0.0 — 2026-11-06
+## 11.0.0 — 2026-11-09
 
 A major release. It brings in everything from 10.1.3 and 10.1.4 below, and adds a
 quieter dock and tab register, per-figure docks, lighter entry bundles and a single
