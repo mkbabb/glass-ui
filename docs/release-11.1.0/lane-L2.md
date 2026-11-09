@@ -305,11 +305,25 @@ Logs and JSON in `lane-L2/gates/`, exit codes in `lane-L2/gates/chain.log`.
 Before the commit each changed suite ran green under `guarded --light`, and
 `npm run typecheck` was clean (exit 0).
 
-**The build-side chain (build, typecheck, demo:dist:build, vitest, verify:package with
-the bundle ratchet) is queued.** At 16:59 it stood second in the guard's heavy FIFO
-(13 waiters), behind slots held by four long-lived preview servers (timeouts 6 to 12 h)
-and one 90-minute run. The guard has not refused it; it waits. Its readings land in
-`gates/chain.log` and in a follow-up records commit.
+The chain waited about an hour for a heavy slot (second in a 13-deep FIFO behind four
+long-lived preview servers); the guard never refused it. It ran at 17:09 on a tree whose
+source is `8d3dc8d2d` (the commits after it before the run touch only `docs/`).
+
+| gate | result | exit |
+| --- | --- | --- |
+| `npm run build` | built | 0 |
+| `npm run typecheck` | clean | 0 |
+| `npm run demo:dist:build` | built | 0 |
+| `vitest run --maxWorkers=2` | 274 files; 2534 passed, 10 expected fail, 1 skipped | 0 |
+| `npm run verify:package` | `G-BUNDLE-RATCHET` increase 2914675 > 2903711 | 1 |
+| ratchet rebind 2903711 → 2914675 (+10,964 B), committed with this record | | |
+| `npm run verify:package` | CLEAN; roster 292/292 | 0 |
+
+**The rebind's reason.** The content bytes grow by this lane's new code and nothing else:
+the frame-coalescing helper and the Slider's hand, the Collapsible's own region and its
+grid-row rules, the menu's grow and recede keyframes, the chart entrance register (its
+module and stylesheet), the press-weight and tempo readers, the sampler's frame batch,
+and the card-swap keyframes and tokens (less the deleted lateral push).
 
 **e2e specs these items touch** (`a11y-slider`, `Select.bound`, `easing-primitive`,
 `dock-with-slider-live`), each engine, each tree, compared by title set:
