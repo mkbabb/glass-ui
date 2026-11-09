@@ -206,3 +206,13 @@ HEAD output: `FAIL … {"p3":true,"cfg":[{"cls":"goo-blob-canvas","colorSpace":"
 
 ## Addendum (2026-11-04): INBOUND O-153
 `setMood()` and `pulse()` on a demand-parked Blob wake the renderer for the motion they start, through the one scheduler O-104a's config redraw and O-112 (2)'s restore redraw use; the config half of the ask is §1's R2-03-06 row. Gate: value's HeroBlob on a quiescent engine: a `pulse()` (the save drip) and a `setMood()` paint on the next frame, and a config edit yields one new frame, ×2.
+
+## Addendum O-204 (value.js blob lane via value-js-63; owner order 2026-11-09: "satellite blobs and goo morphing needs to be more pronounced, less shaded")
+
+value has shipped everything config can reach on branch o1109-color-blob (56979e978): body 0.27, four 0.12 satellites at orbit 0.39, fissionAmp 0.8, morphT 0.3, shadow off. On ANGLE Metal over 10 s, lobes went from 0.25 to about 3, goo mass outside the body from 0.012 to 0.20, and body L spread from 0.25 to 0.044. The satellites still read as lobes fused to the body, not as separate beads. value names three engine causes. Two belong to this wave's colony and are bound here:
+
+1. **A bead's visible disc is its physical disc.** Today an orbiting satellite draws at opacity q = 0.75, and `sceneDistG` adds `(1 − opacity) · 0.3` to its SDF, which shrinks the disc by 0.075 uv, most of a 0.09 satellite. In the colony, opacity never inflates the SDF. A bead's silhouette radius equals its simulated radius (within 0.002 uv) whenever it is drawn, and fade, if any remains, is an opacity on the colour, never on the distance. Gate: a free bead's measured silhouette diameter matches 2r within 0.004 uv in both engines. The bite is restoring the inflation term.
+2. **Perturbation scales with the orbit.** Today's wobble (0.015–0.035 + 0.01–0.025) and `pertX`/`pertY` (0.03–0.08) are absolute uv, so a bead's reach near the containment ceiling is unpredictable. The colony has no closed-form orbit: its forces are dimensionless in the orbit radius, so a bead's excursion is a fixed fraction of its orbit. Gate: across orbit radii 0.25–0.45, the 99th-percentile excursion over orbit radius varies by at most 10 %, and no bead crosses the ceiling over 8 seeds × 60 s.
+3. The wrapper's `content-visibility: auto` clips the canvas overscan. This is a paint bug, not physics, so it ships in **11.1.0** (`docs/release-11.1.0/orchestrator-note-restraint.md` addendum).
+
+value then returns its body to 0.325 and lets detached beads orbit outside it. value holds this part and adopts it at its repin.
