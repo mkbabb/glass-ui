@@ -17,6 +17,7 @@ Ships: band 0 in 10.2.0; bands A to L in 11.0.0.
 | W-0.10 | 0 | F-71 (split: O-82) | one declared `reference` on PopoverContent and TooltipContent | — |
 | W-0.11 | 0 | F-31 (split: O-87 lighting tokens) | O-87's token-level refinement: lower blur radii, one-layer modal shadow, no dock glow; values from D3 | D3 |
 | W-0.12 | 0 | F-16 (split: L04-M33, a disease row) | the zero-width morph window decided and built on W-0.8's landed carrier: `.dock-layer--full`'s state rule takes the morph gate or is struck | — |
+| W-0.13 | 0 | — (O-192) | the demo site at glass.babb.dev: CF Pages `glass`, deploy on each published `v*` tag, infra precepts rewritten for glass | — |
 | W-0.7 | 0 | F-68 (split: 10.2.0 relay) | the 10.2.0 cut and the consumer relay | — |
 | W-A.1 | A | F-05 | visual harness repair | — |
 | W-A.2 | A | F-01, F-02, F-03, F-06, F-09 | W-REGISTER-COLLAPSE: 40-60 invariants, bites on shipped detectors, #10 sink struck, latches retired | — |
