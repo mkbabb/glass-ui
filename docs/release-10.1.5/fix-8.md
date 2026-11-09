@@ -106,7 +106,7 @@ I left it open and did not loosen the bound.
 | `npm run typecheck` | exit 0 |
 | `npm run build`, `npm run demo:dist:build` | exit 0, exit 0 |
 | `npx vitest run --maxWorkers=2` | 247/247 files; 2397 passed, 10 expected fail, 1 skipped |
-| `npm run verify:package` | the ratchet refused +84 B (2952772 > 2952688) on the uncommitted records; the rebind and its CLEAN re-run on the committed tree are below |
+| `npm run verify:package` | the ratchet refused +84 B (2952772 > 2952688), the same on the committed tree (`fix-8/verify-package-2.log`); rebound 2952688 → 2952772, then terminal CLEAN at 10.1.5 (`fix-8/verify-package-3.log`) |
 
 Tokens: no existing token value moves in this round. O-182's `--shadow-color` move is
 `9aaf0a79c`'s, named above. Nothing new is public; no export is removed or renamed.
