@@ -1,0 +1,590 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l1-v1100/tests-visual/playwright.config.ts",
+      "--project=chromium-headless-new",
+      "--workers=1",
+      "scroll-progress-rim.spec.ts",
+      "nav-dock-fix.spec.ts",
+      "dock-animation-live.spec.ts"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l1-v1100/tests-visual/playwright.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l1-v1100/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l1-v1100/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-headless-new",
+        "name": "chromium-headless-new",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l1-v1100/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l1-v1100/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "coarse-touch",
+        "name": "coarse-touch",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l1-v1100/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l1-v1100/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l1-v1100/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "safari-webgl.spec.ts",
+          "aurora-swraster.spec.ts",
+          "release-10-1-1.spec.ts",
+          "release-10-1-2.spec.ts",
+          "release-10-1-3.spec.ts",
+          "release-10-1-4.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/docs/release-11.1.0/lane-L1/gates/e2e-chromium-v1100.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 7941",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l1-v1100/",
+      "url": "http://localhost:7941",
+      "reuseExistingServer": true,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "dock-animation-live.spec.ts",
+      "file": "dock-animation-live.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "dock-animation-live (π lane — single-scalar, fail-CLOSED)",
+          "file": "dock-animation-live.spec.ts",
+          "line": 61,
+          "column": 6,
+          "specs": [
+            {
+              "title": "the dock box and --dock-morph-t morph on ONE clock (lead/lag ≤ 1 frame)",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 884,
+                      "error": {
+                        "message": "Error: --dock-morph-t ramped over only 0 rising frame(s) (< 5) — the single-scalar spring did NOT run (frozen at 0; the snap/desync regression)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m5\u001b[39m\nReceived:    \u001b[31m0\u001b[39m",
+                        "stack": "Error: --dock-morph-t ramped over only 0 rising frame(s) (< 5) — the single-scalar spring did NOT run (frozen at 0; the snap/desync regression)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m5\u001b[39m\nReceived:    \u001b[31m0\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l1-v1100/tests-visual/dock-animation-live.spec.ts:235:11",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l1-v1100/tests-visual/dock-animation-live.spec.ts",
+                          "column": 11,
+                          "line": 235
+                        },
+                        "snippet": "  233 |             risingScalar,\n  234 |             `--dock-morph-t ramped over only ${risingScalar} rising frame(s) (< ${MIN_MORPH_FRAMES}) — the single-scalar spring did NOT run (frozen at 0; the snap/desync regression)`,\n> 235 |         ).toBeGreaterThanOrEqual(MIN_MORPH_FRAMES);\n      |           ^\n  236 |\n  237 |         // The root box width must rise over ≥5 rising frames (a snap/freeze fails).\n  238 |         const risingWidth = countRising(tl.widths, 0.5);"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l1-v1100/tests-visual/dock-animation-live.spec.ts",
+                            "column": 11,
+                            "line": 235
+                          },
+                          "message": "Error: --dock-morph-t ramped over only 0 rising frame(s) (< 5) — the single-scalar spring did NOT run (frozen at 0; the snap/desync regression)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m5\u001b[39m\nReceived:    \u001b[31m0\u001b[39m\n\n  233 |             risingScalar,\n  234 |             `--dock-morph-t ramped over only ${risingScalar} rising frame(s) (< ${MIN_MORPH_FRAMES}) — the single-scalar spring did NOT run (frozen at 0; the snap/desync regression)`,\n> 235 |         ).toBeGreaterThanOrEqual(MIN_MORPH_FRAMES);\n      |           ^\n  236 |\n  237 |         // The root box width must rise over ≥5 rising frames (a snap/freeze fails).\n  238 |         const risingWidth = countRising(tl.widths, 0.5);\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l1-v1100/tests-visual/dock-animation-live.spec.ts:235:11"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-09T18:41:48.795Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l1-v1100/tests-visual/test-results/dock-animation-live-dock-a-bdb92-E-clock-lead-lag-≤-1-frame--chromium-headless-new/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l1-v1100/tests-visual/dock-animation-live.spec.ts",
+                        "column": 11,
+                        "line": 235
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "a3d0d96723f0c09c3fc1-70e009e965c31e8ed6e3",
+              "file": "dock-animation-live.spec.ts",
+              "line": 97,
+              "column": 5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "nav-dock-fix.spec.ts",
+      "file": "nav-dock-fix.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "W-NAV-DOCK-FIX — the nav-dock binding π",
+          "file": "nav-dock-fix.spec.ts",
+          "line": 70,
+          "column": 6,
+          "specs": [
+            {
+              "title": "light · mobile — nav-dock gestalt",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 826,
+                      "error": {
+                        "message": "Error: the rail renders mode=\"facets\"\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"facets\"\u001b[39m\nReceived: \u001b[31mnull\u001b[39m",
+                        "stack": "Error: the rail renders mode=\"facets\"\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"facets\"\u001b[39m\nReceived: \u001b[31mnull\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l1-v1100/tests-visual/nav-dock-fix.spec.ts:140:68",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l1-v1100/tests-visual/nav-dock-fix.spec.ts",
+                          "column": 68,
+                          "line": 140
+                        },
+                        "snippet": "  138 |                     return rail?.getAttribute(\"data-mode\") ?? null;\n  139 |                 });\n> 140 |                 expect(railMode, 'the rail renders mode=\"facets\"').toBe(\"facets\");\n      |                                                                    ^\n  141 |\n  142 |                 // Distinct per-facet --glass-accent (read the inline style hue).\n  143 |                 const accents = await page.evaluate(() => {"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l1-v1100/tests-visual/nav-dock-fix.spec.ts",
+                            "column": 68,
+                            "line": 140
+                          },
+                          "message": "Error: the rail renders mode=\"facets\"\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"facets\"\u001b[39m\nReceived: \u001b[31mnull\u001b[39m\n\n  138 |                     return rail?.getAttribute(\"data-mode\") ?? null;\n  139 |                 });\n> 140 |                 expect(railMode, 'the rail renders mode=\"facets\"').toBe(\"facets\");\n      |                                                                    ^\n  141 |\n  142 |                 // Distinct per-facet --glass-accent (read the inline style hue).\n  143 |                 const accents = await page.evaluate(() => {\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l1-v1100/tests-visual/nav-dock-fix.spec.ts:140:68"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-09T18:41:50.307Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l1-v1100/tests-visual/test-results/nav-dock-fix-W-NAV-DOCK-FI-e4817-·-mobile-—-nav-dock-gestalt-chromium-headless-new/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l1-v1100/tests-visual/nav-dock-fix.spec.ts",
+                        "column": 68,
+                        "line": 140
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "b6323a27afd682ee8a66-a2f993735f4e0197520e",
+              "file": "nav-dock-fix.spec.ts",
+              "line": 73,
+              "column": 13
+            },
+            {
+              "title": "light · desktop — nav-dock gestalt",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 834,
+                      "error": {
+                        "message": "Error: the rail renders mode=\"facets\"\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"facets\"\u001b[39m\nReceived: \u001b[31mnull\u001b[39m",
+                        "stack": "Error: the rail renders mode=\"facets\"\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"facets\"\u001b[39m\nReceived: \u001b[31mnull\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l1-v1100/tests-visual/nav-dock-fix.spec.ts:140:68",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l1-v1100/tests-visual/nav-dock-fix.spec.ts",
+                          "column": 68,
+                          "line": 140
+                        },
+                        "snippet": "  138 |                     return rail?.getAttribute(\"data-mode\") ?? null;\n  139 |                 });\n> 140 |                 expect(railMode, 'the rail renders mode=\"facets\"').toBe(\"facets\");\n      |                                                                    ^\n  141 |\n  142 |                 // Distinct per-facet --glass-accent (read the inline style hue).\n  143 |                 const accents = await page.evaluate(() => {"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l1-v1100/tests-visual/nav-dock-fix.spec.ts",
+                            "column": 68,
+                            "line": 140
+                          },
+                          "message": "Error: the rail renders mode=\"facets\"\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"facets\"\u001b[39m\nReceived: \u001b[31mnull\u001b[39m\n\n  138 |                     return rail?.getAttribute(\"data-mode\") ?? null;\n  139 |                 });\n> 140 |                 expect(railMode, 'the rail renders mode=\"facets\"').toBe(\"facets\");\n      |                                                                    ^\n  141 |\n  142 |                 // Distinct per-facet --glass-accent (read the inline style hue).\n  143 |                 const accents = await page.evaluate(() => {\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l1-v1100/tests-visual/nav-dock-fix.spec.ts:140:68"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-09T18:41:51.554Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l1-v1100/tests-visual/test-results/nav-dock-fix-W-NAV-DOCK-FI-c3b61--desktop-—-nav-dock-gestalt-chromium-headless-new/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l1-v1100/tests-visual/nav-dock-fix.spec.ts",
+                        "column": 68,
+                        "line": 140
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "b6323a27afd682ee8a66-d350a25bff6d09b8d827",
+              "file": "nav-dock-fix.spec.ts",
+              "line": 73,
+              "column": 13
+            },
+            {
+              "title": "dark · mobile — nav-dock gestalt",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 824,
+                      "error": {
+                        "message": "Error: the rail renders mode=\"facets\"\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"facets\"\u001b[39m\nReceived: \u001b[31mnull\u001b[39m",
+                        "stack": "Error: the rail renders mode=\"facets\"\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"facets\"\u001b[39m\nReceived: \u001b[31mnull\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l1-v1100/tests-visual/nav-dock-fix.spec.ts:140:68",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l1-v1100/tests-visual/nav-dock-fix.spec.ts",
+                          "column": 68,
+                          "line": 140
+                        },
+                        "snippet": "  138 |                     return rail?.getAttribute(\"data-mode\") ?? null;\n  139 |                 });\n> 140 |                 expect(railMode, 'the rail renders mode=\"facets\"').toBe(\"facets\");\n      |                                                                    ^\n  141 |\n  142 |                 // Distinct per-facet --glass-accent (read the inline style hue).\n  143 |                 const accents = await page.evaluate(() => {"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l1-v1100/tests-visual/nav-dock-fix.spec.ts",
+                            "column": 68,
+                            "line": 140
+                          },
+                          "message": "Error: the rail renders mode=\"facets\"\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"facets\"\u001b[39m\nReceived: \u001b[31mnull\u001b[39m\n\n  138 |                     return rail?.getAttribute(\"data-mode\") ?? null;\n  139 |                 });\n> 140 |                 expect(railMode, 'the rail renders mode=\"facets\"').toBe(\"facets\");\n      |                                                                    ^\n  141 |\n  142 |                 // Distinct per-facet --glass-accent (read the inline style hue).\n  143 |                 const accents = await page.evaluate(() => {\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l1-v1100/tests-visual/nav-dock-fix.spec.ts:140:68"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-09T18:41:52.866Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l1-v1100/tests-visual/test-results/nav-dock-fix-W-NAV-DOCK-FI-abc92-·-mobile-—-nav-dock-gestalt-chromium-headless-new/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l1-v1100/tests-visual/nav-dock-fix.spec.ts",
+                        "column": 68,
+                        "line": 140
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "b6323a27afd682ee8a66-4b04ac98f7107f7fa2a1",
+              "file": "nav-dock-fix.spec.ts",
+              "line": 73,
+              "column": 13
+            },
+            {
+              "title": "dark · desktop — nav-dock gestalt",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 4,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 830,
+                      "error": {
+                        "message": "Error: the rail renders mode=\"facets\"\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"facets\"\u001b[39m\nReceived: \u001b[31mnull\u001b[39m",
+                        "stack": "Error: the rail renders mode=\"facets\"\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"facets\"\u001b[39m\nReceived: \u001b[31mnull\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l1-v1100/tests-visual/nav-dock-fix.spec.ts:140:68",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l1-v1100/tests-visual/nav-dock-fix.spec.ts",
+                          "column": 68,
+                          "line": 140
+                        },
+                        "snippet": "  138 |                     return rail?.getAttribute(\"data-mode\") ?? null;\n  139 |                 });\n> 140 |                 expect(railMode, 'the rail renders mode=\"facets\"').toBe(\"facets\");\n      |                                                                    ^\n  141 |\n  142 |                 // Distinct per-facet --glass-accent (read the inline style hue).\n  143 |                 const accents = await page.evaluate(() => {"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l1-v1100/tests-visual/nav-dock-fix.spec.ts",
+                            "column": 68,
+                            "line": 140
+                          },
+                          "message": "Error: the rail renders mode=\"facets\"\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"facets\"\u001b[39m\nReceived: \u001b[31mnull\u001b[39m\n\n  138 |                     return rail?.getAttribute(\"data-mode\") ?? null;\n  139 |                 });\n> 140 |                 expect(railMode, 'the rail renders mode=\"facets\"').toBe(\"facets\");\n      |                                                                    ^\n  141 |\n  142 |                 // Distinct per-facet --glass-accent (read the inline style hue).\n  143 |                 const accents = await page.evaluate(() => {\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l1-v1100/tests-visual/nav-dock-fix.spec.ts:140:68"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-09T18:41:54.207Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l1-v1100/tests-visual/test-results/nav-dock-fix-W-NAV-DOCK-FI-5fb77--desktop-—-nav-dock-gestalt-chromium-headless-new/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l1-v1100/tests-visual/nav-dock-fix.spec.ts",
+                        "column": 68,
+                        "line": 140
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "b6323a27afd682ee8a66-972e140f3111db12d804",
+              "file": "nav-dock-fix.spec.ts",
+              "line": 73,
+              "column": 13
+            },
+            {
+              "title": "bottom-dock tab strip + persistent prev/next",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 5,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 719,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-09T18:41:55.556Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b6323a27afd682ee8a66-fe4195a39dc3e0adece7",
+              "file": "nav-dock-fix.spec.ts",
+              "line": 198,
+              "column": 5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "scroll-progress-rim.spec.ts",
+      "file": "scroll-progress-rim.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "aggregate and segmented progress share one thin radius-following masked rim",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 5889,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('progressbar', { name: 'Example scroll progress' })\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('progressbar', { name: 'Example scroll progress' })\u001b[22m\n",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('progressbar', { name: 'Example scroll progress' })\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('progressbar', { name: 'Example scroll progress' })\u001b[22m\n\n    at readRim (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l1-v1100/tests-visual/scroll-progress-rim.spec.ts:8:24)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l1-v1100/tests-visual/scroll-progress-rim.spec.ts:33:29",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l1-v1100/tests-visual/scroll-progress-rim.spec.ts",
+                      "column": 24,
+                      "line": 8
+                    },
+                    "snippet": "   6 |     const root = page.getByRole(\"progressbar\", { name: label });\n   7 |     const track = root.locator(\".scroll-progress-rim__track\");\n>  8 |     await expect(root).toBeVisible();\n     |                        ^\n   9 |     return {\n  10 |         root,\n  11 |         paint: await track.evaluate((element) => {"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l1-v1100/tests-visual/scroll-progress-rim.spec.ts",
+                        "column": 24,
+                        "line": 8
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('progressbar', { name: 'Example scroll progress' })\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('progressbar', { name: 'Example scroll progress' })\u001b[22m\n\n\n   6 |     const root = page.getByRole(\"progressbar\", { name: label });\n   7 |     const track = root.locator(\".scroll-progress-rim__track\");\n>  8 |     await expect(root).toBeVisible();\n     |                        ^\n   9 |     return {\n  10 |         root,\n  11 |         paint: await track.evaluate((element) => {\n    at readRim (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l1-v1100/tests-visual/scroll-progress-rim.spec.ts:8:24)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l1-v1100/tests-visual/scroll-progress-rim.spec.ts:33:29"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-09T18:41:56.377Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l1-v1100/tests-visual/test-results/scroll-progress-rim-aggreg-1eaea-radius-following-masked-rim-chromium-headless-new/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l1-v1100/tests-visual/scroll-progress-rim.spec.ts",
+                    "column": 24,
+                    "line": 8
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "3bbfa48be6c1eef7864f-43da892e95af4c5263c4",
+          "file": "scroll-progress-rim.spec.ts",
+          "line": 28,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-09T18:41:46.846Z",
+    "duration": 15520.769,
+    "expected": 1,
+    "skipped": 0,
+    "unexpected": 6,
+    "flaky": 0
+  }
+}
