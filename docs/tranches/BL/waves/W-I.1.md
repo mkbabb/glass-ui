@@ -497,3 +497,7 @@ Gates, in Chromium and WebKit:
 Delivered in the 11.1.0 feature run, and judged in the D2 dock design loop against N-16.
 
 The same relay asks whether the dock grammar covers small icon-only utility clusters (to-top, up, sidebar collapse) and filter-chip rows. It does: GlassDock with DockControl seats makes an icon cluster, and GlassDock hosting a SegmentedTabs or a toggle group in a seat makes a filter row, as parkway does. Any gap a consumer finds comes back as a row.
+
+## Addendum O-188 (Gregg, 2026-11-08): a gliding active mark on a DockControl nav run
+
+A DockControl run used as navigation gets one active mark that travels between tabs on `springPreset("dock")` instead of cutting. There is one mark per run, it rides the run's own coordinates (so it stays right while the run scrolls), and reduced motion cuts it. Gate: in Chromium and WebKit at 390 and 1440, changing the selected tab moves the mark through at least 3 painted intermediate positions, and under PRM it cuts in one frame.

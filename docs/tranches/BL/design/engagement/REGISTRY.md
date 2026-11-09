@@ -4117,3 +4117,7 @@ The checklist stays **CK-01..CK-27, unchanged**. Critics may not add rows. Pass 
 Q-14 stays with the owner. Machine law as §P14-8.2. THE STOP IS THE GUARD'S REFUSAL: an armed zone flag that still admits runs is a warning; a refused run stops that seat's runs, and the seat returns PARTIAL with its list unrun.
 
 **Convergence criterion: unchanged** (§P14-8.3). The clean-pass count after pass 14 is **0**. D5's convergence comes at **the close of pass 17 at the earliest**. **The R-K1-c vehicle moves with this registry: after pass 17 at the earliest.** atlas's M-7 stays until then.
+
+## D5 · Q-14 · OWNER RULING (2026-11-09)
+
+The owner answered Q-14 with **yes, settle then stop**. A released element may spring to rest within the dock spring's duration, and then all motion stops. This is branch (i), already the build default, so it now binds S15 and every later pass: no loop runs past release, and the settle is bounded by `springPreset("dock")`. CK-16 reads against this ruling.

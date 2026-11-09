@@ -85,3 +85,7 @@ Gates, in Chromium and WebKit, light and dark:
 - No mark carries a glow, a sheen or a shadow.
 
 Delivered in the 11.1.0 feature run.
+
+## Addendum O-190 (Gregg, 2026-11-08): off-screen marks
+
+HandMark settles a mark that is off-screen at mount, so it never draws in when the reader scrolls to it. This is the O-183 `trigger="in-view"` gap seen from the consumer side: with `in-view`, a mark first observed off-screen holds at its undrawn state until it intersects, then draws once. Gate: a mark mounted 2 viewports below the fold reads undrawn in paint until scrolled into view, then shows at least 3 draw-in frames.

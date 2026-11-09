@@ -182,3 +182,7 @@ Gates, in Chromium and WebKit, light and dark:
 - Reduced motion uses the 120 ms cut.
 
 Delivered in the 11.1.0 feature run.
+
+## Addendum O-189 (Gregg, 2026-11-08)
+
+Gregg asks for the same thing as O-171 R-1: Collapsible animates its height. No new scope; atlas is a second consumer witness for the gate.
