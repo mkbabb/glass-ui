@@ -1,0 +1,13 @@
+@import "tailwindcss" source("../../../../src");
+@import "tw-animate-css";
+@import "../../../../src/styles/index.css";
+
+body { margin: 0; background: var(--background); color: var(--foreground); }
+.scene { padding: 48px 24px; display: flex; flex-direction: column; gap: 32px; align-items: flex-start; }
+.slider-host { inline-size: min(340px, calc(100vw - 48px)); }
+.collapse-host { inline-size: min(340px, calc(100vw - 48px)); border: 1px solid var(--border); border-radius: 12px; padding: 8px; }
+.collapse-body { block-size: 120px; background: color-mix(in oklab, var(--primary) 20%, transparent); border-radius: 8px; }
+.vt-card { inline-size: min(340px, calc(100vw - 48px)); block-size: 220px; border-radius: 16px; display: grid; place-items: center; font-size: 28px; font-weight: 600; view-transition-name: gl-route-window; }
+.vt-a { background: #2f6fd1; color: white; }
+.vt-b { background: #d14f2f; color: white; }
+.chart { inline-size: min(340px, calc(100vw - 48px)); }
