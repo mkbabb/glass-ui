@@ -17,6 +17,7 @@ import {
     type Ref,
 } from "vue";
 import { useReducedMotion } from "../core/useReducedMotion";
+import { cascadeStaggerMs } from "./entranceRegister";
 
 export interface UseStaggerOptions {
     /** Count of staggered slots. Each slot maps to one boolean in `revealed`. */
@@ -24,11 +25,11 @@ export interface UseStaggerOptions {
     /**
      * Delay between consecutive reveals.
      *
-     * Default 80ms — mirrors the `--motion-stagger-default` token in
-     * `tokens.css` (AJ--κ canon). Consumers driving per-row CSS
-     * `animation-delay` cascades on the same surface should also read
-     * `--motion-stagger-default` so the JS-driven cascade (this composable)
-     * and the CSS-driven cascade stay in lockstep.
+     * Default: `cascadeStaggerMs(items)`, the 80ms `--motion-stagger-default`
+     * tightened so the whole cascade starts inside one `panel` duration (a long
+     * series spaces closer; three items keep 80ms). The CSS twin is the
+     * `.viz-*` entrance register's `--viz-stagger`, so a JS-driven cascade and a
+     * CSS-driven one on the same surface stay in lockstep.
      *
      * The two adjacent canon tiers are:
      *   - `--motion-stagger-tight: 40ms` — dense row cascades
@@ -70,7 +71,7 @@ export interface UseStaggerControls {
  */
 export function useStagger(options: UseStaggerOptions): UseStaggerControls {
     const itemCount = Math.max(0, Math.floor(options.items));
-    const delayMs = options.delayMs ?? 80;
+    const delayMs = options.delayMs ?? cascadeStaggerMs(itemCount);
     const initialDelayMs = options.initialDelayMs ?? 0;
     const immediate = options.immediate !== false;
     const respectReducedMotion = options.respectReducedMotion !== false;

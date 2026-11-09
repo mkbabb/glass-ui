@@ -54,6 +54,29 @@ layer default; `useLiquidReveal` is the source-rect bloom JS refinement (compose
 external CTA morphs onto a dock control). `popover-animate` + `slide-in-from-side` retired
 as a clean break.
 
+## The data-viz entrance register
+
+Chart marks enter on rows the spring table already has; there is no data-viz spring.
+`composables/motion/reveal/entranceRegister.ts` (`VIZ_ENTRANCE`) is the one record of
+which row lands which kind, and `styles/glass/viz-enter.css` is its CSS twin.
+
+| kind | class | row | how it enters |
+| --- | --- | --- | --- |
+| mark (a point, dot, glyph) | `.viz-mark` | `present` | scales up from its own centre and lands dead; no fade |
+| bar or area | `.viz-bar` | `panel` | a clip uncovers it from its baseline (`data-viz-from` names another edge); the row's rebound runs the clip past the bar's box, so the bar never draws past its value |
+| ripple, radial field | `.viz-ripple` | `bloom` | a circle clip opens from `--viz-ripple-at` |
+
+The cascade has one spacing: each item sets `--i`, the series sets `--viz-n`, and the
+spacing is `min(--motion-stagger-default, --spring-panel-duration / n)`, so a series of
+any length starts inside one `panel` duration. `useStagger` defaults to the same spacing
+(`cascadeStaggerMs`). Reduced motion draws every mark at rest. The Motion Lab story's
+"Chart entrances" section shows all three.
+
+The Collapsible's height and the menu plate's growth are the two disclosure geometries:
+the Collapsible transitions its grid row (`0fr` ↔ `1fr`) on `present`, which turns
+mid-flight where it stands; a menu plate is laid out at its final size and a clip
+uncovers it from its trigger on `bloom`. Neither fades in.
+
 ## useDragMorph — the pull/drag-to-morph-squish primitive (BB.W-DRAG-MORPH)
 
 The platform's ONE pull-gesture primitive: grab live chrome and pull it. Composes the kf

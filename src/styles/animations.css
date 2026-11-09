@@ -177,6 +177,84 @@
     }
 }
 
+/* THE MENU PLATE GROWS FROM ITS TRIGGER (glass/reveal.css, `data-reveal="menu"`).
+ * The plate is laid out at its final size from the first frame; a clip uncovers it from
+ * the edge that faces its trigger, starting as a strip the trigger's own height and
+ * ending past the plate by `--menu-grow-bleed` on every side, so the plate's shadow is
+ * already inside the clip when the animation ends and the clip lets go. Only the far
+ * edge travels; the rows never move or blur, and the plate never fades in. A plate on
+ * the trigger's top side (`data-side="top"`) grows upward, so its travelling edge is the
+ * top; every other side grows down from the top edge.
+ *
+ * The close runs the same clip back into the strip, holding full opacity until the
+ * last tenth and cutting there (the `90%` is the route grammar's opacity cut). */
+@keyframes glass-menu-grow {
+    from {
+        clip-path: inset(
+            calc(-1 * var(--menu-grow-bleed))
+                calc(-1 * var(--menu-grow-bleed))
+                calc(100% - var(--reka-popper-anchor-height, 0px))
+                calc(-1 * var(--menu-grow-bleed))
+                round var(--radius-ctx)
+        );
+    }
+    to {
+        clip-path: inset(calc(-1 * var(--menu-grow-bleed)) round var(--radius-ctx));
+    }
+}
+@keyframes glass-menu-grow-up {
+    from {
+        clip-path: inset(
+            calc(100% - var(--reka-popper-anchor-height, 0px))
+                calc(-1 * var(--menu-grow-bleed))
+                calc(-1 * var(--menu-grow-bleed))
+                calc(-1 * var(--menu-grow-bleed))
+                round var(--radius-ctx)
+        );
+    }
+    to {
+        clip-path: inset(calc(-1 * var(--menu-grow-bleed)) round var(--radius-ctx));
+    }
+}
+@keyframes glass-menu-recede {
+    0% {
+        clip-path: inset(calc(-1 * var(--menu-grow-bleed)) round var(--radius-ctx));
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        clip-path: inset(
+            calc(-1 * var(--menu-grow-bleed))
+                calc(-1 * var(--menu-grow-bleed))
+                calc(100% - var(--reka-popper-anchor-height, 0px))
+                calc(-1 * var(--menu-grow-bleed))
+                round var(--radius-ctx)
+        );
+        opacity: 0;
+    }
+}
+@keyframes glass-menu-recede-up {
+    0% {
+        clip-path: inset(calc(-1 * var(--menu-grow-bleed)) round var(--radius-ctx));
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        clip-path: inset(
+            calc(100% - var(--reka-popper-anchor-height, 0px))
+                calc(-1 * var(--menu-grow-bleed))
+                calc(-1 * var(--menu-grow-bleed))
+                calc(-1 * var(--menu-grow-bleed))
+                round var(--radius-ctx)
+        );
+        opacity: 0;
+    }
+}
+
 /* The reduced-motion EXIT — fade ONLY (no transform/blur frames, the vestibular
  * floor, WCAG 2.3.3). Still a keyframe reka can await (a transition-only fade
  * would be torn down the same way, and the surface would vanish rather than fade),

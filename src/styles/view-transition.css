@@ -54,10 +54,10 @@
      *
      *   route     nothing is continuous — the whole transition is the root cross-fade.
      *   zoom      forward into the tapped cell: inhale, extent morph, world recedes.
-     *   lateral   sibling to sibling: the coordinated push at the parallax ratio.
+     *   lateral   sibling to sibling: an opaque card swap, signed by the direction.
      *   collapse  back out: ease-in, opacity cut at the last tenth, world recovers last.
      *
-     * ALPHA IS CONSERVED IN EVERY CLASS, and that is the whole of G-NO-FLASH. The root pair
+     * ALPHA IS CONSERVED IN EVERY CLASS THAT FADES, and that is the whole of G-NO-FLASH. The root pair
      * cross-fades under `plus-lighter`, so the two halves must sum to 1 at every t: identical
      * durations, a LINEAR clock on both, and complementary keyframes. A spring curve on
      * either half makes the sum dip below 1 mid-flight, and a sum below 1 over a light page
@@ -78,15 +78,16 @@
         block-size: 100%;
     }
 
-    /* The conserved pair — one rule, every class. */
-    html:active-view-transition-type(route, zoom, lateral, collapse)::view-transition-old(root),
-    html:active-view-transition-type(route, zoom, lateral, collapse)::view-transition-new(root) {
+    /* The conserved pair — one rule, every class that fades. `lateral` does not fade
+       (below). */
+    html:active-view-transition-type(route, zoom, collapse)::view-transition-old(root),
+    html:active-view-transition-type(route, zoom, collapse)::view-transition-new(root) {
         animation-timing-function: linear;
     }
-    html:active-view-transition-type(route, zoom, lateral, collapse)::view-transition-old(root) {
+    html:active-view-transition-type(route, zoom, collapse)::view-transition-old(root) {
         animation-name: gl-vt-route-out;
     }
-    html:active-view-transition-type(route, zoom, lateral, collapse)::view-transition-new(root) {
+    html:active-view-transition-type(route, zoom, collapse)::view-transition-new(root) {
         animation-name: gl-vt-route-in;
     }
 
@@ -99,8 +100,8 @@
 
     /* ── The world, wherever a window travels. Its alpha rides the world clock in every
        class that has one, which is what puts the world's finish after the foreground's. */
-    html:active-view-transition-type(zoom, lateral)::view-transition-old(root),
-    html:active-view-transition-type(zoom, lateral)::view-transition-new(root) {
+    html:active-view-transition-type(zoom)::view-transition-old(root),
+    html:active-view-transition-type(zoom)::view-transition-new(root) {
         animation-duration: var(--route-world-clock);
     }
     html:active-view-transition-type(collapse)::view-transition-old(root),
@@ -131,20 +132,17 @@
         animation-fill-mode: both, backwards;
     }
 
-    /* lateral — the world trails the content at the parallax ratio. `--route-direction` is
-       written by the mechanism (+1 forward, −1 back, 0 unknown), so an unknown direction
-       degrades to a pure cross-fade rather than to a guessed push. */
+    /* lateral — the page does not fade and the world does not move. Everything outside
+       the window is cut at once: the departing root is not shown and the arriving root
+       is drawn as it is, so the only motion is the window's card swap below. Neither
+       root half blends, so nothing sums. */
     html:active-view-transition-type(lateral)::view-transition-old(root) {
-        animation-name: gl-vt-route-out, gl-route-world-push-out;
-        animation-duration: var(--route-world-clock), var(--route-world-clock);
-        animation-timing-function: linear, var(--route-world-spring);
-        animation-fill-mode: both, both;
+        animation: none;
+        opacity: 0;
     }
     html:active-view-transition-type(lateral)::view-transition-new(root) {
-        animation-name: gl-vt-route-in, gl-route-world-push-in;
-        animation-duration: var(--route-world-clock), var(--route-world-clock);
-        animation-timing-function: linear, var(--route-world-spring);
-        animation-fill-mode: both, both;
+        animation: none;
+        mix-blend-mode: normal;
     }
 
     /* ── The window — the ONE element that participates. The group carries the rect, so the
@@ -174,37 +172,40 @@
         animation-timing-function: var(--route-collapse-spring);
     }
 
-    /* The window's own pair is conserved too. `lateral` cross-fades over its whole clock,
-       because two sibling articles are equals replacing one another and both must be seen
-       travelling. `zoom` does NOT: I4 measures the artwork→surface crossfade at ~42ms, the
+    /* The window's own pair is conserved too. `lateral` does not cross-fade at all (its
+       card swap is below). `zoom` hands over fast: I4 measures the artwork→surface crossfade at ~42ms, the
        inhale's own window, and the reason is visible the moment it is authored otherwise —
        a source snapshot held at ×1.57 while the group scales it another 1.8× paints a
        3×-magnified ghost of the cell across the arriving page for the rest of the flight.
        The handover is the inhale; what flies the remaining distance is the destination. */
-    html:active-view-transition-type(zoom, lateral)::view-transition-old(gl-route-window),
-    html:active-view-transition-type(zoom, lateral)::view-transition-new(gl-route-window) {
-        animation-timing-function: linear;
-    }
     html:active-view-transition-type(zoom)::view-transition-old(gl-route-window),
     html:active-view-transition-type(zoom)::view-transition-new(gl-route-window) {
+        animation-timing-function: linear;
         animation-duration: var(--route-inhale-clock);
-    }
-    html:active-view-transition-type(lateral)::view-transition-old(gl-route-window),
-    html:active-view-transition-type(lateral)::view-transition-new(gl-route-window) {
-        animation-duration: var(--route-lateral-clock);
     }
     html:active-view-transition-type(zoom)::view-transition-new(gl-route-window) {
         animation-name: gl-vt-route-in;
     }
 
-    /* lateral moves the window itself: the two sibling articles occupy the SAME rect, so the
-       group has no travel to interpolate and the push has to be authored. Content by
-       `--route-slide`, world by an eighth of it — the 1:8 the codex measured. */
+    /* lateral — THE CARD SWAP. Both halves stay opaque and the new card is stacked
+       above the old (the image pair's own order), so there is no cross-fade to
+       conserve: the departing card recedes in place (it shrinks a little, sinks a little
+       and dims), and the arriving card slides in from the side the destination lies on,
+       `--route-direction` (+1 forward, −1 back, 0 unknown: scale and recede only). The
+       group still carries the rect, so a change of size between the two cards animates
+       on the same spring. One spring drives the group and both halves. */
+    html:active-view-transition-type(lateral)::view-transition-old(gl-route-window),
     html:active-view-transition-type(lateral)::view-transition-new(gl-route-window) {
-        animation-name: gl-vt-route-in, gl-route-slide-in;
-        animation-duration: var(--route-lateral-clock), var(--route-lateral-clock);
-        animation-timing-function: linear, var(--route-lateral-spring);
-        animation-fill-mode: both, both;
+        animation-duration: var(--route-lateral-clock);
+        animation-timing-function: var(--route-lateral-spring);
+        animation-fill-mode: both;
+        mix-blend-mode: normal;
+    }
+    html:active-view-transition-type(lateral)::view-transition-old(gl-route-window) {
+        animation-name: gl-route-card-recede;
+    }
+    html:active-view-transition-type(lateral)::view-transition-new(gl-route-window) {
+        animation-name: gl-route-card-enter;
     }
 
     /* THE INHALE — the tapped body acknowledges the tap before it becomes anything else.
@@ -216,12 +217,6 @@
         animation-duration: var(--route-inhale-clock), var(--route-inhale-clock);
         animation-timing-function: linear, var(--ease-out);
         animation-fill-mode: both, forwards;
-    }
-    html:active-view-transition-type(lateral)::view-transition-old(gl-route-window) {
-        animation-name: gl-vt-route-out, gl-route-slide-out;
-        animation-duration: var(--route-lateral-clock), var(--route-lateral-clock);
-        animation-timing-function: linear, var(--route-lateral-spring);
-        animation-fill-mode: both, both;
     }
 
     /* THE OPACITY CUT — the return holds its picture and then cuts, rather than dissolving.
@@ -248,7 +243,7 @@
     }
 
     /* AN UNMATCHED WINDOW RIDES THE ROOT PAIR. Every rule above clocks the window on the
-       HANDOVER — the inhale's 42ms, the lateral's push, the cut's last tenth — and a handover
+       HANDOVER — the inhale's 42ms, the lateral's swap, the cut's last tenth — and a handover
        clock is only correct when there is something to hand over from. A half with no partner
        is composited over the ROOT pair instead of against a twin, so on its own clock it
        reaches α=1 while the root pair is still conserving to 1, and the rect it covers sums to
@@ -263,15 +258,29 @@
        pair's own keyframe on the ROOT pair's own clock. That clock is per class, so these
        forks are too. `:only-child` is the runtime's own word for "this pair has one half" —
        the same selector the `.gl-list-item` group uses two rules below. */
-    html:active-view-transition-type(zoom, lateral)::view-transition-old(gl-route-window):only-child {
+    html:active-view-transition-type(zoom)::view-transition-old(gl-route-window):only-child {
         animation-name: gl-vt-route-out;
         animation-duration: var(--route-world-clock);
         animation-timing-function: linear;
         animation-fill-mode: both;
     }
-    html:active-view-transition-type(zoom, lateral)::view-transition-new(gl-route-window):only-child {
+    html:active-view-transition-type(zoom)::view-transition-new(gl-route-window):only-child {
         animation-name: gl-vt-route-in;
         animation-duration: var(--route-world-clock);
+        animation-timing-function: linear;
+        animation-fill-mode: both;
+    }
+    /* `lateral` has no root fade to conserve against: an unpartnered card fades out or
+       in on the handover clock, the one place the swap keeps an opacity channel. */
+    html:active-view-transition-type(lateral)::view-transition-old(gl-route-window):only-child {
+        animation-name: gl-vt-route-out;
+        animation-duration: var(--route-inhale-clock);
+        animation-timing-function: linear;
+        animation-fill-mode: both;
+    }
+    html:active-view-transition-type(lateral)::view-transition-new(gl-route-window):only-child {
+        animation-name: gl-vt-route-in;
+        animation-duration: var(--route-inhale-clock);
         animation-timing-function: linear;
         animation-fill-mode: both;
     }
@@ -369,27 +378,20 @@
     }
 }
 
-/* The parallax pair — the world moves at an eighth of the content, in the direction the
- * mechanism wrote. At `--route-direction: 0` both legs are zero and the class degrades to
- * the conserved cross-fade, which is the honest read of "we do not know which way". */
-@keyframes gl-route-world-push-out {
+/* THE CARD SWAP — the lateral pair. The departing card recedes in place; the arriving
+ * card travels in from the destination's side and grows the last 2% to full size. At
+ * `--route-direction: 0` the arrival has no travel. */
+@keyframes gl-route-card-recede {
     to {
-        translate: calc(var(--route-direction, 0) * -1 * var(--route-world-slide)) 0;
+        scale: var(--route-card-recede);
+        translate: 0 var(--route-card-sink);
+        filter: brightness(var(--route-card-dim));
     }
 }
-@keyframes gl-route-world-push-in {
+@keyframes gl-route-card-enter {
     from {
-        translate: calc(var(--route-direction, 0) * var(--route-world-slide)) 0;
-    }
-}
-@keyframes gl-route-slide-out {
-    to {
-        translate: calc(var(--route-direction, 0) * -1 * var(--route-slide)) 0;
-    }
-}
-@keyframes gl-route-slide-in {
-    from {
-        translate: calc(var(--route-direction, 0) * var(--route-slide)) 0;
+        scale: var(--route-card-enter-scale);
+        translate: calc(var(--route-direction, 0) * var(--route-card-travel)) 0;
     }
 }
 

@@ -96,20 +96,55 @@
         animation-timing-function: var(--spring-present);
     }
 
-    .disclosure-content[data-disclosure="collapsible"] {
-        --disclosure-content-size: var(--reka-collapsible-content-height);
-    }
-
     .disclosure-content[data-disclosure="accordion"] {
         --disclosure-content-size: var(--reka-accordion-content-height);
     }
 
-    .disclosure-content[data-state="open"] {
+    .disclosure-content[data-disclosure="accordion"][data-state="open"] {
         animation-name: disclosure-open;
     }
 
-    .disclosure-content[data-state="closed"] {
+    .disclosure-content[data-disclosure="accordion"][data-state="closed"] {
         animation-name: disclosure-close;
+    }
+
+    /* The Collapsible's height is its grid row: `0fr` closed, `1fr` open, on the
+       `present` spring. A transition starts from the current value, so a reversal
+       mid-flight turns where it stands; nothing is measured and nothing fades. The
+       clip is the row's one child: `min-block-size: 0` lets the row reach zero, and
+       the content inside it keeps its final layout while the edge travels.
+       `--collapsible-gap` is the space between the trigger and the content. It sits
+       inside the clip, so it opens and closes with the height (a `gap` on the root
+       would appear in one frame when the region mounts). */
+    .disclosure-content[data-disclosure="collapsible"] {
+        display: grid;
+        grid-template-rows: 1fr;
+        transition: grid-template-rows var(--spring-present-duration) var(--spring-present);
+    }
+
+    .disclosure-content[data-disclosure="collapsible"][hidden] {
+        display: none;
+    }
+
+    .disclosure-content[data-disclosure="collapsible"][data-state="closed"] {
+        grid-template-rows: 0fr;
+    }
+
+    @starting-style {
+        .disclosure-content[data-disclosure="collapsible"][data-state="open"] {
+            grid-template-rows: 0fr;
+        }
+    }
+
+    .disclosure-content-clip {
+        min-block-size: 0;
+        overflow: hidden;
+    }
+
+    .disclosure-content-clip::before {
+        content: "";
+        display: block;
+        block-size: var(--collapsible-gap, 0px);
     }
 
     .disclosure-content-body {
@@ -121,6 +156,10 @@
     @media (prefers-reduced-motion: reduce) {
         .disclosure-content {
             animation-duration: 0.01ms;
+        }
+
+        .disclosure-content[data-disclosure="collapsible"] {
+            transition-duration: 0.01ms;
         }
 
         .disclosure-icon {

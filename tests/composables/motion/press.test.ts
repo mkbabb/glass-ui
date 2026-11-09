@@ -116,38 +116,48 @@ describe("useLiquidPress", () => {
         expect(mounted.result.pressStyle.value).toBe(restStyle);
         expect(spy).not.toHaveBeenCalledWith(el);
 
-        // A press still couples the cap to the element's live weight.
+        // A press still couples the cap to the element's weight, read once as the press
+        // begins and never again while the spring moves.
         mounted.result.press();
         await settle(4);
         expect(mounted.result.pressStyle.value.scale).toBeDefined();
-        expect(spy).toHaveBeenCalledWith(el);
+        const reads = spy.mock.calls.filter(([target]) => target === el).length;
+        expect(reads).toBe(1);
+        await settle(8);
+        void mounted.result.pressStyle.value;
+        expect(spy.mock.calls.filter(([target]) => target === el).length).toBe(reads);
 
         mounted.unmount();
         el.remove();
     });
 
-    // B7c C3-5: the per-control `:root` tempo read. Every spring read `--motion-tempo`
-    // off `:root` at construction, one forced style read per pressable control.
-    it("reads the root tempo once for a batch of controls mounted in one task", async () => {
+    // The `:root` tempo is one shared value: read once, and again only after its source
+    // changes. A scene of pressable controls mounting reads no style at all.
+    it("reads the root tempo only when its source changes", async () => {
         const spy = vi.spyOn(window, "getComputedStyle");
+        const rootReads = () =>
+            spy.mock.calls.filter(([el]) => el === document.documentElement).length;
         const mounted = Array.from({ length: 12 }, () =>
             mountComposable(() => useLiquidPress({ squish: false })),
         );
-        const rootReads = spy.mock.calls.filter(
-            ([el]) => el === document.documentElement,
-        ).length;
-        expect(rootReads).toBe(1);
+        expect(rootReads()).toBeLessThanOrEqual(1);
 
-        // A tempo set between tasks still reaches the next mount.
+        // A later scene, nothing changed: no read.
         await Promise.resolve();
-        document.documentElement.style.setProperty("--motion-tempo", "0.5");
-        const later = mountComposable(() => useLiquidPress({ squish: false }));
-        expect(
-            spy.mock.calls.filter(([el]) => el === document.documentElement).length,
-        ).toBe(2);
+        const before = rootReads();
+        const scene = Array.from({ length: 12 }, () =>
+            mountComposable(() => useLiquidPress({ squish: false })),
+        );
+        expect(rootReads()).toBe(before);
 
-        document.documentElement.style.removeProperty("--motion-tempo");
+        // A tempo set on <html>, even in the same task, reaches the next mount.
+        document.documentElement.setAttribute("data-tempo-probe", "");
+        const later = mountComposable(() => useLiquidPress({ squish: false }));
+        expect(rootReads()).toBe(before + 1);
+
+        document.documentElement.removeAttribute("data-tempo-probe");
         later.unmount();
+        for (const m of scene) m.unmount();
         for (const m of mounted) m.unmount();
     });
 });

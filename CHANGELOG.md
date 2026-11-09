@@ -40,6 +40,86 @@ A minor release: new things you can opt into, and nothing you need to change.
   </GlassDock>
   ```
 
+### Motion and forms
+
+- **Dragging a `Slider` sends one update per frame.** A fast pointer can deliver two or
+  more moves between frames, and each one used to reach your `v-model`, so your code ran
+  for values nobody saw. During a drag the slider now sends at most one
+  `update:modelValue` per frame, always the latest value, and sends the last one before
+  `valueCommit`, so the commit always matches where the pointer let go. Arrow keys, Page
+  Up and Down, Home and End still update at once.
+
+- **A `Slider` you drive from a clock no longer fights the hand.** If your code writes
+  `modelValue` continuously, say a playback clock moving a scrubber, the slider now holds
+  the value under the pointer from the moment it is pressed until it is released, and
+  then follows your model again from where the hand left it, with no jump. Two new
+  events tell you when the hand has it, so you can pause your clock: `grab` when a
+  pointer takes the slider, and `release` (with the value it left) when it lets go.
+
+  ```vue
+  <Slider
+      v-model="position"
+      variant="scrubber"
+      @grab="clock.pause()"
+      @release="clock.resume()"
+  />
+  ```
+
+- **`Collapsible` animates its height, and you can turn it around mid-flight.** The
+  content grows to its own height and gives it back on close, without fading, and a
+  press while it is moving turns it around from where it is rather than jumping. To space
+  the content from its trigger, set `--collapsible-gap` on the `Collapsible` (for
+  example `class="[--collapsible-gap:--spacing(3)]"`) instead of a `gap` on the root: the
+  space then opens and closes with the content, where a `gap` appears and disappears in
+  one frame. The content now sits inside one extra wrapper, so a style that targeted the
+  content's direct children with `>` should drop the `>`.
+
+- **Menus grow from their trigger.** `Select`, `DropdownMenu` and the other menus no
+  longer bloom and fade in. The list is laid out at its full size and opens from the edge
+  facing its trigger, starting as a strip the trigger's height, so the rows stay still
+  and sharp while the edge travels. Closing runs the same way back and lets go at the
+  very end. With reduced motion turned on, a menu fades in and out quickly instead.
+
+- **Chart entrances.** Three new classes animate the marks of a chart as they arrive,
+  each on a spring the library already uses: `.viz-bar` grows a bar from its baseline
+  (it never draws past its value, even as the spring settles), `.viz-mark` lands a point
+  or glyph in place, and `.viz-ripple` opens a radial field from a point. Set `--i` on
+  each mark and `--viz-n` on the series, and the cascade is spaced so a series of any
+  length starts within one bar's growth. A bar that hangs from the top or runs
+  sideways takes `data-viz-from="top"`, `"left"` or `"right"`. With reduced motion
+  turned on, the marks are simply drawn.
+
+  ```vue
+  <g :style="{ '--viz-n': values.length }">
+      <rect
+          v-for="(v, i) in values"
+          :key="i"
+          class="viz-bar"
+          :style="{ '--i': i }"
+          …
+      />
+  </g>
+  ```
+
+- **`useStagger` spaces long series closer.** Without an explicit `delayMs`, it now uses
+  the same spacing as the chart entrances: 80 ms apart for a short series, closer for a
+  long one, so the whole cascade starts within the same short window. Pass `delayMs` to
+  keep a fixed spacing.
+
+- **Mounting a page full of controls is lighter.** Pressable controls no longer read
+  the page's motion settings from computed style as they mount (the value is read once
+  and kept until it can have changed), a press reads its element's motion weight once
+  when it begins rather than on every frame, and a glass surface that samples the
+  brightness behind it takes its first sample on the next frame, together with every
+  other surface mounting at the same time, instead of inside the mount.
+
+- **The `lateral` route transition is a card swap.** Moving between sibling pages with
+  the `lateral` type no longer fades the page. The page you leave recedes slightly in
+  place, and the new page slides in over it from the side it lies on, set by
+  `--route-direction` (`1` forward, `-1` back). With no direction it simply settles into
+  place. Everything outside the moving page changes at once, and with reduced motion
+  turned on, nothing animates.
+
 ## 11.0.0 — 2026-11-09
 
 A major release. It brings in everything from 10.1.3 and 10.1.4 below, and adds a

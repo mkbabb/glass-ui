@@ -42,16 +42,19 @@ describe("useGlassBackdropLuminance · live re-sampling", () => {
         });
         target.value = surface;
         await nextTick();
-        await vi.advanceTimersByTimeAsync(0);
+        // The mount asks for its first sample on the next frame, never in the mounting
+        // task.
+        expect(samples).toBe(0);
+        await vi.advanceTimersByTimeAsync(32);
         return { mounted, count: () => samples };
     }
 
-    it("requests no animation frame while the field is still", async () => {
-        const raf = vi.spyOn(window, "requestAnimationFrame");
+    it("samples once on the frame after mount, then requests no frame while the field is still", async () => {
         const { mounted, count } = await mountObserver();
         const afterMount = count();
         expect(afterMount).toBeGreaterThanOrEqual(1);
 
+        const raf = vi.spyOn(window, "requestAnimationFrame");
         await vi.advanceTimersByTimeAsync(2000);
 
         expect(raf).not.toHaveBeenCalled();

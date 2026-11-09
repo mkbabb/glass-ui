@@ -32,7 +32,7 @@
    |-----------------|------------|------------------------|
    | route           | present    | duration               |  the chrome-only cut: nothing is continuous, so the whole transition is the alpha-conserving root cross-fade.
    | zoom            | panel      | duration               |  forward into the tapped cell: the extent morph, whose intrinsic peak IS the landing bloom.
-   | lateral         | dock       | duration               |  sibling to sibling: the coordinated push.
+   | lateral         | dock       | duration               |  sibling to sibling: an opaque card swap; the world does not move.
    | collapse        | (bezier)   | panel exit-duration    |  back out: `--ease-in`, never a spring, on the exit reader of the row it reverses.
 
    This block is a MIRROR of `composables/motion/route/routeGrammar.ts`, not a second
@@ -128,16 +128,19 @@
        `--glass-blur-overlay-radius` at 22px, is the ladder's top and belongs to overlay
        surfaces; a world receding behind a window is not one. The dim is the corpus's ~45%
        drop, on `brightness` so chroma survives (§9 item 1) and so the alpha channel stays
-       free for the cross-fade. Travel is the parallax ratio over the block viewport — the
-       same 1:8 that governs the lateral push, spent once. */
+       free for the cross-fade. Travel is the parallax ratio over the block viewport. */
     --route-world-blur: var(--glass-blur-floating-radius);
     --route-world-dim: 0.55;
     --route-world-travel: calc(var(--route-parallax) * 100lvb);
-    /* The lateral pair, and the whole of "parallax ~1:8": the content offsets by an
-       eighth of the inline viewport — a nudge, never a carousel (I4b: "the neighbours do
-       not move") — and the world behind it by an eighth of THAT. */
-    --route-slide: calc(var(--route-parallax) * 100lvi);
-    --route-world-slide: calc(var(--route-parallax) * var(--route-slide));
+    /* The lateral card swap. The departing card recedes in place: it shrinks to
+       `--route-card-recede`, sinks by `--route-card-sink` of its own height and dims to
+       `--route-card-dim`. The arriving card travels `--route-card-travel` from the
+       destination's side and grows from `--route-card-enter-scale`. Nothing fades. */
+    --route-card-recede: 0.94;
+    --route-card-sink: 1.5%;
+    --route-card-dim: 0.92;
+    --route-card-travel: min(6rem, 24vw);
+    --route-card-enter-scale: 0.98;
 
     /* ── Named exit clock ──
        The overlay register's recede reads the exit clock DERIVED from the row it
