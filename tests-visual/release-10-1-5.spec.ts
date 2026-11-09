@@ -1649,11 +1649,16 @@ function m5(): void {
                 const png = PNG.sync.read(await page.screenshot({ clip, scale: "css" }));
                 const lum = (i: number) => 0.2126 * png.data[i]! + 0.7152 * png.data[i + 1]! + 0.0722 * png.data[i + 2]!;
                 const ground = lum(0);
+                // The plate's own antialiased edge is not the band. The clip's origin is
+                // fractional (the plate sits at x 66.59 at 390), and WebKit rounds it where
+                // Chromium does not, so that edge pixel lands up to 2 px past the box in
+                // the capture: E excludes it by distance, and a halo is anything further out.
+                const E = 2;
                 let lighter = 0;
                 let worst = 0;
                 for (let y = 0; y < png.height; y += 1)
                     for (let x = 0; x < png.width; x += 1) {
-                        if (x >= B - 1 && x < png.width - B + 1 && y >= B - 1 && y < png.height - B + 1) continue;
+                        if (x >= B - E && x < png.width - B + E && y >= B - E && y < png.height - B + E) continue;
                         const d = lum((y * png.width + x) * 4) - ground;
                         if (d > 1.5) lighter += 1;
                         worst = Math.max(worst, d);
@@ -1718,6 +1723,83 @@ test.describe("critique 7, coarse phone", () => {
 });
 
 m();
+
+/* ── n · critique round 8 (docs/release-10.1.5/critique-8.md N1) ─────────────────────
+   RED on the round-8 tip 3592aeb0d, GREEN after. */
+
+type SeatFrame = { morphing: boolean; s1: number; s6: number };
+
+/** S1's top and S6's bottom, painted, every frame for `ms` from now. */
+function seatFrames(page: Page, ms: number): Promise<SeatFrame[]> {
+    return page.evaluate(
+        (ms) =>
+            new Promise<SeatFrame[]>((res) => {
+                const out: SeatFrame[] = [];
+                const dock = document.querySelector<HTMLElement>(".glass-dock")!;
+                const s1 = document.querySelector<HTMLElement>('[data-witness="S1"]')!;
+                const s6 = document.querySelector<HTMLElement>('[data-witness="S6"]')!;
+                const t0 = performance.now();
+                const step = () => {
+                    out.push({
+                        morphing: dock.hasAttribute("data-morphing"),
+                        s1: s1.getBoundingClientRect().top,
+                        s6: s6.getBoundingClientRect().bottom,
+                    });
+                    if (performance.now() - t0 < ms) requestAnimationFrame(step);
+                    else res(out);
+                };
+                requestAnimationFrame(step);
+            }),
+        ms,
+    );
+}
+
+/** N1: the seats of a fitting vertical run hold still where a morph starts and settles. */
+function n1(): void {
+    test("n1 a fitting vertical dock's seats do not step at the expand's settle or the collapse's start, across the fit edge", async ({
+        page,
+    }) => {
+        test.setTimeout(240_000);
+        await page.setViewportSize({ width: 1440, height: 800 });
+        const bad: unknown[] = [];
+        let yielded = 0;
+        for (let stageH = 316; stageH <= 348; stageH += 8) {
+            await open7(page, `scene=dock&collapse=closed&orientation=vertical&stageH=${stageH}&kinds=icon,icon,icon,icon,icon,icon`);
+            await page.mouse.move(1430, 790);
+            const expand = seatFrames(page, 1600);
+            await page.evaluate(() => (window as unknown as { __dock: Dock7 }).__dock.expand());
+            const e = await expand;
+            const pad = await page.evaluate(() => getComputedStyle(document.querySelector(".glass-dock .dock-run")!).paddingTop);
+            if (Number.parseFloat(pad) < 6.5) yielded += 1;
+            const last = e.findLastIndex((f) => f.morphing);
+            expect(last, `${stageH}: the expand morphed and settled`).toBeGreaterThan(0);
+            expect(last, `${stageH}: the expand settled`).toBeLessThan(e.length - 1);
+            const [a, b] = [e[last]!, e[last + 1]!];
+            const settleStep = Math.max(Math.abs(b.s1 - a.s1), Math.abs(b.s6 - a.s6));
+            if (settleStep > 0.5) bad.push({ stageH, edge: "expand settle", pad, a, b });
+
+            const collapse = seatFrames(page, 700);
+            // The rest frames before the collapse are the baseline its first frame is read against.
+            await page.waitForTimeout(100);
+            await page.evaluate(() => (window as unknown as { __dock: Dock7 }).__dock.collapse());
+            const c = await collapse;
+            const firstM = c.findIndex((f) => f.morphing);
+            expect(firstM, `${stageH}: the collapse morphed`).toBeGreaterThan(0);
+            const [p, q] = [c[firstM - 1]!, c[firstM]!];
+            const startStep = Math.max(Math.abs(q.s1 - p.s1), Math.abs(q.s6 - p.s6));
+            if (startStep > 0.5) bad.push({ stageH, edge: "collapse start", pad, p, q });
+        }
+        expect(yielded, "the sweep reaches docks whose reserve yields").toBeGreaterThan(0);
+        expect(bad, "seat steps over 0.5 px at a morph's edge").toEqual([]);
+    });
+}
+
+test.describe("critique 8, coarse phone", () => {
+    test.use({ hasTouch: true, isMobile: true, viewport: { width: 390, height: 844 } });
+    n1();
+});
+
+n1();
 
 /* M3 · O-159 and O-160, read from the source (no browser state). */
 test("m3 O-159 the dock README names every DockProps member and no other", async () => {

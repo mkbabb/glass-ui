@@ -228,10 +228,20 @@ export function useDockExpandedSize(
      * wherever an endpoint is, since the same observers see the port and the seats
      * change. On a vertical run whose seats fit it also writes `--dock-run-room-block`,
      * half the room they leave, which the run's block reserve yields to.
+     *
+     * IT IS THE EXPANDED RUN'S READING AT REST, held through every morph. It is read
+     * only while the full pane is the active one and no morph holds the root: at an
+     * expand's arm (post-flush, before `[data-morphing]`, the root laid out at its
+     * expanded rest), at rest expanded, and once more when a morph settles (`release`).
+     * Through an expand, a collapse and every reversal the run therefore keeps the yield
+     * it rests in at either end, so no seat moves when a morph starts or ends (O-166).
+     * While collapsed the full pane is out of flow and hidden, and the reading it held
+     * expanded stays until the next expand's arm re-reads it.
      */
     let yieldPublished = "";
 
     function publishYield(root: HTMLElement, run: HTMLElement): void {
+        if (root.hasAttribute("data-morphing") || !run.classList.contains("is-active")) return;
         const horizontal = axis.value === "horizontal";
         let start = Infinity;
         let end = -Infinity;
@@ -491,6 +501,8 @@ export function useDockExpandedSize(
         if (!root) return;
         for (const el of [root, ...rigidRegions(root), contentEl.value]) el?.style.removeProperty(ORIGIN);
         for (const pane of panes()) pane.style.removeProperty(PANE_SHIFT);
+        // At a settle (the morph flag already cleared) the run is at rest again.
+        if (expandedEl.value) publishYield(root, expandedEl.value);
     }
 
     function anchor(): void {

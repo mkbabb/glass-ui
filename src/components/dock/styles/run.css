@@ -413,10 +413,11 @@
        where it is. Under `data-run-fits` each end's reserve is the smaller of the reserve
        and half the room the seats leave, `--dock-run-room-block` (dockMorphMeasure.ts,
        from the same reading that sets the flag), so the flag and `scrollHeight =
-       clientHeight` are one fact. It yields only on an expanded dock at rest: through a
-       morph the run holds its whole reserve, so the panes the morph moves (a leaving or
-       entering summary) never see the run's padding change under them. */
-    .glass-dock.vertical.expanded[data-run-fits]:not([data-morphing]) .dock-run {
+       clientHeight` are one fact. The flag and the room are the expanded run's reading
+       at rest, held through every morph (`publishYield`), so the yield the run rests in
+       is the yield it morphs in: no seat moves when a morph starts or settles (O-166),
+       and the panes the morph moves never see the run's padding change under them. */
+    .glass-dock.vertical[data-run-fits] .dock-run {
         padding-block: min(var(--dock-run-reserve-block), var(--dock-run-room-block, 0px));
     }
 
