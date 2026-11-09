@@ -1,0 +1,115 @@
+{
+ "id": "C-A14",
+ "engine": "webkit",
+ "version": "26.5",
+ "target": {
+  "build": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p15/CA14c/wt/.ca14out/builds/cand14"
+ },
+ "loadStart": "5.9/5.7/5.6",
+ "loadEnd": "5.1/5.5/5.6",
+ "verdict": "FAIL",
+ "cells": [
+  {
+   "name": "A1 (M2/M3) a transformed link inside a shadow tree · scale 0.5 (origin 0 0) in an open shadow root · 40 px insert above the shadow host",
+   "status": "FAIL",
+   "line": "the act on frame 8 · paint moved 0.0, 40.0 px in all; on the act's frame 0.00, 20.00 = 20.00 px (bound ≤ 0.50) · largest move over any 16.7 ms 12.2 px at +20 ms (bound 6.5 = moved × peak × the map's stretch 1.000 + 1) · glides 1 (210 ms) · scrollY 33 → 33 → 33, scroller 0 → 0 → 0 · path [0.0,0.0 0.0,20.0 0.0,20.6 0.0,22.2 0.0,23.0] · errors 0 · the offsetParent chain span > body",
+   "load": "5.6/5.7/5.6"
+  },
+  {
+   "name": "A1 (M2/M3) a transformed link inside a shadow tree · scale 0.5 (origin 0 0) in a closed shadow root · 40 px insert above the shadow host",
+   "status": "FAIL",
+   "line": "the act on frame 8 · paint moved 0.0, 40.0 px in all; on the act's frame 0.00, 20.00 = 20.00 px (bound ≤ 0.50) · largest move over any 16.7 ms 13.7 px at +20 ms (bound 6.5 = moved × peak × the map's stretch 1.000 + 1) · glides 1 (210 ms) · scrollY 33 → 33 → 33, scroller 0 → 0 → 0 · path [0.0,0.0 0.0,20.0 0.0,20.4 0.0,21.4 0.0,23.2] · errors 0 · the offsetParent chain span > body",
+   "load": "5.6/5.7/5.6"
+  },
+  {
+   "name": "A1 (M2/M3) a transformed link inside a shadow tree · rotate 20deg in an open shadow root · 40 px insert above the shadow host",
+   "status": "FAIL",
+   "line": "the act on frame 8 · paint moved 0.0, 40.0 px in all; on the act's frame 13.68, 2.41 = 13.89 px (bound ≤ 0.50) · largest move over any 16.7 ms 8.3 px at +21 ms (bound 6.5 = moved × peak × the map's stretch 1.000 + 1) · glides 1 (210 ms) · scrollY 0 → 0 → 0, scroller 0 → 0 → 0 · path [0.0,0.0 13.7,2.4 13.4,3.2 12.7,5.0 11.8,7.6] · errors 0 · the offsetParent chain span > body",
+   "load": "5.6/5.7/5.6"
+  },
+  {
+   "name": "A1 (M2/M3) a transformed link inside a shadow tree · scale 0.5 in an open shadow root · 40 px insert inside the card above the root (control: below the transform)",
+   "status": "PASS",
+   "line": "the act on frame 8 · paint moved 0.0, 20.0 px in all; on the act's frame 0.00, 0.00 = 0.00 px (bound ≤ 0.50) · largest move over any 16.7 ms 2.8 px at +70 ms (bound 3.8 = moved × peak × the map's stretch 1.000 + 1) · glides 1 (210 ms) · scrollY 33 → 33 → 33, scroller 0 → 0 → 0 · path [0.0,0.0 0.0,0.0 0.0,0.4 0.0,1.4 0.0,3.0] · errors 0 · the offsetParent chain span > body",
+   "load": "6.0/5.7/5.6"
+  },
+  {
+   "name": "A2 (M3/M6) stylesheet transform: translateY(-50%), transform-origin 0 0 · a 40 px insert inside the card above the root",
+   "status": "FAIL",
+   "line": "the act on frame 8 · paint moved 0.0, 20.0 px in all; on the act's frame 0.00, -20.00 = 20.00 px (bound ≤ 0.50) · largest move over any 16.7 ms 11.3 px at +21 ms (bound 3.8 = moved × peak × the map's stretch 1.000 + 1) · glides 1 (210 ms) · scrollY 269 → 269 → 269, scroller 0 → 0 → 0 · path [0.0,0.0 0.0,-20.0 0.0,-19.2 0.0,-17.2 0.0,-14.5] · errors 0",
+   "load": "6.0/5.7/5.6"
+  },
+  {
+   "name": "A2 (M3/M6) stylesheet transform: translate(-50%, -50%), transform-origin top center (the drop-down's scale-in origin) · a 40 px insert inside the card above the root",
+   "status": "FAIL",
+   "line": "the act on frame 8 · paint moved 0.0, 20.0 px in all; on the act's frame 0.00, -20.00 = 20.00 px (bound ≤ 0.50) · largest move over any 16.7 ms 14.7 px at +19 ms (bound 3.8 = moved × peak × the map's stretch 1.000 + 1) · glides 1 (210 ms) · scrollY 269 → 269 → 269, scroller 0 → 0 → 0 · path [0.0,0.0 0.0,-20.0 0.0,-19.4 0.0,-17.5 0.0,-14.2] · errors 0",
+   "load": "6.0/5.7/5.6"
+  },
+  {
+   "name": "A2 (M3/M6) stylesheet transform: translateY(-50%), default origin (control: the origin moves with the size) · a 40 px insert inside the card above the root",
+   "status": "PASS",
+   "line": "the act on frame 8 · paint moved 0.0, 20.0 px in all; on the act's frame 0.00, 0.00 = 0.00 px (bound ≤ 0.50) · largest move over any 16.7 ms 2.8 px at +70 ms (bound 3.8 = moved × peak × the map's stretch 1.000 + 1) · glides 1 (210 ms) · scrollY 269 → 269 → 269, scroller 0 → 0 → 0 · path [0.0,0.0 0.0,0.0 0.0,0.4 0.0,1.4 0.0,3.2] · errors 0",
+   "load": "5.7/5.7/5.6"
+  },
+  {
+   "name": "A2 (M3/M6) stylesheet translate: 0 -50%, transform-origin 0 0 (control: the computed translate keeps the %) · a 40 px insert inside the card above the root",
+   "status": "PASS",
+   "line": "the act on frame 8 · paint moved 0.0, 20.0 px in all; on the act's frame 0.00, 0.00 = 0.00 px (bound ≤ 0.50) · largest move over any 16.7 ms 2.8 px at +72 ms (bound 3.8 = moved × peak × the map's stretch 1.000 + 1) · glides 1 (210 ms) · scrollY 269 → 269 → 269, scroller 0 → 0 → 0 · path [0.0,0.0 0.0,0.0 0.0,0.4 0.0,1.4 0.0,2.7] · errors 0",
+   "load": "5.7/5.7/5.6"
+  },
+  {
+   "name": "A3 (M11) the root's height 80 → 40 px and a 20 px insert above it in one frame",
+   "status": "FAIL",
+   "line": "the root's painted top edge on the act's frame moved 21.20 px (bound ≤ 1.70 = 0.5 + the grow ×1.0600's share of the size change: the block-flow edge is the point the layout keeps, the insert's step glided) · its centre 0.00 px · height 84.8 → 42.4 · glides 0 · path(top) [0.0 21.2 21.2 21.2 21.2] · errors 0",
+   "load": "5.7/5.7/5.6"
+  },
+  {
+   "name": "A3 (M11) the root's height 80 → 40 px and a 15 px insert above it in one frame",
+   "status": "FAIL",
+   "line": "the root's painted top edge on the act's frame moved 21.20 px (bound ≤ 1.70 = 0.5 + the grow ×1.0600's share of the size change: the block-flow edge is the point the layout keeps, the insert's step glided) · its centre 0.00 px · height 84.8 → 42.4 · glides 1 · path(top) [0.0 21.2 21.1 20.8 20.4] · errors 0",
+   "load": "5.4/5.6/5.6"
+  },
+  {
+   "name": "A3 (M11) the root's height 80 → 40 px and a 10 px insert above it in one frame (control: outside the band)",
+   "status": "PASS",
+   "line": "the root's painted top edge on the act's frame moved 1.20 px (bound ≤ 1.70 = 0.5 + the grow ×1.0600's share of the size change: the block-flow edge is the point the layout keeps, the insert's step glided) · its centre -20.00 px · height 84.8 → 42.4 · glides 1 · path(top) [0.0 1.2 1.4 1.9 2.6] · errors 0",
+   "load": "5.4/5.6/5.6"
+  },
+  {
+   "name": "A6 (M27) a train of inserts above the root · 40 px every third frame, 6 steps",
+   "status": "PASS",
+   "line": "glides 6 (bound ≥ 6: each step glided) · on each insert's frame the break of the root's own motion, less the running glide's own change of velocity, [0.00 0.00 0.00 0.00 0.00 0.00] px (bound ≤ 0.5 each; E-14 M27's measure) · errors 0",
+   "load": "5.4/5.6/5.6"
+  },
+  {
+   "name": "A6 (M27) a train of inserts above the root · 40 px every fourth frame, 4 steps",
+   "status": "PASS",
+   "line": "glides 4 (bound ≥ 4: each step glided) · on each insert's frame the break of the root's own motion, less the running glide's own change of velocity, [0.00 0.00 0.00 0.00] px (bound ≤ 0.5 each; E-14 M27's measure) · errors 0",
+   "load": "5.2/5.6/5.6"
+  },
+  {
+   "name": "A6 (M27) a train of inserts above the root · 40, 8, 40, 8 px every second frame",
+   "status": "FAIL",
+   "line": "glides 4 (bound ≥ 4: each step glided) · on each insert's frame the break of the root's own motion, less the running glide's own change of velocity, [0.00 0.74 0.00 0.12] px (bound ≤ 0.5 each; E-14 M27's measure) · errors 0",
+   "load": "5.2/5.6/5.6"
+  },
+  {
+   "name": "A12 (M18) C's own top 0 → 120 px, a 400 ms linear CSS transition, during the hold",
+   "status": "FAIL",
+   "line": "the card moved 120.0 px · the root's centre apart from its card's: max 4.00 px, frames over 2 px 7 (bound ≤ 0.5: the held control never comes apart from its card, S14 a.4) · glides started 9 · errors 0",
+   "load": "5.2/5.6/5.6"
+  },
+  {
+   "name": "A12 (M18) C's own top 0 → 120 px, a 400 ms ease CSS transition, during the hold",
+   "status": "FAIL",
+   "line": "the card moved 120.0 px · the root's centre apart from its card's: max 5.59 px, frames over 2 px 15 (bound ≤ 0.5: the held control never comes apart from its card, S14 a.4) · glides started 6 · errors 0",
+   "load": "5.1/5.5/5.6"
+  },
+  {
+   "name": "A12 (M18) C's own top 0 → 120 px, a 400 ms ease-in-out CSS transition, during the hold",
+   "status": "FAIL",
+   "line": "the card moved 120.0 px · the root's centre apart from its card's: max 2.62 px, frames over 2 px 8 (bound ≤ 0.5: the held control never comes apart from its card, S14 a.4) · glides started 5 · errors 0",
+   "load": "5.1/5.5/5.6"
+  }
+ ]
+}

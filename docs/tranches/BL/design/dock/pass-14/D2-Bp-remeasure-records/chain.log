@@ -1,0 +1,70 @@
+2026-11-08 23:45:25 run: start pid 87215 · load averages: 47.44 40.80 27.39
+2026-11-08 23:45:36 run: pid 87215 stopped by this seat before any step (an argument-split bug in its step helper); restarted · load averages: 49.11 41.38 27.76
+2026-11-08 23:45:36 run: start pid 87680 · load averages: 49.11 41.38 27.76
+2026-11-08 23:54:19 run: builds done: bp12: 21483 bp13: 21473  · load averages: 25.66 45.24 38.43
+2026-11-08 23:54:19 CHAIN start (steps: pr f7); harness list 42 OK · load averages: 25.66 45.24 38.43
+2026-11-08 23:54:19 start PR · load averages: 25.66 45.24 38.43
+2026-11-08 23:54:24 end PR · load averages: 25.53 44.89 38.34
+2026-11-08 23:54:24 disk free 190 GB before F7 · load averages: 25.53 44.89 38.34
+2026-11-08 23:54:54 start-gate F7 at load 19.85 (bound 20, waited 30 s) · load averages: 19.85 41.69 37.41
+2026-11-08 23:56:40 end F7: 64 files / 503777 B; ceiling 503808; margin 31 B · load averages: 26.01 37.58 36.30
+2026-11-08 23:56:40 same build: SAME · load averages: 26.01 37.58 36.30
+2026-11-08 23:56:40 CHAIN-DONE · load averages: 26.01 37.58 36.30
+2026-11-08 23:56:40 CHAIN start (steps: batc); harness list 42 OK · load averages: 26.01 37.58 36.30
+2026-11-08 23:56:40 disk free 190 GB before battery chromium light · load averages: 26.01 37.58 36.30
+2026-11-09 00:02:40 start-gate bp13 chromium light at load 19.00 (bound 20, waited 360 s) · load averages: 19.00 28.81 32.92
+2026-11-09 00:02:40 start bp13 chromium light · load averages: 19.00 28.81 32.92
+2026-11-09 00:13:13 end bp13 chromium light exit 0; cells max load 22.79 · load averages: 14.62 17.74 24.10
+2026-11-09 00:13:14 disk free 196 GB before battery chromium dark · load averages: 14.41 17.65 24.02
+2026-11-09 00:13:14 start-gate bp13 chromium dark at load 14.41 (bound 20, waited 0 s) · load averages: 14.41 17.65 24.02
+2026-11-09 00:13:14 start bp13 chromium dark · load averages: 14.41 17.65 24.02
+2026-11-09 00:23:58 end bp13 chromium dark exit 0; cells max load 30.38 · load averages: 11.12 15.27 20.17
+2026-11-09 00:23:59 CHAIN-DONE · load averages: 11.75 15.33 20.16
+2026-11-09 00:23:59 CHAIN start (steps: wk); harness list 42 OK · load averages: 11.75 15.33 20.16
+2026-11-09 00:23:59 disk free 195 GB before wk webkit-light · load averages: 11.75 15.33 20.16
+2026-11-09 00:23:59 start-gate wk webkit-light at load 11.75 (bound 20, waited 0 s) · load averages: 11.75 15.33 20.16
+2026-11-09 00:23:59 queue wk webkit-light · load averages: 11.75 15.33 20.16
+2026-11-09 01:47:48 end wk webkit-light exit 75; cells max load 18.50 · load averages: 4.69 7.46 10.30
+2026-11-09 01:47:49 disk free 198 GB before wk webkit-dark · load averages: 4.69 7.46 10.30
+2026-11-09 01:47:49 start-gate wk webkit-dark at load 4.69 (bound 20, waited 0 s) · load averages: 4.69 7.46 10.30
+2026-11-09 01:47:49 queue wk webkit-dark · load averages: 4.69 7.46 10.30
+2026-11-09 03:17:39 note (seat): W·d wk slot lock wait passed 90 min (queued 01:47:49); kept queued, not cancelled · load averages: 5.31 6.27 8.67
+2026-11-09 04:50:03 end wk webkit-dark exit 75; cells max load 6.11 · load averages: 4.08 4.21 4.27
+2026-11-09 04:50:03 CHAIN-DONE · load averages: 4.08 4.21 4.27
+2026-11-09 04:50:03 CHAIN start (steps: fmlow digest); harness list 42 OK · load averages: 4.08 4.21 4.27
+2026-11-09 04:50:03 start digest · load averages: 4.08 4.21 4.27
+2026-11-09 04:50:12 end digest · load averages: 4.81 4.37 4.32
+2026-11-09 04:50:12 CHAIN-DONE · load averages: 4.81 4.37 4.32
+2026-11-09 04:50:12 CHAIN start (steps: q); harness list 42 OK · load averages: 4.81 4.37 4.32
+2026-11-09 04:50:12 disk free 191 GB before q chromium-light · load averages: 4.81 4.37 4.32
+2026-11-09 04:50:12 start-gate q chromium-light slot 1 at load 4.81 (next rev-bp13-r1 gate 11, waited 0 s, 90 lines left) · load averages: 4.81 4.37 4.32
+2026-11-09 05:57:06 end q chromium-light slot 1 exit 0 · load averages: 4.31 4.54 5.67
+2026-11-09 05:57:06 disk free 196 GB before q chromium-dark · load averages: 4.31 4.54 5.67
+2026-11-09 05:57:06 start-gate q chromium-dark slot 1 at load 4.29 (next rev-bp13-r1 gate 11, waited 0 s, 90 lines left) · load averages: 4.29 4.53 5.66
+2026-11-09 06:42:48 end q chromium-dark slot 1 exit 0 · load averages: 10.49 13.08 11.36
+2026-11-09 06:42:48 disk free 195 GB before q webkit-light · load averages: 10.49 13.08 11.36
+2026-11-09 06:42:48 start-gate q webkit-light slot 1 at load 10.49 (next swp-bp13-r1 gate 11, waited 0 s, 50 lines left) · load averages: 10.49 13.08 11.36
+2026-11-09 08:08:04 end q webkit-light slot 1 exit 0 · load averages: 5.77 5.43 5.81
+2026-11-09 08:08:04 disk free 194 GB before q webkit-dark · load averages: 5.77 5.43 5.81
+2026-11-09 08:08:04 start-gate q webkit-dark slot 1 at load 5.77 (next r2-bp13-r2 gate 15, waited 0 s, 26 lines left) · load averages: 5.77 5.43 5.81
+2026-11-09 09:16:15 end q webkit-dark slot 1 exit 0 · load averages: 8.73 7.58 9.75
+2026-11-09 09:16:15 CHAIN-DONE · load averages: 8.73 7.58 9.75
+2026-11-09 09:16:15 CHAIN start (steps: cost); harness list 42 OK · load averages: 8.73 7.58 9.75
+2026-11-09 09:16:15 start cost · load averages: 8.73 7.58 9.75
+2026-11-09 09:16:15 start-gate cost bp13 r1 at load 8.73 (bound 15, waited 0 s) · load averages: 8.73 7.58 9.75
+2026-11-09 09:16:15 start-gate cost bp12 r1 at load 8.73 (bound 15, waited 0 s) · load averages: 8.73 7.58 9.75
+2026-11-09 09:16:15 start-gate cost fv5 r1 at load 8.73 (bound 15, waited 0 s) · load averages: 8.73 7.58 9.75
+2026-11-09 09:16:16 start-gate cost bp13 r2 at load 8.73 (bound 15, waited 0 s) · load averages: 8.73 7.58 9.75
+2026-11-09 09:16:16 start-gate cost bp12 r2 at load 8.73 (bound 15, waited 0 s) · load averages: 8.73 7.58 9.75
+2026-11-09 09:16:16 start-gate cost fv5 r2 at load 8.73 (bound 15, waited 0 s) · load averages: 8.73 7.58 9.75
+2026-11-09 09:16:16 start-gate cost bp13 r3 at load 8.73 (bound 15, waited 0 s) · load averages: 8.73 7.58 9.75
+2026-11-09 09:16:16 start-gate cost bp12 r3 at load 8.59 (bound 15, waited 0 s) · load averages: 8.59 7.57 9.74
+2026-11-09 09:16:16 start-gate cost fv5 r3 at load 8.59 (bound 15, waited 0 s) · load averages: 8.59 7.57 9.74
+2026-11-09 09:16:16 end cost · load averages: 8.59 7.57 9.74
+2026-11-09 09:16:16 CHAIN-DONE · load averages: 8.59 7.57 9.74
+2026-11-09 09:16:16 CHAIN start (steps: digest hend); harness list 42 OK · load averages: 8.59 7.57 9.74
+2026-11-09 09:16:16 start digest · load averages: 8.59 7.57 9.74
+2026-11-09 09:16:25 end digest · load averages: 9.03 7.67 9.76
+2026-11-09 09:16:25 harness end: 42 OK · load averages: 9.03 7.67 9.76
+2026-11-09 09:16:25 CHAIN-DONE · load averages: 9.03 7.67 9.76
+2026-11-09 09:16:25 run: RUN-DONE · load averages: 9.03 7.67 9.76

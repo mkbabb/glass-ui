@@ -1,0 +1,17 @@
+# C-A14 plant-velreset-e14 webkit · 2026-11-09 02:55:05 · load { 12.62 14.60 12.47 } · harness 7e79063a4b00 · --only M27
+# E-14 · S14's members at their ranges (P-E14 §S14-c)
+# target /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p15/CA14c/wt/.ca14out/builds/plant-velreset · engine webkit · lock wait 0.0 s (the deadline 5400 s counts from here) · other headless processes: chromium 12, webkit 0 · load 12.6/14.6/12.5 at start
+# scene app: harness scenes/App.vue (sha1 912fecf0a1aa)
+# webkit 26.5 (Playwright WebKit, not Safari; real Safari UNMEASURED (owner's safaridriver checkbox))
+# held control: scene slider root .glass-slider thumb [role="slider"] engaged [data-engaged], [data-held]; clock token --spring-dock-settle; cells M27
+  PASS       M27 a train of inserts above the root · 16 px every frame for 12 frames · glides 1 (bound ≤ 2: the onset, carried after) · on each insert's frame the break of the root's own motion, less the running glide's own change of velocity, [0.00 27.20 0.00 1.32 0.00 0.00 0.00 0.08 2.48 0.00 0.00 0.01] px (bound ≤ 0.5 at the onset) · errors 0 · load 11.9/14.4/12.4
+  PASS       M27 a train of inserts above the root · 16 px every second frame, 6 steps · glides 6 (bound ≥ 6: each step glided) · on each insert's frame the break of the root's own motion, less the running glide's own change of velocity, [0.00 0.30 0.00 0.00 0.00 0.00] px (bound ≤ 0.5 each) · errors 0 · load 11.9/14.4/12.4
+  PASS       M27 a train of inserts above the root · 8 px every frame for 12 frames · glides 1 (bound ≤ 2: the onset, carried after) · on each insert's frame the break of the root's own motion, less the running glide's own change of velocity, [0.00 16.88 0.00 1.91 0.46 0.00 0.00 0.00 0.02 0.01 1.23 0.00] px (bound ≤ 0.5 at the onset) · errors 0 · load 11.5/14.3/12.4
+  FAIL       M27 a train of inserts above the root · 40 px every second frame, 6 steps · glides 6 (bound ≥ 6: each step glided) · on each insert's frame the break of the root's own motion, less the running glide's own change of velocity, [0.00 0.66 0.00 0.28 0.00 0.00] px (bound ≤ 0.5 each) · errors 0 · load 11.5/14.3/12.4
+  FAIL       M27 a slow margin ramp above C · 0.2 px a frame · glides over the ramp 8 (bound ≤ 2: the onset and one uneven frame; Y8 reads 0-1 at ≤ 200 px/s) · errors 0 · load 11.5/14.3/12.4
+  FAIL       M27 a slow margin ramp above C · 0.5 px a frame · glides over the ramp 21 (bound ≤ 2: the onset and one uneven frame; Y8 reads 0-1 at ≤ 200 px/s) · errors 0 · load 12.6/14.5/12.5
+  PASS       M27 a slow margin ramp above C · 1 px a frame · glides over the ramp 1 (bound ≤ 2: the onset and one uneven frame; Y8 reads 0-1 at ≤ 200 px/s) · errors 0 · load 12.6/14.5/12.5
+  PASS       M27 a slow margin ramp above C · 2 px a frame · glides over the ramp 1 (bound ≤ 2: the onset and one uneven frame; Y8 reads 0-1 at ≤ 200 px/s) · errors 0 · load 12.6/14.5/12.5
+E-14 webkit FAIL · 5 pass, 3 fail, 0 unmeasured of 8 gating cells (0 reported) · load 12.6/14.6/12.5 at start, 12.6/14.5/12.5 at end
+# exit 1 · 2026-11-09 02:55:21 · load { 12.63 14.47 12.46 }
+# end · 2026-11-09 02:55:21 · load { 12.63 14.47 12.46 } · harness 7e79063a4b00

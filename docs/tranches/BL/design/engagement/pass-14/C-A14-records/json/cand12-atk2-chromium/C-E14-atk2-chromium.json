@@ -1,0 +1,79 @@
+{
+ "id": "C-E14-atk2",
+ "engine": "chromium",
+ "version": "149.0.7827.55",
+ "target": {
+  "build": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p15/CA14c/wt/.ca14out/builds/cand12"
+ },
+ "loadStart": "12.8/12.5/14.2",
+ "loadEnd": "13.6/12.8/14.2",
+ "verdict": "PASS",
+ "cells": [
+  {
+   "name": "B1 (M27 by superposition) 40 px every second frame, 2 steps, against one 40 px step",
+   "status": "PASS",
+   "line": "the train's paint less the sum of the one step's paint shifted to each step's frame: on the steps' frames [0.00 0.00] px, max over the film 0.07 px (bound ≤ 0.5 + the interpolation's own error ≤ 0.25) · glides 2 · the one step's act frame 0.00 px · errors 0",
+   "load": "13.3/12.6/14.2"
+  },
+  {
+   "name": "B1 (M27 by superposition) 40 px every second frame, 6 steps, against one 40 px step",
+   "status": "PASS",
+   "line": "the train's paint less the sum of the one step's paint shifted to each step's frame: on the steps' frames [0.00 0.04 0.05 0.05 0.05 0.06] px, max over the film 0.18 px (bound ≤ 0.5 + the interpolation's own error ≤ 0.26) · glides 6 · the one step's act frame 0.00 px · errors 0",
+   "load": "15.0/13.0/14.3"
+  },
+  {
+   "name": "B1 (M27 by superposition) 80 px every second frame, 3 steps, against one 80 px step",
+   "status": "PASS",
+   "line": "the train's paint less the sum of the one step's paint shifted to each step's frame: on the steps' frames [0.00 0.00 0.04] px, max over the film 0.49 px (bound ≤ 0.5 + the interpolation's own error ≤ 0.44) · glides 3 · the one step's act frame 0.00 px · errors 0",
+   "load": "15.0/13.0/14.3"
+  },
+  {
+   "name": "B1 (M27 by superposition) 40 px every third frame, 3 steps, against one 40 px step",
+   "status": "PASS",
+   "line": "the train's paint less the sum of the one step's paint shifted to each step's frame: on the steps' frames [0.00 0.00 0.00] px, max over the film 0.27 px (bound ≤ 0.5 + the interpolation's own error ≤ 0.34) · glides 3 · the one step's act frame 0.00 px · errors 0",
+   "load": "14.5/12.9/14.3"
+  },
+  {
+   "name": "B1 (M27 by superposition) 40 px every frame, 4 steps, against one 40 px step",
+   "status": "PASS",
+   "line": "the train's paint less the sum of the one step's paint shifted to each step's frame: on the steps' frames [0.00 0.05 0.05 0.07] px, max over the film 0.28 px (bound ≤ 0.5 + the interpolation's own error ≤ 0.27) · glides 4 · the one step's act frame 0.00 px · errors 0",
+   "load": "13.9/12.8/14.3"
+  },
+  {
+   "name": "B2 (M28's cause) sine 80 px / 600 ms on C, C's transform-origin 0 0, a 1 px a frame margin ramp inside C above the root",
+   "status": "PASS",
+   "line": "glides 0 (bound ≤ 2, E-14 M28's grade) · errors 0",
+   "load": "13.9/12.8/14.3"
+  },
+  {
+   "name": "B2 (M28's cause) sine 80 px / 600 ms on C, C's transform-origin default (50% 50%: E-14 M28's form), a 1 px a frame margin ramp inside C above the root",
+   "status": "PASS",
+   "line": "glides 0 (bound ≤ 2, E-14 M28's grade) · errors 0",
+   "load": "13.9/12.8/14.3"
+  },
+  {
+   "name": "B2 (M28's cause) sine 80 px / 600 ms on C, C's transform-origin 0 0, 2 px a frame, a 2 px a frame margin ramp inside C above the root",
+   "status": "PASS",
+   "line": "glides 0 (bound ≤ 2, E-14 M28's grade) · errors 0",
+   "load": "13.9/12.8/14.3"
+  },
+  {
+   "name": "B3 (M22 on the host) the root's own zoom 1 → 1.5",
+   "status": "PASS",
+   "line": "on the act's frame the top edge (fixed in layout) moved -0.30 px and the left edge 0.00 px (bound ≤ 0.80: 0.5 + the grow's share), the centre 5.00 px · the top edge then travels 0.00 px more · height 21.2 → 31.8, width 381.6 → 381.6 · glides at the change 0 (bound 0) · errors 0",
+   "load": "13.6/12.8/14.2"
+  },
+  {
+   "name": "B3 (M22 on the host) the root's own zoom 1 → 0.75",
+   "status": "PASS",
+   "line": "on the act's frame the top edge (fixed in layout) moved 0.15 px and the left edge 0.00 px (bound ≤ 0.65: 0.5 + the grow's share), the centre -2.50 px · the top edge then travels 0.00 px more · height 21.2 → 15.9, width 381.6 → 381.6 · glides at the change 0 (bound 0) · errors 0",
+   "load": "13.6/12.8/14.2"
+  },
+  {
+   "name": "B3 (M22 on the host) the root's own height 21 → 31 px (M11's block-axis analogue: the control)",
+   "status": "PASS",
+   "line": "on the act's frame the top edge (fixed in layout) moved -0.30 px and the left edge 0.00 px (bound ≤ 0.80: 0.5 + the grow's share), the centre 5.00 px · the top edge then travels 0.00 px more · height 21.2 → 31.8, width 381.6 → 381.6 · glides at the change 0 (bound 0) · errors 0",
+   "load": "13.6/12.8/14.2"
+  }
+ ]
+}

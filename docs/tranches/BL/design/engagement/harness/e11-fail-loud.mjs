@@ -80,7 +80,7 @@ const TRAVEL_SETTLES = ["210ms", "0.21s", "-1", "0", "nonsense"];
 // every math function CSS takes in a <time> context: calc(), min(), max(), clamp(), round(), abs(), calc() of a time and a number, nested,
 // with a var() fallback) and from the single-easing grammar animate() takes. `calc(infinity * 1s)` is REPORT (an endless clock has no
 // exactness to test); `1e-3s` is graded on the carry alone (a once-per-frame recorder cannot see a 1 ms travel on the lens or the root)
-const H13_SETTLES = ["210MS", "0.21S", "2.1e2ms", "+0.21s", "/* c */ 210ms", "-0s", "210", "210ms, 0.3s", "inherit", "calc(0.1s + 110ms)", "calc(105ms * 2)", "min(210ms, 1s)", "max(210ms, 0.1s)", "clamp(100ms, 210ms, 1s)", "calc(var(--h13-undefined, 210ms))", "var(--h13-undefined, 210ms)", "calc(calc(105ms) * 2)", "round(nearest, 214ms, 10ms)", "abs(-210ms)", "calc(1s * 0.21)", "calc(infinity * 1s)", "1e-3s"];
+const H13_SETTLES = ["210MS", "0.21S", "2.1e2ms", "+0.21s", "/* c */ 210ms", "-0s", "0s", "calc(-0.21s)", "210", "210ms, 0.3s", "inherit", "calc(0.1s + 110ms)", "calc(105ms * 2)", "min(210ms, 1s)", "max(210ms, 0.1s)", "clamp(100ms, 210ms, 1s)", "calc(var(--h13-undefined, 210ms))", "var(--h13-undefined, 210ms)", "calc(calc(105ms) * 2)", "round(nearest, 214ms, 10ms)", "abs(-210ms)", "calc(1s * 0.21)", "calc(infinity * 1s)", "1e-3s"];
 // a held box "as clean": within max(1 px, 1.5 % of the clean box) on each axis. The grow's run-to-run spread is 1.1 % of the box (e11-noise,
 // H2 §2.3: 1.054-1.066); a misread grow (×1 for ×1.06) moves it 5.7 %, a misread gutter by its whole width
 const asClean = (b, c) => !!b && !!c && Math.abs(b.w - c.w) <= Math.max(1, 0.015 * c.w) && Math.abs(b.h - c.h) <= Math.max(1, 0.015 * c.h);
@@ -118,12 +118,14 @@ const TRAVEL_REC = ([LS, RS]) => {
 // the consumers' own grammars, on the page as planted: CSS's reading of every row's settle as a <time>, in the row duration token's
 // own form (calc(settle × tempo)); and whether animate() takes the planted easing (a KeyframeEffect built in a try), with its normal form
 const TRAVEL_FACTS = ([names, tok]) => {
-  const p = document.createElement("div"); document.body.appendChild(p); const css = {};
-  for (const n of names) { const t = `--spring-${n}-settle`; p.style.cssText = ""; p.style.setProperty("transition-duration", `calc(var(${t}) * var(--motion-tempo, 1))`, "important"); const d = getComputedStyle(p).transitionDuration; const v = Number.parseFloat(d); css[t] = /ms/.test(d) ? v : v * 1000; }
+  const p = document.createElement("div"); document.body.appendChild(p); const css = {}, valid = {};
+  for (const n of names) { const t = `--spring-${n}-settle`; p.style.cssText = ""; p.style.setProperty("transition-duration", `calc(var(${t}) * var(--motion-tempo, 1))`, "important"); const d = getComputedStyle(p).transitionDuration; const v = Number.parseFloat(d); css[t] = /ms/.test(d) ? v : v * 1000;
+    // H15 class 6: whether the planted settle is a <time> its consumer's calc() takes (a valid 0 runs 0 s; an invalid value falls to the initial 0s)
+    const raw = getComputedStyle(document.documentElement).getPropertyValue(t).trim(); valid[t] = raw !== "" && CSS.supports("transition-duration", `calc((${raw}) * 1)`); }
   p.remove();
   let takes = null, norm = null, why = null;
   if (tok && !/-settle$/.test(tok)) { const v = getComputedStyle(document.documentElement).getPropertyValue(tok).trim(); if (!v) { takes = false; why = "the token computes to nothing"; } else { try { norm = new KeyframeEffect(null, null, { easing: v }).getTiming().easing; takes = true; } catch (e) { takes = false; why = String(e?.message ?? e); } } }
-  return { css, takes, norm, why };
+  return { css, valid, takes, norm, why };
 };
 // ── H6: the clock census, in page ─────────────────────────────────────────────────────────────────────────────
 // every style rule of every loaded sheet, nested rules resolved against their parent (`&` replaced by :is(parent), a
@@ -245,16 +247,18 @@ await witness("E-11", "CK-21 no silent degradation", async ({ a, E, T, cell, gua
       // what the consumer's grammar says: a settle CSS reads as a positive <time> is TAKEN on that clock, else REFUSED; an easing
       // animate() takes is TAKEN with that easing, else REFUSED; the carry takes its shape from its own curve and may not read the
       // easing at all, so on the carry an easing is either taken on the clock or refused
-      const expect = kind === "settle" ? (cssMs > 0 ? "taken" : "refused") : path === "carry" ? "either" : r.facts.takes ? "taken" : "refused";
+      // H15 class 6 (REGISTRY §P14-4, E-11's settle of 0): a settle that is a valid <time> its consumer computes as 0 s (`-0s`, `0s`,
+      // `calc(-0.21s)`) is RUN on the clock CSS runs (S14-e): 0 s, no travel over 1 ms, no error naming it. Refused only when CSS cannot read it
+      const expect = kind === "settle" ? (cssMs > 0 ? "taken" : cssMs === 0 && r.facts.valid?.[settleOf(row)] ? "zero" : "refused") : path === "carry" ? "either" : r.facts.takes ? "taken" : "refused";
       // driven: the painted side flips, or the lens's travel started (a travel on a misread clock, 210 s, holds the paint on the old
       // side for the whole film, so the flip alone would call a misread clock NOT DRIVEN; the same drive flipped the clean page)
       const sideOk = path !== "side" || changesOf(r.film) >= 1 || tv.length >= 1;
       const takenOk = tv.length >= 1 && !named.length && tv.every((x) => Math.abs(x.ms - cssMs) <= 1) && (kind !== "easing" || path === "carry" || tv.every((x) => x.easing === r.facts.norm));
-      const refusedOk = named.length >= 1 && !tv.length;
-      const ok = sideOk && !uncaught.length && laterOk(r) && (expect === "taken" ? takenOk : expect === "refused" ? refusedOk : takenOk || refusedOk);
-      const verdictWhy = !sideOk ? "NOT DRIVEN: no side change · " : uncaught.length ? "THROWS · " : expect === "taken" && !takenOk ? (tv.length && tv.some((x) => Math.abs(x.ms - cssMs) > 1) ? "MISREAD CLOCK · " : tv.length ? "NOT EXACT · " : "NOT TAKEN · ") : expect === "refused" && !refusedOk ? (tv.length ? "TRAVELS ON A REFUSED TOKEN · " : "SILENT · ") : "";
+      const refusedOk = named.length >= 1 && !tv.length; const zeroOk = !named.length && tv.every((x) => x.ms <= 1);
+      const ok = sideOk && !uncaught.length && laterOk(r) && (expect === "taken" ? takenOk : expect === "refused" ? refusedOk : expect === "zero" ? zeroOk : takenOk || refusedOk);
+      const verdictWhy = !sideOk ? "NOT DRIVEN: no side change · " : uncaught.length ? "THROWS · " : expect === "taken" && !takenOk ? (tv.length && tv.some((x) => Math.abs(x.ms - cssMs) > 1) ? "MISREAD CLOCK · " : tv.length ? "NOT EXACT · " : "NOT TAKEN · ") : expect === "refused" && !refusedOk ? (tv.length ? "TRAVELS ON A REFUSED TOKEN · " : "SILENT · ") : expect === "zero" && !zeroOk ? (named.length ? "REFUSED A 0 s CLOCK CSS RUNS · " : "TRAVELS PAST A 0 s CLOCK · ") : "";
       const report = val === "calc(infinity * 1s)" || (val === "1e-3s" && path !== "carry");
-      cell(nm, report ? "REPORT" : !sideOk ? "UNMEASURED" : ok ? "PASS" : "FAIL", `${report ? `REPORT (${val === "1e-3s" ? "a 1 ms travel a once-per-frame recorder cannot see on this path; graded on the carry" : "an endless clock has no exactness to test"}; would ${ok ? "pass" : "fail"}) · ` : ""}${verdictWhy}${tok}: ${val} on <html> before the first script (the row ${row.n}, read from the clean travel) · the grammar: CSS reads the settle ${f(cssMs, 1)} ms${kind === "easing" ? `; animate() ${r.facts.takes ? `takes "${String(r.facts.norm).slice(0, 50)}"` : `refuses it (${String(r.facts.why).slice(0, 80)})`}` : ""} → expect ${expect} · ${path === "side" ? `side changes ${changesOf(r.film)} · ` : ""}travel ${tline(tv)} · console errors naming the token ${named.length}${named[0] ? ` ("${named[0].slice(0, 100)}")` : ""}, uncaught page errors ${uncaught.length}${uncaught[0] ? ` ("${uncaught[0].slice(0, 120)}")` : ""}, all errors ${r.errs.length} · ${laterLine(r)} (bound: taken on CSS's clock to 1 ms with the easing animate() parses and no error, or refused with ≥ 1 console.error naming the token and no travel; 0 uncaught; the later hold engaged, shown, pinned ≤ 2 px)`);
+      cell(nm, report ? "REPORT" : !sideOk ? "UNMEASURED" : ok ? "PASS" : "FAIL", `${report ? `REPORT (${val === "1e-3s" ? "a 1 ms travel a once-per-frame recorder cannot see on this path; graded on the carry" : "an endless clock has no exactness to test"}; would ${ok ? "pass" : "fail"}) · ` : ""}${verdictWhy}${tok}: ${val} on <html> before the first script (the row ${row.n}, read from the clean travel) · the grammar: CSS reads the settle ${f(cssMs, 1)} ms${kind === "easing" ? `; animate() ${r.facts.takes ? `takes "${String(r.facts.norm).slice(0, 50)}"` : `refuses it (${String(r.facts.why).slice(0, 80)})`}` : ""} → expect ${expect} · ${path === "side" ? `side changes ${changesOf(r.film)} · ` : ""}travel ${tline(tv)} · console errors naming the token ${named.length}${named[0] ? ` ("${named[0].slice(0, 100)}")` : ""}, uncaught page errors ${uncaught.length}${uncaught[0] ? ` ("${uncaught[0].slice(0, 120)}")` : ""}, all errors ${r.errs.length} · ${laterLine(r)} (bound: taken on CSS's clock to 1 ms with the easing animate() parses and no error; a valid <time> CSS computes as 0 s run as 0 s (no travel over 1 ms, no error naming it: H15 class 6); else refused with ≥ 1 console.error naming the token and no travel; 0 uncaught; the later hold engaged, shown, pinned ≤ 2 px)`);
     }
   }
   // ── H13: TOKEN FORMS at their consumers (CK-21; REGISTRY §P12-8.1 (b)): `--part tokens`. Per token P-E12 §1.2 lists (the scene app,

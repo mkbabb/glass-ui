@@ -1,0 +1,283 @@
+{
+ "id": "C-E13c",
+ "engine": "chromium",
+ "version": "149.0.7827.55",
+ "target": {
+  "build": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p15/CA14c/wt/.ca14out/builds/cand14"
+ },
+ "loadStart": "20.8/20.9/23.9",
+ "loadEnd": "19.4/20.4/23.4",
+ "verdict": "FAIL",
+ "cells": [
+  {
+   "name": "D1 raf-translate",
+   "status": "PASS",
+   "line": "cand14 · the card moved 71.8 px over 60 engaged frames · the held root's centre off where its card carries it (its rest offset, × the card's scale): max 0.00 px, median 0.00 px, frames over 2 px 0 · stage glides started 0 · errors 0 (bound: ≤ 0.5 px every frame, 0 glides)",
+   "load": "20.8/20.9/23.9"
+  },
+  {
+   "name": "D1 scroll-parallax",
+   "status": "PASS",
+   "line": "cand14 · the card moved 168.0 px over 60 engaged frames · the held root's centre off where its card carries it (its rest offset, × the card's scale): max 0.00 px, median 0.00 px, frames over 2 px 0 · stage glides started 0 · errors 0 (bound: ≤ 0.5 px every frame, 0 glides)",
+   "load": "19.9/20.7/23.8"
+  },
+  {
+   "name": "D1 member-scale",
+   "status": "PASS",
+   "line": "cand14 · the card moved 27.0 px over 60 engaged frames · the held root's centre off where its card carries it (its rest offset, × the card's scale): max 0.01 px, median 0.00 px, frames over 2 px 0 · stage glides started 0 · errors 0 (bound: ≤ 0.5 px every frame, 0 glides)",
+   "load": "19.9/20.7/23.8"
+  },
+  {
+   "name": "D1 inline-scale",
+   "status": "PASS",
+   "line": "cand14 · the card moved 27.0 px over 60 engaged frames · the held root's centre off where its card carries it (its rest offset, × the card's scale): max 0.01 px, median 0.00 px, frames over 2 px 0 · stage glides started 0 · errors 0 (bound: ≤ 0.5 px every frame, 0 glides)",
+   "load": "19.9/20.7/23.8"
+  },
+  {
+   "name": "D2 insert · page loop writing a text node every frame",
+   "status": "PASS",
+   "line": "cand14 · a 40 px insert above the held root on frame 8 · the root's paint moved 40.0 px in all by the film's end (+360 ms) · on the act's frame 0.00 px from where it was painted (≤ 0.5) · stage glides started 1 (bound 1) · the paint settles 216.4 ms after the frame before the act (bound: the dock clock 210.0 ms + 17) · durations 210.0 · errors 0",
+   "load": "19.7/20.7/23.8"
+  },
+  {
+   "name": "D2 insert · no page loop (control)",
+   "status": "PASS",
+   "line": "cand14 · a 40 px insert above the held root on frame 8 · the root's paint moved 40.0 px in all by the film's end (+358 ms) · on the act's frame 0.00 px from where it was painted (≤ 0.5) · stage glides started 1 (bound 1) · the paint settles 208.6 ms after the frame before the act (bound: the dock clock 210.0 ms + 17) · durations 210.0 · errors 0",
+   "load": "19.7/20.7/23.8"
+  },
+  {
+   "name": "D2 card-scale · page loop writing a text node every frame",
+   "status": "PASS",
+   "line": "cand14 · the card's 600 ms scale transition 1 → 0.9 from frame 8 · stage glides started 0 (bound 0) · the root's paint moved 10.5 px with its card · errors 0",
+   "load": "19.7/20.7/23.8"
+  },
+  {
+   "name": "D2 card-scale · no page loop (control)",
+   "status": "PASS",
+   "line": "cand14 · the card's 600 ms scale transition 1 → 0.9 from frame 8 · stage glides started 0 (bound 0) · the root's paint moved 10.5 px with its card · errors 0",
+   "load": "19.7/20.7/23.8"
+  },
+  {
+   "name": "D3 card-scale + unrelated append",
+   "status": "PASS",
+   "line": "cand14 · released, then the card's 600 ms scale 1 → 0.9 and an unrelated node appended at frame 5 · the root on the stage at the act: true / at frame 5: true · stage glides started 0 (bound 0) · errors 0",
+   "load": "19.0/20.5/23.7"
+  },
+  {
+   "name": "D3 card-scale alone (control)",
+   "status": "PASS",
+   "line": "cand14 · released, then the card's 600 ms scale 1 → 0.9 and no record · the root on the stage at the act: true · stage glides started 0 (bound 0) · errors 0",
+   "load": "19.0/20.5/23.7"
+  },
+  {
+   "name": "D4 perspective(400px) rotateX(40deg) · host -200 px from the origin · insert 40 px",
+   "status": "PASS",
+   "line": "cand14 · the root's paint moved 18.5 px in all · on the act's frame 0.00, 0.00 = 0.00 px from where it was painted (bound ≤ 0.5) · glides 1 · errors 0",
+   "load": "19.0/20.5/23.7"
+  },
+  {
+   "name": "D4 perspective(400px) rotateX(40deg) · host -200 px from the origin · insert 120 px",
+   "status": "PASS",
+   "line": "cand14 · the root's paint moved 61.7 px in all · on the act's frame 0.00, 0.00 = 0.00 px from where it was painted (bound ≤ 0.5) · glides 1 · errors 0",
+   "load": "19.0/20.5/23.7"
+  },
+  {
+   "name": "D4 perspective(400px) rotateX(40deg) · host -200 px from the origin · insert 200 px",
+   "status": "PASS",
+   "line": "cand14 · the root's paint moved 116.0 px in all · on the act's frame 0.00, -0.00 = 0.00 px from where it was painted (bound ≤ 0.5) · glides 1 · errors 0",
+   "load": "19.7/20.6/23.7"
+  },
+  {
+   "name": "D4 perspective(400px) rotateX(40deg) · host 0 px from the origin · insert 40 px",
+   "status": "PASS",
+   "line": "cand14 · the root's paint moved 32.8 px in all · on the act's frame 0.00, 0.00 = 0.00 px from where it was painted (bound ≤ 0.5) · glides 1 · errors 0",
+   "load": "19.7/20.6/23.7"
+  },
+  {
+   "name": "D4 perspective(400px) rotateX(40deg) · host 0 px from the origin · insert 120 px",
+   "status": "PASS",
+   "line": "cand14 · the root's paint moved 114.0 px in all · on the act's frame 0.00, 0.00 = 0.00 px from where it was painted (bound ≤ 0.5) · glides 1 · errors 0",
+   "load": "19.7/20.6/23.7"
+  },
+  {
+   "name": "D4 perspective(400px) rotateX(40deg) · host 0 px from the origin · insert 200 px",
+   "status": "PASS",
+   "line": "cand14 · the root's paint moved 226.1 px in all · on the act's frame -0.00, 0.00 = 0.00 px from where it was painted (bound ≤ 0.5) · glides 1 · errors 0",
+   "load": "18.8/20.4/23.6"
+  },
+  {
+   "name": "D4 perspective(400px) rotateX(40deg) · host 150 px from the origin · insert 40 px",
+   "status": "PASS",
+   "line": "cand14 · the root's paint moved 58.2 px in all · on the act's frame 0.00, 0.00 = 0.00 px from where it was painted (bound ≤ 0.5) · glides 1 · errors 0",
+   "load": "18.8/20.4/23.6"
+  },
+  {
+   "name": "D4 perspective(400px) rotateX(40deg) · host 150 px from the origin · insert 120 px",
+   "status": "PASS",
+   "line": "cand14 · the root's paint moved 214.4 px in all · on the act's frame 0.00, 0.00 = 0.00 px from where it was painted (bound ≤ 0.5) · glides 1 · errors 0",
+   "load": "18.8/20.4/23.6"
+  },
+  {
+   "name": "D4 perspective(400px) rotateX(40deg) · host 150 px from the origin · insert 200 px",
+   "status": "PASS",
+   "line": "cand14 · the root's paint moved 462.7 px in all · on the act's frame 0.00, -0.00 = 0.00 px from where it was painted (bound ≤ 0.5) · glides 1 · errors 0",
+   "load": "18.8/20.4/23.6"
+  },
+  {
+   "name": "D4 perspective(600px) rotateX(25deg) · host -200 px from the origin · insert 40 px",
+   "status": "PASS",
+   "line": "cand14 · the root's paint moved 28.6 px in all · on the act's frame 0.00, 0.00 = 0.00 px from where it was painted (bound ≤ 0.5) · glides 1 · errors 0",
+   "load": "17.9/20.2/23.5"
+  },
+  {
+   "name": "D4 perspective(600px) rotateX(25deg) · host -200 px from the origin · insert 120 px",
+   "status": "PASS",
+   "line": "cand14 · the root's paint moved 90.3 px in all · on the act's frame 0.00, 0.00 = 0.00 px from where it was painted (bound ≤ 0.5) · glides 1 · errors 0",
+   "load": "17.9/20.2/23.5"
+  },
+  {
+   "name": "D4 perspective(600px) rotateX(25deg) · host -200 px from the origin · insert 200 px",
+   "status": "PASS",
+   "line": "cand14 · the root's paint moved 158.9 px in all · on the act's frame 0.00, 0.00 = 0.00 px from where it was painted (bound ≤ 0.5) · glides 1 · errors 0",
+   "load": "17.9/20.2/23.5"
+  },
+  {
+   "name": "D4 perspective(600px) rotateX(25deg) · host 0 px from the origin · insert 40 px",
+   "status": "PASS",
+   "line": "cand14 · the root's paint moved 37.3 px in all · on the act's frame 0.00, 0.00 = 0.00 px from where it was painted (bound ≤ 0.5) · glides 1 · errors 0",
+   "load": "17.9/20.2/23.5"
+  },
+  {
+   "name": "D4 perspective(600px) rotateX(25deg) · host 0 px from the origin · insert 120 px",
+   "status": "PASS",
+   "line": "cand14 · the root's paint moved 118.8 px in all · on the act's frame 0.00, 0.00 = 0.00 px from where it was painted (bound ≤ 0.5) · glides 1 · errors 0",
+   "load": "19.2/20.4/23.6"
+  },
+  {
+   "name": "D4 perspective(600px) rotateX(25deg) · host 0 px from the origin · insert 200 px",
+   "status": "PASS",
+   "line": "cand14 · the root's paint moved 211.0 px in all · on the act's frame 0.00, -0.00 = 0.00 px from where it was painted (bound ≤ 0.5) · glides 1 · errors 0",
+   "load": "19.2/20.4/23.6"
+  },
+  {
+   "name": "D4 perspective(600px) rotateX(25deg) · host 150 px from the origin · insert 40 px",
+   "status": "PASS",
+   "line": "cand14 · the root's paint moved 46.8 px in all · on the act's frame 0.00, 0.00 = 0.00 px from where it was painted (bound ≤ 0.5) · glides 1 · errors 0",
+   "load": "19.2/20.4/23.6"
+  },
+  {
+   "name": "D4 perspective(600px) rotateX(25deg) · host 150 px from the origin · insert 120 px",
+   "status": "PASS",
+   "line": "cand14 · the root's paint moved 150.2 px in all · on the act's frame 0.00, 0.00 = 0.00 px from where it was painted (bound ≤ 0.5) · glides 1 · errors 0",
+   "load": "19.2/20.4/23.6"
+  },
+  {
+   "name": "D4 perspective(600px) rotateX(25deg) · host 150 px from the origin · insert 200 px",
+   "status": "PASS",
+   "line": "cand14 · the root's paint moved 269.1 px in all · on the act's frame 0.00, -0.00 = 0.00 px from where it was painted (bound ≤ 0.5) · glides 1 · errors 0",
+   "load": "19.4/20.4/23.6"
+  },
+  {
+   "name": "D5 NumberField scrub 9 → 10 · flex-start row · field-sizing content",
+   "status": "PASS",
+   "line": "cand14 · values 3 → 4 → 5 → 6 → 7 → 8 → 9 → 10 → 11 → 12 → 13 → 14 → 15 → 16 → 17 → 18 → 19 · at 9 → 10 the field grew 9.0 px in layout, its leading edge moved 0.0 px in layout and up to 0.00 px in paint over the next 20 frames · stage glides started at the change 0 · engaged true · field-sizing true · pitch 8.95385px · errors 0",
+   "load": "19.4/20.4/23.6"
+  },
+  {
+   "name": "D5 NumberField scrub 9 → 10 · center row · field-sizing content",
+   "status": "PASS",
+   "line": "cand14 · values 3 → 4 → 5 → 6 → 7 → 8 → 9 → 10 → 11 → 12 → 13 → 14 → 15 → 16 → 17 → 18 → 19 · at 9 → 10 the field grew 9.0 px in layout, its leading edge moved -4.0 px in layout and up to 4.47 px in paint over the next 20 frames · stage glides started at the change 0 · engaged true · field-sizing true · pitch 8.95385px · errors 0",
+   "load": "18.8/20.3/23.5"
+  },
+  {
+   "name": "D6 button commit · a consumer's transition-all on the host · default tokens",
+   "status": "PASS",
+   "line": "cand14 · button transition-property \"all\" duration \"0.15s\" · 3 clicks, the largest scale excursion of the button, its descendants and their ::before/::after, × its width: 0.00, 0.00, 0.00 px (pop > 0.8) · engage errors 0 (bound: 0 engage errors over 3 pointer commits; the pop itself is E-2's paint read, and this computed-scale read is a REPORT that sees no scale channel on either build)",
+   "load": "18.6/20.2/23.5"
+  },
+  {
+   "name": "D6 button commit (control: no transition-all) · default tokens",
+   "status": "PASS",
+   "line": "cand14 · button transition-property \"all\" duration \"0s\" · 3 clicks, the largest scale excursion of the button, its descendants and their ::before/::after, × its width: 0.00, 0.00, 0.00 px (pop > 0.8) · engage errors 0 (bound: 0 engage errors over 3 pointer commits; the pop itself is E-2's paint read, and this computed-scale read is a REPORT that sees no scale channel on either build)",
+   "load": "20.0/20.5/23.5"
+  },
+  {
+   "name": "D6 held slider · a consumer's transition-all on the host · default tokens",
+   "status": "PASS",
+   "line": "cand14 · host transition-property \"all\" duration \"0.15s\" · engaged inline ×1.0600 (--stage-reach \"1.06\") · engage errors 0 (bound: 0 errors, ×≥ 1.03)",
+   "load": "20.0/20.5/23.5"
+  },
+  {
+   "name": "D7 --motion-tempo 1 · re-render glide",
+   "status": "PASS",
+   "line": "cand14 · --motion-tempo computes \"1\" · CSS's --spring-dock-duration 0.21s · the stage's re-render glide ran 210.0 ms · errors naming the tempo or the dock row 0 (bound: the clock CSS runs, or loud by name)",
+   "load": "20.0/20.5/23.5"
+  },
+  {
+   "name": "D7 --motion-tempo 1 · release carry",
+   "status": "PASS",
+   "line": "cand14 · --motion-tempo computes \"1\" · CSS's --spring-dock-duration 0.21s · the stage's release carry ran 210.0 ms · errors naming the tempo or the dock row 0 (bound: the clock CSS runs, or loud by name)",
+   "load": "20.0/20.5/23.5"
+  },
+  {
+   "name": "D7 --motion-tempo 0 · re-render glide",
+   "status": "PASS",
+   "line": "cand14 · --motion-tempo computes \"0\" · CSS's --spring-dock-duration 0s · the stage's re-render glide ran nothing · errors naming the tempo or the dock row 0 (bound: the clock CSS runs, or loud by name)",
+   "load": "20.0/20.5/23.5"
+  },
+  {
+   "name": "D7 --motion-tempo 0 · release carry",
+   "status": "PASS",
+   "line": "cand14 · --motion-tempo computes \"0\" · CSS's --spring-dock-duration 0s · the stage's release carry ran nothing · errors naming the tempo or the dock row 0 (bound: the clock CSS runs, or loud by name)",
+   "load": "20.0/20.5/23.5"
+  },
+  {
+   "name": "D7 --motion-tempo -1 · re-render glide",
+   "status": "PASS",
+   "line": "cand14 · --motion-tempo computes \"-1\" · CSS's --spring-dock-duration 0s · the stage's re-render glide ran nothing · errors naming the tempo or the dock row 0 (bound: the clock CSS runs, or loud by name)",
+   "load": "20.0/20.5/23.5"
+  },
+  {
+   "name": "D7 --motion-tempo -1 · release carry",
+   "status": "PASS",
+   "line": "cand14 · --motion-tempo computes \"-1\" · CSS's --spring-dock-duration 0s · the stage's release carry ran nothing · errors naming the tempo or the dock row 0 (bound: the clock CSS runs, or loud by name)",
+   "load": "20.0/20.5/23.5"
+  },
+  {
+   "name": "D8 --space-section 2em, host 14px, page 16px",
+   "status": "FAIL",
+   "line": "cand14 · rest 632.0 px wide, 34.0 / 34.0 px from the viewport's edges (font 14px) · engaged 636.0 px (×1.0063, --stage-reach \"1.00633\"), 32.0 / 32.0 px from the edges · the host's shape-margin 0px · the page's padding consumer lays the gutter at 33.2 px · the held box stops -1.22 px off it (bound ±1) · errors 0",
+   "load": "20.0/20.5/23.5"
+  },
+  {
+   "name": "D8 --space-section 4cqi, host in a 400 px container",
+   "status": "PASS",
+   "line": "cand14 · rest 640.0 px wide, 30.0 / 30.0 px from the viewport's edges (font 16.61px) · engaged 644.0 px (×1.0063, --stage-reach \"1.00625\"), 28.0 / 28.0 px from the edges · the host's shape-margin 0px · the page's padding consumer lays the gutter at 28.0 px · the held box stops 0.00 px off it (bound ±1) · errors 0",
+   "load": "20.1/20.5/23.5"
+  },
+  {
+   "name": "D9 card scale 1 → 1.25 about the held root · scaled during the hold",
+   "status": "PASS",
+   "line": "cand14 · after the scroll the held box paints 650.0 px (layout 504, frame ×1.2500, --stage-reach \"1.03175\"), 25.0 / 25.0 px from the viewport's edges · the gutter 20.0 px, 25.0 px as the card paints it (bound: ≥ that − 1) · errors 0",
+   "load": "20.1/20.5/23.5"
+  },
+  {
+   "name": "D9 card scale 1 → 1.25 about the held root · scaled before the hold (control)",
+   "status": "PASS",
+   "line": "cand14 · after the scroll the held box paints 650.0 px (layout 504, frame ×1.2500, --stage-reach \"1.03175\"), 25.0 / 25.0 px from the viewport's edges · the gutter 20.0 px, 25.0 px as the card paints it (bound: ≥ that − 1) · errors 0",
+   "load": "20.1/20.5/23.5"
+  },
+  {
+   "name": "D10 drag work · round 1",
+   "status": "REPORT",
+   "line": "cand14 · 60 pointer moves of a held thumb over ~1.2 s: layouts 362, style recalcs 362, layout 30.8 ms, recalc 124.0 ms, script 23.7 ms",
+   "load": "19.4/20.4/23.4"
+  },
+  {
+   "name": "D10 drag work · round 2",
+   "status": "REPORT",
+   "line": "cand14 · 60 pointer moves of a held thumb over ~1.2 s: layouts 364, style recalcs 364, layout 30.2 ms, recalc 122.1 ms, script 23.4 ms",
+   "load": "19.4/20.4/23.4"
+  }
+ ]
+}

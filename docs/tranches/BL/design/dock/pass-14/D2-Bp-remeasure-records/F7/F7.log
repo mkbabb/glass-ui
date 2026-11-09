@@ -1,0 +1,22 @@
+23:54  up 4 days,  5:14, 3 users, load averages: 19.85 41.69 37.41
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1794199018 slope=28.1/s inuse=2675922 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. Finish what you are doing and report it; the owner decides on the reboot.
+STEP  F7  lib  exit 0  8 s  [load 19.85-19.46]
+STEP  F7  demo  exit 0  2 s  [load 19.46-19.99]
+STEP  F7  typecheck  exit 0  18 s  [load 19.99-22.05]
+STEP  F7  units  exit 0  72 s  [load 22.05-26.1]
+PASS  F7  source  f7·typecheck  typecheck exit 0  [load 26.1]
+PASS  F7  source  f7·build  lib build exit 0, demo dist build exit 0  [load 26.1]
+PASS  F7  source  f7·units  232 test file(s) outside tests/gates/, 2241 test(s); 0 file(s) failing  [load 26.1]
+PASS  F7  source  f7·gate·boot-graph  14 assertion(s), 14 ran, 0 failing; build arm 3/3 ran  [load 26.1]
+PASS  F7  source  f7·gate·comment-ratio  15 assertion(s), 15 ran, 0 failing  [load 26.1]
+PASS  F7  source  f7·gate·feedback-tint-seam  3 assertion(s), 3 ran, 0 failing  [load 26.1]
+PASS  F7  source  f7·gate·gate-register  21 assertion(s), 21 ran, 0 failing  [load 26.1]
+PASS  F7  source  f7·gate·orphan-css-partial  9 assertion(s), 9 ran, 0 failing  [load 26.1]
+PASS  F7  source  f7·gate·overfit-structure  15 assertion(s), 15 ran, 0 failing  [load 26.1]
+PASS  F7  source  f7·gate·tabs-seam  26 assertion(s), 26 ran, 0 failing  [load 26.1]
+PASS  F7  source  f7·gate·token-hygiene  4 assertion(s), 4 ran, 0 failing  [load 26.1]
+PASS  F7  source  f7·gate·trap-gates  6 assertion(s), 6 ran, 0 failing  [load 26.1]
+PASS  F7  source  f7·gate·type-hygiene  7 assertion(s), 7 ran, 0 failing  [load 26.1]
+PASS  F7  wt  13/13 cells pass  (json: /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D2/p14/Bp-remeasure/out/f7/runs/F7-wt/F7.json)
+exit 0
+23:56  up 4 days,  5:16, 3 users, load averages: 26.01 37.58 36.30

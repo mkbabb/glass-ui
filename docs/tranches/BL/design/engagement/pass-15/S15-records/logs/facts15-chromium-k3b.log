@@ -1,0 +1,32 @@
+# S15 facts · chromium 149.0.7827.55 · playwright 1.61.1 · load 19.5/41.2/37.3 at start
+K3 the host's own zoom 1 → 1.5 · load 19.5/41.2/37.3
+  (probe point: a span inside the host) zoom chain [1,1,1,1] → [1.5,1.5,1,1]
+  painted Δ [18,2] · Σ lv×own zoom Δ [20,3] · Σ lv×parent's zoom Δ [0,-17] · cand14's host-unit Q Δ [-16.333,-43.667] · **S15 root-px Q Δ [18.5,1.5]**
+  absolute: painted [107,139], Σ lv×own zoom [109,140], Σ lv×parent's zoom [89,120], S15 root-px Q [107.5,138.5]
+  the host: offsets [40,54,200,20] → [37,37,200,20] · painted box [83,137,200,20] → [98,139,300,30]
+  a 10px translate on the span paints 15 px (span zoom 1.5)
+K3 the host's own zoom 1 → 0.75 · load 19.5/41.2/37.3
+  (probe point: a span inside the host) zoom chain [1,1,1,1] → [0.75,0.75,1,1]
+  painted Δ [-9,-1] · Σ lv×own zoom Δ [-10,-1.5] · Σ lv×parent's zoom Δ [1.5,17] · cand14's host-unit Q Δ [16.333,43.667] · **S15 root-px Q Δ [-9.25,-0.75]**
+  absolute: painted [80,136], Σ lv×own zoom [79,135.5], Σ lv×parent's zoom [90.5,154], S15 root-px Q [79.75,136.25]
+  the host: offsets [40,54,200,20] → [43,71,200,20] · painted box [83,137,200,20] → [75.5,136,150,15]
+  a 10px translate on the span paints 7.5 px (span zoom 0.75)
+K3 an ancestor's zoom 1 → 1.25 · load 19.5/41.2/37.3
+  (probe point: a span inside the host) zoom chain [1,1,1,1] → [1.25,1.25,1.25,1]
+  painted Δ [21.5,33.5] · Σ lv×own zoom Δ [21,33] · Σ lv×parent's zoom Δ [11,13] · cand14's host-unit Q Δ [-1,-1] · **S15 root-px Q Δ [21,33]**
+  absolute: painted [110.5,170.5], Σ lv×own zoom [110,170], Σ lv×parent's zoom [100,150], S15 root-px Q [110,170]
+  the host: offsets [40,54,200,20] → [40,54,200,20] · painted box [83,137,200,20] → [103,170.5,250,25]
+  a 10px translate on the span paints 12.5 px (span zoom 1.25)
+K3 a box before the host 1 → 1.25 · load 19.5/41.2/37.3
+  (probe point: a span inside the host) zoom chain [1,1,1,1] → [1,1,1,1]
+  painted Δ [0,10] · Σ lv×own zoom Δ [0,10] · Σ lv×parent's zoom Δ [0,10] · cand14's host-unit Q Δ [0,10] · **S15 root-px Q Δ [0,10]**
+  absolute: painted [89,147], Σ lv×own zoom [89,147], Σ lv×parent's zoom [89,147], S15 root-px Q [89,147]
+  the host: offsets [40,54,200,20] → [40,64,200,20] · painted box [83,137,200,20] → [83,147,200,20]
+  a 10px translate on the span paints 10 px (span zoom 1)
+K3 an ancestor at 1.25, the host 1 → 1.5 · load 19.5/41.2/37.3
+  (probe point: a span inside the host) zoom chain [1.25,1.25,1.25,1] → [1.875,1.875,1.25,1]
+  painted Δ [22.5,2.5] · Σ lv×own zoom Δ [24.375,3.125] · Σ lv×parent's zoom Δ [0,-21.25] · cand14's host-unit Q Δ [-16.333,-43.667] · **S15 root-px Q Δ [23.125,1.875]**
+  absolute: painted [133,173], Σ lv×own zoom [134.38,173.13], Σ lv×parent's zoom [100,128.75], S15 root-px Q [133.13,171.88]
+  the host: offsets [40,54,200,20] → [37,37,200,20] · painted box [103,170.5,250,25] → [121.75,173,375,37.5]
+  a 10px translate on the span paints 18.75 px (span zoom 1.875)
+# end · 5 cells written · load 19.5/41.2/37.3

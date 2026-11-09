@@ -26,8 +26,12 @@ let broken = 0, runs = 0, na = 0; const retried = [];
 const failLines = (o) => o.split("\n").filter((l) => /^\s+FAIL\s/.test(l));
 // H3 (pass 3): the capture (CK-25) carries a gating cell (its committed frame shows a commit that happened) and so a
 // plant (`cap-nocommit`); it is self-tested beside the witnesses, on the fixture's `pop` scene, light, both pointers
+// H15: E-15 is read on builds only (its plants are builds: REGISTRY §P14-8.2 wave 2); its self-test is the build battery's tabulation
+// (pass-15/H15-records/sum15.py), not a fixture run
+const BUILD_ONLY = new Set(["E-15"]);
 for (const [id, file] of [...WITNESSES, ["CAP", "capture.mjs"]]) {
   if (only && !only.has(id)) continue;
+  if (BUILD_ONLY.has(id)) { console.log(`N/A    ${id} its plants are builds; self-tested by the build battery (H15)`); continue; }
   for (const engine of engines) {
     const tag = `${id} ${engine.padEnd(8)}`;
     const witnessNA = ENGINE_ONLY[id] && !ENGINE_ONLY[id].includes(engine);

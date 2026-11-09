@@ -1,0 +1,16 @@
+# C-A14 cand14-E-7 webkit · 2026-11-09 02:27:10 · load { 5.94 6.53 6.76 } · harness 7e79063a4b00 · 
+# E-7 static arm: the worktree holds the build's src tree b499f8a7c54e (668 files)
+# E-7 · one writer of data-engaged, meaning held
+# target /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p15/CA14c/wt/.ca14out/builds/cand14 · engine webkit · lock wait 0.0 s (the deadline 5400 s counts from here) · other headless processes: chromium 4, webkit 0 · load 5.9/6.5/6.8 at start
+# scene app: harness scenes/App.vue (sha1 912fecf0a1aa)
+# webkit 26.5 (Playwright WebKit, not Safari; real Safari UNMEASURED (owner's safaridriver checkbox))
+  PASS       E-7 writers data-engaged (static) · 1 writer file(s): src/composables/motion/engage/stage.ts · bound ≤ 1, under src/composables/motion/engage/ · tree /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p15/CA14c/wt · load 6.3/6.6/6.8
+  FAIL       E-7 writers data-held (static) · 2 writer file(s): src/components/dock/GlassDock.vue, src/composables/motion/engage/useEngage.ts · bound ≤ 1, under src/composables/motion/engage/ · tree /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p15/CA14c/wt · load 6.3/6.6/6.8
+  PASS       E-7 writers data-press (static) · 1 writer file(s): src/composables/motion/engage/press.ts · bound ≤ 1, under src/composables/motion/engage/ · tree /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p15/CA14c/wt · load 6.3/6.6/6.8
+  PASS       E-7 writers data-commit (static) · 1 writer file(s): src/composables/motion/engage/useEngage.ts · bound ≤ 1, under src/composables/motion/engage/ · tree /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p15/CA14c/wt · load 6.3/6.6/6.8
+  PASS       E-7 slider held · [data-engaged] nodes while pointer-held 1 · bound ≥ 1 · load 6.3/6.6/6.8
+  PASS       E-7 slider held PRM · reduce · [data-engaged] nodes while pointer-held 1 · bound ≥ 1 · load 6.3/6.6/6.8
+  PASS       E-7 modal open, nothing held · dialog open true · veil nodes 1 · [data-engaged] nodes 0 · bound 0 · load 6.3/6.6/6.8
+E-7 webkit FAIL · 6 pass, 1 fail, 0 unmeasured of 7 gating cells (0 reported) · load 5.9/6.5/6.8 at start, 6.3/6.6/6.8 at end
+# exit 1 · 2026-11-09 02:27:14 · load { 6.27 6.59 6.78 }
+# end · 2026-11-09 02:27:14 · load { 6.27 6.59 6.78 } · harness 7e79063a4b00

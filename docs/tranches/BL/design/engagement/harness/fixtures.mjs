@@ -630,7 +630,7 @@ function clockOf(el) {
   let ms = NaN;
   if (FAULT === "e11-travelunit" && /^[\\d.]+m?s$/.test(raw)) ms = Number.parseFloat(raw) * 1000; // the plant misreads a plain <time> (210ms) as seconds; its calc() default is read as the clean fixture reads it
   else ms = readTok(el, "--spring-press-settle", "time");
-  if (ms > 0 && Number.isFinite(ms)) return ms;
+  if (ms >= 0 && Number.isFinite(ms)) return ms; // H15 class 6: a valid <time> computing 0 s runs 0 s, the clock CSS runs (S14-e)
   console.error("[fixture] --spring-press-settle is unreadable (" + JSON.stringify(raw) + "): the travel has no clock"); return 0;
 }
 function easingOf(el) {

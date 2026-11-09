@@ -3962,3 +3962,158 @@ Pass 15 is a build pass and cannot be clean (CK-01 and CK-17 need F-17 in D5's b
 - passes 16 and 17 both clean.
 
 If pass 15 reaches the fixed point, D5 runs no further build pass until F-16 and F-17 land. **The R-K1-c vehicle moves with this registry: after pass 17 at the earliest.** atlas's M-7 stays until then.
+
+---
+
+# D5 · pass 14 · completion: cand14 at 18/27 on both critics, `ca14 A1`, `A2`, `A3`, `A12` placed as CK-20 regressions, NOT CLEAN, the count stays 0
+
+Everything above this line is left as written. This part is the pass-14 completion's agglomeration (§P14-8.0 c6). It scores only what a seat measured. It rules every row §P14-2 left pending on both critics, places C-A14's members, and changes the base and the pass-15 plan only where a C-A14 read refutes a reading above on the same path.
+
+| field | value |
+|---|---|
+| seat | D5 pass-14 completion agglomeration (§P14-8.0 c6) |
+| model | `claude-opus-5-5`, asserted from own system identity |
+| HEAD | `eb845639f`. `git diff --stat 82491ebb9 HEAD -- src tests demo` prints nothing. `release/10.1.4` is not an ancestor (`git merge-base --is-ancestor`, exit 1). The base did not move; F5‴ carries |
+| the candidate's bytes | **cand14 = HEAD + `pass-14/P-E14.patch` `5989adedb3271e5a23db9290cc250682afc3131e`** (this seat's `shasum`, equal to §P14's header, C-A14's and P-E15's). Src tree **`971802d6034f`**, read back by C-A14-complete against C-A14's `logs/builds.log`, with every other build's tree and every plant equal (C-A14 header, `logs/cc-builds*.log`) |
+| inputs, read in full | `pass-14/C-A14.md` (the completion, all 137 lines); `pass-15/P-E15.md` (all of S15, 266 lines); this file's "pass 14 · REGISTRY" part (the spec of record), the "pass 13 · completion 2" part and §P1-6. Spot reads of C-A14-complete's stage logs: `cand14-ca14-{chromium,webkit}.log`, `cand13-ca14-webkit.log`, `cand12-ca14-webkit.log`, `cand1{2,4}-ca14-chromium-{d77a75,587c87,c4fe43}.log` (A3, A14-A18), `cand1{2,3,4}-atk-{chromium,webkit}-fcf2be.log` (A5), every `*-atk2-*.log` (B1-B3). `C-E14.md` lines 20-123 by `grep` (B1, A5, the limit rows). `../../audit/INBOUND.md` (mtime 2026-11-08 23:39, last row **O-185**) and `../../FORMATION-PROGRESS.md` (mtime 2026-11-08 23:40, last line 23:55), re-read at this seat's start. `../../CHARTER.md` design-loop section (50-90) |
+| left unread, stated | the pass-13 completion part (3434-3660) and the pass-13 part beyond what §P14 carries; passes 1-12 beyond §P1-6; H14, P-E14 and the S14 challenge beyond what §P14 and S15 cite; C-E14 beyond the lines named; every JSON and frame. No ruling below rests on an unread part: each rests on a C-A14-complete stage log read here or on the two reports |
+| instruments | none that measure. `shasum` of the patch, the ancestry check, `ps` (no C-A14 chain is running), `git status` of the records. Every number cites the seat that measured it (P-3) |
+| fences | no source edit, no git write; this part and `pass-15/P-E15.md` §S15-FOLD are the only writes. No browser ran. Nothing under `~/.claude` was read |
+| engines | Chromium 149.0.7827.55 and Playwright WebKit 26.5 (playwright 1.61.1), headless shell, no GPU arguments. Playwright WebKit is not Safari. Real Safari: **UNMEASURED (owner's safaridriver checkbox)** |
+| rulings in force | O-103d (1)-(4); **O-103f (1)-(4)**, (3) as written ("the engaged frame loop runs only while engaged and stops at release, measured"); Q-1 (c), Q-4 (b) as defaults; O-118 (3); O-87; E-1, E-2, D-1..D-3, P-1, P-3. **Q-14 is unanswered**: INBOUND's last row is O-185 (the dock grain as an LCP candidate; no D5 cell or CK row), and FORMATION-PROGRESS's last line (23:55) says "Q-14 is with the owner". So S15 keeps both branches and part B builds branch (i). F-16 not published (`waves/W-0.1.md`'s last commit is still `0b16d54e3`, O-174). F-17 not published: D2 pass 13 is CLEAN, count 1 of 2 (`../dock/REGISTRY.md` "D2 · pass 13 · REGISTRY"), and its pass-14 confirmation runs (`wf_24206b87-2c0`). Nothing to fold |
+
+Short citations: `CA14 §n` is `pass-14/C-A14.md` (the completion); `CE14 §n` is `C-E14.md`; `S15-x` is `pass-15/P-E15.md`'s sections; `ca14 An` C-A14's cells, `An`/`Bn` C-E14's.
+
+## P14c-0 · In brief
+
+**Seats' completeness.**
+
+| wave | seat | status |
+|---|---|---|
+| c5 | **C-A14-complete** | **COMPLETE.** Every stage of `C-1.held` (22), `CR.q` (8), `WQ.q` (59), `ADD.q` (9) and `WADD.q` (9) ran to its end, plus `CX.q` (5) and `WR.q` (2), each recorded before it ran. `guarded` refused nothing; every call printed the zone warning. Five C-4 stages measured nothing ("unknown stage") and re-ran whole as CX-1, so none is scored from C-4 (CA14 §4 item 1) |
+| 1 | P-E15 part S (S15) | WRITTEN; its FOLD is closed by this seat (§P14c-6). Q-14 open by design |
+
+| candidate | built as | critics | rows closed / applicable (both critics) | status |
+|---|---|---|---:|---|
+| **A+E** | `P-E14.patch` `5989aded…`, src tree `971802d6034f` | C-E14 **18/27**; C-A14 **18/27** (C-1 + the completion) | **18/27 = 67 %** | **ADVANCE, NOT CLEAN** |
+
+**Pass 14 is not a clean pass. The clean-pass count stays 0.** The two critics close the same 18 rows in both engines and hold the same 9 open. The score series: 52 % (pass 4), 37 %, 67 %, 78 %, 78 %, 81 %, 78 %, 78 %, 74 % (pass 12), 67 % (pass 13), **67 % (pass 14)**.
+
+**The fixed point is not reached.** CK-16, 20, 21, 22 and 27 carry counterexamples on these bytes in both engines, each a rule inside the frame read and curable in place (§P14-6). The completion adds four CK-20 regressions and no cure.
+
+1. **Every pending row closes on the second critic** (CA14 §1). C-A14 reads CK-02..15, 18, 23, 24 and 26 closed in both engines, on its own stages below or at the load bounds it states, and no row moves against C-E14's reading.
+2. **`ca14 A1`, `A2`, `A3`, `A12` reproduce, and each is a CK-20 counterexample and a regression** (CA14 §0 item 1). Each read is equal to the hundredth across C-1 (load 33-104), CR-1 (9.8-13.6), WK-1 (4.7-5.4) and WK-2 (4.5-5.9), with its reference passing in the same acquisition and the in-scene controls (the 10 px insert; `translate: 0 -50%` and the default origin) passing on cand14. WebKit was read below load 8 twice; Chromium never fell below 8 in CR-1, but a geometric figure equal across a 10× load range is not a load effect, so the load law's purpose is met (it is not a FAIL "seen only above the bound"). This seat checked the lines in `cand14-ca14-{chromium,webkit}.log`: the same 11 cells fail in both engines.
+
+   | member | cand14, both engines | reference (passes, same acquisition) | other builds |
+   |---|---|---|---|
+   | `A1` a transformed link (`scale: 0.5` origin `0 0`, or `rotate: 20deg`) inside an open or closed shadow root, 40 px insert above the shadow host | **20.00 px** on the act's frame (13.89 rotated), bound ≤ 0.5 | **cand13** 0.00 px | cand12 fails in WebKit (20.00 px) |
+   | `A2` a stylesheet `translateY(-50%)` origin `0 0`, or `translate(-50%, -50%)` origin `top center`, 40 px insert inside the card | **20.00 px**, bound ≤ 0.5 | **cand13** 0.00 px | cand12 fails in WebKit, also on both controls; passes in Chromium |
+   | `A3` the host's height 80 → 40 px with a 20 or 15 px insert above it in one frame | top edge **21.20 px**, bound ≤ 1.70 | **cand12 1.20 px** (`cand12-ca14-chromium-d77a75.log`) | cand13 fails, also on the 10 px control in WebKit |
+   | `A12` the card's own `top` 0 → 120 px under a 400 ms transition | apart from its card **2.00-6.58 px** Chromium, **2.00-5.61 px** WebKit, bound ≤ 0.5 | **cand12 and cand13** 0.00 px | — |
+
+3. **C-E14's counterexamples hold on the second critic, both engines** (CA14 §0 item 2): M28 (`B2`, 12 / 14 / 17 glides Chromium, 19 / 20 / 21 WebKit, bound ≤ 2; cand12 0); the host's own zoom (`B3` −5.30 and 2.65 px; `A5` 2.65 px; the height control −0.30 px); `nozoom` red on nothing (`A5` 2/1, `B3` 1/2, `A9` 2/0, equal to cand14); `<link>` at load (CA13c `norec link` 40.00 px on the film).
+4. **One reference reading is refuted on the same path: cand12 is not the passing reference for every M22 cell** (§P14c-3). On `A5`, cand12 fails all three cells in both engines (`cand12-atk-{chromium,webkit}-fcf2be.log`): the ancestor's zoom (G 1 → 1.25 and 1 → 0.8, **94.85 / 75.89 px** on the act's frame) where cand13 and cand14 read 0.00 px, and the host's own cell, where its edge reads 0.15 px but the probe point is cut 2.50 px in one frame against a 16.7 ms bound of 1.5. §P14-4's "cand12 exact" holds on `B3` only. This narrows S15-b's reference. It does not change the base or the plan: the host's zoom regression stands on `B3`, where cand12 passes both cells and cand14 fails both, in both engines.
+5. **CK-16 is OPEN on O-103f (3) as written, on both critics.** C-A14 reads the idle bar beside `cand8` in the same run (Chromium 119.7 / 120.3 against 119.9 / 120.2; WebKit 97.9 / 97.9 against 97.9 / 98.3; 0 layouts) and the loop past release (`cand14-loop` 0/2 both engines; 245.5 / 233.8 per s Chromium and 197.4 / 196.1 WebKit in the first 150 ms; 0.0/s from +1.5 s). Q-14 is unanswered.
+6. **A14-A18 add no counterexample on cand14** (13/0 in both engines). They are the line's cures past S14's ranges: cand13 fails A14 (record-started keyframes, 160.00 px) and A15; cand12 fails A16 (anchoring, 400.00 px). With S15-a changing the route above the transformed link, they become regression cells for cand15 (§P14c-6).
+7. **CK-25's lens clause closes on both critics** (CA14 §3: the level ×1.06 pill under `rotate: 10deg`, both engines, on C-A14's own frames). The row stays OPEN ◇ on D3's ambient clause only.
+
+## P14c-1 · Registry
+
+| id | family | status after the completion | carries forward |
+|---|---|---|---|
+| **A+E** | the declared register with the engaged stage, under S14's frame read | ADVANCE, the one convergence candidate; `cand14` **18/27 on both critics**; `cand13` 18/27; `cand12` 20/27 | P-E15 on P-E14 under S15 and its FOLD (§P14c-5) |
+| (c), D5-B, D5-B (door), D5-C, D5-D, D5-X1..X3 | — | as §P13c-1 | unchanged |
+
+## P14c-2 · The candidate, row by row
+
+| row | C-E14 (both engines) | C-A14 (both engines) | ruled | reason |
+|---|---|---|---|---|
+| CK-01 | OPEN ◇ | OPEN ◇ (E-1 93/1/2 · 93/3/0) | **OPEN ◇** | D2's latch (54/55), D3's ambient (WebKit 1.71 against 1.24), A's reduce leg |
+| CK-02, 03 | CLOSED | CLOSED (E-2 164/0 · 164/0) | **CLOSED** | — |
+| CK-04 | CLOSED | CLOSED (E-3 22/0 · 22/0; D9 inside `ce13c`) | **CLOSED** | the cand13 regression is cured on both critics |
+| CK-05 | CLOSED | CLOSED (E-4 18/0 · 15/0/4, the four the engine's Carousel cells) | **CLOSED** | — |
+| CK-06 | CLOSED | CLOSED (E-5 56/0 · 56/0) | **CLOSED** | — |
+| CK-07 | CLOSED | CLOSED (S6 RETIRED; E-6's fails are the retired cells) | **CLOSED** | — |
+| CK-08 | CLOSED | CLOSED (E-7 6/1 · 6/1, `GlassDock.vue` D2's clause) | **CLOSED** | — |
+| CK-09 | CLOSED | CLOSED (E-8 19/0 · 19/0; no `engage-read` in `src`) | **CLOSED** | the orphan names are gone on both critics |
+| CK-10 | CLOSED | CLOSED (E-9 85/0 · 85/0; PRM plant 32 red · 32 red) | **CLOSED** | — |
+| CK-11, 13, 14 | CLOSED | CLOSED (E-12 102/0 · 101/0/1) | **CLOSED** | — |
+| CK-12 | CLOSED (crest 2/0 · 2/0) | CLOSED (static census; no crest stage on its lists) | **CLOSED** | C-E14's crest read stands; C-A14 read the row's census itself |
+| CK-15 | CLOSED | CLOSED (E-10 218/0; WebKit 212/1 then 213/0 twice, WR-1; `hg13` 90/0 · 90/0) | **CLOSED** | the WebKit fail is NOT-REPRODUCED (class 8, read again before it graded) |
+| **CK-16** | **OPEN** | **OPEN** | **OPEN** | §P14c-0 item 5; §P14-4 |
+| CK-17 | OPEN ◇ | OPEN ◇ | **OPEN ◇** | D2; every Safari cell UNMEASURED |
+| CK-18 | CLOSED | CLOSED | **CLOSED** | — |
+| CK-19 | OPEN ◇ | OPEN ◇ | **OPEN ◇** | D3 |
+| **CK-20** | **OPEN** (M28, host zoom, `<link>`) | **OPEN** (`ca14 A1`, `A2`, `A3`, `A12`; M28; host zoom; `<link>`) | **OPEN** | §P14c-0 items 2-3; four regressions added |
+| **CK-21** | **OPEN** (D8) | **OPEN** (D8, both engines) | **OPEN** | §P14-4 |
+| **CK-22** | **OPEN** (four sentences) | **OPEN** (the four, plus §S14-c's claims for M2/M3, M3/M6, M11, M18) | **OPEN** | §P14c-0 item 2; S15-f gains four rows (§P14c-6) |
+| CK-23 | CLOSED | CLOSED (numstat; drag 362-364 layouts against cand12's 362-366; CPU held still REPORT) | **CLOSED** | class 5 stands (§P14-5) |
+| CK-24 | CLOSED | CLOSED | **CLOSED** | — |
+| CK-25 | OPEN ◇ (D3's clause) | OPEN ◇ (D3's clause); lens clause closed on its own frames | **OPEN ◇** | D5's lens clause closes on both critics |
+| CK-26 | CLOSED | CLOSED (no lighting layer, blur or radius; the Chip's `plus-lighter` flood removed) | **CLOSED** | O-87 |
+| **CK-27** | **OPEN** (`nozoom`) | **OPEN** (`nozoom` red on no cell; the other twelve plants red) | **OPEN** | §P14-4 |
+
+**Closed on both critics: 18 of 27** (CK-02..15, 18, 23, 24, 26). **Open: 9.** Held by D2 or D3: CK-01, 17, 19 and CK-25's ambient clause. D5's own, with counterexamples on these bytes: CK-16, 20, 21, 22, 27.
+
+## P14c-3 · Where the seats differ, and the ruling
+
+| item | one side | the other | ruling |
+|---|---|---|---|
+| **cand12 as M22's reference** | §P14-4 and §P14-0 item 2: "cand12: −0.30 and 0.15 px, no glide … cand12 exact"; S15-b's member line: "Reference: cand12" over the whole range, ancestors included | `A5` on cand12, both engines, both critics' builds: the host cell FAIL (edge 0.15 px, but the probe point cut 2.50 px in one frame, largest 16.7 ms move 2.5 against 1.5, 0 glides); G's zoom 1 → 1.25 and 1 → 0.8 FAIL at 94.85 / 75.89 px; cand13 and cand14 pass both G cells at 0.00 px. CE14 line 87 reads the same | **Refuted on the same path, for `A5` only.** cand12 is the passing reference on `B3` (both cells, both engines) and on nothing else in M22. For a zoom change on an ancestor, cand14 (and cand13) pass and cand12 is a plant of record. The regression ruling for the host's own zoom stands on `B3`. The base and the plan do not change; S15-b's reference line is narrowed in the FOLD |
+| **`A5`'s host cell grades a size change as a place step** | `A5`'s host cell carries two bounds: the layout-fixed edge (≤ 0.5 + the grow's share) and the probe point's largest move over 16.7 ms (≤ 1.5) | `B3`'s host cells and the height control grade the edge only, and cand12 passes `B3`'s 1 → 1.5 cell with the centre moving 5.00 px; S15-b treats the host's own zoom as a size change that b.5 takes, so under S15 nothing is glided when the edge holds, and the probe point's 2.5 px change paints on one frame, as on cand12 | **The second bound is the instrument's on this cell.** A size change of the host itself is graded on its layout-fixed point, as `B3` and the height control grade it, and S15-b states that rule. On that grade cand12 passes `A5`'s host cell and cand14 fails it (2.65 px). H15 re-grades `A5`'s host cell to the edge bound (class 3 of this part) and keeps the 16.7 ms bound for place steps. No build passes the cell as `A5` grades it now, so no row rests on that clause |
+| **The every-frame train** (`B1` 40 px every frame, 4 steps) | cand14 116.2-117.5 px off the superposition, both engines, both critics; cand12 and cand13 ≤ 0.09 px | CE14 line 89 and CA14 §0 item 2: S14's stated limit (a.3, b.6, Ch-F7 (i)): a constant-velocity train is carried after its onset | **Not a counterexample: both critics grade it the stated limit**, and the onset is glided. Recorded for the S15 challenge: cand12 and cand13 superpose this train exactly, so the limit is a behaviour the line had and S14 gave up by design. The challenge may attack it under D-1; no row opens on it here |
+| **`<link>` at load** | both critics: CA13c `norec link` 40.00 px on the act's frame, both engines (CK-20) | S15-c (K4, library-free, both engines): the load lands in a task between frames, the next frame's resize step sees it before paint, and the film's posted-message read can read a layout no frame painted (class 7) | **The counterexample stays of record on the film until a read on cand14 after the frame's resize step decides.** K4 is not a read of the candidate on the same path. H15's after-step read on cand14 and cand15 decides it (S15-c). CK-20 is open on six other members either way |
+| `hostseat` | C-E14: red in WebKit on its `A12` (279.6 / 293.1 ms against 500.0) | C-A14: 6/0 on M30; C-E14's `A12` is not on its lists | **No conflict.** The plant fails on C-E14's cell; CK-27 stays open on `nozoom` alone |
+| the drag's cost | C-E14: 384-414 layouts on cand14 | C-A14: 362-364 against cand12's 362-366 (load 15-17) | **Both at cand12's cost**, each beside cand12 in its own run. No ruling moves |
+
+**No C-A14 read refutes the base, a row ruling, or the pass-15 plan.** The one refuted reading is a reference's reach (item 1), which S15's FOLD narrows.
+
+## P14c-4 · Defect classes (recorded; no CK row added), each placed
+
+§P14-5's classes stand as placed. Class 11 (a critic seat that ends mid-list with no report) and class 12 (members read only under load) are cured for pass 14 by the completion. New:
+
+| # | class | source | placed at | owner of the cure |
+|---|---|---|---|---|
+| 1 | **A queue with stage forms its runner does not resolve.** `CQ.q` listed five `<build>-ce11` / `<build>-ca11` stages and `WQ.q` four; `run.sh` had no such form. C-4's five printed "unknown stage" and measured nothing | CA14 §4 item 1 | process | the orchestrator and every critic: dry-run each queue against its runner (every stage form resolves) before the first acquisition, with class 11's report skeleton |
+| 2 | **A completion seat's builds overwrite its parent's tracked records.** The parent's `builds.sh` writes `logs/build-<label>.log`, a fixed name; C-A14-complete's builds rewrote 19 tracked logs, then put the parent's bytes back with `git show HEAD:<path>` | CA14 header (fences), §4 item 4 | process | the orchestrator's completion-seat charter: a completion seat that reuses a parent's scripts writes under its own prefix |
+| 3 | **A grade that applies a place-step bound to a size change of the host** (`A5`'s host cell, its 16.7 ms clause) | §P14c-3 item 2 | instruments, CK-20 | H15: grade a host's own size change, zoom included, on its layout-fixed point, as `B3` does |
+| 4 | **A reference stated past the cells it passes.** S15-b names cand12 as M22's reference across ancestors, where cand12 fails `A5`'s G cells; S15-h cites `ca14 A3`'s bound (1.70 px) as cand12's read (1.20 px) | §P14c-3 item 1; `cand12-ca14-chromium-d77a75.log` | CK-22 (statement), CK-27 | P-E15: the FOLD names each member's reference cell by cell (§P14c-6) |
+| 5 | **Process.** The WebKit lock waited 57.4, **110.6**, 18.1 and 2.9 min (WK-2 past the 90-minute plan; the cells stayed open and the seat waited, as charged). Four other `--exclusive webkit` callers were queued alongside. The guard refused nothing; the zone flag warned on every call | CA14 §4 items 2-3 | records | the orchestrator: commit `pass-14/C-A14.md`, `C-A14-records/` (untracked files, and `chain.log`, appended only), this part and P-E15's FOLD |
+
+## P14c-5 · The base of P-E15 and the formulation
+
+**The base stays P-E14** (§P14-6), and **the formulation stays S15** (`pass-15/P-E15.md`), with its FOLD. The completion reproduces every counterexample §P14 ruled and adds four members S15-h already carries with ranges that contain C-A14's cells. None needs the record-driven mechanism back. Each regression's reference is now read cell by cell: cand13 for `A1` and `A2`, cand12 for `A3` and `B3`, cand12 and cand13 for `A12`, cand14 itself for `A5`'s ancestor cells and A14-A18.
+
+## P14c-6 · What S15's FOLD now carries
+
+Closed by this seat in `pass-15/P-E15.md` §S15-FOLD, each with its section, its range and its read:
+- `ca14 A1`, `A2`, `A3`, `A12`: regressions of record; S15-h's rows are the treatment of record; each range contains C-A14's cells; S15-h A3's reference figure corrected to 1.20 px.
+- S15-f gains four rows: §S14-c's claims for M2/M3 (a transformed link at any depth, across a shadow-tree carrier), M3/M6 (a stylesheet percentage `translate` with an origin), M11 (the host's own size change with an insert in the same frame), M18 (a carrier's layout transition), each rewritten to S15-h's treatment and limits.
+- S15-b's reference narrowed (cand12 on `B3`; cand14 on ancestor zoom; `A5`'s host cell graded on its edge), and `A5`'s G cells added to M22's member list as regression cells.
+- `B2` and `B3` on the second critic: S15-a and S15-b's diagnoses unchanged.
+- `B1` / `A6`: M27 graded by superposition (class 3); the every-frame train stays S14's stated limit, open to the challenge.
+- A14-A18: regression cells for cand15 (cand14 the passing reference).
+- WebKit list: no cell P-E14 read clean fails twice below the bound.
+- Cost and M17 read as recorded; Q-14 unanswered, branch (i) the build default.
+
+## P14c-7 · What D2 and D3 hold
+
+**D2**: pass 13 is CLEAN, count 1 of 2 (`../dock/REGISTRY.md` "D2 · pass 13 · REGISTRY", B′ `bp13` 38/38); its pass-14 confirmation runs (`wf_24206b87-2c0`). If that pass is clean, D2 converges at its close and F-17 can be published after it, which is §P14-7's earliest date. D2 holds CK-01's `dock` latch, CK-17 and CK-08's named clause.
+
+**D3**: no D3 hunk is published (`W-0.1.md`'s last commit `0b16d54e3`). D3 holds CK-19, CK-01's ambient cell, CK-25's ambient clause and F-16.
+
+**Rows that cannot close inside D5:** CK-01, CK-17, CK-19, CK-25's ambient clause.
+
+## P14c-8 · The next step
+
+The checklist stays **CK-01..CK-27, unchanged**. Critics may not add rows. Pass 14 is closed. Pass 15 continues at §P14-8.2 from wave 1b, on S15 and its FOLD:
+
+| wave | seat | note from this part |
+|---|---|---|
+| 1b | **S15 challenge** | as §P14-8.2; it also attacks the FOLD rows, and may attack S14's every-frame-train limit under D-1 (§P14c-3 item 3) |
+| 2 | **H15** | as §P14-8.2, plus: `A5`'s host cell re-graded on its edge (class 3 here); `A5`'s G cells and A14-A18 as regression cells; the M22 and M9 references cell by cell. This seat holds no lock, so H15's browser stages may start once the challenge has folded |
+| 3, 4, 5 | P-E15 part B, C-A15 and C-E15, agglomeration | as §P14-8.2. Each critic dry-runs its queue against its runner before its first acquisition (class 1 here), and drives `ca14 A1`, `A2`, `A3`, `A12`, `B1`-`B3` and `A5` beside their references |
+
+Q-14 stays with the owner. Machine law as §P14-8.2. THE STOP IS THE GUARD'S REFUSAL: an armed zone flag that still admits runs is a warning; a refused run stops that seat's runs, and the seat returns PARTIAL with its list unrun.
+
+**Convergence criterion: unchanged** (§P14-8.3). The clean-pass count after pass 14 is **0**. D5's convergence comes at **the close of pass 17 at the earliest**. **The R-K1-c vehicle moves with this registry: after pass 17 at the earliest.** atlas's M-7 stays until then.

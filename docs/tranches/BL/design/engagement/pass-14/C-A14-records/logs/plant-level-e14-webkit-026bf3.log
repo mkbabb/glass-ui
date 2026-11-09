@@ -1,0 +1,13 @@
+# C-A14 plant-level-e14 webkit · 2026-11-09 02:55:47 · load { 16.02 15.10 12.76 } · harness 7e79063a4b00 · --only M3
+# E-14 · S14's members at their ranges (P-E14 §S14-c)
+# target /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p15/CA14c/wt/.ca14out/builds/plant-level · engine webkit · lock wait 0.0 s (the deadline 5400 s counts from here) · other headless processes: chromium 13, webkit 0 · load 16.0/15.1/12.8 at start
+# scene app: harness scenes/App.vue (sha1 912fecf0a1aa)
+# webkit 26.5 (Playwright WebKit, not Safari; real Safari UNMEASURED (owner's safaridriver checkbox))
+# held control: scene slider root .glass-slider thumb [role="slider"] engaged [data-engaged], [data-held]; clock token --spring-dock-settle; cells M3
+  PASS       M3 the host's glide · outside · scale 0.5 · the act on frame 8 · paint moved 0.0, 40.0 px in all; on the act's frame 0.00, 0.00 = 0.00 px (bound ≤ 0.50) · largest move over any 16.7 ms 5.5 px at +72 ms (bound 6.5) · glides 1 (210 ms) · scrollY 33 → 33 → 33, scroller 0 → 0 → 0 · path [0.0,0.0 0.0,0.0 0.0,1.0 0.0,3.0 0.0,5.5] · errors 0 · load 16.0/15.1/12.8
+  FAIL       M3 the host's glide · outside · skewX 30deg · the act on frame 8 · paint moved 0.0, 40.0 px in all; on the act's frame -2.68, 0.72 = 2.77 px (bound ≤ 0.50) · largest move over any 16.7 ms 5.4 px at +72 ms (bound 6.5) · glides 1 (210 ms) · scrollY 38 → 38 → 38, scroller 0 → 0 → 0 · path [0.0,0.0 -2.7,0.7 -2.6,1.2 -2.5,3.0 -2.4,5.5] · errors 0 · load 16.3/15.2/12.8
+  FAIL       M3 the host's glide · outside · rotate 180deg centre · the act on frame 8 · paint moved 0.0, 40.0 px in all; on the act's frame 0.00, 160.00 = 160.00 px (bound ≤ 0.50) · largest move over any 16.7 ms 126.7 px at +18 ms (bound 6.5) · glides 1 (210 ms) · scrollY 38 → 38 → 38, scroller 0 → 0 → 0 · path [0.0,0.0 0.0,160.0 0.0,157.1 0.0,150.3 0.0,140.8] · errors 0 · load 16.3/15.2/12.8
+  FAIL       M3 the host's glide · outside · matrix rotate 30 + scale 1.5 · the act on frame 8 · paint moved 0.0, 40.0 px in all; on the act's frame 5.36, -9.28 = 10.72 px (bound ≤ 0.50) · largest move over any 16.7 ms 6.9 px at +71 ms (bound 6.5) · glides 1 (210 ms) · scrollY 176 → 176 → 176, scroller 0 → 0 → 0 · path [0.0,0.0 5.4,-9.3 5.2,-8.1 5.0,-5.6 4.7,-2.9] · errors 0 · load 16.3/15.2/12.8
+E-14 webkit FAIL · 1 pass, 3 fail, 0 unmeasured of 4 gating cells (0 reported) · load 16.0/15.1/12.8 at start, 16.3/15.2/12.8 at end
+# exit 1 · 2026-11-09 02:55:55 · load { 16.34 15.18 12.80 }
+# end · 2026-11-09 02:55:55 · load { 16.34 15.18 12.80 } · harness 7e79063a4b00

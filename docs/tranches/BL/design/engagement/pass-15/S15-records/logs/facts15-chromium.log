@@ -1,0 +1,108 @@
+# S15 facts · chromium 149.0.7827.55 · playwright 1.61.1 · load 32.7/51.7/39.6 at start
+K1 C translated, no padding, no border (E-14 M28's C) · load 32.7/51.7/39.6
+  margin 0: H.offsetParent C · H.offsetTop 0 · C.offsetTop 130 · C.offsetHeight 20 · H painted top 142
+  margin 10: H.offsetParent C · H.offsetTop 0 · C.offsetTop 140 · C.offsetHeight 20 · H painted top 152
+  margin 40: H.offsetParent C · H.offsetTop 0 · C.offsetTop 170 · C.offsetHeight 20 · H painted top 182
+K1 C translated, padding-top 1px · load 32.7/51.7/39.6
+  margin 0: H.offsetParent C · H.offsetTop 1 · C.offsetTop 130 · C.offsetHeight 21 · H painted top 143
+  margin 10: H.offsetParent C · H.offsetTop 11 · C.offsetTop 130 · C.offsetHeight 31 · H painted top 153
+  margin 40: H.offsetParent C · H.offsetTop 41 · C.offsetTop 130 · C.offsetHeight 61 · H painted top 183
+K1 C translated, display flow-root · load 32.7/51.7/39.6
+  margin 0: H.offsetParent C · H.offsetTop 0 · C.offsetTop 130 · C.offsetHeight 20 · H painted top 142
+  margin 10: H.offsetParent C · H.offsetTop 10 · C.offsetTop 130 · C.offsetHeight 30 · H painted top 152
+  margin 40: H.offsetParent C · H.offsetTop 40 · C.offsetTop 130 · C.offsetHeight 60 · H painted top 182
+K1 C position relative, no padding · load 32.7/51.7/39.6
+  margin 0: H.offsetParent C · H.offsetTop 0 · C.offsetTop 130 · C.offsetHeight 20 · H painted top 130
+  margin 10: H.offsetParent C · H.offsetTop 0 · C.offsetTop 140 · C.offsetHeight 20 · H painted top 140
+  margin 40: H.offsetParent C · H.offsetTop 0 · C.offsetTop 170 · C.offsetHeight 20 · H painted top 170
+K2 none · load 32.7/51.7/39.6
+  probe J [1.0000 0.0000 0.0000 1.0000] · computed z·ΠL [1.0000 0.0000 0.0000 1.0000] (host zoom 1) · max |diff| 0.00000
+K2 C rotate 10deg · load 32.7/51.7/39.6
+  probe J [0.9848 -0.1736 0.1736 0.9848] · computed z·ΠL [0.9848 -0.1736 0.1736 0.9848] (host zoom 1) · max |diff| 0.00000
+K2 C scale 0.8 · load 32.7/51.7/39.6
+  probe J [0.8000 0.0000 0.0000 0.8000] · computed z·ΠL [0.8000 0.0000 0.0000 0.8000] (host zoom 1) · max |diff| 0.00000
+K2 C scale 0.8 1.25 · load 32.7/51.7/39.6
+  probe J [0.8000 0.0000 0.0000 1.2500] · computed z·ΠL [0.8000 0.0000 0.0000 1.2500] (host zoom 1) · max |diff| 0.00000
+K2 C transform rotate(10deg) scale(0.8) skewX(15deg) · load 32.7/51.7/39.6
+  probe J [0.7878 0.0722 0.1389 0.8251] · computed z·ΠL [0.7878 0.0722 0.1389 0.8251] (host zoom 1) · max |diff| 0.00000
+K2 C transform matrix(0.9,0.2,-0.3,1.1,7,9) · load 32.7/51.7/39.6
+  probe J [0.9000 -0.3000 0.2000 1.1000] · computed z·ΠL [0.9000 -0.3000 0.2000 1.1000] (host zoom 1) · max |diff| 0.00000
+K2 C translate -50% -50% + rotate 30deg + transform scale(1.2) · load 32.7/51.7/39.6
+  probe J [1.0392 -0.6000 0.6000 1.0392] · computed z·ΠL [1.0392 -0.6000 0.6000 1.0392] (host zoom 1) · max |diff| 0.00000
+K2 C rotate 10deg, origin 0 0 · load 32.7/51.7/39.6
+  probe J [0.9848 -0.1736 0.1736 0.9848] · computed z·ΠL [0.9848 -0.1736 0.1736 0.9848] (host zoom 1) · max |diff| 0.00000
+K2 C rotate 10deg inside G scale 1.25 inside A rotate -25deg · load 32.7/51.7/39.6
+  probe J [1.2074 0.3235 -0.3235 1.2074] · computed z·ΠL [1.2074 0.3235 -0.3235 1.2074] (host zoom 1) · max |diff| 0.00000
+K2 C rotateZ via transform rotate3d(0,0,1,20deg) · load 32.7/51.7/39.6
+  probe J [0.9397 -0.3420 0.3420 0.9397] · computed z·ΠL [0.9397 -0.3420 0.3420 0.9397] (host zoom 1) · max |diff| 0.00000
+K2 C rotateX(40deg) (flattened, no perspective) · load 32.7/51.7/39.6
+  probe J [1.0000 0.0000 0.0000 0.7660] · computed z·ΠL [1.0000 0.0000 0.0000 0.7660] (host zoom 1) · max |diff| 0.00000
+K2 C zoom 1.25 + rotate 10deg · load 32.7/51.7/39.6
+  probe J [1.2310 -0.2171 0.2171 1.2310] · computed z·ΠL [1.2310 -0.2171 0.2171 1.2310] (host zoom 1.25) · max |diff| 0.00000
+K2 G zoom 1.5, C scale 0.8 · load 32.7/51.7/39.6
+  probe J [1.2000 0.0000 0.0000 1.2000] · computed z·ΠL [1.2000 0.0000 0.0000 1.2000] (host zoom 1.5) · max |diff| 0.00000
+K2 host's own scale 1.06 (excluded: translate composes outside it) · load 32.7/51.7/39.6
+  probe J [1.0000 0.0000 0.0000 1.0000] · computed z·ΠL [1.0000 0.0000 0.0000 1.0000] (host zoom 1) · max |diff| 0.00000
+K3 the host's own zoom 1 → 1.5 · load 32.7/51.7/39.6
+  (probe point: a span inside the host) zoom chain [1,1,1,1] → [1.5,1.5,1,1]
+  painted Δ [18,2] · Σ lv×own zoom Δ [20,3] · Σ lv×parent's zoom Δ [0,-17] · cand14's host-unit Q Δ [-16.333,-43.667]
+  absolute: painted [107,139], Σ lv×own zoom [109,140], Σ lv×parent's zoom [89,120]
+  the host: offsets [40,54,200,20] → [37,37,200,20] · painted box [83,137,200,20] → [98,139,300,30]
+  a 10px translate on the span paints 15 px (span zoom 1.5)
+K3 the host's own zoom 1 → 0.75 · load 32.7/51.7/39.6
+  (probe point: a span inside the host) zoom chain [1,1,1,1] → [0.75,0.75,1,1]
+  painted Δ [-9,-1] · Σ lv×own zoom Δ [-10,-1.5] · Σ lv×parent's zoom Δ [1.5,17] · cand14's host-unit Q Δ [16.333,43.667]
+  absolute: painted [80,136], Σ lv×own zoom [79,135.5], Σ lv×parent's zoom [90.5,154]
+  the host: offsets [40,54,200,20] → [43,71,200,20] · painted box [83,137,200,20] → [75.5,136,150,15]
+  a 10px translate on the span paints 7.5 px (span zoom 0.75)
+K3 an ancestor's zoom 1 → 1.25 · load 32.7/51.7/39.6
+  (probe point: a span inside the host) zoom chain [1,1,1,1] → [1.25,1.25,1.25,1]
+  painted Δ [21.5,33.5] · Σ lv×own zoom Δ [21,33] · Σ lv×parent's zoom Δ [11,13] · cand14's host-unit Q Δ [-1,-1]
+  absolute: painted [110.5,170.5], Σ lv×own zoom [110,170], Σ lv×parent's zoom [100,150]
+  the host: offsets [40,54,200,20] → [40,54,200,20] · painted box [83,137,200,20] → [103,170.5,250,25]
+  a 10px translate on the span paints 12.5 px (span zoom 1.25)
+K3 a box before the host 1 → 1.25 · load 32.7/51.7/39.6
+  (probe point: a span inside the host) zoom chain [1,1,1,1] → [1,1,1,1]
+  painted Δ [0,10] · Σ lv×own zoom Δ [0,10] · Σ lv×parent's zoom Δ [0,10] · cand14's host-unit Q Δ [0,10]
+  absolute: painted [89,147], Σ lv×own zoom [89,147], Σ lv×parent's zoom [89,147]
+  the host: offsets [40,54,200,20] → [40,64,200,20] · painted box [83,137,200,20] → [83,147,200,20]
+  a 10px translate on the span paints 10 px (span zoom 1)
+K3 an ancestor at 1.25, the host 1 → 1.5 · load 32.7/51.7/39.6
+  (probe point: a span inside the host) zoom chain [1.25,1.25,1.25,1] → [1.875,1.875,1.25,1]
+  painted Δ [22.5,2.5] · Σ lv×own zoom Δ [24.375,3.125] · Σ lv×parent's zoom Δ [0,-21.25] · cand14's host-unit Q Δ [-16.333,-43.667]
+  absolute: painted [133,173], Σ lv×own zoom [134.38,173.13], Σ lv×parent's zoom [100,128.75]
+  the host: offsets [40,54,200,20] → [37,37,200,20] · painted box [103,170.5,250,25] → [121.75,173,375,37.5]
+  a 10px translate on the span paints 18.75 px (span zoom 1.875)
+K4 a <link> sheet inserted at frame 6 (served after 25 ms) that grows a block above the target by 40 px · load 32.7/51.7/39.6
+  first read that sees the move: f10 rAF (start) T.offsetTop 160
+  the reads around it: f9 resize-step read T.offsetTop 120 | f9 task after the frame T.offsetTop 120 | link load event (between frames 9 and 10; T.offsetTop then 160) | f10 rAF (start) T.offsetTop 160 | f10 resize-step read T.offsetTop 160 | f10 task after the frame T.offsetTop 160
+K4 a <link> sheet served after 70 ms · load 32.7/51.7/39.6
+  first read that sees the move: f15 rAF (start) T.offsetTop 160
+  the reads around it: f14 resize-step read T.offsetTop 120 | f14 task after the frame T.offsetTop 120 | link load event (between frames 14 and 15; T.offsetTop then 160) | f15 rAF (start) T.offsetTop 160 | f15 resize-step read T.offsetTop 160 | f15 task after the frame T.offsetTop 160
+K4 an <img> with no size above the target, served after 25 ms (40 px tall by CSS once it has an intrinsic size) · load 32.7/51.7/39.6
+  first read that sees the move: f10 rAF (start) T.offsetTop 160
+  the reads around it: f9 resize-step read T.offsetTop 120 | f9 task after the frame T.offsetTop 120 | img load event (between frames 9 and 10; T.offsetTop then 160) | f10 rAF (start) T.offsetTop 160 | f10 resize-step read T.offsetTop 160 | f10 task after the frame T.offsetTop 160
+K5 the token on :root (2rem) · load 32.7/51.7/39.6
+  the consumer's padding-inline-start 32px · the read on the host's ::before 32px · the read on :root::before 32px
+K5 2em on the host (font 14px) · load 32.7/51.7/39.6
+  the consumer's padding-inline-start 28px · the read on the host's ::before 28px · the read on :root::before 32px
+K5 2em on an ancestor (font 20px), the host 14px · load 32.7/51.7/39.6
+  the consumer's padding-inline-start 28px · the read on the host's ::before 28px · the read on :root::before 32px
+K5 4cqi on an ancestor, an inline-size container of 500px above · load 32.7/51.7/39.6
+  the consumer's padding-inline-start 20px · the read on the host's ::before 20px · the read on :root::before 32px
+K5 4cqi, the host itself an inline-size container of 300px inside a 500px one · load 32.7/51.7/39.6
+  the consumer's padding-inline-start 20px · the read on the host's ::before 12px · the read on :root::before 32px
+K5 1.5lh on the host (line-height 30px) · load 32.7/51.7/39.6
+  the consumer's padding-inline-start 45px · the read on the host's ::before 45px · the read on :root::before 32px
+K5 5% on the host · load 32.7/51.7/39.6
+  the consumer's padding-inline-start 40px · the read on the host's ::before 5% · the read on :root::before 32px
+K5 clamp(1rem, 3vw, 3rem) on the host · load 32.7/51.7/39.6
+  the consumer's padding-inline-start 24px · the read on the host's ::before 24px · the read on :root::before 32px
+K6 computed vs resolved transform values · load 32.7/51.7/39.6
+  getComputedStyle transform matrix(0.984808, 0.173648, -0.173648, 0.984808, -100, -50) · translate -25% 10% · transform-origin 100px 50px
+  computedStyleMap transform translate(-50%, -50%) rotate(10deg) (CSSTransformValue; first component CSSTranslate x -50%) · translate -25% 10% (CSSStyleValue)
+K7 shadow open · load 32.7/51.7/39.6
+  before: offsetParent BODY, offsetTop 106, painted top 104.8 · after a 40 px insert inside the shadow card above the slot: offsetParent BODY, offsetTop 146 (Δ 40), painted Δ 32.000 (the card's scale 0.8)
+K7 shadow closed · load 32.7/51.7/39.6
+  before: offsetParent BODY, offsetTop 106, painted top 104.8 · after a 40 px insert inside the shadow card above the slot: offsetParent BODY, offsetTop 146 (Δ 40), painted Δ 32.000 (the card's scale 0.8)
+# end · 37 cells written · load 32.7/51.7/39.6

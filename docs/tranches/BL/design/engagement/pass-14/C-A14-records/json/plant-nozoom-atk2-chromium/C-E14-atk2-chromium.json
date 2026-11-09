@@ -1,0 +1,31 @@
+{
+ "id": "C-E14-atk2",
+ "engine": "chromium",
+ "version": "149.0.7827.55",
+ "target": {
+  "build": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p15/CA14c/wt/.ca14out/builds/plant-nozoom"
+ },
+ "loadStart": "11.0/12.3/13.9",
+ "loadEnd": "12.1/12.5/14.0",
+ "verdict": "FAIL",
+ "cells": [
+  {
+   "name": "B3 (M22 on the host) the root's own zoom 1 → 1.5",
+   "status": "FAIL",
+   "line": "on the act's frame the top edge (fixed in layout) moved -5.30 px and the left edge 0.00 px (bound ≤ 0.80: 0.5 + the grow's share), the centre 0.00 px · the top edge then travels 5.00 px more · height 21.2 → 31.8, width 381.6 → 381.6 · glides at the change 1 (bound 0) · errors 0",
+   "load": "12.1/12.5/14.0"
+  },
+  {
+   "name": "B3 (M22 on the host) the root's own zoom 1 → 0.75",
+   "status": "FAIL",
+   "line": "on the act's frame the top edge (fixed in layout) moved 2.65 px and the left edge 0.00 px (bound ≤ 0.65: 0.5 + the grow's share), the centre -0.00 px · the top edge then travels 2.50 px more · height 21.2 → 15.9, width 381.6 → 381.6 · glides at the change 1 (bound 0) · errors 0",
+   "load": "12.1/12.5/14.0"
+  },
+  {
+   "name": "B3 (M22 on the host) the root's own height 21 → 31 px (M11's block-axis analogue: the control)",
+   "status": "PASS",
+   "line": "on the act's frame the top edge (fixed in layout) moved -0.30 px and the left edge 0.00 px (bound ≤ 0.80: 0.5 + the grow's share), the centre 5.00 px · the top edge then travels 0.00 px more · height 21.2 → 31.8, width 381.6 → 381.6 · glides at the change 0 (bound 0) · errors 0",
+   "load": "12.1/12.5/14.0"
+  }
+ ]
+}

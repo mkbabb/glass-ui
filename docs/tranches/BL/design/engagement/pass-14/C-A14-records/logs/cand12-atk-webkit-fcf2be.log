@@ -1,0 +1,12 @@
+# C-A14 cand12-atk webkit · 2026-11-09 05:39:03 · load { 7.59 7.81 7.28 } · harness 7e79063a4b00 · --only A5
+# C-E14-atk · C-E14: S14 attacked past H14 cells (D5 pass 14, wave 4)
+# target /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p15/CA14c/wt/.ca14out/builds/cand12 · engine webkit · lock wait 0.0 s (the deadline 5400 s counts from here) · other headless processes: chromium 12, webkit 0 · load 7.6/7.8/7.3 at start
+# scene app: harness scenes/App.vue (sha1 912fecf0a1aa)
+# webkit 26.5 (Playwright WebKit, not Safari; real Safari UNMEASURED (owner's safaridriver checkbox))
+# held control: scene slider root .glass-slider thumb [role="slider"] engaged [data-engaged], [data-held]; clock token --spring-dock-settle; cells A5
+  FAIL       A5 (M22 past H14) a zoom change during the hold · the root's own zoom 1 → 1.25 · the top-left edge (fixed in layout) moved 0.15 px on the act's frame (bound 0.5 + the grow's share) · width 381.6 → 381.6 · the act on frame 8 · paint moved 0.0, 2.5 px in all; on the act's frame 0.00, 2.50 = 2.50 px (bound ≤ 3.15) · largest move over any 16.7 ms 1.5 px at +20 ms (bound 1.5) · glides 0 · scrollY 38 → 38 → 38, scroller 0 → 0 → 0 · path [0.0,0.0 0.0,2.5 0.0,2.5 0.0,2.5 0.0,2.5] · errors 0 · load 7.6/7.8/7.3
+  FAIL       A5 (M22 past H14) a zoom change during the hold · G's zoom 1 → 1.25, the root 300 px deep in G · the act on frame 8 · paint moved 45.0, 83.5 px in all; on the act's frame 45.00, 83.50 = 94.85 px (bound ≤ 50.85) · largest move over any 16.7 ms 40.2 px at +23 ms (bound 21.8) · glides 0 (moved ≥ 5 px, no glide) · scrollY 339 → 339 → 339, scroller 0 → 0 → 0 · path [0.0,0.0 45.0,83.5 45.0,83.5 45.0,83.5 45.0,83.5] · errors 0 · load 7.2/7.7/7.3
+  FAIL       A5 (M22 past H14) a zoom change during the hold · G's zoom 1 → 0.8, the root 300 px deep in G · the act on frame 8 · paint moved -36.0, -66.8 px in all; on the act's frame -36.00, -66.81 = 75.89 px (bound ≤ 40.78) · largest move over any 16.7 ms 56.2 px at +19 ms (bound 17.7) · glides 0 (moved ≥ 5 px, no glide) · scrollY 339 → 339 → 339, scroller 0 → 0 → 0 · path [0.0,0.0 -36.0,-66.8 -36.0,-66.8 -36.0,-66.8 -36.0,-66.8] · errors 0 · load 7.2/7.7/7.3
+C-E14-atk webkit FAIL · 0 pass, 3 fail, 0 unmeasured of 3 gating cells (0 reported) · load 7.6/7.8/7.3 at start, 7.2/7.7/7.3 at end
+# exit 1 · 2026-11-09 05:39:09 · load { 7.23 7.73 7.26 }
+# end · 2026-11-09 05:39:09 · load { 7.23 7.73 7.26 } · harness 7e79063a4b00

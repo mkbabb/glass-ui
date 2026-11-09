@@ -1,0 +1,38 @@
+{
+ "id": "E-14",
+ "engine": "chromium",
+ "version": "149.0.7827.55",
+ "target": {
+  "fixture": true,
+  "fault": "e14-noimportant"
+ },
+ "loadStart": "15.6/15.9/12.9",
+ "loadEnd": "14.8/15.8/12.9",
+ "verdict": "FAIL",
+ "cells": [
+  {
+   "name": "M26 sheet translate: 10px 0 !important on the held root",
+   "status": "FAIL",
+   "line": "errors naming the translate or !important at the hold: 0 (bound exactly 1: refused loud, once) · no error · glides 1 · the hold's probe from a task moves the root 0.000 px (blocked: the step is cut, as b.10 states) · the act on frame 8 · paint moved 0.0, 40.0 px in all; on the act's frame 0.00, 40.00 = 40.00 px (bound ≤ 0.50) · largest move over any 16.7 ms 1.3 px at +25 ms (bound 7.0) · glides 1 (350 ms) · scrollY 35 → 35 → 35, scroller 0 → 0 → 0 · path [0.0,0.0 0.0,40.0 0.0,40.0 0.0,40.0 0.0,40.0] · errors 0",
+   "load": "14.8/15.8/12.9"
+  },
+  {
+   "name": "M26 inline translate: 0 0 !important on the held root",
+   "status": "FAIL",
+   "line": "errors naming the translate or !important at the hold: 0 (bound exactly 1: refused loud, once) · no error · glides 1 · the hold's probe from a task moves the root 0.000 px (blocked: the step is cut, as b.10 states) · the act on frame 8 · paint moved 0.0, 40.0 px in all; on the act's frame 0.00, 40.00 = 40.00 px (bound ≤ 0.50) · largest move over any 16.7 ms 39.4 px at +17 ms (bound 7.0) · glides 1 (350 ms) · scrollY 35 → 35 → 35, scroller 0 → 0 → 0 · path [0.0,0.0 0.0,40.0 0.0,40.0 0.0,40.0 0.0,40.0] · errors 0",
+   "load": "14.8/15.8/12.9"
+  },
+  {
+   "name": "M26 translate: none !important on the held root",
+   "status": "FAIL",
+   "line": "errors naming the translate or !important at the hold: 0 (bound exactly 1: refused loud, once) · no error · glides 1 · the hold's probe from a task moves the root 0.000 px (blocked: the step is cut, as b.10 states) · the act on frame 8 · paint moved 0.0, 40.0 px in all; on the act's frame 0.00, 40.00 = 40.00 px (bound ≤ 0.50) · largest move over any 16.7 ms 38.9 px at +17 ms (bound 7.0) · glides 1 (350 ms) · scrollY 35 → 35 → 35, scroller 0 → 0 → 0 · path [0.0,0.0 0.0,40.0 0.0,40.0 0.0,40.0 0.0,40.0] · errors 0",
+   "load": "14.8/15.8/12.9"
+  },
+  {
+   "name": "M26 transform: rotate(2deg) !important (control) on the held root",
+   "status": "PASS",
+   "line": "a (40, 0) probe on the held root moves it 40.000 px in chromium: the declaration does not block the animation here (H14 finding W-3), so no refusal is owed: errors 0 (bound 0), and the step is glided · the act on frame 8 · paint moved 0.0, 41.8 px in all; on the act's frame 0.00, 0.00 = 0.00 px (bound ≤ 0.50) · largest move over any 16.7 ms 6.0 px at +50 ms (bound 7.3) · glides 1 (350 ms) · scrollY 35 → 35 → 35, scroller 0 → 0 → 0 · path [0.0,0.0 0.0,0.0 0.0,3.1 0.0,6.6 0.0,9.0] · errors 0",
+   "load": "14.8/15.8/12.9"
+  }
+ ]
+}

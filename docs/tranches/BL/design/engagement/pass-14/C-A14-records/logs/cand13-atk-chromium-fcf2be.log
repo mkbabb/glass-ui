@@ -1,0 +1,12 @@
+# C-A14 cand13-atk chromium · 2026-11-09 00:50:06 · load { 11.09 12.33 13.98 } · harness 7e79063a4b00 · --only A5
+# C-E14-atk · C-E14: S14 attacked past H14 cells (D5 pass 14, wave 4)
+# target /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p15/CA14c/wt/.ca14out/builds/cand13 · engine chromium · lock wait 0.0 s (the deadline 5400 s counts from here) · other headless processes: chromium 11, webkit 0 · load 11.1/12.3/14.0 at start
+# scene app: harness scenes/App.vue (sha1 912fecf0a1aa)
+# chromium 149.0.7827.55
+# held control: scene slider root .glass-slider thumb [role="slider"] engaged [data-engaged], [data-held]; clock token --spring-dock-settle; cells A5
+  FAIL       A5 (M22 past H14) a zoom change during the hold · the root's own zoom 1 → 1.25 · the top-left edge (fixed in layout) moved 2.65 px on the act's frame (bound 0.5 + the grow's share) · width 381.6 → 381.6 · the act on frame 8 · paint moved 0.0, 2.5 px in all; on the act's frame 0.00, 0.00 = 0.00 px (bound ≤ 3.15) · largest move over any 16.7 ms 0.3 px at +65 ms (bound 1.3) · glides 1 (210 ms) · scrollY 39 → 39 → 39, scroller 0 → 0 → 0 · path [0.0,0.0 0.0,0.0 0.0,0.0 0.0,0.1 0.0,0.3] · errors 0 · load 11.0/12.3/14.0
+  PASS       A5 (M22 past H14) a zoom change during the hold · G's zoom 1 → 1.25, the root 300 px deep in G · the act on frame 8 · paint moved 45.0, 83.5 px in all; on the act's frame 0.00, 0.00 = 0.00 px (bound ≤ 50.85) · largest move over any 16.7 ms 13.2 px at +67 ms (bound 14.2) · glides 1 (210 ms) · scrollY 339 → 339 → 339, scroller 0 → 0 → 0 · path [0.0,0.0 0.0,0.0 0.6,1.2 2.2,4.1 4.5,8.3] · errors 0 · load 11.0/12.3/14.0
+  PASS       A5 (M22 past H14) a zoom change during the hold · G's zoom 1 → 0.8, the root 300 px deep in G · the act on frame 8 · paint moved -36.0, -66.8 px in all; on the act's frame 0.00, -0.00 = 0.00 px (bound ≤ 40.78) · largest move over any 16.7 ms 10.5 px at +67 ms (bound 11.5) · glides 1 (210 ms) · scrollY 339 → 339 → 339, scroller 0 → 0 → 0 · path [0.0,0.0 0.0,-0.0 -0.4,-0.7 -1.6,-2.9 -3.7,-6.9] · errors 0 · load 11.0/12.3/14.0
+C-E14-atk chromium FAIL · 2 pass, 1 fail, 0 unmeasured of 3 gating cells (0 reported) · load 11.1/12.3/14.0 at start, 11.0/12.3/14.0 at end
+# exit 1 · 2026-11-09 00:50:12 · load { 11.01 12.29 13.95 }
+# end · 2026-11-09 00:50:12 · load { 11.01 12.29 13.95 } · harness 7e79063a4b00

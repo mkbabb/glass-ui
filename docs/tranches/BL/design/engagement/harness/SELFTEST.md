@@ -137,3 +137,8 @@ total 174 runs: 173 OK, 1 N/A, 0 BROKEN, 0 UNREAD (E-1..E-10 rec3: 166 runs, 165
 - The fixture's scenes are the contract's shapes, not the library's components. Whether a library scene exercises a witness is shown by the HEAD run (`../pass-2/H2.md` §3).
 - Platform flings (the fixture strip, the library Carousel) are Chromium's compositor's own. At loads above ~150 the platform's fling can land short of the still release (`../pass-2/H2.md` §2.1); the touch drive's moves are clocked, but the compositor's pacing is not the harness's to fix.
 - An N/A run is not read for unrelated failures.
+
+## Pass 15 (H15)
+
+H15 added E-15 (`e15-s15.mjs`, S15's members as folded) and moved E-14's framework into `film.mjs` (one source for E-14 and E-15), with three instrument cures by rule (`HARNESS.md` §3.2): the film reads after the frame's resize step (class 7), a WebKit read that repeats a sample near the act is read again (class 8), and E-14's M27 is graded by superposition (class 3). E-11 runs a valid 0 s settle as 0 s (class 6), and the clean fixture's clock reader takes it. **E-15 is read on builds only**: its plants are builds (cand14 where S15 says it fails, cand12 or cand13 the reference, HEAD the control), and its self-test is the build battery's table (`../pass-15/H15-records/sum15.py`) met in both engines. `selftest.mjs` lists E-15 N/A. The witnesses whose code changed (E-11, E-14) were self-tested again in both engines; the others carry H14's runs of record, since their code and the fixture paths they drive are unchanged (`film.mjs` is imported by E-14 and E-15 only; the fixture's one change is `clockOf`, which E-11's travel cells drive). The reading is `../pass-15/H15.md` §3.
+

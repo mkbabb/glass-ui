@@ -1,0 +1,62 @@
+{
+ "id": "E-14",
+ "engine": "chromium",
+ "version": "149.0.7827.55",
+ "target": {
+  "fixture": true,
+  "fault": "e14-velreset"
+ },
+ "loadStart": "17.3/16.3/13.0",
+ "loadEnd": "15.6/15.9/12.9",
+ "verdict": "FAIL",
+ "cells": [
+  {
+   "name": "M27 a train of inserts above the root · 16 px every frame for 12 frames · by superposition",
+   "status": "PASS",
+   "line": "STATED LIMIT (S14 a.3, b.6: carried after its onset) · the onset's act frame 0.00 px (bound ≤ 0.5) · glides 1 (bound ≥ 1: the onset glided) · REPORT the train less the superposition: on the steps' frames max 109.73 px, over the film 109.73 px · errors 0",
+   "load": "17.3/16.3/13.0"
+  },
+  {
+   "name": "M27 a train of inserts above the root · 16 px every second frame, 6 steps · by superposition",
+   "status": "PASS",
+   "line": "the train's paint less the sum of the one step's paint shifted to each step's frame: on the steps' frames [0.00 0.00 0.00 0.00 0.00 0.00] px, max over the film 0.07 px (bound ≤ 0.81 = 0.5 + the interpolation's own error) · glides 6 · the one step's act frame 0.00 px · errors 0",
+   "load": "16.0/16.0/12.9"
+  },
+  {
+   "name": "M27 a train of inserts above the root · 8 px every frame for 12 frames · by superposition",
+   "status": "PASS",
+   "line": "STATED LIMIT (S14 a.3, b.6: carried after its onset) · the onset's act frame 0.00 px (bound ≤ 0.5) · glides 1 (bound ≥ 1: the onset glided) · REPORT the train less the superposition: on the steps' frames max 55.72 px, over the film 55.72 px · errors 0",
+   "load": "16.7/16.2/13.0"
+  },
+  {
+   "name": "M27 a train of inserts above the root · 40 px every second frame, 6 steps · by superposition",
+   "status": "PASS",
+   "line": "the train's paint less the sum of the one step's paint shifted to each step's frame: on the steps' frames [0.00 0.00 0.00 0.00 0.01 0.00] px, max over the film 0.17 px (bound ≤ 1.36 = 0.5 + the interpolation's own error) · glides 6 · the one step's act frame 0.00 px · errors 0",
+   "load": "16.7/16.2/13.0"
+  },
+  {
+   "name": "M27 a slow margin ramp above C · 0.2 px a frame",
+   "status": "FAIL",
+   "line": "glides over the ramp 8 (bound ≤ 2: the onset and one uneven frame; Y8 reads 0-1 at ≤ 200 px/s) · errors 0",
+   "load": "16.7/16.2/13.0"
+  },
+  {
+   "name": "M27 a slow margin ramp above C · 0.5 px a frame",
+   "status": "FAIL",
+   "line": "glides over the ramp 21 (bound ≤ 2: the onset and one uneven frame; Y8 reads 0-1 at ≤ 200 px/s) · errors 0",
+   "load": "15.6/15.9/12.9"
+  },
+  {
+   "name": "M27 a slow margin ramp above C · 1 px a frame",
+   "status": "PASS",
+   "line": "glides over the ramp 1 (bound ≤ 2: the onset and one uneven frame; Y8 reads 0-1 at ≤ 200 px/s) · errors 0",
+   "load": "15.6/15.9/12.9"
+  },
+  {
+   "name": "M27 a slow margin ramp above C · 2 px a frame",
+   "status": "PASS",
+   "line": "glides over the ramp 1 (bound ≤ 2: the onset and one uneven frame; Y8 reads 0-1 at ≤ 200 px/s) · errors 0",
+   "load": "15.6/15.9/12.9"
+  }
+ ]
+}

@@ -1,0 +1,98 @@
+{
+ "id": "E-14",
+ "engine": "chromium",
+ "version": "149.0.7827.55",
+ "target": {
+  "fixture": true,
+  "fault": null
+ },
+ "loadStart": "6.9/7.9/8.2",
+ "loadEnd": "6.6/7.7/8.2",
+ "verdict": "PASS",
+ "cells": [
+  {
+   "name": "M9 a move with no record · a shadow-tree edit",
+   "status": "PASS",
+   "line": "the act on frame 8 · paint moved 0.0, 40.0 px in all; on the act's frame 0.00, 0.00 = 0.00 px (bound ≤ 0.50) · largest move over any 16.7 ms 6.0 px at +57 ms (bound 7.0) · glides 1 (350 ms) · scrollY 35 → 35 → 35, scroller 0 → 0 → 0 · path [0.0,0.0 0.0,0.0 0.0,3.0 0.0,6.0 0.0,8.7] · errors 0",
+   "load": "6.8/7.8/8.2"
+  },
+  {
+   "name": "M9 a move with no record · field-sizing: content, a textarea's value",
+   "status": "PASS",
+   "line": "the act on frame 8 · paint moved 0.0, 40.0 px in all; on the act's frame 0.00, 0.00 = 0.00 px (bound ≤ 0.50) · largest move over any 16.7 ms 6.0 px at +57 ms (bound 7.0) · glides 1 (350 ms) · scrollY 55 → 55 → 55, scroller 0 → 0 → 0 · path [0.0,0.0 0.0,0.0 0.0,3.0 0.0,6.3 0.0,9.2] · errors 0",
+   "load": "6.8/7.8/8.2"
+  },
+  {
+   "name": "M9 a move with no record · a <link> sheet applied after its record",
+   "status": "PASS",
+   "line": "the act on frame 8 · paint moved 0.0, 40.0 px in all; on the act's frame 0.00, 0.00 = 0.00 px (bound ≤ 0.50) · largest move over any 16.7 ms 6.0 px at +34 ms (bound 7.0) · glides 1 (350 ms) · scrollY 35 → 35 → 35, scroller 0 → 0 → 0 · path [0.0,0.0 0.0,0.0 0.0,2.5 0.0,5.7 0.0,9.2] · errors 0",
+   "load": "6.8/7.8/8.2"
+  },
+  {
+   "name": "M9 a move with no record · an image decoded after its record",
+   "status": "PASS",
+   "line": "the act on frame 8 · paint moved 0.0, 40.0 px in all; on the act's frame 0.00, 0.00 = 0.00 px (bound ≤ 0.50) · largest move over any 16.7 ms 6.0 px at +33 ms (bound 7.0) · glides 1 (350 ms) · scrollY 35 → 35 → 35, scroller 0 → 0 → 0 · path [0.0,0.0 0.0,0.0 0.0,2.4 0.0,5.5 0.0,8.6] · errors 0",
+   "load": "6.8/7.8/8.2"
+  },
+  {
+   "name": "M9 a move with no record · a CSSOM insertRule",
+   "status": "PASS",
+   "line": "the act on frame 8 · paint moved 0.0, 40.0 px in all; on the act's frame 0.00, 0.00 = 0.00 px (bound ≤ 0.50) · largest move over any 16.7 ms 6.0 px at +60 ms (bound 7.0) · glides 1 (350 ms) · scrollY 35 → 35 → 35, scroller 0 → 0 → 0 · path [0.0,0.0 0.0,0.0 0.0,3.0 0.0,5.6 0.0,8.8] · errors 0",
+   "load": "7.2/7.9/8.2"
+  },
+  {
+   "name": "M9 a move with no record · a pseudo-class restyle (:checked set through its IDL)",
+   "status": "PASS",
+   "line": "the act on frame 8 · paint moved 0.0, 40.0 px in all; on the act's frame 0.00, 0.00 = 0.00 px (bound ≤ 0.50) · largest move over any 16.7 ms 6.0 px at +42 ms (bound 7.0) · glides 1 (350 ms) · scrollY 35 → 35 → 35, scroller 0 → 0 → 0 · path [0.0,0.0 0.0,0.0 0.0,2.7 0.0,5.8 0.0,9.0] · errors 0",
+   "load": "7.2/7.9/8.2"
+  },
+  {
+   "name": "M27 a train of inserts above the root · 16 px every frame for 12 frames · by superposition",
+   "status": "PASS",
+   "line": "STATED LIMIT (S14 a.3, b.6: carried after its onset) · the onset's act frame 0.00 px (bound ≤ 0.5) · glides 1 (bound ≥ 1: the onset glided) · REPORT the train less the superposition: on the steps' frames max 109.40 px, over the film 109.40 px · errors 0",
+   "load": "7.2/7.9/8.2"
+  },
+  {
+   "name": "M27 a train of inserts above the root · 16 px every second frame, 6 steps · by superposition",
+   "status": "PASS",
+   "line": "the train's paint less the sum of the one step's paint shifted to each step's frame: on the steps' frames [0.00 0.00 0.00 0.00 0.00 0.00] px, max over the film 0.08 px (bound ≤ 0.79 = 0.5 + the interpolation's own error) · glides 6 · the one step's act frame 0.00 px · errors 0",
+   "load": "6.8/7.8/8.2"
+  },
+  {
+   "name": "M27 a train of inserts above the root · 8 px every frame for 12 frames · by superposition",
+   "status": "PASS",
+   "line": "STATED LIMIT (S14 a.3, b.6: carried after its onset) · the onset's act frame 0.00 px (bound ≤ 0.5) · glides 1 (bound ≥ 1: the onset glided) · REPORT the train less the superposition: on the steps' frames max 55.86 px, over the film 55.86 px · errors 0",
+   "load": "6.8/7.8/8.2"
+  },
+  {
+   "name": "M27 a train of inserts above the root · 40 px every second frame, 6 steps · by superposition",
+   "status": "PASS",
+   "line": "the train's paint less the sum of the one step's paint shifted to each step's frame: on the steps' frames [0.00 0.00 0.00 0.00 0.01 0.00] px, max over the film 0.14 px (bound ≤ 1.23 = 0.5 + the interpolation's own error) · glides 6 · the one step's act frame 0.00 px · errors 0",
+   "load": "6.9/7.8/8.2"
+  },
+  {
+   "name": "M27 a slow margin ramp above C · 0.2 px a frame",
+   "status": "PASS",
+   "line": "glides over the ramp 0 (bound ≤ 2: the onset and one uneven frame; Y8 reads 0-1 at ≤ 200 px/s) · errors 0",
+   "load": "6.9/7.8/8.2"
+  },
+  {
+   "name": "M27 a slow margin ramp above C · 0.5 px a frame",
+   "status": "PASS",
+   "line": "glides over the ramp 0 (bound ≤ 2: the onset and one uneven frame; Y8 reads 0-1 at ≤ 200 px/s) · errors 0",
+   "load": "6.6/7.7/8.2"
+  },
+  {
+   "name": "M27 a slow margin ramp above C · 1 px a frame",
+   "status": "PASS",
+   "line": "glides over the ramp 0 (bound ≤ 2: the onset and one uneven frame; Y8 reads 0-1 at ≤ 200 px/s) · errors 0",
+   "load": "6.6/7.7/8.2"
+  },
+  {
+   "name": "M27 a slow margin ramp above C · 2 px a frame",
+   "status": "PASS",
+   "line": "glides over the ramp 1 (bound ≤ 2: the onset and one uneven frame; Y8 reads 0-1 at ≤ 200 px/s) · errors 0",
+   "load": "6.6/7.7/8.2"
+  }
+ ]
+}

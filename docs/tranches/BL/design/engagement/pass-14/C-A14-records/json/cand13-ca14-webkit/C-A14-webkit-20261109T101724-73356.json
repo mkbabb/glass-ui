@@ -1,0 +1,91 @@
+{
+ "id": "C-A14",
+ "engine": "webkit",
+ "version": "26.5",
+ "target": {
+  "build": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p15/CA14c/wt/.ca14out/builds/cand13"
+ },
+ "loadStart": "5.1/5.6/5.6",
+ "loadEnd": "5.8/5.7/5.6",
+ "verdict": "FAIL",
+ "cells": [
+  {
+   "name": "A14 (M7) a class on C starts @keyframes rotate 20deg → 0 (900 ms), origin centre",
+   "status": "PASS",
+   "line": "the root's distance from C's painted centre off its first engaged value: max 0.00 px (bound ≤ 0.5) · the carrier turned the root through 344.1° · glides started 0 (bound 0) · errors 0",
+   "load": "5.1/5.6/5.6"
+  },
+  {
+   "name": "A14 (M7) a class on C starts @keyframes translate 0 -160px → 0 (900 ms ease-in-out)",
+   "status": "FAIL",
+   "line": "scrollY 38 → 38, scroller 0 → 0 · the carrier moved 160.0 px over 50 engaged frames · the root's centre off where its box carries it: max 160.00 px, frames over 2 px 21 (bound ≤ 0.50) · glides started 1 (bound ≤ 0) · errors 0",
+   "load": "5.1/5.6/5.6"
+  },
+  {
+   "name": "A14 (M7) a class on G starts @keyframes scale 0.5 → 1 (900 ms), origin 0 0",
+   "status": "FAIL",
+   "line": "scrollY 38 → 38, scroller 0 → 0 · the carrier moved 180.4 px over 50 engaged frames · the root's centre off where its box carries it: max 91.59 px, frames over 2 px 21 (bound ≤ 0.50) · glides started 1 (bound ≤ 0) · errors 0",
+   "load": "5.2/5.6/5.6"
+  },
+  {
+   "name": "A14 (M7) C's 900 ms scale transition 1 → 0.6 under a page loop writing a text node every frame",
+   "status": "FAIL",
+   "line": "scrollY 38 → 38, scroller 0 → 0 · the carrier moved 72.0 px over 50 engaged frames · the root's centre off where its box carries it: max 36.06 px, frames over 2 px 42 (bound ≤ 0.50) · glides started 44 (bound ≤ 0) · errors 0",
+   "load": "5.2/5.6/5.6"
+  },
+  {
+   "name": "A15 (M8) a page loop writing a text node every frame, requested before the hold · a 400 px insert above the root",
+   "status": "FAIL",
+   "line": "the act on frame 8 · paint moved 0.0, 0.0 px in all; on the act's frame 0.00, 0.00 = 0.00 px (bound ≤ 0.50) · largest move over any 16.7 ms 0.0 px at +NaN ms (bound 1.0) · glides 43 (210 ms) · scrollY 38 → 38 → 38, scroller 0 → 0 → 0 · path [0.0,0.0 0.0,0.0 0.0,0.0 0.0,0.0 0.0,0.0] · errors 0 · glides 43 (bound 1) · landed false (moved 0.0 of 400 px by +439 ms)",
+   "load": "5.2/5.6/5.6"
+  },
+  {
+   "name": "A15 (M8) a page loop writing data-k on C every frame, requested before the hold · a 40 px insert above the root",
+   "status": "FAIL",
+   "line": "the act on frame 8 · paint moved 0.0, 0.0 px in all; on the act's frame 0.00, 0.00 = 0.00 px (bound ≤ 0.50) · largest move over any 16.7 ms 0.0 px at +NaN ms (bound 1.0) · glides 43 (210 ms) · scrollY 38 → 38 → 38, scroller 0 → 0 → 0 · path [0.0,0.0 0.0,0.0 0.0,0.0 0.0,0.0 0.0,0.0] · errors 0 · glides 43 (bound 1) · landed false (moved 0.0 of 40 px by +439 ms)",
+   "load": "5.7/5.7/5.6"
+  },
+  {
+   "name": "A16 (M13) anchoring on the chain · page · insert 400 px above · overflow-anchor auto",
+   "status": "PASS",
+   "line": "the act on frame 8 · paint moved 0.0, 0.0 px in all; on the act's frame 0.00, 0.00 = 0.00 px (bound ≤ 0.50) · largest move over any 16.7 ms 0.0 px at +NaN ms (bound 1.0) · glides 0 · scrollY 1238 → 1638 → 1638, scroller 1238 → 1638 → 1638 · path [0.0,0.0 0.0,0.0 0.0,0.0 0.0,0.0 0.0,0.0] · errors 0",
+   "load": "5.7/5.7/5.6"
+  },
+  {
+   "name": "A16 (M13) anchoring on the chain · page · remove 400 px above · overflow-anchor auto",
+   "status": "PASS",
+   "line": "the act on frame 8 · paint moved 0.0, 0.0 px in all; on the act's frame 0.00, 0.00 = 0.00 px (bound ≤ 0.50) · largest move over any 16.7 ms 0.0 px at +NaN ms (bound 1.0) · glides 0 · scrollY 1638 → 1238 → 1238, scroller 1638 → 1238 → 1238 · path [0.0,0.0 0.0,0.0 0.0,0.0 0.0,0.0 0.0,0.0] · errors 0",
+   "load": "5.8/5.7/5.6"
+  },
+  {
+   "name": "A16 (M13) anchoring on the chain · scroller · insert 400 px above · overflow-anchor auto",
+   "status": "PASS",
+   "line": "the act on frame 8 · paint moved 0.0, 0.0 px in all; on the act's frame 0.00, 0.00 = 0.00 px (bound ≤ 0.50) · largest move over any 16.7 ms 0.0 px at +NaN ms (bound 1.0) · glides 0 · scrollY 134 → 134 → 134, scroller 840 → 1240 → 1240 · path [0.0,0.0 0.0,0.0 0.0,0.0 0.0,0.0 0.0,0.0] · errors 0",
+   "load": "5.8/5.7/5.6"
+  },
+  {
+   "name": "A17 (M23) G sticky top 0 · page scrolled 600 px a frame for 3 frames across the stick",
+   "status": "PASS",
+   "line": "scrollY 194 → 1448, scroller 0 → 0 · the carrier moved 1229.1 px over 30 engaged frames · the root's centre off where its box carries it: max 0.00 px, frames over 2 px 0 (bound ≤ 0.50) · glides started 0 (bound ≤ 0) · errors 0",
+   "load": "5.8/5.7/5.6"
+  },
+  {
+   "name": "A17 (M23) G sticky top 0 · scroller scrolled 500 px a frame for 2 frames across the stick",
+   "status": "PASS",
+   "line": "scrollY 230 → 230, scroller 0 → 968 · the carrier moved 150.0 px over 30 engaged frames · the root's centre off where its box carries it: max 0.00 px, frames over 2 px 0 (bound ≤ 0.50) · glides started 0 (bound ≤ 0) · errors 0",
+   "load": "5.8/5.7/5.6"
+  },
+  {
+   "name": "A18 (M24) scroll-snap y mandatory, align center: the snapped item grows 300 → 700 px below the root",
+   "status": "PASS",
+   "line": "the act on frame 8 · paint moved 0.0, -200.0 px in all; on the act's frame 0.00, 0.00 = 0.00 px (bound ≤ 0.50) · largest move over any 16.7 ms 27.6 px at +71 ms (bound 28.7) · glides 1 (210 ms) · scrollY 154 → 154 → 154, scroller 600 → 800 → 800 · path [0.0,0.0 0.0,0.0 0.0,-6.3 0.0,-17.6 0.0,-32.0] · errors 0",
+   "load": "5.8/5.7/5.6"
+  },
+  {
+   "name": "A18 (M24) scroll-snap y mandatory, align end: the snapped item grows 300 → 700 px below the root",
+   "status": "PASS",
+   "line": "the act on frame 8 · paint moved 0.0, -400.0 px in all; on the act's frame 0.00, 0.00 = 0.00 px (bound ≤ 0.50) · largest move over any 16.7 ms 55.4 px at +72 ms (bound 56.5) · glides 1 (210 ms) · scrollY 154 → 154 → 154, scroller 600 → 1000 → 1000 · path [0.0,0.0 0.0,0.0 0.0,-6.5 0.0,-25.3 0.0,-48.9] · errors 0",
+   "load": "5.8/5.7/5.6"
+  }
+ ]
+}

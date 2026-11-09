@@ -1,0 +1,147 @@
+== nb: near-bound classes at A/B rate (reads red on the check / reads), bp13 vs bp12
+('chromium', 'dark', 'lead-add', 'bp12') {'reads': 8}
+('chromium', 'dark', 'lead-add', 'bp13') {'reads': 8}
+('chromium', 'dark', 'lead-remove', 'bp12') {'reads': 8}
+('chromium', 'dark', 'lead-remove', 'bp13') {'reads': 8}
+('chromium', 'dark', 'swap-long', 'bp12') {'reads': 8}
+('chromium', 'dark', 'swap-long', 'bp13') {'reads': 8}
+('chromium', 'light', 'lead-add', 'bp12') {'reads': 8}
+('chromium', 'light', 'lead-add', 'bp13') {'reads': 8}
+('chromium', 'light', 'lead-remove', 'bp12') {'reads': 8}
+('chromium', 'light', 'lead-remove', 'bp13') {'reads': 8}
+('chromium', 'light', 'swap-long', 'bp12') {'reads': 8}
+('chromium', 'light', 'swap-long', 'bp13') {'reads': 8}
+('webkit', 'dark', 'swap-long', 'bp12') {'reads': 8, 'window': 1}
+('webkit', 'dark', 'swap-long', 'bp13') {'reads': 8, 'window': 1}
+('webkit', 'dark', 'swap-short', 'bp12') {'reads': 8}
+('webkit', 'dark', 'swap-short', 'bp13') {'reads': 8, 'window': 1, 'blank': 1}
+('webkit', 'light', 'swap-long', 'bp12') {'reads': 8, 'window': 3}
+('webkit', 'light', 'swap-long', 'bp13') {'reads': 8, 'window': 5}
+('webkit', 'light', 'swap-short', 'bp12') {'reads': 8, 'window': 2, 'blank': 1}
+('webkit', 'light', 'swap-short', 'bp13') {'reads': 8, 'window': 1}
+    ('webkit', 'dark', 'bp12', '4', 'swap-long', 'window', 4.28, 'window 261 ms > clock 214.2 + 2×16.7 + stall 12 = 259.6 ms (O-64 R-4, H-3d)')
+    ('webkit', 'dark', 'bp13', '4', 'swap-long', 'window', 4.44, 'window 260 ms > clock 214.2 + 2×16.7 + stall 12 = 259.6 ms (O-64 R-4, H-3d)')
+    ('webkit', 'dark', 'bp13', '4', 'swap-short', 'window', 4.44, 'window 266 ms > clock 214.2 + 2×16.7 + stall 12 = 259.6 ms (O-64 R-4, H-3d)')
+    ('webkit', 'dark', 'bp13', '4', 'swap-short', 'blank', 4.44, '2 blank of 27 moving frame(s), longest run 2 (bound 1)')
+    ('webkit', 'light', 'bp12', '2', 'swap-long', 'window', 10.19, 'window 261 ms > clock 214.2 + 2×16.7 + stall 13 = 260.6 ms (O-64 R-4, H-3d)')
+    ('webkit', 'light', 'bp12', '4', 'swap-short', 'window', 11.17, 'window 261 ms > clock 214.2 + 2×16.7 + stall 12 = 259.6 ms (O-64 R-4, H-3d)')
+    ('webkit', 'light', 'bp12', '5', 'swap-long', 'window', 10.14, 'window 264 ms > clock 214.2 + 2×16.7 + stall 13 = 260.6 ms (O-64 R-4, H-3d)')
+    ('webkit', 'light', 'bp12', '5', 'swap-short', 'window', 10.14, 'window 264 ms > clock 214.2 + 2×16.7 + stall 12 = 259.6 ms (O-64 R-4, H-3d)')
+    ('webkit', 'light', 'bp12', '5', 'swap-short', 'blank', 10.14, '2 blank of 27 moving frame(s), longest run 2 (bound 1)')
+    ('webkit', 'light', 'bp12', '6', 'swap-long', 'window', 10.99, 'window 260 ms > clock 214.2 + 2×16.7 + stall 12 = 259.6 ms (O-64 R-4, H-3d)')
+    ('webkit', 'light', 'bp13', '1', 'swap-long', 'window', 10.5, 'window 260 ms > clock 214.2 + 2×16.7 + stall 12 = 259.6 ms (O-64 R-4, H-3d)')
+    ('webkit', 'light', 'bp13', '1', 'swap-short', 'window', 10.5, 'window 263 ms > clock 214.2 + 2×16.7 + stall 13 = 260.6 ms (O-64 R-4, H-3d)')
+    ('webkit', 'light', 'bp13', '2', 'swap-long', 'window', 10.18, 'window 260 ms > clock 214.2 + 2×16.7 + stall 12 = 259.6 ms (O-64 R-4, H-3d)')
+    ('webkit', 'light', 'bp13', '4', 'swap-long', 'window', 10.02, 'window 262 ms > clock 214.2 + 2×16.7 + stall 12 = 259.6 ms (O-64 R-4, H-3d)')
+    ('webkit', 'light', 'bp13', '6', 'swap-long', 'window', 10.65, 'window 266 ms > clock 214.2 + 2×16.7 + stall 13 = 260.6 ms (O-64 R-4, H-3d)')
+    ('webkit', 'light', 'bp13', '8', 'swap-long', 'window', 8.96, 'window 263 ms > clock 214.2 + 2×16.7 + stall 12 = 259.6 ms (O-64 R-4, H-3d)')
+== r2: worst leaving drop (vanish), bound 0.5
+('chromium', 'dark', 'bp12', 'ANY', None) worst 0.387 margin 0.113 at ('r2', '1', 'first-expand', 8, 14.68) n 122 loads 4.11-14.68
+('chromium', 'dark', 'bp12', 'retarget·80', 1) worst 0.349 margin 0.151 at ('r2', '2', 'retarget·80', 1, 10.05) n 10 loads 4.11-13.75
+('chromium', 'dark', 'bp12', 'swap-long', 1) worst 0.372 margin 0.128 at ('nb', '4', 'swap-long', 1, 5.43) n 10 loads 4.6-14.68
+('chromium', 'dark', 'bp12', 'swap-long', 2) worst 0.372 margin 0.128 at ('nb', '4', 'swap-long', 2, 5.43) n 10 loads 4.6-14.68
+('chromium', 'dark', 'bp13', 'ANY', None) worst 0.389 margin 0.111 at ('nb', '4', 'swap-long', 1, 7) n 122 loads 4.12-17.17
+('chromium', 'dark', 'bp13', 'retarget·80', 1) worst 0.349 margin 0.151 at ('ab', '2', 'retarget·80', 1, 5.34) n 10 loads 4.13-16.28
+('chromium', 'dark', 'bp13', 'swap-long', 1) worst 0.389 margin 0.111 at ('nb', '4', 'swap-long', 1, 7) n 10 loads 4.97-12.82
+('chromium', 'dark', 'bp13', 'swap-long', 2) worst 0.389 margin 0.111 at ('nb', '4', 'swap-long', 2, 7) n 10 loads 4.97-12.82
+('chromium', 'light', 'bp12', 'ANY', None) worst 0.394 margin 0.106 at ('r2', '1', 'swap-short', 3, 10.45) n 122 loads 4.09-10.49
+('chromium', 'light', 'bp12', 'retarget·80', 1) worst 0.349 margin 0.151 at ('ab', '8', 'retarget·80', 1, 5.67) n 10 loads 4.66-8.57
+('chromium', 'light', 'bp12', 'swap-long', 1) worst 0.388 margin 0.112 at ('nb', '7', 'swap-long', 1, 5.63) n 10 loads 4.16-10.45
+('chromium', 'light', 'bp12', 'swap-long', 2) worst 0.388 margin 0.112 at ('nb', '7', 'swap-long', 2, 5.63) n 10 loads 4.16-10.45
+('chromium', 'light', 'bp13', 'ANY', None) worst 0.391 margin 0.109 at ('nb', '7', 'swap-long', 1, 6.32) n 122 loads 4.21-11.94
+('chromium', 'light', 'bp13', 'retarget·80', 1) worst 0.349 margin 0.151 at ('r2', '1', 'retarget·80', 1, 11.94) n 10 loads 5.76-11.94
+('chromium', 'light', 'bp13', 'swap-long', 1) worst 0.391 margin 0.109 at ('nb', '7', 'swap-long', 1, 6.32) n 10 loads 4.51-8.28
+('chromium', 'light', 'bp13', 'swap-long', 2) worst 0.391 margin 0.109 at ('nb', '7', 'swap-long', 2, 6.32) n 10 loads 4.51-8.28
+('webkit', 'dark', 'bp12', 'ANY', None) worst 0.438 margin 0.062 at ('fe', '2', 'first-expand', 8, 6.37) n 178 loads 3.69-15.1
+('webkit', 'dark', 'bp12', 'retarget·80', 1) worst 0.398 margin 0.102 at ('r2y', '4', 'retarget·80', 1, 14.45) n 14 loads 3.69-14.45
+('webkit', 'dark', 'bp12', 'swap-long', 1) worst 0.400 margin 0.100 at ('nb', '1', 'swap-long', 1, 6.02) n 14 loads 3.94-15.1
+('webkit', 'dark', 'bp12', 'swap-long', 2) worst 0.399 margin 0.101 at ('nb', '1', 'swap-long', 2, 6.02) n 14 loads 3.94-15.1
+('webkit', 'dark', 'bp13', 'ANY', None) worst 0.425 margin 0.075 at ('fe', '7', 'first-expand', 8, 5.04) n 178 loads 3.68-16.91
+('webkit', 'dark', 'bp13', 'retarget·80', 1) worst 0.383 margin 0.117 at ('r2', '2', 'retarget·80', 1, 10.55) n 14 loads 3.68-14.07
+('webkit', 'dark', 'bp13', 'swap-long', 1) worst 0.384 margin 0.116 at ('r2y', '4', 'swap-long', 1, 12.49) n 14 loads 3.78-16.91
+('webkit', 'dark', 'bp13', 'swap-long', 2) worst 0.384 margin 0.116 at ('r2y', '4', 'swap-long', 2, 12.49) n 14 loads 3.78-16.91
+('webkit', 'light', 'bp12', 'ANY', None) worst 0.436 margin 0.064 at ('r2y', '3', 'swap-long', 1, 10.5) n 178 loads 4.57-13.42
+('webkit', 'light', 'bp12', 'retarget·80', 1) worst 0.395 margin 0.105 at ('ab', '3', 'retarget·80', 1, 8.17) n 14 loads 5.19-13.42
+('webkit', 'light', 'bp12', 'swap-long', 1) worst 0.436 margin 0.064 at ('r2y', '3', 'swap-long', 1, 10.5) n 14 loads 5.12-11.31
+('webkit', 'light', 'bp12', 'swap-long', 2) worst 0.436 margin 0.064 at ('r2y', '3', 'swap-long', 2, 10.5) n 14 loads 5.12-11.31
+('webkit', 'light', 'bp13', 'ANY', None) worst 0.414 margin 0.086 at ('fe', '4', 'first-expand', 8, 5.42) n 178 loads 4.49-12.13
+('webkit', 'light', 'bp13', 'retarget·80', 1) worst 0.369 margin 0.131 at ('r2y', '2', 'retarget·80', 1, 9.4) n 14 loads 6.82-12.13
+('webkit', 'light', 'bp13', 'swap-long', 1) worst 0.412 margin 0.088 at ('r2y', '3', 'swap-long', 1, 10) n 14 loads 8.84-11.96
+('webkit', 'light', 'bp13', 'swap-long', 2) worst 0.412 margin 0.088 at ('r2y', '3', 'swap-long', 2, 10) n 14 loads 8.84-11.96
+== swp: swrev in paint (F2's arguments), splice frames and the glyph share between the facing edges
+   SPLICE ('webkit', 'dark', 'bp12', '1') then 32 run 1 load 4.07 +113 ms s7|s8 gap 8.51 edges 752.18 760.69 dt 0 between: none · across: "F"(F)=0 op 1
+   SPLICE ('webkit', 'dark', 'bp12', '2') then 16 run 1 load 4.04 +102 ms s7|s8 gap 8.05 edges 751.52 759.57 dt 0 between: none · across: none
+   SPLICE ('webkit', 'dark', 'bp12', '2') then 32 run 2 load 4.41 +122 ms s7|s8 gap 8.45 edges 756.56 765.01 dt 0 between: none · across: "F"(F)=0 op 1
+   SPLICE ('webkit', 'dark', 'bp12', '4') then 16 run 2 load 4.66 +102 ms s7|s8 gap 8.48 edges 750.08 758.56 dt 0 between: none · across: none
+   SPLICE ('webkit', 'dark', 'bp12', '6') then 64 run 1 load 4.89 +143 ms s7|s8 gap 8.66 edges 761.22 769.88 dt 0 between: none · across: "F"(F)=0 op 1
+   SPLICE ('webkit', 'light', 'bp12', '2') then 16 run 1 load 10.92 +103 ms s7|s8 gap 8.48 edges 750.86 759.34 dt 0 between: none · across: none
+   SPLICE ('webkit', 'light', 'bp12', '7') then 16 run 1 load 10.12 +102 ms s7|s8 gap 8.47 edges 751.09 759.56 dt 0 between: none · across: none
+   SPLICE ('webkit', 'light', 'bp13', '1') then 64 run 2 load 6.88 +144 ms s7|s8 gap 8.66 edges 760.78 769.44 dt 0 between: none · across: "F"(F)=0 op 1
+   SPLICE ('webkit', 'light', 'bp13', '5') then 32 run 1 load 9.55 +112 ms s7|s8 gap 8.47 edges 753.55 762.02 dt 0 between: none · across: "F"(F)=0 op 1
+   SPLICE ('webkit', 'light', 'bp13', '8') then 32 run 1 load 10.72 +112 ms s7|s8 gap 8.28 edges 752.92 761.2 dt 0 between: none · across: none
+('webkit', 'dark', 'bp12') {'reads': 64, 'splice frames': 5, 'splice reads': 5}
+('webkit', 'dark', 'bp13') {'reads': 64, 'splice frames': 0}
+('webkit', 'light', 'bp12') {'reads': 64, 'splice frames': 2, 'splice reads': 2}
+('webkit', 'light', 'bp13') {'reads': 64, 'splice frames': 3, 'splice reads': 3}
+== si: display-frame probe
+('chromium', 'dark', 'bp12') runs 18 with an empty frame 0 least ink 0.422 at ('swap-long', 'Tools at +70.9 ms', 4.93)
+('chromium', 'dark', 'bp13') runs 18 with an empty frame 0 least ink 0.422 at ('swap-long', 'Tools at +67 ms', 5.11)
+('chromium', 'light', 'bp12') runs 18 with an empty frame 0 least ink 0.422 at ('swap-long', 'Tools at +67.7 ms', 5.88)
+('chromium', 'light', 'bp13') runs 18 with an empty frame 0 least ink 0.422 at ('swap-long', 'Tools at +67.4 ms', 6.02)
+('webkit', 'dark', 'bp12') runs 18 with an empty frame 0 least ink 0.414 at ('swap-long', 'Tools at +154 ms', 5.38)
+('webkit', 'dark', 'bp13') runs 18 with an empty frame 0 least ink 0.422 at ('swap-long', 'Tools at +77 ms', 4.88)
+('webkit', 'light', 'bp12') runs 18 with an empty frame 0 least ink 0.422 at ('swap-long', 'Tools at +79 ms', 10.48)
+('webkit', 'light', 'bp13') runs 18 with an empty frame 0 least ink 0.422 at ('swap-long', 'Tools at +77 ms', 9.45)
+== fmab: FM warm-expand / first-expand
+('webkit', 'dark', 'bp12') {'reads': 16}
+('webkit', 'dark', 'bp13') {'reads': 16}
+('webkit', 'light', 'bp12') {'reads': 16}
+('webkit', 'light', 'bp13') {'reads': 16}
+== reds: every red check of every red W3 cell in the queues (ruled = PASS when the only red is [window] and Q-4 (c) holds)
+   rev ('chromium', 'dark', 'bp12', '2') reversal FAIL ['window', 'stub'] load 5.26
+       [window] window 275 ms after the retarget > clock 214.2 + 2×16.7 + stall 10.3 = 257.9 ms (O-64 R-4, H-3d)
+       [stub] 1 stub frame(s) of 42 judged (up to 24 glyphs a frame); first at 116.7 ms: "n" in button.dock-tab-button.glass-specular-track painted 30 % at opacity 1, a hard edge (10→90 % alpha in 0.24 px) at 886.9 px (1 stub(s) in that frame) (bound 0; a stub is a glyph painted 10-90 %, at any opacity, by an edg
+   rev ('chromium', 'dark', 'bp12', '5') reversal FAIL ['window', 'stub'] load 4.74
+       [window] window 275 ms after the retarget > clock 214.2 + 2×16.7 + stall 10.1 = 257.7 ms (O-64 R-4, H-3d)
+       [stub] 1 stub frame(s) of 42 judged (up to 24 glyphs a frame); first at 116.7 ms: "n" in button.dock-tab-button.glass-specular-track painted 30 % at opacity 1, a hard edge (10→90 % alpha in 0.24 px) at 886.9 px (1 stub(s) in that frame) (bound 0; a stub is a glyph painted 10-90 %, at any opacity, by an edg
+   nb ('webkit', 'dark', 'bp13', '4') swap-short FAIL ['window', 'blank'] load 4.44
+       [window] window 266 ms > clock 214.2 + 2×16.7 + stall 12 = 259.6 ms (O-64 R-4, H-3d)
+       [blank] 2 blank of 27 moving frame(s), longest run 2 (bound 1)
+   nb ('webkit', 'light', 'bp12', '5') swap-short FAIL ['window', 'blank'] load 10.14
+       [window] window 264 ms > clock 214.2 + 2×16.7 + stall 12 = 259.6 ms (O-64 R-4, H-3d)
+       [blank] 2 blank of 27 moving frame(s), longest run 2 (bound 1)
+   r2 ('webkit', 'light', 'bp12', '2') swap-short FAIL ['window', 'blank'] load 10.41
+       [window] window 264 ms > clock 214.2 + 2×16.7 + stall 12 = 259.6 ms (O-64 R-4, H-3d)
+       [blank] 2 blank of 27 moving frame(s), longest run 2 (bound 1)
+   fe ('webkit', 'light', 'bp13', '5') first-expand FAIL ['window', 'lanes'] load 5.11
+       [window] window 271 ms > clock 214.2 + 2×16.7 + stall 12 = 259.6 ms (O-64 R-4, H-3d)
+       [lanes] every lane (3) at its final value from the frame the flag closed; 1 lane(s) cancelled to identity, the largest button.dock-icon-button.glass-specular-track.glass-capsule-hover clip from 40 px in one frame (previous step 1.64 px) at 46 ms; every seat at its final position from the flag
+   OWNER-BLOCKED on [window] alone, Q-4 (c) PASS (ruled PASS), per queue/column/build:
+      ('fe', 'webkit', 'dark', 'bp12') 8
+      ('fe', 'webkit', 'dark', 'bp13') 8
+      ('fe', 'webkit', 'light', 'bp12') 8
+      ('fe', 'webkit', 'light', 'bp13') 7
+      ('nb', 'webkit', 'dark', 'bp12') 1
+      ('nb', 'webkit', 'dark', 'bp13') 1
+      ('nb', 'webkit', 'light', 'bp12') 4
+      ('nb', 'webkit', 'light', 'bp13') 6
+      ('r2', 'chromium', 'dark', 'bp12') 12
+      ('r2', 'chromium', 'dark', 'bp13') 12
+      ('r2', 'chromium', 'light', 'bp12') 10
+      ('r2', 'chromium', 'light', 'bp13') 12
+      ('r2', 'webkit', 'dark', 'bp12') 10
+      ('r2', 'webkit', 'dark', 'bp13') 10
+      ('r2', 'webkit', 'light', 'bp12') 10
+      ('r2', 'webkit', 'light', 'bp13') 11
+      ('r2y', 'webkit', 'dark', 'bp12') 1
+      ('r2y', 'webkit', 'dark', 'bp13') 2
+      ('r2y', 'webkit', 'light', 'bp12') 1
+      ('r2y', 'webkit', 'light', 'bp13') 2
+      ('rev', 'chromium', 'dark', 'bp12') 14
+      ('rev', 'chromium', 'dark', 'bp13') 16
+      ('rev', 'chromium', 'light', 'bp12') 16
+      ('rev', 'chromium', 'light', 'bp13') 16
+      ('rev', 'webkit', 'dark', 'bp12') 8
+      ('rev', 'webkit', 'dark', 'bp13') 8
+      ('rev', 'webkit', 'light', 'bp12') 8
+      ('rev', 'webkit', 'light', 'bp13') 8

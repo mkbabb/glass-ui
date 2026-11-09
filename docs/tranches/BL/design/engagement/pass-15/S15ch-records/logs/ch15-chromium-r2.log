@@ -1,0 +1,120 @@
+# S15 challenge facts · chromium 149.0.7827.55 · playwright 1.61.1 · load 6.9/7.5/9.3 at start
+X1 2em on :root; main 16.6 px; host 14 px (CE13c D8 row 1) · load 6.9/7.5/9.3
+  page consumer (main div padding) 33.20px · host's own padding (K5's 'consumer') 28.00px · host ::before (S15-e) 28px (off the page -5.20) · :root::before (cand14) 32px (off the page -1.20)
+X1 4cqi on :root; host in a 400 px inline-size container; consumer in main (CE13c D8 row 2) · load 6.9/7.5/9.3
+  page consumer (main div padding) 32.00px · host's own padding (K5's 'consumer') 16.00px · host ::before (S15-e) 16px (off the page -16.00) · :root::before (cand14) 32px (off the page 0.00)
+X1 2rem on :root (the library default; control) · load 6.9/7.5/9.3
+  page consumer (main div padding) 32.00px · host's own padding (K5's 'consumer') 32.00px · host ::before (S15-e) 32px (off the page 0.00) · :root::before (cand14) 32px (off the page 0.00)
+X1 2rem on :root, 2em on main (a nearer page override) · load 6.9/7.5/9.3
+  page consumer (main div padding) 33.20px · host's own padding (K5's 'consumer') 28.00px · host ::before (S15-e) 28px (off the page -5.20) · :root::before (cand14) 32px (off the page -1.20)
+X1 clamp(1rem, 3vw, 3rem) on :root (control) · load 6.9/7.5/9.3
+  page consumer (main div padding) 24.00px · host's own padding (K5's 'consumer') 24.00px · host ::before (S15-e) 24px (off the page 0.00) · :root::before (cand14) 24px (off the page 0.00)
+X2 open shadow root, depth 1 · load 6.9/7.5/9.3
+  H.assignedSlot <slot> · H.offsetParent <body> · walk assignedSlot>parentNode>root.host>parentNode>parentNode · carriers found div.card(0.8) · carriers present card(scale .8) in SH's root · painted width 64.00 of offsetWidth 80 · composedPath from document div>slot>div>#document-fragment>div>body>html>#document>?
+X2 open shadow root, depth 2 · load 6.9/7.5/9.3
+  H.assignedSlot <slot> · H.offsetParent <body> · walk assignedSlot>assignedSlot>parentNode>root.host>parentNode>root.host · carriers found div.card(0.8), div.c1(10deg) · carriers present c1(rotate 10deg) in SH's root, card(scale .8) in SH2's root · painted width 65.81 of offsetWidth 80 · composedPath from document div>slot>slot>div>#document-fragment>x-inner>div>#document-fragment>div>body>html>#document>?
+X2 closed shadow root, depth 1 · load 6.9/7.5/9.3
+  H.assignedSlot null · H.offsetParent <body> · walk parentNode>parentNode>parentNode · carriers found NONE · carriers present card(scale .8) in SH's root · painted width 64.00 of offsetWidth 80 · composedPath from document div>div>body>html>#document>?
+X2 closed shadow root, depth 2 · load 6.9/7.5/9.3
+  H.assignedSlot null · H.offsetParent <body> · walk parentNode>parentNode>parentNode · carriers found NONE · carriers present c1(rotate 10deg) in SH's root, card(scale .8) in SH2's root · painted width 65.81 of offsetWidth 80 · composedPath from document div>div>body>html>#document>?
+X3 P none · C rotateX(50deg) (K2's flattened control) · load 6.9/7.5/9.3
+  S15 J (Π flattened links) [1.00000 0.00000 0.00000 0.64279] · engine probe map [1.00000 0.00000 0.00000 0.64279] · max |diff| 0.00000 · links C,P: m14 0.000 m24 0.000 m34 0.000 m13 0.000 m23 0.766 | m14 0.000 m24 0.000 m34 0.000 m13 0.000 m23 0.000 · a 40 px painted step compensated by J: residual on the act's frame 0.00 px
+X3 P rotateY(50deg) flat · C rotateX(50deg) (control: no preserve-3d) · load 6.9/7.5/9.3
+  S15 J (Π flattened links) [0.64279 0.00000 0.00000 0.64279] · engine probe map [0.64279 0.00000 0.00000 0.64279] · max |diff| 0.00000 · links C,P: m14 0.000 m24 0.000 m34 0.000 m13 0.000 m23 0.766 | m14 0.000 m24 0.000 m34 0.000 m13 -0.766 m23 0.000 · a 40 px painted step compensated by J: residual on the act's frame 0.00 px
+X3 P rotateY(50deg) preserve-3d · C rotateX(50deg) · load 6.9/7.5/9.3
+  S15 J (Π flattened links) [0.64279 0.00000 0.00000 0.64279] · engine probe map [0.64279 0.58683 0.00000 0.64278] · max |diff| 0.58683 · links C,P: m14 0.000 m24 0.000 m34 0.000 m13 0.000 m23 0.766 | m14 0.000 m24 0.000 m34 0.000 m13 -0.766 m23 0.000 · a 40 px painted step compensated by J: residual on the act's frame 36.52 px
+X3 P rotateY(60deg) preserve-3d · C rotateY(-60deg) (cancels in 3D) · load 6.9/7.5/9.3
+  S15 J (Π flattened links) [0.25000 0.00000 0.00000 1.00000] · engine probe map [1.00000 0.00000 0.00000 1.00000] · max |diff| 0.75000 · links C,P: m14 0.000 m24 0.000 m34 0.000 m13 0.866 m23 0.000 | m14 0.000 m24 0.000 m34 0.000 m13 -0.866 m23 0.000 · a 40 px painted step compensated by J: residual on the act's frame 0.00 px
+X3 P rotateZ(30deg) rotateX(60deg) preserve-3d · C rotateY(40deg) · load 6.9/7.5/9.3
+  S15 J (Π flattened links) [0.66341 -0.25000 0.38302 0.43301] · engine probe map [0.38508 -0.25000 0.86511 0.43301] · max |diff| 0.48209 · links C,P: m14 0.000 m24 0.000 m34 0.000 m13 -0.643 m23 0.000 | m14 0.000 m24 0.000 m34 0.000 m13 0.000 m23 0.866 · a 40 px painted step compensated by J: residual on the act's frame 14.53 px
+X3 P rotate: x 55deg preserve-3d · C rotate: y 35deg (individual properties) · load 6.9/7.5/9.3
+  S15 J (Π flattened links) [0.81915 0.00000 0.00000 0.57358] · engine probe map [0.81915 0.00000 0.46985 0.57358] · max |diff| 0.46985 · links C,P: m14 0.000 m24 0.000 m34 0.000 m13 -0.574 m23 0.000 | m14 0.000 m24 0.000 m34 0.000 m13 0.000 m23 0.819 · a 40 px painted step compensated by J: residual on the act's frame 0.00 px
+X4 transform transition, mismatched lists: translate(-50%,-50%) rotate(10deg) → scale(1.2), at 50 % · load 6.9/7.5/9.3
+  getComputedStyle matrix(1.09581, 0.0958713, -0.0958713, 1.09581, -50, -25) · Typed OM matrix(1.09581, 0.0958713, -0.0958713, 1.09581, 0, 0) [CSSMatrixComponent] · percentage kept by Typed OM: NO · painted box 235.63,260.62 228.75×128.76
+X4 transform transition, matched lists: translate(-50%,-50%) rotate(10deg) → translate(-20%,-50%) rotate(30deg), at 50 % · load 6.9/7.5/9.3
+  getComputedStyle matrix(0.939693, 0.34202, -0.34202, 0.939693, -70, -50) · Typed OM translate(-35%, -50%) rotate(20deg) [CSSTranslate,CSSRotate] · percentage kept by Typed OM: YES · painted box 218.93,218.81 222.14×162.37
+X4 transform transition, none → translate(-50%,-50%), at 50 % · load 6.9/7.5/9.3
+  getComputedStyle matrix(1, 0, 0, 1, -50, -25) · Typed OM translate(-25%, -25%) [CSSTranslate] · percentage kept by Typed OM: YES · painted box 250.00,275.00 200.00×100.00
+X4 transform WAAPI, translate(-50%,-50%) → translateX(0) scale(2) (mismatched), at 50 % · load 6.9/7.5/9.3
+  getComputedStyle matrix(1.5, 0, 0, 1.5, -50, -25) · Typed OM translate(-25%, -25%) scale(1.5, 1.5) [CSSTranslate,CSSScale] · percentage kept by Typed OM: YES · painted box 200.00,250.00 300.00×150.00
+X4 translate transition, -50% -50% → 10px 10px, at 50 % · load 6.9/7.5/9.3
+  getComputedStyle calc(-25% + 5px) calc(-25% + 5px) · Typed OM calc(-25% + 5px) calc(-25% + 5px) [CSSStyleValue] · percentage kept by Typed OM: YES · painted box 255.00,280.00 200.00×100.00
+X5 block in flow (control) · load 6.9/7.5/9.3
+  Δ start 0.00 · Δ centre -20.00 · Δ end -40.00 → the engine keeps: start · S15's table: start (table: block-level in flow, block axis always start) · S14's least-moved (one frame, no insert): start
+X5 block container align-content: center · load 6.9/7.5/9.3
+  Δ start 20.00 · Δ centre 0.00 · Δ end -20.00 → the engine keeps: centre · S15's table: start (table: block-level in flow, block axis always start) · S14's least-moved (one frame, no insert): centre
+X5 block container align-content: end · load 6.9/7.5/9.3
+  Δ start 40.00 · Δ centre 20.00 · Δ end 0.00 → the engine keeps: end · S15's table: start (table: block-level in flow, block axis always start) · S14's least-moved (one frame, no insert): end
+X5 flex column-reverse, justify-content normal · load 6.9/7.5/9.3
+  Δ start 40.00 · Δ centre 20.00 · Δ end 0.00 → the engine keeps: end · S15's table: unnamed (no row names column-reverse) → S14 least-moved limit · S14's least-moved (one frame, no insert): end
+X5 grid align-content: end · load 6.9/7.5/9.3
+  Δ start 40.00 · Δ centre 20.00 · Δ end 0.00 → the engine keeps: end · S15's table: ambiguous ('end … forms' names no property) · S14's least-moved (one frame, no insert): end
+X5 table-cell vertical-align: middle · load 6.9/7.5/9.3
+  Δ start 20.00 · Δ centre 0.00 · Δ end -20.00 → the engine keeps: centre · S15's table: unnamed → least-moved limit · S14's least-moved (one frame, no insert): centre
+X5 abspos inset:0 margin:auto (block-axis auto margins) · load 6.9/7.5/9.3
+  Δ start 20.00 · Δ centre 0.00 · Δ end -20.00 → the engine keeps: centre · S15's table: unnamed (table names margin-inline:auto only) → least-moved limit · S14's least-moved (one frame, no insert): centre
+X5 abspos bottom: 10px · load 6.9/7.5/9.3
+  Δ start 40.00 · Δ centre 20.00 · Δ end 0.00 → the engine keeps: end · S15's table: unnamed → least-moved limit · S14's least-moved (one frame, no insert): end
+X6 relative, top auto, bottom 20px · load 6.9/7.5/9.3
+  getComputedStyle top -20px bottom 20px · Typed OM top auto bottom 20px · offsetTop 30 (laid out at 50)
+X6 relative, top 10px, bottom 20px (over-constrained: bottom ignored) · load 6.9/7.5/9.3
+  getComputedStyle top 10px bottom 20px · Typed OM top 10px bottom 20px · offsetTop 60 (laid out at 50)
+X6 relative, top 10% of a 300 px containing block · load 6.9/7.5/9.3
+  getComputedStyle top 30px bottom -30px · Typed OM top 10% bottom auto · offsetTop 80 (laid out at 50)
+X7 no transform (control) · load 6.9/7.5/9.3
+  anchor positioning supported true · lens bottom-centre minus the anchor's painted top-centre: 0.00, 0.00 px (0 = laid on it with no correction)
+X7 the host's glide: composite-add translate 0 40px → 0, held at progress 0.5 · load 6.9/7.5/9.3
+  anchor positioning supported true · lens bottom-centre minus the anchor's painted top-centre: 0.00, 0.00 px (0 = laid on it with no correction)
+X7 a carrier: the host's ancestor scale: 0.8, origin 0 0 · load 6.9/7.5/9.3
+  anchor positioning supported true · lens bottom-centre minus the anchor's painted top-centre: 0.00, 0.00 px (0 = laid on it with no correction)
+X7 a carrier: the host's ancestor translate: 30px -25px · load 6.9/7.5/9.3
+  anchor positioning supported true · lens bottom-centre minus the anchor's painted top-centre: 0.00, 0.00 px (0 = laid on it with no correction)
+X7 the grow: the host's own scale 1.06 1.3 about its centre · load 6.9/7.5/9.3
+  anchor positioning supported true · lens bottom-centre minus the anchor's painted top-centre: -0.00, 0.00 px (0 = laid on it with no correction)
+X8 zoom sweep: S15-b's root-px Q against paint · load 6.9/7.5/9.3
+  zA 1 zP 0.5 · per zH, |ΔQ−Δpaint| for the host's zoom 1→zH / for a 7.3 px insert: 0.5:0.08/0.20 0.75:0.28/0.20 1:0.00/0.20 1.25:0.03/0.20 1.5:0.23/0.20 1.875:0.50/0.20 2:0.45/0.20
+  zA 1 zP 0.75 · per zH, |ΔQ−Δpaint| for the host's zoom 1→zH / for a 7.3 px insert: 0.5:0.11/0.20 0.75:0.44/0.20 1:0.00/0.20 1.25:0.05/0.20 1.5:0.33/0.20 1.875:0.75/0.20 2:0.67/0.20
+  zA 1 zP 1 · per zH, |ΔQ−Δpaint| for the host's zoom 1→zH / for a 7.3 px insert: 0.5:0.16/0.30 0.75:0.58/0.30 1:0.00/0.30 1.25:0.06/0.30 1.5:0.45/0.30 1.875:1.00/0.30 2:0.91/0.30
+  zA 1 zP 1.25 · per zH, |ΔQ−Δpaint| for the host's zoom 1→zH / for a 7.3 px insert: 0.5:0.19/0.20 0.75:0.28/0.20 1:0.00/0.20 1.25:0.09/0.20 1.5:0.56/0.20 1.875:1.23/0.20 2:1.13/0.20
+  zA 1 zP 1.5 · per zH, |ΔQ−Δpaint| for the host's zoom 1→zH / for a 7.3 px insert: 0.5:0.22/0.20 0.75:0.86/0.20 1:0.00/0.20 1.25:0.11/0.20 1.5:0.67/0.20 1.875:1.48/0.20 2:1.34/0.20
+  zA 1 zP 1.875 · per zH, |ΔQ−Δpaint| for the host's zoom 1→zH / for a 7.3 px insert: 0.5:0.28/0.20 0.75:0.42/0.20 1:0.00/0.20 1.25:0.14/0.20 1.5:0.84/0.20 1.875:1.84/0.20 2:1.69/0.20
+  zA 1 zP 2 · per zH, |ΔQ−Δpaint| for the host's zoom 1→zH / for a 7.3 px insert: 0.5:0.30/0.70 0.75:1.16/0.70 1:0.00/0.70 1.25:0.14/0.70 1.5:0.89/0.70 1.875:1.98/0.70 2:1.80/0.70
+  zA 1.25 zP 0.5 · per zH, |ΔQ−Δpaint| for the host's zoom 1→zH / for a 7.3 px insert: 0.5:0.09/0.25 0.75:0.14/0.25 1:0.00/0.25 1.25:0.05/0.25 1.5:0.28/0.25 1.875:0.61/0.25 2:0.56/0.25
+  zA 1.25 zP 0.75 · per zH, |ΔQ−Δpaint| for the host's zoom 1→zH / for a 7.3 px insert: 0.5:0.14/0.25 0.75:0.53/0.25 1:0.00/0.25 1.25:0.08/0.25 1.5:0.42/0.25 1.875:0.92/0.25 2:0.84/0.25
+  zA 1.25 zP 1 · per zH, |ΔQ−Δpaint| for the host's zoom 1→zH / for a 7.3 px insert: 0.5:0.19/0.38 0.75:0.28/0.38 1:0.00/0.38 1.25:0.09/0.38 1.5:0.56/0.38 1.875:1.23/0.38 2:1.13/0.38
+  zA 1.25 zP 1.25 · per zH, |ΔQ−Δpaint| for the host's zoom 1→zH / for a 7.3 px insert: 0.5:0.23/0.25 0.75:0.89/0.25 1:0.00/0.25 1.25:0.13/0.25 1.5:0.70/0.25 1.875:1.53/0.25 2:1.41/0.25
+  zA 1.25 zP 1.5 · per zH, |ΔQ−Δpaint| for the host's zoom 1→zH / for a 7.3 px insert: 0.5:0.28/0.25 0.75:0.42/0.25 1:0.00/0.25 1.25:0.14/0.25 1.5:0.84/0.25 1.875:1.84/0.25 2:1.69/0.25
+  zA 1.25 zP 1.875 · per zH, |ΔQ−Δpaint| for the host's zoom 1→zH / for a 7.3 px insert: 0.5:0.34/0.25 0.75:1.34/0.25 1:0.00/0.25 1.25:0.19/0.25 1.5:1.05/0.25 1.875:2.30/0.25 2:2.11/0.25
+  zA 1.25 zP 2 · per zH, |ΔQ−Δpaint| for the host's zoom 1→zH / for a 7.3 px insert: 0.5:0.38/0.88 0.75:0.56/0.88 1:0.00/0.88 1.25:0.19/0.88 1.5:1.13/0.88 1.875:2.47/0.88 2:2.25/0.88
+  zA 2 zP 0.5 · per zH, |ΔQ−Δpaint| for the host's zoom 1→zH / for a 7.3 px insert: 0.5:0.16/0.41 0.75:0.58/0.41 1:0.00/0.41 1.25:0.06/0.41 1.5:0.45/0.41 1.875:1.00/0.41 2:0.91/0.41
+  zA 2 zP 0.75 · per zH, |ΔQ−Δpaint| for the host's zoom 1→zH / for a 7.3 px insert: 0.5:0.22/0.41 0.75:0.86/0.41 1:0.00/0.41 1.25:0.11/0.41 1.5:0.67/0.41 1.875:1.48/0.41 2:1.34/0.41
+  zA 2 zP 1 · per zH, |ΔQ−Δpaint| for the host's zoom 1→zH / for a 7.3 px insert: 0.5:0.30/0.59 0.75:1.16/0.59 1:0.00/0.59 1.25:0.14/0.59 1.5:0.89/0.59 1.875:1.98/0.59 2:1.80/0.59
+  zA 2 zP 1.25 · per zH, |ΔQ−Δpaint| for the host's zoom 1→zH / for a 7.3 px insert: 0.5:0.38/0.41 0.75:0.56/0.41 1:0.00/0.41 1.25:0.19/0.41 1.5:1.13/0.41 1.875:2.47/0.41 2:2.25/0.41
+  zA 2 zP 1.5 · per zH, |ΔQ−Δpaint| for the host's zoom 1→zH / for a 7.3 px insert: 0.5:0.45/0.41 0.75:1.72/0.41 1:0.00/0.41 1.25:0.22/0.41 1.5:1.36/0.41 1.875:2.97/0.41 2:2.70/0.41
+  zA 2 zP 1.875 · per zH, |ΔQ−Δpaint| for the host's zoom 1→zH / for a 7.3 px insert: 0.5:0.56/0.41 0.75:0.84/0.41 1:0.00/0.41 1.25:0.28/0.41 1.5:1.69/0.41 1.875:3.70/0.41 2:3.38/0.41
+  zA 2 zP 2 · per zH, |ΔQ−Δpaint| for the host's zoom 1→zH / for a 7.3 px insert: 0.5:0.59/1.41 0.75:2.30/1.41 1:0.00/1.41 1.25:0.30/1.41 1.5:1.80/1.41 1.875:3.95/1.41 2:3.59/1.41
+  WORST host-zoom change 3.95 px at zA 2 zP 2 zH 1→1.875 · WORST insert step 1.41 px at zA 2 zP 2 zH 0.5 · glide floor 0.5 px
+X9 the card's own step (40 px insert above it), card scale 0.5 → 1 during the 210 ms glide · load 6.9/7.5/9.3
+  act's frame: painted 0.00 px from where it was (≤ 0.5 bound) · the glide's largest painted excursion 40.00 px for a 40 px step · largest departure from the step's own path 10.00 px
+  τ 0: glide 0.00,-40.00 vs the step's own 0.00,-40.00 · τ 35: glide 0.00,-38.89 vs the step's own 0.00,-33.33 · τ 70: glide 0.00,-35.56 vs the step's own 0.00,-26.67 · τ 105: glide 0.00,-30.00 vs the step's own 0.00,-20.00 · τ 140: glide 0.00,-22.22 vs the step's own 0.00,-13.33 · τ 175: glide 0.00,-12.22 vs the step's own 0.00,-6.67 · τ 210: glide 0.00,0.00 vs the step's own 0.00,0.00
+X9 the card's own step, card scale 0.25 → 1 · load 6.9/7.5/9.3
+  act's frame: painted 0.00 px from where it was (≤ 0.5 bound) · the glide's largest painted excursion 53.33 px for a 40 px step · largest departure from the step's own path 30.00 px
+  τ 0: glide 0.00,-40.00 vs the step's own 0.00,-40.00 · τ 35: glide 0.00,-50.00 vs the step's own 0.00,-33.33 · τ 70: glide 0.00,-53.33 vs the step's own 0.00,-26.67 · τ 105: glide 0.00,-50.00 vs the step's own 0.00,-20.00 · τ 140: glide 0.00,-40.00 vs the step's own 0.00,-13.33 · τ 175: glide 0.00,-23.33 vs the step's own 0.00,-6.67 · τ 210: glide 0.00,0.00 vs the step's own 0.00,0.00
+X9 the card's own step, card scale 0.1 → 1 (a scale-in) · load 6.9/7.5/9.3
+  act's frame: painted 0.00 px from where it was (≤ 0.5 bound) · the glide's largest painted excursion 110.00 px for a 40 px step · largest departure from the step's own path 90.00 px
+  τ 0: glide 0.00,-40.00 vs the step's own 0.00,-40.00 · τ 35: glide 0.00,-83.33 vs the step's own 0.00,-33.33 · τ 70: glide 0.00,-106.67 vs the step's own 0.00,-26.67 · τ 105: glide 0.00,-110.00 vs the step's own 0.00,-20.00 · τ 140: glide 0.00,-93.33 vs the step's own 0.00,-13.33 · τ 175: glide 0.00,-56.67 vs the step's own 0.00,-6.67 · τ 210: glide 0.00,0.00 vs the step's own 0.00,0.00
+X9 the card's own step, card rotate 0 → 90deg · load 6.9/7.5/9.3
+  act's frame: painted 0.00 px from where it was (≤ 0.5 bound) · the glide's largest painted excursion 40.00 px for a 40 px step · largest departure from the step's own path 15.31 px
+  τ 0: glide 0.00,-40.00 vs the step's own 0.00,-40.00 · τ 35: glide 8.63,-32.20 vs the step's own 0.00,-33.33 · τ 70: glide 13.33,-23.09 vs the step's own 0.00,-26.67 · τ 105: glide 14.14,-14.14 vs the step's own 0.00,-20.00 · τ 140: glide 11.55,-6.67 vs the step's own 0.00,-13.33 · τ 175: glide 6.44,-1.73 vs the step's own 0.00,-6.67 · τ 210: glide 0.00,0.00 vs the step's own 0.00,0.00
+X9 CONTROL: the step inside the card (flow-root), card scale 0.25 → 1 · load 6.9/7.5/9.3
+  act's frame: painted 0.00 px from where it was (≤ 0.5 bound) · the glide's largest painted excursion 13.33 px for a 40 px step · largest departure from the step's own path 0.00 px
+  τ 0: glide 0.00,-10.00 vs the step's own 0.00,-10.00 · τ 35: glide 0.00,-12.50 vs the step's own 0.00,-12.50 · τ 70: glide 0.00,-13.33 vs the step's own 0.00,-13.33 · τ 105: glide 0.00,-12.50 vs the step's own 0.00,-12.50 · τ 140: glide 0.00,-10.00 vs the step's own 0.00,-10.00 · τ 175: glide 0.00,-5.83 vs the step's own 0.00,-5.83 · τ 210: glide 0.00,0.00 vs the step's own 0.00,0.00
+X10 a font swap (font-display: swap, served 60 ms after insertion) · load 8.0/7.7/9.4
+  frames 60 · frames where the stage-form read ≠ the after-step read: 0 · first frame the stage read sees a move: f13: rAF 46 stage 46 after 46 · f12 msg 40 · frames whose posted-message read saw a move the frame's own stage read did not: 0
+X10 an insertRule from a setTimeout task (25 ms) · load 8.0/7.7/9.4
+  frames 60 · frames where the stage-form read ≠ the after-step read: 0 · first frame the stage read sees a move: f16: rAF 90 stage 90 after 90 · f15 msg 40 · frames whose posted-message read saw a move the frame's own stage read did not: 0
+X10 a viewport media flip (setViewportSize during the hold) · load 8.0/7.7/9.4
+  frames 60 · frames where the stage-form read ≠ the after-step read: 0 · first frame the stage read sees a move: f32: rAF 80 stage 80 after 80 · f31 msg 80 · frames whose posted-message read saw a move the frame's own stage read did not: 1
+X10 CONTROL: another resize observer created after the stage's writes height (M25) · load 8.8/7.9/9.4
+  frames 60 · frames where the stage-form read ≠ the after-step read: 0 · first frame the stage read sees a move: f13: rAF 70 stage 70 after 70 · f12 msg 70 · frames whose posted-message read saw a move the frame's own stage read did not: 1
+# done · 46 cells, 0 errors · load 8.8/7.9/9.4

@@ -1,0 +1,22 @@
+# C-A14 cand14-E-6 webkit · 2026-11-09 02:27:04 · load { 5.85 6.52 6.76 } · harness 7e79063a4b00 · 
+# E-6 · the idle rung under the compositor-only bound
+# target /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p15/CA14c/wt/.ca14out/builds/cand14 · engine webkit · lock wait 0.0 s (the deadline 5400 s counts from here) · other headless processes: chromium 4, webkit 0 · load 5.9/6.5/6.8 at start
+# scene app: harness scenes/App.vue (sha1 912fecf0a1aa)
+# webkit 26.5 (Playwright WebKit, not Safari; real Safari UNMEASURED (owner's safaridriver checkbox))
+  FAIL       E-6 s6 present light · 0 running infinite animation(s) at rest · load 5.9/6.5/6.8
+  UNMEASURED E-6 s6 channel light · no idle animation to read · load 5.9/6.5/6.8
+  UNMEASURED E-6 s6 shape light · no idle animation to read · load 5.9/6.5/6.8
+  UNMEASURED E-6 s6 amplitude light · no idle animation to read · load 5.9/6.5/6.8
+  UNMEASURED E-6 s6 period light · no idle animation to read · load 5.9/6.5/6.8
+  REPORT     E-6 s6 layouts/s light · n/a: Playwright WebKit exposes no layout counter · load 5.9/6.5/6.8
+  PASS       E-6 s6 PRM light · 0 idle animation(s) under reduced motion, 0 spatial · load 5.9/6.5/6.8
+  FAIL       E-6 s6 present dark · 0 running infinite animation(s) at rest · load 5.9/6.5/6.8
+  UNMEASURED E-6 s6 channel dark · no idle animation to read · load 5.9/6.5/6.8
+  UNMEASURED E-6 s6 shape dark · no idle animation to read · load 5.9/6.5/6.8
+  UNMEASURED E-6 s6 amplitude dark · no idle animation to read · load 5.9/6.5/6.8
+  UNMEASURED E-6 s6 period dark · no idle animation to read · load 5.9/6.5/6.8
+  REPORT     E-6 s6 layouts/s dark · n/a: Playwright WebKit exposes no layout counter · load 5.9/6.5/6.8
+  PASS       E-6 s6 PRM dark · 0 idle animation(s) under reduced motion, 0 spatial · load 5.9/6.5/6.8
+E-6 webkit FAIL · 2 pass, 2 fail, 8 unmeasured of 12 gating cells (2 reported) · load 5.9/6.5/6.8 at start, 5.9/6.5/6.8 at end
+# exit 1 · 2026-11-09 02:27:10 · load { 5.94 6.53 6.76 }
+# end · 2026-11-09 02:27:10 · load { 5.94 6.53 6.76 } · harness 7e79063a4b00

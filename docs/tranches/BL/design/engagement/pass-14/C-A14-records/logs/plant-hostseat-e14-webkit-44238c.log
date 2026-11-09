@@ -1,0 +1,15 @@
+# C-A14 plant-hostseat-e14 webkit · 2026-11-09 02:56:12 · load { 14.83 14.91 12.76 } · harness 7e79063a4b00 · --only M30
+# E-14 · S14's members at their ranges (P-E14 §S14-c)
+# target /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p15/CA14c/wt/.ca14out/builds/plant-hostseat · engine webkit · lock wait 0.0 s (the deadline 5400 s counts from here) · other headless processes: chromium 9, webkit 0 · load 14.8/14.9/12.8 at start
+# scene app: harness scenes/App.vue (sha1 912fecf0a1aa)
+# webkit 26.5 (Playwright WebKit, not Safari; real Safari UNMEASURED (owner's safaridriver checkbox))
+# held control: scene slider root .glass-slider thumb [role="slider"] engaged [data-engaged], [data-held]; clock token --spring-dock-settle; cells M30
+  PASS       M30 the held root's transition: all 300ms linear allow-discrete · the class arrives 40 ms before the hold · errors 0 (bound 0: no false refusal) · the glide ran [210] ms; the consumer's var(--spring-dock-settle) computes 210 ms · load 14.8/14.9/12.8
+  PASS       M30 the held root's transition: all 300ms linear · the clock token changed at runtime 60 ms before the act · errors 0 (bound 0: no false refusal) · the glide ran [309] ms; the consumer's var(--spring-dock-settle) computes 500 ms (REPORT: the glide's clock is the row's, × the tempo where the build multiplies it) · load 14.5/14.8/12.7
+  PASS       M30 the held root's transition-property: all; 150ms · the clock token changed at runtime · errors 0 (bound 0: no false refusal) · the glide ran [469] ms; the consumer's var(--spring-dock-settle) computes 500 ms (REPORT: the glide's clock is the row's, × the tempo where the build multiplies it) · load 14.5/14.8/12.7
+  PASS       M30 the held root's no transition (control) · the clock token changed at runtime · errors 0 (bound 0: no false refusal) · the glide ran [500] ms; the consumer's var(--spring-dock-settle) computes 500 ms · load 14.5/14.8/12.7
+  PASS       M30 Chip's static → selectable switch, held 40 ms after it (X9) · the host after the switch <button>, the press reached it: true · errors 0 (bound 0: no false loud refusal) · load 14.5/14.8/12.7
+  PASS       M30 Chip's selectable → static switch, held 40 ms after it (X9) · the host after the switch <span>, static (no hold owed) · errors 0 (bound 0: no false loud refusal) · load 13.9/14.7/12.7
+E-14 webkit PASS · 6 pass, 0 fail, 0 unmeasured of 6 gating cells (0 reported) · load 14.8/14.9/12.8 at start, 13.9/14.7/12.7 at end
+# exit 0 · 2026-11-09 02:56:21 · load { 13.92 14.72 12.71 }
+# end · 2026-11-09 02:56:21 · load { 13.92 14.72 12.71 } · harness 7e79063a4b00

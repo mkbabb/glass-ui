@@ -1,0 +1,12 @@
+# C-A14 plant-nozoom-atk2 webkit · 2026-11-09 05:39:22 · load { 7.15 7.69 7.25 } · harness 7e79063a4b00 · --only B3
+# C-E14-atk2 · C-E14: the second attack list (D5 pass 14, wave 4)
+# target /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p15/CA14c/wt/.ca14out/builds/plant-nozoom · engine webkit · lock wait 0.0 s (the deadline 5400 s counts from here) · other headless processes: chromium 12, webkit 0 · load 7.1/7.7/7.3 at start
+# scene app: harness scenes/App.vue (sha1 912fecf0a1aa)
+# webkit 26.5 (Playwright WebKit, not Safari; real Safari UNMEASURED (owner's safaridriver checkbox))
+# held control: scene slider root .glass-slider thumb [role="slider"] engaged [data-engaged], [data-held]; clock token --spring-dock-settle; cells B3
+  FAIL       B3 (M22 on the host) the root's own zoom 1 → 1.5 · on the act's frame the top edge (fixed in layout) moved -5.30 px and the left edge 0.00 px (bound ≤ 0.80: 0.5 + the grow's share), the centre 0.00 px · the top edge then travels 5.00 px more · height 21.2 → 31.8, width 381.6 → 381.6 · glides at the change 1 (bound 0) · errors 0 · load 7.1/7.7/7.3
+  FAIL       B3 (M22 on the host) the root's own zoom 1 → 0.75 · on the act's frame the top edge (fixed in layout) moved 2.65 px and the left edge 0.00 px (bound ≤ 0.65: 0.5 + the grow's share), the centre 0.00 px · the top edge then travels 2.50 px more · height 21.2 → 15.9, width 381.6 → 381.6 · glides at the change 1 (bound 0) · errors 0 · load 7.3/7.7/7.3
+  PASS       B3 (M22 on the host) the root's own height 21 → 31 px (M11's block-axis analogue: the control) · on the act's frame the top edge (fixed in layout) moved -0.30 px and the left edge 0.00 px (bound ≤ 0.80: 0.5 + the grow's share), the centre 5.00 px · the top edge then travels 0.00 px more · height 21.2 → 31.8, width 381.6 → 381.6 · glides at the change 0 (bound 0) · errors 0 · load 7.3/7.7/7.3
+C-E14-atk2 webkit FAIL · 1 pass, 2 fail, 0 unmeasured of 3 gating cells (0 reported) · load 7.1/7.7/7.3 at start, 7.3/7.7/7.3 at end
+# exit 1 · 2026-11-09 05:39:28 · load { 7.29 7.71 7.26 }
+# end · 2026-11-09 05:39:28 · load { 7.29 7.71 7.26 } · harness 7e79063a4b00
