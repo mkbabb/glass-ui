@@ -120,6 +120,64 @@ A minor release: new things you can opt into, and nothing you need to change.
   place. Everything outside the moving page changes at once, and with reduced motion
   turned on, nothing animates.
 
+### Surfaces
+
+- **A `Badge` can be just its mark.** `variant="bare"` draws no plate, no ring and no
+  minimum width, so the badge is exactly the size of its icon, and the icon sits at the
+  height of the capital letters beside it, in the colour of the surrounding text. Any
+  label you put next to the icon in its own element stays as the badge's accessible name
+  but is not drawn. It suits a tight spot such as a card title on a phone, where a full
+  pill would crowd out the words it annotates.
+
+  ```vue
+  <Badge variant="bare">
+      <Award />
+      <span>Featured</span>
+  </Badge>
+  ```
+
+- **Tables have rounded corners.** `Table` (and so `DataTable`) now sits in a rounded
+  container on the quiet glass plate, with no border of its own. The corners clip
+  everything inside them: the header row, the last row, a header you make sticky, and
+  rows scrolled sideways, at either end. To give a table you write by hand the same
+  corners, wrap it in an element with the `table-container` class. The container scrolls
+  its table, so a sticky header sticks to the container's top; give the container a
+  `max-block-size` for that.
+
+  ```html
+  <div class="table-container" style="max-block-size: 20rem">
+      <table>…</table>
+  </div>
+  ```
+
+- **A popover can point at something that is not an element.** `PopoverContent` takes a
+  `reference`: an element, or any object with a `getBoundingClientRect()` that returns
+  where the anchor is on screen, such as the point under the pointer on a map. Placement,
+  flipping at the viewport's edge and closing on an outside press all work as they do
+  with a trigger, and you open it with `v-model:open` on `Popover`, with no
+  `PopoverTrigger` needed. To move it, hand it a new object (a `computed` over your
+  coordinates does this); it is placed again once per change and does nothing in
+  between. The object's type is exported as `PopoverVirtualElement`.
+
+  ```vue
+  <script setup lang="ts">
+  const anchor = computed<PopoverVirtualElement>(() => ({
+      getBoundingClientRect: () => new DOMRect(point.x, point.y, 0, 0),
+  }));
+  </script>
+
+  <Popover v-model:open="hovering">
+      <PopoverContent :reference="anchor" side="top">{{ station.name }}</PopoverContent>
+  </Popover>
+  ```
+
+- **Side sheets can lean in as they arrive.** Set `--sheet-enter-skew` to an angle (at
+  `:root`, or on the sheet's class) and a sliding `SheetContent` starts its entry sheared
+  by that angle and straightens as it settles, on the same spring as the slide. It
+  defaults to `0deg`, so nothing changes until you set it, and with reduced motion
+  turned on the sheet never shears. Sheets with detents grow rather than slide, and do
+  not shear.
+
 ## 11.0.0 — 2026-11-09
 
 A major release. It brings in everything from 10.1.3 and 10.1.4 below, and adds a

@@ -158,6 +158,29 @@ const body: StoryBody = {
             })),
         },
         {
+            label: "bare mark",
+            blurb: 'variant="bare": no plate, no ring, no floor. The glyph sits at the cap height of the words beside it and takes their ink; the label element beside it stays as the accessible name and is not drawn. For a tight title row on a phone card.',
+            bespoke: {
+                component: "p",
+                props: { class: "text-subheading flex items-baseline gap-2" },
+                slots: {
+                    default: [
+                        "Neon Cyberpunk",
+                        {
+                            component: Badge,
+                            props: { variant: "bare", class: "text-warning" },
+                            slots: {
+                                default: [
+                                    { component: BadgeCheck },
+                                    { component: "span", slots: { default: "Verified" } },
+                                ],
+                            },
+                        },
+                    ],
+                },
+            },
+        },
+        {
             label: "baseline alignment in text-small context",
             // Prose with an inline specimen — the bespoke escape.
             bespoke: {

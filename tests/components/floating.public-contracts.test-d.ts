@@ -50,6 +50,7 @@ type PopoverContentContract = [
     Assert<Has<"align", PopoverContentProps>>,
     Assert<Has<"alignOffset", PopoverContentProps>>,
     Assert<Has<"portal", PopoverContentProps>>,
+    Assert<Has<"reference", PopoverContentProps>>,
     // [2026-08-09 · BK #66 CLOSE · RT-40-D] `surface` retired off the content props with the #89 W-OVERLAY
     // register fold (see the menu contract for the full grounds). Inverted.
     Assert<Lacks<"surface", PopoverContentProps>>,

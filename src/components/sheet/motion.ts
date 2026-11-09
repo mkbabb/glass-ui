@@ -28,6 +28,20 @@ export function sheetSlideTransform(placement: SidePlacement, p: number): string
 }
 
 /**
+ * The side sheet's entry shear as a CSS `transform` value, on the SAME scalar as the
+ * slide: `p` = 1 off the edge, 0 at rest. The angle is `--sheet-enter-skew` × `p`, so
+ * the first entry frame carries the whole angle and the settled sheet carries none;
+ * the spring's overshoot (`p < 0`) leans it a hair the other way as it lands, as the
+ * slide overshoots. A sheet that slides along x shears along y, and the reverse. The
+ * sign mirrors on the left and top edges, so one angle reads the same from any edge.
+ */
+export function sheetEntryShear(placement: SidePlacement, p: number): string {
+    const sign = placement === "left" || placement === "top" ? -1 : 1;
+    const axis = placement === "left" || placement === "right" ? "skewY" : "skewX";
+    return `${axis}(calc(var(--sheet-enter-skew) * ${sign * p}))`;
+}
+
+/**
  * Scrim opacity synced to the surface position: 1 at open (p=0), 0 at dismissed
  * (p=1). Clamped so the spring overshoot (p<0 or p>1) never pushes opacity out of
  * [0,1]. Reads the SAME live scalar as the surface → no desync through an interrupt.

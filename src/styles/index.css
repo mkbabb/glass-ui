@@ -257,6 +257,10 @@
 @import "../components/slider/styles.css";
 /* The thin, radius-following masked scroll-progress band. */
 @import "../components/scroll-progress-rim/styles.css";
+/* The table container: the one rounded, clipping scroll port for `<Table>`, `DataTable`
+   and a consumer's own `<table>`. Here, not in the component's chunk, because a plain
+   table that never imports `<Table>` wears it too. */
+@import "../components/table/styles.css";
 /* Per-component sheets are not in this entry (atlas U/B7 F5). Configurator,
    MusicStaff, Metric, the Deck substrate and Carousel each import their own sheet
    from script (`import "./styles.css"`), and the library build keeps that import

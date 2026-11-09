@@ -1,3 +1,6 @@
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
+
 import { mount } from "@vue/test-utils";
 import { describe, expect, it } from "vitest";
 
@@ -62,5 +65,32 @@ describe("Table foundation contract", () => {
         expect(row.classes()).not.toContain("transition-colors");
         expect(row.classes()).not.toContain("hover:bg-muted/50");
         expect(row.classes()).not.toContain("data-[state=selected]:bg-muted");
+    });
+});
+
+// Rounded table containers: the radius, the clip and the plate live on ONE element,
+// `.table-container`, which `<Table>` renders and a consumer's own `<table>` can wear.
+describe("Table container", () => {
+    const css = (rel: string): string =>
+        readFileSync(join(process.cwd(), rel), "utf8")
+            .replace(/\/\*[\s\S]*?\*\//g, "")
+            .replace(/\s+/g, " ");
+
+    it("renders the table inside the one container class", () => {
+        const wrapper = mount(Table, { slots: { default: "<tbody><tr><td>x</td></tr></tbody>" } });
+        const container = wrapper.get('[data-slot="table-container"]');
+        expect(container.classes()).toEqual(["table-container"]);
+    });
+
+    it("rounds, clips and scrolls on that element, on the plate, with no border", () => {
+        const rule = css("src/components/table/styles.css").match(/\.table-container \{([^}]*)\}/)?.[1] ?? "";
+        expect(rule).toContain("border-radius: var(--radius-card)");
+        expect(rule).toContain("overflow: auto");
+        expect(rule).toContain("background: var(--glass-plate-quiet)");
+        expect(rule).not.toMatch(/\bborder(?:-(?:top|right|bottom|left|block|inline|width|style|color)[a-z-]*)?:/);
+        // the main cascade carries it, so a plain table needs no component import
+        expect(css("src/styles/index.css")).toContain('@import "../components/table/styles.css";');
+        // DataTable's root no longer clips: the container is the one clip
+        expect(css("src/components/data-table/styles.css")).not.toMatch(/\.data-table \{[^}]*overflow/);
     });
 });

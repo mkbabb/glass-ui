@@ -16,8 +16,37 @@ import {
 } from "../_shared/overlay";
 import { usePopoverUnion } from "./popoverContext";
 
+/**
+ * A point or box on the page that is not an element: a map coordinate, a chart datum, a
+ * text range. It reports its rect in viewport pixels; `contextElement` (the map's
+ * canvas, say) tells the popover which scroll containers to watch.
+ */
+export interface PopoverVirtualElement {
+    getBoundingClientRect(): {
+        x: number;
+        y: number;
+        width: number;
+        height: number;
+        top: number;
+        right: number;
+        bottom: number;
+        left: number;
+    };
+    contextElement?: Element;
+}
+
 export interface PopoverContentProps extends FloatingPlacementProps {
     class?: HTMLAttributes["class"];
+    /**
+     * Anchor the content to this instead of the trigger: an element, or a virtual
+     * element whose `getBoundingClientRect()` gives the anchor's rect. Side, align,
+     * collision flipping and dismissal work exactly as they do on a trigger. To move
+     * the anchor, pass a new object (a `computed` over your coordinates does this); the
+     * content is re-placed once per new reference, with no layout read beyond its own
+     * placement. Open it with `v-model:open` on `<Popover>`; no `PopoverTrigger` is
+     * needed.
+     */
+    reference?: Element | PopoverVirtualElement;
     /** Teleport content to the document body. */
     portal?: boolean;
     /**
@@ -58,6 +87,8 @@ const placementProps = computed(() => ({
     sideOffset: props.sideOffset,
     align: props.align,
     alignOffset: props.alignOffset,
+    // reka's own door: PopperContent places against `reference ?? the trigger`.
+    reference: props.reference,
     avoidCollisions: true,
     collisionPadding: 16,
 }));
