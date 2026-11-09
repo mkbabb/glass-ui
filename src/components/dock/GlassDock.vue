@@ -46,6 +46,7 @@ import { useDockClickIntegrity } from "./composables/useDockClickIntegrity";
 // two CSS branches were three moving parts expressing one fact the platform already
 // had.
 import { useDockRun } from "./composables/useDockRun";
+import { useDockRunMark } from "./composables/useDockRunMark";
 
 /* The attrs contract. Fall-through attrs (class, data-testid, aria-*, the container
    styles every gate + consumer targets via `.glass-dock[...]`) belong on the
@@ -110,6 +111,8 @@ const statusEl = useTemplateRef<HTMLElement>("statusEl");
    roving tabindex and the announcement all read the SAME lattice arithmetic, so they
    live in one composable rather than three that must agree. */
 const { toolbar } = useDockRun({ runEl: fullEl, statusEl, orientation });
+/* One selected plate for a navigation run, gliding between `aria-current` seats. */
+useDockRunMark({ runEl: fullEl });
 
 /* Wire the sampled-luminance observer ON for
    the dock by default. It writes `--glass-backdrop-luma` + derives the

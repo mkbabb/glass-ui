@@ -750,11 +750,15 @@ describe("G-DOCK-MATERIAL — the focus ring composes instead of competing", () 
         //    A sixth row arriving is a new size authority on this element, and whoever
         //    adds it has to say what it does to the reserve.
         const sized = bandDeclSites(/^\s*(min-|max-)?(width|height|inline-size|block-size)\s*:/)
-            .filter(({ chain }) =>
-                /\.dock-run(?![-\w])|\.dock-layer--full(?![-\w])|\.dock-layer(?![-\w])/.test(
-                    chain.split(/\s+/).pop() ?? "",
-                ),
-            )
+            // A pseudo-element (the run's active mark, `::before`) is its own box, not the
+            // run's element, so it sizes nothing the reserve pads.
+            .filter(({ chain }) => {
+                const subject = chain.split(/\s+/).pop() ?? "";
+                return (
+                    !subject.includes("::") &&
+                    /\.dock-run(?![-\w])|\.dock-layer--full(?![-\w])|\.dock-layer(?![-\w])/.test(subject)
+                );
+            })
             .map(({ file, chain, decl }) => `${file}: ${chain} { ${decl} }`);
         expect(sized).toEqual([
             /* PIN   · a horizontal run's cross (block) axis */

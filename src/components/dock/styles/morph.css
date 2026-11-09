@@ -167,12 +167,15 @@
         box-shadow: var(--shadow-dock-override, var(--shadow-dock-collapsed));
     }
 
-    /* The collapsed horizontal dock at rest is a square box, and it is drawn as a
-       circle (`--radius-circle`). `--radius-dock` (the pill rung, 1rem) is a corner on
-       anything taller than 32px, so the circle is stated here, for the settled box
-       only: mid-morph the box carries the expanded footprint under a scale. */
+    /* The collapsed horizontal dock at rest is drawn as a STADIUM (`--radius-stadium`).
+       On the square box (one glyph) that is the circle; on a content-sized one (a glyph
+       and a short reading, "⌁ 12") it is a pill with round ends, never the oval lozenge
+       `50%` draws on a box wider than it is tall. `--radius-dock` (the pill rung, 1rem)
+       is a corner on anything taller than 32px, so the stadium is stated here, for the
+       settled box only: mid-morph the box carries the expanded footprint under a
+       scale. */
     .glass-dock.collapsed:not([data-morphing]):not(.vertical) {
-        border-radius: var(--radius-circle);
+        border-radius: var(--radius-stadium);
     }
 
     /* A collapsed dock that keeps a `#persistent` control beside its summary is NOT a
@@ -189,21 +192,19 @@
         border-radius: var(--radius-dock);
     }
 
-    /* The collapsed summary is a PERFECT CIRCLE. The `.dock-layer`
-       base rule (`.glass-dock:not(.vertical) .dock-layer`) locks `height:
-       var(--dock-layer-height)` (40px) on EVERY layer including the summary; against
-       the 0.85× `--dock-collapsed-summary-min-size` min-width that made the pane
-       40h × 30w — an oval (the user's "circle, not oval"). This rule (1) LIFTS the
-       height-lock so the summary block-sizes to the SAME token its width floors at,
-       and (2) floors both axes to that ONE token, so the collapsed pane is a square
-       and the root's symmetric collapsed padding keeps the pill a circle. The glyph
-       sits centred on both axes. The `aspect-ratio: 1` belt-and-braces guarantees
-       1:1 even if a consumer's collapsed-slot content is wider than the floor. */
+    /* The collapsed summary is a SQUARE FLOOR that sizes to its content. Its block
+       size is the summary token (floored by the layer's own `min-height` on a
+       horizontal dock), and `aspect-ratio: 1` makes the inline size match it, so one
+       glyph is a square pane and the root's symmetric collapsed padding keeps the
+       pill a circle. The inline minimum is `auto` ON PURPOSE: for a box with an
+       aspect ratio, `auto` is its min-content width, so a wider face (a glyph and a
+       reading, "⌁ 12") widens the pane instead of overflowing a 1:1 box. A length
+       here is what clipped it: the ratio then fixes the width at the height and the
+       content runs past it. The settled stadium radius above rounds the wide pane's
+       ends; the dock's own collapsed padding keeps the face off the curve. The pane
+       carries no padding of its own, so the square holds under either box model. */
     .glass-dock .dock-layer--summary {
-        min-width: var(
-            --dock-collapsed-summary-min-size,
-            var(--dock-layer-height, 2.5rem)
-        );
+        min-width: auto;
         min-block-size: var(
             --dock-collapsed-summary-min-size,
             var(--dock-layer-height, 2.5rem)

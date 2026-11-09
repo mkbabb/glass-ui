@@ -1,5 +1,45 @@
 # Changelog
 
+## 11.1.0 — unreleased
+
+A minor release: new things you can opt into, and nothing you need to change.
+
+### Dock
+
+- **A collapsed dock can show a glyph with a short reading.** Put an icon and a few
+  characters in the `#collapsed` slot, such as a clock glyph with "Now" or a count, and
+  the collapsed dock grows to fit them with round ends instead of clipping them. A single
+  glyph still collapses to a circle, exactly as before. The shape comes from a new
+  radius token, `--radius-stadium` (also the `rounded-stadium` utility): round ends at
+  any width, and a circle on a square box, where `--radius-circle` would draw an oval.
+
+- **The selected tab in a navigation dock now glides.** When the controls in a dock mark
+  where you are with `aria-current` (a `RouterLink` does this for you, or set
+  `aria-current="page"` on the current `DockControl`), the dock draws one selected
+  plate and moves it from the old tab to the new one on the dock's spring, instead of
+  switching instantly. It scrolls with the dock's controls, and with reduced motion
+  turned on it moves in a single step. Controls that sit inside their own scrolling strip
+  keep their own selected look.
+
+- **`ScrollProgressRim` can draw progress on the border itself.** Pass
+  `edge="border"` and the progress becomes the host's own border: a stroke the width of
+  the border, running edge to edge and around the corners, filling from the leading side
+  as the value grows. Nothing is drawn where it is unfilled, so at rest the host looks
+  exactly as it did. Inside a `GlassDock` it matches the dock's border width and corner
+  on its own. The stroke uses one colour, the first of `stops` if you pass them, and moves
+  on the dock's spring (a single step with reduced motion). On a host that draws its own
+  CSS border, set `--scroll-progress-rim-outset` to that border's width so the stroke
+  covers it. The default `edge="inset"` track is unchanged.
+
+  ```vue
+  <GlassDock>
+      <template #persistent>
+          <ScrollProgressRim :value="progress" edge="border" />
+      </template>
+      …
+  </GlassDock>
+  ```
+
 ## 11.0.0 — 2026-11-09
 
 A major release. It brings in everything from 10.1.3 and 10.1.4 below, and adds a

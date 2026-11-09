@@ -51,9 +51,11 @@ describe("U/B8r I-2: no dock control scales on hover", () => {
 describe("U/B8r I-3: the two-cell collapsed dock is not drawn as a circle", () => {
     const morph = decomment(read("src/components/dock/styles/morph.css"));
 
-    it("the circle stays for the square collapsed dock", () => {
+    // The settled collapsed dock is a stadium: the engine clamps the radius to half the
+    // block size, a circle on the square box and round ends on a content-sized one.
+    it("the square collapsed dock is a circle, and a content-sized one a stadium", () => {
         expect(morph).toMatch(
-            /\.glass-dock\.collapsed:not\(\[data-morphing\]\):not\(\.vertical\)\s*\{\s*border-radius:\s*var\(--radius-circle\);/,
+            /\.glass-dock\.collapsed:not\(\[data-morphing\]\):not\(\.vertical\)\s*\{\s*border-radius:\s*var\(--radius-stadium\);/,
         );
     });
 

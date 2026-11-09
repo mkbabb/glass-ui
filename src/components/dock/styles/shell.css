@@ -148,6 +148,11 @@
         --dock-plate-collapsed-border: var(--glass-border-floating);
         --dock-plate-expanded-tier: var(--glass-veil-dock);
         --dock-plate-expanded-border: var(--glass-border-dock);
+        /* The plate's border width, named once: the plate draws it (dock/dock.css) and a
+           `ScrollProgressRim edge="border"` seated in this dock strokes over it at the
+           same width. */
+        --dock-plate-border-width: 1.5px;
+        --scroll-progress-rim-stroke: var(--dock-plate-border-width);
         /* `contain: layout style` — the restyle-scope axes ONLY; `paint` is NOT in the
            value and `.glass-dock` is NOT a clip aperture.
 

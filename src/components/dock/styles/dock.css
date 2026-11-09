@@ -128,7 +128,7 @@
            the 1.625× held optic derives from. */
         --glass-grasp-rest-filter: var(--dock-surface-blur);
         --glass-grasp-radius: var(--glass-blur-resting-radius);
-        border: 1.5px solid
+        border: var(--dock-plate-border-width) solid
             color-mix(
                 in srgb,
                 var(--dock-plate-expanded-border) calc(var(--dock-expand-t) * 100%),
@@ -191,6 +191,15 @@
         display: contents;
         overflow: visible;
         pointer-events: auto;
+    }
+
+    /* The dock's corner reaches a progress rim seated in a persistent region. The rim is
+       out of flow and fills the dock box, so on its border edge it traces the dock's
+       radius; neither wrapper paints, clips or draws a background, so passing the corner
+       through them changes nothing else. */
+    .glass-dock > .dock-controls,
+    .glass-dock > .dock-controls > .dock-persistent {
+        border-radius: inherit;
     }
 
     /* When a consumer needs the control run to be a real box (a scroll port lands here at

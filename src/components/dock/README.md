@@ -61,7 +61,8 @@ the painted backdrop by default).
 
 - `persistent`: leading controls present in collapsed and expanded states.
 - `default`: expanded controls.
-- `collapsed`: compact-state content.
+- `collapsed`: compact-state content. One glyph collapses to a circle; a glyph with a
+  short reading ("⌁ 12") collapses to a pill sized to fit it.
 - `search`: search-field content when `search` is enabled.
 - `persistent-end`: trailing controls present in both states.
 
@@ -69,6 +70,11 @@ the painted backdrop by default).
 
 - The consumer owns selection state. `DockControl.active` supplies pressed/selected
   paint; richer radio or tab semantics should use `useSelectionGroup`.
+- A navigation run marks its destination with `aria-current` (a `RouterLink` sets it).
+  The dock then draws one selected plate for the run and glides it between controls on
+  the dock spring; a control inside its own scrolling strip keeps its own selected fill.
+- A `ScrollProgressRim edge="border"` in the `persistent` slot draws progress on the
+  dock's own border, at the plate's border width and corner.
 - Portaled dropdowns, selects, and popovers keep the dock open through the typed dock
   context and retain their own focus and dismissal semantics.
 - Collapse, resize, and layer transitions share the dock spring. Reduced motion seats
