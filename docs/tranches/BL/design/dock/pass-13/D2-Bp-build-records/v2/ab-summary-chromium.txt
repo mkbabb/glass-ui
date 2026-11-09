@@ -1,0 +1,45 @@
+== ab: retarget·40/80/120 (rules (a), (b))
+('chromium', 'dark', 'bp12') {'reads': 24, 'splice': 0, 'sliver': 0, 'stub': 0}
+('chromium', 'dark', 'bp13') {'reads': 24, 'splice': 0, 'sliver': 0, 'stub': 0}
+('chromium', 'light', 'bp12') {'reads': 24, 'splice': 0, 'sliver': 0, 'stub': 0}
+('chromium', 'light', 'bp13') {'reads': 24, 'splice': 0, 'sliver': 0, 'stub': 0}
+== cr: content-remove (rule (c)); every gap
+('chromium', 'dark', 'bp12', '1') gap 0.0 F 16.7  verdict PASS failed []
+('chromium', 'dark', 'bp12', '2') gap 0.0 F 16.7  verdict PASS failed []
+('chromium', 'dark', 'bp12', '3') gap 0.0 F 16.7  verdict PASS failed []
+('chromium', 'dark', 'bp12', '4') gap 0.0 F 16.7  verdict PASS failed []
+('chromium', 'dark', 'bp12', '5') gap 0.0 F 16.7  verdict PASS failed []
+('chromium', 'dark', 'bp12', '6') gap 0.0 F 16.7  verdict PASS failed []
+('chromium', 'dark', 'bp12', '7') gap 0.0 F 16.7  verdict PASS failed []
+('chromium', 'dark', 'bp12', '8') gap 0.0 F 16.7  verdict PASS failed []
+('chromium', 'dark', 'bp13', '1') gap 0.0 F 16.7  verdict PASS failed []
+('chromium', 'dark', 'bp13', '2') gap 0.0 F 16.7  verdict PASS failed []
+('chromium', 'dark', 'bp13', '3') gap 0.0 F 16.7  verdict PASS failed []
+('chromium', 'dark', 'bp13', '4') gap 0.0 F 16.7  verdict PASS failed []
+('chromium', 'dark', 'bp13', '5') gap 8.4 F 16.7  verdict PASS failed []
+('chromium', 'dark', 'bp13', '6') gap 0 F 16.7  verdict PASS failed []
+('chromium', 'dark', 'bp13', '7') gap 0.0 F 16.7  verdict PASS failed []
+('chromium', 'dark', 'bp13', '8') gap 0.0 F 16.7  verdict PASS failed []
+('chromium', 'light', 'bp12', '1') gap 0.0 F 16.7  verdict PASS failed []
+('chromium', 'light', 'bp12', '2') gap 0.0 F 16.7  verdict PASS failed []
+('chromium', 'light', 'bp12', '3') gap 0.0 F 16.7  verdict PASS failed []
+('chromium', 'light', 'bp12', '4') gap 0.0 F 16.7  verdict PASS failed []
+('chromium', 'light', 'bp12', '5') gap 0 F 16.7  verdict PASS failed []
+('chromium', 'light', 'bp12', '6') gap 8.6 F 16.7  verdict PASS failed []
+('chromium', 'light', 'bp12', '7') gap 0.0 F 16.7  verdict PASS failed []
+('chromium', 'light', 'bp12', '8') gap 0.0 F 16.7  verdict PASS failed []
+('chromium', 'light', 'bp13', '1') gap 0.0 F 16.7  verdict PASS failed []
+('chromium', 'light', 'bp13', '2') gap 0.0 F 16.7  verdict PASS failed []
+('chromium', 'light', 'bp13', '3') gap 0.0 F 16.7  verdict PASS failed []
+('chromium', 'light', 'bp13', '4') gap 0.0 F 16.7  verdict PASS failed []
+('chromium', 'light', 'bp13', '5') gap 0.0 F 16.7  verdict PASS failed []
+('chromium', 'light', 'bp13', '6') gap 0.0 F 16.7  verdict PASS failed []
+('chromium', 'light', 'bp13', '7') gap 0.0 F 16.7  verdict PASS failed []
+('chromium', 'light', 'bp13', '8') gap 0.0 F 16.7  verdict PASS failed []
+== rev: reversal (rule (d)); every stub read
+   STUB ('chromium', 'light', 'bp12', '12') frames 1 "n" button.dock-tab-button.glass-specular-track painted 0.3 edge 886.9 px at +116.7 ms ramp width 0.24
+('chromium', 'dark', 'bp12') {'reads': 16, 'red:window': 16}
+('chromium', 'dark', 'bp13') {'reads': 16, 'red:window': 16}
+('chromium', 'light', 'bp12') {'reads': 16, 'red:window': 15, 'stub': 1, 'red:window,stub': 1}
+('chromium', 'light', 'bp13') {'reads': 16, 'red:window': 16}
+== swrev (beside the rows)

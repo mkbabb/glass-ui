@@ -1,0 +1,83 @@
+--- bp12/useDockScene.ts
++++ bp13/useDockScene.ts
+@@ -71,7 +71,9 @@
+ // The seam edge is a ramp. A hard edge inside the plate cuts glyphs, and a cut glyph reads
+ // as another glyph ("B" as "3") at any ink. So every edge a seam puts inside the plate is
+ // a mask that rises from nothing at the edge to full one seam in: a glyph crossing it
+-// fades across its own width, and nothing is cut sharp. The plate's own edge stays hard.
++// fades across its own width, and nothing is cut sharp. The plate's own edge stays hard, and an
++// edge within a touch of it (or of the unit's own box) is written on it, so on every frame the
++// only hard edge that crosses a glyph is the plate's.
+ //
+ // The window. `[data-morphing]` opens with the episode and closes on the frame its last
+ // lane lands, the exchanges included, and every inline value the scene wrote is cleared
+@@ -531,6 +533,15 @@
+         inside the plate (a seam's) is a ramp: the mask rises from 0 at the edge to 1 one
+         seam in, so a glyph it crosses fades across its width and none is cut sharp. */
+     function writeClip(m: Mover, box: Span, v0: number, v1: number, P: Span, R: number, vert: boolean): void {
++        // The seam edge is a ramp (the header): an edge that takes none is written on the edge it touches.
++        const lo = Math.max(box.lo, P.lo);
++        const hi = Math.min(box.hi, P.hi);
++        const cs = v0 > lo + TOUCH_PX;
++        const ce = v1 < hi - TOUCH_PX;
++        if (v1 > v0) {
++            if (!cs) v0 = lo;
++            if (!ce) v1 = hi;
++        }
+         const whole =
+             v0 <= box.lo + 0.01 && v1 >= box.hi - 0.01 &&
+             box.lo >= P.lo + R && box.hi <= P.hi - R && box.clo >= P.clo && box.chi <= P.chi;
+@@ -551,8 +562,6 @@
+         // A unit closing on its heir's place (The handoff) keeps the ink at its middle to its
+         // last frame: its ramps rise to full by its middle, so the middle paints whole until the
+         // frame it hands the place on.
+-        const cs = v0 > box.lo + TOUCH_PX && v0 > P.lo + TOUCH_PX;
+-        const ce = v1 < box.hi - TOUCH_PX && v1 < P.hi - TOUCH_PX;
+         if (!cs && !ce) {
+             setMask(m, null);
+             return;
+@@ -592,6 +601,8 @@
+         p.style.borderRadius = `${radius}px`;
+         if (posture) p.style.setProperty("--dock-expand-t", `${clamp01(e.value)}`);
+         const P: Span = vert ? { lo: Pr.t, hi: Pr.b, clo: Pr.l, chi: Pr.r } : { lo: Pr.l, hi: Pr.r, clo: Pr.t, chi: Pr.b };
++        /** The part of [a, b] inside the plate. */
++        const inPlate = (a: number, b: number): [number, number] => [Math.max(a, P.lo), Math.min(b, P.hi)];
+ 
+         // The flow (shell.css): the margins carry the painted plate's difference from
+         // layout, and the box holds its layout size.
+@@ -659,7 +670,7 @@
+                 // can meet them. A unit closing on a place a unit arrives on (The handoff)
+                 // paints nothing from that frame, and the part it gives up is the arriving
+                 // unit's on the same frame.
+-                const v: [number, number] = [Math.max(a, P.lo), Math.min(b, P.hi)];
++                const v = inPlate(a, b);
+                 const cut = b > a && sliver(m, box, v, P);
+                 if (cut && x.heir) {
+                     gift.set(x.heir, v);
+@@ -667,7 +678,7 @@
+                 } else if (b > a && !cut) frontOf.set(m, [a, b]);
+                 if (b < a) b = a;
+             }
+-            visOf.set(m, [Math.max(a, P.lo), Math.min(b, P.hi)]);
++            visOf.set(m, inPlate(a, b));
+             ownOf.set(m, [a, b]);
+         }
+         // Units coming in: only where no other unit still paints, and one seam short of a
+@@ -712,7 +723,7 @@
+                 } else if (cut[1]) a = Math.max(a, fo![1] + seam);
+                 else if (paints) a = Math.max(a, ov[1]);
+             }
+-            visOf.set(m, [Math.max(a, P.lo), Math.min(b, P.hi)]);
++            visOf.set(m, inPlate(a, b));
+             ownOf.set(m, [a, Math.max(a, b)]);
+         }
+         // A unit coming in uncovers with weight: each edge, a seam's or the opening plate's,
+@@ -744,7 +755,7 @@
+             const b = Math.max(a, box.hi - ce);
+             // Its own span keeps what only the plate cuts: a retarget's front starts there.
+             ownOf.set(m, [cs > cs0 + 0.01 ? a : o[0], ce > ce0 + 0.01 ? b : o[1]]);
+-            visOf.set(m, [Math.max(a, P.lo), Math.min(b, P.hi)]);
++            visOf.set(m, inPlate(a, b));
+         }
+         // Two cut edges that face each other keep the seam, whatever cut them, unless both
+         // units are going out: their fronts are the exchange's. The fronts hold the side a unit

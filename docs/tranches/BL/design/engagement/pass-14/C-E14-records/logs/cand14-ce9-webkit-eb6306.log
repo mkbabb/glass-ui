@@ -1,0 +1,17 @@
+# C-E14 cand14-ce9 webkit · 2026-11-06 21:22:59 · load { 8.09 10.06 10.77 } · harness 7e79063a4b00 · --only stack,lensdlg,anc
+# CE9-probe · C-E9's cells: stacking, the lens under unread kinds and on scroll, unread ancestor kinds, the DOM's words
+# target /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p14/C-E14/wt/.ce14out/builds/cand14 · engine webkit · lock wait 0.0 s (the deadline 5400 s counts from here) · other headless processes: chromium 0, webkit 0 · load 8.1/10.1/10.8 at start
+# scene app: harness scenes/App.vue (sha1 912fecf0a1aa)
+# webkit 26.5 (Playwright WebKit, not Safari; real Safari UNMEASURED (owner's safaridriver checkbox))
+  REPORT     CE9 stack · keyboard · engaged true, promoted false, lens shown false · a later positioned red sibling over the track's right part: its inner region red 100.0 % at rest, 100.0 % engaged (the sibling paints OVER the engaged body) · frames cand14-webkit-stack-keyboard-{rest,engaged}.png · load 8.1/10.1/10.8
+  REPORT     CE9 stack · fine · engaged true, promoted false, lens shown true · a later positioned red sibling over the track's right part: its inner region red 100.0 % at rest, 100.0 % engaged (the sibling paints OVER the engaged body) · frames cand14-webkit-stack-fine-{rest,engaged}.png · load 7.9/10.0/10.7
+  REPORT     CE9 anc none · keyboard · reference ×1.014 (promoted false) · load 7.9/10.0/10.7
+  REPORT     CE9 anc skew · keyboard · promoted false · the scroller transform: skewX(10deg) · engaged over released ×1.015 against ×1.014 · ratio of ratios 1.001 (inside 0.90..1.10) · load 10.0/10.4/10.9
+  REPORT     CE9 anc mask · keyboard · promoted false · the scroller mask-image: linear-gradient(to right, black 40%, transparent 95%); -webkit-mask-image: linear-gradient(to right, black 40%, transparent 95%) · engaged over released ×1.012 against ×1.014 · ratio of ratios 0.998 (inside 0.90..1.10) · load 10.0/10.4/10.9
+  REPORT     CE9 anc zoom · keyboard · promoted false · the scroller zoom: 0.8 · engaged over released ×0.977 against ×1.014 · ratio of ratios 0.963 (inside 0.90..1.10) · load 9.6/10.3/10.8
+  REPORT     CE9 anc persp · keyboard · promoted false · the scroller transform: perspective(500px) rotateY(25deg) · engaged over released ×1.106 against ×1.014 · ratio of ratios 1.091 (inside 0.90..1.10) · load 9.6/10.3/10.8
+  REPORT     CE9 anc blend · keyboard · promoted false · the scroller mix-blend-mode: difference · engaged over released ×1.117 against ×1.014 · ratio of ratios 1.102 (OUTSIDE 0.90..1.10) · load 11.1/10.6/10.9
+  PASS       CE9 lens dialog · fine · the Dialog's slider held · band ×1.600 (k max 1.6) · pinned edge Δ 0.0 px · the lens is the topmost element at its centre true · popover-open true · load 12.0/10.8/11.0
+CE9-probe webkit PASS · 1 pass, 0 fail, 0 unmeasured of 1 gating cells (8 reported) · load 8.1/10.1/10.8 at start, 12.0/10.8/11.0 at end
+# exit 0 · 2026-11-06 21:23:23 · load { 12.03 10.80 11.02 }
+# end · 2026-11-06 21:23:23 · load { 12.03 10.80 11.02 } · harness 7e79063a4b00

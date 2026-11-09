@@ -1,0 +1,13 @@
+# C-A14 plant-level-e14 chromium · 2026-11-06 16:00:46 · load { 23.37 28.33 31.74 } · harness 7e79063a4b00 · --only M3
+# E-14 · S14's members at their ranges (P-E14 §S14-c)
+# target /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p14/C-A14/wt/.ca14out/builds/plant-level · engine chromium · lock wait 0.0 s (the deadline 5400 s counts from here) · other headless processes: chromium 11, webkit 0 · load 23.4/28.3/31.7 at start
+# scene app: harness scenes/App.vue (sha1 912fecf0a1aa)
+# chromium 149.0.7827.55
+# held control: scene slider root .glass-slider thumb [role="slider"] engaged [data-engaged], [data-held]; clock token --spring-dock-settle; cells M3
+  PASS       M3 the host's glide · outside · scale 0.5 · the act on frame 8 · paint moved 0.0, 40.0 px in all; on the act's frame 0.00, 0.00 = 0.00 px (bound ≤ 0.50) · largest move over any 16.7 ms 5.5 px at +67 ms (bound 6.5) · glides 1 (210 ms) · scrollY 34 → 34 → 34, scroller 0 → 0 → 0 · path [0.0,0.0 0.0,0.0 0.0,0.4 0.0,2.1 0.0,4.0] · errors 0 · load 22.5/28.1/31.6
+  FAIL       M3 the host's glide · outside · skewX 30deg · the act on frame 8 · paint moved 0.0, 40.0 px in all; on the act's frame -2.68, 0.72 = 2.77 px (bound ≤ 0.50) · largest move over any 16.7 ms 5.5 px at +68 ms (bound 6.5) · glides 1 (210 ms) · scrollY 39 → 39 → 39, scroller 0 → 0 → 0 · path [0.0,0.0 -2.7,0.7 -2.6,1.2 -2.5,2.6 -2.4,4.6] · errors 0 · load 22.5/28.1/31.6
+  FAIL       M3 the host's glide · outside · rotate 180deg centre · the act on frame 8 · paint moved 0.0, 40.0 px in all; on the act's frame 0.00, 160.00 = 160.00 px (bound ≤ 0.50) · largest move over any 16.7 ms 155.3 px at +17 ms (bound 6.5) · glides 1 (210 ms) · scrollY 39 → 39 → 39, scroller 0 → 0 → 0 · path [0.0,0.0 0.0,160.0 0.0,158.1 0.0,153.8 0.0,147.5] · errors 0 · load 22.5/28.1/31.6
+  FAIL       M3 the host's glide · outside · matrix rotate 30 + scale 1.5 · the act on frame 8 · paint moved 0.0, 40.0 px in all; on the act's frame 5.36, -9.28 = 10.72 px (bound ≤ 0.50) · largest move over any 16.7 ms 9.8 px at +17 ms (bound 6.5) · glides 1 (210 ms) · scrollY 177 → 177 → 177, scroller 0 → 0 → 0 · path [0.0,0.0 5.4,-9.3 5.3,-8.5 5.1,-6.7 4.8,-4.2] · errors 0 · load 22.1/27.9/31.5
+E-14 chromium FAIL · 1 pass, 3 fail, 0 unmeasured of 4 gating cells (0 reported) · load 23.4/28.3/31.7 at start, 22.1/27.9/31.5 at end
+# exit 1 · 2026-11-06 16:00:53 · load { 22.09 27.89 31.55 }
+# end · 2026-11-06 16:00:53 · load { 22.09 27.89 31.55 } · harness 7e79063a4b00

@@ -1,0 +1,13 @@
+# C-E14 plant-subtreewait-e14 chromium · 2026-11-06 18:42:22 · load { 13.62 13.55 13.27 } · harness 7e79063a4b00 · --only M29
+# E-14 · S14's members at their ranges (P-E14 §S14-c)
+# target /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p14/C-E14/wt/.ce14out/builds/plant-subtreewait · engine chromium · lock wait 0.0 s (the deadline 5400 s counts from here) · other headless processes: chromium 4, webkit 2 · load 13.6/13.6/13.3 at start
+# scene app: harness scenes/App.vue (sha1 912fecf0a1aa)
+# chromium 149.0.7827.55
+# held control: scene slider root .glass-slider thumb [role="slider"] engaged [data-engaged], [data-held]; clock token --spring-dock-settle; cells M29
+  PASS       M29 the released host's subtree holds a paused finite animation · rAF callbacks a second at rest before the hold 0, after release + the clock 210 ms + 700 ms: 0 (bound ≤ the rest's) · the root still on the stage (data-engage-stage) false · errors 0 · load 14.1/13.7/13.3
+  PASS       M29 the released host's subtree holds a view() timeline animation · rAF callbacks a second at rest before the hold 0, after release + the clock 210 ms + 700 ms: 0 (bound ≤ the rest's) · the root still on the stage (data-engage-stage) false · errors 0 · load 15.8/14.0/13.4
+  FAIL       M29 the released host's subtree holds a 10 s finite animation · rAF callbacks a second at rest before the hold 0, after release + the clock 210 ms + 700 ms: 134 (bound ≤ the rest's) · the root still on the stage (data-engage-stage) true · errors 0 · load 14.9/13.8/13.4
+  PASS       M29 the released host's subtree holds nothing (control) · rAF callbacks a second at rest before the hold 0, after release + the clock 210 ms + 700 ms: 0 (bound ≤ the rest's) · the root still on the stage (data-engage-stage) false · errors 0 · load 14.0/13.7/13.3
+E-14 chromium FAIL · 3 pass, 1 fail, 0 unmeasured of 4 gating cells (0 reported) · load 13.6/13.6/13.3 at start, 14.0/13.7/13.3 at end
+# exit 1 · 2026-11-06 18:42:40 · load { 13.98 13.68 13.32 }
+# end · 2026-11-06 18:42:40 · load { 13.98 13.68 13.32 } · harness 7e79063a4b00

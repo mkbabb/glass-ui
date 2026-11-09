@@ -1,0 +1,295 @@
+{
+ "id": "C-A11 probe",
+ "engine": "chromium",
+ "version": "149.0.7827.55",
+ "target": {
+  "build": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p14/C-E14/wt/.ce14out/builds/cand14"
+ },
+ "loadStart": "16.2/13.7/13.2",
+ "loadEnd": "10.6/13.3/13.1",
+ "verdict": "FAIL",
+ "cells": [
+  {
+   "name": "CA11 side · page · zoom05",
+   "status": "FAIL",
+   "line": "1 change(s) · step 7.1 px over any 16.7 ms at +653 ms; bound 8.1 = span 50.9 × dock 0.139 + 1 · off > 2 px on 24 frames over 171 ms (≤ 465) · across 0.0 · end pin -0.0, whole true (10.2..50.5) · above 8.2 (≤ 8) · errors 0",
+   "load": "15.8/13.7/13.1"
+  },
+  {
+   "name": "CA11 side · carry · zoom05",
+   "status": "PASS",
+   "line": "1 change(s) · step 7.0 px over any 16.7 ms at +570 ms; bound 8.1 = span 50.9 × dock 0.139 + 1 · off > 2 px on 25 frames over 177 ms (≤ 465) · across 0.0 · end pin -0.0, whole true (9.3..49.6) · above 3.6 (≤ 6) · errors 0",
+   "load": "17.3/14.0/13.3"
+  },
+  {
+   "name": "CA11 side · page · zoom25",
+   "status": "PASS",
+   "line": "1 change(s) · step 35.2 px over any 16.7 ms at +252 ms; bound 36.3 = span 254.4 × dock 0.139 + 1 · off > 2 px on 27 frames over 200 ms (≤ 465) · across 0.0 · end pin 0.0, whole true (213.4..414.8) · above 2.0 (≤ 8) · errors 0",
+   "load": "17.3/14.0/13.3"
+  },
+  {
+   "name": "CA11 side · carry · zoom25",
+   "status": "PASS",
+   "line": "0 change(s) · step 0.0 px over any 16.7 ms at +NaN ms; bound 1.0 = span 0.0 × press 0.219 (no row carried: fastest) + 1 · off > 2 px on 0 frames over 0 ms (≤ 330) · across 0.0 · end pin 0.0, whole true (189.5..390.9) · above 0.0 (≤ 6) · errors 0",
+   "load": "18.0/14.2/13.3"
+  },
+  {
+   "name": "CA11 side · page · zs",
+   "status": "PASS",
+   "line": "1 change(s) · step 14.1 px over any 16.7 ms at +563 ms; bound 15.1 = span 101.8 × dock 0.139 + 1 · off > 2 px on 25 frames over 188 ms (≤ 465) · across 0.0 · end pin -0.0, whole true (59.5..140.1) · above 2.0 (≤ 8) · errors 0",
+   "load": "18.0/14.2/13.3"
+  },
+  {
+   "name": "CA11 side · carry · zs",
+   "status": "PASS",
+   "line": "1 change(s) · step 14.1 px over any 16.7 ms at +428 ms; bound 15.1 = span 101.8 × dock 0.139 + 1 · off > 2 px on 26 frames over 185 ms (≤ 465) · across 0.0 · end pin 0.0, whole true (59.8..140.4) · above 2.8 (≤ 6) · errors 0",
+   "load": "18.6/14.4/13.4"
+  },
+  {
+   "name": "CA11 side · page · nested",
+   "status": "PASS",
+   "line": "1 change(s) · step 14.1 px over any 16.7 ms at +584 ms; bound 15.1 = span 101.8 × dock 0.139 + 1 · off > 2 px on 25 frames over 184 ms (≤ 465) · across 0.0 · end pin -0.0, whole true (59.5..140.1) · above 1.5 (≤ 8) · errors 0",
+   "load": "18.4/14.4/13.4"
+  },
+  {
+   "name": "CA11 side · carry · nested",
+   "status": "PASS",
+   "line": "1 change(s) · step 14.1 px over any 16.7 ms at +440 ms; bound 15.1 = span 101.8 × dock 0.139 + 1 · off > 2 px on 24 frames over 185 ms (≤ 465) · across 0.0 · end pin 0.0, whole true (59.8..140.4) · above 2.7 (≤ 6) · errors 0",
+   "load": "18.4/14.4/13.4"
+  },
+  {
+   "name": "CA11 clock · zoom05",
+   "status": "PASS",
+   "line": "raise 88 frames (23 in flight), worst pin -0.0 px · exit 12 (10 in flight), worst pin 0.0 px · across worst 0.0 px",
+   "load": "18.9/14.6/13.5"
+  },
+  {
+   "name": "CA11 clock · zs",
+   "status": "PASS",
+   "line": "raise 82 frames (20 in flight), worst pin -0.0 px · exit 11 (10 in flight), worst pin 0.0 px · across worst 0.0 px",
+   "load": "18.9/14.6/13.5"
+  },
+  {
+   "name": "CA11 clock · nested",
+   "status": "PASS",
+   "line": "raise 85 frames (22 in flight), worst pin -0.0 px · exit 11 (10 in flight), worst pin 0.0 px · across worst 0.0 px",
+   "load": "18.0/14.5/13.5"
+  },
+  {
+   "name": "CA11 clock · zoom25",
+   "status": "PASS",
+   "line": "raise 83 frames (21 in flight), worst pin 0.0 px · exit 11 (10 in flight), worst pin 0.0 px · across worst 0.0 px",
+   "load": "18.0/14.5/13.5"
+  },
+  {
+   "name": "CA11 reverse · none · 3 frames in",
+   "status": "PASS",
+   "line": "2 change(s) · step over 16.7 ms 14.1 px at +437 ms (bound 15.1 = span 101.8 × dock 0.139 + 1) · end pin 0.0 · above 0.2",
+   "load": "19.0/14.8/13.6"
+  },
+  {
+   "name": "CA11 reverse · none · 6 frames in",
+   "status": "PASS",
+   "line": "2 change(s) · step over 16.7 ms 14.1 px at +444 ms (bound 15.1 = span 101.8 × dock 0.139 + 1) · end pin 0.0 · above 0.2",
+   "load": "20.3/15.1/13.7"
+  },
+  {
+   "name": "CA11 reverse · none · 10 frames in",
+   "status": "PASS",
+   "line": "2 change(s) · step over 16.7 ms 14.1 px at +443 ms (bound 15.1 = span 101.8 × dock 0.139 + 1) · end pin 0.0 · above 0.2",
+   "load": "19.0/14.9/13.6"
+  },
+  {
+   "name": "CA11 reverse · zoom08 · 3 frames in",
+   "status": "PASS",
+   "line": "2 change(s) · step over 16.7 ms 11.3 px at +515 ms (bound 12.3 = span 81.4 × dock 0.139 + 1) · end pin 0.0 · above 1.9",
+   "load": "19.0/14.9/13.6"
+  },
+  {
+   "name": "CA11 reverse · zoom08 · 6 frames in",
+   "status": "PASS",
+   "line": "2 change(s) · step over 16.7 ms 11.3 px at +484 ms (bound 12.3 = span 81.4 × dock 0.139 + 1) · end pin 0.0 · above 1.9",
+   "load": "17.8/14.7/13.6"
+  },
+  {
+   "name": "CA11 reverse · zoom08 · 10 frames in",
+   "status": "PASS",
+   "line": "2 change(s) · step over 16.7 ms 11.2 px at +488 ms (bound 12.3 = span 81.4 × dock 0.139 + 1) · end pin 0.0 · above 1.9",
+   "load": "16.8/14.6/13.5"
+  },
+  {
+   "name": "CA11 reverse · zoom125 · 3 frames in",
+   "status": "PASS",
+   "line": "2 change(s) · step over 16.7 ms 17.6 px at +402 ms (bound 18.6 = span 127.2 × dock 0.139 + 1) · end pin 0.0 · above 0.5",
+   "load": "16.0/14.5/13.5"
+  },
+  {
+   "name": "CA11 reverse · zoom125 · 6 frames in",
+   "status": "PASS",
+   "line": "2 change(s) · step over 16.7 ms 17.6 px at +392 ms (bound 18.6 = span 127.2 × dock 0.139 + 1) · end pin 0.0 · above 0.3",
+   "load": "15.0/14.3/13.4"
+  },
+  {
+   "name": "CA11 reverse · zoom125 · 10 frames in",
+   "status": "PASS",
+   "line": "2 change(s) · step over 16.7 ms 17.6 px at +384 ms (bound 18.6 = span 127.2 × dock 0.139 + 1) · end pin 0.0 · above 0.0",
+   "load": "15.0/14.3/13.4"
+  },
+  {
+   "name": "CA11 reverse · zoom2 · 3 frames in",
+   "status": "PASS",
+   "line": "2 change(s) · step over 16.7 ms 28.2 px at +119 ms (bound 29.2 = span 203.5 × dock 0.139 + 1) · end pin -0.0 · above 0.3",
+   "load": "14.0/14.1/13.4"
+  },
+  {
+   "name": "CA11 reverse · zoom2 · 6 frames in",
+   "status": "PASS",
+   "line": "2 change(s) · step over 16.7 ms 28.2 px at +121 ms (bound 29.2 = span 203.5 × dock 0.139 + 1) · end pin -0.0 · above 0.3",
+   "load": "13.6/14.0/13.3"
+  },
+  {
+   "name": "CA11 reverse · zoom2 · 10 frames in",
+   "status": "PASS",
+   "line": "2 change(s) · step over 16.7 ms 28.1 px at +116 ms (bound 29.2 = span 203.5 × dock 0.139 + 1) · end pin -0.0 · above 0.3",
+   "load": "13.4/13.9/13.3"
+  },
+  {
+   "name": "CA11 wheel · none",
+   "status": "PASS",
+   "line": "8 px wheel ticks over the held thumb · 1 change(s) · step over 16.7 ms 14.1 px (bound 15.1 + one 8 px tick, the drive's own step) · off > 2 px on 27 frames · end pin -0.0, top 35.5 · above 2.3 on any frame",
+   "load": "12.5/13.8/13.3"
+  },
+  {
+   "name": "CA11 wheel · zoom125",
+   "status": "PASS",
+   "line": "8 px wheel ticks over the held thumb · 1 change(s) · step over 16.7 ms 17.6 px (bound 18.6 + one 8 px tick, the drive's own step) · off > 2 px on 26 frames · end pin 0.0, top 56.7 · above 6.5 on any frame",
+   "load": "12.5/13.8/13.3"
+  },
+  {
+   "name": "CA11 wheel · zoom08",
+   "status": "PASS",
+   "line": "8 px wheel ticks over the held thumb · 1 change(s) · step over 16.7 ms 11.3 px (bound 12.3 + one 8 px tick, the drive's own step) · off > 2 px on 26 frames · end pin -0.0, top 15.4 · above 2.0 on any frame",
+   "load": "14.4/14.1/13.4"
+  },
+  {
+   "name": "CA11 release-mid · none",
+   "status": "PASS",
+   "line": "change at visible frame 47, release at 49 · step over 16.7 ms while visible 8.9 px (bound 15.1) · last visible rel -16.4, pin 0.6 px at opacity 0.06",
+   "load": "15.4/14.3/13.5"
+  },
+  {
+   "name": "CA11 release-mid · zoom125",
+   "status": "PASS",
+   "line": "change at visible frame 43, release at 45 · step over 16.7 ms while visible 10.9 px (bound 18.6) · last visible rel -23.2, pin -1.0 px at opacity 0.08",
+   "load": "15.5/14.4/13.5"
+  },
+  {
+   "name": "CA11 release-mid · zoom2",
+   "status": "PASS",
+   "line": "change at visible frame 7, release at 9 · step over 16.7 ms while visible 16.5 px (bound 29.2) · last visible rel -37.9, pin -3.1 px at opacity 0.07",
+   "load": "15.5/14.4/13.5"
+  },
+  {
+   "name": "CA11 exit-side · none",
+   "status": "PASS",
+   "line": "12 visible exit frames, 1 change(s) · step over 16.7 ms 9.4 px (bound 15.1 + the 4 px drive) · off > 2 px on 9 frames over 59 ms (≤ 465)",
+   "load": "15.6/14.4/13.5"
+  },
+  {
+   "name": "CA11 exit-side · zoom125",
+   "status": "PASS",
+   "line": "11 visible exit frames, 1 change(s) · step over 16.7 ms 12.2 px (bound 18.6 + the 4 px drive) · off > 2 px on 8 frames over 62 ms (≤ 465)",
+   "load": "16.0/14.5/13.5"
+  },
+  {
+   "name": "CA11 rerender · up · none",
+   "status": "PASS",
+   "line": "1 change(s) · step over 16.7 ms 14.1 px (bound 15.1) · end pin -0.0, top 53.5 · above 3.9 · errors 0",
+   "load": "14.9/14.3/13.5"
+  },
+  {
+   "name": "CA11 rerender · up · zoom125",
+   "status": "PASS",
+   "line": "1 change(s) · step over 16.7 ms 17.6 px (bound 18.6) · end pin 0.0, top 79.7 · above 4.4 · errors 0",
+   "load": "14.9/14.3/13.5"
+  },
+  {
+   "name": "CA11 rerender · down · none",
+   "status": "PASS",
+   "line": "1 change(s) · step over 16.7 ms 14.1 px (bound 15.1) · end pin 0.0, top 47.7 · above 0.0 · errors 0",
+   "load": "13.9/14.1/13.4"
+  },
+  {
+   "name": "CA11 rerender · down · zoom125",
+   "status": "PASS",
+   "line": "1 change(s) · step over 16.7 ms 17.6 px (bound 18.6) · end pin 0.0, top 48.5 · above 0.0 · errors 0",
+   "load": "13.2/14.0/13.4"
+  },
+  {
+   "name": "CA11 hostglide · none",
+   "status": "PASS",
+   "line": "a 40 px block inserted above the card mid-hold · the host's painted centre moved 40.0 px · its first frame after the insert 0.0 px from where it was painted (≤ 2) · largest move over any 16.7 ms 5.5 px (bound 6.5 = 40.0 × dock 0.139 + 1) · glide running true · errors 0",
+   "load": "13.2/14.0/13.4"
+  },
+  {
+   "name": "CA11 hostglide · zoom125",
+   "status": "PASS",
+   "line": "a 40 px block inserted above the card mid-hold · the host's painted centre moved 40.0 px · its first frame after the insert 0.0 px from where it was painted (≤ 2) · largest move over any 16.7 ms 5.5 px (bound 6.5 = 40.0 × dock 0.139 + 1) · glide running true · errors 0",
+   "load": "13.2/14.0/13.4"
+  },
+  {
+   "name": "CA11 hostglide · zoom08",
+   "status": "PASS",
+   "line": "a 40 px block inserted above the card mid-hold · the host's painted centre moved 40.0 px · its first frame after the insert 0.0 px from where it was painted (≤ 2) · largest move over any 16.7 ms 5.5 px (bound 6.5 = 40.0 × dock 0.139 + 1) · glide running true · errors 0",
+   "load": "12.4/13.8/13.3"
+  },
+  {
+   "name": "CA11 hostglide · scale",
+   "status": "PASS",
+   "line": "a 40 px block inserted above the card mid-hold · the host's painted centre moved 40.0 px · its first frame after the insert 0.0 px from where it was painted (≤ 2) · largest move over any 16.7 ms 5.5 px (bound 6.5 = 40.0 × dock 0.139 + 1) · glide running true · errors 0",
+   "load": "12.4/13.8/13.3"
+  },
+  {
+   "name": "CA11 hostglide · nested",
+   "status": "PASS",
+   "line": "a 40 px block inserted above the card mid-hold · the host's painted centre moved 40.0 px · its first frame after the insert 0.0 px from where it was painted (≤ 2) · largest move over any 16.7 ms 5.5 px (bound 6.5 = 40.0 × dock 0.139 + 1) · glide running true · errors 0",
+   "load": "11.7/13.6/13.2"
+  },
+  {
+   "name": "CA11 repress · none",
+   "status": "PASS",
+   "line": "below true, pin -0.0 px, opacity 1.00, top 17.6 px",
+   "load": "11.7/13.6/13.2"
+  },
+  {
+   "name": "CA11 repress · zoom125",
+   "status": "PASS",
+   "line": "below true, pin -0.0 px, opacity 1.00, top 22.8 px",
+   "load": "11.1/13.5/13.2"
+  },
+  {
+   "name": "CA11 reach · none",
+   "status": "REPORT",
+   "line": "rest 48.0..408.0 of 700 (gutter token 1.25rem) · engaged 37.2..418.8: grown ×1.0600 inline, left gap 37.2, right gap 281.2 painted px · --stage-room , --stage-w , --stage-reach 1.06, zoom 1",
+   "load": "11.1/13.5/13.2"
+  },
+  {
+   "name": "CA11 reach · zoom125",
+   "status": "REPORT",
+   "line": "rest 48.0..498.0 of 700 (gutter token 1.25rem) · engaged 34.5..511.5: grown ×1.0600 inline, left gap 34.5, right gap 188.5 painted px · --stage-room , --stage-w , --stage-reach 1.06, zoom 1.25",
+   "load": "11.1/13.5/13.2"
+  },
+  {
+   "name": "CA11 reach · zoom08",
+   "status": "REPORT",
+   "line": "rest 48.0..336.0 of 700 (gutter token 1.25rem) · engaged 39.4..344.6: grown ×1.0600 inline, left gap 39.4, right gap 355.4 painted px · --stage-room , --stage-w , --stage-reach 1.06, zoom 0.800000011920929",
+   "load": "10.6/13.3/13.1"
+  },
+  {
+   "name": "CA11 reach · scale",
+   "status": "REPORT",
+   "line": "rest 48.0..336.0 of 700 (gutter token 1.25rem) · engaged 39.4..344.6: grown ×1.0600 inline, left gap 39.4, right gap 355.4 painted px · --stage-room , --stage-w , --stage-reach 1.06, zoom 1",
+   "load": "10.6/13.3/13.1"
+  }
+ ]
+}

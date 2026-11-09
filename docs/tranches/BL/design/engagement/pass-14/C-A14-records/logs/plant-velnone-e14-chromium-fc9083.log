@@ -1,0 +1,20 @@
+# C-A14 plant-velnone-e14 chromium · 2026-11-06 15:59:47 · load { 28.49 29.69 32.40 } · harness 7e79063a4b00 · --only M18,M27
+# E-14 · S14's members at their ranges (P-E14 §S14-c)
+# target /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p14/C-A14/wt/.ca14out/builds/plant-velnone · engine chromium · lock wait 0.0 s (the deadline 5400 s counts from here) · other headless processes: chromium 11, webkit 0 · load 28.5/29.7/32.4 at start
+# scene app: harness scenes/App.vue (sha1 912fecf0a1aa)
+# chromium 149.0.7827.55
+# held control: scene slider root .glass-slider thumb [role="slider"] engaged [data-engaged], [data-held]; clock token --spring-dock-settle; cells M18,M27
+  FAIL       M18 a constant margin ramp 200 px/s on a box above C · the ramp ran 40 frames · glides 42 (bound ≤ 2: the onset, one uneven frame)  · errors 0 · load 28.5/29.7/32.4
+  FAIL       M18 a constant margin ramp 1000 px/s on a box above C · the ramp ran 40 frames · glides 42 (bound ≤ 2: the onset, one uneven frame)  · errors 0 · load 28.5/29.7/32.4
+  FAIL       M18 a constant margin ramp 200 px/s + a 40 px insert at frame 30 on a box above C · the ramp ran 40 frames · glides 42 (bound ≤ 3: the onset, the insert, one uneven frame) · on the insert's frame the root's step departs from the ramp's by 0.93 px (bound ≤ 1.5) · errors 0 · load 29.3/29.8/32.4
+  FAIL       M27 a train of inserts above the root · 16 px every frame for 12 frames · glides 12 (bound ≤ 2: the onset, carried after) · on each insert's frame the break of the root's own motion, less the running glide's own change of velocity, [0.00 0.45 0.70 0.39 0.48 0.24 0.00 0.00 0.10 0.00 0.00 0.00] px (bound ≤ 0.5 at the onset) · errors 0 · load 29.3/29.8/32.4
+  PASS       M27 a train of inserts above the root · 16 px every second frame, 6 steps · glides 6 (bound ≥ 6: each step glided) · on each insert's frame the break of the root's own motion, less the running glide's own change of velocity, [0.00 0.26 0.08 0.05 0.00 0.00] px (bound ≤ 0.5 each) · errors 0 · load 29.3/29.8/32.4
+  FAIL       M27 a train of inserts above the root · 8 px every frame for 12 frames · glides 12 (bound ≤ 2: the onset, carried after) · on each insert's frame the break of the root's own motion, less the running glide's own change of velocity, [0.00 0.24 0.32 0.28 0.16 0.05 0.07 0.00 0.00 0.00 0.00 0.00] px (bound ≤ 0.5 at the onset) · errors 0 · load 30.8/30.1/32.5
+  FAIL       M27 a train of inserts above the root · 40 px every second frame, 6 steps · glides 6 (bound ≥ 6: each step glided) · on each insert's frame the break of the root's own motion, less the running glide's own change of velocity, [0.00 0.65 0.37 0.00 0.00 0.00] px (bound ≤ 0.5 each) · errors 0 · load 30.8/30.1/32.5
+  PASS       M27 a slow margin ramp above C · 0.2 px a frame · glides over the ramp 0 (bound ≤ 2: the onset and one uneven frame; Y8 reads 0-1 at ≤ 200 px/s) · errors 0 · load 30.8/30.1/32.5
+  PASS       M27 a slow margin ramp above C · 0.5 px a frame · glides over the ramp 0 (bound ≤ 2: the onset and one uneven frame; Y8 reads 0-1 at ≤ 200 px/s) · errors 0 · load 31.4/30.3/32.6
+  PASS       M27 a slow margin ramp above C · 1 px a frame · glides over the ramp 0 (bound ≤ 2: the onset and one uneven frame; Y8 reads 0-1 at ≤ 200 px/s) · errors 0 · load 31.4/30.3/32.6
+  FAIL       M27 a slow margin ramp above C · 2 px a frame · glides over the ramp 42 (bound ≤ 2: the onset and one uneven frame; Y8 reads 0-1 at ≤ 200 px/s) · errors 0 · load 31.4/30.3/32.6
+E-14 chromium FAIL · 4 pass, 7 fail, 0 unmeasured of 11 gating cells (0 reported) · load 28.5/29.7/32.4 at start, 31.4/30.3/32.6 at end
+# exit 1 · 2026-11-06 16:00:06 · load { 31.41 30.27 32.56 }
+# end · 2026-11-06 16:00:06 · load { 31.41 30.27 32.56 } · harness 7e79063a4b00

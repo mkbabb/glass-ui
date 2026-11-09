@@ -1,0 +1,414 @@
+{
+ "witness": "W3",
+ "target": "bp13@392ff1e3",
+ "when": "2026-11-07T03:08:16.230Z",
+ "load": 9.98,
+ "cells": [
+  {
+   "engine": "webkit",
+   "cell": "retarget·40",
+   "pass": true,
+   "failed": [],
+   "frames": 80,
+   "retargetFrame": 5,
+   "blank": {
+    "ok": true,
+    "entering": 3,
+    "movingFrames": 1,
+    "blankFrames": 0,
+    "longestRun": 0,
+    "atMs": null,
+    "why": "0 blank of 1 moving frame(s), longest run 0 (bound 1)"
+   },
+   "overlap": {
+    "ok": true,
+    "frames": 0,
+    "first": null
+   },
+   "leaving": {
+    "ok": true,
+    "leaving": 2,
+    "failing": 0,
+    "lengthMs": 51,
+    "rows": [
+     {
+      "seat": 1,
+      "ok": true,
+      "tracks": false,
+      "deficit": 1,
+      "fades": true,
+      "spanMs": 131,
+      "spanFrames": 13,
+      "path": [
+       0.99,
+       0.641,
+       0.396,
+       0.396,
+       0.396,
+       0.396,
+       0.396,
+       0.396,
+       0.396,
+       0.396,
+       0.396,
+       0.396,
+       0.396,
+       0
+      ],
+      "vanish": {
+       "drop": 0.396,
+       "from": 0.396,
+       "to": 0,
+       "atMs": 174
+      }
+     },
+     {
+      "seat": 2,
+      "ok": true,
+      "tracks": false,
+      "deficit": 1,
+      "fades": true,
+      "spanMs": 143,
+      "spanFrames": 14,
+      "path": [
+       1,
+       0.651,
+       0.543,
+       0.543,
+       0.543,
+       0.34,
+       0.34,
+       0.34,
+       0.34,
+       0.34,
+       0.34,
+       0.34,
+       0.34,
+       0.306,
+       0
+      ],
+      "vanish": {
+       "drop": 0.349,
+       "from": 1,
+       "to": 0.651,
+       "atMs": 11
+      }
+     }
+    ],
+    "vanish": {
+     "ok": true,
+     "drop": 0.396,
+     "seat": 1,
+     "from": 0.396,
+     "to": 0,
+     "atMs": 174
+    },
+    "inkMax": 1,
+    "inkOk": true,
+    "why": "2 leaving seat(s), 0 failing; tightest seat 1: ink 0.99 → 0.641 → 0.396 → 0.396 → 0.396 → 0.396 → 0.396 → 0.396 → 0.396 → 0.396 → 0.396 → 0.396 → 0.396 → 0 over 131 ms / 13 frame(s) (fade bound ≥ 3 frames and ≥ 12.8 ms), coverage deficit 1 (track bound 0.1); vanish worst one-frame drop beyond the closing edge 0.396 (seat 1 0.396 → 0 at +174 ms) (bound 0.5); largest unit ink read 1 (an ink is a share of the unit's own box: ≤ 1, H6-3)"
+   },
+   "splice": {
+    "ok": true,
+    "spliceFrames": 0,
+    "sliverFrames": 0,
+    "firstSplice": null,
+    "firstSliver": null,
+    "why": "0 splice frame(s), 0 sliver frame(s) (bound 0 each)"
+   },
+   "vanish": {
+    "drop": 0.4,
+    "seat": 1,
+    "from": 0.4,
+    "to": 0,
+    "atMs": 128
+   },
+   "stub": {
+    "ok": true,
+    "judged": 31,
+    "stubFrames": 0,
+    "glyphs": 27,
+    "first": null,
+    "rampPx": 7.87,
+    "unreadGlyphs": 0,
+    "why": "0 stub frame(s) of 31 judged (up to 27 glyphs a frame); narrowest ramp across a glyph 7.87 px (RECORD) (bound 0; a stub is a glyph painted 10-90 %, at any opacity, by an edge whose alpha goes 10→90 % inside 2 px, inside the plate)"
+   },
+   "pageErrors": [],
+   "summary": "swap to long retargeted to mid 40 ms later (scheduled in the page; frame 5): blank 0 blank of 1 moving frame(s), longest run 0 (bound 1); seat overlap 0 frame(s); leaving 2 leaving seat(s), 0 failing; tightest seat 1: ink 0.99 → 0.641 → 0.396 → 0.396 → 0.396 → 0.396 → 0.396 → 0.396 → 0.396 → 0.396 → 0.396 → 0.396 → 0.396 → 0 over 131 ms / 13 frame(s) (fade bound ≥ 3 frames and ≥ 12.8 ms), coverage deficit 1 (track bound 0.1); vanish worst one-frame drop beyond the closing edge 0.396 (seat 1 0.396 → 0 at +174 ms) (bound 0.5); largest unit ink read 1 (an ink is a share of the unit's own box: ≤ 1, H6-3); vanish worst one-frame drop from the retarget 0.4 (seat 1 0.4 → 0 at +128 ms) (bound 0.5), over the strip 0.396; splice 0 splice frame(s), 0 sliver frame(s) (bound 0 each); stub 0 stub frame(s) of 31 judged (up to 27 glyphs a frame); narrowest ramp across a glyph 7.87 px (RECORD) (bound 0; a stub is a glyph painted 10-90 %, at any opacity, by an edge whose alpha goes 10→90 % inside 2 px, inside the plate); page errors 0",
+   "load": 10.59
+  },
+  {
+   "engine": "webkit",
+   "cell": "retarget·80",
+   "pass": true,
+   "failed": [],
+   "frames": 86,
+   "retargetFrame": 9,
+   "blank": {
+    "ok": true,
+    "entering": 3,
+    "movingFrames": 27,
+    "blankFrames": 0,
+    "longestRun": 0,
+    "atMs": null,
+    "why": "0 blank of 27 moving frame(s), longest run 0 (bound 1)"
+   },
+   "overlap": {
+    "ok": true,
+    "frames": 0,
+    "first": null
+   },
+   "leaving": {
+    "ok": true,
+    "leaving": 2,
+    "failing": 0,
+    "lengthMs": 357,
+    "rows": [
+     {
+      "seat": 1,
+      "ok": true,
+      "tracks": false,
+      "deficit": 1,
+      "fades": true,
+      "spanMs": 132,
+      "spanFrames": 13,
+      "path": [
+       0.901,
+       0.844,
+       0.844,
+       0.842,
+       0.839,
+       0.827,
+       0.807,
+       0.784,
+       0.728,
+       0.658,
+       0.588,
+       0.47,
+       0.369,
+       0
+      ],
+      "vanish": {
+       "drop": 0.369,
+       "from": 0.369,
+       "to": 0,
+       "atMs": 204
+      }
+     },
+     {
+      "seat": 2,
+      "ok": true,
+      "tracks": false,
+      "deficit": 1,
+      "fades": true,
+      "spanMs": 185,
+      "spanFrames": 18,
+      "path": [
+       1,
+       0.651,
+       0.543,
+       0.543,
+       0.543,
+       0.543,
+       0.543,
+       0.543,
+       0.543,
+       0.339,
+       0.34,
+       0.339,
+       0.34,
+       0.34,
+       0.34,
+       0.34,
+       0.34,
+       0.287,
+       0
+      ],
+      "vanish": {
+       "drop": 0.349,
+       "from": 1,
+       "to": 0.651,
+       "atMs": 10
+      }
+     }
+    ],
+    "vanish": {
+     "ok": true,
+     "drop": 0.369,
+     "seat": 1,
+     "from": 0.369,
+     "to": 0,
+     "atMs": 204
+    },
+    "inkMax": 1,
+    "inkOk": true,
+    "why": "2 leaving seat(s), 0 failing; tightest seat 1: ink 0.901 → 0.844 → 0.844 → 0.842 → 0.839 → 0.827 → 0.807 → 0.784 → 0.728 → 0.658 → 0.588 → 0.47 → 0.369 → 0 over 132 ms / 13 frame(s) (fade bound ≥ 3 frames and ≥ 89.3 ms), coverage deficit 1 (track bound 0.1); vanish worst one-frame drop beyond the closing edge 0.369 (seat 1 0.369 → 0 at +204 ms) (bound 0.5); largest unit ink read 1 (an ink is a share of the unit's own box: ≤ 1, H6-3)"
+   },
+   "splice": {
+    "ok": true,
+    "spliceFrames": 0,
+    "sliverFrames": 0,
+    "firstSplice": null,
+    "firstSliver": null,
+    "why": "0 splice frame(s), 0 sliver frame(s) (bound 0 each)"
+   },
+   "vanish": {
+    "drop": 0.37,
+    "seat": 1,
+    "from": 0.37,
+    "to": 0,
+    "atMs": 120
+   },
+   "stub": {
+    "ok": true,
+    "judged": 36,
+    "stubFrames": 0,
+    "glyphs": 27,
+    "first": null,
+    "rampPx": 7.63,
+    "unreadGlyphs": 0,
+    "why": "0 stub frame(s) of 36 judged (up to 27 glyphs a frame); narrowest ramp across a glyph 7.63 px (RECORD) (bound 0; a stub is a glyph painted 10-90 %, at any opacity, by an edge whose alpha goes 10→90 % inside 2 px, inside the plate)"
+   },
+   "pageErrors": [],
+   "summary": "swap to long retargeted to mid 80 ms later (scheduled in the page; frame 9): blank 0 blank of 27 moving frame(s), longest run 0 (bound 1); seat overlap 0 frame(s); leaving 2 leaving seat(s), 0 failing; tightest seat 1: ink 0.901 → 0.844 → 0.844 → 0.842 → 0.839 → 0.827 → 0.807 → 0.784 → 0.728 → 0.658 → 0.588 → 0.47 → 0.369 → 0 over 132 ms / 13 frame(s) (fade bound ≥ 3 frames and ≥ 89.3 ms), coverage deficit 1 (track bound 0.1); vanish worst one-frame drop beyond the closing edge 0.369 (seat 1 0.369 → 0 at +204 ms) (bound 0.5); largest unit ink read 1 (an ink is a share of the unit's own box: ≤ 1, H6-3); vanish worst one-frame drop from the retarget 0.37 (seat 1 0.37 → 0 at +120 ms) (bound 0.5), over the strip 0.369; splice 0 splice frame(s), 0 sliver frame(s) (bound 0 each); stub 0 stub frame(s) of 36 judged (up to 27 glyphs a frame); narrowest ramp across a glyph 7.63 px (RECORD) (bound 0; a stub is a glyph painted 10-90 %, at any opacity, by an edge whose alpha goes 10→90 % inside 2 px, inside the plate); page errors 0",
+   "load": 9.98
+  },
+  {
+   "engine": "webkit",
+   "cell": "retarget·120",
+   "pass": true,
+   "failed": [],
+   "frames": 89,
+   "retargetFrame": 13,
+   "blank": {
+    "ok": true,
+    "entering": 3,
+    "movingFrames": 26,
+    "blankFrames": 0,
+    "longestRun": 0,
+    "atMs": null,
+    "why": "0 blank of 26 moving frame(s), longest run 0 (bound 1)"
+   },
+   "overlap": {
+    "ok": true,
+    "frames": 0,
+    "first": null
+   },
+   "leaving": {
+    "ok": true,
+    "leaving": 2,
+    "failing": 0,
+    "lengthMs": 388,
+    "rows": [
+     {
+      "seat": 1,
+      "ok": true,
+      "tracks": false,
+      "deficit": 1,
+      "fades": true,
+      "spanMs": 133,
+      "spanFrames": 13,
+      "path": [
+       0.901,
+       0.836,
+       0.762,
+       0.681,
+       0.549,
+       0.438,
+       0.438,
+       0.437,
+       0.433,
+       0.422,
+       0.4,
+       0.366,
+       0.319,
+       0
+      ],
+      "vanish": {
+       "drop": 0.319,
+       "from": 0.319,
+       "to": 0,
+       "atMs": 204
+      }
+     },
+     {
+      "seat": 2,
+      "ok": true,
+      "tracks": false,
+      "deficit": 1,
+      "fades": true,
+      "spanMs": 204,
+      "spanFrames": 20,
+      "path": [
+       1,
+       0.651,
+       0.543,
+       0.543,
+       0.543,
+       0.543,
+       0.543,
+       0.543,
+       0.543,
+       0.543,
+       0.543,
+       0.543,
+       0.438,
+       0.34,
+       0.34,
+       0.34,
+       0.339,
+       0.34,
+       0.339,
+       0.318,
+       0
+      ],
+      "vanish": {
+       "drop": 0.349,
+       "from": 1,
+       "to": 0.651,
+       "atMs": 10
+      }
+     }
+    ],
+    "vanish": {
+     "ok": true,
+     "drop": 0.349,
+     "seat": 2,
+     "from": 1,
+     "to": 0.651,
+     "atMs": 10
+    },
+    "inkMax": 1,
+    "inkOk": true,
+    "why": "2 leaving seat(s), 0 failing; tightest seat 1: ink 0.901 → 0.836 → 0.762 → 0.681 → 0.549 → 0.438 → 0.438 → 0.437 → 0.433 → 0.422 → 0.4 → 0.366 → 0.319 → 0 over 133 ms / 13 frame(s) (fade bound ≥ 3 frames and ≥ 97 ms), coverage deficit 1 (track bound 0.1); vanish worst one-frame drop beyond the closing edge 0.349 (seat 2 1 → 0.651 at +10 ms) (bound 0.5); largest unit ink read 1 (an ink is a share of the unit's own box: ≤ 1, H6-3)"
+   },
+   "splice": {
+    "ok": true,
+    "spliceFrames": 0,
+    "sliverFrames": 0,
+    "firstSplice": null,
+    "firstSliver": null,
+    "why": "0 splice frame(s), 0 sliver frame(s) (bound 0 each)"
+   },
+   "vanish": {
+    "drop": 0.35,
+    "seat": 7,
+    "from": 0.54,
+    "to": 0.19,
+    "atMs": 11
+   },
+   "stub": {
+    "ok": true,
+    "judged": 39,
+    "stubFrames": 0,
+    "glyphs": 27,
+    "first": null,
+    "rampPx": 7.82,
+    "unreadGlyphs": 0,
+    "why": "0 stub frame(s) of 39 judged (up to 27 glyphs a frame); narrowest ramp across a glyph 7.82 px (RECORD) (bound 0; a stub is a glyph painted 10-90 %, at any opacity, by an edge whose alpha goes 10→90 % inside 2 px, inside the plate)"
+   },
+   "pageErrors": [],
+   "summary": "swap to long retargeted to mid 120 ms later (scheduled in the page; frame 13): blank 0 blank of 26 moving frame(s), longest run 0 (bound 1); seat overlap 0 frame(s); leaving 2 leaving seat(s), 0 failing; tightest seat 1: ink 0.901 → 0.836 → 0.762 → 0.681 → 0.549 → 0.438 → 0.438 → 0.437 → 0.433 → 0.422 → 0.4 → 0.366 → 0.319 → 0 over 133 ms / 13 frame(s) (fade bound ≥ 3 frames and ≥ 97 ms), coverage deficit 1 (track bound 0.1); vanish worst one-frame drop beyond the closing edge 0.349 (seat 2 1 → 0.651 at +10 ms) (bound 0.5); largest unit ink read 1 (an ink is a share of the unit's own box: ≤ 1, H6-3); vanish worst one-frame drop from the retarget 0.35 (seat 7 0.54 → 0.19 at +11 ms) (bound 0.5), over the strip 0.349; splice 0 splice frame(s), 0 sliver frame(s) (bound 0 each); stub 0 stub frame(s) of 39 judged (up to 27 glyphs a frame); narrowest ramp across a glyph 7.82 px (RECORD) (bound 0; a stub is a glyph painted 10-90 %, at any opacity, by an edge whose alpha goes 10→90 % inside 2 px, inside the plate); page errors 0",
+   "load": 9.98
+  }
+ ]
+}

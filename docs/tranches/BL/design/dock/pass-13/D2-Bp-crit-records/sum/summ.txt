@@ -1,0 +1,158 @@
+== retarget A/B (pass-10 builder's absum.py)
+('chromium', 'dark', 'bp12', 'retarget·120') reads 8 splice 0 [] sliver [] other red [] load 7.86 - 10.02
+('chromium', 'dark', 'bp12', 'retarget·40') reads 8 splice 0 [] sliver [] other red [] load 7.63 - 10.55
+('chromium', 'dark', 'bp12', 'retarget·80') reads 8 splice 0 [] sliver [] other red [] load 7.89 - 10.55
+('chromium', 'dark', 'bp13', 'retarget·120') reads 8 splice 0 [] sliver [] other red [] load 7.63 - 11.83
+('chromium', 'dark', 'bp13', 'retarget·40') reads 8 splice 0 [] sliver [] other red [] load 7.86 - 11.83
+('chromium', 'dark', 'bp13', 'retarget·80') reads 8 splice 0 [] sliver [] other red [] load 7.86 - 11.83
+('chromium', 'light', 'bp12', 'retarget·120') reads 8 splice 0 [] sliver [] other red [] load 8.5 - 13.16
+('chromium', 'light', 'bp12', 'retarget·40') reads 8 splice 0 [] sliver [] other red [] load 8.63 - 11.43
+('chromium', 'light', 'bp12', 'retarget·80') reads 8 splice 0 [] sliver [] other red [] load 8.5 - 11.43
+('chromium', 'light', 'bp13', 'retarget·120') reads 8 splice 0 [] sliver [] other red [] load 8.63 - 10.72
+('chromium', 'light', 'bp13', 'retarget·40') reads 8 splice 0 [] sliver [] other red [] load 7.98 - 10.82
+('chromium', 'light', 'bp13', 'retarget·80') reads 8 splice 0 [] sliver [] other red [] load 7.98 - 10.72
+('webkit', 'dark', 'bp12', 'retarget·120') reads 8 splice 0 [] sliver [] other red [] load 8.62 - 11.79
+('webkit', 'dark', 'bp12', 'retarget·40') reads 8 splice 0 [] sliver [] other red [] load 9.11 - 11.51
+('webkit', 'dark', 'bp12', 'retarget·80') reads 8 splice 0 [] sliver [] other red [] load 9.11 - 11.51
+('webkit', 'dark', 'bp13', 'retarget·120') reads 8 splice 0 [] sliver [] other red [] load 8.09 - 13.59
+('webkit', 'dark', 'bp13', 'retarget·40') reads 8 splice 0 [] sliver [] other red [] load 8.62 - 12.51
+('webkit', 'dark', 'bp13', 'retarget·80') reads 8 splice 0 [] sliver [] other red [] load 8.09 - 12.51
+('webkit', 'light', 'bp12', 'retarget·120') reads 8 splice 0 [] sliver [] other red [] load 9.72 - 11.81
+('webkit', 'light', 'bp12', 'retarget·40') reads 8 splice 0 [] sliver [] other red [] load 9.03 - 10.75
+('webkit', 'light', 'bp12', 'retarget·80') reads 8 splice 0 [] sliver [] other red [] load 9.15 - 11.81
+('webkit', 'light', 'bp13', 'retarget·120') reads 8 splice 0 [] sliver [] other red [] load 9.03 - 12.17
+('webkit', 'light', 'bp13', 'retarget·40') reads 8 splice 0 [] sliver [] other red [] load 9.34 - 12.17
+('webkit', 'light', 'bp13', 'retarget·80') reads 8 splice 0 [] sliver [] other red [] load 9.34 - 12.17
+('chromium', 'bp12') splice 0/48 sliver 0/48 load 7.63-13.16
+('chromium', 'bp13') splice 0/48 sliver 0/48 load 7.63-11.83
+('webkit', 'bp12') splice 0/48 sliver 0/48 load 8.62-11.81
+('webkit', 'bp13') splice 0/48 sliver 0/48 load 8.09-13.59
+
+== reversal stub A/B (phase2.mjs rev-c, bp10 / bp8)
+bp12-chromium-dark-k1.log: reads 12 splice 0 sliver 0 blank 0 stub 0 error 0 load 10.02-14.01
+bp12-chromium-dark-k2.log: reads 12 splice 0 sliver 0 blank 0 stub 0 error 0 load 9.86-14.14
+bp12-chromium-light-k1.log: reads 12 splice 0 sliver 0 blank 0 stub 0 error 0 load 10.04-12.22
+bp12-chromium-light-k2.log: reads 12 splice 0 sliver 0 blank 0 stub 1 error 0 load 10.09-13.75
+    morph rev-c 0.25 r1 frame 8 splice 0 sliver 0 blank ok stub false [load 10.18]
+bp12-webkit-dark-k1.log: reads 12 splice 0 sliver 0 blank 0 stub 0 error 0 load 9.17-12.84
+bp12-webkit-dark-k2.log: reads 12 splice 0 sliver 0 blank 0 stub 0 error 0 load 11.58-14.04
+bp12-webkit-light-k1.log: reads 12 splice 0 sliver 0 blank 0 stub 0 error 0 load 9.34-10.85
+bp12-webkit-light-k2.log: reads 12 splice 0 sliver 0 blank 0 stub 1 error 0 load 10.03-13.19
+    morph rev-c 0.25 r2 frame 6 splice 0 sliver 0 blank ok stub false [load 11.64]
+bp13-chromium-dark-k1.log: reads 12 splice 0 sliver 0 blank 0 stub 0 error 0 load 10.57-14.6
+bp13-chromium-dark-k2.log: reads 12 splice 0 sliver 0 blank 0 stub 0 error 0 load 9.43-11.75
+bp13-chromium-light-k1.log: reads 12 splice 0 sliver 0 blank 0 stub 0 error 0 load 8.38-9.8
+bp13-chromium-light-k2.log: reads 12 splice 0 sliver 0 blank 0 stub 0 error 0 load 9.4-12.52
+bp13-webkit-dark-k1.log: reads 12 splice 0 sliver 0 blank 0 stub 0 error 0 load 9.89-13.05
+bp13-webkit-dark-k2.log: reads 12 splice 0 sliver 0 blank 0 stub 0 error 0 load 9.89-15.16
+bp13-webkit-light-k1.log: reads 12 splice 0 sliver 0 blank 0 stub 0 error 0 load 8.35-11.14
+bp13-webkit-light-k2.log: reads 12 splice 0 sliver 0 blank 0 stub 0 error 0 load 9.05-12.4
+== swap reversed, and retargeted during the reversal (swrev.mjs)
+bp12-chromium-dark-r1.log: reads 8 splice 0 sliver 0 blank 0 stub 0 error 0 load 9.93-13.27
+bp12-chromium-dark-r2.log: reads 8 splice 0 sliver 0 blank 0 stub 0 error 0 load 10.54-12.89
+bp12-chromium-dark-r3.log: reads 8 splice 0 sliver 0 blank 0 stub 0 error 0 load 8.93-10.54
+bp12-chromium-dark-r4.log: reads 8 splice 0 sliver 0 blank 0 stub 0 error 0 load 9.44-10.17
+bp12-chromium-light-r1.log: reads 8 splice 0 sliver 0 blank 0 stub 0 error 0 load 9.2-9.98
+bp12-chromium-light-r2.log: reads 8 splice 0 sliver 0 blank 0 stub 0 error 0 load 9.6-10.65
+bp12-chromium-light-r3.log: reads 8 splice 0 sliver 0 blank 0 stub 0 error 0 load 9.51-10.59
+bp12-chromium-light-r4.log: reads 8 splice 0 sliver 0 blank 0 stub 0 error 0 load 9.22-9.96
+bp12-webkit-dark-r1.log: reads 8 splice 0 sliver 0 blank 0 stub 0 error 0 load 9.41-10.77
+bp12-webkit-dark-r2.log: reads 8 splice 0 sliver 0 blank 0 stub 0 error 0 load 10.46-10.96
+bp12-webkit-dark-r3.log: reads 8 splice 0 sliver 0 blank 0 stub 0 error 0 load 10.22-12.37
+bp12-webkit-dark-r4.log: reads 8 splice 0 sliver 0 blank 0 stub 0 error 0 load 10.31-11.84
+bp12-webkit-light-r1.log: reads 8 splice 0 sliver 0 blank 0 stub 0 error 0 load 10.4-13.68
+bp12-webkit-light-r2.log: reads 8 splice 0 sliver 0 blank 0 stub 0 error 0 load 9.65-14.17
+bp12-webkit-light-r3.log: reads 8 splice 0 sliver 0 blank 0 stub 0 error 0 load 10.02-11.62
+bp12-webkit-light-r4.log: reads 8 splice 1 sliver 0 blank 0 stub 0 error 0 load 8.43-8.88
+    rev  40 then 32 r1 frame 5 splice 1 s7|s8 gap 8.26 at 112 sliver 0 blank ok stub true [load 8.81]
+bp13-chromium-dark-r1.log: reads 8 splice 0 sliver 0 blank 0 stub 0 error 0 load 10.69-13.67
+bp13-chromium-dark-r2.log: reads 8 splice 0 sliver 0 blank 0 stub 0 error 0 load 9.54-10.18
+bp13-chromium-dark-r3.log: reads 8 splice 0 sliver 0 blank 0 stub 0 error 0 load 9.44-10.5
+bp13-chromium-dark-r4.log: reads 8 splice 0 sliver 0 blank 0 stub 0 error 0 load 10.27-11.45
+bp13-chromium-light-r1.log: reads 8 splice 0 sliver 0 blank 0 stub 0 error 0 load 9.89-10.7
+bp13-chromium-light-r2.log: reads 8 splice 0 sliver 0 blank 0 stub 0 error 0 load 10.23-13.4
+bp13-chromium-light-r3.log: reads 8 splice 0 sliver 0 blank 0 stub 0 error 0 load 10.43-10.99
+bp13-chromium-light-r4.log: reads 8 splice 0 sliver 0 blank 0 stub 0 error 0 load 8.98-9.51
+bp13-webkit-dark-r1.log: reads 8 splice 0 sliver 0 blank 0 stub 0 error 0 load 9.62-10.85
+bp13-webkit-dark-r2.log: reads 8 splice 0 sliver 0 blank 0 stub 0 error 0 load 10.07-12.27
+bp13-webkit-dark-r3.log: reads 8 splice 1 sliver 0 blank 0 stub 0 error 0 load 10.18-12.09
+    rev  40 then 32 r2 frame 5 splice 1 s7|s8 gap 8.43 at 112 sliver 0 blank ok stub true [load 12.09]
+bp13-webkit-dark-r4.log: reads 8 splice 0 sliver 0 blank 0 stub 0 error 0 load 9.65-10.58
+bp13-webkit-light-r1.log: reads 8 splice 1 sliver 0 blank 0 stub 0 error 0 load 10.88-15.58
+    rev  40 then 32 r1 frame 5 splice 1 s7|s8 gap 8.43 at 113 sliver 0 blank ok stub true [load 12.73]
+bp13-webkit-light-r2.log: reads 8 splice 2 sliver 0 blank 0 stub 0 error 0 load 10.04-10.63
+    rev  40 then 64 r1 frame 5 splice 1 s7|s8 gap 8.03 at 151 sliver 0 blank ok stub true [load 10.5]
+    rev  40 then 32 r2 frame 6 splice 1 s7|s8 gap 8.26 at 121 sliver 0 blank ok stub true [load 10.04]
+bp13-webkit-light-r3.log: reads 8 splice 0 sliver 0 blank 0 stub 0 error 0 load 10.01-12.98
+bp13-webkit-light-r4.log: reads 8 splice 0 sliver 0 blank 0 stub 0 error 0 load 9.31-10.01
+== a retarget during the morph reversal (phase3.mjs)
+bp12-chromium-dark-rev-c-rt-16.log: reads 8 splice 0 sliver 0 blank 0 stub 0 error 0 load 8.65-10.26
+bp12-chromium-dark-rev-c-rt-32.log: reads 8 splice 0 sliver 0 blank 0 stub 0 error 0 load 7.99-8.98
+bp12-chromium-dark-rev-c-rt-64.log: reads 8 splice 0 sliver 0 blank 0 stub 1 error 0 load 7.18-13.97
+    morph rev-c-rt+64 0.5 r2 frame 12 splice 0 sliver 0 blank ok stub false [load 12.58]
+bp12-chromium-dark-rev-e-rt-16.log: reads 8 splice 0 sliver 0 blank 0 stub 0 error 0 load 8.12-10.17
+bp12-chromium-dark-rev-e-rt-32.log: reads 8 splice 0 sliver 0 blank 0 stub 0 error 0 load 7.98-9.99
+bp12-chromium-dark-rev-e-rt-64.log: reads 8 splice 0 sliver 0 blank 0 stub 0 error 0 load 7.83-8.95
+bp12-chromium-light-rev-c-rt-16.log: reads 8 splice 0 sliver 0 blank 0 stub 1 error 0 load 10.43-11.96
+    morph rev-c-rt+16 0.8 r1 frame 20 splice 0 sliver 0 blank ok stub false [load 11.52]
+bp12-chromium-light-rev-c-rt-32.log: reads 8 splice 0 sliver 0 blank 0 stub 1 error 0 load 9.39-11.41
+    morph rev-c-rt+32 0.35 r2 frame 9 splice 0 sliver 0 blank ok stub false [load 11.36]
+bp12-chromium-light-rev-c-rt-64.log: reads 8 splice 0 sliver 0 blank 0 stub 1 error 0 load 10.95-15.46
+    morph rev-c-rt+64 0.5 r2 frame 13 splice 0 sliver 0 blank ok stub false [load 15.46]
+bp12-chromium-light-rev-e-rt-16.log: reads 8 splice 0 sliver 0 blank 0 stub 0 error 0 load 9.2-11.26
+bp12-chromium-light-rev-e-rt-32.log: reads 8 splice 0 sliver 0 blank 0 stub 0 error 0 load 10.23-13.87
+bp12-chromium-light-rev-e-rt-64.log: reads 8 splice 0 sliver 0 blank 0 stub 0 error 0 load 9.95-12.4
+bp12-webkit-dark-rev-c-rt-16.log: reads 8 splice 0 sliver 0 blank 0 stub 0 error 0 load 9.63-11.58
+bp12-webkit-dark-rev-c-rt-32.log: reads 8 splice 0 sliver 0 blank 0 stub 0 error 0 load 8.46-10.11
+bp12-webkit-dark-rev-c-rt-64.log: reads 8 splice 0 sliver 0 blank 0 stub 0 error 0 load 8.8-11.4
+bp12-webkit-dark-rev-e-rt-16.log: reads 8 splice 0 sliver 0 blank 0 stub 0 error 0 load 8.72-10.14
+bp12-webkit-dark-rev-e-rt-32.log: reads 8 splice 0 sliver 0 blank 0 stub 0 error 0 load 10.81-14.12
+bp12-webkit-dark-rev-e-rt-64.log: reads 8 splice 0 sliver 0 blank 0 stub 0 error 0 load 11.78-13.2
+bp12-webkit-light-rev-c-rt-16.log: reads 8 splice 0 sliver 0 blank 0 stub 0 error 0 load 8.74-10.36
+bp12-webkit-light-rev-c-rt-32.log: reads 8 splice 0 sliver 0 blank 0 stub 0 error 0 load 9.63-11.5
+bp12-webkit-light-rev-c-rt-64.log: reads 8 splice 0 sliver 0 blank 0 stub 0 error 0 load 9.92-12.76
+bp12-webkit-light-rev-e-rt-16.log: reads 8 splice 0 sliver 0 blank 0 stub 0 error 0 load 9.54-12.05
+bp12-webkit-light-rev-e-rt-32.log: reads 8 splice 0 sliver 0 blank 0 stub 0 error 0 load 10.17-12.51
+bp12-webkit-light-rev-e-rt-64.log: reads 8 splice 0 sliver 0 blank 0 stub 0 error 0 load 8.54-13.16
+bp13-chromium-dark-rev-c-rt-16.log: reads 8 splice 0 sliver 0 blank 0 stub 0 error 0 load 9.61-13.04
+bp13-chromium-dark-rev-c-rt-32.log: reads 8 splice 0 sliver 0 blank 0 stub 0 error 0 load 8.45-8.78
+bp13-chromium-dark-rev-c-rt-64.log: reads 8 splice 0 sliver 0 blank 0 stub 0 error 0 load 7.18-7.8
+bp13-chromium-dark-rev-e-rt-16.log: reads 8 splice 0 sliver 0 blank 0 stub 0 error 0 load 9.38-11.11
+bp13-chromium-dark-rev-e-rt-32.log: reads 8 splice 0 sliver 0 blank 0 stub 0 error 0 load 7.28-10.14
+bp13-chromium-dark-rev-e-rt-64.log: reads 8 splice 0 sliver 0 blank 0 stub 0 error 0 load 6.99-10.04
+bp13-chromium-light-rev-c-rt-16.log: reads 8 splice 0 sliver 0 blank 0 stub 0 error 0 load 10.51-12.76
+bp13-chromium-light-rev-c-rt-32.log: reads 8 splice 0 sliver 0 blank 0 stub 0 error 0 load 9.7-10.38
+bp13-chromium-light-rev-c-rt-64.log: reads 8 splice 0 sliver 0 blank 0 stub 0 error 0 load 10.77-13.91
+bp13-chromium-light-rev-e-rt-16.log: reads 8 splice 0 sliver 0 blank 0 stub 0 error 0 load 10.23-17.69
+bp13-chromium-light-rev-e-rt-32.log: reads 8 splice 0 sliver 0 blank 0 stub 0 error 0 load 9.41-11.22
+bp13-chromium-light-rev-e-rt-64.log: reads 8 splice 0 sliver 0 blank 0 stub 0 error 0 load 10.49-15.42
+bp13-webkit-dark-rev-c-rt-16.log: reads 8 splice 0 sliver 0 blank 0 stub 0 error 0 load 10.04-14.57
+bp13-webkit-dark-rev-c-rt-32.log: reads 8 splice 0 sliver 0 blank 0 stub 0 error 0 load 9.25-10.89
+bp13-webkit-dark-rev-c-rt-64.log: reads 8 splice 0 sliver 0 blank 0 stub 0 error 0 load 8.47-9.89
+bp13-webkit-dark-rev-e-rt-16.log: reads 8 splice 0 sliver 0 blank 0 stub 0 error 0 load 8.86-10.87
+bp13-webkit-dark-rev-e-rt-32.log: reads 8 splice 0 sliver 0 blank 0 stub 0 error 0 load 8.3-11.49
+bp13-webkit-dark-rev-e-rt-64.log: reads 8 splice 0 sliver 0 blank 0 stub 0 error 0 load 10.35-13.96
+bp13-webkit-light-rev-c-rt-16.log: reads 8 splice 0 sliver 0 blank 0 stub 0 error 0 load 9.55-11.66
+bp13-webkit-light-rev-c-rt-32.log: reads 8 splice 0 sliver 0 blank 0 stub 0 error 0 load 10.57-13.66
+bp13-webkit-light-rev-c-rt-64.log: reads 8 splice 0 sliver 0 blank 0 stub 0 error 0 load 10.13-11.08
+bp13-webkit-light-rev-e-rt-16.log: reads 8 splice 0 sliver 0 blank 0 stub 0 error 0 load 9.08-10.93
+bp13-webkit-light-rev-e-rt-32.log: reads 8 splice 0 sliver 0 blank 0 stub 0 error 0 load 8.51-11.11
+bp13-webkit-light-rev-e-rt-64.log: reads 8 splice 0 sliver 0 blank 0 stub 0 error 0 load 9.83-11.06
+== retarget·N at the unswept offsets (sweep.mjs)
+bp13-chromium-dark-early.log: reads 22 splice 0 sliver 0 blank 0 stub 0 error 0 load 8.51-11.09
+bp13-chromium-dark-late.log: reads 26 splice 0 sliver 0 blank 0 stub 0 error 0 load 7.91-14.13
+bp13-chromium-light-early.log: reads 22 splice 0 sliver 0 blank 0 stub 0 error 0 load 13.68-16.45
+bp13-chromium-light-late.log: reads 26 splice 0 sliver 0 blank 0 stub 0 error 0 load 10.14-14.11
+bp13-webkit-dark-early.log: reads 22 splice 0 sliver 0 blank 0 stub 0 error 0 load 10.16-12.29
+bp13-webkit-dark-late.log: reads 26 splice 0 sliver 0 blank 0 stub 0 error 0 load 9.91-13.44
+bp13-webkit-light-early.log: reads 22 splice 0 sliver 0 blank 0 stub 0 error 0 load 9.58-14.36
+bp13-webkit-light-late.log: reads 26 splice 0 sliver 0 blank 0 stub 0 error 0 load 10.05-13.37
+== frozen vmorph collapse (frz.mjs)
+frz-chromium-dark-bp12.log: reads 12 frozen-on-a-splice-frame 4 facingCut 0 freeze-not-held 0 error 0 load 7.63-9.84
+frz-chromium-dark-bp13.log: reads 12 frozen-on-a-splice-frame 3 facingCut 0 freeze-not-held 0 error 0 load 8.72-10.59
+frz-chromium-light-bp12.log: reads 12 frozen-on-a-splice-frame 6 facingCut 0 freeze-not-held 0 error 0 load 13.95-20.0
+frz-chromium-light-bp13.log: reads 12 frozen-on-a-splice-frame 2 facingCut 0 freeze-not-held 0 error 0 load 12.26-17.77
+frz-webkit-dark-bp12.log: reads 12 frozen-on-a-splice-frame 3 facingCut 0 freeze-not-held 0 error 0 load 8.22-13.01
+frz-webkit-dark-bp13.log: reads 12 frozen-on-a-splice-frame 5 facingCut 0 freeze-not-held 0 error 0 load 7.98-10.79
+frz-webkit-light-bp12.log: reads 12 frozen-on-a-splice-frame 3 facingCut 0 freeze-not-held 0 error 0 load 10.29-13.52
+frz-webkit-light-bp13.log: reads 12 frozen-on-a-splice-frame 5 facingCut 0 freeze-not-held 0 error 0 load 10.63-13.77

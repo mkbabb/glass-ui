@@ -1,0 +1,34 @@
+== si: display-frame probe
+('bp12', 'chromium', 'dark') runs with an empty frame 0/18 lowest minInk (0.422, 'swap-long', 'Tools at +69 ms', 10.39)
+('bp12', 'chromium', 'light') runs with an empty frame 0/18 lowest minInk (0.422, 'swap-long', 'Tools at +70.8 ms', 9.93)
+('bp13', 'chromium', 'dark') runs with an empty frame 0/18 lowest minInk (0.422, 'swap-long', 'Tools at +70.6 ms', 11.51)
+('bp13', 'chromium', 'light') runs with an empty frame 0/18 lowest minInk (0.422, 'swap-long', 'Tools at +71.1 ms', 10.92)
+== fs: constructed far side
+== heir
+bp13i-chromium.json first-expand           armed 1 tied [('P', '1', 'enter', '-', 'de', 0)]
+bp13i-chromium.json warm-collapse          armed 1 tied [('1', 'P', 'enter', '-', 'de', 0)]
+bp13i-chromium.json warm-expand            armed 1 tied [('P', '1', 'enter', '-', 'de', 0)]
+bp13i-chromium.json swap-long              armed 2 tied [('A', 'C', 'enter', '-', 'de', 0)]
+bp13i-chromium.json swap-short             armed 2 tied [('C', 'A', 'enter', '-', 'de', 0)]
+bp13i-chromium.json content-add            armed 0 tied []
+bp13i-chromium.json lead-add               armed 0 tied []
+bp13i-chromium.json lead-remove            armed 1 tied []
+bp13i-chromium.json vlead-add              armed 0 tied []
+bp13i-chromium.json vlead-remove           armed 1 tied []
+bp13i-chromium.json vlead-remove-wide      armed 1 tied []
+bp13i-chromium.json vfirst-expand          armed 1 tied [('P', '1', 'enter', '-', 'de', 0)]
+bp13i-chromium.json wide-first-expand      armed 1 tied []
+bp13i-chromium.json end-first-expand       armed 1 tied [('P', '1', 'enter', '-', 'de', 0)]
+bp13i-chromium.json three-long             armed 2 tied [('A', 'C', 'enter', '-', 'de', 0)]
+bp13i-chromium.json three-mid              armed 3 tied [('C', 'E', 'enter', '-', 'de', 0)]
+== cases
+== fmab: FM A/B
+== r2: W3 whole, worst leaving drop per run
+r2 w3-chromium-dark-bp12-r1.log worst (0.393, 'swap-short', 3, '132.1', 8.05) margin 0.107 seat8 warm-expand [0.364] reds 0
+r2 w3-chromium-dark-bp12-r2.log worst (0.389, 'first-expand', 8, '223.4', 9.91) margin 0.111 seat8 warm-expand [0.371] reds 0
+r2 w3-chromium-dark-bp13-r1.log worst (0.371, 'swap-short', 3, '133.3', 8.51) margin 0.129 seat8 warm-expand [0.35] reds 0
+r2 w3-chromium-dark-bp13-r2.log worst (0.372, 'swap-long', 1, '133.3', 9.56) margin 0.128 seat8 warm-expand [0.364] reds 0
+r2 w3-chromium-light-bp12-r1.log worst (0.373, 'warm-collapse', 2, '3741.9', 10.14) margin 0.127 seat8 warm-expand [0.371] reds 0
+r2 w3-chromium-light-bp12-r2.log worst (0.385, 'swap-long', 1, '133.8', 9.39) margin 0.115 seat8 warm-expand [0.369] reds 0
+r2 w3-chromium-light-bp13-r1.log worst (0.377, 'swap-short', 3, '133.6', 9.34) margin 0.123 seat8 warm-expand [0.372] reds 0
+r2 w3-chromium-light-bp13-r2.log worst (0.389, 'first-expand', 8, '217.1', 10.27) margin 0.111 seat8 warm-expand [0.354] reds 0

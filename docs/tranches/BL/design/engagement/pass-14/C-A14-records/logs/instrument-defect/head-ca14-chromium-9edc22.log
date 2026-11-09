@@ -1,0 +1,8 @@
+# C-A14 head-ca14 chromium · 2026-11-06 13:09:46 · load { 16.89 16.42 17.22 } · harness 7e79063a4b00 · --only A1
+# C-A14 · S14 attacked past H14's ranges (C-A14, D5 pass 14 wave 4)
+# target /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p14/C-A14/wt/.ca14out/builds/head · engine chromium · lock wait 652.2 s (the deadline 5400 s counts from here) · other headless processes: chromium 16, webkit 0 · load 16.6/18.6/18.2 at start
+# scene app: harness scenes/App.vue (sha1 912fecf0a1aa)
+# chromium 149.0.7827.55
+# held control: scene slider root .glass-slider thumb [role="slider"] engaged [data-engaged], [data-held]; clock token --spring-dock-settle; cells A1
+  FAIL       A1 (M2/M3) a transformed link inside a shadow tree · scale 0.5 (origin 0 0) in an open shadow root · 40 px insert above the shadow host · ENGINE CLOSED, REPRODUCED 2/2 (CELL TIMEOUT 60 s; then CELL TIMEOUT 60 s) · load 14.6/16.8/17.5
+  FAIL       A1 (M2/M3) a transformed link inside a shadow tree · scale 0.5 (origin 0 0) in a closed shadow root · 40 px insert above the shadow host · ENGINE CLOSED, REPRODUCED 2/2 (CELL TIMEOUT 60 s; then CELL TIMEOUT 60 s) · load 13.3/15.9/17.1

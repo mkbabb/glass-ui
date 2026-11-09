@@ -3972,3 +3972,297 @@ Every class a pass-12 seat recorded is placed, §P12-8's included where the comp
 | D5 pass 13 completion running (c3) | `FORMATION-PROGRESS.md` | what moves with this count (§P12c-5 item 3) |
 | O-118, O-119, O-120, O-121, O-113's dock rows, the atlas U/B7d addendum, W-0.8 §10, 10.1.3's cures, O-101, O-110, O-102d, O-104 | §P12-8; INBOUND | W-0.8, as §P12-5 placed them, updated at §P12c-5 |
 | real Safari | every report | **UNMEASURED (owner's safaridriver checkbox)**; O-103: not granted |
+
+---
+
+# D2 · pass 13 · REGISTRY: B′ `bp13` at 38/38, none of rules (a)-(d) fires, CLEAN, the count at 1 of 2
+
+Everything above this line is the record of passes 1-12 and the owner's rulings. It is left as written. No "D2 · CONVERGED" part follows this one.
+
+| field | value |
+|---|---|
+| seat | D2 pass-13 agglomeration. It rules pass 13 by §P12c-7.5 item 2 (§P11-7.5's test with rule (d) added): B′'s rows of 38 on the ruled digest, whether the pass is clean, and the convergence count. It rules O-129 r9 for W-I.1, updates §P12c-5's landing content, places every class a pass-13 seat recorded, and writes the pass-14 plan |
+| model | `claude-opus-5-5`, asserted from own system identity |
+| HEAD | `392ff1e3c`, the critic's worktree base. `git diff --name-only 392ff1e3c HEAD -- src demo tests tests-visual package.json docs/design` is empty, so every reading describes today's tree. This seat re-hashed `pass-13/D2-Bp-p13.patch` (**`bb7cb08da92677aa6e4e2c753ce9f901b17f4ddb2051d2f4162ef43e97648121`**), `pass-12/D2-Bp-p12.patch` (`5318a3dc…`), `pass-6/floor-v5.patch` (`cba6bdc2…`) and `pass-4/floor-v3.patch` (`637d1625…`): all equal to the critic's. It checked `harness/` against `pass-8/H8-records/harness.sha256` (list hash `9d12810b…`) at its start (2026-11-07 06:08, 42 OK) and at its end (§P13-8) |
+| inputs | §P12c-0 to §P12c-8 in full, §P10-7 (the confirmation model), and the earlier parts as those cite them; `pass-13/D2-Bp-build.md` and `pass-13/D2-Bp-critique.md` in full; everything else under `pass-13/` as they cite it; `audit/INBOUND.md` to its last row (O-184); `FORMATION-PROGRESS.md` to its last line (2026-11-06 15:40). Read directly for single facts: the critic's `digest/counts-p13crit-ruled-ruled.md`, `digest/rows-p13crit-ruled-ruled.md`, `sum/absum.txt` (rules (a), (c), (d)), `chain.log` and `harness-check-end.txt`; for r9, the relay letter INBOUND cites (`value.js/docs/tranches/X/coordination/O-129-glass-relay-2026-11-04.md` row 9, read only), `waves/W-I.1.md`'s O-129 addendum, and the dock source it names (read only) |
+| instruments | none. This seat measures nothing; every number cites the report that measured it (P-3) |
+| fences | no source edit, no git write; this part is the only write. Nothing under `~/.claude` was read. `ps` shows no D2 process left: the critic's chains ended `RUN-DONE` (2026-11-07 04:56:51) and `FU-DONE` (06:04:28), the builder's `RUN13-DONE` (2026-11-06 19:03:40) |
+| engines | every WebKit number is **Playwright WebKit**, unshimmed. Real Safari is **UNMEASURED (owner's safaridriver checkbox)**: O-103, not granted |
+| owner rulings | **O-103**; O-87 and O-88 bind; **O-118** as it stands. The owner's 2026-11-03 order holds: the guard printed ZONE-ARMED (inuse about 43k) on the critic's WebKit queues and **refused no run** of either seat, so every reading admitted is of record. INBOUND O-134 to O-184 arrived since §P12c; none touches the 38 (§P13-5, §P13-8). O-129 r9 is ruled here (§P13-6) |
+
+Short citations: `BU` is `pass-13/D2-Bp-build.md`; `CR` is `pass-13/D2-Bp-critique.md`; `CC` is `pass-12/D2-Bp-critique-complete.md`.
+
+**Both seats ran to their ends.** The builder ran in three entries (a disk-full crash of `guarded` at a WebKit slot's start, then the usage limit; the third entry adopted the live chain and waited on its PID; no battery ran twice, BU §7). The critic ran in one entry, with every step of §P12c-7.4 read and a follow-up `fu` that re-read every red cell of its A/Bs and attacks (CR §1, §3.7). Neither reports complete=false. So pass 13 is scored here, from CR's ruled digest.
+
+---
+
+## P13-0 · In brief
+
+| build | status | 38 rows (ruled, of record) | first 36 | first 24 | default digest | open rows | reason in one line |
+|---|---|---:|---:|---:|---|---|---|
+| D2-B′ `bp13` (`bb7cb08d…`) | **ADVANCE, CLEAN** | **38/38 (100 %)** | **36/36** | **24/24** | 36/38, 34/36, 22/24 (P1 OWNER-BLOCKED on Q-12, P3 on Q-4; each PASS on its ruled branch) | **none** | the reversal-stub family cured by one edge law in `writeClip`, read 0 in every bp13 read; rules (a)-(d) 0 |
+| D2-B′ `bp12` (`5318a3dc…`) | reference arm | 35/38 as §P12c-2 | 33/36 | 22/24 | 34/38 | P3, R6, B2 | no pass-13 battery of record; its A/Bs draw the stub family 1 + 7 times (BU, CR) |
+| D2-G | BANKED (§P5-4); its seats did not run | — | — | — | — | — | no re-trigger recorded |
+
+**Pass 13 is CLEAN. Clean-pass count: 1 of 2.** Pass 14 is the confirmation on the §P10-7 model (§P13-7). **The earliest D2 convergence is pass 14's close.**
+
+Four findings.
+1. **The cure is a law and it holds in paint.** BU traced the 886.9 px stub to the pixel and the millisecond: a clip edge within a touch (0.5 px) of the plate's or the box's own edge, written at its exact place with no ramp (BU §1). The cure gives that edge a ramp from 1 − depth / touch, so on every frame the only hard edge across a glyph is the plate's. No edge moves in place or time and no constant moved (BU §3, CR §2's static read). It is byte-negative: the boot graph's margin is 31 B (was 21).
+2. **The family reads 0 on bp13 everywhere it was read.** Rule (d)'s `reversal` A/B: bp13 0 of 48 at the builder and 0 of 48 at the critic; bp12 1 and 1. Over the critic's whole reversal family (`reversal`, `revst`, `rtrev`), bp13 0 of 336 against bp12 7, one of them in Playwright WebKit (CR §2). The 794 px sibling drew on bp12 twice in BU's `swrev` and on bp13 never (0 of 64 at BU, 0 of 128 at CR).
+3. **What pass 12 cured stays cured.** Rule (c) 0 late in 32 at each seat; `lanes` 0 late in 72 and no window closed early (CR §3.2); FM A/B 0 holes; the B2 strips clean by eye ×4 (CR §3.3); rule (a) 0 of 96 at each seat; `o.enter` holds; `facingCut` 0 on 96 frozen frames (CR §3.5).
+4. **The base's near-bound classes are still there, and they are pass 14's risk.** The battery read two single reds, each NOT-REPRODUCED under H6-7: C·d `lead-add` [terminal] (0.95 px against 0.88) and W·l `swap-long` [leaving] (a fade 0.3 ms short of its bound). The A/Bs read [terminal], [faces] and [blank] on both builds at equal rates (CR §3.7). None separates the builds. This is §P12c-4's pattern: a confirmation that samples one of them twice in a slot opens a row. §P13-7 reads each at A/B rates beside the rows, so that a build that must follow has its carrier rate in hand.
+
+---
+
+## P13-1 · How pass 13 ran
+
+| step | record | what it established |
+|---|---|---|
+| builder, entry 1 (2026-11-04 19:13 → 11-05) | BU §1-§3, §7 | the edge trace (`edgetrace.py`, `revtrace.mjs`) on bp10x / bp12x / bp13x; the cause; the v1 draft (a touch snap), its C·l battery FAIL [window, lanes] (a half-pixel clip step); the continuous form; F7, PR; the Chromium battery |
+| builder, entry 2 (11-06 11:55 → 14:27) | BU §7 | resumed after `guarded` crashed at a WebKit slot's start (OSError 28, disk full); the orphaned queue slot was still in its load gate, no read started, stopped by process group. Ended at the usage limit |
+| builder, entry 3 (18:01 → 19:07) | BU §5, §7, §8 | adopted the live chain, waited on its PID to `RUN13-DONE` (19:03:40); patch `bb7cb08d…`; harness 42 OK at the end |
+| critic: builds, PR, F7, battery C·l and C·d (19:09 → 19:34) | CR §1 | each build exit 0; F7 13/13 at 15.32, PR 6/6 |
+| critic: WebKit slots 1 and 2 (admitted 20:46:13 and 21:48:43 after 71 and 41 min) | CR §1 | the owed re-runs (12 reads, all PASS), the W·l and W·d batteries, `fmlow` per theme |
+| critic: read queues, cost, digest (23:08 → 04:56:51) | CR §1, §4 | 528 gate-11 reads, each checked ≤ 11 before it started; cost at ≤ 15; harness 42 OK |
+| critic: `fu` (04:57:18 → 06:04:28) | CR §3.7 | every red cell of the A/Bs and attacks re-read, 8 rounds per theme, bp13 and bp12 alternating |
+
+The machine law held at both seats. There was one heavy run at a time per seat, and every browser run went through the guard, never `--light` (the critic's PR ran `--light` with no browser, as the law allows). Playwright WebKit ran under `--exclusive webkit`, queued and never cancelled. No admitted slot was ended by stopping its parent. No battery slot read a cell above 31. Two of the builder's lock waits passed 90 min and were kept queued (BU §7); the critic's longest was 71. The builder's worktree directory `.claude/worktrees/bl/D2/p13/Bp-build/` (about 1.3 GB, nothing of record) remains, its removal refused by the permission check; the critic deleted its own (CR §7).
+
+---
+
+## P13-2 · Registry: D2-B′ `bp13`, ADVANCE, CLEAN, 38/38
+
+**The reading of record is the fresh critic's ruled digest, with B2 read on the strips: 38/38, 36/36, 24/24 (default 36/38, 34/36, 22/24).** 671 cells: 0 FAIL, 2 NOT-REPRODUCED, 12 UNMEASURED (W8 `consumer·*`, as every pass), 12 RECORD; 39 OWNER-BLOCKED cells read on Q-4 (c) / Q-12 (b), 39 PASS (`digest/counts-p13crit-ruled-ruled.md`, `rows-p13crit-ruled-ruled.md`; read directly by this seat).
+
+| row | ruled | default | note |
+|---|---|---|---|
+| P1 | PASS | OWNER-BLOCKED (Q-12) | 42/42 ×4; W1 `card·*` on [card] only |
+| P3 | PASS | OWNER-BLOCKED (Q-4) | 42/42 ×4; NR 1 each in C·d (`lead-add` [terminal]) and W·l (`swap-long` [leaving]) |
+| P2, P4, P5; F1-F7; N1-N5 | PASS | PASS | F6 0 crashes; F7 13/13 at 15.32; N5 with PR 6/6 |
+| R1 | PASS | PASS | C·d NR 1 (the [terminal] read) |
+| R2 | PASS ×4 | PASS | W·l NR 1 (the [leaving] read); margins below |
+| R3-R5, R7, R8 | PASS | PASS | |
+| **R6** | **PASS** | **PASS** | W3 stub 0 ×4; FM stub 0 ×4 (was FAIL in pass 12) |
+| B1, B3 | PASS | PASS | PR 5/5 |
+| **B2** | **PASS** | **PASS** | FM, `fmlow`, the strips by eye ×4 and the W3 stub all clean (was FAIL in pass 12 through the W3 stub) |
+| C1-C9 | PASS | PASS | ×4 |
+| L1 | PASS | PASS | 6/6 per engine against `fv3` |
+
+**P3, R6, B2 close on the cure, not on a draw.** Pass 12 opened them on one cell, C·l W3 `reversal` [stub]. On bp13 that cell and its whole family read 0: in every battery W3 read in all four columns at both seats, in 96 rule-(d) reads, and in 288 `revst` and `rtrev` reads, while bp12, alternating with it, drew the class 8 times (BU §5.2, CR §2). The cure is the law BU named, read statically by CR. It moves no edge, so it misses no glyph by timing, and it is no mask under E-2.
+
+**The two NOT-REPRODUCED cells** (CR §3.7, H6-7: re-runs 1 and 2 PASS in each):
+- C·d W3 `lead-add` [terminal], main read at 11.82: last step 0.95 px after 0.34, bound 0.88. The class is the base's: bp13 reads it 5 times outside the battery, bp12 7 (CR §3.7).
+- W·l W3 `swap-long` [leaving], main read at 10.73: seat 1 fades over 64 ms against a 64.3 ms bound; its vanish drop 0.451 is under 0.5. Re-runs read 80 and 72 ms. It feeds R1 and R2 as NR on both digests.
+
+**The §P12c-7.1 rules:**
+
+| rule | reading of record (CR; BU beside) | ruled here |
+|---|---|---|
+| (a) two `splice` reads at one `retarget` cell, one column, one A/B | bp13 0 of 96, sliver 0, stub 0 (BU 0 of 96); bp12 0 of 96 (`sum/absum.txt`, read directly) | **does not fire** |
+| (b) two `stub` reads at one slot, one column, one battery | 0 stub frames in every battery W3 read, main and re-runs, four columns; FM stub 0 ×4 | **does not fire** |
+| (c) any bp13 `content-remove` A/B read whose flag closes over 2F + 0.5 after the landing | bp13 0 late in 32; gaps 0 but C·l 9.2 and C·d 8.2 ms, one in-band step each (BU 0 late in 32) | **does not fire** |
+| (d) any bp13 `stub` read on the `reversal` A/B | bp13 0 of 48 (BU 0 of 48); bp12 1 of 48, C·d r14, "t" painted 0.22 at 879.1 px, +104.2 ms, ramp 0.24 px (BU: bp12 1, the 886.9 px "n") | **does not fire** |
+
+**Rulings this seat makes on the readings.** None turns a row.
+- **The edge law is the header's, stated once.** "An edge less than a touch inside the plate's edge (or the unit's own box) is a ramp too, from 1 − depth / touch at the edge" (BU §4). CR notes that "no step" holds to the `whole` test's own 0.01 px tolerance, a 2 % step at most (CR §2). That is a true statement of a tolerance the code already had, not a defect. The prose stays as built, so pass 14's bytes are p13's.
+- **The `swrev` splice, read in paint, cuts no ink.** It reads bp13 8 of 192 and bp12 8 of 192 over BU and CR (CR §3.1): the two leaving remnants facing each other, ramps to 0 between them, with the glyph between reading share 0 (BU §2). BU showed that the two levers that would remove it are a seam between leaving units, which `vmorph`'s frozen frame forbids, and the sliver rule's timing, which is a mask under E-2. So it is a clip-rect reading at a phase no rule reads, not a defect of motion in paint. It stays beside the rows. Pass 14 reads it in paint, by glyph share at the splice frame (§P13-7.3). If ink is ever read cut there, it is placed for a build before the landing takes the scene, as §P10-7.5 item 2 placed `vmorph`.
+- **R2's margin.** BU's one 0.497 read (margin 0.003, W·l `swap-long` seat 1) is not reproduced in 18 bp13 reads of that cell at 9.21-14.53, which top at 0.399 in the A/B and 0.451 in the battery; bp12 reads 0.451 in the A/B (CR §3.4). The cure does not separate the builds on R2. The margin of record is CR's battery, 0.049. It is no row, and it is placed for pass 14's reading.
+- **The display frame.** BU's bp13 0.375 / 0.399 is not a bp13 tail: CR reads bp13 0.41-0.422 and bp12 0.377 (CR §3.3). Closed as a reading.
+- **CASES `case·rotated`** reads bp13 no worse than bp12 (CR §4: C·l 1/3 against 2/3, W·l 0/3 against 3/3; the battery's CASES 6/6 in both engines). §P12-2's ruling stands; outside the 38.
+- **The builder's report named every red check** (BU §6), as §P12c-7.3 item 6 asked.
+
+**Readings beside the rows** (CR unless marked; of record as readings, none a row):
+
+| reading | C·l | C·d | W·l | W·d | note |
+|---|---:|---:|---:|---:|---|
+| R2 worst, battery (bound 0.5) | 0.394 (`warm-collapse`, 2) | 0.376 | **0.451** (`swap-long`, 1, the NR read) | 0.437 (`first-expand`, 8) | of record; thinnest margin 0.049 |
+| R2 worst, A/Bs and attacks, bp13 / bp12 | 0.388 / 0.389 | 0.378 / 0.378 | 0.412 / 0.451 | 0.425 / 0.412 | BU's one bp13 0.497 not reproduced |
+| reversal family stub, bp13 / bp12 (CR) | 0 / 4 | 0 / 2 | 0 / 1 | 0 / 0 | `reversal` + `revst` + `rtrev`, 336 reads per build |
+| `reversal` stub, rule (d), bp13 / bp12 (BU) | 0/16 / 1/16 | 0/16 / 0/16 | 0/8 / 0/8 | 0/8 / 0/8 | |
+| `swrev` splice `s7\|s8`, bp13 / bp12 (CR; BU) | 0 / 0 | 0 / 0 | 3/32 / 1/32; BU 2/32 / 3/32 | 1/32 / 0/32; BU 2/32 / 4/32 | 8/192 each over both seats; no ink cut |
+| `swrev` stub (the 794 px sibling), bp13 / bp12 | 0 / 0 | 0 / 0 | 0 / 0; BU 0 / 2 | 0 / 0 | |
+| `content-remove` gaps, bp13 (ms) | 0 ×7, 9.2 | 0 ×7, 8.2 | 0 ×8 | 0 ×8 | rule (c)'s reading |
+| [terminal] reads outside the battery, bp13 / bp12 | | | | | 5 / 7 (Chromium); `fu` 3/32 / 2/32 |
+| [faces] `swap-long`, bp13 / bp12 | | | | | 2/28 / 1/28 (Chromium) |
+| [blank] `swap-short` at +19-21 ms, bp13 / bp12 | | | | | 2 / 1 attack reads; `fu` 0/16 / 1/16 (Playwright WebKit) |
+| FM holes (A/B), bp13 / bp12 | — | — | 0/16 / 0/16 | 0/16 / 0/16 | |
+| `vmorph` frozen frame, `facingCut` | 0 | 0 | 0 | 0 | 96 frames |
+| display-frame, runs with an empty frame | 0/18 ×2 | 0/18 ×2 | 0/18 ×2 | 0/18 ×2 | bp13 least ink 0.41 |
+
+---
+
+## P13-3 · The cost row (not a row; for the record under Q-15 (a))
+
+| measure | bp13 `CR` | bp12 `CR` | fv5 `CR` | bp13 `BU` | bp12 `BU` | fv5 `BU` |
+|---|---:|---:|---:|---:|---:|---:|
+| frames over 25 ms, sum over the four 4× rows (3 runs each) | 4 | 4 | 0 | 5 | 7 | 0 |
+| main-thread ms per frame, 4×40 lead | 1.359-1.499 | 1.407-1.521 | 0.101-0.128 | 1.592-1.79 | 1.54-1.97 | 0.138-0.188 |
+| boot graph, B of 503,808 | 503,777 (31 B margin) | 503,787 (21 B) | — | 503,777 | 503,787 | — |
+
+**Reading.** bp13 and bp12 do not separate. Floor v5's lead stays about a tenth of B′'s main-thread time, the lead Q-15 (a) prices.
+
+---
+
+## P13-4 · The §P12c-7.5 rule, applied, and the convergence history
+
+| clause | holds? | evidence |
+|---|---|---|
+| 0 open rows of 38 on the ruled digest | **yes** | 38/38 (§P13-2) |
+| B2 read on the strips | **yes, clean ×4** | CR §3.3 |
+| §7.1 (a) | does not fire | bp13 0 of 96 |
+| §7.1 (b) | does not fire | 0 stub in every battery W3 read |
+| §7.1 (c) | does not fire | bp13 0 late in 32 |
+| §7.1 (d) | does not fire | bp13 0 of 48 at CR (and 0 of 48 at BU) |
+| the reading is the critic's digest; no probe used to turn a row | yes | CR §0, §5; this seat turned none either way |
+| G re-trigger (the WebKit-clock condition) | no | no pass-13 seat recorded it |
+| two consecutive clean passes | **1 of 2** | pass 13 is clean |
+
+**The convergence history (B′, the route of record from pass 3).** §P12c-4's table, with pass 13's rows added:
+
+| pass | list | score of record | first 24 | open | what closed or opened |
+|---|---|---:|---:|---|---|
+| … | | | | | passes 3-12 as §P12c-4 |
+| `BU`, pass 13 | 38 rows | not of record (the builder's digest: 38/38 ruled) | — | — | the builder's battery |
+| **13** | 38 rows | **38/38 (100 %); default 36/38** | **24/24** | **none** | **the reversal stub and its 794 px sibling cured by one edge law, read 0 on bp13 in every read. Count 1** |
+
+The list has been fixed at 38 rows since pass 5. **Clean passes: 1 of 2. Earliest D2 convergence: pass 14's close.**
+
+What passes 10-13 show, read together. Pass 10 was clean and pass 11, its confirmation, was not: a near-bound class of the base (the window) drew twice in a slot. Pass 13 is clean the same way pass 10 was, and the base still has near-bound classes: [terminal] on `lead-*` (a last step 0.07 px over its bound), [leaving] on `swap-long` (0.3 ms short), [faces] and [blank]. Each read on bp13 as often as on bp12, and none drew twice in a battery. Pass 14 cannot cure them, since a confirmation builds nothing. What it can do is read each at the rate an A/B sees, so that if one opens, the build after it starts with the carrier rate instead of a trace from scratch (§P13-7.3).
+
+---
+
+## P13-5 · O-88: the facility status, and 10.2.0's critical path
+
+**C1-C9 hold on B′ in both engines and both themes for the eighth pass running** (CR §5). O-88's facility is complete on its carrier, and the carrier reads 38/38 for the first time on a fresh critic since pass 10. D3 and D4 have converged. O-103's go applies once D2 converges and the landing is green. D2 alone still binds the date: pass 14's close.
+
+1. **Pass 14, the confirmation** (§P13-7). If it is clean, D2 is CONVERGED at pass 14's close (passes 13 and 14). If it is not, the count returns to 0 and pass 15 is a build.
+2. **The landing (W-0.8)**, unchanged in order. Its content as of today, with each change from §P12c-5 step 2 marked:
+   - **B′ (changed).** The patch the landing takes is **`pass-13/D2-Bp-p13.patch` (`bb7cb08d…`) once pass 14 confirms it**. It differs from p12 only in `useDockScene.ts` (`writeClip`'s edge law and the `inPlate` helper, BU §3). The edge law is the header's, and it travels as written.
+   - **The merge base (changed).** Since §P12c, the release line moved twice beside master. **11.0.0** is in its close on `release/11.0.0` (`50503bf73`): cut from master, carrying the U line (`373ed8aba`: DockTrigger in `./dock-trigger`, the `--scale-hover-dock` deletion) and `release/10.1.4`. Its critic 4 is clean and the close-only run is going; it is not tagged (`git tag` tops at `v10.1.4`). Master fast-forwards to it after its publish. **10.1.5** is at fix 8 on `release/10.1.5` (`d04dfd9a8`), not published, and forward-merges as 11.0.1 (`FORMATION-PROGRESS.md`, 2026-11-05 09:35 and 2026-11-06 11:48). Both branches change `src/components/dock` against master (11.0.0: 25 files, including `useDockMorph.ts`, `dockMorphMeasure.ts`, `useDockRun.ts` and `useDockState.ts`; 10.1.5: 24 files). So floor v5 + B′ rebases at the landing on whatever master then holds: 10.1.1-10.1.5 and 11.0.x. B′ deletes `useDockMorph.ts` and `dockMorphMeasure.ts`, so each change those releases made to them is carried as its law on the landed scene, never as a ported file, with its witness as the gate. **Which version number the facility ships under, now that 11.0.0 publishes first, is the formation's to state with the owner; O-88's content is unchanged** (§P13-6).
+   - **Laws on the landed scene, each with its gate**, as §P12c-5: O-101; O-110; 10.1.3's further cures; O-102d; 10.1.1's and 10.1.2's cures; O-104's Z-Dock-16 and Z-LG-7; the 10.1.5 run-reserve cures; the centre law's boundary grep (CR §3.6 read it statically on bp13: no box framing dock units carries a scale or rotate of its own).
+   - **W-0.8 §11 and its addenda (changed),** each row's law and gate as §11 and its addenda state them (P-3): O-123 OD-1 and OD-5, O-124 OD-5b, OD-13 and OD-14, O-122 G-17, O-129 r3, r4 and r8, O-131 G-20 and G-22, O-132 OD-18, as §P12c-5. **New since §P12c:** O-166's morph smoothing (the owner's "smooth the expand and collapse", to W-0.8 and the D2 bar; D2's motion rows R1-R8 are that bar in the passes, and they read PASS ×4 on bp13); O-171 R-2 (the expanded plate morphs its inline size on content change, not a snap: O-129 r3's object, whose code B′ deletes); O-180 (3) (the dock layer measure's forced layout, with R-2: `dockMorphMeasure.ts`, which B′ deletes); O-170 (1) (fourier's `collapse="open"` dock in the census); value O-99 R-2 (the block-extent token beside C9, by O-148); O-135 (2) (value reads OD-18's bar at the landing). None opens a row of the 38.
+   - **O-118's rulings, O-119 (d) (d1), (d2), (d4), O-120, O-121's gate, O-113's dock rows, the atlas U/B7d addendum (still untracked), W-0.8 §10's D5-held cells, the far-side consumer read, the prose sweep**: unchanged from §P12c-5.
+   - **F7 on the landed tree (changed).** The boot graph's margin is **31 B** on bp13 (503,777 against 503,808; BU §3.3, CR §4). The ceiling is not raised. **The ceiling's re-read with the owner stays the landing's first step, before any merge bytes**: the 10.1.x and 11.0.x merge, the §11 laws and their addenda all cost bytes against it.
+3. **What moves with this count,** for the driver:
+   - D4's W-J.1; D5's held cells (D5's pass-14 E-14 critic is running, `FORMATION-PROGRESS.md` 2026-11-06 12:38);
+   - W-0.12 and W-I.1 on W-0.8's carrier. **O-129 r9 is ruled (§P13-6)**, so W-I.1 has D2's seat grammar for tooltips. W-I.1's O-169 addendum (`ScrollProgressRim edge="border"`) is judged in the D2 loop against N-16 when it is delivered in 11.1.0, outside the 38;
+   - the peers told "10.2.0 after D2 converges + W-0.8" (O-113, the atlas lane, Gregg's relay, value.js under O-123, O-124, O-129, O-130, O-132, O-134, O-135). D2's date does not move this pass: pass 14's close, as §P12c set.
+
+---
+
+## P13-6 · O-129 r9: dock seat tooltips, ruled as D2's seat grammar for W-I.1
+
+**The ask** (relay row 9, INBOUND O-129): "No role=tooltip within 2 s on any app. Confirm the intent. If tooltips are intended, wire them in DockIconButton on `--duration-fast`/`--spring-present`." `DockIconButton` is folded into `DockControl` (`shape="icon"`, `src/components/dock/index.ts:25`, `DockControl.vue:156`). Today the dock documents its label affordance as the consumer's own `<Tooltip side="right">` around each control (`styles/controls/touch-floor.css:61`, `DockLayerGroup.vue:237-244`). So the served apps, which do not wrap, show none, and a sighted pointer user sees an icon with no name.
+
+**Ruling: ADOPT. An icon seat shows its own name, on a fine pointer, at rest.** This is a statement of D2's seat grammar. It is outside the 38, it builds nothing in the passes, and W-I.1 lands it.
+
+1. **One source for a seat's name (P-3).** `DockControl` takes the name once. That one value is the seat's accessible name and the tip's text. The switcher tabs in `DockLayerGroup` follow the same grammar, with `layer.label` as the one value. A seat whose name is visible text (`shape="tab"`, a text tab) shows no tip, because its text is already its label. The consumer composition (`aria-label` on the control, a `<Tooltip>` around it) is replaced, not kept beside (E-1). The two comments that document it are restated as the seat's own grammar, and consumers drop their wrappers in their own tranches.
+2. **When.** A tip shows only on a hover-capable fine pointer (`(hover: hover) and (pointer: fine)`) and on keyboard `:focus-visible`. It never shows on touch or after a tap, and W-I.3's I3/TOOLTIP-TAP reading of 0 holds. It shows only at rest: while the scene's window is open (a morph, a swap, a retarget) no tip opens, and an open tip closes at once, so no tip rides a moving seat. The collapsed summary shows none: its name is the disclosure's own.
+3. **How.** It uses the library's own Tooltip, portalled, so it adds no reach and no clip to the run (O-123 OD-5 and O-124 OD-13 unchanged). It sits on the side away from the dock's anchored edge. One provider serves the whole dock, so the first tip waits the provider's delay and the next seat along shows its tip with no second delay (the skip delay, as the macOS dock reads). It reveals on `--duration-fast` / `--spring-present`, as the relay asks, and appears at once under reduced motion. It carries no seat-local tooltip styling: it inherits the Tooltip's own cures, O-140's reveal state (W-L.2) and O-154's tier (W-E.4), and W-I.1 lands with or after them.
+4. **The gate** (W-I.1, Chromium and Playwright WebKit, both themes). On a fine pointer, hovering an icon seat at rest shows exactly one `role=tooltip` within the provider delay plus `--duration-fast`, and its text equals the seat's accessible name. Moving to the next seat shows that seat's tip with no second delay. A tap, a text-tab seat, and a seat inside the morph window each show 0. A grep finds no demo `DockControl` given both its own name and a wrapping `<Tooltip>`. The bytes are W-I.1's, held against the boot-graph ceiling as re-read at W-0.8's landing, and no seat raises it.
+
+Why adopt: under D-2 and D-3 every component shows engagement, and an unnamed icon on a pointer device is a dead end that the macOS and iPadOS docks never leave. KISS: the name is given once, and the library's one Tooltip serves it. O-87 holds: the tip is the house overlay plate, with no added lighting layer. KEEP from the relay letter (the spring ladder, the menu's entry and exit asymmetry, collapse smoothness) is unchanged.
+
+---
+
+## P13-7 · The pass-14 plan: the confirmation pass
+
+Pass 13 is clean, so pass 14 is a confirmation on the §P10-7 model: a fresh re-measure of the same build on the same harness, fresh A/Bs and a fresh critic. **No new build unless a row opens. The list is held fixed at 38.** The count is 1 of 2.
+
+### 7.1 · Harness and rules
+
+**H8 as landed, unchanged** (`9d12810b…`). Every seat checks the per-file list against `pass-8/H8-records/harness.sha256` at its start and its end. No H9. No bound is re-read inside the pass.
+
+**Rules (a)-(d) carry, on bp13:** (a) two `splice` reads at one `retarget` cell in one column of one A/B; (b) two `stub` reads at one slot in one column of one battery; (c) any bp13 `content-remove` A/B read whose flag closes over 2F + 0.5 after the landing; (d) any bp13 `stub` read on the `reversal` A/B. Each makes pass 14 not clean, whatever the digest reads. Both seats run the A/Bs.
+
+### 7.2 · Floor, arms and base
+
+**Floor v5** (`cba6bdc2…`) stays the base. **Arms:** `bp13` (base + floor v5 + `pass-13/D2-Bp-p13.patch`, `bb7cb08d…`), `bp12` (base + floor v5 + `pass-12/D2-Bp-p12.patch`, `5318a3dc…`) the reference arm, `fv5`, and `fv3` for L1. Stage with `git apply` only, no commit.
+
+**The base is pinned at `392ff1e3c`**, the tree pass 13 measured (src-identical to `8b70ba0a9`, BU §7). Master is due to fast-forward to `release/11.0.0` after its publish, and that changes 25 dock files (§P13-5). A confirmation measures the same bytes, so each seat's worktree is detached at `392ff1e3c` whatever master then holds. The rebase onto 10.1.5 and 11.0.x is the landing's, as the 10.1.x merge has been since pass 8.
+
+### 7.3 · The re-measure seat (D2-B′, pass 14)
+
+A seat that authored nothing in D2's passes 12 and 13 and was no pass-13 critic.
+
+1. **Same build, proved.** Re-hash the patches. `git apply --check`, then apply on `392ff1e3c` + floor v5 and build. Record the scene chunk (BU and CR: **21,473 B**) and the boot graph (**503,777 B**). F7 and PR re-run. **If any of these differs, the seat stops and the pass becomes a build pass.** There is no prose edit: CR's 2 % nit is a true statement of the `whole` tolerance (§P13-2).
+2. **The battery, fresh.** All four columns under H8 on §P12c-7.3 item 5's arm set and load rules: every witness, red cells re-run twice, FM's six B2 cells three runs each, `fmlow` per WebKit theme, F7, PR, L1 against `fv3`. Each slot starts at load ≤ 20 and is read again at WebKit lock admission. A slot whose cells run above 31 is re-read, and both readings are kept.
+3. **The A/Bs, bp13 and bp12 alternating, each read started at load ≤ 11, waiting for that rather than timing out into a higher start:** `retarget·40/80/120` (rules (a), (b)); `content-remove` (rule (c), every gap); `reversal`, 16 rounds per Chromium theme and 8 per WebKit theme (rule (d); every stub read with its glyph, edge, offset and ramp); FM `warm-expand` and `first-expand`; the display-frame probe; cost (each start ≤ 15); the boot graph. **Readings beside the rows, none a row and none a rule:**
+   - **the base's near-bound classes at A/B rate**, 8 rounds per theme on the cells where pass 13 read them: `lead-add` / `lead-remove` [terminal] (Chromium), `swap-long` [leaving] and its fade span (W·l), `swap-long` [faces] (Chromium), `swap-short` [blank] (Playwright WebKit). Report the rate per build and each red read's margin to its bound;
+   - **`swrev` in paint**: F2's arguments, 8 rounds per WebKit theme; at every `s7|s8` frame, the glyph share between the two edges (BU §2 reads 0);
+   - **R2 per column with the seat**, at 10-15, above all W·l `swap-long` seats 1 and 2 and seat 1 at `retarget·80`.
+4. **The report names every red check of every red cell** (§P12c-7.3 item 6).
+
+### 7.4 · The fresh critic
+
+A seat that authored nothing in D2 and was no earlier D2 critic. It reads CR and the re-measure's report in full, re-hashes the patches, checks the harness at its start and end, and stages the arms on `392ff1e3c` with `git apply` only. It runs the re-measure's owed re-runs, then one battery of all four columns under H8, then its own A/Bs of §7.3 item 3, rule (d)'s included. It attacks:
+- the reversal family (`reversal`, `revst`, `rtrev`) and every plate-edge cell (`swap-*`, `retarget·*`, `lead-*`, `content-add`, `warm-*`), in Chromium and Playwright WebKit at load ≤ 11; the 794 px sibling on `swrev --then 0`;
+- **the edge law's own range**: a cut whose depth crosses the touch on consecutive frames (the v1 draft's failure, BU §3.2), read for a clip step in `lanes`;
+- the window, late and early, in Playwright WebKit at ≤ 11;
+- the B2 strips by eye in all four columns, with the `warm-collapse` slot-5 frame;
+- R2 at 10-15 against bp12 in alternating slots;
+- the heir at `fs-to-one` and `fs-to-three`; `vmorph` collapse on the frozen frame, both engines;
+- the header and comments against the code; the centre law's boundary, read statically;
+- CASES `case·rotated`, for the record only, outside the 38.
+
+**A critic may not add rows, and may not rule a row PASS against its own instrument.** If it opens one of the 38, or any of rules (a)-(d) fires, pass 14 is not clean, the count returns to 0, and pass 15 is a build pass with the list held fixed. That build cures the class that opened and every near-bound class §7.3 item 3 read on bp13, on the §P12c-4 lesson.
+
+### 7.5 · Order
+
+1. The re-measure seat (§7.3), then the fresh critic (§7.4). One heavy run at a time per seat. Every browser run goes through the guard, never `--light`. Playwright WebKit runs under `--exclusive webkit`, queued and never cancelled. No admitted slot is ended by stopping its parent. G's seats do not run.
+   - **The stop is the guard's refusal.** An armed flag that admits runs is a warning, and the readings it admits are of record. A refused run stops the seat's runs. The seat records what ran, and a completion seat finishes the rest. **A seat that measured nothing reports no score and no "0 defects".**
+   - **A seat that dies mid-chain** leaves its chain running under `guarded`. The resumed seat waits on the chain's PID and reads its finished records, and runs no second battery.
+   - **Disk.** BU's entry 2 began with `guarded` crashing on a full disk. Each seat checks free space before its builds and keeps its outputs under its own worktree.
+2. **The pass-14 agglomeration.** **Pass 14 is clean** at 0 open rows of 38 on the ruled digest, B2 read on the strips included, with none of (a)-(d) fired. **Then D2 is CONVERGED (passes 13 and 14)**, `D2-Bp-p13.patch` is the specification W-0.8 lands, and O-103's go applies once the landing is green. The `swrev` splice, the R2 margin and the near-bound classes are no rows; none makes a pass unclean by itself. A `swrev` frame read with ink cut is placed for a build before the landing takes the scene.
+3. After convergence, outside the passes: the landing (W-0.8, §P13-5 step 2), its first step the boot-graph ceiling's re-read with the owner.
+
+### 7.6 · The checklist (fixed; critics may not add rows)
+
+The same 38 rows as §P12c-7.6, read on H8 unchanged. Critics report the 38, the first 36 and the first 24 on the ruled digest (O-103), with the default digest beside it. **The convergence rule:** D2 is CONVERGED at two consecutive clean passes, passes 13 and 14 at the earliest. There is no winner rule while G is banked. If WebKit's clock condition re-triggers G, the §P4-7.5 rule returns.
+
+---
+
+## P13-8 · Next-pass defect classes, placed
+
+Every class a pass-13 seat recorded is placed. None is left unassigned, and none was minted into the list.
+
+| class | recorded in | placed in |
+|---|---|---|
+| **the reversal stub family** (a hard clip edge within a touch of the plate's or box's edge, 0.24-0.25 px, across a tab-button glyph after the retarget) | BU §1, §5.2; CR §2 | **cured by the edge law, read in paint**: bp13 0 of 96 rule (d), 0 of 288 `revst`/`rtrev`, 0 in every battery; bp12 1 + 1 + 6. P3, R6, B2 PASS; held under rule (d) in pass 14 |
+| the 794 px opening-plate sibling ("r" at 793.8 px, `swrev --then 0`) | BU §1, §5.2; CR §2 | one class with the stub (BU §1); bp13 0 of 192 `swrev`, bp12 2; **cured**, attacked in pass 14 |
+| bp12's `reversal` stub in Playwright WebKit (W·l `revst`, "i" at 884.2 px) | CR §2 | the reference arm's; the class is not Chromium-only on the base; bp13 0 there |
+| **`swrev` splice `s7\|s8`** (two leaving remnants facing each other) | BU §2, §5.2; CR §3.1 | the base's, 8/192 on each build; **no ink cut in paint** (BU §2); not rule (a), no row; **read in paint in pass 14** (§P13-7.3); a build before the landing if ink is ever cut |
+| `bp13v1`, the touch-snap draft: C·l `reversal` [window, lanes], a 0.57 px clip step | BU §3.2 | **superseded**, not of record for bp13; the lesson (a snap is a step) is the edge law's continuous form; pass 14's critic attacks the depth crossing the touch (§P13-7.4) |
+| **C·d W3 `lead-add` [terminal]** (0.95 px against 0.88), battery main read; [terminal] on `lead-*` in the A/Bs | CR §3.7 | NR (H6-7); the base's (bp13 5, bp12 7); **pass 14 reads its rate** (§P13-7.3); a build's if it opens |
+| **W·l W3 `swap-long` [leaving]** (fade 0.3 ms short; drop 0.451) | CR §3.4, §3.7 | NR; R1 and R2 PASS; **pass 14 reads its rate and fade span** |
+| `swap-long` [faces] 1.5 px (Chromium) | CR §3.7 | the base's (bp13 2/28, bp12 1/28; p13 moves no clip or plate edge); **pass 14 reads its rate** |
+| `swap-short` [blank] at +19-22 ms (Playwright WebKit) | BU §6; CR §3.7 | the base's (bp13 2 attack reads, 0 of 16 re-reads; bp12 1 + BU's 1); **pass 14 reads its rate** |
+| R2 W·l `swap-long` seat 1, BU's 0.497 (margin 0.003) | BU §5.3 | **not reproduced** in 18 bp13 reads (CR §3.4); margin of record 0.049; R2 PASS ×4; read again in pass 14 |
+| display-frame least ink bp13 0.375 / 0.399 (BU) | BU §5.2, §9 | **closed as a reading**: CR reads bp13 0.41-0.422, bp12 0.377 |
+| the cure's 2 % edge step at d = 0.01 px | CR §2 | the `whole` test's own tolerance; **no defect**, no prose edit (pass 14's bytes are p13's) |
+| bp12 W·d `warm-collapse` [lanes], `swap-short` [window, blank] (BU's A/Bs) | BU §6; CR §1 | **NOT-REPRODUCED** on the owed re-runs (12 reads PASS); closed |
+| `fs-to-three` one frame at C | CR §3.5 | both builds, every read; the probe's `wide` limit, as CC |
+| CASES `case·rotated` | BU §6; CR §4 | outside the 38; bp13 no worse than bp12; §P12-2's ruling stands |
+| the centre law's boundary | CR §3.6 | read statically on bp13, holds; the landing's grep (§P13-5) |
+| cost bp13 4-5, bp12 4-7, fv5 0 | BU §5.3; CR §4 | Q-15 (a); the builds do not separate |
+| boot graph 31 B | BU §3.3; CR §4 | F7 holds, no raise; the ceiling's re-read is the landing's first step |
+| two read starts logged above 11 (BU `rev-bp12-r12` 12.57; CR `lanes-morph-bp13t-r3` 11.17) | BU §5.2; CR §1 | each checked ≤ 11 the instant before; kept as read; neither a bp13 red |
+| `guarded` crashed on a full disk (OSError 28) at a WebKit slot's start; an orphaned queue slot stopped in its load gate | BU §7 | no read ran outside the guard; **pass 14 checks disk before its builds** (§P13-7.5) |
+| the builder's three entries (usage limit at 14:27; the third adopted the live chain) | BU §7; `FORMATION-PROGRESS.md` 15:40 | standing practice (§P12c-7.5 item 1); no battery ran twice |
+| two builder WebKit lock waits past 90 min, kept queued; critic waits 71 and 41 min | BU §7; CR §1 | queued, never cancelled, as the law says; no admitted run passed its timeout |
+| ZONE-ARMED warnings (inuse about 43k), no refusal | CR header; BU §7 | the owner's 2026-11-03 order; readings of record |
+| `.claude/worktrees/bl/D2/p13/Bp-build/` (about 1.3 GB), removal refused | BU §8 | the owner's chore, beside §P12c-6's; nothing of record |
+| pass-13 records untracked (`git status`) | `git status` | committing them is the driver's; this seat makes no git write |
+| HEAD moved during the builder (20 docs-only commits) | BU header | no path outside `docs/` changed; readings describe `392ff1e3c`; **pass 14 pins its base there** (§P13-7.2) |
+| **11.0.0 in its close; 10.1.5 at fix 8; master to fast-forward to 11.0.0** | `FORMATION-PROGRESS.md`; `git` | the landing's rebase (§P13-5); the facility's version number is the formation's to state with the owner |
+| **O-129 r9** (dock seat tooltips) | INBOUND; relay row 9 | **ruled ADOPT (§P13-6)** for W-I.1; outside the 38 |
+| O-166 morph smoothing; O-171 R-2; O-180 (3); O-170 (1); value O-99 R-2 (O-148); O-135 (2) | INBOUND | **W-0.8 and its §11 addenda** (§P13-5); the D2 bar is R1-R8, PASS ×4 on bp13; none of the 38 |
+| O-155, O-156, O-165, O-166 shape, O-167, O-176, O-177, O-182 (the halo; its blur to W-0.1) | INBOUND | **10.1.5**, as INBOUND places them; the landing carries each cure as its law (§P13-5) |
+| O-169 (`ScrollProgressRim edge="border"`) | INBOUND; W-I.1 addendum | **W-I.1, 11.1.0**, judged in the D2 loop against N-16 on delivery; none of the 38 |
+| O-148 (1), O-129 r10 withdrawn | INBOUND | closed; W-I.1's addendum drops row 10 |
+| O-134, O-139 (10.1.5 adoption pings), O-140 (Tooltip reveal state), O-154 (tooltip tier) | INBOUND | 10.1.5; W-L.2; W-E.4. O-140 and O-154 are r9's inherited cures (§P13-6 item 3) |
+| O-118 to O-121, O-113's dock rows, the atlas U/B7d addendum, W-0.8 §10, O-101, O-110, O-102d, O-104, O-123, O-124, O-129 r3/r4/r8, O-131, O-132 | §P12c-8; INBOUND | W-0.8, as §P12c-5 placed them, updated at §P13-5 |
+| D5's E-14 critic running | `FORMATION-PROGRESS.md` | what moves with this count (§P13-5 item 3) |
+| real Safari | every report | **UNMEASURED (owner's safaridriver checkbox)**; O-103: not granted |
+
+**Harness at this seat's end:** 42 OK against `pass-8/H8-records/harness.sha256` (list hash `9d12810b…`), 2026-11-07 06:13. No process of this seat remains.

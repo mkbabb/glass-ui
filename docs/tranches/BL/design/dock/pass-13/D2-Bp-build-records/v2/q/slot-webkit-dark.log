@@ -1,0 +1,233 @@
+[guarded] waiting for the 'webkit' lock
+admitted wk webkit-dark 2026-11-05 22:21:52 · 22:21  up 1 day,  3:41, 2 users, load averages: 14.38 13.34 12.93
+battery end 22:32:48 exit 0
+fmlow end 22:34:52 exit 0
+admitted webkit-dark 2026-11-05 22:34:52 · 22:34  up 1 day,  3:54, 2 users, load averages: 22.07 17.69 15.28
+22:40:12 start ab-bp13-r1 gate 11 load 10.73
+22:40:20 end ab-bp13-r1 load 13.26
+22:42:31 start ab-bp12-r1 gate 11 load 10.83
+22:42:38 end ab-bp12-r1 load 10.44
+22:42:38 start ab-bp13-r2 gate 11 load 10.44
+22:42:45 end ab-bp13-r2 load 12.83
+gate 11 unmet 30 min before ab-bp12-r2 at load 11.73 23:12:54; releasing
+[guarded] waiting for the 'webkit' lock
+admitted webkit-dark 2026-11-06 08:16:51 ·  8:16  up 1 day, 13:36, 2 users, load averages: 23.95 16.39 14.09
+gate 11 unmet 30 min before ab-bp12-r2 at load 29.49 08:51:10; releasing
+[guarded] waiting for the 'webkit' lock
+admitted webkit-dark 2026-11-06 11:00:22 · 11:00  up 1 day, 16:19, 3 users, load averages: 17.43 17.67 16.90
+gate 11 unmet 30 min before ab-bp12-r2 at load 14.74 11:30:29; releasing
+[guarded] waiting for the 'webkit' lock
+admitted webkit-dark 2026-11-06 11:50:59 · 11:50  up 1 day, 17:10, 3 users, load averages: 25.00 19.96 18.58
+OSError: [Errno 28] No space left on device
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/mkbabb/.claude/guard/guarded", line 579, in <module>
+    main()
+    ~~~~^^
+  File "/Users/mkbabb/.claude/guard/guarded", line 431, in main
+    log(f"start {run_id} pid={proc.pid} {mode}{'+'+a.exclusive if a.exclusive else ''}{' armed=1' if armed else ''} waited={waited}s load={load1():.0f} memfree={mem_free_pct()}% swap={swap_used_pct():.0f}% procs={nprocs()} cmd={joined[:300]}")
+    ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/mkbabb/.claude/guard/guarded", line 80, in log
+    with open(LOG, "a") as f:
+         ~~~~^^^^^^^^^^
+OSError: [Errno 28] No space left on device
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1793985220 slope=25.3/s inuse=43342 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. Finish what you are doing and report it; the owner decides on the reboot.
+[guarded] waiting for the 'webkit' lock
+admitted webkit-dark 2026-11-06 13:16:34 · 13:16  up 1 day, 18:35, 3 users, load averages: 22.98 19.47 18.25
+13:25:35 start ab-bp12-r2 gate 11 load 10.92
+13:25:43 end ab-bp12-r2 load 10.36
+13:25:43 start ab-bp13-r3 gate 11 load 10.36
+13:25:50 end ab-bp13-r3 load 10.15
+13:25:50 start ab-bp12-r3 gate 11 load 10.15
+13:25:57 end ab-bp12-r3 load 11.50
+13:28:08 start ab-bp13-r4 gate 11 load 10.38
+13:28:16 end ab-bp13-r4 load 10.07
+13:28:16 start ab-bp12-r4 gate 11 load 10.07
+13:28:23 end ab-bp12-r4 load 9.50
+13:28:23 start ab-bp13-r5 gate 11 load 9.50
+13:28:31 end ab-bp13-r5 load 11.80
+13:29:11 start ab-bp12-r5 gate 11 load 10.23
+13:29:18 end ab-bp12-r5 load 10.21
+13:29:18 start ab-bp13-r6 gate 11 load 10.21
+13:29:26 end ab-bp13-r6 load 10.25
+13:29:26 start ab-bp12-r6 gate 11 load 10.25
+13:29:34 end ab-bp12-r6 load 9.46
+13:29:34 start ab-bp13-r7 gate 11 load 9.46
+13:29:41 end ab-bp13-r7 load 9.58
+13:29:42 start ab-bp12-r7 gate 11 load 9.58
+13:29:49 end ab-bp12-r7 load 10.56
+13:29:49 start ab-bp13-r8 gate 11 load 10.56
+13:29:56 end ab-bp13-r8 load 12.44
+13:30:36 start ab-bp12-r8 gate 11 load 10.48
+13:30:44 end ab-bp12-r8 load 10.13
+13:30:44 start cr-bp13-r1 gate 11 load 10.13
+13:31:35 end cr-bp13-r1 load 16.33
+gate 11 unmet 30 min before cr-bp12-r1 at load 118.66 14:03:32; releasing
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1793985220 slope=25.3/s inuse=43342 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. Finish what you are doing and report it; the owner decides on the reboot.
+admitted webkit-dark 2026-11-06 16:19:00 · 16:19  up 1 day, 21:38, 3 users, load averages: 10.03 13.56 19.34
+16:19:00 start cr-bp12-r1 gate 11 load 10.03
+16:19:48 end cr-bp12-r1 load 12.56
+16:20:18 start cr-bp13-r2 gate 11 load 10.64
+16:21:05 end cr-bp13-r2 load 13.90
+16:23:36 start cr-bp12-r2 gate 11 load 11.00
+16:24:23 end cr-bp12-r2 load 13.39
+16:32:54 start cr-bp13-r3 gate 11 load 10.63
+16:33:42 end cr-bp13-r3 load 17.76
+16:38:43 start cr-bp12-r3 gate 11 load 10.49
+16:39:31 end cr-bp12-r3 load 14.71
+16:42:01 start cr-bp13-r4 gate 11 load 10.16
+16:42:49 end cr-bp13-r4 load 11.22
+16:42:59 start cr-bp12-r4 gate 11 load 10.27
+16:43:48 end cr-bp12-r4 load 10.88
+16:43:48 start cr-bp13-r5 gate 11 load 10.88
+16:44:34 end cr-bp13-r5 load 11.58
+16:45:04 start cr-bp12-r5 gate 11 load 10.43
+16:45:51 end cr-bp12-r5 load 10.68
+16:45:51 start cr-bp13-r6 gate 11 load 10.68
+16:46:36 end cr-bp13-r6 load 10.31
+16:46:36 start cr-bp12-r6 gate 11 load 10.31
+16:47:24 end cr-bp12-r6 load 14.72
+16:48:04 start cr-bp13-r7 gate 11 load 10.71
+16:48:51 end cr-bp13-r7 load 11.33
+16:49:01 start cr-bp12-r7 gate 11 load 10.74
+16:49:49 end cr-bp12-r7 load 13.85
+16:50:59 start cr-bp13-r8 gate 11 load 10.92
+16:51:46 end cr-bp13-r8 load 13.59
+16:57:27 start cr-bp12-r8 gate 11 load 10.83
+16:58:15 end cr-bp12-r8 load 16.02
+17:03:25 start rev-bp13-r1 gate 11 load 10.58
+17:03:40 end rev-bp13-r1 load 12.23
+17:04:40 start rev-bp12-r1 gate 11 load 11.00
+17:04:54 end rev-bp12-r1 load 13.21
+17:18:47 start rev-bp13-r2 gate 11 load 10.53
+17:19:01 end rev-bp13-r2 load 12.39
+17:19:51 start rev-bp12-r2 gate 11 load 10.75
+17:20:05 end rev-bp12-r2 load 11.26
+17:36:58 start rev-bp13-r3 gate 11 load 10.33
+17:37:12 end rev-bp13-r3 load 11.67
+17:37:22 start rev-bp12-r3 gate 11 load 10.79
+17:37:36 end rev-bp12-r3 load 14.75
+gate 11 unmet 30 min before rev-bp13-r4 at load 17.19 17:39:06; releasing
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1793985220 slope=25.3/s inuse=43342 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. Finish what you are doing and report it; the owner decides on the reboot.
+admitted webkit-dark 2026-11-06 17:48:12 · 17:48  up 1 day, 23:07, 3 users, load averages: 10.89 13.48 14.02
+17:48:12 start rev-bp13-r4 gate 11 load 10.89
+17:48:27 end rev-bp13-r4 load 13.02
+17:48:47 start rev-bp12-r4 gate 11 load 10.98
+17:49:01 end rev-bp12-r4 load 10.29
+17:49:01 start rev-bp13-r5 gate 11 load 10.29
+17:49:15 end rev-bp13-r5 load 10.25
+17:49:15 start rev-bp12-r5 gate 11 load 10.25
+17:49:29 end rev-bp12-r5 load 10.30
+17:49:29 start rev-bp13-r6 gate 11 load 10.30
+17:49:43 end rev-bp13-r6 load 11.41
+17:49:53 start rev-bp12-r6 gate 11 load 10.35
+17:50:07 end rev-bp12-r6 load 9.58
+17:50:07 start rev-bp13-r7 gate 11 load 9.58
+17:50:21 end rev-bp13-r7 load 8.92
+17:50:21 start rev-bp12-r7 gate 11 load 8.92
+17:50:35 end rev-bp12-r7 load 10.54
+17:50:35 start rev-bp13-r8 gate 11 load 10.54
+17:50:49 end rev-bp13-r8 load 10.40
+17:50:49 start rev-bp12-r8 gate 11 load 10.40
+17:51:03 end rev-bp12-r8 load 10.97
+17:51:03 start swrev-bp13-r1 gate 11 load 10.97
+17:51:12 end swrev-bp13-r1 load 10.51
+17:51:12 start swrev-bp12-r1 gate 11 load 10.51
+17:51:21 end swrev-bp12-r1 load 9.67
+17:51:21 start swrev-bp13-r2 gate 11 load 9.67
+17:51:31 end swrev-bp13-r2 load 9.27
+17:51:31 start swrev-bp12-r2 gate 11 load 9.27
+17:51:40 end swrev-bp12-r2 load 12.25
+17:52:30 start swrev-bp13-r3 gate 11 load 10.00
+17:52:40 end swrev-bp13-r3 load 10.26
+17:52:40 start swrev-bp12-r3 gate 11 load 10.26
+17:52:49 end swrev-bp12-r3 load 13.46
+17:53:40 start swrev-bp13-r4 gate 11 load 10.62
+17:53:49 end swrev-bp13-r4 load 10.06
+17:53:49 start swrev-bp12-r4 gate 11 load 10.06
+17:53:59 end swrev-bp12-r4 load 13.22
+17:54:39 start swrev-bp13-r5 gate 11 load 10.78
+17:54:49 end swrev-bp13-r5 load 10.50
+17:54:49 start swrev-bp12-r5 gate 11 load 10.50
+17:54:58 end swrev-bp12-r5 load 10.38
+17:54:58 start swrev-bp13-r6 gate 11 load 10.38
+17:55:07 end swrev-bp13-r6 load 12.41
+17:56:18 start swrev-bp12-r6 gate 11 load 10.72
+17:56:27 end swrev-bp12-r6 load 10.67
+17:56:27 start swrev-bp13-r7 gate 11 load 10.67
+17:56:37 end swrev-bp13-r7 load 11.78
+17:56:47 start swrev-bp12-r7 gate 11 load 10.94
+17:56:56 end swrev-bp12-r7 load 10.42
+17:56:56 start swrev-bp13-r8 gate 11 load 10.42
+17:57:05 end swrev-bp13-r8 load 9.97
+17:57:05 start swrev-bp12-r8 gate 11 load 9.97
+17:57:15 end swrev-bp12-r8 load 9.82
+17:57:15 start fmab-bp13-r1 gate 11 load 9.82
+17:57:25 end fmab-bp13-r1 load 10.45
+17:57:25 start fmab-bp12-r1 gate 11 load 10.45
+17:57:36 end fmab-bp12-r1 load 12.33
+17:58:26 start fmab-bp13-r2 gate 11 load 10.91
+17:58:38 end fmab-bp13-r2 load 16.42
+18:01:58 start fmab-bp12-r2 gate 11 load 10.56
+18:02:09 end fmab-bp12-r2 load 11.66
+18:06:20 start fmab-bp13-r3 gate 11 load 10.76
+18:06:31 end fmab-bp13-r3 load 10.01
+18:06:31 start fmab-bp12-r3 gate 11 load 10.01
+18:06:41 end fmab-bp12-r3 load 10.95
+18:06:41 start fmab-bp13-r4 gate 11 load 10.95
+18:06:52 end fmab-bp13-r4 load 11.03
+18:15:03 start fmab-bp12-r4 gate 11 load 10.93
+18:15:14 end fmab-bp12-r4 load 15.71
+18:16:45 start fmab-bp13-r5 gate 11 load 10.93
+18:16:55 end fmab-bp13-r5 load 10.17
+18:16:55 start fmab-bp12-r5 gate 11 load 10.17
+18:17:05 end fmab-bp12-r5 load 9.91
+18:17:05 start fmab-bp13-r6 gate 11 load 9.91
+18:17:16 end fmab-bp13-r6 load 9.53
+18:17:16 start fmab-bp12-r6 gate 11 load 9.53
+18:17:26 end fmab-bp12-r6 load 11.47
+18:18:37 start fmab-bp13-r7 gate 11 load 10.01
+18:18:48 end fmab-bp13-r7 load 11.08
+18:26:39 start fmab-bp12-r7 gate 11 load 10.75
+18:26:50 end fmab-bp12-r7 load 12.67
+18:27:40 start fmab-bp13-r8 gate 11 load 10.98
+18:27:51 end fmab-bp13-r8 load 11.97
+18:28:42 start fmab-bp12-r8 gate 11 load 10.57
+18:28:52 end fmab-bp12-r8 load 9.95
+18:28:52 start si-bp13-r1 gate 11 load 9.95
+18:29:09 end si-bp13-r1 load 12.26
+18:29:39 start si-bp12-r1 gate 11 load 10.65
+18:29:57 end si-bp12-r1 load 10.23
+18:29:57 start si-bp13-r2 gate 11 load 10.23
+18:30:14 end si-bp13-r2 load 10.51
+18:30:14 start si-bp12-r2 gate 11 load 10.51
+18:30:31 end si-bp12-r2 load 11.58
+18:31:02 start si-bp13-r3 gate 11 load 11.00
+18:31:19 end si-bp13-r3 load 9.59
+18:31:19 start si-bp12-r3 gate 11 load 9.59
+18:31:36 end si-bp12-r3 load 12.81
+18:32:06 start r2-bp13-r1 gate 11 load 10.97
+18:34:26 end r2-bp13-r1 load 16.13
+18:41:58 start r2-bp12-r1 gate 11 load 10.96
+18:44:15 end r2-bp12-r1 load 10.02
+18:44:15 start r2-bp13-r2 gate 11 load 10.02
+18:46:33 end r2-bp13-r2 load 11.42
+18:46:43 start r2-bp12-r2 gate 11 load 10.58
+18:49:01 end r2-bp12-r2 load 12.82
+18:49:01 start r2x-bp13-r1 gate 10-15 load 12.82
+18:51:18 end r2x-bp13-r1 load 11.95
+18:51:18 start r2x-bp12-r1 gate 10-15 load 11.95
+18:53:35 end r2x-bp12-r1 load 12.92
+18:53:35 start r2x-bp13-r2 gate 10-15 load 12.92
+18:55:52 end r2x-bp13-r2 load 14.46
+18:55:52 start r2x-bp12-r2 gate 10-15 load 14.46
+18:58:09 end r2x-bp12-r2 load 12.21
+18:58:09 start r2x-bp13-r3 gate 10-15 load 12.21
+19:00:26 end r2x-bp13-r3 load 8.97
+19:00:36 start r2x-bp12-r3 gate 10-15 load 11.08
+19:02:53 end r2x-bp12-r3 load 12.40
+19:02:53 start frz-bp13 gate 15 load 12.40
+19:03:28 end frz-bp13 load 11.70
+queue end webkit-dark 2026-11-06 19:03:28 · 19:03  up 2 days, 22 mins, 3 users, load averages: 11.70 12.23 12.82

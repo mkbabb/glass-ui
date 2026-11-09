@@ -1,0 +1,84 @@
+== si: display-frame probe
+('bp12', 'chromium', 'dark') runs with an empty frame 0/18 lowest minInk (0.422, 'swap-long', 'Tools at +69 ms', 10.39)
+('bp12', 'chromium', 'light') runs with an empty frame 0/18 lowest minInk (0.422, 'swap-long', 'Tools at +70.8 ms', 9.93)
+('bp12', 'webkit', 'dark') runs with an empty frame 0/18 lowest minInk (0.422, 'swap-long', 'Tools at +74 ms', 10.16)
+('bp12', 'webkit', 'light') runs with an empty frame 0/18 lowest minInk (0.422, 'swap-long', 'Tools at +87 ms', 12.15)
+('bp13', 'chromium', 'dark') runs with an empty frame 0/18 lowest minInk (0.422, 'swap-long', 'Tools at +70.6 ms', 11.51)
+('bp13', 'chromium', 'light') runs with an empty frame 0/18 lowest minInk (0.422, 'swap-long', 'Tools at +71.1 ms', 10.92)
+('bp13', 'webkit', 'dark') runs with an empty frame 0/18 lowest minInk (0.399, 'swap-long', 'Tools at +154 ms', 10.23)
+('bp13', 'webkit', 'light') runs with an empty frame 0/18 lowest minInk (0.375, 'swap-long', 'Tools at +160 ms', 9.56)
+== fs: constructed far side
+== heir
+bp13i-chromium.json first-expand           armed 1 tied [('P', '1', 'enter', '-', 'de', 0)]
+bp13i-chromium.json warm-collapse          armed 1 tied [('1', 'P', 'enter', '-', 'de', 0)]
+bp13i-chromium.json warm-expand            armed 1 tied [('P', '1', 'enter', '-', 'de', 0)]
+bp13i-chromium.json swap-long              armed 2 tied [('A', 'C', 'enter', '-', 'de', 0)]
+bp13i-chromium.json swap-short             armed 2 tied [('C', 'A', 'enter', '-', 'de', 0)]
+bp13i-chromium.json content-add            armed 0 tied []
+bp13i-chromium.json lead-add               armed 0 tied []
+bp13i-chromium.json lead-remove            armed 1 tied []
+bp13i-chromium.json vlead-add              armed 0 tied []
+bp13i-chromium.json vlead-remove           armed 1 tied []
+bp13i-chromium.json vlead-remove-wide      armed 1 tied []
+bp13i-chromium.json vfirst-expand          armed 1 tied [('P', '1', 'enter', '-', 'de', 0)]
+bp13i-chromium.json wide-first-expand      armed 1 tied []
+bp13i-chromium.json end-first-expand       armed 1 tied [('P', '1', 'enter', '-', 'de', 0)]
+bp13i-chromium.json three-long             armed 2 tied [('A', 'C', 'enter', '-', 'de', 0)]
+bp13i-chromium.json three-mid              armed 3 tied [('C', 'E', 'enter', '-', 'de', 0)]
+bp13i-webkit.json first-expand           armed 1 tied [('P', '1', 'enter', '-', 'de', 0)]
+bp13i-webkit.json warm-collapse          armed 1 tied [('1', 'P', 'enter', '-', 'de', 0)]
+bp13i-webkit.json warm-expand            armed 1 tied [('P', '1', 'enter', '-', 'de', 0)]
+bp13i-webkit.json swap-long              armed 2 tied [('A', 'C', 'enter', '-', 'de', 0)]
+bp13i-webkit.json swap-short             armed 2 tied [('C', 'A', 'enter', '-', 'de', 0)]
+bp13i-webkit.json content-add            armed 0 tied []
+bp13i-webkit.json lead-add               armed 0 tied []
+bp13i-webkit.json lead-remove            armed 1 tied []
+bp13i-webkit.json vlead-add              armed 0 tied []
+bp13i-webkit.json vlead-remove           armed 1 tied []
+bp13i-webkit.json vlead-remove-wide      armed 1 tied []
+bp13i-webkit.json vfirst-expand          armed 1 tied [('P', '1', 'enter', '-', 'de', 0)]
+bp13i-webkit.json wide-first-expand      armed 1 tied []
+bp13i-webkit.json end-first-expand       armed 1 tied [('P', '1', 'enter', '-', 'de', 0)]
+bp13i-webkit.json three-long             armed 2 tied [('A', 'C', 'enter', '-', 'de', 0)]
+bp13i-webkit.json three-mid              armed 3 tied [('C', 'E', 'enter', '-', 'de', 0)]
+== cases
+== fmab: FM A/B
+('webkit', 'dark', 'bp12', 'film·first-expand') reads 8 with a hole frame 0 run > 1 0 stub reads 0 load 9.25 - 13.33
+('webkit', 'dark', 'bp12', 'film·warm-expand') reads 8 with a hole frame 0 run > 1 0 stub reads 0 load 9.91 - 15.71
+('webkit', 'dark', 'bp13', 'film·first-expand') reads 8 with a hole frame 0 run > 1 0 stub reads 0 load 9.27 - 15.32
+('webkit', 'dark', 'bp13', 'film·warm-expand') reads 8 with a hole frame 0 run > 1 0 stub reads 0 load 9.53 - 16.42
+('webkit', 'light', 'bp12', 'film·first-expand') reads 8 with a hole frame 0 run > 1 0 stub reads 0 load 8.31 - 11.24
+('webkit', 'light', 'bp12', 'film·warm-expand') reads 8 with a hole frame 0 run > 1 0 stub reads 0 load 8.39 - 13.06
+('webkit', 'light', 'bp13', 'film·first-expand') reads 8 with a hole frame 0 run > 1 0 stub reads 0 load 8.36 - 13.18
+('webkit', 'light', 'bp13', 'film·warm-expand') reads 8 with a hole frame 0 run > 1 0 stub reads 0 load 7.93 - 13.49
+== r2: W3 whole, worst leaving drop per run
+r2 w3-chromium-dark-bp12-r1.log worst (0.393, 'swap-short', 3, '132.1', 8.05) margin 0.107 seat8 warm-expand [0.364] reds 0
+r2 w3-chromium-dark-bp12-r2.log worst (0.389, 'first-expand', 8, '223.4', 9.91) margin 0.111 seat8 warm-expand [0.371] reds 0
+r2 w3-chromium-dark-bp13-r1.log worst (0.371, 'swap-short', 3, '133.3', 8.51) margin 0.129 seat8 warm-expand [0.35] reds 0
+r2 w3-chromium-dark-bp13-r2.log worst (0.372, 'swap-long', 1, '133.3', 9.56) margin 0.128 seat8 warm-expand [0.364] reds 0
+r2 w3-chromium-light-bp12-r1.log worst (0.373, 'warm-collapse', 2, '3741.9', 10.14) margin 0.127 seat8 warm-expand [0.371] reds 0
+r2 w3-chromium-light-bp12-r2.log worst (0.385, 'swap-long', 1, '133.8', 9.39) margin 0.115 seat8 warm-expand [0.369] reds 0
+r2 w3-chromium-light-bp13-r1.log worst (0.377, 'swap-short', 3, '133.6', 9.34) margin 0.123 seat8 warm-expand [0.372] reds 0
+r2 w3-chromium-light-bp13-r2.log worst (0.389, 'first-expand', 8, '217.1', 10.27) margin 0.111 seat8 warm-expand [0.354] reds 0
+r2 w3-webkit-dark-bp12-r1.log worst (0.399, 'first-expand', 8, '214', 13.84) margin 0.101 seat8 warm-expand [0.398] reds 1
+     FAIL  W3  Playwright WebKit  warm-collapse  D 379.72 px (481.72→102); step ×0.66; dead; window 256 ms (allow 267.6, clock 214.2); trajectory worst 1.13 px (0.3
+r2 w3-webkit-dark-bp12-r2.log worst (0.426, 'warm-expand', 8, '204', 9.13) margin 0.074 seat8 warm-expand [0.426] reds 1
+     FAIL  W3  Playwright WebKit  swap-short  D 245.06 px (347.06→102); step ×0.65; dead; window 264 ms (allow 259.6, clock 214.2) — window 264 ms > clock 214.2 + 2×
+r2 w3-webkit-dark-bp13-r1.log worst (0.398, 'warm-collapse', 2, '3736', 11.09) margin 0.102 seat8 warm-expand [0.384] reds 0
+r2 w3-webkit-dark-bp13-r2.log worst (0.439, 'swap-short', 3, '143', 12.23) margin 0.061 seat8 warm-expand [0.381] reds 0
+r2 w3-webkit-light-bp12-r1.log worst (0.46, 'warm-collapse', 2, '3734', 9.17) margin 0.040 seat8 warm-expand [0.431] reds 0
+r2 w3-webkit-light-bp12-r2.log worst (0.488, 'swap-short', 3, '130', 10.75) margin 0.012 seat8 warm-expand [0.476] reds 0
+r2 w3-webkit-light-bp13-r1.log worst (0.451, 'warm-expand', 8, '218', 9.22) margin 0.049 seat8 warm-expand [0.451] reds 0
+r2 w3-webkit-light-bp13-r2.log worst (0.454, 'swap-short', 3, '132', 14.8) margin 0.046 seat8 warm-expand [0.432] reds 0
+r2x w3-webkit-dark-bp12-r1.log worst (0.4, 'warm-collapse', 2, '3736', 14.53) margin 0.100 seat8 warm-expand [0.385] reds 0
+r2x w3-webkit-dark-bp12-r2.log worst (0.398, 'warm-expand', 8, '214', 14.56) margin 0.102 seat8 warm-expand [0.398] reds 0
+r2x w3-webkit-dark-bp12-r3.log worst (0.488, 'lead-remove', 20, '108', 12.76) margin 0.012 seat8 warm-expand [0.385] reds 0
+r2x w3-webkit-dark-bp13-r1.log worst (0.385, 'warm-collapse', 2, '3736', 13.66) margin 0.115 seat8 warm-expand [0.34] reds 0
+r2x w3-webkit-dark-bp13-r2.log worst (0.457, 'retarget·120', 2, '25', 16.77) margin 0.043 seat8 warm-expand [0.385] reds 0
+r2x w3-webkit-dark-bp13-r3.log worst (0.412, 'first-expand', 8, '215', 13.66) margin 0.088 seat8 warm-expand [0.397] reds 0
+r2x w3-webkit-light-bp12-r1.log worst (0.446, 'warm-expand', 8, '219', 9.66) margin 0.054 seat8 warm-expand [0.446] reds 0
+r2x w3-webkit-light-bp12-r2.log worst (0.46, 'retarget·80', 1, '202', 10.47) margin 0.040 seat8 warm-expand [0.447] reds 0
+r2x w3-webkit-light-bp12-r3.log worst (0.456, 'swap-long', 1, '150', 11.61) margin 0.044 seat8 warm-expand [0.432] reds 0
+r2x w3-webkit-light-bp13-r1.log worst (0.466, 'retarget·80', 1, '200', 10.94) margin 0.034 seat8 warm-expand [0.448] reds 0
+r2x w3-webkit-light-bp13-r2.log worst (0.438, 'swap-short', 3, '135', 11.99) margin 0.062 seat8 warm-expand [0.433] reds 0
+r2x w3-webkit-light-bp13-r3.log worst (0.497, 'swap-long', 1, '133', 11.46) margin 0.003 seat8 warm-expand [0.448] reds 0

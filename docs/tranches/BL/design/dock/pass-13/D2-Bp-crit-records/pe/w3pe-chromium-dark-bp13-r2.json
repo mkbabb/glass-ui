@@ -1,0 +1,1431 @@
+{
+ "witness": "W3",
+ "target": "bp13@392ff1e3",
+ "when": "2026-11-07T06:50:29.309Z",
+ "load": 10.25,
+ "cells": [
+  {
+   "engine": "chromium",
+   "cell": "warm-collapse",
+   "pass": false,
+   "failed": [
+    "window"
+   ],
+   "ownerBlocked": "Q-4",
+   "D": 379.66,
+   "start": 481.66,
+   "target": 102,
+   "frames": 600,
+   "travelMs": 256.8,
+   "continuity": {
+    "ok": true,
+    "ratio": 0.66,
+    "step": 29.5,
+    "bound": 44.84,
+    "atMs": 3659.4,
+    "dt": 9.3
+   },
+   "landing": {
+    "ok": true,
+    "why": "dead",
+    "overshoot": 0,
+    "reversals": 0
+   },
+   "window": {
+    "ok": false,
+    "why": "window 265.9 ms > clock 214.2 + 2×16.7 + stall 10.8 = 258.4 ms (O-64 R-4, H-3d)",
+    "open": 3614.8,
+    "close": 3880.7,
+    "land": 3871.6000000000004,
+    "motionStart": 3614.8,
+    "clockMs": 214.2,
+    "frameMs": 16.7,
+    "duration": 265.9,
+    "allowMs": 258.4,
+    "q4": true,
+    "q4AllowMs": 314.2,
+    "q4a": {
+     "ok": false,
+     "allowMs": 258.4,
+     "why": "265.9 ms > 258.4"
+    },
+    "q4c": {
+     "ok": true,
+     "allowMs": 314.2,
+     "why": "265.9 ms ≤ 314.2"
+    }
+   },
+   "owners": {
+    "ok": true,
+    "frames": 0
+   },
+   "trajectory": {
+    "ok": true,
+    "dev": 1.12,
+    "tol": 16.19,
+    "frac": 0,
+    "atMs": 3919.9,
+    "why": "worst 1.12 px (0.3 % of D) from the rung's analytic spring (tol 16.19)"
+   },
+   "terminal": {
+    "ok": true,
+    "last": 0.81,
+    "prev": 0.78,
+    "bound": 2.07,
+    "why": "last step 0.81 px after 0.78 px (bound 2.07)"
+   },
+   "spec": {
+    "vmaxNorm": 8.37,
+    "M": 0.002966,
+    "band": 0.02,
+    "clockMs": 214.2
+   },
+   "seats": {
+    "step": {
+     "ok": true,
+     "ratio": 0.65,
+     "step": 14.77,
+     "bound": 22.67,
+     "seat": 6,
+     "atMs": 3659.4
+    },
+    "overlap": {
+     "ok": true,
+     "frames": 0,
+     "first": null
+    }
+   },
+   "blank": {
+    "ok": true,
+    "entering": 2,
+    "movingFrames": 33,
+    "blankFrames": 0,
+    "longestRun": 0,
+    "atMs": null,
+    "why": "0 blank of 33 moving frame(s), longest run 0 (bound 1)"
+   },
+   "leaving": {
+    "ok": true,
+    "leaving": 6,
+    "failing": 0,
+    "lengthMs": 256.8,
+    "rows": [
+     {
+      "seat": 2,
+      "ok": true,
+      "tracks": false,
+      "deficit": 1,
+      "fades": true,
+      "spanMs": 67.6,
+      "spanFrames": 9,
+      "path": [
+       0.905,
+       0.863,
+       0.811,
+       0.745,
+       0.671,
+       0.611,
+       0.522,
+       0.422,
+       0.346,
+       0
+      ],
+      "vanish": {
+       "drop": 0.346,
+       "from": 0.346,
+       "to": 0,
+       "atMs": 3741.9
+      }
+     },
+     {
+      "seat": 3,
+      "ok": true,
+      "tracks": true,
+      "deficit": 0,
+      "fades": true,
+      "spanMs": 72.6,
+      "spanFrames": 9,
+      "path": [
+       0.942,
+       0.724,
+       0.572,
+       0.448,
+       0.349,
+       0.291,
+       0.232,
+       0.17,
+       0.124,
+       0.096
+      ],
+      "vanish": {
+       "drop": 0,
+       "from": 0.232,
+       "to": 0.17,
+       "atMs": 3823.7
+      }
+     },
+     {
+      "seat": 4,
+      "ok": true,
+      "tracks": true,
+      "deficit": 0,
+      "fades": false,
+      "spanMs": 29.2,
+      "spanFrames": 4,
+      "path": [
+       0.918,
+       0.69,
+       0.384,
+       0.162,
+       0
+      ],
+      "vanish": {
+       "drop": 0
+      }
+     },
+     {
+      "seat": 5,
+      "ok": true,
+      "tracks": true,
+      "deficit": 0.007,
+      "fades": false,
+      "spanMs": 29.9,
+      "spanFrames": 4,
+      "path": [
+       1,
+       0.849,
+       0.483,
+       0.16,
+       0
+      ],
+      "vanish": {
+       "drop": 0.003,
+       "from": 0.849,
+       "to": 0.483,
+       "atMs": 3698.3
+      }
+     },
+     {
+      "seat": 6,
+      "ok": true,
+      "tracks": true,
+      "deficit": 0.002,
+      "fades": false,
+      "spanMs": 32.1,
+      "spanFrames": 4,
+      "path": [
+       1,
+       0.862,
+       0.534,
+       0.325,
+       0.057
+      ],
+      "vanish": {
+       "drop": 0.001,
+       "from": 0.862,
+       "to": 0.534,
+       "atMs": 3668.4
+      }
+     },
+     {
+      "seat": 7,
+      "ok": true,
+      "tracks": true,
+      "deficit": 0,
+      "fades": false,
+      "spanMs": 44.6,
+      "spanFrames": 5,
+      "path": [
+       1,
+       0.885,
+       0.681,
+       0.449,
+       0.101,
+       0
+      ],
+      "vanish": {
+       "drop": 0
+      }
+     }
+    ],
+    "vanish": {
+     "ok": true,
+     "drop": 0.346,
+     "seat": 2,
+     "from": 0.346,
+     "to": 0,
+     "atMs": 3741.9
+    },
+    "inkMax": 1,
+    "inkOk": true,
+    "why": "6 leaving seat(s), 0 failing; tightest seat 4: ink 0.918 → 0.69 → 0.384 → 0.162 → 0 over 29.2 ms / 4 frame(s) (fade bound ≥ 3 frames and ≥ 64.2 ms), coverage deficit 0 (track bound 0.1); vanish worst one-frame drop beyond the closing edge 0.346 (seat 2 0.346 → 0 at +3741.9 ms) (bound 0.5); largest unit ink read 1 (an ink is a share of the unit's own box: ≤ 1, H6-3)"
+   },
+   "splice": {
+    "ok": true,
+    "spliceFrames": 0,
+    "sliverFrames": 0,
+    "firstSplice": null,
+    "firstSliver": null,
+    "why": "0 splice frame(s), 0 sliver frame(s) (bound 0 each)"
+   },
+   "stub": {
+    "ok": true,
+    "judged": 510,
+    "stubFrames": 0,
+    "glyphs": 24,
+    "first": null,
+    "rampPx": null,
+    "unreadGlyphs": 0,
+    "why": "0 stub frame(s) of 510 judged (up to 24 glyphs a frame) (bound 0; a stub is a glyph painted 10-90 %, at any opacity, by an edge whose alpha goes 10→90 % inside 2 px, inside the plate)"
+   },
+   "lanes": {
+    "ok": true,
+    "judged": true,
+    "flagClosedMs": 3880.7,
+    "lanes": 3,
+    "worst": null,
+    "cancels": [],
+    "seatAfterFlag": null,
+    "why": "every lane (3) at its final value from the frame the flag closed; no lane cancelled to identity; every seat at its final position from the flag"
+   },
+   "summary": "D 379.66 px (481.66→102); step ×0.66; dead; window 265.9 ms (allow 258.4, clock 214.2) — window 265.9 ms > clock 214.2 + 2×16.7 + stall 10.8 = 258.4 ms (O-64 R-4, H-3d); trajectory worst 1.12 px (0.3 % of D) from the rung's analytic spring (tol 16.19); terminal last step 0.81 px after 0.78 px (bound 2.07); owners 0; seat step ×0.65 (14.77 px), seat overlap 0 frame(s); blank 0 blank of 33 moving frame(s), longest run 0 (bound 1); leaving 6 leaving seat(s), 0 failing; tightest seat 4: ink 0.918 → 0.69 → 0.384 → 0.162 → 0 over 29.2 ms / 4 frame(s) (fade bound ≥ 3 frames and ≥ 64.2 ms), coverage deficit 0 (track bound 0.1); vanish worst one-frame drop beyond the closing edge 0.346 (seat 2 0.346 → 0 at +3741.9 ms) (bound 0.5); largest unit ink read 1 (an ink is a share of the unit's own box: ≤ 1, H6-3); splice 0 splice frame(s), 0 sliver frame(s) (bound 0 each); stub 0 stub frame(s) of 510 judged (up to 24 glyphs a frame) (bound 0; a stub is a glyph painted 10-90 %, at any opacity, by an edge whose alpha goes 10→90 % inside 2 px, inside the plate); lanes every lane (3) at its final value from the frame the flag closed; no lane cancelled to identity; every seat at its final position from the flag; Q-4 lenient window holds (allow 314.2 ms); Q-4 (a) flag at the 2 % band fails (265.9 ms > 258.4); Q-4 (c) 270 ms dock clock holds (265.9 ms ≤ 314.2)  ⟶ OWNER-BLOCKED (Q-4): window; faces 0.5 px of face ink beyond the plate over 152 screenshot sample(s) (9 in flight) (bound 1)",
+   "load": 11.92,
+   "faces": {
+    "ok": true,
+    "max": 0.5,
+    "n": 152,
+    "inflight": 9,
+    "travel": 379.66,
+    "bound": 1,
+    "how": "screenshot",
+    "why": "0.5 px of face ink beyond the plate over 152 screenshot sample(s) (9 in flight) (bound 1)"
+   }
+  },
+  {
+   "engine": "chromium",
+   "cell": "warm-expand",
+   "pass": true,
+   "failed": [],
+   "D": 379.66,
+   "start": 102,
+   "target": 481.66,
+   "frames": 138,
+   "travelMs": 255.2,
+   "continuity": {
+    "ok": true,
+    "ratio": 0.66,
+    "step": 27.89,
+    "bound": 42.45,
+    "atMs": 138.3,
+    "dt": 8.8
+   },
+   "landing": {
+    "ok": true,
+    "why": "dead",
+    "overshoot": 0,
+    "reversals": 0
+   },
+   "window": {
+    "ok": true,
+    "why": "",
+    "open": 93.39999999999964,
+    "close": 348.59999999999945,
+    "land": 348.59999999999945,
+    "motionStart": 93.39999999999964,
+    "clockMs": 214.2,
+    "frameMs": 16.7,
+    "duration": 255.2,
+    "allowMs": 258.4,
+    "closeMinusLandFrames": 0,
+    "closeMinusLandMs": 0
+   },
+   "owners": {
+    "ok": true,
+    "frames": 0
+   },
+   "trajectory": {
+    "ok": true,
+    "dev": 1.13,
+    "tol": 16.19,
+    "frac": 0,
+    "atMs": 401.5,
+    "why": "worst 1.13 px (0.3 % of D) from the rung's analytic spring (tol 16.19)"
+   },
+   "terminal": {
+    "ok": true,
+    "last": 0.66,
+    "prev": 0.72,
+    "bound": 1.28,
+    "why": "last step 0.66 px after 0.72 px (bound 1.28)"
+   },
+   "spec": {
+    "vmaxNorm": 8.37,
+    "M": 0.002966,
+    "band": 0.02,
+    "clockMs": 214.2
+   },
+   "seats": {
+    "step": {
+     "ok": true,
+     "ratio": 0.65,
+     "step": 13.96,
+     "bound": 21.48,
+     "seat": 1,
+     "atMs": 138.3
+    },
+    "overlap": {
+     "ok": true,
+     "frames": 0,
+     "first": null
+    }
+   },
+   "blank": {
+    "ok": true,
+    "entering": 7,
+    "movingFrames": 34,
+    "blankFrames": 0,
+    "longestRun": 0,
+    "atMs": null,
+    "why": "0 blank of 34 moving frame(s), longest run 0 (bound 1)"
+   },
+   "leaving": {
+    "ok": true,
+    "leaving": 1,
+    "failing": 0,
+    "lengthMs": 255.2,
+    "rows": [
+     {
+      "seat": 8,
+      "ok": true,
+      "tracks": false,
+      "deficit": 1,
+      "fades": true,
+      "spanMs": 69.3,
+      "spanFrames": 9,
+      "path": [
+       0.916,
+       0.871,
+       0.834,
+       0.761,
+       0.691,
+       0.632,
+       0.536,
+       0.448,
+       0.341,
+       0
+      ],
+      "vanish": {
+       "drop": 0.341,
+       "from": 0.341,
+       "to": 0,
+       "atMs": 221.8
+      }
+     }
+    ],
+    "vanish": {
+     "ok": true,
+     "drop": 0.341,
+     "seat": 8,
+     "from": 0.341,
+     "to": 0,
+     "atMs": 221.8
+    },
+    "inkMax": 1,
+    "inkOk": true,
+    "why": "1 leaving seat(s), 0 failing; tightest seat 8: ink 0.916 → 0.871 → 0.834 → 0.761 → 0.691 → 0.632 → 0.536 → 0.448 → 0.341 → 0 over 69.3 ms / 9 frame(s) (fade bound ≥ 3 frames and ≥ 63.8 ms), coverage deficit 1 (track bound 0.1); vanish worst one-frame drop beyond the closing edge 0.341 (seat 8 0.341 → 0 at +221.8 ms) (bound 0.5); largest unit ink read 1 (an ink is a share of the unit's own box: ≤ 1, H6-3)"
+   },
+   "splice": {
+    "ok": true,
+    "spliceFrames": 0,
+    "sliverFrames": 0,
+    "firstSplice": null,
+    "firstSliver": null,
+    "why": "0 splice frame(s), 0 sliver frame(s) (bound 0 each)"
+   },
+   "stub": {
+    "ok": true,
+    "judged": 46,
+    "stubFrames": 0,
+    "glyphs": 24,
+    "first": null,
+    "rampPx": null,
+    "unreadGlyphs": 0,
+    "why": "0 stub frame(s) of 46 judged (up to 24 glyphs a frame) (bound 0; a stub is a glyph painted 10-90 %, at any opacity, by an edge whose alpha goes 10→90 % inside 2 px, inside the plate)"
+   },
+   "lanes": {
+    "ok": true,
+    "judged": true,
+    "flagClosedMs": 348.6,
+    "lanes": 3,
+    "worst": null,
+    "cancels": [],
+    "seatAfterFlag": null,
+    "why": "every lane (3) at its final value from the frame the flag closed; no lane cancelled to identity; every seat at its final position from the flag"
+   },
+   "summary": "D 379.66 px (102→481.66); step ×0.66; dead; window 255.2 ms (allow 258.4, clock 214.2); trajectory worst 1.13 px (0.3 % of D) from the rung's analytic spring (tol 16.19); terminal last step 0.66 px after 0.72 px (bound 1.28); owners 0; seat step ×0.65 (13.96 px), seat overlap 0 frame(s); blank 0 blank of 34 moving frame(s), longest run 0 (bound 1); leaving 1 leaving seat(s), 0 failing; tightest seat 8: ink 0.916 → 0.871 → 0.834 → 0.761 → 0.691 → 0.632 → 0.536 → 0.448 → 0.341 → 0 over 69.3 ms / 9 frame(s) (fade bound ≥ 3 frames and ≥ 63.8 ms), coverage deficit 1 (track bound 0.1); vanish worst one-frame drop beyond the closing edge 0.341 (seat 8 0.341 → 0 at +221.8 ms) (bound 0.5); largest unit ink read 1 (an ink is a share of the unit's own box: ≤ 1, H6-3); splice 0 splice frame(s), 0 sliver frame(s) (bound 0 each); stub 0 stub frame(s) of 46 judged (up to 24 glyphs a frame) (bound 0; a stub is a glyph painted 10-90 %, at any opacity, by an edge whose alpha goes 10→90 % inside 2 px, inside the plate); lanes every lane (3) at its final value from the frame the flag closed; no lane cancelled to identity; every seat at its final position from the flag; faces 1 px of face ink beyond the plate over 17 screenshot sample(s) (10 in flight) (bound 1)",
+   "load": 11.92,
+   "faces": {
+    "ok": true,
+    "max": 1,
+    "n": 17,
+    "inflight": 10,
+    "travel": 379.66,
+    "bound": 1,
+    "how": "screenshot",
+    "why": "1 px of face ink beyond the plate over 17 screenshot sample(s) (10 in flight) (bound 1)"
+   }
+  },
+  {
+   "engine": "chromium",
+   "cell": "content-add",
+   "pass": true,
+   "failed": [],
+   "D": 179.33,
+   "start": 481.66,
+   "target": 660.98,
+   "frames": 128,
+   "travelMs": 243.8,
+   "continuity": {
+    "ok": true,
+    "ratio": 0.64,
+    "step": 12.91,
+    "bound": 20.09,
+    "atMs": 61.3,
+    "dt": 8.7
+   },
+   "landing": {
+    "ok": true,
+    "why": "dead",
+    "overshoot": 0,
+    "reversals": 0
+   },
+   "window": {
+    "ok": true,
+    "why": "",
+    "open": 8.700000000000728,
+    "close": 252.5,
+    "land": 252.5,
+    "motionStart": 8.700000000000728,
+    "clockMs": 214.2,
+    "frameMs": 16.7,
+    "duration": 243.8,
+    "allowMs": 256.3,
+    "closeMinusLandFrames": 0,
+    "closeMinusLandMs": 0
+   },
+   "owners": {
+    "ok": true,
+    "frames": 0
+   },
+   "trajectory": {
+    "ok": true,
+    "dev": 0.53,
+    "tol": 8.17,
+    "frac": 0,
+    "atMs": 313.5,
+    "why": "worst 0.53 px (0.3 % of D) from the rung's analytic spring (tol 8.17)"
+   },
+   "terminal": {
+    "ok": true,
+    "last": 0.73,
+    "prev": 0.48,
+    "bound": 1,
+    "why": "last step 0.73 px after 0.48 px (bound 1)"
+   },
+   "spec": {
+    "vmaxNorm": 8.37,
+    "M": 0.002966,
+    "band": 0.02,
+    "clockMs": 214.2
+   },
+   "seats": {
+    "step": {
+     "ok": true,
+     "ratio": 0.64,
+     "step": 6.41,
+     "bound": 10.08,
+     "seat": 18,
+     "atMs": 61.3
+    },
+    "overlap": {
+     "ok": true,
+     "frames": 0,
+     "first": null
+    }
+   },
+   "blank": {
+    "ok": true,
+    "entering": 8,
+    "movingFrames": 34,
+    "blankFrames": 0,
+    "longestRun": 0,
+    "atMs": null,
+    "why": "0 blank of 34 moving frame(s), longest run 0 (bound 1)"
+   },
+   "leaving": {
+    "ok": true,
+    "leaving": 0,
+    "failing": 0,
+    "lengthMs": 243.8,
+    "rows": [],
+    "vanish": {
+     "ok": true,
+     "drop": 0
+    },
+    "inkMax": 1,
+    "inkOk": true,
+    "why": "no seat leaves"
+   },
+   "splice": {
+    "ok": true,
+    "spliceFrames": 0,
+    "sliverFrames": 0,
+    "firstSplice": null,
+    "firstSliver": null,
+    "why": "0 splice frame(s), 0 sliver frame(s) (bound 0 each)"
+   },
+   "stub": {
+    "ok": true,
+    "judged": 35,
+    "stubFrames": 0,
+    "glyphs": 39,
+    "first": null,
+    "rampPx": null,
+    "unreadGlyphs": 0,
+    "why": "0 stub frame(s) of 35 judged (up to 39 glyphs a frame) (bound 0; a stub is a glyph painted 10-90 %, at any opacity, by an edge whose alpha goes 10→90 % inside 2 px, inside the plate)"
+   },
+   "lanes": {
+    "ok": true,
+    "judged": true,
+    "flagClosedMs": 252.5,
+    "lanes": 3,
+    "worst": null,
+    "cancels": [],
+    "seatAfterFlag": null,
+    "why": "every lane (3) at its final value from the frame the flag closed; no lane cancelled to identity; every seat at its final position from the flag"
+   },
+   "summary": "D 179.33 px (481.66→660.98); step ×0.64; dead; window 243.8 ms (allow 256.3, clock 214.2); trajectory worst 0.53 px (0.3 % of D) from the rung's analytic spring (tol 8.17); terminal last step 0.73 px after 0.48 px (bound 1); owners 0; seat step ×0.64 (6.41 px), seat overlap 0 frame(s); blank 0 blank of 34 moving frame(s), longest run 0 (bound 1); leaving no seat leaves; splice 0 splice frame(s), 0 sliver frame(s) (bound 0 each); stub 0 stub frame(s) of 35 judged (up to 39 glyphs a frame) (bound 0; a stub is a glyph painted 10-90 %, at any opacity, by an edge whose alpha goes 10→90 % inside 2 px, inside the plate); lanes every lane (3) at its final value from the frame the flag closed; no lane cancelled to identity; every seat at its final position from the flag; faces 0 px of face ink beyond the plate over 13 screenshot sample(s) (8 in flight) (bound 1)",
+   "load": 11.92,
+   "faces": {
+    "ok": true,
+    "max": 0,
+    "n": 13,
+    "inflight": 8,
+    "travel": 179.33,
+    "bound": 1,
+    "how": "screenshot",
+    "why": "0 px of face ink beyond the plate over 13 screenshot sample(s) (8 in flight) (bound 1)"
+   }
+  },
+  {
+   "engine": "chromium",
+   "cell": "lead-add",
+   "pass": true,
+   "failed": [],
+   "D": 70.3,
+   "start": 481.66,
+   "target": 551.95,
+   "frames": 125,
+   "travelMs": 229.1,
+   "continuity": {
+    "ok": true,
+    "ratio": 0.62,
+    "step": 4.81,
+    "bound": 7.74,
+    "atMs": 58.6,
+    "dt": 8.2
+   },
+   "landing": {
+    "ok": true,
+    "why": "dead",
+    "overshoot": 0,
+    "reversals": 0
+   },
+   "window": {
+    "ok": true,
+    "why": "",
+    "open": 5.799999999999272,
+    "close": 250.39999999999964,
+    "land": 234.89999999999964,
+    "motionStart": 5.799999999999272,
+    "clockMs": 214.2,
+    "frameMs": 16.7,
+    "duration": 244.6,
+    "allowMs": 256.9,
+    "closeMinusLandFrames": 2,
+    "closeMinusLandMs": 15.5
+   },
+   "owners": {
+    "ok": true,
+    "frames": 0
+   },
+   "trajectory": {
+    "ok": true,
+    "dev": 0.57,
+    "tol": 3.81,
+    "frac": 0.01,
+    "atMs": 234.9,
+    "why": "worst 0.57 px (0.82 % of D) from the rung's analytic spring (tol 3.81)"
+   },
+   "terminal": {
+    "ok": true,
+    "last": 0.77,
+    "prev": 0.3,
+    "bound": 0.83,
+    "why": "last step 0.77 px after 0.3 px (bound 0.83)"
+   },
+   "spec": {
+    "vmaxNorm": 8.37,
+    "M": 0.002966,
+    "band": 0.02,
+    "clockMs": 214.2
+   },
+   "seats": {
+    "step": {
+     "ok": true,
+     "ratio": 0.59,
+     "step": 2.41,
+     "bound": 4.12,
+     "seat": 2,
+     "atMs": 58.6
+    },
+    "overlap": {
+     "ok": true,
+     "frames": 0,
+     "first": null
+    }
+   },
+   "blank": {
+    "ok": true,
+    "entering": 8,
+    "movingFrames": 31,
+    "blankFrames": 0,
+    "longestRun": 0,
+    "atMs": null,
+    "why": "0 blank of 31 moving frame(s), longest run 0 (bound 1)"
+   },
+   "leaving": {
+    "ok": true,
+    "leaving": 0,
+    "failing": 0,
+    "lengthMs": 229.1,
+    "rows": [],
+    "vanish": {
+     "ok": true,
+     "drop": 0
+    },
+    "inkMax": 1,
+    "inkOk": true,
+    "why": "no seat leaves"
+   },
+   "splice": {
+    "ok": true,
+    "spliceFrames": 0,
+    "sliverFrames": 0,
+    "firstSplice": null,
+    "firstSliver": null,
+    "why": "0 splice frame(s), 0 sliver frame(s) (bound 0 each)"
+   },
+   "stub": {
+    "ok": true,
+    "judged": 34,
+    "stubFrames": 0,
+    "glyphs": 27,
+    "first": null,
+    "rampPx": null,
+    "unreadGlyphs": 0,
+    "why": "0 stub frame(s) of 34 judged (up to 27 glyphs a frame) (bound 0; a stub is a glyph painted 10-90 %, at any opacity, by an edge whose alpha goes 10→90 % inside 2 px, inside the plate)"
+   },
+   "lanes": {
+    "ok": true,
+    "judged": true,
+    "flagClosedMs": 250.4,
+    "lanes": 3,
+    "worst": null,
+    "cancels": [],
+    "seatAfterFlag": null,
+    "why": "every lane (3) at its final value from the frame the flag closed; no lane cancelled to identity; every seat at its final position from the flag"
+   },
+   "summary": "D 70.3 px (481.66→551.95); step ×0.62; dead; window 244.6 ms (allow 256.9, clock 214.2); trajectory worst 0.57 px (0.82 % of D) from the rung's analytic spring (tol 3.81); terminal last step 0.77 px after 0.3 px (bound 0.83); owners 0; seat step ×0.59 (2.41 px), seat overlap 0 frame(s); blank 0 blank of 31 moving frame(s), longest run 0 (bound 1); leaving no seat leaves; splice 0 splice frame(s), 0 sliver frame(s) (bound 0 each); stub 0 stub frame(s) of 34 judged (up to 27 glyphs a frame) (bound 0; a stub is a glyph painted 10-90 %, at any opacity, by an edge whose alpha goes 10→90 % inside 2 px, inside the plate); lanes every lane (3) at its final value from the frame the flag closed; no lane cancelled to identity; every seat at its final position from the flag; faces 0 px of face ink beyond the plate over 13 screenshot sample(s) (9 in flight) (bound 1)",
+   "load": 11.92,
+   "faces": {
+    "ok": true,
+    "max": 0,
+    "n": 13,
+    "inflight": 9,
+    "travel": 70.3,
+    "bound": 1,
+    "how": "screenshot",
+    "why": "0 px of face ink beyond the plate over 13 screenshot sample(s) (9 in flight) (bound 1)"
+   }
+  },
+  {
+   "engine": "chromium",
+   "cell": "lead-remove",
+   "pass": true,
+   "failed": [],
+   "D": 70.3,
+   "start": 551.95,
+   "target": 481.66,
+   "frames": 126,
+   "travelMs": 228.1,
+   "continuity": {
+    "ok": true,
+    "ratio": 0.63,
+    "step": 5.41,
+    "bound": 8.62,
+    "atMs": 57.8,
+    "dt": 9.2
+   },
+   "landing": {
+    "ok": true,
+    "why": "dead",
+    "overshoot": 0,
+    "reversals": 0
+   },
+   "window": {
+    "ok": true,
+    "why": "",
+    "open": 8.700000000000728,
+    "close": 250.8000000000011,
+    "land": 236.8000000000011,
+    "motionStart": 8.700000000000728,
+    "clockMs": 214.2,
+    "frameMs": 16.7,
+    "duration": 242.1,
+    "allowMs": 258.3,
+    "closeMinusLandFrames": 2,
+    "closeMinusLandMs": 14
+   },
+   "owners": {
+    "ok": true,
+    "frames": 0
+   },
+   "trajectory": {
+    "ok": true,
+    "dev": 0.52,
+    "tol": 3.81,
+    "frac": 0.01,
+    "atMs": 236.8,
+    "why": "worst 0.52 px (0.74 % of D) from the rung's analytic spring (tol 3.81)"
+   },
+   "terminal": {
+    "ok": true,
+    "last": 0.72,
+    "prev": 0.31,
+    "bound": 0.89,
+    "why": "last step 0.72 px after 0.31 px (bound 0.89)"
+   },
+   "spec": {
+    "vmaxNorm": 8.37,
+    "M": 0.002966,
+    "band": 0.02,
+    "clockMs": 214.2
+   },
+   "seats": {
+    "step": {
+     "ok": true,
+     "ratio": 0.6,
+     "step": 3.13,
+     "bound": 5.22,
+     "seat": 2,
+     "atMs": 48.6
+    },
+    "overlap": {
+     "ok": true,
+     "frames": 0,
+     "first": null
+    }
+   },
+   "blank": {
+    "ok": true,
+    "entering": 7,
+    "movingFrames": 31,
+    "blankFrames": 0,
+    "longestRun": 0,
+    "atMs": null,
+    "why": "0 blank of 31 moving frame(s), longest run 0 (bound 1)"
+   },
+   "leaving": {
+    "ok": true,
+    "leaving": 1,
+    "failing": 0,
+    "lengthMs": 228.1,
+    "rows": [
+     {
+      "seat": 20,
+      "ok": true,
+      "tracks": false,
+      "deficit": 1,
+      "fades": true,
+      "spanMs": 110.7,
+      "spanFrames": 14,
+      "path": [
+       1,
+       0.801,
+       0.801,
+       0.8,
+       0.797,
+       0.79,
+       0.772,
+       0.746,
+       0.71,
+       0.672,
+       0.626,
+       0.551,
+       0.405,
+       0.23,
+       0
+      ],
+      "vanish": {
+       "drop": 0.23,
+       "from": 0.23,
+       "to": 0,
+       "atMs": 110.7
+      }
+     }
+    ],
+    "vanish": {
+     "ok": true,
+     "drop": 0.23,
+     "seat": 20,
+     "from": 0.23,
+     "to": 0,
+     "atMs": 110.7
+    },
+    "inkMax": 1,
+    "inkOk": true,
+    "why": "1 leaving seat(s), 0 failing; tightest seat 20: ink 1 → 0.801 → 0.801 → 0.8 → 0.797 → 0.79 → 0.772 → 0.746 → 0.71 → 0.672 → 0.626 → 0.551 → 0.405 → 0.23 → 0 over 110.7 ms / 14 frame(s) (fade bound ≥ 3 frames and ≥ 57 ms), coverage deficit 1 (track bound 0.1); vanish worst one-frame drop beyond the closing edge 0.23 (seat 20 0.23 → 0 at +110.7 ms) (bound 0.5); largest unit ink read 1 (an ink is a share of the unit's own box: ≤ 1, H6-3)"
+   },
+   "splice": {
+    "ok": true,
+    "spliceFrames": 0,
+    "sliverFrames": 0,
+    "firstSplice": null,
+    "firstSliver": null,
+    "why": "0 splice frame(s), 0 sliver frame(s) (bound 0 each)"
+   },
+   "stub": {
+    "ok": true,
+    "judged": 34,
+    "stubFrames": 0,
+    "glyphs": 27,
+    "first": null,
+    "rampPx": null,
+    "unreadGlyphs": 0,
+    "why": "0 stub frame(s) of 34 judged (up to 27 glyphs a frame) (bound 0; a stub is a glyph painted 10-90 %, at any opacity, by an edge whose alpha goes 10→90 % inside 2 px, inside the plate)"
+   },
+   "lanes": {
+    "ok": true,
+    "judged": true,
+    "flagClosedMs": 250.8,
+    "lanes": 3,
+    "worst": null,
+    "cancels": [],
+    "seatAfterFlag": null,
+    "why": "every lane (3) at its final value from the frame the flag closed; no lane cancelled to identity; every seat at its final position from the flag"
+   },
+   "summary": "D 70.3 px (551.95→481.66); step ×0.63; dead; window 242.1 ms (allow 258.3, clock 214.2); trajectory worst 0.52 px (0.74 % of D) from the rung's analytic spring (tol 3.81); terminal last step 0.72 px after 0.31 px (bound 0.89); owners 0; seat step ×0.6 (3.13 px), seat overlap 0 frame(s); blank 0 blank of 31 moving frame(s), longest run 0 (bound 1); leaving 1 leaving seat(s), 0 failing; tightest seat 20: ink 1 → 0.801 → 0.801 → 0.8 → 0.797 → 0.79 → 0.772 → 0.746 → 0.71 → 0.672 → 0.626 → 0.551 → 0.405 → 0.23 → 0 over 110.7 ms / 14 frame(s) (fade bound ≥ 3 frames and ≥ 57 ms), coverage deficit 1 (track bound 0.1); vanish worst one-frame drop beyond the closing edge 0.23 (seat 20 0.23 → 0 at +110.7 ms) (bound 0.5); largest unit ink read 1 (an ink is a share of the unit's own box: ≤ 1, H6-3); splice 0 splice frame(s), 0 sliver frame(s) (bound 0 each); stub 0 stub frame(s) of 34 judged (up to 27 glyphs a frame) (bound 0; a stub is a glyph painted 10-90 %, at any opacity, by an edge whose alpha goes 10→90 % inside 2 px, inside the plate); lanes every lane (3) at its final value from the frame the flag closed; no lane cancelled to identity; every seat at its final position from the flag; faces 0 px of face ink beyond the plate over 13 screenshot sample(s) (8 in flight) (bound 1)",
+   "load": 11.92,
+   "faces": {
+    "ok": true,
+    "max": 0,
+    "n": 13,
+    "inflight": 8,
+    "travel": 70.3,
+    "bound": 1,
+    "how": "screenshot",
+    "why": "0 px of face ink beyond the plate over 13 screenshot sample(s) (8 in flight) (bound 1)"
+   }
+  },
+  {
+   "engine": "chromium",
+   "cell": "swap-long",
+   "pass": true,
+   "failed": [],
+   "D": 244.98,
+   "start": 102,
+   "target": 346.98,
+   "frames": 130,
+   "travelMs": 257.1,
+   "continuity": {
+    "ok": true,
+    "ratio": 0.65,
+    "step": 15.94,
+    "bound": 24.5,
+    "atMs": 50.5,
+    "dt": 7.8
+   },
+   "landing": {
+    "ok": true,
+    "why": "dead",
+    "overshoot": 0,
+    "reversals": 0
+   },
+   "window": {
+    "ok": true,
+    "why": "",
+    "open": 5.800000000000182,
+    "close": 262.9000000000001,
+    "land": 262.9000000000001,
+    "motionStart": 5.800000000000182,
+    "clockMs": 214.2,
+    "frameMs": 16.7,
+    "duration": 257.1,
+    "allowMs": 257.6,
+    "closeMinusLandFrames": 0,
+    "closeMinusLandMs": 0
+   },
+   "owners": {
+    "ok": true,
+    "frames": 0
+   },
+   "trajectory": {
+    "ok": true,
+    "dev": 0.73,
+    "tol": 10.8,
+    "frac": 0,
+    "atMs": 313.5,
+    "why": "worst 0.73 px (0.3 % of D) from the rung's analytic spring (tol 10.8)"
+   },
+   "terminal": {
+    "ok": true,
+    "last": 0.51,
+    "prev": 0.5,
+    "bound": 1.29,
+    "why": "last step 0.51 px after 0.5 px (bound 1.29)"
+   },
+   "spec": {
+    "vmaxNorm": 8.37,
+    "M": 0.002966,
+    "band": 0.02,
+    "clockMs": 214.2
+   },
+   "seats": {
+    "step": {
+     "ok": true,
+     "ratio": 0.64,
+     "step": 8.23,
+     "bound": 12.96,
+     "seat": 1,
+     "atMs": 58.6
+    },
+    "overlap": {
+     "ok": true,
+     "frames": 0,
+     "first": null
+    }
+   },
+   "blank": {
+    "ok": true,
+    "entering": 5,
+    "movingFrames": 35,
+    "blankFrames": 0,
+    "longestRun": 0,
+    "atMs": null,
+    "why": "0 blank of 35 moving frame(s), longest run 0 (bound 1)"
+   },
+   "leaving": {
+    "ok": true,
+    "leaving": 2,
+    "failing": 0,
+    "lengthMs": 257.1,
+    "rows": [
+     {
+      "seat": 1,
+      "ok": true,
+      "tracks": false,
+      "deficit": 1,
+      "fades": true,
+      "spanMs": 66.5,
+      "spanFrames": 9,
+      "path": [
+       0.912,
+       0.885,
+       0.839,
+       0.781,
+       0.709,
+       0.656,
+       0.574,
+       0.5,
+       0.367,
+       0
+      ],
+      "vanish": {
+       "drop": 0.367,
+       "from": 0.367,
+       "to": 0,
+       "atMs": 133.4
+      }
+     },
+     {
+      "seat": 2,
+      "ok": true,
+      "tracks": false,
+      "deficit": 1,
+      "fades": true,
+      "spanMs": 133.4,
+      "spanFrames": 18,
+      "path": [
+       1,
+       0.651,
+       0.543,
+       0.543,
+       0.543,
+       0.543,
+       0.543,
+       0.543,
+       0.543,
+       0.543,
+       0.543,
+       0.543,
+       0.543,
+       0.543,
+       0.543,
+       0.543,
+       0.5,
+       0.367,
+       0
+      ],
+      "vanish": {
+       "drop": 0.367,
+       "from": 0.367,
+       "to": 0,
+       "atMs": 133.4
+      }
+     }
+    ],
+    "vanish": {
+     "ok": true,
+     "drop": 0.367,
+     "seat": 1,
+     "from": 0.367,
+     "to": 0,
+     "atMs": 133.4
+    },
+    "inkMax": 1,
+    "inkOk": true,
+    "why": "2 leaving seat(s), 0 failing; tightest seat 1: ink 0.912 → 0.885 → 0.839 → 0.781 → 0.709 → 0.656 → 0.574 → 0.5 → 0.367 → 0 over 66.5 ms / 9 frame(s) (fade bound ≥ 3 frames and ≥ 64.3 ms), coverage deficit 1 (track bound 0.1); vanish worst one-frame drop beyond the closing edge 0.367 (seat 1 0.367 → 0 at +133.4 ms) (bound 0.5); largest unit ink read 1 (an ink is a share of the unit's own box: ≤ 1, H6-3)"
+   },
+   "splice": {
+    "ok": true,
+    "spliceFrames": 0,
+    "sliverFrames": 0,
+    "firstSplice": null,
+    "firstSliver": null,
+    "why": "0 splice frame(s), 0 sliver frame(s) (bound 0 each)"
+   },
+   "stub": {
+    "ok": true,
+    "judged": 36,
+    "stubFrames": 0,
+    "glyphs": 22,
+    "first": null,
+    "rampPx": 8.84,
+    "unreadGlyphs": 0,
+    "why": "0 stub frame(s) of 36 judged (up to 22 glyphs a frame); narrowest ramp across a glyph 8.84 px (RECORD) (bound 0; a stub is a glyph painted 10-90 %, at any opacity, by an edge whose alpha goes 10→90 % inside 2 px, inside the plate)"
+   },
+   "lanes": {
+    "ok": true,
+    "judged": true,
+    "flagClosedMs": 262.9,
+    "lanes": 3,
+    "worst": null,
+    "cancels": [],
+    "seatAfterFlag": null,
+    "why": "every lane (3) at its final value from the frame the flag closed; no lane cancelled to identity; every seat at its final position from the flag"
+   },
+   "summary": "D 244.98 px (102→346.98); step ×0.65; dead; window 257.1 ms (allow 257.6, clock 214.2); trajectory worst 0.73 px (0.3 % of D) from the rung's analytic spring (tol 10.8); terminal last step 0.51 px after 0.5 px (bound 1.29); owners 0; seat step ×0.64 (8.23 px), seat overlap 0 frame(s); blank 0 blank of 35 moving frame(s), longest run 0 (bound 1); leaving 2 leaving seat(s), 0 failing; tightest seat 1: ink 0.912 → 0.885 → 0.839 → 0.781 → 0.709 → 0.656 → 0.574 → 0.5 → 0.367 → 0 over 66.5 ms / 9 frame(s) (fade bound ≥ 3 frames and ≥ 64.3 ms), coverage deficit 1 (track bound 0.1); vanish worst one-frame drop beyond the closing edge 0.367 (seat 1 0.367 → 0 at +133.4 ms) (bound 0.5); largest unit ink read 1 (an ink is a share of the unit's own box: ≤ 1, H6-3); splice 0 splice frame(s), 0 sliver frame(s) (bound 0 each); stub 0 stub frame(s) of 36 judged (up to 22 glyphs a frame); narrowest ramp across a glyph 8.84 px (RECORD) (bound 0; a stub is a glyph painted 10-90 %, at any opacity, by an edge whose alpha goes 10→90 % inside 2 px, inside the plate); lanes every lane (3) at its final value from the frame the flag closed; no lane cancelled to identity; every seat at its final position from the flag; faces 0 px of face ink beyond the plate over 14 screenshot sample(s) (9 in flight) (bound 1)",
+   "load": 11.12,
+   "faces": {
+    "ok": true,
+    "max": 0,
+    "n": 14,
+    "inflight": 9,
+    "travel": 244.98,
+    "bound": 1,
+    "how": "screenshot",
+    "why": "0 px of face ink beyond the plate over 14 screenshot sample(s) (9 in flight) (bound 1)"
+   }
+  },
+  {
+   "engine": "chromium",
+   "cell": "swap-short",
+   "pass": true,
+   "failed": [],
+   "D": 244.98,
+   "start": 346.98,
+   "target": 102,
+   "frames": 128,
+   "travelMs": 245.4,
+   "continuity": {
+    "ok": true,
+    "ratio": 0.65,
+    "step": 18.77,
+    "bound": 28.8,
+    "atMs": 58.9,
+    "dt": 9.2
+   },
+   "landing": {
+    "ok": true,
+    "why": "dead",
+    "overshoot": 0,
+    "reversals": 0
+   },
+   "window": {
+    "ok": true,
+    "why": "",
+    "open": 8.299999999999727,
+    "close": 263.0999999999999,
+    "land": 253.69999999999982,
+    "motionStart": 8.299999999999727,
+    "clockMs": 214.2,
+    "frameMs": 16.7,
+    "duration": 254.8,
+    "allowMs": 257,
+    "closeMinusLandFrames": 1,
+    "closeMinusLandMs": 9.4
+   },
+   "owners": {
+    "ok": true,
+    "frames": 0
+   },
+   "trajectory": {
+    "ok": true,
+    "dev": 0.73,
+    "tol": 10.8,
+    "frac": 0,
+    "atMs": 314,
+    "why": "worst 0.73 px (0.3 % of D) from the rung's analytic spring (tol 10.8)"
+   },
+   "terminal": {
+    "ok": true,
+    "last": 0.28,
+    "prev": 0.7,
+    "bound": 2.05,
+    "why": "last step 0.28 px after 0.7 px (bound 2.05)"
+   },
+   "spec": {
+    "vmaxNorm": 8.37,
+    "M": 0.002966,
+    "band": 0.02,
+    "clockMs": 214.2
+   },
+   "seats": {
+    "step": {
+     "ok": true,
+     "ratio": 0.64,
+     "step": 9.34,
+     "bound": 14.65,
+     "seat": 2,
+     "atMs": 58.9
+    },
+    "overlap": {
+     "ok": true,
+     "frames": 0,
+     "first": null
+    }
+   },
+   "blank": {
+    "ok": true,
+    "entering": 2,
+    "movingFrames": 35,
+    "blankFrames": 1,
+    "longestRun": 1,
+    "atMs": 8.3,
+    "why": "1 blank of 35 moving frame(s), longest run 1 (bound 1)"
+   },
+   "leaving": {
+    "ok": true,
+    "leaving": 5,
+    "failing": 0,
+    "lengthMs": 245.4,
+    "rows": [
+     {
+      "seat": 3,
+      "ok": true,
+      "tracks": false,
+      "deficit": 1,
+      "fades": true,
+      "spanMs": 66.7,
+      "spanFrames": 9,
+      "path": [
+       0.913,
+       0.869,
+       0.835,
+       0.778,
+       0.71,
+       0.629,
+       0.574,
+       0.474,
+       0.373,
+       0
+      ],
+      "vanish": {
+       "drop": 0.373,
+       "from": 0.373,
+       "to": 0,
+       "atMs": 133.4
+      }
+     },
+     {
+      "seat": 4,
+      "ok": true,
+      "tracks": false,
+      "deficit": 1,
+      "fades": true,
+      "spanMs": 141.6,
+      "spanFrames": 19,
+      "path": [
+       1,
+       0.65,
+       0.629,
+       0.629,
+       0.629,
+       0.629,
+       0.629,
+       0.629,
+       0.629,
+       0.629,
+       0.629,
+       0.629,
+       0.629,
+       0.629,
+       0.628,
+       0.573,
+       0.472,
+       0.371,
+       0.254,
+       0
+      ],
+      "vanish": {
+       "drop": 0.35,
+       "from": 1,
+       "to": 0.65,
+       "atMs": 8.3
+      }
+     },
+     {
+      "seat": 5,
+      "ok": true,
+      "tracks": true,
+      "deficit": 0.001,
+      "fades": true,
+      "spanMs": 74.3,
+      "spanFrames": 10,
+      "path": [
+       1,
+       0.885,
+       0.745,
+       0.611,
+       0.534,
+       0.419,
+       0.325,
+       0.235,
+       0.155,
+       0.107,
+       0.048
+      ],
+      "vanish": {
+       "drop": 0,
+       "from": 0.107,
+       "to": 0.048,
+       "atMs": 154.9
+      }
+     },
+     {
+      "seat": 6,
+      "ok": true,
+      "tracks": true,
+      "deficit": 0,
+      "fades": false,
+      "spanMs": 31.8,
+      "spanFrames": 4,
+      "path": [
+       0.931,
+       0.755,
+       0.507,
+       0.302,
+       0.095
+      ],
+      "vanish": {
+       "drop": 0
+      }
+     },
+     {
+      "seat": 7,
+      "ok": true,
+      "tracks": true,
+      "deficit": 0,
+      "fades": false,
+      "spanMs": 23.6,
+      "spanFrames": 3,
+      "path": [
+       0.978,
+       0.719,
+       0.385,
+       0
+      ],
+      "vanish": {
+       "drop": 0,
+       "from": 1,
+       "to": 0.978,
+       "atMs": 14
+      }
+     }
+    ],
+    "vanish": {
+     "ok": true,
+     "drop": 0.373,
+     "seat": 3,
+     "from": 0.373,
+     "to": 0,
+     "atMs": 133.4
+    },
+    "inkMax": 1,
+    "inkOk": true,
+    "why": "5 leaving seat(s), 0 failing; tightest seat 7: ink 0.978 → 0.719 → 0.385 → 0 over 23.6 ms / 3 frame(s) (fade bound ≥ 3 frames and ≥ 61.4 ms), coverage deficit 0 (track bound 0.1); vanish worst one-frame drop beyond the closing edge 0.373 (seat 3 0.373 → 0 at +133.4 ms) (bound 0.5); largest unit ink read 1 (an ink is a share of the unit's own box: ≤ 1, H6-3)"
+   },
+   "splice": {
+    "ok": true,
+    "spliceFrames": 0,
+    "sliverFrames": 0,
+    "firstSplice": null,
+    "firstSliver": null,
+    "why": "0 splice frame(s), 0 sliver frame(s) (bound 0 each)"
+   },
+   "stub": {
+    "ok": true,
+    "judged": 36,
+    "stubFrames": 0,
+    "glyphs": 22,
+    "first": null,
+    "rampPx": null,
+    "unreadGlyphs": 0,
+    "why": "0 stub frame(s) of 36 judged (up to 22 glyphs a frame) (bound 0; a stub is a glyph painted 10-90 %, at any opacity, by an edge whose alpha goes 10→90 % inside 2 px, inside the plate)"
+   },
+   "lanes": {
+    "ok": true,
+    "judged": true,
+    "flagClosedMs": 263.1,
+    "lanes": 3,
+    "worst": null,
+    "cancels": [],
+    "seatAfterFlag": null,
+    "why": "every lane (3) at its final value from the frame the flag closed; no lane cancelled to identity; every seat at its final position from the flag"
+   },
+   "summary": "D 244.98 px (346.98→102); step ×0.65; dead; window 254.8 ms (allow 257, clock 214.2); trajectory worst 0.73 px (0.3 % of D) from the rung's analytic spring (tol 10.8); terminal last step 0.28 px after 0.7 px (bound 2.05); owners 0; seat step ×0.64 (9.34 px), seat overlap 0 frame(s); blank 1 blank of 35 moving frame(s), longest run 1 (bound 1); leaving 5 leaving seat(s), 0 failing; tightest seat 7: ink 0.978 → 0.719 → 0.385 → 0 over 23.6 ms / 3 frame(s) (fade bound ≥ 3 frames and ≥ 61.4 ms), coverage deficit 0 (track bound 0.1); vanish worst one-frame drop beyond the closing edge 0.373 (seat 3 0.373 → 0 at +133.4 ms) (bound 0.5); largest unit ink read 1 (an ink is a share of the unit's own box: ≤ 1, H6-3); splice 0 splice frame(s), 0 sliver frame(s) (bound 0 each); stub 0 stub frame(s) of 36 judged (up to 22 glyphs a frame) (bound 0; a stub is a glyph painted 10-90 %, at any opacity, by an edge whose alpha goes 10→90 % inside 2 px, inside the plate); lanes every lane (3) at its final value from the frame the flag closed; no lane cancelled to identity; every seat at its final position from the flag; faces 0.5 px of face ink beyond the plate over 14 screenshot sample(s) (10 in flight) (bound 1)",
+   "load": 11.12,
+   "faces": {
+    "ok": true,
+    "max": 0.5,
+    "n": 14,
+    "inflight": 10,
+    "travel": 244.98,
+    "bound": 1,
+    "how": "screenshot",
+    "why": "0.5 px of face ink beyond the plate over 14 screenshot sample(s) (10 in flight) (bound 1)"
+   }
+  }
+ ]
+}

@@ -1,0 +1,61 @@
+{
+ "id": "E-14",
+ "engine": "webkit",
+ "version": "26.5",
+ "target": {
+  "build": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p14/C-E14/wt/.ce14out/builds/plant-velreset"
+ },
+ "loadStart": "13.0/11.4/11.3",
+ "loadEnd": "11.2/11.1/11.2",
+ "verdict": "FAIL",
+ "cells": [
+  {
+   "name": "M27 a train of inserts above the root · 16 px every frame for 12 frames",
+   "status": "PASS",
+   "line": "glides 1 (bound ≤ 2: the onset, carried after) · on each insert's frame the break of the root's own motion, less the running glide's own change of velocity, [0.00 22.84 0.00 0.00 0.72 0.00 1.59 6.56 0.00 0.00 4.80 0.00] px (bound ≤ 0.5 at the onset) · errors 0",
+   "load": "13.0/11.4/11.3"
+  },
+  {
+   "name": "M27 a train of inserts above the root · 16 px every second frame, 6 steps",
+   "status": "PASS",
+   "line": "glides 6 (bound ≥ 6: each step glided) · on each insert's frame the break of the root's own motion, less the running glide's own change of velocity, [0.00 0.24 0.00 0.00 0.00 0.00] px (bound ≤ 0.5 each) · errors 0",
+   "load": "12.3/11.3/11.2"
+  },
+  {
+   "name": "M27 a train of inserts above the root · 8 px every frame for 12 frames",
+   "status": "PASS",
+   "line": "glides 1 (bound ≤ 2: the onset, carried after) · on each insert's frame the break of the root's own motion, less the running glide's own change of velocity, [0.00 15.05 0.00 2.52 0.00 0.00 0.00 1.26 1.37 0.15 0.00 0.00] px (bound ≤ 0.5 at the onset) · errors 0",
+   "load": "12.3/11.3/11.2"
+  },
+  {
+   "name": "M27 a train of inserts above the root · 40 px every second frame, 6 steps",
+   "status": "FAIL",
+   "line": "glides 6 (bound ≥ 6: each step glided) · on each insert's frame the break of the root's own motion, less the running glide's own change of velocity, [0.00 0.74 0.33 0.00 0.00 0.00] px (bound ≤ 0.5 each) · errors 0",
+   "load": "12.3/11.3/11.2"
+  },
+  {
+   "name": "M27 a slow margin ramp above C · 0.2 px a frame",
+   "status": "FAIL",
+   "line": "glides over the ramp 8 (bound ≤ 2: the onset and one uneven frame; Y8 reads 0-1 at ≤ 200 px/s) · errors 0",
+   "load": "11.6/11.2/11.2"
+  },
+  {
+   "name": "M27 a slow margin ramp above C · 0.5 px a frame",
+   "status": "FAIL",
+   "line": "glides over the ramp 21 (bound ≤ 2: the onset and one uneven frame; Y8 reads 0-1 at ≤ 200 px/s) · errors 0",
+   "load": "11.6/11.2/11.2"
+  },
+  {
+   "name": "M27 a slow margin ramp above C · 1 px a frame",
+   "status": "PASS",
+   "line": "glides over the ramp 1 (bound ≤ 2: the onset and one uneven frame; Y8 reads 0-1 at ≤ 200 px/s) · errors 0",
+   "load": "11.6/11.2/11.2"
+  },
+  {
+   "name": "M27 a slow margin ramp above C · 2 px a frame",
+   "status": "PASS",
+   "line": "glides over the ramp 1 (bound ≤ 2: the onset and one uneven frame; Y8 reads 0-1 at ≤ 200 px/s) · errors 0",
+   "load": "11.2/11.1/11.2"
+  }
+ ]
+}

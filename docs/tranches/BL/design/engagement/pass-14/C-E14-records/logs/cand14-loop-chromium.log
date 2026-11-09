@@ -1,0 +1,20 @@
+# C-E14 cand14-loop chromium · 2026-11-06 18:43:35 · load { 12.40 13.24 13.18 } · harness 7e79063a4b00 · 
+# E9-probe · P-E9's loop cells (O-103f (3): the engaged frame loop stops at release)
+# target /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p14/C-E14/wt/.ce14out/builds/cand14 · engine chromium · lock wait 0.0 s (the deadline 5400 s counts from here) · other headless processes: chromium 4, webkit 2 · load 12.4/13.2/13.2 at start
+# scene app: harness scenes/App.vue (sha1 912fecf0a1aa)
+# chromium 149.0.7827.55
+  REPORT     E9 loop keyboard · rest · rAF 0.0/s · RO callbacks 0.0/s · layouts 0.0/s · style recalcs 0.0/s · [data-engaged] 0→0 · [data-engage-stage] 0→0 · loupe 0→0 · window 3004 ms · load 11.1/12.9/13.1
+  REPORT     E9 loop keyboard · engaged idle · rAF 132.1/s · RO callbacks 132.1/s · layouts 0.0/s · style recalcs 0.0/s · [data-engaged] 1→1 · [data-engage-stage] 1→1 · loupe 0→0 · window 3005 ms · load 11.1/12.9/13.1
+  REPORT     E9 loop keyboard · release +0..150 ms · rAF 123.9/s · RO callbacks 123.9/s · layouts 776.3/s · style recalcs 776.3/s · [data-engaged] 0→0 · [data-engage-stage] 1→1 · loupe 0→0 · window 153 ms · load 11.1/12.9/13.1
+  REPORT     E9 loop keyboard · release +150..450 ms (exit clock) · rAF 29.7/s · RO callbacks 29.7/s · layouts 0.0/s · style recalcs 3.3/s · [data-engaged] 0→0 · [data-engage-stage] 1→0 · loupe 0→0 · window 303 ms · load 11.1/12.9/13.1
+  REPORT     E9 loop keyboard · release +1.5..4.5 s · rAF 0.0/s · RO callbacks 0.0/s · layouts 0.0/s · style recalcs 0.0/s · [data-engaged] 0→0 · [data-engage-stage] 0→0 · loupe 0→0 · window 3003 ms · load 11.1/12.9/13.1
+  FAIL       E9 loop keyboard · stops at release · engaged 264.2/s (> 30: the loop runs); after release +0..150 ms 247.9/s, +150..450 ms (exit clock) 59.4/s, +1.5..4.5 s 0.0/s (each ≤ 2) · [data-engage-stage] across the first window 1→1 · load 11.1/12.9/13.1
+  REPORT     E9 loop fine-hold · rest · rAF 0.0/s · RO callbacks 0.0/s · layouts 0.0/s · style recalcs 0.0/s · [data-engaged] 0→0 · [data-engage-stage] 0→0 · loupe 0→0 · window 3003 ms · load 9.9/12.6/12.9
+  REPORT     E9 loop fine-hold · held still, loupe shown · rAF 267.8/s · RO callbacks 133.9/s · layouts 0.0/s · style recalcs 0.0/s · [data-engaged] 1→1 · [data-engage-stage] 1→1 · loupe 1→1 · window 3003 ms · load 9.9/12.6/12.9
+  REPORT     E9 loop fine-hold · release +0..150 ms · rAF 136.7/s · RO callbacks 136.7/s · layouts 3099.0/s · style recalcs 3118.5/s · [data-engaged] 0→0 · [data-engage-stage] 1→1 · loupe 1→1 · window 154 ms · load 9.9/12.6/12.9
+  REPORT     E9 loop fine-hold · release +150..450 ms (exit clock) · rAF 26.4/s · RO callbacks 26.4/s · layouts 3.3/s · style recalcs 52.7/s · [data-engaged] 0→0 · [data-engage-stage] 1→0 · loupe 1→0 · window 304 ms · load 9.9/12.6/12.9
+  REPORT     E9 loop fine-hold · release +1.5..4.5 s · rAF 0.0/s · RO callbacks 0.0/s · layouts 0.0/s · style recalcs 0.0/s · [data-engaged] 0→0 · [data-engage-stage] 0→0 · loupe 0→0 · window 3004 ms · load 9.9/12.6/12.9
+  FAIL       E9 loop fine-hold · stops at release · engaged 401.6/s (> 30: the loop runs); after release +0..150 ms 273.4/s, +150..450 ms (exit clock) 52.7/s, +1.5..4.5 s 0.0/s (each ≤ 2) · [data-engage-stage] across the first window 1→1 · load 9.9/12.6/12.9
+E9-probe chromium FAIL · 0 pass, 2 fail, 0 unmeasured of 2 gating cells (10 reported) · load 12.4/13.2/13.2 at start, 9.9/12.6/12.9 at end
+# exit 1 · 2026-11-06 18:44:01 · load { 9.92 12.58 12.94 }
+# end · 2026-11-06 18:44:01 · load { 9.92 12.58 12.94 } · harness 7e79063a4b00

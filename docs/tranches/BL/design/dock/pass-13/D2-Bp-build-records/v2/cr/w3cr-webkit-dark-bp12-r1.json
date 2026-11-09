@@ -1,0 +1,198 @@
+{
+ "witness": "W3",
+ "target": "bp12@8b70ba0a",
+ "when": "2026-11-06T21:19:48.210Z",
+ "load": 12.56,
+ "cells": [
+  {
+   "engine": "webkit",
+   "cell": "content-remove",
+   "pass": false,
+   "failed": [
+    "window"
+   ],
+   "ownerBlocked": "Q-4",
+   "D": 179.39,
+   "start": 661.11,
+   "target": 481.72,
+   "frames": 96,
+   "travelMs": 253,
+   "continuity": {
+    "ok": true,
+    "ratio": 0.65,
+    "step": 16.44,
+    "bound": 25.28,
+    "atMs": 72,
+    "dt": 11
+   },
+   "landing": {
+    "ok": true,
+    "why": "dead",
+    "overshoot": 0,
+    "reversals": 0
+   },
+   "window": {
+    "ok": false,
+    "why": "window 261 ms > clock 214.2 + 2×16.7 + stall 12 = 259.6 ms (O-64 R-4, H-3d)",
+    "open": 13,
+    "close": 274,
+    "land": 274,
+    "motionStart": 21,
+    "clockMs": 214.2,
+    "frameMs": 16.7,
+    "duration": 261,
+    "allowMs": 259.6,
+    "q4": true,
+    "q4AllowMs": 315.4,
+    "q4a": {
+     "ok": false,
+     "allowMs": 259.6,
+     "why": "261 ms > 259.6"
+    },
+    "q4c": {
+     "ok": true,
+     "allowMs": 315.4,
+     "why": "261 ms ≤ 315.4"
+    }
+   },
+   "owners": {
+    "ok": true,
+    "frames": 0
+   },
+   "trajectory": {
+    "ok": true,
+    "dev": 0.53,
+    "tol": 8.18,
+    "frac": 0,
+    "atMs": 328,
+    "why": "worst 0.53 px (0.3 % of D) from the rung's analytic spring (tol 8.18)"
+   },
+   "terminal": {
+    "ok": true,
+    "last": 0.53,
+    "prev": 0.63,
+    "bound": 1.35,
+    "why": "last step 0.53 px after 0.63 px (bound 1.35)"
+   },
+   "spec": {
+    "vmaxNorm": 8.37,
+    "M": 0.002966,
+    "band": 0.02,
+    "clockMs": 214.2
+   },
+   "seats": {
+    "step": {
+     "ok": true,
+     "ratio": 0.64,
+     "step": 8.25,
+     "bound": 12.89,
+     "seat": 6,
+     "atMs": 72
+    },
+    "overlap": {
+     "ok": true,
+     "frames": 0,
+     "first": null
+    }
+   },
+   "blank": {
+    "ok": true,
+    "entering": 7,
+    "movingFrames": 27,
+    "blankFrames": 0,
+    "longestRun": 0,
+    "atMs": null,
+    "why": "0 blank of 27 moving frame(s), longest run 0 (bound 1)"
+   },
+   "leaving": {
+    "ok": true,
+    "leaving": 1,
+    "failing": 0,
+    "lengthMs": 253,
+    "rows": [
+     {
+      "seat": 18,
+      "ok": true,
+      "tracks": false,
+      "deficit": 0.621,
+      "fades": true,
+      "spanMs": 120,
+      "spanFrames": 12,
+      "path": [
+       0.998,
+       0.861,
+       0.861,
+       0.839,
+       0.806,
+       0.763,
+       0.715,
+       0.665,
+       0.609,
+       0.497,
+       0.373,
+       0.221,
+       0.071
+      ],
+      "vanish": {
+       "drop": 0.137,
+       "from": 0.998,
+       "to": 0.861,
+       "atMs": 21
+      }
+     }
+    ],
+    "vanish": {
+     "ok": true,
+     "drop": 0.137,
+     "seat": 18,
+     "from": 0.998,
+     "to": 0.861,
+     "atMs": 21
+    },
+    "inkMax": 1,
+    "inkOk": true,
+    "why": "1 leaving seat(s), 0 failing; tightest seat 18: ink 0.998 → 0.861 → 0.861 → 0.839 → 0.806 → 0.763 → 0.715 → 0.665 → 0.609 → 0.497 → 0.373 → 0.221 → 0.071 over 120 ms / 12 frame(s) (fade bound ≥ 3 frames and ≥ 63.3 ms), coverage deficit 0.621 (track bound 0.1); vanish worst one-frame drop beyond the closing edge 0.137 (seat 18 0.998 → 0.861 at +21 ms) (bound 0.5); largest unit ink read 1 (an ink is a share of the unit's own box: ≤ 1, H6-3)"
+   },
+   "splice": {
+    "ok": true,
+    "spliceFrames": 0,
+    "sliverFrames": 0,
+    "firstSplice": null,
+    "firstSliver": null,
+    "why": "0 splice frame(s), 0 sliver frame(s) (bound 0 each)"
+   },
+   "stub": {
+    "ok": true,
+    "judged": 28,
+    "stubFrames": 0,
+    "glyphs": 39,
+    "first": null,
+    "rampPx": 7.86,
+    "unreadGlyphs": 0,
+    "why": "0 stub frame(s) of 28 judged (up to 39 glyphs a frame); narrowest ramp across a glyph 7.86 px (RECORD) (bound 0; a stub is a glyph painted 10-90 %, at any opacity, by an edge whose alpha goes 10→90 % inside 2 px, inside the plate)"
+   },
+   "lanes": {
+    "ok": true,
+    "judged": true,
+    "flagClosedMs": 274,
+    "lanes": 3,
+    "worst": null,
+    "cancels": [],
+    "seatAfterFlag": null,
+    "why": "every lane (3) at its final value from the frame the flag closed; no lane cancelled to identity; every seat at its final position from the flag"
+   },
+   "summary": "D 179.39 px (661.11→481.72); step ×0.65; dead; window 261 ms (allow 259.6, clock 214.2) — window 261 ms > clock 214.2 + 2×16.7 + stall 12 = 259.6 ms (O-64 R-4, H-3d); trajectory worst 0.53 px (0.3 % of D) from the rung's analytic spring (tol 8.18); terminal last step 0.53 px after 0.63 px (bound 1.35); owners 0; seat step ×0.64 (8.25 px), seat overlap 0 frame(s); blank 0 blank of 27 moving frame(s), longest run 0 (bound 1); leaving 1 leaving seat(s), 0 failing; tightest seat 18: ink 0.998 → 0.861 → 0.861 → 0.839 → 0.806 → 0.763 → 0.715 → 0.665 → 0.609 → 0.497 → 0.373 → 0.221 → 0.071 over 120 ms / 12 frame(s) (fade bound ≥ 3 frames and ≥ 63.3 ms), coverage deficit 0.621 (track bound 0.1); vanish worst one-frame drop beyond the closing edge 0.137 (seat 18 0.998 → 0.861 at +21 ms) (bound 0.5); largest unit ink read 1 (an ink is a share of the unit's own box: ≤ 1, H6-3); splice 0 splice frame(s), 0 sliver frame(s) (bound 0 each); stub 0 stub frame(s) of 28 judged (up to 39 glyphs a frame); narrowest ramp across a glyph 7.86 px (RECORD) (bound 0; a stub is a glyph painted 10-90 %, at any opacity, by an edge whose alpha goes 10→90 % inside 2 px, inside the plate); lanes every lane (3) at its final value from the frame the flag closed; no lane cancelled to identity; every seat at its final position from the flag; Q-4 lenient window holds (allow 315.4 ms); Q-4 (a) flag at the 2 % band fails (261 ms > 259.6); Q-4 (c) 270 ms dock clock holds (261 ms ≤ 315.4)  ⟶ OWNER-BLOCKED (Q-4): window; faces 0 px of face ink beyond the plate over 25 screencast sample(s) (bound 2)",
+   "load": 11.76,
+   "faces": {
+    "ok": true,
+    "max": 0,
+    "n": 25,
+    "inflight": null,
+    "travel": null,
+    "bound": 2,
+    "how": "screencast",
+    "why": "0 px of face ink beyond the plate over 25 screencast sample(s) (bound 2)"
+   }
+  }
+ ]
+}

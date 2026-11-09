@@ -1,0 +1,156 @@
+{
+ "witness": "W3",
+ "target": "bp13@392ff1e3",
+ "when": "2026-11-07T04:13:35.757Z",
+ "load": 8.3,
+ "cells": [
+  {
+   "engine": "chromium",
+   "cell": "reversal",
+   "pass": false,
+   "failed": [
+    "window"
+   ],
+   "ownerBlocked": "Q-4",
+   "D": 0,
+   "start": 481.66,
+   "target": 481.66,
+   "frames": 142,
+   "travelMs": 334.4,
+   "continuity": {
+    "ok": true,
+    "ratio": 0.65,
+    "step": 18.09,
+    "bound": 27.68,
+    "atMs": 51.1,
+    "dt": 5.7
+   },
+   "landing": {
+    "ok": true,
+    "why": "dead",
+    "overshoot": 0,
+    "reversals": 1
+   },
+   "window": {
+    "ok": false,
+    "why": "window 274.7 ms after the retarget > clock 214.2 + 2×16.7 + stall 10 = 257.6 ms (O-64 R-4, H-3d)",
+    "open": 6.899999999999636,
+    "close": 341.2999999999993,
+    "land": 341.2999999999993,
+    "motionStart": 6.899999999999636,
+    "clockMs": 214.2,
+    "frameMs": 16.7,
+    "duration": 334.4,
+    "fromRetargetMs": 274.7,
+    "allowMs": 257.6,
+    "q4": true,
+    "q4AllowMs": 313.4,
+    "q4a": {
+     "ok": true,
+     "allowMs": 288.4,
+     "why": "274.7 ms ≤ 288.4"
+    },
+    "q4c": {
+     "ok": true,
+     "allowMs": 313.4,
+     "why": "274.7 ms ≤ 313.4"
+    }
+   },
+   "owners": {
+    "ok": true,
+    "frames": 0
+   },
+   "trajectory": {
+    "ok": true,
+    "dev1": 0.62,
+    "tol1": 16.19,
+    "dev2": 1.39,
+    "tol2": 8.01,
+    "vAtRetarget": -3.12,
+    "D1": 160.55,
+    "why": "before the retarget 0.62 px (tol 16.19); after it, released at 338.93 px with -3.12 px/ms: 1.39 px (tol 8.01)"
+   },
+   "terminal": {
+    "ok": true,
+    "last": 0.62,
+    "prev": 0.44,
+    "bound": 1.2,
+    "why": "last step 0.62 px after 0.44 px (bound 1.2)"
+   },
+   "spec": {
+    "vmaxNorm": 8.37,
+    "M": 0.002966,
+    "band": 0.02,
+    "clockMs": 214.2
+   },
+   "seats": {
+    "step": {
+     "ok": true,
+     "ratio": 0.64,
+     "step": 12.17,
+     "bound": 18.87,
+     "seat": 6,
+     "atMs": 58.8
+    },
+    "overlap": {
+     "ok": true,
+     "frames": 0,
+     "first": null
+    }
+   },
+   "blank": {
+    "ok": true,
+    "entering": 7,
+    "movingFrames": 46,
+    "blankFrames": 0,
+    "longestRun": 0,
+    "atMs": null,
+    "why": "0 blank of 46 moving frame(s), longest run 0 (bound 1)"
+   },
+   "leaving": {
+    "ok": true,
+    "leaving": 0,
+    "failing": 0,
+    "lengthMs": 334.4,
+    "rows": [],
+    "vanish": {
+     "ok": true,
+     "drop": 0
+    },
+    "inkMax": 1,
+    "inkOk": true,
+    "why": "no seat leaves"
+   },
+   "splice": {
+    "ok": true,
+    "spliceFrames": 0,
+    "sliverFrames": 0,
+    "firstSplice": null,
+    "firstSliver": null,
+    "why": "0 splice frame(s), 0 sliver frame(s) (bound 0 each)"
+   },
+   "stub": {
+    "ok": true,
+    "judged": 47,
+    "stubFrames": 0,
+    "glyphs": 24,
+    "first": null,
+    "rampPx": null,
+    "unreadGlyphs": 0,
+    "why": "0 stub frame(s) of 47 judged (up to 24 glyphs a frame) (bound 0; a stub is a glyph painted 10-90 %, at any opacity, by an edge whose alpha goes 10→90 % inside 2 px, inside the plate)"
+   },
+   "lanes": {
+    "ok": true,
+    "judged": true,
+    "flagClosedMs": 341.3,
+    "lanes": 3,
+    "worst": null,
+    "cancels": [],
+    "seatAfterFlag": null,
+    "why": "every lane (3) at its final value from the frame the flag closed; no lane cancelled to identity; every seat at its final position from the flag"
+   },
+   "summary": "D 0 px (481.66→481.66); step ×0.65; dead, 1 reversal(s); window 334.4 ms (allow 257.6, clock 214.2) — window 274.7 ms after the retarget > clock 214.2 + 2×16.7 + stall 10 = 257.6 ms (O-64 R-4, H-3d); trajectory before the retarget 0.62 px (tol 16.19); after it, released at 338.93 px with -3.12 px/ms: 1.39 px (tol 8.01); terminal last step 0.62 px after 0.44 px (bound 1.2); owners 0; seat step ×0.64 (12.17 px), seat overlap 0 frame(s); blank 0 blank of 46 moving frame(s), longest run 0 (bound 1); leaving no seat leaves; splice 0 splice frame(s), 0 sliver frame(s) (bound 0 each); stub 0 stub frame(s) of 47 judged (up to 24 glyphs a frame) (bound 0; a stub is a glyph painted 10-90 %, at any opacity, by an edge whose alpha goes 10→90 % inside 2 px, inside the plate); lanes every lane (3) at its final value from the frame the flag closed; no lane cancelled to identity; every seat at its final position from the flag; Q-4 lenient window holds (allow 313.4 ms); Q-4 (a) flag at the 2 % band holds (274.7 ms ≤ 288.4); Q-4 (c) 270 ms dock clock holds (274.7 ms ≤ 313.4); retargeted at 340.47 px  ⟶ OWNER-BLOCKED (Q-4): window",
+   "load": 8.3
+  }
+ ]
+}

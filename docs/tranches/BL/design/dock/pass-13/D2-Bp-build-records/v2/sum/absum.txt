@@ -1,0 +1,100 @@
+== ab: retarget·40/80/120 (rules (a), (b))
+('chromium', 'dark', 'bp12') {'reads': 24, 'splice': 0, 'sliver': 0, 'stub': 0}
+('chromium', 'dark', 'bp13') {'reads': 24, 'splice': 0, 'sliver': 0, 'stub': 0}
+('chromium', 'light', 'bp12') {'reads': 24, 'splice': 0, 'sliver': 0, 'stub': 0}
+('chromium', 'light', 'bp13') {'reads': 24, 'splice': 0, 'sliver': 0, 'stub': 0}
+('webkit', 'dark', 'bp12') {'reads': 24, 'splice': 0, 'sliver': 0, 'stub': 0}
+('webkit', 'dark', 'bp13') {'reads': 24, 'splice': 0, 'sliver': 0, 'stub': 0}
+('webkit', 'light', 'bp12') {'reads': 24, 'splice': 0, 'sliver': 0, 'stub': 0}
+('webkit', 'light', 'bp13') {'reads': 24, 'splice': 0, 'sliver': 0, 'stub': 0}
+== cr: content-remove (rule (c)); every gap
+('chromium', 'dark', 'bp12', '1') gap 0.0 F 16.7  verdict PASS failed []
+('chromium', 'dark', 'bp12', '2') gap 0.0 F 16.7  verdict PASS failed []
+('chromium', 'dark', 'bp12', '3') gap 0.0 F 16.7  verdict PASS failed []
+('chromium', 'dark', 'bp12', '4') gap 0.0 F 16.7  verdict PASS failed []
+('chromium', 'dark', 'bp12', '5') gap 0.0 F 16.7  verdict PASS failed []
+('chromium', 'dark', 'bp12', '6') gap 0.0 F 16.7  verdict PASS failed []
+('chromium', 'dark', 'bp12', '7') gap 0.0 F 16.7  verdict PASS failed []
+('chromium', 'dark', 'bp12', '8') gap 0.0 F 16.7  verdict PASS failed []
+('chromium', 'dark', 'bp13', '1') gap 0.0 F 16.7  verdict PASS failed []
+('chromium', 'dark', 'bp13', '2') gap 0.0 F 16.7  verdict PASS failed []
+('chromium', 'dark', 'bp13', '3') gap 0.0 F 16.7  verdict PASS failed []
+('chromium', 'dark', 'bp13', '4') gap 0.0 F 16.7  verdict PASS failed []
+('chromium', 'dark', 'bp13', '5') gap 8.4 F 16.7  verdict PASS failed []
+('chromium', 'dark', 'bp13', '6') gap 0 F 16.7  verdict PASS failed []
+('chromium', 'dark', 'bp13', '7') gap 0.0 F 16.7  verdict PASS failed []
+('chromium', 'dark', 'bp13', '8') gap 0.0 F 16.7  verdict PASS failed []
+('chromium', 'light', 'bp12', '1') gap 0.0 F 16.7  verdict PASS failed []
+('chromium', 'light', 'bp12', '2') gap 0.0 F 16.7  verdict PASS failed []
+('chromium', 'light', 'bp12', '3') gap 0.0 F 16.7  verdict PASS failed []
+('chromium', 'light', 'bp12', '4') gap 0.0 F 16.7  verdict PASS failed []
+('chromium', 'light', 'bp12', '5') gap 0 F 16.7  verdict PASS failed []
+('chromium', 'light', 'bp12', '6') gap 8.6 F 16.7  verdict PASS failed []
+('chromium', 'light', 'bp12', '7') gap 0.0 F 16.7  verdict PASS failed []
+('chromium', 'light', 'bp12', '8') gap 0.0 F 16.7  verdict PASS failed []
+('chromium', 'light', 'bp13', '1') gap 0.0 F 16.7  verdict PASS failed []
+('chromium', 'light', 'bp13', '2') gap 0.0 F 16.7  verdict PASS failed []
+('chromium', 'light', 'bp13', '3') gap 0.0 F 16.7  verdict PASS failed []
+('chromium', 'light', 'bp13', '4') gap 0.0 F 16.7  verdict PASS failed []
+('chromium', 'light', 'bp13', '5') gap 0.0 F 16.7  verdict PASS failed []
+('chromium', 'light', 'bp13', '6') gap 0.0 F 16.7  verdict PASS failed []
+('chromium', 'light', 'bp13', '7') gap 0.0 F 16.7  verdict PASS failed []
+('chromium', 'light', 'bp13', '8') gap 0.0 F 16.7  verdict PASS failed []
+('webkit', 'dark', 'bp12', '1') gap 0 F 16.7  verdict OWNER-BLOCKED failed ['window']
+('webkit', 'dark', 'bp12', '2') gap 0 F 16.7  verdict PASS failed []
+('webkit', 'dark', 'bp12', '3') gap 0 F 16.7  verdict PASS failed []
+('webkit', 'dark', 'bp12', '4') gap 0 F 16.7  verdict PASS failed []
+('webkit', 'dark', 'bp12', '5') gap 0 F 16.7  verdict PASS failed []
+('webkit', 'dark', 'bp12', '6') gap 0 F 16.7  verdict PASS failed []
+('webkit', 'dark', 'bp12', '7') gap 0 F 16.7  verdict PASS failed []
+('webkit', 'dark', 'bp12', '8') gap 0 F 16.7  verdict PASS failed []
+('webkit', 'dark', 'bp13', '1') gap 0 F 17  verdict PASS failed []
+('webkit', 'dark', 'bp13', '2') gap 0 F 16.7  verdict PASS failed []
+('webkit', 'dark', 'bp13', '3') gap 0 F 16.7  verdict PASS failed []
+('webkit', 'dark', 'bp13', '4') gap 0 F 16.7  verdict PASS failed []
+('webkit', 'dark', 'bp13', '5') gap 0 F 16.7  verdict PASS failed []
+('webkit', 'dark', 'bp13', '6') gap 0 F 16.7  verdict PASS failed []
+('webkit', 'dark', 'bp13', '7') gap 0 F 16.7  verdict PASS failed []
+('webkit', 'dark', 'bp13', '8') gap 0 F 16.7  verdict PASS failed []
+('webkit', 'light', 'bp12', '1') gap 0 F 17  verdict PASS failed []
+('webkit', 'light', 'bp12', '2') gap 0 F 17  verdict PASS failed []
+('webkit', 'light', 'bp12', '3') gap 0 F 17  verdict PASS failed []
+('webkit', 'light', 'bp12', '4') gap 15 F 16.7  verdict PASS failed []
+('webkit', 'light', 'bp12', '5') gap 0 F 17  verdict PASS failed []
+('webkit', 'light', 'bp12', '6') gap 0 F 17  verdict PASS failed []
+('webkit', 'light', 'bp12', '7') gap 0 F 17  verdict PASS failed []
+('webkit', 'light', 'bp12', '8') gap 0 F 17  verdict PASS failed []
+('webkit', 'light', 'bp13', '1') gap 0 F 17  verdict PASS failed []
+('webkit', 'light', 'bp13', '2') gap 0 F 17  verdict PASS failed []
+('webkit', 'light', 'bp13', '3') gap 15 F 17  verdict PASS failed []
+('webkit', 'light', 'bp13', '4') gap 0 F 17  verdict PASS failed []
+('webkit', 'light', 'bp13', '5') gap 0 F 17  verdict PASS failed []
+('webkit', 'light', 'bp13', '6') gap 0 F 17  verdict PASS failed []
+('webkit', 'light', 'bp13', '7') gap 0 F 17  verdict PASS failed []
+('webkit', 'light', 'bp13', '8') gap 0 F 17  verdict PASS failed []
+== rev: reversal (rule (d)); every stub read
+   STUB ('chromium', 'light', 'bp12', '12') frames 1 "n" button.dock-tab-button.glass-specular-track painted 0.3 edge 886.9 px at +116.7 ms ramp width 0.24
+('chromium', 'dark', 'bp12') {'reads': 16, 'red:window': 16}
+('chromium', 'dark', 'bp13') {'reads': 16, 'red:window': 16}
+('chromium', 'light', 'bp12') {'reads': 16, 'red:window': 15, 'stub': 1, 'red:window,stub': 1}
+('chromium', 'light', 'bp13') {'reads': 16, 'red:window': 16}
+('webkit', 'dark', 'bp12') {'reads': 8, 'red:window': 8}
+('webkit', 'dark', 'bp13') {'reads': 8, 'red:window': 8}
+('webkit', 'light', 'bp12') {'reads': 8, 'red:window': 8}
+('webkit', 'light', 'bp13') {'reads': 8, 'red:window': 8}
+== swrev (beside the rows)
+   SPLICE ('webkit', 'dark', 'bp12', '2') at 40 then 16 {'units': ['s7', 's8'], 'gapPx': 8.7, 'advPx': 9.58, 'atMs': 102} load 10.53
+   SPLICE ('webkit', 'dark', 'bp12', '3') at 40 then 16 {'units': ['s7', 's8'], 'gapPx': 8.43, 'advPx': 9.58, 'atMs': 102} load 10.26
+   SPLICE ('webkit', 'dark', 'bp12', '4') at 40 then 32 {'units': ['s7', 's8'], 'gapPx': 8.47, 'advPx': 9.58, 'atMs': 112} load 11.5
+   SPLICE ('webkit', 'dark', 'bp12', '6') at 40 then 16 {'units': ['s7', 's8'], 'gapPx': 8.25, 'advPx': 9.58, 'atMs': 109} load 10.9
+   SPLICE ('webkit', 'light', 'bp12', '1') at 40 then 32 {'units': ['s7', 's8'], 'gapPx': 7.39, 'advPx': 9.58, 'atMs': 116} load 8.12
+   SPLICE ('webkit', 'light', 'bp12', '4') at 40 then 16 {'units': ['s7', 's8'], 'gapPx': 7.74, 'advPx': 9.58, 'atMs': 102} load 7.42
+   SPLICE ('webkit', 'light', 'bp12', '6') at 40 then 16 {'units': ['s7', 's8'], 'gapPx': 7.44, 'advPx': 9.58, 'atMs': 100} load 10.61
+   SPLICE ('webkit', 'dark', 'bp13', '3') at 40 then 32 {'units': ['s7', 's8'], 'gapPx': 8.23, 'advPx': 9.58, 'atMs': 112} load 10.8
+   SPLICE ('webkit', 'dark', 'bp13', '3') at 40 then 64 {'units': ['s7', 's8'], 'gapPx': 8.42, 'advPx': 9.58, 'atMs': 143} load 10.8
+   SPLICE ('webkit', 'light', 'bp13', '3') at 40 then 16 {'units': ['s7', 's8'], 'gapPx': 7.31, 'advPx': 9.58, 'atMs': 99} load 8.72
+   SPLICE ('webkit', 'light', 'bp13', '5') at 40 then 32 {'units': ['s7', 's8'], 'gapPx': 7.42, 'advPx': 9.58, 'atMs': 117} load 8.46
+('webkit', 'dark', 'bp12') {'reads': 32, 'splice': 4}
+('webkit', 'dark', 'bp13') {'reads': 32, 'splice': 2}
+('webkit', 'light', 'bp12') {'reads': 32, 'stub': 2, 'splice': 3}
+('webkit', 'light', 'bp13') {'reads': 32, 'splice': 2}

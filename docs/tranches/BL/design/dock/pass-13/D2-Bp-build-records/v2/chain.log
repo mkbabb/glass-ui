@@ -1,0 +1,96 @@
+2026-11-05 00:57:46 run13: build bp13 (v2) into out2 · load averages: 18.81 19.77 19.18
+2026-11-05 01:07:30 run13: mkpatch · load averages: 26.71 23.71 21.07
+2026-11-05 01:07:35 run13: mkpatch: bb7cb08da92677aa6e4e2c753ce9f901b17f4ddb2051d2f4162ef43e97648121  /Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/dock/pass-13/D2-Bp-p13.patch · load averages: 29.78 24.40 21.32
+2026-11-05 01:37:52 run13: queues: chromium-light:       76 lines chromium-dark:       75 lines webkit-light:       98 lines webkit-dark:       97 lines  · load averages: 16.68 17.77 19.28
+2026-11-05 01:37:52 CHAIN start (steps: pr f7); harness list 42 OK · load averages: 16.68 17.77 19.28
+2026-11-05 01:37:52 start PR · load averages: 16.68 17.77 19.28
+2026-11-05 01:37:58 end PR · load averages: 17.91 18.00 19.36
+2026-11-05 01:37:58 start-gate F7 at load 17.91 (bound 20, waited 0 s) · load averages: 17.91 18.00 19.36
+2026-11-05 01:39:53 end F7: 64 files / 503777 B; ceiling 503808; margin 31 B · load averages: 24.15 19.98 19.93
+2026-11-05 01:39:53 CHAIN-DONE · load averages: 24.15 19.98 19.93
+2026-11-05 01:39:53 CHAIN start (steps: bat); harness list 42 OK · load averages: 23.26 19.86 19.89
+2026-11-05 01:40:23 start-gate bp13 chromium light at load 18.60 (bound 20, waited 30 s) · load averages: 18.60 19.02 19.58
+2026-11-05 01:40:23 start bp13 chromium light · load averages: 18.60 19.02 19.58
+2026-11-05 01:51:19 end bp13 chromium light exit 0; cells max load 24.55 · load averages: 22.77 19.44 18.67
+2026-11-05 01:51:50 start-gate bp13 chromium dark at load 19.66 (bound 20, waited 30 s) · load averages: 19.66 18.96 18.52
+2026-11-05 01:51:50 start bp13 chromium dark · load averages: 19.66 18.96 18.52
+2026-11-05 02:01:44 end bp13 chromium dark exit 0; cells max load 18.35 · load averages: 14.58 14.86 16.37
+2026-11-05 02:01:45 CHAIN-DONE · load averages: 14.58 14.86 16.37
+2026-11-05 02:01:45 CHAIN start (steps: q); harness list 42 OK · load averages: 14.58 14.86 16.37
+2026-11-05 02:05:16 start-gate q chromium-light slot 1 at load 9.74 (next ab-bp13-r1 gate 11, waited 211 s, 76 lines left) · load averages: 9.74 13.09 15.33
+2026-11-05 02:46:14 end q chromium-light slot 1 exit 75 · load averages: 12.26 14.88 14.21
+2026-11-05 03:18:16 start-gate q chromium-light slot 2 at load 8.34 (next cr-bp12-r8 gate 11, waited 1922 s, 45 lines left) · load averages: 8.34 12.70 14.61
+2026-11-05 04:41:46 chain.sh edited: a q slot holds its gate 30 min (was 10) before exit 75; takes effect from the next chain.sh invocation (cost, wk, WebKit q). The running Chromium q chain keeps 10 min. Slot 2 waited 70 min for guard admission (03:18 → 04:28)
+2026-11-05 04:45:02 end q chromium-light slot 2 exit 75 · load averages: 27.55 21.54 17.74
+2026-11-05 04:52:00 run13 (98467) and its q chain (43355) stopped by PID in the pre-queue gate (no slot queued or admitted), to restart the Chromium queues with the 30-min hold; restart SKIP_BUILD=1 S3=none
+2026-11-05 04:52:08 run13b: resume at the Chromium queues · load averages: 18.28 21.35 19.73
+2026-11-05 04:52:09 CHAIN start (steps: q); harness list 42 OK · load averages: 18.28 21.35 19.73
+2026-11-05 05:11:10 start-gate q chromium-light slot 1 at load 10.44 (next rev-bp13-r1 gate 11, waited 1141 s, 44 lines left) · load averages: 10.44 14.48 17.08
+2026-11-05 06:10:35 end q chromium-light slot 1 exit 75 · load averages: 17.66 18.72 18.01
+2026-11-05 06:52:08 start-gate q chromium-light slot 2 at load 10.28 (next rev-bp12-r7 gate 11, waited 2493 s, 31 lines left) · load averages: 10.28 14.01 16.04
+2026-11-05 07:13:42 end q chromium-light slot 2 exit 0 · load averages: 14.38 12.60 12.93
+2026-11-05 07:20:12 start-gate q chromium-dark slot 1 at load 10.71 (next ab-bp13-r1 gate 11, waited 390 s, 75 lines left) · load averages: 10.71 12.62 12.91
+2026-11-05 08:13:12 end q chromium-dark slot 1 exit 75 · load averages: 12.67 17.62 17.89
+2026-11-05 08:36:14 start-gate q chromium-dark slot 2 at load 10.12 (next cr-bp13-r2 gate 11, waited 1382 s, 57 lines left) · load averages: 10.12 14.68 16.46
+2026-11-05 09:38:07 end q chromium-dark slot 2 exit 75 · load averages: 19.65 18.58 18.09
+2026-11-05 10:11:14 start-gate q chromium-dark slot 3 at load 10.23 (next rev-bp12-r3 gate 11, waited 1987 s, 38 lines left) · load averages: 10.23 14.52 16.88
+2026-11-05 10:56:21 end q chromium-dark slot 3 exit 75 · load averages: 12.65 17.47 17.54
+2026-11-05 11:40:56 start-gate q chromium-dark slot 4 at load 10.91 (next rev-bp13-r10 gate 11, waited 2675 s, 25 lines left) · load averages: 10.91 17.06 18.10
+2026-11-05 12:25:21 end q chromium-dark slot 4 exit 75 · load averages: 25.49 19.10 18.91
+2026-11-05 13:03:24 start-gate q chromium-dark slot 5 at load 10.93 (next rev-bp13-r10 gate 11, waited 2283 s, 25 lines left) · load averages: 10.93 15.10 17.21
+2026-11-05 14:23:36 end q chromium-dark slot 5 exit 75 · load averages: 22.82 21.50 18.90
+2026-11-05 14:36:07 start-gate q chromium-dark slot 6 at load 10.28 (next si-bp13-r3 gate 11, waited 751 s, 7 lines left) · load averages: 10.28 18.96 20.25
+2026-11-05 15:07:36 end q chromium-dark slot 6 exit 0 · load averages: 11.65 12.13 14.38
+2026-11-05 15:07:36 CHAIN-DONE · load averages: 11.65 12.13 14.38
+2026-11-05 15:07:37 CHAIN start (steps: cost); harness list 42 OK · load averages: 11.65 12.13 14.38
+2026-11-05 15:07:37 start cost · load averages: 11.65 12.13 14.38
+2026-11-05 15:07:37 start-gate cost bp13 r1 at load 11.65 (bound 15, waited 0 s) · load averages: 11.65 12.13 14.38
+2026-11-05 15:34:05 start-gate cost bp12 r1 at load 14.54 (bound 15, waited 60 s) · load averages: 14.54 13.97 12.89
+2026-11-05 17:04:33 start-gate cost fv5 r1 at load 14.27 (bound 15, waited 691 s) · load averages: 14.27 21.36 21.84
+2026-11-05 17:09:48 start-gate cost bp13 r2 at load 11.75 (bound 15, waited 210 s) · load averages: 11.75 17.32 19.95
+2026-11-05 17:26:33 start-gate cost bp12 r2 at load 6.89 (bound 15, waited 0 s) · load averages: 6.89 8.99 12.66
+2026-11-05 17:59:58 start-gate cost fv5 r2 at load 11.80 (bound 15, waited 0 s) · load averages: 11.80 13.02 12.51
+2026-11-05 18:09:51 start-gate cost bp13 r3 at load 13.11 (bound 15, waited 210 s) · load averages: 13.11 16.69 15.14
+2026-11-05 18:10:54 start-gate cost bp12 r3 at load 12.45 (bound 15, waited 0 s) · load averages: 12.45 16.01 15.00
+2026-11-05 18:12:23 start-gate cost fv5 r3 at load 13.21 (bound 15, waited 30 s) · load averages: 13.21 15.64 14.98
+2026-11-05 18:14:17 end cost · load averages: 9.36 13.83 14.37
+2026-11-05 18:14:17 CHAIN-DONE · load averages: 9.36 13.83 14.37
+2026-11-05 18:14:17 CHAIN start (steps: wk); harness list 42 OK · load averages: 9.36 13.83 14.37
+2026-11-05 18:14:17 start-gate wk webkit-light at load 9.36 (bound 20, waited 0 s) · load averages: 9.36 13.83 14.37
+2026-11-05 18:14:17 queue wk webkit-light · load averages: 9.36 13.83 14.37
+2026-11-05 20:45:45 end wk webkit-light exit 75; cells max load 18.73 · load averages: 9.54 11.14 11.85
+2026-11-05 20:45:46 start-gate wk webkit-dark at load 9.54 (bound 20, waited 0 s) · load averages: 9.54 11.14 11.85
+2026-11-05 20:45:46 queue wk webkit-dark · load averages: 9.54 11.14 11.85
+2026-11-05 22:17:38 note: the W·d wk slot's WebKit lock wait passed 90 min (queued 20:45:46); kept queued
+2026-11-05 23:13:00 end wk webkit-dark exit 75; cells max load 17.13 · load averages: 13.43 15.27 16.29
+2026-11-05 23:13:01 CHAIN-DONE · load averages: 15.72 15.71 16.44
+2026-11-05 23:13:02 CHAIN start (steps: q); harness list 42 OK · load averages: 15.72 15.71 16.44
+2026-11-06 00:10:17 start-gate q webkit-light slot 1 at load 10.02 (next fmab-bp12-r7 gate 11, waited 3435 s, 21 lines left) · load averages: 10.02 19.46 22.41
+2026-11-06 01:23:57 end q webkit-light slot 1 exit 75 · load averages: 23.77 29.76 26.06
+2026-11-06 02:04:31 start-gate q webkit-light slot 2 at load 9.92 (next fmab-bp12-r7 gate 11, waited 2434 s, 21 lines left) · load averages: 9.92 15.59 18.36
+2026-11-06 03:09:38 end q webkit-light slot 2 exit 75 · load averages: 21.37 20.63 21.05
+2026-11-06 03:26:09 start-gate q webkit-light slot 3 at load 10.90 (next fmab-bp12-r7 gate 11, waited 991 s, 21 lines left) · load averages: 10.90 16.25 19.20
+2026-11-06 04:56:56 note: W·l q slot 3's WebKit lock wait passed 90 min (queued 03:26:09); kept queued
+2026-11-06 05:59:38 end q webkit-light slot 3 exit 0 · load averages: 11.12 11.54 11.83
+2026-11-06 06:00:08 start-gate q webkit-dark slot 1 at load 9.10 (next ab-bp12-r2 gate 11, waited 30 s, 94 lines left) · load averages: 9.10 11.02 11.64
+2026-11-06 09:06:02 end q webkit-dark slot 1 exit 75 · load averages: 27.21 18.77 15.12
+2026-11-06 09:24:37 start-gate q webkit-dark slot 2 at load 8.70 (next ab-bp12-r2 gate 11, waited 1115 s, 94 lines left) · load averages: 8.70 17.52 23.63
+2026-11-06 11:30:34 end q webkit-dark slot 2 exit 75 · load averages: 13.80 18.19 19.15
+2026-11-06 11:44:36 start-gate q webkit-dark slot 3 at load 10.93 (next ab-bp12-r2 gate 11, waited 842 s, 94 lines left) · load averages: 10.93 15.85 17.60
+2026-11-06 11:50:59 end q webkit-dark slot 3 exit 1 · load averages: 25.00 19.96 18.58
+2026-11-06 11:55:45 resumed builder seat: guarded crashed at slot 3's start log line (OSError 28, no space left on device, 11:50:59; the disk read 24 GiB free right after), leaving its child 'bash -c qslot' (pid 6538) orphaned, unguarded and outside the WebKit lock. It was still in its load gate with no read started; stopped by process group 6538. No read ran outside the guard. · load averages: 21.67 17.98 17.87
+2026-11-06 13:03:34 start-gate q webkit-dark slot 4 at load 10.06 (next ab-bp12-r2 gate 11, waited 4355 s, 94 lines left) · load averages: 10.06 13.72 17.08
+2026-11-06 14:04:26 end q webkit-dark slot 4 exit 75 · load averages: 111.24 43.56 26.25
+2026-11-06 16:19:00 start-gate q webkit-dark slot 5 at load 10.03 (next cr-bp12-r1 gate 11, waited 8074 s, 80 lines left) · load averages: 10.03 13.56 19.34
+2026-11-06 17:39:11 end q webkit-dark slot 5 exit 75 · load averages: 18.14 14.83 14.56
+2026-11-06 17:48:12 start-gate q webkit-dark slot 6 at load 10.89 (next rev-bp13-r4 gate 11, waited 541 s, 59 lines left) · load averages: 10.89 13.48 14.02
+2026-11-06 18:01:47 resumed builder seat (3rd, post limit reset): adopted the live chain run13b (pid 82460) → chain.sh (66447) → q webkit-dark slot 6 (guarded 84996), left running; harness list 42 OK at this seat's start · load averages: 11.10 12.51 12.90
+2026-11-06 19:03:31 end q webkit-dark slot 6 exit 0 · load averages: 11.17 12.11 12.77
+2026-11-06 19:03:31 CHAIN-DONE · load averages: 11.17 12.11 12.77
+2026-11-06 19:03:31 CHAIN start (steps: digest hend); harness list 42 OK · load averages: 11.17 12.11 12.77
+2026-11-06 19:03:31 start digest · load averages: 11.17 12.11 12.77
+2026-11-06 19:03:40 end digest · load averages: 10.06 11.85 12.67
+2026-11-06 19:03:40 harness end: 42 OK · load averages: 10.06 11.85 12.67
+2026-11-06 19:03:40 CHAIN-DONE · load averages: 10.06 11.85 12.67
+2026-11-06 19:03:40 run13b: RUN13-DONE · load averages: 10.06 11.85 12.67
+2026-11-06 19:07:17 builder seat end: report written (D2-Bp-build.md §0, §5-§9); worktree entry removed, its dir refused by the permission check (1.3 GB, not of record); harness 42 OK · load averages: 12.47 11.90 12.49
