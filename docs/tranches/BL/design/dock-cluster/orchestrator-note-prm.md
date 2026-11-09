@@ -1,0 +1,3 @@
+# Orchestrator note for the challenge and fold seats: the owner's reduced-motion bar (O-198)
+
+Under `prefers-reduced-motion: reduce`, every cluster state change (fuse, fission, collapse, expand, a page change, a control-set change) snaps all geometry (radius, width, inset, clip-path or path, position) to its end state. The only transition left is opacity, at 144 ms or less. W-I.8's reduced-motion gate must measure exactly this with `getAnimations()` over the cluster subtree in both engines, and it must bite on a planted radius or clip transition. 11.1.0 fixes the same bar on the single dock (O-198), so the cluster composes that cure and does not add a second reduced-motion path.
