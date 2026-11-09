@@ -1918,22 +1918,30 @@ for (const width of [1440, 390]) {
         page,
     }) => {
         await page.setViewportSize({ width, height: 800 });
+        // Every read is banked and judged at the end, so a RED names each path that fails
+        // (the rest corner, and each hovered control's lens), not only the first.
+        const bad: unknown[] = [];
+        const judge = (read: PlateRead, cell: string) => {
+            const half = read.h / 2;
+            const run = read.runs.find((r) => r.active)!;
+            const round = read.radii.every((r) => /^[\d.]+px$/.test(r) && Math.abs(Number.parseFloat(r) - half) <= 0.5);
+            if (!round || run.sw !== run.cw) bad.push({ cell, radii: read.radii, half, sw: run.sw, cw: run.cw });
+        };
         for (const nest of [false, true]) {
             await open(page, gregg(width, nest));
             await pointerOff(page);
             await settle(page, 200);
-            const rest = await readPlate(page);
-            expectNoReach(rest, `${width} nest=${nest} rest`);
-            expectRestCorner(rest, `${width} nest=${nest} rest`);
+            judge(await readPlate(page), `${width} nest=${nest} rest`);
             const n = await page.locator('[data-witness^="S"]').count();
             for (let i = 1; i <= n; i++) {
                 await hoverSeat(page, i);
                 for (const ms of [150, 700]) {
                     await page.waitForTimeout(ms);
-                    expectRestCorner(await readPlate(page), `${width} nest=${nest} hover S${i} +${ms} ms`);
+                    judge(await readPlate(page), `${width} nest=${nest} hover S${i} +${ms} ms`);
                 }
             }
         }
+        expect(bad, "reads whose corner is not one length of half the cross extent, or whose run scrolls").toEqual([]);
     });
 
     test(`q2 O-187 at ${width}: a nested .dock-run group keeps each hovered control's whole ink`, async ({ page }) => {

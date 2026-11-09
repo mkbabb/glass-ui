@@ -3,6 +3,7 @@
 #   branch     the whole release spec (p1, n1 and the q gates with the rest)
 #   g6         the 10.1.4 and 10.1.3 release specs
 #   red        p1 with the src files fix 9 changed checked out from the round-9 tip 51af0f9b5
+#   q          q1-q3 on the branch alone
 #   v1014      q1-q3 with every src file the branch changed checked out from v10.1.4
 # (src is restored to HEAD after each RED arm.)
 #   ~/.claude/guard/guarded [--exclusive webkit] --timeout 90 -- zsh docs/release-10.1.5/scripts/witness-fix-9.sh chromium|webkit step...
@@ -31,6 +32,7 @@ for s in $@; do
   case $s in
     branch) run branch release-10-1-5.spec.ts;;
     g6) run g6-10-1-4 release-10-1-4.spec.ts; run g6-10-1-3 release-10-1-3.spec.ts;;
+    q) run branch-q release-10-1-5.spec.ts " q[123] ";;
     red) red red-51af0f9b5 51af0f9b5 " p1 ";;
     v1014) red red-v1014-q v10.1.4 " q[123] ";;
   esac
