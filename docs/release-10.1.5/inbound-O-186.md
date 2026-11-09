@@ -1,16 +1,16 @@
-# Inbound O-185 and O-186: Gregg's WebKit hover lens and nested runs (sci-report-ef, 2026-11-08)
+# Inbound O-186 and O-187: Gregg's WebKit hover lens and nested runs (sci-report-ef, 2026-11-08)
 
-## O-185: WebKit hover turns the plate into a lens
+## O-186: WebKit hover turns the plate into a lens
 
 In a fit-content GlassDock (`backdrop-mode="static"`, `:collapse="false"`), hovering any control in Playwright WebKit at 1440 makes `.dock-plate` compute `border-radius: 50% calc(45% + 1.6px) calc(45% + 1.6px) 50%`, at both 150 ms and 850 ms of hover. A wide pill becomes a lens, and the selected tab's pill is clipped at the left end. Chromium keeps the pill. Gregg pins `border-radius: 9999px !important` on its plates as a stopgap.
 
 This is the r1 law (a percentage radius resolves per axis) in the cap or clip keyframes, reached on a path the branch has not yet witnessed.
 
-## O-186: a nested `.dock-run` clips the hover scale and adds a second timeline
+## O-187: a nested `.dock-run` clips the hover scale and adds a second timeline
 
 A `<div class="dock-run">` of DockControl tabs inside a GlassDock is made a scroll container by the run styles:
 - **The hover scale is clipped.** The last tab's 1.1 hover scale is cut flat at the group's edge: it reads 1109.6–1204.7 against an edge at 1200.4.
-- **A second timeline drives the plate.** The nested run names a second `--dock-run` scroll timeline, which the plate then reads. Gregg suspects this is O-185's trigger.
+- **A second timeline drives the plate.** The nested run names a second `--dock-run` scroll timeline, which the plate then reads. Gregg suspects this is O-186's trigger.
 
 Gregg resets the nested run in a commented rule:
 
