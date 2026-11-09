@@ -40,8 +40,9 @@ if (stop(chal)) return { stopped: 's15-challenge-incomplete' }
 const fold = await retry(() => agent(`You are P-E15, PART S (the fold) of D5 pass 15. ${ID}\n${FENCE('S15f')}\n${LAW}\n${PLAN}\nRead ${P15}/S15-challenge.md and its records. Fold every finding into S15 in ${P15}/P-E15.md, record each one (finding → change, or refutation with its read), and close S15 for H15.${FINISH}${RET}`, { label: 'D5-P15-S15-fold', phase: 'D5 S15 challenge', model: 'opus', schema: REP }))
 if (stop(fold)) return { stopped: 's15-fold-incomplete' }
 
+const RES = (k) => (args && args.resume && args.resume[k]) ? '\n' + args.resume[k] : ''
 phase('D5 H15')
-const h15 = await retry(() => agent(`You are H15 (wave 2) of D5 pass 15, the one owner of ${D}/harness/. ${ID}\n${FENCE('H15')}\n${LAW}\n${PLAN}\nRead ${P15}/P-E15.md's S15 as closed, ${P15}/S15-challenge.md, ${P14}/H14.md and the pass-14 part's instrument classes. TASK, exactly §P14-8.2 wave 2: build S15's cells member by member with plants (cand14 where it fails, cand12 or cand11 as the passing reference, HEAD the control); cure classes 3, 6, 7, 8, 9 by rule and record each; self-test of record green in both engines. Write ${P15}/H15.md with records under ${P15}/H15-records/.${FINISH}${RET}`, { label: 'D5-P15-H15', phase: 'D5 H15', model: 'opus', schema: REP }))
+const h15 = await retry(() => agent(`You are H15 (wave 2) of D5 pass 15, the one owner of ${D}/harness/. ${ID}\n${FENCE('H15')}\n${LAW}\n${PLAN}${RES('D5-P15-H15')}\nRead ${P15}/P-E15.md's S15 as closed, ${P15}/S15-challenge.md, ${P14}/H14.md and the pass-14 part's instrument classes. TASK, exactly §P14-8.2 wave 2: build S15's cells member by member with plants (cand14 where it fails, cand12 or cand11 as the passing reference, HEAD the control); cure classes 3, 6, 7, 8, 9 by rule and record each; self-test of record green in both engines. Write ${P15}/H15.md with records under ${P15}/H15-records/.${FINISH}${RET}`, { label: 'D5-P15-H15', phase: 'D5 H15', model: 'opus', schema: REP }))
 if (stop(h15)) return { stopped: 'h15-incomplete', h15: h15?.summary?.slice(0, 800) }
 
 phase('D5 P-E15 build')
