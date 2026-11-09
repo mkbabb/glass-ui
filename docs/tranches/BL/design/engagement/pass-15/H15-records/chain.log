@@ -12,3 +12,17 @@ dev-3 exit 0 08:44:34
 # 2026-11-09 09:08:42 C2 queued · load { 6.45 9.32 11.59 } · disk free 185Gi
 # 2026-11-09 09:08:42 C2 exit 75 · load { 6.45 9.32 11.59 }
 # 2026-11-09 09:08:42 GUARD REFUSED C2: chain stops
+# 2026-11-09 11:41:06 RESUME seat (H15 r2): builds guarded call queued · base eb845639f · load { { 54.05 59.39 42.97 } }
+builds-r2 exit 0 · 11:42:35
+# 2026-11-09 11:42:53 RESUME chain-r2 starts (HELD.q unchanged: C2, WK1, WK2, C3) · harness 0c64ff33af43 · builds at eb845639f, trees as of record
+# 2026-11-09 11:42:54 C2 queued · load { 34.30 50.22 41.24 } · disk free 186Gi
+# 2026-11-09 12:44:37 C2 exit 0 · load { 13.04 12.83 12.17 }
+# 2026-11-09 12:44:37 WK1 queued · load { 13.04 12.83 12.17 } · disk free 149Gi
+# 2026-11-09 13:25:13 r2: WK2.q gains three M28 re-reads ahead of st-E-11 (cand14 ×2, cand12 ×1; WebKit's one NOT MET, read again by the load rule)
+# 2026-11-09 13:41:14 WK1 exit 0 · load { 17.38 16.72 16.54 }
+# 2026-11-09 13:41:14 WK2 queued · load { 17.38 16.72 16.54 } · disk free 140Gi
+# 2026-11-09 14:52:03 WK2 exit 0 · load { 7.87 12.74 15.17 }
+# 2026-11-09 14:52:03 C3 queued · load { 7.87 12.74 15.17 } · disk free 120Gi
+# 2026-11-09 15:21:02 C3 exit 0 · load { 16.08 16.34 16.45 }
+# chain done · 2026-11-09 15:21:02
+# 2026-11-09 15:21:39 r2: worktree removed; nothing of H15 runs

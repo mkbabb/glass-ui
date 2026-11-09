@@ -1,0 +1,614 @@
+diff --git a/src/components/dock/DockCluster.vue b/src/components/dock/DockCluster.vue
+new file mode 100644
+index 000000000..f39cd044d
+--- /dev/null
++++ b/src/components/dock/DockCluster.vue
+@@ -0,0 +1,251 @@
++<script setup lang="ts">
++/**
++ * DockCluster: a row of GlassDock plates that fuse into one pill and fission back.
++ *
++ * Each plate stays its own GlassDock with its own `.dock-plate` backdrop the whole
++ * time. A seam's fuse is shape and position only (styles/cluster.css):
++ *
++ *   - position: `translate` per plate, a FLIP from the box it painted before the
++ *     state change to the box the new layout gives it (one layout read at arm,
++ *     none per frame);
++ *   - shape: the facing corners spring from the plate's px radius to 0, and the
++ *     plate clips its own facing border off (`clip-path: inset`, on the plate);
++ *   - seam paint: the elevation and the rim ride a per-plate `::before` whose
++ *     `clip-path` removes the slot the neighbour's glass covers, so no shadow paints
++ *     over or under a neighbour's glass.
++ *
++ * One spring drives every seam: `useDockSpring(DOCK_SPRING)`, the dock's own.
++ * Reduced motion swaps the geometry at the floor of an opacity dip.
++ *
++ * The cluster never reorders, re-parents, hides or focuses anything: roles, names
++ * and tab order are the plates' own through every fuse.
++ */
++import { useMediaQuery } from "@vueuse/core";
++import { computed, onMounted, onUnmounted, useTemplateRef, watch } from "vue";
++import { DOCK_SPRING } from "./constants";
++import { useDockSpring } from "./composables/useDockSpring";
++
++const props = withDefaults(
++    defineProps<{
++        /** `true` fuses every seam; an array fuses seam i (between plate i and i+1). */
++        fused?: boolean | readonly boolean[];
++    }>(),
++    { fused: false },
++);
++
++const rootEl = useTemplateRef<HTMLElement>("rootEl");
++const reduced = useMediaQuery("(prefers-reduced-motion: reduce)");
++const spring = useDockSpring({
++    response: DOCK_SPRING.response,
++    dampingFraction: DOCK_SPRING.dampingFraction,
++});
++
++function plates(): HTMLElement[] {
++    const el = rootEl.value;
++    return el
++        ? (Array.from(el.children).filter((c) =>
++              c.classList.contains("glass-dock"),
++          ) as HTMLElement[])
++        : [];
++}
++
++function targetSeams(n: number): number[] {
++    const f = props.fused;
++    return Array.from({ length: Math.max(0, n - 1) }, (_, i) =>
++        (typeof f === "boolean" ? f : !!f[i]) ? 1 : 0,
++    );
++}
++
++/* The live per-seam fuse, 0 split … 1 fused. */
++let live: number[] = [];
++let from: number[] = [];
++let to: number[] = [];
++let dx: number[] = [];
++let lefts: number[] = [];
++let fade: Animation | null = null;
++
++function writeSeams(els: HTMLElement[], seams: number[]): void {
++    els.forEach((el, i) => {
++        el.style.setProperty("--dock-fuse-start", `${i > 0 ? seams[i - 1] ?? 0 : 0}`);
++        el.style.setProperty("--dock-fuse-end", `${i < els.length - 1 ? seams[i] ?? 0 : 0}`);
++    });
++}
++
++/* Layout: each plate's start seam is fused or split in the target layout. */
++function writeLayout(els: HTMLElement[], seams: number[]): void {
++    els.forEach((el, i) => {
++        if (i === 0) el.removeAttribute("data-seam-start");
++        else el.setAttribute("data-seam-start", seams[i - 1] ? "fused" : "split");
++        if (i === els.length - 1) el.removeAttribute("data-seam-end");
++        else el.setAttribute("data-seam-end", seams[i] ? "fused" : "split");
++    });
++}
++
++function frame(els: HTMLElement[], s: number): void {
++    live = from.map((f0, j) => f0 + ((to[j] ?? f0) - f0) * s);
++    writeSeams(els, live);
++    els.forEach((el, i) => {
++        const d = (dx[i] ?? 0) * (1 - s);
++        el.style.translate = Math.abs(d) < 0.01 ? "" : `${d}px 0`;
++    });
++}
++
++function settle(els: HTMLElement[]): void {
++    live = to.slice();
++    writeSeams(els, live);
++    els.forEach((el) => (el.style.translate = ""));
++    lefts = els.map((el) => el.getBoundingClientRect().left);
++    rootEl.value?.removeAttribute("data-fusing");
++}
++
++/* Put every seam on the device-pixel grid. A seam at a fractional x anti-aliases both
++   plates' clip edges into one pixel and the field shows through as a light line, so:
++   the seam inset is the border width the engine actually paints (it snaps per DPR),
++   each plate's width rounds up to whole device pixels, and the cluster shifts by its
++   sub-pixel remainder (relative `left`, not a transform). Layout, written at arm only. */
++function snapGrid(els: HTMLElement[]): void {
++    const root = rootEl.value;
++    if (!root || !els.length) return;
++    const dpr = window.devicePixelRatio || 1;
++    const plate = els[0]!.querySelector(".dock-plate");
++    if (plate) {
++        const bw = parseFloat(getComputedStyle(plate).borderInlineEndWidth) || 0;
++        root.style.setProperty("--dock-cluster-seam", `${bw}px`);
++    }
++    els.forEach((el) => (el.style.minInlineSize = ""));
++    root.style.left = "";
++    const ws = els.map((el) => el.getBoundingClientRect().width);
++    els.forEach((el, i) => {
++        const w = Math.ceil(ws[i]! * dpr - 0.01) / dpr;
++        if (w - ws[i]! > 1e-3) el.style.minInlineSize = `${w}px`;
++    });
++    const l = els[0]!.getBoundingClientRect().left;
++    const d = Math.round(l * dpr) / dpr - l;
++    if (Math.abs(d) > 1e-3) root.style.left = `${d}px`;
++}
++
++/** Arm a FLIP from the painted boxes to the target layout and spring it. */
++function arm(before: number[] | null): void {
++    const els = plates();
++    if (!els.length) return;
++    const next = targetSeams(els.length);
++    if (live.length !== next.length) live = next.map((_, j) => live[j] ?? next[j]!);
++    const painted = before ?? els.map((el) => el.getBoundingClientRect().left);
++
++    if (reduced.value) {
++        // A plain cross-fade: dip each plate's paint, swap at the floor, rise.
++        // WAAPI on a registered number: the PRM transition carve snaps CSS
++        // transitions, and an opacity fade is not a vestibular trigger (canon P6).
++        const root = rootEl.value!;
++        spring.dispose();
++        fade?.cancel();
++        const ms = swapMs();
++        const easing = getComputedStyle(root).getPropertyValue("--ease-standard").trim() || "ease";
++        const out = root.animate(
++            [{ "--dock-cluster-fade": 1 }, { "--dock-cluster-fade": 0 }],
++            { duration: ms, easing, fill: "forwards" },
++        );
++        fade = out;
++        out.finished
++            .then(() => {
++                from = next.slice();
++                to = next.slice();
++                writeLayout(els, next);
++                snapGrid(els);
++                settle(els);
++                fade = root.animate(
++                    [{ "--dock-cluster-fade": 0 }, { "--dock-cluster-fade": 1 }],
++                    { duration: ms, easing },
++                );
++                out.cancel();
++            })
++            .catch(() => {});
++        return;
++    }
++
++    // Velocity carried into the new leg: the first seam that moves sets the ratio.
++    let scale = 0;
++    if (spring.live) {
++        const j = next.findIndex((t, k) => t !== (to[k] ?? t));
++        const k = j >= 0 ? j : 0;
++        const oldSpan = (to[k] ?? 0) - (from[k] ?? 0);
++        const newSpan = next[k]! - (live[k] ?? 0);
++        if (Math.abs(newSpan) > 1e-3) scale = oldSpan / newSpan;
++    }
++    from = live.slice();
++    to = next;
++    writeLayout(els, next);
++    els.forEach((el) => (el.style.translate = ""));
++    snapGrid(els);
++    const after = els.map((el) => el.getBoundingClientRect().left);
++    dx = after.map((a, i) => (painted[i] ?? a) - a);
++    rootEl.value?.setAttribute("data-fusing", "");
++    frame(els, 0);
++    spring.playTo(0, 1, {
++        inheritVelocityScale: scale,
++        onFrame: (s) => frame(els, s),
++        onSettle: () => settle(els),
++    });
++}
++
++function swapMs(): number {
++    const el = rootEl.value;
++    if (!el) return 0;
++    const v = getComputedStyle(el).getPropertyValue("--dock-cluster-swap").trim();
++    return v.endsWith("ms") ? parseFloat(v) : parseFloat(v) * 1000 || 0;
++}
++
++const key = computed(() => JSON.stringify(props.fused));
++watch(key, () => arm(null), { flush: "pre" });
++
++/* A plate that changes size (a page's control set) moves its neighbours: FLIP them
++   from where they painted last. */
++let ro: ResizeObserver | null = null;
++let mo: MutationObserver | null = null;
++onMounted(() => {
++    const els = plates();
++    to = targetSeams(els.length);
++    from = to.slice();
++    live = to.slice();
++    writeLayout(els, to);
++    writeSeams(els, to);
++    snapGrid(els);
++    lefts = els.map((el) => el.getBoundingClientRect().left);
++    ro = new ResizeObserver(() => {
++        if (spring.live) return;
++        const prev = lefts;
++        const now = plates();
++        if (prev.length !== now.length) return;
++        const cur = now.map((el) => el.getBoundingClientRect().left);
++        if (cur.every((c, i) => Math.abs(c - prev[i]!) < 0.5)) return;
++        arm(prev);
++    });
++    els.forEach((el) => ro!.observe(el));
++    mo = new MutationObserver(() => {
++        ro?.disconnect();
++        const now = plates();
++        now.forEach((el) => ro!.observe(el));
++        arm(null);
++    });
++    mo.observe(rootEl.value!, { childList: true });
++});
++onUnmounted(() => {
++    ro?.disconnect();
++    mo?.disconnect();
++    spring.dispose();
++});
++
++defineExpose({
++    /** Harness-only: pin the morph at spring progress `s` for a deterministic capture. */
++    scrub(s: number): void {
++        spring.dispose();
++        frame(plates(), s);
++    },
++});
++</script>
++
++<template>
++    <div ref="rootEl" class="glass-dock-cluster">
++        <slot />
++    </div>
++</template>
+diff --git a/src/components/dock/index.ts b/src/components/dock/index.ts
+index 29a95047e..a2046c9ac 100644
+--- a/src/components/dock/index.ts
++++ b/src/components/dock/index.ts
+@@ -41,6 +41,8 @@ export { default as DockBackgroundToggle } from "./DockBackgroundToggle.vue";
+ // [2026-08-12 · BK #47 W1 SURFACE] ~~full-row section break in a grid dock~~ — the
+ // `layout="grid"` tile panel is struck with its prop.
+ export { default as DockSeparator } from "./DockSeparator.vue";
++// A row of GlassDock plates that fuse into one pill and fission back.
++export { default as DockCluster } from "./DockCluster.vue";
+ // Re-export composable types so consumers can
+ // type wrappers around the published surface. `UseDockStateOptions`
+ // and `DockState` need to be reachable through the `@mkbabb/glass-ui/dock`
+diff --git a/src/components/dock/styles/cluster.css b/src/components/dock/styles/cluster.css
+new file mode 100644
+index 000000000..185d8f4eb
+--- /dev/null
++++ b/src/components/dock/styles/cluster.css
+@@ -0,0 +1,197 @@
++/* DockCluster: GlassDock plates that fuse into one pill and fission back.
++ *
++ * Shape and position only. Every plate keeps its own `.dock-plate` backdrop-filter,
++ * and nothing here puts a filter, mask, opacity or clip-path on an ANCESTOR of a
++ * plate (each would make that ancestor a backdrop root and blank the glass).
++ *
++ * Per plate, the cluster writes two numbers, `--dock-fuse-start` and
++ * `--dock-fuse-end` (0 split, 1 fused, one spring: DockCluster.vue), and a FLIP
++ * `translate`. From them:
++ *
++ *   corners  the facing corners go from the plate's px radius to 0. The radius is a
++ *            registered `<length>`, so a percentage cannot reach it (the r1 law);
++ *   border   the plate clips its own facing border off (`clip-path: inset` on the
++ *            plate, composed with the dock's extent inset). The fused layout overlaps
++ *            neighbours by two border widths, so glass meets glass with no line;
++ *   shadow   the elevation and the rim move from the dock box to `::before`, whose
++ *            polygon clip cuts out the slot the neighbour's glass covers. No shadow
++ *            paints over a neighbour, and no plate blurs a neighbour's shadow.
++ *            Outside the plates the two halos still sum, and the halo of two
++ *            abutting rectangles is the halo of their union: one shadow.
++ *   rim      the key shade's x leg sits on one vertical edge; it fades with that
++ *            edge's fuse, so the seam carries no 1px line.
++ *
++ * Gap and overlap are layout, written once when the fuse arms; between, only
++ * `translate`, `border-*-radius`, `clip-path` and two numbers move. */
++
++@property --dock-fuse-start {
++    syntax: "<number>";
++    inherits: true;
++    initial-value: 0;
++}
++
++@property --dock-fuse-end {
++    syntax: "<number>";
++    inherits: true;
++    initial-value: 0;
++}
++
++/* A `<length>`: `50%` is invalid here at computed-value time, so the fused corners can
++   never be a per-axis percentage that turns a pill into an ellipse. */
++@property --dock-cluster-radius {
++    syntax: "<length>";
++    inherits: true;
++    initial-value: 0px;
++}
++
++/* The reduced-motion dip's half, registered so it resolves to a time the script reads. */
++@property --dock-cluster-swap {
++    syntax: "<time>";
++    inherits: true;
++    initial-value: 0s;
++}
++
++/* The reduced-motion dip (DockCluster.vue animates it with WAAPI, which the PRM
++   transition carve does not reach). */
++@property --dock-cluster-fade {
++    syntax: "<number>";
++    inherits: true;
++    initial-value: 1;
++}
++
++@layer components {
++    .glass-dock-cluster {
++        --dock-cluster-gap: 0.5rem;
++        /* The plate border (dock.css `.dock-plate`, 1.5px) that each facing edge clips.
++           DockCluster rewrites it with the width the engine paints (1px at DPR 1). */
++        --dock-cluster-seam: 1.5px;
++        /* How far a plate's elevation can paint past its box (`--shadow-dock` is a 20px blur). */
++        --dock-cluster-reach: 64px;
++        --dock-cluster-swap: var(--spring-dock-exit-duration);
++        position: relative;
++        display: flex;
++        flex-wrap: nowrap;
++        align-items: center;
++        justify-content: center;
++    }
++
++    .glass-dock-cluster > .glass-dock {
++        margin-inline: 0;
++        --dock-cluster-radius: var(--radius-dock);
++        border-start-start-radius: calc(
++            var(--dock-cluster-radius) * (1 - var(--dock-fuse-start))
++        );
++        border-end-start-radius: calc(
++            var(--dock-cluster-radius) * (1 - var(--dock-fuse-start))
++        );
++        border-start-end-radius: calc(
++            var(--dock-cluster-radius) * (1 - var(--dock-fuse-end))
++        );
++        border-end-end-radius: calc(
++            var(--dock-cluster-radius) * (1 - var(--dock-fuse-end))
++        );
++        /* The box paints nothing; `::before` carries the elevation and rim. */
++        box-shadow: none;
++    }
++
++    .glass-dock-cluster > .glass-dock[data-seam-start="split"] {
++        margin-inline-start: var(--dock-cluster-gap);
++    }
++
++    .glass-dock-cluster > .glass-dock[data-seam-start="fused"] {
++        margin-inline-start: calc(-2 * var(--dock-cluster-seam));
++    }
++
++    /* The facing border, clipped off the plate itself (never an ancestor). */
++    .glass-dock-cluster > .glass-dock > .dock-plate {
++        --dock-clip-end: calc(var(--dock-cluster-seam) * var(--dock-fuse-end));
++        --dock-clip-start: calc(var(--dock-cluster-seam) * var(--dock-fuse-start));
++        clip-path: inset(
++            var(--dock-plate-inset-block)
++                calc(var(--dock-plate-inset-inline) + var(--dock-clip-end))
++                var(--dock-plate-inset-block)
++                calc(var(--dock-plate-inset-inline) + var(--dock-clip-start))
++        );
++    }
++
++    .glass-dock-cluster > .glass-dock:dir(rtl) > .dock-plate {
++        clip-path: inset(
++            var(--dock-plate-inset-block)
++                calc(var(--dock-plate-inset-inline) + var(--dock-clip-start))
++                var(--dock-plate-inset-block)
++                calc(var(--dock-plate-inset-inline) + var(--dock-clip-end))
++        );
++    }
++
++    /* The elevation + rim carrier. `--dock-gap-*` is the distance from this plate's
++       edge to where the neighbour's glass starts: the gap when split, minus one border
++       width when fused (the overlap less the neighbour's own clipped border). It is
++       linear in the fuse, as the FLIP translate is, so the slot tracks the glass on
++       every frame. A side with no neighbour pushes its slot out of reach. */
++    .glass-dock-cluster > .glass-dock::before {
++        content: "";
++        position: absolute;
++        inset: 0;
++        z-index: -2;
++        border-radius: inherit;
++        pointer-events: none;
++        --dock-gap-end: calc(
++            (1 - var(--dock-fuse-end)) * var(--dock-cluster-gap) -
++                var(--dock-fuse-end) * var(--dock-cluster-seam)
++        );
++        --dock-gap-start: calc(
++            (1 - var(--dock-fuse-start)) * var(--dock-cluster-gap) -
++                var(--dock-fuse-start) * var(--dock-cluster-seam)
++        );
++        --r: var(--dock-cluster-reach);
++        box-shadow:
++            var(--glass-rim-top),
++            inset 0 var(--glass-key-shade-y) 0
++                color-mix(
++                    in srgb,
++                    var(--foreground) calc(6% * var(--glass-level)),
++                    transparent
++                ),
++            inset
++                calc(
++                    max(var(--glass-key-shade-x), 0px) * (1 - var(--dock-fuse-start)) +
++                        min(var(--glass-key-shade-x), 0px) * (1 - var(--dock-fuse-end))
++                )
++                0 0
++                color-mix(
++                    in srgb,
++                    var(--foreground) calc(4% * var(--glass-level)),
++                    transparent
++                ),
++            var(--shadow-dock-override, var(--shadow-dock));
++        clip-path: polygon(
++            calc(-1 * var(--r)) calc(-1 * var(--r)),
++            calc(100% + var(--r)) calc(-1 * var(--r)),
++            calc(100% + var(--r)) 0,
++            calc(100% + var(--dock-gap-end)) 0,
++            calc(100% + var(--dock-gap-end)) 100%,
++            calc(100% + var(--r)) 100%,
++            calc(100% + var(--r)) calc(100% + var(--r)),
++            calc(-1 * var(--r)) calc(100% + var(--r)),
++            calc(-1 * var(--r)) 100%,
++            calc(-1 * var(--dock-gap-start)) 100%,
++            calc(-1 * var(--dock-gap-start)) 0,
++            calc(-1 * var(--r)) 0
++        );
++    }
++
++    .glass-dock-cluster > .glass-dock:not([data-seam-end])::before {
++        --dock-gap-end: var(--dock-cluster-reach);
++    }
++
++    .glass-dock-cluster > .glass-dock:not([data-seam-start])::before {
++        --dock-gap-start: var(--dock-cluster-reach);
++    }
++
++    /* Reduced motion: the plate paint dips and rises around the geometry swap. */
++    .glass-dock-cluster > .glass-dock::before,
++    .glass-dock-cluster > .glass-dock > .dock-plate,
++    .glass-dock-cluster > .glass-dock > .dock-controls > * {
++        opacity: var(--dock-cluster-fade);
++    }
++}
+diff --git a/src/components/dock/styles/index.css b/src/components/dock/styles/index.css
+index 10d2c8e09..31704eec6 100644
+--- a/src/components/dock/styles/index.css
++++ b/src/components/dock/styles/index.css
+@@ -84,6 +84,8 @@
+    SURFACE] ~~`[data-search]`~~); the pill→field morph is the dock's OWN `--dock-morph-t`
+    glide (box-inviolate); CONSUMES the tint seam + the menu-row recipe, re-authors neither. */
+ @import "./search.css";
++/* DockCluster: plates that fuse into one pill and fission back (shape and position only). */
++@import "./cluster.css";
+ 
+ /* The SINGLE morph scalar. The dock morph orchestrator writes it once per frame
+    to the `.glass-dock` root; EVERY morph axis (box size, padding, radius, scale,
+diff --git a/tests-visual/dock-cluster/App.vue b/tests-visual/dock-cluster/App.vue
+new file mode 100644
+index 000000000..f996f5246
+--- /dev/null
++++ b/tests-visual/dock-cluster/App.vue
+@@ -0,0 +1,91 @@
++<script setup lang="ts">
++/* DockCluster fixture: two and three plates fusing and fissioning over a field
++   with a striped band (the backdrop the seam and the blur are read against).
++   Query: n=2|3, fused=0|1, theme via html.dark. Hooks on window.__cluster. */
++import { onMounted, ref, useTemplateRef } from "vue";
++import { DockCluster, DockControl, GlassDock } from "@glass/components/dock";
++
++const q = new URLSearchParams(location.search);
++const n = ref(q.get("n") === "2" ? 2 : 3);
++const fused = ref<boolean | boolean[]>(q.get("fused") === "1");
++const page = ref(0);
++const extra = ref(q.get("extra") === "1");
++// A phone row holds three short tabs beside two icon plates (358 px at 390 wide);
++// daraksha's four named tabs take their own row there (see proposal-A.md §1.4).
++const PAGES = innerWidth < 500 ? ["Read", "Hear", "Learn"] : ["Read", "Hear", "Learn", "About"];
++const dark = ref(document.documentElement.classList.contains("dark"));
++const cluster = useTemplateRef<{ scrub(s: number): void }>("cluster");
++
++onMounted(() => {
++    (window as any).__cluster = {
++        set: (v: boolean | boolean[]) => { fused.value = v; },
++        scrub: (s: number) => cluster.value?.scrub(s),
++        page: (i: number) => { page.value = i; },
++        extra: (v: boolean) => { extra.value = v; },
++        root: () => document.querySelector(".glass-dock-cluster"),
++        ready: true,
++    };
++});
++</script>
++
++<template>
++    <main class="field">
++        <div class="band"></div>
++        <div class="stage" data-testid="stage">
++            <DockCluster ref="cluster" :fused="fused" data-testid="cluster" dir="ltr">
++                <GlassDock fit-content :collapse="false" aria-label="Pages" data-plate="pages">
++                    <DockControl v-for="(p, i) in PAGES" :key="p" shape="tab" :active="i === page" @click="page = i">{{ p }}</DockControl>
++                </GlassDock>
++                <GlassDock fit-content :collapse="false" aria-label="Page controls" data-plate="controls">
++                    <DockControl aria-label="Text size">
++                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 18 9 6l5 12M6 14h6M15 18l3-7 3 7"/></svg>
++                    </DockControl>
++                    <DockControl v-if="extra" aria-label="Bookmark">
++                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 4h12v16l-6-4-6 4z"/></svg>
++                    </DockControl>
++                    <DockControl v-if="n === 2" :aria-label="dark ? 'Light theme' : 'Dark theme'" :active="dark">
++                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 14A8 8 0 1 1 10 4a7 7 0 0 0 10 10z"/></svg>
++                    </DockControl>
++                </GlassDock>
++                <GlassDock v-if="n === 3" fit-content :collapse="false" aria-label="Theme" data-plate="theme">
++                    <DockControl :aria-label="dark ? 'Light theme' : 'Dark theme'" :active="dark">
++                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 14A8 8 0 1 1 10 4a7 7 0 0 0 10 10z"/></svg>
++                    </DockControl>
++                </GlassDock>
++            </DockCluster>
++        </div>
++    </main>
++</template>
++
++<style>
++.field {
++    position: relative;
++    min-height: 100vh;
++    background:
++        radial-gradient(40rem 22rem at 20% 30%, oklch(0.78 0.14 40 / 0.9), transparent 70%),
++        radial-gradient(36rem 20rem at 80% 70%, oklch(0.72 0.13 250 / 0.9), transparent 70%),
++        oklch(0.95 0.02 90);
++}
++.dark .field {
++    background:
++        radial-gradient(40rem 22rem at 20% 30%, oklch(0.45 0.12 40 / 0.9), transparent 70%),
++        radial-gradient(36rem 20rem at 80% 70%, oklch(0.42 0.12 250 / 0.9), transparent 70%),
++        oklch(0.2 0.02 260);
++}
++/* The striped band runs under the cluster: a blur that samples nothing shows the
++   stripes sharp, a live one smears them. */
++.band {
++    position: absolute;
++    inset-inline: 0;
++    top: calc(50% - 40px);
++    height: 80px;
++    background: repeating-linear-gradient(90deg, oklch(0.25 0.03 260) 0 6px, oklch(0.97 0.01 90) 6px 12px);
++}
++.stage {
++    position: absolute;
++    inset-inline: 16px;
++    top: calc(50% - 26px);
++    display: flex;
++    justify-content: center;
++}
++</style>
+diff --git a/tests-visual/dock-cluster/h.css b/tests-visual/dock-cluster/h.css
+new file mode 100644
+index 000000000..bad435b31
+--- /dev/null
++++ b/tests-visual/dock-cluster/h.css
+@@ -0,0 +1,6 @@
++@import "tailwindcss" source("./");
++@source "../../src/components/**/*.vue";
++@source "../../src/components/_shared/**/*.ts";
++@import "tw-animate-css";
++@import "../../src/styles/index.css";
++body { min-height: 100vh; margin: 0; }
+diff --git a/tests-visual/dock-cluster/index.html b/tests-visual/dock-cluster/index.html
+new file mode 100644
+index 000000000..771f56e90
+--- /dev/null
++++ b/tests-visual/dock-cluster/index.html
+@@ -0,0 +1 @@
++<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>dock cluster</title></head><body><div id="app"></div><script type="module" src="./main.ts"></script></body></html>
+diff --git a/tests-visual/dock-cluster/main.ts b/tests-visual/dock-cluster/main.ts
+new file mode 100644
+index 000000000..21f684e07
+--- /dev/null
++++ b/tests-visual/dock-cluster/main.ts
+@@ -0,0 +1,6 @@
++import "./h.css";
++import { createApp } from "vue";
++import App from "./App.vue";
++const app = createApp(App);
++app.config.errorHandler = (err, _i, info) => { console.error("[cluster] app error", info, err); (window as any).__errors = ((window as any).__errors || 0) + 1; };
++app.mount("#app");

@@ -7,7 +7,7 @@ WT=$G/.claude/worktrees/bl/D5/p15/H15/wt; O=$WT/.h15out
 E14P=$P/pass-14/P-E14.patch; E13P=$P/pass-13/P-E13.patch; E12P=$P/pass-12/P-E12.patch; E11P=$P/pass-11/P-E11.patch
 cd $WT || exit 1; mkdir -p $O $R/logs
 th() { { git diff --binary HEAD -- src; git ls-files -o --exclude-standard src | LC_ALL=C sort | xargs cat 2>/dev/null; } | shasum | cut -c1-12; }
-b() { node $H/build.mjs $WT --label $1 --out $O > $R/logs/build-$1.log 2>&1; echo "$1 build exit $? · src tree $(th) · $(date '+%T') load $(sysctl -n vm.loadavg) · $(tail -1 $R/logs/build-$1.log | cut -c1-100)"; }
+b() { node $H/build.mjs $WT --label $1 --out $O > $R/logs/build-$1${BTAG}.log 2>&1; echo "$1 build exit $? · src tree $(th) · $(date '+%T') load $(sysctl -n vm.loadavg) · $(tail -1 $R/logs/build-$1${BTAG}.log | cut -c1-100)"; }
 echo "# $(date '+%F %T') builds start · load $(sysctl -n vm.loadavg) · HEAD $(git rev-parse --short HEAD) · P-E14 $(shasum $E14P | cut -c1-12) · P-E13 $(shasum $E13P | cut -c1-12) · P-E12 $(shasum $E12P | cut -c1-12) · P-E11 $(shasum $E11P | cut -c1-12) · App.vue $(shasum $H/scenes/App.vue | cut -c1-12)"
 C=$(th); echo "HEAD src tree $C"
 for x in "$@"; do

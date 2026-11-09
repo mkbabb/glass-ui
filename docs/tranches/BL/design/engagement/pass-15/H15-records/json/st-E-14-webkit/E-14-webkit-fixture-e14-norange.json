@@ -1,0 +1,32 @@
+{
+ "id": "E-14",
+ "engine": "webkit",
+ "version": "26.5",
+ "target": {
+  "fixture": true,
+  "fault": "e14-norange"
+ },
+ "loadStart": "12.3/17.4/16.8",
+ "loadEnd": "11.6/17.2/16.7",
+ "verdict": "FAIL",
+ "cells": [
+  {
+   "name": "M24 scroll-snap y mandatory, align center: the snapped item grows 300 → 400 px below the root",
+   "status": "FAIL",
+   "line": "the act on frame 8 · paint moved 0.0, -50.0 px in all; on the act's frame 0.00, -50.00 = 50.00 px (bound ≤ 0.50) · largest move over any 16.7 ms 30.3 px at +21 ms (bound 8.5) · glides 0 (moved ≥ 5 px, no glide) · scrollY 0 → 0 → 0, scroller 600 → 650 → 650 · path [0.0,0.0 0.0,-50.0 0.0,-50.0 0.0,-50.0 0.0,-50.0] · errors 0",
+   "load": "12.3/17.4/16.8"
+  },
+  {
+   "name": "M24 scroll-snap y mandatory, align end: the snapped item grows 300 → 400 px below the root",
+   "status": "FAIL",
+   "line": "the act on frame 8 · paint moved 0.0, -100.0 px in all; on the act's frame 0.00, -100.00 = 100.00 px (bound ≤ 0.50) · largest move over any 16.7 ms 72.2 px at +20 ms (bound 16.1) · glides 0 (moved ≥ 5 px, no glide) · scrollY 0 → 0 → 0, scroller 600 → 700 → 700 · path [0.0,0.0 0.0,-100.0 0.0,-100.0 0.0,-100.0 0.0,-100.0] · errors 0",
+   "load": "11.6/17.2/16.7"
+  },
+  {
+   "name": "M24 scroll-snap y mandatory, align start: the snapped item grows 300 → 400 px below the root",
+   "status": "PASS",
+   "line": "the act on frame 8 · paint moved 0.0, 0.0 px in all; on the act's frame 0.00, 0.00 = 0.00 px (bound ≤ 0.50) · largest move over any 16.7 ms 0.0 px at +NaN ms (bound 1.0) · glides 0 · scrollY 0 → 0 → 0, scroller 600 → 600 → 600 · path [0.0,0.0 0.0,0.0 0.0,0.0 0.0,0.0 0.0,0.0] · errors 0",
+   "load": "11.6/17.2/16.7"
+  }
+ ]
+}
