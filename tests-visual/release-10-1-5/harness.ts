@@ -123,11 +123,34 @@ const scenes: Record<string, Component> = {
     // label ticks with `__tick`), each seat `data-witness="S<i>"`; `?persistent=1` adds a
     // seat in each persistent region (`lead`, `tail`), `?orientation=vertical` a vertical
     // dock in a `?stageH=` tall column, `?maxw=` a max inline size, `?fit=0` drops
-    // fitContent and `?preset=` sets the dock's `data-preset`.
+    // fitContent and `?preset=` sets the dock's `data-preset`. O-186/O-187 (Gregg's
+    // sci-report dock): `?backdrop=static` sets `backdropMode`, `?current=<i>` marks seat i
+    // `aria-current="page"`, and `?nest=1` wraps every `tab:` seat in a consumer's own
+    // `<div class="dock-run" data-witness="nest">` group.
     seats: defineComponent(() => {
         const orientation = (params.get("orientation") ?? "horizontal") as "horizontal" | "vertical";
         const kinds = (params.get("kinds") ?? "icon,icon,icon").split(",");
         const persistent = params.get("persistent") === "1";
+        const current = Number(params.get("current") ?? 0);
+        const nest = params.get("nest") === "1";
+        const tab = (label: string, i: number) =>
+            h(
+                DockControl,
+                {
+                    shape: "tab",
+                    "data-witness": `S${i + 1}`,
+                    "aria-current": current === i + 1 ? "page" : undefined,
+                },
+                () => [glyph(), h("span", label)],
+            );
+        const nested = (seats: unknown[]) => {
+            if (!nest) return seats;
+            const tabs = kinds.flatMap((k, i) => (k.startsWith("tab:") ? [seats[i]] : []));
+            const out = seats.filter((_, i) => !kinds[i]!.startsWith("tab:"));
+            const at = kinds.findIndex((k) => k.startsWith("tab:"));
+            out.splice(at, 0, h("div", { class: "dock-run", "data-witness": "nest" }, tabs));
+            return out;
+        };
         return () =>
             h(
                 "div",
@@ -145,12 +168,13 @@ const scenes: Record<string, Component> = {
                             fitContent: params.get("fit") !== "0",
                             collapse: false,
                             orientation,
+                            backdropMode: params.get("backdrop") === "static" ? "static" : undefined,
                             "data-preset": params.get("preset") ?? undefined,
                             style: params.get("maxw") ? `max-inline-size:${params.get("maxw")}px` : undefined,
                         },
                         {
                             default: () =>
-                                kinds.map((k, i) =>
+                                nested(kinds.map((k, i) =>
                                     k.startsWith("trigger:")
                                         ? h(DropdownMenu, { modal: false }, () => [
                                               h(DockTrigger, { for: "dropdown", "data-witness": `S${i + 1}` }, () => [
@@ -165,12 +189,9 @@ const scenes: Record<string, Component> = {
                                                 h("span", `Tick ${tick.value}`),
                                             ])
                                           : k.startsWith("tab:")
-                                        ? h(DockControl, { shape: "tab", "data-witness": `S${i + 1}` }, () => [
-                                              glyph(),
-                                              h("span", k.slice(4)),
-                                          ])
+                                        ? tab(k.slice(4), i)
                                         : h(DockControl, { "aria-label": `S${i + 1}`, "data-witness": `S${i + 1}` }, glyph),
-                                ),
+                                )),
                             collapsed: () => h("span", glyph()),
                             ...(persistent
                                 ? {

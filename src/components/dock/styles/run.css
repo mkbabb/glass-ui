@@ -247,8 +247,15 @@
        new DOM: the full face is already the box whose children are the seats, already
        the box the pre-lattice port scrolled, and already the common ancestor the W5
        timeline needs. Interposing a wrapper would make every consumer's seats
-       grandchildren of the flex run for no gain. */
-    .glass-dock .dock-run {
+       grandchildren of the flex run for no gain.
+
+       EVERY RUN RULE NAMES THE DOCK'S OWN RUN, the child of `.dock-layers`, never a
+       `.dock-run` a consumer nests among the seats (O-187). The scroll container, the
+       reserve, the lattice and the timeline are the run's; a nested group given them
+       clipped its own seats' hover ink at its edge and named a second `--dock-run`
+       timeline in the dock's scope, so the plate read a timeline that was not the
+       visible run's (O-186). `:where()` keeps each rule's specificity. */
+    .glass-dock :where(.dock-layers) > .dock-run {
         /* A capped axis IS a scroll axis. No `[data-dock-overflow]` attribute, no
            observer, no FITS/OVERFLOW branch: the engine scrolls this box exactly when
            its content exceeds it and leaves it inert otherwise. */
@@ -368,7 +375,7 @@
         gap: var(--dock-run-gap);
     }
 
-    .glass-dock .dock-run::-webkit-scrollbar {
+    .glass-dock :where(.dock-layers) > .dock-run::-webkit-scrollbar {
         display: none;
     }
 
@@ -417,27 +424,27 @@
        at rest, held through every morph (`publishYield`), so the yield the run rests in
        is the yield it morphs in: no seat moves when a morph starts or settles (O-166),
        and the panes the morph moves never see the run's padding change under them. */
-    .glass-dock.vertical[data-run-fits] .dock-run {
+    .glass-dock.vertical[data-run-fits] :where(.dock-layers) > .dock-run {
         padding-block: min(var(--dock-run-reserve-block), var(--dock-run-room-block, 0px));
     }
 
-    .glass-dock:not(.vertical) .dock-run:has(> *) {
+    .glass-dock:not(.vertical) :where(.dock-layers) > .dock-run:has(> *) {
         padding-inline-end: 0;
     }
 
-    .glass-dock:not(.vertical) .dock-run:has(> *)::before,
-    .glass-dock:not(.vertical) .dock-run:has(> *)::after {
+    .glass-dock:not(.vertical) :where(.dock-layers) > .dock-run:has(> *)::before,
+    .glass-dock:not(.vertical) :where(.dock-layers) > .dock-run:has(> *)::after {
         content: "";
         flex: 0 var(--dock-run-yield) auto;
         inline-size: var(--dock-run-reserve-inline);
         min-inline-size: 0;
     }
 
-    .glass-dock:not(.vertical) .dock-run:has(> *)::before {
+    .glass-dock:not(.vertical) :where(.dock-layers) > .dock-run:has(> *)::before {
         margin-inline: calc(-1 * var(--dock-run-reserve-inline)) calc(-1 * var(--dock-run-gap));
     }
 
-    .glass-dock:not(.vertical) .dock-run:has(> *)::after {
+    .glass-dock:not(.vertical) :where(.dock-layers) > .dock-run:has(> *)::after {
         margin-inline-start: calc(-1 * var(--dock-run-gap));
     }
 
@@ -445,7 +452,7 @@
        a seat that grows is a seat that is no longer an integer number of pitches, and
        the lattice dies quietly the moment one does. `start` alignment is what the
        `scroll-padding` above is measured against. */
-    .glass-dock .dock-run > * {
+    .glass-dock :where(.dock-layers) > .dock-run > * {
         scroll-snap-align: start;
         flex: 0 0 auto;
     }
@@ -456,11 +463,11 @@
        wider than the port, the group let Chromium rest the run on an arbitrary covering
        offset (8 px at a 260 px cap), which cut the leading corner and the first seat's
        ring. */
-    .glass-dock .dock-run > .dock-layer-group {
+    .glass-dock :where(.dock-layers) > .dock-run > .dock-layer-group {
         scroll-snap-align: none;
     }
 
-    .glass-dock .dock-run > .dock-layer-group .dock-face.is-active > .dock-face-content > * {
+    .glass-dock :where(.dock-layers) > .dock-run > .dock-layer-group .dock-face.is-active > .dock-face-content > * {
         scroll-snap-align: start;
     }
 
@@ -476,7 +483,7 @@
        anything was there. It is a scroll container here — a SNAPPED one — because
        `overscroll-behavior` has no effect on a non-scroller, and `pan-y` on a
        non-scroller LICENSES the document pan it was meant to trap. */
-    .glass-dock.vertical .dock-run {
+    .glass-dock.vertical :where(.dock-layers) > .dock-run {
         overflow-x: hidden;
         overflow-y: auto;
         scroll-snap-type: y mandatory;
@@ -529,8 +536,8 @@
        token is read, never a remembered literal, so a re-tune of the preset re-tunes
        the exchange with it. The "free bulge" is struck: a total width that grows
        mid-exchange is a lattice that stops being one for the duration of the motion. */
-    .glass-dock .dock-run > [aria-current]:not([aria-current="false"]),
-    .glass-dock .dock-run > :has([aria-current]:not([aria-current="false"])) {
+    .glass-dock :where(.dock-layers) > .dock-run > [aria-current]:not([aria-current="false"]),
+    .glass-dock :where(.dock-layers) > .dock-run > :has([aria-current]:not([aria-current="false"])) {
         inline-size: var(--dock-open-seat);
         /* The cross axis is untouched: the open seat is WIDER, never taller. */
         transition: inline-size var(--spring-dock-duration) var(--spring-dock);
@@ -539,7 +546,7 @@
     /* Every OTHER seat is exactly one pitch minus the gap. Stating it is what makes the
        transfer complementary — the departing seat has a rule to run BACK to, so the two
        animations are one exchange rather than one growth and one snap. */
-    .glass-dock .dock-run > :not([aria-current]:not([aria-current="false"])):not(
+    .glass-dock :where(.dock-layers) > .dock-run > :not([aria-current]:not([aria-current="false"])):not(
             :has([aria-current]:not([aria-current="false"]))
         ) {
         transition: inline-size var(--spring-dock-duration) var(--spring-dock);
@@ -548,15 +555,15 @@
     /* Rotated for a vertical dock: m=2 there, so the open seat is 2·P − gap of BLOCK
        extent (96px at the default rungs) rather than the 148px a block-axis m=3 would
        impose around a 24px glyph — a proportion violation with no affordance bought. */
-    .glass-dock.vertical .dock-run > [aria-current]:not([aria-current="false"]),
-    .glass-dock.vertical .dock-run > :has([aria-current]:not([aria-current="false"])) {
+    .glass-dock.vertical :where(.dock-layers) > .dock-run > [aria-current]:not([aria-current="false"]),
+    .glass-dock.vertical :where(.dock-layers) > .dock-run > :has([aria-current]:not([aria-current="false"])) {
         inline-size: auto;
         block-size: var(--dock-open-seat);
         transition: block-size var(--spring-dock-duration) var(--spring-dock);
     }
 
     .glass-dock.vertical
-        .dock-run
+        :where(.dock-layers) > .dock-run
         > :not([aria-current]:not([aria-current="false"])):not(
             :has([aria-current]:not([aria-current="false"]))
         ) {
@@ -731,7 +738,7 @@
         );
     }
 
-    .glass-dock .dock-run.is-active {
+    .glass-dock :where(.dock-layers) > .dock-run.is-active {
         scroll-timeline: --dock-run inline;
         --dock-run-corner-rest: max(0px, var(--dock-cap-rest) - var(--dock-run-inset));
         --dock-run-corner-cut: max(0px, var(--dock-cap-cut) - var(--dock-run-inset));
@@ -745,7 +752,7 @@
         animation-direction: normal, reverse;
     }
 
-    .glass-dock.vertical .dock-run.is-active {
+    .glass-dock.vertical :where(.dock-layers) > .dock-run.is-active {
         scroll-timeline: --dock-run block;
         animation-name: gl-dock-clip-block-start, gl-dock-clip-block-end;
     }
@@ -805,7 +812,7 @@
        to the timeline afresh. A collapsed dock's run is not the visible run, so it
        hides nothing either, and its plate is the circle. */
     .glass-dock:is([data-run-fits], .collapsed) .dock-plate,
-    .glass-dock:is([data-run-fits], .collapsed) .dock-run {
+    .glass-dock:is([data-run-fits], .collapsed) :where(.dock-layers) > .dock-run {
         animation: none;
     }
 

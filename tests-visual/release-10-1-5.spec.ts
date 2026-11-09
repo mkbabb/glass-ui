@@ -59,6 +59,12 @@
 // after:
 //   l1  (L1) a run whose overflow vanishes while it is scrolled (to its end, or mid) rests
 //       round: a lifted cap, a viewport resize 390 → 844, and a vertical run's stage grown
+//
+// Fix round 10 (inbound-O-186.md, Gregg's sci-report dock), RED on v10.1.4, GREEN after:
+//   q1  (O-186) a fit-content static dock under hover on every control, flat and with a
+//       nested group, 1440 and 390: one rest corner, half the cross extent, no percentage
+//   q2  (O-187) a consumer's nested `.dock-run` group keeps each hovered control's ink
+//   q3  (O-187) exactly one `--dock-run` scroll timeline in the dock, the active run's
 import { expect, test, type Page } from "@playwright/test";
 import { PNG } from "pngjs";
 
@@ -1887,6 +1893,93 @@ test.describe("critique 9, coarse phone", () => {
 });
 
 p1();
+
+/* ── q · O-186 and O-187 (Gregg, sci-report): a fit-content static dock under hover,
+   and a consumer's nested `.dock-run` group ─────────────────────────────────────── */
+
+/** The fit-content static dock at each width: four labelled tabs and two icons at 1440,
+ * two and two at 390 (both fit). Flat, the first tab is current (the open seat); `nest`
+ * puts the tabs in a consumer's `<div class="dock-run">` with no current tab, as Gregg's
+ * group is (its tabs keep their own width there, so the group is not an open seat). */
+function gregg(width: number, nest: boolean): string {
+    const kinds = width >= 1024
+        ? "tab:Overview,tab:Methods,tab:Results,tab:Figures,icon,icon"
+        : "tab:Data,tab:Notes,icon,icon";
+    return `scene=seats&backdrop=static&current=${nest ? 0 : 1}&nest=${nest ? 1 : 0}&kinds=${encodeURIComponent(kinds)}`;
+}
+
+async function hoverSeat(page: Page, i: number): Promise<void> {
+    const box = (await page.locator(`[data-witness="S${i}"]`).boundingBox())!;
+    await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
+}
+
+for (const width of [1440, 390]) {
+    test(`q1 O-186 at ${width}: a fit-content static dock under hover on every control keeps one rest corner, half its cross extent, no percentage`, async ({
+        page,
+    }) => {
+        await page.setViewportSize({ width, height: 800 });
+        for (const nest of [false, true]) {
+            await open(page, gregg(width, nest));
+            await pointerOff(page);
+            await settle(page, 200);
+            const rest = await readPlate(page);
+            expectNoReach(rest, `${width} nest=${nest} rest`);
+            expectRestCorner(rest, `${width} nest=${nest} rest`);
+            const n = await page.locator('[data-witness^="S"]').count();
+            for (let i = 1; i <= n; i++) {
+                await hoverSeat(page, i);
+                for (const ms of [150, 700]) {
+                    await page.waitForTimeout(ms);
+                    expectRestCorner(await readPlate(page), `${width} nest=${nest} hover S${i} +${ms} ms`);
+                }
+            }
+        }
+    });
+
+    test(`q2 O-187 at ${width}: a nested .dock-run group keeps each hovered control's whole ink`, async ({ page }) => {
+        await page.setViewportSize({ width, height: 800 });
+        await open(page, gregg(width, true));
+        const tabs = await page.locator('[data-witness="nest"] > [data-witness^="S"]').count();
+        expect(tabs, "the nested group holds the tabs").toBeGreaterThan(1);
+        for (let i = 1; i <= tabs; i++) {
+            await hoverSeat(page, i);
+            await settle(page, 600);
+            const read = await page.evaluate((w) => {
+                const seat = document.querySelector<HTMLElement>(`[data-witness="${w}"]`)!;
+                const ink = seat.getBoundingClientRect();
+                const cut: unknown[] = [];
+                for (let el = seat.parentElement; el && !el.classList.contains("glass-dock"); el = el.parentElement) {
+                    const cs = getComputedStyle(el);
+                    if (cs.overflowX === "visible" && cs.overflowY === "visible") continue;
+                    const r = el.getBoundingClientRect();
+                    const box = {
+                        l: r.left + el.clientLeft,
+                        r: r.left + el.clientLeft + el.clientWidth,
+                        t: r.top + el.clientTop,
+                        b: r.top + el.clientTop + el.clientHeight,
+                    };
+                    if (ink.left < box.l - 0.5 || ink.right > box.r + 0.5 || ink.top < box.t - 0.5 || ink.bottom > box.b + 0.5)
+                        cut.push({ clip: el.className, box, ink: [ink.left, ink.right, ink.top, ink.bottom] });
+                }
+                return { scale: getComputedStyle(seat).scale, cut };
+            }, `S${i}`);
+            await expectHoverScale(page, read.scale, `nested S${i}`);
+            expect(read.cut, `${width}: nested S${i}'s hover ink inside every clip`).toEqual([]);
+        }
+    });
+
+    test(`q3 O-187 at ${width}: the plate has exactly one scroll timeline in scope, the visible run's`, async ({ page }) => {
+        await page.setViewportSize({ width, height: 800 });
+        await open(page, gregg(width, true));
+        const named = await page.evaluate(() =>
+            [...document.querySelectorAll<HTMLElement>(".glass-dock *")]
+                .filter((el) => /--dock-run\b/.test(getComputedStyle(el).scrollTimelineName))
+                .map((el) => el.className),
+        );
+        expect(named.length, `one --dock-run timeline (${JSON.stringify(named)})`).toBe(1);
+        expect(named[0], "it is the dock's active run").toMatch(/\bdock-layer--full\b.*\bis-active\b|\bis-active\b.*\bdock-layer--full\b/);
+    });
+}
 
 /* M3 · O-159 and O-160, read from the source (no browser state). */
 test("m3 O-159 the dock README names every DockProps member and no other", async () => {

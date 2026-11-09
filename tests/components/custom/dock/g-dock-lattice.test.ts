@@ -589,7 +589,9 @@ describe("G-DOCK-MORPH — a morph never starts against an unmeasured target", (
     it("the measure reads the posture from the DOM and chrome only at rest", () => {
         const src = read(`${DOCK}/composables/dockMorphMeasure.ts`);
         expect(src).toMatch(/const expanded = full\.classList\.contains\("is-active"\)/);
-        expect(src).toMatch(/if \(!root\.hasAttribute\("data-morphing"\)\) \{/);
+        expect(src).toMatch(
+            /const morphing = root\.hasAttribute\("data-morphing"\);\s*if \(!morphing\) \{\s*const chrome =/,
+        );
         expect(src).not.toMatch(/watch\(expanded/);
     });
 
@@ -700,7 +702,7 @@ describe("G-DOCK-MATERIAL — the focus ring composes instead of competing", () 
         // 1. THE BOX MODEL RIDES THE SAME SUBJECT AS THE RESERVE. Not `run.css` somewhere
         //    — the one rule that declares the pair. A `box-sizing` that drifted onto a
         //    different selector would leave the reserve exactly as defeated as it was.
-        const reserveRules = [...run.matchAll(/\.glass-dock \.dock-run \{([^{}]*)\}/g)]
+        const reserveRules = [...run.matchAll(/\.glass-dock :where\(\.dock-layers\) > \.dock-run \{([^{}]*)\}/g)]
             .map((m) => m[1]!)
             .filter((body) =>
                 /padding:\s*var\(--dock-run-reserve-block\) var\(--dock-run-reserve-inline\)/.test(body),
@@ -731,7 +733,7 @@ describe("G-DOCK-MATERIAL — the focus ring composes instead of competing", () 
             bandDeclSites(/^\s*box-sizing\s*:/).map(
                 ({ file, chain, decl }) => `${file}: ${chain} { ${decl} }`,
             ),
-        ).toEqual([`${STYLES}/run.css: .glass-dock .dock-run { box-sizing: content-box }`]);
+        ).toEqual([`${STYLES}/run.css: .glass-dock :where(.dock-layers) > .dock-run { box-sizing: content-box }`]);
 
         // 3. THE CENSUS THE BOX MODEL ANSWERS TO — every size declaration in the band
         //    whose subject is the run's own element (`dock-layer dock-layer--full
@@ -752,9 +754,9 @@ describe("G-DOCK-MATERIAL — the focus ring composes instead of competing", () 
             /* PIN   · the vertical run's cross (inline) axis */
             `${STYLES}/layers.css: .glass-dock.expanded:not(.fit-content) .dock-layer--full { width: 100% }`,
             /* FLOOR · releases the flex/grid min-content floor on the scroll axis */
-            `${STYLES}/run.css: .glass-dock .dock-run { min-inline-size: 0 }`,
+            `${STYLES}/run.css: .glass-dock :where(.dock-layers) > .dock-run { min-inline-size: 0 }`,
             /* FLOOR · the same release, rotated */
-            `${STYLES}/run.css: .glass-dock.vertical .dock-run { min-block-size: 0 }`,
+            `${STYLES}/run.css: .glass-dock.vertical :where(.dock-layers) > .dock-run { min-block-size: 0 }`,
             /* FLOOR · vertical layer stack */
             `${STYLES}/shell-regions.css: .glass-dock.vertical .dock-layer { min-width: 0 }`,
         ]);
@@ -833,7 +835,7 @@ describe("G-DOCK-MATERIAL — the focus ring composes instead of competing", () 
         expect(run).toMatch(/--dock-run-corner-rest:\s*max\(0px, var\(--dock-cap-rest\) - var\(--dock-run-inset\)\)/);
         expect(run).toMatch(/--dock-run-corner-cut:\s*max\(0px, var\(--dock-cap-cut\) - var\(--dock-run-inset\)\)/);
         expect(run).toMatch(
-            /\.glass-dock \.dock-run\.is-active \{[^{}]*animation-timeline:\s*--dock-run, --dock-run;/,
+            /\.glass-dock :where\(\.dock-layers\) > \.dock-run\.is-active \{[^{}]*animation-timeline:\s*--dock-run, --dock-run;/,
         );
         expect(new Set(keyframed.map(({ file }) => file))).toEqual(
             new Set([`${STYLES}/run.css`]),
