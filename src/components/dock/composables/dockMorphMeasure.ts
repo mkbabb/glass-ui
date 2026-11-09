@@ -197,15 +197,7 @@ export function useDockExpandedSize(
         const expandedPx = keepScroll(full, () =>
             restSize(root, full, summary, a, expandedChrome),
         );
-        // Mid-morph the run's port is laid out under the morph's chrome, so the rest port
-        // is the expanded endpoint less its chrome and the run's own edge, all at rest.
-        publishYield(
-            root,
-            full,
-            morphing && expandedChrome !== null && runEdge !== null
-                ? expandedPx - expandedChrome - runEdge
-                : undefined,
-        );
+        publishYield(root, full, expandedPx);
         if (!expanded) {
             collapsedPx = keepScroll(full, () =>
                 restSize(root, summary, full, a, collapsedChrome),
@@ -241,23 +233,34 @@ export function useDockExpandedSize(
      * IT IS THE EXPANDED RUN'S READING AT REST, in every frame. It is read only while
      * the full pane is the active one. At rest (an expand's arm, post-flush and before
      * `[data-morphing]`; at rest expanded; once more when a morph settles, `release`) the
-     * port is the run's own. Mid-expand the run lays out under the morph's chrome (the
-     * root's padding interpolates), so the port is the rest port instead: the expanded
-     * endpoint, which `restSize` reads with the host's constraint as at rest, less the
-     * expanded chrome and the run's edge (`runEdge`, its border box less its port), both
-     * read at rest. So a morph reads what its rest reads, and no seat moves when it
-     * starts or settles (O-166), while a host that resizes the dock mid-morph moves the
-     * flag and the room on the frame it lands, where the morph carries the change. While
-     * collapsing the full pane is out of flow, and the reading it held expanded stays
-     * until the next expand re-reads it.
+     * port is the run's own, and the reading notes the expanded endpoint it was taken
+     * at (`restEndpoint`). Through a morph the reading is held, so no seat moves when a
+     * morph starts or settles (O-166), and the panes the morph moves never see the run's
+     * padding change under them (the bottom-anchored D-1 cell under an ancestor `zoom` in
+     * WebKit). It moves mid-morph only when the host moves the endpoint itself (a clamp,
+     * a stage resize): then the port is the rest port, the new endpoint, which `restSize`
+     * reads with the host's constraint as at rest, less the expanded chrome and the run's
+     * edge (`runEdge`, its border box less its port), both read at rest. So the flag and
+     * the room move on the frame the host's change lands, where the morph carries it,
+     * not at the settle (P1, P2). While collapsing the full pane is out of flow, and the
+     * reading it held expanded stays until the next expand re-reads it.
      */
     let yieldPublished = "";
     let runEdge: number | null = null;
+    let restEndpoint: number | null = null;
 
-    function publishYield(root: HTMLElement, run: HTMLElement, restPort?: number): void {
+    function publishYield(root: HTMLElement, run: HTMLElement, endpoint: number): void {
         if (!run.classList.contains("is-active")) return;
         const morphing = root.hasAttribute("data-morphing");
-        if (morphing && restPort === undefined) return;
+        if (
+            morphing &&
+            (expandedChrome === null ||
+                runEdge === null ||
+                restEndpoint === null ||
+                Math.abs(endpoint - restEndpoint) < 0.5)
+        ) {
+            return;
+        }
         const horizontal = axis.value === "horizontal";
         let start = Infinity;
         let end = -Infinity;
@@ -268,8 +271,11 @@ export function useDockExpandedSize(
             end = Math.max(end, offset + (horizontal ? seat.offsetWidth : seat.offsetHeight));
         }
         const client = horizontal ? run.clientWidth : run.clientHeight;
-        if (!morphing) runEdge = getSize(run, axis.value) - client;
-        const port = restPort ?? client;
+        if (!morphing) {
+            runEdge = getSize(run, axis.value) - client;
+            restEndpoint = endpoint;
+        }
+        const port = morphing ? endpoint - expandedChrome! - runEdge! : client;
         const fits = end > start && end - start <= port;
         // The vertical reserve yields as padding (run.css THE VERTICAL RESERVE YIELDS
         // TOO): half the room the seats leave in the port. The port is the run's padding
@@ -409,6 +415,7 @@ export function useDockExpandedSize(
         seatsPublished = "";
         yieldPublished = "";
         runEdge = null;
+        restEndpoint = null;
         const root = rootEl.value;
         if (!root) return;
         if (typeof ResizeObserver !== "undefined") {
@@ -520,8 +527,16 @@ export function useDockExpandedSize(
         if (!root) return;
         for (const el of [root, ...rigidRegions(root), contentEl.value]) el?.style.removeProperty(ORIGIN);
         for (const pane of panes()) pane.style.removeProperty(PANE_SHIFT);
-        // At a settle (the morph flag already cleared) the run is at rest again.
-        if (expandedEl.value) publishYield(root, expandedEl.value);
+        // At a settle (the morph flag already cleared) the run is at rest again, and its
+        // reading notes the endpoint it rests at.
+        const full = expandedEl.value;
+        const summary = collapsedEl.value;
+        if (full && summary) {
+            const endpoint = keepScroll(full, () =>
+                restSize(root, full, summary, axis.value, expandedChrome),
+            );
+            publishYield(root, full, endpoint);
+        }
     }
 
     function anchor(): void {
