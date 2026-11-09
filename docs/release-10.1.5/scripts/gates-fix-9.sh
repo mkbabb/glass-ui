@@ -5,7 +5,7 @@
 set -u
 WT=${0:A:h:h:h:h}
 cd $WT
-L=docs/release-10.1.5/fix-9
+L=docs/release-10.1.5/fix-9${FIX9_SUB:+/$FIX9_SUB}
 mkdir -p $L
 : > $L/gates.txt
 gate() { # name cmd...

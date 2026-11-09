@@ -11,7 +11,7 @@ set -u
 ENGINE=$1; shift
 WT=${0:A:h:h:h:h}
 cd $WT
-L=docs/release-10.1.5/fix-9
+L=docs/release-10.1.5/fix-9${FIX9_SUB:+/$FIX9_SUB}
 mkdir -p $L
 export GLASS_UI_DEMO_PORT=${GLASS_UI_DEMO_PORT:-5281}
 if [[ $ENGINE == webkit ]]; then CFG=(-c tests-visual/webkit-2287.config.ts --project=webkit)
