@@ -14,3 +14,14 @@ This changes W-I.8's consumer half, and it conflicts with **R-8 (members do not 
 3. **Keep every measured cure:** the shared silhouette, split lenses, whole-pixel members, one tint and O-198.
 
 **Rounding is open.** The owner reads the 11.0.0 dock as "not rounded": `--radius-dock` is `--radius-pill` = 1rem, which is 16 px corners on a 52–56 px dock. A ruling on the dock's resting corner is pending with the owner. R-4 (the corner is the dock's) stands as written, so the cluster follows whatever `--radius-dock` resolves to. Do not hard-code 16 px anywhere.
+
+## Amendments (owner, 2026-11-09 17:19 and his ruling that evening)
+
+**Rounding is ruled: "Rounded. Inform atlas always."** In 11.1.0 the dock rests as a full capsule, with its corner at half the cross extent in px (O-199). R-4 now resolves to that, and the cluster's silhouette is a capsule run, so never write a 16 px literal.
+
+**The layer swap is a first-class case (O-202).** On color.babb.dev, the owner watched value's dock go from "Tools →" into a tool view, and from the tool view back. Frame: `~/.dev-logs/owner-1109/shots3/3-dock-tools.png`. His words: "the dock animations from tools to the tool view is not well defined, glassy, eased, and smooth. glass-ui needs to modify this--it should appear as ONE dock with many layers that are smoothly eased and grow, fission, fuse, and animate." This sits beside daraksha's "ONE dock, not two, with layers of controls."
+
+So W-I.8 has a second canonical case besides the theme fission: **the DockLayerGroup face swap**, where a page layer becomes a tool layer and back. The fold must:
+1. Specify the swap as one dock whose silhouette grows or shrinks on the dock spring, and whose content cross-fades inside it. Any part of the incoming layer that sits in its own plate (the tool's own control run, say) fissions out of, or fuses into, the dock on the same join spring. The A/B harness must measure it: the silhouette continuous, no % radius, the backdrop live mid-swap, and O-198 under PRM.
+2. Use value's dock on color.babb.dev (the value.js demo, read-only, or a fixture of its Tools → tool-view geometry) as the real-world witness.
+3. State the release. The swap's silhouette continuity may already partly exist in DockCrossfade (11.0.0). Say what 11.0.0 does today, measured, and what the cluster adds.
