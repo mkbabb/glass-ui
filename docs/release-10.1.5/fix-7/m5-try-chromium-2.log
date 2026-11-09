@@ -1,0 +1,50 @@
+
+Running 2 tests using 1 worker
+
+  ✘  1 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1631:9 › critique 7, coarse phone › m5 O-182 vertical: in dark nothing past the plate is lighter than the ground (1.7s)
+  ✘  2 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1631:9 › m5 O-182 vertical: in dark nothing past the plate is lighter than the ground (1.6s)
+
+
+  1) [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1631:9 › critique 7, coarse phone › m5 O-182 vertical: in dark nothing past the plate is lighter than the ground 
+
+    Error: vertical 390: band pixels lighter than the ground 10.1 (worst +20.1)
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 214
+
+      1654 |                     }
+      1655 |                 if (process.env.M5_DUMP) (await import("node:fs")).writeFileSync(`${process.env.M5_DUMP}/m5-${name}-${width}-${test.info().project.name}.png`, PNG.sync.write(png));
+    > 1656 |                 expect(lighter, `${name} ${width}: band pixels lighter than the ground ${ground.toFixed(1)} (worst +${worst.toFixed(1)})`).toBe(0);
+           |                                                                                                                                            ^
+      1657 |                 const L = await page.evaluate(() => {
+      1658 |                     const read = (bg: string) => {
+      1659 |                         const el = document.createElement("span");
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:1656:140
+
+    Error Context: tests-visual/test-results/release-10-1-5-critique-7--93a37--is-lighter-than-the-ground-chromium-headless-new/error-context.md
+
+  2) [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1631:9 › m5 O-182 vertical: in dark nothing past the plate is lighter than the ground 
+
+    Error: vertical 390: band pixels lighter than the ground 10.1 (worst +20.1)
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 210
+
+      1654 |                     }
+      1655 |                 if (process.env.M5_DUMP) (await import("node:fs")).writeFileSync(`${process.env.M5_DUMP}/m5-${name}-${width}-${test.info().project.name}.png`, PNG.sync.write(png));
+    > 1656 |                 expect(lighter, `${name} ${width}: band pixels lighter than the ground ${ground.toFixed(1)} (worst +${worst.toFixed(1)})`).toBe(0);
+           |                                                                                                                                            ^
+      1657 |                 const L = await page.evaluate(() => {
+      1658 |                     const read = (bg: string) => {
+      1659 |                         const el = document.createElement("span");
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:1656:140
+
+    Error Context: tests-visual/test-results/release-10-1-5-m5-O-182-ve-0eb89--is-lighter-than-the-ground-chromium-headless-new/error-context.md
+
+  2 failed
+    [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1631:9 › critique 7, coarse phone › m5 O-182 vertical: in dark nothing past the plate is lighter than the ground 
+    [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1631:9 › m5 O-182 vertical: in dark nothing past the plate is lighter than the ground 
