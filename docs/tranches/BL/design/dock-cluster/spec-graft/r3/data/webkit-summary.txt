@@ -1,0 +1,46 @@
+# webkit 26.5 2026-11-09T21:16:00.716Z → 2026-11-09T21:17:04.824Z
+
+## seam, flat field, rest fused: line step / tone step per join (interior rows rimTop,inTop,mid,inBot | halo top,bot)
+| naive | 390 | light | 24.3 / 1.6 / 1.4 ; 24.3 / 1.6 / 1.4 | gaps 0,0 |
+| B | 390 | light | 0 / 0 / 0 ; 0 / 0 / 0 | gaps 10,10 |
+| naive | 390 | dark | 24.1 / 2.5 / 1.5 ; 24.1 / 2.5 / 1.5 | gaps 0,0 |
+| B | 390 | dark | 0 / 0 / 0 ; 0 / 0 / 0 | gaps 10,10 |
+| naive | 1440 | light | 24.3 / 1.6 / 1.4 ; 24.3 / 1.6 / 1.4 | gaps 0,0 |
+| B | 1440 | light | 0 / 0 / 0 ; 0 / 0 / 0 | gaps 10,10 |
+| naive | 1440 | dark | 24.1 / 2.5 / 1.5 ; 24.1 / 2.5 / 1.5 | gaps 0,0 |
+| B | 1440 | dark | 0 / 0 / 0 ; 0 / 0 / 0 | gaps 10,10 |
+
+## backdrop probe (stripe sd): plates [split | 40 | 80 | 140 | fused] ; join residue fused ; seamTone fused ; bare ; ctl backdrop-div / filter-div
+| B | 390 | light | max plate sd 89.85 | 89.85 | 89.85 | 89.85 | 89.85 | join 75.77,89.73 | tone 0,7.3 | bare 101.6 | ctl 105.87/27.41/104.88 |
+|   mid 80ms join residue 75.77,89.73 ; plate sd 89.85,89.82,89.71
+| B | 390 | dark | max plate sd 91.01 | 91.01 | 91.01 | 91.01 | 91.01 | join 76.72,90.84 | tone 0.1,7.3 | bare 103.36 | ctl 105.87/27.41/104.88 |
+|   mid 80ms join residue 76.72,90.84 ; plate sd 91.01,90.97,90.86
+| B | 1440 | light | max plate sd 89.88 | 89.88 | 89.88 | 89.88 | 89.88 | join 47.87,87.53 | tone 0.1,7.2 | bare 105.92 | ctl 105.87/27.41/104.88 |
+|   mid 80ms join residue 47.87,87.53 ; plate sd 89.86,89.8,89.88
+| B | 1440 | dark | max plate sd 91.03 | 91.03 | 91.03 | 91.03 | 91.03 | join 48.48,88.61 | tone 0.1,7.2 | bare 105.95 | ctl 105.87/27.41/104.88 |
+|   mid 80ms join residue 48.48,88.61 ; plate sd 91.02,90.95,91.03
+
+## radius (non-square %, ellipse, frames)
+| B | 390 | light | 0 | 0 | 181 frames, 36924 reads, square-% 2896 | 
+| B | 390 | dark | 0 | 0 | 181 frames, 36924 reads, square-% 2896 | 
+| B | 1440 | light | 0 | 0 | 181 frames, 41268 reads, square-% 4344 | 
+| B | 1440 | dark | 0 | 0 | 181 frames, 41268 reads, square-% 4344 | 
+
+## perf (median over 3 windows) idle vs morph
+| B | 390 | idle | 10 / 13 / 16 | >17.5 0 | layout – | style – –s | script –s | task –s | load 18.4 |
+| B | 390 | morph | 12 / 19 / 41 | >17.5 8 | layout – | style – –s | script –s | task –s | load 17.3 |
+| B | 1440 | idle | 10 / 13 / 13 | >17.5 0 | layout – | style – –s | script –s | task –s | load 16 |
+| B | 1440 | morph | 11 / 21 / 33 | >17.5 16 | layout – | style – –s | script –s | task –s | load 16 |
+
+## reduced motion
+| B | 1440 | light | min op 0 | end 1 | intermediate frames 17 | controls min op 1 | geometry states 2 | translate false | swap at 137 ms |
+| B | 1440 | dark | min op 0 | end 1 | intermediate frames 16 | controls min op 1 | geometry states 2 | translate false | swap at 142 ms |
+
+## a11y
+| B | 390 | tree true | census true | tab true (Read > Text size > Dark theme > beforeGlass reads what lies under it, line 1, and the dock sits on the page.Glass reads what lies under it, line 2, and the dock sits on the page.Glass reads what lies under it, line 3, and the dock sits on the page.Glass reads what lies under it, line 4, and the dock sits on the page.Glass reads what lies under it, line 5, and the dock sits on the page.Glass reads what lies under it, line 6, and the dock sits on the page.Glass reads what lies under it, line 7, and the dock sits on the page.Glass reads what lies under it, line 8, and the dock sits on the page.Glass reads what lies under it, line 9, and the dock sits on the page.ReadHearLearnReadText sizeDark themeafter > Read > Text size > Dark theme > beforeGlass reads what lies under it, line 1, and the dock sits on the page.Glass reads what lies under it, line 2, and the dock sits on the page.Glass reads what lies under it, line 3, and the dock sits on the page.Glass reads what lies under it, line 4, and the dock sits on the page.Glass reads what lies under it, line 5, and the dock sits on the page.Glass reads what lies under it, line 6, and the dock sits on the page.Glass reads what lies under it, line 7, and the dock sits on the page.Glass reads what lies under it, line 8, and the dock sits on the page.Glass reads what lies under it, line 9, and the dock sits on the page.ReadHearLearnReadText sizeDark themeafter > Read > Text size > Dark theme > beforeGlass reads what lies under it, line 1, and the dock sits on the page.Glass reads what lies under it, line 2, and the dock sits on the page.Glass reads what lies under it, line 3, and the dock sits on the page.Glass reads what lies under it, line 4, and the dock sits on the page.Glass reads what lies under it, line 5, and the dock sits on the page.Glass reads what lies under it, line 6, and the dock sits on the page.Glass reads what lies under it, line 7, and the dock sits on the page.Glass reads what lies under it, line 8, and the dock sits on the page.Glass reads what lies under it, line 9, and the dock sits on the page.ReadHearLearnReadText sizeDark themeafter) | focus true ({"before":"Text size","midFocus":"Text size","afterFuse":"Text size","afterFission":"Text size"}) | diffs  |
+| B | 1440 | tree true | census true | tab true (Read > Text size > Dark theme > beforeGlass reads what lies under it, line 1, and the dock sits on the page.Glass reads what lies under it, line 2, and the dock sits on the page.Glass reads what lies under it, line 3, and the dock sits on the page.Glass reads what lies under it, line 4, and the dock sits on the page.Glass reads what lies under it, line 5, and the dock sits on the page.Glass reads what lies under it, line 6, and the dock sits on the page.Glass reads what lies under it, line 7, and the dock sits on the page.Glass reads what lies under it, line 8, and the dock sits on the page.Glass reads what lies under it, line 9, and the dock sits on the page.ReadHearLearnAboutReadText sizeDark themeafter > Read > Text size > Dark theme > beforeGlass reads what lies under it, line 1, and the dock sits on the page.Glass reads what lies under it, line 2, and the dock sits on the page.Glass reads what lies under it, line 3, and the dock sits on the page.Glass reads what lies under it, line 4, and the dock sits on the page.Glass reads what lies under it, line 5, and the dock sits on the page.Glass reads what lies under it, line 6, and the dock sits on the page.Glass reads what lies under it, line 7, and the dock sits on the page.Glass reads what lies under it, line 8, and the dock sits on the page.Glass reads what lies under it, line 9, and the dock sits on the page.ReadHearLearnAboutReadText sizeDark themeafter > Read > Text size > Dark theme > beforeGlass reads what lies under it, line 1, and the dock sits on the page.Glass reads what lies under it, line 2, and the dock sits on the page.Glass reads what lies under it, line 3, and the dock sits on the page.Glass reads what lies under it, line 4, and the dock sits on the page.Glass reads what lies under it, line 5, and the dock sits on the page.Glass reads what lies under it, line 6, and the dock sits on the page.Glass reads what lies under it, line 7, and the dock sits on the page.Glass reads what lies under it, line 8, and the dock sits on the page.Glass reads what lies under it, line 9, and the dock sits on the page.ReadHearLearnAboutReadText sizeDark themeafter) | focus true ({"before":"Text size","midFocus":"Text size","afterFuse":"Text size","afterFission":"Text size"}) | diffs  |
+
+## control set (+1 control, fused)
+| B | 1440 | light | {"totalShift":24,"firstFrameJump":24,"maxPerFrame":24,"framesMoving":1,"maxExtraOverlap":0} |
+
+## errors

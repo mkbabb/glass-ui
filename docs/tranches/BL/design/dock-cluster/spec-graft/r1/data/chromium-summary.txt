@@ -1,0 +1,47 @@
+# chromium 149.0.7827.55 2026-11-09T20:49:31.828Z → 2026-11-09T20:50:19.582Z
+
+## seam, flat field, rest fused: line step / tone step per join (interior rows rimTop,inTop,mid,inBot | halo top,bot)
+| naive | 390 | light | 23.7 / 3.1 / 1.1 ; 20 / 6.6 / 0.9 | gaps 0,0 |
+| B | 390 | light | 3.7 / 0.1 / 0 ; 1.3 / 0.1 / 0 | gaps 10,10 |
+| naive | 390 | dark | 18.1 / 4.1 / 1.4 ; 20 / 6.1 / 1.6 | gaps 0,0 |
+| B | 390 | dark | 0.8 / 1.2 / 0 ; 0.8 / 1.2 / 0 | gaps 10,10 |
+| naive | 1440 | light | 19.7 / 5 / 1.3 ; 20 / 2.7 / 0.9 | gaps 0,0 |
+| B | 1440 | light | 10 / 0.1 / 0 ; 2 / 0.1 / 0 | gaps 10,10 |
+| naive | 1440 | dark | 19.5 / 4.9 / 1.3 ; 20 / 2.2 / 1.6 | gaps 0,0 |
+| B | 1440 | dark | 1.6 / 1.2 / 0 ; 0.8 / 1.2 / 0 | gaps 10,10 |
+
+## backdrop probe (stripe sd): plates [split | 40 | 80 | 140 | fused] ; join residue fused ; seamTone fused ; bare ; ctl backdrop-div / filter-div
+| B | 390 | light | max plate sd 9.99 | 9.83 | 9.81 | 9.81 | 9.82 | join 5.2,6.52 | tone 4.7,6.6 | bare 102.09 | ctl 15.18/26.82/104.82 |
+|   mid 80ms join residue 4.8,6.16 ; plate sd 3.4,3.24,9.81
+| B | 390 | dark | max plate sd 9.46 | 9.5 | 9.53 | 9.54 | 9.54 | join 8.93,10.5 | tone 10.3,12.3 | bare 103.71 | ctl 15.18/26.82/104.82 |
+|   mid 80ms join residue 8.24,9.7 ; plate sd 3.36,3.3,9.53
+| B | 1440 | light | max plate sd 10.39 | 10.21 | 10.19 | 10.19 | 10.19 | join 2.36,4.31 | tone 0.3,3.3 | bare 105.87 | ctl 15.18/26.82/104.82 |
+|   mid 80ms join residue 2.46,3.82 ; plate sd 3.4,3.32,10.19
+| B | 1440 | dark | max plate sd 9.67 | 9.68 | 9.7 | 9.7 | 9.7 | join 4.86,7.82 | tone 4.9,9.1 | bare 105.89 | ctl 15.18/26.82/104.82 |
+|   mid 80ms join residue 4.8,7.26 ; plate sd 3.32,3.24,9.7
+
+## radius (non-square %, ellipse, frames)
+| B | 390 | light | 0 | 0 | 181 frames, 34752 reads, square-% 2896 | 
+| B | 390 | dark | 0 | 0 | 181 frames, 34752 reads, square-% 2896 | 
+| B | 1440 | light | 0 | 0 | 181 frames, 39096 reads, square-% 4344 | 
+| B | 1440 | dark | 0 | 0 | 181 frames, 39096 reads, square-% 4344 | 
+
+## perf (median over 3 windows) idle vs morph
+| B | 390 | idle | 8.3 / 9 / 9.3 | >17.5 0 | layout 0 | style 0 0s | script 0.0014s | task 0.0096s | load 4.8 |
+| B | 390 | morph | 8.3 / 9.1 / 16.8 | >17.5 0 | layout 0 | style 61 0.0222s | script 0.0164s | task 0.065s | load 4.8 |
+| B | 1440 | idle | 8.3 / 9.2 / 16.8 | >17.5 0 | layout 0 | style 0 0s | script 0.0015s | task 0.0102s | load 5.1 |
+| B | 1440 | morph | 8.3 / 9.1 / 16.6 | >17.5 0 | layout 0 | style 61 0.0193s | script 0.0157s | task 0.0617s | load 5.1 |
+|   trace morph: {"Paint":8.9,"RasterTask":90.2,"PrePaint":3.1,"Layerize":3.2,"UpdateLayoutTree":12.9,"Commit":3.7,"Display::DrawAndSwap":117.6}
+
+## reduced motion
+| B | 1440 | light | min op 1 | end 1 | intermediate frames 0 | controls min op 1 | geometry states 1 | translate false | swap at null ms |
+| B | 1440 | dark | min op 1 | end 1 | intermediate frames 0 | controls min op 1 | geometry states 1 | translate false | swap at null ms |
+
+## a11y
+| B | 390 | tree true | census true | tab true (Read > Text size > Dark theme) | focus true ({"before":"Text size","midFocus":"Text size","afterFuse":"Text size","afterFission":"Text size"}) | diffs  |
+| B | 1440 | tree true | census true | tab true (Read > Text size > Dark theme) | focus true ({"before":"Text size","midFocus":"Text size","afterFuse":"Text size","afterFission":"Text size"}) | diffs  |
+
+## control set (+1 control, fused)
+| B | 1440 | light | {"totalShift":24,"firstFrameJump":24,"maxPerFrame":24,"framesMoving":1,"maxExtraOverlap":0} |
+
+## errors
