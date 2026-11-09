@@ -1,0 +1,59 @@
+
+Running 10 tests using 1 worker
+
+  ✓   1 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1631:9 › critique 7, coarse phone › m5 O-182 horizontal: in dark nothing past the plate is lighter than the ground (2.9s)
+  ✓   2 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1631:9 › critique 7, coarse phone › m5 O-182 vertical: in dark nothing past the plate is lighter than the ground (2.8s)
+  ✓   3 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1631:9 › critique 7, coarse phone › m5 O-182 collapsed: in dark nothing past the plate is lighter than the ground (2.7s)
+  ✓   4 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1690:5 › critique 7, coarse phone › m5 O-182 light: the shadow is still the foreground (866ms)
+  ✓   5 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1631:9 › m5 O-182 horizontal: in dark nothing past the plate is lighter than the ground (2.8s)
+  ✓   6 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1631:9 › m5 O-182 vertical: in dark nothing past the plate is lighter than the ground (2.8s)
+  ✓   7 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1631:9 › m5 O-182 collapsed: in dark nothing past the plate is lighter than the ground (2.8s)
+  ✓   8 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1690:5 › m5 O-182 light: the shadow is still the foreground (860ms)
+  ✘   9 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1759:5 › critique 8, coarse phone › n1 a fitting vertical dock's seats do not step at the expand's settle or the collapse's start, across the fit edge (3.1s)
+  ✘  10 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1759:5 › n1 a fitting vertical dock's seats do not step at the expand's settle or the collapse's start, across the fit edge (3.1s)
+
+
+  1) [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1759:5 › critique 8, coarse phone › n1 a fitting vertical dock's seats do not step at the expand's settle or the collapse's start, across the fit edge 
+
+    Error: 316: the collapse morphed
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   0
+
+      1783 |             const c = await collapse;
+      1784 |             const firstM = c.findIndex((f) => f.morphing);
+    > 1785 |             expect(firstM, `${stageH}: the collapse morphed`).toBeGreaterThan(0);
+           |                                                               ^
+      1786 |             const [p, q] = [c[firstM - 1]!, c[firstM]!];
+      1787 |             const startStep = Math.max(Math.abs(q.s1 - p.s1), Math.abs(q.s6 - p.s6));
+      1788 |             if (startStep > 0.5) bad.push({ stageH, edge: "collapse start", pad, p, q });
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:1785:63
+
+    Error Context: tests-visual/test-results/release-10-1-5-critique-8--28df9-s-start-across-the-fit-edge-chromium-headless-new/error-context.md
+
+  2) [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1759:5 › n1 a fitting vertical dock's seats do not step at the expand's settle or the collapse's start, across the fit edge 
+
+    Error: 316: the collapse morphed
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   0
+
+      1783 |             const c = await collapse;
+      1784 |             const firstM = c.findIndex((f) => f.morphing);
+    > 1785 |             expect(firstM, `${stageH}: the collapse morphed`).toBeGreaterThan(0);
+           |                                                               ^
+      1786 |             const [p, q] = [c[firstM - 1]!, c[firstM]!];
+      1787 |             const startStep = Math.max(Math.abs(q.s1 - p.s1), Math.abs(q.s6 - p.s6));
+      1788 |             if (startStep > 0.5) bad.push({ stageH, edge: "collapse start", pad, p, q });
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:1785:63
+
+    Error Context: tests-visual/test-results/release-10-1-5-n1-a-fittin-3ab0a-s-start-across-the-fit-edge-chromium-headless-new/error-context.md
+
+  2 failed
+    [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1759:5 › critique 8, coarse phone › n1 a fitting vertical dock's seats do not step at the expand's settle or the collapse's start, across the fit edge 
+    [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1759:5 › n1 a fitting vertical dock's seats do not step at the expand's settle or the collapse's start, across the fit edge 
+  8 passed (26.9s)

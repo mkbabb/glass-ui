@@ -5,10 +5,11 @@
 A patch for five paint defects value.js reported from color.babb.dev, keyframes.babb.dev
 and fourier.babb.dev on 10.1.4 (records: `docs/tranches/BL/audit/INBOUND.md` O-129 rows
 1, 2, 5, 6 and 7; `docs/release-10.1.5/implement.md`). No public API is removed or
-renamed. Two token values move, each because the token is the cure: `--dock-cap-rest`
-on the pill (`50%` to half the plate's measured cross extent) and, under
+renamed. Three token values move, each because the token is the cure: `--dock-cap-rest`
+on the pill (`50%` to half the plate's measured cross extent); under
 `(pointer: coarse)`, `--control-text`/`--control-text-sm` (the 1.5x comfort scale to the
-16 px floor and to 6/7 of it). Two tokens are new, `--icon-label-gap` (0.25rem) and
+16 px floor and to 6/7 of it); and the dark arm's `--shadow-color` (the foreground to
+the page ground deepened, O-182). Two tokens are new, `--icon-label-gap` (0.25rem) and
 `--field-text-floor` (0 px, 16 px under a coarse pointer), and the dock publishes one new
 measured property, `--dock-plate-cross-px`.
 
@@ -29,9 +30,11 @@ measured property, `--dock-plate-cross-px`.
 
 - **A collapsed dock is a circle (O-129 r2).** The collapsed dock's full pane stays laid
   out behind the summary and still scrolls, so the cap timeline cut the collapsed
-  plate's trailing corners to 16 px (`50% 16px 16px 50%`). The `--dock-run` timeline is
-  now named only on the pane that is active, so a collapsed plate paints its rest
-  corner.
+  plate's trailing corners to 16 px (`50% 16px 16px 50%`). A collapsed dock's run is
+  not the visible run and hides nothing, so under `.collapsed` the plate's and the run's
+  cut-cap animations are off (as they are on any run whose seats fit) and the plate
+  paints its rest corner. An inactive timeline alone did not do it: it holds what it
+  last resolved, so a collapse from a scrolled run sealed lopsided.
 
 - **The Slider's thumb shows at min and max (O-129 r5).** The scrubber painted no thumb
   and a fill of `value x track`, so at the minimum there was a bare track and at the
@@ -59,6 +62,11 @@ measured property, `--dock-plate-cross-px`.
   `.menu__sub-trigger` had no gap, so a bare icon component sat flush against its label.
   Both now take `gap: var(--icon-label-gap)`, the 4 px the dock trigger family already
   painted. The dock trigger reads the same token as its fallback.
+
+- **No light halo around glass in dark (O-182).** The root's `--shadow-color` is the
+  foreground, which under `.dark` is a light ink, so every elevation shadow cast light
+  on the night ground. The dark arm's `--shadow-color` is now the page ground deepened,
+  never lighter than the ground it falls on. Light mode is unchanged.
 
 ## 10.1.4 — 2026-11-04
 

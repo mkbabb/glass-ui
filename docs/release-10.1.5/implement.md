@@ -546,7 +546,8 @@ changed, checked out from the round-7 tip `fd1c2443a` and restored to HEAD after
     point, so the offset is the true grab and the drag tracks 1:1 (residual under 0.5 px,
     the step's rounding).
 
-Tokens: no existing token value moved. New, internal to the dock: `--dock-run-room-block`
+Tokens: no existing token value moved in the M1 to M4 cures (O-182's `--shadow-color`
+move is recorded under "Fix round 8"). New, internal to the dock: `--dock-run-room-block`
 (written on the root under a fitting vertical run) and `--dock-run-cross-half`; internal to
 the slider: `--slider-fill-ink`. No export removed or renamed. The posture unit
 "focuses the summary without expanding" is restated under O-177 (Tab expands and lands on
@@ -589,6 +590,19 @@ The RED arm: Chromium 27 failed of 27; WebKit 17 failed, 10 passed, the ten bein
 ### Not cured here
 
 - O-182 (the owner's dock halo in dark, inbound before critique 7) was not in this round's
-  defect list.
+  defect list when it opened; the round cured it after the orchestrator's round-8 note, in
+  `9aaf0a79c` (see "Fix round 8", which records it).
 - `guarded` warned the kernel zone leak ARMED (inuse 43342) on the WebKit and gates runs;
   by the owner's 2026-11-03 order it does not hold runs, and none was refused.
+
+## Fix round 8 (critique-8.md: N1 to N3) and O-182
+
+Recorded in full in `fix-8.md`. O-182 is `9aaf0a79c`: the dark arm's `--shadow-color` is
+the page ground deepened, which moves that token's value (the cure is the token). N1: the
+vertical yield is the expanded run's reading at rest, held through every morph
+(`publishYield` reads only from the active full pane outside a morph, and once more at a
+settle), so the rule is `.vertical[data-run-fits]` and no seat steps at a morph's edge.
+Witness `n1`, RED on `3592aeb0d` and GREEN after, in both engines. N2: m5 excludes the
+plate's antialiased edge by 2 px, and the records are corrected. N3: the fit-edge ring bound
+is accepted and recorded (at most `k - r` under the ring's reach `k`), since keeping
+the ring there would need a run that scrolls while every seat shows.
