@@ -1,0 +1,931 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "docs/release-11.0.0/critique-1/probe.config.ts",
+      "--project=webkit-1440-fine",
+      "--project=webkit-390-coarse",
+      "--workers=1"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/docs/release-11.0.0/critique-1/probe.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/docs/release-11.0.0/critique-1",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-1440-fine",
+        "name": "chromium-1440-fine",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/docs/release-11.0.0/critique-1",
+        "testIgnore": [],
+        "testMatch": [
+          "probe.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-390-coarse",
+        "name": "chromium-390-coarse",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/docs/release-11.0.0/critique-1",
+        "testIgnore": [],
+        "testMatch": [
+          "probe.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-1440-fine",
+        "name": "webkit-1440-fine",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/docs/release-11.0.0/critique-1",
+        "testIgnore": [],
+        "testMatch": [
+          "probe.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-390-coarse",
+        "name": "webkit-390-coarse",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/docs/release-11.0.0/critique-1",
+        "testIgnore": [],
+        "testMatch": [
+          "probe.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "docs/release-11.0.0/critique-1/probe-webkit.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npx vite --host 127.0.0.1 --port 7961 --strictPort",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/",
+      "url": "http://127.0.0.1:7961",
+      "reuseExistingServer": false,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "probe.spec.ts",
+      "file": "probe.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "anchor=end in a flex row with free space pins the dock to that edge",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "geometry",
+                  "description": "{\"row\":{\"left\":24,\"right\":744,\"top\":24,\"bottom\":80,\"width\":720},\"dock\":{\"left\":356,\"right\":412,\"top\":24,\"bottom\":80,\"width\":56},\"margins\":{\"start\":\"332px\",\"end\":\"332px\"}}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit-1440-fine",
+              "projectName": "webkit-1440-fine",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 1790,
+                  "error": {
+                    "message": "Error: the end edge gap (dock 356..412 in row 24..744; margins {\"start\":\"332px\",\"end\":\"332px\"})\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m1.5\u001b[39m\nReceived:   \u001b[31m332\u001b[39m",
+                    "stack": "Error: the end edge gap (dock 356..412 in row 24..744; margins {\"start\":\"332px\",\"end\":\"332px\"})\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m1.5\u001b[39m\nReceived:   \u001b[31m332\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/docs/release-11.0.0/critique-1/probe.spec.ts:51:166",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/docs/release-11.0.0/critique-1/probe.spec.ts",
+                      "column": 166,
+                      "line": 51
+                    },
+                    "snippet": "  49 |             test.info().annotations.push({ type: \"geometry\", description: JSON.stringify({ row, dock, margins }) });\n  50 |             const edge = anchor === \"end\" ? row.right - dock.right : dock.left - row.left;\n> 51 |             expect(Math.abs(edge), `the ${anchor} edge gap (dock ${dock.left}..${dock.right} in row ${row.left}..${row.right}; margins ${JSON.stringify(margins)})`).toBeLessThan(1.5);\n     |                                                                                                                                                                      ^\n  52 |         });\n  53 |     }\n  54 | }"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/docs/release-11.0.0/critique-1/probe.spec.ts",
+                        "column": 166,
+                        "line": 51
+                      },
+                      "message": "Error: the end edge gap (dock 356..412 in row 24..744; margins {\"start\":\"332px\",\"end\":\"332px\"})\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m1.5\u001b[39m\nReceived:   \u001b[31m332\u001b[39m\n\n  49 |             test.info().annotations.push({ type: \"geometry\", description: JSON.stringify({ row, dock, margins }) });\n  50 |             const edge = anchor === \"end\" ? row.right - dock.right : dock.left - row.left;\n> 51 |             expect(Math.abs(edge), `the ${anchor} edge gap (dock ${dock.left}..${dock.right} in row ${row.left}..${row.right}; margins ${JSON.stringify(margins)})`).toBeLessThan(1.5);\n     |                                                                                                                                                                      ^\n  52 |         });\n  53 |     }\n  54 | }\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/docs/release-11.0.0/critique-1/probe.spec.ts:51:166"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-05T16:28:24.024Z",
+                  "annotations": [
+                    {
+                      "type": "geometry",
+                      "description": "{\"row\":{\"left\":24,\"right\":744,\"top\":24,\"bottom\":80,\"width\":720},\"dock\":{\"left\":356,\"right\":412,\"top\":24,\"bottom\":80,\"width\":56},\"margins\":{\"start\":\"332px\",\"end\":\"332px\"}}"
+                    }
+                  ],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/test-results/probe-anchor-end-in-a-flex-63f31--pins-the-dock-to-that-edge-webkit-1440-fine/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/docs/release-11.0.0/critique-1/probe.spec.ts",
+                    "column": 166,
+                    "line": 51
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "9223f0ac28d4fb57516f-bf2e064617cbf3d2bf73",
+          "file": "probe.spec.ts",
+          "line": 41,
+          "column": 9
+        },
+        {
+          "title": "anchor=start in a flex row with free space pins the dock to that edge",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "geometry",
+                  "description": "{\"row\":{\"left\":24,\"right\":744,\"top\":24,\"bottom\":80,\"width\":720},\"dock\":{\"left\":356,\"right\":412,\"top\":24,\"bottom\":80,\"width\":56},\"margins\":{\"start\":\"332px\",\"end\":\"332px\"}}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit-1440-fine",
+              "projectName": "webkit-1440-fine",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 1167,
+                  "error": {
+                    "message": "Error: the start edge gap (dock 356..412 in row 24..744; margins {\"start\":\"332px\",\"end\":\"332px\"})\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m1.5\u001b[39m\nReceived:   \u001b[31m332\u001b[39m",
+                    "stack": "Error: the start edge gap (dock 356..412 in row 24..744; margins {\"start\":\"332px\",\"end\":\"332px\"})\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m1.5\u001b[39m\nReceived:   \u001b[31m332\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/docs/release-11.0.0/critique-1/probe.spec.ts:51:166",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/docs/release-11.0.0/critique-1/probe.spec.ts",
+                      "column": 166,
+                      "line": 51
+                    },
+                    "snippet": "  49 |             test.info().annotations.push({ type: \"geometry\", description: JSON.stringify({ row, dock, margins }) });\n  50 |             const edge = anchor === \"end\" ? row.right - dock.right : dock.left - row.left;\n> 51 |             expect(Math.abs(edge), `the ${anchor} edge gap (dock ${dock.left}..${dock.right} in row ${row.left}..${row.right}; margins ${JSON.stringify(margins)})`).toBeLessThan(1.5);\n     |                                                                                                                                                                      ^\n  52 |         });\n  53 |     }\n  54 | }"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/docs/release-11.0.0/critique-1/probe.spec.ts",
+                        "column": 166,
+                        "line": 51
+                      },
+                      "message": "Error: the start edge gap (dock 356..412 in row 24..744; margins {\"start\":\"332px\",\"end\":\"332px\"})\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m1.5\u001b[39m\nReceived:   \u001b[31m332\u001b[39m\n\n  49 |             test.info().annotations.push({ type: \"geometry\", description: JSON.stringify({ row, dock, margins }) });\n  50 |             const edge = anchor === \"end\" ? row.right - dock.right : dock.left - row.left;\n> 51 |             expect(Math.abs(edge), `the ${anchor} edge gap (dock ${dock.left}..${dock.right} in row ${row.left}..${row.right}; margins ${JSON.stringify(margins)})`).toBeLessThan(1.5);\n     |                                                                                                                                                                      ^\n  52 |         });\n  53 |     }\n  54 | }\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/docs/release-11.0.0/critique-1/probe.spec.ts:51:166"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-05T16:28:26.466Z",
+                  "annotations": [
+                    {
+                      "type": "geometry",
+                      "description": "{\"row\":{\"left\":24,\"right\":744,\"top\":24,\"bottom\":80,\"width\":720},\"dock\":{\"left\":356,\"right\":412,\"top\":24,\"bottom\":80,\"width\":56},\"margins\":{\"start\":\"332px\",\"end\":\"332px\"}}"
+                    }
+                  ],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/test-results/probe-anchor-start-in-a-fl-b33e1--pins-the-dock-to-that-edge-webkit-1440-fine/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/docs/release-11.0.0/critique-1/probe.spec.ts",
+                    "column": 166,
+                    "line": 51
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "9223f0ac28d4fb57516f-1373f305bdea3db947d1",
+          "file": "probe.spec.ts",
+          "line": 41,
+          "column": 9
+        },
+        {
+          "title": "anchor=end in a grid row with free space pins the dock to that edge",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "geometry",
+                  "description": "{\"row\":{\"left\":24,\"right\":744,\"top\":24,\"bottom\":80,\"width\":720},\"dock\":{\"left\":356,\"right\":412,\"top\":24,\"bottom\":80,\"width\":56},\"margins\":{\"start\":\"332px\",\"end\":\"332px\"}}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit-1440-fine",
+              "projectName": "webkit-1440-fine",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 1037,
+                  "error": {
+                    "message": "Error: the end edge gap (dock 356..412 in row 24..744; margins {\"start\":\"332px\",\"end\":\"332px\"})\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m1.5\u001b[39m\nReceived:   \u001b[31m332\u001b[39m",
+                    "stack": "Error: the end edge gap (dock 356..412 in row 24..744; margins {\"start\":\"332px\",\"end\":\"332px\"})\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m1.5\u001b[39m\nReceived:   \u001b[31m332\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/docs/release-11.0.0/critique-1/probe.spec.ts:51:166",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/docs/release-11.0.0/critique-1/probe.spec.ts",
+                      "column": 166,
+                      "line": 51
+                    },
+                    "snippet": "  49 |             test.info().annotations.push({ type: \"geometry\", description: JSON.stringify({ row, dock, margins }) });\n  50 |             const edge = anchor === \"end\" ? row.right - dock.right : dock.left - row.left;\n> 51 |             expect(Math.abs(edge), `the ${anchor} edge gap (dock ${dock.left}..${dock.right} in row ${row.left}..${row.right}; margins ${JSON.stringify(margins)})`).toBeLessThan(1.5);\n     |                                                                                                                                                                      ^\n  52 |         });\n  53 |     }\n  54 | }"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/docs/release-11.0.0/critique-1/probe.spec.ts",
+                        "column": 166,
+                        "line": 51
+                      },
+                      "message": "Error: the end edge gap (dock 356..412 in row 24..744; margins {\"start\":\"332px\",\"end\":\"332px\"})\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m1.5\u001b[39m\nReceived:   \u001b[31m332\u001b[39m\n\n  49 |             test.info().annotations.push({ type: \"geometry\", description: JSON.stringify({ row, dock, margins }) });\n  50 |             const edge = anchor === \"end\" ? row.right - dock.right : dock.left - row.left;\n> 51 |             expect(Math.abs(edge), `the ${anchor} edge gap (dock ${dock.left}..${dock.right} in row ${row.left}..${row.right}; margins ${JSON.stringify(margins)})`).toBeLessThan(1.5);\n     |                                                                                                                                                                      ^\n  52 |         });\n  53 |     }\n  54 | }\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/docs/release-11.0.0/critique-1/probe.spec.ts:51:166"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-05T16:28:28.261Z",
+                  "annotations": [
+                    {
+                      "type": "geometry",
+                      "description": "{\"row\":{\"left\":24,\"right\":744,\"top\":24,\"bottom\":80,\"width\":720},\"dock\":{\"left\":356,\"right\":412,\"top\":24,\"bottom\":80,\"width\":56},\"margins\":{\"start\":\"332px\",\"end\":\"332px\"}}"
+                    }
+                  ],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/test-results/probe-anchor-end-in-a-grid-54bba--pins-the-dock-to-that-edge-webkit-1440-fine/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/docs/release-11.0.0/critique-1/probe.spec.ts",
+                    "column": 166,
+                    "line": 51
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "9223f0ac28d4fb57516f-d5ce937e5025fd8ee814",
+          "file": "probe.spec.ts",
+          "line": 41,
+          "column": 9
+        },
+        {
+          "title": "anchor=start in a grid row with free space pins the dock to that edge",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "geometry",
+                  "description": "{\"row\":{\"left\":24,\"right\":744,\"top\":24,\"bottom\":80,\"width\":720},\"dock\":{\"left\":356,\"right\":412,\"top\":24,\"bottom\":80,\"width\":56},\"margins\":{\"start\":\"332px\",\"end\":\"332px\"}}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit-1440-fine",
+              "projectName": "webkit-1440-fine",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 1093,
+                  "error": {
+                    "message": "Error: the start edge gap (dock 356..412 in row 24..744; margins {\"start\":\"332px\",\"end\":\"332px\"})\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m1.5\u001b[39m\nReceived:   \u001b[31m332\u001b[39m",
+                    "stack": "Error: the start edge gap (dock 356..412 in row 24..744; margins {\"start\":\"332px\",\"end\":\"332px\"})\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m1.5\u001b[39m\nReceived:   \u001b[31m332\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/docs/release-11.0.0/critique-1/probe.spec.ts:51:166",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/docs/release-11.0.0/critique-1/probe.spec.ts",
+                      "column": 166,
+                      "line": 51
+                    },
+                    "snippet": "  49 |             test.info().annotations.push({ type: \"geometry\", description: JSON.stringify({ row, dock, margins }) });\n  50 |             const edge = anchor === \"end\" ? row.right - dock.right : dock.left - row.left;\n> 51 |             expect(Math.abs(edge), `the ${anchor} edge gap (dock ${dock.left}..${dock.right} in row ${row.left}..${row.right}; margins ${JSON.stringify(margins)})`).toBeLessThan(1.5);\n     |                                                                                                                                                                      ^\n  52 |         });\n  53 |     }\n  54 | }"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/docs/release-11.0.0/critique-1/probe.spec.ts",
+                        "column": 166,
+                        "line": 51
+                      },
+                      "message": "Error: the start edge gap (dock 356..412 in row 24..744; margins {\"start\":\"332px\",\"end\":\"332px\"})\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m1.5\u001b[39m\nReceived:   \u001b[31m332\u001b[39m\n\n  49 |             test.info().annotations.push({ type: \"geometry\", description: JSON.stringify({ row, dock, margins }) });\n  50 |             const edge = anchor === \"end\" ? row.right - dock.right : dock.left - row.left;\n> 51 |             expect(Math.abs(edge), `the ${anchor} edge gap (dock ${dock.left}..${dock.right} in row ${row.left}..${row.right}; margins ${JSON.stringify(margins)})`).toBeLessThan(1.5);\n     |                                                                                                                                                                      ^\n  52 |         });\n  53 |     }\n  54 | }\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/docs/release-11.0.0/critique-1/probe.spec.ts:51:166"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-05T16:28:29.867Z",
+                  "annotations": [
+                    {
+                      "type": "geometry",
+                      "description": "{\"row\":{\"left\":24,\"right\":744,\"top\":24,\"bottom\":80,\"width\":720},\"dock\":{\"left\":356,\"right\":412,\"top\":24,\"bottom\":80,\"width\":56},\"margins\":{\"start\":\"332px\",\"end\":\"332px\"}}"
+                    }
+                  ],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/test-results/probe-anchor-start-in-a-gr-90e3f--pins-the-dock-to-that-edge-webkit-1440-fine/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/docs/release-11.0.0/critique-1/probe.spec.ts",
+                    "column": 166,
+                    "line": 51
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "9223f0ac28d4fb57516f-f47481d87eb67824dcad",
+          "file": "probe.spec.ts",
+          "line": 41,
+          "column": 9
+        },
+        {
+          "title": "atlas lane: the figure dock's end edge holds through the press expand",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "geometry",
+                  "description": "{\"ctl\":{\"left\":680,\"right\":876,\"top\":24,\"bottom\":80,\"width\":196},\"before\":{\"left\":820,\"right\":876,\"top\":24,\"bottom\":80,\"width\":56},\"after\":{\"left\":668,\"right\":876,\"top\":24,\"bottom\":80,\"width\":208},\"drift\":0,\"n\":58}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit-1440-fine",
+              "projectName": "webkit-1440-fine",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2331,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-05T16:28:31.510Z",
+                  "annotations": [
+                    {
+                      "type": "geometry",
+                      "description": "{\"ctl\":{\"left\":680,\"right\":876,\"top\":24,\"bottom\":80,\"width\":196},\"before\":{\"left\":820,\"right\":876,\"top\":24,\"bottom\":80,\"width\":56},\"after\":{\"left\":668,\"right\":876,\"top\":24,\"bottom\":80,\"width\":208},\"drift\":0,\"n\":58}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9223f0ac28d4fb57516f-818f9b91df7fe6c0c9ff",
+          "file": "probe.spec.ts",
+          "line": 56,
+          "column": 1
+        },
+        {
+          "title": "page dock: every posture stays on screen and hit-testable",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "expanded",
+                  "description": "fixed bottom-4 glass-dock horizontal shape-pill expanded"
+                },
+                {
+                  "type": "hits",
+                  "description": "[{\"seat\":\"Home\",\"w\":40,\"hit\":true},{\"seat\":\"Search\",\"w\":40,\"hit\":true},{\"seat\":\"Library\",\"w\":40,\"hit\":true},{\"seat\":\"Settings\",\"w\":40,\"hit\":true},{\"seat\":\"Profile\",\"w\":40,\"hit\":true}]"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit-1440-fine",
+              "projectName": "webkit-1440-fine",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4464,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-05T16:28:34.145Z",
+                  "annotations": [
+                    {
+                      "type": "expanded",
+                      "description": "fixed bottom-4 glass-dock horizontal shape-pill expanded"
+                    },
+                    {
+                      "type": "hits",
+                      "description": "[{\"seat\":\"Home\",\"w\":40,\"hit\":true},{\"seat\":\"Search\",\"w\":40,\"hit\":true},{\"seat\":\"Library\",\"w\":40,\"hit\":true},{\"seat\":\"Settings\",\"w\":40,\"hit\":true},{\"seat\":\"Profile\",\"w\":40,\"hit\":true}]"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9223f0ac28d4fb57516f-60f5963fd4ca8701dbfc",
+          "file": "probe.spec.ts",
+          "line": 70,
+          "column": 1
+        },
+        {
+          "title": "anchor=end in a flex row with free space pins the dock to that edge",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "geometry",
+                  "description": "{\"row\":{\"left\":24,\"right\":744,\"top\":24,\"bottom\":84,\"width\":720},\"dock\":{\"left\":354,\"right\":414,\"top\":24,\"bottom\":84,\"width\":60},\"margins\":{\"start\":\"330px\",\"end\":\"330px\"}}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit-390-coarse",
+              "projectName": "webkit-390-coarse",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 1222,
+                  "error": {
+                    "message": "Error: the end edge gap (dock 354..414 in row 24..744; margins {\"start\":\"330px\",\"end\":\"330px\"})\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m1.5\u001b[39m\nReceived:   \u001b[31m330\u001b[39m",
+                    "stack": "Error: the end edge gap (dock 354..414 in row 24..744; margins {\"start\":\"330px\",\"end\":\"330px\"})\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m1.5\u001b[39m\nReceived:   \u001b[31m330\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/docs/release-11.0.0/critique-1/probe.spec.ts:51:166",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/docs/release-11.0.0/critique-1/probe.spec.ts",
+                      "column": 166,
+                      "line": 51
+                    },
+                    "snippet": "  49 |             test.info().annotations.push({ type: \"geometry\", description: JSON.stringify({ row, dock, margins }) });\n  50 |             const edge = anchor === \"end\" ? row.right - dock.right : dock.left - row.left;\n> 51 |             expect(Math.abs(edge), `the ${anchor} edge gap (dock ${dock.left}..${dock.right} in row ${row.left}..${row.right}; margins ${JSON.stringify(margins)})`).toBeLessThan(1.5);\n     |                                                                                                                                                                      ^\n  52 |         });\n  53 |     }\n  54 | }"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/docs/release-11.0.0/critique-1/probe.spec.ts",
+                        "column": 166,
+                        "line": 51
+                      },
+                      "message": "Error: the end edge gap (dock 354..414 in row 24..744; margins {\"start\":\"330px\",\"end\":\"330px\"})\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m1.5\u001b[39m\nReceived:   \u001b[31m330\u001b[39m\n\n  49 |             test.info().annotations.push({ type: \"geometry\", description: JSON.stringify({ row, dock, margins }) });\n  50 |             const edge = anchor === \"end\" ? row.right - dock.right : dock.left - row.left;\n> 51 |             expect(Math.abs(edge), `the ${anchor} edge gap (dock ${dock.left}..${dock.right} in row ${row.left}..${row.right}; margins ${JSON.stringify(margins)})`).toBeLessThan(1.5);\n     |                                                                                                                                                                      ^\n  52 |         });\n  53 |     }\n  54 | }\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/docs/release-11.0.0/critique-1/probe.spec.ts:51:166"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-05T16:28:39.209Z",
+                  "annotations": [
+                    {
+                      "type": "geometry",
+                      "description": "{\"row\":{\"left\":24,\"right\":744,\"top\":24,\"bottom\":84,\"width\":720},\"dock\":{\"left\":354,\"right\":414,\"top\":24,\"bottom\":84,\"width\":60},\"margins\":{\"start\":\"330px\",\"end\":\"330px\"}}"
+                    }
+                  ],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/test-results/probe-anchor-end-in-a-flex-63f31--pins-the-dock-to-that-edge-webkit-390-coarse/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/docs/release-11.0.0/critique-1/probe.spec.ts",
+                    "column": 166,
+                    "line": 51
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "9223f0ac28d4fb57516f-3776c84df437c54f6d34",
+          "file": "probe.spec.ts",
+          "line": 41,
+          "column": 9
+        },
+        {
+          "title": "anchor=start in a flex row with free space pins the dock to that edge",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "geometry",
+                  "description": "{\"row\":{\"left\":24,\"right\":744,\"top\":24,\"bottom\":84,\"width\":720},\"dock\":{\"left\":354,\"right\":414,\"top\":24,\"bottom\":84,\"width\":60},\"margins\":{\"start\":\"330px\",\"end\":\"330px\"}}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit-390-coarse",
+              "projectName": "webkit-390-coarse",
+              "results": [
+                {
+                  "workerIndex": 6,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 1118,
+                  "error": {
+                    "message": "Error: the start edge gap (dock 354..414 in row 24..744; margins {\"start\":\"330px\",\"end\":\"330px\"})\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m1.5\u001b[39m\nReceived:   \u001b[31m330\u001b[39m",
+                    "stack": "Error: the start edge gap (dock 354..414 in row 24..744; margins {\"start\":\"330px\",\"end\":\"330px\"})\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m1.5\u001b[39m\nReceived:   \u001b[31m330\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/docs/release-11.0.0/critique-1/probe.spec.ts:51:166",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/docs/release-11.0.0/critique-1/probe.spec.ts",
+                      "column": 166,
+                      "line": 51
+                    },
+                    "snippet": "  49 |             test.info().annotations.push({ type: \"geometry\", description: JSON.stringify({ row, dock, margins }) });\n  50 |             const edge = anchor === \"end\" ? row.right - dock.right : dock.left - row.left;\n> 51 |             expect(Math.abs(edge), `the ${anchor} edge gap (dock ${dock.left}..${dock.right} in row ${row.left}..${row.right}; margins ${JSON.stringify(margins)})`).toBeLessThan(1.5);\n     |                                                                                                                                                                      ^\n  52 |         });\n  53 |     }\n  54 | }"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/docs/release-11.0.0/critique-1/probe.spec.ts",
+                        "column": 166,
+                        "line": 51
+                      },
+                      "message": "Error: the start edge gap (dock 354..414 in row 24..744; margins {\"start\":\"330px\",\"end\":\"330px\"})\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m1.5\u001b[39m\nReceived:   \u001b[31m330\u001b[39m\n\n  49 |             test.info().annotations.push({ type: \"geometry\", description: JSON.stringify({ row, dock, margins }) });\n  50 |             const edge = anchor === \"end\" ? row.right - dock.right : dock.left - row.left;\n> 51 |             expect(Math.abs(edge), `the ${anchor} edge gap (dock ${dock.left}..${dock.right} in row ${row.left}..${row.right}; margins ${JSON.stringify(margins)})`).toBeLessThan(1.5);\n     |                                                                                                                                                                      ^\n  52 |         });\n  53 |     }\n  54 | }\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/docs/release-11.0.0/critique-1/probe.spec.ts:51:166"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-05T16:28:41.104Z",
+                  "annotations": [
+                    {
+                      "type": "geometry",
+                      "description": "{\"row\":{\"left\":24,\"right\":744,\"top\":24,\"bottom\":84,\"width\":720},\"dock\":{\"left\":354,\"right\":414,\"top\":24,\"bottom\":84,\"width\":60},\"margins\":{\"start\":\"330px\",\"end\":\"330px\"}}"
+                    }
+                  ],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/test-results/probe-anchor-start-in-a-fl-b33e1--pins-the-dock-to-that-edge-webkit-390-coarse/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/docs/release-11.0.0/critique-1/probe.spec.ts",
+                    "column": 166,
+                    "line": 51
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "9223f0ac28d4fb57516f-0dbb89dd28ca5765a0b6",
+          "file": "probe.spec.ts",
+          "line": 41,
+          "column": 9
+        },
+        {
+          "title": "anchor=end in a grid row with free space pins the dock to that edge",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "geometry",
+                  "description": "{\"row\":{\"left\":24,\"right\":744,\"top\":24,\"bottom\":84,\"width\":720},\"dock\":{\"left\":354,\"right\":414,\"top\":24,\"bottom\":84,\"width\":60},\"margins\":{\"start\":\"330px\",\"end\":\"330px\"}}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit-390-coarse",
+              "projectName": "webkit-390-coarse",
+              "results": [
+                {
+                  "workerIndex": 7,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 1130,
+                  "error": {
+                    "message": "Error: the end edge gap (dock 354..414 in row 24..744; margins {\"start\":\"330px\",\"end\":\"330px\"})\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m1.5\u001b[39m\nReceived:   \u001b[31m330\u001b[39m",
+                    "stack": "Error: the end edge gap (dock 354..414 in row 24..744; margins {\"start\":\"330px\",\"end\":\"330px\"})\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m1.5\u001b[39m\nReceived:   \u001b[31m330\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/docs/release-11.0.0/critique-1/probe.spec.ts:51:166",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/docs/release-11.0.0/critique-1/probe.spec.ts",
+                      "column": 166,
+                      "line": 51
+                    },
+                    "snippet": "  49 |             test.info().annotations.push({ type: \"geometry\", description: JSON.stringify({ row, dock, margins }) });\n  50 |             const edge = anchor === \"end\" ? row.right - dock.right : dock.left - row.left;\n> 51 |             expect(Math.abs(edge), `the ${anchor} edge gap (dock ${dock.left}..${dock.right} in row ${row.left}..${row.right}; margins ${JSON.stringify(margins)})`).toBeLessThan(1.5);\n     |                                                                                                                                                                      ^\n  52 |         });\n  53 |     }\n  54 | }"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/docs/release-11.0.0/critique-1/probe.spec.ts",
+                        "column": 166,
+                        "line": 51
+                      },
+                      "message": "Error: the end edge gap (dock 354..414 in row 24..744; margins {\"start\":\"330px\",\"end\":\"330px\"})\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m1.5\u001b[39m\nReceived:   \u001b[31m330\u001b[39m\n\n  49 |             test.info().annotations.push({ type: \"geometry\", description: JSON.stringify({ row, dock, margins }) });\n  50 |             const edge = anchor === \"end\" ? row.right - dock.right : dock.left - row.left;\n> 51 |             expect(Math.abs(edge), `the ${anchor} edge gap (dock ${dock.left}..${dock.right} in row ${row.left}..${row.right}; margins ${JSON.stringify(margins)})`).toBeLessThan(1.5);\n     |                                                                                                                                                                      ^\n  52 |         });\n  53 |     }\n  54 | }\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/docs/release-11.0.0/critique-1/probe.spec.ts:51:166"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-05T16:28:42.877Z",
+                  "annotations": [
+                    {
+                      "type": "geometry",
+                      "description": "{\"row\":{\"left\":24,\"right\":744,\"top\":24,\"bottom\":84,\"width\":720},\"dock\":{\"left\":354,\"right\":414,\"top\":24,\"bottom\":84,\"width\":60},\"margins\":{\"start\":\"330px\",\"end\":\"330px\"}}"
+                    }
+                  ],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/test-results/probe-anchor-end-in-a-grid-54bba--pins-the-dock-to-that-edge-webkit-390-coarse/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/docs/release-11.0.0/critique-1/probe.spec.ts",
+                    "column": 166,
+                    "line": 51
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "9223f0ac28d4fb57516f-8de452e29493c3ed3780",
+          "file": "probe.spec.ts",
+          "line": 41,
+          "column": 9
+        },
+        {
+          "title": "anchor=start in a grid row with free space pins the dock to that edge",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "geometry",
+                  "description": "{\"row\":{\"left\":24,\"right\":744,\"top\":24,\"bottom\":84,\"width\":720},\"dock\":{\"left\":354,\"right\":414,\"top\":24,\"bottom\":84,\"width\":60},\"margins\":{\"start\":\"330px\",\"end\":\"330px\"}}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit-390-coarse",
+              "projectName": "webkit-390-coarse",
+              "results": [
+                {
+                  "workerIndex": 8,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 1142,
+                  "error": {
+                    "message": "Error: the start edge gap (dock 354..414 in row 24..744; margins {\"start\":\"330px\",\"end\":\"330px\"})\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m1.5\u001b[39m\nReceived:   \u001b[31m330\u001b[39m",
+                    "stack": "Error: the start edge gap (dock 354..414 in row 24..744; margins {\"start\":\"330px\",\"end\":\"330px\"})\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m1.5\u001b[39m\nReceived:   \u001b[31m330\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/docs/release-11.0.0/critique-1/probe.spec.ts:51:166",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/docs/release-11.0.0/critique-1/probe.spec.ts",
+                      "column": 166,
+                      "line": 51
+                    },
+                    "snippet": "  49 |             test.info().annotations.push({ type: \"geometry\", description: JSON.stringify({ row, dock, margins }) });\n  50 |             const edge = anchor === \"end\" ? row.right - dock.right : dock.left - row.left;\n> 51 |             expect(Math.abs(edge), `the ${anchor} edge gap (dock ${dock.left}..${dock.right} in row ${row.left}..${row.right}; margins ${JSON.stringify(margins)})`).toBeLessThan(1.5);\n     |                                                                                                                                                                      ^\n  52 |         });\n  53 |     }\n  54 | }"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/docs/release-11.0.0/critique-1/probe.spec.ts",
+                        "column": 166,
+                        "line": 51
+                      },
+                      "message": "Error: the start edge gap (dock 354..414 in row 24..744; margins {\"start\":\"330px\",\"end\":\"330px\"})\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m1.5\u001b[39m\nReceived:   \u001b[31m330\u001b[39m\n\n  49 |             test.info().annotations.push({ type: \"geometry\", description: JSON.stringify({ row, dock, margins }) });\n  50 |             const edge = anchor === \"end\" ? row.right - dock.right : dock.left - row.left;\n> 51 |             expect(Math.abs(edge), `the ${anchor} edge gap (dock ${dock.left}..${dock.right} in row ${row.left}..${row.right}; margins ${JSON.stringify(margins)})`).toBeLessThan(1.5);\n     |                                                                                                                                                                      ^\n  52 |         });\n  53 |     }\n  54 | }\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/docs/release-11.0.0/critique-1/probe.spec.ts:51:166"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-05T16:28:44.588Z",
+                  "annotations": [
+                    {
+                      "type": "geometry",
+                      "description": "{\"row\":{\"left\":24,\"right\":744,\"top\":24,\"bottom\":84,\"width\":720},\"dock\":{\"left\":354,\"right\":414,\"top\":24,\"bottom\":84,\"width\":60},\"margins\":{\"start\":\"330px\",\"end\":\"330px\"}}"
+                    }
+                  ],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/test-results/probe-anchor-start-in-a-gr-90e3f--pins-the-dock-to-that-edge-webkit-390-coarse/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/docs/release-11.0.0/critique-1/probe.spec.ts",
+                    "column": 166,
+                    "line": 51
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "9223f0ac28d4fb57516f-5436ed4aaaa8998aa5c5",
+          "file": "probe.spec.ts",
+          "line": 41,
+          "column": 9
+        },
+        {
+          "title": "atlas lane: the figure dock's end edge holds through the press expand",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "geometry",
+                  "description": "{\"ctl\":{\"left\":122,\"right\":318,\"top\":24,\"bottom\":96,\"width\":196},\"before\":{\"left\":258,\"right\":318,\"top\":24,\"bottom\":84,\"width\":60},\"after\":{\"left\":94,\"right\":318,\"top\":24,\"bottom\":84,\"width\":224},\"drift\":0.00000762939453125,\"n\":58}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit-390-coarse",
+              "projectName": "webkit-390-coarse",
+              "results": [
+                {
+                  "workerIndex": 9,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2368,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-05T16:28:46.599Z",
+                  "annotations": [
+                    {
+                      "type": "geometry",
+                      "description": "{\"ctl\":{\"left\":122,\"right\":318,\"top\":24,\"bottom\":96,\"width\":196},\"before\":{\"left\":258,\"right\":318,\"top\":24,\"bottom\":84,\"width\":60},\"after\":{\"left\":94,\"right\":318,\"top\":24,\"bottom\":84,\"width\":224},\"drift\":0.00000762939453125,\"n\":58}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9223f0ac28d4fb57516f-cdbf3a15580d7b079863",
+          "file": "probe.spec.ts",
+          "line": 56,
+          "column": 1
+        },
+        {
+          "title": "page dock: every posture stays on screen and hit-testable",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "expanded",
+                  "description": "fixed bottom-4 glass-dock horizontal shape-pill expanded pinned"
+                },
+                {
+                  "type": "hits",
+                  "description": "[{\"seat\":\"Home\",\"w\":44,\"hit\":true},{\"seat\":\"Search\",\"w\":44,\"hit\":true},{\"seat\":\"Library\",\"w\":44,\"hit\":true},{\"seat\":\"Settings\",\"w\":44,\"hit\":true},{\"seat\":\"Profile\",\"w\":44,\"hit\":true}]"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit-390-coarse",
+              "projectName": "webkit-390-coarse",
+              "results": [
+                {
+                  "workerIndex": 9,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4495,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-05T16:28:49.252Z",
+                  "annotations": [
+                    {
+                      "type": "expanded",
+                      "description": "fixed bottom-4 glass-dock horizontal shape-pill expanded pinned"
+                    },
+                    {
+                      "type": "hits",
+                      "description": "[{\"seat\":\"Home\",\"w\":44,\"hit\":true},{\"seat\":\"Search\",\"w\":44,\"hit\":true},{\"seat\":\"Library\",\"w\":44,\"hit\":true},{\"seat\":\"Settings\",\"w\":44,\"hit\":true},{\"seat\":\"Profile\",\"w\":44,\"hit\":true}]"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9223f0ac28d4fb57516f-e61dc28d49a0a080d747",
+          "file": "probe.spec.ts",
+          "line": 70,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-05T16:28:22.714Z",
+    "duration": 31103.15,
+    "expected": 4,
+    "skipped": 0,
+    "unexpected": 8,
+    "flaky": 0
+  }
+}

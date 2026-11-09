@@ -1,0 +1,38 @@
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1793985220 slope=25.3/s inuse=43342 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. Finish what you are doing and report it; the owner decides on the reboot.
+
+> @mkbabb/glass-ui-tests-visual@0.0.0 gate:pixel-floor
+> rm -f .cache/pi-report-green.json; PI_REPORT=.cache/pi-report-green.json playwright test substrate-paints-color.spec.ts --project=chromium-headless-new; node pi-gate-verify.mjs --expect=green --report=./.cache/pi-report-green.json
+
+
+Running 3 tests using 1 worker
+
+PI aurora DEFAULT meanChannel=230.7 floor=8
+PI aurora SETTING_SUN meanChannel=231.2 floor=8
+PI aurora DUSK meanChannel=230.1 floor=8
+PI aurora VIVID_SETTING_SUN meanChannel=233.0 floor=8
+PI aurora OPENAI_SKY meanChannel=231.5 floor=8
+PI aurora OPENAI_DAWN meanChannel=229.4 floor=8
+PI aurora OPENAI_MEADOW meanChannel=205.6 floor=8
+PI aurora DELIBERATIVE meanChannel=235.0 floor=8
+PI aurora DAY9_YELLOW meanChannel=229.1 floor=8
+PI aurora OIL_IMPASTO meanChannel=194.0 floor=8
+PI aurora OIL_GESTURAL meanChannel=217.7 floor=8
+PI aurora VANGOGH meanChannel=101.7 floor=8
+PI aurora OILPASTEL_SUNSET meanChannel=200.4 floor=8
+PI aurora OILPASTEL_RAINBOW meanChannel=218.3 floor=8
+PI aurora OILPASTEL_OCEAN meanChannel=145.0 floor=8
+PI aurora CRAYON meanChannel=171.2 floor=8
+PI aurora METAL meanChannel=205.4 floor=8
+PI aurora SPEEDTEST meanChannel=174.8 floor=8
+  ✓  1 [chromium-headless-new] › substrate-paints-color.spec.ts:575:5 › substrate-paints-color (π lane — fail-CLOSED) › aurora paints a non-black interior on DEFAULT + every preset at t=1 (22.2s)
+PI blob paintable=[0.188,0.188]-[0.813,0.702] paintableShareOfInterior=0.557
+PI blob baseline groundMotion=0.000
+PI blob coverage=0.156 floor=0.1 · paintedShare=0.280 ceil=0.7
+  ✓  2 [chromium-headless-new] › substrate-paints-color.spec.ts:759:5 › substrate-paints-color (π lane — fail-CLOSED) › blob paints a non-blank droplet on BLOB_CONFIG_DEFAULTS (5.7s)
+PI blob paintable=[0.188,0.188]-[0.813,0.702] paintableShareOfInterior=0.557
+PI blob baseline groundMotion=0.000
+PI blob coverage=0.156 floor=0.1 · paintedShare=0.279 ceil=0.7
+  ✓  3 [chromium-headless-new] › substrate-paints-color.spec.ts:767:5 › substrate-paints-color (π lane — fail-CLOSED) › blob keeps a transparent margin (non-flood ceiling) on BLOB_CONFIG_DEFAULTS (6.0s)
+
+  3 passed (36.1s)
+pixel-floor gate: GREEN — 3 floors ran on the live paint path and passed.

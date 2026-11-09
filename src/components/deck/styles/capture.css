@@ -112,12 +112,26 @@
 
 @layer components {
     @media print {
-        @page {
-            size: 1280px 720px;
-            margin: 0;
+        /* The slide page is NAMED: this stylesheet reaches every importer of the
+           library's styles, and a page with no deck prints on the reader's own paper.
+           A consumer's own `@page` (their paper) must not reach the deck's sheets: in
+           this layer the deck's page loses to an unlayered `@page` before page-selector
+           specificity counts, and Chromium lets a later sheet's `@page` size beat the
+           named page's specificity, so both declarations are important. */
+        @page deck {
+            size: 1280px 720px !important;
+            margin: 0 !important;
         }
-        html,
-        body {
+        /* A page with a deck prints at slide geometry, gated on a stage being present.
+           The document takes the page as well as the stage: a named page starts a
+           sheet only from a box in normal flow, and a stage in an overlay (a modal, the
+           library's fixed Dialog plate, any fixed or absolute layer) is not one. */
+        [data-slot="deck-stage"] {
+            page: deck;
+        }
+        :root:has([data-slot="deck-stage"]),
+        :root:has([data-slot="deck-stage"]) body {
+            page: deck;
             overflow: visible !important;
             margin: 0 !important;
             padding: 0 !important;
@@ -125,9 +139,9 @@
             -webkit-print-color-adjust: exact;
         }
         /* the SPA wrapper's full height spills one blank sheet per document */
-        html,
-        body,
-        #app {
+        :root:has([data-slot="deck-stage"]),
+        :root:has([data-slot="deck-stage"]) body,
+        :root:has([data-slot="deck-stage"]) #app {
             block-size: auto !important;
             min-block-size: 0 !important;
         }

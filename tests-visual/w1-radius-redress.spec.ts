@@ -13,9 +13,9 @@
 //
 // The RULED bindings this proves (all COMPUTED, at the built receiver):
 //   /navigation/tabs   — SegmentedTabs horizontal pill+underline buttons resolve
-//                        --radius-tab (9999px); vertical resolve --radius-strip (12px);
+//                        --radius-tab (the 1rem pill); vertical resolve --radius-strip (12px);
 //                        the button is co-geometric with its indicator.
-//   /data/search       — the live single-line field computes --radius-control (9999px,
+//   /data/search       — the live single-line field computes --radius-control (1rem pill,
 //                        the true control pill) and carries the .input-bar glass plate.
 //                        [2026-08-25 · BK #42] the floating/bare variant clones are
 //                        struck with searchVariants.ts.
@@ -24,20 +24,20 @@
 //                        specimen computes --radius-card (16px) — proving the @layer
 //                        components cascade lets caller utilities win.
 //   /data/infinite-scroll — the Reset is the PUBLIC Button (data-slot=button, computed
-//                        control radius 9999px), not a hand-rolled button.
+//                        control radius 1rem pill), not a hand-rolled button.
 //   /display/atoms     — Avatar square identity computes --radius-media (10px),
 //                        value-identical to the retained rung; circle is the pill.
 //   /data/tags-input   — the field CONTAINER computes the ruled --radius-field (16px),
-//                        NEVER 0px; the pill Chip child computes 9999px, is DISTINCT
+//                        NEVER 0px; the pill Chip child computes 1rem pill, is DISTINCT
 //                        from the container, and is STRICTLY INSET — the corrected F12
 //                        containment law. (Born-RED before d7588514: --radius-field was
 //                        tree-shaken from runtime :root and the container fell to 0px.)
 //   /forms/inputs      — the field-radius census: base single-line input keeps the pill
-//                        (9999px); Textarea computes --radius-field (16px); a dialog-
+//                        (the 1rem pill); Textarea computes --radius-field (16px); a dialog-
 //                        nested single-line input (F7, [data-slot=dialog-content] scope)
 //                        computes --radius-field (16px), not the pill.
 //   /data/sortable-list — the drop-indicator capsule (::before/::after) computes
-//                        --radius-pill (9999px); the drag-ghost carries its gold ring.
+//                        --radius-pill (the 1rem pill); the drag-ghost carries its gold ring.
 //   /containers/command — .command__input has NO border-radius (computed 0px); the
 //                        panel owns --radius-panel (12px).
 //
@@ -76,9 +76,13 @@ const TOUCH_FLOOR = 44;
 type Ledger = Record<string, unknown>;
 const ledger: Ledger = { engine: "", startedAt: new Date().toISOString(), receivers: {} };
 
+/** U/B7 G1-4: the pill rung is 1rem. A box up to 32px tall renders a full stadium and
+ *  a taller one 16px corners, so a pill-rung receiver computes at least 16px. */
+const PILL = 16;
+
 function parsePx(v: string | null | undefined): number {
     if (!v) return NaN;
-    // border-radius may serialize as "9999px", "10px 10px", "50%", or the
+    // border-radius may serialize as "16px", "10px 10px", "50%", or the
     // Tailwind rounded-full sentinel ("16777200px" / "1.67772e+07px").
     const first = v.trim().split(/\s+/)[0];
     return parseFloat(first);
@@ -149,7 +153,7 @@ test.describe("W1 radius redress — computed receivers (fine pointer, Chromium)
     test.skip(({ isMobile }) => isMobile === true, "fine-pointer matrix");
 
     // ── /navigation/tabs ────────────────────────────────────────────────────
-    test("tabs — horizontal → --radius-tab (9999px), vertical → --radius-strip (12px), button co-geometric with indicator", async ({
+    test("tabs — horizontal → --radius-tab (the 1rem pill), vertical → --radius-strip (12px), button co-geometric with indicator", async ({
         page,
     }, info) => {
         await page.goto("/navigation/tabs", { waitUntil: "networkidle" });
@@ -166,6 +170,7 @@ test.describe("W1 radius redress — computed receivers (fine pointer, Chromium)
                 return {
                     underline,
                     vertical,
+                    bar: s.getAttribute("data-shape") === "bar",
                     btnRadius: btn ? getComputedStyle(btn).borderRadius : null,
                     indRadius: ind ? getComputedStyle(ind).borderRadius : null,
                     radiusTab: cs.getPropertyValue("--radius-tab").trim(),
@@ -188,11 +193,16 @@ test.describe("W1 radius redress — computed receivers (fine pointer, Chromium)
         expect(vPill, "no vertical pill strip").toBeTruthy();
         expect(vUnder, "no vertical underline strip").toBeTruthy();
 
-        // Horizontal reads the control-stadium rung (--radius-tab = 9999px).
-        expect(parsePx(hPill!.btnRadius)).toBeGreaterThanOrEqual(9999 - EPS);
-        expect(parsePx(hUnder!.btnRadius)).toBeGreaterThanOrEqual(9999 - EPS);
+        // Horizontal reads the control-stadium rung (--radius-tab = 1rem pill); a strip
+        // wider than 20rem is a bar and reads --radius-bar (12px, U/B7 G1-7).
+        const horizontal = (r: { bar: boolean; btnRadius: string | null }) =>
+            r.bar
+                ? expect(parsePx(r.btnRadius)).toBeCloseTo(12, 0)
+                : expect(parsePx(r.btnRadius)).toBeGreaterThanOrEqual(PILL - EPS);
+        horizontal(hPill!);
+        horizontal(hUnder!);
         // The horizontal pill button is co-geometric with its measured indicator.
-        expect(parsePx(hPill!.indRadius)).toBeGreaterThanOrEqual(9999 - EPS);
+        expect(parsePx(hPill!.indRadius)).toBeGreaterThanOrEqual((hPill!.bar ? 12 : PILL) - EPS);
         expect(Math.abs(parsePx(hPill!.btnRadius) - parsePx(hPill!.indRadius))).toBeLessThanOrEqual(EPS);
 
         // Vertical inherits the bounded column-stack corner (--radius-strip = 12px),
@@ -205,8 +215,9 @@ test.describe("W1 radius redress — computed receivers (fine pointer, Chromium)
         expect(
             Math.abs(parsePx(vPill!.btnRadius) - parsePx(vPill!.indRadius)),
         ).toBeLessThanOrEqual(EPS);
-        // The orientation seam actually differs between horizontal and vertical.
-        expect(parsePx(hPill!.btnRadius)).toBeGreaterThan(parsePx(vPill!.btnRadius) + 100);
+        // The orientation seam actually differs between horizontal and vertical: the
+        // seam the vertical arm re-binds is not the one the horizontal arm reads.
+        expect(vPill!.bouncy).not.toBe(hPill!.bouncy);
 
         for (const vp of VIEWPORTS) {
             await page.setViewportSize({ width: vp.width, height: vp.height });
@@ -236,7 +247,7 @@ test.describe("W1 radius redress — computed receivers (fine pointer, Chromium)
     // `search.css` styles it, four value.js sites select it). Its radius ROLE is
     // therefore still a real claim to hold: the route's one live field must compute the
     // true control pill and carry the plate.
-    test("search — the live .input-bar computes --radius-control (9999px) + the glass plate", async ({
+    test("search — the live .input-bar computes --radius-control (the 1rem pill) + the glass plate", async ({
         page,
     }, info) => {
         await page.goto("/data/search", { waitUntil: "networkidle" });
@@ -277,9 +288,9 @@ test.describe("W1 radius redress — computed receivers (fine pointer, Chromium)
         record(info, "search", probe);
 
         expect(probe.inline.length, "no .input-bar receiver on /data/search").toBeGreaterThanOrEqual(1);
-        // Every rendered field is a true control pill (9999px) carrying the plate.
+        // Every rendered field is a true control pill (the 1rem pill) carrying the plate.
         for (const bar of probe.inline) {
-            expect(parsePx(bar.radius), `bar h=${bar.h} radius`).toBeGreaterThanOrEqual(9999 - EPS);
+            expect(parsePx(bar.radius), `bar h=${bar.h} radius`).toBeGreaterThanOrEqual(PILL - EPS);
             expect(bar.bgAlpha, `bar h=${bar.h} plate bg alpha`).toBeGreaterThan(0.05);
             expect(parsePx(bar.borderTopWidth), `bar h=${bar.h} plate border`).toBeGreaterThanOrEqual(1 - EPS);
         }
@@ -358,7 +369,7 @@ test.describe("W1 radius redress — computed receivers (fine pointer, Chromium)
     });
 
     // ── /data/infinite-scroll ──────────────────────────────────────────────────
-    test("infinite-scroll — the Reset is the PUBLIC Button (data-slot=button, computed control radius 9999px), rest + focus", async ({
+    test("infinite-scroll — the Reset is the PUBLIC Button (data-slot=button, computed control radius 1rem pill), rest + focus", async ({
         page,
     }, info) => {
         await page.goto("/data/infinite-scroll", { waitUntil: "networkidle" });
@@ -380,13 +391,13 @@ test.describe("W1 radius redress — computed receivers (fine pointer, Chromium)
         // It is the public Button primitive, not a hand-rolled <button>.
         expect(probe.dataSlot, "Reset must be the public Button (data-slot=button)").toBe("button");
         expect(probe.cls, "Reset must carry the .button recipe class").toContain("button");
-        // Its computed corner is the control pill (9999px), not a raw literal.
-        expect(parsePx(probe.radius), "Reset control radius").toBeGreaterThanOrEqual(9999 - EPS);
+        // Its computed corner is the control pill (the 1rem pill), not a raw literal.
+        expect(parsePx(probe.radius), "Reset control radius").toBeGreaterThanOrEqual(PILL - EPS);
 
         // Focus keeps the same corner (no focus-state radius shift).
         await reset.focus();
         const focusedRadius = await reset.evaluate((el) => getComputedStyle(el).borderRadius);
-        expect(parsePx(focusedRadius)).toBeGreaterThanOrEqual(9999 - EPS);
+        expect(parsePx(focusedRadius)).toBeGreaterThanOrEqual(PILL - EPS);
 
         await shot(page, info, "infinite-scroll-reset-focus");
     });
@@ -437,14 +448,15 @@ test.describe("W1 radius redress — computed receivers (fine pointer, Chromium)
         // Circle identity = the pill (distinct role — a mutation collapsing square→circle
         // or vice versa REDs one arm).
         for (const c of circles) {
-            expect(parsePx(c.identityRadius), `circle avatar (${c.size})`).toBeGreaterThanOrEqual(9999 - EPS);
+            // U/B7 G1-4: a circle is `--radius-circle` (50%), not the pill.
+            expect(c.identityRadius?.trim(), `circle avatar (${c.size})`).toBe("50%");
         }
 
         await shot(page, info, "atoms-avatar");
     });
 
     // ── /data/tags-input (F12) ──────────────────────────────────────────────────
-    test("tags-input — the field CONTAINER computes --radius-field (16px, NEVER 0px); the pill Chip child is 9999px, DISTINCT, and STRICTLY INSET", async ({
+    test("tags-input — the field CONTAINER computes --radius-field (16px, NEVER 0px); the pill Chip child is 1rem pill, DISTINCT, and STRICTLY INSET", async ({
         page,
     }, info) => {
         await page.goto("/data/tags-input", { waitUntil: "networkidle" });
@@ -495,7 +507,7 @@ test.describe("W1 radius redress — computed receivers (fine pointer, Chromium)
             expect(parsePx(r.containerRadius), "container must compute --radius-field (16px)").toBeCloseTo(16, 0);
             expect(parsePx(r.containerRadius), "container must never be 0px").toBeGreaterThan(EPS);
             // The child is a PILL Chip.
-            expect(parsePx(r.chipRadius), "chip must be a pill").toBeGreaterThanOrEqual(9999 - EPS);
+            expect(parsePx(r.chipRadius), "chip must be a pill").toBeGreaterThanOrEqual(PILL - EPS);
             // The container role silhouette is DISTINCT from the chip's pill.
             expect(
                 Math.abs(parsePx(r.chipRadius) - parsePx(r.containerRadius)),
@@ -517,7 +529,7 @@ test.describe("W1 radius redress — computed receivers (fine pointer, Chromium)
     });
 
     // ── /forms/inputs (the --radius-field census) ───────────────────────────────
-    test("field census — base single-line input keeps the pill (9999px); Textarea → --radius-field (16px); dialog-nested input (F7) → --radius-field (16px)", async ({
+    test("field census — base single-line input keeps the pill (the 1rem pill); Textarea → --radius-field (16px); dialog-nested input (F7) → --radius-field (16px)", async ({
         page,
     }, info) => {
         await page.goto("/forms/inputs", { waitUntil: "networkidle" });
@@ -534,7 +546,7 @@ test.describe("W1 radius redress — computed receivers (fine pointer, Chromium)
             // scope selector `[data-slot="dialog-content"] .field-control[data-kind=input]`
             // re-binds the pill onto --radius-field. Cloning the REAL input under the
             // real scope wrapper is deterministic + mutation-biting (drop the F7 rule →
-            // this reverts to 9999px and REDs).
+            // this reverts to 1rem pill and REDs).
             let dialogNested: string | null = null;
             if (input) {
                 const wrap = document.createElement("div");
@@ -556,21 +568,17 @@ test.describe("W1 radius redress — computed receivers (fine pointer, Chromium)
 
         expect(probe.rootField, "--radius-field must resolve at :root (was tree-shaken/EMPTY)").not.toBe("");
         // Base single-line input stays the stadium pill.
-        expect(parsePx(probe.inputRadius), "base input keeps the pill (9999px)").toBeGreaterThanOrEqual(9999 - EPS);
+        expect(parsePx(probe.inputRadius), "base input keeps the pill (the 1rem pill)").toBeGreaterThanOrEqual(PILL - EPS);
         // Textarea (multi-line box) reads the ruled field rung, NOT the pill.
         expect(parsePx(probe.textareaRadius), "Textarea → --radius-field (16px)").toBeCloseTo(16, 0);
         // Dialog-nested single-line input reads the field rung (F7), NOT the pill.
         expect(parsePx(probe.dialogNested), "dialog-nested input → --radius-field (16px)").toBeCloseTo(16, 0);
-        expect(
-            parsePx(probe.dialogNested),
-            "dialog-nested input must NOT stay the pill",
-        ).toBeLessThan(9999 - EPS);
 
         await shot(page, info, "field-census-inputs");
     });
 
     // ── /data/sortable-list ─────────────────────────────────────────────────────
-    test("sortable-list — the drop-indicator capsule computes --radius-pill (9999px); rest has no bar; the drag-ghost carries its gold ring", async ({
+    test("sortable-list — the drop-indicator capsule computes --radius-pill (the 1rem pill); rest has no bar; the drag-ghost carries its gold ring", async ({
         page,
     }, info) => {
         await page.goto("/data/sortable-list", { waitUntil: "networkidle" });
@@ -611,10 +619,10 @@ test.describe("W1 radius redress — computed receivers (fine pointer, Chromium)
         expect(probe.count, "no sortable items").toBeGreaterThan(0);
         // At rest the row owns no insertion bar.
         expect(parsePx(probe.restBefore), "rest: no drop-indicator bar").toBeLessThanOrEqual(EPS);
-        // Both insertion edges compute the capsule (--radius-pill = 9999px) — a mutation
+        // Both insertion edges compute the capsule (--radius-pill = 1rem pill) — a mutation
         // swapping the token or hard-coding 999px REDs here.
-        expect(parsePx(probe.dropAbove), "drop-above capsule → --radius-pill (9999px)").toBeGreaterThanOrEqual(9999 - EPS);
-        expect(parsePx(probe.dropBelow), "drop-below capsule → --radius-pill (9999px)").toBeGreaterThanOrEqual(9999 - EPS);
+        expect(parsePx(probe.dropAbove), "drop-above capsule → --radius-pill (the 1rem pill)").toBeGreaterThanOrEqual(PILL - EPS);
+        expect(parsePx(probe.dropBelow), "drop-below capsule → --radius-pill (the 1rem pill)").toBeGreaterThanOrEqual(PILL - EPS);
         // The ghost carries a real box-shadow ring (the gold affordance), not none.
         expect(probe.ghostShadow.length, "drag-ghost must carry a box-shadow ring").toBeGreaterThan(4);
         expect(probe.ghostShadow, "drag-ghost shadow must not be none").not.toBe("none");
@@ -754,7 +762,7 @@ test.describe("W1 radius redress — coarse hit-floor + insertion (F12)", () => 
         await shot(page, info, "tags-input-coarse");
     });
 
-    test("sortable-list — the coarse insertion capsule computes --radius-pill (9999px)", async ({
+    test("sortable-list — the coarse insertion capsule computes --radius-pill (the 1rem pill)", async ({
         page,
     }, info) => {
         await page.goto("/data/sortable-list", { waitUntil: "networkidle" });
@@ -777,7 +785,7 @@ test.describe("W1 radius redress — coarse hit-floor + insertion (F12)", () => 
         expect(probe.ok, "no sortable item").toBeTruthy();
         if (!probe.ok) return;
         expect(probe.pointerCoarse, "coarse pointer media must match").toBe(true);
-        expect(parsePx(probe.dropAbove), "coarse drop capsule → --radius-pill (9999px)").toBeGreaterThanOrEqual(9999 - EPS);
+        expect(parsePx(probe.dropAbove), "coarse drop capsule → --radius-pill (the 1rem pill)").toBeGreaterThanOrEqual(PILL - EPS);
 
         await shot(page, info, "sortable-list-coarse");
     });

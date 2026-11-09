@@ -91,7 +91,15 @@ providePopoverUnion({ usesHoverRoot, modal: computed(() => props.modal) });
    guarded acquire, a guarded release, and a `onScopeDispose` that had to
    remember. `useDockParticipation` owns the discipline once, for all four
    holders, and takes the condition declaratively so the watch disappears too. */
-useDockParticipation({ hold: () => resolvedOpen.value && props.keepDockOpen });
+/* A popover a dock seat opened closes when that dock collapses (O-102 (3)). The
+   collapse owns the WHEN; the root owns the HOW, because the root is the one place
+   that holds the open state for both arms, controlled and uncontrolled alike. */
+useDockParticipation({
+    hold: () => resolvedOpen.value && props.keepDockOpen,
+    close: () => {
+        if (resolvedOpen.value) updateOpen(false);
+    },
+});
 </script>
 
 <template>

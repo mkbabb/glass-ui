@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import "./styles.css";
 import { computed, onUnmounted } from "vue";
 
 import { provideSortableItemContext, useSortableContext } from "./context";

@@ -44,11 +44,9 @@ export interface UseLiquidFlexParams {
     /**
      * The LOW squish cap — the maximum `--stretch` the travel can reach (a +N%
      * elongation along the travel axis). Defaults to 1.14. Kept LOW: the liquid
-     * register is a lively settle, never a rubber-band taffy-pull. The tabs indicator
-     * passes its own tighter cap explicitly (`DEFAULT_INDICATOR_MAX_STRETCH`, 1.11).
-     * May be a getter so a consumer reading a live cascade override
-     * (`--tab-indicator-max-stretch`) re-resolves the cap per-read without
-     * reconstructing the primitive.
+     * register is a lively settle, never a rubber-band taffy-pull. May be a getter
+     * so a consumer reading a live cascade override re-resolves the cap per-read
+     * without reconstructing the primitive.
      */
     maxStretch?: number | (() => number);
     /**

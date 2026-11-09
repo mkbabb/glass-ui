@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { type HTMLAttributes } from "vue";
-import { DialogOverlay } from "reka-ui";
+import { Presence, injectDialogRootContext } from "reka-ui";
 import { cn } from "../_shared/class-names";
+import ModalScrim from "./ModalScrim.vue";
 
 /**
  * The modal scrim — DIM ONLY.
@@ -57,21 +58,34 @@ const props = withDefaults(defineProps<ModalOverlayProps>(), {
     opacity: null,
     veil: false,
 });
+
+/* reka's `DialogOverlay` mounting, kept: a modal root only, present while open (or
+   force-mounted through the spring exit), shown while present. The element is
+   `ModalScrim`, which holds the page through the root lock rather than `body`. */
+const root = injectDialogRootContext();
 </script>
 
 <template>
-    <DialogOverlay
-        :force-mount="props.forceMount"
-        :class="
-            cn(
-                'fixed inset-0 z-overlay bg-overlay-scrim',
-                props.opacity == null ? 'sheet-animate' : '',
-                props.class,
-            )
-        "
-        :style="props.opacity == null ? undefined : { opacity: props.opacity }"
+    <Presence
+        v-if="root.modal.value"
+        v-slot="{ present }"
+        :present="props.forceMount || root.open.value"
+        :force-mount="props.forceMount || !root.unmountOnHide.value"
     >
-        <span v-if="props.veil" class="glass-focus-veil" data-engaged aria-hidden="true" />
-        <slot />
-    </DialogOverlay>
+        <ModalScrim
+            v-show="root.unmountOnHide.value || present"
+            :present="root.unmountOnHide.value || present"
+            :class="
+                cn(
+                    'fixed inset-0 z-overlay bg-overlay-scrim',
+                    props.opacity == null ? 'sheet-animate' : '',
+                    props.class,
+                )
+            "
+            :style="props.opacity == null ? undefined : { opacity: props.opacity }"
+        >
+            <span v-if="props.veil" class="glass-focus-veil" data-engaged aria-hidden="true" />
+            <slot />
+        </ModalScrim>
+    </Presence>
 </template>

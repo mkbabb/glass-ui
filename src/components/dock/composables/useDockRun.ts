@@ -28,10 +28,10 @@
 // The clamp is what makes the terminals flush (0 and scrollMax, ≡ 0 mod P by
 // definition) rather than half-peeked — completeness at the ends, peek in the middle.
 
-import { onMounted, onUnmounted, watch, type ComputedRef, type Ref } from "vue";
+import { onMounted, onUnmounted, ref, watch, type ComputedRef, type Ref } from "vue";
 
 import { FOCUSABLE_SELECTOR } from "../../_shared/focus";
-import { DOCK_SPRING } from "../constants";
+import { DOCK_SEAT_ATTR, DOCK_SPRING } from "../constants";
 import { useDockSpring } from "./useDockSpring";
 
 export interface UseDockRunOptions {
@@ -52,6 +52,11 @@ export interface UseDockRunReturn {
     reach: (seat: HTMLElement) => void;
     /** Re-derive the tab stop. Called on mount, on focus moves, and on content change. */
     syncRoving: () => void;
+    /**
+     * True while the run has a declared seat and every child is one, glass's
+     * `<DockSeparator>` and reka's form `<select>` aside: the run's `role="toolbar"`.
+     */
+    toolbar: Readonly<Ref<boolean>>;
 }
 
 /** Read a registered custom property off `el` as a finite number of px (or units). */
@@ -91,10 +96,58 @@ function openIndexOf(seats: HTMLElement[]): number {
     });
 }
 
-/** The seat's own focusable, or the seat itself when it is one. */
-function focusTargetOf(seat: HTMLElement): HTMLElement | null {
-    if (seat.matches(FOCUSABLE_SELECTOR)) return seat;
-    return seat.querySelector<HTMLElement>(FOCUSABLE_SELECTOR);
+/**
+ * THE SEAT RULE: a seat is DECLARED (atlas G-4, arm b-ii; INBOUND O-102d). The run roves
+ * a direct child only when it carries `DOCK_SEAT_ATTR`, which glass's seat primitives
+ * (`<DockControl>`, `<DockTrigger>`) set and a consumer's own seat sets by hand. Every
+ * other child is not the run's: it writes no `tabIndex` into it and claims no key pressed
+ * inside it, so a plain button, a trigger, a `[role=button][tabindex]` handle, an input
+ * pair or a composite (RadioGroup, ToggleGroup, a container holding one) keeps its
+ * natural tab stop and its own arrows.
+ *
+ * Nothing is inferred from focusability. Reading seats off the tabbable selector took
+ * atlas's filter trigger, gear, provenance handle, year range and dark toggle out of the
+ * Tab order (written to −1 as non-stop seats), and no predicate over focusability can
+ * tell a seat from a control that merely sits in the run.
+ */
+function isDeclaredSeat(child: HTMLElement): boolean {
+    return child.hasAttribute(DOCK_SEAT_ATTR);
+}
+
+/** The seats the run roves, in document order. */
+function declaredSeatsOf(run: HTMLElement): HTMLElement[] {
+    return seatsOf(run).filter(isDeclaredSeat);
+}
+
+/**
+ * Glass's own `<DockSeparator>`, by the class it renders: a decorative divider that is
+ * never a stop. Not any `role="separator"`: a consumer's focusable splitter
+ * (`[role=separator][tabindex][aria-valuenow]`) is an undeclared child like any other.
+ */
+const DOCK_SEPARATOR = ".dock-separator";
+
+/**
+ * reka's FORM `<select>`, by the exact shape it renders: reka's `<Select>` with a `name`
+ * inside a `<form>` puts a native `<select aria-hidden="true" tabindex="-1">` beside its
+ * trigger for form submission, so a `DockTrigger for="select"` seated in a form puts it in
+ * the run. It is in neither the accessibility tree nor the Tab sequence and holds no
+ * control, so it is no toolbar member. Only this shape: an `aria-hidden` wrapper or
+ * control that still holds a Tab stop is undeclared, and focusability is not read.
+ */
+const FORM_SELECT = 'select[aria-hidden="true"][tabindex="-1"]';
+
+/**
+ * THE TOOLBAR CLAIM. `role="toolbar"` promises one stop with arrows across the run, so
+ * the run makes it only when it has a declared seat and every child is one, glass's
+ * `<DockSeparator>` (a toolbar holds separators, APG) and reka's form `<select>`
+ * (`FORM_SELECT`) aside. A run with any other undeclared child claims no role: its declared seats still
+ * rove, and the rest keep their own stops.
+ */
+function isToolbar(run: HTMLElement): boolean {
+    const children = seatsOf(run).filter(
+        (child) => !child.matches(DOCK_SEPARATOR) && !child.matches(FORM_SELECT),
+    );
+    return children.length > 0 && children.every(isDeclaredSeat);
 }
 
 export function useDockRun(options: UseDockRunOptions): UseDockRunReturn {
@@ -104,6 +157,8 @@ export function useDockRun(options: UseDockRunOptions): UseDockRunReturn {
     // spring from its live (value, velocity) rather than racing a second episode — the
     // interruptible-physics continuity, and the reason a fast tab-through reads as one
     // continuous travel instead of a stutter of restarts.
+    const toolbar = ref(false);
+
     const glide = useDockSpring({
         response: DOCK_SPRING.response,
         dampingFraction: DOCK_SPRING.dampingFraction,
@@ -169,7 +224,11 @@ export function useDockRun(options: UseDockRunOptions): UseDockRunReturn {
     function announce(seat: HTMLElement): void {
         const status = statusEl.value;
         if (!status) return;
-        const target = focusTargetOf(seat) ?? seat;
+        // The NAME is read, never written: an undeclared seat is named by its first
+        // control, because naming is not roving.
+        const target = isDeclaredSeat(seat)
+            ? seat
+            : (seat.querySelector<HTMLElement>(FOCUSABLE_SELECTOR) ?? seat);
         const name =
             target.getAttribute("aria-label") ??
             target.getAttribute("title") ??
@@ -199,6 +258,27 @@ export function useDockRun(options: UseDockRunOptions): UseDockRunReturn {
     }
 
     /**
+     * THE RUN'S WRITES, keyed by element, valued by the `tabindex` attribute the element
+     * carried before the run's first write (null when it had none). Every `tabIndex` the
+     * run sets goes through `writeStop`, so `release` can hand a child that stops being a
+     * declared seat exactly the tab stop it had before the run touched it.
+     */
+    const authored = new WeakMap<HTMLElement, string | null>();
+
+    function writeStop(seat: HTMLElement, value: 0 | -1): void {
+        if (!authored.has(seat)) authored.set(seat, seat.getAttribute("tabindex"));
+        seat.tabIndex = value;
+    }
+
+    function release(child: HTMLElement): void {
+        if (!authored.has(child)) return;
+        const original = authored.get(child) ?? null;
+        authored.delete(child);
+        if (original === null) child.removeAttribute("tabindex");
+        else child.setAttribute("tabindex", original);
+    }
+
+    /**
      * ROVING TABINDEX. Exactly one seat is in the tab order; the rest are reachable by
      * arrow key. The RED this replaces was total — every focusable seat carried
      * `tabIndex 0` across all five docks (13/13, 9/9, 7/7, 5/5, 15/15) and `keydown`
@@ -211,7 +291,14 @@ export function useDockRun(options: UseDockRunOptions): UseDockRunReturn {
     function syncRoving(): void {
         const run = runEl.value;
         if (!run) return;
-        const seats = seatsOf(run);
+        toolbar.value = isToolbar(run);
+        // A child the run wrote into and that has since dropped its declaration gets
+        // its authored `tabindex` back: the run writes nothing into an undeclared child,
+        // and that includes not leaving its own past write behind.
+        for (const child of seatsOf(run)) {
+            if (!isDeclaredSeat(child)) release(child);
+        }
+        const seats = declaredSeatsOf(run);
         if (seats.length === 0) return;
         const openIdx = openIndexOf(seats);
         // A seat that already holds focus keeps the stop — re-seating it to the open
@@ -219,31 +306,29 @@ export function useDockRun(options: UseDockRunOptions): UseDockRunReturn {
         const focusedIdx = seats.findIndex((seat) => seat.contains(document.activeElement));
         const stop = focusedIdx >= 0 ? focusedIdx : openIdx >= 0 ? openIdx : 0;
         seats.forEach((seat, idx) => {
-            const target = focusTargetOf(seat);
-            if (!target) return;
-            target.tabIndex = idx === stop ? 0 : -1;
+            writeStop(seat, idx === stop ? 0 : -1);
         });
     }
 
     function moveTo(seats: HTMLElement[], idx: number): void {
         const seat = seats[idx];
         if (!seat) return;
-        const target = focusTargetOf(seat);
-        if (!target) return;
         // Glide FIRST, focus second. `focus()` on an occluded child triggers the
         // engine's own scroll-into-view, which lands at the engine's anchor rather than
         // the lattice's and then fights the spring for the same scroll offset.
         // `preventScroll` refuses that, and reach owns the travel.
         reach(seat);
-        target.tabIndex = 0;
-        target.focus({ preventScroll: true });
+        writeStop(seat, 0);
+        seat.focus({ preventScroll: true });
         syncRoving();
     }
 
     function onKeydown(event: KeyboardEvent): void {
         const run = runEl.value;
         if (!run) return;
-        const seats = seatsOf(run);
+        // A key pressed inside an undeclared child belongs to that child: `from` stays
+        // −1 for it and the handler returns before claiming the key.
+        const seats = declaredSeatsOf(run);
         if (seats.length === 0) return;
         const from = seats.findIndex((seat) => seat.contains(event.target as Node));
         if (from < 0) return;
@@ -292,31 +377,73 @@ export function useDockRun(options: UseDockRunOptions): UseDockRunReturn {
         if (seat) reach(seat);
     }
 
+    /**
+     * WHEEL CONTAINMENT AT THE ENDS [atlas U/B7, R-INTERACT §7]. `overscroll-behavior:
+     * contain` (run.css) keeps a wheel that reaches the run's end from scrolling the page in
+     * Chromium. Firefox honours it only inside one wheel transaction: once the run sits at
+     * its end and the transaction lapses (about 1.5 s), Firefox picks the next scroller
+     * that can move, and the page behind the dock scrolls (measured: 10 of 20 wheel steps
+     * scrolled the page 600 px at 1440 and 390). The platform cannot express "contain
+     * across transactions", so the run declines the wheel itself, on its own axis, only
+     * while it is a real scroller and only at the end the wheel pushes against. Mid-run
+     * wheels are untouched, so native momentum and the mandatory snap still own the glide.
+     */
+    function onWheel(event: WheelEvent): void {
+        const run = runEl.value;
+        if (!run || event.ctrlKey) return;
+        const vertical = orientation.value === "vertical";
+        const delta = vertical ? event.deltaY : event.deltaX;
+        if (delta === 0) return;
+        const pos = vertical ? run.scrollTop : run.scrollLeft;
+        const max = vertical
+            ? run.scrollHeight - run.clientHeight
+            : run.scrollWidth - run.clientWidth;
+        if (max <= 0) return;
+        if ((delta > 0 && pos >= max - 0.5) || (delta < 0 && pos <= 0.5)) event.preventDefault();
+    }
+
     let mo: MutationObserver | null = null;
+
+    function feedsRun(run: HTMLElement, record: MutationRecord): boolean {
+        if (record.type !== "attributes") return true;
+        if (record.attributeName === "aria-current" || record.attributeName === DOCK_SEAT_ATTR)
+            return true;
+        const target = record.target as HTMLElement;
+        return target.parentElement === run && !isDeclaredSeat(target);
+    }
 
     onMounted(() => {
         const run = runEl.value;
         if (!run) return;
         run.addEventListener("keydown", onKeydown);
+        run.addEventListener("wheel", onWheel, { passive: false });
         run.addEventListener("click", onActivate, { capture: true });
         run.addEventListener("focusin", onActivate, { capture: true });
         syncRoving();
         // The seat set is consumer content: it changes when a route list changes, when a
-        // face swaps, when `aria-current` moves. Re-derive the tab stop on those, and on
-        // nothing else — no scroll listener, no resize observer, because the lattice
-        // makes both irrelevant (the anchor is arithmetic, not a measurement).
-        mo = new MutationObserver(() => syncRoving());
+        // face swaps, when `aria-current` moves, when a child declares itself a seat, and
+        // when a direct child's `aria-hidden` or `tabindex` moves it into or out of the
+        // `FORM_SELECT` shape the toolbar claim waives. Re-derive the tab stop and the
+        // claim on those, and on nothing else: no scroll listener, no resize observer,
+        // because the lattice makes both irrelevant (the anchor is arithmetic, not a
+        // measurement). A `tabindex` record on a declared seat is the run's own write and
+        // one deeper in the tree is a seat's interior; neither feeds the claim, and
+        // reacting to the first would loop.
+        mo = new MutationObserver((records) => {
+            if (records.some((record) => feedsRun(run, record))) syncRoving();
+        });
         mo.observe(run, {
             childList: true,
             subtree: true,
             attributes: true,
-            attributeFilter: ["aria-current"],
+            attributeFilter: ["aria-current", DOCK_SEAT_ATTR, "aria-hidden", "tabindex"],
         });
     });
 
     onUnmounted(() => {
         const run = runEl.value;
         run?.removeEventListener("keydown", onKeydown);
+        run?.removeEventListener("wheel", onWheel);
         run?.removeEventListener("click", onActivate, { capture: true });
         run?.removeEventListener("focusin", onActivate, { capture: true });
         mo?.disconnect();
@@ -328,5 +455,5 @@ export function useDockRun(options: UseDockRunOptions): UseDockRunReturn {
     // a tab order that now reads across the wrong axis.
     watch(orientation, () => syncRoving());
 
-    return { reach, syncRoving };
+    return { reach, syncRoving, toolbar };
 }

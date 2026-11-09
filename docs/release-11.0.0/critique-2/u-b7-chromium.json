@@ -1,0 +1,932 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "tests-visual/u-b7/playwright.config.ts",
+      "--project=chromium-desk",
+      "--project=chromium-coarse",
+      "--workers=1"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/tests-visual/u-b7/playwright.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-desk",
+        "name": "chromium-desk",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "u-b7.spec.ts"
+        ],
+        "timeout": 90000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-coarse",
+        "name": "chromium-coarse",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "u-b7.spec.ts"
+        ],
+        "timeout": 90000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "firefox-desk",
+        "name": "firefox-desk",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "u-b7.spec.ts"
+        ],
+        "timeout": 90000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "firefox-phone",
+        "name": "firefox-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "u-b7.spec.ts"
+        ],
+        "timeout": 90000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "docs/release-11.0.0/critique-2/u-b7-chromium.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npx vite --host 127.0.0.1 --port 7932 --strictPort",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/",
+      "url": "http://127.0.0.1:7932",
+      "reuseExistingServer": false,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "u-b7.spec.ts",
+      "file": "u-b7.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "U/B7",
+          "file": "u-b7.spec.ts",
+          "line": 34,
+          "column": 6,
+          "specs": [
+            {
+              "title": "D-5 · a seat pressed mid-morph after an owner-opened expand is hit and activated",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-desk",
+                  "projectName": "chromium-desk",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1139,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-05T17:58:38.862Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8ead4689f60e929aa832-8f246e6d9e5872d98d38",
+              "file": "u-b7.spec.ts",
+              "line": 36,
+              "column": 5
+            },
+            {
+              "title": "run · the wheel reaches every seat, returns to the top, and never scrolls the page",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-desk",
+                  "projectName": "chromium-desk",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 13887,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-05T17:58:40.128Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8ead4689f60e929aa832-227382c6be1de12cce96",
+              "file": "u-b7.spec.ts",
+              "line": 68,
+              "column": 5
+            },
+            {
+              "title": "run · the arrows walk every seat once, in order, each one in view",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-desk",
+                  "projectName": "chromium-desk",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 4907,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-05T17:58:54.024Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8ead4689f60e929aa832-c5080b7b2ed4732bb153",
+              "file": "u-b7.spec.ts",
+              "line": 97,
+              "column": 5
+            },
+            {
+              "title": "run · every seat is clickable once reached",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-desk",
+                  "projectName": "chromium-desk",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 5635,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-05T17:58:58.937Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8ead4689f60e929aa832-aeec13518f0c58920a90",
+              "file": "u-b7.spec.ts",
+              "line": 113,
+              "column": 5
+            },
+            {
+              "title": "run · a touch drag pans the run and not the page",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "CDP touch input: Chromium coarse only",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/tests-visual/u-b7.spec.ts",
+                        "line": 128,
+                        "column": 14
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium-desk",
+                  "projectName": "chromium-desk",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "skipped",
+                      "duration": 35,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-05T17:59:04.578Z",
+                      "annotations": [
+                        {
+                          "type": "skip",
+                          "description": "CDP touch input: Chromium coarse only",
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/tests-visual/u-b7.spec.ts",
+                            "line": 128,
+                            "column": 14
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "8ead4689f60e929aa832-ec0508cf8bcd30b1d217",
+              "file": "u-b7.spec.ts",
+              "line": 127,
+              "column": 5
+            },
+            {
+              "title": "F6 · twelve scroll steps write nothing to the aurora ground",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-desk",
+                  "projectName": "chromium-desk",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2241,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-05T17:59:04.620Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8ead4689f60e929aa832-3461458a91949399b037",
+              "file": "u-b7.spec.ts",
+              "line": 160,
+              "column": 5
+            },
+            {
+              "title": "D-5 · a seat pressed mid-morph after an owner-opened expand is hit and activated",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-coarse",
+                  "projectName": "chromium-coarse",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 852,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-05T17:59:20.540Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8ead4689f60e929aa832-a64636e1b3e7830376ee",
+              "file": "u-b7.spec.ts",
+              "line": 36,
+              "column": 5
+            },
+            {
+              "title": "run · the wheel reaches every seat, returns to the top, and never scrolls the page",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-coarse",
+                  "projectName": "chromium-coarse",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 13735,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-05T17:59:21.481Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8ead4689f60e929aa832-793a5bb4698d2b119743",
+              "file": "u-b7.spec.ts",
+              "line": 68,
+              "column": 5
+            },
+            {
+              "title": "run · the arrows walk every seat once, in order, each one in view",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-coarse",
+                  "projectName": "chromium-coarse",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 4807,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-05T17:59:35.225Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8ead4689f60e929aa832-7d4049a83c5bff20c958",
+              "file": "u-b7.spec.ts",
+              "line": 97,
+              "column": 5
+            },
+            {
+              "title": "run · every seat is clickable once reached",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-coarse",
+                  "projectName": "chromium-coarse",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 5512,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-05T17:59:40.039Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8ead4689f60e929aa832-32b52fb30319826b0859",
+              "file": "u-b7.spec.ts",
+              "line": 113,
+              "column": 5
+            },
+            {
+              "title": "run · a touch drag pans the run and not the page",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-coarse",
+                  "projectName": "chromium-coarse",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 8467,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-05T17:59:45.558Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8ead4689f60e929aa832-9717f3b2af36b0b1f132",
+              "file": "u-b7.spec.ts",
+              "line": 127,
+              "column": 5
+            },
+            {
+              "title": "F6 · twelve scroll steps write nothing to the aurora ground",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-coarse",
+                  "projectName": "chromium-coarse",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2234,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-05T17:59:54.030Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8ead4689f60e929aa832-f9b77bd58f67d56fa3e1",
+              "file": "u-b7.spec.ts",
+              "line": 160,
+              "column": 5
+            }
+          ]
+        },
+        {
+          "title": "anchor",
+          "file": "u-b7.spec.ts",
+          "line": 225,
+          "column": 6,
+          "specs": [
+            {
+              "title": "anchor · an anchor=\"start\" dock at its row's start (ltr) keeps that edge through expand and collapse",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-desk",
+                  "projectName": "chromium-desk",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3003,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-05T17:59:06.868Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8ead4689f60e929aa832-8a0ea5a48c6edee60160",
+              "file": "u-b7.spec.ts",
+              "line": 232,
+              "column": 9
+            },
+            {
+              "title": "anchor · an anchor=\"end\" dock at its row's end (ltr) keeps that edge through expand and collapse",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-desk",
+                  "projectName": "chromium-desk",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3015,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-05T17:59:09.877Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8ead4689f60e929aa832-8b7f309b8accf4e9b885",
+              "file": "u-b7.spec.ts",
+              "line": 232,
+              "column": 9
+            },
+            {
+              "title": "anchor · an anchor=\"end\" dock at its row's end (rtl) keeps that edge through expand and collapse",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-desk",
+                  "projectName": "chromium-desk",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2962,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-05T17:59:12.897Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8ead4689f60e929aa832-a1d4b1bb5e8b701fab20",
+              "file": "u-b7.spec.ts",
+              "line": 232,
+              "column": 9
+            },
+            {
+              "title": "anchor · the prop never moves the dock: start, end and center lay out alike",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-desk",
+                  "projectName": "chromium-desk",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1406,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-05T17:59:15.862Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8ead4689f60e929aa832-39a5e787e1ff1361a009",
+              "file": "u-b7.spec.ts",
+              "line": 249,
+              "column": 5
+            },
+            {
+              "title": "anchor · atlas's figure lane holds its end edge through expand and collapse",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-desk",
+                  "projectName": "chromium-desk",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2946,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-05T17:59:17.271Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8ead4689f60e929aa832-2936b7dc7b4546a144d9",
+              "file": "u-b7.spec.ts",
+              "line": 261,
+              "column": 5
+            },
+            {
+              "title": "anchor · an anchor=\"start\" dock at its row's start (ltr) keeps that edge through expand and collapse",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-coarse",
+                  "projectName": "chromium-coarse",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2967,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-05T17:59:56.267Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8ead4689f60e929aa832-552b916fe66409397a7d",
+              "file": "u-b7.spec.ts",
+              "line": 232,
+              "column": 9
+            },
+            {
+              "title": "anchor · an anchor=\"end\" dock at its row's end (ltr) keeps that edge through expand and collapse",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-coarse",
+                  "projectName": "chromium-coarse",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2979,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-05T17:59:59.238Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8ead4689f60e929aa832-a083c83345eef7a2bfbc",
+              "file": "u-b7.spec.ts",
+              "line": 232,
+              "column": 9
+            },
+            {
+              "title": "anchor · an anchor=\"end\" dock at its row's end (rtl) keeps that edge through expand and collapse",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-coarse",
+                  "projectName": "chromium-coarse",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2994,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-05T18:00:02.220Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8ead4689f60e929aa832-9589ee94a92ce5e55ef9",
+              "file": "u-b7.spec.ts",
+              "line": 232,
+              "column": 9
+            },
+            {
+              "title": "anchor · the prop never moves the dock: start, end and center lay out alike",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-coarse",
+                  "projectName": "chromium-coarse",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1436,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-05T18:00:05.221Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8ead4689f60e929aa832-532e97fa213ebdf770e5",
+              "file": "u-b7.spec.ts",
+              "line": 249,
+              "column": 5
+            },
+            {
+              "title": "anchor · atlas's figure lane holds its end edge through expand and collapse",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-coarse",
+                  "projectName": "chromium-coarse",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2994,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-05T18:00:06.660Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8ead4689f60e929aa832-75a055def9afebf5e373",
+              "file": "u-b7.spec.ts",
+              "line": 261,
+              "column": 5
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-05T17:58:37.630Z",
+    "duration": 92114.87000000001,
+    "expected": 21,
+    "skipped": 1,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

@@ -323,7 +323,12 @@ const files = walk(SRC);
 const roots = declaredCssRoots(pkg);
 const reach = publicJsReach();
 const refMap = componentReferenceMap(files);
-const reachable = new Set([...importClosure(roots), ...rescuedReferences(refMap, reach)]);
+// A rescued sheet carries its own `@import` partials with it (the deck substrate's index
+// imports stage/turn/capture/reveal; atlas U/B7 F5 moved it to a script import).
+const reachable = new Set([
+    ...importClosure(roots),
+    ...importClosure([...rescuedReferences(refMap, reach)]),
+]);
 
 const orphans = files
     .filter((file) => file.endsWith(".css"))

@@ -19,7 +19,8 @@ register it rides (its `--spring-<name>-duration` clock + the coupled-fade partn
 PRM behavior.
 
 1. **HOVER-LIFT** — *"this is touchable."* A sub-perceptual scale lift
-   (`--scale-hover-btn` 1.05 / `--scale-hover-dock` 1.1 / `--scale-hover` 1.08,
+   (`--scale-hover-btn` 1.05 / `--scale-hover` 1.08; the dock controls take no hover
+   scale since U/B8r I-2,
    `tokens/scale-paper.css`) on `--spring-smooth`, the surface bg shifting to the next
    glass tier, the gleam waking — the three legs as ONE motion (the `transition-control`
    utility `utilities/btn.css` carries border/shadow/transform/color TOGETHER so they
@@ -43,11 +44,12 @@ PRM behavior.
    `SpringProgress.respectReducedMotion` snaps the value (the gesture confirms, physics
    off).
 4. **DRAG-MORPH** — *grab → follow ~1:1 → gel-squish → fling-to-nearest* (`useDragMorph.ts`
-   — kf `Draggable` + `SpringProgress` (eased `snappy`) + `useLiquidFlex` capped ≤
-   `--tab-indicator-max-stretch` + `decayRest` nearest-snap), for elements that EARN a
+   — kf `Draggable` + `SpringProgress` (eased `snappy`) + `useLiquidFlex` capped by
+   the `maxStretch` getter, default 1.08 + `decayRest` nearest-snap), for elements that EARN a
    pull (the tab pill, the DockLayerGroup rail, the Slider track, the SortableHandle) —
-   NOT every element (the proportion fence). PRM: the gesture still functions, the squish
-   is off, the release is an instant nearest-snap.
+   NOT every element (the proportion fence). The tab pill and the DockLayerGroup rail
+   follow at their own size and write no squish. PRM: the gesture still functions, the
+   squish is off, the release is an instant nearest-snap.
 5. **FOCUS-RING** — *the keyboard-reachable cue,* the non-motion a11y affordance distinct
    from hover. The `.focus-ring` utility keyed off `--focus-ring-shadow`
    (`utilities/base.css`), consumed at every interactive atom's CVA base. EVERY
@@ -76,10 +78,10 @@ the SFC template + the CVA `index.ts`).
 |---|---|---|---|---|---|---|---|
 | **Button** (glass: default/glass/primary-audacious) | ui/button | ✓ `scale-hover` | ✓ `v-specular` auto-arm | ✓ `useSpringPress`+`tap-squish` `--glass-btn-press-t` | — | ✓ `.focus-ring` | `useSpringPress.ts`·`vSpecular.ts`·`index.ts` CVA base; press reads the eased `press` register (`BC.W-SPRING-EASE`) |
 | **Button** (solid/destructive/link/secondary/outline/ghost) | ui/button | ✓ `scale-hover` | — (opaque, no glass-tier `::before`) | ✓ `.tap-squish` `:active` + `useSpringPress` | — | ✓ `.focus-ring` | `index.ts` `transition-control`; the gleam is glass-tier-only (recorded) |
-| **DockIconButton** | custom/dock | ✓ `--scale-hover-dock` | ✓ `v-specular` | ✓ `tap-squish`/`:active` | — | ✓ `.focus-ring` | `DockIconButton.vue`·`dock/styles/controls/icon-button.css` |
-| **DockTabButton / DockSelectTrigger / DockDropdownTrigger** | custom/dock | ✓ `--scale-hover-dock` | ✓ `v-specular` | ✓ `:active` press | — | ✓ `.focus-ring` (`dock.css`) | `dock/styles/controls/triggers.css`·`dock/styles/controls/tab-button.css` |
-| **DarkModeToggle** | custom/dock | ✓ `--scale-hover-dock` | ✓ `v-specular` | ✓ `:active` press | — | ✓ `.focus-ring` (`dark-mode-toggle.css`) | `dark-mode-toggle/dark-mode-toggle.css` |
-| **SegmentedTabs pill indicator** (variant="pill") | ui/tabs | ✓ glass plate | ✓ tier `::before` | ✓ squish-on-travel `--stretch` | ✓ `:draggable` (`useDragMorph`) | ✓ roving-tabindex | `useTabIndicator.ts`·`useDragMorph.ts`; reads the eased `snappy` |
+| **DockIconButton** | custom/dock | — (no hover scale, U/B8r I-2) | ✓ `v-specular` | ✓ `tap-squish`/`:active` | — | ✓ `.focus-ring` | `DockIconButton.vue`·`dock/styles/controls/icon-button.css` |
+| **DockTabButton / DockSelectTrigger / DockDropdownTrigger** | custom/dock | — (no hover scale, U/B8r I-2) | ✓ `v-specular` | ✓ `:active` press | — | ✓ `.focus-ring` (`dock.css`) | `dock/styles/controls/triggers.css`·`dock/styles/controls/tab-button.css` |
+| **DarkModeToggle** | custom/dock | — (no hover scale, U/B8r I-2) | ✓ `v-specular` | ✓ `:active` press | — | ✓ `.focus-ring` (`dark-mode-toggle.css`) | `dark-mode-toggle/dark-mode-toggle.css` |
+| **SegmentedTabs pill indicator** (variant="pill") | ui/tabs | ✓ glass plate | ✓ tier `::before` | — (glides at its own size; no squish on travel or drag) | ✓ `:draggable` (`useDragMorph`, no squish written) | ✓ roving-tabindex | `useTabIndicator.ts`·`useDragMorph.ts`; reads the eased `snappy` |
 | **SegmentedTabs underline indicator** (variant="underline") | ui/tabs | — (a hairline does not lift) | — | — (a hairline does not squish) | — | ✓ roving-tabindex | the ink mark SLIDES on `--spring-snappy` (recorded — the paper material) |
 | **menu row** (Dropdown/Context/Select/Combobox/Command items) | ui/dropdown-menu, ui/context-menu, ui/select, ui/combobox, ui/command | ✓ `--menu-row-lift` -1px on `--spring-smooth` | — (a row is quiet — gleam reserved for the trigger) | — (select-on-click, no squish) | — | ✓ `data-highlighted` + `.focus-ring` | `menu.css` (the lift rides `--spring-smooth`, co-timed with the bg tint) |
 | **Card** (`selected` present → `role="option"`) | card | ✓ `--fill-hover` fill, bracketed in `@media (hover: hover)` | — (the Card primitive dropped its `specular` prop; `v-specular` still ships for a surface that arms it) | ✓ `:active` `--scale-press-sm` on the spatial spring leg | — | ✓ `:focus-visible` outline + the glow leg | `Card.vue`·`card/styles.css` — CSS only: there is no press composable and no press scalar on the card. An inert content group gets no pointer answer at all. `@utility cartoon-surface` is decoration (border + cast) and adds no interaction engine |

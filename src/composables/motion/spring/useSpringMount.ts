@@ -107,6 +107,10 @@ export interface SpringMountRef {
  * vs. dismiss. The mid-flight re-target preserves spring continuity per
  * SpringProgress.
  */
+/** The dismissed edge: a position this close to 1 is off the screen (the kernel's own
+ *  position settle threshold, under a pixel for any surface shorter than 1,000 px). */
+const EXIT_EDGE = 1e-3;
+
 export function useSpringMount(options: UseSpringMountOptions): SpringMountRef {
     const preset = SPRING_PRESETS[options.preset ?? "panel"];
     // Always seat the spring AT the off-screen position (1) and let the
@@ -134,7 +138,7 @@ export function useSpringMount(options: UseSpringMountOptions): SpringMountRef {
         response: preset.response,
         dampingFraction: preset.dampingFraction,
         initial: 1, // start off-screen / scaled-small
-        settleThreshold: 1e-3,
+        settleThreshold: EXIT_EDGE,
         velocitySettleThreshold: 1e-3,
         respectReducedMotion: options.respectReducedMotion !== false,
     });
@@ -173,24 +177,23 @@ export function useSpringMount(options: UseSpringMountOptions): SpringMountRef {
         },
     );
 
-    // Mount-hold release — the settle owns unmount. Drops `present` once the
-    // dismiss-spring has RIDDEN to the endpoint AND the host is logically closed
-    // (`!open`), so reka Presence unmounts. Independent of the `pendingDismiss` drag
-    // branch (the sheet never drags). Two subtleties, both load-bearing:
+    // Mount-hold release — the dismissed EDGE owns unmount. Drops `present` once the
+    // exit has ridden to within `EXIT_EDGE` of the dismissed endpoint while the host is
+    // logically closed (`!open`), so reka Presence unmounts. Not the settle: `panel` is
+    // underdamped (ζ 0.71), and its tail rings past the edge until the velocity falls under
+    // 1e-3 units/s, 1.5–1.9 s after the surface left the screen. Held that long, a closed
+    // sheet kept its scrim mounted and the body scroll-locked, and the page ate the reader's
+    // next scroll or tap (U/B7b M1, repair round 1). At the edge the surface is under a pixel
+    // from fully off and its scrim alpha is ~0, so nothing visible is cut short.
     //   • gated on the spring POSITION (`spring.value.value`), not the local `target`
-    //     ref: `target` flips synchronously on close while the engine still reads
-    //     `settled` from the prior rest — a one-tick stale window that would clear
-    //     `present` before the exit even starts. Position is 0 at rest, so it only
-    //     satisfies the guard once the spring has actually arrived.
-    //   • watched as a CONDITION, not the raw `isSettled` edge: under PRM the snap
-    //     keeps `isSettled` true across the target flip (no edge to fire), so only
-    //     the composed guard transitions.
+    //     ref: `target` flips synchronously on close while the position is still 0, so
+    //     the guard only holds once the exit has actually arrived.
+    //   • watched as a CONDITION, not an edge: under PRM the snap lands the position at 1
+    //     in place, and the composed guard still transitions.
+    //   • independent of the `pendingDismiss` drag branch (that one still waits the settle).
     // `!open` keeps a re-open-mid-exit mounted.
     const stopPresentWatch = watch(
-        () =>
-            spring.isSettled.value &&
-            spring.value.value >= 1 &&
-            !options.open.value,
+        () => spring.value.value >= 1 - EXIT_EDGE && !options.open.value,
         (dismissed) => {
             if (dismissed) present.value = false;
         },

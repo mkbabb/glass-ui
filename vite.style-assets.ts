@@ -16,7 +16,6 @@ import type { Plugin, ResolvedConfig, UserConfig } from "vite";
 
 import {
     copyStyleAssets,
-    foldSfcBundle,
     inlineFonts,
     normalizeShippedBackdropPairs,
     minifyStyleAssets,
@@ -29,6 +28,13 @@ import { flattenSubpathTypes } from "./scripts/flatten-subpath-types.mjs";
 import { verifyExportTypes } from "./scripts/verify-export-types.mjs";
 
 const require_ = createRequire(import.meta.url);
+
+/** The per-chunk SFC sheets the library build writes beside its chunks (U/B7b X3). */
+function chunkSheets(outputRoot: string): string[] {
+    return readdirSync(outputRoot)
+        .filter((name) => name.endsWith(".css"))
+        .map((name) => resolve(outputRoot, name));
+}
 
 function commandPath(packageName: string, binName: string): string {
     const packageEntry = require_.resolve(`${packageName}/package.json`);
@@ -163,13 +169,12 @@ export function publishStyleAssets(): Plugin {
             const outputRoot = generationRoot;
             try {
                 const { srcFonts, distStyles, distComponents } = copyStyleAssets(repositoryRoot, closure, outputRoot);
-                foldSfcBundle(repositoryRoot, distStyles);
                 await emitComponentUtilities(repositoryRoot, distStyles, closure);
                 inlineFonts(srcFonts, distStyles, distComponents);
                 normalizeShippedBackdropPairs(
                     distStyles,
                     distComponents,
-                    resolve(outputRoot, "glass-ui.css"),
+                    ...chunkSheets(outputRoot),
                 );
                 minifyStyleAssets(distStyles, distComponents);
                 stageTypesAndRelays(outputRoot);

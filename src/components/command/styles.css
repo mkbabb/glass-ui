@@ -92,6 +92,13 @@
     }
 
     .command__group {
+        /* The list is reka's ComboboxContent, an inline flex column with a bounded
+           height. `overflow: hidden` drops a flex item's automatic minimum height to 0,
+           so a long list shrank every group to fit: a short first group (the palette's
+           "Dashboards") collapsed to a sliver under the input, its heading under the
+           next group's, and its rows unreachable (U/B7b M1, relay row 3). A group keeps
+           its content height; the list scrolls instead. */
+        flex: none;
         overflow: hidden;
         padding: 0.25rem;
         color: var(--foreground);

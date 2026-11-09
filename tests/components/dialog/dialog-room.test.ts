@@ -158,10 +158,10 @@ describe("G-DLG-ROOM · the type pair is one derived interval", () => {
 });
 
 describe("G-DLG-ROOM · the ✕ is a real target with real states", () => {
-    it("carries the 44px touch floor and the pill role", () => {
+    it("carries the 44px touch floor and the circle", () => {
         expect(declOf(close(), "inline-size")).toBe("var(--touch-target)");
         expect(declOf(close(), "block-size")).toBe("var(--touch-target)");
-        expect(declOf(close(), "border-radius")).toBe("var(--radius-pill)");
+        expect(declOf(close(), "border-radius")).toBe("var(--radius-circle)");
         expect(declOf(close(), "cursor")).toBe("pointer");
     });
 

@@ -26,8 +26,9 @@
  *        clip-path).
  *
  *   L1 — THE CONTROLS (`.dock-controls`).  A normal-flow flex run OVER the plate,
- *        `overflow: visible` BOTH axes ALWAYS. No ancestor clips it — "afford enough room
- *        from first principles" IS this layer.
+ *        `overflow: visible` BOTH axes ALWAYS. At rest no ancestor clips it — "afford
+ *        enough room from first principles" IS this layer. While the dock morphs, the box
+ *        clips on the morph axis only (shell.css, the morph clip).
  *
  * L2 — TRANSIENT SURFACES. Top-layer popovers — nothing to escape FROM.
  *
@@ -178,9 +179,11 @@
     }
 
     /* ── L1 — THE CONTROLS ─────────────────────────────────────────────────────────
-       A normal-flow run OVER the plate, `overflow: visible` BOTH axes ALWAYS. A hover/
-       press plate on an edge control overhangs the plate edge freely — NO ancestor clips
-       it, so "Dock hover items clip" defects are structurally impossible. The control
+       A normal-flow run OVER the plate, `overflow: visible` BOTH axes ALWAYS. At rest no
+       ancestor clips it, so a hover/press plate on an edge control overhangs the plate
+       edge freely. While `[data-morphing]` is set the box clips on the morph axis
+       (shell.css, the morph clip), which cuts only what lies past the plate's moving
+       edge, and the press keepalive lifts that clip. The control
        run inherits the box's flex layout via `display: contents` (it groups the controls
        the SFC places without interposing a flex context of its own — the dock's own
        `display: inline-flex` on `.glass-dock` lays the controls out). */

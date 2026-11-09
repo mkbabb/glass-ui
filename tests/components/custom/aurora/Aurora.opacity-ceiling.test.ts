@@ -41,6 +41,7 @@ vi.mock("@glass/components/aurora/composables/useAurora", async () => {
 vi.mock(
     "@glass/components/aurora/composables/auroraFallbackGround",
     () => ({
+        auroraGroundKey: () => "ground",
         auroraFallbackGround: () => ({
             backgroundImage: "linear-gradient(#123, #456)",
             backgroundColor: "#123",

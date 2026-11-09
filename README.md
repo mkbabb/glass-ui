@@ -92,7 +92,7 @@ Of that, only `MIGRATION.md` ships. `package.json` declares `files: ["dist", "MI
 
 ```bash
 npm run dev             # storybook demo (multi-page, dock + carousel navigation)
-npm run build           # library → dist/glass-ui.js + glass-ui.css + index.d.ts + per-subpath chunks
+npm run build           # library → dist/glass-ui.js + index.d.ts + per-subpath chunks
 npm run typecheck       # vue-tsc --noEmit
 npm run profile:bundle  # inspect bundle sizes and exact value.js capability imports
 ```
@@ -168,7 +168,7 @@ Convenience classes bundle a tier with a shape: `.glass-card` (resting + `--radi
 
 ## Design Tokens
 
-`src/styles/tokens/` defines the shared `:root` properties consumed by all style modules and components — duration, easing (`--spring-{smooth,snappy,bouncy,gentle}` + `--spring-<name>-duration` clocks), z-index, radius (primitive + semantic), shadows (composed via `color-mix(in srgb, var(--shadow-color) N%, transparent)`), the 5-tier glass ladder, paper/grain textures, the `--surface-tint-*` family, and the warm-chroma color palette. These are declared in a plain unlayered `:root`, which beats every layered consumer `:root`: re-declare one in an unlayered `:root` of your own, or on an element below `:root` in any layer, and every reader downstream follows; a `:root` inside `@theme` or any `@layer` loses to the package root. Font registers are the one exception and live in the theme layer — re-declare `--font-serif-math` in your own `@theme`, and rebrand `--font-text` / `--font-display` there or through `--font-stack-text` / `--font-stack-display` on an unlayered `:root` (`MIGRATION.md`, _The token-root contract_ under 10.0.0). [2026-09-22 · O-23/O-32 B-1 — this sentence said any re-declaration in your own CSS wins; a layered `:root` does not.]
+`src/styles/tokens/` defines the shared `:root` properties consumed by all style modules and components — duration, easing (`--spring-{smooth,snappy,bouncy,gentle}` + `--spring-<name>-duration` clocks), z-index, radius (primitive + semantic), shadows (composed via `color-mix(in srgb, var(--shadow-color) N%, transparent)`), the 5-tier glass ladder, paper/grain textures, the `--surface-tint-*` family, and the warm-chroma color palette. These are declared in a plain unlayered `:root`, which beats every layered consumer `:root`: re-declare one in an unlayered `:root` of your own, or on an element below `:root` in any layer, and every reader downstream follows; a `:root` inside `@theme` or any `@layer` loses to the package root. Font registers are the one exception and live in the theme layer — re-declare `--font-serif-math` in your own `@theme`, and rebrand `--font-text` / `--font-display` there or through `--font-stack-text` / `--font-stack-display` on an unlayered `:root` (`MIGRATION.md`, _The token-root contract_ under 10.0.0).
 
 **Every other rule the package ships sits in `@layer components`**, and `./styles.css` opens with `@layer theme, base, components, utilities;` (the same order `./styles` declares), so a rule of yours — unlayered, or in `@layer utilities` — beats a library rule at any specificity. What stays outside the layer: the token roots above, the `@utility` / `@theme` / `@property` / `@font-face` / `@keyframes` at-rules, and one named exception, the slider's stylesheet. `!important` runs the other way across layers: a library `!important` beats yours unless yours sits in a layer ordered before `components`.
 

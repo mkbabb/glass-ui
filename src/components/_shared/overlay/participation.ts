@@ -9,6 +9,7 @@ import {
     type Ref,
 } from "vue";
 import {
+    useInDockFace,
     useOptionalDockContext,
     type DockHoldKind,
 } from "../../dock/composables/dockContext";
@@ -82,6 +83,9 @@ export function useHoldToken(
 export interface DockPortalAttrs {
     "data-glass-dock-portal"?: string;
     "data-glass-dock-owner"?: string;
+    /** Present when the overlay was opened from the dock's face: the collapse closes
+     *  it, and the dock reads this to know focus inside it is about to lose its place. */
+    "data-glass-dock-face"?: string;
 }
 
 export interface DockParticipation {
@@ -94,7 +98,8 @@ export interface DockParticipation {
 }
 
 /**
- * Dock participation for a portalled overlay: the stamp, and the one token.
+ * Dock participation for a portalled overlay: the stamp, the one token, and the
+ * close on collapse.
  *
  * `hold` is the DECLARATIVE arm — pass a ref/getter that is true exactly while
  * the surface should pin the dock open and the token is driven for you. The
@@ -104,13 +109,33 @@ export interface DockParticipation {
 export function useDockParticipation(o?: {
     hold?: MaybeRefOrGetter<boolean>;
     kind?: DockHoldKind;
+    /**
+     * Close this overlay. Called on the dock's COLLAPSE edge, so a dropdown or
+     * popover a seat of the FACE opened never outlives the posture it was opened
+     * from. The collapse owns the close: the overlay states how it closes, the dock
+     * says when. Outside the face (a `#persistent` control, whose trigger stays
+     * painted and live when collapsed) and outside a dock it is never called.
+     */
+    close?: () => void;
 }): DockParticipation {
     const dock = useOptionalDockContext();
     const token = useHoldToken(() => dock, o?.kind);
 
+    const inFace = !!dock && useInDockFace();
+    const close = o?.close;
+    if (dock && inFace && close) {
+        watch(dock.expanded, (expanded, was) => {
+            if (was && !expanded) close();
+        });
+    }
+
     const portalAttrs = computed<DockPortalAttrs>(() =>
         dock?.id
-            ? { "data-glass-dock-portal": "", "data-glass-dock-owner": dock.id }
+            ? {
+                  "data-glass-dock-portal": "",
+                  "data-glass-dock-owner": dock.id,
+                  ...(inFace ? { "data-glass-dock-face": "" } : {}),
+              }
             : {},
     );
 

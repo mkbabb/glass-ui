@@ -22,6 +22,14 @@
 export const SURFACES = ["glass", "veil", "opaque"] as const;
 export type Surface = (typeof SURFACES)[number];
 
+/** The backdrop-sampling axis. `live` samples and filters what is painted behind the
+ * plate on every frame; `static` samples nothing, so no backdrop-filter surface is
+ * allocated. A plate in the page flow over a still field is the `static` case: nothing
+ * moves behind it but the field, so the lens costs a full re-filter per scroll frame and
+ * shows nothing the fill does not. Floating chrome that content scrolls under stays `live`. */
+export const BACKDROP_MODES = ["live", "static"] as const;
+export type BackdropMode = (typeof BACKDROP_MODES)[number]; // default "live"
+
 /** The five-rung glass ladder. */
 export const SURFACE_TIERS = ["wash", "quiet", "resting", "floating", "overlay"] as const;
 export type SurfaceTier = (typeof SURFACE_TIERS)[number];

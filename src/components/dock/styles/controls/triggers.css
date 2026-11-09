@@ -2,8 +2,8 @@
    `.dock-dropdown-trigger` picker family.
 
    The shared base rule, the glass-translucent hover (the pickers
-   off the opaque `--muted` flat plate onto the FAMILY hover token, with the
-   `--scale-hover-dock` lift unified into the shared hover group), the iOS press
+   off the opaque `--muted` flat plate onto the FAMILY hover token; no hover
+   scale), the iOS press
    darken, the focus + open/active fill (hover ≠ open), and
    the `__chevron` open-flip. Opens its OWN `@layer components`; @import-ed after
    tab-button.css. */
@@ -66,26 +66,16 @@
        LADDER step above hover), so an OPEN dropdown reads distinctly from a merely-
        hovered one (paired with the chevron flip). ONE source per state, glass-aware
        across the whole dock-control family. */
-    /* The picker hover lift is in the SHARED group: the
-       `--scale-hover-dock` scale fires on BOTH select + dropdown (not the dropdown
-       ONLY). All four dock control members (icon/tab/select/dropdown) lift on hover as
-       one register, mirroring the unified glass-tier `--dock-control-hover-bg`
-       cross-fade. The lone `.dock-dropdown-trigger:hover` scale rule is RETIRED into
-       this group. */
     /* Hover lifts the FILL only; the hover-SCALE is RETIRED across
        the whole trigger family so portaled content anchors smoothly (the SelectTrigger's
        documented no-scale reason, generalized — clean break, no alias). */
-    .dock-trigger:hover:not(:disabled),
-    .dock-select-trigger:hover:not(:disabled),
-    .dock-dropdown-trigger:hover:not(:disabled) {
+    .dock-trigger:hover:not([aria-disabled="true"]) {
         background: var(--dock-control-hover-bg);
         color: var(--btn-hover-color, var(--foreground));
     }
 
     /* The iOS press darken-plus-shrink (see the icon-button). */
-    .dock-trigger:active:not(:disabled),
-    .dock-select-trigger:active:not(:disabled),
-    .dock-dropdown-trigger:active:not(:disabled) {
+    .dock-trigger:active:not([aria-disabled="true"]) {
         background: var(--dock-control-press-bg);
         scale: var(--scale-press-dock);
     }

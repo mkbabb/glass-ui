@@ -1,0 +1,329 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "tests-visual/playwright.config.ts",
+      "--project=chromium-headless-new",
+      "--workers=1",
+      "shell-identity"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/tests-visual/playwright.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-headless-new",
+        "name": "chromium-headless-new",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "coarse-touch",
+        "name": "coarse-touch",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "safari-webgl.spec.ts",
+          "aurora-swraster.spec.ts",
+          "release-10-1-1.spec.ts",
+          "release-10-1-2.spec.ts",
+          "release-10-1-3.spec.ts",
+          "release-10-1-4.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/docs/release-11.0.0/fix-4/shell-identity-chromium.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 7981",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/",
+      "url": "http://localhost:7981",
+      "reuseExistingServer": true,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "shell-identity.spec.ts",
+      "file": "shell-identity.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "shell-identity (π lane — the home-region MEASURED-BAND readback, fail-CLOSED)",
+          "file": "shell-identity.spec.ts",
+          "line": 81,
+          "column": 6,
+          "specs": [
+            {
+              "title": "S5a — the ℱ ink-mass is optically centered within ±0.5px",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 7142,
+                      "error": {
+                        "message": "Error: the ℱ home control must be present\n\n\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveCount\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('a[aria-label=\"glass-ui home\"]')\nExpected: \u001b[32m1\u001b[39m\nReceived: \u001b[31m0\u001b[39m\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - the ℱ home control must be present with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('a[aria-label=\"glass-ui home\"]')\u001b[22m\n\u001b[2m    14 × locator resolved to 0 elements\u001b[22m\n\u001b[2m       - unexpected value \"0\"\u001b[22m\n",
+                        "stack": "Error: the ℱ home control must be present\n\n\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveCount\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('a[aria-label=\"glass-ui home\"]')\nExpected: \u001b[32m1\u001b[39m\nReceived: \u001b[31m0\u001b[39m\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - the ℱ home control must be present with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('a[aria-label=\"glass-ui home\"]')\u001b[22m\n\u001b[2m    14 × locator resolved to 0 elements\u001b[22m\n\u001b[2m       - unexpected value \"0\"\u001b[22m\n\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/tests-visual/shell-identity.spec.ts:116:70",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/tests-visual/shell-identity.spec.ts",
+                          "column": 70,
+                          "line": 116
+                        },
+                        "snippet": "  114 |\n  115 |             const link = page.locator('a[aria-label=\"glass-ui home\"]');\n> 116 |             await expect(link, \"the ℱ home control must be present\").toHaveCount(1);\n      |                                                                      ^\n  117 |             const box = (await link.boundingBox())!;\n  118 |             expect(box, \"the home-control rect must be measurable\").not.toBeNull();\n  119 |             // Measure the REST state (NO hover): the optical centering is a static-geometry"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/tests-visual/shell-identity.spec.ts",
+                            "column": 70,
+                            "line": 116
+                          },
+                          "message": "Error: the ℱ home control must be present\n\n\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveCount\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('a[aria-label=\"glass-ui home\"]')\nExpected: \u001b[32m1\u001b[39m\nReceived: \u001b[31m0\u001b[39m\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - the ℱ home control must be present with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('a[aria-label=\"glass-ui home\"]')\u001b[22m\n\u001b[2m    14 × locator resolved to 0 elements\u001b[22m\n\u001b[2m       - unexpected value \"0\"\u001b[22m\n\n\n  114 |\n  115 |             const link = page.locator('a[aria-label=\"glass-ui home\"]');\n> 116 |             await expect(link, \"the ℱ home control must be present\").toHaveCount(1);\n      |                                                                      ^\n  117 |             const box = (await link.boundingBox())!;\n  118 |             expect(box, \"the home-control rect must be measurable\").not.toBeNull();\n  119 |             // Measure the REST state (NO hover): the optical centering is a static-geometry\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/tests-visual/shell-identity.spec.ts:116:70"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-06T06:54:13.161Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/tests-visual/test-results/shell-identity-shell-ident-adf75-ally-centered-within-±0-5px-chromium-headless-new/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/tests-visual/shell-identity.spec.ts",
+                        "column": 70,
+                        "line": 116
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "7f2410eff1deb6659950-d2af87e4f5eda8a00f41",
+              "file": "shell-identity.spec.ts",
+              "line": 86,
+              "column": 5
+            },
+            {
+              "title": "S5b — the home region is ONE Foundations entry, demarcated, glass-hovered",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 1186,
+                      "error": {
+                        "message": "Error: the ℱ home control must render\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m",
+                        "stack": "Error: the ℱ home control must render\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/tests-visual/shell-identity.spec.ts:178:64",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/tests-visual/shell-identity.spec.ts",
+                          "column": 64,
+                          "line": 178
+                        },
+                        "snippet": "  176 |         });\n  177 |\n> 178 |         expect(dom.hasHomeF, \"the ℱ home control must render\").toBe(true);\n      |                                                                ^\n  179 |         expect(\n  180 |             dom.foundationsCategoryButtonCount,\n  181 |             \"a redundant Foundations category DockIconButton survives (the Compass home dup — R3-12)\","
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/tests-visual/shell-identity.spec.ts",
+                            "column": 64,
+                            "line": 178
+                          },
+                          "message": "Error: the ℱ home control must render\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n\n  176 |         });\n  177 |\n> 178 |         expect(dom.hasHomeF, \"the ℱ home control must render\").toBe(true);\n      |                                                                ^\n  179 |         expect(\n  180 |             dom.foundationsCategoryButtonCount,\n  181 |             \"a redundant Foundations category DockIconButton survives (the Compass home dup — R3-12)\",\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/tests-visual/shell-identity.spec.ts:178:64"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-06T06:54:20.771Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/tests-visual/test-results/shell-identity-shell-ident-60438-ry-demarcated-glass-hovered-chromium-headless-new/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/tests-visual/shell-identity.spec.ts",
+                        "column": 64,
+                        "line": 178
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "7f2410eff1deb6659950-7d5628b7f74e0e2d140c",
+              "file": "shell-identity.spec.ts",
+              "line": 149,
+              "column": 5
+            },
+            {
+              "title": "G-CLOSE — capture the home-region + hover DELTA",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "timedOut",
+                      "duration": 60027,
+                      "error": {
+                        "message": "\u001b[31mTest timeout of 60000ms exceeded.\u001b[39m",
+                        "stack": "\u001b[31mTest timeout of 60000ms exceeded.\u001b[39m"
+                      },
+                      "errors": [
+                        {
+                          "message": "\u001b[31mTest timeout of 60000ms exceeded.\u001b[39m"
+                        },
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/tests-visual/shell-identity.spec.ts",
+                            "column": 32,
+                            "line": 249
+                          },
+                          "message": "Error: locator.boundingBox: Test timeout of 60000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('a[aria-label=\"glass-ui home\"]')\u001b[22m\n\n\n  247 |         });\n  248 |         const link = page.locator('a[aria-label=\"glass-ui home\"]');\n> 249 |         const lb = (await link.boundingBox())!;\n      |                                ^\n  250 |         await page.mouse.move(lb.x + lb.width / 2, lb.y + lb.height / 2);\n  251 |         await page.waitForTimeout(450);\n  252 |         await page.screenshot({\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/tests-visual/shell-identity.spec.ts:249:32"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-06T06:54:22.329Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.0/tests-visual/test-results/shell-identity-shell-ident-f1848-the-home-region-hover-DELTA-chromium-headless-new/error-context.md"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "7f2410eff1deb6659950-50c59328231ce746612b",
+              "file": "shell-identity.spec.ts",
+              "line": 218,
+              "column": 5
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-06T06:54:11.083Z",
+    "duration": 71429.916,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 3,
+    "flaky": 0
+  }
+}

@@ -139,6 +139,28 @@ function resolveSourceReference(from: string, reference: string): string | null 
     return candidates.find((path) => existsSync(path) && statSync(path).isFile()) ?? null;
 }
 
+/**
+ * A script specifier resolves the way the bundler resolves it: the exact path, else a
+ * module extension or a directory index. An extensionless specifier never names a
+ * sheet, so `import { isAriaInvalid } from "../_shared/field/control"` is `control.ts`,
+ * not the `control.css` beside it (which ships only through its `<style src>` in the
+ * SFC bundle). The CSS-first order of `resolveSourceReference` is for CSS references.
+ */
+function resolveScriptReference(from: string, reference: string): string | null {
+    const clean = reference.split(/[?#]/, 1)[0];
+    if (!clean.startsWith(".")) return null;
+    const base = resolve(dirname(from), clean);
+    const candidates = [
+        base,
+        `${base}.ts`,
+        `${base}.js`,
+        `${base}.vue`,
+        resolve(base, "index.ts"),
+        resolve(base, "index.js"),
+    ];
+    return candidates.find((path) => existsSync(path) && statSync(path).isFile()) ?? null;
+}
+
 function isCodeBearingSource(path: string): boolean {
     return /\.(?:vue|jsx?|tsx?|mjs|mts|cjs|cts)$/.test(path);
 }
@@ -188,6 +210,7 @@ function visitVue(
     visitCss: (path: string) => void,
     visitInlineCss: (style: InlineStyle) => void,
     visitScript: (path: string) => void,
+    visitScriptCss: (path: string) => void,
 ): void {
     const source = readFileSync(path, "utf8").replace(/\/\*[\s\S]*?\*\//g, "").replace(/\/\/.*$/gm, "");
     for (const match of source.matchAll(/<style\b[^>]*\bsrc=["']([^"']+)["'][^>]*>/gi)) {
@@ -199,9 +222,9 @@ function visitVue(
     for (const match of source.matchAll(/(?:import|export)\s+(?:[^"']*?\s+from\s+)?["']([^"']+)["']|import\(\s*["']([^"']+)["']\s*\)/g)) {
         const reference = match[1] ?? match[2];
         if (!reference.startsWith(".")) continue;
-        const target = resolveSourceReference(path, reference);
+        const target = resolveScriptReference(path, reference);
         if (!target) throw new Error(`${path}: dangling SFC/script reference ${reference}`);
-        if (target.endsWith(".css")) visitCss(target);
+        if (target.endsWith(".css")) visitScriptCss(target);
         else if (/\.(?:vue|ts|js)$/.test(target)) visitScript(target);
     }
 }
@@ -334,22 +357,26 @@ export function collectStyleClosure(root: string): StyleClosure {
         const node = cssNodes.get(style.id);
         if (node) visitCssNode(node);
     };
+    // A sheet a script imports (`import "./styles.css"`) is a per-component sheet:
+    // the library build keeps the import external (vite.component-sheets.ts), so the
+    // sheet ships as its own published file under `dist/components/` (atlas U/B7 F5).
+    const visitScriptCss = (path: string): void => visitCss(path, true);
     const visitingScripts = new Set<string>();
     const visitScript = (path: string): void => {
         if (!path || visitingScripts.has(path) || !existsSync(path)) return;
         visitingScripts.add(path);
         sources.add(path);
         if (path.endsWith(".vue")) {
-            visitVue(path, visitCss, visitInlineCss, visitScript);
+            visitVue(path, visitCss, visitInlineCss, visitScript, visitScriptCss);
             return;
         }
         const source = readFileSync(path, "utf8").replace(/\/\*[\s\S]*?\*\//g, "").replace(/\/\/.*$/gm, "");
         for (const match of source.matchAll(/(?:import|export)\s+(?:[^"']*?\s+from\s+)?["']([^"']+)["']|import\(\s*["']([^"']+)["']\s*\)/g)) {
             const reference = match[1] ?? match[2];
             if (!reference.startsWith(".")) continue;
-            const target = resolveSourceReference(path, reference);
+            const target = resolveScriptReference(path, reference);
             if (!target) throw new Error(`${path}: dangling public reference ${reference}`);
-            if (target.endsWith(".css")) visitCss(target);
+            if (target.endsWith(".css")) visitScriptCss(target);
             else if (/\.(?:vue|ts|js)$/.test(target)) visitScript(target);
             else addCopySource(target, path);
         }
@@ -409,42 +436,6 @@ function cssFilesUnder(...roots: string[]): string[] {
         if (statSync(root).isFile()) return root.endsWith(".css") ? [root] : [];
         return filesUnder(root).filter((path) => path.endsWith(".css"));
     });
-}
-
-/**
- * foldSfcBundle — AN.W1: fold the SFC scoped component CSS into the `/styles`
- * bundle so a single `@import "@mkbabb/glass-ui/styles"` carries the COMPLETE
- * stylesheet: the token cascade (index.css's @import chain) PLUS the
- * per-component `<style scoped>` payload Vite extracts to `dist/glass-ui.css`
- * (Aurora's `.aurora-root` grid layering, Progress/Slider/etc. scoped rules).
- *
- * The two artefacts sit behind two exports — `./styles` (cascade) and
- * `./styles.css` (SFC scoped). The fold appends an `@import` of the SFC bundle
- * into the dist copy of `index.css` (Shape A): least-invasive, the cascade
- * authoring is untouched, and `./styles.css` stays reachable as a transparent
- * SFC-only export. The `@import` is injected into the DIST copy only —
- * `src/styles/index.css` references no built sibling, so the `proof:theme`
- * source-read stays valid.
- *
- * CSS ordering: the SFC `@import` is inserted before the terminal accessibility
- * import (or the trailing `@source` in an older source tree). The SFC bundle
- * lives one dir up from `dist/styles/`, hence `../glass-ui.css`.
- */
-export function foldSfcBundle(root: string, distStyles: string): void {
-    const distIndex = resolve(distStyles, "index.css");
-    const sfcBundle = resolve(dirname(distStyles), "glass-ui.css");
-    if (existsSync(distIndex) && existsSync(sfcBundle)) {
-        const indexSrc = readFileSync(distIndex, "utf-8");
-        const sfcImport = '@import "../glass-ui.css";';
-        if (!indexSrc.includes(sfcImport)) {
-            const sourceAt = terminalImportIndex(indexSrc);
-            const folded =
-                sourceAt === -1
-                    ? `${indexSrc}\n${sfcImport}\n`
-                    : `${indexSrc.slice(0, sourceAt)}/* AN.W1 — SFC scoped component CSS (folded so a single\n   @import "@mkbabb/glass-ui/styles" carries cascade + components) */\n${sfcImport}\n\n${indexSrc.slice(sourceAt)}`;
-            writeFileSync(distIndex, folded, "utf-8");
-        }
-    }
 }
 
 /**

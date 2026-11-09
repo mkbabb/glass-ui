@@ -57,20 +57,21 @@
            box beside it, at the same `size`. */
         border: 1px solid var(--button-edge);
         /* The stadium bound, resolved against the CONTROL RUNG rather than the
-           box. `--radius-pill` (9999px) is clamped by the engine to half the
+           box. A radius above half the box is clamped by the engine to half the
            ACTUAL block-size, so a button whose label wraps to two lines grows a
            balloon: the curvature tracks the content instead of the control. The
            corner is half the control rung `--button-size` (which the size arms
            re-point to `--control-h-xs/sm/lg`), so a single-line button is
            byte-identical to the stadium it was, and a wrapped or multi-line button
-           keeps single-line curvature. A narrower-than-tall box (the icon arm)
+           keeps single-line curvature until it is past its rung. Past the rung (a
+           wrapped label, a box taller than `--button-size`, or wider than 20rem) the
+           button carries `data-shape="bar"` and takes `--radius-bar` (U/B7 G1-7). A
+           narrower-than-tall box (the icon arm)
            still reads a circle: the engine's own radius scaling clamps the corner
            to half the short edge, which is the resolved-corner precedent — and it is
            the `icon / single tap-target → 50%` row of the radius role spine, so the
            icon arm mints no corner of its own.
-           A bare `min(9999px, …)` is REFUSED: it couples the corner to a second
-           token to re-derive a clamp the engine already applies (GF-DOCK §STRIKE —
-           `from: 50%` IS the resolved corner). */
+           */
         border-radius: calc(var(--button-size) / 2);
         color: var(--button-ink);
         font: inherit;
@@ -252,6 +253,11 @@
         block-size: var(--button-size);
         min-block-size: var(--button-size);
         padding: 0;
+    }
+
+    /* Past its rung the button is a bar (U/B7 G1-7, `useBarShape`). */
+    .button[data-shape="bar"] {
+        border-radius: var(--radius-bar);
     }
 
     /* ── Disabled — DIM, and dim is not desaturate ────────────────────────────

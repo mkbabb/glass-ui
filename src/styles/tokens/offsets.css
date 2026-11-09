@@ -69,10 +69,9 @@
        carried none since 7.0.0; `--tooltip-text` names its reader in its own docblock.] */
     /* `min-w-32` = 32 × 0.25rem = 8rem — the dropdown/select/context-menu min-width. */
     --overlay-min-width: 8rem;
-    /* ONE BOUND, ONE MEASURE. Every portalled list in the family reads this: the
-       dropdown, the command palette, and the Select listbox's precompiled
-       `[data-slot="select-content"]` rule (glass/overlay-plate.css), which used to
-       carry a second, differently-named ceiling of its own.
+    /* THE COMMAND LIST AND THE HINT read this bound. The anchored overlays
+       (DropdownMenu, Select, Popover) do not: they take the room reka measured,
+       with no fixed ceiling (the sizing law, glass/overlay-plate.css, U/B7).
        `min(24rem, 60dvh)` is a COMFORTABLE ceiling that a short viewport tightens:
        24rem is the height past which a menu stops being a menu, and `dvh` — not
        `vh` — is what makes the mobile arm honest, because `vh` measures against the

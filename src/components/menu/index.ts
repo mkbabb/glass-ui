@@ -1,10 +1,13 @@
-export type { MenuTrigger } from "./context";
-
 export {
     default as DropdownMenu,
     type DropdownMenuEmits,
     type DropdownMenuProps,
 } from "./DropdownMenu.vue";
+export {
+    default as ContextMenu,
+    type ContextMenuEmits,
+    type ContextMenuProps,
+} from "./ContextMenu.vue";
 export {
     default as DropdownMenuTrigger,
     type DropdownMenuTriggerAction,

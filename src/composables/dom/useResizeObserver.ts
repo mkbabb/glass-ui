@@ -40,7 +40,9 @@ export interface UseResizeObserverControls {
  * Vue-scope-aware ResizeObserver wrapper.
  *
  * Watches one element ref and fires a callback when its bounding box
- * changes by more than `threshold` CSS pixels in either dimension.
+ * changes by more than `threshold` CSS pixels in either dimension. The
+ * platform's first observation of each element always dispatches, so a
+ * caller learns the element's size on mount without a resize.
  * Dispatch coalesces through `requestAnimationFrame` by default so a
  * caller wiring an expensive re-init (canvas DPR-resync, layout
  * remeasure) doesn't pay for every drag-resize step.
@@ -65,8 +67,11 @@ export function useResizeObserver<T extends Element>(
 
     let observer: ResizeObserver | null = null;
     let observed: Element | null = null;
-    let lastWidth = 0;
-    let lastHeight = 0;
+    // NaN until an element's first observation (and again on `disconnect`): no reading
+    // equals it, so the platform's initial observation, delivered once per `observe`
+    // after layout, always dispatches.
+    let lastWidth = Number.NaN;
+    let lastHeight = Number.NaN;
     let rafId: number | null = null;
     let pending: ResizeObserverEntry | null = null;
 
@@ -106,6 +111,8 @@ export function useResizeObserver<T extends Element>(
         observer?.disconnect();
         observer = null;
         observed = null;
+        lastWidth = Number.NaN;
+        lastHeight = Number.NaN;
         if (rafId !== null) {
             cancelAnimationFrame(rafId);
             rafId = null;
@@ -123,9 +130,6 @@ export function useResizeObserver<T extends Element>(
         });
         observer.observe(el, box ? { box } : undefined);
         observed = el;
-        const rect = el.getBoundingClientRect();
-        lastWidth = rect.width;
-        lastHeight = rect.height;
     }
 
     // The `target` is structurally typed as `RefLike<T | null>` for the

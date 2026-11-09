@@ -30,9 +30,16 @@
 // value domain the engine has no knowledge of).
 //
 // The squish rides the SHARED `useLiquidFlex` `"tanh"` velocity register (the
-// metaball/morph-showcase law), capped at the live `--tab-indicator-max-stretch`
-// getter (≤1.08, the anti-taffy-pull bar). The spring is the coordinated-travel `dock`
+// metaball/morph-showcase law), capped by the `maxStretch` getter (≤1.08, the
+// anti-taffy-pull bar). The spring is the coordinated-travel `dock`
 // row, read from the table, never a new clock.
+//
+// THE VALUE DOMAIN IS THE SURFACE'S CENTRE. The spring and the snap centres share one
+// space: where the surface's centre is, in client coordinates. A press seats the spring
+// on the surface's own centre, not on the pointer, and the pointer's coordinate maps
+// through the grab's offset, so a press moves nothing and a release lands the surface
+// exactly on a snap centre. The snap centres are re-read at each press (kf reads `snap`
+// at construction, and client space moves with any re-flow).
 //
 // COMPOSITOR-ONLY. The follow maps the spring's live position onto a
 // `transform: translate` on the morph axis — NEVER `inline-size`/`left`/`top`/
@@ -91,8 +98,8 @@ export interface UseDragMorphParams<V = string> {
      */
     snapTargets: readonly DragMorphSnapTarget<V>[] | (() => readonly DragMorphSnapTarget<V>[]);
     /**
-     * The live cap getter for the squish (`--tab-indicator-max-stretch`, ≤1.08).
-     * Defaults to the shared 1.08 fence; a getter re-reads the cascade override.
+     * The live cap getter for the squish (≤1.08). Defaults to the shared 1.08
+     * fence; a getter can re-read a cascade override.
      */
     maxStretch?: () => number;
     /**
@@ -184,6 +191,21 @@ export function useDragMorph<V = string>(
     // (`play`) — both deferred to first gesture-arm, NOT setup.
     let spring: SpringProgress | null = null;
     let unsubscribe: (() => void) | null = null;
+    // Fire the single commit once the released spring has settled, ONLY after a real
+    // gesture (not the settled-on-mount emit). Called per frame and at the release: a
+    // release already on its snap centre, or one snapped by PRM, has no frame after it.
+    function commitIfSettled(s: SpringProgress): void {
+        if (!hasGestured || dragging.value || !s.settled || committed) return;
+        const value = nearestValue(s.value);
+        if (value == null) return;
+        committed = true;
+        hasGestured = false;
+        params.onSnap(value);
+        // The model update seats the indicator's base translate while the morph lock is
+        // held; then release the gesture delta without a jump.
+        void nextTick(() => morph.clear());
+    }
+
     function ensureSpring(): SpringProgress {
         if (spring) return spring;
         const s = new SpringProgress({
@@ -204,19 +226,7 @@ export function useDragMorph<V = string>(
             if (!(respectPRM && prefersReducedMotion())) {
                 liquid.drive(normalizedPosition(v));
             }
-            // Fire the single commit when the post-release fling settles — ONLY after
-            // a real gesture (not the settled-on-mount emit).
-            if (hasGestured && !dragging.value && s.settled && !committed) {
-                const value = nearestValue(v);
-                if (value != null) {
-                    committed = true;
-                    hasGestured = false;
-                    params.onSnap(value);
-                    // The model update seats the indicator's base translate while the
-                    // morph lock is held; then release the gesture delta without a jump.
-                    void nextTick(() => morph.clear());
-                }
-            }
+            commitIfSettled(s);
         });
         // Arm the engine's managed rAF lifecycle (the no-op keeps the auto-resume
         // gate non-null — the useSpring precedent; state read through `subscribe`).
@@ -245,7 +255,10 @@ export function useDragMorph<V = string>(
 
     // The follow is an offset from the settled footprint. `useElementMorph` owns
     // the transform write; this gesture owns only pointer physics and snap value.
+    // `dragOrigin` is the surface's settled centre at the press, `grabOffset` how far
+    // from that centre the pointer came down.
     const dragOrigin = ref(0);
+    let grabOffset = 0;
 
     // The normalized travel domain for the squish — the span across the first/last
     // snap centers. `drive(t)` wants 0→1, so map the live position onto that span.
@@ -310,7 +323,7 @@ export function useDragMorph<V = string>(
     // the first paint). Re-resolve the axis on attach so an orientation flip
     // re-binds the correct pointer axis.
     function reattach(): void {
-        handleEl?.removeEventListener("pointerdown", onPointerDownCapture);
+        handleEl?.removeEventListener("pointerdown", onPointerDownCapture, true);
         handleEl = null;
         detachDrag?.();
         detachDrag = null;
@@ -318,25 +331,43 @@ export function useDragMorph<V = string>(
         const node = params.handle.value;
         if (!node) return;
         handleEl = node;
-        // (Re)build the Draggable over OUR reused spring (the physics core stays the
-        // single source of truth across rebuilds; a rebuild re-resolves the axis on
-        // an orientation flip AND re-reads the snap centers — kf reads `snap` at
-        // construction, so a geometry change re-resolves them HERE, never live on
-        // release).
+        node.addEventListener("pointerdown", onPointerDownCapture, true);
+        armDraggable(node);
+    }
+
+    // (Re)build the Draggable over OUR reused spring (the physics core stays the single
+    // source of truth across rebuilds). A rebuild re-resolves the axis on an orientation
+    // flip AND re-reads the snap centers: kf reads `snap` at construction.
+    function armDraggable(node: HTMLElement): void {
+        detachDrag?.();
         draggable = new Draggable({
             spring: ensureSpring(),
             axis: axisOf(),
             snap: targetsOf().map((t) => t.center),
+            transform: (coord) => coord - grabOffset,
         });
-        node.addEventListener("pointerdown", onPointerDownCapture);
         detachDrag = draggable.attach(node);
     }
 
-    function onPointerDownCapture(): void {
+    // In the capture phase, so it runs before the Draggable's own listener seats the
+    // spring through `transform`.
+    function onPointerDownCapture(e: PointerEvent): void {
+        // A second pointer does not re-seat a gesture in flight.
+        if (dragging.value) return;
+        const handle = e.currentTarget as HTMLElement;
+        const el = (params.surface ?? params.handle).value;
+        if (!el) return;
         dragging.value = true;
         committed = false;
         hasGestured = true;
-        dragOrigin.value = ensureSpring().value;
+        // Lock first, so a selection glide in flight resolves to the settled box.
+        morph.offset(0, 0);
+        const box = el.getBoundingClientRect();
+        const vertical = axisOf() === "y";
+        const center = vertical ? box.top + box.height / 2 : box.left + box.width / 2;
+        dragOrigin.value = center;
+        grabOffset = (vertical ? e.clientY : e.clientX) - center;
+        armDraggable(handle);
         // While dragging, the squish is live; on settle the watcher releases it
         // to 1 via the normalized-position drive (the travel decays to 0).
     }
@@ -349,6 +380,13 @@ export function useDragMorph<V = string>(
         // so the settle watcher arms the single COMMIT-side `onSnap` (off the value
         // the spring settles at — the nearest center the engine snapped to).
         dragging.value = false;
+        if (!spring) return;
+        // A release on the snap centre it already sits on has no travel left. The
+        // Draggable re-seats the spring there with the release velocity and aims it at
+        // that same centre, which kf treats as an unchanged target: the spring is left
+        // unsettled and never ticks, so the gesture would never finish. Settle it in place.
+        if (!spring.settled && spring.value === spring.target) spring.snap();
+        commitIfSettled(spring);
     }
 
     // The kf Draggable owns the per-gesture pointermove/up; we mirror dragging
@@ -380,7 +418,7 @@ export function useDragMorph<V = string>(
     bindWindowUp();
 
     function detach(): void {
-        handleEl?.removeEventListener("pointerdown", onPointerDownCapture);
+        handleEl?.removeEventListener("pointerdown", onPointerDownCapture, true);
         handleEl = null;
         detachDrag?.();
         detachDrag = null;

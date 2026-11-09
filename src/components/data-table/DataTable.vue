@@ -7,6 +7,7 @@ import {
     onUpdated,
     ref,
     useSlots,
+    watch,
 } from "vue";
 import { useResizeObserver } from "../../composables/dom";
 import {
@@ -67,16 +68,40 @@ const renderedState = computed(() => {
 // The root owns measurement; the composable derives only the projection.
 const rootRef = ref<HTMLElement | null>(null);
 const rootWidth = ref(0);
+// A content-sized host (inline-block, flex item, `auto` grid track, fit-content) sizes
+// the root to the projection it renders. When the table is narrower than the breakpoint
+// and the cards wider, each projection's own width asks for the other, and the two
+// alternate every frame. So a projection change measures the root it just rendered: a
+// width that would take the projection straight back is the change's own echo, and is
+// held. Only a different width, a change from outside, decides again.
+let heldWidth = Number.NaN;
 useResizeObserver(rootRef, (rect) => {
+    if (Math.abs(rect.width - heldWidth) < 1) return;
+    heldWidth = Number.NaN;
     rootWidth.value = rect.width;
 });
 
-const { isCard, headerColumn, bodyColumns } = useDataTableResponsive<T>({
+const { isCard, cardAt, headerColumn, bodyColumns } = useDataTableResponsive<T>({
     columns: () => props.columns,
     responsive: () => props.responsive,
     cardBreakpoint: () => props.cardBreakpoint,
     containerWidth: rootWidth,
 });
+
+watch(
+    isCard,
+    (card) => {
+        const el = rootRef.value;
+        if (!el) return;
+        // The content-box width, as the observer reports it (`clientWidth` is
+        // untransformed and excludes border and scrollbar).
+        const cs = getComputedStyle(el);
+        const width =
+            el.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
+        heldWidth = cardAt(width) === card ? Number.NaN : width;
+    },
+    { flush: "post" },
+);
 
 // Stable identity validation stays separate from rendering and interaction.
 const { rowEntries } = useDataTableRowIdentity<T>({

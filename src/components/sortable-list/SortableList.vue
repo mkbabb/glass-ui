@@ -1,4 +1,5 @@
 <script setup lang="ts" generic="T">
+import "./styles.css";
 import { computed, toRef, useAttrs, type Ref } from "vue";
 
 import { provideSortableContext } from "./context";
@@ -78,4 +79,3 @@ defineExpose({
     </span>
 </template>
 
-<style src="./styles.css"></style>

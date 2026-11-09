@@ -19,7 +19,7 @@ state machine, and one motion spine. Import the family from `@mkbabb/glass-ui/do
 
 - `GlassDock` owns the plate, orientation, collapse state, overflow, and backdrop mode.
 - `DockControl` is the button face. Use `shape="icon"` or `shape="tab"`.
-- `DockTrigger` applies the same face to select, dropdown, or popover triggers.
+- `DockTrigger` (from `@mkbabb/glass-ui/dock-trigger`) applies the same face to select, dropdown, or popover triggers.
 - `DockSeparator` follows the dock's orientation and layout.
 - `DockLayerGroup` and `DockLayer` compose consumer-owned selectable panes.
 - `DockCrossfade` is the thin controlled face-swap primitive.
@@ -34,23 +34,28 @@ the existing Reka-backed menu, select, or popover families.
 | Prop | Values | Default |
 | --- | --- | --- |
 | `orientation` | `horizontal`, `vertical` | `horizontal` |
-| `size` | `sm`, `md`, `lg`, `xl` | `md` |
 | `shape` | `pill`, `rounded`, `card` | `pill` |
-| `layout` | `linear`, `grid` | `linear` |
-| `position` | `fixed`, `inline`, `sticky` | `inline` |
-| `overflow` | `grow`, `wrap` | `grow` |
+| `collapse` | `"closed"`, `"open"`, `false` | `"closed"` |
+| `expandOn` | `hover`, `press` | `hover` |
+| `anchor` | `center`, `start`, `end` | `center` |
+| `collapsedLabel` | string | `"Expand dock"` |
 | `backdropMode` | `live`, `static` | `live` |
-| `alwaysExpanded` | boolean | `false` |
-| `startCollapsed` | boolean | `true` |
-| `collapseDelay` | milliseconds | `2000` |
 | `fitContent` | boolean | `false` |
 | `backgroundCanvas` | canvas, getter, selector, or `null` | `null` |
-| `search` | boolean | `false` |
 
-`layout="grid"` is always expanded. `overflow="wrap"` applies to horizontal docks;
-capped horizontal and vertical runs otherwise use native scrolling only when measured
-content exceeds the relevant size cap. `backdropMode="static"` avoids backdrop sampling
-and filtering (a `"live"` dock samples the painted backdrop by default).
+`collapse: false` never collapses. `expandOn="press"` opens only on a press or
+Enter/Space on the collapsed summary, pinned; hover, focus and the idle timer are inert,
+and Escape, a press outside or focus leaving the dock closes it. Use it where a page
+carries many docks (one per figure). `anchor` is a hook for your own CSS: a value other than
+`center` is written to the root as `data-anchor`, and that is all it does. It does not move
+the dock or change its morph. The morph grows from the edge your layout lays the dock at,
+because its origin is measured when it starts, so a dock your layout centres grows on both
+sides whatever `anchor` says. The dock centres itself in its own box with auto inline
+margins, so to hold it at an edge, put it in a wrapper sized to its content (a
+`display: flex` box at the end of a row, say).
+`collapsedLabel` names the collapsed summary, e.g. "Tools for Fund balance by year".
+`backdropMode="static"` avoids backdrop sampling and filtering (a `"live"` dock samples
+the painted backdrop by default).
 
 ## Slots
 

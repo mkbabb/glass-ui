@@ -54,8 +54,7 @@ export * from "../reveal/vReveal";
 // volume-preserving squish (the reconcile of the tabs-indicator reciprocal-stretch +
 // the metaball `sa`/`1/sa` squash). Owns no spring/rAF/element — imports `vue` only,
 // so it is engine-FREE + vueuse-FREE and ships on the `/motion-core` surface AND the
-// root barrel. ≥2 consumers: useSelectionIndicator (the tabs-indicator squish),
-// useLiquidPress, useDragMorph, usePagerWorm (the pager-dots worm), and Timeline
+// root barrel. ≥2 consumers: useLiquidPress, useDragMorph, usePagerWorm (the pager-dots worm), and Timeline
 // (the meniscus cap + the mark swell, one cap for both).
 export * from "../spring/useLiquidFlex";
 // Shared viz-pointer-physics field (pointer position +
@@ -99,7 +98,7 @@ export * from "../scroll/useScrollChrome";
 // cap AT the consuming element off the live `--motion-weight`, NEVER a :root calc
 // token). Engine-FREE + vueuse-FREE (no `vue`, no `@mkbabb/keyframes.js`) — ships
 // on the `/motion-core` surface alongside the squish primitives it serves. The
-// `--stretch` write-sites (useSelectionIndicator/useTabDragMorph/useLiquidPress)
+// `--stretch` write-sites (useLiquidPress and the drag primitives)
 // read the cap through `effectiveCap` + fold the velocity boost via
 // `writeVelocityWeight`.
 export * from "./writeVelocityWeight";

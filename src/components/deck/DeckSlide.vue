@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import "./styles/index.css";
 import type { HTMLAttributes } from "vue";
 import { computed } from "vue";
 import { cn } from "../_shared/class-names";

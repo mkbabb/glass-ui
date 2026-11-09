@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import "./styles.css";
 import { computed } from "vue";
 import { cn } from "../_shared/class-names";
 import { useCarousel } from "./useCarousel";

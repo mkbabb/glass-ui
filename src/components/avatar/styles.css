@@ -130,7 +130,7 @@
    last block, border-radius only.] */
 @layer components {
     .avatar[data-shape="circle"] .avatar__identity {
-        border-radius: var(--mark-stadium, var(--radius-pill));
+        border-radius: var(--radius-circle);
     }
 
     .avatar[data-shape="square"] .avatar__identity {
@@ -138,6 +138,6 @@
     }
 
     .avatar__status {
-        border-radius: var(--mark-stadium, var(--radius-pill));
+        border-radius: var(--radius-circle);
     }
 }

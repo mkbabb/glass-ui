@@ -85,10 +85,17 @@ function declarationFiles(outputRoot) {
     return files.sort();
 }
 
+// A side-effect stylesheet import (`import "./styles.css";`) has no type meaning, and
+// vue-tsc copies one into the `.d.ts` of every SFC whose script imports its sheet
+// (the F5 component sheets). An installed consumer's TypeScript then fails with
+// TS2882, no declarations for the side-effect import (U/B7b X3). The runtime chunk
+// keeps the import; the declaration drops it.
+const styleSideEffectPattern = /^[ \t]*import\s+(["'])[^"']+\.css\1;?[ \t]*\r?\n?/gm;
+
 function closeDeclarationReferences(outputRoot) {
     const files = declarationFiles(outputRoot);
     for (const file of files) {
-        const source = readFileSync(file, "utf8");
+        const source = readFileSync(file, "utf8").replace(styleSideEffectPattern, "");
         const rewritten = source.replace(
             relativeReferencePattern,
             (match, prefix, quote, reference) => {
@@ -104,7 +111,7 @@ function closeDeclarationReferences(outputRoot) {
                 return `${prefix}${quote}${next.startsWith(".") ? next : `./${next}`}${quote}`;
             },
         );
-        if (rewritten !== source) writeFileSync(file, rewritten, "utf8");
+        if (rewritten !== readFileSync(file, "utf8")) writeFileSync(file, rewritten, "utf8");
     }
 }
 

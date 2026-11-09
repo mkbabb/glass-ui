@@ -12,7 +12,7 @@ overlay through a disabled/enabled Teleport.
 
 ## Export
 
-- **`ExpandableContainer`** — owns body locking, Escape exit, direct Reka focus
+- **`ExpandableContainer`** — owns the scroll lock (on the root element, so `body` never becomes a scroll container and sticky ancestors hold; the root keeps a stable gutter), Escape exit, direct Reka focus
   containment/restoration, and the fullscreen ~~`glass-overlay` tier
   (`surface="opaque"` opts into a solid wall)~~ [struck 2026-08-10, BK #52: the
   expanded root is the WORLD SCRIM and the scrim takes no rung on the glass ladder.

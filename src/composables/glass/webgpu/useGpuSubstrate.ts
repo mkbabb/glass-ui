@@ -48,6 +48,14 @@ export interface GpuSubstrateOptions {
     /** The GLSL program builder (the WebGL2 fallback path — always required). */
     setupGL: WebGLCanvasOptions["setup"];
     /**
+     * Awaited before a backend arms, with the backend about to run its `setup`. A viz
+     * whose setup lives in a dynamically imported module loads it here, so only the
+     * backend the host resolves is fetched (atlas U/B7 F6: the aurora WebGL and WebGPU
+     * paths are separate chunks). Each setup callback is still synchronous; this hook
+     * makes sure it can be. A rejection is that backend's arm failure.
+     */
+    prepare?: (backend: GpuBackend) => Promise<void>;
+    /**
      * The consumer's DPR policy: a flat multiplier
      * or a box-aware resolver). REQUIRED: the leaf owns the backing-store measurement
      * + sizes it SYNCHRONOUSLY at mount (the ONE sizer; before the async acquire on the
@@ -247,7 +255,7 @@ export function createGpuSubstrate(
     }
 
     /** Fall from a recognized pre-context WebGPU acquisition failure to WebGL2. */
-    function fallToWebGL2(error: unknown): void {
+    async function fallToWebGL2(error: unknown): Promise<void> {
         // Dispose the half-built WebGPU leaf (releases the device, unbinds the
         // device-loss promise) before standing up the net.
         webgpu?.dispose();
@@ -256,6 +264,8 @@ export function createGpuSubstrate(
         emitStatus(pendingRenderer("webgl2"));
         options.onBackendFallback?.({ from: "webgpu", to: "webgl2", error });
         try {
+            await options.prepare?.("webgl2");
+            if (disposed) return;
             webgl2 = buildWebGL2(canvas, options);
             webgl2.arm();
             emitStatus({
@@ -284,6 +294,8 @@ export function createGpuSubstrate(
                 // configure → setup prelude. On a no-adapter host it REJECTS (the leaf
                 // no longer throws an uncaught error to the page — D8'); the reject is
                 // caught HERE and routed to the net.
+                await options.prepare?.("webgpu");
+                if (disposed || !webgpu) return;
                 await webgpu.armAsync();
                 emitStatus({
                     phase: "ready",
@@ -300,15 +312,17 @@ export function createGpuSubstrate(
                     err instanceof WebGPUInitError &&
                     err.kind !== "pipeline-validation"
                 ) {
-                    fallToWebGL2(err);
+                    await fallToWebGL2(err);
                     return;
                 }
                 emitStatus(rendererFailure("webgpu", webgpu.adapterClass, err));
                 throw err;
             }
         }
-        // The WebGL2 net is synchronous — arm it immediately.
+        // The WebGL2 net arms synchronously once its setup is loaded.
         try {
+            await options.prepare?.("webgl2");
+            if (disposed) return;
             webgl2?.arm();
             emitStatus({
                 phase: "ready",

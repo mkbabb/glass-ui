@@ -733,7 +733,11 @@ describe("G-12 SURFACE — the dead ceremony is gone and the names stopped lying
             const body = read(sfc);
             expect(body, `${sfc} authors CSS`).not.toMatch(/<style(?![^>]*\bsrc=)/);
         }
-        expect(read("SortableList.vue")).toContain('<style src="./styles.css">');
+        // the lane ships as a per-component sheet the SFCs import from script (atlas U/B7 F5)
+        for (const sfc of ["SortableList.vue", "SortableItem.vue", "SortableHandle.vue"]) {
+            expect(read(sfc), `${sfc} does not import the lane`).toContain('import "./styles.css";');
+            expect(read(sfc), `${sfc} keeps a style block`).not.toMatch(/<style\b/);
+        }
     });
 
     it("every spring is bound BY NAME — no response, damping or clock is typed", () => {

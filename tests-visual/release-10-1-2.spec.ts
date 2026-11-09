@@ -1,0 +1,541 @@
+// glass-ui 10.1.2 — the engine witnesses for the declared seat marker (atlas G-4, arm
+// b-ii; INBOUND O-102d). Each drives `release-10-1-2/harness.html?scene=<name>` (the real
+// components from `src/` under the demo's own cascade) and reads focus and attributes,
+// never pixels, at 1440 and 390. Engines: the `chromium-headless-new` project, and the
+// `webkit` project on Playwright WebKit 2287 (`webkit-2287.config.ts`, under
+// `guarded --exclusive webkit`). RED on a 10.1.1 tree carrying this spec and harness
+// except where a test says it is a regression arm, GREEN on 10.1.2.
+import { expect, test, type Page } from "@playwright/test";
+
+async function open(page: Page, scene: string): Promise<void> {
+    await page.goto(`/tests-visual/release-10-1-2/harness.html?scene=${scene}`);
+    await page.waitForFunction(() => (window as unknown as { __ready?: boolean }).__ready);
+    await page.locator('[data-witness="seat-0"]').waitFor();
+}
+
+const active = (page: Page) =>
+    page.evaluate(
+        () =>
+            document.activeElement?.getAttribute("data-witness") ??
+            document.activeElement?.getAttribute("data-item") ??
+            null,
+    );
+
+/**
+ * Tab from the `before` stop to the `after` stop, recording each stop on the way. WebKit's
+ * plain Tab skips buttons by default (Safari's "Press Tab to highlight each item" is off),
+ * so there the walk presses Option-Tab, which is Safari's full sequential focus order.
+ */
+async function tabWalk(page: Page, browserName: string): Promise<(string | null)[]> {
+    const key = browserName === "webkit" ? "Alt+Tab" : "Tab";
+    await page.locator('[data-witness="before"]').focus();
+    const walk: (string | null)[] = [];
+    for (let i = 0; i < 16; i++) {
+        await page.keyboard.press(key);
+        const at = await active(page);
+        walk.push(at);
+        if (at === "after") break;
+    }
+    return walk;
+}
+
+const run = (page: Page) => page.locator(".dock-run");
+
+for (const [label, viewport] of [
+    ["1440", { width: 1440, height: 900 }],
+    ["390", { width: 390, height: 844 }],
+] as const) {
+    test.describe(`10.1.2 · ${label}`, () => {
+        test.use({ viewport });
+
+        test("G-4 · the atlas shapes seated in a run are all Tab-reachable", async ({
+            page,
+            browserName,
+        }) => {
+            await open(page, "atlas");
+            expect(await tabWalk(page, browserName)).toEqual([
+                "seat-0",
+                "filter",
+                "gear",
+                "handle",
+                "year-from",
+                "year-to",
+                "dark",
+                "after",
+            ]);
+        });
+
+        test("G-4 · arrows rove only the declared seats; an undeclared control keeps its keys", async ({
+            page,
+        }) => {
+            await open(page, "atlas");
+            await page.locator('[data-witness="seat-0"]').focus();
+            await page.keyboard.press("ArrowRight");
+            expect(await active(page)).toBe("seat-9");
+            await page.keyboard.press("ArrowLeft");
+            expect(await active(page)).toBe("seat-0");
+            for (const name of ["gear", "handle", "dark"]) {
+                await page.locator(`[data-witness="${name}"]`).focus();
+                await page.keyboard.press("ArrowRight");
+                expect(await active(page), name).toBe(name);
+            }
+        });
+
+        test("G-4 · a run with an undeclared child claims no toolbar role", async ({ page }) => {
+            await open(page, "atlas");
+            expect(await run(page).getAttribute("role")).toBeNull();
+            expect(await run(page).getAttribute("aria-orientation")).toBeNull();
+        });
+
+        // RED on 10.1.1 (the splitter inferred a seat, -1, under a toolbar claim) and on
+        // the first 10.1.2 cuts (any role=separator waived from the claim).
+        test("G-4 · a focusable splitter is undeclared: its own stop, no toolbar role", async ({
+            page,
+            browserName,
+        }) => {
+            await open(page, "splitter");
+            expect(await run(page).getAttribute("role")).toBeNull();
+            expect(await tabWalk(page, browserName)).toEqual(["seat-0", "splitter", "after"]);
+        });
+
+        // Regression arm: green on 10.1.1 too, which claimed the role over every run.
+        test("G-4 · an all-declared run is one toolbar stop with arrows across it", async ({
+            page,
+            browserName,
+        }) => {
+            await open(page, "declared");
+            expect(await run(page).getAttribute("role")).toBe("toolbar");
+            expect(await tabWalk(page, browserName)).toEqual(["seat-0", "after"]);
+            await page.locator('[data-witness="seat-0"]').focus();
+            await page.keyboard.press("ArrowRight");
+            expect(await active(page)).toBe("seat-1");
+            await page.keyboard.press("ArrowRight");
+            expect(await active(page)).toBe("seat-2");
+        });
+
+        // RED on 10.1.1, which roved ArrowRight from seat-1 onto reka's hidden native
+        // `<select>` (an inferred seat), and on the first three 10.1.2 cuts, which counted
+        // that `<select>` as an undeclared child and claimed no role.
+        test("G-4 · a DockTrigger for=select in a form keeps an all-declared run's toolbar", async ({
+            page,
+            browserName,
+        }) => {
+            await open(page, "form-select");
+            expect(await page.locator('.dock-run > select[aria-hidden="true"]').count()).toBe(1);
+            expect(await run(page).getAttribute("role")).toBe("toolbar");
+            expect(await tabWalk(page, browserName)).toEqual(["seat-0", "after"]);
+            await page.locator('[data-witness="seat-0"]').focus();
+            await page.keyboard.press("ArrowRight");
+            expect(await active(page)).toBe("seat-1");
+            await page.keyboard.press("ArrowRight");
+            expect(await active(page)).toBe("seat-3");
+        });
+
+        // The claim follows the form select's `aria-hidden` and `tabindex` changed in
+        // place, both ways. RED on 10.1.1 (the role over every run) and on the fourth
+        // 10.1.2 cut, which observed neither (critique-4 D-2).
+        test("G-4 · the toolbar claim follows a child's aria-hidden and tabindex in place", async ({
+            page,
+        }) => {
+            await open(page, "form-select");
+            const native = page.locator('.dock-run > select[aria-hidden="true"]');
+            const handle = await native.elementHandle();
+            expect(await run(page).getAttribute("role")).toBe("toolbar");
+            await handle!.evaluate((el) => {
+                el.removeAttribute("aria-hidden");
+                el.removeAttribute("tabindex");
+            });
+            await expect(run(page)).not.toHaveAttribute("role", "toolbar");
+            await handle!.evaluate((el) => {
+                el.setAttribute("aria-hidden", "true");
+                el.setAttribute("tabindex", "-1");
+            });
+            await expect(run(page)).toHaveAttribute("role", "toolbar");
+        });
+
+        // RED on 10.1.1 (the role over every run) and on the fourth 10.1.2 cut, which
+        // waived any `aria-hidden` child with a negative `tabIndex`, a wrapper included.
+        test("G-4 · an aria-hidden wrapper around a Tab stop voids the toolbar claim", async ({
+            page,
+            browserName,
+        }) => {
+            await open(page, "hidden-wrapper");
+            expect(await run(page).getAttribute("role")).toBeNull();
+            expect(await tabWalk(page, browserName)).toEqual(["seat-0", "hid", "after"]);
+        });
+
+        // A seat that drops its marker while mounted gets back the tab stop the run took.
+        // RED on 10.1.1 (an inferred seat, held at -1) and on the first 10.1.2 cut.
+        test("G-4 · a child that drops its declaration is Tab-reachable again", async ({
+            page,
+            browserName,
+        }) => {
+            await open(page, "reactive");
+            expect(await run(page).getAttribute("role")).toBe("toolbar");
+            expect(await tabWalk(page, browserName)).toEqual(["seat-0", "after"]);
+            await page.evaluate(() => (window as unknown as { __undeclare: () => void }).__undeclare());
+            await expect(run(page)).not.toHaveAttribute("role", "toolbar");
+            expect(await page.locator('[data-witness="middle"]').getAttribute("tabindex")).toBeNull();
+            expect(await tabWalk(page, browserName)).toEqual(["seat-0", "middle", "after"]);
+        });
+
+        // critique-b3 D-1 · Q1. A declared seat stays focusable: a disabled Select's
+        // DockTrigger is `aria-disabled`, so holding the stop keeps the run in the Tab
+        // order. RED on 53c68dab7 (native `disabled` on the stop: the walk is `after`).
+        // 10.1.1 skipped the disabled trigger (`seat-1, after`); 10.1.2 keeps it, as
+        // `<DockControl disabled>` always was, a present-but-disabled stop.
+        test("G-4 · a disabled DockTrigger holding the stop keeps the run in the Tab order", async ({
+            page,
+            browserName,
+        }) => {
+            await open(page, "disabled-first");
+            const seat0 = page.locator('[data-witness="seat-0"]');
+            expect(await seat0.getAttribute("aria-disabled")).toBe("true");
+            expect(await seat0.evaluate((el) => (el as HTMLButtonElement).disabled)).toBe(false);
+            expect(await tabWalk(page, browserName)).toEqual(["seat-0", "after"]);
+            await seat0.focus();
+            await page.keyboard.press("ArrowRight");
+            expect(await active(page)).toBe("seat-1");
+        });
+
+        // critique-b3 D-1 · Q2. The arrows pass a disabled DockTrigger mid-run. RED on
+        // 53c68dab7 (seat-0 -> seat-0 -> seat-0: focus() on a native-disabled seat fails).
+        test("G-4 · the arrows pass a disabled DockTrigger mid-run", async ({ page, browserName }) => {
+            await open(page, "disabled-mid");
+            await page.locator('[data-witness="before"]').focus();
+            await page.keyboard.press(browserName === "webkit" ? "Alt+Tab" : "Tab");
+            expect(await active(page)).toBe("seat-0");
+            await page.keyboard.press("ArrowRight");
+            expect(await active(page)).toBe("seat-1");
+            await page.keyboard.press("ArrowRight");
+            expect(await active(page)).toBe("seat-2");
+        });
+
+        // Regression arm: green on 10.1.1 too (its held-control clause), kept because the
+        // (b-ii) contract must hold it without that clause.
+        test("G-4 · a RadioGroup and a ToggleGroup seated directly keep their arrows", async ({
+            page,
+        }) => {
+            await open(page, "composites");
+            for (const group of ["radio", "toggle"]) {
+                await page.locator(`[data-item="${group}-x"]`).focus();
+                await page.keyboard.press("ArrowRight");
+                expect(await active(page), group).toBe(`${group}-y`);
+            }
+            await page.locator('[data-witness="seat-0"]').focus();
+            await page.keyboard.press("ArrowRight");
+            expect(await active(page)).toBe("seat-9");
+        });
+    });
+}
+
+// critique-b4 D-1 · a disabled DockTrigger paints disabled. Scene `disabled-paint`: a
+// select, dropdown and popover DockTrigger, each disabled, then an enabled popover
+// trigger. Each disabled arm computes `opacity` equal to `--opacity-disabled` and
+// `cursor: not-allowed`, and a hover and a press over it leave its fill and scale at
+// rest. The enabled trigger takes the hover fill, so the pointer is known to reach the
+// run. These cells read computed style, the one place in this spec that reads paint, in
+// both schemes. RED on abd829944 (the trigger paint keyed on `:disabled`, which 2b4efe77e
+// had moved to `aria-disabled`: opacity 1, cursor pointer, the enabled hover fill).
+type Paint = { opacity: string; token: string; cursor: string; background: string; scale: string };
+
+async function paintOf(page: Page, name: string): Promise<Paint> {
+    return page.locator(`[data-witness="${name}"]`).evaluate(async (el) => {
+        await Promise.all(el.getAnimations().map((a) => a.finished.catch(() => undefined)));
+        const cs = getComputedStyle(el);
+        return {
+            opacity: cs.opacity,
+            token: cs.getPropertyValue("--opacity-disabled").trim(),
+            cursor: cs.cursor,
+            background: cs.backgroundColor,
+            scale: cs.scale,
+        };
+    });
+}
+
+for (const [label, viewport] of [
+    ["1440", { width: 1440, height: 900 }],
+    ["390", { width: 390, height: 844 }],
+] as const) {
+    for (const scheme of ["light", "dark"] as const) {
+        test.describe(`10.1.2 · ${label} · ${scheme}`, () => {
+            test.use({ viewport, colorScheme: scheme });
+
+            test("D-1 · a disabled DockTrigger paints disabled and takes no hover or press fill", async ({
+                page,
+            }) => {
+                await open(page, "disabled-paint");
+                expect(
+                    await page.evaluate(() => document.documentElement.classList.contains("dark")),
+                    "the scheme reached the page",
+                ).toBe(scheme === "dark");
+
+                const live = page.locator('[data-witness="live"]');
+                const liveRest = await paintOf(page, "live");
+                await live.hover();
+                expect((await paintOf(page, "live")).background, "the enabled trigger's hover fill").not.toBe(
+                    liveRest.background,
+                );
+
+                for (const arm of ["select", "dropdown", "popover"]) {
+                    const seat = page.locator(`[data-witness="${arm}"]`);
+                    await page.mouse.move(0, 0);
+                    const rest = await paintOf(page, arm);
+                    expect(await seat.getAttribute("aria-disabled"), arm).toBe("true");
+                    expect(Number(rest.token), `${arm} --opacity-disabled`).toBeLessThan(1);
+                    expect(Number(rest.opacity), `${arm} opacity`).toBeCloseTo(Number(rest.token), 3);
+                    expect(rest.cursor, `${arm} cursor`).toBe("not-allowed");
+
+                    await seat.hover();
+                    const hovered = await paintOf(page, arm);
+                    expect(hovered.background, `${arm} hover fill`).toBe(rest.background);
+                    expect(hovered.opacity, `${arm} hover opacity`).toBe(rest.opacity);
+
+                    await page.mouse.down();
+                    const pressed = await paintOf(page, arm);
+                    await page.mouse.up();
+                    expect(pressed.background, `${arm} press fill`).toBe(rest.background);
+                    expect(pressed.scale, `${arm} press scale`).toBe(rest.scale);
+                    await page.keyboard.press("Escape");
+                }
+            });
+        });
+    }
+}
+
+// O-101 · DOCK-STALE-EXPANDED-ENDPOINT (value.js letter 2026-10-19; INBOUND O-101,
+// O-101a). The scene's full pane is a breakpoint's (12 seats at >= 768px, 3 below), so a
+// resize across 768px changes it. Every frame is sampled from just before the change.
+// RED on 10.1.1, which latched the expanded endpoint only while expanded, so a morph
+// reserved the old pane's span.
+//
+// Three sequences, each at 1440->390 and 390->1440:
+// - `collapsed`: expand and collapse at the first width, change the pane while collapsed,
+//   expand (`pin` expands it in the same render as the breakpoint, value.js's shape;
+//   otherwise `__expand()` after the collapsed dock re-lays out). Witness:
+//   `--dock-expanded-px` on the first morphing frame equals the settled size (+-1 px).
+// - `reversal`: expand and collapse at the first width, then 60 ms into a collapse change
+//   the pane and expand again.
+// - `mid-expand`: collapsed at the first width, expand, and 60 ms in change the pane.
+//   Witness for both: every morphing frame after the change reserves the settled size
+//   (+-1 px), so the pane retargets the reserved box rather than leaving it.
+// All three: no frame has the document scrolling on the morph axis.
+//
+// The horizontal dock reserves `inline-size`; the vertical one (`?axis=vertical`)
+// reserves `block-size`. The vertical dock is capped at `--dock-max-block-size`, so a
+// stale reservation there shows as the reserved size, not as document scroll.
+interface Frame {
+    morphing: boolean;
+    changed: boolean;
+    reserved: number;
+    size: number;
+    scroll: number;
+    client: number;
+}
+
+type Axis = "horizontal" | "vertical";
+type Sequence = "collapsed" | "pinned" | "reversal" | "mid-expand";
+
+const viewport = (width: number) => ({ width, height: 844 });
+
+async function driveStaleEndpoint(
+    page: Page,
+    axis: Axis,
+    from: number,
+    to: number,
+    sequence: Sequence,
+    scene: "stale-endpoint" | "overflow" = "stale-endpoint",
+) {
+    await page.setViewportSize(viewport(from));
+    const pin = sequence === "pinned" ? (to < 768 ? "narrow" : "wide") : "";
+    await page.goto(`/tests-visual/release-10-1-2/harness.html?scene=${scene}&pin=${pin}&axis=${axis}`);
+    await page.waitForFunction(() => (window as unknown as { __ready?: boolean }).__ready);
+    const settled = (posture: "expanded" | "collapsed") =>
+        page.waitForFunction(
+            (p) => {
+                const el = document.querySelector(".glass-dock");
+                return !!el && el.classList.contains(p) && !el.hasAttribute("data-morphing");
+            },
+            posture,
+        );
+    const call = (name: string) =>
+        page.evaluate((n) => (window as unknown as Record<string, () => void>)[n](), name);
+
+    await settled("collapsed");
+    if (sequence !== "mid-expand") {
+        // Expand and collapse at the first width, so the endpoints are the first pane's.
+        await call("__expand");
+        await settled("expanded");
+        await page.waitForTimeout(150);
+        if (sequence !== "reversal") {
+            await call("__collapse");
+            await settled("collapsed");
+            await page.waitForTimeout(150);
+        }
+    }
+
+    await page.evaluate(
+        ({ vertical, to }) => {
+            const w = window as unknown as { __frames: Frame[]; __stop: boolean };
+            w.__frames = [];
+            w.__stop = false;
+            const tick = () => {
+                const el = document.querySelector<HTMLElement>(".glass-dock")!;
+                const root = document.documentElement;
+                w.__frames.push({
+                    morphing: el.hasAttribute("data-morphing"),
+                    changed: innerWidth === to,
+                    reserved: Number.parseFloat(el.style.getPropertyValue("--dock-expanded-px")),
+                    size: vertical ? el.offsetHeight : el.offsetWidth,
+                    scroll: vertical ? root.scrollHeight : root.scrollWidth,
+                    client: vertical ? root.clientHeight : root.clientWidth,
+                });
+                if (!w.__stop) requestAnimationFrame(tick);
+            };
+            requestAnimationFrame(tick);
+        },
+        { vertical: axis === "vertical", to },
+    );
+
+    if (sequence === "reversal") {
+        await call("__collapse");
+        await page.waitForTimeout(60);
+        await page.setViewportSize(viewport(to));
+        await call("__expand");
+    } else if (sequence === "mid-expand") {
+        await call("__expand");
+        await page.waitForTimeout(60);
+        await page.setViewportSize(viewport(to));
+    } else {
+        await page.setViewportSize(viewport(to));
+        if (sequence === "collapsed") {
+            await page.waitForTimeout(250);
+            await expect(page.locator(".glass-dock")).toHaveClass(/collapsed/);
+            await call("__expand");
+        }
+    }
+    await page.waitForFunction(() =>
+        (window as unknown as { __frames: Frame[] }).__frames.some((f) => f.morphing),
+    );
+    await settled("expanded");
+    await page.waitForTimeout(200);
+    await page.evaluate(() => ((window as unknown as { __stop: boolean }).__stop = true));
+    return page.evaluate(() => (window as unknown as { __frames: Frame[] }).__frames);
+}
+
+for (const axis of ["horizontal", "vertical"] as const) {
+    for (const [from, to] of [
+        [1440, 390],
+        [390, 1440],
+    ] as const) {
+        for (const sequence of ["pinned", "collapsed", "reversal", "mid-expand"] as const) {
+            test(`O-101 · ${axis} · ${sequence} · the expanded endpoint follows the pane (${from}->${to})`, async ({
+                page,
+            }) => {
+                const seq = await driveStaleEndpoint(page, axis, from, to, sequence);
+                const rest = seq[seq.length - 1];
+                expect(rest.morphing).toBe(false);
+                if (sequence === "pinned" || sequence === "collapsed") {
+                    const start = seq.find((f) => f.morphing)!;
+                    expect.soft(
+                        Math.abs(start.reserved - rest.size),
+                        `reserved ${start.reserved}px at morph start, settled at ${rest.size}px`,
+                    ).toBeLessThanOrEqual(1);
+                } else {
+                    expect(
+                        seq.some((f) => f.morphing && f.changed),
+                        "the pane changed while the morph ran",
+                    ).toBe(true);
+                    const stale = seq.filter(
+                        (f) => f.morphing && f.changed && !(Math.abs(f.reserved - rest.size) <= 1),
+                    );
+                    expect.soft(
+                        stale.length,
+                        `morphing frames after the change reserving other than the settled ${rest.size}px (${[...new Set(stale.map((f) => f.reserved))].join(", ")})`,
+                    ).toBe(0);
+                }
+                const over = seq.filter((f) => f.scroll > f.client);
+                expect
+                    .soft(
+                        over.length,
+                        `frames with the document scrolling on the ${axis} axis, of ${seq.length} (max ${Math.max(0, ...over.map((f) => f.scroll))}, client ${rest.client})`,
+                    )
+                    .toBe(0);
+            });
+        }
+    }
+}
+
+// O-101a, 10.1.2 critique b2 D-2. A constant pane wider than the narrow host (scene
+// `overflow`: 20 seats, natural span 960, so the run scrolls at 390 and fits at 1440),
+// with the HOST changing during the morph rather than the pane. No observed box but the
+// host moves while the root is held at its reservation. Same sequences and assertions
+// as the O-101 cells above. RED on 10.1.1 and on the round-1 cure, whose per-posture
+// frame (root less natural span) encoded the old host: 976 reserved for 390 with the
+// document at `scrollWidth` 683, and 390 reserved for 976, then a 586 px snap at settle.
+for (const [from, to] of [
+    [1440, 390],
+    [390, 1440],
+] as const) {
+    for (const sequence of ["collapsed", "reversal", "mid-expand"] as const) {
+        test(`O-101a · a host change during the morph · ${sequence} (${from}->${to})`, async ({ page }) => {
+            const seq = await driveStaleEndpoint(page, "horizontal", from, to, sequence, "overflow");
+            const rest = seq[seq.length - 1];
+            expect(rest.morphing).toBe(false);
+            const stale = seq.filter(
+                (f) =>
+                    f.morphing &&
+                    f.changed &&
+                    (sequence !== "collapsed" || f === seq.find((g) => g.morphing)) &&
+                    !(Math.abs(f.reserved - rest.size) <= 1),
+            );
+            expect.soft(
+                stale.length,
+                `morphing frames after the change reserving other than the settled ${rest.size}px (${[...new Set(stale.map((f) => f.reserved))].join(", ")})`,
+            ).toBe(0);
+            const over = seq.filter((f) => f.scroll > f.client);
+            expect
+                .soft(
+                    over.length,
+                    `frames with the document scrolling, of ${seq.length} (max ${Math.max(0, ...over.map((f) => f.scroll))}, client ${rest.client})`,
+                )
+                .toBe(0);
+        });
+    }
+}
+
+// 10.1.2 critique b2 D-1. A capture lays panes out to read an endpoint; it must leave a
+// scrolled run where it is. Scene `scroll`: an always-open dock whose run scrolls, scrolled
+// to an interior rest, then one seat's text changes (a MutationObserver capture) and one
+// seat widens (a ResizeObserver capture). The text change leaves the offset; the resize
+// moves it only by the engine's own re-snap, never to the leading edge. RED on the
+// round-1 cure in WebKit (312 -> 24 at 390, 312 -> 0 at 1440); GREEN on 10.1.1.
+for (const [width, n] of [
+    [390, 20],
+    [1440, 60],
+] as const) {
+    test(`O-101 · a capture keeps a scrolled run's scroll position (${width})`, async ({ page }) => {
+        await page.setViewportSize(viewport(width));
+        await page.goto(`/tests-visual/release-10-1-2/harness.html?scene=scroll&n=${n}`);
+        await page.waitForFunction(() => (window as unknown as { __ready?: boolean }).__ready);
+        await page.locator('[data-witness="seat-0"]').waitFor();
+        await page.waitForTimeout(600);
+        const frames2 = () =>
+            page.evaluate(() => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r))));
+        const offset = () => run(page).evaluate((el) => el.scrollLeft);
+        await run(page).evaluate((el) => el.scrollTo({ left: 300, behavior: "instant" }));
+        await page.waitForTimeout(400);
+        const at = await offset();
+        expect(at, "the run scrolled to an interior rest").toBeGreaterThan(0);
+
+        await page.evaluate(() => (window as unknown as { __tick: () => void }).__tick());
+        await frames2();
+        await page.waitForTimeout(200);
+        expect(await offset(), "after a seat's text changed").toBe(at);
+
+        await page.evaluate(() => (window as unknown as { __grow: () => void }).__grow());
+        await frames2();
+        await page.waitForTimeout(200);
+        expect(await offset(), "after a seat resized").toBeGreaterThanOrEqual(at);
+    });
+}

@@ -1,0 +1,33 @@
+11.0.0 close, second resume, 2026-11-08/09, HEAD 7daccce2f (= 50503bf73 + records).
+All runs through ~/.claude/guard/guarded; WebKit under --exclusive webkit. No run was refused.
+
+DataTable WebKit cell (release-10-1-4.spec.ts:136, the four host cells), alone:
+  run 1 exit 0, 4 passed. The release-WebKit failure at 50503bf73 was the known load flake.
+
+Full visual suite (suite.sh, 179 top-level specs, 25-file chunks, GLASS_UI_DEMO_URL=http://localhost:7997):
+  chunk results in suite-summary.txt. Every chromium/coarse chunk but ah exits 1, as at v10.1.4.
+  The first WebKit call queued 43 min on the lock and was stopped by this seat by PID (rc=143, not refused);
+  the re-queued call ran: webkit rc=1, 10 failed, 9 skipped, 154 passed.
+
+Title-set comparison against the banked v10.1.4 close (compare.sh):
+  chromium-headless-new: 11.0.0 fails 450, 10.1.4 fails 447, not in 10.1.4: 10
+  coarse-touch:          11.0.0 fails 456, 10.1.4 fails 445, not in 10.1.4: 15
+  webkit:                11.0.0 fails 10,  10.1.4 fails 2,   not in 10.1.4: 9
+  (only-1100-*.tsv list them.)
+
+Those, re-run on release/11.0.0 and on a git archive of 373ed8aba (cand*.sh, cand-summary.txt, cand-*.tsv),
+specs byte-identical on both trees:
+  chromium-headless-new: 1100 13 failed / 373 13 failed, identical title sets
+  coarse-touch:          1100 17 failed / 373 17 failed, identical title sets
+  webkit (O-101 cells + O-119 f :311): 1100 8 failed / 373 8 failed, identical title sets
+  - release-10-1-2 O-101 reversal and mid-expand (8 cells, every project): one stale morph frame,
+    deterministic, the same at 373ed8aba. Inherited from the U line, not an 11.0.0 defect.
+  - w1-radius-redress, blob-config-delta D1/D2: the same at 373ed8aba.
+  - SegmentedTabs.glide and DropdownMenu.scroll-lock (U-line specs, absent at v10.1.4): passed on the
+    chromium re-run on both trees, fail on coarse on both trees. Shared with 373ed8aba.
+  - release-10-1-4 O-119 (f) page.pdf modal dialog, WebKit: a Chromium-only test that skips in WebKit; in the
+    suite run it was the last test and the WebKit context teardown hit the 60 s timeout. Re-run: skipped, clean.
+    A harness teardown hang, not a product failure.
+  - aurora-swraster forced capture mount, WebKit: shared with v10.1.4.
+
+Verdict: no visual-suite failure fails only on release/11.0.0.

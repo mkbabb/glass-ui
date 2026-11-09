@@ -101,6 +101,56 @@ describe("useDockState — the auto FSM floor", () => {
     });
 });
 
+/** A pointer event by type, with the fields the press rule reads (jsdom has none). */
+function pointer(type: string, init: { isPrimary?: boolean; pointerType?: string } = {}) {
+    const e = new Event(type, { bubbles: true, composed: true });
+    Object.assign(e, { isPrimary: init.isPrimary ?? true, pointerType: init.pointerType ?? "mouse" });
+    return e;
+}
+
+// value.js O-110, critique-6 D-1. A press on the dock holds an environmental expand
+// until the press ends. WebKit ends a link drag (`dragstart`) and a right-click
+// (`contextmenu`) with no `pointerup`, `pointercancel` or click; the hold must end
+// there, or every later focus and hover waits on it. Unresolved, a press lapses at the
+// next primary `pointerdown` anywhere.
+describe("useDockState — a press that ends without a release", () => {
+    function pressed() {
+        const s = mountState();
+        const root = document.querySelector<HTMLElement>(".state-root")!;
+        root.dispatchEvent(pointer("pointerdown"));
+        s.handle.onFocusIn();
+        expect(s.handle.state.value, "the press holds the focus expand").toBe("collapsed");
+        return s;
+    }
+
+    for (const end of ["dragstart", "contextmenu"]) {
+        it(`ends at ${end}: the deferred focus expands, and a later focus is not deferred`, () => {
+            const { handle } = pressed();
+            window.dispatchEvent(new Event(end, { bubbles: true }));
+            expect(handle.state.value).toBe("hover");
+            handle.collapse();
+            handle.onFocusIn();
+            expect(handle.state.value).toBe("hover");
+        });
+    }
+
+    it("lapses at a primary pointerdown outside the dock; a later focus expands", () => {
+        const { handle } = pressed();
+        document.body.dispatchEvent(pointer("pointerdown"));
+        expect(handle.state.value, "what the lapsed press deferred lapses with it").toBe("collapsed");
+        handle.onFocusIn();
+        expect(handle.state.value).toBe("hover");
+    });
+
+    it("holds through a non-primary pointerdown (a second finger)", () => {
+        const { handle } = pressed();
+        document.body.dispatchEvent(pointer("pointerdown", { isPrimary: false, pointerType: "touch" }));
+        expect(handle.state.value).toBe("collapsed");
+        window.dispatchEvent(pointer("pointercancel"));
+        expect(handle.state.value).toBe("hover");
+    });
+});
+
 describe("useDockShellProps — `collapse` folds the two retired posture props", () => {
     it("`false` is the force-pinned pole and never starts collapsed", () => {
         const shell = useDockShellProps({ collapse: false });
