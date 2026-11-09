@@ -28,7 +28,7 @@ if (!wit || !wit.measured) return { stopped: 'witness-not-measured', wit: wit?.s
 
 let crit = (wit.defects || []).length ? wit : null
 for (let round = 4; round <= 9; round++) {
-  if (crit && (crit.defects || []).length) {
+  if (crit && (crit.defects || []).length && !((args && args.fixDone) || []).includes(round)) {
     phase('Fix')
     const pre = await retry(() => agent(ID + '\n' + LAW + '\n' + SCOPE + '\nYou are the FIX seat (before round ' + round + ') on release/10.1.5 in ' + WT + '. Cure every defect below at its root, add or correct a witness for each (RED before, GREEN after, both engines), re-run typecheck, build, vitest and the affected e2e in both engines (guarded), and commit. ' + PACE + MEAS + ' Defects:\n' + JSON.stringify(crit.defects, null, 1), { label: 'fix-1015-pre' + round, phase: 'Fix', model: 'opus', schema: REP }))
     if (!pre || !pre.measured) return { stopped: 'fix-not-measured', round }
