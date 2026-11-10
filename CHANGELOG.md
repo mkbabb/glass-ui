@@ -317,6 +317,24 @@ A minor release: new things you can opt into, and nothing you need to change.
   or when the page is printed, every mark is fully drawn from the first frame, including
   a `trigger="in-view"` mark that has not been scrolled to.
 
+- **The draw stays smooth while your page is busy.** An underline, strike or highlight
+  now draws by sliding a window open along the stroke, which the browser animates off
+  the main thread. So a heavy mount or a long script that lands mid-draw no longer
+  freezes the stroke halfway: it keeps drawing at its own pace. The finished mark looks
+  just as it did. A ring still draws round along its own path.
+
+- **Sequence your page on `drawn`.** A mark emits `drawn` once its last line has
+  finished drawing, so you can bring in what follows it without polling its
+  animations. With reduced motion, in print, or with `:draw="false"`, the mark is
+  finished from the start, and `drawn` fires as soon as it mounts. A `retrigger` mark
+  emits it again after each redraw.
+
+  ```vue
+  <h1>
+      Plan the <HandMark @drawn="showPlate = true">quiet season</HandMark>
+  </h1>
+  ```
+
 ## 11.0.0 — 2026-11-09
 
 A major release. It brings in everything from 10.1.3 and 10.1.4 below, and adds a

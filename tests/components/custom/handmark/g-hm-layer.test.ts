@@ -83,8 +83,13 @@ async function renderShape(shape: string, fs: number, lines: Line[]) {
         width: m.attributes("width"),
         height: m.attributes("height"),
     }));
+    // The window the draw slides open, as the DOM carries it on `.hm-reveal`.
+    const windows = w.findAll(".hm-reveal").map((el) => {
+        const st = (el.element as HTMLElement).style;
+        return { x: st.left, y: st.top, width: st.width, height: st.height };
+    });
     w.unmount();
-    return { ink, html, svgAttrs, masks, frames };
+    return { ink, html, svgAttrs, masks, frames, windows };
 }
 
 /**
@@ -120,6 +125,19 @@ function windowOf(m: {
         w: num(m.width, "width"),
         h: num(m.height, "height"),
     };
+}
+
+/**
+ * The RENDERED draw window, in px. A percentage would resolve against the inline host's
+ * containing block, which collapses to `0px` on wrap, and a zero-area window clips the
+ * ink away.
+ */
+function revealOf(m: { x: string; y: string; width: string; height: string }) {
+    const num = (v: string, name: string): number => {
+        expect(v, `window ${name}="${v}" is not a px length`).toMatch(/^-?[\d.]+px$/);
+        return parseFloat(v);
+    };
+    return { x: num(m.x, "left"), y: num(m.y, "top"), w: num(m.width, "width"), h: num(m.height, "height") };
 }
 
 /**
@@ -274,15 +292,21 @@ describe("G-HM-LAYER 2 · CONTAINMENT, geometric — extent is geometry, never i
     });
 
     it.each(SHAPE_MEMBERS)(
-        "%s: the RENDERED mask window is real units and contains the ink it gates",
+        "%s: the RENDERED window is real units and contains the ink it gates",
         async (shape) => {
             // This is the reading the doctrine "extent is fixed by geometry alone"
-            // was missing: on a live surface extent is fixed by the MASK WINDOW, and
+            // was missing: on a live surface extent is fixed by the WINDOW, and
             // a window authored in percentages of a collapsible box is not geometry.
+            // Every shape draws through the `.hm-reveal` window; the ring alone also
+            // draws through its centreline mask, over the same window.
             const fs = 30.1;
             const r = await renderShape(shape, fs, [{ x: 40, y: 60, w: 240, h: fs * 1.35 }]);
-            expect(r.masks, `${shape}: one mask per emitted mark`).toHaveLength(r.ink.length);
-            const win = windowOf(r.masks[0]);
+            expect(r.windows, `${shape}: one window per emitted mark`).toHaveLength(r.ink.length);
+            expect(r.masks, `${shape}: a mask only for the ring`).toHaveLength(
+                shape === "circle" ? r.ink.length : 0,
+            );
+            const win = revealOf(r.windows[0]);
+            if (shape === "circle") expect(windowOf(r.masks[0])).toEqual(win);
             expect(win.w, `${shape}: a zero-area window masks the ink away entirely`).toBeGreaterThan(0);
             expect(win.h, `${shape}: a zero-area window masks the ink away entirely`).toBeGreaterThan(0);
             const b = bbox(r.ink[0] ?? "");
