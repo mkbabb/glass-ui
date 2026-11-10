@@ -37,7 +37,7 @@ phase('D2 P14 Critique')
 const crit = await retry(() => agent(`You are the FRESH adversarial CRITIC for D2-B′ in D2 pass 14 (the confirmation). You authored nothing in D2 and were no earlier D2 critic. ${ID}
 ${FENCE('Bp-crit')}
 ${LAW}
-${PLAN}
+${PLAN}${RES('D2-Bp-P14-crit')}
 Read ${P14}/D2-Bp-remeasure.md with its records, ${P13}/D2-Bp-critique.md and the pass-13 REGISTRY part in full. Stage the arms on 392ff1e3c with git apply only; re-hash the patches and the harness. TASK, exactly §P13-7.4: the re-measure's owed re-runs, then one battery of all four columns under H8, then your own A/Bs of §7.3 item 3 with rule (d)'s; attack every target §7.4 lists. Score all 38 rows on the ruled digest (first 36 and 24, default beside); report whether any of rules (a)-(d) fired. Write ${P14}/D2-Bp-critique.md with records under ${P14}/D2-Bp-crit-records/ (no bulky video).${FINISH}
 Return the JSON.`, { label: 'D2-Bp-P14-crit', phase: 'D2 P14 Critique', model: 'opus', schema: CRIT }))
 
@@ -46,5 +46,5 @@ const agg = await retry(() => agent(`You are the AGGLOMERATION seat closing D2 p
 ${LAW}
 ${PLAN}
 Read everything under ${P14}/, the pass-13 REGISTRY part, docs/tranches/BL/audit/INBOUND.md and docs/tranches/BL/FORMATION-PROGRESS.md. If a seat stopped or reports complete=false, say so, score nothing not measured, and plan the completion seat. Otherwise rule per §P13-7.5: rows closed of 38 (ruled digest; first 36 and 24, default beside); whether pass 14 is CLEAN (0 open, B2 on the strips, none of (a)-(d)). IF CLEAN: D2 is CONVERGED (passes 13 and 14); D2-Bp-p13.patch is the specification W-0.8 lands; write the landing plan (§P13-5 step 2, its first step the boot-graph ceiling re-read with the owner) against the 11.0.x base master will hold. IF NOT: the count returns to 0 and plan pass 15 as a build with the list fixed, curing the class that opened and every near-bound class §7.3 item 3 read. Place every defect class a seat recorded.
-Return JSON {model_id, report_path, summary, open_gaps, complete}.`, { label: 'D2-P14-agglomerate', phase: 'D2 P14 Agglomerate', model: 'opus', schema: REP }))
+Return JSON {model_id, report_path, summary, open_gaps, complete}.${RES('D2-P14-agglomerate')}`, { label: 'D2-P14-agglomerate', phase: 'D2 P14 Agglomerate', model: 'opus', schema: REP }))
 return { rem: rem.summary?.slice(0, 600), crit: crit ? { verdict: crit.verdict, closed: crit.rows_closed, total: crit.rows_total, first24: crit.rows_closed_first24, complete: crit.complete } : null, agg: agg?.summary?.slice(0, 1500) }
