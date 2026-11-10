@@ -1,0 +1,21 @@
+2026-11-09 17:50:22 · load { 31.35 19.76 14.55 } · df 86Gi · chain start (pid 77019)
+2026-11-09 17:50:22 · load { 31.35 19.76 14.55 } · df 86Gi · builds queued
+2026-11-09 17:56:47 · load { 16.75 22.05 18.25 } · df 80Gi · REFUSED by the guard in builds.log: [guarded] WARNING: the kernel zone leak is ARMED (armed 1794252999 slope=43.3/s inuse=29715 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs inc; the chain stops
+2026-11-09 17:57:06 · CORRECTION: the stop above is the chain's own false match (the zone WARNING line contains the word REFUSED); the guard refused nothing. Builds: all 31 exit 0, trees as of record (logs/builds.log). The match is now '^[guarded] REFUSED'; the chain resumes at C1 with SKIPBUILD=1
+2026-11-09 17:57:08 · load { 16.54 21.66 18.20 } · df 80Gi · chain start (pid 8008)
+2026-11-09 17:57:08 · load { 16.54 21.66 18.20 } · df 80Gi · C1 queued (58 stages from CQ.q)
+2026-11-09 18:48:38 · STOPPED BY THE SEAT (process groups 8007, 48679): E-10's 'perspective translateZ · below' cell found a cand15 defect (a carrier's size share under a projective chain read through the flattened linear part); C1's stages so far read the superseded bytes (src tree 4eb6b82d5cb1) and are not of record; cand15-E-11 was cut mid-stage. Rebuild and restart follow
+2026-11-09 18:50:25 · load { 12.82 12.63 15.96 } · df 79Gi · chain start (pid 44420)
+2026-11-09 18:50:25 · load { 12.82 12.63 15.96 } · df 79Gi · gates gates3 queued
+2026-11-09 19:15:29 · load { 20.30 14.28 14.27 } · df 75Gi · gates gates3: build exit 0 (9 s) · load { 12.47 11.34 13.36 } ·  typecheck exit 0 (21 s) · load { 15.39 12.09 13.59 } ·  demo exit 0 (2 s) · load { 15.39 12.09 13.59 } ·  vitest exit 0 (78 s) · load { 20.33 14.19 14.23 } ·  Test Fi 
+2026-11-09 19:15:30 · load { 20.30 14.28 14.27 } · df 75Gi · P-E15.patch 6edc7321c665ab463c2bcc0b7ed3ceabf0cd639b 12765 lines · 199 files
+2026-11-09 19:15:30 · load { 20.30 14.28 14.27 } · df 75Gi · builds queued
+2026-11-09 19:39:27 · load { 30.05 38.11 38.77 } · df 83Gi · builds exit 0 · 31 built · 
+2026-11-09 19:39:28 · load { 30.05 38.11 38.77 } · df 83Gi · C1 queued (58 stages from CQ.q)
+2026-11-09 21:09:36 · load { 20.26 23.99 25.62 } · df 48Gi · C1 exit 0 · held 6
+2026-11-09 21:09:36 · load { 20.26 23.99 25.62 } · df 48Gi · C2 queued (6 stages from C1.held)
+2026-11-09 21:44:15 · load { 8.41 10.82 13.77 } · df 67Gi · C2 exit 0 · held 0
+2026-11-09 21:44:15 · load { 8.41 10.82 13.77 } · df 67Gi · W1 queued for the WebKit lock (54 stages from WQ.q)
+2026-11-09 23:44:45 · load { 3.04 4.00 4.72 } · df 58Gi · W1 exit 0 · held 1
+2026-11-09 23:44:45 · load { 3.04 4.00 4.72 } · df 58Gi · W2 queued for the WebKit lock (1 stages from W1.held)
+2026-11-09 23:44:45 · load { 3.04 4.00 4.72 } · df 58Gi · REFUSED by the guard in guard-W2.log: [guarded] REFUSED: kernel zone data.kalloc.1024 at 8.76M (panics near 20.8M; heavy and browser runs stop at 8M): reboot the Mac; the chain stops

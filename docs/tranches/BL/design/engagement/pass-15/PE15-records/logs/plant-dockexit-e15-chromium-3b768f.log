@@ -1,0 +1,11 @@
+# PE15 plant-dockexit-e15 chromium · 2026-11-09 21:00:25 · load { 22.15 22.10 25.67 } · harness 0c64ff33af43 · --only EXIT
+# E-15 · S15's members at their folded ranges (P-E15 §S15)
+# target /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p15/PE15/wt/.pe15out/builds/plant-dockexit · engine chromium · lock wait 0.0 s (the deadline 5400 s counts from here) · other headless processes: chromium 8, webkit 2 · load 22.1/22.1/25.7 at start
+# scene app: harness scenes/App.vue (sha1 912fecf0a1aa)
+# chromium 149.0.7827.55
+# held control: scene slider root .glass-slider thumb [role="slider"] engaged [data-engaged], [data-held]; clock token --spring-dock-settle; cells EXIT; film read after the frame's resize step (class 7)
+  PASS       EXIT --spring-dock-settle 0.08s on <html>: the released root's painted width across the stage's hide · width 380.9 → 360.0 px over 30 frames · the stage hid on frame 15 (+117 ms) · the width's change on that frame 0.60 px against the grow's own return just before it 0.62 px a frame (bound ≤ 2 × that + 0.5: continuous) · per-frame changes [-2.2 -2.4 -2.6 -2.4 -2.0 -2.4 -1.5 -1.4 -1.0 -0.9 -0.6 -0.4 -0.4 -0.6 0.0 0.0] · errors 0 · load 22.3/22.1/25.7
+  PASS       EXIT --spring-dock-settle 0.21s on <html>: the released root's painted width across the stage's hide (the library's settle: control) · width 381.0 → 360.0 px over 30 frames · the stage hid on frame 26 (+209 ms) · the width's change on that frame 0.00 px against the grow's own return just before it 0.50 px a frame (bound ≤ 2 × that + 0.5: continuous) · per-frame changes [-2.0 -2.3 -2.5 -2.2 -2.5 -2.0 -1.7 -1.4 -1.1 -0.8 -0.8 -0.5 -0.4 -0.4 -0.5 0.0] · errors 0 · load 22.3/22.1/25.7
+E-15 chromium PASS · 2 pass, 0 fail, 0 unmeasured of 2 gating cells (0 reported) · load 22.1/22.1/25.7 at start, 22.3/22.1/25.7 at end
+# exit 0 · 2026-11-09 21:00:31 · load { 22.29 22.13 25.66 }
+# end · 2026-11-09 21:00:31 · load { 22.29 22.13 25.66 } · harness 0c64ff33af43

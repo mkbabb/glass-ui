@@ -1,0 +1,13 @@
+# PE15 plant-subtreewait-e14 webkit · 2026-11-09 23:16:09 · load { 4.94 5.10 8.40 } · harness 0c64ff33af43 · --only M29
+# E-14 · S14's members at their ranges (P-E14 §S14-c)
+# target /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p15/PE15/wt/.pe15out/builds/plant-subtreewait · engine webkit · lock wait 0.0 s (the deadline 5400 s counts from here) · other headless processes: chromium 0, webkit 0 · load 4.9/5.1/8.4 at start
+# scene app: harness scenes/App.vue (sha1 912fecf0a1aa)
+# webkit 26.5 (Playwright WebKit, not Safari; real Safari UNMEASURED (owner's safaridriver checkbox))
+# held control: scene slider root .glass-slider thumb [role="slider"] engaged [data-engaged], [data-held]; clock token --spring-dock-settle; cells M29; film: read after the frame's resize step (H15 class 7)
+  PASS       M29 the released host's subtree holds a paused finite animation · rAF callbacks a second at rest before the hold 0, after release + the clock 210 ms + 700 ms: 0 (bound ≤ the rest's) · the root still on the stage (data-engage-stage) false · errors 0 · load 4.8/5.1/8.4
+  PASS       M29 the released host's subtree holds a view() timeline animation · rAF callbacks a second at rest before the hold 0, after release + the clock 210 ms + 700 ms: 0 (bound ≤ the rest's) · the root still on the stage (data-engage-stage) false · errors 0 · load 4.8/5.1/8.3
+  FAIL       M29 the released host's subtree holds a 10 s finite animation · rAF callbacks a second at rest before the hold 0, after release + the clock 210 ms + 700 ms: 0 (bound ≤ the rest's) · the root still on the stage (data-engage-stage) true · errors 0 · load 4.7/5.0/8.3
+  PASS       M29 the released host's subtree holds nothing (control) · rAF callbacks a second at rest before the hold 0, after release + the clock 210 ms + 700 ms: 0 (bound ≤ the rest's) · the root still on the stage (data-engage-stage) false · errors 0 · load 4.5/5.0/8.3
+E-14 webkit FAIL · 3 pass, 1 fail, 0 unmeasured of 4 gating cells (0 reported) · load 4.9/5.1/8.4 at start, 4.5/5.0/8.3 at end
+# exit 1 · 2026-11-09 23:16:28 · load { 4.52 4.99 8.28 }
+# end · 2026-11-09 23:16:28 · load { 4.52 4.99 8.28 } · harness 0c64ff33af43
