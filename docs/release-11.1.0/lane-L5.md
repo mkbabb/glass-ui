@@ -4,30 +4,40 @@ The build seat for lane L5 on `release/11.1.0`, run by claude-opus-5-5. Before b
 `lane-L1.md` through `lane-L4.md`, both orchestrator notes, the INBOUND rows O-183 and O-190, and
 W-B.6 in full, including its O-183 and O-190 addenda.
 
-**STOPPED ON A GUARD REFUSAL.** At 22:28:19, `guarded` refused both v11.0.0 witness runs
-(Chromium and WebKit) with `REFUSED: kernel zone data.kalloc.1024 at 8.19M … reboot the Mac`, exit 75
-(`lane-L5/out/red-{chromium,webkit}.log`). Under the machine law a refusal is a stop. These did not
-run:
-- the RED witness on v11.0.0, in both engines;
-- the committed-tree gates (`gates.sh`: build, typecheck, demo:dist:build, full vitest, verify:package
-  and the ratchet);
-- the e2e spec (`e2e.sh`: `handmark.spec.ts`, both engines, both trees).
+**Complete.** On 2026-11-09 at 22:28:19, `guarded` refused the v11.0.0 witness runs at kernel zone
+8.19M (exit 75; the logs are kept in `lane-L5/out/refused-2026-11-09/`), and the gates and e2e
+runs did not start. After the reboot, the resume on 2026-11-10 ran everything that was refused,
+with no rebuild: the RED half of `chain.sh` (`witness.sh .cache/l5-v1100 7992 red red`), then
+`gates.sh` on the committed tree at `a4ff25387`, then `e2e.sh`. `guarded` admitted every run. The
+WebKit runs waited for the machine-wide `webkit` lock and were not refused.
 
-The scripts for all three are written and ready (`lane-L5/chain.sh`, `gates.sh`, `e2e.sh`), and the
-v11.0.0 tree is staged at `.cache/l5-v1100` (`git archive v11.0.0`, tranche records excluded,
-`node_modules` symlinked). After the reboot, run `chain.sh` (or `witness.sh <tree> <port> red red`
-for the v11.0.0 half alone), then `gates.sh`, then `e2e.sh`.
-
-**What did run:**
+**Runs:**
 
 | run | result | exit |
 | --- | --- | --- |
-| `vue-tsc --noEmit -p tsconfig.src.json` (guarded `--light`) | clean | 0 |
-| `vitest run tests/components/custom/handmark tests/components/handmark` (guarded `--light`) | 3 files, 67 passed | 0 |
-| `npm run build` (guarded, before the code commit) | built; `dist/handmark.css` carries the new rules unlowered | 0 |
-| branch witness · Chromium headless shell | 60/60 | 0 |
-| branch witness · WebKit 2287 (`--exclusive webkit`) | 60/60 | 0 |
-| v11.0.0 witness · Chromium / WebKit | REFUSED by guarded (zone 8.19M) | 75 / 75 |
+| `vue-tsc --noEmit -p tsconfig.src.json` (guarded `--light`, build run) | clean | 0 |
+| `vitest run tests/components/custom/handmark tests/components/handmark` (guarded `--light`, build run) | 3 files, 67 passed | 0 |
+| branch witness · Chromium headless shell (2026-11-09) | 60/60 | 0 |
+| branch witness · WebKit 2287 (`--exclusive webkit`, 2026-11-09) | 60/60 | 0 |
+| v11.0.0 witness · Chromium headless shell (2026-11-10 13:05) | 26/60 (RED) | 1 |
+| v11.0.0 witness · WebKit 2287 (`--exclusive webkit`, 13:27) | 26/60 (RED) | 1 |
+| `gates.sh` · `npm run build` | built | 0 |
+| `gates.sh` · `npm run typecheck` | clean | 0 |
+| `gates.sh` · `npm run demo:dist:build` | built | 0 |
+| `gates.sh` · `vitest run --maxWorkers=2` | 275 files; 2545 passed, 10 expected fail, 1 skipped | 0 |
+| `gates.sh` · `npm run verify:package` (first pass) | ratchet increase forbidden: 3008867 > 3007136 | 1 |
+| `gates.sh` · ratchet rebind, then `verify:package` again | `terminal: CLEAN` | 0 |
+| `e2e.sh` · `handmark.spec.ts` · branch · Chromium headless shell | 10 passed | 0 |
+| `e2e.sh` · `handmark.spec.ts` · branch · WebKit 2287 | 10 passed | 0 |
+| `e2e.sh` · `handmark.spec.ts` · v11.0.0 · Chromium headless shell | 10 passed | 0 |
+| `e2e.sh` · `handmark.spec.ts` · v11.0.0 · WebKit 2287 | 10 passed | 0 |
+
+The 26 checks that v11.0.0 passes are the hold lines (nib scale, no ornament, marks at rest drawn,
+the final state under reduced motion) and the cells that the old defaults already met (the wrap, and
+the light focal ink, since `currentColor` equals `--primary` in light). Every claim the items make
+fails on v11.0.0 and passes on the branch, in both engines. The two engines agree cell for cell.
+Readings: `lane-L5/out/{green,red}-{chromium,webkit}.json`; logs and exit codes:
+`lane-L5/out/chain.log` and `lane-L5/gates/chain.log`.
 
 Commit (read from `git log`): `325d022f4` holds the code, the updated unit test and the CHANGELOG
 section. The records commit carries this file and `lane-L5/`.
@@ -107,11 +117,20 @@ Paint: `out/png/green-*-o183-{hero,section}-*.png` (the marks at rest),
 highlight is now a warm peach (the hue of the light `--primary`). In dark it is the violet of the
 dark `--primary`.
 
-**RED readings on v11.0.0: not measured (guard refusal).** What v11.0.0 is expected to read, from
-its source, still to be confirmed by the run: the stroke fill is `currentColor` (equal to
-`--primary` in light, so that cell may hold, but not in dark); the band hue is 78; the draw is a
-WAAPI `Animation` of `140 + 0.55 × length` ms on `minJerk`; print at frame 0 is still undrawn;
-reduced motion is drawn (a hold line).
+**RED readings on v11.0.0 (2026-11-10; Chromium exit 1, WebKit exit 1; the same in both engines):**
+
+| claim | Chromium | WebKit 2287 | what v11.0.0 reads |
+| --- | --- | --- | --- |
+| wrapped hero phrase: lines = frames ≥ 2 | 4/4 | 4/4 | holds (not part of the change) |
+| stroke fill = `--primary` | 2/4 | 2/4 | light holds (`currentColor` is `rgb(28, 25, 23)`, the light `--primary`); dark fails: the fill is `rgb(233, 230, 226)` (the text colour), not `oklch(0.739 0.134 318.1)` |
+| band hue = focal hue | 0/4 | 0/4 | band `oklch(0.86 0.16 78)` against focal H 56.04, gap 21.96° |
+| draw on the present clock | 0/4 | 0/4 | WAAPI durations by length (Chromium 310, 248, 250, 179 ms; WebKit 325, 256, 257, 179 ms) against 200 ms; easing not `--spring-present` |
+| print final at frame 0 (heading / fold) | 0/4, 0/4 | 0/4, 0/4 | dash fraction about 1 (undrawn), 8 and 2 animations running |
+| reduced-motion final at frame 0 (heading / fold) | 4/4, 4/4 | 4/4, 4/4 | holds (a hold line) |
+| retrigger redraws on each entry | 0/4 | 0/4 | fraction 0 on first entry, after leaving, and on re-entry: drawn throughout, nothing redraws |
+| nib follows font size; no ornament; marks rest drawn (holds) | 4/4 each | 4/4 each | holds |
+
+The predictions from source all held.
 
 ## O-190 · off-screen marks wait undrawn and draw in when scrolled to
 
@@ -128,17 +147,36 @@ off-screen holds at `wait` until it intersects, then draws once.
 
 Paint: `out/png/green-*-o190-strip-*-{0,25,50,75,100}.png`.
 
-**RED readings on v11.0.0: not measured (guard refusal).** Expected: drawn while off-screen
-(fraction 0 at 1.5 s), no running animation on entry, so no draw frames and no strip.
+**RED readings on v11.0.0 (0/4 on every claim, in each engine; exit 1):**
+
+| claim | Chromium | WebKit 2287 | what v11.0.0 reads |
+| --- | --- | --- | --- |
+| off-screen mark waits undrawn | 0/4 | 0/4 | the mark 1704–1705 px down already reads dash fraction 0 (drawn) at 1.5 s, with no `data-ink` |
+| draws in on entry (≥ 3 mid frames) | 0/4 | 0/4 | 0 draw frames (fraction 0 first and last) |
+| paint: undrawn at entry, then drawn in | 0/4 | 0/4 | no animation running on entry (2 already finished and paused), so there is no strip |
 
 ## Gates
 
-Not run; `guarded` refused at zone 8.19M. `lane-L5/gates.sh` (the L4 chain, retargeted) and
-`lane-L5/e2e.sh` (`handmark.spec.ts` on both trees, Chromium headless shell and WebKit 2287, with
-the spec's captures moved out of `docs/tranches/BK/audit/visual` into `lane-L5/gates/png/` so the
-tranche records are not clobbered) are ready. Expected ratchet movement: small. The component lost
-the WAAPI clock and the `getTotalLength` read, and gained the observer and the draw rules. Any
-rebind is to be recorded here with its measured bytes.
+All ran on 2026-11-10, each inside one `guarded` run, on the committed tree at `a4ff25387`
+(`lane-L5/gates/chain.log`, a log per step): build 0, typecheck 0, demo:dist:build 0, vitest 0
+(275 files; 2545 passed, 10 expected fail, 1 skipped), verify:package 0 after the rebind.
+
+**Ratchet rebind: `.bundle-ratchet` 3007136 → 3008867 (+1,731 B).** The first `verify:package`
+exited 1 on `bundle ratchet increase forbidden: 3008867 > 3007136`, and the second, on the new
+datum, reads `terminal: CLEAN`. The datum 3007136 is lane L4's committed-tree measure, taken before
+this lane's code commit. The +1,731 content bytes are HandMark's: the `IntersectionObserver`
+trigger and its `data-ink` states, the CSS draw keyframes with their per-line delay rules, and the
+reduced-motion and print rules, net of the removed WAAPI clock and `getTotalLength` read.
+`git diff --stat d4b06c675 HEAD -- src package.json` names one file, `HandMark.vue`. The rebind is
+deliberate, and this is its record.
+
+**e2e (`handmark.spec.ts`, `lane-L5/gates/e2e-*.{log,json}`):** 10 passed in each of the four runs
+(branch and v11.0.0, Chromium headless shell and WebKit 2287), exit 0 each. The spec guards the
+hand voice's existing paint (the band under the letterforms, the ring's room, one path per line
+rect, the mark whole at rest). It passes on both trees, so the branch keeps every existing paint
+claim, and the RED/GREEN split lives in the witness above. The spec's captures were moved to
+`lane-L5/gates/png/`, and the tracked `docs/tranches/BK/audit/visual` files were restored and not
+changed.
 
 ## CHANGELOG
 
@@ -149,16 +187,13 @@ motion and print.
 
 ## Open gaps
 
-- **The RED half, the gates and the e2e spec** (above): owed after the reboot. `measured` is false.
-- **The orchestrator notes add O-194, O-197, O-198 and O-199 (the dock) to this lane, after
-  HandMark.** They are not built. The seat's computed task named L5 as HandMark (O-183 with O-190).
-  The four dock items share one surface (the collapsed face as the persistent region, the trailing
-  gap that the collapsed `:has(.dock-layer--summary:empty)` rules also own, PRM over the dock's
-  springs and transitions, and a capsule radius that must compute to half the cross extent in px in
-  every posture and morph frame), and they should be designed together by a dock seat. The guard
-  stop then ended the run. They need their own seat on this branch.
-- **O-206 (a compositor-run draw and a `drawn` event)** was added to this lane by an orchestrator
-  note committed during the run (`ce2b7ed12`). It is not built. The new CSS draw still animates
+- **The dock items O-194, O-197, O-198 and O-199 move to lane L6** (the resume's computed task),
+  and are not built here. They share one surface (the collapsed face as the persistent region, the
+  trailing gap that the collapsed `:has(.dock-layer--summary:empty)` rules also own, PRM over the
+  dock's springs and transitions, and a capsule radius that must compute to half the cross extent
+  in px in every posture and morph frame), so one dock seat should design them together.
+- **O-206 (a compositor-run draw and a `drawn` event) moves to lane L7** and is not built here.
+  An orchestrator note had added it to this lane during the build run (`ce2b7ed12`). The new CSS draw still animates
   `stroke-dashoffset`, which is not a compositor property in either engine, so a main-thread task
   can still stall it. The `drawn` event does not exist yet. The CSS draw is the right base for it
   (one clock, one `animationend` per mark to emit `drawn` on), but the clip-path or mask-scale reveal
