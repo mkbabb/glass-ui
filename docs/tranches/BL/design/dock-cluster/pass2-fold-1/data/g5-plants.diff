@@ -1,0 +1,23 @@
+--- plant glide-edge-s1
+- s1: useDockSpring(DOCK_SPRING) };
++ s1: useDockSpring({ response: 0.3, dampingFraction: 0.88 }) };
+
+--- plant survivor-offset
+- { o: 0, spring: useDockSpring(DOCK_SPRING) };
++ { o: 0, spring: useDockSpring({ response: 0.3, dampingFraction: 0.88 }) };
+
+--- plant phantom
+- role: "phantom", el: null, after, spring: useDockSpring(DOCK_SPRING) };
++ role: "phantom", el: null, after, spring: useDockSpring({ response: 0.3, dampingFraction: 0.88 }) };
+
+--- plant arriver-run
+- role: "slot", el: d, after, spring: useDockSpring(DOCK_SPRING) };
++ role: "slot", el: d, after, spring: useDockSpring({ response: 0.3, dampingFraction: 0.88 }) };
+
+--- plant join
+- springs = t.map(() => useDockSpring(DOCK_SPRING));
++ springs = t.map(() => useDockSpring({ response: 0.3, dampingFraction: 0.88 }));
+
+--- plant spread
+- s0: useDockSpring(DOCK_SPRING), s1
++ s0: useDockSpring({ ...DOCK_SPRING }), s1
