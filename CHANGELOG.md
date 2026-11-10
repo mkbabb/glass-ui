@@ -34,7 +34,25 @@ measured property, `--dock-plate-cross-px`.
   not the visible run and hides nothing, so under `.collapsed` the plate's and the run's
   cut-cap animations are off (as they are on any run whose seats fit) and the plate
   paints its rest corner. An inactive timeline alone did not do it: it holds what it
-  last resolved, so a collapse from a scrolled run sealed lopsided.
+  last resolved, so a collapse from a scrolled run sealed lopsided. The idle full pane
+  is also no longer a scroll container (`overflow: clip` while it is neither active nor
+  leaving), and a layer group's idle face (neither active nor leaving) clips its own
+  overflow, so a wider hidden face no longer gives a fitting run a scroll range
+  (O-205). The leaving face is not clipped, so its crossfade paints as before.
+
+- **A fitting run keeps a whole ring's room at each end (O-201).** The run's reserves
+  yield to the room its seats leave, so a dock a few pixels short of its content has
+  nothing to scroll. They yielded down to zero, which cut a focused first or last seat's
+  ring by up to 4 px at the fit edge. `data-run-fits` is now set only while the seats
+  leave at least `--dock-ring-reserve` at each end; under that the run keeps its
+  reserves, scrolls them, and the cap is cut. `--dock-ring-reserve` is now a registered
+  `<length>`; its value does not move.
+
+- **A disclosure trigger's keyboard ring is the house outline (O-207).** The
+  CollapsibleTrigger and AccordionTrigger focus rule set `outline: none` and painted the
+  30% `--focus-ring-shadow`, about 2:1, and took the ring off a trigger that also
+  carries `.focus-ring`. It now paints the `.focus-ring` outline (2 px, the perimeter
+  ink, about 3:1).
 
 - **The Slider's thumb shows at min and max (O-129 r5).** The scrubber painted no thumb
   and a fill of `value x track`, so at the minimum there was a bare track and at the

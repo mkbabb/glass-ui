@@ -1398,7 +1398,8 @@ function m1(): void {
     }
 }
 
-/** M2: a vertical run whose seats fit has nothing to scroll; the flag says so too. */
+/** M2: a vertical run whose seats fit, with a whole ring's room at each end (O-201), has
+ * nothing to scroll; the flag says so too. */
 function m2(): void {
     test("m2 a vertical run whose seats fit scrolls nothing, across the fit edge", async ({ page }) => {
         test.setTimeout(240_000);
@@ -1413,10 +1414,12 @@ function m2(): void {
                 const run = dock.querySelector<HTMLElement>(".dock-run")!;
                 const k = [...run.children] as HTMLElement[];
                 const span = k.at(-1)!.offsetTop + k.at(-1)!.offsetHeight - k[0]!.offsetTop;
-                return { fits: dock.hasAttribute("data-run-fits"), sh: run.scrollHeight, ch: run.clientHeight, span };
+                const ring = parseFloat(getComputedStyle(dock).getPropertyValue("--dock-ring-reserve"));
+                return { fits: dock.hasAttribute("data-run-fits"), sh: run.scrollHeight, ch: run.clientHeight, span, ring };
             });
-            if (r.span <= r.ch) fitted += 1;
-            if ((r.fits || r.span <= r.ch) && r.sh > r.ch) bad.push({ stageH, ...r });
+            const room = r.span + 2 * r.ring <= r.ch;
+            if (room) fitted += 1;
+            if ((r.fits || room) && r.sh > r.ch) bad.push({ stageH, ...r });
         }
         expect(fitted, "the sweep crosses the fit edge").toBeGreaterThan(2);
         expect(bad, "no row whose seats fit (or flagged fits) scrolls").toEqual([]);
@@ -1845,8 +1848,10 @@ function hostResizeFrames(page: Page, at: number, action: string, ms: number): P
                     if (!done && t >= at) {
                         done = true;
                         const [kind, px] = action.split(":");
+                        const stage = document.querySelector<HTMLElement>('[data-witness="stage"]')!;
                         if (kind === "maxw") dock.style.maxInlineSize = `${px}px`;
-                        else document.querySelector<HTMLElement>('[data-witness="stage"]')!.style.blockSize = `${px}px`;
+                        else if (kind === "pad") stage.style.paddingBlock = `${px}px`;
+                        else stage.style.blockSize = `${px}px`;
                     }
                     const r = s1.getBoundingClientRect();
                     out.push({
@@ -2142,6 +2147,207 @@ r1(1440);
 test.describe("fix 10, coarse phone", () => {
     test.use({ hasTouch: true, isMobile: true, viewport: { width: 390, height: 844 } });
     r1(390);
+});
+
+/* ── s · critique round 11 (critique-11.md R1-R4) ────────────────────────────────────
+   RED on the round-11 tip 1e0f9d879's src, GREEN after. The scenes are critic 11's own
+   (`release-10-1-5/critic-11.html`, `o205`, `o201`, `focus`) and critic 7's vertical dock. */
+async function open11(page: Page, query: string, ms = 900): Promise<void> {
+    await page.goto(`/tests-visual/release-10-1-5/critic-11.html?${query}`);
+    await page.waitForFunction(() => (window as unknown as { __ready?: boolean }).__ready);
+    await page.evaluate(() => document.fonts.ready);
+    if (test.info().project.use.isMobile) await expectCoarse(page);
+    await settle(page, ms);
+}
+
+/** Keyboard focus on a witness: a key press first, so the engine marks it focus-visible. */
+async function keyFocus(page: Page, witness: string): Promise<void> {
+    await page.keyboard.press("Shift");
+    await page.locator(`[data-witness="${witness}"]`).focus();
+    await settle(page, 250);
+}
+
+/** How far a focused witness's ring lies past each clipping ancestor's padding box, up to the dock. */
+function ringPast(page: Page, witness: string) {
+    return page.locator(`[data-witness="${witness}"]`).evaluate((el) => {
+        const cs = getComputedStyle(el);
+        const s = cs.scale === "none" ? 1 : Number.parseFloat(cs.scale);
+        const ink = (Number.parseFloat(cs.outlineWidth) + Number.parseFloat(cs.outlineOffset)) * s;
+        const r = el.getBoundingClientRect();
+        let worst = 0;
+        const cuts: string[] = [];
+        for (let a = el.parentElement; a && !a.classList.contains("glass-dock"); a = a.parentElement) {
+            const acs = getComputedStyle(a);
+            if (acs.overflowX === "visible" && acs.overflowY === "visible") continue;
+            const b = a.getBoundingClientRect();
+            const l = b.left + a.clientLeft, t = b.top + a.clientTop;
+            const past = Math.max(l - (r.left - ink), r.right + ink - (l + a.clientWidth), t - (r.top - ink), r.bottom + ink - (t + a.clientHeight));
+            if (past > worst) worst = past;
+            if (past > 0.5) cuts.push(`${a.className.split(" ")[0]} ${past.toFixed(2)}`);
+        }
+        return { focusVisible: el.matches(":focus-visible"), outline: cs.outlineStyle, worst: +worst.toFixed(2), cuts };
+    });
+}
+
+/** The active run's scroll extent against its port, the flag, and the plate's corners. */
+function runRead(page: Page) {
+    return page.evaluate(() => {
+        const dock = document.querySelector<HTMLElement>(".glass-dock")!;
+        const plate = dock.querySelector<HTMLElement>(":scope > .dock-plate")!;
+        const cs = getComputedStyle(plate);
+        const half = Math.min(plate.offsetWidth, plate.offsetHeight) / 2;
+        const radii = [cs.borderTopLeftRadius, cs.borderTopRightRadius, cs.borderBottomRightRadius, cs.borderBottomLeftRadius];
+        return {
+            collapsed: dock.classList.contains("collapsed"),
+            fits: dock.hasAttribute("data-run-fits"),
+            half,
+            radii,
+            round: radii.every((x) => /^[\d.]+px$/.test(x) && Math.abs(Number.parseFloat(x) - half) <= 0.5),
+            runs: [...dock.querySelectorAll<HTMLElement>(".dock-run")].map((run) => ({
+                active: run.classList.contains("is-active"),
+                sw: run.scrollWidth, cw: run.clientWidth, sh: run.scrollHeight, ch: run.clientHeight,
+                sl: Math.round(run.scrollLeft),
+            })),
+        };
+    });
+}
+
+/** s1 (R1, O-205): a run's scrollable overflow is exactly the active face's content. */
+function s1(width: number): void {
+    test(`s1 O-205 at ${width}: no collapsed dock has a scrolling run, and a hidden wider face adds nothing to a fitting run`, async ({ page }) => {
+        await page.setViewportSize({ width, height: 844 });
+        const bad: unknown[] = [];
+        for (const layers of [1, 0]) {
+            await open11(page, `scene=o205&collapse=closed&layers=${layers}`, 1500);
+            const read = await runRead(page);
+            // The idle run's scroll RANGE: a write to its offset lands nowhere. (Its
+            // scrollWidth is its content's extent, as on any box that does not scroll.)
+            const range = await page.evaluate(() =>
+                [...document.querySelectorAll<HTMLElement>(".glass-dock .dock-run")].map((run) => {
+                    run.scrollLeft = 60;
+                    run.scrollTop = 60;
+                    const cs = getComputedStyle(run);
+                    return { overflow: `${cs.overflowX} ${cs.overflowY}`, sl: run.scrollLeft, st: run.scrollTop, timeline: cs.scrollTimelineName };
+                }),
+            );
+            const scrolls = range.filter((r) => r.sl !== 0 || r.st !== 0 || r.timeline !== "none");
+            if (!read.collapsed || !read.round || scrolls.length) bad.push({ cell: `collapsed layers=${layers}`, ...read, range });
+        }
+        await open11(page, "scene=o205&collapse=false&layers=1&active=read", 1200);
+        await pointerOff(page);
+        const rest = await runRead(page);
+        const run = rest.runs.find((r) => r.active)!;
+        if (!rest.fits || run.sw !== run.cw || !rest.round) bad.push({ cell: "open, narrow face", ...rest });
+        const box = (await page.locator(".dock-layers > .dock-run.is-active").boundingBox())!;
+        await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
+        await page.mouse.wheel(240, 0);
+        await settle(page, 600);
+        const wheeled = await runRead(page);
+        if (wheeled.runs.find((r) => r.active)!.sl !== 0) bad.push({ cell: "open, narrow face, after a wheel", ...wheeled });
+        expect(bad, "a collapsed dock whose plate is not round or whose run scrolls, or a fitting run that scrolls a hidden face").toEqual([]);
+    });
+}
+
+/** s2 (R2, O-201): no fitting run clips a focused seat's ring, across the fit edge. */
+function s2(width: number): void {
+    test(`s2 O-201 at ${width}: across the fit edge the first and last seats keep their whole ring, and the flag is the layout`, async ({ page }) => {
+        test.setTimeout(300_000);
+        await page.setViewportSize({ width, height: 844 });
+        await open11(page, "scene=o201&at=end", 1000);
+        await pointerOff(page);
+        const natural = Math.ceil(await page.evaluate(() => document.querySelector<HTMLElement>(".glass-dock")!.getBoundingClientRect().width));
+        const bad: unknown[] = [];
+        let edge = Number.NaN;
+        for (let cap = natural; cap >= natural - 40; cap -= 1) {
+            await page.evaluate((cap) => {
+                (document.activeElement as HTMLElement | null)?.blur();
+                document.querySelector<HTMLElement>(".glass-dock")!.style.maxInlineSize = `${cap}px`;
+            }, cap);
+            await settle(page, 120);
+            const read = await runRead(page);
+            const run = read.runs.find((r) => r.active)!;
+            if (read.fits !== run.sw <= run.cw) bad.push({ cap, flag: read.fits, sw: run.sw, cw: run.cw });
+            if (!read.fits) {
+                if (Number.isNaN(edge)) edge = cap + 1;
+                if (cap < edge - 3) break;
+                continue;
+            }
+            for (const seat of ["S1", "home"]) {
+                await keyFocus(page, seat);
+                const ring = await ringPast(page, seat);
+                if (!ring.focusVisible || ring.outline === "none" || ring.cuts.length) bad.push({ cap, seat, ...ring });
+            }
+        }
+        expect(Number.isFinite(edge), `the fit edge is found under ${natural}`).toBe(true);
+        expect(bad, "a fitting cap that cuts a focused seat's ring, or a flag that is not the layout").toEqual([]);
+    });
+}
+
+s1(1440);
+s2(1440);
+
+test.describe("fix 11, coarse phone", () => {
+    test.use({ hasTouch: true, isMobile: true, viewport: { width: 390, height: 844 } });
+    s1(390);
+    s2(390);
+});
+
+test("s3 O-207 G3 a disclosure trigger's keyboard ring is the house outline, whatever it composes", async ({ page }) => {
+    const bad: unknown[] = [];
+    for (const dark of [0, 1]) {
+        await open11(page, `scene=focus&dark=${dark}`, 500);
+        for (const witness of ["card-trigger", "plain-trigger", "accordion"]) {
+            await keyFocus(page, witness);
+            const read = await page.locator(`[data-witness="${witness}"]`).evaluate((el) => {
+                const cs = getComputedStyle(el);
+                const alpha = /\/\s*([\d.]+)\s*\)$/.exec(cs.outlineColor);
+                return { fv: el.matches(":focus-visible"), style: cs.outlineStyle, width: cs.outlineWidth, alpha: alpha ? Number(alpha[1]) : 1 };
+            });
+            if (!read.fv || read.style !== "solid" || read.width !== "2px" || read.alpha < 0.45) bad.push({ dark, witness, ...read });
+        }
+    }
+    expect(bad, "a disclosure trigger whose focus ring is not the house outline (2px, the perimeter ink)").toEqual([]);
+});
+
+/** s4 (R4): a host that moves only its padding across the fit edge mid-expand moves the endpoint where the morph carries it. */
+test("s4 a host padding change across the fit edge mid-expand holds every seat at the settle (vertical)", async ({ page }) => {
+    test.setTimeout(300_000);
+    await page.setViewportSize({ width: 1440, height: 800 });
+    const V = (h: number) => `scene=dock&collapse=closed&orientation=vertical&stageH=${h}&kinds=icon,icon,icon,icon,icon,icon`;
+    const park = () => page.mouse.move(1430, 790);
+    await open7(page, V(600));
+    await park();
+    await page.evaluate(() => (window as unknown as { __dock: Dock7 }).__dock.expand());
+    await page.waitForTimeout(1300);
+    const Ev = await page.evaluate(async () => {
+        const dock = document.querySelector<HTMLElement>(".glass-dock")!;
+        const stage = document.querySelector<HTMLElement>('[data-witness="stage"]')!;
+        let edge = Number.NaN;
+        for (let m = 400; m >= 280; m -= 1) {
+            stage.style.blockSize = `${m}px`;
+            await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+            await new Promise((r) => setTimeout(r, 60));
+            if (!dock.hasAttribute("data-run-fits")) break;
+            edge = m;
+        }
+        return edge;
+    });
+    expect(Number.isFinite(Ev), `the fit edge is found (${Ev})`).toBe(true);
+    const bad: unknown[] = [];
+    for (const [stageH, pad] of [[Ev, 16.5], [Ev, 17], [Ev - 1, 15], [Ev - 2, 15]] as const)
+        for (const at of [110, 300]) {
+            await open7(page, V(stageH));
+            await park();
+            const fr = await hostResizeFrames(page, at, `pad:${pad}`, 1800);
+            const last = fr.findLastIndex((f) => f.morphing);
+            expect(last, `${stageH} pad ${pad} @${at}: the expand morphed and settled`).toBeGreaterThan(0);
+            expect(last).toBeLessThan(fr.length - 1);
+            const step = Math.abs(fr[last + 1]!.s1 - fr[last]!.s1);
+            if (step > 0.5) bad.push({ stageH, pad, at, step: +step.toFixed(2) });
+            const end = fr.at(-1)!;
+            if (end.fits === end.over) bad.push({ stageH, pad, at, flag: end.fits, overflows: end.over });
+        }
+    expect(bad, "seat steps over 0.5 px at the settle, or a rest flag that is not the layout's truth").toEqual([]);
 });
 
 /* M3 · O-159 and O-160, read from the source (no browser state). */
