@@ -15,9 +15,10 @@ const TWO_LINES = [
     { x: 40, y: 104, w: 180, h: 40 },
 ];
 
-function stillMedia(matches: boolean) {
+/** Reduced motion on (`still`) or off, as the motion media and the reduce query read it. */
+function stillMedia(still: boolean) {
     vi.stubGlobal("matchMedia", (q: string) => ({
-        matches: matches && q.includes("prefers-reduced-motion"),
+        matches: q.includes(": reduce") ? still : !still,
         media: q,
         addEventListener: () => {},
         removeEventListener: () => {},

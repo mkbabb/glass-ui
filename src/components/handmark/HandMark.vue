@@ -293,11 +293,14 @@ function drawAnimations(): Animation[] {
     ).flatMap((el) => el.getAnimations?.() ?? []);
 }
 
-/** Reduced motion and print show the final state from frame 0: nothing is left to draw. */
-const STILL = "(prefers-reduced-motion: reduce), print";
+/**
+ * Where the draw runs: the style block's own media condition. Anywhere else (reduced
+ * motion, print) the mark stands final from frame 0, and nothing is left to draw.
+ */
+const MOTION = "screen and (prefers-reduced-motion: no-preference)";
 
 function still(): boolean {
-    return window.matchMedia?.(STILL)?.matches ?? false;
+    return !(window.matchMedia?.(MOTION)?.matches ?? true);
 }
 
 function reduced(): boolean {
@@ -473,11 +476,11 @@ function watchEntry(el: HTMLElement): void {
 }
 
 let ro: ResizeObserver | null = null;
-let stillQuery: MediaQueryList | null = null;
+let motionQuery: MediaQueryList | null = null;
 
 /** Turning reduced motion on (or printing) shows every mark complete, so it is drawn. */
-function onStill(e: MediaQueryListEvent): void {
-    if (e.matches) finish();
+function onMotion(e: MediaQueryListEvent): void {
+    if (!e.matches) finish();
 }
 
 watch(ink, (v) => {
@@ -488,8 +491,8 @@ onMounted(() => {
     measure();
     // A mark that will not move is complete now: `draw` off, reduced motion, print.
     if (ink.value === "rest" || still()) finish();
-    stillQuery = window.matchMedia?.(STILL) ?? null;
-    stillQuery?.addEventListener?.("change", onStill);
+    motionQuery = window.matchMedia?.(MOTION) ?? null;
+    motionQuery?.addEventListener?.("change", onMotion);
     void nextTick(measure);
     void document.fonts?.ready?.then(measure);
     if (ink.value === "wait" && root.value) watchEntry(root.value);
@@ -502,7 +505,7 @@ onMounted(() => {
 
 onBeforeUnmount(() => {
     ro?.disconnect();
-    stillQuery?.removeEventListener?.("change", onStill);
+    motionQuery?.removeEventListener?.("change", onMotion);
     seen?.disconnect();
     if (quiet !== null) window.clearTimeout(quiet);
     document.removeEventListener("scroll", onScroll, { capture: true });
@@ -655,39 +658,44 @@ defineExpose({ play });
            the first time the preset is retuned. */
         animation: hm-settle var(--spring-present-duration) var(--spring-present) both;
     }
-    /* The draw: each line opens on the same `present` clock, line `i` after the `i`
-       before it, the whole mark after its line rank's lead. The window and the frame
-       share the clock, so their two transforms cancel at every frame. */
-    .hm[data-ink="draw"] :is(.hm-reveal, .hm-mark, .hm-guide) {
-        animation-duration: var(--spring-present-duration);
-        animation-timing-function: var(--spring-present);
-        animation-delay: calc(var(--hm-lead, 0ms) + var(--hm-i, 0) * var(--spring-present-duration));
-        animation-fill-mode: both;
-    }
-    .hm[data-ink="draw"]:not([data-shape="circle"]) .hm-reveal {
-        animation-name: hm-reveal;
-    }
-    .hm[data-ink="draw"]:not([data-shape="circle"]) .hm-mark {
-        animation-name: hm-frame;
-    }
-    .hm[data-ink="draw"][data-shape="circle"] .hm-guide {
-        animation-name: hm-draw;
-    }
     .hm-guide {
         stroke-dasharray: 1;
         stroke-dashoffset: 0;
     }
-    .hm[data-ink="wait"]:not([data-shape="circle"]) .hm-reveal {
-        transform: translateX(-100%);
-    }
-    .hm[data-ink="wait"]:not([data-shape="circle"]) .hm-mark {
-        transform: translateX(var(--hm-wipe));
-    }
-    .hm[data-ink="wait"] .hm-guide {
-        stroke-dashoffset: 1;
-    }
     .hm[data-ink="wait"] .hm-ink {
         animation: none;
+    }
+    /* The draw and the undrawn wait exist only on a screen with motion allowed. Under
+       reduced motion and in print, every mark stands at its final state from frame 0,
+       with nothing to undo. */
+    @media screen and (prefers-reduced-motion: no-preference) {
+        /* Each line opens on the same `present` clock, line `i` after the `i` before it,
+           the whole mark after its line rank's lead. The window and the frame share the
+           clock, so their two transforms cancel at every frame. */
+        .hm[data-ink="draw"] :is(.hm-reveal, .hm-mark, .hm-guide) {
+            animation-duration: var(--spring-present-duration);
+            animation-timing-function: var(--spring-present);
+            animation-delay: calc(var(--hm-lead, 0ms) + var(--hm-i, 0) * var(--spring-present-duration));
+            animation-fill-mode: both;
+        }
+        .hm[data-ink="draw"]:not([data-shape="circle"]) .hm-reveal {
+            animation-name: hm-reveal;
+        }
+        .hm[data-ink="draw"]:not([data-shape="circle"]) .hm-mark {
+            animation-name: hm-frame;
+        }
+        .hm[data-ink="draw"][data-shape="circle"] .hm-guide {
+            animation-name: hm-draw;
+        }
+        .hm[data-ink="wait"]:not([data-shape="circle"]) .hm-reveal {
+            transform: translateX(-100%);
+        }
+        .hm[data-ink="wait"]:not([data-shape="circle"]) .hm-mark {
+            transform: translateX(var(--hm-wipe));
+        }
+        .hm[data-ink="wait"] .hm-guide {
+            stroke-dashoffset: 1;
+        }
     }
 }
 @keyframes hm-reveal {
@@ -732,16 +740,6 @@ defineExpose({ play });
         }
         .hm-ink {
             animation: none;
-        }
-    }
-    /* Reduced motion and print show every mark at its final state from frame 0. */
-    @media (prefers-reduced-motion: reduce), print {
-        .hm[data-ink] :is(.hm-reveal, .hm-mark, .hm-guide) {
-            animation: none;
-            transform: none;
-        }
-        .hm[data-ink] .hm-guide {
-            stroke-dashoffset: 0;
         }
     }
     @media print {
