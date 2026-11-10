@@ -191,9 +191,12 @@ function ringClip(page: Page, sel: string) {
     }, sel);
 }
 
+// WebKit's Tab reaches text fields and links only (the macOS "tab to all controls" default); Option+Tab reaches every control.
+const tabKey = (page: Page, shift = false) =>
+    `${page.context().browser()?.browserType().name() === "webkit" ? "Alt+" : ""}${shift ? "Shift+" : ""}Tab`;
 async function tabTo(page: Page, sel: string, max = 20): Promise<boolean> {
     for (let i = 0; i < max; i++) {
-        await page.keyboard.press("Tab");
+        await page.keyboard.press(tabKey(page));
         if (await page.evaluate((sel) => document.activeElement?.matches(sel) ?? false, sel)) return true;
     }
     return false;
@@ -282,7 +285,7 @@ test("c11d O-207 G3 keyboard focus paints a ring on every atom", async ({ browse
             await page.mouse.move(2, 2);
             const out: unknown[] = [];
             for (let i = 0; i < 14; i++) {
-                await page.keyboard.press("Tab");
+                await page.keyboard.press(tabKey(page));
                 await page.waitForTimeout(250);
                 const info = await page.evaluate(() => {
                     const el = document.activeElement as HTMLElement | null;
@@ -304,8 +307,8 @@ test("c11d O-207 G3 keyboard focus paints a ring on every atom", async ({ browse
                 await page.waitForTimeout(250);
                 const off = await page.screenshot({ clip });
                 // re-focus by keyboard order: shift-tab then tab returns to the same element
-                await page.keyboard.press("Shift+Tab");
-                await page.keyboard.press("Tab");
+                await page.keyboard.press(tabKey(page, true));
+                await page.keyboard.press(tabKey(page));
                 await page.waitForTimeout(150);
                 const contrast = await page.evaluate(async ([a, b, w, hgt, ex, ey]) => {
                     const load = (s: string) => new Promise<ImageData>((res) => {

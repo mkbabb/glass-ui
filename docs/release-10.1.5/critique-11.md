@@ -14,6 +14,11 @@ runs; I stopped that waiter by its PID at 22:10 to run the Chromium follow-ups f
 came before I could queue it again), **and g7 did not run.** Every cell below is Chromium
 (`chromium-headless-new`) only. The machine needs a reboot before the next round.
 
+**Resumed 2026-11-10 after the reboot** (zone count about 3k, every run admitted): the WebKit 2287
+chain, g7 and the D-1 attribution ran. See *Resume: WebKit, g7, D-1* at the end. Every defect
+below (R1 to R4) now reproduces in both engines; R5 is attributed to load, not the patch; one
+WebKit intermittent in g6 (R6) is new.
+
 ## What ran (all through `guarded`, Chromium, one run at a time; `critic-11/runs.txt`)
 
 | run | result |
@@ -218,3 +223,86 @@ dock's room and nothing that `constraintOf` reads.
   `zsh docs/release-10.1.5/scripts/chain-critic-11.sh wk c11 c11-v1014 branch g6-4 g6-3 r10 r10b r10c d1`
   under `guarded --exclusive webkit`, the D-1 A/B in both engines, and g7
   (`scripts/gates-critic-10.sh` shape).
+
+## Resume: WebKit, g7, D-1 (2026-11-10, post-reboot)
+
+Same tip (`1e0f9d879` src; HEAD `01a093adc` adds only records). Driver
+`scripts/resume-critic-11.sh` (each step its own `guarded` call, WebKit under `--exclusive webkit`),
+then `scripts/wk-focus-critic-11.sh` and `scripts/f4-ab-critic-11.sh`. Rows in
+`critic-11/probe/<arm>/webkit/`, `critic-11/r10/*/webkit/`, logs `critic-11/*-wk.log`, summary
+`python3 -I scripts/critic-11-summary.py`. No run was refused.
+
+| run (WebKit 2287 unless noted) | result |
+|---|---|
+| `release-10-1-5.spec.ts` | 98/98 |
+| g6 `release-10-1-4` | **2 failed** (F-4 inline and grid hosts, `swaps` 2 vs `<= 1`), 13 passed, 8 skipped (page.pdf) |
+| g6 `release-10-1-3` | 58/58, 2 skipped |
+| critique 10's cells (r10, r10b, r10c) | 6/6, 12/12, 7/7 |
+| round 11's cells, branch and v10.1.4 arms | 9/9 and 9/9 |
+| c11c/c11d again with Option+Tab, both arms (`c11w*-wk.log`) | 2/2 and 2/2 |
+| D-1 cell `--repeat-each=8` (in the chain, load 37) | 4 failed (2.0, 2.34, 3.32, 3.63 px) |
+| D-1 A/B, Chromium (`d1ab/d1ab.txt`, load 29-40) | branch 0/8 pass, **v10.1.4 0/8 pass**, branch 7/8 |
+| D-1 A/B, WebKit (load 15-18) | branch 8/8, v10.1.4 8/8, branch 8/8 |
+| F-4 A/B, WebKit, `--repeat-each=8` (`f4ab/f4ab.txt`) | branch 39/40, v10.1.4 40/40, branch 40/40 |
+| g7 (`critic-11/g7/gates.txt`) | typecheck, build, demo:dist:build, vitest 247 files / 2397 passed (10 expected fail, 1 skip), verify:package: all exit 0 |
+
+**A harness note.** The first WebKit pass of c11c and c11d pressed Tab, which WebKit gives only to
+text fields and links (the macOS "tab to all controls" default), so no button took focus and the
+rows read `found: false`. I changed the spec's `tabTo` and c11d's loop to press Option+Tab in WebKit
+(as `release-10-1-2.spec.ts` does) and re-ran those two cells. Chromium's rows are untouched. In
+WebKit, c11d's blur-then-Shift+Tab re-focus step returns to the first atom every time, so only the
+first atom (value's palette-card trigger) is read there; the other atoms are Chromium readings.
+
+### Both engines, defect by defect
+
+- **R1 (O-205 at its root) reproduces in WebKit.** c11a: every collapsed cell has four equal
+  corners of half the cross extent (30/28 px), and the hidden full run still scrolls 178-194 px
+  (plain run) and 618-697 px (layer group). c11b: the open dock on its narrow face reads
+  `sw 752 / cw 267`, `778/260`, `825/265` with `data-run-fits` set. c11i: one wheel scrolls the
+  fitting run **167 px at 390 and 175 px at 1440**, flag still set (Chromium 165/173). v10.1.4:
+  collapsed corners `50% calc(0% + 16px) calc(0% + 16px) 50%` (gate 1 RED there), and its open dock
+  overflows its 136-148 px port, so the wheel case does not arise.
+- **R2 (O-201 at the fit edge) reproduces in WebKit.** Natural width: the Home ring is whole in all
+  16 cells on the branch; v10.1.4 cuts it **3.63-4.23 px** in all 16 (cured there, both engines).
+  Fit edge (255/267 at 390, 262/274 at 1440): the first and last seats' rings are cut **3.81 down to
+  0.31 px** (390) and **4.0-4.23 down to 0.11 px** (1440), fine and coarse alike, for the 8 px above
+  the edge.
+- **R3 (O-207 G3) reproduces in WebKit** for value's composition (`button focus-ring
+  disclosure-trigger`): ring contrast **2.08 (light), 2.12 (dark)**; v10.1.4 2.08/2.02. Pre-existing.
+- **R4 (the Q1 padding door) reproduces in WebKit, to the hundredth.** c11h: S1 steps **7.02 px**
+  (padding 16 → 16.5/17, stage 314) and **6.48/6.98 px** (padding 16 → 15, stage 313/312); the
+  same changes through the stage's size step 0.02 px; v10.1.4 0.02 px in every cell.
+- **R5 (D-1) is attributed: load, not the patch.** Under load 29-40 in Chromium, v10.1.4's own src
+  fails 8 of 8 (3.28-3.78 px) and the branch 8 of 8 (2.96-4.32 px), then 1 of 8 as load fell to 29.
+  In WebKit at load 15-18, branch and v10.1.4 pass 8 of 8 each. The cell's `< 2 px` bound is a
+  frame-timing reading that both trees miss alike once the machine is loaded. Withdrawn as a patch
+  defect; it stays a gate that cannot be read on a loaded machine.
+
+### R6: g6's 10.1.4 F-4 DataTable settle cell is intermittent in WebKit on the branch (low; unattributed)
+
+- The chain's g6 pass (load 39) failed the inline and grid hosts (`swaps` 2 against `<= 1`). The
+  A/B at load 17-49: branch 1 of 40 (fit host, 2 swaps), v10.1.4 0 of 40, branch 0 of 40. On the
+  branch that is 3 failures in 84 runs, against 0 in 40 on v10.1.4; that does not separate the
+  trees. The branch's only table change is `e06783047` (row and header rules take `border-border`;
+  the width does not move), so no cause in the patch is known. Critique 10's WebKit g6 was 23/23.
+- g6 is a release gate, so the close seat should re-read it at low load (`scripts/f4-ab-critic-11.sh
+  webkit 16`) before tagging.
+
+### What held in WebKit
+
+- The release spec 98/98; g6 10.1.3 58/58.
+- critique 10's cells read the same as Chromium in WebKit: every boolean in c10a-c10d and the c9
+  cells matches, c10b's S1 steps 0-0.02 px (Q1 on the dock's own max size holds), c9e's rest step is
+  0 in every cell, and the c1 sweep (postures, overflow, Slider, menu gap, type floor) has no reading
+  more than 1.5 px from Chromium's. The one WebKit-only reading is c9e `h-to-220` at 110 ms
+  (`sl 176`), which is critique 9's P3 re-scroll, pre-existing at v10.1.4.
+- c11e (G1) and c11f (G10) refute the same way in WebKit (default fill warm capsule and calm ink;
+  the near-black only under value's own `--slider-range-bg`; the dock box takes no first-frame step).
+- c11g: the undeclared wrapper is its content (92.8/99.8 px; v10.1.4 136).
+- g7 GREEN on the committed tip.
+
+### Union verdict
+
+Not ready to tag. Open on the branch, in both engines: **R1** (O-205 at its root), **R2** (O-201
+at the fit edge), **R3** (O-207 G3, pre-existing), **R4** (fix 10's Q1 key misses the parent's
+padding; a regression against v10.1.4). **R6** wants a low-load re-read. R5 is withdrawn.
