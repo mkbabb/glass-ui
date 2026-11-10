@@ -33,6 +33,11 @@ It is a major because it deletes public exports. It runs on its own branch, cut 
   - One tab register, not a third style (C-42).
   - Bezier mode draws no step staircase (C-100).
   - Presets show curve previews (C-78).
+- **K1 and K2 (keyframes; extending G9), EasingPicker:**
+  - A prop hides its own preset list, for a host whose gallery is the selector.
+  - Seeded `initial.points` that match a catalogue curve show that curve's name, not "Custom".
+  - Each mode draws only its own curve.
+- **K9 (keyframes; C-9), weight:** `.text-subheading`, the ConfiguratorLayer trigger label, the catalogue's family headings and SubPaneHeader set weight 400. Size carries the step.
 - **G11, per-component CSS entry points:** a consumer importing 9 components ships only their rules, not 2,618 rules and 17 backdrop-filter values. Each component subpath gets its own stylesheet entry.
 - **G12, field skins:** one field skin library-wide. NumberField's filled skin and Select's transparent skin become one (C-5, C-18).
 
