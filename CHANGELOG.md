@@ -232,6 +232,37 @@ A minor release: new things you can opt into, and nothing you need to change.
   around it, as they were drawn to. A blob scrolled out of view still stops drawing
   entirely.
 
+### HandMark
+
+- **Marks draw in your page's focal colour.** With no `color`, an underline, strike or
+  ring now paints in `--primary`, and a highlight takes the hue of `--primary`, instead
+  of the text colour and a fixed yellow. Since `--primary` follows your theme, a mark
+  in dark mode takes your dark accent on its own. Passing `color` works as before: a
+  colour for a stroke, a hue number for a highlight. `color="78"` gives you the old
+  yellow band back.
+
+- **Marks wait until they are scrolled to.** Add `trigger="in-view"` and a mark holds
+  undrawn until at least half of it is on screen, then draws in, so a heading further
+  down the page draws when your reader gets there rather than while it is out of sight.
+  It draws once; add `retrigger` to draw it again each time it comes back into view.
+  Without `trigger`, a mark draws as soon as it mounts, as before.
+
+  ```vue
+  <h2>
+      Plan the <HandMark shape="highlight" trigger="in-view">quiet season</HandMark>
+  </h2>
+  ```
+
+- **The draw keeps the library's time.** Each line of a mark draws on the same spring
+  as menus and popovers (`--spring-present`), one line after another across a wrapped
+  phrase, and it follows `--motion-tempo` like every other motion. A mark that is
+  re-measured, for example when your fonts finish loading, keeps its place instead of
+  drawing over again.
+
+- **Reduced motion and print show the finished mark.** With reduced motion turned on,
+  or when the page is printed, every mark is fully drawn from the first frame, including
+  a `trigger="in-view"` mark that has not been scrolled to.
+
 ## 11.0.0 — 2026-11-09
 
 A major release. It brings in everything from 10.1.3 and 10.1.4 below, and adds a

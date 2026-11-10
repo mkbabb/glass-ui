@@ -11,6 +11,7 @@
 <script setup lang="ts">
 import { computed, nextTick, onBeforeUnmount, onMounted, ref, useId, watch } from "vue";
 import { FRAME_MS } from "../../composables/motion/core/constants";
+import { motionTempo } from "../../composables/motion/core/motionTempo";
 import { useIntersectionPause } from "../../composables/motion/core/useIntersectionPause";
 import {
     BAND_HEIGHT,
@@ -21,9 +22,7 @@ import {
     handBand,
     handLine,
     handRing,
-    markDuration,
     markSeed,
-    minJerk,
     nib,
     ringReserve,
     serialize,
@@ -37,16 +36,22 @@ const props = withDefaults(
         weight?: number;
         seed?: number;
         draw?: boolean;
+        /**
+         * When the mark draws in. `"mount"` draws as soon as it is measured; `"in-view"`
+         * holds the mark undrawn until at least half of it is in the viewport, then
+         * draws it, so a heading below the fold draws when the reader reaches it.
+         */
+        trigger?: "mount" | "in-view";
+        /** With `trigger="in-view"`: undraw on leaving the viewport and draw again on each entry. */
+        retrigger?: boolean;
     }>(),
-    { shape: "underline", color: "currentColor", weight: 1, draw: true },
+    { shape: "underline", weight: 1, draw: true, trigger: "mount", retrigger: false },
 );
 
 interface Mark {
     ink: string;
     guide: string;
     stroke: number;
-    delay: number;
-    duration: number;
     /** The mask's own window, in the SAME user units the geometry is emitted in. */
     window: Frame;
     /**
@@ -71,23 +76,34 @@ const reserve = ref(0);
 const swell = ref(1);
 const lag = ref(0);
 const settling = ref(false);
+/** The line rank's lead, in ms: see THE FRAME-RANK LAW in `measure()`. */
+const lead = ref(0);
 
-/** The highlight takes a HUE; every other gesture takes a colour. */
+/**
+ * Where the draw stands. `wait` holds the mark undrawn (an in-view mark not yet seen),
+ * `draw` runs the draw on the `present` spring, `rest` shows it drawn with no motion.
+ * The style block reads it; reduced motion and print show every state drawn.
+ */
+const ink = ref<"wait" | "draw" | "rest">(
+    !props.draw ? "rest" : props.trigger === "in-view" ? "wait" : "draw",
+);
+
+/**
+ * The highlight takes a HUE; every other gesture takes a colour. With no `color`, both
+ * take the page's focal ink, `--primary`: the stroke paints it, and the band takes its hue.
+ */
 const bandHue = computed(() => {
     const n = Number(props.color);
-    return Number.isFinite(n) ? n : 78;
+    return props.color !== undefined && Number.isFinite(n) ? n : null;
 });
-const inkFill = computed(() => (props.shape === "highlight" ? "var(--hm-band)" : props.color));
+const inkFill = computed(() =>
+    props.shape === "highlight" ? "var(--hm-band)" : (props.color ?? "var(--primary)"),
+);
 const hostStyle = computed(() => ({
-    "--hm-h": `${bandHue.value}`,
+    ...(bandHue.value === null ? {} : { "--hm-h": `${bandHue.value}` }),
     "--hm-reserve": reserve.value ? `${reserve.value}px` : "0px",
+    "--hm-lead": `${lead.value}ms`,
 }));
-
-function polylineLength(p: Point[]): number {
-    let sum = 0;
-    for (let i = 1; i < p.length; i++) sum += Math.hypot(p[i].x - p[i - 1].x, p[i].y - p[i - 1].y);
-    return sum;
-}
 
 /** The nearest block ancestor: the scope a mark's identity and its stagger are read in. */
 function blockScope(el: HTMLElement): HTMLElement {
@@ -179,11 +195,7 @@ function maskWindow(points: Point[], stroke: number): Frame {
 
 // The frame's `box` is the RECT, not the geometry — `measure()` owns it, so it is not
 // among the things a shape's closed form can answer for.
-function geometryFor(
-    rect: Frame,
-    fs: number,
-    seed: number,
-): Omit<Mark, "delay" | "duration" | "box"> & { length: number } {
+function geometryFor(rect: Frame, fs: number, seed: number): Omit<Mark, "box"> {
     if (props.shape === "highlight") {
         const band = handBand(rect, { fs, seed });
         const half = band.length / 2;
@@ -195,7 +207,6 @@ function geometryFor(
         return {
             ink: fillPolygon(band),
             guide: serialize(guide),
-            length: polylineLength(guide),
             stroke,
             window: maskWindow(band.concat(guide), stroke),
         };
@@ -208,7 +219,6 @@ function geometryFor(
     return {
         ink: strokeRibbon(line, w),
         guide: serialize(line),
-        length: polylineLength(line),
         stroke: w * 1.6,
         window: maskWindow(line, w * 1.6),
     };
@@ -227,8 +237,9 @@ function measure(): void {
     // THE FRAME-RANK LAW: a line's lead over the one above it is four frames of the
     // display's own beat, not a minted millisecond. `FRAME_MS` is the shared token and
     // 4 is this family's rank — the same grammar the timeline reads, so the library
-    // owns one lead/lag idea rather than two coincidentally-similar numbers.
-    let clock = line * 4 * FRAME_MS;
+    // owns one lead/lag idea rather than two coincidentally-similar numbers. Within the
+    // mark, line `i` waits `i` draws of the `present` clock (the style block).
+    lead.value = Math.round(line * 4 * FRAME_MS * 100) / 100;
     const next: Mark[] = [];
     for (const r of rects) {
         const frame: Frame = {
@@ -238,17 +249,7 @@ function measure(): void {
             height: r.height,
         };
         const g = geometryFor(frame, fs, seed + next.length);
-        const duration = markDuration(g.length);
-        next.push({
-            ink: g.ink,
-            guide: g.guide,
-            stroke: g.stroke,
-            window: g.window,
-            box: { width: up(frame.width), height: up(frame.height) },
-            delay: clock,
-            duration,
-        });
-        clock += duration;
+        next.push({ ...g, box: { width: up(frame.width), height: up(frame.height) } });
     }
     marks.value = next;
     reserve.value =
@@ -258,44 +259,55 @@ function measure(): void {
 }
 
 /**
- * The draw is a mask of the centreline, dashed open and pulled shut on a minimum-jerk
- * clock. A spring would be wrong here: a stroke cannot un-draw past its own end.
+ * The draw is a mask of the centreline, dashed open and pulled shut. The style block owns
+ * it: `pathLength="1"` normalises every guide, and the dash offset runs 1 → 0 on the
+ * `present` spring's own clock and curve, which is critically damped, so the stroke
+ * never draws past its end and back. `play()` replays it.
  */
-function run(from = 0): void {
-    if (typeof document === "undefined" || !root.value) return;
-    const reduce = window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ?? false;
-    const press = getComputedStyle(root.value).getPropertyValue("--spring-press").trim();
-    const easing = from > 0 && press ? press : minJerk();
-    for (const el of Array.from(root.value.querySelectorAll<SVGPathElement>(".hm-guide"))) {
-        const total = el.getTotalLength?.() ?? 0;
-        if (!total) continue;
-        const mark = marks.value[Number(el.dataset.i ?? 0)];
-        el.style.strokeDasharray = `${total}`;
-        el.style.strokeDashoffset = "0";
-        if (!props.draw || reduce || typeof el.animate !== "function") continue;
-        el.animate([{ strokeDashoffset: total * (1 - from) }, { strokeDashoffset: 0 }], {
-            duration: from > 0 ? 220 : (mark?.duration ?? 400),
-            delay: from > 0 ? 0 : (mark?.delay ?? 0),
-            easing,
-            fill: "both",
-        });
-    }
+function guideAnimations(): Animation[] {
+    if (!root.value) return [];
+    return Array.from(root.value.querySelectorAll<SVGElement>(".hm-guide, .hm-ink")).flatMap(
+        (el) => el.getAnimations?.() ?? [],
+    );
 }
 
 function play(): void {
-    run(0);
+    if (ink.value !== "draw") {
+        ink.value = "draw";
+        return;
+    }
+    for (const a of guideAnimations()) {
+        a.currentTime = 0;
+        a.play();
+    }
 }
 
-/** Re-ink: one replay, every modality. The nib swells 4%; the centreline never moves. */
+function reduced(): boolean {
+    return window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ?? false;
+}
+
+/**
+ * Re-ink: one replay, every modality. The nib swells 4% and the last third of the stroke
+ * pulls shut again on the `press` spring; the centreline never moves.
+ */
 function reink(): void {
-    if (swell.value !== 1) return;
+    if (swell.value !== 1 || ink.value === "wait" || !root.value || reduced()) return;
+    const style = getComputedStyle(root.value);
+    const settle = parseFloat(style.getPropertyValue("--spring-press-settle"));
+    const duration = (Number.isFinite(settle) ? settle * 1000 : 0) * motionTempo(root.value);
+    const easing = style.getPropertyValue("--spring-press").trim() || "linear";
     swell.value = 1.04;
     measure();
-    run(0.35);
-    window.setTimeout(() => {
+    const runs = Array.from(root.value.querySelectorAll<SVGPathElement>(".hm-guide")).map((el) =>
+        el.animate([{ strokeDashoffset: 0.35 }, { strokeDashoffset: 0 }], {
+            duration,
+            easing,
+        }),
+    );
+    void Promise.all(runs.map((a) => a.finished)).finally(() => {
         swell.value = 1;
         measure();
-    }, 220);
+    });
 }
 
 let quiet: number | null = null;
@@ -352,18 +364,43 @@ useIntersectionPause(root, {
     },
 });
 
+/**
+ * `trigger="in-view"`: the mark waits undrawn until half of it is in the viewport, then
+ * draws once; with `retrigger` it undraws when wholly out and draws on each entry. An
+ * observer's first report is the truth about a mark mounted off-screen, so the state
+ * starts at `wait` and only an entry moves it.
+ */
+let seen: IntersectionObserver | null = null;
+
+function watchEntry(el: HTMLElement): void {
+    if (typeof IntersectionObserver === "undefined") {
+        ink.value = "draw";
+        return;
+    }
+    seen = new IntersectionObserver(
+        ([entry]) => {
+            if (entry.intersectionRatio >= 0.5) {
+                ink.value = "draw";
+                if (!props.retrigger) {
+                    seen?.disconnect();
+                    seen = null;
+                }
+            } else if (props.retrigger && !entry.isIntersecting) {
+                ink.value = "wait";
+            }
+        },
+        { threshold: [0, 0.5] },
+    );
+    seen.observe(el);
+}
+
 let ro: ResizeObserver | null = null;
 
 onMounted(() => {
     measure();
-    void nextTick(() => {
-        measure();
-        run(0);
-    });
-    void document.fonts?.ready?.then(() => {
-        measure();
-        run(0);
-    });
+    void nextTick(measure);
+    void document.fonts?.ready?.then(measure);
+    if (ink.value === "wait" && root.value) watchEntry(root.value);
     if (typeof ResizeObserver !== "undefined" && root.value) {
         ro = new ResizeObserver(() => measure());
         ro.observe(root.value);
@@ -373,6 +410,7 @@ onMounted(() => {
 
 onBeforeUnmount(() => {
     ro?.disconnect();
+    seen?.disconnect();
     if (quiet !== null) window.clearTimeout(quiet);
     document.removeEventListener("scroll", onScroll, { capture: true });
 });
@@ -387,6 +425,7 @@ defineExpose({ play });
         class="hm"
         ref="root"
         :data-shape="shape"
+        :data-ink="ink"
         :style="hostStyle"
         @pointerenter="reink"
         @pointerdown="reink"
@@ -419,7 +458,9 @@ defineExpose({ play });
                     <path
                         class="hm-guide"
                         :data-i="i"
+                        :style="{ '--hm-i': i }"
                         :d="m.guide"
+                        pathLength="1"
                         fill="none"
                         stroke="#fff"
                         :stroke-width="m.stroke"
@@ -440,8 +481,12 @@ defineExpose({ play });
         display: inline;
         isolation: isolate;
         padding-inline: var(--hm-reserve, 0px);
-        --hm-h: 78;
-        --hm-band: light-dark(oklch(0.86 0.16 var(--hm-h)), oklch(0.44 0.16 var(--hm-h)));
+        /* The band takes the `color` hue when one is given (`--hm-h`), else the hue of
+           the page's focal ink. */
+        --hm-band: light-dark(
+            oklch(from var(--primary) 0.86 0.16 var(--hm-h, h)),
+            oklch(from var(--primary) 0.44 0.16 var(--hm-h, h))
+        );
     }
     .hm del {
         text-decoration: none;
@@ -486,6 +531,30 @@ defineExpose({ play });
            the first time the preset is retuned. */
         animation: hm-settle var(--spring-present-duration) var(--spring-present) both;
     }
+    /* The draw: each line pulls shut on the same `present` clock, line `i` after the `i`
+       before it, the whole mark after its line rank's lead. */
+    .hm-guide {
+        stroke-dasharray: 1;
+        stroke-dashoffset: 0;
+    }
+    .hm[data-ink="draw"] .hm-guide {
+        animation: hm-draw var(--spring-present-duration) var(--spring-present)
+            calc(var(--hm-lead, 0ms) + var(--hm-i, 0) * var(--spring-present-duration)) both;
+    }
+    .hm[data-ink="wait"] .hm-guide {
+        stroke-dashoffset: 1;
+    }
+    .hm[data-ink="wait"] .hm-ink {
+        animation: none;
+    }
+}
+@keyframes hm-draw {
+    from {
+        stroke-dashoffset: 1;
+    }
+    to {
+        stroke-dashoffset: 0;
+    }
 }
 @keyframes hm-settle {
     from {
@@ -502,6 +571,21 @@ defineExpose({ play });
         }
         .hm-mark--settling {
             transition: none;
+        }
+        .hm-ink {
+            animation: none;
+        }
+    }
+    /* Reduced motion and print show every mark at its final state from frame 0. */
+    @media (prefers-reduced-motion: reduce), print {
+        .hm[data-ink] .hm-guide {
+            animation: none;
+            stroke-dashoffset: 0;
+        }
+    }
+    @media print {
+        .hm-mark {
+            transform: none;
         }
         .hm-ink {
             animation: none;

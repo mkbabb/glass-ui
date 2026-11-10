@@ -319,10 +319,12 @@ describe("G-HM-LAYER 2 · CONTAINMENT, geometric — extent is geometry, never i
 });
 
 describe("G-HM-LAYER 3 · SUBSTRATE — structural half; the painted windows are π-BAND", () => {
-    it("the band is one law on two papers — light-dark() over one hue variable", () => {
+    it("the band is one law on two papers — light-dark() over one hue, the focal ink's unless given", () => {
         expect(styleBlock()).toMatch(
-            /--hm-band:\s*light-dark\(\s*oklch\(0\.86\s+0\.16\s+var\(--hm-h\)\)\s*,\s*oklch\(0\.44\s+0\.16\s+var\(--hm-h\)\)\s*\)/s,
+            /--hm-band:\s*light-dark\(\s*oklch\(from var\(--primary\) 0\.86\s+0\.16\s+var\(--hm-h,\s*h\)\)\s*,\s*oklch\(from var\(--primary\) 0\.44\s+0\.16\s+var\(--hm-h,\s*h\)\)\s*\)/s,
         );
+        // No fixed hue: the host declares none, so an absent `color` falls to the focal ink.
+        expect(styleBlock()).not.toMatch(/--hm-h:\s*\d/);
     });
 
     it("no ink recolour anywhere — the family never names an ink value", () => {
