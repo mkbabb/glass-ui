@@ -63,9 +63,47 @@
        hides content. Shell corner static, plate corner scroll-driven, one owner each —
        which is exactly the separation the identity-lerp blurred, because a rule that
        animates and a rule that cannot be seen to animate are indistinguishable from
-       the outside until someone sets a token and discovers the design. */
+       the outside until someone sets a token and discovers the design.
+
+       `--radius-dock` is the stadium (theme/radius.css), so this one corner is half the
+       box's cross extent in every posture: the engine clamps it to half the shorter
+       side, in px, never a `%` (which resolves per axis into an ellipse).
+
+       `--dock-corner` is that capsule stated as a finite length, for the two places
+       that need a number rather than a clamp: the cut cap's keyframe rest (run.css) and
+       the morph below. It is half the token cross extent (the layer height plus the
+       cross padding), bounded by `--radius-dock`, so a host's bar corner wins. */
     .glass-dock {
         border-radius: var(--radius-dock);
+        --dock-corner: min(
+            var(--radius-dock),
+            calc(var(--dock-layer-height, 2.5rem) / 2 + var(--dock-padding-block, 0.375rem))
+        );
+    }
+    .glass-dock.vertical {
+        --dock-corner: min(
+            var(--radius-dock),
+            calc(var(--dock-layer-height, 2.5rem) / 2 + var(--dock-padding-inline, 0.5rem))
+        );
+    }
+
+    /* THE CORNER THROUGH THE MORPH. The morph scales the box on its axis by
+       `--dock-size-scale` (k, below), and a scale carries the corner with it: the
+       collapsed circle opened as a k-squashed rounded box (6 x 28 px on screen at the
+       first expand frame), a silhouette swap the capsule exists to rule out. So while
+       the box morphs its corner is stated counter-scaled, `R / k` along the axis and
+       `R` across it, with R = `--dock-corner`. The engine's overlap clamp scales both
+       radii by one factor, so any R at or past the half cross extent paints exactly
+       half the visible cross extent on both axes: the ends stay round in every frame,
+       whatever the content's true height. A host's smaller R paints its own round
+       corner. The pill shape only: `rounded` and `card` keep their own corners. */
+    .glass-dock.shape-pill[data-morphing]:not(.vertical) {
+        border-radius: calc(var(--dock-corner) / max(var(--dock-size-scale, 1), 0.06)) /
+            var(--dock-corner);
+    }
+    .glass-dock.shape-pill[data-morphing].vertical {
+        border-radius: var(--dock-corner) /
+            calc(var(--dock-corner) / max(var(--dock-size-scale, 1), 0.06));
     }
 
     /* [2026-08-25 · BK #47 W5 CUT] ~~THE ARBITRARY SILHOUETTE — the OPT-IN `clip-path`

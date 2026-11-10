@@ -475,8 +475,10 @@
        DOWN, never up. `styles/scroll-driven.css` documents that trap already.
 
        Every shape keyframes from its own finite rest, where no clamp is in play. The
-       pill shape's rest is `--radius-dock` (the 1rem pill rung since U/B7); a rest the
-       engine clamps would hold until the end of the range and then snap.
+       pill shape rests as a capsule (`--radius-dock`, the stadium, which the engine
+       clamps), so its keyframe rest is that capsule stated finitely, `--dock-corner`
+       (shape.css). A rest the engine clamps would hold until the end of the range and
+       then snap.
 
        TWO RUNGS DOWN, ON THE SERIES — never a hand-picked number. The corner series is
        4 · 10 · 16 · 24, and every value below is that series by name: pill 16 → 4
@@ -489,7 +491,7 @@
         timeline-scope: --dock-run;
         /* The rest corner and its two-rung drop, per shape. Each shape names its own
            finite rest so the keyframe never has to guess at a box height. */
-        --dock-cap-rest: var(--radius-dock);
+        --dock-cap-rest: var(--dock-corner);
         --dock-cap-cut: var(--radius-xs);
     }
 
@@ -524,27 +526,35 @@
        Outside its range each arm holds its own end value (`fill: both`), which is what
        makes a deeply-scrolled run keep its leading cut instead of springing back. When
        there is NOTHING to scroll the timeline is inactive and the plate paints its base
-       corner — no cap on a run that hides nothing, with no attribute asked to say so. */
-    .glass-dock .dock-plate {
-        animation:
-            gl-dock-cap-inline-start linear both,
-            gl-dock-cap-inline-end linear both;
-        animation-timeline: --dock-run, --dock-run;
-        animation-range:
-            0 var(--dock-pitch),
-            calc(100% - var(--dock-pitch)) 100%;
-        animation-direction: normal, reverse;
-    }
+       corner — no cap on a run that hides nothing, with no attribute asked to say so.
 
-    .glass-dock.vertical .dock-plate {
-        animation:
-            gl-dock-cap-block-start linear both,
-            gl-dock-cap-block-end linear both;
-        animation-timeline: --dock-run, --dock-run;
-        animation-range:
-            0 var(--dock-pitch),
-            calc(100% - var(--dock-pitch)) 100%;
-        animation-direction: normal, reverse;
+       The cap reports the RUN, so it rides only a dock whose run is the face it shows:
+       a collapsed dock's run is out of flow and inert behind the summary, and its
+       overflow cut the collapsed plate's trailing corners. Under reduced motion the
+       corner holds still: the library's scroll-driven register is motion, and the
+       run's peek of its next seat still reports the overflow. */
+    @media (prefers-reduced-motion: no-preference) {
+        .glass-dock:not(.collapsed) .dock-plate {
+            animation:
+                gl-dock-cap-inline-start linear both,
+                gl-dock-cap-inline-end linear both;
+            animation-timeline: --dock-run, --dock-run;
+            animation-range:
+                0 var(--dock-pitch),
+                calc(100% - var(--dock-pitch)) 100%;
+            animation-direction: normal, reverse;
+        }
+
+        .glass-dock.vertical:not(.collapsed) .dock-plate {
+            animation:
+                gl-dock-cap-block-start linear both,
+                gl-dock-cap-block-end linear both;
+            animation-timeline: --dock-run, --dock-run;
+            animation-range:
+                0 var(--dock-pitch),
+                calc(100% - var(--dock-pitch)) 100%;
+            animation-direction: normal, reverse;
+        }
     }
 
     /* ── THE LIVE REGION ─────────────────────────────────────────────────────────

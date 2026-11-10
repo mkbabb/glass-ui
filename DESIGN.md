@@ -393,7 +393,7 @@ this table must agree). Five classes: **primitive** (the numeric ladder), **sema
 | `--radius-strip`    | 0.75rem            | 12 px | Bounded column-stack segmented track (vertical)            |
 | `--radius-tab`      | var(--radius-pill) | 16 px | Segmented control (horizontal; a stadium up to 32 px tall) |
 | `--radius-badge`    | var(--radius-pill) | 16 px | Badge (a stadium at badge height)                          |
-| `--radius-dock`     | var(--radius-pill) | 16 px | Dock container (the collapsed dock is `--radius-stadium`)  |
+| `--radius-dock`     | var(--radius-stadium) | half the cross extent | Dock container: a capsule in every posture (a host sets `1rem` for the bar) |
 | `--radius-dock-card`| var(--radius-3xl)  | 24 px | Big-dock card shell (density-scaled)                       |
 | `--radius-tooltip`  | var(--radius-lg)   | 10 px | Tooltip                                                    |
 

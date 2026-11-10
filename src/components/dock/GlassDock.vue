@@ -18,7 +18,7 @@
 // axis-aware expand/collapse transition, and the pointer/focus hold machinery.
 // The fission split facility is DEFINITION-ABSENT (decided-terminal;
 // clean break, no alias — demo-only spectacle + the prime Safari suspect).
-import { computed, nextTick, ref, useId, useTemplateRef, watch } from "vue";
+import { computed, nextTick, ref, useId, useSlots, useTemplateRef, watch } from "vue";
 // The sampled-luminance observer is wired ON for every
 // `backdropMode: "live"` dock (the surface the user reported unreadable over light, and the
 // one most often over a live/bright backdrop). It REFINES the declarative bucket +
@@ -244,7 +244,20 @@ const {
     geometry,
 });
 
-const summaryIsDisclosure = computed(() => outerCurrentLayer.value === "summary");
+/* THE PERSISTENT FACE. With no `#collapsed` slot authored and a seat in `#persistent`
+   or `#persistent-end`, those seats ARE the collapsed face: the summary pane is empty
+   (morph.css shrinks it to nothing, so the plate shrink-wraps the seats on the one
+   spring) and it is no disclosure. A summary button beside the seats would put a
+   second control on the collapsed dock, and wrapping a seat in it would nest a button
+   in a button. Expansion follows `expand-on`: a hover or a keyboard focus on a seat, or
+   a long press on a coarse pointer (useDockState); a press on a seat is the seat's. */
+const slots = useSlots();
+const persistentFace = computed(
+    () => !slots.collapsed && (!!slots.persistent || !!slots["persistent-end"]),
+);
+const summaryIsDisclosure = computed(
+    () => outerCurrentLayer.value === "summary" && !persistentFace.value,
+);
 async function onSummaryKeydown(event: KeyboardEvent) {
     if (!summaryIsDisclosure.value || !["Enter", " "].includes(event.key)) return;
     event.preventDefault();
@@ -297,7 +310,8 @@ function onFullKeydown(event: KeyboardEvent): void {
    overlay's later return to its inert trigger is a no-op on an inert element. An
    overlay a `#persistent` control opened is not the face's: it stays open, focus in it
    stays, and taking it would send its own focus return to a live trigger and re-expand
-   the dock (critic-3 D-1). */
+   the dock (critic-3 D-1). A persistent face has no summary to take focus: its first
+   seat takes it. */
 watch(visualExpanded, async (isExpanded, was) => {
     if (!was || isExpanded) return;
     const active = document.activeElement;
@@ -307,8 +321,12 @@ watch(visualExpanded, async (isExpanded, was) => {
             dockId;
     if (!held) return;
     await nextTick();
-    const summary = summaryEl.value;
-    if (summary && !summary.hasAttribute("inert")) summary.focus({ preventScroll: true });
+    const target = persistentFace.value
+        ? dockEl.value?.querySelector<HTMLElement>(
+              `.dock-persistent :is(${FOCUSABLE_SELECTOR})`,
+          )
+        : summaryEl.value;
+    if (target && !target.hasAttribute("inert")) target.focus({ preventScroll: true });
 });
 
 /* The CLICK-INTEGRITY guard. Scopes the collapsed-tap / hover-
@@ -461,7 +479,7 @@ defineExpose({
             No cartoon box-punch; the morph carries ONE
             deformation-free `--dock-size-scale` box morph on the `scale:` channel.
         -->
-        <div v-if="$slots.persistent" class="dock-persistent">
+        <div v-if="$slots.persistent" class="dock-persistent dock-persistent-start">
             <slot name="persistent" />
         </div>
 

@@ -335,8 +335,8 @@ describe("G-DOCK-RUN — the platform is the detent engine", () => {
 
     /**
      * BOTH ENDPOINTS ARRIVE THROUGH THE TOKEN PAIR, so retargeting a shape is a token
-     * line and never a keyframe edit. U/B7: the pill shape rests on `--radius-dock`
-     * (the 1rem pill rung), a finite corner no clamp pins.
+     * line and never a keyframe edit. The pill shape rests on `--dock-corner`, the
+     * capsule stated finitely (shape.css), so no clamp pins the keyframe rest.
      */
     it("the cap keyframes only through the rest/cut token pair", () => {
         const run = read(`${STYLES}/run.css`);
@@ -348,7 +348,7 @@ describe("G-DOCK-RUN — the platform is the detent engine", () => {
             }
         }
         const decls = declarations(`${STYLES}/run.css`);
-        expect(decls).toMatch(/--dock-cap-rest:\s*var\(--radius-dock\)/);
+        expect(decls).toMatch(/--dock-cap-rest:\s*var\(--dock-corner\)/);
         // Declarations only: `from: 9999px` is NAMED in the docblock as the rejected
         // alternative, and a detector that cannot tell a rejection from a declaration
         // would RED the file for explaining itself.
@@ -818,7 +818,7 @@ describe("G-DOCK-MATERIAL — the focus ring composes instead of competing", () 
 
         // 2. The shell's resting corner is one static token read, not a calc().
         expect(declarations(`${STYLES}/shape.css`)).toMatch(
-            /\.glass-dock \{\s*border-radius:\s*var\(--radius-dock\);\s*\}/,
+            /\.glass-dock \{\s*border-radius:\s*var\(--radius-dock\);/,
         );
 
         // 3. The band's ONLY keyframed radius is the cut cap's, on the plate.

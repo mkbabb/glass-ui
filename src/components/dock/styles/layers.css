@@ -148,6 +148,15 @@
         transition: visibility 0s linear var(--duration-normal);
     }
 
+    /* Under reduced motion a posture or face change snaps: the leaving pane is already
+       at opacity 0 (the spring lands in one frame), so it hides at once instead of
+       holding a delayed visibility flip. */
+    @media (prefers-reduced-motion: reduce) {
+        :where(.glass-dock, .dock-layer-group) .dock-layer {
+            transition: none;
+        }
+    }
+
     :where(.glass-dock, .dock-layer-group) .dock-layer:not(.is-active):not(.is-leaving) {
         opacity: 0;
         visibility: hidden;

@@ -40,6 +40,60 @@ A minor release: new things you can opt into, and nothing you need to change.
   </GlassDock>
   ```
 
+- **The dock rests as a capsule.** In every shape it takes, the dock's corners are now
+  half its height (half its width when it stands vertically): an open dock has fully
+  round ends, a collapsed single control is a circle, and a collapsed dock two controls
+  wide is a capsule rather than a rounded bar. The ends stay round while the dock opens
+  and closes, too, where before they flattened for a moment at the start of each change.
+  A collapsed dock also no longer shows one squared-off corner when the controls it hides
+  would overflow. If you prefer the rounded-bar corner, set `--radius-dock: 1rem` on the
+  dock or on any element around it. The `rounded-dock` utility follows the same token.
+
+  ```css
+  .site-header {
+      --radius-dock: 1rem;
+  }
+  ```
+
+- **A collapsed dock can be just its always-visible controls.** Leave out the
+  `#collapsed` slot and put a control in `#persistent` or `#persistent-end`, such as a
+  theme toggle, and the collapsed dock is exactly that control, with its own icon, its
+  own name and its own pressed state, and no "Expand dock" button beside it. With
+  controls in both slots, the leading ones come first and the trailing ones follow. The
+  dock still opens the way `expand-on` says: hovering it with a mouse or trackpad opens
+  it, and tabbing onto the control opens it from the keyboard, so Tab (or Shift+Tab, for
+  a trailing control) carries you on into the rest of the dock. A touch screen has no
+  hover, so there you press and hold the control to open the dock; a quick tap is the
+  control's own.
+
+  ```vue
+  <GlassDock collapse="closed">
+      <template #persistent-end>
+          <DockControl aria-label="Dark theme" :active="isDark" @click="toggleDark">
+              <MoonIcon />
+          </DockControl>
+      </template>
+      …
+  </GlassDock>
+  ```
+
+- **Pressing an always-visible control only presses it.** A click or tap on a control
+  in `#persistent` or `#persistent-end` now does that control's job and nothing else:
+  the collapsed dock no longer opens behind it. If hovering had already opened the
+  dock, it closes as soon as the pointer leaves, instead of waiting out the usual pause.
+
+- **Trailing controls keep their spacing.** A control in `#persistent-end` now sits the
+  same distance from the rest of the dock as one in `#persistent`, in horizontal and
+  vertical docks alike, so the dock's last control and the trailing one no longer touch.
+  In a vertical dock the space after a `#persistent` control is now that same single
+  gap, where before it was twice as wide.
+
+- **With reduced motion turned on, the dock changes in one step.** Opening, closing,
+  switching faces and pressing all land at once, with nothing sliding, growing or
+  changing shape, and a face that is leaving disappears immediately rather than after a
+  short hold. The corner that tightens while controls are hidden past the dock's edge
+  holds still too; the half-visible control at the edge still shows there is more.
+
 ### Motion and forms
 
 - **Dragging a `Slider` sends one update per frame.** A fast pointer can deliver two or

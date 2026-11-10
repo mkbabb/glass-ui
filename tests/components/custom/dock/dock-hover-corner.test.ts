@@ -7,7 +7,9 @@
 //
 // I-3: a collapsed horizontal dock was always drawn as `--radius-circle` (50%). A dock
 // whose `#persistent` control sits beside the summary is two cells wide, so 50% drew an
-// oval lozenge over 40 px (atlas F-20). That dock keeps the bar corner `--radius-dock`.
+// oval lozenge over 40 px (atlas F-20). The dock now rests as a capsule in every
+// posture (`--radius-dock` is the stadium): that two-cell dock is a capsule, the square
+// one a circle, both from the one corner rule, with no collapsed posture rule.
 //
 // jsdom has no cascade, so these are source detectors on comment-stripped CSS. The
 // engine half is atlas's `PlateDock.browser.spec.ts` (computed `scale` under hover and
@@ -51,17 +53,15 @@ describe("U/B8r I-2: no dock control scales on hover", () => {
 describe("U/B8r I-3: the two-cell collapsed dock is not drawn as a circle", () => {
     const morph = decomment(read("src/components/dock/styles/morph.css"));
 
-    // The settled collapsed dock is a stadium: the engine clamps the radius to half the
-    // block size, a circle on the square box and round ends on a content-sized one.
-    it("the square collapsed dock is a circle, and a content-sized one a stadium", () => {
-        expect(morph).toMatch(
-            /\.glass-dock\.collapsed:not\(\[data-morphing\]\):not\(\.vertical\)\s*\{\s*border-radius:\s*var\(--radius-stadium\);/,
+    // One corner for every posture: the engine clamps the stadium to half the box's
+    // shorter side, a circle on the square box and round ends on a wider one.
+    it("the dock's corner is the stadium, with no collapsed posture rule", () => {
+        expect(decomment(read("src/styles/theme/radius.css"))).toMatch(
+            /--radius-dock:\s*var\(--radius-stadium\);/,
         );
-    });
-
-    it("a collapsed dock with a persistent control beside a summary keeps --radius-dock", () => {
-        expect(morph).toMatch(
-            /\.glass-dock\.collapsed:not\(\[data-morphing\]\):not\(\.vertical\):has\(\.dock-persistent\):has\(\s*\.dock-layer--summary:not\(:empty\)\s*\)\s*\{\s*border-radius:\s*var\(--radius-dock\);/,
+        expect(decomment(read("src/components/dock/styles/shape.css"))).toMatch(
+            /\.glass-dock \{\s*border-radius:\s*var\(--radius-dock\);/,
         );
+        expect(morph).not.toMatch(/\.glass-dock\.collapsed[^{]*\{[^}]*border-radius/);
     });
 });

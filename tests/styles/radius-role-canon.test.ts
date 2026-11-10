@@ -374,7 +374,6 @@ const ROLE_OF: Readonly<Record<string, RadiusRole>> = Object.freeze({
     "--radius-pill": "pill",
     "--radius-control": "pill",
     "--radius-badge": "pill",
-    "--radius-dock": "pill",
     "--radius-tab": "pill",
     "--radius-ctx": "relay",
     "--radius-inset": "relay",
@@ -385,6 +384,9 @@ const CIRCLE = "--radius-circle";
 /** The stadium is its own value too: an unbounded radius the engine clamps to half the
  *  shorter side, so it has no px seat on the spine. */
 const STADIUM = "--radius-stadium";
+/** Roles that ARE the stadium: the dock rests as a capsule, its corner half its cross
+ *  extent in every posture, so it has no px seat on the spine either. */
+const STADIUM_ALIASES = ["--radius-dock"] as const;
 
 /** The role values, verbatim from the settlement's terminal table. */
 const ROLE_PX: Readonly<Record<Exclude<RadiusRole, "relay">, number>> = Object.freeze({
@@ -439,10 +441,16 @@ describe("6. the role spine — 7 roles, and every member of a role is ONE value
             (t) =>
                 !(t in ROLE_OF) &&
                 !OFF_ROLE_12.includes(t as never) &&
+                !STADIUM_ALIASES.includes(t as never) &&
                 t !== CIRCLE &&
                 t !== STADIUM,
         );
         expect(roleless).toEqual([]);
+    });
+
+    it("resolves the dock corner to the stadium (a capsule in every posture)", () => {
+        for (const t of STADIUM_ALIASES)
+            expect(resolveAlias(RADIUS_DECLS, t), t).toBe("calc(infinity * 1px)");
     });
 
     it("declares the circle as 50%, apart from the pill rung", () => {
@@ -601,7 +609,7 @@ describe("7. this wave's role bindings", () => {
         const inventoried = Object.keys(RADIUS_ROLE_INVENTORY).filter((t) =>
             t.startsWith("--radius"),
         );
-        const spined = [...Object.keys(ROLE_OF), ...OFF_ROLE_12, CIRCLE, STADIUM];
+        const spined = [...Object.keys(ROLE_OF), ...OFF_ROLE_12, ...STADIUM_ALIASES, CIRCLE, STADIUM];
         expect([...spined].sort()).toEqual([...inventoried].sort());
     });
 });

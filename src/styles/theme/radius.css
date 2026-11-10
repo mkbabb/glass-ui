@@ -127,7 +127,7 @@
     --radius-circle: 50%;
     /* The stadium: a radius past any half-height, which the engine clamps to half the
        box's shorter side. A circle on a square box, round ends on a wider one (where
-       `50%` draws an oval). The collapsed dock, whose face sizes to its content. */
+       `50%` draws an oval). The dock in every posture. */
     --radius-stadium: calc(infinity * 1px);
 
     /* Semantic radius aliases — plain @theme (not inline; see header note).
@@ -185,7 +185,11 @@
        so the small pills stay ROUND (no regression). */
     --radius-control: var(--radius-pill);
     --radius-badge:   var(--radius-pill);
-    --radius-dock:    var(--radius-pill);
+    /* The dock rests as a capsule: its corner is half its cross extent in every
+       posture (a stadium open, a circle collapsed square, a capsule collapsed wide), so
+       the morph between postures changes no silhouette. A host that wants the bar
+       corner sets `--radius-dock: 1rem` on itself. */
+    --radius-dock:    var(--radius-stadium);
     /* The segmented-control register. On a strip up to 32px tall the pill rung
        clamps to half-height (a true end-cap); a taller strip takes 16px corners. The
        value.js DESIGN.md idiom: the role-bearing pill token, NOT a hand-rolled

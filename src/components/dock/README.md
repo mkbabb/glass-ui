@@ -53,7 +53,8 @@ because its origin is measured when it starts, so a dock your layout centres gro
 sides whatever `anchor` says. The dock centres itself in its own box with auto inline
 margins, so to hold it at an edge, put it in a wrapper sized to its content (a
 `display: flex` box at the end of a row, say).
-`collapsedLabel` names the collapsed summary, e.g. "Tools for Fund balance by year".
+`collapsedLabel` names the collapsed summary, e.g. "Tools for Fund balance by year". A
+dock whose collapsed face is its persistent seats (below) has no summary to name.
 `backdropMode="static"` avoids backdrop sampling and filtering (a `"live"` dock samples
 the painted backdrop by default).
 
@@ -62,9 +63,16 @@ the painted backdrop by default).
 - `persistent`: leading controls present in collapsed and expanded states.
 - `default`: expanded controls.
 - `collapsed`: compact-state content. One glyph collapses to a circle; a glyph with a
-  short reading ("⌁ 12") collapses to a pill sized to fit it.
+  short reading ("⌁ 12") collapses to a capsule sized to fit it. With no `collapsed`
+  slot, the persistent seats are the whole collapsed face (leading, then trailing), with
+  no summary disclosure beside them.
 - `search`: search-field content when `search` is enabled.
 - `persistent-end`: trailing controls present in both states.
+
+The dock rests as a capsule (`--radius-dock` is the stadium): its corner is half its
+cross extent in every posture and through the morph. A host sets `--radius-dock: 1rem`
+for the bar corner. Each persistent region keeps `--dock-layer-gap` toward the run, in
+both orientations.
 
 ## Interaction contracts
 
@@ -75,6 +83,11 @@ the painted backdrop by default).
   the dock spring; a control inside its own scrolling strip keeps its own selected fill.
 - A `ScrollProgressRim edge="border"` in the `persistent` slot draws progress on the
   dock's own border, at the plate's border width and corner.
+- A press on a persistent seat is the seat's own act: it never expands the dock, by any
+  pointer. A hover-opened dock the pointer leaves after a seat press collapses at once.
+  On a coarse pointer a long press (500 ms, held still) on a
+  collapsed seat pins the dock open, and its release presses nothing; Tab onto a seat
+  expands it from the keyboard.
 - Portaled dropdowns, selects, and popovers keep the dock open through the typed dock
   context and retain their own focus and dismissal semantics.
 - Collapse, resize, and layer transitions share the dock spring. Reduced motion seats
