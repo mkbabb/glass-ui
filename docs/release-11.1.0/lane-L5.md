@@ -157,6 +157,12 @@ motion and print.
   springs and transitions, and a capsule radius that must compute to half the cross extent in px in
   every posture and morph frame), and they should be designed together by a dock seat. The guard
   stop then ended the run. They need their own seat on this branch.
+- **O-206 (a compositor-run draw and a `drawn` event)** was added to this lane by an orchestrator
+  note committed during the run (`ce2b7ed12`). It is not built. The new CSS draw still animates
+  `stroke-dashoffset`, which is not a compositor property in either engine, so a main-thread task
+  can still stall it. The `drawn` event does not exist yet. The CSS draw is the right base for it
+  (one clock, one `animationend` per mark to emit `drawn` on), but the clip-path or mask-scale reveal
+  and its throttled-CPU witness are owed.
 - **`markDuration` / `minJerk`** stay exported but unused by the component. Removing them is a
   major.
 - **The default highlight hue changed** (78 → the focal ink's hue). This is the addendum's ask,
