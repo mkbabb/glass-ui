@@ -4266,3 +4266,242 @@ Every class a pass-13 seat recorded is placed. None is left unassigned, and none
 | real Safari | every report | **UNMEASURED (owner's safaridriver checkbox)**; O-103: not granted |
 
 **Harness at this seat's end:** 42 OK against `pass-8/H8-records/harness.sha256` (list hash `9d12810b…`), 2026-11-07 06:13. No process of this seat remains.
+
+---
+
+# D2 · pass 14 · REGISTRY: B′ `bp13` unscored, the critic stopped at the guard's zone refusal, a completion seat owed
+
+Everything above this line is the record of passes 1-13 and the owner's rulings. It is left as written. This part is the pass-14 agglomeration. **It does not close pass 14**: the critic's reading of record does not exist, so pass 14 stays open until its completion seat runs (§P14-7). No "D2 · CONVERGED" part follows it.
+
+| field | value |
+|---|---|
+| seat | D2 pass-14 agglomeration. By §P13-7.5 item 2 it rules B′'s rows of 38 on the ruled digest, whether the pass is clean, and the convergence count, if they were measured. It records that the critic's were not and why, places every class a pass-14 seat recorded, updates §P13-5's landing content, and plans the completion seat |
+| model | `claude-opus-5-5`, asserted from own system identity |
+| HEAD | `c19fbb332` (master; the checkout's branch). The arms' base stays **`392ff1e3c`** (§P13-7.2); both seats staged there. Since then master merged `release/11.0.0` (`FORMATION-PROGRESS.md` 2026-11-09 10:35): `git diff --name-only 392ff1e3c master -- src/components/dock` lists **25 files**, `useDockMorph.ts` and `dockMorphMeasure.ts` among them. None of that reaches a pass-14 reading, since each seat built from a worktree detached at `392ff1e3c` |
+| hashes and harness | This seat re-hashed `pass-13/D2-Bp-p13.patch` (**`bb7cb08da92677aa6e4e2c753ce9f901b17f4ddb2051d2f4162ef43e97648121`**) and `pass-12/D2-Bp-p12.patch` (`5318a3dc…`), both equal to the seats'. It checked `harness/` per file against `pass-8/H8-records/harness.sha256` (list hash `9d12810b…`) at its start (2026-11-09 22:35, 42 OK) and at its end (§P14-8) |
+| inputs | §P13-0 to §P13-8 in full; §P12-0 to §P12-8 (the precedent for an unscored pass and its completion seat); the earlier parts as those cite them. `pass-14/D2-Bp-remeasure.md` and `pass-14/D2-Bp-critique.md` in full. Read directly for single facts: the critic's `chain.log` (its last five lines), `sum/battery-w3.txt`, `sum/rerun.txt` and `q/*.q` line counts. `audit/INBOUND.md` to its last row (O-211); `FORMATION-PROGRESS.md` to its last line (2026-11-09 22:55) |
+| instruments | none. This seat measures nothing; every number cites the report that measured it (P-3) |
+| fences | no source edit, no git write; this part is the only write. Nothing under `~/.claude` was read. `ps` shows no D2 process: the re-measure's chains ended `RUN-DONE` (09:16:25), `COMPLETE-DONE` (15:02:23) and `FV5-DONE` (15:34:46); the critic's ended `STOPPED at 'wk' (exit 5)` (22:30:33). Neither seat left a worktree (`git worktree list` shows no `bl/D2/p14`) |
+| engines | every WebKit number is **Playwright WebKit**, unshimmed. Real Safari is **UNMEASURED (owner's safaridriver checkbox)**: O-103, not granted |
+| owner rulings | **O-103**; O-87 and O-88 bind; **O-118** as it stands. INBOUND O-185 to O-211 arrived since §P13. None touches the 38 (§P14-5, §P14-8). The machine: at this seat's start the Mac's uptime was 12 h 02 min (booted about 10:33). The reboot the user's message names is the one before the 11:50 resumption; **no reboot has followed the guard's 22:30:33 refusal**, and the progress cursor reads the zone at 8.19M (22:30) |
+
+Short citations: `RM` is `pass-14/D2-Bp-remeasure.md`; `CK` is `pass-14/D2-Bp-critique.md`; `CR` is `pass-13/D2-Bp-critique.md`.
+
+**The re-measure seat is complete. The critic is not.**
+- **The re-measure** ran in two entries. The first stopped at the guard's zone refusal (09:16:15, 8.16M) before the cost A/B. The completion, after the reboot, re-proved the same build, re-read the C·d slot and ran the cost A/B. It ran no second battery (RM §1.4). Its own word: "This seat is complete: items 1-4 have all run" (RM §0).
+- **The fresh critic** ran its builds, F7, PR, 12 owed re-runs, and battery readings of C·l, C·d (two each) and W·l (one). Then the guard **REFUSED** at 22:30:33 ("kernel zone data.kalloc.1024 at 8.22M … reboot the Mac", CK header, `chain.log`). It reports **complete=false** and scores no row (CK §0).
+
+§P13-7.4 makes the critic's digest the reading of record, and §P13-7.5 item 1 says a seat that measured nothing reports no score. The critic measured part of its work, but none of the A/Bs, none of rules (a), (c), (d), no W·d column and no four-column digest. **So this seat scores nothing.** No row is PASS or FAIL for pass 14, and no rule is ruled fired or held. The re-measure's digest is kept beside, as BU's was in §P12-2; it is not counted.
+
+---
+
+## P14-0 · In brief
+
+| build | status | 38 rows (ruled, of record) | first 36 | first 24 | default digest | open rows | reason in one line |
+|---|---|---:|---:|---:|---|---|---|
+| D2-B′ `bp13` (`bb7cb08d…`) | **OPEN, UNSCORED** | — | — | — | — | **unread by a critic** | the critic's runs were refused at 8.22M before W·d, the A/Bs and the attacks; its three columns all ran above 31 |
+| D2-B′ `bp12` (`5318a3dc…`) | reference arm | 35/38 as §P12c-2 | 33/36 | 22/24 | 34/38 | P3, R6, B2 | unchanged; no pass-14 reading of record |
+| D2-G | BANKED (§P5-4); its seats did not run | — | — | — | — | — | no re-trigger recorded |
+
+**Pass 14 is neither clean nor not clean. Clean-pass count: 1 of 2, unchanged** (pass 13). The next step is the pass-14 completion seat (§P14-7), then a completion agglomeration that rules pass 14 by §P13-7.5 item 2. **The earliest D2 convergence stays pass 14's close.** The date moves by however long the zone holds, not by a pass.
+
+What the seats read. None of it is of record, and none of it is scored here.
+1. **The build is the same, proved three times.** RM twice (scene chunk 21,473 B, boot graph 503,777 B with a 31 B margin, F7 13/13, PR 6/6), CK once (the same numbers, F7 13/13, PR 6/6). Pass 14 stays a confirmation.
+2. **The re-measure's own digest reads 38/38 ruled** (default 36/38, P1 on Q-12 and P3 on Q-4), with one NR (W·d `first-expand` [lanes]), and its C·d re-read changes no verdict (RM §2). Its A/Bs read **rules (a), (b), (c), (d) quiet**: bp13 0 of 96 splice, 0 stub in every battery W3 read, 0 late in 32, 0 of 48 `reversal` stubs. bp12 drew the 886.9 px stub twice in 48, to the pixel and the millisecond of pass 12's (RM §3.1).
+3. **The critic's partial reading found no defect.** It read 0 FAIL and 0 NR in 506 cells over three columns and 339 in the Chromium re-read, 0 stub and 0 splice in five W3 readings, and 12 of 12 owed re-runs ruled PASS (CK §0, §1.1, §2). Every one of those battery readings ran above load 31 (to 57.32), so each owes a lower-load re-read before it can stand in a digest of record.
+4. **One new near-bound class, the base's by its rate.** W3 `first-expand` [lanes] in Playwright WebKit: an icon-button lane "clip from 40 px in one frame" at 46 ms. bp13 drew it 2 in 11 reads, each NOT-REPRODUCED; bp12 0 in 16 here and 1 in BU (`warm-collapse`). The critic's re-runs read bp13 W·l `first-expand` PASS 2/2 (CK §1.1). It sits on `dock-icon-button`, not the tab-button clip p13 changes (RM §4). Pass 13's four near-bound classes drew 0 red on bp13 at A/B rate except [blank] (1 of 16, at its bound's second frame) (RM §3.3).
+
+---
+
+## P14-1 · How pass 14 ran
+
+| step | record | what it established |
+|---|---|---|
+| re-measure, entry 1 (2026-11-08 23:41 → 11-09 09:16) | RM §1.1 | SAME; the four-column battery; every A/B but cost; 409 gate-11 reads, highest start 11.00. One WebKit lock wait of 105 min, kept queued. Stopped at cost by the zone refusal (8.16M) |
+| reboot, then re-measure completion (11:41 → 15:35) | RM §1.2-§1.4 | SAME again on a recreated worktree; the C·d re-read (cells 10.84-21.52; identical verdicts); cost; two fv5 re-reads with the gate read inside the admitted slot |
+| critic, builds and source (15:38 → 18:14) | CK §1 | attempt 1 (one guarded slot per build) queued 58 + 20 min and was stopped by its own process group before any build of record; the builds then ran in one slot (11 builds in 37 s); SAME, F7 13/13, PR 6/6 |
+| critic, owed re-runs and Chromium battery (18:18 → 21:18) | CK §1, §1.1 | 8 Chromium/W·l re-runs per build started at ≤ 11 (W·d pair not run); C·l to 57.32, re-read to 37.46; C·d to 48.92, re-read to 32.59 |
+| critic, WebKit slot W·l (21:18 → 22:27) | CK §1 | the W·l re-runs; battery cells to 47.20; `fmlow` deferred at admission (20.79 > 15); the read queue's first line waited 30 min for ≤ 11 and released (exit 75), 0 queue reads |
+| **zone refusal** (22:30:33, 8.22M) | CK header; `chain.log` | the W·l re-read and the W·d slot refused; the run `STOPPED at 'wk'`; partial digests (guarded `--light`, no browser) and harness end 42 OK |
+
+The machine law held at both seats. One heavy run at a time per seat; every build and browser run through the guard, never `--light` with a browser; Playwright WebKit under `--exclusive webkit`, queued and never cancelled. No admitted slot was ended by stopping its parent: the processes either seat stopped were its own and stopped before any step ran (RM §1.2, CK §1). Disk was read before every build and battery step: RM 169-198 GB and 176-183 GB, CK 121 GB falling to 48 GB as other seats wrote, never under 15. At this seat's start, `df -h /System/Volumes/Data` reads **58 GB free**. Both seats deleted their worktrees.
+
+---
+
+## P14-2 · Registry: D2-B′ `bp13`, OPEN, UNSCORED
+
+**No row is scored for pass 14.** The 38 stand where §P13-2 left them: bp13 38/38 on pass 13's critic. The re-measure's digest (38/38 ruled) is kept for the completion seat. Under §P13-7.4 it does not stand in for the critic's, and this seat does not count it.
+
+**The §P13-7.1 rules, as far as anyone read them:**
+
+| rule | re-measure (not of record) | critic | ruled here |
+|---|---|---|---|
+| (a) two `splice` reads at one `retarget` cell, one column, one A/B | bp13 0 of 96, sliver 0, stub 0; bp12 0 of 96 (RM §3.1) | UNREAD (0 A/B reads) | **not ruled** |
+| (b) two `stub` reads at one slot, one column, one battery | 0 stub in every battery W3 read, four columns, and in the C·d re-read; FM stub 0 | 0 stub, 0 splice in five W3 readings of three columns (CK §2), each above load 31 | **not ruled.** The rule's battery is the critic's, and W·d did not run |
+| (c) any bp13 `content-remove` read whose flag closes over 2F + 0.5 after the landing | bp13 gaps 0 in all 32 | UNREAD | **not ruled** |
+| (d) any bp13 `stub` read on the `reversal` A/B | bp13 0 of 48; bp12 2 of 48 (C·d r2, r5: "n" at 886.9 px, +116.7 ms, ramp 0.24 px) | UNREAD (the critic's C·d `reversal` re-runs, 2 per build, read stub 0 on both; they are re-runs of RM's reds, not rule (d)'s A/B) | **not ruled** |
+
+**Rulings this seat makes on the readings.** None turns a row.
+- **The edge law's sentence, scoped.** CK §3.1 reads "the only hard edge across a glyph is the plate's" as true at the stub law's resolution (H8 judges an edge only more than `CUT_PX` in), while below a touch a step of height 1 − d / touch sits d px in. That is the law §P13-2 ruled, read at a finer scale. It is a statement of scope, not a defect, and no prose edit is asked: pass 14's bytes stay p13's (§P13-7.3 item 1). If the landing's prose sweep touches that paragraph, it may add "at the stub law's resolution". That is the landing's call, not a pass edit.
+- **RM's first boot-graph read (525,445 B, DIFFERS) was the wrong instrument** (RM §1.3). The seat stopped on it, as §P13-7.3 item 1 asks, found it read `build.mjs`'s demo output rather than F7's `dist-demo`, and read 503,777 B on the instrument of record. The scene chunks, which the two tries share, were equal on both. So the build is the same and the stop was right. The completion seat reads the boot graph only on F7's `dist-demo` with `bootsize.py`.
+- **R2.** RM's thinnest bp13 margin is 0.075 (W·d `first-expand` seat 8), and W·l `swap-long` seat 1 reads 0.088 over 14 reads per build. bp12 reads thinner on every WebKit cell (RM §3.4). CK's W·l battery reads 0.451 at `swap-long` seat 2 (margin 0.049), equal to CR's margin of record, at a cell load the report does not single out but inside a slot that ran to 47.20. R2 is no row of change here; the completion critic reads it at 10-15 against bp12, as §P13-7.4 says.
+- **`swrev` in paint** (§P13-7.3's reading): 10 splice frames over 256 reads, bp13 3 of 128 and bp12 7 of 128. At every one, no glyph lies between the facing edges, and the one glyph across an edge ("F") reads painted 0 (RM §3.5). **No ink is cut**, so §P13-7.5 item 2's build trigger does not apply.
+- **Cost** reads higher on all three arms alike than in pass 13, so the rise is the machine's (RM §3.6). The builds do not separate. It is no row and no rule.
+
+**Readings beside the rows** (RM unless marked; none of record):
+
+| reading | C·l | C·d | W·l | W·d | note |
+|---|---:|---:|---:|---:|---|
+| R2 worst, bp13 / bp12 (bound 0.5) | 0.391 / 0.394 | 0.389 / 0.387 | 0.414 / 0.436; CK battery 0.451 | 0.425 / 0.438 | thinnest bp13 margin 0.075 |
+| `reversal` stub, rule (d), bp13 / bp12 | 0/16 / 0/16 | 0/16 / **2/16** | 0/8 / 0/8 | 0/8 / 0/8 | bp12's is pass 12's stub |
+| `content-remove` late, bp13 / bp12 | 0/8 / 0/8 | 0/8 / 0/8 | 0/8 / 0/8 | 0/8 / 0/8 | gaps 0 on bp13 |
+| `swrev` splice, bp13 / bp12 | — | — | 3/64 / 2/64 | 0/64 / 5/64 | no ink cut |
+| [terminal] `lead-*`, bp13 / bp12 | 0/16 / 0/16 | 0/16 / 0/16 | — | — | not drawn |
+| [faces] / [leaving] `swap-long`, bp13 / bp12 | 0 / 0 | 0 / 0 | 0/16 / 0/16 | | not drawn; seat 1's shortest fade 71 ms bp13, 65 ms bp12 (bound 64.3-65) |
+| [blank] `swap-short`, bp13 / bp12 | — | — | 0/8 / 1/8 | 1/8 / 0/8 | every read sits at 1 blank frame, the bound |
+| `first-expand` [lanes] (`fe`), bp13 / bp12 | — | — | 1/8 / 0/8 | 0/8 / 0/8 | plus bp13's W·d battery main read; CK re-runs W·l 2/2 PASS on both |
+| FM holes (A/B), bp13 / bp12 | — | — | 0/16 / 0/16 | 0/16 / 0/16 | stub 0 |
+| display frame, empty | 0/18 ×2 | 0/18 ×2 | 0/18 ×2 | 0/18 ×2 | least ink 0.422 both builds |
+
+---
+
+## P14-3 · The cost row (not a row; for the record under Q-15 (a))
+
+| measure | bp13 `RM` | bp12 `RM` | fv5 `RM` | bp13 `CR` | bp12 `CR` | fv5 `CR` |
+|---|---:|---:|---:|---:|---:|---:|
+| frames over 25 ms, sum over the four 4× rows (3 runs each) | 10 | 9 | 1 (r3 under load; 0 in r4, r5) | 4 | 4 | 0 |
+| main-thread ms per frame, 4×40 lead | 1.742-2.055 | 1.71-2.011 | 0.145-0.214 | 1.359-1.499 | 1.407-1.521 | 0.101-0.128 |
+| boot graph, B of 503,808 | 503,777 (31 B) | 503,787 | — | 503,777 | 503,787 | — |
+
+**Reading.** bp13 and bp12 do not separate. The rise against pass 13 is common to all three arms. Floor v5's lead stays about a tenth of B′'s main-thread time, the lead Q-15 (a) prices. The critic's cost was not run.
+
+---
+
+## P14-4 · The §P13-7.5 rule, applied, and the convergence history
+
+| clause | holds? | evidence |
+|---|---|---|
+| 0 open rows of 38 on the ruled digest | **unread** | no four-column critic digest (zone refusal) |
+| B2 read on the strips | **unread by a critic** | W·d never ran; `fmlow` deferred; the strips that ran were not read by eye (CK §2) |
+| §7.1 (a) | **unread** | RM 0 of 96, not of record |
+| §7.1 (b) | **unread** | three columns of the critic's, each above 31; W·d not run |
+| §7.1 (c) | **unread** | RM 0 of 32, not of record |
+| §7.1 (d) | **unread** | RM 0 of 48, not of record |
+| the reading is the critic's digest; no probe used to turn a row | yes, vacuously | this seat turned nothing |
+| G re-trigger (the WebKit-clock condition) | no | no pass-14 seat recorded it |
+| two consecutive clean passes | **1 of 2** | pass 13 clean; pass 14 not ruled |
+
+**The convergence history (B′, the route of record from pass 3).** §P13-4's table, with two rows added:
+
+| pass | list | score of record | first 24 | open | what closed or opened |
+|---|---|---:|---:|---|---|
+| … | | | | | passes 3-13 as §P13-4 |
+| `RM`, pass 14 | 38 rows | not of record (the re-measure's digest: 38/38 ruled; rules (a)-(d) quiet) | — | — | the same build, re-proved |
+| **14** | 38 rows | **UNSCORED** (the critic refused at 8.22M) | — | **unread** | **completion seat owed. Count 1 of 2** |
+
+The list has been fixed at 38 rows since pass 5. **Clean passes: 1 of 2. Earliest D2 convergence: pass 14's close**, once its completion seat runs and reads it clean.
+
+---
+
+## P14-5 · O-88: the facility status, and its critical path
+
+**C1-C9: no pass-14 reading of record.** RM's digest reads them PASS in all four columns, and §P13-5's "complete on its carrier" stands on pass 13's critic. D3 and D4 have converged. O-103's go applies once D2 converges and the landing is green. D2 binds the date, and today the zone binds D2.
+
+1. **The pass-14 completion seat and its agglomeration** (§P14-7), after the owner's reboot. If pass 14 reads clean, D2 is CONVERGED (passes 13 and 14) and `D2-Bp-p13.patch` is the specification W-0.8 lands. If it does not, the count returns to 0 and pass 15 is a build.
+2. **The landing (W-0.8)**, unchanged in order; it starts only after convergence, so this seat writes no landing plan. What has changed in its ground since §P13-5, for the agglomeration that writes it:
+   - **The base (changed).** 11.0.0 is LIVE (tag `v11.0.0` at `dd5c8db74`) and master merged it. Master's dock tree differs from `392ff1e3c` in 25 files, including `useDockMorph.ts` and `dockMorphMeasure.ts`, which B′ deletes. `release/10.1.5` (24 dock files against the base) is in its fix loop, critic 11 owed after a reboot, and forward-merges as 11.0.1. **`release/11.1.0`** was cut from master on 11-09 and is in its lanes (26 dock files against the base; L1 dock built; L5 holds O-194, O-197, O-198, O-199 and O-205's forward), stopped at L5 by the same refusal. So floor v5 + B′ rebases at the landing on master as it then stands, which by then carries 11.0.x and likely 11.1.0. Each change those releases make to files B′ deletes is carried as its law on the landed scene, never as a ported file, with its witness as the gate (as §P13-5).
+   - **The version number.** O-88 names 10.2.0. Since 11.0.0 shipped first and 11.1.0 and the cluster's W-I.8 (11.2.0) are in flight, **which release carries the facility is the formation's to state with the owner**. O-88's content is unchanged.
+   - **New laws for the landed scene, each with its gate,** none a row of the 38: O-199 (the dock rests as a full capsule, corner half its cross extent, in px; `--radius-dock` for a host's bar) lands on 11.1.0 L5 and the scene's plate takes it as built there; O-186/O-187/O-205 (the plate's radius per axis, a nested `.dock-run` naming a second timeline, the cut cap on a collapsed DockLayerGroup) are 10.1.5's cures, carried as laws; O-198 (under PRM only opacity animates, ≤ 144 ms) is 11.1.0 L5's and binds the scene's PRM path; O-185 (the plate's grain off the LCP channel) is 11.1.0 L4's; O-211 (DockLayerGroup's switcher split) is 11.1.0's and changes the tree B′'s scene drives; O-188 (a gliding active mark on the dock spring) is W-I.1's. **O-203** (the restraint precept: no enter overshoot on controls, the specular gleam and press squish deleted) ships as 12.0.0. It agrees with B′'s motion as built: Q-5 stands confirmed at (a), weight without visible bounce (O-103), so no row reads an overshoot. But the tab and icon buttons the witnesses name carry `glass-specular-track` (RM §3.1, §4), so the landing that follows 12.0.0 re-reads the witness selectors against the deleted class.
+   - **The cluster (O-195, O-200, O-202 → W-I.8, 11.2.0).** One dock with layers that fuse and fission. It is a design loop outside D2's 38. W-I.8 builds on whatever scene the landing puts down, so it reads B′'s scene laws (the window, the edge law, the centre law) as its carrier.
+   - **F7 on the landed tree.** 31 B of margin (RM, CK). The ceiling's re-read with the owner stays **the landing's first step, before any merge bytes**: 11.0.x, 11.1.0's dock lanes and the §11 laws all cost bytes against it.
+   - Everything else in §P13-5 step 2 stands unchanged.
+3. **What moves with this count,** for the driver: D4's W-J.1; D5's held cells; W-0.12 and W-I.1 on W-0.8's carrier; and the peers told "after D2 converges + W-0.8". D2's date does not move by a pass: pass 14's close, after its completion seat.
+
+---
+
+## P14-6 · What the owner must rule
+
+**No D2 question.** Nothing the seats read raises one: the build is the same, no rule fired on what ran, and the edge law's scope is a reading.
+
+**What waits on the owner is the machine.** The guard has refused heavy and browser runs since 22:30 (zone 8.22M at the critic, 8.19M in the cursor). The Mac has not been rebooted since. The completion seat, 10.1.5's critic 11 and 11.1.0's L5 all wait on that reboot (`FORMATION-PROGRESS.md` 22:30-22:55).
+
+**One message for the owner** (none gates):
+- **For your information.** The dock confirmation pass got halfway again. The re-measure finished: it rebuilt the same dock, byte for byte, re-ran the full checklist and read 38 of 38 with no rule firing. The fresh critic, whose score is the one that counts, got through three of four columns with no defect and was then stopped by the kernel-zone guard, before its WebKit dark column and its comparisons. So nothing is scored yet, and convergence still needs that critic to finish after a reboot.
+- **Disk.** 58 GB free at this seat's start. The critic watched it fall from 121 to 48 GB while other seats wrote.
+
+---
+
+## P14-7 · The plan: the pass-14 completion seat, then pass 14's agglomeration
+
+**No new build.** bp13 (`bb7cb08d…`) is pass 14's build. The list is held fixed at 38, and the count is 1 of 2. §P13-7.1 (H8 unchanged, no H9, no bound re-read, rules (a)-(d) on bp13) and §P13-7.2 (floor v5 the base, arms bp13, bp12 the reference, fv5, fv3 for L1; **base pinned at `392ff1e3c`**; `git apply` only, no commit) hold unchanged.
+
+### 7.1 · Precondition
+
+The seat starts only when the guard admits heavy and browser runs, which needs the owner's reboot. **The stop is the guard's refusal**: a ZONE-ARMED line that admits is a warning, and its readings are of record. A refused run stops the seat's runs; it records what ran, and a further completion seat finishes the rest. A seat that measured nothing reports no score (complete=false). **Disk:** `df -h /System/Volumes/Data` before each build and battery step; under 15 GB free, stop and report. If the predecessor's chain is ever found live, the seat waits on its PID and runs no second battery (there is none today: CK's chain ended `STOPPED`).
+
+### 7.2 · The completion critic (the critic of record for pass 14)
+
+It may be the pass-14 critic resumed with a RESUME clause pointing it at `pass-14/D2-Bp-crit-records/`, or a new seat that authored nothing in D2, was no earlier D2 critic and is not the re-measure seat. In order:
+1. **Read** CK, RM and CR in full; INBOUND and `FORMATION-PROGRESS.md` to their last lines (a ruling arriving mid-seat is folded at the next seat boundary).
+2. **Re-hash** p13, p12, floor v5 and floor v3; check the harness per file against `pass-8/H8-records/harness.sha256` at the start and the end. **Recreate the worktree at `.claude/worktrees/bl/D2/p14/Bp-crit/wt`, detached at `392ff1e3c`**, so CK's `scripts/` and `q/` run unchanged (or rewrite their paths, and say so). Run CK's `scripts/build.sh`: **all builds in one guarded slot** (CK §4's lesson). Re-prove SAME: scene chunk bp13 21,473 B, bp12 21,483 B; **the boot graph read with `bootsize.py` on F7's `dist-demo` only** (RM §1.3's lesson), 503,777 B; F7 13/13; PR 6/6. If any differs, stop: the pass becomes a build pass.
+3. **The owed W·d re-runs** (`q/rerun-webkit-dark.q`): `swap-short` ×2 and `first-expand` ×2 per build, bp13 and bp12 alternating, each read started at ≤ 11.
+4. **The battery, to a digest of record.** CK's five readings all ran above 31, so none stands alone in the digest. Run, under H8 and `--exclusive webkit` for WebKit: **W·d** (battery, red cells re-run twice, FM's six B2 cells ×3, `fmlow`); **`fmlow` W·l**; and **re-reads of C·l, C·d and W·l**. Each slot starts at ≤ 20 **with the gate read inside the admitted slot**, since the guard's admission wait decouples an outside gate from the run (RM §1.3, §6). A slot whose cells run above 31 is re-read again, and every reading is kept. **Copy each column's `battery/json` aside before a sibling theme's run** (CK §2's lesson: the copy step overwrites it). The four-column digest of record is built from one reading per column whose cells ran ≤ 31, the ones of record named by path. If after two re-reads a column still cannot read ≤ 31, record that and stop: the seat reports complete=false rather than score a column above 31.
+5. **The A/Bs of §P13-7.3 item 3**, bp13 against bp12 alternating, each read started at ≤ 11, waiting for that rather than timing out: `retarget·40/80/120` (rules (a), (b)); `content-remove` (rule (c), every gap); **`reversal`, 16 rounds per Chromium theme and 8 per WebKit theme (rule (d))**, every stub with its glyph, edge, offset and ramp; FM `warm-expand` and `first-expand`; the display frame; cost (each start ≤ 15, gate inside the slot); the boot graph. Beside the rows: the near-bound classes at A/B rate (`nb`), **`fl`: W3 `first-expand` and `warm-collapse` [lanes] in Playwright WebKit, 8 rounds per theme per build** (RM §4's class); `swp` in paint; `r2` and `r2y`. CK's queues (`q/{chromium,webkit}-{light,dark}.q`, 144/136/194/186 lines) are this list.
+6. **The attacks of §P13-7.4**: the reversal family (`reversal`, `revst`, `rtrev`) and every plate-edge cell in both engines at ≤ 11; the 794 px sibling on `swrev --then 0`; **the edge law's range** (`er` on `bp13x`; the depth crossing the touch read for a clip step in `lanes`), CK having read it only statically; the window late and early in Playwright WebKit at ≤ 11; **the B2 strips by eye in all four columns, with the `warm-collapse` slot-5 frame**; R2 at 10-15 against bp12, above all W·l `swap-long` seats 1 and 2 and W·d `first-expand` seat 8; the heir at `fs-to-one`/`fs-to-three`; `vmorph` on the frozen frame, both engines; CASES `case·rotated` for the record. CK's static reads (§3) stand as records and are not repeated as findings.
+7. **Score** the 38, the first 36 and the first 24 on the ruled digest, with the default beside them; report (a)-(d); **name every red check of every red cell**.
+
+**A critic may not add rows, and may not rule a row PASS against its own instrument.**
+
+### 7.3 · Order
+
+1. The completion critic (§7.2). One heavy run at a time; every browser run through the guard, never `--light`; Playwright WebKit queued and never cancelled; no admitted slot ended by stopping its parent. G's seats do not run.
+2. **The pass-14 agglomeration (completion)**, by §P13-7.5 item 2. **Pass 14 is clean** at 0 open rows of 38 on the ruled digest, B2 read on the strips included, with none of (a)-(d) fired. **Then D2 is CONVERGED (passes 13 and 14)**, `D2-Bp-p13.patch` is the specification W-0.8 lands, and that agglomeration writes the landing plan against the base master then holds (§P14-5 step 2), **its first step the boot-graph ceiling's re-read with the owner**. If pass 14 is not clean, the count returns to 0 and pass 15 is a build with the list fixed, curing the class that opened and every near-bound class read on bp13 (§P13-7.4): [terminal], [leaving], [faces], [blank], and now [lanes] on `first-expand`/`warm-collapse`. The `swrev` splice, R2's margin and the near-bound classes are no rows, and none makes a pass unclean by itself; a `swrev` frame read with ink cut is placed for a build before the landing.
+3. After convergence, outside the passes: the landing (W-0.8).
+
+### 7.4 · The checklist (fixed; critics may not add rows)
+
+The same 38 rows as §P13-7.6, read on H8 unchanged. Critics report the 38, the first 36 and the first 24 on the ruled digest (O-103), with the default digest beside it. **The convergence rule:** D2 is CONVERGED at two consecutive clean passes, passes 13 and 14 at the earliest. No winner rule while G is banked; if WebKit's clock condition re-triggers G, §P4-7.5 returns.
+
+---
+
+## P14-8 · Next-pass defect classes, placed
+
+Every class a pass-14 seat recorded is placed. None is left unassigned, and none was minted into the list.
+
+| class | recorded in | placed in |
+|---|---|---|
+| **the zone refusal** (RM 09:16:15 at 8.16M; CK 22:30:33 at 8.22M) | RM §1.4; CK header, §1 | the machine's, not D2's; **the completion seat** after the owner's reboot (§P14-7), as §P13-7.5 made it the standing answer |
+| ZONE-ARMED warnings that admitted (inuse 29,715, kext=nfs) | RM header; CK header | the owner's order; readings of record as readings |
+| **W3 `first-expand` [lanes]** in Playwright WebKit: an icon-button clip from 40 px in one frame at 46 ms (bp13 W·d battery main NR; `fe` W·l r5) | RM §4, §5 | the base's by rate (bp13 2/11, bp12 0/16 + BU's 1); CK re-runs W·l 2/2 PASS on both builds; **the completion critic reads it at A/B rate (`fl`) and attacks it under the edge law's range**; a pass-15 build's near-bound class if a pass opens |
+| `swap-short` [blank] at +18-21 ms (Playwright WebKit) | RM §3.3, §5 | the base's (bp13 1/20, bp12 2/20; every read sits at the bound); CK re-runs W·l 2/2 PASS; **W·d pair owed** (§P14-7.2 item 3) |
+| [terminal] `lead-*`, [faces] and [leaving] `swap-long` | RM §3.3 | not drawn on either build at 8 rounds per theme; read again by the completion critic (`nb`) |
+| bp12's `reversal` stub, 2 of 48 C·d ("n" at 886.9 px) | RM §3.1 | rule (d)'s reference arm; CK's re-runs read it 0 of 2 |
+| `swrev` splice `s7\|s8`, no ink cut | RM §3.5 | beside the rows; §P13-7.5's build trigger not met |
+| R2 margins: bp13 0.075 (RM, W·d `first-expand` 8); CK W·l 0.451 (margin 0.049, slot above 31) | RM §3.4; CK §2 | no row; the completion critic's R2 attack at 10-15 against bp12 |
+| cost higher than pass 13 on all three arms; fv5 r3's one frame under load, NR | RM §3.6 | the machine's state; Q-15 (a) |
+| boot graph 31 B; RM's first read on the wrong instrument (525,445 B, stopped, corrected) | RM §1.3, §3.6 | F7 holds; **the completion seat reads `bootsize.py` on F7's `dist-demo` only**; the ceiling's re-read is the landing's first step |
+| the guard's admission wait decoupling a start gate from the run (fv5 r3 gate 10.14, cells to 34.83; waits 27-68 min) | RM §1.3, §6 | **gates read inside the admitted slot** (§P14-7.2 items 4-5) |
+| every critic battery slot started at ≤ 20 and ran above 31 (to 57.32) under other seats' browser load | CK §1, §2 | the five readings kept as records; **re-reads owed** (§P14-7.2 item 4) |
+| per-build guarded slots queued about 1 h each | CK §1, §4 | builds in one guarded slot |
+| the battery's json copy overwriting a re-read's sibling theme | CK §2 | the first readings preserved in `battery-first-*`; **copy aside before a sibling run**; a runner behaviour, no witness change |
+| the critic's refusal match reading the ZONE-ARMED warning as a refusal (20 s) | CK §1 | its own script, cured (`^[guarded] REFUSED`); nothing refused then |
+| `fmlow` W·l deferred at admission (20.79 > 15); the W·l read queue released after 30 min without a ≤ 11 start | CK §1 | owed to the completion seat |
+| the edge law's sentence holds at the stub law's resolution; below a touch a 0-to-(1 − d / touch) step sits d px in | CK §3.1 | a statement of scope (§P14-2); no prose edit in the pass; the landing's prose sweep may scope the sentence |
+| `x / k` with `k = 0` (pass 12's division, unchanged) | CK §3.1 | not p13's; `--dock-seam: 1ch` is never 0 on a laid-out box; no defect |
+| the centre law's boundary | CK §3.2 | read statically on bp13, holds; the landing's grep |
+| W3 battery reds on [window] alone, OWNER-BLOCKED, Q-4 (c) PASS | RM §5; CK §2 | the base's, as every pass |
+| disk falling 121 → 48 GB during the critic; 58 GB at this seat | CK §1; `df` | above the 15 GB stop; the driver's to watch |
+| processes each seat stopped (RM pids 87215, 25034; CK pgids 67306, 36295), each before any step of record | RM §1.2; CK §1 | its own, by PID or group; recorded |
+| pass-14 records untracked (`git status`) | `git status` | committing them is the driver's; this seat makes no git write |
+| **master merged 11.0.0; 25 dock files against `392ff1e3c`; 10.1.5 in its loop; 11.1.0 cut, its dock lanes in flight** | `FORMATION-PROGRESS.md`; `git` | the landing's rebase (§P14-5); the facility's release number is the formation's with the owner |
+| O-199 (capsule rest), O-194, O-197, O-198 (PRM opacity only), O-205's forward | INBOUND | **11.1.0 L5**; laws on the landed scene (§P14-5); none of the 38 |
+| O-186, O-187, O-193, O-201, O-205, O-207 | INBOUND | **10.1.5**, carried as laws at the landing |
+| O-185 (grain off the LCP channel) | INBOUND | **11.1.0 L4**; the landing carries it |
+| O-211 (DockLayerGroup switcher split) | INBOUND | **11.1.0** critic note; the landing reads the scene against the split tree |
+| O-188 (gliding active mark) | INBOUND | **W-I.1**, 11.1.0; on the dock spring, PRM cuts |
+| O-195, O-200, O-202 (the one-dock cluster, fuse/fission, the layer swap) | INBOUND | **W-I.8** (11.2.0) design loop; reads B′'s scene laws as its carrier; none of the 38 |
+| **O-203** (restraint: no control overshoot; gleam and press squish deleted) | INBOUND | **12.0.0**; agrees with Q-5 (a) as built; the landing after 12.0.0 re-reads witness selectors that name `glass-specular-track` |
+| O-189, O-190, O-191, O-192, O-196, O-204, O-206, O-208 to O-210 | INBOUND | their placed waves (W-F.4, W-B.6, answered, W-0.13, 11.1.0 L2/L4/L5, W-G.5, W-R.1, 10.1.5); no dock-scene content |
+| real Safari | every report | **UNMEASURED (owner's safaridriver checkbox)**; O-103: not granted |
+
+**Harness at this seat's end:** checked per file against `pass-8/H8-records/harness.sha256` (list hash `9d12810b…`): **42 OK**, 2026-11-09 22:38. No process of this seat remains.

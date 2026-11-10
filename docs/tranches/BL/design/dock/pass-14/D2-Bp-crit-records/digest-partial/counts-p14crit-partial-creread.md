@@ -1,0 +1,34 @@
+| witness | build | theme | engine | PASS | FAIL | NOT-REPRODUCED | OWNER-BLOCKED | UNMEASURED | RECORD | crashed | load (cells + re-runs) |
+|---|---|---|---|---:|---:|---:|---:|---:|---:|---:|---|
+| CASES | bp13 | light | chromium | 6 | 0 | 0 | 0 | 0 | 0 | 0 | 33.27-35.74 |
+| CF | bp13 | light | chromium | 16 | 0 | 0 | 0 | 0 | 0 | 0 | 17.84-26.46 |
+| FM | bp13 | light | chromium | 7 | 0 | 0 | 0 | 0 | 0 | 0 | 23.63-35.48 |
+| L1 | bp13 | light | chromium | 6 | 0 | 0 | 0 | 0 | 0 | 0 | 22.79-25.63 |
+| R5 | bp13 | light | chromium | 4 | 0 | 0 | 0 | 0 | 0 | 0 | 19.54-21.1 |
+| ST | bp13 | light | chromium | 10 | 0 | 0 | 0 | 0 | 0 | 0 | 20.95-28.2 |
+| W2 | bp13 | light | chromium | 8 | 0 | 0 | 0 | 0 | 0 | 0 | 32.82-38.36 |
+| W3 | bp13 | light | chromium | 27 | 0 | 0 | 6 | 0 | 0 | 0 | 23.62-30.31 |
+| R6 | bp13 | light | chromium | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 34.99-36.73 |
+| W1 | bp13 | light | chromium | 19 | 0 | 0 | 3 | 0 | 0 | 0 | 27.64-32.61 |
+| W4 | bp13 | light | chromium | 13 | 0 | 0 | 0 | 0 | 0 | 0 | 29.03-30.04 |
+| W5 | bp13 | light | chromium | 6 | 0 | 0 | 0 | 0 | 0 | 0 | 30.58-33.67 |
+| W6 | bp13 | light | chromium | 2 | 0 | 0 | 2 | 0 | 0 | 0 | 34.58-35.41 |
+| W7 | bp13 | light | chromium | 18 | 0 | 0 | 0 | 0 | 2 | 0 | 35.05-39.24 |
+| W8 | bp13 | light | chromium | 6 | 0 | 0 | 0 | 0 | 0 | 0 | 36.27-36.49 |
+| W8 | bp13 | light | consumer | 0 | 0 | 0 | 0 | 3 | 0 | 0 | 37.41-37.41 |
+| CF | bp13 | dark | chromium | 16 | 0 | 0 | 0 | 0 | 0 | 0 | 14.97-24.83 |
+| FM | bp13 | dark | chromium | 7 | 0 | 0 | 0 | 0 | 0 | 0 | 18.45-33.43 |
+| R5 | bp13 | dark | chromium | 4 | 0 | 0 | 0 | 0 | 0 | 0 | 24.64-27.31 |
+| ST | bp13 | dark | chromium | 10 | 0 | 0 | 0 | 0 | 0 | 0 | 18.84-22.77 |
+| W1 | bp13 | dark | chromium | 19 | 0 | 0 | 3 | 0 | 0 | 0 | 25.28-30.28 |
+| W2 | bp13 | dark | chromium | 8 | 0 | 0 | 0 | 0 | 0 | 0 | 27.31-29.87 |
+| W3 | bp13 | dark | chromium | 26 | 0 | 0 | 7 | 0 | 0 | 0 | 26.7-32.39 |
+| R6 | bp13 | dark | chromium | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 8.64-8.96 |
+| W4 | bp13 | dark | chromium | 13 | 0 | 0 | 0 | 0 | 0 | 0 | 11.45-14.41 |
+| W5 | bp13 | dark | chromium | 6 | 0 | 0 | 0 | 0 | 0 | 0 | 10.88-11.76 |
+| W6 | bp13 | dark | chromium | 2 | 0 | 0 | 2 | 0 | 0 | 0 | 10.69-11.21 |
+| W7 | bp13 | dark | chromium | 18 | 0 | 0 | 0 | 0 | 2 | 0 | 9.17-10.4 |
+| W8 | bp13 | dark | chromium | 6 | 0 | 0 | 0 | 0 | 0 | 0 | 8.52-8.91 |
+| W8 | bp13 | dark | consumer | 0 | 0 | 0 | 0 | 3 | 0 | 0 | 8.52-8.52 |
+| F7 | bp13 | - | source | 13 | 0 | 0 | 0 | 0 | 0 | 0 | 17.23-17.23 |
+| PR | bp13 | - | source | 6 | 0 | 0 | 0 | 0 | 0 | 0 | 27.23-27.23 |
