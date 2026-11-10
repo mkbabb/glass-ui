@@ -540,7 +540,12 @@ async function partInterrupt(browser) {
             const frames = [f0];
             for (let i = 0; i < 90; i++) {
                 const acts = seq.filter(([j]) => j === i).flatMap(([, a]) => a);
+                // --order (resume attribution): unset = the fold's read (two macrotask waits, so the cluster's ResizeObserver lands
+                // before or after tick k by real-clock luck); pre = a rendering update delivers it before the tick; post = the
+                // browser's own order: the act, its microtasks (MutationObserver), then the tick, then layout and ResizeObserver
+                if (acts.length && args.order === "post") { await page.evaluate(async ([acts, F]) => { for (const [fn, arg] of acts) window.__ab[fn](arg); await Promise.resolve(); await Promise.resolve(); window.__vc.step(F); await new Promise((r) => { const ro = new ResizeObserver(() => { ro.disconnect(); r(); }); ro.observe(document.body); }); }, [acts, FRAME]); const f = await read(); f.i = i; f.t = +((i + 1) * FRAME).toFixed(1); frames.push(f); continue; }
                 if (acts.length) { await page.evaluate((acts) => { for (const [fn, arg] of acts) window.__ab[fn](arg); }, acts); await page.evaluate(() => new Promise((r) => setTimeout(r, 0))); await page.evaluate(() => new Promise((r) => setTimeout(r, 0))); }
+                if (acts.length && args.order === "pre") await page.evaluate(() => new Promise((r) => { const ro = new ResizeObserver(() => { ro.disconnect(); r(); }); ro.observe(document.body); }));
                 await page.evaluate(async (F) => { window.__vc.step(F); await new Promise((r) => setTimeout(r, 0)); await new Promise((r) => { const ro = new ResizeObserver(() => { ro.disconnect(); r(); }); ro.observe(document.body); }); }, FRAME);
                 const f = await read(); f.i = i; f.t = +((i + 1) * FRAME).toFixed(1);
                 if (i >= k - 1 && i <= k + 1) { const g = await geom(page); for (const sh of f.shares ?? []) if (sh) g.members.push({ l: sh[0], r: sh[1], t: g.members[0].t, b: g.members[0].b }); await shot(page, `interrupt-${name.split(" ")[0]}-${W}-f${i}`, g, 20); }
@@ -750,6 +755,29 @@ async function partReader(browser) {
 }
 
 // M · the seam mid-motion at fractional ratios: freeze an episode at t, read the line across each contacted cut
+// fold-1 resume: the painted silhouette's y extent at x = X, from the tone's own path() (M/L/C/Z, absolute)
+function neckAt(d, X) {
+    const tok = d.match(/[MLCZ]|-?\d+(?:\.\d+)?/g) ?? [];
+    let i = 0, cx = 0, cy = 0, sx = 0, sy = 0; const ys = [];
+    const seg = (pts) => { // pts: [[x,y],...] control polygon from the current point
+        const n = 64, P = [[cx, cy], ...pts];
+        const at = (t) => { if (P.length === 2) return [P[0][0] + (P[1][0] - P[0][0]) * t, P[0][1] + (P[1][1] - P[0][1]) * t];
+            const u = 1 - t; return [0, 1].map((k) => u * u * u * P[0][k] + 3 * u * u * t * P[1][k] + 3 * u * t * t * P[2][k] + t * t * t * P[3][k]); };
+        let a = at(0);
+        for (let k = 1; k <= n; k++) { const b = at(k / n);
+            if (Math.abs(a[0] - X) < 0.05) ys.push(a[1]);
+            if ((a[0] - X) * (b[0] - X) < 0) ys.push(a[1] + (b[1] - a[1]) * (X - a[0]) / (b[0] - a[0]));
+            a = b; }
+        if (Math.abs(a[0] - X) < 0.05) ys.push(a[1]);
+        [cx, cy] = P.at(-1);
+    };
+    while (i < tok.length) { const c = tok[i++]; const num = () => +tok[i++];
+        if (c === "M") { cx = sx = num(); cy = sy = num(); }
+        else if (c === "L") seg([[num(), num()]]);
+        else if (c === "C") seg([[num(), num()], [num(), num()], [num(), num()]]);
+        else if (c === "Z") seg([[sx, sy]]); }
+    return ys.length ? { top: Math.min(...ys), bot: Math.max(...ys) } : null;
+}
 async function partMotionSeam(browser) {
     const res = [];
     const eps = [["collapse", { shape: "onedock", open: "1" }, false, [["set", true], ["collapse"]]], ["fuse", { shape: "onedock", open: "1" }, false, [["set", true]]], ["swap-in", { shape: "swap" }, true, [["layer", "tool"]]]];
@@ -764,14 +792,30 @@ async function partMotionSeam(browser) {
             const img = await shot(page, null, g, 24, dsf);
             const top = Math.min(...g.members.map((m) => m.t)), bot = Math.max(...g.members.map((m) => m.b));
             const rows = { inTop: top + 8, mid: (top + bot) / 2, inBot: bot - 8 };
+            // the rows inside the painted glass at the cut: the neck's own top + 8, middle, bottom − 8 (a row
+            // through the neck's rim reads the rim, not a seam); the member rows are kept beside them
+            const tone = await page.evaluate(() => { const e = document.querySelector("[data-testid=cluster] .dock-cluster-tone") ?? document.querySelector(".dock-cluster-tone"); const r = e.getBoundingClientRect(); const m = /path\("([^"]*)"\)/.exec(e.style.clipPath); return { d: m ? m[1] : "", left: r.left, top: r.top }; });
             const cuts = [];
             for (let i = 0; i < (f.shares?.length ?? 0) - 1; i++) {
                 const a = f.shares[i], b = f.shares[i + 1];
                 if (!a || !b || b[0] - a[1] > 0.6) continue; // not in contact
                 const jx = (a[1] + b[0]) / 2;
-                let line = 0, tone = 0;
-                for (const y of Object.values(rows)) { const s = seamAt(img, y, jx); line = Math.max(line, s.line); tone = Math.max(tone, s.tone); }
-                cuts.push({ i, x: +jx.toFixed(2), line, tone, now: f.now });
+                let memberLine = 0, memberTone = 0;
+                for (const y of Object.values(rows)) { const s = seamAt(img, y, jx); memberLine = Math.max(memberLine, s.line); memberTone = Math.max(memberTone, s.tone); }
+                const nk = neckAt(tone.d, jx - tone.left);
+                const neck = nk ? { top: nk.top + tone.top, bot: nk.bot + tone.top } : null;
+                const nrows = neck ? (neck.bot - neck.top >= 20 ? [neck.top + 8, (neck.top + neck.bot) / 2, neck.bot - 8] : [(neck.top + neck.bot) / 2]) : Object.values(rows);
+                let line = 0, tone2 = 0;
+                for (const y of nrows) { const s = seamAt(img, y, jx); line = Math.max(line, s.line); tone2 = Math.max(tone2, s.tone); }
+                cuts.push({ i, x: +jx.toFixed(2), line, tone: tone2, neck: neck ? [+(neck.top - top).toFixed(2), +(neck.bot - top).toFixed(2)] : null, memberLine, memberTone, now: f.now });
+                // --plant seam (the bite): a 1 px rim-coloured line down the neck at the cut, read by the same rows
+                if (args.plant === "seam" && neck) {
+                    await page.evaluate(([x, t, h]) => { const e = document.createElement("div"); e.className = "plant-seam"; const c = getComputedStyle(document.querySelector(".dock-cluster")).getPropertyValue("--glass-border-dock").trim() || "rgba(0,0,0,.12)"; Object.assign(e.style, { position: "fixed", left: `${x - 0.5}px`, top: `${t}px`, width: "1px", height: `${h}px`, background: c, zIndex: 9999, pointerEvents: "none" }); document.body.append(e); }, [jx, neck.top, neck.bot - neck.top]);
+                    const img2 = await shot(page, null, g, 24, dsf);
+                    await page.evaluate(() => document.querySelectorAll(".plant-seam").forEach((e) => e.remove()));
+                    let pl = 0; for (const y of nrows) pl = Math.max(pl, seamAt(img2, y, jx).line);
+                    cuts.at(-1).plantLine = pl;
+                }
             }
             res.push({ dsf, theme, name, t, cuts, errs: errs.slice(0, 2) });
             log("mseam", dsf, theme, name, t, JSON.stringify(cuts));

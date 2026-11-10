@@ -10,10 +10,11 @@
 | harness | `pass2-fold-1/tools/probe.mjs` is the challenge-1 probe plus: the cluster's own `%`-clip count by selector with no exemption, the silhouette's outer ends and each member's controls by label, the controls clip read through `.dock-controls`' boxes and the engine's `inset()` shorthand, the trigger in daraksha's `.site-dock` placement and a focus-hold cell, the reader at the breakpoint widths and with `narrowAt`. `tools/continuity.py` is I8-G18's interrupt arm. `tools/seat-check.mjs` reads the active seat's computed backdrop. The fixture is challenge-1's plus `narrowAt` |
 | engines | headless Chromium (Playwright headless shell) and Playwright WebKit 26.5, guarded, one browser per run, a new context per cell; WebKit under `--exclusive webkit`. The unit test and builds under `guarded --light`, vitest `--maxWorkers=2` |
 | records | `pass2-fold-1/data/`, `logs/`, `png/`. Runners `tools/run-chromium.sh` (f1), `tools/run-final.sh` (f2 and WebKit) |
+| resume | 2026-11-10, after the reboot, a second seat (`claude-opus-5-5`). Scratch worktree `.claude/worktrees/bl/cluster/pass2-fold-1-resume` on master `9b71327e1` with `pass2/prototype.patch`, removed after this record was written. Runners `tools/run-resume.sh` (the refused stages, and Chromium's interrupt ×3) and `tools/run-cure.sh` (the one-clock build, both engines). The cure is §R; `prototype.patch` now carries it, and the round-1 build's patch is kept as `pass2-fold-1/prototype-fold1-ownclock.patch`. W-I.8's amendments for it are `pass2-fold-1/W-I.8-resume.patch` |
 
 ## Verdict
 
-All seven findings are cured in the mechanism, and each cure is measured in the cell the challenger used, in both engines (§W). One read is owed: `guarded` refused the last WebKit stages (the kernel zone at 8.79M; the owner must reboot), so WebKit's fractional-ratio rest seam (I8-G1) after C4's change is unmeasured. Until it is read the fold is not complete. The two notes are folded into the gates. I8-G18's last RED arm from pass 2 (an arriver's controls outside its droplet) closes as a consequence of C6. No gate was weakened: I8-G4, G5, G8 and G18 are rewritten or sharpened, G16 gains an arm, and I8-G19 (the reach holds) and I8-G20 (the consumer's placement and row) are new. Two items stay open, both recorded: one late read in seven Chromium runs of an interrupt cell, and a survivor offset that is still re-played (§6).
+All seven findings are cured in the mechanism, and each cure is measured in the cell the challenger used, in both engines (§W). After the reboot the refused WebKit stages ran, and WebKit's I8-G1 after C4 is GREEN: 0 / 0 in all 84 cells (§R). The one late read was not a harness artefact. In the browser's own step order the round-1 build is RED in every interrupt cell with a membership change, in both engines, so the fold adds a cure, R-14, one clock (§R). On the one-clock build every interrupt arm is GREEN in three step orders in both engines, and I8-G1's new motion arm is GREEN in both engines with its bite RED in 72 of 72 cuts. The fold is complete. The two notes are folded into the gates. I8-G18's last RED arm from pass 2 (an arriver's controls outside its droplet) closes as a consequence of C6. No gate was weakened: I8-G4, G5, G8 and G18 are rewritten or sharpened, G16 gains an arm, and I8-G19 (the reach holds) and I8-G20 (the consumer's placement and row) are new. Two items stay open, both recorded: one late read in seven Chromium runs of an interrupt cell, and a survivor offset that is still re-played (§6).
 
 ## Dispositions
 
@@ -28,6 +29,7 @@ All seven findings are cured in the mechanism, and each cure is measured in the 
 | C7 | the I8-G5 unit test cannot bite on three sites | **Gate rewritten.** The test drives a width glide, a pure leave and an arrival, requires each stage to mint its site's springs, and stops the frame clock | R-11, I8-G5 | clean 10 / 10. Fails on the identity arm with a literal at each of the five sites and with a spread (six plants). Pass 2's test: green with the plant at three sites |
 | N1 | G18 on shares reads RED on an uninterrupted swap | **Gate rewritten.** G18 reads the silhouette's outer ends and each member's controls by label, never the internal cuts, plus the interrupt arm | I8-G18 | outer ends ≤ 10.0 px per frame over 145 px (6.9 %) in every swap cell; the cut at a membership change still moves into the phantom, unread |
 | N2 | G4's clip arm and the probe's `inset(50%)` exemption disagree | **Mechanism amended, gate sharpened.** One tone element; every unpainted cluster layer clips to `path("M0 0")`; the arm reads the cluster's own elements by selector with no exemption | R-2 (one tone), I8-G4 | 0 `%` in the cluster's own clip strings in every frame of every one-dock, swap and interrupt cell. The rest are master's: the G12 face inset, and `.dock-run-status`'s `inset(50%)`, which the old exemption also hid |
+| R | the late read (round 1 §6): one read in seven a frame ahead | **Real, and cured: R-14, one clock (§R).** In the browser's step order the round-1 build reads −17.39, then 0, at every membership interrupt, 3 of 3. Each spring ran its own rAF after the cluster's paint, and a fresh loop's first step was 16.7 ms. Now the cluster's frame loop steps every spring it owns, then paints. **Gates sharpened:** I8-G18's interrupt arm is read in three pinned orders ("post" binding), I8-G5 requires every spring host-clocked, and I8-G1 gains a motion arm read inside the glass, with a plant | R-14, I8-G1, G5, G18, §6 | one clock: 72 / 72 Chromium and 40 / 40 WebKit interrupt arms GREEN (worst +0.23); round 1 in "post": RED +6.24 to +11.18. Motion seam: 0 of 72 cuts over 1.5 in either engine; the plant RED 72 / 72 in both |
 
 ## C1 · The reach holds
 
@@ -142,7 +144,7 @@ Playwright WebKit 26.5, `--exclusive webkit`, one run on the final build (`data/
 
 WebKit still logs "ResizeObserver loop completed with undelivered notifications" in the one-dock cells (17 lines in the run), the open item of pass 2 §8. The fold did not touch it.
 
-**Not run in WebKit: guarded refused them.** After `webkit-f2`, `guarded` refused the three remaining WebKit stages: `REFUSED: kernel zone data.kalloc.1024 at 8.79M … reboot the Mac` (`logs/webkit-f2rep2.log`, `webkit-f2rest.log`, `webkit-f2mseam.log`, rc 75). So in WebKit these were not measured: the interrupt repeat, **I8-G1's rest seam at DSF 1 to 3 after C4's move of the grid's remainder onto the members' `translate`**, and the motion seam. Chromium read I8-G1 GREEN after the move (84 cells, line ≤ 1.5). WebKit read 0 / 0 in every cell on pass 2, where the remainder sat on the root's `left`. Whether WebKit's member layers anti-alias differently under a fractional `translate` is unmeasured, and it is the first thing to run after the reboot: `tools/run-final.sh`'s last three lines.
+**Refused on 2026-11-09, run on 2026-11-10 (§R).** After `webkit-f2`, `guarded` refused the three remaining WebKit stages: `REFUSED: kernel zone data.kalloc.1024 at 8.79M … reboot the Mac` (rc 75). After the reboot they ran (`tools/run-resume.sh`): the interrupt repeat on the round-1 build, and I8-G1's rest seam and the motion seam on the one-clock build. §R has the reads.
 
 ## Not re-read on the round-1 build, and why
 
@@ -153,7 +155,90 @@ WebKit still logs "ResizeObserver loop completed with undelivered notifications"
 
 ## §6 · Open
 
-- **WebKit I8-G1 after C4, unmeasured** (§W). Run `tools/run-final.sh`'s last three lines after the reboot.
-- **One late read in seven.** In one Chromium run (`data/chromium-smoke2.json`), the in-then-out@42 interrupt frame read −17.39 then 0, where six other runs read −9.65, −7.74. The positions it read at frame 5 are another run's frame 6, so one read landed a frame ahead. It is either the harness's step ordering or a real frame where the springs tick twice. W-I.8 §6 records it, and I8-G18's interrupt arm is read over three runs per engine at landing.
+- ~~**WebKit I8-G1 after C4, unmeasured.**~~ Read after the reboot: 0 / 0 in all 84 cells (§R).
+- ~~**One late read in seven.**~~ Real, attributed and cured by R-14 (§R).
+- **The `toolrun=0` reversal reads two trajectories in the harness's order** (§R). Both are GREEN, and the binding "post" order is deterministic.
+- **WebKit's member-row seam read varies between captures** (3.4, then 0, in the same cell on the same build). The neck rows, which are the gate, read 0 in both (§R).
 - **A survivor offset is still re-played** (`playTo`) on a later membership change, where a glide and a run retarget. No cell interrupts a pure leave with another membership change. W-I.8 §6 books a G15 cell for it.
 - **The morph frame hook.** The prototype still paints on a MutationObserver of `--dock-morph-t` (R-12). The context hook from the morph's `onFrame` is the wave's.
+
+## §R · Resume after the reboot (2026-11-10)
+
+The seat rebuilt round 1's site from `pass2/prototype.patch` on master `9b71327e1` (`logs/build-resume.log`, the same code that was measured). It ran what `guarded` had refused, then re-ran Chromium's interrupt cells to attribute the late read.
+
+### The refused WebKit stages
+
+| stage | build | read |
+|---|---|---|
+| `f2rep2`, the interrupt repeat | round 1 | GREEN in all four cells in the harness's order, matching Chromium's f2 to 0.01 px (`data/webkit-f2rep2.json`) |
+| `f2rest`, I8-G1 at DSF 1, 1.25, 1.5, 2, 2.2, 2.625, 3 | one clock | **0 / 0 (line / tone) and the corner r = h/2 in all 84 cells.** In WebKit, C4's sub-pixel remainder on the members' `translate` anti-aliases no differently from the root's `left`. Chromium on the same build reads ≤ 1.5 / ≤ 0.1 in all 84 (`chromium-c3rest`), as on round 1 |
+| `f2mseam`, the motion seam | one clock | 71 of 72 cuts ≤ 1.5 on the member rows, one at 3.4 (DSF 1.25 dark, fuse at 100 ms). Re-read with the neck rows below: 0 in all 72, and in that rerun the member rows read 0 too |
+
+The rest and the motion seam ran on the one-clock build because the cure below was built before WebKit's lock came free. Rest is a settled frame, and the clock changes nothing in it.
+
+### Attributing the late read: it is real
+
+`chromium-smoke2` ran on an earlier round-1 build (built 21:41, before `build-final`). Its frame 5 equals the normal frame 6 to 0.01 px, frame 6 moves 0, and frame 7 is back in step. So the trajectory was unchanged, and one paint showed the next frame's state. The three repeats asked for (`r1`–`r3`, round-1 build, the harness's order) read the normal path: in-then-out@42 left end −9.31, −9.65, −7.74, −4.40, −1.83 in 3 of 3, every arm GREEN. On round 1's final build the normal path held in all nine runs before this read (f1, f1rep2, f1rep3, f2, f2rep2, r1–r3, WebKit f2).
+
+The harness's interrupt step runs the act, then waits on two macrotasks before it steps the virtual clock. A rendering update may or may not fall inside those waits, so the cluster's ResizeObserver lands before or after the frame by real-clock luck. `probe.mjs --order` pins it:
+
+- **pre:** a rendering update delivers the ResizeObserver before the frame.
+- **post:** the browser's own order. The act and its microtasks (the MutationObserver), then the frame, then layout and the ResizeObserver.
+
+| round-1 build, Chromium | in then out @83 | in then out @42 | out then in @42 | `toolrun=0` |
+|---|---|---|---|---|
+| pre ×3 (`ord-pre-*`) | GREEN, 3 / 3 | GREEN: −9.31, −9.65, −7.74, −4.40 | GREEN | GREEN |
+| **post ×3** (`ord-post-*`) | **RED +6.24 / +6.84**: −8.41, **−13.00, 0**, −1.45 | **RED +10.55 / +11.18**: −9.31, **−17.39, 0**, −4.40 | **RED +10.55 / +11.18**: +9.31, **+17.39, 0** | GREEN |
+
+So the late read is what a browser paints, 3 of 3, at every interrupt with a membership change. Two causes add up, and both are in the mechanism:
+
+1. **Paint before tick.** Each `useDockSpring` drove its own `SpringProgress.play` rAF loop, and the cluster painted from a separate rAF `tick`. rAF callbacks run in registration order. A spring minted or re-played at a membership change (a run, a phantom, a join) registered after the cluster's tick for that frame, so the frame's paint showed the spring's previous value.
+2. **A fresh loop's first step is two frames.** keyframes' `RAFPlayback.drive` steps a new loop by `this._lastFrameT ? n − this._lastFrameT : 16.667` (`dist/sequence-*.js`), and 16.667 ms is two frames at 120 Hz.
+
+In the harness's lucky order the lag and the jump cancel. In "post" order the ResizeObserver's `paint()` lands after the frame and shows the jump (−17.39 = −9.65 + −7.74), then the next tick paints the stale value (0).
+
+### The cure: R-14, one clock
+
+- `useDockSpring(config, { clock: "host" })` arms a spring without a loop. `step(dt)` advances it by `tickDt(dt)` and emits its frame and its settle, which disposes it as before. The reduced-motion snap that `play` performs is kept: under PRM a host spring jumps to its target and settles in one call. The default stays `"own"`, so GlassDock's morph, DockCrossfade and `useDockRun` are unchanged.
+- Every cluster spring site passes `HOST`: the joins, the two glide edges, the phantom run, the survivor offset and the arriver run. I8-G5's five plant sites stay where they were.
+- The cluster's `tick(t)` steps every live spring it owns (joins, glides, slots, phantoms and offsets, each once) by `t − last`, then paints. A loop woken from rest steps 0, the way a CSS transition's first frame shows zero progress, so the first painted frame is the state at the act.
+- One intermediate build (`data/cure-a/`, `logs/cure-a/`) stepped a woken loop by `t − performance.now()` at the wake. It was GREEN, but its reads moved 0.3 px from run to run, because the probe's virtual rAF clock and the real `performance.now()` disagree. Stepping 0 is deterministic and needs no wall clock.
+
+On the one-clock build (`data/{chromium,webkit}-c{def,pre,post}*.json`):
+
+| engine | runs | arms GREEN | worst \|Δv\| − bound | membership cells across runs and orders |
+|---|---|---|---|---|
+| Chromium | harness ×3, pre ×3, post ×3 | 72 / 72 | +0.23 | identical to 0.01 px |
+| WebKit | post ×3, harness ×1, pre ×1 | 40 / 40 | +0.20 | identical to 0.01 px, and to Chromium |
+
+Left end, in then out at 42 ms: −8.51, −7.40, −4.66, −2.52, −0.88, +0.35. Right end, out then in at 42 ms: −8.56, −8.27, −4.68, −2.54, −0.88. In then out at 83 ms reverses through zero velocity: −2.79, 0.00, +2.07.
+
+`toolrun=0` has no membership change, and its width retarget reaches the cluster only through the ResizeObserver. So in the harness's order it does not read the same every time: 2 of 3 runs take the pre path (−5.03, −3.65, −1.57) and 1 of 3 a third path (−5.03, −4.72, −3.30). Pinned, each order reads the same in every run: pre −5.03, −3.65, −1.57, and post the same path one frame later (−5.27, −5.03, −3.65, −1.57). All three are GREEN. "Post" is the browser's own latency, and it is the binding read.
+
+I8-G5 (`tests/components/dock/dock-cluster-spring.spec.ts`) gains an arm: every spring the cluster mints is host-clocked, and the mock now forwards the second argument. Clean: 1 passed (`logs/g5-clean-resume.log`). The plant, the phantom site left on its own loop (`data/g5-plant-own-clock.diff`), fails on that arm with `spring 5: the cluster's clock: expected undefined to be 'host'` (`logs/g5-plant-own-clock-phantom.log`). vue-tsc exits 0 (`logs/typecheck-resume.log`).
+
+### The motion seam, read inside the glass
+
+On the one-clock build the motion starts a frame later, so for the first time the 100 ms read samples a neck still forming: j = 0.617. The old sampling read only j = 0.714, 0.975 and 1.001, because the 16.7 ms first step pushed every 100 ms read past 0.7. On the old member rows (member top + 8, the middle, member bottom − 8), Chromium then read 9 of 72 cuts over 1.5, up to 16 (`chromium-c3mseam`). The captures (`png/chromium-c3mseam-mseam-*-t100.png`) show one material: one rim, one shadow, no line at the cut. There the neck's own top lies 7.2–9.5 px below the member top, so the member row at + 8 runs along the neck's rim and reads the rim's curve as a line.
+
+The probe now reads three rows inside the painted glass at the cut: the neck's own top + 8, its middle and its bottom − 8. The neck comes from the tone's own `path()`, sampled where it crosses x = cut, with one middle row when the neck is under 20 px. The member rows stay in the record as `memberLine`. The bite, `--plant seam`, draws a 1 px line in the cluster's rim colour (`--glass-border-dock`) down the neck at each contacted cut, reshoots, and reads the same rows.
+
+| engine (one clock) | contacted cuts | neck rows, line max | over 1.5 | the plant | member rows (record only) |
+|---|---|---|---|---|---|
+| Chromium (`c3mseamN`, `c3mseamPlant`) | 72 | 1.5 | 0 | 8.9–16.2, RED 72 / 72 | up to 21.4 |
+| WebKit (`c3mseamPlant`) | 72 | 0 | 0 | 6.9–16.1, RED 72 / 72 | 0 |
+
+`W-I.8-resume.patch` gives I8-G1 this read as its motion arm.
+
+### The rest of the battery on the one-clock build (`c3`, both engines)
+
+- **Identical to round 1's reads, line for line:** trigger (I8-G19), sitedock and reader (I8-G20), g8glide (I8-G8), restraint and a11y. Each was compared against f2, and Chromium's reader against f1.
+- **The same shape, one frame later:**
+  - The onedock reads (I8-G17): theme first frame 4.36 px, largest step 5.11 px, overlap 0 and 0 `%` / elliptical. The bridge at j ≥ 0.45 reads ≤ 0.3 in both engines, and below 0.45 it reads the bare field, as before.
+  - The swap reads (I8-G18): outer ends ≤ 10 px per frame, overlap 0, and 0 px of a control outside its glass at opacity > 0.25. The last member's step peak moves from 50 to 58.3 ms.
+- **PRM (I8-G6):** 2 geometry states in every episode, and the WAAPI plant reads 4. The opacity arm is still RED at 250–283 ms, the known L5 wait (pass 2 and round 1 read 249–330 ms).
+- WebKit still logs 17 "ResizeObserver loop completed with undelivered notifications" lines, as round 1 did (pass 2 §8).
+
+### Process
+
+After the reboot the machine was busy, and the WebKit stages waited on another session's webkit lock for about 25 minutes. This seat stopped two of its own queued runner shells by PID and restarted them. One was stopped because its idle check matched its own queued `guarded` wrapper, the other so the site could be rebuilt with the zero first step. No other process was touched. Every run went through `guarded`, and WebKit's ran under `--exclusive webkit`.

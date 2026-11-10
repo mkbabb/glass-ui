@@ -1,9 +1,9 @@
 diff --git a/src/components/dock/DockCluster.vue b/src/components/dock/DockCluster.vue
 new file mode 100644
-index 000000000..b393335c0
+index 000000000..07611a5e4
 --- /dev/null
 +++ b/src/components/dock/DockCluster.vue
-@@ -0,0 +1,638 @@
+@@ -0,0 +1,661 @@
 +<script setup lang="ts">
 +/**
 + * DockCluster (W-I.8, PASS-2 FOLD round 1 build, scratch only). Pass 2's mechanism, with the
@@ -23,6 +23,9 @@ index 000000000..b393335c0
 + *   C6  inside a cluster no member descendant carries a backdrop-filter (cluster.css), so the
 + *       glide's and the arriver's content clips (on `.dock-controls`' boxes) sit over no blur;
 + *   N2  one tone element; no `%` clip anywhere (empty `path()` defaults).
++ *   R-14 one clock: every cluster spring is stepped by the cluster's own frame loop, then the
++ *       frame paints (`useDockSpring(…, { clock: "host" })`); a loop woken from rest paints its
++ *       first frame at zero elapsed time.
 + * Pass 2: the painted extent and the chain (R-12), one ink and one tone (R-1, R-2), the capsule
 + * corner (R-4), the PRM seat (R-5).
 + */
@@ -42,6 +45,8 @@ index 000000000..b393335c0
 +});
 +
 +const SHADOW_PAD = 40;
++/** Every cluster spring is stepped by the cluster's one frame loop (`tick`), then painted. */
++const HOST = { clock: "host" } as const;
 +
 +const root = useTemplateRef<HTMLElement>("root");
 +const shadowEl = useTemplateRef<HTMLElement>("shadowEl");
@@ -214,7 +219,7 @@ index 000000000..b393335c0
 +        wake();
 +        return;
 +    }
-+    const g: Glide = { b0: from.x0, b1: from.x1, d0: 0, d1: 0, s0: useDockSpring(DOCK_SPRING), s1: useDockSpring(DOCK_SPRING) };
++    const g: Glide = { b0: from.x0, b1: from.x1, d0: 0, d1: 0, s0: useDockSpring(DOCK_SPRING, HOST), s1: useDockSpring(DOCK_SPRING, HOST) };
 +    glides.set(d, g);
 +    const t0 = L.x0 - g.b0, t1 = L.x1 - g.b1;
 +    // onFrame has already written the settled value (a retarget may have moved the target)
@@ -412,10 +417,28 @@ index 000000000..b393335c0
 +const live = () =>
 +    springs.some((s) => s.live) || [...offsets.values()].some((v) => v.spring.live) || morphingChildren > 0 || glides.size > 0 || slots.size > 0 || phantoms.length > 0;
 +const openOf = (r: Run) => Math.max(0, Math.min(1, r.s / Math.max(1e-6, r.full)));
-+function tick(): void {
++/* One clock (fold-1 resume): every cluster spring advances by the same true frame and only then
++   does the frame paint. On their own loops a spring minted outside this frame (a membership change)
++   ticked after the paint, and its loop's first step was a nominal 16.7 ms: one frame late, then two
++   frames at once whenever a ResizeObserver paint landed after the tick. A loop woken from rest
++   paints its first frame at zero elapsed time (as a CSS transition does), then true intervals. */
++let lastT = 0;
++function clocked(): Set<DockSpring> {
++    const all = new Set<DockSpring>(springs);
++    for (const g of glides.values()) { all.add(g.s0); all.add(g.s1); }
++    for (const r of slots.values()) all.add(r.spring);
++    for (const r of phantoms) all.add(r.spring);
++    for (const e of offsets.values()) all.add(e.spring);
++    return all;
++}
++function tick(t: number): void {
 +    raf = 0;
++    const dt = lastT ? t - lastT : 0;
++    lastT = t;
++    for (const s of clocked()) s.step(dt);
 +    paint();
 +    if (live()) raf = requestAnimationFrame(tick);
++    else lastT = 0;
 +}
 +function wake(): void {
 +    if (!raf) raf = requestAnimationFrame(tick);
@@ -505,7 +528,7 @@ index 000000000..b393335c0
 +            return tv;
 +        });
 +        springs.forEach((s) => s.dispose());
-+        springs = t.map(() => useDockSpring(DOCK_SPRING));
++        springs = t.map(() => useDockSpring(DOCK_SPRING, HOST));
 +        joinTo.length = 0;
 +        const firstMount = prev.length === 0;
 +        members = list;
@@ -529,7 +552,7 @@ index 000000000..b393335c0
 +                let r = slots.get(d);
 +                slots.delete(d);
 +                if (r) { r.role = "phantom"; r.el = null; r.after = after; }
-+                else r = { s: W(was) + (lastGap.get(d) ?? 0), full: W(was) + (lastGap.get(d) ?? 0), role: "phantom", el: null, after, spring: useDockSpring(DOCK_SPRING) };
++                else r = { s: W(was) + (lastGap.get(d) ?? 0), full: W(was) + (lastGap.get(d) ?? 0), role: "phantom", el: null, after, spring: useDockSpring(DOCK_SPRING, HOST) };
 +                phantoms.push(r);
 +                runTo(r, 0);
 +            }
@@ -541,7 +564,7 @@ index 000000000..b393335c0
 +                    const layoutX0 = pureBox(d).x0 + shift;
 +                    const from = was.x0 - layoutX0;
 +                    if (Math.abs(from) < 0.25 || glides.has(d)) continue;
-+                    const entry = offsets.get(d) ?? { o: 0, spring: useDockSpring(DOCK_SPRING) };
++                    const entry = offsets.get(d) ?? { o: 0, spring: useDockSpring(DOCK_SPRING, HOST) };
 +                    offsets.set(d, entry);
 +                    entry.o = from;
 +                    entry.spring.playTo(from, 0, { onFrame: (v) => { entry.o = v; }, onSettle: () => { entry.o = 0; } });
@@ -557,7 +580,7 @@ index 000000000..b393335c0
 +                const ph = phantoms.find((p) => p.after === after && p.spring.live);
 +                let r: Run;
 +                if (ph) { phantoms = phantoms.filter((x) => x !== ph); r = ph; r.role = "slot"; r.el = d; r.full = W(box) + gap; }
-+                else r = { s: 0, full: W(box) + gap, role: "slot", el: d, after, spring: useDockSpring(DOCK_SPRING) };
++                else r = { s: 0, full: W(box) + gap, role: "slot", el: d, after, spring: useDockSpring(DOCK_SPRING, HOST) };
 +                slots.set(d, r);
 +                runTo(r, r.full);
 +            }
@@ -895,6 +918,93 @@ index 000000000..a6e7900d9
 +        `${f(Number(x) + dx)} ${f(Number(y) + dy)}`,
 +    );
 +}
+diff --git a/src/components/dock/composables/useDockSpring.ts b/src/components/dock/composables/useDockSpring.ts
+index 5f0b44751..dd9012dd1 100644
+--- a/src/components/dock/composables/useDockSpring.ts
++++ b/src/components/dock/composables/useDockSpring.ts
+@@ -69,15 +69,36 @@ export interface DockSpring {
+     readonly velocity: number;
+     /** Tear down any running spring (idempotent). */
+     dispose(): void;
++    /**
++     * Advance a `clock: "host"` spring by `dt` ms and emit its frame (and its
++     * settle). The host calls it once per frame for every spring it owns, then
++     * paints; a no-op when parked or on the spring's own clock.
++     */
++    step(dt: number): void;
+ }
+ 
+-export function useDockSpring(config: DockSpringConfig): DockSpring {
++export interface DockSpringClock {
++    /**
++     * `"own"` (the default): the spring drives its own rAF loop. `"host"`: the
++     * caller steps it from its one frame loop, so every spring it owns has
++     * advanced by the same true frame before it paints. A host with several
++     * springs needs this: own loops tick in rAF registration order, so a spring
++     * minted outside the host's frame ticks after the host's paint, and a fresh
++     * own loop's first step is a nominal 16.7 ms (two 120 Hz frames).
++     */
++    clock?: "own" | "host";
++}
++
++export function useDockSpring(config: DockSpringConfig, { clock = "own" }: DockSpringClock = {}): DockSpring {
+     // The single live morph driver for this handle. `null` when parked.
+     let spring: SpringProgress | null = null;
++    // the host-clocked episode's writer (null on the own clock or when parked)
++    let hosted: DockSpringPlayOptions | null = null;
+ 
+     const isLive = (): boolean => spring !== null && !spring.settled;
+ 
+     function dispose(): void {
++        hosted = null;
+         if (spring) {
+             spring.dispose();
+             spring = null;
+@@ -105,6 +126,15 @@ export function useDockSpring(config: DockSpringConfig): DockSpring {
+         spring = active;
+         active.reset(from, inheritedVelocity);
+         active.target = to;
++        if (clock === "host") {
++            hosted = options;
++            // the PRM jump `play` performs: one frame at the target, settled
++            if (window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) {
++                active.snap();
++                emit(active, options);
++            }
++            return;
++        }
+         active.play((value: number, velocity: number) => {
+             options.onFrame(value, velocity);
+             if (active.settled) {
+@@ -116,6 +146,21 @@ export function useDockSpring(config: DockSpringConfig): DockSpring {
+         });
+     }
+ 
++    function emit(active: SpringProgress, options: DockSpringPlayOptions): void {
++        options.onFrame(active.value, active.velocity);
++        if (active.settled) {
++            options.onSettle?.();
++            if (spring === active) dispose();
++        }
++    }
++
++    function step(dt: number): void {
++        if (!hosted || !isLive()) return;
++        const active = spring!;
++        active.tickDt(dt);
++        emit(active, hosted);
++    }
++
+     function retarget(to: number): void {
+         // `set target` re-seats the closed form from the current `(value,
+         // velocity)`, so the mid-flight retarget is continuous by construction.
+@@ -132,5 +177,6 @@ export function useDockSpring(config: DockSpringConfig): DockSpring {
+             return isLive() ? spring!.velocity : 0;
+         },
+         dispose,
++        step,
+     };
+ }
 diff --git a/src/components/dock/index.ts b/src/components/dock/index.ts
 index 29a95047e..5bb95ed5e 100644
 --- a/src/components/dock/index.ts
@@ -1059,10 +1169,10 @@ index 10d2c8e09..d70318c53 100644
     to the `.glass-dock` root; EVERY morph axis (box size, padding, radius, scale,
 diff --git a/tests/components/dock/dock-cluster-spring.spec.ts b/tests/components/dock/dock-cluster-spring.spec.ts
 new file mode 100644
-index 000000000..6147bf8c0
+index 000000000..c9b100db5
 --- /dev/null
 +++ b/tests/components/dock/dock-cluster-spring.spec.ts
-@@ -0,0 +1,109 @@
+@@ -0,0 +1,113 @@
 +// I8-G5 source arm: every spring the cluster mints is handed the DOCK_SPRING constant itself.
 +// C7 (pass 2, challenge 1): the test drives every site that mints one, a join, a width glide,
 +// a pure leave (survivor offsets and a phantom) and an arrival, and asserts each stage minted
@@ -1071,10 +1181,13 @@ index 000000000..6147bf8c0
 +import { h, nextTick, ref } from "vue";
 +import { describe, expect, it, vi } from "vitest";
 +
++// fold-1 resume: and every one is stepped by the cluster's one clock (`clock: "host"`), so a site
++// on its own rAF loop (one frame late, then two at once) fails it too
 +const seen: unknown[] = [];
++const clocks: unknown[] = [];
 +vi.mock("@glass/components/dock/composables/useDockSpring", async (orig) => {
 +    const real = (await orig()) as typeof import("@glass/components/dock/composables/useDockSpring");
-+    return { ...real, useDockSpring: (cfg: never) => { seen.push(cfg); return real.useDockSpring(cfg); } };
++    return { ...real, useDockSpring: (cfg: never, o?: { clock?: string }) => { seen.push(cfg); clocks.push(o?.clock); return real.useDockSpring(cfg, o); } };
 +});
 +
 +/* happy-dom lays nothing out: each member's box comes from its `data-w`, in a row from
@@ -1167,6 +1280,7 @@ index 000000000..6147bf8c0
 +        await stage("arrive (joins, slot)", n, 3);
 +
 +        for (const cfg of seen) expect(cfg).toBe(DOCK_SPRING);
++        clocks.forEach((c, i) => expect(c, `spring ${i}: the cluster's clock`).toBe("host"));
 +        w.unmount();
 +        vi.restoreAllMocks();
 +        vi.unstubAllGlobals();
