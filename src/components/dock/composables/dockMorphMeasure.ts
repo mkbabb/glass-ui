@@ -191,6 +191,7 @@ export function useDockExpandedSize(
     let seatObserver: ResizeObserver | null = null;
     const seatBoxes = new Map<Element, { inline: number; block: number }>();
     let mutations: MutationObserver | null = null;
+    let hostStyle: MutationObserver | null = null;
     let expandedChrome: number | null = null;
     let collapsedChrome: number | null = null;
     let collapsedPx: number | null = null;
@@ -452,6 +453,8 @@ export function useDockExpandedSize(
         seatObserver = null;
         mutations?.disconnect();
         mutations = null;
+        hostStyle?.disconnect();
+        hostStyle = null;
         seatBoxes.clear();
         seatsPublished = "";
         yieldPublished = "";
@@ -484,6 +487,17 @@ export function useDockExpandedSize(
                     });
                 }
             }
+            // A host that loosens the root's own constraint mid-morph (its `style` or
+            // `class`: a larger max size) resizes nothing observed, since the root is held
+            // at its reserved size. The morph reads it on the record, if it moved what
+            // `constraintOf` reads (Q1, a 1-2 px growth across the fit edge).
+            hostStyle = new MutationObserver(() => {
+                // Once the host has moved, the morph already takes every reading, and the
+                // capture's own `--dock-*-px` writes must not re-enter it.
+                if (hostMoved || !restConstraint || !root.hasAttribute("data-morphing")) return;
+                if (constraintOf(root, axis.value) !== restConstraint) capture();
+            });
+            hostStyle.observe(root, { attributes: true, attributeFilter: ["style", "class"] });
         }
         capture();
     }
@@ -508,6 +522,8 @@ export function useDockExpandedSize(
         seatObserver = null;
         mutations?.disconnect();
         mutations = null;
+        hostStyle?.disconnect();
+        hostStyle = null;
         if (typeof window !== "undefined") window.removeEventListener("resize", onResize);
     });
 
