@@ -19,6 +19,7 @@ Ships: band 0 in 10.2.0; bands A to L in 11.0.0.
 | W-0.12 | 0 | F-16 (split: L04-M33, a disease row) | the zero-width morph window decided and built on W-0.8's landed carrier: `.dock-layer--full`'s state rule takes the morph gate or is struck | — |
 | W-0.13 | 0 | — (O-192) | the demo site at glass.babb.dev: CF Pages `glass`, deploy on each published `v*` tag, infra precepts rewritten for glass | — |
 | W-0.7 | 0 | F-68 (split: 10.2.0 relay) | the 10.2.0 cut and the consumer relay | — |
+| W-R.1 | R | — (O-203, O-208) | restraint as 12.0.0: delete gleam, press indent and control overshoot; shadow/blur/radius/gradient budgets; the audit's component findings G2, G4-G9, G11, G12 | — |
 | W-A.1 | A | F-05 | visual harness repair | — |
 | W-A.2 | A | F-01, F-02, F-03, F-06, F-09 | W-REGISTER-COLLAPSE: 40-60 invariants, bites on shipped detectors, #10 sink struck, latches retired | — |
 | W-A.3 | A | F-04 | W-VISUAL-CI: the wired set in CI, both engines | — |
