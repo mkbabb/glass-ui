@@ -96,7 +96,7 @@ code changed in this round.
 |---|---|---|
 | `s1`-`s4` on the round-11 tip 1e0f9d879's src (`red`) | 6/6 RED | 6/6 RED (s4 S1 7.02 px, as c11h) |
 | `s1`-`s4` on the final src | 6/6 (`r3/`, and `s-chromium` before) | 6/6 (`r3/s-webkit`) |
-| whole release spec, final src | 104/104 (`r3/branch-chromium`) | 103/104 (`final/branch-webkit`, load 6-8): `q2` at 1440 timed out in `page.goto`; its re-run is recorded below |
+| whole release spec, final src | 104/104 (`r3/branch-chromium`) | 103/104 (`final/branch-webkit`, load 6-8): `q2` at 1440 timed out in `page.goto`; it passed on the same src in `r2/branch-webkit` (on `208fcf83c`; later commits change no src). A lone `q2` re-run waited over an hour on other sessions' `--exclusive webkit` runs and never started, so it is not banked |
 | critique 10's `p2`, repeated 3 | — | 6/6 (`r3/p2-webkit`, load 7) |
 | g6 `release-10-1-4` / `release-10-1-3` | 23/23 / 60/60 | 15 + 8 skips / 58 + 2 skips (`final/`) |
 | F-4 DataTable cell, repeated 16 | — | 80/80 (`final/f4-webkit`, its five hosts 16 times, load 7.6) |
