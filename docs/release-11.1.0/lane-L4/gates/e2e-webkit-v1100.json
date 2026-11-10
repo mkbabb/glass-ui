@@ -1,0 +1,841 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "docs/release-11.1.0/lane-L4/e2e-webkit.config.ts",
+      "--workers=1"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/docs/release-11.1.0/lane-L4/e2e-webkit.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l4-v1100/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l4-v1100/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "blob-render.spec.ts",
+          "blob-pause-seam.spec.ts",
+          "dark-semantic-contrast.spec.ts",
+          "font-cascade-live.spec.ts",
+          "dock-plate-clearance.spec.ts"
+        ],
+        "timeout": 90000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/docs/release-11.1.0/lane-L4/gates/e2e-webkit-v1100.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npx vite --host localhost --port 7992 --strictPort",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l4-v1100",
+      "url": "http://localhost:7992",
+      "reuseExistingServer": false,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "blob-pause-seam.spec.ts",
+      "file": "blob-pause-seam.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "blob-integration (π lane — the WCAG-2.2.2 pause seam + context bound + README consistency)",
+          "file": "blob-pause-seam.spec.ts",
+          "line": 88,
+          "column": 6,
+          "specs": [
+            {
+              "title": "the DockBackgroundToggle pause seam PARKS the render loop (live rAF-park observation)",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 8824,
+                      "error": {
+                        "message": "Error: after a second DockBackgroundToggle click the blob did NOT resume animating (inter-frame motion 0.008) — resume() did not re-arm the loop\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0.05\u001b[39m\nReceived:   \u001b[31m0.007955576777199826\u001b[39m",
+                        "stack": "Error: after a second DockBackgroundToggle click the blob did NOT resume animating (inter-frame motion 0.008) — resume() did not re-arm the loop\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0.05\u001b[39m\nReceived:   \u001b[31m0.007955576777199826\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l4-v1100/tests-visual/blob-pause-seam.spec.ts:132:11",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l4-v1100/tests-visual/blob-pause-seam.spec.ts",
+                          "column": 11,
+                          "line": 132
+                        },
+                        "snippet": "  130 |             resumedMotion,\n  131 |             `after a second DockBackgroundToggle click the blob did NOT resume animating (inter-frame motion ${resumedMotion.toFixed(3)}) — resume() did not re-arm the loop`,\n> 132 |         ).toBeGreaterThan(0.05);\n      |           ^\n  133 |     });\n  134 |\n  135 |     test(\"the re-cast blob stories hold a BOUNDED number of live WebGL2 contexts\", async ({"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l4-v1100/tests-visual/blob-pause-seam.spec.ts",
+                            "column": 11,
+                            "line": 132
+                          },
+                          "message": "Error: after a second DockBackgroundToggle click the blob did NOT resume animating (inter-frame motion 0.008) — resume() did not re-arm the loop\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0.05\u001b[39m\nReceived:   \u001b[31m0.007955576777199826\u001b[39m\n\n  130 |             resumedMotion,\n  131 |             `after a second DockBackgroundToggle click the blob did NOT resume animating (inter-frame motion ${resumedMotion.toFixed(3)}) — resume() did not re-arm the loop`,\n> 132 |         ).toBeGreaterThan(0.05);\n      |           ^\n  133 |     });\n  134 |\n  135 |     test(\"the re-cast blob stories hold a BOUNDED number of live WebGL2 contexts\", async ({\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l4-v1100/tests-visual/blob-pause-seam.spec.ts:132:11"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-10T02:15:31.995Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/test-results/blob-pause-seam-blob-integ-1fa40--live-rAF-park-observation--webkit/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l4-v1100/tests-visual/blob-pause-seam.spec.ts",
+                        "column": 11,
+                        "line": 132
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "bc3e8071cbf21f46bb54-26673606a66082cd1ff1",
+              "file": "blob-pause-seam.spec.ts",
+              "line": 89,
+              "column": 5
+            },
+            {
+              "title": "the re-cast blob stories hold a BOUNDED number of live WebGL2 contexts",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 978,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-10T02:15:41.474Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "bc3e8071cbf21f46bb54-42ce82c80c180385b144",
+              "file": "blob-pause-seam.spec.ts",
+              "line": 135,
+              "column": 5
+            },
+            {
+              "title": "README-vs-code defineExpose CONSISTENCY — every README 'Exposed' method is on the Blob surface",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-10T02:15:42.631Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "bc3e8071cbf21f46bb54-87895307d760b6dcdf4d",
+              "file": "blob-pause-seam.spec.ts",
+              "line": 167,
+              "column": 5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "blob-render.spec.ts",
+      "file": "blob-render.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "blob-render (π lane — fail-CLOSED, the blob's CLOSING gate)",
+          "file": "blob-render.spec.ts",
+          "line": 525,
+          "column": 6,
+          "specs": [
+            {
+              "title": "blob renders a CONTAINED LIT LIVING droplet on BLOB_CONFIG_DEFAULTS (four-side containment + dome variance + silhouette + field)",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 9669,
+                      "error": {
+                        "message": "Error: blob interior-corner empty fraction 0.448 is below the field floor 0.7 — the canvas reads as a FLAT slab (the body fills the corners), not a contained metaball field\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m0.7\u001b[39m\nReceived:    \u001b[31m0.44775667533081287\u001b[39m",
+                        "stack": "Error: blob interior-corner empty fraction 0.448 is below the field floor 0.7 — the canvas reads as a FLAT slab (the body fills the corners), not a contained metaball field\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m0.7\u001b[39m\nReceived:    \u001b[31m0.44775667533081287\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l4-v1100/tests-visual/blob-render.spec.ts:609:11",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l4-v1100/tests-visual/blob-render.spec.ts",
+                          "column": 11,
+                          "line": 609
+                        },
+                        "snippet": "  607 |             cornerEmpty,\n  608 |             `blob interior-corner empty fraction ${cornerEmpty.toFixed(3)} is below the field floor ${CORNER_EMPTY_MIN} — the canvas reads as a FLAT slab (the body fills the corners), not a contained metaball field`,\n> 609 |         ).toBeGreaterThanOrEqual(CORNER_EMPTY_MIN);\n      |           ^\n  610 |\n  611 |         // 3. FOUR-SIDE CONTAINMENT (AX.W15 F0 + AX.W16 reconciliation) — the BODY is\n  612 |         // contained on EVERY edge (W15 geometry); the orbiting SATELLITE intentionally"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l4-v1100/tests-visual/blob-render.spec.ts",
+                            "column": 11,
+                            "line": 609
+                          },
+                          "message": "Error: blob interior-corner empty fraction 0.448 is below the field floor 0.7 — the canvas reads as a FLAT slab (the body fills the corners), not a contained metaball field\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m0.7\u001b[39m\nReceived:    \u001b[31m0.44775667533081287\u001b[39m\n\n  607 |             cornerEmpty,\n  608 |             `blob interior-corner empty fraction ${cornerEmpty.toFixed(3)} is below the field floor ${CORNER_EMPTY_MIN} — the canvas reads as a FLAT slab (the body fills the corners), not a contained metaball field`,\n> 609 |         ).toBeGreaterThanOrEqual(CORNER_EMPTY_MIN);\n      |           ^\n  610 |\n  611 |         // 3. FOUR-SIDE CONTAINMENT (AX.W15 F0 + AX.W16 reconciliation) — the BODY is\n  612 |         // contained on EVERY edge (W15 geometry); the orbiting SATELLITE intentionally\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l4-v1100/tests-visual/blob-render.spec.ts:609:11"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-10T02:15:42.646Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/test-results/blob-render-blob-render-π--62597--variance-silhouette-field--webkit/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l4-v1100/tests-visual/blob-render.spec.ts",
+                        "column": 11,
+                        "line": 609
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "1238e1c6916d493c0e7e-d693c0022450c393882f",
+              "file": "blob-render.spec.ts",
+              "line": 526,
+              "column": 5
+            },
+            {
+              "title": "blob LEANS toward a synthetic hover-flick (the wired interaction is legible within the footprint)",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 5383,
+                      "error": {
+                        "message": "Error: blob centroid shift under a rightward hover-flick = -0.0021 (rest 0.477 → lean 0.475); it must move ≥ 0.012 toward the pointer — the wired lean/pseudopod is INVISIBLE (no contained silhouette to deform legibly)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m0.012\u001b[39m\nReceived:    \u001b[31m-0.002054247797231401\u001b[39m",
+                        "stack": "Error: blob centroid shift under a rightward hover-flick = -0.0021 (rest 0.477 → lean 0.475); it must move ≥ 0.012 toward the pointer — the wired lean/pseudopod is INVISIBLE (no contained silhouette to deform legibly)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m0.012\u001b[39m\nReceived:    \u001b[31m-0.002054247797231401\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l4-v1100/tests-visual/blob-render.spec.ts:700:11",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l4-v1100/tests-visual/blob-render.spec.ts",
+                          "column": 11,
+                          "line": 700
+                        },
+                        "snippet": "  698 |             shift,\n  699 |             `blob centroid shift under a rightward hover-flick = ${shift.toFixed(4)} (rest ${restCx.toFixed(3)} → lean ${leanCx.toFixed(3)}); it must move ≥ ${CENTROID_SHIFT_MIN} toward the pointer — the wired lean/pseudopod is INVISIBLE (no contained silhouette to deform legibly)`,\n> 700 |         ).toBeGreaterThanOrEqual(CENTROID_SHIFT_MIN);\n      |           ^\n  701 |         expect(\n  702 |             shift,\n  703 |             `blob centroid shift under a rightward hover-flick = ${shift.toFixed(4)} exceeds the calm-lean ceiling ${CENTROID_SHIFT_MAX} — the creature LURCHES toward the cursor (the \"far too dramatic\" lunge; the calm lean measures ≈ 0.042, a lunge toward ≈ 0.11 reds)`,"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l4-v1100/tests-visual/blob-render.spec.ts",
+                            "column": 11,
+                            "line": 700
+                          },
+                          "message": "Error: blob centroid shift under a rightward hover-flick = -0.0021 (rest 0.477 → lean 0.475); it must move ≥ 0.012 toward the pointer — the wired lean/pseudopod is INVISIBLE (no contained silhouette to deform legibly)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m0.012\u001b[39m\nReceived:    \u001b[31m-0.002054247797231401\u001b[39m\n\n  698 |             shift,\n  699 |             `blob centroid shift under a rightward hover-flick = ${shift.toFixed(4)} (rest ${restCx.toFixed(3)} → lean ${leanCx.toFixed(3)}); it must move ≥ ${CENTROID_SHIFT_MIN} toward the pointer — the wired lean/pseudopod is INVISIBLE (no contained silhouette to deform legibly)`,\n> 700 |         ).toBeGreaterThanOrEqual(CENTROID_SHIFT_MIN);\n      |           ^\n  701 |         expect(\n  702 |             shift,\n  703 |             `blob centroid shift under a rightward hover-flick = ${shift.toFixed(4)} exceeds the calm-lean ceiling ${CENTROID_SHIFT_MAX} — the creature LURCHES toward the cursor (the \"far too dramatic\" lunge; the calm lean measures ≈ 0.042, a lunge toward ≈ 0.11 reds)`,\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l4-v1100/tests-visual/blob-render.spec.ts:700:11"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-10T02:15:52.639Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/test-results/blob-render-blob-render-π--770c2-gible-within-the-footprint--webkit/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l4-v1100/tests-visual/blob-render.spec.ts",
+                        "column": 11,
+                        "line": 700
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "1238e1c6916d493c0e7e-ef4457b27a23632ea9f2",
+              "file": "blob-render.spec.ts",
+              "line": 660,
+              "column": 5
+            },
+            {
+              "title": "EVERY grid blob paints visibly against the page background in BOTH light and dark (the var(--primary)-dark-wash guard)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 9586,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-10T02:15:58.462Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "1238e1c6916d493c0e7e-b86102cf95bf9ae83fef",
+              "file": "blob-render.spec.ts",
+              "line": 707,
+              "column": 5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "dark-semantic-contrast.spec.ts",
+      "file": "dark-semantic-contrast.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "dark-semantic-contrast (π lane — the dark --destructive ink readback, fail-CLOSED)",
+          "file": "dark-semantic-contrast.spec.ts",
+          "line": 195,
+          "column": 6,
+          "specs": [
+            {
+              "title": "destructive Alert title clears the 4.6:1 ink floor under .dark @ mobile",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1579,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-10T02:16:08.197Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "105902f7e9ab759996a5-788ac61244aa22901936",
+              "file": "dark-semantic-contrast.spec.ts",
+              "line": 197,
+              "column": 9
+            },
+            {
+              "title": "destructive Alert title clears the 4.6:1 ink floor under .dark @ desktop",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1584,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-10T02:16:09.782Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "105902f7e9ab759996a5-f620d50415d1b7306199",
+              "file": "dark-semantic-contrast.spec.ts",
+              "line": 197,
+              "column": 9
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "dock-plate-clearance.spec.ts",
+      "file": "dock-plate-clearance.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "plate clearance — sidebar-vertical (light)",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 210,
+                  "error": {
+                    "message": "Error: page.goto: Could not connect to the server.\nCall log:\n\u001b[2m  - navigating to \"http://localhost:5199/dock/overview\", waiting until \"networkidle\"\u001b[22m\n",
+                    "stack": "Error: page.goto: Could not connect to the server.\nCall log:\n\u001b[2m  - navigating to \"http://localhost:5199/dock/overview\", waiting until \"networkidle\"\u001b[22m\n\n    at goto (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l4-v1100/tests-visual/dock-plate-clearance.spec.ts:38:16)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l4-v1100/tests-visual/dock-plate-clearance.spec.ts:176:19",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l4-v1100/tests-visual/dock-plate-clearance.spec.ts",
+                      "column": 16,
+                      "line": 38
+                    },
+                    "snippet": "  36 |\n  37 | async function goto(page: Page, route: string) {\n> 38 |     await page.goto(BASE + route, { waitUntil: \"networkidle\" });\n     |                ^\n  39 |     await page.waitForTimeout(450);\n  40 | }\n  41 |"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l4-v1100/tests-visual/dock-plate-clearance.spec.ts",
+                        "column": 16,
+                        "line": 38
+                      },
+                      "message": "Error: page.goto: Could not connect to the server.\nCall log:\n\u001b[2m  - navigating to \"http://localhost:5199/dock/overview\", waiting until \"networkidle\"\u001b[22m\n\n\n  36 |\n  37 | async function goto(page: Page, route: string) {\n> 38 |     await page.goto(BASE + route, { waitUntil: \"networkidle\" });\n     |                ^\n  39 |     await page.waitForTimeout(450);\n  40 | }\n  41 |\n    at goto (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l4-v1100/tests-visual/dock-plate-clearance.spec.ts:38:16)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l4-v1100/tests-visual/dock-plate-clearance.spec.ts:176:19"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:16:11.373Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/test-results/dock-plate-clearance-plate-e898a-e-—-sidebar-vertical-light--webkit/error-context.md"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/test-results/dock-plate-clearance-plate-e898a-e-—-sidebar-vertical-light--webkit/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l4-v1100/tests-visual/dock-plate-clearance.spec.ts",
+                    "column": 16,
+                    "line": 38
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "ff679c7a1d0ebf803f58-ffa996af8f1ec635d6eb",
+          "file": "dock-plate-clearance.spec.ts",
+          "line": 174,
+          "column": 9
+        },
+        {
+          "title": "plate clearance — sidebar-vertical (dark)",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 340,
+                  "error": {
+                    "message": "Error: page.goto: Could not connect to the server.\nCall log:\n\u001b[2m  - navigating to \"http://localhost:5199/dock/overview\", waiting until \"networkidle\"\u001b[22m\n",
+                    "stack": "Error: page.goto: Could not connect to the server.\nCall log:\n\u001b[2m  - navigating to \"http://localhost:5199/dock/overview\", waiting until \"networkidle\"\u001b[22m\n\n    at goto (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l4-v1100/tests-visual/dock-plate-clearance.spec.ts:38:16)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l4-v1100/tests-visual/dock-plate-clearance.spec.ts:176:19",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l4-v1100/tests-visual/dock-plate-clearance.spec.ts",
+                      "column": 16,
+                      "line": 38
+                    },
+                    "snippet": "  36 |\n  37 | async function goto(page: Page, route: string) {\n> 38 |     await page.goto(BASE + route, { waitUntil: \"networkidle\" });\n     |                ^\n  39 |     await page.waitForTimeout(450);\n  40 | }\n  41 |"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l4-v1100/tests-visual/dock-plate-clearance.spec.ts",
+                        "column": 16,
+                        "line": 38
+                      },
+                      "message": "Error: page.goto: Could not connect to the server.\nCall log:\n\u001b[2m  - navigating to \"http://localhost:5199/dock/overview\", waiting until \"networkidle\"\u001b[22m\n\n\n  36 |\n  37 | async function goto(page: Page, route: string) {\n> 38 |     await page.goto(BASE + route, { waitUntil: \"networkidle\" });\n     |                ^\n  39 |     await page.waitForTimeout(450);\n  40 | }\n  41 |\n    at goto (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l4-v1100/tests-visual/dock-plate-clearance.spec.ts:38:16)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l4-v1100/tests-visual/dock-plate-clearance.spec.ts:176:19"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:16:11.889Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/test-results/dock-plate-clearance-plate-a45e2-ce-—-sidebar-vertical-dark--webkit/error-context.md"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/test-results/dock-plate-clearance-plate-a45e2-ce-—-sidebar-vertical-dark--webkit/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l4-v1100/tests-visual/dock-plate-clearance.spec.ts",
+                    "column": 16,
+                    "line": 38
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "ff679c7a1d0ebf803f58-a661a1e70b2b56bc87fe",
+          "file": "dock-plate-clearance.spec.ts",
+          "line": 174,
+          "column": 9
+        },
+        {
+          "title": "plate clearance — bottom-horizontal (light)",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 351,
+                  "error": {
+                    "message": "Error: page.goto: Could not connect to the server.\nCall log:\n\u001b[2m  - navigating to \"http://localhost:5199/dock/overview\", waiting until \"networkidle\"\u001b[22m\n",
+                    "stack": "Error: page.goto: Could not connect to the server.\nCall log:\n\u001b[2m  - navigating to \"http://localhost:5199/dock/overview\", waiting until \"networkidle\"\u001b[22m\n\n    at goto (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l4-v1100/tests-visual/dock-plate-clearance.spec.ts:38:16)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l4-v1100/tests-visual/dock-plate-clearance.spec.ts:176:19",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l4-v1100/tests-visual/dock-plate-clearance.spec.ts",
+                      "column": 16,
+                      "line": 38
+                    },
+                    "snippet": "  36 |\n  37 | async function goto(page: Page, route: string) {\n> 38 |     await page.goto(BASE + route, { waitUntil: \"networkidle\" });\n     |                ^\n  39 |     await page.waitForTimeout(450);\n  40 | }\n  41 |"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l4-v1100/tests-visual/dock-plate-clearance.spec.ts",
+                        "column": 16,
+                        "line": 38
+                      },
+                      "message": "Error: page.goto: Could not connect to the server.\nCall log:\n\u001b[2m  - navigating to \"http://localhost:5199/dock/overview\", waiting until \"networkidle\"\u001b[22m\n\n\n  36 |\n  37 | async function goto(page: Page, route: string) {\n> 38 |     await page.goto(BASE + route, { waitUntil: \"networkidle\" });\n     |                ^\n  39 |     await page.waitForTimeout(450);\n  40 | }\n  41 |\n    at goto (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l4-v1100/tests-visual/dock-plate-clearance.spec.ts:38:16)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l4-v1100/tests-visual/dock-plate-clearance.spec.ts:176:19"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:16:12.681Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/test-results/dock-plate-clearance-plate-0270e--—-bottom-horizontal-light--webkit/error-context.md"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/test-results/dock-plate-clearance-plate-0270e--—-bottom-horizontal-light--webkit/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l4-v1100/tests-visual/dock-plate-clearance.spec.ts",
+                    "column": 16,
+                    "line": 38
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "ff679c7a1d0ebf803f58-867b6978e60039c25914",
+          "file": "dock-plate-clearance.spec.ts",
+          "line": 174,
+          "column": 9
+        },
+        {
+          "title": "plate clearance — bottom-horizontal (dark)",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 6,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 351,
+                  "error": {
+                    "message": "Error: page.goto: Could not connect to the server.\nCall log:\n\u001b[2m  - navigating to \"http://localhost:5199/dock/overview\", waiting until \"networkidle\"\u001b[22m\n",
+                    "stack": "Error: page.goto: Could not connect to the server.\nCall log:\n\u001b[2m  - navigating to \"http://localhost:5199/dock/overview\", waiting until \"networkidle\"\u001b[22m\n\n    at goto (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l4-v1100/tests-visual/dock-plate-clearance.spec.ts:38:16)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l4-v1100/tests-visual/dock-plate-clearance.spec.ts:176:19",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l4-v1100/tests-visual/dock-plate-clearance.spec.ts",
+                      "column": 16,
+                      "line": 38
+                    },
+                    "snippet": "  36 |\n  37 | async function goto(page: Page, route: string) {\n> 38 |     await page.goto(BASE + route, { waitUntil: \"networkidle\" });\n     |                ^\n  39 |     await page.waitForTimeout(450);\n  40 | }\n  41 |"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l4-v1100/tests-visual/dock-plate-clearance.spec.ts",
+                        "column": 16,
+                        "line": 38
+                      },
+                      "message": "Error: page.goto: Could not connect to the server.\nCall log:\n\u001b[2m  - navigating to \"http://localhost:5199/dock/overview\", waiting until \"networkidle\"\u001b[22m\n\n\n  36 |\n  37 | async function goto(page: Page, route: string) {\n> 38 |     await page.goto(BASE + route, { waitUntil: \"networkidle\" });\n     |                ^\n  39 |     await page.waitForTimeout(450);\n  40 | }\n  41 |\n    at goto (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l4-v1100/tests-visual/dock-plate-clearance.spec.ts:38:16)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l4-v1100/tests-visual/dock-plate-clearance.spec.ts:176:19"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T02:16:13.500Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/test-results/dock-plate-clearance-plate-0ad3d-e-—-bottom-horizontal-dark--webkit/error-context.md"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/test-results/dock-plate-clearance-plate-0ad3d-e-—-bottom-horizontal-dark--webkit/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l4-v1100/tests-visual/dock-plate-clearance.spec.ts",
+                    "column": 16,
+                    "line": 38
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "ff679c7a1d0ebf803f58-c4292794c44bd2df0973",
+          "file": "dock-plate-clearance.spec.ts",
+          "line": 174,
+          "column": 9
+        }
+      ]
+    },
+    {
+      "title": "font-cascade-live.spec.ts",
+      "file": "font-cascade-live.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "font-cascade-live (π lane — DOM-cascade font readback, fail-CLOSED)",
+          "file": "font-cascade-live.spec.ts",
+          "line": 63,
+          "column": 6,
+          "specs": [
+            {
+              "title": "the library default register IS the rendered register (Plus Jakarta text + Fira Code mono)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 7,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 907,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-10T02:16:14.322Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "07d0417b224275570e11-15d627f2b11237246570",
+              "file": "font-cascade-live.spec.ts",
+              "line": 64,
+              "column": 5
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-10T02:15:30.270Z",
+    "duration": 45156.029,
+    "expected": 6,
+    "skipped": 0,
+    "unexpected": 7,
+    "flaky": 0
+  }
+}
