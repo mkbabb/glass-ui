@@ -14,4 +14,5 @@
    - the highlighted pill keeps its concentric inset on all four corners;
    - `elementFromPoint` at each row's right edge minus 12 px hits the row;
    - the gate is RED on v11.0.0.
+   **O-213 (fourier, via value-js-65) is folded into the same bound.** The cap `100vw - 2rem` counts the stable scrollbar gutter as usable width. The owner ruled on 2026-11-10 that `:where(html) { scrollbar-gutter: stable }` stays, so the cap must measure the inline extent the page actually lays out in, never `100vw`. The same cap also kept a consumer-measured anchored panel narrower than its anchor at 390 (352 against 358). The one bound therefore lets a plate follow its anchor's or trigger's width up to the layout viewport less the 1rem gutters. Added gates: at 360 and 390 with a classic scrollbar (the 15 px gutter reserved), no plate passes the layout viewport less 1rem on either side; and an anchored panel 358 px wide is never clamped below its anchor.
 3. **The close:** the full release battery, tag v11.0.1, push, and the CI publish as `latest`. Then tell value-js-63, value-js-65, sci-report-62 (atlas, per the owner's "Inform atlas always") and sci-report-58 (Gregg).
