@@ -27,7 +27,7 @@ const PACE = 'Budget your time: start long stages in the background under guarde
 const MEAS = ' Set measured=false if guarded refused ANY heavy or browser run you needed; a refusal is a stop, so return at once and say what ran.'
 
 phase('Build')
-const LANES = ['L1', 'L2', 'L3', 'L4', 'L5']
+const LANES = ['L1', 'L2', 'L3', 'L4', 'L5'].concat((args && args.extraLanes) || [])
 const built = []
 for (const L of LANES) {
   const b = await retry(() => agent(ID + '\n' + LAW + '\n' + SCOPE + '\nYou are the BUILD seat for lane ' + L + ' on release/11.1.0 in ' + WT + '. Read ' + REL + '/ (the earlier lanes\' records) first, then every INBOUND row and wave addendum your lane names. Build each item at its root (no patch on a symptom), with its witness RED on v11.0.0 and GREEN on the branch in both engines (guarded), run typecheck, build and vitest, add your items to the 11.1.0 CHANGELOG entry, record in ' + REL + '/lane-' + L + '.md (per item: what changed, the files, the witness, its RED and GREEN readings with exit codes, any open gap), and commit. ' + PACE + MEAS + RES('build-1110-' + L), { label: 'build-1110-' + L, phase: 'Build', model: 'opus', schema: REP }))
