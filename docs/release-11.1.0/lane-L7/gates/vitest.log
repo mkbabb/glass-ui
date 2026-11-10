@@ -1,0 +1,34 @@
+
+ RUN  v4.1.10 /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0
+
+ ❯ tests/components/custom/dock/GlassDock.persistent-face.test.ts (12 tests | 1 failed) 4050ms
+     × a fine press on a #persistent-end seat inside the hover dwell never expands the dock 264ms
+(node:45390) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:45435) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:46211) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:46830) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/components/custom/dock/GlassDock.persistent-face.test.ts > a press on a persistent seat is the seat's > a fine press on a #persistent-end seat inside the hover dwell never expands the dock
+AssertionError: expected "vi.fn()" to be called 1 times, but got 0 times
+ ❯ tests/components/custom/dock/GlassDock.persistent-face.test.ts:102:29
+    100|             await wait(HOVER_INTENT_MS + 200);
+    101|             await nextTick();
+    102|             expect(onClick).toHaveBeenCalledTimes(1);
+       |                             ^
+    103|             expect(root.classList.contains("expanded")).toBe(false);
+    104|         });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 276 passed (277)
+      Tests  1 failed | 2560 passed | 10 expected fail | 1 skipped (2572)
+   Start at  16:50:25
+   Duration  68.82s (transform 3.11s, setup 8.06s, import 24.00s, tests 41.67s, environment 34.81s)
+

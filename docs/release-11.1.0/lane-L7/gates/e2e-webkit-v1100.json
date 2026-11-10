@@ -1,0 +1,446 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "docs/release-11.1.0/lane-L7/e2e-webkit.config.ts",
+      "--workers=1"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/docs/release-11.1.0/lane-L7/e2e-webkit.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l5-v1100/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l5-v1100/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "handmark.spec.ts"
+        ],
+        "timeout": 90000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/docs/release-11.1.0/lane-L7/gates/e2e-webkit-v1100.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npx vite --host localhost --port 7984 --strictPort",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l5-v1100",
+      "url": "http://localhost:7984",
+      "reuseExistingServer": false,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "handmark.spec.ts",
+      "file": "handmark.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "the hand voice paints",
+          "file": "handmark.spec.ts",
+          "line": 36,
+          "column": 6,
+          "specs": [
+            {
+              "title": "four gestures over real text (desktop light)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3147,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-10T22:57:54.585Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "211c058018ac3467f998-e7c66281c122c05f37e6",
+              "file": "handmark.spec.ts",
+              "line": 40,
+              "column": 13
+            },
+            {
+              "title": "the band sits under the letterforms and inside its card (desktop light)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2605,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-10T22:57:57.941Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "211c058018ac3467f998-7c76df812de8c84fa960",
+              "file": "handmark.spec.ts",
+              "line": 87,
+              "column": 13
+            },
+            {
+              "title": "four gestures over real text (desktop dark)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2866,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-10T22:58:00.553Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "211c058018ac3467f998-1660be3b99336f81d05a",
+              "file": "handmark.spec.ts",
+              "line": 40,
+              "column": 13
+            },
+            {
+              "title": "the band sits under the letterforms and inside its card (desktop dark)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2682,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-10T22:58:03.423Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "211c058018ac3467f998-c98a01f339ab5f0301d0",
+              "file": "handmark.spec.ts",
+              "line": 87,
+              "column": 13
+            },
+            {
+              "title": "four gestures over real text (mobile light)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2788,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-10T22:58:06.109Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "211c058018ac3467f998-a98bb87fa947dc2a13c6",
+              "file": "handmark.spec.ts",
+              "line": 40,
+              "column": 13
+            },
+            {
+              "title": "the band sits under the letterforms and inside its card (mobile light)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2646,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-10T22:58:08.901Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "211c058018ac3467f998-ea5553f138998482b098",
+              "file": "handmark.spec.ts",
+              "line": 87,
+              "column": 13
+            },
+            {
+              "title": "four gestures over real text (mobile dark)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2862,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-10T22:58:11.552Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "211c058018ac3467f998-e0cda9e65e2f9bd338ac",
+              "file": "handmark.spec.ts",
+              "line": 40,
+              "column": 13
+            },
+            {
+              "title": "the band sits under the letterforms and inside its card (mobile dark)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2641,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-10T22:58:14.420Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "211c058018ac3467f998-fdd915bb6a73a5dca7bd",
+              "file": "handmark.spec.ts",
+              "line": 87,
+              "column": 13
+            },
+            {
+              "title": "the ring reserves the room it spills into",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2505,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-10T22:58:17.068Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "211c058018ac3467f998-6ec28a8b7e6c73d98808",
+              "file": "handmark.spec.ts",
+              "line": 138,
+              "column": 5
+            },
+            {
+              "title": "the mark is whole and solid at rest, and one path per line rect",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2522,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-10T22:58:19.577Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "211c058018ac3467f998-1593cb1aa4174b13a297",
+              "file": "handmark.spec.ts",
+              "line": 168,
+              "column": 5
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-10T22:57:53.003Z",
+    "duration": 29143.275,
+    "expected": 10,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}
