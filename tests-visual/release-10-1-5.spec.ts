@@ -60,6 +60,14 @@
 //   l1  (L1) a run whose overflow vanishes while it is scrolled (to its end, or mid) rests
 //       round: a lifted cap, a viewport resize 390 → 844, and a vertical run's stage grown
 //
+// Critique round 10 (critique-10.md), RED on the round-10 tip 932823b85, GREEN after:
+//   p2  (Q1) a 1-2 px host change across the fit edge mid-expand: no seat steps at the
+//       settle, horizontal and vertical
+//   r1  (Q2) a nested group holding the current seat: no seat paints over another, every
+//       seat's centre hits it, the run scrolls nothing (RED on v10.1.4 as well)
+//   g4  (Q3) the coarse field cell also reads the library's Input (`.field-control`):
+//       it floors at 16px
+//
 // Fix round 10 (inbound-O-186.md, Gregg's sci-report dock), RED on v10.1.4, GREEN after:
 //   q1  (O-186) a fit-content static dock under hover on every control, flat and with a
 //       nested group, 1440 and 390: one rest corner, half the cross extent, no percentage
@@ -267,6 +275,9 @@ test.describe("coarse phone", () => {
         // The `.input-bar` seat and the picker rung keep the 16px no-zoom floor.
         expect(read.bar, `bar keeps the no-zoom floor (${JSON.stringify(read)})`).toBeGreaterThanOrEqual(16);
         expect(read.picker, `picker keeps the no-zoom floor (${JSON.stringify(read)})`).toBeGreaterThanOrEqual(16);
+        // The library's own Input (`.field-control`, as Textarea and NumberField) holds the
+        // same floor (critique 10 Q3: it painted 14px, under iOS Safari's zoom line).
+        expect(read.pill, `the Input keeps the no-zoom floor (${JSON.stringify(read)})`).toBeGreaterThanOrEqual(16);
         for (const field of ["bar", "pill", "picker"] as const) {
             expect(read[field], `${field} type (${JSON.stringify(read)})`).toBeLessThanOrEqual(16);
             expect(
@@ -1894,6 +1905,96 @@ test.describe("critique 9, coarse phone", () => {
 
 p1();
 
+/* critique round 10 (critique-10.md Q1): a host change of 1 or 2 px across the fit edge,
+   mid-expand. Fix 9's 2 px endpoint band held it, so the flag and the reserve moved at
+   the settle and every seat stepped 9-11 px there. RED on the round-10 tip 932823b85,
+   GREEN after. The fit edge is found at rest by a 1 px sweep: the dock's own max inline
+   size (horizontal), its stage's block size (vertical). */
+function p2(): void {
+    test("p2 a 1-2 px host change across the fit edge mid-expand holds every seat at the settle", async ({ page }) => {
+        test.setTimeout(480_000);
+        const coarse = !!test.info().project.use.isMobile;
+        if (!coarse) await page.setViewportSize({ width: 1440, height: 800 });
+        const park = async () => {
+            if (!coarse) await page.mouse.move(2, 790);
+        };
+        const sweep = (vertical: boolean, from: number, to: number) =>
+            page.evaluate(
+                async ({ vertical, from, to }) => {
+                    const dock = document.querySelector<HTMLElement>(".glass-dock")!;
+                    const stage = document.querySelector<HTMLElement>('[data-witness="stage"]')!;
+                    let edge = Number.NaN;
+                    for (let m = from; m >= to; m -= 1) {
+                        if (vertical) stage.style.blockSize = `${m}px`;
+                        else dock.style.maxInlineSize = `${m}px`;
+                        await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+                        await new Promise((r) => setTimeout(r, 60));
+                        if (!dock.hasAttribute("data-run-fits")) break;
+                        edge = m;
+                    }
+                    return edge;
+                },
+                { vertical, from, to },
+            );
+        const H = `scene=dock&collapse=closed&kinds=${encodeURIComponent("tab:Home,icon,icon,icon")}`;
+        await open7(page, H);
+        await park();
+        await page.evaluate(() => (window as unknown as { __dock: Dock7 }).__dock.expand());
+        await page.waitForTimeout(1300);
+        const W = await page.evaluate(() => document.querySelector<HTMLElement>(".glass-dock > .dock-plate")!.offsetWidth);
+        const E = await sweep(false, W, W - 60);
+        const V = (h: number) => `scene=dock&collapse=closed&orientation=vertical&stageH=${h}&kinds=icon,icon,icon,icon,icon,icon`;
+        await open7(page, V(600));
+        await park();
+        await page.evaluate(() => (window as unknown as { __dock: Dock7 }).__dock.expand());
+        await page.waitForTimeout(1300);
+        const Ev = await sweep(true, 400, 280);
+        expect(Number.isFinite(E) && Number.isFinite(Ev), `fit edges found (E ${E}, Ev ${Ev})`).toBe(true);
+        const cells: [string, string, number, number][] = [
+            ...([[E, E - 1], [E, E - 2], [E - 1, E + 1], [E - 2, E]] as const).map(
+                ([from, to]) => [`h ${from}->${to}`, H, to, from] as [string, string, number, number],
+            ),
+            ...([[Ev, Ev - 1], [Ev - 1, Ev + 1], [Ev + 6, Ev + 4]] as const).map(
+                ([from, to]) => [`v ${from}->${to}`, V(from), to, 0] as [string, string, number, number],
+            ),
+        ];
+        const bad: unknown[] = [];
+        // A horizontal cell's starting clamp is written by the page, not the harness's
+        // `?maxw=`: the harness binds that as the dock's style, which its re-render on the
+        // expand would write back over the host's change.
+        for (const [cell, query, to, from] of cells) {
+            const vertical = cell.startsWith("v");
+            for (const at of [110, 300]) {
+                await open7(page, query);
+                await park();
+                if (from) {
+                    await page.evaluate((m) => {
+                        document.querySelector<HTMLElement>(".glass-dock")!.style.maxInlineSize = `${m}px`;
+                    }, from);
+                    await settle(page, 300);
+                }
+                const fr = await hostResizeFrames(page, at, `${vertical ? "stage" : "maxw"}:${to}`, 1800);
+                const last = fr.findLastIndex((f) => f.morphing);
+                expect(last, `${cell}@${at}: the expand morphed and settled`).toBeGreaterThan(0);
+                expect(last).toBeLessThan(fr.length - 1);
+                const [a, b] = [fr[last]!, fr[last + 1]!];
+                const step = Math.abs(b.s1 - a.s1);
+                if (step > 0.5) bad.push({ cell, at, edge: "settle", step: +step.toFixed(2), a, b });
+                const end = fr.at(-1)!;
+                if (end.fits === end.over) bad.push({ cell, at, edge: "rest", flag: end.fits, overflows: end.over });
+            }
+        }
+        expect(bad, "seat steps over 0.5 px at the settle, or a rest flag that is not the layout's truth").toEqual([]);
+    });
+}
+
+test.describe("critique 10, coarse phone", () => {
+    test.use({ hasTouch: true, isMobile: true, viewport: { width: 390, height: 844 } });
+    p2();
+});
+
+p2();
+
 /* ── q · O-186 and O-187 (Gregg, sci-report): a fit-content static dock under hover,
    and a consumer's nested `.dock-run` group ─────────────────────────────────────── */
 
@@ -1988,6 +2089,60 @@ for (const width of [1440, 390]) {
         expect(named[0], "it is the dock's active run").toMatch(/\bdock-layer--full\b.*\bis-active\b|\bis-active\b.*\bdock-layer--full\b/);
     });
 }
+
+/* ── r · critique round 10 (critique-10.md Q2): a consumer's nested group that holds the
+   current seat is plain markup, not the run's open seat ─────────────────────────────
+   RED on the round-10 tip 932823b85 (the group is sized as one open seat and, no longer
+   a scroll container, paints its tabs over the dock's seats) and on v10.1.4 (the group
+   scrolls its tabs inside one open seat, so a tab's centre hits nothing). */
+function r1(width: number): void {
+    test(`r1 Q2 at ${width}: a nested group holding the current seat paints every seat clear of the others, and the run's flag is its layout`, async ({
+        page,
+    }) => {
+        await page.setViewportSize({ width, height: 800 });
+        const kinds = width >= 1024
+            ? "tab:Overview,tab:Methods,tab:Results,icon,icon"
+            : "tab:Data,tab:Notes,icon,icon";
+        const bad: unknown[] = [];
+        for (const current of [1, 2]) {
+            await open(page, `scene=seats&nest=1&current=${current}&kinds=${encodeURIComponent(kinds)}`);
+            await pointerOff(page);
+            await settle(page, 300);
+            const read = await page.evaluate(() => {
+                const dock = document.querySelector<HTMLElement>(".glass-dock")!;
+                const run = dock.querySelector<HTMLElement>(".dock-layers > .dock-run.is-active")!;
+                const seats = [...dock.querySelectorAll<HTMLElement>('[data-witness^="S"]')];
+                const boxes = seats.map((s) => s.getBoundingClientRect());
+                const overlaps: string[] = [];
+                for (let i = 0; i < seats.length; i += 1)
+                    for (let j = i + 1; j < seats.length; j += 1) {
+                        const a = boxes[i]!, b = boxes[j]!;
+                        const main = Math.min(a.right, b.right) - Math.max(a.left, b.left);
+                        const cross = Math.min(a.bottom, b.bottom) - Math.max(a.top, b.top);
+                        if (main > 1 && cross > 1) overlaps.push(`${seats[i]!.dataset.witness}/${seats[j]!.dataset.witness} ${main.toFixed(1)}`);
+                    }
+                const misses = seats.flatMap((s, i) => {
+                    const b = boxes[i]!;
+                    const hit = document.elementFromPoint(b.left + b.width / 2, b.top + b.height / 2);
+                    return hit && s.contains(hit) ? [] : [`${s.dataset.witness} hits ${hit?.className ?? "nothing"}`];
+                });
+                return { overlaps, misses, fits: dock.hasAttribute("data-run-fits"), sw: run.scrollWidth, cw: run.clientWidth };
+            });
+            const cell = `${width} current=${current}`;
+            if (read.overlaps.length || read.misses.length) bad.push({ cell, overlaps: read.overlaps, misses: read.misses });
+            if (read.fits !== read.sw <= read.cw) bad.push({ cell, flag: read.fits, sw: read.sw, cw: read.cw });
+            if (read.sw > read.cw) bad.push({ cell, scrolls: [read.sw, read.cw] });
+        }
+        expect(bad, "seats that paint over each other or whose centre misses them, or a run that scrolls or whose flag is not its layout").toEqual([]);
+    });
+}
+
+r1(1440);
+
+test.describe("fix 10, coarse phone", () => {
+    test.use({ hasTouch: true, isMobile: true, viewport: { width: 390, height: 844 } });
+    r1(390);
+});
 
 /* M3 · O-159 and O-160, read from the source (no browser state). */
 test("m3 O-159 the dock README names every DockProps member and no other", async () => {
