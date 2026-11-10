@@ -42,6 +42,13 @@ It is a major because it deletes public exports. It runs on its own branch, cut 
 - **G11, per-component CSS entry points:** a consumer importing 9 components ships only their rules, not 2,618 rules and 17 backdrop-filter values. Each component subpath gets its own stylesheet entry.
 - **G12, field skins:** one field skin library-wide. NumberField's filled skin and Select's transparent skin become one (C-5, C-18).
 
+**O-215 (fourier; evidence for this wave): the dock forces layout in the boot long task.** In an unminified fourier prod build on glass 10.1.3, at 390 with a 4× CPU throttle, the boot long task is 1471 ms. The dock's code is its largest self-time:
+- the size read (`offsetWidth`/`offsetHeight`): 230 ms;
+- the scroll-port measure (`scrollLeft`/`scrollTop`, wrapped in `setProperty`/`removeProperty`): 109 ms;
+- the backdrop luminance sample (`getBoundingClientRect` plus `document.elementsFromPoint`): 102 ms.
+
+The profile is `~/.dev-logs/feedback-canon/fourier-apply/prof-unmin-morph.json`. The dock reads no layout on first mount. Sizes come from a ResizeObserver entry, and the scroll-port measure and the luminance sample run after first paint. 11.1.0's mount-path work (O-180) moved other readers off the mount, so measure first what is left on 11.1.0. Gate: under a 4× throttle at 390, the dock's forced-layout self-time during mount is at most 16 ms and its first frame shows no visible change.
+
 ## Gates
 
 Every item is RED on 11.1.0 and GREEN on the branch, in Chromium and WebKit at 390 and 1440, light and dark. Each budget is a static check over the built CSS plus a paint check per component in the demo, and each check is shown to bite by a planted violation. The CHANGELOG's 12.0.0 entry lists every deleted export and the plain migration, in consumer prose.
