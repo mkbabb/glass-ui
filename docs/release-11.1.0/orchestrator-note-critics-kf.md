@@ -9,3 +9,13 @@ The evidence is `~/.dev-logs/feedback-canon/kf-apply/probe.mjs`, with results in
 
 3. **G13: Configurator `aside-side="left"` swaps placement but not widths.** At 64rem and up, the template stays `minmax(0,1fr) minmax(aside-min, aside-max)`, while `[data-aside-side="left"]` moves the aside to column 1 and the stage to column 2 (`src/components/configurator/styles.css`, the `@container (inline-size >= 64rem)` flip, confirmed on master). The controls take the 1fr column, and the stage is squeezed into the aside band. Under `[data-aside-side="left"]` the template must reverse to `minmax(aside-min, aside-max) minmax(0,1fr)`, with the gallery dock following. DOM and tab order stay as they are (WCAG 1.3.2). Gate, at 1440 in both engines: with left and with right aside, the stage's width is the larger column and the aside's width lies within [aside-min, aside-max]. It must be RED on v11.0.0. fourier holds its controls-on-the-left canon until this ships.
 4. **G14: SegmentedTabs pill strips are 26–28 px tall under a coarse pointer.** fourier's 390 workspace tabs (Controls / Canvas) show this; the owner's floor is 44 px (C-42). Under `(pointer: coarse)`, every tab's hit target is at least 44 px tall. Raise the strip's own height, not an invisible padding that overlaps neighbours. Gate: at 390 coarse, in both engines, every tab's box height is at least 44 and no two tabs' hit rects overlap. It must be RED on v11.0.0.
+
+## O-211: a DockLayerGroup with no switcher pays for the switcher (daraksha via value-js-63, measured on 11.0.0). Critics raise it, and fix seats cure it.
+
+Sizes are esbuild minified, gzip -9, with vue, reka, vueuse, lucide and keyframes external:
+- GlassDock + DockControl is 16,277 B.
+- Adding DockLayerGroup brings it to 22,121 B, so +5.8 KB. DockLayer and DockSeparator add only about 0.3 KB.
+
+DockLayerGroup's setup always calls `useSelectionGroup` (2,072 B), `useDragMorph` (3,325 B), `useDockCtaReceive` (1,387 B) and `useIntersectionPause` (859 B), even with `:show-switcher="false"`. That breaks daraksha's 120 KB per-route eager budget: NamePage is 125.5 KB and ScripturePage 123.0 KB (PR #5).
+
+The cure: a layer group without a switcher statically pulls in only the crossfade and the faces. The switcher (the tablist, its indicator, the drag-morph and the CTA receive) becomes its own colocated component that the group renders only when it is wanted. That way a consumer that never uses it does not import it, and the public API is unchanged. Gate: a fixture importing GlassDock, DockControl, DockLayerGroup and DockLayer with no switcher bundles to at most GlassDock + DockControl + 1 KB gz. The switcher still works when shown (the existing switcher specs stay GREEN in both engines). It must be RED on v11.0.0.
