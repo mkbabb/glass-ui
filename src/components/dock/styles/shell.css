@@ -379,10 +379,8 @@
        inline one that died with `overflow.css`) go together — there is no half-state
        where one axis feathers and the other caps. */
 
-    /* The paper-grain `::after` MOVED onto `.dock-plate::after`
-       (dock/dock.css): the grain belongs on the glass SURFACE, which is the plate now.
-       Same recipe (the `--paper-clean-texture` overlay + the `.dark` soft-light arm),
-       byte-identical. */
+    /* The paper-grain `::after` lives on `.dock-plate::after` (dock/dock.css): the
+       grain belongs on the glass SURFACE, which is the plate. */
 
     /* Vertical docks grow-to-fit then clamp at `--dock-max-block-size` (the
        contract). At rest a capped column scrolls its OWN block axis

@@ -329,18 +329,14 @@ defineExpose({
            fires: hover propagates to this ancestor when the pointer-events:auto child is
            the hit target. */
         pointer-events: none;
-        /* Layout/style containment isolates Blob as a layout root
-           (NO `paint` containment: the 160%-canvas satellites intentionally
-           overflow the wrapper footprint, and paint containment would clip them).
-           `content-visibility:auto` lets the browser skip Blob
-           when it scrolls offscreen — the substrate's `contentvisibilityautostate-
-           change` listener then parks the RAF. content-visibility applies its own
-           paint/layout containment ONLY while skipped (offscreen, invisible), so
-           the on-screen overflow is preserved. `contain-intrinsic-size:auto`
-           remembers the rendered size across a skip so the box does not collapse. */
+        /* Layout/style containment isolates Blob as a layout root, with NO paint
+           containment: the 160% canvas paints the goo and the satellites past the
+           wrapper box, and paint containment would clip them to it. That rules out
+           `content-visibility: auto`, which turns paint containment on whenever it
+           is set, not only while the box is skipped. The offscreen park is the
+           renderer's intersection observer (`composeIntersectionPark`), which stops
+           the frame loop while the blob is out of view without touching paint. */
         contain: layout style;
-        content-visibility: auto;
-        contain-intrinsic-size: auto none;
         /*  E2, D4 — the GROUNDED gel-dome shadow, NOT the
            hard `5px 5px` near-black cartoon offset-stamp. A lit gel dome SITS on its
            surface: a soft AMBIENT cast (the dome floats a little above) PLUS a tight,

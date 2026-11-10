@@ -178,6 +178,60 @@ A minor release: new things you can opt into, and nothing you need to change.
   turned on the sheet never shears. Sheets with detents grow rather than slide, and do
   not shear.
 
+### Type and material
+
+- **IBM Plex Sans ships with the library.** The upright and italic faces (Latin, every
+  weight from 100 to 700 in one variable file each) are at
+  `@mkbabb/glass-ui/fonts/ibm-plex-sans/`, declared in the new `styles/font-files`
+  entry below. Point your text stack at it and delete any copy you host yourself:
+
+  ```css
+  @import "@mkbabb/glass-ui/styles/font-files";
+
+  :root {
+      --font-stack-text: "IBM Plex Sans", system-ui, sans-serif;
+  }
+  ```
+
+- **Fonts as files.** The new `@mkbabb/glass-ui/styles/font-files` entry declares Plus
+  Jakarta Sans, Fira Code and IBM Plex Sans with each face pointing at its WOFF2 file,
+  instead of carrying about 131 KB of font data inside the CSS. Your bundler copies and
+  hashes the files, and the browser downloads a face only when your text uses it. If
+  your CSS goes through a bundler, import it in place of `styles/fonts`. To land the
+  brand face in the first frame, preload
+  `@mkbabb/glass-ui/fonts/plus-jakarta-sans/plus-jakarta-sans-latin.woff2` (the README
+  shows how with Vite). `styles/fonts` is unchanged and still the right choice if you
+  emit the sheet as it is, for example with a `?url` import, which does not copy the
+  files a sheet points at. If you link the package with `file:` in development, add its
+  `dist` folder to Vite's `server.fs.allow`.
+
+- **The `.dark` class alone decides the theme.** Before, a page with no `.dark` class on
+  a phone or computer set to dark mode painted some colours from the dark theme and
+  others from the light one. The page root now asks the browser for the light scheme
+  until `.dark` is applied, so the class you set is the theme you get, whatever the
+  system setting. If you want to follow the system, set the class from
+  `prefers-color-scheme`; the pre-paint script and `useGlobalDark` already do this for
+  you.
+
+- **The shadow tokens you can rely on are listed.** The README now names every shadow
+  token you can set: `--shadow-color`, the five glass tier shadows and
+  `--glass-shadow-capsule`, the three `--glass-under-shadow-*` casts, the cartoon
+  stamps, the two dock shadows and `--shadow-dock-override`. Each is stable within a
+  major version.
+
+- **The dock's paper grain is no longer a page's largest paint.** Chrome and Safari
+  counted the grain on the dock's plate as page content, because it was an image, so on
+  a page with little else the grain became the Largest Contentful Paint and its timing
+  followed the dock's entrance. The grain is now a fine dot field drawn with gradients,
+  which browsers never count as content, at the same faint strength
+  (`--glass-grain-opacity`). If you set `--glass-grain-opacity: 0` on the dock for this
+  reason, you can remove that line.
+
+- **The blob's goo reaches past its box.** `Blob` no longer clips its own painting to its
+  layout box, so the goo and the satellites that orbit wide paint fully into the space
+  around it, as they were drawn to. A blob scrolled out of view still stops drawing
+  entirely.
+
 ## 11.0.0 — 2026-11-09
 
 A major release. It brings in everything from 10.1.3 and 10.1.4 below, and adds a

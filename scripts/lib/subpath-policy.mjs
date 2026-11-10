@@ -217,6 +217,9 @@ export const CSS_FONT_EXPORTS = {
     // not worth its wave + gate + manifest + two exports. The `./styles` union
     // stays the one byte-complete entry (a splitter consumer folds onto it).
     "./styles/fonts": "./dist/styles/fonts.css",
+    // The same brand faces plus IBM Plex Sans, each `url()` pointing at its woff2 file
+    // under `./fonts/*` (vite.style-fold.ts `linkFonts`): no font bytes in the CSS.
+    "./styles/font-files": "./dist/styles/font-files.css",
     // Q060 / ATLAS-N C4 — Tailwind v4 registration only: the @theme aliases
     // and dark variant, without the component cascade or resolved base tokens.
     "./styles/theme": "./dist/styles/theme.css",

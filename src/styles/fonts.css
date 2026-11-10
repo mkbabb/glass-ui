@@ -1,71 +1,23 @@
 /*
- * fonts.css — payload-bearing @font-face declarations (OFL woff2 faces)
+ * fonts.css — the brand faces (Plus Jakarta Sans, Fira Code), declared once.
  *
- * AM- (entry-path weight split) — these are the ONLY @font-face rules
- * that carry a font binary. At publish time the build plugin
- * (vite.config.ts → publishStyleAssets) base64-inlines each
- * `url("@mkbabb/glass-ui/fonts/<family>/<face>.woff2")` into a
- * `data:font/woff2;base64,…` URI sourced from `src/fonts/`. That payload
- * is ~99 KB gzipped — over half of the entire `./styles` critical CSS
- * weight.
+ * Two deliveries, one record:
  *
- * This file is DELIBERATELY NOT `@import`ed by `styles/index.css`. The
- * critical first-paint entry path (`@mkbabb/glass-ui/styles`) therefore no
- * longer carries the font binary. Consumers import the faces once,
- * separately and off the critical path:
+ *   `@mkbabb/glass-ui/styles/fonts` (dist/styles/fonts.css) — this sheet with
+ *   every face inlined at build as a `data:font/woff2;base64,…` URL. It is
+ *   self-contained, so it works however a consumer emits it, including a Vite
+ *   `?url` import or a plugin that copies the sheet verbatim, neither of which
+ *   follows a `url()`. It costs about 131 KB of CSS.
  *
- *   @import "@mkbabb/glass-ui/styles";        (critical — no font payload)
- *   @import "@mkbabb/glass-ui/styles/fonts";  (font corpus, loaded once)
+ *   `@mkbabb/glass-ui/styles/font-files` (dist/styles/font-files.css) — these
+ *   faces and IBM Plex Sans with each `url()` pointing at the woff2 file shipped
+ *   under `dist/fonts/` (font-files.css). A consumer that `@import`s it through a
+ *   bundler pays no font bytes in its CSS, and the browser fetches a face only
+ *   when it is used.
  *
- * The calibrated `local()` fallback faces (San Francisco / Segoe UI /
- * Roboto / Arial for the sans; SF Mono / Menlo / … for the mono) carry NO
- * payload and remain in `typography.css` on the critical path — they are
- * what paints during the `font-display: optional`/`swap` window, so they
- * are genuinely first-paint critical. The metric overrides on those
- * fallback faces (Capsize-calibrated) reference the exact
- * geometry of the faces declared here, so the split is purely a
- * load-order/weight concern: the cascade is identical once both files load.
- *
- * Contract-v2 (docs/precepts/cross-repo-dev-resolution.md §2.1): this file
- * is published into `dist/styles/fonts.css` and is reachable via the
- * `./styles/fonts` exports key → `./dist/styles/fonts.css`. The build
- * plugin walks EVERY `dist/styles/*.css` (not just index's transitive
- * closure), so the inline rewrite applies here exactly as it did when these
- * faces lived in typography.css. No `url()` resolves out of `dist/`.
- *
- * AM--δ separate-files refinement — DEFERRED (base64 KEPT). The -close
- * audit proposed de-base64ing THIS file to dist-relative
- * `url("../fonts/<face>.woff2")` (referencing the already-shipped
- * `dist/fonts/*` woff2 via the `./fonts/*` export), so the browser would
- * fetch only the USED faces — unicode-range-deferring the ~35 KB latin-ext
- * pair + gaining per-face HTTP caching. That refinement is STRUCTURALLY
- * BLOCKED by the consumer's font-delivery idiom, verified at AM--δ:
- *
- *   a consumer loads this file via a Vite `?url` import
- *   (`import fontsHref from "@mkbabb/glass-ui/styles/fonts?url"`), which
- *   emits fonts.css VERBATIM as a content-hashed asset into the consumer's
- *   OWN `dist/assets/fonts-<hash>.css` and injects it as an async `<link>`.
- *   `?url` does NOT parse the CSS or follow its `url()` refs — so the
- *   referenced woff2 are NEVER copied across the package boundary into the
- *   consumer's dist (confirmed: zero `*.woff2` in the consumer dist). A
- *   dist-relative `url("../fonts/…")` inside the emitted
- *   `/assets/fonts-<hash>.css` would resolve at runtime to `/fonts/…` on
- *   the CONSUMER's origin, which has no such file → 404 on every face,
- *   broken fonts. (This is the same symlink-realpath axis that defeated
- *   "Option A" for the publisher in vite.config.ts → publishStyleAssets;
- *   the `?url` consumer path inherits it.) The CSP also gates here:
- *   `font-src 'self' data:` admits the `data:` URI but the dist-relative
- *   file would not be present on `'self'`.
- *
- *   Base64 keeps the face request layer entirely self-contained: the woff2
- *   travel INSIDE the emitted CSS, so the async `<link>` is the only
- *   network fetch and it works regardless of how the consumer re-emits the
- *   file. The unicode-range split below is preserved either way — it still
- *   defers latin-ext glyph SHAPING — but with base64 the latin-ext bytes
- *   ship in the (once-cached, off-critical-path) CSS rather than as a lazy
- *   separate request. Working fonts > the marginal lazy-fetch win. Revisit
- *   only if a consumer adopts a delivery that DOES bundle/copy `url()`
- *   targets across the boundary (e.g. a real `@import` of the dist file).
+ * Neither is `@import`ed by `styles/index.css`, so the critical entry carries no
+ * font payload. The calibrated `local()` fallback faces live in typography.css on
+ * the critical path; they paint during the load window.
  */
 
 /* ═══════════════════════════════════════════════
