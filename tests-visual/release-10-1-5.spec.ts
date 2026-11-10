@@ -1398,8 +1398,7 @@ function m1(): void {
     }
 }
 
-/** M2: a vertical run whose seats fit, with a whole ring's room at each end (O-201), has
- * nothing to scroll; the flag says so too. */
+/** M2: a vertical run whose seats fit has nothing to scroll; the flag says so too. */
 function m2(): void {
     test("m2 a vertical run whose seats fit scrolls nothing, across the fit edge", async ({ page }) => {
         test.setTimeout(240_000);
@@ -1414,12 +1413,10 @@ function m2(): void {
                 const run = dock.querySelector<HTMLElement>(".dock-run")!;
                 const k = [...run.children] as HTMLElement[];
                 const span = k.at(-1)!.offsetTop + k.at(-1)!.offsetHeight - k[0]!.offsetTop;
-                const ring = parseFloat(getComputedStyle(dock).getPropertyValue("--dock-ring-reserve"));
-                return { fits: dock.hasAttribute("data-run-fits"), sh: run.scrollHeight, ch: run.clientHeight, span, ring };
+                return { fits: dock.hasAttribute("data-run-fits"), sh: run.scrollHeight, ch: run.clientHeight, span };
             });
-            const room = r.span + 2 * r.ring <= r.ch;
-            if (room) fitted += 1;
-            if ((r.fits || room) && r.sh > r.ch) bad.push({ stageH, ...r });
+            if (r.span <= r.ch) fitted += 1;
+            if ((r.fits || r.span <= r.ch) && r.sh > r.ch) bad.push({ stageH, ...r });
         }
         expect(fitted, "the sweep crosses the fit edge").toBeGreaterThan(2);
         expect(bad, "no row whose seats fit (or flagged fits) scrolls").toEqual([]);
@@ -2238,10 +2235,17 @@ function s1(width: number): void {
         const rest = await runRead(page);
         const run = rest.runs.find((r) => r.active)!;
         if (!rest.fits || run.sw !== run.cw || !rest.round) bad.push({ cell: "open, narrow face", ...rest });
-        const box = (await page.locator(".dock-layers > .dock-run.is-active").boundingBox())!;
-        await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
-        await page.mouse.wheel(240, 0);
-        await settle(page, 600);
+        // A wheel where the pointer hovers (mobile WebKit has none), and a scroll write in every engine.
+        if (await hovers(page)) {
+            const box = (await page.locator(".dock-layers > .dock-run.is-active").boundingBox())!;
+            await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
+            await page.mouse.wheel(240, 0);
+            await settle(page, 600);
+        }
+        await page.evaluate(() => {
+            document.querySelector<HTMLElement>(".dock-layers > .dock-run.is-active")!.scrollLeft = 200;
+        });
+        await settle(page, 300);
         const wheeled = await runRead(page);
         if (wheeled.runs.find((r) => r.active)!.sl !== 0) bad.push({ cell: "open, narrow face, after a wheel", ...wheeled });
         expect(bad, "a collapsed dock whose plate is not round or whose run scrolls, or a fitting run that scrolls a hidden face").toEqual([]);

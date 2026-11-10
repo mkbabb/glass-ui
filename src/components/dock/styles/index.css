@@ -206,8 +206,8 @@
 
 /* The ring's outer extent, registered for the same reason as the pitch: the run's fit
    reading (`publishYield`, dockMorphMeasure.ts) reads it through `getComputedStyle` as
-   a length, the floor every yielded reserve keeps, so a fitting run never clips a
-   focused seat's ring (O-201). Registering it moves no value. */
+   a length, the floor a horizontal run's yielded reserves keep, so a fitting run never
+   clips a focused seat's ring (O-201). Registering it moves no value. */
 @property --dock-ring-reserve {
     syntax: "<length>";
     inherits: true;

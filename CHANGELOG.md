@@ -43,9 +43,10 @@ measured property, `--dock-plate-cross-px`.
 - **A fitting run keeps a whole ring's room at each end (O-201).** The run's reserves
   yield to the room its seats leave, so a dock a few pixels short of its content has
   nothing to scroll. They yielded down to zero, which cut a focused first or last seat's
-  ring by up to 4 px at the fit edge. `data-run-fits` is now set only while the seats
-  leave at least `--dock-ring-reserve` at each end; under that the run keeps its
-  reserves, scrolls them, and the cap is cut. `--dock-ring-reserve` is now a registered
+  ring by up to 4 px at the fit edge. On a horizontal run `data-run-fits` is now set only
+  while the seats leave at least `--dock-ring-reserve` at each end; under that the run
+  keeps its reserves, scrolls them, and the cap is cut. A vertical run keeps the yield to
+  half the room its seats leave. `--dock-ring-reserve` is now a registered
   `<length>`; its value does not move.
 
 - **A disclosure trigger's keyboard ring is the house outline (O-207).** The

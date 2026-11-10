@@ -405,7 +405,8 @@
        seats overflow keeps both reserves whole and scrolls them. A yielded reserve never
        falls under the ring's reach (`--dock-ring-reserve`): the flag is set only while
        the seats leave a whole ring's room at each end, so no fitting run clips a focused
-       seat's ring (O-201). Under that room the run does not fit and the cap says so. The boxes' declared
+       seat's ring (O-201). Under that room the run does not fit, the spacer boxes scroll
+       in every engine, and the cap says so. The boxes' declared
        size is the reserve in either state, so the dock's own content size never reads
        the yield. */
     .glass-dock {

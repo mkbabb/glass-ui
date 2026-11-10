@@ -275,8 +275,8 @@ export function useDockExpandedSize(
 
     /*
      * WHETHER THE RUN'S SEATS FIT ITS PORT, `data-run-fits` on the root: present when
-     * the seats' span along the run's scroll axis, plus a ring's room at each end, is no
-     * longer than the port. It is the
+     * the seats' span along the run's scroll axis (plus a ring's room at each end on a
+     * horizontal run) is no longer than the port. It is the
      * one source of record for "the run hides nothing", and run.css reads it twice.
      * On a horizontal run it sets `--dock-run-yield` to 1 (THE RESERVE YIELDS), so the
      * two reserve boxes shrink into the room the seats leave and a run that hides
@@ -323,11 +323,17 @@ export function useDockExpandedSize(
         const client = horizontal ? run.clientWidth : run.clientHeight;
         if (!morphing) runEdge = getSize(run, axis.value) - client;
         const port = restPort ?? client;
-        // The seats fit only with a whole ring's room at each end (O-201): a yielded
-        // reserve never falls under `--dock-ring-reserve`, so a fitting run never clips a
-        // focused seat's ring. Under that room the run does not fit, keeps its reserves
-        // whole and scrolls them, and the cap's cut says so.
-        const ring = parseFloat(getComputedStyle(root).getPropertyValue("--dock-ring-reserve")) || 0;
+        // A horizontal run's seats fit only with a whole ring's room at each end (O-201):
+        // a yielded reserve never falls under `--dock-ring-reserve`, so a fitting run
+        // never clips a focused seat's ring. Under that room the run does not fit, keeps
+        // its reserves whole and scrolls them (its trailing reserve is a box, run.css),
+        // and the cap's cut says so. A vertical run keeps its block-end reserve as
+        // padding, which WebKit counts as scrollable overflow only once the seats pass
+        // it, so under that room it could neither scroll nor show the ring; it keeps the
+        // yield to half the room the seats leave.
+        const ring = horizontal
+            ? parseFloat(getComputedStyle(root).getPropertyValue("--dock-ring-reserve")) || 0
+            : 0;
         const fits = end > start && end - start + 2 * ring <= port;
         // The vertical reserve yields as padding (run.css THE VERTICAL RESERVE YIELDS
         // TOO): half the room the seats leave in the port. The port is the run's padding
