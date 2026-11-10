@@ -36,6 +36,18 @@
         will-change: opacity;
     }
 
+    /* AN IDLE FACE ADDS NO SCROLLABLE OVERFLOW (O-205). A face that is neither active nor
+       leaving paints nothing (opacity 0), but its row is `max-content` inside a box the
+       active face sizes, and an absolute box's overflow counts toward the run's
+       scrollable overflow: a fitting run then scrolled a wider hidden face's width.
+       `overflow: clip` keeps the idle face's overflow inside its own box, and it makes
+       the face no scroll container. The leaving face is not clipped: its crossfade paint
+       spans the run's port while the plate morphs, and it holds its overflow only
+       for the dissolve. */
+    .dock-crossfade > .dock-face:not(.is-active):not(.is-leaving) {
+        overflow: clip;
+    }
+
     /* ACTIVE — in flow, fully painted AT REST (`opacity: 1`; `--dock-t` is a registered
        `initial-value: 0` property, so a `var(--dock-t, 1)` at-rest read would resolve the
        registered 0, not the fallback — the active pane would vanish). The two-child

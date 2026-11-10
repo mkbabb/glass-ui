@@ -402,7 +402,10 @@
        twin and moves nothing, and the two boxes shrink as one flex pair, equally.
        `--dock-run-yield` is the flex shrink: 1 under `data-run-fits` (the seats fit the
        port, `useDockExpandedSize`, dockMorphMeasure.ts), 0 otherwise, so a run whose
-       seats overflow keeps both reserves whole and scrolls them. The boxes' declared
+       seats overflow keeps both reserves whole and scrolls them. A yielded reserve never
+       falls under the ring's reach (`--dock-ring-reserve`): the flag is set only while
+       the seats leave a whole ring's room at each end, so no fitting run clips a focused
+       seat's ring (O-201). Under that room the run does not fit and the cap says so. The boxes' declared
        size is the reserve in either state, so the dock's own content size never reads
        the yield. */
     .glass-dock {
@@ -674,17 +677,25 @@
     }
 
     /* THE TIMELINE IS NAMED ONLY ON THE RUN THAT PAINTS. A collapsed dock's full pane
-       stays laid out (absolute, inset 0, layers.css) inside the collapsed box and
-       still scrolls, so a timeline on every `.dock-run` would cut the collapsed
-       plate's trailing corners to `--dock-cap-cut` on its circle. The timeline is
-       gated on the pane's own `is-active` (the DOM posture the morph and the measure
-       both read). That alone does not round the collapsed plate: an inactive timeline
-       holds what it last resolved (Chromium keeps the cut of a run collapsed while
-       scrolled), so the collapsed dock also takes the cap's animations off (THE CAP
-       RUNS ONLY ON A RUN THAT HIDES SOMETHING, below) and paints its rest corner: a
-       circle.
+       stays laid out (absolute, inset 0, layers.css) inside the collapsed box, so a
+       timeline on every `.dock-run` would cut the collapsed plate's trailing corners to
+       `--dock-cap-cut` on its circle. The timeline is gated on the pane's own
+       `is-active` (the DOM posture the morph and the measure both read). That alone does
+       not round the collapsed plate: an inactive timeline holds what it last resolved
+       (Chromium keeps the cut of a run collapsed while scrolled), so the collapsed dock
+       also takes the cap's animations off (THE CAP RUNS ONLY ON A RUN THAT HIDES
+       SOMETHING, below) and paints its rest corner: a circle.
 
-       THE RUN'S CLIP FOLLOWS THE PLATE'S CORNER, on the same timeline. The reserve's
+       AN IDLE RUN IS NO SCROLL CONTAINER (O-205). The full pane at rest collapsed (not
+       active, not leaving) is squeezed into the collapsed box and its seats overrun it,
+       so as a scroller it scrolled 180-700 px nobody can see. `overflow: clip` makes it
+       none: it has no scroll range and no timeline to hold. The leaving pane keeps its
+       scroll offset, so a collapse fades the seats where they were. */
+    .glass-dock :where(.dock-layers) > .dock-run:not(.is-active):not(.is-leaving) {
+        overflow: clip;
+    }
+
+    /* THE RUN'S CLIP FOLLOWS THE PLATE'S CORNER, on the same timeline. The reserve's
        hand-back lays the run's scroll clip `--dock-run-inset` inside the plate's edge
        (0 to 1 px at the house and cockpit geometries), so while the cap is cut, a seat
        the clip crosses there would keep the square ends of its fill past the plate's
