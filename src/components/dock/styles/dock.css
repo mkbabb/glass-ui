@@ -159,25 +159,28 @@
         display: none;
     }
 
-    /* The paper grain on the plate: a generated dot field (three gradient dot lattices
-       at co-prime pitches, so the pattern repeats only every few hundred pixels) used
-       as the MASK over a flat ink fill. No `url()` image paints here. Browsers count a
-       `url()` image as page content: Chromium a background, WebKit a mask as well, so
-       an SVG grain became a page's Largest Contentful Paint entry, timed by the dock's
-       late land. Gradients are never LCP candidates in either engine. The ink is the
-       foreground, so the tooth darkens on light and lifts on dark through the blend. */
+    /* The paper grain on the plate: a generated dot field of foreground ink, three
+       gradient dot lattices at co-prime pitches, so the pattern repeats only every few
+       hundred pixels. No `url()` image paints here. Browsers count a `url()` image as
+       page content (Chromium a background, WebKit a mask as well), so an SVG grain
+       became a page's Largest Contentful Paint entry, timed by the dock's late land.
+       Gradients are never LCP candidates in either engine. The ink darkens on light
+       and lifts on dark through the blend. */
     .dock-plate::after {
         content: "";
         position: absolute;
         inset: 0;
         border-radius: inherit;
-        background-color: var(--foreground);
-        mask-image:
-            radial-gradient(circle at 30% 40%, #000 0 0.5px, transparent 0.9px),
-            radial-gradient(circle at 70% 25%, #000 0 0.5px, transparent 0.9px),
-            radial-gradient(circle at 45% 75%, rgb(0 0 0 / 0.5) 0 0.6px, transparent 1px);
-        mask-size: 7px 7px, 11px 13px, 17px 19px;
-        mask-repeat: repeat;
+        background-image:
+            radial-gradient(circle at 30% 40%, var(--foreground) 0 0.5px, transparent 0.9px),
+            radial-gradient(circle at 70% 25%, var(--foreground) 0 0.5px, transparent 0.9px),
+            radial-gradient(
+                circle at 45% 75%,
+                color-mix(in srgb, var(--foreground) 50%, transparent) 0 0.6px,
+                transparent 1px
+            );
+        background-size: 7px 7px, 11px 13px, 17px 19px;
+        background-repeat: repeat;
         opacity: var(--glass-grain-opacity);
         pointer-events: none;
         mix-blend-mode: overlay;
