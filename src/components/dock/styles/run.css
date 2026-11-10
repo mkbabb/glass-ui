@@ -514,7 +514,11 @@
        on (GF-DOCK ratifies it over `role="tab"` for a dock whose seats are routes), and
        it is read as a NEGATION of the false pole so any truthy token — `page`, `true`,
        `step` — counts. The `:has()` arm catches the common shape where the seat is a
-       wrapper and `RouterLink` stamps the attribute on the anchor inside it.
+       wrapper and `RouterLink` stamps the attribute on the anchor inside it, and like
+       `openIndexOf` it reads only a DECLARED seat (`data-glass-dock-seat`,
+       `DOCK_SEAT_ATTR`): a consumer's group of seats that holds the current one (a nested
+       `.dock-run` of tabs, O-187) is plain markup, sized by its own content, never one
+       open seat whose tabs then paint over the seats beside it.
 
        WHY `m·P − gap` AND NOT A MEASURED WIDTH. `--dock-open-pitches` is AUTHORED, so
        the open seat's extent is known before layout: it is the specific mechanism that
@@ -537,7 +541,7 @@
        the exchange with it. The "free bulge" is struck: a total width that grows
        mid-exchange is a lattice that stops being one for the duration of the motion. */
     .glass-dock :where(.dock-layers) > .dock-run > [aria-current]:not([aria-current="false"]),
-    .glass-dock :where(.dock-layers) > .dock-run > :has([aria-current]:not([aria-current="false"])) {
+    .glass-dock :where(.dock-layers) > .dock-run > [data-glass-dock-seat]:has([aria-current]:not([aria-current="false"])) {
         inline-size: var(--dock-open-seat);
         /* The cross axis is untouched: the open seat is WIDER, never taller. */
         transition: inline-size var(--spring-dock-duration) var(--spring-dock);
@@ -547,7 +551,7 @@
        transfer complementary — the departing seat has a rule to run BACK to, so the two
        animations are one exchange rather than one growth and one snap. */
     .glass-dock :where(.dock-layers) > .dock-run > :not([aria-current]:not([aria-current="false"])):not(
-            :has([aria-current]:not([aria-current="false"]))
+            [data-glass-dock-seat]:has([aria-current]:not([aria-current="false"]))
         ) {
         transition: inline-size var(--spring-dock-duration) var(--spring-dock);
     }
@@ -556,7 +560,7 @@
        extent (96px at the default rungs) rather than the 148px a block-axis m=3 would
        impose around a 24px glyph — a proportion violation with no affordance bought. */
     .glass-dock.vertical :where(.dock-layers) > .dock-run > [aria-current]:not([aria-current="false"]),
-    .glass-dock.vertical :where(.dock-layers) > .dock-run > :has([aria-current]:not([aria-current="false"])) {
+    .glass-dock.vertical :where(.dock-layers) > .dock-run > [data-glass-dock-seat]:has([aria-current]:not([aria-current="false"])) {
         inline-size: auto;
         block-size: var(--dock-open-seat);
         transition: block-size var(--spring-dock-duration) var(--spring-dock);
@@ -565,7 +569,7 @@
     .glass-dock.vertical
         :where(.dock-layers) > .dock-run
         > :not([aria-current]:not([aria-current="false"])):not(
-            :has([aria-current]:not([aria-current="false"]))
+            [data-glass-dock-seat]:has([aria-current]:not([aria-current="false"]))
         ) {
         transition: block-size var(--spring-dock-duration) var(--spring-dock);
     }
