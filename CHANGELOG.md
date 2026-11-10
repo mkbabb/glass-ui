@@ -54,9 +54,9 @@ measured property, `--dock-plate-cross-px`.
   `(pointer: coarse)` `--control-text` is now `max(fluid base, 1rem)`, with the comfort
   scale left on the box, whose heights are unchanged, and `--control-text-sm` is
   `max(fluid base, 1rem x 6/7)`, so menu labels, shortcuts and small buttons stay the
-  quieter rung on touch. The iOS no-zoom floor binds text fields: `.input-pill` and
-  `.input-bar-field` read the new `--field-text-floor`, 16 px under a coarse pointer,
-  so a small field still paints 16 px.
+  quieter rung on touch. The iOS no-zoom floor binds text fields: `.input-pill`,
+  `.input-bar-field` and `.field-control` (Input, Textarea, NumberField) read the new
+  `--field-text-floor`, 16 px under a coarse pointer, so a small field still paints 16 px.
 
 - **A menu item's icon stands off its label (O-129 r7).** `.menu__item` and
   `.menu__sub-trigger` had no gap, so a bare icon component sat flush against its label.
