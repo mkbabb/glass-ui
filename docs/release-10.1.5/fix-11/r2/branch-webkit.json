@@ -1,0 +1,3802 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "tests-visual/release-10-1-5-critic-11.config.ts",
+      "--project=webkit",
+      "release-10-1-5.spec.ts",
+      "--repeat-each=1",
+      "--workers=1"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5-critic-11.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-headless-new",
+        "name": "chromium-headless-new",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "coarse-touch",
+        "name": "coarse-touch",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-10-1-5-critic-11.spec.ts",
+          "release-10-1-5-critic-11-r10.spec.ts",
+          "release-10-1-5-critic-11-r10b.spec.ts",
+          "release-10-1-5-critic-11-r10c.spec.ts",
+          "release-10-1-5.spec.ts",
+          "release-10-1-4.spec.ts",
+          "release-10-1-3.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/docs/release-10.1.5/fix-11/r2/branch-webkit.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5293",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/",
+      "url": "http://localhost:5293",
+      "reuseExistingServer": true,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "release-10-1-5.spec.ts",
+      "file": "release-10-1-5.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "g1 rest dock at 1280: one corner = half its height, nothing to scroll, pointer off and on the trailing seat",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2020,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T20:55:30.832Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-808b628252789fdc1aeb",
+          "file": "release-10-1-5.spec.ts",
+          "line": 218,
+          "column": 5
+        },
+        {
+          "title": "g1 an overflowing run at scroll 0: the leading cap rests at half the block extent, a length; the trailing cap is cut",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1370,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T20:55:32.861Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-7eb0e24f62356e7a98c2",
+          "file": "release-10-1-5.spec.ts",
+          "line": 295,
+          "column": 1
+        },
+        {
+          "title": "g2 collapsed: the plate is a circle, half its extent on both axes",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1563,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T20:55:34.236Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-883492fef8fa06d875fa",
+          "file": "release-10-1-5.spec.ts",
+          "line": 317,
+          "column": 1
+        },
+        {
+          "title": "g2 expanded (collapsible), each layer and input mode hold g1",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3674,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T20:55:35.804Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-344e0bfd3f56461fd112",
+          "file": "release-10-1-5.spec.ts",
+          "line": 335,
+          "column": 1
+        },
+        {
+          "title": "g3 the Slider thumb is visible and one size at min, mid and max, inside the fill",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1117,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T20:55:39.483Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-07e2c8167209403ddc0d",
+          "file": "release-10-1-5.spec.ts",
+          "line": 361,
+          "column": 1
+        },
+        {
+          "title": "g5 the DropdownMenuItem icon-to-label gap is the icon-slot token, the dock trigger's own",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1939,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T20:55:40.612Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-2f7e84a0c699469259f9",
+          "file": "release-10-1-5.spec.ts",
+          "line": 408,
+          "column": 1
+        },
+        {
+          "title": "c1 a value mark is the thumb's centre at that value, on every axis; the loupe's value point is the thumb's centre",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1604,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T20:55:42.555Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-06c4a0749b2b31c6036b",
+          "file": "release-10-1-5.spec.ts",
+          "line": 438,
+          "column": 1
+        },
+        {
+          "title": "c3 the disabled scrubber dims its thumb with its fill",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1101,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T20:55:47.800Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-79f1476f55f7a8d57ca4",
+          "file": "release-10-1-5.spec.ts",
+          "line": 542,
+          "column": 1
+        },
+        {
+          "title": "c4 desktop: a keyboard-focused seat under the pointer keeps its whole ring",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2440,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T20:55:48.905Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-ff67222335e7e782d811",
+          "file": "release-10-1-5.spec.ts",
+          "line": 618,
+          "column": 1
+        },
+        {
+          "title": "e1 at 390: a label-wide tab under the pointer gives the run no reach and cuts no corner",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1987,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T20:56:08.852Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-51298042f26e977ae702",
+          "file": "release-10-1-5.spec.ts",
+          "line": 637,
+          "column": 5
+        },
+        {
+          "title": "e1 at 1440: a label-wide tab under the pointer gives the run no reach and cuts no corner",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2012,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T20:56:10.843Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-721bb960d135205b5425",
+          "file": "release-10-1-5.spec.ts",
+          "line": 637,
+          "column": 5
+        },
+        {
+          "title": "e2 at 390: focused, hovered tab seats keep their whole ring on every edge",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5042,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T20:56:12.860Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-938b5d7cae1606523602",
+          "file": "release-10-1-5.spec.ts",
+          "line": 661,
+          "column": 5
+        },
+        {
+          "title": "e2 at 1440: focused, hovered tab seats keep their whole ring on every edge",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5026,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T20:56:17.906Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-c145929157fd54ff619f",
+          "file": "release-10-1-5.spec.ts",
+          "line": 661,
+          "column": 5
+        },
+        {
+          "title": "e3 at 390: the run's clip and hit stop at the persistent seats, at rest and scrolled",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5675,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T20:56:22.937Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-a61ba8a3a58ca28732dd",
+          "file": "release-10-1-5.spec.ts",
+          "line": 673,
+          "column": 5
+        },
+        {
+          "title": "e4 at 1440: a run whose seats all show, capped under its reserve, scrolls nothing and keeps the end seat's ring",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2801,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T20:56:28.617Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-74657f6228fcfb17ac32",
+          "file": "release-10-1-5.spec.ts",
+          "line": 722,
+          "column": 5
+        },
+        {
+          "title": "f1 a SegmentedTabs under a fixed z:1 header paints beneath it; its labels paint over the indicator",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3189,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T20:56:31.423Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-32c035a7cf0072f7ea48",
+          "file": "release-10-1-5.spec.ts",
+          "line": 762,
+          "column": 1
+        },
+        {
+          "title": "f2 Table row and header rules paint in --border, light and dark",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1096,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T20:56:34.617Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-e23959a7dcd9946f3dc2",
+          "file": "release-10-1-5.spec.ts",
+          "line": 804,
+          "column": 1
+        },
+        {
+          "title": "h2 at 844: a labelled DockTrigger adds no reserve; the run's room is the icon dock's",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2402,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T20:56:42.374Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-c7bf2c05f9873b1b03e4",
+          "file": "release-10-1-5.spec.ts",
+          "line": 954,
+          "column": 1
+        },
+        {
+          "title": "h3 a ticking seat label constructs no ResizeObserver",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2200,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T20:56:44.781Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-f3a038fb225a1cb07734",
+          "file": "release-10-1-5.spec.ts",
+          "line": 970,
+          "column": 1
+        },
+        {
+          "title": "h4 with no ResizeObserver the plate rests at half its block extent",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1359,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T20:56:46.988Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-8d7546586619791c8b51",
+          "file": "release-10-1-5.spec.ts",
+          "line": 988,
+          "column": 1
+        },
+        {
+          "title": "k2 vertical: a wide tab at a flush edge keeps its whole ring, at the start and at the end",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4519,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T20:56:48.354Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-c48098b74ce39be94021",
+          "file": "release-10-1-5.spec.ts",
+          "line": 1148,
+          "column": 1
+        },
+        {
+          "title": "k1 at 320: End, focus() and hover+focus land the end seat flush with its ring whole; Home lands the first",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 10929,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T20:57:06.132Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-ce06f1e29b4806012287",
+          "file": "release-10-1-5.spec.ts",
+          "line": 1085,
+          "column": 5
+        },
+        {
+          "title": "k3 at 320: a capped dock whose seats all show has nothing to scroll and rests round",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2279,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T20:57:17.066Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-a79d1836faeace841234",
+          "file": "release-10-1-5.spec.ts",
+          "line": 1187,
+          "column": 5
+        },
+        {
+          "title": "l1 a cap lifted under a run scrolled to its end rests round (tab:Home,icon,icon,icon,tab:Settings)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3300,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T20:57:39.435Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-a3be1e24668d3a227222",
+          "file": "release-10-1-5.spec.ts",
+          "line": 1270,
+          "column": 13
+        },
+        {
+          "title": "l1 a cap lifted under a run scrolled to its mid rests round (tab:Home,icon,icon,icon,tab:Settings)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3328,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T20:57:42.740Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-200b4be583e15b741835",
+          "file": "release-10-1-5.spec.ts",
+          "line": 1270,
+          "column": 13
+        },
+        {
+          "title": "l1 a cap lifted under a run scrolled to its end rests round (icon,icon,icon,icon,icon,icon)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3278,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T20:57:46.073Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-3c93d3d519a9437b71dd",
+          "file": "release-10-1-5.spec.ts",
+          "line": 1270,
+          "column": 13
+        },
+        {
+          "title": "l1 a cap lifted under a run scrolled to its mid rests round (icon,icon,icon,icon,icon,icon)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3316,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T20:57:49.356Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-85ad51ac4035cffdb65f",
+          "file": "release-10-1-5.spec.ts",
+          "line": 1270,
+          "column": 13
+        },
+        {
+          "title": "l1 a viewport resize 390 → 844 under a run scrolled to its end rests round",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3731,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T20:57:52.676Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-e58593dadf1f08cfa3ca",
+          "file": "release-10-1-5.spec.ts",
+          "line": 1287,
+          "column": 5
+        },
+        {
+          "title": "l1 a vertical run's stage grown under a run scrolled to its end rests round",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3270,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T20:57:56.412Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-9f51df777cb90ab989f1",
+          "file": "release-10-1-5.spec.ts",
+          "line": 1303,
+          "column": 5
+        },
+        {
+          "title": "m1 at 390: a collapse from a run scrolled to its mid seals round",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 7449,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T20:59:32.304Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-f4527867ac815f18057f",
+          "file": "release-10-1-5.spec.ts",
+          "line": 1375,
+          "column": 9
+        },
+        {
+          "title": "m1 at 390: a collapse from a run scrolled to its end seals round",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 7438,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T20:59:39.757Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-df6e10953d31a64c8818",
+          "file": "release-10-1-5.spec.ts",
+          "line": 1375,
+          "column": 9
+        },
+        {
+          "title": "m1 at 1440: a collapse from a run scrolled to its end seals round",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 7447,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T20:59:47.198Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-bb9f85093d2a3d142985",
+          "file": "release-10-1-5.spec.ts",
+          "line": 1375,
+          "column": 9
+        },
+        {
+          "title": "m5 O-182 horizontal: in dark nothing past the plate is lighter than the ground",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2965,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T20:59:54.650Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-15c3eeab1d70eeb8adaa",
+          "file": "release-10-1-5.spec.ts",
+          "line": 1648,
+          "column": 9
+        },
+        {
+          "title": "m5 O-182 vertical: in dark nothing past the plate is lighter than the ground",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2971,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T20:59:57.619Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-fdb95fab46ccef18fd00",
+          "file": "release-10-1-5.spec.ts",
+          "line": 1648,
+          "column": 9
+        },
+        {
+          "title": "m5 O-182 collapsed: in dark nothing past the plate is lighter than the ground",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2973,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T21:00:00.594Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-f5b66515412a72c3460d",
+          "file": "release-10-1-5.spec.ts",
+          "line": 1648,
+          "column": 9
+        },
+        {
+          "title": "m5 O-182 light: the shadow is still the foreground",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1055,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T21:00:03.570Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-1a016db1ec7f7ff744df",
+          "file": "release-10-1-5.spec.ts",
+          "line": 1707,
+          "column": 5
+        },
+        {
+          "title": "m2 a vertical run whose seats fit scrolls nothing, across the fit edge",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 15695,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T21:00:04.629Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-4918874e51be4103ad84",
+          "file": "release-10-1-5.spec.ts",
+          "line": 1403,
+          "column": 5
+        },
+        {
+          "title": "m4 at 390: a layered overflowing run rests at its start, the leading corner round",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1753,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T21:00:20.328Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-3214cc2b7a18faed968e",
+          "file": "release-10-1-5.spec.ts",
+          "line": 1429,
+          "column": 9
+        },
+        {
+          "title": "m4 at 1440: a layered overflowing run rests at its start, the leading corner round",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1731,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T21:00:22.085Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-bbf3c71ca849685839b0",
+          "file": "release-10-1-5.spec.ts",
+          "line": 1429,
+          "column": 9
+        },
+        {
+          "title": "m3 O-157 a static-backdrop plate follows --glass-veil-ink, light and dark",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5098,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T21:00:23.819Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-c75ed2b7e1ba006ed991",
+          "file": "release-10-1-5.spec.ts",
+          "line": 1449,
+          "column": 5
+        },
+        {
+          "title": "m3 O-162 the folded summary's ring follows the pill after Escape",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4073,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T21:00:28.921Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-77511dc0fed7b7e15b57",
+          "file": "release-10-1-5.spec.ts",
+          "line": 1504,
+          "column": 5
+        },
+        {
+          "title": "m3 O-177 Tab onto the folded face expands the dock and lands on a seat",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2608,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T21:00:32.999Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-5d366de0f55425008fd4",
+          "file": "release-10-1-5.spec.ts",
+          "line": 1531,
+          "column": 5
+        },
+        {
+          "title": "m3 O-176 a collapse=open dock left untouched idles shut, and after a remount",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 13400,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T21:00:35.611Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-644b4f193a8225dc90e3",
+          "file": "release-10-1-5.spec.ts",
+          "line": 1553,
+          "column": 5
+        },
+        {
+          "title": "m3 O-177 a press during the expand activates its seat once",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 10517,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T21:00:49.015Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-e62e60f4d9766f8ce31d",
+          "file": "release-10-1-5.spec.ts",
+          "line": 1572,
+          "column": 5
+        },
+        {
+          "title": "m3 O-167 the dock Slider's fill is a calm ink in dark and its thumb tracks the drag",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1963,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T21:00:59.537Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-e5c020dc04baac805c96",
+          "file": "release-10-1-5.spec.ts",
+          "line": 1600,
+          "column": 5
+        },
+        {
+          "title": "n1 a fitting vertical dock's seats do not step at the expand's settle or the collapse's start, across the fit edge",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 15957,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T21:01:17.482Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-607c3fc1d352bdc36cc6",
+          "file": "release-10-1-5.spec.ts",
+          "line": 1776,
+          "column": 5
+        },
+        {
+          "title": "p1 a dock its host resizes mid-expand holds every seat at the settle (horizontal clamp, vertical yield band)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 16048,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T21:01:49.542Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-200e0955a68311f8540a",
+          "file": "release-10-1-5.spec.ts",
+          "line": 1870,
+          "column": 5
+        },
+        {
+          "title": "p2 a 1-2 px host change across the fit edge mid-expand holds every seat at the settle",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 480000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 51831,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T21:02:55.787Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-364e566695fca13edcd4",
+          "file": "release-10-1-5.spec.ts",
+          "line": 1916,
+          "column": 5
+        },
+        {
+          "title": "q1 O-186 at 1440: a fit-content static dock under hover on every control keeps one rest corner, half its cross extent, no percentage",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 12858,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T21:03:47.786Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-3adce90f1bde222882ca",
+          "file": "release-10-1-5.spec.ts",
+          "line": 2020,
+          "column": 5
+        },
+        {
+          "title": "q2 O-187 at 1440: a nested .dock-run group keeps each hovered control's whole ink",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3666,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T21:04:00.650Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-af568b7a600172a61418",
+          "file": "release-10-1-5.spec.ts",
+          "line": 2050,
+          "column": 5
+        },
+        {
+          "title": "q3 O-187 at 1440: the plate has exactly one scroll timeline in scope, the visible run's",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1116,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T21:04:04.321Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-3ace994e7e822e0cad96",
+          "file": "release-10-1-5.spec.ts",
+          "line": 2082,
+          "column": 5
+        },
+        {
+          "title": "q1 O-186 at 390: a fit-content static dock under hover on every control keeps one rest corner, half its cross extent, no percentage",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 9326,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T21:04:05.442Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-e712121145b462f45c4f",
+          "file": "release-10-1-5.spec.ts",
+          "line": 2020,
+          "column": 5
+        },
+        {
+          "title": "q2 O-187 at 390: a nested .dock-run group keeps each hovered control's whole ink",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2424,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T21:04:14.773Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-1cc7cfbd462ff8cc5d60",
+          "file": "release-10-1-5.spec.ts",
+          "line": 2050,
+          "column": 5
+        },
+        {
+          "title": "q3 O-187 at 390: the plate has exactly one scroll timeline in scope, the visible run's",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1107,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T21:04:17.201Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-78a4f4ac7a1e3532107d",
+          "file": "release-10-1-5.spec.ts",
+          "line": 2082,
+          "column": 5
+        },
+        {
+          "title": "r1 Q2 at 1440: a nested group holding the current seat paints every seat clear of the others, and the run's flag is its layout",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2584,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T21:04:18.313Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-39661fcf3cb47535ea21",
+          "file": "release-10-1-5.spec.ts",
+          "line": 2101,
+          "column": 5
+        },
+        {
+          "title": "s1 O-205 at 1440: no collapsed dock has a scrolling run, and a hidden wider face adds nothing to a fitting run",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5925,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T21:04:23.515Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-81ccc2b10ff54fd49b68",
+          "file": "release-10-1-5.spec.ts",
+          "line": 2214,
+          "column": 5
+        },
+        {
+          "title": "s2 O-201 at 1440: across the fit edge the first and last seats keep their whole ring, and the flag is the layout",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 7604,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T21:04:29.443Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-b0fd852703a7cea09c90",
+          "file": "release-10-1-5.spec.ts",
+          "line": 2257,
+          "column": 5
+        },
+        {
+          "title": "s3 O-207 G3 a disclosure trigger's keyboard ring is the house outline, whatever it composes",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3189,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T21:04:49.227Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-9e6e3acf950fabf883a1",
+          "file": "release-10-1-5.spec.ts",
+          "line": 2299,
+          "column": 1
+        },
+        {
+          "title": "s4 a host padding change across the fit edge mid-expand holds every seat at the settle (vertical)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 30104,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T21:04:52.420Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-0e611fa043ab5e32309f",
+          "file": "release-10-1-5.spec.ts",
+          "line": 2317,
+          "column": 1
+        },
+        {
+          "title": "m3 O-159 the dock README names every DockProps member and no other",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 7,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T21:05:22.530Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-92c6d0072ed19e9ddb0d",
+          "file": "release-10-1-5.spec.ts",
+          "line": 2358,
+          "column": 1
+        },
+        {
+          "title": "m3 O-160 no cut-cap or clip keyframe carries a percentage radius",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 7,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T21:05:22.541Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-c37b34623262ece63a94",
+          "file": "release-10-1-5.spec.ts",
+          "line": 2372,
+          "column": 1
+        }
+      ],
+      "suites": [
+        {
+          "title": "coarse phone",
+          "file": "release-10-1-5.spec.ts",
+          "line": 244,
+          "column": 6,
+          "specs": [
+            {
+              "title": "g1 rest dock at 390: one corner = half its height, nothing to scroll, pointer off and on the trailing seat",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2327,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-10T20:55:25.022Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ba3de8f038291be5029b-76eee5367d5987376445",
+              "file": "release-10-1-5.spec.ts",
+              "line": 218,
+              "column": 5
+            },
+            {
+              "title": "g1 rest dock at 844: one corner = half its height, nothing to scroll, pointer off and on the trailing seat",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2060,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-10T20:55:27.600Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ba3de8f038291be5029b-7bf0597bf44bf87651a1",
+              "file": "release-10-1-5.spec.ts",
+              "line": 218,
+              "column": 5
+            },
+            {
+              "title": "g4 at 390 coarse the field type is at most 16px and at most 1.25x the pane subtitle",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1159,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-10T20:55:29.666Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ba3de8f038291be5029b-5313cefcae731d0cd06a",
+              "file": "release-10-1-5.spec.ts",
+              "line": 250,
+              "column": 5
+            }
+          ]
+        },
+        {
+          "title": "coarse phone, round 1",
+          "file": "release-10-1-5.spec.ts",
+          "line": 504,
+          "column": 6,
+          "specs": [
+            {
+              "title": "c2 coarse: the -sm rung stays the quieter rung for every non-field reader; an sm field floors at 16px",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1170,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-10T20:55:44.164Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ba3de8f038291be5029b-0c895e515a8c95489115",
+              "file": "release-10-1-5.spec.ts",
+              "line": 506,
+              "column": 5
+            },
+            {
+              "title": "c4 coarse 390: a keyboard-focused seat under the pointer keeps its whole ring",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2456,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-10T20:55:45.339Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ba3de8f038291be5029b-cb235968fa0b8c1304a9",
+              "file": "release-10-1-5.spec.ts",
+              "line": 535,
+              "column": 5
+            }
+          ]
+        },
+        {
+          "title": "critique 2, coarse phone",
+          "file": "release-10-1-5.spec.ts",
+          "line": 743,
+          "column": 6,
+          "specs": [
+            {
+              "title": "e1 at 390: a label-wide tab under the pointer gives the run no reach and cuts no corner",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2007,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-10T20:55:51.350Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ba3de8f038291be5029b-f3503e8ed2a7fe57aea7",
+              "file": "release-10-1-5.spec.ts",
+              "line": 637,
+              "column": 5
+            },
+            {
+              "title": "e1 at 844: a label-wide tab under the pointer gives the run no reach and cuts no corner",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1972,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-10T20:55:53.361Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ba3de8f038291be5029b-088f26e260d0f432da7e",
+              "file": "release-10-1-5.spec.ts",
+              "line": 637,
+              "column": 5
+            },
+            {
+              "title": "e2 at 390: focused, hovered tab seats keep their whole ring on every edge",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 5020,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-10T20:55:55.337Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ba3de8f038291be5029b-c8b1afa8ee30b7f0f3c8",
+              "file": "release-10-1-5.spec.ts",
+              "line": 661,
+              "column": 5
+            },
+            {
+              "title": "e3 at 390: the run's clip and hit stop at the persistent seats, at rest and scrolled",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 5698,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-10T20:56:00.361Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ba3de8f038291be5029b-ad4a3e425063732c8bbc",
+              "file": "release-10-1-5.spec.ts",
+              "line": 673,
+              "column": 5
+            },
+            {
+              "title": "e4 at 390: a run whose seats all show, capped under its reserve, scrolls nothing and keeps the end seat's ring",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2785,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-10T20:56:06.062Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ba3de8f038291be5029b-7eb4fc5770c1c770db7b",
+              "file": "release-10-1-5.spec.ts",
+              "line": 722,
+              "column": 5
+            }
+          ]
+        },
+        {
+          "title": "h1 at 2x",
+          "file": "release-10-1-5.spec.ts",
+          "line": 836,
+          "column": 6,
+          "specs": [
+            {
+              "title": "h1 house at 390: a seat cut by the trailing clip paints nothing past the plate's corner arc",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3313,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-10T20:56:35.719Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ba3de8f038291be5029b-a5ef6aa9f3ba62856ef7",
+              "file": "release-10-1-5.spec.ts",
+              "line": 839,
+              "column": 9
+            },
+            {
+              "title": "h1 cockpit at 390: a seat cut by the trailing clip paints nothing past the plate's corner arc",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3332,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-10T20:56:39.037Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ba3de8f038291be5029b-33b51f0edc01a5fc488b",
+              "file": "release-10-1-5.spec.ts",
+              "line": 839,
+              "column": 9
+            }
+          ]
+        },
+        {
+          "title": "critique 5, coarse phone",
+          "file": "release-10-1-5.spec.ts",
+          "line": 1212,
+          "column": 6,
+          "specs": [
+            {
+              "title": "k1 at 320: End, focus() and hover+focus land the end seat flush with its ring whole; Home lands the first",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 10980,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-10T20:56:52.878Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ba3de8f038291be5029b-e8bf3cacf9fb2866e949",
+              "file": "release-10-1-5.spec.ts",
+              "line": 1085,
+              "column": 5
+            },
+            {
+              "title": "k3 at 320: a capped dock whose seats all show has nothing to scroll and rests round",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2265,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-10T20:57:03.862Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ba3de8f038291be5029b-3ad55026b72aca235cb5",
+              "file": "release-10-1-5.spec.ts",
+              "line": 1187,
+              "column": 5
+            }
+          ]
+        },
+        {
+          "title": "critique 6, coarse phone",
+          "file": "release-10-1-5.spec.ts",
+          "line": 1318,
+          "column": 6,
+          "specs": [
+            {
+              "title": "l1 a cap lifted under a run scrolled to its end rests round (tab:Home,icon,icon,icon,tab:Settings)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3273,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-10T20:57:19.349Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ba3de8f038291be5029b-b86a7cc8e35fc7ae0af1",
+              "file": "release-10-1-5.spec.ts",
+              "line": 1270,
+              "column": 13
+            },
+            {
+              "title": "l1 a cap lifted under a run scrolled to its mid rests round (tab:Home,icon,icon,icon,tab:Settings)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3264,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-10T20:57:22.626Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ba3de8f038291be5029b-22ac2cf115a061862d81",
+              "file": "release-10-1-5.spec.ts",
+              "line": 1270,
+              "column": 13
+            },
+            {
+              "title": "l1 a cap lifted under a run scrolled to its end rests round (icon,icon,icon,icon,icon,icon)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3258,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-10T20:57:25.895Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ba3de8f038291be5029b-2fc2e7529d1fd90fe2ba",
+              "file": "release-10-1-5.spec.ts",
+              "line": 1270,
+              "column": 13
+            },
+            {
+              "title": "l1 a cap lifted under a run scrolled to its mid rests round (icon,icon,icon,icon,icon,icon)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3293,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-10T20:57:29.157Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ba3de8f038291be5029b-6974847d5f8756c28bde",
+              "file": "release-10-1-5.spec.ts",
+              "line": 1270,
+              "column": 13
+            },
+            {
+              "title": "l1 a viewport resize 390 → 844 under a run scrolled to its end rests round",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3703,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-10T20:57:32.455Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ba3de8f038291be5029b-bb7958d6ca0b5805dc65",
+              "file": "release-10-1-5.spec.ts",
+              "line": 1287,
+              "column": 5
+            },
+            {
+              "title": "l1 a vertical run's stage grown under a run scrolled to its end rests round",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3268,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-10T20:57:36.162Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ba3de8f038291be5029b-d8c707b9585eb72345be",
+              "file": "release-10-1-5.spec.ts",
+              "line": 1303,
+              "column": 5
+            }
+          ]
+        },
+        {
+          "title": "critique 7, coarse phone",
+          "file": "release-10-1-5.spec.ts",
+          "line": 1736,
+          "column": 6,
+          "specs": [
+            {
+              "title": "m1 at 390: a collapse from a run scrolled to its mid seals round",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 7480,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-10T20:57:59.687Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ba3de8f038291be5029b-fc59b427066fefe2fe70",
+              "file": "release-10-1-5.spec.ts",
+              "line": 1375,
+              "column": 9
+            },
+            {
+              "title": "m1 at 390: a collapse from a run scrolled to its end seals round",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 7488,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-10T20:58:07.171Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ba3de8f038291be5029b-cf2f027ec468f1dae2eb",
+              "file": "release-10-1-5.spec.ts",
+              "line": 1375,
+              "column": 9
+            },
+            {
+              "title": "m1 at 1440: a collapse from a run scrolled to its end seals round",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 7489,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-10T20:58:14.663Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ba3de8f038291be5029b-0dde505f5a6f4d802d02",
+              "file": "release-10-1-5.spec.ts",
+              "line": 1375,
+              "column": 9
+            },
+            {
+              "title": "m5 O-182 horizontal: in dark nothing past the plate is lighter than the ground",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3033,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-10T20:58:22.157Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ba3de8f038291be5029b-a7a72861d4ac1ef5cc99",
+              "file": "release-10-1-5.spec.ts",
+              "line": 1648,
+              "column": 9
+            },
+            {
+              "title": "m5 O-182 vertical: in dark nothing past the plate is lighter than the ground",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3038,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-10T20:58:25.195Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ba3de8f038291be5029b-cc60cee76a7c79d52ae7",
+              "file": "release-10-1-5.spec.ts",
+              "line": 1648,
+              "column": 9
+            },
+            {
+              "title": "m5 O-182 collapsed: in dark nothing past the plate is lighter than the ground",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2993,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-10T20:58:28.239Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ba3de8f038291be5029b-e06604fb4008c229adb4",
+              "file": "release-10-1-5.spec.ts",
+              "line": 1648,
+              "column": 9
+            },
+            {
+              "title": "m5 O-182 light: the shadow is still the foreground",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1087,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-10T20:58:31.236Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ba3de8f038291be5029b-3ecfb30232a99836dc47",
+              "file": "release-10-1-5.spec.ts",
+              "line": 1707,
+              "column": 5
+            },
+            {
+              "title": "m2 a vertical run whose seats fit scrolls nothing, across the fit edge",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 240000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 15816,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-10T20:58:32.328Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ba3de8f038291be5029b-cc13417ea60bed512a66",
+              "file": "release-10-1-5.spec.ts",
+              "line": 1403,
+              "column": 5
+            },
+            {
+              "title": "m4 at 390: a layered overflowing run rests at its start, the leading corner round",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1781,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-10T20:58:48.149Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ba3de8f038291be5029b-f43091fad283e084ed3a",
+              "file": "release-10-1-5.spec.ts",
+              "line": 1429,
+              "column": 9
+            },
+            {
+              "title": "m4 at 1440: a layered overflowing run rests at its start, the leading corner round",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1741,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-10T20:58:49.935Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ba3de8f038291be5029b-95cd3c354626ebcf2d2c",
+              "file": "release-10-1-5.spec.ts",
+              "line": 1429,
+              "column": 9
+            },
+            {
+              "title": "m3 O-157 a static-backdrop plate follows --glass-veil-ink, light and dark",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 5117,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-10T20:58:51.681Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ba3de8f038291be5029b-1a98e7cb1bc204290f4c",
+              "file": "release-10-1-5.spec.ts",
+              "line": 1449,
+              "column": 5
+            },
+            {
+              "title": "m3 O-162 the folded summary's ring follows the pill after Escape",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 4056,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-10T20:58:56.802Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ba3de8f038291be5029b-61450b41101b7375a9c4",
+              "file": "release-10-1-5.spec.ts",
+              "line": 1504,
+              "column": 5
+            },
+            {
+              "title": "m3 O-177 Tab onto the folded face expands the dock and lands on a seat",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2655,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-10T20:59:00.863Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ba3de8f038291be5029b-3002b74aef071ad6a753",
+              "file": "release-10-1-5.spec.ts",
+              "line": 1531,
+              "column": 5
+            },
+            {
+              "title": "m3 O-176 a collapse=open dock left untouched idles shut, and after a remount",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 13446,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-10T20:59:03.522Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ba3de8f038291be5029b-324d13839e050850f2ca",
+              "file": "release-10-1-5.spec.ts",
+              "line": 1553,
+              "column": 5
+            },
+            {
+              "title": "m3 O-177 a press during the expand activates its seat once",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 10519,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-10T20:59:16.972Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ba3de8f038291be5029b-b5ce1bbf54dd7c3039f1",
+              "file": "release-10-1-5.spec.ts",
+              "line": 1572,
+              "column": 5
+            },
+            {
+              "title": "m3 O-167 the dock Slider's fill is a calm ink in dark and its thumb tracks the drag",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2005,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-10T20:59:27.495Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ba3de8f038291be5029b-770655c102a2e6ff0160",
+              "file": "release-10-1-5.spec.ts",
+              "line": 1600,
+              "column": 5
+            },
+            {
+              "title": "m3 O-161 a tap leaves no hover paint on the DarkModeToggle or a DockControl",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2795,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-10T20:59:29.505Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ba3de8f038291be5029b-b06c006b15b8b00f6615",
+              "file": "release-10-1-5.spec.ts",
+              "line": 1484,
+              "column": 5
+            }
+          ]
+        },
+        {
+          "title": "critique 8, coarse phone",
+          "file": "release-10-1-5.spec.ts",
+          "line": 1814,
+          "column": 6,
+          "specs": [
+            {
+              "title": "n1 a fitting vertical dock's seats do not step at the expand's settle or the collapse's start, across the fit edge",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 240000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 15973,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-10T21:01:01.505Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ba3de8f038291be5029b-230202a5188bed82cf74",
+              "file": "release-10-1-5.spec.ts",
+              "line": 1776,
+              "column": 5
+            }
+          ]
+        },
+        {
+          "title": "critique 9, coarse phone",
+          "file": "release-10-1-5.spec.ts",
+          "line": 1903,
+          "column": 6,
+          "specs": [
+            {
+              "title": "p1 a dock its host resizes mid-expand holds every seat at the settle (horizontal clamp, vertical yield band)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 240000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 16094,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-10T21:01:33.443Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ba3de8f038291be5029b-2d4802228fa40e9c3601",
+              "file": "release-10-1-5.spec.ts",
+              "line": 1870,
+              "column": 5
+            }
+          ]
+        },
+        {
+          "title": "critique 10, coarse phone",
+          "file": "release-10-1-5.spec.ts",
+          "line": 1993,
+          "column": 6,
+          "specs": [
+            {
+              "title": "p2 a 1-2 px host change across the fit edge mid-expand holds every seat at the settle",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 480000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 49825,
+                      "error": {
+                        "message": "Error: seat steps over 0.5 px at the settle, or a rest flag that is not the layout's truth\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 9\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"at\": 110,\u001b[39m\n\u001b[31m+     \"cell\": \"h 262->264\",\u001b[39m\n\u001b[31m+     \"edge\": \"rest\",\u001b[39m\n\u001b[31m+     \"flag\": true,\u001b[39m\n\u001b[31m+     \"overflows\": true,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+ ]\u001b[39m",
+                        "stack": "Error: seat steps over 0.5 px at the settle, or a rest flag that is not the layout's truth\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 9\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"at\": 110,\u001b[39m\n\u001b[31m+     \"cell\": \"h 262->264\",\u001b[39m\n\u001b[31m+     \"edge\": \"rest\",\u001b[39m\n\u001b[31m+     \"flag\": true,\u001b[39m\n\u001b[31m+     \"overflows\": true,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+ ]\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:1989:108",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                          "column": 108,
+                          "line": 1989
+                        },
+                        "snippet": "  1987 |             }\n  1988 |         }\n> 1989 |         expect(bad, \"seat steps over 0.5 px at the settle, or a rest flag that is not the layout's truth\").toEqual([]);\n       |                                                                                                            ^\n  1990 |     });\n  1991 | }\n  1992 |"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                            "column": 108,
+                            "line": 1989
+                          },
+                          "message": "Error: seat steps over 0.5 px at the settle, or a rest flag that is not the layout's truth\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 9\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"at\": 110,\u001b[39m\n\u001b[31m+     \"cell\": \"h 262->264\",\u001b[39m\n\u001b[31m+     \"edge\": \"rest\",\u001b[39m\n\u001b[31m+     \"flag\": true,\u001b[39m\n\u001b[31m+     \"overflows\": true,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+ ]\u001b[39m\n\n  1987 |             }\n  1988 |         }\n> 1989 |         expect(bad, \"seat steps over 0.5 px at the settle, or a rest flag that is not the layout's truth\").toEqual([]);\n       |                                                                                                            ^\n  1990 |     });\n  1991 | }\n  1992 |\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:1989:108"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-10T21:02:05.596Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/test-results/release-10-1-5-critique-10-44e23-ds-every-seat-at-the-settle-webkit/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                        "column": 108,
+                        "line": 1989
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "ba3de8f038291be5029b-0aa08d380786c9ff56c7",
+              "file": "release-10-1-5.spec.ts",
+              "line": 1916,
+              "column": 5
+            }
+          ]
+        },
+        {
+          "title": "fix 10, coarse phone",
+          "file": "release-10-1-5.spec.ts",
+          "line": 2144,
+          "column": 6,
+          "specs": [
+            {
+              "title": "r1 Q2 at 390: a nested group holding the current seat paints every seat clear of the others, and the run's flag is its layout",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2609,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-10T21:04:20.901Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ba3de8f038291be5029b-b02516a8b60e828f052d",
+              "file": "release-10-1-5.spec.ts",
+              "line": 2101,
+              "column": 5
+            }
+          ]
+        },
+        {
+          "title": "fix 11, coarse phone",
+          "file": "release-10-1-5.spec.ts",
+          "line": 2293,
+          "column": 6,
+          "specs": [
+            {
+              "title": "s1 O-205 at 390: no collapsed dock has a scrolling run, and a hidden wider face adds nothing to a fitting run",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 5268,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-10T21:04:37.053Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ba3de8f038291be5029b-e9c9f986baa33f812436",
+              "file": "release-10-1-5.spec.ts",
+              "line": 2214,
+              "column": 5
+            },
+            {
+              "title": "s2 O-201 at 390: across the fit edge the first and last seats keep their whole ring, and the flag is the layout",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 300000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 6896,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-10T21:04:42.326Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ba3de8f038291be5029b-7fd138609742c884ee13",
+              "file": "release-10-1-5.spec.ts",
+              "line": 2257,
+              "column": 5
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-10T20:55:23.102Z",
+    "duration": 599485.969,
+    "expected": 103,
+    "skipped": 0,
+    "unexpected": 1,
+    "flaky": 0
+  }
+}

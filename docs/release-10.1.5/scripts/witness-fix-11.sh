@@ -4,6 +4,7 @@
 #   branch   the whole release spec
 #   red      s1-s4 with the src files fix 11 changed checked out from the round-11 tip 1e0f9d879
 #   g6       the 10.1.4 and 10.1.3 release specs
+#   p2       critique 10's p2 cells, repeated $P2_N (default 3)
 #   f4       the 10.1.4 F-4 DataTable settle cell, repeated $F4_N (default 16)
 # (src is restored to HEAD after each RED arm.)
 #   ~/.claude/guard/guarded [--exclusive webkit] --timeout 90 -- zsh docs/release-10.1.5/scripts/witness-fix-11.sh chromium|webkit step...
@@ -38,6 +39,7 @@ for s in $@; do
     branch) run branch release-10-1-5.spec.ts;;
     red) red red-1e0f9d879 1e0f9d879 " s[1-4] ";;
     g6) run g6-10-1-4 release-10-1-4.spec.ts; run g6-10-1-3 release-10-1-3.spec.ts;;
+    p2) run p2 release-10-1-5.spec.ts " p2 " ${P2_N:-3};;
     f4) run f4 release-10-1-4.spec.ts "F-4" ${F4_N:-16};;
   esac
 done
