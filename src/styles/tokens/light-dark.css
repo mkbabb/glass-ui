@@ -28,8 +28,9 @@
            quieter rung on touch as it is on desktop (0.86-0.88 of the default); a 1rem
            `-sm` floor would flatten menu labels, shortcuts, group headings and sm
            buttons onto the primary 16px. The no-zoom law binds FIELDS only, so the field recipes floor
-           there: `--field-text-floor` below, read by `.input-pill` and
-           `.input-bar-field`, lifts an sm field to 16px and nothing else. */
+           there: `--field-text-floor` below, read by `.input-pill`,
+           `.input-bar-field` and `.field-control`, lifts a field to 16px and nothing
+           else. */
         --control-text: max(var(--type-small), 1rem);
         --control-text-sm: max(var(--type-caption), calc(1rem * 6 / 7));
         --field-text-floor: 1rem;
