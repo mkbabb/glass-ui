@@ -38,6 +38,7 @@ It is a major because it deletes public exports. It runs on its own branch, cut 
   - Seeded `initial.points` that match a catalogue curve show that curve's name, not "Custom".
   - Each mode draws only its own curve.
 - **K9 (keyframes; C-9), weight:** `.text-subheading`, the ConfiguratorLayer trigger label, the catalogue's family headings and SubPaneHeader set weight 400. Size carries the step.
+- **G15 (fourier; C-9), Metric:** `.metric__label` is set in sentence case at body weight, with no uppercase and no wide tracking, and `.metric__value` takes regular weight. Size carries the hierarchy (fourier `/morph` reads "PHASE idle / N 50 …" in caps and bold today).
 - **G11, per-component CSS entry points:** a consumer importing 9 components ships only their rules, not 2,618 rules and 17 backdrop-filter values. Each component subpath gets its own stylesheet entry.
 - **G12, field skins:** one field skin library-wide. NumberField's filled skin and Select's transparent skin become one (C-5, C-18).
 
