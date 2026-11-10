@@ -52,7 +52,7 @@ browser chains first.
 | c10 cells, branch and v10.1.4 | Chromium / WebKit | 5/5 and 5/5 / 6/6 and 6/6, all banked |
 | critique 9's cells on the tip | Chromium / WebKit | 12/12 / 12/12 |
 | critique 1's sweep on the tip | Chromium / WebKit | 7/7 / 7/7 |
-| g7 (`critic-10/g7/`) | node | queued in the heavy pool at this commit; the result follows in the next commit |
+| g7 (`critic-10/g7/`) | node | typecheck 0, build 0, demo:dist:build 0, vitest 247/247 files (2397 passed, 10 expected fail, 1 skip), verify:package terminal CLEAN at 10.1.5 (ratchet datum 2953525 holds) |
 
 ## Verdict
 
@@ -61,7 +61,7 @@ Fix 9's cures hold where they were aimed. P1 and P2 are cured in both engines: c
 300 ms, both pointers) step S1 0 px at the settle (vertical 0.02 px). N1 holds (c9a: settle
 ≤ 0.02 px, collapse start 0 px, the flag the layout's truth in every row). O-186, O-187's three
 gates and O-193 are GREEN on the branch at 1440 and 390 in both engines and RED on v10.1.4.
-The D-1 cell is green in both engines. g6 is GREEN in both engines. The posture sweep, the Slider,
+The D-1 cell is green in both engines. g6 is GREEN in both engines. g7 is GREEN. The posture sweep, the Slider,
 the type floor and the menu gap read as critique 9 read them.
 
 The branch is **not ready to tag**:
