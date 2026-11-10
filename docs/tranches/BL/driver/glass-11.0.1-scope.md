@@ -15,4 +15,14 @@
    - `elementFromPoint` at each row's right edge minus 12 px hits the row;
    - the gate is RED on v11.0.0.
    **O-213 (fourier, via value-js-65) is folded into the same bound.** The cap `100vw - 2rem` counts the stable scrollbar gutter as usable width. The owner ruled on 2026-11-10 that `:where(html) { scrollbar-gutter: stable }` stays, so the cap must measure the inline extent the page actually lays out in, never `100vw`. The same cap also kept a consumer-measured anchored panel narrower than its anchor at 390 (352 against 358). The one bound therefore lets a plate follow its anchor's or trigger's width up to the layout viewport less the 1rem gutters. Added gates: at 360 and 390 with a classic scrollbar (the 15 px gutter reserved), no plate passes the layout viewport less 1rem on either side; and an anchored panel 358 px wide is never clamped below its anchor.
+2b. **O-214: after a pointer open, the focus ring lands on the selected row, not the trigger (11-line only; not explained by the 11.0.0 CHANGELOG).** value.js color, `/#/`, the dock's "Select view" combobox at 1024×768, light and dark, opened by mouse. Focus lands on the checked row (it carries `data-highlighted`, and `:focus-visible` matches), and the row draws `outline: 2px solid` (the foreground at 0.48). The open trigger shows no ring. On 10.1.3 the ring was on the trigger and the row was bare. The likely source is the 11.0.0 overlay rework (16274926d and its follow-ups, which changed `SelectContent.vue` and `overlay-plate.css`). Reproduce it, name the root, and cure it there:
+- A pointer open paints no keyboard ring on any row; the highlight pill alone marks the row (restraint: one indicator).
+- A keyboard open still paints the ring where focus is.
+- The trigger's ring follows `:focus-visible` exactly as on 10.1.3.
+
+Gates, in both engines, light and dark, at 390 and 1440:
+- After a mouse open, no row computes a visible outline or ring.
+- After a keyboard open (Enter, Space, ArrowDown), the focused row's ring is visible at 3:1 or better.
+- Value's two goldens (the dock view-select open, light and dark) match 10.1.3's ring placement.
+- RED on v11.0.0.
 3. **The close:** the full release battery, tag v11.0.1, push, and the CI publish as `latest`. Then tell value-js-63, value-js-65, sci-report-62 (atlas, per the owner's "Inform atlas always") and sci-report-58 (Gregg).
