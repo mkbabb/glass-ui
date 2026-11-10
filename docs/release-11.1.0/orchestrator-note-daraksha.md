@@ -57,3 +57,16 @@ In 11.0.0, `--radius-dock` is `--radius-pill`, which is 1rem: 16 px corners on a
 The build: **the dock's resting silhouette is a full capsule.** Its corner is half its cross extent, in px, never `%` (the r1 law), and this holds for every posture. An open horizontal dock is a stadium, a vertical dock is a stadium on its long axis, and a collapsed square dock stays a circle. A collapsed dock that is two cells wide, the persistent-plus-summary case, becomes a capsule rather than the 16 px bar. The morph between collapsed and open then swaps no silhouette: both ends sit at half the cross extent, so the corner rides the box. Express it as one rule at the token or shape layer, written once (`--radius-dock` resolves to a capsule). Never write a per-posture literal. A consumer that wants the bar corner sets `--radius-dock` at its own host, and the CHANGELOG says how in plain consumer prose.
 
 Gates, in both engines at 390 and 1440, light and dark: in every posture, with every count of collapsed cells, and at each of 5 sampled morph frames, the computed radius equals half the cross extent within 0.5 px and contains no `%`. Paint shows a capsule. A host that sets `--radius-dock: 1rem` gets the bar corner back. The witness must be RED on v11.0.0. The orchestrator tells atlas when it ships, as the owner ordered.
+
+## O-206 joins L5 with O-183/O-190: HandMark's draw stalls under main-thread work (Gregg via sci-report-58, measured on 11.0.0)
+
+HandMark draws its stroke by animating `stroke-dashoffset` with WAAPI. That runs on the main thread, so any mount task during the draw stalls it. On Gregg's production build at a 4× CPU throttle, two frames of 49.9 ms and 50 ms landed mid-stroke while the hero plate mounted. Gregg's stopgap: HeroSection awaits `headline.getAnimations({ subtree: true })` before releasing the plate, which costs about 150 ms at 1×.
+
+The build:
+- **A compositor-run draw.** The reveal rides a property the compositor animates: a `clip-path` inset or path reveal, or a `scale` on a mask wrapper, along the stroke's direction, keeping the hand-drawn look (the stroke's own taper and the preset clock). If a stroke shape cannot keep its look on a compositor property, record that with captures, and keep dashoffset for that shape alone.
+- **A `drawn` event** emitted when the draw completes, or at once under reduced motion or print, so a consumer can sequence on it without polling animations.
+
+Gates, in both engines:
+- Under a 4× CPU throttle with a 50 ms main-thread task injected mid-draw, the stroke's paint keeps advancing through the task (sampled progress rises during it). It must be RED on v11.0.0, where it stalls.
+- `drawn` fires once, after the last stroke frame, and fires immediately under PRM.
+- The draw's look matches v11.0.0 at rest (captured).
