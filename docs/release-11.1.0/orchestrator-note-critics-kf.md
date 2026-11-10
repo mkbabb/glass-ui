@@ -29,3 +29,7 @@ The plate clamps at `max-inline-size: min(22rem, 100vw - 2rem)` (`src/styles/gla
 `.configurator-shell { min-inline-size: min(20rem, 100%) }` (`src/components/configurator/styles.css:72`): the `100%` is the containing block, so the shell's own inline margins are never subtracted from it. Take a 360 viewport, less the 15 px stable scrollbar gutter, which the owner ruled on 2026-11-10 stays. With `margin-inline: 16px`, the shell was 320 px in a 313 px column, 7 px past the gutter. Make the floor margin-safe at the root: the shell never lays out wider than its column, whatever margin a host gives it. Gate, at 320, 360 and 390 with a classic scrollbar and a shell margin of 0 or 16 px in both engines: the shell's border box stays within its column. It must be RED on v11.0.0.
 
 Also part of O-213: the overlay cap `min(22rem, 100vw - 2rem)` ignores the scrollbar gutter, and it clamps a consumer-measured anchored panel below its anchor. That is cured with O-212 by one bound (master `docs/tranches/BL/driver/glass-11.0.1-scope.md` item 2).
+
+## O-214: after a pointer open, Select paints the focus ring on the selected row and not on the trigger (value.js color via value-js-65, on 11.0.0). Critics raise it, and fix seats cure it.
+
+The repro, root and gates are in master `docs/tranches/BL/driver/glass-11.0.1-scope.md`, item 2b. 11.1.0 carries the same cure, so the 11.0.1 forward-merge is clean.
