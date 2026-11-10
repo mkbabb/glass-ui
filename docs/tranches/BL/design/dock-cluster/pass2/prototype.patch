@@ -1,13 +1,15 @@
 diff --git a/src/components/dock/DockCluster.vue b/src/components/dock/DockCluster.vue
 new file mode 100644
-index 000000000..07611a5e4
+index 000000000..fc4708e14
 --- /dev/null
 +++ b/src/components/dock/DockCluster.vue
-@@ -0,0 +1,661 @@
+@@ -0,0 +1,762 @@
 +<script setup lang="ts">
 +/**
-+ * DockCluster (W-I.8, PASS-2 FOLD round 1 build, scratch only). Pass 2's mechanism, with the
-+ * round-1 challenge folded in:
++ * DockCluster (W-I.8, PASS-2 FOLD round 3 build, scratch only). Pass 2's mechanism, with the
++ * round-1, round-2 and round-3 challenges folded in (round 3: the hold reads a member's own
++ * overlay as inside, and a press outside ends it; forced colors draw the silhouette's ring).
++ * Round 1:
 + *   C1  the cluster holds every member open while the pointer or focus is anywhere in it
 + *       (R-13): reaching from the dock to the theme is not leaving the dock;
 + *   C2  a leaver's phantom and an arriver are ONE run of px span on one spring: a phantom
@@ -39,6 +41,7 @@ index 000000000..07611a5e4
 +} from "../../composables/glass/useGlassBackdropLuminance";
 +import { clusterShape, rectPath, shiftPath, type PlateBox } from "./composables/dockClusterShape";
 +import { provideDockClusterContext, type DockClusterMember } from "./composables/dockClusterContext";
++import { isTeleportedTarget } from "../_shared/overlay/isTeleportedTarget";
 +
 +const props = withDefaults(defineProps<{ fused?: boolean | readonly boolean[] }>(), {
 +    fused: false,
@@ -67,8 +70,13 @@ index 000000000..07611a5e4
 +   A member's own hover and focus regions end at its box. In a cluster the reader reaches
 +   from the dock to a sibling member (the theme), which would read as leaving the dock and
 +   collapse it under a resting pointer. So the cluster takes one posture hold on every
-+   member while the pointer or focus is anywhere inside it, and releases it when both have
-+   left. GlassDock's own release grace and collapse delay then run as they do alone. */
++   member while the reader is in it. PF2 D1: "in" follows the lone dock's own rule. The
++   pointer holds while it is inside. Focus holds from a `focusin` until the pointer leaves
++   or focus leaves: a click seats focus on the control it hit, and that focus must not
++   outlast the pointer, or the dock never collapses again (a lone dock's `mouseleave`
++   schedules its collapse with focus still inside). A keyboard move inside the cluster is
++   a fresh `focusin`, so a reader who Tabs is held again. On release every member runs its
++   own leave, so the collapse keeps the lone dock's delay, not the release grace on top. */
 +const registered = new Set<DockClusterMember>();
 +let pointerIn = false;
 +let focusIn = false;
@@ -77,12 +85,51 @@ index 000000000..07611a5e4
 +    const want = pointerIn || focusIn;
 +    if (want === holding) return;
 +    holding = want;
-+    for (const m of registered) (want ? m.keepOpen : m.release)();
++    /* PF3 C3-2: the press that ends a hold is watched only while one is held */
++    if (want) window.addEventListener("pointerdown", onPressOutside, true);
++    else window.removeEventListener("pointerdown", onPressOutside, true);
++    for (const m of registered) {
++        if (want) m.keepOpen();
++        else { m.release(); m.leave(); }
++    }
++}
++/* PF3 C3-1: a member's own portalled overlay (its menu, select, popover or a seat's tooltip,
++   stamped `data-glass-dock-owner` with that member's id) is inside the cluster, as a lone
++   dock's own leave and focus-out read it (`isTeleportedTarget(…, dockId)`). A leave into it
++   is not a leave, so the hold stays and the overlay stays open under the reader. */
++function inOwnOverlay(t: EventTarget | null): boolean {
++    for (const m of registered) if (isTeleportedTarget(t, m.id)) return true;
++    return false;
++}
++function inside(t: EventTarget | null): boolean {
++    return (t instanceof Node && !!root.value?.contains(t)) || inOwnOverlay(t);
++}
++/* PF3 C3-2: a press outside the cluster and its members' overlays ends the hold first, so each
++   member's own click-away then runs as it does alone. A touch tap leaves no pointerleave after
++   its compatibility focus, so without this a tap on the theme held the dock open for good.
++   Window capture runs before every document listener, so the members' click-away (document
++   capture) always sees the hold already released, whatever order they were installed in. */
++function onPressOutside(e: PointerEvent): void {
++    if (inside(e.target)) return;
++    pointerIn = false;
++    focusIn = false;
++    syncHold();
++}
++/* PF2 D3 / R-8: at most one member carries its own collapse. Two collapsing members would
++   morph at once, and the one ink cannot follow two scaled boxes. Asserted on every
++   registration and every membership change; the throw paints nothing (as R-10's layout
++   asserts do), so the failure is loud, never a half-inked silhouette. */
++function assertOneCollapsible(): void {
++    const live = [...registered].filter((m) => m.el.isConnected && m.collapsible());
++    if (live.length < 2) return;
++    const name = (m: DockClusterMember) => `"${m.el.getAttribute("aria-label") ?? m.el.id ?? "unnamed"}"`;
++    throw new Error(`DockCluster: ${live.map(name).join(" and ")} both collapse; at most one member of a cluster may carry its own collapse (W-I.8 R-8)`);
 +}
 +provideDockClusterContext({
 +    register(m) {
 +        registered.add(m);
 +        if (holding) m.keepOpen();
++        assertOneCollapsible();
 +        return () => {
 +            if (holding) m.release();
 +            registered.delete(m);
@@ -90,11 +137,13 @@ index 000000000..07611a5e4
 +    },
 +});
 +function onPointerEnter(): void { pointerIn = true; syncHold(); }
-+function onPointerLeave(): void { pointerIn = false; syncHold(); }
++function onPointerLeave(e: PointerEvent): void {
++    if (inOwnOverlay(e.relatedTarget)) return;
++    pointerIn = false; focusIn = false; syncHold();
++}
 +function onFocusIn(): void { focusIn = true; syncHold(); }
 +function onFocusOut(e: FocusEvent): void {
-+    const to = e.relatedTarget as Node | null;
-+    if (to && root.value?.contains(to)) return;
++    if (inside(e.relatedTarget)) return;
 +    focusIn = false;
 +    syncHold();
 +}
@@ -127,12 +176,19 @@ index 000000000..07611a5e4
 +type Span = { x0: number; x1: number };
 +const W = (x: Span) => x.x1 - x.x0;
 +
-+function scaleOf(d: HTMLElement, r: DOMRect): { k: number; o: number } {
++/* PF2 (D2's read): a member's own scale is read from its computed transform and `scale`, never
++   inferred from `rect.width / offsetWidth`. GlassDock's morph is a size morph (no transform),
++   and `offsetWidth` is a whole number, so the inferred `k` was off 1 by up to 0.5 / w and the
++   unscaled width by up to 0.5 px: the gap the chain hangs the next member on wobbled 0–1 px a
++   frame through every collapse. */
++function scaleOf(d: HTMLElement, _r: DOMRect): { k: number; o: number } {
 +    if (!d.hasAttribute("data-morphing")) return { k: 1, o: 0 };
-+    const w = d.offsetWidth;
-+    const k = w > 0 ? r.width / w : 1;
-+    const o = Number.parseFloat(getComputedStyle(d).transformOrigin) || 0;
-+    return { k, o };
++    const cs = getComputedStyle(d);
++    const m = cs.transform && cs.transform !== "none" ? new DOMMatrixReadOnly(cs.transform).a : 1;
++    const sx = cs.scale && cs.scale !== "none" ? Number.parseFloat(cs.scale) || 1 : 1;
++    const k = m * sx;
++    if (Math.abs(k - 1) < 1e-6) return { k: 1, o: 0 };
++    return { k, o: Number.parseFloat(cs.transformOrigin) || 0 };
 +}
 +
 +/** A member's pure layout box: every translate the cluster wrote, and its own scale, removed. */
@@ -140,7 +196,7 @@ index 000000000..07611a5e4
 +function pureBox(d: HTMLElement, r = d.getBoundingClientRect()): Span {
 +    const { k, o } = scaleOf(d, r);
 +    const x0 = r.left - (tr.get(d) ?? 0) - o * (1 - k);
-+    return { x0, x1: x0 + (d.hasAttribute("data-morphing") ? d.offsetWidth : r.width) };
++    return { x0, x1: x0 + r.width / k };
 +}
 +
 +/* ── C4: the whole-px grid ──────────────────────────────────────────────────────────
@@ -155,7 +211,10 @@ index 000000000..07611a5e4
 +    if (!el || !list.length) return;
 +    list.forEach((d, i) => {
 +        if (i === list.length - 1) return;
-+        const w = d.getBoundingClientRect().width;
++        // PF2: the layout width, never the painted rect. Under its own morph a member's rect is
++        // scaled, and `ceil(w) − w` of a scaled width wrote a margin anywhere in [0, 1) on each
++        // ResizeObserver pass: the next member's layout gap wobbled up to 1 px a frame
++        const w = W(pureBox(d));
 +        const m = Math.ceil(w - 0.01) - w;
 +        // full precision: both engines lay out in 1/64 px (fold F5, WebKit)
 +        const v = m > 1e-3 ? `${m}px` : "";
@@ -193,8 +252,14 @@ index 000000000..07611a5e4
 +   C2: an arriving member and a leaver's phantom are one RUN, a span in px on one spring. An
 +   arriver paints `o = span / (its width + one gap)` of its width and of one gap; a phantom
 +   holds its span where it stood. A run changes role by retarget, so a swap that turns back
-+   keeps its span and its velocity. */
-+interface Glide { b0: number; b1: number; d0: number; d1: number; s0: DockSpring; s1: DockSpring }
++   keeps its span and its velocity.
++   PF2 D2: a member's own morph that starts while it glides takes the glide over. The anchors
++   then ride the morph's painted rect (`onMorph`), and each offset is re-seated to where the
++   glide painted this frame, relative to that rect, springing to 0 on the same spring (a
++   `playTo` on a live spring keeps its velocity). When the morph settles the anchors return
++   to the layout box with the same re-seat. So the extent neither steps where the morph
++   starts nor repaints a stale glide where it ends. */
++interface Glide { b0: number; b1: number; d0: number; d1: number; s0: DockSpring; s1: DockSpring; onMorph: boolean }
 +const glides = new Map<HTMLElement, Glide>();
 +interface Run { s: number; full: number; role: "slot" | "phantom"; el: HTMLElement | null; after: HTMLElement | null; spring: DockSpring }
 +const slots = new Map<HTMLElement, Run>();
@@ -219,12 +284,24 @@ index 000000000..07611a5e4
 +        wake();
 +        return;
 +    }
-+    const g: Glide = { b0: from.x0, b1: from.x1, d0: 0, d1: 0, s0: useDockSpring(DOCK_SPRING, HOST), s1: useDockSpring(DOCK_SPRING, HOST) };
++    const g: Glide = { b0: from.x0, b1: from.x1, d0: 0, d1: 0, s0: useDockSpring(DOCK_SPRING, HOST), s1: useDockSpring(DOCK_SPRING, HOST), onMorph: false };
 +    glides.set(d, g);
 +    const t0 = L.x0 - g.b0, t1 = L.x1 - g.b1;
 +    // onFrame has already written the settled value (a retarget may have moved the target)
 +    g.s0.playTo(0, t0, { onFrame: (v) => { g.d0 = v; }, onSettle: () => queueMicrotask(() => done(d, g)) });
 +    g.s1.playTo(0, t1, { onFrame: (v) => { g.d1 = v; }, onSettle: () => queueMicrotask(() => done(d, g)) });
++    wake();
++}
++/** PF2 D2: move a glide's anchors to `to` and keep its painted edges. Each offset is re-seated
++    by the anchor's step and springs to 0, so the extent converges on `to`; `playTo` on a live
++    spring carries its velocity. */
++function reanchor(d: HTMLElement, g: Glide, to: Span): void {
++    for (const [s, k, b, n] of [[g.s0, "d0", "b0", to.x0], [g.s1, "d1", "b1", to.x1]] as const) {
++        const v = g[b] + g[k] - n;
++        g[b] = n;
++        g[k] = v;
++        s.playTo(v, 0, { onFrame: (x) => { g[k] = x; }, onSettle: () => queueMicrotask(() => done(d, g)) });
++    }
 +    wake();
 +}
 +function done(d: HTMLElement, g: Glide): void {
@@ -283,10 +360,31 @@ index 000000000..07611a5e4
 +        if (e) { e.spring.dispose(); offsets.delete(d); lay[i] = { ...L }; o[i] = 0; }
 +        glideTo(d, from, L);
 +    });
-+    // each member's painted extent: its scaled rect under its own morph; its layout box plus
-+    // its glide offsets; an opening slot is a droplet of `o` of its width; else its layout box
++    // PF2 D2: a glide that a morph interrupts rides the morph's rect; one whose morph has
++    // settled returns to the layout box. Both keep the painted edges and their velocity.
++    list.forEach((d, i) => {
++        const g = glides.get(d);
++        if (!g || reduced.value) return;
++        if (morph[i] && !g.onMorph) {
++            g.onMorph = true;
++            clearContentClip(d);
++            reanchor(d, g, { x0: raw[i]!.left - tCur[i]! + shift + o[i]!, x1: raw[i]!.right - tCur[i]! + shift + o[i]! });
++        } else if (!morph[i] && g.onMorph) {
++            g.onMorph = false;
++            reanchor(d, g, lay[i]!);
++        }
++    });
++    // each member's painted extent: its scaled rect under its own morph (plus a glide it took
++    // over); its layout box plus its glide offsets; an opening slot is a droplet of `o` of its
++    // width; else its layout box
 +    const ext: Span[] = list.map((d, i) => {
-+        if (morph[i]) return { x0: raw[i]!.left - tCur[i]! + shift + o[i]!, x1: raw[i]!.right - tCur[i]! + shift + o[i]! };
++        if (morph[i]) {
++            const x0 = raw[i]!.left - tCur[i]! + shift + o[i]!, x1 = raw[i]!.right - tCur[i]! + shift + o[i]!;
++            const g = glides.get(d);
++            if (!g?.onMorph) return { x0, x1 };
++            g.b0 = x0; g.b1 = x1;
++            return { x0: x0 + g.d0, x1: x1 + g.d1 };
++        }
 +        const L = lay[i]!;
 +        const s = slots.get(d);
 +        if (s) { const c = (L.x0 + L.x1) / 2, w = W(L) * openOf(s); return { x0: c - w / 2, x1: c + w / 2 }; }
@@ -315,7 +413,7 @@ index 000000000..07611a5e4
 +    const tNew = list.map((d, i) => {
 +        const p0 = lay0[i]!.x0 - shift; // the pure layout x
 +        if (m < 0 || i === m) return o[i]! + shift;
-+        if (morph[i]) return P[i]!.x0 - p0 - sc[i]!.o * (1 - sc[i]!.k);
++        if (morph[i]) return P[i]!.x0 - (glides.get(d)?.onMorph ? glides.get(d)!.d0 : 0) - p0 - sc[i]!.o * (1 - sc[i]!.k);
 +        if (open[i]! < 1) return (P[i]!.x0 + P[i]!.x1) / 2 - (lay0[i]!.x0 + lay0[i]!.x1) / 2 + shift;
 +        if (glides.has(d)) { const g = glides.get(d)!; return P[i]!.x0 - (g.b0 + g.d0 - lay0[i]!.x0) - p0; }
 +        return P[i]!.x0 - p0;
@@ -371,7 +469,7 @@ index 000000000..07611a5e4
 +        // its controls held inside its glass. No member descendant carries a backdrop-filter in
 +        // a cluster (cluster.css), so this clip sits over no blur (I8-G8).
 +        // `.dock-controls` is `display: contents`, so each of its boxes is clipped on its own
-+        if (glides.has(member) || slots.has(member)) {
++        if ((glides.has(member) && !glides.get(member)!.onMorph) || slots.has(member)) {
 +            for (const ctl of member.querySelectorAll<HTMLElement>(":scope > .dock-controls > *")) {
 +                const r = ctl.getBoundingClientRect();
 +                if (r.width <= 0) continue;
@@ -515,6 +613,7 @@ index 000000000..07611a5e4
 +    const prev = members;
 +    const changed = list.length !== prev.length || list.some((d, i) => d !== prev[i]);
 +    assertLayout();
++    assertOneCollapsible();
 +    if (changed) {
 +        const oldJoin = new Map(prev.slice(0, -1).map((d, i) => [d, now[i] ?? 0]));
 +        const t = Array.from({ length: Math.max(0, list.length - 1) }, (_, i) =>
@@ -609,6 +708,7 @@ index 000000000..07611a5e4
 +onMounted(() => {
 +    ro = new ResizeObserver(() => {
 +        assertLayout();
++        assertOneCollapsible();
 +        if (reduced.value && pendingSeat && pendingSeat.length === now.length) now = [...pendingSeat];
 +        regrid(members);
 +        paint();
@@ -641,6 +741,7 @@ index 000000000..07611a5e4
 +    glides.forEach((g) => { g.s0.dispose(); g.s1.dispose(); });
 +    slots.forEach((s) => s.spring.dispose());
 +    phantoms.forEach((p) => p.spring.dispose());
++    window.removeEventListener("pointerdown", onPressOutside, true);
 +    if (holding) for (const m of registered) m.release();
 +});
 +</script>
@@ -666,7 +767,7 @@ index 000000000..07611a5e4
 +    </div>
 +</template>
 diff --git a/src/components/dock/GlassDock.vue b/src/components/dock/GlassDock.vue
-index 21db6397c..6611db8b8 100644
+index 21db6397c..289513631 100644
 --- a/src/components/dock/GlassDock.vue
 +++ b/src/components/dock/GlassDock.vue
 @@ -32,6 +32,7 @@ import { useGlassBackdropLuminance } from "../../composables/glass/useGlassBackd
@@ -677,36 +778,51 @@ index 21db6397c..6611db8b8 100644
  import { useDockMorphOrchestrator } from "./composables/useDockMorph";
  import { useDockExpandedSize } from "./composables/dockMorphMeasure";
  import { useDockShellProps, type DockProps } from "./composables/useDockShellProps";
-@@ -176,6 +177,9 @@ const {
+@@ -176,6 +177,16 @@ const {
     published as a flag — nothing should paint off "a popover is open". */
  const visualExpanded = computed(() => alwaysExpanded.value || expanded.value);
  
-+/* W-I.8 R-13: in a DockCluster the member registers its root and its posture hold. */
-+useDockClusterMember(dockEl, { keepOpen, release });
++/* W-I.8 R-13: in a DockCluster the member registers its root, its posture hold and its
++   own leave; R-8: and whether it collapses. */
++useDockClusterMember(dockEl, {
++    id: dockId,
++    keepOpen,
++    release,
++    leave: () => onMouseLeave(),
++    collapsible: () => !alwaysExpanded.value,
++});
 +
  provideDockContext({
      id: dockId,
      orientation,
 diff --git a/src/components/dock/composables/dockClusterContext.ts b/src/components/dock/composables/dockClusterContext.ts
 new file mode 100644
-index 000000000..c8277740f
+index 000000000..c257d44d4
 --- /dev/null
 +++ b/src/components/dock/composables/dockClusterContext.ts
-@@ -0,0 +1,39 @@
+@@ -0,0 +1,47 @@
 +import { inject, onBeforeUnmount, onMounted, provide, type InjectionKey, type Ref } from "vue";
 +import type { DockHoldKind } from "./dockContext";
 +
 +/**
-+ * A DockCluster member as the cluster sees it: its root, and the hold it already
-+ * publishes to its own descendants (`keepOpen`/`release`). The cluster takes one
-+ * posture hold on every member while the pointer or focus is anywhere in the
-+ * cluster, so reaching from the dock to a sibling member (the theme) never reads
-+ * as leaving the dock (W-I.8 R-13).
++ * A DockCluster member as the cluster sees it: its root, the hold it already
++ * publishes to its own descendants (`keepOpen`/`release`), its own leave, and
++ * whether it can collapse. The cluster takes one posture hold on every member
++ * while the reader is in the cluster, so reaching from the dock to a sibling
++ * member (the theme) never reads as leaving the dock (W-I.8 R-13). When the
++ * reader leaves the cluster, each member runs its own leave, so the collapse
++ * keeps the lone dock's timing. At most one member may be collapsible (R-8).
 + */
 +export interface DockClusterMember {
 +    el: HTMLElement;
++    /** The member's dock id, which its portalled overlays carry as `data-glass-dock-owner`. */
++    id: string;
 +    keepOpen: (kind?: DockHoldKind) => void;
 +    release: (kind?: DockHoldKind) => void;
++    /** The member's own pointer-leave (its collapse delay), run when the reader leaves the cluster. */
++    leave: () => void;
++    /** True when the member carries its own collapse (`collapse` is not `false`). */
++    collapsible: () => boolean;
 +}
 +
 +export interface DockClusterContext {
@@ -1019,10 +1135,10 @@ index 29a95047e..5bb95ed5e 100644
  // and `DockState` need to be reachable through the `@mkbabb/glass-ui/dock`
 diff --git a/src/components/dock/styles/cluster.css b/src/components/dock/styles/cluster.css
 new file mode 100644
-index 000000000..7e14d076d
+index 000000000..d29e064bd
 --- /dev/null
 +++ b/src/components/dock/styles/cluster.css
-@@ -0,0 +1,131 @@
+@@ -0,0 +1,167 @@
 +/* DockCluster (W-I.8 spec graft, prototype): N GlassDocks fuse into one plate and
 + * fission back by shape alone.
 + *
@@ -1152,6 +1268,42 @@ index 000000000..7e14d076d
 +        /* unprefixed only: the build emits the -webkit- pair, and a hand-written pair is
 +           folded to the prefixed declaration alone (measured: Chromium kept the blur) */
 +        backdrop-filter: none;
++    }
++    /* PF2 D4 (restraint: no gleam on docks). The controls' specular `::before` (the active
++       seat's rest gleam, the hover and press lift) does not paint in the fused plate. The
++       pseudo is the gleam alone (material.css), so it is not generated. The lone dock's
++       gleam is master's, struck by O-203. */
++    .dock-cluster
++        > .glass-dock
++        :is(
++            .glass-specular-track,
++            .dock-icon-button,
++            .dock-tab-button,
++            .dock-select-trigger,
++            .dock-dropdown-trigger
++        )::before {
++        content: none;
++    }
++}
++
++/* PF3 C3-3 (forced colors, R-1): the platform drops the lenses, the ink and the shadow, and
++   repaints the ring's background to Canvas, so the fused silhouette drew no edge, and the
++   forced skin's box border (a11y-fallback.css, `.glass-dock { border: 1px solid CanvasText }`)
++   drew each member as its own plate (the collapsed dock as a half-arc, then a gap). Inside a
++   cluster the silhouette is the edge: the member box takes no border, so its geometry is the
++   one the cluster measures in every other mode (a 1 px border moved every plate 1 px inside
++   its box and cut the ring's bottom 2 px, measured), and the painter's ring, which already
++   traces the whole silhouette, draws it in CanvasText. `forced-color-adjust: none` sits on
++   that one pseudo only, so every control keeps the user's palette. */
++@media (forced-colors: active) {
++    @layer components {
++        .dock-cluster > .glass-dock {
++            border-width: 0;
++        }
++        .dock-cluster > .glass-dock > .dock-plate::before {
++            forced-color-adjust: none;
++            background: CanvasText;
++        }
 +    }
 +}
 diff --git a/src/components/dock/styles/index.css b/src/components/dock/styles/index.css
