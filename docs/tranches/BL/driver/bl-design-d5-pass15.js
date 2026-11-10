@@ -46,7 +46,7 @@ const h15 = await retry(() => agent(`You are H15 (wave 2) of D5 pass 15, the one
 if (stop(h15)) return { stopped: 'h15-incomplete', h15: h15?.summary?.slice(0, 800) }
 
 phase('D5 P-E15 build')
-const pe = await retry(() => agent(`You are P-E15, PART B (wave 3) of D5 pass 15. ${ID}\n${FENCE('PE15')}\n${LAW}\n${PLAN}\nRead ${P15}/P-E15.md (S15 closed), ${P15}/H15.md, ${P14}/P-E14.patch and ${P14}/P-E14.md. TASK, exactly §P14-8.2 wave 3: build on P-E14 to S15; gates (build, typecheck, demo:dist:build, vitest --maxWorkers=2); H15's lists in both engines, every plant on its cells, the cost (§P14-8.1 (g)), the glance. Write ${P15}/P-E15.patch over HEAD (report its sha1 and src tree) and the build section of ${P15}/P-E15.md, records under ${P15}/PE15-records/.${FINISH}${RET}`, { label: 'D5-P15-PE15-build', phase: 'D5 P-E15 build', model: 'opus', schema: REP }))
+const pe = await retry(() => agent(`You are P-E15, PART B (wave 3) of D5 pass 15. ${ID}\n${FENCE('PE15')}\n${LAW}\n${PLAN}${RES('D5-P15-PE15-build')}\nRead ${P15}/P-E15.md (S15 closed), ${P15}/H15.md, ${P14}/P-E14.patch and ${P14}/P-E14.md. TASK, exactly §P14-8.2 wave 3: build on P-E14 to S15; gates (build, typecheck, demo:dist:build, vitest --maxWorkers=2); H15's lists in both engines, every plant on its cells, the cost (§P14-8.1 (g)), the glance. Write ${P15}/P-E15.patch over HEAD (report its sha1 and src tree) and the build section of ${P15}/P-E15.md, records under ${P15}/PE15-records/.${FINISH}${RET}`, { label: 'D5-P15-PE15-build', phase: 'D5 P-E15 build', model: 'opus', schema: REP }))
 if (stop(pe)) return { stopped: 'pe15-incomplete', pe: pe?.summary?.slice(0, 800) }
 
 phase('D5 P15 Critique')
