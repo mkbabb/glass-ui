@@ -146,6 +146,21 @@ const PANE_SHIFT = "--dock-pane-shift";
 const ENDPOINT_BAND_PX = 2;
 
 /**
+ * What the host constrains the dock's endpoint with, on the morph axis: the parent's
+ * content box, the root's own min and max size, and the viewport. Through a morph the
+ * root is held at its reserved size, so none of them moves, a parent sized by the dock
+ * included; a host that resizes the dock moves at least one. It is compared between
+ * morph frames only: at rest a parent sized by the dock is the posture's size.
+ */
+function constraintOf(root: HTMLElement, axis: Axis): string {
+    const cs = getComputedStyle(root);
+    const parent = root.parentElement;
+    return axis === "vertical"
+        ? `${parent?.clientHeight} ${cs.minHeight} ${cs.maxHeight} ${window.innerHeight}`
+        : `${parent?.clientWidth} ${cs.minWidth} ${cs.maxWidth} ${window.innerWidth}`;
+}
+
+/**
  * Measure the dock's two endpoints, `--dock-expanded-px` and `--dock-collapsed-px`.
  *
  * An endpoint is the root's box at rest in its posture, laid out from the live DOM on
@@ -180,6 +195,8 @@ export function useDockExpandedSize(
     let collapsedChrome: number | null = null;
     let collapsedPx: number | null = null;
     let restEndpoint: number | null = null;
+    let restConstraint = "";
+    let hostMoved = false;
     let disposed = false;
 
     function capture(): void {
@@ -200,16 +217,33 @@ export function useDockExpandedSize(
         let expandedPx = keepScroll(full, () =>
             restSize(root, full, summary, a, expandedChrome),
         );
-        // THE ENDPOINT A MORPH STARTS FROM HOLDS until the host moves it. At rest the
-        // reading is the endpoint. Mid-morph a reading within the rounding band of it is
-        // the same box read off another pixel phase (an ancestor `zoom` in WebKit rounds
-        // the box the morph is moving 1 px either way, frame to frame), so the morph keeps
-        // the endpoint and the run keeps its yield. A reading past the band is the host
-        // resizing the dock: the endpoint follows it, and so does the run's yield, read
-        // from the rest port, on the frame it lands (O-101; P1, P2).
-        if (!morphing) restEndpoint = expandedPx;
-        else if (restEndpoint !== null && Math.abs(expandedPx - restEndpoint) <= ENDPOINT_BAND_PX) {
-            expandedPx = restEndpoint;
+        // THE ENDPOINT A MORPH STARTS FROM HOLDS until the host moves it, and the hold
+        // is keyed on the cause, not the size. At rest the reading is the endpoint. The
+        // morph's first capture notes what constrains the dock (`constraintOf`), and
+        // while nothing of it has moved since, a reading within the rounding band of the
+        // endpoint is the same box read off another pixel phase (an ancestor `zoom` in
+        // WebKit rounds the box the morph is moving 1 px either way, frame to frame), so
+        // the morph keeps the endpoint and the run keeps its yield (fix 9's D-1). Once the
+        // host moves a constraint, by any amount, the morph takes every reading: the
+        // endpoint follows it, and so does the run's yield, read from the rest port, on
+        // the frame it lands (O-101; P1, P2, and Q1: a 1-2 px host change across the fit
+        // edge, which the band alone held until the settle). A reading past the band with
+        // no constraint moved (the pane's content changed) is taken as well.
+        if (!morphing) {
+            restEndpoint = expandedPx;
+            restConstraint = "";
+            hostMoved = false;
+        } else {
+            const constraint = constraintOf(root, a);
+            if (!restConstraint) restConstraint = constraint;
+            hostMoved ||= constraint !== restConstraint;
+            if (
+                !hostMoved &&
+                restEndpoint !== null &&
+                Math.abs(expandedPx - restEndpoint) <= ENDPOINT_BAND_PX
+            ) {
+                expandedPx = restEndpoint;
+            }
         }
         publishYield(
             root,
@@ -257,10 +291,10 @@ export function useDockExpandedSize(
      * morph starts or settles (O-166), and the panes the morph moves never see the run's
      * padding change under them (the bottom-anchored D-1 cell under an ancestor `zoom` in
      * WebKit). It moves mid-morph only when the host moves the endpoint itself (a clamp,
-     * a stage resize; `capture`): then the port is the rest port (`restPort`), the new
+     * a stage resize, by any amount; `capture`): then the port is the rest port (`restPort`), the new
      * endpoint less the expanded chrome and the run's edge (`runEdge`, its border box
      * less its port), both read at rest. So the flag and the room move on the frame the
-     * host's change lands, where the morph carries it, not at the settle (P1, P2). While
+     * host's change lands, where the morph carries it, not at the settle (P1, P2, Q1). While
      * collapsing the full pane is out of flow, and the reading it held expanded stays
      * until the next expand re-reads it.
      */
@@ -423,6 +457,8 @@ export function useDockExpandedSize(
         yieldPublished = "";
         runEdge = null;
         restEndpoint = null;
+        restConstraint = "";
+        hostMoved = false;
         const root = rootEl.value;
         if (!root) return;
         if (typeof ResizeObserver !== "undefined") {
