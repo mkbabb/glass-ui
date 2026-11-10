@@ -1,0 +1,31 @@
+diff --git a/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/dock-cluster/pass2-challenge-1/data/DockCluster.clean.vue b/src/components/dock/DockCluster.vue
+index 723658bfd..48eb942ab 100644
+--- a/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/design/dock-cluster/pass2-challenge-1/data/DockCluster.clean.vue
++++ b/src/components/dock/DockCluster.vue
+@@ -150,7 +150,7 @@ function scaleOf(d: HTMLElement, r: DOMRect): { k: number; o: number } {
+ 
+ /** A glide from `from` (null: an arriver, from zero width) to the member's layout box. */
+ function startGlide(d: HTMLElement, from: Span | null): void {
+-    const g = glides.get(d) ?? { from, p: 0, spring: useDockSpring(DOCK_SPRING) };
++    const g = glides.get(d) ?? { from, p: 0, spring: useDockSpring({ response: 0.3, dampingFraction: 0.88 }) };
+     g.from = from;
+     g.p = 0;
+     glides.set(d, g);
+@@ -459,7 +459,7 @@ function observe(): void {
+                 const layoutX0 = d.getBoundingClientRect().left - (tr.get(d) ?? 0);
+                 const from = was.x0 - layoutX0;
+                 if (Math.abs(from) < 0.25) continue;
+-                const entry = offsets.get(d) ?? { o: 0, spring: useDockSpring(DOCK_SPRING) };
++                const entry = offsets.get(d) ?? { o: 0, spring: useDockSpring({ response: 0.3, dampingFraction: 0.88 }) };
+                 offsets.set(d, entry);
+                 entry.o = from;
+                 entry.spring.playTo(from, 0, {
+@@ -482,7 +482,7 @@ function observe(): void {
+                 const nb = painted.get(prev[idx - 1]!) ?? null;
+                 if (!was) return;
+                 const at = prev.slice(0, idx).filter((x) => list.includes(x)).length;
+-                const ph = { at, w: was.x1 - was.x0, g: nb ? was.x0 - nb.x1 : 0, p: 0, spring: useDockSpring(DOCK_SPRING) };
++                const ph = { at, w: was.x1 - was.x0, g: nb ? was.x0 - nb.x1 : 0, p: 0, spring: useDockSpring({ response: 0.3, dampingFraction: 0.88 }) };
+                 phantoms.push(ph);
+                 ph.spring.playTo(0, 1, { onFrame: (v) => { ph.p = v; }, onSettle: () => { phantoms = phantoms.filter((x) => x !== ph); ph.spring.dispose(); paint(); } });
+             });
