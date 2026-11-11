@@ -1,0 +1,1337 @@
+diff --git a/proto/marks-a/fixture.css b/proto/marks-a/fixture.css
+new file mode 100644
+index 000000000..e29286dec
+--- /dev/null
++++ b/proto/marks-a/fixture.css
+@@ -0,0 +1,16 @@
++@import "tailwindcss" source("../../src");
++@import "tw-animate-css";
++@import "../../src/styles/index.css";
++
++body { margin: 0; background: var(--background); color: var(--foreground); font-family: "Plus Jakarta Sans", system-ui, sans-serif; }
++.sheet { padding: 40px 32px 80px; display: flex; flex-direction: column; gap: 36px; align-items: flex-start; }
++.sheet h1 { margin: 0; font-weight: 800; line-height: 1.05; letter-spacing: -0.02em; white-space: nowrap; }
++.sheet p { margin: 0; font-size: 16px; line-height: 1.5; }
++.sheet .wrap { font-size: 22px; line-height: 1.35; inline-size: 300px; }
++.sheet .rtl { font-size: 24px; line-height: 1.6; inline-size: 300px; }
++.sheet .nested { font-size: 22px; line-height: 1.35; inline-size: 300px; }
++.spring-probe { position: fixed; left: -99px; animation-duration: var(--spring-present-duration); animation-timing-function: var(--spring-present); }
++#pm { position: fixed; left: 0; top: 0; width: 20px; height: 20px; background: transparent; }
++/* The instrument control: a plain composited transform animation, always running. */
++#ctl { position: fixed; left: 30px; top: 0; width: 20px; height: 20px; background: rgb(255, 0, 255); animation: ctl 1s linear infinite; }
++@keyframes ctl { to { transform: translateX(200px); } }
+diff --git a/proto/marks-a/fixture.ts b/proto/marks-a/fixture.ts
+new file mode 100644
+index 000000000..75a622be4
+--- /dev/null
++++ b/proto/marks-a/fixture.ts
+@@ -0,0 +1,156 @@
++// The Mark fixture. One page, chosen by the query:
++//   ?scene=sheet&shape=underline|highlight&theme=light|dark[&hold=1][&probeink=1]
++//       every row the brief names. `hold` starts every draw paused at its first frame, so
++//       a probe can seek it; `probeink` paints the mark pure magenta so a probe can find it.
++//   ?scene=stall&shape=...   one 85 px headline mark, mounted on demand by `__mount()`.
++const w = window as unknown as Record<string, any>;
++
++// Layout reads, counted at the platform: every geometry call any script makes.
++const reads: { api: string; t: number; phase: string }[] = [];
++w.__reads = reads;
++w.__phase = "load";
++const count = (api: string) => reads.push({ api, t: performance.now(), phase: w.__phase });
++function wrapFn(proto: any, name: string, label: string) {
++    const orig = proto[name];
++    proto[name] = function (...args: unknown[]) {
++        count(label);
++        return orig.apply(this, args);
++    };
++}
++function wrapGet(proto: any, name: string, label: string) {
++    const d = Object.getOwnPropertyDescriptor(proto, name);
++    if (!d?.get) return;
++    Object.defineProperty(proto, name, { ...d, get() { count(label); return d.get!.call(this); } });
++}
++wrapFn(Element.prototype, "getBoundingClientRect", "Element.getBoundingClientRect");
++wrapFn(Element.prototype, "getClientRects", "Element.getClientRects");
++wrapFn(Range.prototype, "getBoundingClientRect", "Range.getBoundingClientRect");
++wrapFn(Range.prototype, "getClientRects", "Range.getClientRects");
++wrapFn(window, "getComputedStyle", "getComputedStyle");
++for (const k of ["offsetWidth", "offsetHeight", "offsetTop", "offsetLeft", "offsetParent"]) wrapGet(HTMLElement.prototype, k, k);
++for (const k of ["clientWidth", "clientHeight", "clientTop", "clientLeft", "scrollTop", "scrollLeft", "scrollWidth", "scrollHeight"]) wrapGet(Element.prototype, k, k);
++
++// The draw's own window, marked on the page clock and in the trace.
++const draw = { start: null as number | null, landed: null as number | null, drawn: [] as number[], started: 0, ended: 0 };
++w.__draw = draw;
++document.addEventListener("animationstart", (e) => {
++    if (e.animationName !== "mark-window") return;
++    draw.started++;
++    if (draw.start === null) { draw.start = performance.now(); performance.mark("mark-draw-start"); }
++}, true);
++document.addEventListener("animationend", (e) => {
++    if (e.animationName !== "mark-window") return;
++    draw.ended++;
++    draw.landed = performance.now();
++    performance.mark("mark-line-landed");
++}, true);
++
++const params = new URLSearchParams(location.search);
++const scene = params.get("scene") ?? "sheet";
++const shape = (params.get("shape") ?? "underline") as "underline" | "highlight";
++document.documentElement.classList.toggle("dark", params.get("theme") === "dark");
++if (params.get("hold") === "1") {
++    const s = document.createElement("style");
++    s.id = "hold";
++    s.textContent = ".mark-line, .mark-slide { animation-play-state: paused !important; }";
++    document.head.appendChild(s);
++}
++if (params.get("probeink") === "1") {
++    document.documentElement.style.setProperty("--mark-ink", "#ff00ff");
++    document.documentElement.style.setProperty("--mark-band", "#ff00ff");
++}
++
++const pm = document.createElement("div");
++pm.id = "pm";
++document.body.appendChild(pm);
++w.__marker = (c: string) => (pm.style.background = c);
++
++async function main() {
++    await import("./fixture.css");
++    // The brand face is `font-display: optional`; load it before anything uses it.
++    await Promise.all([
++        document.fonts.load('800 85px "Plus Jakarta Sans"', "4,485"),
++        document.fonts.load('400 16px "Plus Jakarta Sans"', "Wake County"),
++    ]);
++    w.__face = {
++        display: document.fonts.check('800 85px "Plus Jakarta Sans"'),
++        text: document.fonts.check('400 16px "Plus Jakarta Sans"'),
++    };
++    const { createApp, defineComponent, h, ref } = await import("vue");
++    const { Mark } = await import("../../src/components/mark");
++
++    const onDrawn = () => {
++        draw.drawn.push(performance.now());
++        performance.mark("mark-drawn");
++        if (scene === "stall") pm.style.background = "rgb(0, 200, 0)";
++    };
++    const mark = (text: any, probe: string) => h(Mark, { shape, "data-probe": probe, onDrawn }, () => text);
++
++    const Sheet = defineComponent(() => () =>
++        h("div", { class: "sheet" }, [
++            ...[48, 85, 112].map((px) =>
++                h("h1", { "data-row": `h${px}`, style: `font-size:${px}px` }, [mark("4,485", `h${px}`), " visits"]),
++            ),
++            // The token that clears instead of skipping: the underline's top sits under the comma's tail.
++            h("h1", { "data-row": "clear", style: "font-size:85px;--mark-offset:0.2em" }, [mark("4,485", "clear"), " visits"]),
++            h("p", { "data-row": "body" }, [
++                "Most visitors came from ", mark("Wake County", "wake"), " and found the museum through ", mark("Google", "google"), ".",
++            ]),
++            h("p", { "data-row": "wrap", class: "wrap" }, [
++                "Attendance ", mark("rose through September and held through the last week of October", "wrap"), ", the longest run on record.",
++            ]),
++            h("p", { "data-row": "rtl", class: "rtl", dir: "rtl", lang: "ar" }, [
++                "أحصى المتحف ", mark("أربعة آلاف زيارة في فصل الخريف", "rtl"), " هذا العام.",
++            ]),
++            h("p", { "data-row": "nested", class: "nested" }, [
++                "Nested markup: ", mark(["a ", h("em", "younger"), " and ", h("strong", "larger"), " crowd than any year before"], "nested"), ".",
++            ]),
++            h("p", { "data-row": "plain" }, [
++                "No component: ", h("span", { class: "mark-underline" }, "Wake County"), " and ", h("mark", { class: "mark-highlight" }, "Google"), ".",
++            ]),
++            h("span", { class: "spring-probe", "data-probe": "spring" }),
++        ]),
++    );
++
++    const mounted = ref(false);
++    w.__mount = () => (mounted.value = true);
++    // `&fold=1` puts the mark two viewports down; `&retrigger=1` redraws it on each entry.
++    const fold = params.get("fold") === "1";
++    const retrigger = params.get("retrigger") === "1";
++    const inst = ref<{ play: () => void } | null>(null);
++    w.__play = () => inst.value?.play();
++    const Stall = defineComponent(() => () =>
++        h("div", { class: "sheet" }, [
++            fold ? h("div", { style: "block-size:200vh" }) : null,
++            h("h1", { "data-row": "stall", style: "font-size:85px" }, [
++                mounted.value ? h(Mark, { ref: inst, shape, retrigger, "data-probe": "mark", onDrawn }, () => "4,485") : "4,485",
++                " visits",
++            ]),
++            h("div", { style: "block-size:200vh" }),
++            h("span", { class: "spring-probe", "data-probe": "spring" }),
++        ]),
++    );
++    if (scene === "stall") {
++        const ctl = document.createElement("div");
++        ctl.id = "ctl";
++        document.body.appendChild(ctl);
++    }
++
++    // `?scene=sweep&prefix=...&text=...`: 64 plain-class rows inside glass's own stylesheet,
++    // each 1/64 px lower than the last (skip.mjs reads the engine's skip-ink off them).
++    const Sweep = defineComponent(() => () =>
++        h("div", { style: "padding:20px" }, Array.from({ length: 64 }, (_, i) => [
++            h("div", { style: "height:0.015625px" }),
++            h("p", { "data-i": i, style: `margin:0;font-size:${params.get("size") ?? 16}px;font-weight:${params.get("weight") ?? 400};line-height:${params.get("lh") ?? 24}px;white-space:nowrap;${params.get("offset") ? `--mark-offset:${params.get("offset")}` : ""}` }, [
++                params.get("prefix") ?? "", h("span", { class: "mark-underline" }, params.get("text") ?? "Wake County"), " and found",
++            ]),
++        ])),
++    );
++
++    w.__phase = "mount";
++    createApp(scene === "stall" ? Stall : scene === "sweep" ? Sweep : Sheet).mount("#app");
++    w.__phase = "after-mount";
++    const raf = window.requestAnimationFrame.bind(window);
++    raf(() => raf(() => (w.__ready = true)));
++}
++void main();
+diff --git a/proto/marks-a/index.html b/proto/marks-a/index.html
+new file mode 100644
+index 000000000..9abb9fbf1
+--- /dev/null
++++ b/proto/marks-a/index.html
+@@ -0,0 +1,12 @@
++<!doctype html>
++<html lang="en">
++<head>
++  <meta charset="utf-8" />
++  <meta name="viewport" content="width=device-width, initial-scale=1" />
++  <title>Mark fixture</title>
++</head>
++<body>
++  <div id="app"></div>
++  <script type="module" src="./fixture.ts"></script>
++</body>
++</html>
+diff --git a/proto/marks-a/probe.mjs b/proto/marks-a/probe.mjs
+new file mode 100644
+index 000000000..729b63085
+--- /dev/null
++++ b/proto/marks-a/probe.mjs
+@@ -0,0 +1,555 @@
++// Proposal A probe: the typographic mark in paint.
++//
++//   node probe.mjs <chromium|webkit> <base-url> <out-dir> [modes]
++//
++// modes (comma list, default all): sheet, measure, reads, still, stall
++// One browser per run, a new context per cell, every context and the browser closed in
++// `finally`. Chromium is Playwright's headless shell; WebKit is build 2287 by path.
++import { chromium, webkit } from "playwright";
++import { createRequire } from "node:module";
++import { existsSync, mkdirSync, writeFileSync } from "node:fs";
++import { homedir } from "node:os";
++import { dirname, join } from "node:path";
++import { fileURLToPath, pathToFileURL } from "node:url";
++
++const require = createRequire(import.meta.url);
++const { PNG, jpegjs } = require(join(dirname(require.resolve("playwright-core")), "lib/utilsBundle.js"));
++
++const [engine, base, outDir, modesArg = "sheet,measure,reads,still,stall"] = process.argv.slice(2);
++const modes = new Set(modesArg.split(","));
++const pngDir = join(outDir, "png");
++mkdirSync(pngDir, { recursive: true });
++const HERE = dirname(fileURLToPath(import.meta.url));
++
++const WEBKIT_2287 = join(homedir(), "Library/Caches/ms-playwright/webkit-2287/pw_run.sh");
++const launch = () =>
++    engine === "webkit" ? webkit.launch(existsSync(WEBKIT_2287) ? { executablePath: WEBKIT_2287 } : {}) : chromium.launch();
++
++const PATH = "/proto/marks-a/index.html";
++const ROWS = ["h48", "h85", "h112", "clear", "body", "wrap", "rtl", "nested"];
++const MARKS = 9;
++const out = { engine, base, version: null, cells: {} };
++
++async function open(browser, { query, theme = "light", width = 1000, height = 1300, dpr = 2, reducedMotion = "no-preference", media = "screen", forcedColors = "none", throttle = 0 }) {
++    const context = await browser.newContext({ viewport: { width, height }, deviceScaleFactor: dpr, colorScheme: theme, reducedMotion, forcedColors });
++    const page = await context.newPage();
++    const errors = [];
++    page.on("pageerror", (e) => errors.push(String(e)));
++    page.on("console", (m) => m.type() === "error" && errors.push(m.text()));
++    await page.emulateMedia({ media, reducedMotion, colorScheme: theme, forcedColors });
++    if (throttle && engine === "chromium") {
++        const cdp = await context.newCDPSession(page);
++        await cdp.send("Emulation.setCPUThrottlingRate", { rate: throttle });
++    }
++    await page.goto(`${base}${PATH}?${query}&theme=${theme}`, { waitUntil: "load" });
++    await page.waitForFunction(() => window.__ready === true, null, { timeout: 60_000 });
++    return { context, page, errors };
++}
++
++const rowClip = (page, row, pad = 10) =>
++    page.evaluate(({ row, pad }) => {
++        const r = document.querySelector(`[data-row="${row}"]`).getBoundingClientRect();
++        return { x: Math.max(0, Math.floor(r.left - pad)), y: Math.max(0, Math.floor(r.top - pad)), width: Math.ceil(r.width + 2 * pad), height: Math.ceil(r.height + 2 * pad) };
++    }, { row, pad });
++
++async function shot(page, clip) {
++    // Clipped inside the viewport. A full-page capture re-lays the page out, and in the trial
++    // run it came back with a different Arabic fallback face than the one the page was read in.
++    return PNG.sync.read(await page.screenshot({ clip }));
++}
++
++function stack(images, gap = 6, bg = [128, 128, 128]) {
++    const width = Math.max(...images.map((i) => i.width));
++    const height = images.reduce((s, i) => s + i.height, 0) + gap * (images.length - 1);
++    const png = new PNG({ width, height });
++    for (let i = 0; i < width * height; i++) png.data.set([...bg, 255], i * 4);
++    let y = 0;
++    for (const im of images) {
++        PNG.bitblt(im, png, 0, 0, im.width, im.height, 0, y);
++        y += im.height + gap;
++    }
++    return png;
++}
++
++function diff(a, b, threshold = 48) {
++    let n = 0, max = 0, x0 = Infinity, y0 = Infinity, x1 = -1, y1 = -1;
++    const len = Math.min(a.data.length, b.data.length);
++    for (let i = 0; i < len; i += 4) {
++        const d = Math.max(Math.abs(a.data[i] - b.data[i]), Math.abs(a.data[i + 1] - b.data[i + 1]), Math.abs(a.data[i + 2] - b.data[i + 2]));
++        if (d > max) max = d;
++        if (d > threshold) {
++            n++;
++            const x = (i / 4) % a.width, y = Math.floor(i / 4 / a.width);
++            x0 = Math.min(x0, x); y0 = Math.min(y0, y); x1 = Math.max(x1, x); y1 = Math.max(y1, y);
++        }
++    }
++    return { pixels: n, of: len / 4, maxChannelDelta: max, ...(n ? { box: { x: x0, y: y0, width: x1 - x0 + 1, height: y1 - y0 + 1 } } : {}) };
++}
++
++/** Seek every held draw to a share of its own whole (n lines × the clock). */
++const seek = (page, f) =>
++    page.evaluate((f) => {
++        const seen = [];
++        for (const host of document.querySelectorAll("[data-probe]")) {
++            const wins = host.querySelectorAll(".mark-line");
++            if (!wins.length) continue;
++            const anims = host.getAnimations({ subtree: true });
++            const dur = anims[0].effect.getComputedTiming().duration;
++            for (const a of anims) {
++                a.pause();
++                a.currentTime = f * wins.length * dur;
++            }
++            seen.push({ probe: host.dataset.probe, lines: wins.length, dur });
++        }
++        return seen;
++    }, f);
++
++// ── sheet: every row, three mid-draw frames and the rest, per theme and shape ─────────
++async function sheetCell(browser, theme, shape) {
++    const cell = `${theme}-${shape}`;
++    const { context, page, errors } = await open(browser, { query: `scene=sheet&shape=${shape}&hold=1`, theme });
++    try {
++        await page.waitForFunction((MARKS) => document.querySelectorAll('[data-probe][data-ink="draw"]').length >= MARKS, MARKS, { timeout: 20_000 });
++        const face = await page.evaluate(() => window.__face);
++        // What the draw animates, and on which clock: read off the held animations.
++        const clock = await page.evaluate(() => {
++            const anims = document.getAnimations().filter((a) => /^mark-/.test(a.animationName ?? ""));
++            const sp = getComputedStyle(document.querySelector('[data-probe="spring"]'));
++            const props = [...new Set(anims.flatMap((a) => a.effect.getKeyframes().flatMap((k) => Object.keys(k))))].filter((k) => !["offset", "computedOffset", "easing", "composite"].includes(k));
++            const easings = [...new Set(anims.map((a) => getComputedStyle(a.effect.target).animationTimingFunction))];
++            return {
++                animations: anims.length, names: [...new Set(anims.map((a) => a.animationName))], props,
++                durations: [...new Set(anims.map((a) => a.effect.getComputedTiming().duration))],
++                delays: [...new Set(anims.map((a) => a.effect.getComputedTiming().delay))].sort((x, y) => x - y),
++                easingIsPresent: easings.length === 1 && easings[0] === sp.animationTimingFunction,
++                presentDuration: sp.animationDuration,
++            };
++        });
++        const clips = {};
++        for (const row of ROWS) clips[row] = await rowClip(page, row);
++        const frames = Object.fromEntries(ROWS.map((r) => [r, []]));
++        let held = null;
++        for (const f of [0.25, 0.5, 0.75]) {
++            held = await seek(page, f);
++            await page.waitForTimeout(120);
++            for (const row of ROWS) frames[row].push(await shot(page, clips[row]));
++        }
++        // Landed: every copy at its final frame, still in place. Dropping the animation is the
++        // `to` keyframe exactly (no transform), and fires no `animationend`.
++        await page.evaluate(() => {
++            const s = document.createElement("style");
++            s.id = "landed";
++            s.textContent = ".mark-line, .mark-slide { animation-name: none !important; }";
++            document.head.appendChild(s);
++        });
++        await page.waitForTimeout(120);
++        const landed = {};
++        for (const row of ROWS) landed[row] = await shot(page, clips[row]);
++        // Let go: the draws finish, the copies leave, the stylesheet's own mark stands.
++        await page.evaluate(() => {
++            document.getElementById("landed").remove();
++            document.getElementById("hold").remove();
++        });
++        await page.waitForFunction((MARKS) => document.querySelectorAll('[data-probe][data-ink="rest"]').length >= MARKS && window.__draw.drawn.length >= MARKS, MARKS, { timeout: 20_000 });
++        await page.waitForTimeout(200);
++        const swap = {};
++        for (const row of ROWS) {
++            const rest = await shot(page, clips[row]);
++            swap[row] = diff(landed[row], rest);
++            writeFileSync(join(pngDir, `${engine}-${cell}-${row}.png`), PNG.sync.write(stack([...frames[row], rest])));
++            writeFileSync(join(pngDir, `${engine}-${cell}-${row}-rest.png`), PNG.sync.write(rest));
++            if (swap[row].pixels) writeFileSync(join(pngDir, `${engine}-${cell}-${row}-landed.png`), PNG.sync.write(landed[row]));
++        }
++        const plain = await shot(page, await rowClip(page, "plain"));
++        writeFileSync(join(pngDir, `${engine}-${cell}-plain-rest.png`), PNG.sync.write(plain));
++        const left = await page.evaluate(() => ({
++            copies: document.querySelectorAll(".mark-line").length,
++            layers: document.querySelectorAll(".mark-layer").length,
++            drawn: window.__draw.drawn.length,
++        }));
++        out.cells[`sheet-${cell}`] = { face, clock, held, swapLandedVsRest: swap, atRest: left, errors };
++    } finally {
++        await context.close();
++    }
++}
++
++// ── measure: where the ink sits against the run and the font, read off magenta paint ──
++async function measureCell(browser, shape) {
++    const { context, page, errors } = await open(browser, { query: `scene=sheet&shape=${shape}&probeink=1` });
++    try {
++        await page.waitForFunction((MARKS) => window.__draw.drawn.length >= MARKS, MARKS, { timeout: 20_000 });
++        await page.waitForTimeout(200);
++        const marks = await page.evaluate(() => {
++            const cv = document.createElement("canvas").getContext("2d");
++            return [...document.querySelectorAll("[data-probe]")].filter((el) => el.dataset.probe !== "spring").map((el) => {
++                const cs = getComputedStyle(el);
++                const fs = parseFloat(cs.fontSize);
++                // The first line's baseline: a zero-size inline-block sits on it. It is removed
++                // before the lines are read; later lines are placed by the line pitch.
++                const strut = document.createElement("span");
++                strut.style.cssText = "display:inline-block;width:0;height:0;vertical-align:baseline";
++                el.parentNode.insertBefore(strut, el);
++                const base0 = strut.getBoundingClientRect().top;
++                strut.remove();
++                const walk = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
++                const range = document.createRange();
++                const lines = [];
++                for (let n = walk.nextNode(); n; n = walk.nextNode()) {
++                    range.selectNodeContents(n);
++                    for (const r of range.getClientRects()) {
++                        if (r.width <= 0) continue;
++                        const row = lines.find((q) => Math.abs(q.top - r.top) < r.height / 2);
++                        if (row) { row.left = Math.min(row.left, r.left); row.right = Math.max(row.right, r.right); }
++                        else lines.push({ left: r.left, right: r.right, top: r.top, bottom: r.bottom });
++                    }
++                }
++
++                cv.font = `${cs.fontStyle} ${cs.fontWeight} ${fs}px ${cs.fontFamily}`;
++                const m = (s) => cv.measureText(s);
++                const text = el.textContent;
++                const box = el.getBoundingClientRect();
++                return {
++                    probe: el.dataset.probe, fs, text, dir: cs.direction,
++                    lines: lines.sort((a, b) => a.top - b.top).map((l) => ({ ...l, top: l.top + scrollY, bottom: l.bottom + scrollY })),
++                    baseline0: base0 + scrollY,
++                    xHeight: m("x").actualBoundingBoxAscent,
++                    descent: Math.max(...[...text].map((c) => m(c).actualBoundingBoxDescent)),
++                    clip: { x: Math.max(0, Math.floor(box.left - 40)), y: Math.max(0, Math.floor(box.top + scrollY - 20)), width: Math.ceil(box.width + 80), height: Math.ceil(box.height + 40) },
++                    decoration: { line: cs.textDecorationLine, thickness: cs.textDecorationThickness, offset: cs.textUnderlineOffset, skip: cs.textDecorationSkipInk },
++                };
++            });
++        });
++        const rows = [];
++        for (const mk of marks) {
++            const img = await shot(page, mk.clip);
++            const s = img.width / mk.clip.width;
++            const isInk = (x, y) => {
++                const i = (y * img.width + x) * 4;
++                return img.data[i] > 200 && img.data[i + 1] < 90 && img.data[i + 2] > 200;
++            };
++            const perLine = mk.lines.map((ln, k) => {
++                // The band of rows that belongs to this line: its own rect, opened by a third of an em.
++                const y0 = Math.max(0, Math.round((ln.top - mk.clip.y - mk.fs * 0.1) * s));
++                const y1 = Math.min(img.height - 1, Math.round((ln.bottom - mk.clip.y + mk.fs * 0.35) * s));
++                let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
++                const cols = new Uint8Array(img.width);
++                for (let y = y0; y <= y1; y++)
++                    for (let x = 0; x < img.width; x++)
++                        if (isInk(x, y)) { minX = Math.min(minX, x); maxX = Math.max(maxX, x); minY = Math.min(minY, y); maxY = Math.max(maxY, y); cols[x] = 1; }
++                if (minX === Infinity) return { line: k, ink: null };
++                const gaps = [];
++                for (let x = minX, open = -1; x <= maxX + 1; x++) {
++                    if (x <= maxX && !cols[x]) { if (open < 0) open = x; }
++                    else if (open >= 0) { gaps.push({ from: +(open / s + mk.clip.x).toFixed(1), width: +((x - open) / s).toFixed(1) }); open = -1; }
++                }
++                const px = (v) => +v.toFixed(2);
++                const inkLeft = minX / s + mk.clip.x, inkRight = (maxX + 1) / s + mk.clip.x;
++                const inkTop = minY / s + mk.clip.y, inkBottom = (maxY + 1) / s + mk.clip.y;
++                // Line k's baseline: the first line's, plus the pitch between line tops.
++                const baseline = mk.baseline0 + (ln.top - mk.lines[0].top);
++                return {
++                    line: k,
++                    run: { left: px(ln.left), right: px(ln.right) },
++                    ink: { left: px(inkLeft), right: px(inkRight), top: px(inkTop), bottom: px(inkBottom) },
++                    pastStart: px(ln.left - inkLeft), pastEnd: px(inkRight - ln.right),
++                    thickness: px(inkBottom - inkTop), thicknessEm: +((inkBottom - inkTop) / mk.fs).toFixed(3),
++                    topBelowBaseline: px(inkTop - baseline), topBelowBaselineEm: +((inkTop - baseline) / mk.fs).toFixed(3),
++                    bottomBelowBaseline: px(inkBottom - baseline), bottomBelowBaselineEm: +((inkBottom - baseline) / mk.fs).toFixed(3),
++                    gaps,
++                };
++            });
++            rows.push({ probe: mk.probe, text: mk.text, fs: mk.fs, dir: mk.dir, xHeightEm: +(mk.xHeight / mk.fs).toFixed(3), deepestDescentEm: +(mk.descent / mk.fs).toFixed(3), decoration: mk.decoration, lines: perLine });
++            writeFileSync(join(pngDir, `${engine}-measure-${shape}-${mk.probe}.png`), PNG.sync.write(img));
++        }
++        out.cells[`measure-${shape}`] = { marks: rows, errors };
++    } finally {
++        await context.close();
++    }
++}
++
++// ── reads: no layout read in the mount task, none per frame of the draw ───────────────
++async function readsCell(browser, shape) {
++    const { context, page, errors } = await open(browser, { query: `scene=sheet&shape=${shape}` });
++    try {
++        await page.waitForFunction((MARKS) => window.__draw.drawn.length >= MARKS, MARKS, { timeout: 20_000 });
++        const r = await page.evaluate(() => {
++            const d = window.__draw, reads = window.__reads;
++            const tally = (list) => list.reduce((m, x) => ((m[x.api] = (m[x.api] ?? 0) + 1), m), {});
++            const lastDrawn = Math.max(...d.drawn);
++            return {
++                draw: { start: d.start, landed: d.landed, drawn: d.drawn, started: d.started, ended: d.ended },
++                inMountTask: tally(reads.filter((x) => x.phase === "mount")),
++                beforeFirstDrawFrame: tally(reads.filter((x) => x.phase !== "mount" && x.phase !== "load" && x.t <= d.start)),
++                duringDraw: tally(reads.filter((x) => x.t > d.start && x.t < d.landed)),
++                landedToDrawn: tally(reads.filter((x) => x.t >= d.landed && x.t <= lastDrawn)),
++                total: reads.length,
++            };
++        });
++        out.cells[`reads-${shape}`] = { ...r, errors };
++    } finally {
++        await context.close();
++    }
++}
++
++// ── still: reduced motion, print, forced colours, no script ───────────────────────────
++async function stillCell(browser, mode, shape) {
++    const opts = mode === "reduced-motion" ? { reducedMotion: "reduce" } : mode === "print" ? { media: "print" } : { forcedColors: "active" };
++    const { context, page, errors } = await open(browser, { query: `scene=sheet&shape=${shape}`, ...opts });
++    try {
++        const frame0 = await page.evaluate(() => ({
++            ink: [...document.querySelectorAll("[data-probe]")].filter((e) => e.dataset.probe !== "spring").map((e) => e.dataset.ink),
++            copies: document.querySelectorAll(".mark-line").length,
++            running: document.getAnimations().filter((a) => /^mark-/.test(a.animationName ?? "")).length,
++            decoration: [...document.querySelectorAll('[data-probe="h85"], [data-probe="google"]')].map((e) => {
++                const cs = getComputedStyle(e);
++                return { line: cs.textDecorationLine, color: cs.textDecorationColor, background: cs.backgroundColor, text: cs.color };
++            }),
++        }));
++        await page.waitForTimeout(400);
++        const drawn = await page.evaluate(() => window.__draw.drawn.length);
++        const imgs = [];
++        for (const row of ["h85", "body", "wrap"]) imgs.push(await shot(page, await rowClip(page, row)));
++        writeFileSync(join(pngDir, `${engine}-${mode}-${shape}.png`), PNG.sync.write(stack(imgs)));
++        out.cells[`still-${mode}-${shape}`] = { frame0, drawn, errors };
++    } finally {
++        await context.close();
++    }
++}
++
++async function noScriptCell(browser, theme) {
++    const context = await browser.newContext({ viewport: { width: 1000, height: 700 }, deviceScaleFactor: 2, colorScheme: theme, javaScriptEnabled: false });
++    try {
++        const page = await context.newPage();
++        await page.goto(pathToFileURL(join(HERE, "static.html")).href, { waitUntil: "load" });
++        await page.waitForTimeout(300);
++        writeFileSync(join(pngDir, `${engine}-noscript-${theme}.png`), await page.screenshot({ clip: { x: 0, y: 0, width: 700, height: 640 } }));
++        await page.emulateMedia({ media: "print" });
++        writeFileSync(join(pngDir, `${engine}-noscript-print-${theme}.png`), await page.screenshot({ clip: { x: 0, y: 0, width: 700, height: 640 } }));
++        out.cells[`noscript-${theme}`] = { script: false, url: "static.html (file://)" };
++    } finally {
++        await context.close();
++    }
++}
++
++// ── stall: the draw keeps painting through a 50 ms main-thread task at a 4× throttle ──
++function decode(frame) {
++    const img = jpegjs.decode(frame.data, { useTArray: true });
++    return { width: img.width, height: img.height, data: img.data, scale: img.width / frame.viewportWidth };
++}
++function crop(img, r) {
++    const s = img.scale;
++    const x0 = Math.round(r.x * s), y0 = Math.round(r.y * s);
++    const w = Math.min(img.width - x0, Math.round(r.width * s)), h = Math.min(img.height - y0, Math.round(r.height * s));
++    const png = new PNG({ width: w, height: h });
++    for (let y = 0; y < h; y++)
++        for (let x = 0; x < w; x++) {
++            const i = ((y0 + y) * img.width + x0 + x) * 4, o = (y * w + x) * 4;
++            png.data[o] = img.data[i]; png.data[o + 1] = img.data[i + 1]; png.data[o + 2] = img.data[i + 2]; png.data[o + 3] = 255;
++        }
++    return png;
++}
++function markerOf(img) {
++    const s = img.scale, i = (Math.round(10 * s) * img.width + Math.round(10 * s)) * 4;
++    const [r, g, b] = [img.data[i], img.data[i + 1], img.data[i + 2]];
++    if (r > 180 && g < 90 && b < 90) return "A";
++    if (b > 180 && r < 90 && g < 90) return "B";
++    if (g > 140 && r < 90 && b < 90) return "C";
++    return "-";
++}
++
++async function stallCell(browser, theme, shape, taskMs = 50) {
++    const cell = `${theme}-${shape}`;
++    const W = 800, H = 400;
++    const { context, page, errors } = await open(browser, { query: `scene=stall&shape=${shape}`, theme, width: W, height: H, dpr: 1, throttle: 4 });
++    const frames = [];
++    let trace = null;
++    try {
++        if (engine === "chromium") await browser.startTracing(page, { categories: ["devtools.timeline", "blink.user_timing", "disabled-by-default-devtools.timeline.frame"] });
++        await page.screencast.start({ onFrame: (f) => frames.push({ ts: f.timestamp, data: f.data, viewportWidth: f.viewportWidth }), size: { width: W, height: H }, quality: 90 });
++        await page.waitForTimeout(400);
++        const before = frames.length;
++        // The page does nothing but mount, wait 40 ms into the draw, and block: no polling and
++        // no reads, so the trace of the draw window holds the draw's own cost and the task.
++        const run = await page.evaluate((TASK) => new Promise((done) => {
++            document.addEventListener("animationstart", function on(e) {
++                if (e.animationName !== "mark-window") return;
++                document.removeEventListener("animationstart", on, true);
++                setTimeout(() => requestAnimationFrame(() => {
++                    // Marker A paints in this frame, the last before the task. The task runs as
++                    // the next task and sets marker B first, which can only paint once it ends.
++                    window.__marker("rgb(255, 0, 0)");
++                    setTimeout(() => {
++                        window.__marker("rgb(0, 0, 255)");
++                        const t0 = performance.now();
++                        performance.mark("task-start");
++                        while (performance.now() - t0 < TASK) { /* the injected main-thread task */ }
++                        performance.mark("task-end");
++                        const t1 = performance.now();
++                        setTimeout(() => {
++                            const d = window.__draw;
++                            done({
++                                taskMs: +(t1 - t0).toFixed(1), taskAt: +(t0 - d.start).toFixed(1),
++                                draw: { wallMs: +(d.landed - d.start).toFixed(1), landedToDrawnMs: +(d.drawn[0] - d.landed).toFixed(1), drawn: d.drawn.length },
++                                readsDuringDraw: window.__reads.filter((x) => x.t > d.start && x.t < d.landed).length,
++                                readsInMountTask: window.__reads.filter((x) => x.phase === "mount").length,
++                                readsBeforeDraw: window.__reads.filter((x) => x.phase !== "mount" && x.t <= d.start).map((x) => x.api),
++                            });
++                        }, 900);
++                    }, 0);
++                }), 40);
++            }, true);
++            window.__mount();
++        }), taskMs);
++        await page.waitForTimeout(300);
++        await page.screencast.stop();
++        if (engine === "chromium") trace = JSON.parse((await browser.stopTracing()).toString());
++        const region = await page.evaluate(() => {
++            const r = document.querySelector('[data-probe="mark"]').getBoundingClientRect();
++            return { x: Math.floor(r.left - 8), y: Math.floor(r.top - 4), width: Math.ceil(r.width + 16), height: Math.ceil(r.height + 20) };
++        });
++        const refCrop = crop(decode(frames[Math.max(0, before - 1)]), region);
++        const fin = crop(decode(frames[frames.length - 1]), region);
++        const full = diff(fin, refCrop).pixels || 1;
++        const CTL = { x: 30, y: 0, width: 220, height: 20 };
++        const seq = frames.map((f, i) => {
++            const img = decode(f);
++            const c = crop(img, region);
++            return { i, ts: f.ts, m: markerOf(img), p: diff(c, refCrop).pixels / full, c, ctl: crop(img, CTL) };
++        });
++        const aFrames = seq.filter((s) => s.m === "A");
++        const inTask = aFrames.slice(1);
++        const first = aFrames[0], last = aFrames[aFrames.length - 1];
++        const controlMoved = first ? inTask.some((s) => diff(s.ctl, first.ctl).pixels > 20) : false;
++        const afterTask = seq.find((s) => s.m === "B");
++        const strip = [first, ...inTask, afterTask].filter(Boolean);
++        if (strip.length) writeFileSync(join(pngDir, `${engine}-stall-${cell}.png`), PNG.sync.write(stack(strip.map((s) => s.c), 3)));
++        // Frames the reader got across the whole draw: from the first frame with ink to the first whole one.
++        const i0 = seq.findIndex((s, k) => k >= before && s.p > 0.01);
++        const i1 = seq.findIndex((s, k) => k >= before && s.p >= 0.99);
++        const drawFrames = i0 >= 0 && i1 >= 0 ? seq.slice(i0, i1 + 1) : [];
++        const gaps = drawFrames.slice(1).map((s, k) => +((s.ts - drawFrames[k].ts) * (s.ts > 1e6 ? 1 : 1000)).toFixed(1));
++
++        let traced = null;
++        if (trace) {
++            const ev = trace.traceEvents ?? trace;
++            const at = (name) => ev.filter((e) => e.name === name && e.cat?.includes("blink.user_timing")).map((e) => e.ts);
++            const start = Math.min(...at("mark-draw-start")), landed = Math.max(...at("mark-line-landed")), drawn = Math.max(...at("mark-drawn"));
++            const mainTid = ev.find((e) => e.name === "mark-draw-start")?.tid;
++            const tally = (lo, hi) => {
++                const m = {};
++                for (const e of ev) {
++                    if (e.ph !== "X" || e.ts < lo || e.ts >= hi) continue;
++                    if (!["Layout", "UpdateLayoutTree", "PrePaint", "Paint", "Layerize", "Commit", "FunctionCall", "FireAnimationFrame", "EventDispatch", "TimerFire", "RunTask", "ParseHTML", "HitTest"].includes(e.name)) continue;
++                    if (e.tid !== mainTid) continue;
++                    const k = (m[e.name] ??= { count: 0, ms: 0 });
++                    k.count++;
++                    k.ms = +(k.ms + (e.dur ?? 0) / 1000).toFixed(2);
++                }
++                return m;
++            };
++            const frameEvents = (lo, hi) => {
++                const m = {};
++                for (const e of ev) if (e.ts >= lo && e.ts < hi && ["DrawFrame", "BeginFrame", "ActivateLayerTree", "BeginMainThreadFrame", "NeedsBeginFrameChanged"].includes(e.name)) m[e.name] = (m[e.name] ?? 0) + 1;
++                return m;
++            };
++            traced = {
++                drawMs: +((landed - start) / 1000).toFixed(1), landedToDrawnMs: +((drawn - landed) / 1000).toFixed(1),
++                mainThreadDuringDraw: tally(start, landed), frameEventsDuringDraw: frameEvents(start, landed),
++                mainThreadLandedToDrawn: tally(landed, drawn),
++            };
++        }
++        out.cells[`stall-${cell}`] = {
++            throttle: engine === "chromium" ? 4 : null, run, region,
++            framesInTask: inTask.length, controlMoved,
++            progressAtTaskStart: first ? +first.p.toFixed(3) : null,
++            progressInTask: inTask.map((s) => +s.p.toFixed(3)),
++            progressFirstFrameAfterTask: afterTask ? +afterTask.p.toFixed(3) : null,
++            rise: inTask.length ? +(last.p - first.p).toFixed(3) : 0,
++            screencastFramesAcrossDraw: drawFrames.length, screencastFrameGapsMs: gaps,
++            progressAcrossDraw: drawFrames.map((s) => +s.p.toFixed(3)),
++            drawnMarkerSeen: seq.some((s) => s.m === "C"),
++            progressFromDrawnOn: seq.filter((s) => s.m === "C").map((s) => +s.p.toFixed(3)),
++            trace: traced, errors,
++        };
++    } finally {
++        await context.close();
++    }
++}
++
++// ── cycle: a mark below the fold waits; retrigger redraws; play() redraws ─────────────
++async function cycleCell(browser, shape) {
++    const state = (page) => page.evaluate(() => ({
++        ink: document.querySelector('[data-probe="mark"]').dataset.ink,
++        drawn: window.__draw.drawn.length, started: window.__draw.started,
++        copies: document.querySelectorAll(".mark-line").length,
++    }));
++    const settle = (page, n) => page.waitForFunction((n) => window.__draw.drawn.length >= n, n, { timeout: 10_000 });
++    const res = {};
++    {
++        const { context, page, errors } = await open(browser, { query: `scene=stall&shape=${shape}&fold=1`, width: 800, height: 400, dpr: 1 });
++        try {
++            await page.evaluate(() => window.__mount());
++            await page.waitForTimeout(700);
++            res.belowFoldAfter700ms = await state(page);
++            await page.evaluate(() => document.querySelector('[data-probe="mark"]').scrollIntoView({ block: "center" }));
++            await settle(page, 1);
++            await page.waitForTimeout(100);
++            res.afterScrollTo = await state(page);
++            res.errors = errors;
++        } finally {
++            await context.close();
++        }
++    }
++    {
++        const { context, page, errors } = await open(browser, { query: `scene=stall&shape=${shape}&retrigger=1`, width: 800, height: 400, dpr: 1 });
++        try {
++            await page.evaluate(() => window.__mount());
++            await settle(page, 1);
++            await page.waitForTimeout(100);
++            res.retriggerFirst = await state(page);
++            await page.evaluate(() => scrollTo(0, 700));
++            await page.waitForTimeout(400);
++            res.retriggerScrolledAway = await state(page);
++            await page.evaluate(() => scrollTo(0, 0));
++            await settle(page, 2);
++            await page.waitForTimeout(100);
++            res.retriggerBack = await state(page);
++            await page.evaluate(() => window.__play());
++            await settle(page, 3);
++            await page.waitForTimeout(100);
++            res.afterPlay = await state(page);
++            res.errors2 = errors;
++        } finally {
++            await context.close();
++        }
++    }
++    out.cells[`cycle-${shape}`] = res;
++}
++
++const browser = await launch();
++out.version = browser.version();
++let code = 0;
++try {
++    if (modes.has("sheet")) for (const theme of ["light", "dark"]) for (const shape of ["underline", "highlight"]) await sheetCell(browser, theme, shape);
++    if (modes.has("measure")) for (const shape of ["underline", "highlight"]) await measureCell(browser, shape);
++    if (modes.has("reads")) for (const shape of ["underline", "highlight"]) await readsCell(browser, shape);
++    if (modes.has("still")) {
++        for (const shape of ["underline", "highlight"]) {
++            await stillCell(browser, "reduced-motion", shape);
++            await stillCell(browser, "print", shape);
++            if (engine === "chromium") await stillCell(browser, "forced-colors", shape);
++        }
++        for (const theme of ["light", "dark"]) await noScriptCell(browser, theme);
++    }
++    if (modes.has("cycle")) for (const shape of ["underline", "highlight"]) await cycleCell(browser, shape);
++    if (modes.has("stall")) for (const theme of ["light", "dark"]) for (const shape of ["underline", "highlight"]) await stallCell(browser, theme, shape);
++} catch (e) {
++    code = 1;
++    out.error = String(e?.stack ?? e);
++    console.error(e);
++} finally {
++    await browser.close();
++    writeFileSync(join(outDir, `${engine}-${[...modes].join("+")}.json`), JSON.stringify(out, null, 1));
++}
++console.log(`${engine} ${[...modes].join(",")} exit ${code}`);
++process.exit(code);
+diff --git a/proto/marks-a/run.sh b/proto/marks-a/run.sh
+new file mode 100755
+index 000000000..6e5c226df
+--- /dev/null
++++ b/proto/marks-a/run.sh
+@@ -0,0 +1,22 @@
++#!/usr/bin/env bash
++# One guarded browser run: serve the worktree with vite on <port>, run probe.mjs and then
++# skip.mjs in <engine> (one browser each, one after the other), and stop the server.
++#   run.sh <port> <engine> <out-dir> [modes]
++set -u
++PORT=$1; ENGINE=$2; OUT=$3; MODES=${4:-sheet,measure,reads,still,stall}
++HERE=$(cd "$(dirname "$0")" && pwd)
++TREE=$(cd "$HERE/../.." && pwd)
++mkdir -p "$OUT"
++( cd "$TREE" && exec npx vite --host 127.0.0.1 --port "$PORT" --strictPort ) > "$OUT/$ENGINE-server.log" 2>&1 &
++SRV=$!
++trap 'kill $SRV 2>/dev/null; wait $SRV 2>/dev/null' EXIT
++for i in $(seq 1 90); do
++  curl -sf "http://127.0.0.1:$PORT/proto/marks-a/index.html" > /dev/null && break
++  kill -0 $SRV 2>/dev/null || { echo "server exited early"; exit 3; }
++  sleep 2
++done
++RC=0
++if [ "$MODES" != "skip-only" ]; then cd "$HERE" && node "$HERE/probe.mjs" "$ENGINE" "http://127.0.0.1:$PORT" "$OUT" "$MODES"; RC=$?; fi
++# The skip-ink sweep, on the same server (its glass-sheet rows are the fixture page).
++if [ "${SKIP:-1}" = "1" ]; then node "$HERE/skip.mjs" "$ENGINE" "$OUT" "http://127.0.0.1:$PORT" > "$OUT/$ENGINE-skip.txt" 2>&1 || RC=$?; fi
++exit $RC
+diff --git a/proto/marks-a/skip.html b/proto/marks-a/skip.html
+new file mode 100644
+index 000000000..83eb400fa
+--- /dev/null
++++ b/proto/marks-a/skip.html
+@@ -0,0 +1,19 @@
++<!doctype html>
++<html lang="en">
++<head>
++  <meta charset="utf-8" />
++  <title>Skip-ink by sub-pixel position</title>
++  <!-- Does the engine's skip-ink hold at every sub-pixel line position? Each row sits an
++       sixty-fourth of a pixel lower than the last. No script. -->
++  <style>
++    @font-face { font-family: "Plus Jakarta Sans"; font-weight: 200 800; src: url("../../src/fonts/plus-jakarta-sans/plus-jakarta-sans-latin.woff2") format("woff2"); }
++    :root { --primary: #ff00ff; }
++    body { margin: 0; padding: 20px; background: #fff; color: #111; font-family: "Plus Jakarta Sans", sans-serif; }
++    p { margin: 0; font-size: 16px; line-height: 24px; white-space: nowrap; }
++    h1 { margin: 0; font-size: 85px; font-weight: 800; line-height: 100px; white-space: nowrap; }
++    .step { height: 0.015625px; }
++  </style>
++  <link rel="stylesheet" href="../../src/components/mark/mark.css" />
++</head>
++<body></body>
++</html>
+diff --git a/proto/marks-a/skip.mjs b/proto/marks-a/skip.mjs
+new file mode 100644
+index 000000000..653fead1d
+--- /dev/null
++++ b/proto/marks-a/skip.mjs
+@@ -0,0 +1,109 @@
++// How often does the engine's own skip-ink open a gap at a descender, across sub-pixel
++// line positions? 64 rows per case, each 1/64 px lower than the last, read off magenta paint.
++//   node skip.mjs <chromium|webkit> <out-dir>
++import { chromium, webkit } from "playwright";
++import { createRequire } from "node:module";
++import { existsSync, readFileSync, writeFileSync, mkdirSync } from "node:fs";
++import { homedir } from "node:os";
++import { dirname, join } from "node:path";
++import { fileURLToPath, pathToFileURL } from "node:url";
++const require = createRequire(import.meta.url);
++const { PNG } = require(join(dirname(require.resolve("playwright-core")), "lib/utilsBundle.js"));
++const [engine, outDir, base = ""] = process.argv.slice(2);
++mkdirSync(join(outDir, "png"), { recursive: true });
++const HERE = dirname(fileURLToPath(import.meta.url));
++const WEBKIT_2287 = join(homedir(), "Library/Caches/ms-playwright/webkit-2287/pw_run.sh");
++const browser = await (engine === "webkit" ? webkit.launch(existsSync(WEBKIT_2287) ? { executablePath: WEBKIT_2287 } : {}) : chromium.launch());
++const out = { engine, version: browser.version(), cells: {} };
++const N = 64;
++const STEP = 1 / 64;
++const html = readFileSync(join(HERE, "skip.html"), "utf8");
++const body = (tag, text, style = "", attrs = "", prefix = "") => Array.from({ length: N }, (_, i) => `<div class="step"></div><${tag} data-i="${i}" style="${style}">${prefix}<span class="mark-underline"${attrs}>${text}</span></${tag}>`).join("");
++const CASES = [
++    { id: "body-16-Wake-County", tag: "p", text: "Wake County", expect: 1 },
++    { id: "body-16-Google", tag: "p", text: "Google", expect: 1 },
++    { id: "h1-85-4,485", tag: "h1", text: "4,485", expect: 1 },
++    { id: "body-16-Wake-County-offset-0.3em", tag: "p", text: "Wake County", style: "--mark-offset:0.3em", expect: 0 },
++    { id: "body-16-mid-line-Wake-County", tag: "p", text: "Wake County", prefix: "Most visitors came from ", expect: 1 },
++    { id: "body-16-mid-line-Google", tag: "p", text: "Google", prefix: "Most visitors came from Wake County and found the museum through ", expect: 1 },
++    // The same rows inside glass's own stylesheet (the fixture page; needs the dev server).
++    ...(base ? [
++        { id: "glass-sheet-mid-line-Wake-County", live: true, tag: "p", text: "Wake County", prefix: "Most visitors came from ", expect: 1 },
++        { id: "glass-sheet-mid-line-Google", live: true, tag: "p", text: "Google", prefix: "Most visitors came from Wake County and found the museum through ", expect: 1 },
++        { id: "glass-sheet-line-start-Wake-County", live: true, tag: "p", text: "Wake County", prefix: "", expect: 1 },
++        { id: "glass-sheet-h1-85-4,485", live: true, tag: "h1", text: "4,485", prefix: "", size: 85, weight: 800, lh: 100, expect: 1 },
++        { id: "glass-sheet-22-through", live: true, tag: "p", text: "rose through", prefix: "Attendance ", size: 22, lh: 30, expect: 1 },
++        // The offset ladder: where does the engine's skip hold at every position, and where does the line clear?
++        // The default offset across sizes.
++        ...[13, 14, 15, 18, 20, 24, 32].flatMap((size) => [
++            { id: `glass-sheet-${size}px-Wake-County`, live: true, tag: "p", text: "Wake County", prefix: "Most visitors came from ", size, lh: Math.round(size * 1.5), expect: 1 },
++            { id: `glass-sheet-${size}px-Google`, live: true, tag: "p", text: "Google", prefix: "Most visitors came from ", size, lh: Math.round(size * 1.5), expect: 1 },
++        ]),
++        { id: "glass-sheet-16px-800-4,485", live: true, tag: "p", text: "4,485", prefix: "counted ", weight: 800, expect: 1 },
++        { id: "glass-sheet-h1-48-4,485", live: true, tag: "h1", text: "4,485", prefix: "", size: 48, weight: 800, lh: 56, expect: 1 },
++        { id: "glass-sheet-h1-112-4,485", live: true, tag: "h1", text: "4,485", prefix: "", size: 112, weight: 800, lh: 124, expect: 1 },
++        ...["0.04em", "0.06em", "0.08em", "0.1em", "0.12em", "0.14em", "0.16em", "0.2em", "0.22em", "0.25em"].flatMap((offset) => [
++            { id: `glass-sheet-offset-${offset}-Wake-County`, live: true, tag: "p", text: "Wake County", prefix: "Most visitors came from ", offset, expect: 1 },
++            { id: `glass-sheet-offset-${offset}-Google`, live: true, tag: "p", text: "Google", prefix: "Most visitors came from ", offset, expect: 1 },
++        ]),
++    ] : []),
++    // As the component leaves a run at rest: the same class, with data-ink="rest".
++    { id: "body-16-Wake-County-data-ink-rest", tag: "p", text: "Wake County", attrs: ' data-ink="rest"', expect: 1 },
++    { id: "body-16-Google-data-ink-rest", tag: "p", text: "Google", attrs: ' data-ink="rest"', expect: 1 },
++];
++try {
++    for (const dpr of [1, 2]) {
++        if (dpr === 1 && process.env.SKIP_DPR1) continue;
++        for (const c of CASES) {
++            const context = await browser.newContext({ viewport: { width: 700, height: Math.ceil(64 * ((c.lh ?? (c.tag === "h1" ? 100 : 24)) + 1) + 60) }, deviceScaleFactor: dpr, javaScriptEnabled: !!c.live });
++            try {
++                const page = await context.newPage();
++                await page.route("**/skip-case.html", (r) => r.fulfill({ contentType: "text/html", body: html.replace("<body></body>", `<body>${body(c.tag, c.text, c.style, c.attrs, c.prefix)}</body>`) }));
++                // Served from the fixture's own folder so the font and the stylesheet resolve.
++                if (c.live) {
++                    await page.goto(`${base}/proto/marks-a/index.html?scene=sweep&probeink=1&prefix=${encodeURIComponent(c.prefix)}&text=${encodeURIComponent(c.text)}&size=${c.size ?? 16}&weight=${c.weight ?? 400}&lh=${c.lh ?? 24}${c.offset ? `&offset=${c.offset}` : ""}`, { waitUntil: "load" });
++                    await page.waitForFunction(() => window.__ready === true, null, { timeout: 60_000 });
++                } else await page.goto(pathToFileURL(join(HERE, "skip-case.html")).href, { waitUntil: "load" });
++                await page.waitForTimeout(500);
++                const png = PNG.sync.read(await page.screenshot());
++                const rowH = (c.lh ?? (c.tag === "h1" ? 100 : 24)) + STEP;
++                const rows = [], crossed = [];
++                for (let i = 0; i < N; i++) {
++                    const y0 = Math.round((20 + STEP + i * rowH) * dpr), y1 = Math.round((20 + STEP + (i + 1) * rowH) * dpr);
++                    const cols = new Uint8Array(png.width);
++                    let lo = Infinity, hi = -1;
++                    for (let y = y0; y < y1 && y < png.height; y++)
++                        for (let x = 0; x < png.width; x++) {
++                            const k = (y * png.width + x) * 4;
++                            if (png.data[k] > 200 && png.data[k + 1] < 90 && png.data[k + 2] > 200) { cols[x] = 1; lo = Math.min(lo, x); hi = Math.max(hi, x); }
++                        }
++                    let gaps = 0;
++                    for (let x = lo, open = false; x <= hi; x++) { if (!cols[x] && !open) { gaps++; open = true; } else if (cols[x]) open = false; }
++                    rows.push(hi < 0 ? null : gaps);
++                    // Crossed: a column that holds both the line's ink and a glyph's, inside the
++                    // line's own rows. A skipped or cleared descender leaves no such column.
++                    let m0 = Infinity, m1 = -1;
++                    for (let y = y0; y < y1 && y < png.height; y++) for (let x = lo; x <= hi; x++) { const k = (y * png.width + x) * 4; if (png.data[k] > 200 && png.data[k + 1] < 90 && png.data[k + 2] > 200) { m0 = Math.min(m0, y); m1 = Math.max(m1, y); } }
++                    let cross = 0;
++                    for (let x = lo; x <= hi; x++) {
++                        if (!cols[x]) continue;
++                        for (let y = m0; y <= m1; y++) { const k = (y * png.width + x) * 4; if (png.data[k] + png.data[k + 1] + png.data[k + 2] < 180) { cross++; break; } }
++                    }
++                    crossed.push(hi < 0 ? null : cross);
++                }
++                const tally = rows.reduce((m, g) => ((m[g] = (m[g] ?? 0) + 1), m), {});
++                out.cells[`${c.id}@${dpr}x`] = {
++                    rows: N, gapsPerRow: rows.join(""), tally, descendersInRun: c.expect,
++                    rowsCrossed: crossed.filter((n) => n > 0).length, crossedColumnsPerRow: crossed.join(","),
++                };
++                if (dpr === 2) writeFileSync(join(outDir, "png", `${engine}-skip-${c.id.replace(/[^\w.-]/g, "_")}.png`), PNG.sync.write((() => { const h = Math.min(png.height, Math.round((20 + 8 * rowH) * dpr)); const o = new PNG({ width: Math.min(png.width, 700), height: h }); PNG.bitblt(png, o, 0, 0, o.width, h, 0, 0); return o; })()));
++            } finally {
++                await context.close();
++            }
++        }
++    }
++} finally {
++    await browser.close();
++    writeFileSync(join(outDir, `${engine}-skip.json`), JSON.stringify(out, null, 1));
++}
++for (const [k, v] of Object.entries(out.cells)) console.log(engine, k, "gaps", JSON.stringify(v.tally), "rows crossed", v.rowsCrossed);
+diff --git a/proto/marks-a/static.html b/proto/marks-a/static.html
+new file mode 100644
+index 000000000..2a91097b1
+--- /dev/null
++++ b/proto/marks-a/static.html
+@@ -0,0 +1,24 @@
++<!doctype html>
++<html lang="en">
++<head>
++  <meta charset="utf-8" />
++  <title>Mark, no script</title>
++  <!-- The plain-CSS mark: this page runs no script at all. The only glass token the two
++       classes read is --primary, given here as glass's light and dark values. -->
++  <style>
++    :root { color-scheme: light dark; --primary: light-dark(hsl(24 10% 10%), hsl(40 20% 92%)); }
++    body { margin: 0; padding: 40px 32px; font: 400 16px/1.5 system-ui, sans-serif; background: light-dark(#f6efe2, #1b1815); color: var(--primary); }
++    h1 { margin: 0 0 28px; font-size: 85px; font-weight: 800; line-height: 1.05; }
++    p { margin: 0 0 20px; }
++    .wrap { font-size: 22px; line-height: 1.35; width: 300px; }
++  </style>
++  <link rel="stylesheet" href="../../src/components/mark/mark.css" />
++</head>
++<body>
++  <h1 data-row="h85"><span class="mark-underline">4,485</span> visits</h1>
++  <h1 data-row="h85b"><mark class="mark-highlight">4,485</mark> visits</h1>
++  <p data-row="body">Most visitors came from <span class="mark-underline">Wake County</span> and found the museum through <mark class="mark-highlight">Google</mark>.</p>
++  <p data-row="wrap" class="wrap">Attendance <span class="mark-underline">rose through September and held through the last week of October</span>, the longest run on record.</p>
++  <p data-row="ssr" class="wrap">As a server renders the component, waiting: <span class="mark-underline" data-ink="wait">drawn where no script runs<span class="mark-layer" aria-hidden="true"></span></span>.</p>
++</body>
++</html>
+diff --git a/scripts/lib/subpath-policy.mjs b/scripts/lib/subpath-policy.mjs
+index 23c7b2c56..1623c6d1b 100644
+--- a/scripts/lib/subpath-policy.mjs
++++ b/scripts/lib/subpath-policy.mjs
+@@ -103,7 +103,7 @@ export const COMPONENT_CLASS = {
+     easing: "PUBLISH", "expandable-container": "PUBLISH",
+     // BI.W-GLASS-DEDUP retired glass-panel (FAM-10; the Surface/Card axis is the one plate).
+     "fading-scroll": "PUBLISH", "fourier-field": "PUBLISH",
+-    blob: "PUBLISH", handmark: "PUBLISH",
++    blob: "PUBLISH", handmark: "PUBLISH", mark: "PUBLISH",
+     // BI.W-OVERLAY-UNION retired hover-popover (folded onto <Popover trigger="hover">).
+     "labeled-field": "PUBLISH",
+     metric: "PUBLISH",
+diff --git a/src/components/mark/Mark.vue b/src/components/mark/Mark.vue
+new file mode 100644
+index 000000000..20bbb3fc9
+--- /dev/null
++++ b/src/components/mark/Mark.vue
+@@ -0,0 +1,215 @@
++<!--
++  Mark — the draw for a typographic mark.
++
++  The mark itself is CSS (`mark.css`): a text decoration the browser places from the
++  glyphs and the font. This component adds one thing, the draw. When the run is first
++  seen it copies each line of the run into a clipped window, the copy carrying the same
++  class with transparent glyphs, and slides the window open on the `present` spring.
++  When the last line lands the copies are removed and the run's own decoration shows.
++  At rest the component holds no geometry, no observer and no listener.
++-->
++<script lang="ts">
++/** Where a draw can run: the stylesheet's own media condition (`mark.css`). */
++const MOTION =
++    "screen and (prefers-reduced-motion: no-preference) and (scripting: enabled) and (forced-colors: none)";
++
++/**
++ * One observer for every waiting mark. Its callback runs after layout, so reads there
++ * force none. Each mark reads first and hands back its writes; the writes run after every
++ * mark in the batch has read, so one mark's copies never dirty layout under another's reads.
++ */
++type Entered = (entry: IntersectionObserverEntry) => (() => void) | void;
++const seen = new WeakMap<Element, Entered>();
++let io: IntersectionObserver | null = null;
++function watch(el: Element, fn: Entered): void {
++    io ??= new IntersectionObserver(
++        (entries) => entries.map((e) => seen.get(e.target)?.(e)).forEach((write) => write?.()),
++        { threshold: [0, 0.5] },
++    );
++    seen.set(el, fn);
++    io.observe(el);
++}
++function unwatch(el: Element): void {
++    seen.delete(el);
++    io?.unobserve(el);
++}
++
++interface Line {
++    rect: DOMRect;
++    range: Range;
++}
++
++/**
++ * The run's line fragments, each with the range of text it holds. One fragment is the
++ * whole run. A wrapped run is walked once, a character at a time, and each character
++ * joins the fragment its box sits in.
++ */
++function lines(host: HTMLElement, layer: HTMLElement): Line[] {
++    const rects = Array.from(host.getClientRects()).filter((r) => r.width > 0 && r.height > 0);
++    if (rects.length === 0) return [];
++    if (rects.length === 1) {
++        const range = document.createRange();
++        range.selectNodeContents(host);
++        range.setEndBefore(layer);
++        return [{ rect: rects[0], range }];
++    }
++    const out: (Line | null)[] = rects.map(() => null);
++    const walk = document.createTreeWalker(host, NodeFilter.SHOW_TEXT);
++    const probe = document.createRange();
++    for (let n = walk.nextNode(); n; n = walk.nextNode()) {
++        if (layer.contains(n)) continue;
++        const len = (n as Text).length;
++        for (let i = 0; i < len; i++) {
++            probe.setStart(n, i);
++            probe.setEnd(n, i + 1);
++            const c = probe.getClientRects()[0];
++            if (!c || c.width === 0) continue;
++            const x = c.left + c.width / 2;
++            const y = c.top + c.height / 2;
++            const k = rects.findIndex((r) => x >= r.left && x <= r.right && y >= r.top && y <= r.bottom);
++            if (k < 0) continue;
++            const line = (out[k] ??= { rect: rects[k], range: document.createRange() });
++            if (line.range.collapsed && line.range.startContainer === document) line.range.setStart(n, i);
++            line.range.setEnd(n, i + 1);
++        }
++    }
++    return out.filter((l): l is Line => l !== null);
++}
++
++/** The line's text, with the inline markup between it and the host put back around it. */
++function copyOf(host: HTMLElement, range: Range): HTMLElement {
++    let content: Node = range.cloneContents();
++    let a: Node | null = range.commonAncestorContainer;
++    if (a.nodeType === Node.TEXT_NODE) a = a.parentNode;
++    for (; a && a !== host; a = a.parentNode) {
++        const wrap = a.cloneNode(false);
++        wrap.appendChild(content);
++        content = wrap;
++    }
++    const copy = host.cloneNode(false) as HTMLElement;
++    copy.removeAttribute("data-ink");
++    copy.removeAttribute("id");
++    copy.appendChild(content);
++    return copy;
++}
++</script>
++
++<script setup lang="ts">
++import "./mark.css";
++import { onBeforeUnmount, onMounted, ref } from "vue";
++
++const props = withDefaults(
++    defineProps<{
++        shape?: "underline" | "highlight";
++        /** Draw the mark in when it is first seen. Off, it stands drawn. */
++        draw?: boolean;
++        /** Undraw on leaving the viewport and draw again on each entry. */
++        retrigger?: boolean;
++    }>(),
++    { shape: "underline", draw: true, retrigger: false },
++);
++
++const emit = defineEmits<{
++    /** The mark stands complete: once per draw, one frame after its last line lands. */
++    drawn: [];
++}>();
++
++const root = ref<HTMLElement | null>(null);
++const layer = ref<HTMLElement | null>(null);
++/** `wait` holds the ink back, `draw` runs the copies, `rest` is the stylesheet alone. */
++const ink = ref<"wait" | "draw" | "rest">(props.draw ? "wait" : "rest");
++
++let pending = 0;
++let query: MediaQueryList | null = null;
++
++const still = () => !(window.matchMedia?.(MOTION)?.matches ?? false);
++
++function rest(): void {
++    if (ink.value === "rest") return;
++    ink.value = "rest";
++    if (!props.retrigger) release();
++    requestAnimationFrame(() => emit("drawn"));
++}
++
++function release(): void {
++    query?.removeEventListener("change", rest);
++    query = null;
++    if (root.value) unwatch(root.value);
++}
++
++/** Reads now (the layer's origin, the line fragments); returns the writes. */
++function begin(): (() => void) | void {
++    const host = root.value;
++    const at = layer.value;
++    if (!host || !at) return;
++    const origin = at.getBoundingClientRect();
++    const found = lines(host, at);
++    if (found.length === 0) return rest;
++    const windows = found.map(({ rect, range }, i) => {
++        const win = document.createElement("span");
++        win.className = "mark-line";
++        // The window is the line's box and one pixel a side (`mark.css` pads it back), so a
++        // decoration the engine snaps a fraction past the box is not clipped.
++        win.style.cssText =
++            `left:${rect.left - origin.left - 1}px;top:${rect.top - origin.top}px;` +
++            `width:${rect.width + 2}px;height:${rect.height}px;line-height:${rect.height}px;` +
++            `--mark-i:${i};--mark-w:${rect.width + 2}px`;
++        const slide = document.createElement("span");
++        slide.className = "mark-slide";
++        slide.appendChild(copyOf(host, range));
++        win.appendChild(slide);
++        return win;
++    });
++    return () => {
++        at.replaceChildren(...windows);
++        pending = windows.length;
++        ink.value = "draw";
++    };
++}
++
++function onEntry(entry: IntersectionObserverEntry): (() => void) | void {
++    if (still()) return rest;
++    if (ink.value === "wait" && entry.intersectionRatio >= 0.5) return begin();
++    if (ink.value === "rest" && props.retrigger && !entry.isIntersecting) ink.value = "wait";
++}
++
++function onEnd(e: AnimationEvent): void {
++    if (ink.value !== "draw" || e.animationName !== "mark-window") return;
++    if (--pending <= 0) rest();
++}
++
++/** Draw again from nothing. */
++function play(): void {
++    const host = root.value;
++    if (!host || still()) return;
++    layer.value?.replaceChildren();
++    ink.value = "wait";
++    // A fresh observation reports after the next layout, with the layer in place.
++    unwatch(host);
++    watch(host, onEntry);
++}
++
++onMounted(() => {
++    if (ink.value === "rest") return void requestAnimationFrame(() => emit("drawn"));
++    if (still() || typeof IntersectionObserver === "undefined") return rest();
++    query = window.matchMedia(MOTION);
++    query.addEventListener("change", rest);
++    if (root.value) watch(root.value, onEntry);
++});
++
++onBeforeUnmount(release);
++
++defineExpose({ play });
++</script>
++
++<template>
++    <component
++        :is="shape === 'highlight' ? 'mark' : 'span'"
++        ref="root"
++        :class="shape === 'highlight' ? 'mark-highlight' : 'mark-underline'"
++        :data-ink="ink"
++        @animationend="onEnd"
++    >
++        <slot /><span v-if="ink !== 'rest'" ref="layer" class="mark-layer" aria-hidden="true" />
++    </component>
++</template>
+diff --git a/src/components/mark/index.ts b/src/components/mark/index.ts
+new file mode 100644
+index 000000000..330b3ac25
+--- /dev/null
++++ b/src/components/mark/index.ts
+@@ -0,0 +1 @@
++export { default as Mark } from "./Mark.vue";
+diff --git a/src/components/mark/mark.css b/src/components/mark/mark.css
+new file mode 100644
+index 000000000..92bb01377
+--- /dev/null
++++ b/src/components/mark/mark.css
+@@ -0,0 +1,129 @@
++/*
++  The mark: a text decoration. The browser places it from the run's own glyphs and the
++  font's own metrics, per line box, in either direction, and it never leaves the text.
++  These two classes are the whole mark and need no script. `Mark.vue` adds the draw.
++
++  Tokens (retune on :root or any ancestor):
++    --mark-ink     the underline's colour             default var(--primary)
++    --mark-band    the highlight's colour             default the focal hue, tinted
++    --mark-weight  the underline's thickness          default max(0.07em, 2px)
++    --mark-offset  baseline to the underline's top    default 0.08em
++*/
++@layer components {
++    .mark-underline {
++        text-decoration: underline solid var(--mark-ink, var(--primary));
++        text-decoration-thickness: var(--mark-weight, max(0.07em, 2px));
++        /* 0.08em: at 0.10 to 0.14em Chromium leaves a descender uncut at 2 or 3 of every 64
++           sub-pixel line positions (16 px text, a 2 px line); at 0.08em and under it cuts at all 64. */
++        text-underline-offset: var(--mark-offset, 0.08em);
++        text-decoration-skip-ink: auto;
++    }
++
++    /* The highlight is the same decoration grown to the x-height and pulled up behind
++       the glyphs: `ex` is the font's own x-height, so the band sits on the lowercase in
++       any face. An underline paints under its text, so the words stay on top. */
++    .mark-highlight {
++        background: none;
++        color: inherit;
++        text-decoration: underline solid
++            var(
++                --mark-band,
++                light-dark(
++                    oklch(from var(--mark-ink, var(--primary)) 0.86 0.16 h),
++                    oklch(from var(--mark-ink, var(--primary)) 0.44 0.16 h)
++                )
++            );
++        text-decoration-thickness: calc(1ex + 0.16em);
++        text-underline-offset: calc(-1ex - 0.08em);
++        text-decoration-skip-ink: none;
++    }
++
++    /* Forced colours repaint a decoration in the text's own colour, which would bury the
++       words under the band. The highlight becomes the system's real one. */
++    @media (forced-colors: active) {
++        .mark-highlight {
++            text-decoration: none;
++            background: Mark;
++            color: MarkText;
++        }
++    }
++
++    /* ── The draw (Mark.vue only) ──────────────────────────────────────────────────── */
++
++    .mark-underline[data-ink],
++    .mark-highlight[data-ink] {
++        position: relative;
++    }
++    .mark-layer {
++        position: absolute;
++        left: 0;
++        top: 0;
++        width: 0;
++        height: 0;
++        z-index: -1;
++        pointer-events: none;
++        user-select: none;
++    }
++    .mark-line {
++        position: absolute;
++        box-sizing: border-box;
++        padding-inline: 1px;
++        overflow-x: clip;
++        overflow-y: visible;
++        text-align: start;
++        white-space: nowrap;
++    }
++    .mark-slide {
++        display: block;
++    }
++    .mark-line:dir(rtl) {
++        --mark-dir: -1;
++    }
++    .mark-layer :is(.mark-underline, .mark-highlight),
++    .mark-layer :is(.mark-underline, .mark-highlight) * {
++        color: transparent;
++    }
++
++    /* The mark waits and draws only where a draw can run: a screen, motion allowed,
++       script on, author colours. Everywhere else it stands drawn from the first frame.
++       `Mark.vue` reads the same condition (MOTION). */
++    @media screen and (prefers-reduced-motion: no-preference) and (scripting: enabled) and (forced-colors: none) {
++        :is(.mark-underline, .mark-highlight):is([data-ink="wait"], [data-ink="draw"]) {
++            isolation: isolate;
++            text-decoration-color: transparent;
++        }
++        /* One line's window slides open along the writing direction while its copy slides
++           back by the same distance: the ink holds still and the window's edge travels.
++           Line i starts when line i-1 lands. The travel is the line's width and one pixel,
++           so a window that waits on a fractional edge shows no sliver of the ink. */
++        .mark-line,
++        .mark-slide {
++            animation-duration: var(--spring-present-duration);
++            animation-timing-function: var(--spring-present);
++            animation-delay: calc(var(--mark-i, 0) * var(--spring-present-duration));
++            animation-fill-mode: both;
++        }
++        .mark-line {
++            animation-name: mark-window;
++        }
++        .mark-slide {
++            animation-name: mark-slide;
++        }
++    }
++}
++@keyframes mark-window {
++    from {
++        transform: translateX(calc((-100% - 1px) * var(--mark-dir, 1)));
++    }
++    to {
++        transform: translateX(0);
++    }
++}
++@keyframes mark-slide {
++    from {
++        transform: translateX(calc((var(--mark-w) + 1px) * var(--mark-dir, 1)));
++    }
++    to {
++        transform: translateX(0);
++    }
++}

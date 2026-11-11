@@ -1,0 +1,40 @@
+@import "tailwindcss" source("../src");
+@import "tw-animate-css";
+@import "../src/styles/index.css";
+
+/* The brand face ships `font-display: optional`; the harness declares the same file under its
+   own name with `block` and waits for it, so every candidate is measured on the real face. */
+@font-face {
+    font-family: "PJS AB";
+    font-style: normal;
+    font-weight: 200 800;
+    font-display: block;
+    src: url("../src/fonts/plus-jakarta-sans/plus-jakarta-sans-latin.woff2") format("woff2");
+}
+body { margin: 0; background: var(--background); color: var(--foreground); font-family: "PJS AB", sans-serif; }
+.sheet { padding: 32px 16px 64px; display: flex; flex-direction: column; gap: 28px; align-items: flex-start; }
+/* Gregg's headline: Plus Jakarta Sans 800, tight tracking and leading (O-230). */
+.head { margin: 0; font-weight: 800; letter-spacing: -0.045em; line-height: 1.04; }
+.body { margin: 0; font-size: 16px; line-height: 1.5; font-weight: 400; max-width: 640px; }
+.wrap { margin: 0; font-size: 22px; line-height: 1.35; font-weight: 500; inline-size: 300px; }
+/* atlas's need: a long title that wraps, one or two words marked, in the route's own ink. */
+.title { margin: 0; font-weight: 700; line-height: 1.2; max-inline-size: 640px; }
+.rtl { margin: 0; font-size: 24px; line-height: 1.6; inline-size: 300px; }
+.plain { margin: 0; font-size: 22px; }
+.bl { display: inline-block; width: 0; height: 0; }
+.spring-probe { position: fixed; left: -99px; animation-duration: var(--spring-present-duration); animation-timing-function: var(--spring-present); }
+.ink-swatch { display: block; width: 24px; height: 24px; }
+
+/* Passes. glyph: the marked words alone, black on white, the mark removed (adapter CSS).
+   mark: every glyph transparent, the mark alone on white. */
+html[data-pass] body { background: #fff !important; }
+html[data-pass="glyph"] .sheet { color: transparent !important; }
+html[data-pass="glyph"] .sheet [data-probe] { color: #000 !important; }
+html[data-pass="mark"] .sheet, html[data-pass="mark"] .sheet * { color: transparent !important; -webkit-text-fill-color: transparent !important; }
+
+#pm { position: fixed; left: 0; top: 0; width: 20px; height: 20px; background: transparent; z-index: 9; }
+#ctl { position: fixed; left: 30px; top: 0; width: 20px; height: 20px; background: rgb(255, 0, 255); animation: ctl 1s linear infinite; z-index: 9; }
+@keyframes ctl { to { transform: translateX(200px); } }
+/* No-script witness: shows red only where the engine says scripting is off. */
+#scr { display: block; width: 10px; height: 10px; background: rgb(0, 0, 255); }
+@media (scripting: none) { #scr { background: rgb(255, 0, 0); } }
