@@ -42,3 +42,8 @@ The full release battery, the tag `v11.1.1`, the push and the CI publish under t
 1. **(measurement, on a capture) What the current menu row paints.** The shared menu row has no selected or current state today. Default: the current row carries the row's hover fill at rest with full-foreground ink, and the highlighted row stays distinct from it by its own fill. The fix seat shows one capture in each theme before the commit; if the two states cannot be told apart at a glance, the current state becomes ink alone.
 2. **(measurement) G8's first read.** Whether the selected item is already in view on `v11.1.0`. Default: it is not, and the cure is built.
 3. **(measurement) `.input-bar:focus-within`.** It marks a container on `focus-within`, not a control on `focus-visible`, and its ring sits beside a border colour change. Default: the patch changes the paint and not the trigger, so the bar takes the outline on `:focus-within` as it takes the shadow today. Whether a pointer click should ring the bar at all is a default change and is not this patch's.
+
+## Added before the cut (2026-11-11)
+
+- **O-229:** every `:has()` rule carries a subject compound. Gate: the Chromium 4x trace of one insertion (no more than 0.2 ms over the rules-removed page) and the static check over built CSS.
+- **O-230 (3):** a HandMark out of view does not run its settling transform at a scroll stop. Witness: no transform animation on an off-screen mark across a scroll stop.
