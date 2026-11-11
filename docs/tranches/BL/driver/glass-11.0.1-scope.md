@@ -26,3 +26,5 @@ Gates, in both engines, light and dark, at 390 and 1440:
 - Value's two goldens (the dock view-select open, light and dark) match 10.1.3's ring placement.
 - RED on v11.0.0.
 3. **The close:** the full release battery, tag v11.0.1, push, and the CI publish as `latest`. Then tell value-js-63, value-js-65, sci-report-62 (atlas, per the owner's "Inform atlas always") and sci-report-58 (Gregg).
+
+5. O-219: a Slider at its minimum keeps a visible fill (floor = the thumb size). Witness RED on 11.0.0 at min, both engines.
