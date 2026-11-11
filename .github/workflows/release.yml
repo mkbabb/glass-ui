@@ -60,7 +60,19 @@ jobs:
             # 2026-09-22); the range states the floor without taking npm 12 at a cut.
             - name: npm with OIDC trusted publishing
               run: npm install -g npm@^11.5.1 && npm --version
+            # A bare `npm publish` moves `latest` to whatever it publishes, so a patch on
+            # an older major would take `latest` back. The version being published takes
+            # `latest` only when it is greater than the registry's; an older line takes
+            # `v<major>`, and a prerelease takes `next`.
+            - name: choose the dist-tag
+              id: tag
+              run: |
+                  V=$(node -p "require('./package.json').version")
+                  L=$(npm view @mkbabb/glass-ui dist-tags.latest)
+                  T=$(node scripts/dist-tag.mjs "$V" "$L")
+                  echo "publishing $V as $T (registry latest: $L)"
+                  echo "tag=$T" >> "$GITHUB_OUTPUT"
             - name: publish
-              run: npm publish --ignore-scripts --access public --provenance
+              run: npm publish --ignore-scripts --access public --provenance --tag "${{ steps.tag.outputs.tag }}"
               env:
                   NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
