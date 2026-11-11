@@ -51,3 +51,4 @@ The full release battery, the tag `v11.1.1`, the push and the CI publish under t
 - **O-237 (b), (c):** a liquid reveal's episode runs on the row's settle clock, not 4× its response, and a reveal on a new trigger starts a fresh episode. Witness: Gregg's two-pick sequence, per-frame transform.
 - **O-238:** the dock layer paints no outline when it holds programmatic focus (WebKit witness); DataTable's idle sort glyph adds no scroll width.
 - **O-246:** `useSelectionIndicator` and `useSelectionGroup` measure layout boxes, so a pressed control's scale never reaches the mark. Witness: after a click the settled indicator equals the control's `offsetWidth` within 0.5 px.
+- **O-247:** a `:collapse="false"` GlassDock does not run its pane measurer (no forced layout at mount, no dock script on a resize; Chromium trace at 4x). The selection indicator's first measure waits for the frame after paint.
