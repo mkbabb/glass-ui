@@ -68,9 +68,23 @@
         overflow: hidden;
     }
 
+    /* THE INLINE BOUND, one statement for every anchored plate (DropdownMenu, Select,
+       Popover). A plate is at least as wide as its anchor and grows to 22rem for its own
+       content, but never past the room reka measured from its inline-start edge to the
+       collision padding (`--reka-popper-available-width`: the layout viewport, so a
+       reserved scrollbar gutter is never counted as room, less the 16px pad). A trigger
+       wider than 22rem therefore widens its plate rather than forcing the list past it,
+       and the plate and the rows inside it answer to this one bound. */
+    .glass-overlay-plate,
+    [data-slot="select-content"] {
+        --overlay-inline-cap: min(
+            max(22rem, var(--reka-popper-anchor-width)),
+            var(--reka-popper-available-width)
+        );
+    }
+
     /* THE SIZING LAW (U/B7 D-1..D-3), one statement for DropdownMenu, Select and
-       Popover. The plate is never wider than 22rem or than the viewport less 1rem a
-       side. Its height is the room reka measured on the side it opened, which
+       Popover. The plate's inline size answers to the inline bound above. Its height is the room reka measured on the side it opened, which
        already excludes the 16px collision padding every one of the three passes
        (`collisionPadding: 16`), so the plate ends 16px short of the viewport edge.
        There is no fixed ceiling under it: a list that fits the room shows whole,
@@ -78,7 +92,7 @@
        reka measures, the plate takes the dynamic viewport height. */
     .glass-overlay-plate[data-reveal="menu"],
     .glass-overlay-plate[data-reveal="overlay"] {
-        max-inline-size: min(22rem, 100vw - 2rem);
+        max-inline-size: var(--overlay-inline-cap);
         max-block-size: var(--reka-popper-available-height, 100dvh);
         overflow-y: auto;
         overscroll-behavior: contain;
@@ -330,7 +344,11 @@
            already subtracted, with no fixed clamp. A twelve-row list that fits the
            room shows whole. The plate clips; the viewport inside is the only scroll
            owner, which is what keeps reka's active-option scrolling correct. */
-        max-inline-size: min(22rem, 100vw - 2rem);
+        min-inline-size: min(
+            max(var(--overlay-min-width), var(--reka-popper-anchor-width)),
+            var(--overlay-inline-cap)
+        );
+        max-inline-size: var(--overlay-inline-cap);
         max-block-size: var(--reka-select-content-available-height, 100dvh);
         overflow: hidden;
 
