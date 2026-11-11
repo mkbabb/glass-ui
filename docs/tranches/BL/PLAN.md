@@ -343,7 +343,7 @@ This table is the one record of edges. A wave spec cites it and does not restate
 | W-G.5 | W-G.1 |
 | W-G.5b | W-G.5 |
 | W-G.6 | W-G.1 |
-| W-G.7 | W-G.1, W-A.5, W-G.6 |
+| W-G.7 | none for its CSS half (per-subpath `./styles/<entry>` exports), which runs in 12.0.0 re-cut against master with its fixtures inside the wave (orchestrator ruling 2026-11-11, W-R.1 OQ-12); its aurora derive subpath waits on W-G.1 and ships with it in 13.0.0 |
 | W-H.1 | D3 gate, W-0.1, W-C.1, W-C.5, W-E.2, W-E.6, W-G.3 |
 | W-H.2 | D3 gate, W-0.1, W-C.1, W-C.5, W-E.2, W-H.1 |
 | W-H.3 | W-H.1, W-H.2, W-H.5, W-B.1, W-B.3 |
