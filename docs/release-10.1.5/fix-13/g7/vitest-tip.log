@@ -1,0 +1,43 @@
+
+ RUN  v4.1.10 /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5
+
+ ❯ tests/components/custom/dock/dockMorphMeasure.test.ts (18 tests | 1 failed) 1035ms
+     × a capture keeps the run's scroll position 1007ms
+(node:90020) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:90046) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ❯ tests/gates/boot-graph.test.ts (14 tests | 1 failed) 60ms
+     × the dist-demo it measures is NEWER than every source it is built from 9ms
+(node:90598) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:91040) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/gates/boot-graph.test.ts > gate:boot-graph — build arm > the dist-demo it measures is NEWER than every source it is built from
+AssertionError: dist-demo/index.html is STALE (built 2026-11-11T10:22:41.705Z, newest source 2026-11-11T10:26:35.109Z) — run `npm run demo:dist:build`; a stale build greens a regressed graph: expected 1794392561705.486 to be greater than 1794392795109.955
+ ❯ tests/gates/boot-graph.test.ts:576:11
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  tests/components/custom/dock/dockMorphMeasure.test.ts > useDockExpandedSize > a capture keeps the run's scroll position
+AssertionError: expected "vi.fn()" to be called at least once
+ ❯ tests/components/custom/dock/dockMorphMeasure.test.ts:414:59
+    412|         // The capture runs on the pane's mutation record; under load …
+    413|         // deliver it after a zero timeout, so wait for the restore it…
+    414|         await vi.waitFor(() => expect(dock.full.scrollTo).toHaveBeenCa…
+       |                                                           ^
+    415|         expect(dock.px("expanded")).toBe("390px");
+    416|         expect(dock.model.scroll).toBe(312);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  2 failed | 245 passed (247)
+      Tests  2 failed | 2395 passed | 10 expected fail | 1 skipped (2408)
+   Start at  05:26:35
+   Duration  52.96s (transform 3.07s, setup 7.06s, import 22.28s, tests 21.37s, environment 29.79s)
+
