@@ -54,6 +54,14 @@
             scale var(--spring-press-duration) var(--transition-liquid-spatial);
     }
 
+    /* ONE INDICATOR after a pointer open. The listbox focuses its checked row by
+       script, which the engines report as `:focus-visible`; a list opened by a pointer
+       is marked `data-open-input="pointer"` (select/openInput.ts), so the highlight
+       fill alone marks the row until a key is pressed inside the list. */
+    [data-open-input="pointer"] .glass-menu-row:focus-visible {
+        outline: none;
+    }
+
     /* G7 HOVER GUARD at the menu-row seat. `:hover` latches on a coarse pointer and
        stays latched until something else is tapped, so an unguarded hover rung paints a
        tapped row as permanently pointed-at. The touch answer here is `[data-highlighted]`

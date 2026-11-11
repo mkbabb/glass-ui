@@ -16,6 +16,7 @@ import {
 import { ChevronDown } from "@lucide/vue";
 import { cn } from "../_shared/class-names";
 import { fixedHostAttrs } from "../_shared/primitive";
+import { injectSelectOpenInput } from "./openInput";
 
 /* ONE trigger, one register. `variant="ghost"` and `size="sm"` are gone with no
  * alias: the ghost arm undid the control surface it had just composed (a picker
@@ -27,6 +28,7 @@ defineOptions({ name: "SelectTrigger", inheritAttrs: false });
 const props = defineProps<SelectTriggerProps>();
 
 const attrs = useAttrs();
+const openInput = injectSelectOpenInput();
 const forwardedAttrs = computed(() => {
     const { reference: _reference, ...forwarded } = fixedHostAttrs(attrs);
     return forwarded;
@@ -47,6 +49,8 @@ const forwardedAttrs = computed(() => {
         data-slot="select-trigger"
         v-bind="forwardedAttrs"
         :disabled="props.disabled"
+        @pointerdown="openInput?.mark('pointer')"
+        @keydown="openInput?.mark('keyboard')"
         :class="
             cn(
                 'control-surface glass-control-edge glass-capsule-hover h-(--control-h-md)',
