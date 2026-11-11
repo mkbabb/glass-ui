@@ -5,11 +5,12 @@
 A patch for five paint defects value.js reported from color.babb.dev, keyframes.babb.dev
 and fourier.babb.dev on 10.1.4 (records: `docs/tranches/BL/audit/INBOUND.md` O-129 rows
 1, 2, 5, 6 and 7; `docs/release-10.1.5/implement.md`). No public API is removed or
-renamed. Three token values move, each because the token is the cure: `--dock-cap-rest`
+renamed. Four token values move, each because the token is the cure: `--dock-cap-rest`
 on the pill (`50%` to half the plate's measured cross extent); under
 `(pointer: coarse)`, `--control-text`/`--control-text-sm` (the 1.5x comfort scale to the
-16 px floor and to 6/7 of it); and the dark arm's `--shadow-color` (the foreground to
-the page ground deepened, O-182). Two tokens are new, `--icon-label-gap` (0.25rem) and
+16 px floor and to 6/7 of it); the dark arm's `--shadow-color` (the foreground to
+the page ground deepened, O-182); and the Slider's default `--liquid-fill-tint` in dark
+(`--glass-capsule-warm` to the foreground at 22%, O-167). Two tokens are new, `--icon-label-gap` (0.25rem) and
 `--field-text-floor` (0 px, 16 px under a coarse pointer), and the dock publishes one new
 measured property, `--dock-plate-cross-px`.
 
@@ -81,6 +82,12 @@ measured property, `--dock-plate-cross-px`.
   at their value, and a disabled scrubber dims its thumb with its fill. The spectrum
   variant is unchanged. The fill is now wrapped in a `.slider-lane` element inside the
   track.
+
+- **The dark Slider's fill is neutral (O-167).** In dark, every Slider and loupe filled
+  with `--glass-capsule-warm` (`oklch(0.42 0.06 75)`), a floor colour that read as a
+  brown stain on a dark dock plate. The default fill is now `--slider-fill-ink`, which
+  stays `--glass-capsule-warm` in light and is the foreground at 22% in dark, quieter
+  than the thumb. A consumer's `--slider-range-bg` still wins in both themes.
 
 - **Touch keeps control type at 16 px (O-129 r6).** The coarse-pointer arm set
   `--ui-scale: 1.5`, and `--control-text` multiplied it into the type, so the
