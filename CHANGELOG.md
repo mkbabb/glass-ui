@@ -2,7 +2,13 @@
 
 ## 11.1.0 — unreleased
 
-A minor release: new things you can opt into, and nothing you need to change.
+A minor release. Nothing is removed and no API changes shape, so your code keeps
+working as it is. Most of what is new is yours to opt into, but a few defaults change
+how a page looks, and each has its own entry below: the dock rests as a capsule
+(`--radius-dock: 1rem` brings back the rounded bar), HandMark draws in your page's
+focal colour, the `.dark` class alone decides the theme, menus grow from their trigger
+instead of fading in, tables have rounded corners, `Collapsible` and `Accordion` no
+longer fade as they open and close, and `useStagger` spaces a long series closer.
 
 ### Dock
 
@@ -119,14 +125,19 @@ A minor release: new things you can opt into, and nothing you need to change.
   />
   ```
 
-- **`Collapsible` animates its height, and you can turn it around mid-flight.** The
-  content grows to its own height and gives it back on close, without fading, and a
-  press while it is moving turns it around from where it is rather than jumping. To space
-  the content from its trigger, set `--collapsible-gap` on the `Collapsible` (for
-  example `class="[--collapsible-gap:--spacing(3)]"`) instead of a `gap` on the root: the
-  space then opens and closes with the content, where a `gap` appears and disappears in
-  one frame. The content now sits inside one extra wrapper, so a style that targeted the
-  content's direct children with `>` should drop the `>`.
+- **`Collapsible` and `Accordion` open without fading.** The content grows to its own
+  height and gives it back on close at full strength, so only its edge moves. The markup
+  and the variables are the same as before, so styles and animations you wrote against
+  the content keep working. To space a `Collapsible`'s content from its trigger, set
+  `--collapsible-gap` on the `Collapsible` (for example
+  `class="[--collapsible-gap:--spacing(3)]"`) instead of a `gap` on the root: the space
+  sits inside the content, so it opens and closes with it, where a `gap` appears and
+  disappears in one frame. It adds no element, and any padding you give the content
+  still applies below it.
+
+- **Segmented tabs are easier to tap.** On a touch screen every tab in a
+  `SegmentedTabs` strip is at least 44 px tall, and the strip grows to hold them, so a
+  finger has a whole target. With a mouse or trackpad the strip is unchanged.
 
 - **Menus grow from their trigger.** `Select`, `DropdownMenu` and the other menus no
   longer bloom and fade in. The list is laid out at its full size and opens from the edge
@@ -140,8 +151,9 @@ A minor release: new things you can opt into, and nothing you need to change.
   or glyph in place, and `.viz-ripple` opens a radial field from a point. Set `--i` on
   each mark and `--viz-n` on the series, and the cascade is spaced so a series of any
   length starts within one bar's growth. A bar that hangs from the top or runs
-  sideways takes `data-viz-from="top"`, `"left"` or `"right"`. With reduced motion
-  turned on, the marks are simply drawn.
+  sideways takes `data-viz-from="top"`, `"left"` or `"right"`. Once a bar or a ripple has
+  landed it keeps no clip, so a focus ring, a label that overhangs it or a hover shadow
+  shows whole. With reduced motion turned on, the marks are simply drawn.
 
   ```vue
   <g :style="{ '--viz-n': values.length }">
@@ -196,13 +208,32 @@ A minor release: new things you can opt into, and nothing you need to change.
   rows scrolled sideways, at either end. To give a table you write by hand the same
   corners, wrap it in an element with the `table-container` class. The container scrolls
   its table, so a sticky header sticks to the container's top; give the container a
-  `max-block-size` for that.
+  `max-block-size` for that. Inside a `Card`, a `Dialog`, a `Sheet` or any other glass
+  surface, the table keeps its corners but draws no plate of its own, so the surface
+  around it stays the one panel.
 
   ```html
   <div class="table-container" style="max-block-size: 20rem">
       <table>…</table>
   </div>
   ```
+
+- **A `Select` with a wide trigger fits its list.** The list is at least as wide as its
+  trigger and grows to fit its options, but never past the room between its left edge
+  and the far side of the screen, less the usual margin. A trigger wider than 22rem now
+  widens the list with it, where before every option lost its right edge and the
+  highlight ran square into the list's border. The room is measured inside the page's
+  scrollbar, so a list never slides under it. Menus and popovers follow the same rule.
+
+- **Opening a `Select` with the mouse shows one highlight.** After a click or a tap,
+  the checked option shows its highlight alone, without a keyboard focus ring around it.
+  Press a key in the list and the ring comes back, and opening the list from the
+  keyboard shows it as before.
+
+- **`Configurator` keeps its stage wide with the controls on the left.** With
+  `aside-side="left"`, the controls now take the narrow column on the left and the stage
+  the wide one, as they do on the right. Before, the stage was squeezed into the controls'
+  column. The reading and tab order are unchanged.
 
 - **A popover can point at something that is not an element.** `PopoverContent` takes a
   `reference`: an element, or any object with a `getBoundingClientRect()` that returns
@@ -227,7 +258,8 @@ A minor release: new things you can opt into, and nothing you need to change.
 
 - **Side sheets can lean in as they arrive.** Set `--sheet-enter-skew` to an angle (at
   `:root`, or on the sheet's class) and a sliding `SheetContent` starts its entry sheared
-  by that angle and straightens as it settles, on the same spring as the slide. It
+  by that angle and straightens as it settles, on the same spring as the slide, without
+  leaning the other way as it lands. It
   defaults to `0deg`, so nothing changes until you set it, and with reduced motion
   turned on the sheet never shears. Sheets with detents grow rather than slide, and do
   not shear.
@@ -278,8 +310,9 @@ A minor release: new things you can opt into, and nothing you need to change.
   a page with little else the grain became the Largest Contentful Paint and its timing
   followed the dock's entrance. The grain is now a fine dot field drawn with gradients,
   which browsers never count as content, at the same faint strength
-  (`--glass-grain-opacity`). If you set `--glass-grain-opacity: 0` on the dock for this
-  reason, you can remove that line.
+  (`--glass-grain-opacity`). If you raised `--glass-grain-opacity` on a dock, you will now
+  see a regular pattern of fine dots there instead of paper noise. If you set
+  `--glass-grain-opacity: 0` on the dock for this reason, you can remove that line.
 
 - **The blob's goo reaches past its box.** `Blob` no longer clips its own painting to its
   layout box, so the goo and the satellites that orbit wide paint fully into the space
@@ -307,8 +340,8 @@ A minor release: new things you can opt into, and nothing you need to change.
   </h2>
   ```
 
-- **The draw keeps the library's time.** Each line of a mark draws on the same spring
-  as menus and popovers (`--spring-present`), one line after another across a wrapped
+- **The draw keeps the library's time.** Each line of a mark draws on the library's
+  `present` spring (`--spring-present`), one line after another across a wrapped
   phrase, and it follows `--motion-tempo` like every other motion. A mark that is
   re-measured, for example when your fonts finish loading, keeps its place instead of
   drawing over again.
