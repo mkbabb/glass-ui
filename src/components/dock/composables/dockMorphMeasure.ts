@@ -567,6 +567,17 @@ export function useDockExpandedSize(
      * paints its rest there, at scale 1).
      */
     let firstBoxes: FirstBoxes | null = null;
+    /*
+     * THE LEAVING RUN HOLDS THE SCROLL IT PAINTED, as the leaving pane holds its box.
+     * Between the swap and the arm the root lays out in the new posture with no
+     * reservation (the measure reads it there), so a collapsing run's port grows for one
+     * forced layout and shrinks back when `[data-morphing]` reserves the box. WebKit
+     * re-snaps a `mandatory` run on that return and can land it at its scroll end
+     * (a coarse vertical run 20 px short of fitting: 0 to 20, every seat stepping 20 px
+     * on the first frame). `first` reads the offset painted before the swap, and `anchor`,
+     * the arm's last layout read, gives it back to a leaving run that moved.
+     */
+    let firstScroll: { left: number; top: number } | null = null;
 
     function rigidRegions(root: HTMLElement): HTMLElement[] {
         return [...root.querySelectorAll<HTMLElement>(":scope > .dock-controls > .dock-persistent")];
@@ -583,6 +594,8 @@ export function useDockExpandedSize(
         firstBoxes = new Map(
             [root, ...rigidRegions(root), ...panes()].map((el) => [el, span(el, a)] as const),
         );
+        const run = expandedEl.value;
+        firstScroll = run ? { left: run.scrollLeft, top: run.scrollTop } : null;
     }
 
     function release(): void {
@@ -595,6 +608,23 @@ export function useDockExpandedSize(
     }
 
     function anchor(): void {
+        const run = expandedEl.value;
+        const held = firstScroll;
+        firstScroll = null;
+        try {
+            anchorPanes();
+        } finally {
+            if (
+                run?.classList.contains("is-leaving") &&
+                held &&
+                (run.scrollLeft !== held.left || run.scrollTop !== held.top)
+            ) {
+                run.scrollTo({ left: held.left, top: held.top, behavior: "instant" });
+            }
+        }
+    }
+
+    function anchorPanes(): void {
         const root = rootEl.value;
         const layers = contentEl.value;
         const boxes = firstBoxes;
