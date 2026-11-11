@@ -326,3 +326,10 @@ R.done();
 ```
 
 HEAD: `FAIL G1-G8 / {"toDataURL":3}`, `FAIL G1-G8 /substrates/aurora {"toDataURL":18}`, `FAIL G1-G5 {"contextsRequested":["webgl2","2d","webgl2","2d",…],"status":[{"engine":null,"attrs":["v-365c95db","auroraSubstrate"]}]}`. The loudness clause reads the story's rendered `onInitError` output, which the demo logs as `[demo] shell aurora init failed <error>` (seen at this seat for the `destroyed` case, W-G.2 §2). The two `toDataURL` rows stay in the probe as π-GROUND's paired reading and are no longer a gate (G1-G8 is struck); their row label is renamed.
+
+## Consumer requirement: the "css" mode stays (atlas via sci-report-b4, 2026-11-11)
+
+atlas sets Aurora's `render-mode` to `"css"` on purpose: the still, pole-derived gradient ground, with no live context and no frame loop, because a per-frame shader behind opaque data plates spends power with nothing to see. Its `"webgl"` value sits behind an opt-in prop no caller passes, so the removed mode costs atlas nothing.
+
+- `"css"` remains a value a consumer sets explicitly, and a consumer that asks for it never gets the WebGPU path.
+- Gate (vitest, with the context getters spied): an Aurora in `"css"` mode requests no GPU adapter, creates no canvas context and schedules no animation frame, at mount and after a resize and a theme flip.
