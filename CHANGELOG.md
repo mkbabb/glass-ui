@@ -2,8 +2,9 @@
 
 ## 11.1.0 — unreleased
 
-A minor release. Nothing is removed and no API changes shape, so your code keeps
-working as it is. Most of what is new is yours to opt into, but a few defaults change
+A minor release. No API changes shape, so your code keeps working as it is. Two
+undocumented route variables are gone with the slide they tuned: `--route-slide` and
+`--route-world-slide` (the `lateral` entry below names what sets that travel now). Most of what is new is yours to opt into, but a few defaults change
 how a page looks, and each has its own entry below: the dock rests as a capsule
 (`--radius-dock: 1rem` brings back the rounded bar), HandMark draws in your page's
 focal colour, the `.dark` class alone decides the theme, menus grow from their trigger
@@ -115,6 +116,9 @@ longer fade as they open and close, and `useStagger` spaces a long series closer
   then follows your model again from where the hand left it, with no jump. Two new
   events tell you when the hand has it, so you can pause your clock: `grab` when a
   pointer takes the slider, and `release` (with the value it left) when it lets go.
+  The same holds if your handler declines a value: during a drag the thumb stays with
+  the hand and returns to your model when it lets go, and a key press you decline
+  leaves the thumb where your model is.
 
   ```vue
   <Slider
@@ -128,16 +132,19 @@ longer fade as they open and close, and `useStagger` spaces a long series closer
 - **`Collapsible` and `Accordion` open without fading.** The content grows to its own
   height and gives it back on close at full strength, so only its edge moves. The markup
   and the variables are the same as before, so styles and animations you wrote against
-  the content keep working. To space a `Collapsible`'s content from its trigger, set
-  `--collapsible-gap` on the `Collapsible` (for example
+  the content keep working, and content you lay out as a grid or a flex row keeps its
+  items exactly where they were. Padding you give the content now grows with the height
+  too, rather than appearing whole on the first frame. To space a `Collapsible`'s
+  content from its trigger, set `--collapsible-gap` on the `Collapsible` (for example
   `class="[--collapsible-gap:--spacing(3)]"`) instead of a `gap` on the root: the space
-  sits inside the content, so it opens and closes with it, where a `gap` appears and
-  disappears in one frame. It adds no element, and any padding you give the content
-  still applies below it.
+  is the content's top padding, so it opens and closes with it, where a `gap` appears and
+  disappears in one frame. If you pad the top of the content yourself, your padding sets
+  that space instead.
 
 - **Segmented tabs are easier to tap.** On a touch screen every tab in a
   `SegmentedTabs` strip is at least 44 px tall, and the strip grows to hold them, so a
-  finger has a whole target. With a mouse or trackpad the strip is unchanged.
+  finger has a whole target. The tabs, the selected plate and the strip keep their round
+  ends at that height. With a mouse or trackpad the strip is unchanged.
 
 - **Menus grow from their trigger.** `Select`, `DropdownMenu` and the other menus no
   longer bloom and fade in. The list is laid out at its full size and opens from the edge
@@ -173,8 +180,9 @@ longer fade as they open and close, and `useStagger` spaces a long series closer
   keep a fixed spacing.
 
 - **Mounting a page full of controls is lighter.** Pressable controls no longer read
-  the page's motion settings from computed style as they mount (the value is read once
-  and kept until it can have changed), a press reads its element's motion weight once
+  the page's motion settings from computed style as they mount (the first control in a
+  mounting batch reads the value and the rest share it, and the next batch reads it
+  afresh, so a change to the page's motion speed is never missed), a press reads its element's motion weight once
   when it begins rather than on every frame, and a glass surface that samples the
   brightness behind it takes its first sample on the next frame, together with every
   other surface mounting at the same time, instead of inside the mount.
@@ -182,8 +190,9 @@ longer fade as they open and close, and `useStagger` spaces a long series closer
 - **The `lateral` route transition is a card swap.** Moving between sibling pages with
   the `lateral` type no longer fades the page. The page you leave recedes slightly in
   place, and the new page slides in over it from the side it lies on, set by
-  `--route-direction` (`1` forward, `-1` back). With no direction it simply settles into
-  place. Everything outside the moving page changes at once, and with reduced motion
+  `--route-direction` (`1` forward, `-1` back). How far it travels is
+  `--route-card-travel` (by default `min(6rem, 24vw)`), which takes the place of
+  `--route-slide`. With no direction it simply settles into place. Everything outside the moving page changes at once, and with reduced motion
   turned on, nothing animates.
 
 ### Surfaces
