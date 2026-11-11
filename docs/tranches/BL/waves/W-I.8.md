@@ -213,3 +213,10 @@ Also in 11.2.0, and not this wave's build: the three enter start radii default t
 Closes O-195, O-200, O-202, O-222, O-224, O-171 R-2, O-129 rows 3 and 4, and O-180 (3). Takes the carrier half of O-88 and of W-0.8.
 
 Records the orchestrator amends, since this seat writes only this file and `design/dock/LANDING.md`: an INDEX row for W-I.8 at 11.2.0; W-0.8 and W-I.1 pointed here for the carrier; the INBOUND placements of O-129 rows 3 and 4, O-171 R-2 and O-180 (3); `docs/precepts/motion-canon.md` P5 and P6, which state Q-6 (a) and §1.6 in one sentence each; and the deletion of `SPEC-SUMMARY.md`. All but the motion-canon sentences were made on 2026-11-11; those two are owed in the precepts repository (`review/fable-2026-11-10/owed-outside-BL.md`).
+
+
+## Owner law added 2026-11-11 (O-248)
+
+The owner's words on daraksha's dock (frames `~/.dev-logs/owner-1111/shots/1.png`, `8.png`): "ALL dock animations should be well defined in animating, not just telporting and instantly changing, the heigth and width", and the collapse is "not smooth in the end or beginning".
+
+This is the wave's subject stated as a law, and it widens §1.6 from width to both extents: **every dock state change animates the plate's width and height on the dock spring with an eased start and end, and the plate is round at every frame.** The changes: collapse, expand, a layer in or out, a page change that alters seat count or label width, a seat appearing or leaving (the bare seat included). The build's gate matrix is that list, one cell per change, each reading per-frame plate width and height: no step over the spring's own peak frame, no frame with unequal corners, first and last frames within 1 px of rest. daraksha is sending the list of changes that jump today; it is merged into the matrix when it arrives, and a change it names that this list lacks is added, not argued.
