@@ -53,6 +53,7 @@ try {
             for (const route of ROUTES) {
                 const cell = `${engine} ${scheme} ${width} ${route}`;
                 const context = await browser.newContext({ colorScheme: scheme, viewport: { width, height: 900 } });
+                let page;
                 try {
                     await context.addInitScript(() =>
                         document.addEventListener("securitypolicyviolation", (e) =>
@@ -63,10 +64,15 @@ try {
                         await context.route("**/*", async (r) => {
                             const u = new URL(r.request().url());
                             if (u.host !== host) return r.continue();
-                            const response = await r.fetch();
-                            await r.fulfill({ response, headers: { ...response.headers(), ...headersFor(u.pathname) } });
+                            try {
+                                const response = await r.fetch();
+                                await r.fulfill({ response, headers: { ...response.headers(), ...headersFor(u.pathname) } });
+                            } catch {
+                                // A failed fetch surfaces as `requestfailed`; after the cell it is a no-op.
+                                await r.abort().catch(() => {});
+                            }
                         });
-                    const page = await context.newPage();
+                    page = await context.newPage();
                     page.on("console", (m) => m.type() === "error" && problems.push(`${cell}: console: ${m.text()}`));
                     page.on("pageerror", (e) => problems.push(`${cell}: pageerror: ${e}`));
                     page.on("requestfailed", (r) => problems.push(`${cell}: failed ${r.url()} (${r.failure()?.errorText})`));
@@ -75,7 +81,11 @@ try {
                         const u = new URL(r.url());
                         if (u.protocol.startsWith("http") && u.host !== host) problems.push(`${cell}: foreign request ${r.url()}`);
                     });
-                    const res = await page.goto(`${origin}${route}`, { waitUntil: "networkidle" });
+                    const res = await page.goto(`${origin}${route}`, { waitUntil: "networkidle" }).catch((e) => e);
+                    if (res instanceof Error) {
+                        problems.push(`${cell}: ${res.message.split("\n")[0]}`);
+                        continue;
+                    }
                     if (res?.status() !== 200) problems.push(`${cell}: document HTTP ${res?.status()}`);
                     await page.waitForTimeout(1500);
                     const notFound = await page.getByText("Page not found").count();
@@ -83,6 +93,8 @@ try {
                     if (!(await page.locator("#app > *").count())) problems.push(`${cell}: #app is empty`);
                     loads++;
                 } finally {
+                    page?.removeAllListeners(); // the cell is judged; teardown aborts are not problems
+                    await context.unrouteAll({ behavior: "ignoreErrors" });
                     await context.close();
                 }
             }

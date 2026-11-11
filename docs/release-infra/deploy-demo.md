@@ -120,10 +120,16 @@ Dynamic, via `--emulate-headers` (see the gates):
 | **Served build bites** | a copy of `dist-demo` without `assets/Blob-DZg7Ru3K.js`, served by `vite preview --outDir` on :5201 | FAIL, exit 1: `1 of 362 assets not served as built (Blob-DZg7Ru3K.js (200 text/html))`, the real fallback-HTML-with-200 mode. The copy was removed, and the real server still PASSes. (Two plants that did not work are recorded below.) |
 | Live, Chromium | `node scripts/check-live.mjs http://localhost:5200 --emulate-headers dist-demo/_headers` | PASS, 8 loads (`/`, `/substrates/aurora` × 390/1440 × light/dark): every request < 400, no console error, no CSP violation, no foreign request |
 | Live, Chromium, no WebGPU | the same with `navigator.gpu` deleted by an init script (CI's GPU-less headless shell) | PASS, 8 loads |
-| Live, WebKit | `guarded --exclusive webkit -- node scripts/check-live.mjs http://localhost:5202 --emulate-headers dist-demo/_headers --browser webkit` | pending: queued for the machine-wide WebKit lock (see the follow-up commit) |
+| Live, WebKit | `guarded --exclusive webkit -- node scripts/check-live.mjs http://localhost:5202 --emulate-headers dist-demo/_headers --browser webkit` | **RED, engine build only**: `page.goto: Page crashed` on 16/16 loads, 8 with `--emulate-headers` and 8 without it. The crash does not depend on the CSP or the interception. It is the known Playwright-WebKit renderer crash on glass-ui (engine build, not the Safari app), which crashed every route while real Safari rendered them. The Safari-app cell is **OWED** (safaridriver). |
 | The emulation enforces | live with the hash stripped / with `data:` stripped from `img-src` | violations on every load (see above) |
 | CSP census, Chromium | 92 routes, CSP enforced plus strict style-src report-only | 0 violations |
 | Workflow parses | `actionlint .github/workflows/deploy-demo.yml` (with shellcheck) | exit 0, no findings |
+
+A check-live fix came out of the first WebKit attempt. An in-flight
+`route.fetch` threw unhandled when a cell's context closed, and killed the run.
+The route handler now catches and aborts, the page's listeners are detached
+before `unrouteAll({ behavior: "ignoreErrors" })` and close, and a failed
+`goto` is a cell problem instead of a throw. Chromium re-PASSed after the fix.
 
 Plants that did not bite, and why:
 - A new file added to `dist-demo/assets` after the server started. `vite
@@ -188,6 +194,11 @@ Until both secrets exist, every release run of deploy-demo is green with
   version string. The equivalent proof is the release-line step (package.json ==
   npm latest, before the build) plus check-served (the live bytes are this
   build's).
+- **WebKit.** The Playwright-WebKit engine build crashes the demo on every load,
+  with or without the headers, so the gate's WebKit cells are red for a reason
+  outside this wave. The real-Safari cell (`safaridriver`, a GUI-enabled act) is
+  owed before claiming WebKit coverage. CI's live assert runs Chromium only, as
+  daraksha's does.
 - **The WebKit route census** (92 routes) was not run; the Chromium census was.
   `'unsafe-inline'` was dropped from `style-src` on the Chromium census, a static
   read and the WebKit live gate. If a WebKit-only path injects a style, the
