@@ -93,4 +93,14 @@ describe("Table container", () => {
         // DataTable's root no longer clips: the container is the one clip
         expect(css("src/components/data-table/styles.css")).not.toMatch(/\.data-table \{[^}]*overflow/);
     });
+
+    it("paints no second plate inside a glass surface", () => {
+        const nested =
+            css("src/components/table/styles.css").match(
+                /:is\(\.glass-wash, \.glass-quiet, \.glass-resting, \.glass-floating, \.glass-overlay\) \.table-container \{([^}]*)\}/,
+            )?.[1] ?? "";
+        expect(nested).toContain("background: transparent");
+        expect(nested).toContain("box-shadow: none");
+        expect(nested).not.toMatch(/radius|overflow/);
+    });
 });

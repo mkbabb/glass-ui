@@ -24,4 +24,11 @@
         background: var(--glass-plate-quiet);
         box-shadow: var(--glass-material-rim);
     }
+
+    /* Inside a glass surface (a Card, a Dialog, a Sheet) that surface is the one plate:
+       the container keeps its corners and its clip and paints nothing of its own. */
+    :is(.glass-wash, .glass-quiet, .glass-resting, .glass-floating, .glass-overlay) .table-container {
+        background: transparent;
+        box-shadow: none;
+    }
 }
