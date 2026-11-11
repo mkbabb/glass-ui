@@ -1,4 +1,4 @@
-import { mount } from "@vue/test-utils";
+import { flushPromises, mount } from "@vue/test-utils";
 import { SliderRoot } from "reka-ui";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { nextTick } from "vue";
@@ -110,6 +110,21 @@ describe("Slider hand and model", () => {
         expect(root.props("modelValue")).toEqual([40]);
         await wrapper.setProps({ modelValue: [41] });
         expect(root.props("modelValue")).toEqual([41]);
+        wrapper.unmount();
+    });
+
+    // A controlled consumer may decline a step (a scrubber that cannot seek past what is
+    // buffered): the model stays, so the thumb and its `aria-valuenow` stay with it.
+    it("returns to the model after a key step the consumer declines", async () => {
+        const wrapper = mountSlider([60]);
+        const root = wrapper.findComponent(SliderRoot);
+        root.vm.$emit("update:modelValue", [70]);
+        expect(wrapper.emitted("update:modelValue")).toEqual([[[70]]]);
+        await flushPromises();
+        expect(root.props("modelValue")).toEqual([60]);
+        root.vm.$emit("update:modelValue", [100]);
+        await flushPromises();
+        expect(root.props("modelValue")).toEqual([60]);
         wrapper.unmount();
     });
 });

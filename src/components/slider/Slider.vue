@@ -68,7 +68,9 @@ const forwarded = useForwardPropsEmits(delegatedProps);
    directly. Outside a grab `own` follows `modelValue`. From the press to the release
    the hand owns it: a model written meanwhile (a playback clock) does not move the
    thumb, and the pointer's value wins. On release the slider follows the model again,
-   from the value the hand left, so nothing jumps.
+   from the value the hand left, so nothing jumps. A key step writes `own` and emits;
+   the next render then returns `own` to the model, so a consumer who declines the
+   step (leaves the model as it was) keeps the thumb where the model is.
 
    A drag streams `update:modelValue` at most once per frame, the latest value winning
    (`useFrameCoalesce`); the pending value is delivered before `valueCommit`, and
@@ -92,11 +94,23 @@ const stream = useFrameCoalesce<number[]>((value) =>
     emits("update:modelValue", value),
 );
 
+/** Outside a grab, return `own` to the model the consumer holds once the render that
+    carries it has run (the value just delivered, a declined step, or a clock's write). */
+function followModel(): void {
+    void nextTick(() => {
+        if (!grabbed.value && props.modelValue) own.value = props.modelValue;
+    });
+}
+
 function onRekaUpdate(next: number[] | undefined): void {
     if (!next) return;
     own.value = next;
-    if (grabbed.value) stream.push(next);
-    else emits("update:modelValue", next);
+    if (grabbed.value) {
+        stream.push(next);
+        return;
+    }
+    emits("update:modelValue", next);
+    followModel();
 }
 
 function onRekaCommit(value: number[]): void {
@@ -115,11 +129,7 @@ function onLetGo(): void {
     stream.flush();
     grabbed.value = false;
     emits("release", [...own.value]);
-    // The model the consumer now holds (the value just delivered, or a clock's newer
-    // write) arrives with the next render; follow it from there.
-    void nextTick(() => {
-        if (!grabbed.value && props.modelValue) own.value = props.modelValue;
-    });
+    followModel();
 }
 
 /* The host-native drag hold — one owner, one acquire path. `useDockHold` attaches
