@@ -17,6 +17,10 @@
 // and draws `start + (L(t) − start) · p(t)`, where p is the dock spring from 0 to 1. At
 // p = 1 it is exactly on the seat, whatever the seat's own transition did meanwhile.
 //
+// THE FIRST MEASURE WAITS ONE FRAME. Reading a seat's box in the mount task would force
+// the new dock's layout there; the first animation frame runs before the first paint, so
+// the mark is still on its seat in the first frame anyone sees.
+//
 // A seat inside its own scroller (a tab strip in a fading scroll region) is not on the
 // run's coordinates, so it keeps its own plate and the run draws no mark.
 
@@ -161,6 +165,7 @@ export function useDockRunMark({ runEl }: UseDockRunMarkOptions): void {
 
     let mutations: MutationObserver | null = null;
     let resizes: ResizeObserver | null = null;
+    let firstFrame = 0;
 
     onMounted(() => {
         const run = runEl.value;
@@ -180,10 +185,14 @@ export function useDockRunMark({ runEl }: UseDockRunMarkOptions): void {
         resizes = new ResizeObserver(() => {
             if (!spring.live) sync();
         });
-        sync();
+        firstFrame = requestAnimationFrame(() => {
+            firstFrame = 0;
+            sync();
+        });
     });
 
     onUnmounted(() => {
+        cancelAnimationFrame(firstFrame);
         mutations?.disconnect();
         resizes?.disconnect();
         spring.dispose();

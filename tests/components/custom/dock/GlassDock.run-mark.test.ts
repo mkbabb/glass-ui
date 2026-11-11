@@ -16,9 +16,12 @@ import DockControl from "@glass/components/dock/DockControl.vue";
 const RUN_CSS = readFileSync(resolve(process.cwd(), "src/components/dock/styles/run.css"), "utf8")
     .replace(/\/\*[\s\S]*?\*\//g, "");
 
+const frame = (): Promise<void> => new Promise((r) => requestAnimationFrame(() => r()));
+
 async function settle(): Promise<void> {
     await nextTick();
     await nextTick();
+    await frame();
 }
 
 function navDock(current: { value: number | null }, wrap?: "scroller") {
@@ -53,6 +56,17 @@ describe("the run's active mark", () => {
         await settle();
         await new Promise((r) => setTimeout(r, 0));
         expect(run.hasAttribute("data-run-mark")).toBe(false);
+        wrapper.unmount();
+    });
+
+    it("takes its first measure in the next frame, not in the mount task", async () => {
+        const current = ref<number | null>(1);
+        const wrapper = navDock(current);
+        await nextTick();
+        const run = wrapper.find(".dock-run").element as HTMLElement;
+        expect(run.hasAttribute("data-run-mark")).toBe(false);
+        await frame();
+        expect(run.hasAttribute("data-run-mark")).toBe(true);
         wrapper.unmount();
     });
 
