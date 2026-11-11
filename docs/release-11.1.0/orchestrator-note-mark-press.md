@@ -8,3 +8,7 @@ Gregg built the same gliding mark by hand on 11.0.0 and found that a mark measur
 - If it reproduces, the cure is at the measure: the mark reads layout boxes (`offsetLeft`, `offsetTop`, `offsetWidth`, `offsetHeight` against the run), which a transform does not change. No second measure after the press, and no timer.
 - Witness: the settled mark equals the seat's layout box within 0.5 px after a click, a keyboard activation and a route change, both engines. RED on the branch as it stands if the defect reproduces.
 - If it does not reproduce on the branch, record the reading and why (for example, the press no longer scales a dock seat), and leave the code alone.
+
+## Also read the mark's first measure (O-247, Gregg 2026-11-11)
+
+Gregg found that a selection mark which measures as soon as its container exists forces the new dock's layout inside the mount task. Read the 11.1.0 run mark for the same cost: one Chromium trace at 4x CPU of a dock mounting with a marked run, and say whether `useDockRunMark` forces layout in the mount task. If it does, the first measure waits for the frame after paint (one `requestAnimationFrame`, no timer), and the mark still shows on its seat at first paint in both engines. If it does not, record the reading and leave the code alone.
