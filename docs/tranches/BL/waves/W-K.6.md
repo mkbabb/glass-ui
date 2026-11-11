@@ -1,11 +1,11 @@
-# W-K.6 · The a11y sweep: names, one keystroke predicate, destinations, count 0 · 11.0.0
+# W-K.6 · The a11y sweep: names, one keystroke predicate, destinations, count 0
 
 | field | value |
 |---|---|
 | seat | band-K wave-spec seat, formation |
 | model | `claude-opus-5-5`, asserted from own system identity |
 | HEAD | `9866d229` (`src` = `f3ad78d0` = published 10.1.0); the band-K fixture (W-K.1 appendix B) and the built demo on :6271 |
-| ships in | 11.0.0 |
+| release | `waves/INDEX.md`, the one record |
 | families | F-42 (all members) and its inbound rows; #31's RT-31C (routed here by the census) |
 | depends on | PLAN §5, the one record of edges |
 | dependants | PLAN §5 (its inverse) |

@@ -1,11 +1,11 @@
-# W-A.2 · W-REGISTER-COLLAPSE: one roster of invariants, each seen red on its shipped detector · 11.0.0
+# W-A.2 · W-REGISTER-COLLAPSE: one roster of invariants, each seen red on its shipped detector
 
 | field | value |
 |---|---|
 | seat | band-A wave-spec seat, formation run `wf_68eb18d6-b21` |
 | model | `claude-opus-5-5`, asserted from own system identity |
 | HEAD | `fabc95e2` in a scratch worktree, with `dist/` and `dist-demo/` built there (`vite build`, 12 s; `vite build --config demo/vite.demo-dist.config.ts`, 3 s). `git diff --stat v10.1.0 HEAD -- src tests tests-visual scripts .github package.json` prints nothing |
-| ships in | 11.0.0 |
+| release | `waves/INDEX.md`, the one record |
 | families | F-01, F-02, F-03, F-06, F-09 (`audit/REGISTRY.md:169-208`, `:228-238`, `:267-277`) |
 | depends on | PLAN §5, the one record of edges |
 | dependants | PLAN §5 (its inverse) |

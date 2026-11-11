@@ -1,11 +1,11 @@
-# W-B.15 · Scroll glide decided: the dock run's glide to the dock loop; no scripted page scroller · 11.0.0
+# W-B.15 · Scroll glide decided: the dock run's glide to the dock loop; no scripted page scroller
 
 | field | value |
 |---|---|
 | seat | band-B wave-spec seat, formation run `wf_68eb18d6-b21` |
 | model | `claude-opus-5-5`, asserted from own system identity |
 | HEAD | `19bf6569` in a scratch worktree |
-| ships in | 11.0.0 |
+| release | `waves/INDEX.md`, the one record |
 | families | F-14, the R3-01-16 split (`audit/REGISTRY.md:331-332`) |
 | depends on | PLAN §5, the one record of edges |
 | dependants | PLAN §5 (its inverse) |

@@ -42,21 +42,23 @@ Short cites: `REG:n` is `audit/REGISTRY.md` line n; `CUR:n` is `FORMATION-PROGRE
 
 Bands are in dependency order. Band 0 comes first because the owner scheduled 10.2.0 ahead of the cut. Every cross-band edge in §5 points to an earlier band.
 
-| band | title | ships in | families | waves |
-|---|---|---|---|---|
-| 0 | The 10.x minor | 10.2.0 | F-31 (veil and control-surface split; the O-87 lighting-token split), F-24 (menu-row split), F-71 (O-76, O-82 and O-74b splits), F-29 (O-77/O-77a/O-89 split; the O-84a split), F-22 (O-78 and O-81 (4) split), F-63 (O-79 split), F-65 (O-81 (5) split), F-16 (the extent and morph, with O-83 and O-88; the L04-M33 split), F-17, F-68 (10.2.0 relay split) | W-0.1 .. W-0.12 (W-0.1, W-0.2, W-0.11 loop D3; W-0.8 loop D2) |
-| A | Gates and evidence | 11.0.0 | F-01, F-02, F-03, F-04, F-05, F-06, F-07, F-08, F-09, F-10 | W-A.1 .. W-A.6 |
-| B | Decisions, records and owner asks | 11.0.0 | F-11, F-13, F-14 (carry and two subject splits), F-15, F-71 (intake and reply split) | W-B.1 .. W-B.15 |
-| C | Sources of record and hygiene | 11.0.0 | F-61, F-62, F-63 (remainder), F-64, F-65 (remainder) | W-C.1 .. W-C.5 |
-| D | Structure (loop D1) | 11.0.0 | F-55, F-56, F-57, F-58, F-59, F-60 | W-D.1 (loop D1), W-D.2 |
-| E | Surfaces, overlays and density | 11.0.0 | F-85, F-21, F-32, F-74, F-65 (detent split), F-22 (remainder), F-41, F-26, F-27, F-28, F-29 (remainder), F-30a, F-33, F-34, F-25, F-20, F-35, F-36, F-80 | W-E.1 .. W-E.14 |
-| F | Motion | 11.0.0 | F-44, F-78, F-46, F-76, F-79, F-45, F-73 | W-F.1 .. W-F.7 |
-| G | Engines and performance | 11.0.0 | F-47, F-49, F-50, F-48, F-51, F-52 | W-G.1 .. W-G.7 |
-| H | Material (loop D3) and the perf register | 11.0.0 | F-23, F-24 (remainder), F-75, F-21 (#84a state-fill split), F-28 (X-G1 selected-fill split), F-31 (remainder), F-14 (glass-register split), F-13 (the T-45 split), F-53 | W-H.1, W-H.2, W-H.5, W-H.6 (loop D3), W-H.3, W-H.4 |
-| I | Dock (loop D2) | 11.0.0 | F-16 (the corner and edge-witness split, and #48), F-18, F-54 (dock-hallmark split), F-71 (badge-seat split), F-19, F-77, F-14 (dock-composition split), F-21 (the dock-run split, C-8) | W-I.1, W-I.4 .. W-I.7 (loop D2), W-I.2, W-I.3 |
-| J | Tile (loop D4) and the engagement register | 11.0.0 | F-30b, F-54 (remainder) | W-J.1 (loop D4), W-J.2 (loop D5) |
-| K | Accessibility and the platform | 11.0.0 | F-81, F-37, F-38, F-39, F-40, F-42, F-43, F-82, F-83, F-84 | W-K.1 .. W-K.11 |
-| L | Consumers, exports, the cut and the close | 11.0.0 | F-71 (API-ask cures split), F-70, F-67, F-69, F-72, F-66, F-68 (remainder), F-12 | W-L.1 .. W-L.8 |
+A band names no release. `waves/INDEX.md`'s release column is the one record of which release carries a wave. Formation gave band 0 to 10.2.0 and every other band to 11.0.0; 10.2.0 was never cut and 11.0.0 published without the band waves, so a wave the index does not name is unplaced.
+
+| band | title | families | waves |
+|---|---|---|---|
+| 0 | The 10.x minor | F-31 (veil and control-surface split; the O-87 lighting-token split), F-24 (menu-row split), F-71 (O-76, O-82 and O-74b splits), F-29 (O-77/O-77a/O-89 split; the O-84a split), F-22 (O-78 and O-81 (4) split), F-63 (O-79 split), F-65 (O-81 (5) split), F-16 (the extent and morph, with O-83 and O-88; the L04-M33 split), F-17, F-68 (10.2.0 relay split) | W-0.1 .. W-0.12 (W-0.1, W-0.2, W-0.11 loop D3; W-0.8 loop D2) |
+| A | Gates and evidence | F-01, F-02, F-03, F-04, F-05, F-06, F-07, F-08, F-09, F-10 | W-A.1 .. W-A.6 |
+| B | Decisions, records and owner asks | F-11, F-13, F-14 (carry and two subject splits), F-15, F-71 (intake and reply split) | W-B.1 .. W-B.15 |
+| C | Sources of record and hygiene | F-61, F-62, F-63 (remainder), F-64, F-65 (remainder) | W-C.1 .. W-C.5 |
+| D | Structure (loop D1) | F-55, F-56, F-57, F-58, F-59, F-60 | W-D.1 (loop D1), W-D.2 |
+| E | Surfaces, overlays and density | F-85, F-21, F-32, F-74, F-65 (detent split), F-22 (remainder), F-41, F-26, F-27, F-28, F-29 (remainder), F-30a, F-33, F-34, F-25, F-20, F-35, F-36, F-80 | W-E.1 .. W-E.14 |
+| F | Motion | F-44, F-78, F-46, F-76, F-79, F-45, F-73 | W-F.1 .. W-F.7 |
+| G | Engines and performance | F-47, F-49, F-50, F-48, F-51, F-52 | W-G.1 .. W-G.7 |
+| H | Material (loop D3) and the perf register | F-23, F-24 (remainder), F-75, F-21 (#84a state-fill split), F-28 (X-G1 selected-fill split), F-31 (remainder), F-14 (glass-register split), F-13 (the T-45 split), F-53 | W-H.1, W-H.2, W-H.5, W-H.6 (loop D3), W-H.3, W-H.4 |
+| I | Dock (loop D2) | F-16 (the corner and edge-witness split, and #48), F-18, F-54 (dock-hallmark split), F-71 (badge-seat split), F-19, F-77, F-14 (dock-composition split), F-21 (the dock-run split, C-8) | W-I.1, W-I.4 .. W-I.7 (loop D2), W-I.2, W-I.3 |
+| J | Tile (loop D4) and the engagement register | F-30b, F-54 (remainder) | W-J.1 (loop D4), W-J.2 (loop D5) |
+| K | Accessibility and the platform | F-81, F-37, F-38, F-39, F-40, F-42, F-43, F-82, F-83, F-84 | W-K.1 .. W-K.11 |
+| L | Consumers, exports, the cut and the close | F-71 (API-ask cures split), F-70, F-67, F-69, F-72, F-66, F-68 (remainder), F-12 | W-L.1 .. W-L.8 |
 
 Why this order:
 
@@ -116,7 +118,7 @@ F-13's mechanism is a chronic that waits on a ruling nobody was seated to make a
 | **W-B.6** | F-13 split (#51: C-5, C-6, C-7) | HandMark: the dark band window set on the token ground (C-5); the light-arm chroma floor 0.08 that the sRGB ceiling 0.06847 at L 0.86, h 270 cannot meet (C-6, a spec defect); π-SCROLL keep or kill, owner-reserved with no default (C-7, OW-4) |
 | **W-B.7** | F-13 split (#44) | The tags field, deleted at `a8a6f66b` with 0 consumers: build behind W-E.6 or retire |
 | **W-B.8** | F-13 split (#28 RT-28D, RT-28E) | DotRing's export (three internal users, in no barrel) and RT-28D's consumer-triggered item |
-| **W-B.9** | F-13 split (#45) | The constellation, decided and built here: BUILD (atlas and slides consume `./constellation`, W-B.9 §2), moved off `useCanvas2D` onto the shared WebGPU device in this wave, then the VizStudio contract with W-G.4 |
+| **W-B.9** | F-13 split (#45) | The constellation, decided and built here: BUILD (atlas and slides consume `./constellation`, W-B.9 §2), moved off `useCanvas2D` onto the shared WebGPU device on W-G.1's one `setup` seam, and `canvas2d/` deleted with its last caller; the blob run's second wave (`W-G.1.md` §0.4); then the VizStudio contract with W-G.4 |
 | **W-B.10** | F-13 split (#46) | GF-TIMELINE: the Σwidth denominator (OW-6) and `useAnisotropicExtent` |
 | **W-B.11** | F-13 split (#78 OWED-1) | The design canon re-author: the salvaged emitter reads retired tokens; rule the re-author against F-63's derivation (W-C.3) |
 | **W-B.12** | F-13 split (GAP-B2b) | The shadcn IDIOM-CLEARED column: draw it and route its rows by mechanism (F-64, F-58, F-66), or retire it because those families' invariants cover it |
@@ -176,11 +178,12 @@ F-13's mechanism is a chronic that waits on a ruling nobody was seated to make a
 
 | wave | families | scope |
 |---|---|---|
-| **W-G.1** | F-47 | W-ONE-ENGINE: the per-dab stroke cascade in WGSL (ids 3, 5, 6, 7 stop collapsing to one Kuwahara body), then the WebGL2 arms deleted (aurora's 11 GLSL modules, the blob's three WebGL2 files; 236 `webgl2` lines in 40 files, CEN #54); the constellation already moved by W-B.9; the raster ground; device limits (request the adapter's `maxTextureDimension2D`, clamp, re-arm). Closes the `gl-excise.test.ts:112` latch subject |
+| **W-G.1** | F-47 | W-ONE-ENGINE, the blob run's first wave: the WebGL2 arms deleted (aurora's 11 GLSL modules, the blob's WebGL2 files, the fourier field's unsupported setup; CEN #54), and the per-dab stroke cascade not ported (`W-G.1.md` §0.5); one `setup` seam; fail loud through one door; device limits (request the adapter's `maxTextureDimension2D`, clamp, re-arm); the backing store under a CSS scale; the aurora's ground in CSS; the pixel floors on WebGPU (W-A.4's floor slice); the run's probe folder and harness `tests-visual/blob-run/`. The constellation is W-B.9's, after it. Closes the `gl-excise.test.ts:112` latch subject |
 | **W-G.2** | F-49 | One `lost` subscription per device fanned out to a Set; a route-cycle DOM-count test (born RED at about 135 nodes per step); the O-54 answer rides it |
 | **W-G.3** | F-50 remainder | W-LUMA-EVENTED and W-AURORA-CLOCK: no synchronous GPU readback on the main thread (KFA-23 = KFA-74), no loop without a resolved source, a drift clock at 30 Hz or less at rest. The blob's settle seam is W-G.5's. What the dock reads in place of the sampler is D3's route (M-5) and W-H.1's |
 | **W-G.4** | F-48 split (aurora) | W-AURORA-GREENFIELD from its spec of record (#49 GF-AURORA), the VizStudio contract riding it; a disease row, its own wave, capture heavy |
-| **W-G.5** | F-48 split (blob), F-50 split (the blob's quiescence seam) | W-BLOB-GREENFIELD from its spec of record (#50: the W1 GLSL excise, the seven W2-W6 cells, C-11, C-12); a mood pin does not veto settle (value.js's quiescence ask); the O-56 G-3 look |
+| **W-G.5** | F-48 split (blob), F-50 split (the blob's quiescence seam) | W-BLOB-GREENFIELD from its spec of record (#50: the seven W2-W6 cells, C-11, C-12; the W1 GLSL excise is W-G.1's), the blob run's third wave: the colony, one settle signal, no shader shadow, one neutral stamp (O-153, O-204 (1) and (2)); a mood pin does not veto settle (value.js's quiescence ask); the O-56 G-3 look |
+| **W-G.5b** | — (O-172) | Blob interaction, the blob run's last wave: the membrane modes, pointer (hover, grab, fling, touch) and `stir()`, after a design loop that sets its numbers |
 | **W-G.6** | F-51 | One mount-path pass: forced recalc per spring, the raster ground, `cn()` memoized, async pipelines, a membership index where SortableList and ToggleGroup scan per item |
 | **W-G.7** | F-52 | A shader-free aurora derive subpath for O-53 (`deriveAurora`, `paletteToCssGradient`; `resolveRenderMode` is deleted by W-G.1); each binding has one door, so `./aurora` no longer exports them (E-1) against value.js's 12,288 B first-paint budget; CSS split per subpath |
 
@@ -298,7 +301,7 @@ This table is the one record of edges. A wave spec cites it and does not restate
 | W-B.6 | W-B.1 |
 | W-B.7 | W-B.1 |
 | W-B.8 | W-B.1 |
-| W-B.9 | W-B.1, W-A.3, W-A.4 |
+| W-B.9 | W-G.1 |
 | W-B.10 | W-B.1 |
 | W-B.11 | W-B.1 |
 | W-B.12 | W-B.1, W-A.2 |
@@ -333,11 +336,12 @@ This table is the one record of edges. A wave spec cites it and does not restate
 | W-F.5 | W-F.3, W-E.3 |
 | W-F.6 | W-A.3, W-F.1 |
 | W-F.7 | W-A.3, W-F.1 |
-| W-G.1 | W-A.4, W-B.9, W-C.5, W-F.1 |
+| W-G.1 | `v12.0.0` merged to master |
 | W-G.2 | W-A.3, W-G.1 |
 | W-G.3 | W-G.1, W-G.6 |
 | W-G.4 | W-G.1, W-B.5, W-G.3, W-G.7 |
-| W-G.5 | W-G.1, W-G.6 |
+| W-G.5 | W-G.1 |
+| W-G.5b | W-G.5 |
 | W-G.6 | W-G.1 |
 | W-G.7 | W-G.1, W-A.5, W-G.6 |
 | W-H.1 | D3 gate, W-0.1, W-C.1, W-C.5, W-E.2, W-E.6, W-G.3 |
@@ -394,8 +398,8 @@ Notes on edges:
   - W-0.3 lands the band-0 paint probe `scripts/probes/band-0/` and its npm script (W-0.3 §4; the text is `W-0.1.md` appendix A). W-0.1, W-0.4, W-0.8, W-0.9 and W-0.11 drive it and depend on W-0.3; W-0.2 and W-0.5 reach it through W-0.1. W-0.3 has no dependency, so the kit waits on no loop. Band 0's external edges are the D3 gate (W-0.1, W-0.2, W-0.11) and the D2 gate (W-0.8), by the owner's O-87 and O-88 rulings of 2026-10-06 (checklist row 7 as amended; `formation-audit/sweeps/release-gates.py` arm CHECKLIST-7 holds the set).
   - W-E.1 lands the band-E fixture app `tests-visual/fixtures/band-e/` with its `lib.mjs` (W-E.1 §4, appendix B). W-E.2, W-E.6, W-E.7, W-E.8, W-E.9, W-E.11 and W-E.12 drive it and depend on W-E.1; W-E.3, W-E.4 and W-E.5 already did, W-E.13 reaches it through W-E.4, and W-E.10 and W-E.14 through W-E.9.
   - W-F.1 lands the band-F probe library `tests-visual/fixtures/band-f/lib.mjs` (W-F.1 §4; the text is `W-F.2.md` appendix D). W-F.2, W-F.6 and W-F.7 depend on W-F.1; W-F.3, W-F.4 and W-F.5 reach it through W-F.2. W-F.2 lands the Sheet and drag kit beside it (W-F.2 §4, appendix E), which W-F.3 drives.
-  - W-B.9 lands the band-G probe library `tests-visual/fixtures/band-g/lib.mjs` and `tests-visual/wired/one-engine.spec.ts` with its constellation route row (W-B.9 §4; the texts are `W-G.1.md` appendices A and B). W-G.1 depends on W-B.9 and adds its rows to that spec. W-G.2 depends on W-G.1, both for the library and because its cure edits the files W-G.1 moves (one path set, W-G.2 §4); W-G.3 to W-G.7 reach W-B.9 through W-G.1.
-  - W-G.6 lands the band-G harness app, pages `h` and `b`, in `tests-visual/fixtures/band-g/` (W-G.6 §4, appendix D). W-G.3 lands `dock-idle-loop.spec.ts` on it, W-G.5 adds its `c=blob` scene to it and W-G.7's G7-G8 reads its `b` page, so all three depend on W-G.6. W-G.4 reaches it through W-G.3.
+  - W-G.1 lands the blob run's probe folder `tests-visual/blob-run/`: the probe library `lib.mjs`, the harness page that mounts one component by `?c=`, and its own probes (`W-G.1.md` §3 item 8, appendix A). W-B.9, W-G.5 and W-G.5b drive it and depend on W-G.1 (W-G.5b through W-G.5); W-B.9 lands no probe library or spec of its own (`W-G.1.md` §0.4). W-G.2 depends on W-G.1, both for the library and because its cure edits the files W-G.1 moves (one path set, W-G.2 §4).
+  - W-G.6 lands the band-G harness app, pages `h` and `b`, in `tests-visual/fixtures/band-g/` (W-G.6 §4, appendix D). W-G.3 lands `dock-idle-loop.spec.ts` on it and W-G.7's G7-G8 reads its `b` page, so both depend on W-G.6. W-G.5 drives `c=blob` on the blob run's harness instead and does not wait on W-G.6. W-G.4 reaches it through W-G.3.
   - W-H.1 lands `scripts/probes/band-H/` (W-H.1 §4, appendix A). W-H.2 reads its `H2/*` rows and adds two scripts to it, W-H.5 reads its `H2/WELL-*` rows and W-H.6 adds its `edge` scene, so all three depend on W-H.1.
   - W-K.1 lands the band-K fixture app `tests-visual/fixtures/band-k/` (W-K.1 §4, appendix B). W-K.2, W-K.7, W-K.8, W-K.9 and W-K.10 depend on W-K.1; W-K.3 and W-K.6 already did, and W-K.4, W-K.5 and W-K.11 reach it through W-K.2. W-K.11 lands `tests-visual/wired/current-row.spec.ts` with W-K.5 appendix A's G1 cell (W-K.11 §4); W-K.5 already depends on W-K.11 and adds its G2 and G3 cells.
 - W-E.4 depends on W-E.2 because W-E.4 §3 item 8 rewrites SelectContent's classes on the tree where W-E.2 has removed the side-translate utilities (E2-G12) (fix-6, FE-01).
@@ -408,7 +412,8 @@ Notes on edges:
   - the owner-gated pair W-A.6 and W-B.13 stay unordered against each other and against W-C.1, W-C.2 and W-L.3, so no wave waits on an owner act it does not need: each pair writes disjoint lines of `release.yml` (W-B.13 deletes `:13-20` and `:65-66`, W-C.1 edits `:35`, W-C.2 strikes the bracket at `:13` only, W-A.6 adds one step to `publish`, W-L.3 adds the matrix job and drops `verify:package`), and no gate of one reads the other's lines. W-C.2's detector (E-10) reads every workflow file as a test, so W-E.1's and W-K.1's `visual.yml` steps, written before or after it, are read by it the same way. The sweep `formation-audit/sweeps/reshape-order.py` lists each unordered pair with this reading.
 - W-C.1 depends on W-A.2 and W-A.5 because both delete a script that reads a tranche record (`scripts/gate-register.mjs`, `scripts/profile-bundle.mjs`), the read W-C.1 §3 step 5 removes; with the order, W-C.1 reads neither and its step 5 has one path (fix-8, FG-01).
 - W-D.1 depends on W-C.3 because W-C.3 §3 item 8 edits `scripts/lib/subpath-policy.mjs`, which W-D.1 deletes (fix-8, FG-01).
-- W-G.1 depends on W-F.1 because W-F.1 edits `src/composables/glass/webgl/createCanvasLifecycle.ts` and its time test imports it from there (`W-F.1.md` appendix B), and W-G.1 moves that file into `webgpu/` and deletes `webgl/`; W-G.1 re-points the import (W-G.1 §4) (fix-8, FG-01).
+- **The blob run** is W-G.1, W-B.9, W-G.5 and W-G.5b, in that order on one branch cut from master after `v12.0.0` merges, and 12.0.0 never waits on it (`W-G.1.md` §0.1, §0.2). W-G.1's re-cut dropped its earlier edges, each with its reason (`W-G.1.md` §0.3): W-A.4 (its floor slice lands in W-G.1), W-B.9 (now after it), W-C.5 (W-B.9 deletes `resolveCanvasColor` with `canvas2d/`), W-F.1 (its time test is not on master; if W-F.1 runs later it imports the lifecycle from `webgpu/`), and W-G.5's edge to W-G.6 (the harness lands in W-G.1).
+- W-G.7's row predates the blob run's placement. W-G.7 is 12.0.0 and W-G.1 is 13.0.0, so W-G.7 cannot wait on W-G.1 as the row says. `waves/W-R.1.md` OQ-12 holds the question; its default runs W-G.7's CSS half in 12.0.0 without the blob, and its aurora derive subpath follows W-G.1.
 
 ## 6 · Formation gaps this plan names
 

@@ -1,4 +1,4 @@
-# W-I.2 · W-DOCK-KEYBOARD: one marker-based member query, the named toolbar, one owner of the selection semantic · 11.0.0
+# W-I.2 · W-DOCK-KEYBOARD: one marker-based member query, the named toolbar, one owner of the selection semantic
 
 | field | value |
 |---|---|
@@ -6,7 +6,7 @@
 | model | `claude-opus-5-5`, asserted from own system identity |
 | HEAD | `8536f2cc` in a scratch worktree; `git diff --stat v10.1.0 HEAD -- src` prints nothing, so every reading measures the published 10.1.0 bytes. A second worktree carries HEAD + `design/dock/pass-2/floor.patch` (D2's floor, `git apply --check` clean, 38 files) so each row below says whether W-I.1's floor already cures it |
 | kind | a BUILD wave on the dock W-I.1 lands. Not a loop wave: D2's floor row 1 decides the dock's seat marker (`[data-dock-seat]` at any depth); this wave makes that the one member query of the library and closes the ARIA rows the loop does not own |
-| ships in | 11.0.0 |
+| release | `waves/INDEX.md`, the one record |
 | families | F-19 (whole), `audit/REGISTRY.md:420-444`; ledger RT-31B (BK #31's dock keyboard route, `ledger/census-register-a.md:43`) |
 | depends on | PLAN §5, the one record of edges |
 | dependants | PLAN §5 (its inverse) |

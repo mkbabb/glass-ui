@@ -1,11 +1,11 @@
-# W-L.7 · W-LANDING: the 11.0.0 packets, measured per consumer, and the relay · 11.0.0
+# W-L.7 · W-LANDING: the 11.0.0 packets, measured per consumer, and the relay
 
 | field | value |
 |---|---|
 | seat | band-L wave-spec seat, formation |
 | model | `claude-opus-5-5`, asserted from own system identity |
 | HEAD | `b3d7fa28` in a scratch worktree; `src` identical to v10.1.0; `dist/` built and packed there (`npm pack` → `mkbabb-glass-ui-10.1.0.tgz`). Sibling repos read only |
-| ships in | 11.0.0 (the packets are written against the 11.0.0 release commit, before the tag) |
+| release | `waves/INDEX.md`, the one record. Formation's placement, superseded there: 11.0.0 (the packets are written against the 11.0.0 release commit, before the tag) |
 | families | F-68 remainder (`audit/REGISTRY.md:1450-1465`): the 11.0.0 packets and relay. Members L15a-F4, L15a-F3, L15a-F5, L15a-F10, L15a-F12, L06-01, L06-07, L06-12, L06-13, L01b-76, L05b-13, L10-08, L11-11, R2-03-10, R2-03-11, R2-07-11. The 10.2.0 relay leg is W-0.7's |
 | depends on | PLAN §5, the one record of edges |
 | dependants | PLAN §5 (its inverse) |

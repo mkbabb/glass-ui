@@ -1,4 +1,4 @@
-# W-H.4 · W-PERF: count gates, the boot shell, the low-power glass register · 11.0.0
+# W-H.4 · W-PERF: count gates, the boot shell, the low-power glass register
 
 | field | value |
 |---|---|
@@ -6,7 +6,7 @@
 | model | `claude-opus-5-5`, asserted from own system identity |
 | HEAD | `80ebfd72` in a scratch worktree; `dist-demo/` built there (`npx vite build --config demo/vite.demo-dist.config.ts`, 5.4 s) and served by a static server inside each probe; `src` is the published 10.1.0 |
 | kind | a disease row decided and built (F-53: W-PERF and W-BOOT-SHELL rode BI, BJ and BK OPEN, `ledger/census-register-b.md:50,58`; `CHARTER.md:23`). Not a loop wave |
-| ships in | 11.0.0 |
+| release | `waves/INDEX.md`, the one record |
 | families | F-53 whole (`audit/REGISTRY.md:1250-1262`); #39's RT-39C (routed to F-53, `census-register-a.md:48`) |
 | depends on | PLAN §5, the one record of edges |
 | dependants | PLAN §5 (its inverse) |

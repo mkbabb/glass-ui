@@ -1,11 +1,11 @@
-# W-K.4 · One ring register with its forced-colours arm · 11.0.0
+# W-K.4 · One ring register with its forced-colours arm
 
 | field | value |
 |---|---|
 | seat | band-K wave-spec seat, formation |
 | model | `claude-opus-5-5`, asserted from own system identity |
 | HEAD | `9866d229` (`src` = `f3ad78d0` = published 10.1.0); the band-K fixture (W-K.1 appendix B); forced colours are Playwright's Chromium emulation (`forcedColors: 'active'`), prefers-contrast is CDP `Emulation.setEmulatedMedia` |
-| ships in | 11.0.0 |
+| release | `waves/INDEX.md`, the one record |
 | families | F-39 (all members), with its inbound rows |
 | depends on | PLAN §5, the one record of edges |
 | dependants | PLAN §5 (its inverse) |

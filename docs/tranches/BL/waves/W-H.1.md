@@ -1,4 +1,4 @@
-# W-H.1 · W-INK-COMPOSITE: ink on the painted composite, state separated in every cell, the PRT arm recedes, the live dock (loop D3) · 11.0.0
+# W-H.1 · W-INK-COMPOSITE: ink on the painted composite, state separated in every cell, the PRT arm recedes, the live dock (loop D3)
 
 | field | value |
 |---|---|
@@ -6,7 +6,7 @@
 | model | `claude-opus-5-5`, asserted from own system identity |
 | HEAD | `80ebfd72` in a scratch worktree (the task named `f3ad78d0`; every commit since is under `docs/`). `git diff --stat v10.1.0 HEAD -- src` prints nothing, so every reading below measures the published 10.1.0 bytes |
 | kind | LOOP WAVE, owned by design loop D3 (`design/material/`). It lands only from D3's converged specification and never before D3 meets its gate |
-| ships in | 11.0.0 |
+| release | `waves/INDEX.md`, the one record |
 | families | F-23 (whole), F-24 (remainder after W-0.1's menu-row split), F-75 (whole); F-21 split (#84a, the ToggleGroup state fill, from W-E.2) and F-28 split (X-G1's selected fill, from W-E.6), both on D3's floor row FL-6 (fix-5, FD-02) |
 | depends on | PLAN §5, the one record of edges |
 | dependants | PLAN §5 (its inverse) |

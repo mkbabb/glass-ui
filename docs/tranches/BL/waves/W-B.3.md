@@ -1,11 +1,11 @@
-# W-B.3 · W-RECAP-CARRY: every owner ask carried to a BL wave or declined in the owner's words; D-3's text of record · 11.0.0
+# W-B.3 · W-RECAP-CARRY: every owner ask carried to a BL wave or declined in the owner's words; D-3's text of record
 
 | field | value |
 |---|---|
 | seat | band-B wave-spec seat, formation run `wf_68eb18d6-b21` |
 | model | `claude-opus-5-5`, asserted from own system identity |
 | HEAD | `19bf6569` in a scratch worktree; docs-only since `f3ad78d0` |
-| ships in | 11.0.0 (records and one script) |
+| release | `waves/INDEX.md`, the one record. Formation's placement, superseded there: 11.0.0 (records and one script) |
 | families | F-14, the carry and D-3 split (`audit/REGISTRY.md:322-340`). The subject decide rows are other waves': R2-06-01 → W-I.4, R2-06-02 → W-H.3, R2-06-03 → W-B.14, R3-01-16 → W-B.15 |
 | depends on | PLAN §5, the one record of edges |
 | dependants | PLAN §5 (its inverse) |

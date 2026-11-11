@@ -1,11 +1,11 @@
-# W-B.12 · The shadcn IDIOM-CLEARED column decided: RETIRE, because three roster invariants hold it · 11.0.0
+# W-B.12 · The shadcn IDIOM-CLEARED column decided: RETIRE, because three roster invariants hold it
 
 | field | value |
 |---|---|
 | seat | band-B wave-spec seat, formation run `wf_68eb18d6-b21` |
 | model | `claude-opus-5-5`, asserted from own system identity |
 | HEAD | `19bf6569` in a scratch worktree |
-| ships in | 11.0.0 |
+| release | `waves/INDEX.md`, the one record |
 | families | F-13, the GAP-B2b split (`audit/REGISTRY.md:320`, `ledger/CENSUS.md:254-256`) |
 | depends on | PLAN §5, the one record of edges |
 | dependants | PLAN §5 (its inverse) |

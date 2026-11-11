@@ -1,11 +1,11 @@
-# W-C.3 · W-DOC-TRUTH: docs name only what the source carries; value tables are generated · 11.0.0
+# W-C.3 · W-DOC-TRUTH: docs name only what the source carries; value tables are generated
 
 | field | value |
 |---|---|
 | seat | band-C wave-spec seat, formation run `wf_68eb18d6-b21` |
 | model | `claude-opus-5-5`, asserted from own system identity |
 | HEAD | `26d193b7` in a scratch worktree, with `dist/` built there. `git diff --stat v10.1.0 HEAD -- src` prints nothing |
-| ships in | 11.0.0 |
+| release | `waves/INDEX.md`, the one record |
 | families | F-63 remainder (`audit/REGISTRY.md:1360-1372`). O-79 (1) and (2) are W-0.5's; this wave's invariants then cover those rows |
 | depends on | PLAN §5, the one record of edges |
 | dependants | PLAN §5 (its inverse) |

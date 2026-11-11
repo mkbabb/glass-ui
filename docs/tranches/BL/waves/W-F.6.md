@@ -1,11 +1,11 @@
-# W-F.6 · W-IDLE-COMPOSITED: idle life runs on the compositor and stops off-screen · 11.0.0
+# W-F.6 · W-IDLE-COMPOSITED: idle life runs on the compositor and stops off-screen
 
 | field | value |
 |---|---|
 | seat | band-F wave-spec seat, formation (relaunch 2026-09-25) |
 | model | `claude-opus-5-5`, asserted from own system identity |
 | HEAD | `84b470aa` (`src`, `demo`, `scripts`, `tests` identical to `f3ad78d0`), scratch worktree, demo built and served on :5961 |
-| ships in | 11.0.0 |
+| release | `waves/INDEX.md`, the one record |
 | families | F-45 (members L07-03, L05a-11, R2-09-07; L07-09 is the dock's, see below) |
 | depends on | PLAN §5, the one record of edges |
 | dependants | PLAN §5 (its inverse) |

@@ -1,11 +1,11 @@
-# W-K.2 · W-COMMAND: the Command is a non-modal listbox; the dialog palette owns focus · 11.0.0
+# W-K.2 · W-COMMAND: the Command is a non-modal listbox; the dialog palette owns focus
 
 | field | value |
 |---|---|
 | seat | band-K wave-spec seat, formation |
 | model | `claude-opus-5-5`, asserted from own system identity |
 | HEAD | `9866d229` (`src` = `f3ad78d0` = published 10.1.0); probes on the packed HEAD build in the band-K consumer fixture (W-K.1 appendix B), reka 2.10.5 and 2.10.1 builds, and Playwright WebKit |
-| ships in | 11.0.0 |
+| release | `waves/INDEX.md`, the one record |
 | families | F-37 (all members) |
 | depends on | PLAN §5, the one record of edges |
 | dependants | PLAN §5 (its inverse) |

@@ -1,11 +1,11 @@
-# W-E.7 · W-DENSITY-DECIDE and the sweep: pads from corners, gaps by width, label slots, one coarse type model, coarse hit areas · 11.0.0
+# W-E.7 · W-DENSITY-DECIDE and the sweep: pads from corners, gaps by width, label slots, one coarse type model, coarse hit areas
 
 | field | value |
 |---|---|
 | seat | band-E wave-spec seat, formation (relaunch 2026-09-25) |
 | model | `claude-opus-5-5`, asserted from own system identity |
 | HEAD | `4d2e3123` (`src`/`demo` identical to `f3ad78d0`), scratch worktree, library and demo built there; probes drive the band-E fixture app (W-E.1 appendix B) and the built demo |
-| ships in | 11.0.0 |
+| release | `waves/INDEX.md`, the one record |
 | families | F-29 remainder (O-74 erratum E-2, the one coarse type model; O-74's F-29 rows; A2-KE-L2-6; UIA-V-225; G-23 COARSE-TARGET-COMPUTED from the W-A.2 roster; the W-B.4 fold "the slider's 44 px coarse hit area by slop"; the W-B.2 folds UIA-F-147, UIA-V-549 and the 25.9 px label) |
 | depends on | PLAN §5, the one record of edges |
 | dependants | PLAN §5 (its inverse) |

@@ -1,11 +1,11 @@
-# W-G.7 · W-PAYLOAD-SPLIT: a shader-free aurora derive subpath, and CSS that ships with its entry · 11.0.0
+# W-G.7 · W-PAYLOAD-SPLIT: a shader-free aurora derive subpath, and CSS that ships with its entry
 
 | field | value |
 |---|---|
 | seat | band-G wave-spec seat, formation (relaunch 2026-09-25) |
 | model | `claude-opus-5-5`, asserted from own system identity |
 | HEAD | `b37a37c3` (`src`, `package.json`, build config identical to `f3ad78d0`); scratch worktree built with `npm run build`; the band-G harness's one-Button page (W-G.6 appendix D) built against that `dist` |
-| ships in | 11.0.0 |
+| release | `waves/INDEX.md`, the one record |
 | families | F-52, payload does not shake (`audit/REGISTRY.md:1237-1250`): L07-05, L07-06, R2-04-07, R2-07-06. Inbound: O-53 R-1 (value.js X-W6, `BK/coordination/valuejs-outbound-2026-09-23-xw6-aurora-derive-relay.md`; `INBOUND-MAP.md:530`) |
 | depends on | PLAN §5, the one record of edges |
 | dependants | PLAN §5 (its inverse) |

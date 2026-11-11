@@ -1,11 +1,11 @@
-# W-F.1 · W-SPRING-ONE: one step-able spring, one clock, curves continuous at 100 % · 11.0.0
+# W-F.1 · W-SPRING-ONE: one step-able spring, one clock, curves continuous at 100 %
 
 | field | value |
 |---|---|
 | seat | band-F wave-spec seat, formation (relaunch 2026-09-25) |
 | model | `claude-opus-5-5`, asserted from own system identity |
 | HEAD | `84b470aa` (`src`, `demo`, `scripts`, `tests` identical to `f3ad78d0`: `git diff --stat f3ad78d0 HEAD -- src demo scripts tests` is empty), scratch worktree, demo built there (`npm run demo:dist:build`) and served by `vite preview` on :5961 |
-| ships in | 11.0.0 |
+| release | `waves/INDEX.md`, the one record |
 | families | F-44 (members L10-01, L10-18, R2-02-09, R2-02-16, R2-04-14, R3-01-10, R3-01-11, R5-01-09) |
 | depends on | PLAN §5, the one record of edges |
 | dependants | PLAN §5 (its inverse) |

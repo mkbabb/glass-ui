@@ -1,11 +1,11 @@
-# W-B.13 · Trusted Publisher, then one auth path: the `NPM_TOKEN` secret and the `release.yml` env pair deleted · 11.0.0
+# W-B.13 · Trusted Publisher, then one auth path: the `NPM_TOKEN` secret and the `release.yml` env pair deleted
 
 | field | value |
 |---|---|
 | seat | band-B wave-spec seat, formation run `wf_68eb18d6-b21` |
 | model | `claude-opus-5-5`, asserted from own system identity |
 | HEAD | `19bf6569` in a scratch worktree; `npm view` and `gh secret list` read at seat time |
-| ships in | 11.0.0 (the first OIDC publish is the 10.2.0 or 11.0.0 tag, whichever follows the owner act) |
+| release | `waves/INDEX.md`, the one record. Formation's placement, superseded there: 11.0.0 (the first OIDC publish is the 10.2.0 or 11.0.0 tag, whichever follows the owner act) |
 | families | F-13, the C-1 and C-3 split (member L04-F17) |
 | depends on | PLAN §5, the one record of edges |
 | dependants | PLAN §5 (its inverse) |

@@ -1,11 +1,11 @@
-# W-F.4 · W-EXTENT-OWNED: the moving box owns every layout contribution it changes · 11.0.0
+# W-F.4 · W-EXTENT-OWNED: the moving box owns every layout contribution it changes
 
 | field | value |
 |---|---|
 | seat | band-F wave-spec seat, formation (relaunch 2026-09-25) |
 | model | `claude-opus-5-5`, asserted from own system identity |
 | HEAD | `84b470aa` (`src`, `demo`, `scripts`, `tests` identical to `f3ad78d0`), scratch worktree, demo built and served on :5961 |
-| ships in | 11.0.0 |
+| release | `waves/INDEX.md`, the one record |
 | families | F-76 (members R3-01-06, R3-01-07, R3-01-08, R4-02-10) |
 | depends on | PLAN §5, the one record of edges |
 | dependants | PLAN §5 (its inverse) |

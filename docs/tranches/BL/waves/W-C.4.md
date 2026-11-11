@@ -1,11 +1,11 @@
-# W-C.4 · W-TOKEN-HYGIENE: every token is declared once, read somewhere, and read without a literal fallback · 11.0.0
+# W-C.4 · W-TOKEN-HYGIENE: every token is declared once, read somewhere, and read without a literal fallback
 
 | field | value |
 |---|---|
 | seat | band-C wave-spec seat, formation run `wf_68eb18d6-b21` |
 | model | `claude-opus-5-5`, asserted from own system identity |
 | HEAD | `26d193b7` in a scratch worktree, with `dist/` and `dist-demo/` built there |
-| ships in | 11.0.0 |
+| release | `waves/INDEX.md`, the one record |
 | families | F-64 (`audit/REGISTRY.md:1374-1392`), plus the rows W-B.1 and W-B.12 fold here (the `.input-pill` recipe, `data-reparse-ok`, W-CONTROL-CHASSIS, the GU-1 shadow size ladder, the `--radius` ladder) |
 | depends on | PLAN §5, the one record of edges |
 | dependants | PLAN §5 (its inverse) |

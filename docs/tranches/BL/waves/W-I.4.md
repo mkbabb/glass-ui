@@ -1,4 +1,4 @@
-# W-I.4 · W-DOCK-COMPOSE-DECIDE: the dock composition facilities, decided inside D2 (loop D2) · 11.0.0
+# W-I.4 · W-DOCK-COMPOSE-DECIDE: the dock composition facilities, decided inside D2 (loop D2)
 
 | field | value |
 |---|---|
@@ -6,7 +6,7 @@
 | model | `claude-opus-5-5`, asserted from own system identity |
 | HEAD | `8536f2cc` in a scratch worktree; `src` is the published 10.1.0 |
 | kind | a DECIDE wave (the charter's form for a disease row: F-14's asks rode BI, BJ and BK without a terminal, `CHARTER.md:23`) and a loop D2 wave (fix-2, FA-15): the composition subjects are dock design questions, so D2 carries each as a witness row or a RETIRE question (PLAN §4 obligations), and this wave lands D2's rulings on the converged dock. The registry placed W-DOCK-COMPOSE-DECIDE "inside the dock design loop" (`audit/REGISTRY.md:339`) |
-| ships in | 11.0.0 (the BUILD rows land in this wave) |
+| release | `waves/INDEX.md`, the one record. Formation's placement, superseded there: 11.0.0 (the BUILD rows land in this wave) |
 | families | F-14, the R2-06-01 split (`audit/REGISTRY.md:326`, `:334`) |
 | depends on | PLAN §5, the one record of edges |
 | dependants | PLAN §5 (its inverse) |

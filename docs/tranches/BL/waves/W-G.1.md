@@ -7,7 +7,7 @@
 | release | `waves/INDEX.md`, the one record. The ruling behind its row is §0.2 |
 | the run | the blob run: W-G.1, W-B.9, W-G.5, W-G.5b, in that order on one branch (§0.1) |
 | families | F-47 whole (`audit/REGISTRY.md:1154-1169`): L05a-01, L10-02, L04-F03, L05b-09, L01b-54, R2-06-10, R4-01-17. R2-09-02's publisher half is W-H.1's, conditional on D3-B. Also the engine halves routed here: F-48's C-11 (π-W1, the blob's GL excise), #49's D5 and #60's one-context arm (both F-51 routings, `census-register-a.md:56`, `census-register-b.md:50`), W-B.1's two folds (the Safari WebGPU promote, the `flow.wgsl.ts` curl tail), and O-172's backing store under a CSS scale. #45 and R2-06-10's constellation half are W-B.9's, the second wave of this run |
-| edges | §8. PLAN §5's rows for W-G.1 and W-G.5 predate the re-cut; §8 replaces them |
+| edges | §8; PLAN §5 carries them (amended 2026-11-11) |
 
 ## 0 · The run, its release, and what the re-cut changed
 
@@ -214,7 +214,7 @@ This wave waits on one thing: `v12.0.0` merged to master (§0.2). W-B.9, W-G.5 a
 
 - **OQ-1 (owner).** After W-B.9, a browser without WebGPU shows no constellation, where Canvas2D paints one today. atlas's page background is the live case. Default: the port stands as W-B.9 rules it, the loss is a MIGRATION row, and atlas decides in its own tranche whether to mount `StillConstellation` (the SVG still that arrives with 11.2.0) under the live field. If the owner keeps the constellation on Canvas2D instead, W-B.9 leaves the run, `useCanvas2D` stays exported, and this wave is unchanged.
 - **OQ-2 (measurement).** Does Playwright WebKit on the releasing machine expose `navigator.gpu`? No seat has read it. Default: no WebKit cell in this wave; W-G.5b's one WebKit cell is its input cell, which needs no paint.
-- **OQ-3 (orchestrator).** `waves/W-B.9.md` still carries its September header and edges. Default: the four amendments of §0.4 are written into it before the run, by a seat allowed to edit it.
+- **OQ-3 (orchestrator).** `waves/W-B.9.md` still carries its September header and edges. Default: the four amendments of §0.4 are written into it before the run, by a seat allowed to edit it. Written 2026-11-11 (`W-B.9.md` §0).
 
 ## Appendix A · `lib.mjs`, the probe library
 

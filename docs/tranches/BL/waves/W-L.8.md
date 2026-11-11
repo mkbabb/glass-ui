@@ -1,11 +1,11 @@
-# W-L.8 · the 11.0.0 cut and the close: a checklist whose every item is a command, then FINAL.md · 11.0.0
+# W-L.8 · the 11.0.0 cut and the close: a checklist whose every item is a command, then FINAL.md
 
 | field | value |
 |---|---|
 | seat | band-L wave-spec seat, formation |
 | model | `claude-opus-5-5`, asserted from own system identity |
 | HEAD | `b3d7fa28`; `package.json:3` `"version": "10.1.0"`; `npm view @mkbabb/glass-ui version dist.unpackedSize` → `10.1.0`, `2919057`; `cat .bundle-ratchet` → `2919057` |
-| ships in | 11.0.0: this wave is the cut, and BL's close |
+| release | `waves/INDEX.md`, the one record. Formation's placement, superseded there: 11.0.0: this wave is the cut, and BL's close |
 | families | F-12 whole (`audit/REGISTRY.md:301-310`): L04-F01, L04-F05, L04-F16, L04-F22, L04-F24, L04-F25, L04-F26, L01a-07, L01a-11, L01b-49b, L01b-55, L01b-66b, L01b-70, L01b-90, L05a-09, L05b-17, L06-11, L08-26, L09-14, R2-06-13 |
 | depends on | PLAN §5, the one record of edges |
 | dependants | PLAN §5 (its inverse) |

@@ -1,11 +1,11 @@
-# W-D.1 · W-COLOCATION: the tree lands in the D1 loop's converged placement, sealed · 11.0.0 · loop D1
+# W-D.1 · W-COLOCATION: the tree lands in the D1 loop's converged placement, sealed · loop D1
 
 | field | value |
 |---|---|
 | seat | band-D wave-spec seat, formation run `wf_68eb18d6-b21`; W-D.1 re-point seat (round 2), against the D1 convergence record |
 | model | `claude-opus-5-5`, asserted from own system identity |
 | HEAD | `3e8f99f9b`. The code is 10.1.0's (`git diff 6154d6ec HEAD -- . ':!docs'` prints nothing), the base the convergence record replays on (D1 §P13-6.1). Measured in two scratch worktrees under `.claude/worktrees/bl/formation/wd1-repoint2/`: `base` at HEAD (the HEAD readings; built there, `npm run build` exit 0), then cut to the floor base by `floor/rows/apply.mjs` (`K13/lib/digest.mjs` `codeDigest` `6773b4ec…` over 1,354 files); `wt` at HEAD with the converged chain replayed (`K13/replay.mjs --twice`, 400.7 s, `code digest 6fdd4ec7bd259630… over 1587 files; chain final MATCH`; a rerun is a no-op, "the chain is applied", 0.3 s) |
-| ships in | 11.0.0 |
+| release | `waves/INDEX.md`, the one record |
 | loop | D1 structure (`design/structure/`). This is a LOOP WAVE: it lands the loop's converged kit and adds no design of its own |
 | families | F-55, F-56, F-57, F-58, F-59 whole (`audit/REGISTRY.md:1278-1324`) |
 | depends on | PLAN §5, the one record of edges |

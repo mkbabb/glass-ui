@@ -171,7 +171,7 @@ One challenge pass and one fold on the build. A second challenge runs only if th
 | I8-G20 (the consumer's placement) | deleted with the root writes it policed; its centring arm is in G-3 |
 | I8-G22 | restated as G-7 |
 
-`design/dock-cluster/SPEC-SUMMARY.md` describes the cluster and is deleted by the orchestrator.
+`design/dock-cluster/SPEC-SUMMARY.md` described the cluster; the orchestrator deleted it on 2026-11-11.
 
 ## 5 · Order
 
@@ -190,7 +190,7 @@ Each has a default. The build proceeds on the default and records the answer whe
 - **OQ-2 (measurement, with OQ-1).** The fade's windows. 0 to 0.35 out is pass 2's (`design/dock/pass-2/D2-Bp-spec.md:202`). 0.35 to 0.70 in is this seat's: no record fixes where the entering face is whole. Default as written; strip B is the read.
 - **OQ-3 (measurement).** Which re-cut H8 rows read RED on master today. Nobody has run the harness on the shipped dock (`design-D2.md` item 4). Default: every re-cut row gates the landed tree, and the rows master already holds are recorded as carried witnesses. Two near-bound classes outlive the exchange, [terminal] and [lanes]; their bounds are fixed before the read. Default: [terminal]'s last step at 1 px (it drew 0.95 against 0.88), [lanes] at its present bound with a draw re-run twice.
 - **OQ-4 (owner).** With the seat out, is the centre the row's (plate and seat together) or the plate's? Default: the row's. The seat is in flow, so a host's centring, its overflow and its height read the true extent, and the plate's own centre moves by half the seat's room on an expand.
-- **OQ-5 (measurement).** The seat's rest gap and its ink on the page. Default: the gap is `--dock-layer-gap` past the plate's edge with no new token, and the ink is `--foreground`. The fixture reads the glyph against the page at 3:1 or better in both themes and captures the gap for the owner's look.
+- **OQ-5 (measurement).** The seat's rest gap and its ink on the page. Default: the gap is `--dock-layer-gap` past the plate's edge with no new token, and the ink is the dock control ink, `--dock-fg-on-aurora` (§1.4). The fixture reads the glyph against the page at 3:1 or better in both themes and captures the gap for the owner's look.
 - **OQ-6 (measurement).** Does G-10 read RED on master and GREEN with the `:empty` rule alone? Default: yes, and no DockLayer API is built.
 - **OQ-7 (measurement).** O-215's dock row, by 11.1.0's close trace. Default: the row closes at 11.1.0; above 16 ms this wave adds one trace cell at 390 and 4x CPU.
 - **OQ-8 (owner).** The boot-graph ceiling. D2's base had 31 B of margin. Default: the landed dock's boot graph is no larger than master's at the cut; if it is larger, the owner rules the ceiling before the merge.
@@ -212,4 +212,4 @@ Also in 11.2.0, and not this wave's build: the three enter start radii default t
 
 Closes O-195, O-200, O-202, O-222, O-224, O-171 R-2, O-129 rows 3 and 4, and O-180 (3). Takes the carrier half of O-88 and of W-0.8.
 
-Records the orchestrator amends, since this seat writes only this file and `design/dock/LANDING.md`: an INDEX row for W-I.8 at 11.2.0; W-0.8 and W-I.1 pointed here for the carrier; the INBOUND placements of O-129 rows 3 and 4, O-171 R-2 and O-180 (3); `docs/precepts/motion-canon.md` P5 and P6, which state Q-6 (a) and §1.6 in one sentence each; and the deletion of `SPEC-SUMMARY.md`.
+Records the orchestrator amends, since this seat writes only this file and `design/dock/LANDING.md`: an INDEX row for W-I.8 at 11.2.0; W-0.8 and W-I.1 pointed here for the carrier; the INBOUND placements of O-129 rows 3 and 4, O-171 R-2 and O-180 (3); `docs/precepts/motion-canon.md` P5 and P6, which state Q-6 (a) and §1.6 in one sentence each; and the deletion of `SPEC-SUMMARY.md`. All but the motion-canon sentences were made on 2026-11-11; those two are owed in the precepts repository (`review/fable-2026-11-10/owed-outside-BL.md`).

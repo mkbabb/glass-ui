@@ -1,4 +1,4 @@
-# W-H.2 · W-FROST-II: one frost detector, blur composed at the element, the F48 ladder (loop D3) · 11.0.0
+# W-H.2 · W-FROST-II: one frost detector, blur composed at the element, the F48 ladder (loop D3)
 
 | field | value |
 |---|---|
@@ -6,7 +6,7 @@
 | model | `claude-opus-5-5`, asserted from own system identity |
 | HEAD | `80ebfd72` in a scratch worktree (the task named `f3ad78d0`; every commit since is under `docs/`). `git diff --stat v10.1.0 HEAD -- src` prints nothing, so every reading measures the published 10.1.0 bytes |
 | kind | LOOP WAVE, owned by design loop D3 (`design/material/`). It lands only from D3's converged specification and never before D3 meets its gate |
-| ships in | 11.0.0 |
+| release | `waves/INDEX.md`, the one record |
 | families | F-31 (remainder after W-0.1's veil-token and control-surface split), with its ledger members from census GAP-1 (#7's remainder, #39's RT-39G) |
 | depends on | PLAN §5, the one record of edges |
 | dependants | PLAN §5 (its inverse) |

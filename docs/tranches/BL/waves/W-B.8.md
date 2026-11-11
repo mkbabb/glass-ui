@@ -1,11 +1,11 @@
-# W-B.8 · DotRing decided: BUILD the export, with the direct-wrap leave arm (RT-28D, RT-28E) · 11.0.0
+# W-B.8 · DotRing decided: BUILD the export, with the direct-wrap leave arm (RT-28D, RT-28E)
 
 | field | value |
 |---|---|
 | seat | band-B wave-spec seat, formation run `wf_68eb18d6-b21` |
 | model | `claude-opus-5-5`, asserted from own system identity |
 | HEAD | `19bf6569` in a scratch worktree |
-| ships in | 11.0.0 |
+| release | `waves/INDEX.md`, the one record |
 | families | F-13, the #28 split (RT-28D, RT-28E); F-71 inbound UIA-F-72 and A2-FO-L1-28 |
 | depends on | PLAN §5, the one record of edges |
 | dependants | PLAN §5 (its inverse) |

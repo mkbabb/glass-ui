@@ -1,11 +1,11 @@
-# W-B.2 · W-MAIL-INTAKE and the reply letter: one inbox, one key per letter, every row ruled and answered · 11.0.0
+# W-B.2 · W-MAIL-INTAKE and the reply letter: one inbox, one key per letter, every row ruled and answered
 
 | field | value |
 |---|---|
 | seat | band-B wave-spec seat, formation run `wf_68eb18d6-b21` |
 | model | `claude-opus-5-5`, asserted from own system identity |
 | HEAD | `19bf6569` in a scratch worktree (docs-only since `f3ad78d0`); `src` is the published 10.1.0. Sibling trees read only (value.js `docs/tranches/V/coordination/INBOX.md`) |
-| ships in | 11.0.0 (the reply is sent when this wave closes; each row's landing version is in the letter) |
+| release | `waves/INDEX.md`, the one record. Formation's placement, superseded there: 11.0.0 (the reply is sent when this wave closes; each row's landing version is in the letter) |
 | families | F-71, the intake and reply split (`audit/REGISTRY.md:1511-1526`). The API-ask cures named in PLAN §3 W-L.1 are W-L.1's; this wave rules every other F-71 row |
 | depends on | PLAN §5, the one record of edges |
 | dependants | PLAN §5 (its inverse) |

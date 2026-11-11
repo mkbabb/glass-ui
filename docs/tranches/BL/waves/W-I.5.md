@@ -1,11 +1,11 @@
-# W-I.5 · the retired dock facilities, decided (loop D2) · 11.0.0
+# W-I.5 · the retired dock facilities, decided (loop D2)
 
 | field | value |
 |---|---|
 | seat | formation fix seat 2 (`formation-audit/fix-2.md`, FA-21); the item and its gate move here from W-I.1 (§3.3 item 7, G20) |
 | model | `claude-opus-5-5`, asserted from own system identity |
 | HEAD | `183e021a` (fix-2's reading of G1); W-I.1's readings at its seat |
-| ships in | 11.0.0 |
+| release | `waves/INDEX.md`, the one record |
 | loop | D2 dock. Q-9 is D2's question (`design/dock/REGISTRY.md:303`); this wave lands its ruling |
 | families | F-16 split: #48 W-DOCK-FISSION, a disease row (OPEN at three closes, LEDGER `#48`). The zero-width morph window L04 proposed folding into #48 is W-0.12's (LEDGER `L04-M33`; fix-12, FK-02; fix-13, FL-04) |
 | depends on | PLAN §5, the one record of edges |

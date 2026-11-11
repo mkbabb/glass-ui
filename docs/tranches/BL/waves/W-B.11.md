@@ -1,11 +1,11 @@
-# W-B.11 · The design canon decided: RETIRE the salvaged body and emitter; the canon is derived (W-C.3) · 11.0.0
+# W-B.11 · The design canon decided: RETIRE the salvaged body and emitter; the canon is derived (W-C.3)
 
 | field | value |
 |---|---|
 | seat | band-B wave-spec seat, formation run `wf_68eb18d6-b21` |
 | model | `claude-opus-5-5`, asserted from own system identity |
 | HEAD | `19bf6569` in a scratch worktree |
-| ships in | 11.0.0 |
+| release | `waves/INDEX.md`, the one record |
 | families | F-13, the #78 split (OWED-1, OWED-2; member L01b-78) |
 | depends on | PLAN §5, the one record of edges |
 | dependants | PLAN §5 (its inverse) |

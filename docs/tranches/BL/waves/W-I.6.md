@@ -1,11 +1,11 @@
-# W-I.6 · the dock hallmarks, OWED-3 and the R-7 captures (loop D2) · 11.0.0
+# W-I.6 · the dock hallmarks, OWED-3 and the R-7 captures (loop D2)
 
 | field | value |
 |---|---|
 | seat | formation fix seat 2 (`formation-audit/fix-2.md`, FA-02, FA-21); the items and gates move here from W-I.1 (§3.1 item 1, §3.3 items 8 and 9, G21, G22) |
 | model | `claude-opus-5-5`, asserted from own system identity |
 | HEAD | `183e021a` (fix-2's readings of G1 and G4); W-I.1's readings at its seat |
-| ships in | 11.0.0 |
+| release | `waves/INDEX.md`, the one record |
 | loop | D2 dock. The hallmark witnesses are D2's (W-I.1 §3.1 item 1's obligation) |
 | families | F-54 split: #67a (hallmarks 1, 2 and 5, and OWED-3) and #67d, #90a and #90d (the R-7 captures, device fps and loupe L-3), disease rows (open at three closes, LEDGER `#67a`, `#67d`, `#90a`, `#90d`). F-13's members L01b-67 (the OWED-3 ruling and the R-7 footage) and L04-F15 (the R-7 ask) are decided here |
 | owner row | OW-5, the three R-7 captures |

@@ -1,11 +1,11 @@
-# W-E.9 · W-CEL-CONTAINER: specimens and components lay out by their container · 11.0.0
+# W-E.9 · W-CEL-CONTAINER: specimens and components lay out by their container
 
 | field | value |
 |---|---|
 | seat | band-E wave-spec seat, formation (relaunch 2026-09-25) |
 | model | `claude-opus-5-5`, asserted from own system identity |
 | HEAD | `4d2e3123` (`src`/`demo` identical to `f3ad78d0`), scratch worktree, library and demo built there; probes drive the built demo and the band-E fixture app (W-E.1 appendix B) |
-| ships in | 11.0.0 |
+| release | `waves/INDEX.md`, the one record |
 | families | F-33 (#59 W-LAYOUT; the `layout-canon` latches W-A.2 retires to this wave at `tests/styles/layout-canon.test.ts:371,403`). The configurator envelope (C-13c, R11, R4-02-07, the `:390` latch) is W-E.14's |
 | depends on | PLAN §5, the one record of edges |
 | dependants | PLAN §5 (its inverse) |

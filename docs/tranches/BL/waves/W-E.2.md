@@ -1,11 +1,11 @@
-# W-E.2 · W-SURFACE-GEOMETRY and the containment row: a shared rule never overrides a component's own geometry, and a clip holds only while its purpose does · 11.0.0
+# W-E.2 · W-SURFACE-GEOMETRY and the containment row: a shared rule never overrides a component's own geometry, and a clip holds only while its purpose does
 
 | field | value |
 |---|---|
 | seat | band-E wave-spec seat, formation (relaunch 2026-09-25) |
 | model | `claude-opus-5-5`, asserted from own system identity |
 | HEAD | `4d2e3123` (`src`/`demo` identical to `f3ad78d0`), scratch worktree, library and demo built there; probes drive the band-E fixture app (W-E.1 appendix B) on the packed build and the built demo |
-| ships in | 11.0.0 |
+| release | `waves/INDEX.md`, the one record |
 | families | F-21 (G-27 CASCADE-GEOMETRY from the W-A.2 roster; N-11a / O-61 R-1; #86's F-21 item). C-8 and the dock-run class are W-I.7's; #84a, the ToggleGroup state fill, is W-H.1's (PLAN §3; fix-5, FD-02) |
 | depends on | PLAN §5, the one record of edges |
 | dependants | PLAN §5 (its inverse) |

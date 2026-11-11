@@ -1,11 +1,11 @@
-# W-F.2 · W-INTERRUPT: every interruption continues from the in-flight value, through one end-of-gesture helper · 11.0.0
+# W-F.2 · W-INTERRUPT: every interruption continues from the in-flight value, through one end-of-gesture helper
 
 | field | value |
 |---|---|
 | seat | band-F wave-spec seat, formation (relaunch 2026-09-25) |
 | model | `claude-opus-5-5`, asserted from own system identity |
 | HEAD | `84b470aa` (`src`, `demo`, `scripts`, `tests` identical to `f3ad78d0`), scratch worktree; demo built there and served on :5961; R4-01's dock harness (`audit/captures/R4-01/probes/harness/`) copied to scratch with `@glass` pointed at the worktree `src`, served by `vite` on :5962; a static build of the same harness with two added pages (`sheet.html` from R10-01's `P.vue.txt`, `drag.html`, appendix E) served by `vite preview` on :5964; a cross-site page on `127.0.0.1:5963` for the bfcache cells |
-| ships in | 11.0.0 |
+| release | `waves/INDEX.md`, the one record |
 | families | F-78 (members R4-01-01..R4-01-06, R5-01-01, R10-01-01, R10-01-03) |
 | depends on | PLAN §5, the one record of edges |
 | dependants | PLAN §5 (its inverse) |

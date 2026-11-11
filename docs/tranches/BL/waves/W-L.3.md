@@ -1,11 +1,11 @@
-# W-L.3 · W-PEER-TRUTH: the consumer matrix replaces `verify:package`, and the artefact does what the source claims · 11.0.0
+# W-L.3 · W-PEER-TRUTH: the consumer matrix replaces `verify:package`, and the artefact does what the source claims
 
 | field | value |
 |---|---|
 | seat | band-L wave-spec seat, formation |
 | model | `claude-opus-5-5`, asserted from own system identity |
 | HEAD | `78922b26` in a scratch worktree; `src` identical to v10.1.0; `dist/` built there (`npm run build`, exit 0). Probes: `@tailwindcss/node` 4.3.3 compiles (appendix A), a dist import-closure walker (appendix B), `vue/server-renderer` under a node-only `vitest` config and hydration under happy-dom (appendix C) |
-| ships in | 11.0.0 |
+| release | `waves/INDEX.md`, the one record |
 | families | F-67 whole (`audit/REGISTRY.md:1428-1448`): L09-03, L06-03, L06-04, L06-05, R2-07-01, R2-07-03, R2-07-04, R2-07-05, R2-07-07, R2-07-12 (the re-scope), R2-09-08, R5-02-02, R5-02-03 |
 | depends on | PLAN §5, the one record of edges |
 | dependants | PLAN §5 (its inverse) |

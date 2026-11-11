@@ -1,11 +1,11 @@
-# W-L.6 · the P-6 census: every published symbol has a reader, or it leaves the surface · 11.0.0
+# W-L.6 · the P-6 census: every published symbol has a reader, or it leaves the surface
 
 | field | value |
 |---|---|
 | seat | band-L wave-spec seat, formation |
 | model | `claude-opus-5-5`, asserted from own system identity |
 | HEAD | `b3d7fa28` in a scratch worktree; `src` identical to v10.1.0. `dist/` and `dist-demo/` built there. Sibling repos read only (`rg` and file reads; nothing built or run in them) |
-| ships in | 11.0.0 |
+| release | `waves/INDEX.md`, the one record |
 | families | F-66 whole (`audit/REGISTRY.md:1416-1427`): L05a-18, L06-10, L10-06, L10-07, L10-15, L10-21, L13-14, R2-01-12, R2-06-11 |
 | depends on | PLAN §5, the one record of edges |
 | dependants | PLAN §5 (its inverse) |

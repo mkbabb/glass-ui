@@ -1,11 +1,11 @@
-# W-I.7 · the dock run's box (loop D2) · 11.0.0
+# W-I.7 · the dock run's box (loop D2)
 
 | field | value |
 |---|---|
 | seat | formation fix seat 2 (`formation-audit/fix-2.md`, FA-21); the item and its three gates move here from W-E.2 (§3 item 9, E2-G14..G16) |
 | model | `claude-opus-5-5`, asserted from own system identity |
 | HEAD | `183e021a` (fix-2 re-ran the three gates) |
-| ships in | 11.0.0 |
+| release | `waves/INDEX.md`, the one record |
 | loop | D2 dock: `dock/styles/run.css` is D2's route's to own. This wave lands after D2's gate and before W-I.1 (PLAN §5, fix-3): the box fix goes on the run as it stands, and W-I.1's converged carrier keeps I7-G1..G3 true on its own rules (§3 item 3) |
 | families | F-21 split: C-8, a disease row (BK FINAL §7 carry, open at two closes, LEDGER `C-8`), with R2-02-04 and R3-02-09, the same defect class in `run.css` |
 | depends on | PLAN §5, the one record of edges |

@@ -1,11 +1,11 @@
-# W-F.5 · W-DIRECTION: direction and writing mode are inputs to every axis · 11.0.0
+# W-F.5 · W-DIRECTION: direction and writing mode are inputs to every axis
 
 | field | value |
 |---|---|
 | seat | band-F wave-spec seat, formation (relaunch 2026-09-25) |
 | model | `claude-opus-5-5`, asserted from own system identity |
 | HEAD | `84b470aa` (`src`, `demo`, `scripts`, `tests` identical to `f3ad78d0`), scratch worktree, demo built and served on :5961 |
-| ships in | 11.0.0 |
+| release | `waves/INDEX.md`, the one record |
 | families | F-79 (the direction and writing-mode members; `REG` band F) |
 | depends on | PLAN §5, the one record of edges |
 | dependants | PLAN §5 (its inverse) |

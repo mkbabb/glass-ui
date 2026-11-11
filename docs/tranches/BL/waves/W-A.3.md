@@ -1,11 +1,11 @@
-# W-A.3 · W-VISUAL-CI: the visual suite is the wired set, run in CI on both engines, and the tag waits on it · 11.0.0
+# W-A.3 · W-VISUAL-CI: the visual suite is the wired set, run in CI on both engines, and the tag waits on it
 
 | field | value |
 |---|---|
 | seat | band-A wave-spec seat, formation run `wf_68eb18d6-b21` |
 | model | `claude-opus-5-5`, asserted from own system identity |
 | HEAD | `fabc95e2` in a scratch worktree, `dist/` and `dist-demo/` built there, the demo served by `vite preview --config demo/vite.demo-dist.config.ts --port 5793` for the probes and stopped after |
-| ships in | 11.0.0 |
+| release | `waves/INDEX.md`, the one record |
 | families | F-04 whole (`audit/REGISTRY.md:210-217`) |
 | depends on | PLAN §5, the one record of edges |
 | dependants | PLAN §5 (its inverse) |

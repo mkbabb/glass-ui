@@ -1,11 +1,11 @@
-# W-L.2 · the type surface: every binding a consumer writes is either typed and delivered, or rejected · 11.0.0
+# W-L.2 · the type surface: every binding a consumer writes is either typed and delivered, or rejected
 
 | field | value |
 |---|---|
 | seat | band-L wave-spec seat, formation |
 | model | `claude-opus-5-5`, asserted from own system identity |
 | HEAD | `78922b26` in a scratch worktree; `src` identical to v10.1.0. `dist/` built there. The consumer fixture (appendix A) type-checks against the built package; the runtime witnesses ran under `vitest` (happy-dom) and one in Chromium (appendix B) |
-| ships in | 11.0.0 |
+| release | `waves/INDEX.md`, the one record |
 | families | F-70 whole (`audit/REGISTRY.md:1478-1509`): L15a-F6, L13-12, R2-02-17, R2-03-02, R2-05-F4, R2-05-F5, R2-07-02, R3-01-01, R4-01-18, R5-02-04, R5-02-05, R6-02-06, R8-02-05. Inbound O-57 R-1; O-56 G-2's consumer half (N-8b); O-72 (W-B.2 §3.6 routes it here) |
 | depends on | PLAN §5, the one record of edges |
 | dependants | PLAN §5 (its inverse) |

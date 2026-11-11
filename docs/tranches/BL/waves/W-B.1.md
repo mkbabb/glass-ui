@@ -1,11 +1,11 @@
-# W-B.1 · The BL ledger: every carried row terminal, every route to a row that exists · 11.0.0
+# W-B.1 · The BL ledger: every carried row terminal, every route to a row that exists
 
 | field | value |
 |---|---|
 | seat | band-B wave-spec seat, formation run `wf_68eb18d6-b21` |
 | model | `claude-opus-5-5`, asserted from own system identity |
 | HEAD | `19bf6569` in a scratch worktree (the task named `f3ad78d0`; the 13 commits between are docs-only: `git diff --stat f3ad78d0 HEAD -- src tests scripts .github package.json` prints nothing). `src` is the published 10.1.0 |
-| ships in | 11.0.0 (the ledger is a tranche record; the checker ships in `scripts/`, not in the package) |
+| release | `waves/INDEX.md`, the one record. Formation's placement, superseded there: 11.0.0 (the ledger is a tranche record; the checker ships in `scripts/`, not in the package) |
 | families | F-11 whole (`audit/REGISTRY.md:292-299`) |
 | depends on | PLAN §5, the one record of edges |
 | dependants | PLAN §5 (its inverse) |

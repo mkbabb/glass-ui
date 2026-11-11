@@ -1,11 +1,11 @@
-# W-L.5 · the value.js colour boundary: every malformed colour throws the published `GlassColorError` · 11.0.0
+# W-L.5 · the value.js colour boundary: every malformed colour throws the published `GlassColorError`
 
 | field | value |
 |---|---|
 | seat | band-L wave-spec seat, formation |
 | model | `claude-opus-5-5`, asserted from own system identity |
 | HEAD | `b3d7fa28` in a scratch worktree; `src` and `package.json` identical to v10.1.0. `dist/` built there. The lockfile resolves `@mkbabb/value.js` `4.0.0` (`package-lock.json`, `"node_modules/@mkbabb/value.js"`) |
-| ships in | 11.0.0 |
+| release | `waves/INDEX.md`, the one record |
 | families | F-72 whole (`audit/REGISTRY.md:1528-1538`): L15a-F9, R2-04-18. Inbound O-36 |
 | depends on | PLAN §5, the one record of edges |
 | dependants | PLAN §5 (its inverse) |

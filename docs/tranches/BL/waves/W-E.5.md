@@ -1,11 +1,11 @@
-# W-E.5 · W-TOAST: one viewport, a queue, one announce channel, named items, placement below `sm` · 11.0.0
+# W-E.5 · W-TOAST: one viewport, a queue, one announce channel, named items, placement below `sm`
 
 | field | value |
 |---|---|
 | seat | band-E wave-spec seat, formation (relaunch 2026-09-25) |
 | model | `claude-opus-5-5`, asserted from own system identity |
 | HEAD | `4d2e3123` (`src`/`demo` identical to `f3ad78d0`), scratch worktree; probes drive the band-E fixture app (W-E.1 appendix B: `pages/e.html` scene `toast`, `pages/f.html` two app roots) and the built demo |
-| ships in | 11.0.0 |
+| release | `waves/INDEX.md`, the one record |
 | families | F-41 (#34 W-TOAST; UIA-F-51, O-59's one BLOCKING row; UIA-F-142; UIA-KF-221, UIA-F-227; #33b; #31f) |
 | depends on | PLAN §5, the one record of edges |
 | dependants | PLAN §5 (its inverse) |

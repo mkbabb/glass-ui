@@ -1,11 +1,11 @@
-# W-E.10 · the demo remainder: a preview on every card, the configurator expression, OKLCH stills, per-page aurora, the shell at the phone cell · 11.0.0
+# W-E.10 · the demo remainder: a preview on every card, the configurator expression, OKLCH stills, per-page aurora, the shell at the phone cell
 
 | field | value |
 |---|---|
 | seat | band-E wave-spec seat, formation (relaunch 2026-09-25) |
 | model | `claude-opus-5-5`, asserted from own system identity |
 | HEAD | `4d2e3123` (`src`/`demo` identical to `f3ad78d0`), scratch worktree, demo built there (`npm run demo:dist:build`) |
-| ships in | 11.0.0 |
+| release | `waves/INDEX.md`, the one record |
 | families | F-34 (#18 W-DELETE's compositions prune, #52 W-CONFIG-EXPRESS, #56 W-DEMO-TRUTH, #58 W-PREVIEW-CARD); F-25 (W-STILL-OKLCH); F-20 (the demo shell at the phone cell). Folds: W-B.1 (L05a-03, L01a-18, the compositions prune), W-B.3 (L05b-19, "many more examples"), W-B.4 (R2-06-08: per-page aurora, and the header one √φ rung down). The latches W-A.2 retires here: `tests/demo/story-preview-card.test.ts:487,556` |
 | depends on | PLAN §5, the one record of edges |
 | dependants | PLAN §5 (its inverse) |

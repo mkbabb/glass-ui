@@ -1,11 +1,11 @@
-# W-B.6 · HandMark decided: the two colour windows retired into the composite invariant; π-SCROLL kept by its own criterion · 11.0.0
+# W-B.6 · HandMark decided: the two colour windows retired into the composite invariant; π-SCROLL kept by its own criterion
 
 | field | value |
 |---|---|
 | seat | band-B wave-spec seat, formation run `wf_68eb18d6-b21` |
 | model | `claude-opus-5-5`, asserted from own system identity |
 | HEAD | `19bf6569` in a scratch worktree |
-| ships in | 11.0.0 |
+| release | `waves/INDEX.md`, the one record |
 | families | F-13, the #51 split: C-5, C-6, C-7 (members L01b-51, L04-F07, L04-F23; `audit/REGISTRY.md:312-320`) |
 | depends on | PLAN §5, the one record of edges |
 | dependants | PLAN §5 (its inverse) |

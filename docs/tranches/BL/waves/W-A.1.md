@@ -1,11 +1,11 @@
-# W-A.1 · The visual harness repaired: typechecked, routed through the manifest, engines routed by name, one colour source, one output root · 11.0.0
+# W-A.1 · The visual harness repaired: typechecked, routed through the manifest, engines routed by name, one colour source, one output root
 
 | field | value |
 |---|---|
 | seat | band-A wave-spec seat, formation run `wf_68eb18d6-b21` |
 | model | `claude-opus-5-5`, asserted from own system identity |
 | HEAD | `fabc95e2` in a scratch worktree (the task named `f3ad78d0`; every commit between is docs-only). `git diff --stat v10.1.0 HEAD -- src tests tests-visual scripts .github package.json` prints nothing |
-| ships in | 11.0.0 (band A, PLAN §2) |
+| release | `waves/INDEX.md`, the one record. Formation's placement, superseded there: 11.0.0 (band A, PLAN §2) |
 | families | F-05 whole (`audit/REGISTRY.md:219-226`) |
 | depends on | PLAN §5, the one record of edges |
 | dependants | PLAN §5 (its inverse) |

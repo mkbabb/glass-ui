@@ -1,11 +1,11 @@
-# W-H.5 · the transmissive well (loop D3) · 11.0.0
+# W-H.5 · the transmissive well (loop D3)
 
 | field | value |
 |---|---|
 | seat | formation fix seat 2 (`formation-audit/fix-2.md`, FA-21); the item, its gates, its cure and its MIGRATION row move here from W-H.2 |
 | model | `claude-opus-5-5`, asserted from own system identity |
 | HEAD | W-H.2's readings (the band-H probe, `W-H.2.md` §2) |
-| ships in | 11.0.0 |
+| release | `waves/INDEX.md`, the one record |
 | loop | D3 material. The well rung, its α and its law come from D3's converged spec (D3 common floor row 5, `design/material/PORTFOLIO.md:237`) |
 | families | F-31 split: #25 W-FIELD-WELL, a disease row (BLOCKED through BK on riders that had all landed, three closes, LEDGER `#25`), with #82's G-F2 and L01a-25 |
 | depends on | PLAN §5, the one record of edges |

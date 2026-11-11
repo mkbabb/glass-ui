@@ -1,11 +1,11 @@
-# W-H.6 · the backdrop's edge sample (T-45), decided and built (loop D3) · 11.0.0
+# W-H.6 · the backdrop's edge sample (T-45), decided and built (loop D3)
 
 | field | value |
 |---|---|
 | seat | formation fix seat 10 (`formation-audit/fix-10.md`, FI-03) |
 | model | `claude-opus-5-5`, asserted from own system identity |
 | HEAD | `31f3c5ea` in a scratch worktree; `git diff --stat v10.1.0 31f3c5ea -- src` prints nothing, so `src` is the published 10.1.0 |
-| ships in | 11.0.0 |
+| release | `waves/INDEX.md`, the one record |
 | loop | D3 material. The ladder's two pseudo-elements are claimed (`.glass-resting::before` the specular catch-light, `::after` grain and rim, `styles/glass/material.css:135`), and which element carries the blur is D3's to converge with the ladder (W-H.2) and the O-87 constraint |
 | families | F-13 split: L06-08, T-45, a disease row. DEFERRED at BI as an "architectural blocker" (`BI/audit/visual/W-XR-PRODUCER-REPAIRS-DELTA.md:21`), in no BJ, BK or BL register (`audit/round-1/L06.md:229-233`), so it rode the BJ and BK tranches and their closes undecided (CH:23) |
 | depends on | PLAN §5, the one record of edges |
