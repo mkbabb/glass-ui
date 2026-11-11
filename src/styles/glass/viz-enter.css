@@ -42,7 +42,7 @@
         }
 
         .viz-bar {
-            animation: gl-viz-grow-up var(--spring-panel-duration) var(--spring-panel) both;
+            animation: gl-viz-grow-up var(--spring-panel-duration) var(--spring-panel) backwards;
             animation-delay: calc(var(--viz-stagger) * var(--i, 0));
         }
         .viz-bar[data-viz-from="top"] {
@@ -56,7 +56,7 @@
         }
 
         .viz-ripple {
-            animation: gl-viz-ripple var(--spring-bloom-duration) var(--spring-bloom) both;
+            animation: gl-viz-ripple var(--spring-bloom-duration) var(--spring-bloom) backwards;
             animation-delay: calc(var(--viz-stagger) * var(--i, 0));
         }
     }

@@ -25,6 +25,13 @@ describe("the data-viz entrance register", () => {
         }
     });
 
+    it("lets a clipped entrance go when it lands: the bar and the ripple fill backwards only", () => {
+        for (const kind of ["bar", "ripple"]) {
+            const rule = css.slice(css.lastIndexOf(`.viz-${kind} {`));
+            expect(rule.slice(0, rule.indexOf("}"))).toMatch(/animation:[^;]*\sbackwards;/);
+        }
+    });
+
     it("spaces a cascade at the canonical stagger, capped inside one panel duration", () => {
         const panelMs = springSettleDurationSeconds(springPreset("panel")) * 1000;
         expect(cascadeStaggerMs(1)).toBe(STAGGER_DEFAULT_MS);
