@@ -24,8 +24,11 @@ const FINISH = `\nBUDGET: this is a long chain. Start long stages in the backgro
 const PLAN = `Read ${D}/REGISTRY.md in full (in chunks), above all the "D2 · pass 13 · REGISTRY" part (from line 3976): its §P13-0 to §P13-6 and §P13-8 (the placed classes), and §P13-7 THE PASS-14 PLAN, this pass's spec of record: a CONFIRMATION pass, the list held at 38, the count 1 of 2, NO NEW BUILD unless a row opens. §7.1 H8 unchanged (per-file sha256 against ${P8}/H8-records/harness.sha256 at start and end), rules (a)-(d) on bp13; §7.2 floor v5 the base, arms bp13 (floor v5 + ${P13}/D2-Bp-p13.patch, bb7cb08d…), bp12 (floor v5 + ${P12}/D2-Bp-p12.patch, 5318a3dc…) the reference, fv5, fv3 for L1; THE BASE IS PINNED AT 392ff1e3c (your worktree is detached there whatever master holds); stage with git apply only; §7.3 the re-measure seat; §7.4 the fresh critic; §7.5 the order, including THE STOP IS THE GUARD'S REFUSAL, A SEAT THAT MEASURED NOTHING REPORTS NO SCORE (complete=false), a resumed seat waits on its predecessor's live chain PID and runs no second battery, and DISK: check \`df -h /System/Volumes/Data\` before each build and battery; under 15 GB free, stop and report (the disk filled twice on 2026-11-06); §7.6 the checklist. Re-read docs/tranches/BL/audit/INBOUND.md and docs/tranches/BL/FORMATION-PROGRESS.md at your start; a ruling arriving mid-pass is folded at the next seat boundary. Real Safari UNMEASURED (owner's safaridriver checkbox). G's seats do not run. Critics may not add rows and may not rule a row PASS against their own instrument.`
 
 const RES = (k) => (args && args.resume && args.resume[k]) ? '\n' + args.resume[k] : ''
+const FABLE = (l) => ((args && args.fable) || []).some(p => new RegExp(p).test(l))
+const FNOTE = '\nMODEL (owner order 2026-11-10, supersedes the Opus line above): this seat runs on Fable 5.2 by design. Assert claude-fable-5-2 from your own system identity; if you are not Fable, say so and stop.'
+const seat = (p, o) => FABLE(o.label) ? agent(p + FNOTE, Object.assign({}, o, { model: 'fable' })) : agent(p, o)
 phase('D2 P14 Re-measure')
-const rem = await retry(() => agent(`You are the RE-MEASURE seat of D2-B′ in D2 pass 14 (the confirmation). You authored nothing in D2's passes 12 and 13 and were no pass-13 critic. ${ID}
+const rem = await retry(() => seat(`You are the RE-MEASURE seat of D2-B′ in D2 pass 14 (the confirmation). You authored nothing in D2's passes 12 and 13 and were no pass-13 critic. ${ID}
 ${FENCE('Bp-remeasure')}
 ${LAW}
 ${PLAN}${RES('D2-Bp-P14-remeasure')}
@@ -34,7 +37,7 @@ if (!rem) { log('re-measure failed twice; stopping'); return { stopped: 're-meas
 if (rem.complete === false) return { stopped: 're-measure-incomplete', rem: rem.summary?.slice(0, 1500), gaps: rem.open_gaps }
 
 phase('D2 P14 Critique')
-const crit = await retry(() => agent(`You are the FRESH adversarial CRITIC for D2-B′ in D2 pass 14 (the confirmation). You authored nothing in D2 and were no earlier D2 critic. ${ID}
+const crit = await retry(() => seat(`You are the FRESH adversarial CRITIC for D2-B′ in D2 pass 14 (the confirmation). You authored nothing in D2 and were no earlier D2 critic. ${ID}
 ${FENCE('Bp-crit')}
 ${LAW}
 ${PLAN}${RES('D2-Bp-P14-crit')}
@@ -42,7 +45,7 @@ Read ${P14}/D2-Bp-remeasure.md with its records, ${P13}/D2-Bp-critique.md and th
 Return the JSON.`, { label: 'D2-Bp-P14-crit', phase: 'D2 P14 Critique', model: 'opus', schema: CRIT }))
 
 phase('D2 P14 Agglomerate')
-const agg = await retry(() => agent(`You are the AGGLOMERATION seat closing D2 pass 14 (glass-ui ${ROOT}). ${ID} Fences: no source edits; never git add/commit; never read ~/.claude; your only write is ${D}/REGISTRY.md (append a "D2 · pass 14 · REGISTRY" part; keep earlier parts; read the file in chunks).
+const agg = await retry(() => seat(`You are the AGGLOMERATION seat closing D2 pass 14 (glass-ui ${ROOT}). ${ID} Fences: no source edits; never git add/commit; never read ~/.claude; your only write is ${D}/REGISTRY.md (append a "D2 · pass 14 · REGISTRY" part; keep earlier parts; read the file in chunks).
 ${LAW}
 ${PLAN}
 Read everything under ${P14}/, the pass-13 REGISTRY part, docs/tranches/BL/audit/INBOUND.md and docs/tranches/BL/FORMATION-PROGRESS.md. If a seat stopped or reports complete=false, say so, score nothing not measured, and plan the completion seat. Otherwise rule per §P13-7.5: rows closed of 38 (ruled digest; first 36 and 24, default beside); whether pass 14 is CLEAN (0 open, B2 on the strips, none of (a)-(d)). IF CLEAN: D2 is CONVERGED (passes 13 and 14); D2-Bp-p13.patch is the specification W-0.8 lands; write the landing plan (§P13-5 step 2, its first step the boot-graph ceiling re-read with the owner) against the 11.0.x base master will hold. IF NOT: the count returns to 0 and plan pass 15 as a build with the list fixed, curing the class that opened and every near-bound class §7.3 item 3 read. Place every defect class a seat recorded.
