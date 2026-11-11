@@ -229,9 +229,10 @@ describe("3. exact W1 bindings", () => {
         // the raw literals are gone
         expect(seg).not.toContain("border-radius: 0.3125rem");
         expect(seg).not.toContain("border-radius: 0.25rem");
-        // the seam resolves orientation-aware: horizontal → tab stadium, vertical → strip
+        // the seam resolves orientation-aware: horizontal → tab stadium (half the touch
+        // floor under a coarse pointer, so a 44px tab stays a capsule), vertical → strip
         expect(rule(seg, "\\.segmented-tabs")).toContain(
-            "--bouncy-slider-radius: var(--radius-tab)",
+            "--bouncy-slider-radius: max(var(--radius-tab), calc(var(--control-floor) / 2))",
         );
         expect(seg).toMatch(
             /\.segmented-tabs--vertical\s*\{[^}]*--bouncy-slider-radius:\s*var\(--radius-strip\)/,
