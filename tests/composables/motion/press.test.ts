@@ -131,8 +131,8 @@ describe("useLiquidPress", () => {
         el.remove();
     });
 
-    // The `:root` tempo is one shared value within a task: a scene of pressable controls
-    // mounting in one task reads it once at most.
+    // The `:root` tempo is one shared value within a synchronous run: a scene of
+    // pressable controls mounting together reads it once at most.
     it("reads the root tempo once for a scene of presses", async () => {
         const spy = vi.spyOn(window, "getComputedStyle");
         const rootReads = () =>
@@ -142,13 +142,13 @@ describe("useLiquidPress", () => {
         );
         expect(rootReads()).toBeLessThanOrEqual(1);
 
-        // A later scene in the same task: no read.
+        // A later scene reads the cascade afresh, once.
         await Promise.resolve();
         const before = rootReads();
         const scene = Array.from({ length: 12 }, () =>
             mountComposable(() => useLiquidPress({ squish: false })),
         );
-        expect(rootReads()).toBe(before);
+        expect(rootReads()).toBeLessThanOrEqual(before + 1);
         for (const m of scene) m.unmount();
         for (const m of mounted) m.unmount();
     });
@@ -198,9 +198,10 @@ describe("useLiquidPress", () => {
         document.documentElement.removeAttribute("data-tempo-probe");
     });
 
-    // The shared value lasts one task. A rule inserted into a sheet, a width query or a
-    // stylesheet that loads later change no attribute; the next task reads the cascade.
-    it("reads the root tempo again in the next task", async () => {
+    // The shared value lasts one synchronous run. A rule inserted into a sheet, a width
+    // query or a stylesheet that loads later change no attribute; the next run reads the
+    // cascade. It leaves no timer behind.
+    it("reads the root tempo again in the next run, leaving no timer", async () => {
         vi.resetModules();
         const { motionTempo } = await import("@glass/composables/motion/core/motionTempo");
         const spy = vi.spyOn(window, "getComputedStyle");
@@ -209,7 +210,8 @@ describe("useLiquidPress", () => {
 
         for (let i = 0; i < 12; i++) motionTempo();
         expect(rootReads()).toBe(1);
-        await vi.advanceTimersByTimeAsync(0);
+        expect(vi.getTimerCount()).toBe(0);
+        await Promise.resolve();
         for (let i = 0; i < 12; i++) motionTempo();
         expect(rootReads()).toBe(2);
     });

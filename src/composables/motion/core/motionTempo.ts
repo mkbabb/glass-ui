@@ -28,12 +28,13 @@ const MOTION_TEMPO_IDENTITY = 1;
  * The `:root` tempo, one shared value. Every element-agnostic spring reads it at
  * construction, and a scene mounts dozens of them (one per pressable control); a
  * `getComputedStyle` read inside a mounting task forces the whole new scene's style.
- * So the first spring of a task reads it, and the springs after it in the same task
- * share that read. The value is let go when the task ends, so the next task reads the
- * cascade again: whatever changed the tempo (a class, a rule inserted into a sheet, a
- * width query, a stylesheet that finished loading) is seen by the next spring built,
- * as when every spring read for itself. A change to an attribute on `<html>` in the
- * same task (a class, a `style`, a `data-*` theme) is seen at once.
+ * So the first spring of a batch reads it, and the springs built after it in the same
+ * synchronous run (a render flush mounts a whole scene in one) share that read. The
+ * value is let go at the next microtask, so the next batch reads the cascade again:
+ * whatever changed the tempo (a class, a rule inserted into a sheet, a width query, a
+ * stylesheet that finished loading) is seen by the next spring built, as when every
+ * spring read for itself. A change to an attribute on `<html>` within the same run (a
+ * class, a `style`, a `data-*` theme) is seen at once. No timer is left behind.
  */
 let rootTempo: number | null = null;
 let observer: MutationObserver | null = null;
@@ -59,7 +60,7 @@ function readTempo(source: Element): number {
  * positive multiplier (the identity `1` off-DOM, on a malformed value, or on any
  * value ≤ 0). Read once at spring construction — a tempo change is a settings-level
  * knob (a re-mount picks it up), never a per-frame read. The `:root` value is shared
- * within a task: one read per task, however many springs it builds.
+ * within one synchronous run: one read however many springs it builds.
  */
 export function motionTempo(el?: Element | null): number {
     if (typeof window === "undefined" || typeof getComputedStyle !== "function") {
@@ -72,7 +73,7 @@ export function motionTempo(el?: Element | null): number {
     if (rootTempo === null) {
         watchHtml();
         rootTempo = readTempo(document.documentElement);
-        setTimeout(markStale, 0);
+        queueMicrotask(markStale);
     }
     return rootTempo;
 }

@@ -181,8 +181,8 @@ longer fade as they open and close, and `useStagger` spaces a long series closer
 
 - **Mounting a page full of controls is lighter.** Pressable controls no longer read
   the page's motion settings from computed style as they mount (the first control in a
-  mounting batch reads the value and the rest share it, and the next batch reads it
-  afresh, so a change to the page's motion speed is never missed), a press reads its element's motion weight once
+  batch that mounts together reads the value and the rest share it, and the next batch
+  reads it afresh, so a change to the page's motion speed is never missed), a press reads its element's motion weight once
   when it begins rather than on every frame, and a glass surface that samples the
   brightness behind it takes its first sample on the next frame, together with every
   other surface mounting at the same time, instead of inside the mount.
