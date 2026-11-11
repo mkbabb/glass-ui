@@ -4,12 +4,30 @@
 
 A minor release. No API changes shape, so your code keeps working as it is. Two
 undocumented route variables are gone with the slide they tuned: `--route-slide` and
-`--route-world-slide` (the `lateral` entry below names what sets that travel now). Most of what is new is yours to opt into, but a few defaults change
-how a page looks, and each has its own entry below: the dock rests as a capsule
-(`--radius-dock: 1rem` brings back the rounded bar), HandMark draws in your page's
-focal colour, the `.dark` class alone decides the theme, menus grow from their trigger
-instead of fading in, tables have rounded corners, `Collapsible` and `Accordion` no
-longer fade as they open and close, and `useStagger` spaces a long series closer.
+`--route-world-slide` (the `lateral` entry below names what sets that travel now).
+
+Most of what is new is yours to opt into, but these defaults change how a page looks
+without you doing anything, and each has its own entry below:
+
+- the dock rests as a capsule (`--radius-dock: 1rem` brings back the rounded bar);
+- a `#persistent-end` control sits as far from the dock's other controls as a
+  `#persistent` one, and in a vertical dock the space after a `#persistent` control is
+  half what it was;
+- the dock's paper grain is a fine dot field at the same faint strength;
+- HandMark draws in your page's focal colour;
+- the `.dark` class alone decides the theme;
+- menus grow from their trigger instead of fading in;
+- tables have rounded corners;
+- `Collapsible` and `Accordion` no longer fade as they open and close;
+- on a touch screen, `SegmentedTabs` are at least 44 px tall, so a row that holds them
+  is taller;
+- the `lateral` route transition swaps cards instead of fading and sliding;
+- `Blob` paints into the space around its box instead of stopping at its edge;
+- `useStagger` spaces a long series closer.
+
+A few fixes below also change what you see, where the old look was a defect: a `Select`
+with a wide trigger, a `Select` opened with the mouse, `Configurator` with its controls
+on the left, the dock with reduced motion turned on, and the timing of HandMark's draw.
 
 ### Dock
 
@@ -138,8 +156,11 @@ longer fade as they open and close, and `useStagger` spaces a long series closer
   content from its trigger, set `--collapsible-gap` on the `Collapsible` (for example
   `class="[--collapsible-gap:--spacing(3)]"`) instead of a `gap` on the root: the space
   is the content's top padding, so it opens and closes with it, where a `gap` appears and
-  disappears in one frame. If you pad the top of the content yourself, your padding sets
-  that space instead.
+  disappears in one frame. If you pad the top of the content yourself and leave
+  `--collapsible-gap` unset, your padding stands exactly as before, wherever you declare
+  it. If you set the gap too, your padding still wins when it is unlayered, a utility
+  such as `p-4`, or in the `components` layer; a padding in an earlier layer, such as
+  `base`, gives way to the gap.
 
 - **Segmented tabs are easier to tap.** On a touch screen every tab in a
   `SegmentedTabs` strip is at least 44 px tall, and the strip grows to hold them, so a
