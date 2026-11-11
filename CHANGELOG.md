@@ -5,12 +5,13 @@
 A patch for five paint defects value.js reported from color.babb.dev, keyframes.babb.dev
 and fourier.babb.dev on 10.1.4 (records: `docs/tranches/BL/audit/INBOUND.md` O-129 rows
 1, 2, 5, 6 and 7; `docs/release-10.1.5/implement.md`). No public API is removed or
-renamed. Four token values move, each because the token is the cure: `--dock-cap-rest`
+renamed. Five token values move, each because the token is the cure: `--dock-cap-rest`
 on the pill (`50%` to half the plate's measured cross extent); under
 `(pointer: coarse)`, `--control-text`/`--control-text-sm` (the 1.5x comfort scale to the
 16 px floor and to 6/7 of it); the dark arm's `--shadow-color` (the foreground to
-the page ground deepened, O-182); and the Slider's default `--liquid-fill-tint` in dark
-(`--glass-capsule-warm` to the foreground at 22%, O-167). Two tokens are new, `--icon-label-gap` (0.25rem) and
+the page ground deepened, O-182); the Slider's default `--liquid-fill-tint` in dark
+(`--glass-capsule-warm` to the foreground at 22%, O-167); and `--glass-level` on a
+static-backdrop dock's plate (the root's inherited 0 to 1, O-157). Two tokens are new, `--icon-label-gap` (0.25rem) and
 `--field-text-floor` (0 px, 16 px under a coarse pointer), and the dock publishes one new
 measured property, `--dock-plate-cross-px`.
 
@@ -64,6 +65,14 @@ measured property, `--dock-plate-cross-px`.
   run's whole scroll range as the collapse began. The morph now reads the run's scroll
   before the swap and gives it back to the leaving run once the first frame's layout
   is set.
+
+- **A static dock's plate takes the consumer's veil (O-157).** Under
+  `backdrop-mode="static"` the plate inherited the dock root's `--glass-level: 0`, so
+  the veil recipe resolved to bare `--card` and the consumer's `--glass-veil-ink` never
+  reached it. The plate now declares `--glass-level: 1` and paints the live plate's veil
+  over an opaque `--card` ground, so the ink reaches it and nothing behind the dock
+  shows through. The root keeps `--glass-level: 0`, so every other glass surface in the
+  dock stays at its solid endpoint.
 
 - **A disclosure trigger's keyboard ring is the house outline (O-207).** The
   CollapsibleTrigger and AccordionTrigger focus rule set `outline: none` and painted the
