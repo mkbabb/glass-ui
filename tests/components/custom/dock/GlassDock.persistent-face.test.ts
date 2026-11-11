@@ -46,6 +46,15 @@ function mountDock(slots: Record<string, () => unknown>) {
 // Real timers: Vue drops a DOM event stamped before its handler was attached, and fake
 // timers skew that clock, so a faked run would never see the seat's click.
 const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+// The dock's capture-phase click guard is a Vue listener, so it stamps the click
+// (`Date.now()`, whole milliseconds) before the seat's own listener reads it, and Vue
+// drops a click stamped at or before the millisecond its listener was attached. A click
+// in the mount's own millisecond is therefore lost about one run in four. A press waits
+// for the clock to pass the mount, as any real press does.
+const pastMount = async () => {
+    const t = Date.now();
+    while (Date.now() <= t) await wait(1);
+};
 afterEach(() => {
     for (const w of wrappers.splice(0)) w.unmount();
 });
@@ -92,6 +101,7 @@ describe("a press on a persistent seat is the seat's", () => {
             const onClick = vi.fn();
             const { root } = mountDock({ [slot]: () => h("button", { "data-seat": "theme", onClick }) });
             const seat = root.querySelector<HTMLElement>('[data-seat="theme"]')!;
+            await pastMount();
             root.dispatchEvent(new MouseEvent("mouseenter"));
             seat.dispatchEvent(pointer("pointerdown"));
             seat.dispatchEvent(new FocusEvent("focusin", { bubbles: true }));

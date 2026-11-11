@@ -133,7 +133,7 @@ describe("useLiquidPress", () => {
 
     // The `:root` tempo is one shared value: read once, and again only after its source
     // changes. A scene of pressable controls mounting reads no style at all.
-    it("reads the root tempo only when its source changes", async () => {
+    it("reads the root tempo once for a scene of presses", async () => {
         const spy = vi.spyOn(window, "getComputedStyle");
         const rootReads = () =>
             spy.mock.calls.filter(([el]) => el === document.documentElement).length;
@@ -149,15 +149,52 @@ describe("useLiquidPress", () => {
             mountComposable(() => useLiquidPress({ squish: false })),
         );
         expect(rootReads()).toBe(before);
-
-        // A tempo set on <html>, even in the same task, reaches the next mount.
-        document.documentElement.setAttribute("data-tempo-probe", "");
-        const later = mountComposable(() => useLiquidPress({ squish: false }));
-        expect(rootReads()).toBe(before + 1);
-
-        document.documentElement.removeAttribute("data-tempo-probe");
-        later.unmount();
         for (const m of scene) m.unmount();
         for (const m of mounted) m.unmount();
+    });
+
+    // The staleness path, on a fresh reader. happy-dom holds a MutationObserver's report
+    // callback only through a `WeakRef`, so after a garbage collection its observers stop
+    // hearing mutations: the same test on happy-dom's observer lost the change about one
+    // run in six. The observer here is the platform's contract (records queue on a
+    // mutation, `takeRecords` hands them over), so the reader's own logic is what runs.
+    it("reads the root tempo again after <html> changes, even in the same task", async () => {
+        const pending: MutationRecord[] = [];
+        class RecordingObserver {
+            observe(target: Node, init: MutationObserverInit): void {
+                if (target !== document.documentElement || !init.attributes) return;
+                const set = Element.prototype.setAttribute;
+                vi.spyOn(document.documentElement, "setAttribute").mockImplementation(function (
+                    this: Element,
+                    name: string,
+                    value: string,
+                ) {
+                    set.call(this, name, value);
+                    pending.push({ type: "attributes", attributeName: name } as MutationRecord);
+                });
+            }
+            takeRecords(): MutationRecord[] {
+                return pending.splice(0);
+            }
+            disconnect(): void {}
+        }
+        vi.resetModules();
+        vi.stubGlobal("MutationObserver", RecordingObserver);
+        const { motionTempo } = await import("@glass/composables/motion/core/motionTempo");
+        const spy = vi.spyOn(window, "getComputedStyle");
+        const rootReads = () =>
+            spy.mock.calls.filter(([el]) => el === document.documentElement).length;
+
+        for (let i = 0; i < 12; i++) motionTempo();
+        expect(rootReads()).toBe(1);
+
+        document.documentElement.setAttribute("data-tempo-probe", "");
+        motionTempo();
+        expect(rootReads()).toBe(2);
+        motionTempo();
+        expect(rootReads()).toBe(2);
+
+        vi.unstubAllGlobals();
+        document.documentElement.removeAttribute("data-tempo-probe");
     });
 });
