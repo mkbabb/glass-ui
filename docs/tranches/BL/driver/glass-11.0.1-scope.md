@@ -1,3 +1,13 @@
+# 11.0.1 and 11.0.2 (re-cut 2026-11-12: the owner's fourth report of the hover ellipse)
+
+**11.0.1 is the small one:** release/10.1.5's cures brought forward onto 11.0.0, and nothing else (the hover ellipse, the squared end, the dark halo, the rest of that patch). Driver: `glass-11.0.1.js`. It does not wait for 10.1.5 to publish; it merges that branch's tip, whose source is frozen since its clean round.
+
+**11.0.2 is everything else this file lists below** (O-212 and O-214 by cherry-pick, O-219, O-223 with O-244, O-227, O-232, O-235, O-240, O-241's second witness, the O-245 read), cut from master after 11.0.1 merges. Read "11.0.1" below as "11.0.2" for every item except the forward merge.
+
+**11.1.0 does not tag until v11.0.1 is merged into it** (its close stops otherwise); it does not wait for 11.0.2, whose two Select commits it already carries.
+
+---
+
 # glass-ui 11.0.1: scope
 
 11.0.1 is the 11 line's patch. The release that cuts it reads this file.
