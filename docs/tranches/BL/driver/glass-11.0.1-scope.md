@@ -30,3 +30,11 @@ Gates, in both engines, light and dark, at 390 and 1440:
 5. O-219: a Slider at its minimum keeps a visible fill (floor = the thumb size). Witness RED on 11.0.0 at min, both engines.
 
 6. O-223: `useGlobalDark({ storageKey })`, threaded to `useDark`, one-shot like `initialValue`; pairs with `darkModeSyncScript({ storageKey })`. Witness: one fresh key in both places opens on `initialValue` in a browser that holds `auto` under the default key.
+
+## Order and sources (Fable second look, 2026-11-10; this section wins over the numbering above)
+
+- 11.0.1 is cut from master after the demo-deploy branch merges (master already carries the dist-tag publish step, `scripts/dist-tag.mjs`).
+- The cures for O-212 (with O-213's cap), O-214 and O-219 are written once, on `release/11.1.0`, one commit per row, source and tests only. 11.0.1 cherry-picks those commits; their hashes are listed in the `release-11.1.0` worktree at `docs/release-11.1.0/fix-2.md` under "11.0.1 cherry-picks". Do not write them a second time.
+- O-223 (`useGlobalDark({ storageKey })`) is built here.
+- The close (tag v11.0.1, CI publish, notify the consumers) is the LAST step, after every item above.
+- 11.1.0 does not tag until `v11.0.1` is merged into `release/11.1.0`.
