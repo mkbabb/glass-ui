@@ -1400,7 +1400,7 @@ function m1(): void {
 
 /** M2: a vertical run whose seats fit has nothing to scroll; the flag says so too. */
 function m2(): void {
-    test("m2 a vertical run whose seats fit scrolls nothing, across the fit edge", async ({ page }) => {
+    test("m2 a vertical run whose seats fit scrolls at most the ring floor's shortfall, across the fit edge", async ({ page }) => {
         test.setTimeout(240_000);
         await page.setViewportSize({ width: 600, height: 900 });
         const bad: unknown[] = [];
@@ -1408,18 +1408,13 @@ function m2(): void {
         for (let stageH = 300; stageH <= 372; stageH += 4) {
             await open7(page, `scene=dock&orientation=vertical&stageH=${stageH}&kinds=icon,icon,icon,icon,icon,icon`);
             await page.mouse.move(590, 890);
-            const r = await page.evaluate(() => {
-                const dock = document.querySelector<HTMLElement>(".glass-dock")!;
-                const run = dock.querySelector<HTMLElement>(".dock-run")!;
-                const k = [...run.children] as HTMLElement[];
-                const span = k.at(-1)!.offsetTop + k.at(-1)!.offsetHeight - k[0]!.offsetTop;
-                return { fits: dock.hasAttribute("data-run-fits"), sh: run.scrollHeight, ch: run.clientHeight, span };
-            });
-            if (r.span <= r.ch) fitted += 1;
-            if ((r.fits || r.span <= r.ch) && r.sh > r.ch) bad.push({ stageH, ...r });
+            const r = await fitRead(page);
+            if (r.span <= r.port) fitted += 1;
+            const law = fitLaw(r);
+            if (law.length) bad.push({ stageH, law, ...r });
         }
         expect(fitted, "the sweep crosses the fit edge").toBeGreaterThan(2);
-        expect(bad, "no row whose seats fit (or flagged fits) scrolls").toEqual([]);
+        expect(bad, "no row whose seats fit scrolls past the ring floor, and the flag is the span").toEqual([]);
     });
 }
 
@@ -1826,6 +1821,7 @@ n1();
    settles. A seat's step is read net of the run's scroll, so WebKit's re-snap of a
    shrunk snapport (critique 9 P3, v10.1.4's own) does not enter it. */
 
+/** `over`: the seats' span is longer than the port, the fact `data-run-fits` negates. */
 type HostFrame = { morphing: boolean; s1: number; fits: boolean; over: boolean };
 
 function hostResizeFrames(page: Page, at: number, action: string, ms: number): Promise<HostFrame[]> {
@@ -1855,7 +1851,13 @@ function hostResizeFrames(page: Page, at: number, action: string, ms: number): P
                         morphing: dock.hasAttribute("data-morphing"),
                         s1: (v ? r.top + run.scrollTop : r.left + run.scrollLeft),
                         fits: dock.hasAttribute("data-run-fits"),
-                        over: v ? run.scrollHeight > run.clientHeight : run.scrollWidth > run.clientWidth,
+                        over: (() => {
+                            // The seats' span against the port: the flag's one fact.
+                            const k = [...run.children] as HTMLElement[];
+                            const at = (el: HTMLElement) => (v ? el.offsetTop : el.offsetLeft);
+                            const end = (el: HTMLElement) => at(el) + (v ? el.offsetHeight : el.offsetWidth);
+                            return Math.max(...k.map(end)) - Math.min(...k.map(at)) > (v ? run.clientHeight : run.clientWidth);
+                        })(),
                     });
                     if (t < ms) requestAnimationFrame(step);
                     else res(out);
@@ -2182,7 +2184,7 @@ function ringPast(page: Page, witness: string) {
             if (past > worst) worst = past;
             if (past > 0.5) cuts.push(`${a.className.split(" ")[0]} ${past.toFixed(2)}`);
         }
-        return { focusVisible: el.matches(":focus-visible"), outline: cs.outlineStyle, worst: +worst.toFixed(2), cuts };
+        return { focusVisible: el.matches(":focus-visible"), outline: cs.outlineStyle, ink: +ink.toFixed(2), worst: +worst.toFixed(2), cuts };
     });
 }
 
@@ -2252,38 +2254,136 @@ function s1(width: number): void {
     });
 }
 
-/** s2 (R2, O-201): no fitting run clips a focused seat's ring, across the fit edge. */
+/**
+ * The run's fit reading: the flag, the seats' span (layout boxes, through a layer group
+ * to its active face), the scroll range, the ring floor of a yielded reserve box, the
+ * plate's corners and how many seats lie outside the port.
+ */
+function fitRead(page: Page) {
+    return page.evaluate(() => {
+        const dock = document.querySelector<HTMLElement>(".glass-dock")!;
+        const vertical = dock.classList.contains("vertical");
+        const run = dock.querySelector<HTMLElement>(":where(.dock-layers) > .dock-run.is-active")!;
+        const plate = dock.querySelector<HTMLElement>(":scope > .dock-plate")!;
+        const cs = getComputedStyle(plate);
+        const half = Math.min(plate.offsetWidth, plate.offsetHeight) / 2;
+        const radii = [cs.borderTopLeftRadius, cs.borderTopRightRadius, cs.borderBottomRightRadius, cs.borderBottomLeftRadius];
+        const kids = [...run.children] as HTMLElement[];
+        const at = (el: HTMLElement) => (vertical ? el.offsetTop : el.offsetLeft);
+        const ext = (el: HTMLElement) => (vertical ? el.offsetHeight : el.offsetWidth);
+        const span = Math.max(...kids.map((k) => at(k) + ext(k))) - Math.min(...kids.map(at));
+        const port = vertical ? run.clientHeight : run.clientWidth;
+        const range = vertical ? run.scrollHeight - run.clientHeight : run.scrollWidth - run.clientWidth;
+        const after = getComputedStyle(run, "::after");
+        const ring = Number.parseFloat(vertical ? after.minHeight : after.minWidth) || 0;
+        const seats = [...run.querySelectorAll<HTMLElement>("[data-glass-dock-seat]")].filter((x) => !x.closest(".dock-face:not(.is-active)"));
+        // How far the seats' layout boxes lie past the port at the run's offset (0 when every seat shows whole).
+        const pos = vertical ? run.scrollTop : run.scrollLeft;
+        const over = Math.max(0, ...seats.map((x) => {
+            let a = 0;
+            for (let el: HTMLElement | null = x; el && el !== run; el = el.offsetParent as HTMLElement | null) a += vertical ? el.offsetTop : el.offsetLeft;
+            const b = a + (vertical ? x.offsetHeight : x.offsetWidth);
+            return Math.max(pos - a, b - (pos + port));
+        }));
+        return {
+            fits: dock.hasAttribute("data-run-fits"), span, port, range, ring, over: +over.toFixed(2), radii,
+            round: radii.every((x) => /^[\d.]+px$/.test(x) && Math.abs(Number.parseFloat(x) - half) <= 0.5),
+        };
+    });
+}
+
+/** The fit law a sweep checks at each cap: the flag is the span, and a fitting run scrolls at most the ring floor's shortfall and rests round. */
+function fitLaw(r: Awaited<ReturnType<typeof fitRead>>): string[] {
+    const bad: string[] = [];
+    if (r.fits !== r.span <= r.port) bad.push("flag is not the span");
+    if (r.fits && r.range > Math.max(0, r.span + 2 * r.ring - r.port) + 1) bad.push("a fitting run scrolls past the ring floor");
+    if (r.fits && !r.round) bad.push("a fitting run's plate is not round");
+    // With less than one ring's reach of room the leading box's ring floor leaves the end
+    // seat that much short of the port at rest: the bound, exactly, and nothing past it.
+    if (r.fits && r.over > Math.max(0, r.ring - (r.port - r.span)) + 0.5) bad.push("a fitting run cuts a seat past the ring floor's shortfall");
+    return bad;
+}
+
+/**
+ * s2 (O-201): at every cap from natural width to 40 px under it, the first seat's and
+ * the end seat's keyboard rings lie inside every clipping ancestor once focus reaches
+ * them (value's Home trigger at a layer group face's end, so reach measures the seat
+ * inside the group), and the fit law holds.
+ */
 function s2(width: number): void {
-    test(`s2 O-201 at ${width}: across the fit edge the first and last seats keep their whole ring, and the flag is the layout`, async ({ page }) => {
-        test.setTimeout(300_000);
+    test(`s2 O-201 at ${width}: at every cap through the fit edge the first and end seats keep their whole ring, and a run that hides nothing rests round`, async ({ page }) => {
+        test.setTimeout(420_000);
         await page.setViewportSize({ width, height: 844 });
         await open11(page, "scene=o201&at=end", 1000);
         await pointerOff(page);
         const natural = Math.ceil(await page.evaluate(() => document.querySelector<HTMLElement>(".glass-dock")!.getBoundingClientRect().width));
         const bad: unknown[] = [];
-        let edge = Number.NaN;
-        for (let cap = natural; cap >= natural - 40; cap -= 1) {
+        let unfit = 0;
+        for (let cap = natural; cap >= natural - 40; cap -= cap > natural - 20 ? 1 : 4) {
             await page.evaluate((cap) => {
                 (document.activeElement as HTMLElement | null)?.blur();
                 document.querySelector<HTMLElement>(".glass-dock")!.style.maxInlineSize = `${cap}px`;
             }, cap);
-            await settle(page, 120);
-            const read = await runRead(page);
-            const run = read.runs.find((r) => r.active)!;
-            if (read.fits !== run.sw <= run.cw) bad.push({ cap, flag: read.fits, sw: run.sw, cw: run.cw });
-            if (!read.fits) {
-                if (Number.isNaN(edge)) edge = cap + 1;
-                if (cap < edge - 3) break;
-                continue;
-            }
-            for (const seat of ["S1", "home"]) {
+            await settle(page, 150);
+            const read = await fitRead(page);
+            if (!read.fits) unfit += 1;
+            const law = fitLaw(read);
+            if (law.length) bad.push({ cap, law, ...read });
+            // The end seat, then back to the first from the end's scroll: both reaches.
+            for (const seat of ["home", "S1"]) {
                 await keyFocus(page, seat);
+                await settle(page, 450);
                 const ring = await ringPast(page, seat);
                 if (!ring.focusVisible || ring.outline === "none" || ring.cuts.length) bad.push({ cap, seat, ...ring });
             }
         }
-        expect(Number.isFinite(edge), `the fit edge is found under ${natural}`).toBe(true);
-        expect(bad, "a fitting cap that cuts a focused seat's ring, or a flag that is not the layout").toEqual([]);
+        expect(unfit, `the sweep under ${natural} crosses the fit edge`).toBeGreaterThan(2);
+        expect(bad, "a cap that cuts a focused seat's ring, a flag that is not the span, or a run that hides nothing and does not rest round").toEqual([]);
+    });
+}
+
+/**
+ * t1 (O-201, vertical): critique 10's six-seat vertical dock, its stage swept through the
+ * fit edge. At every stage the first seat (focused from the last stage's end scroll) and
+ * the last (reached by End) keep their whole ring, except in the vertical yield band: a
+ * vertical run yields its block padding to half the room its seats leave, so there a
+ * focused end seat's ring may be cut by the ring's reach less that half, and no more
+ * (the bound the vertical run keeps in 10.1.5). The fit law holds at every stage.
+ */
+function t1(): void {
+    test("t1 O-201 vertical: through the fit edge the end seats keep their whole ring, bounded in the yield band", async ({ page }) => {
+        test.setTimeout(420_000);
+        await page.goto("/tests-visual/release-10-1-5/critic-10.html?scene=seats&collapse=false&orientation=vertical&stageH=420&kinds=icon,icon,icon,icon,icon,icon");
+        await page.waitForFunction(() => (window as unknown as { __ready?: boolean }).__ready);
+        await page.evaluate(() => document.fonts.ready);
+        if (test.info().project.use.isMobile) await expectCoarse(page);
+        await settle(page, 1000);
+        await page.mouse.move(page.viewportSize()!.width - 5, 5);
+        const bad: unknown[] = [];
+        let unfit = 0;
+        for (let stage = 360; stage >= 296; stage -= 2) {
+            await page.evaluate((s) => {
+                (document.activeElement as HTMLElement | null)?.blur();
+                document.querySelector<HTMLElement>('[data-witness="stage"]')!.style.blockSize = `${s}px`;
+            }, stage);
+            await settle(page, 150);
+            const read = await fitRead(page);
+            if (!read.fits) unfit += 1;
+            const law = fitLaw(read);
+            if (law.length) bad.push({ stage, law, ...read });
+            const allowed = (ink: number) => (read.fits ? Math.max(0, ink - (read.port - read.span) / 2) : 0) + 0.5;
+            // From the last stage's End scroll: the reach back to the first seat, read at rest.
+            await keyFocus(page, "S1");
+            await settle(page, 450);
+            const first = await ringPast(page, "S1");
+            if (!first.focusVisible || first.outline === "none" || first.worst > allowed(first.ink)) bad.push({ stage, seat: "S1", ...first });
+            await page.keyboard.press("End");
+            await settle(page, 400);
+            const last = await ringPast(page, "S6");
+            if (!last.focusVisible || last.outline === "none" || last.worst > allowed(last.ink)) bad.push({ stage, seat: "S6", ...last });
+        }
+        expect(unfit, "the sweep crosses the fit edge").toBeGreaterThan(2);
+        expect(bad, "a stage that cuts a focused end seat's ring past the yield band's bound, or a run that breaks the fit law").toEqual([]);
     });
 }
 
@@ -2294,6 +2394,16 @@ test.describe("fix 11, coarse phone", () => {
     test.use({ hasTouch: true, isMobile: true, viewport: { width: 390, height: 844 } });
     s1(390);
     s2(390);
+});
+
+test.describe("fix 12, desktop", () => {
+    test.use({ viewport: { width: 1440, height: 900 } });
+    t1();
+});
+
+test.describe("fix 12, coarse phone", () => {
+    test.use({ hasTouch: true, isMobile: true, viewport: { width: 390, height: 844 } });
+    t1();
 });
 
 test("s3 O-207 G3 a disclosure trigger's keyboard ring is the house outline, whatever it composes", async ({ page }) => {

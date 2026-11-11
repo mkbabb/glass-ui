@@ -40,14 +40,19 @@ measured property, `--dock-plate-cross-px`.
   overflow, so a wider hidden face no longer gives a fitting run a scroll range
   (O-205). The leaving face is not clipped, so its crossfade paints as before.
 
-- **A fitting run keeps a whole ring's room at each end (O-201).** The run's reserves
-  yield to the room its seats leave, so a dock a few pixels short of its content has
-  nothing to scroll. They yielded down to zero, which cut a focused first or last seat's
-  ring by up to 4 px at the fit edge. On a horizontal run `data-run-fits` is now set only
-  while the seats leave at least `--dock-ring-reserve` at each end; under that the run
-  keeps its reserves, scrolls them, and the cap is cut. A vertical run keeps the yield to
-  half the room its seats leave. `--dock-ring-reserve` is now a registered
-  `<length>`; its value does not move.
+- **A keyboard-focused seat keeps its whole ring at every width (O-201).** The run's
+  reserves yield to the room its seats leave, so a dock a few pixels short of its
+  content has nothing to cut. They yielded down to zero, which cut a focused first or
+  last seat's ring by up to 4 px at the fit edge. They now yield down to
+  `--dock-ring-reserve`, on both axes: `data-run-fits` means only that the seats' span
+  fits the port, so a run whose seats show rests round, and with less than a ring's
+  room at each end it scrolls at most the difference, which reach uses to bring a
+  focused end seat's whole ring into view. A vertical run's reserves are now the same
+  two boxes as a horizontal run's (its yielded padding and `--dock-run-room-block` are
+  gone). Reach now measures a seat inside a `DockLayerGroup` by its own box, not the
+  group's, so a focused seat at a face's end is brought into view on a run that does
+  not fit; and a reach that needs no travel stops a glide still running toward an
+  earlier seat. No token value moves.
 
 - **A disclosure trigger's keyboard ring is the house outline (O-207).** The
   CollapsibleTrigger and AccordionTrigger focus rule set `outline: none` and painted the
