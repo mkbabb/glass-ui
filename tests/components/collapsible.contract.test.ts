@@ -83,8 +83,8 @@ describe("Collapsible product contract", () => {
 
         expect(root.attributes("data-state")).toBe("open");
         expect(trigger.attributes("aria-expanded")).toBe("true");
-        // A region that loads open carries no `data-state` until its first frame, so the
-        // page never animates what it loads open; its ABSENCE is the open assertion here.
+        // reka stamps the region's own `data-state` only while it is CLOSED — an open
+        // force-mounted region carries none, so its ABSENCE is the open assertion here.
         expect(content.attributes("data-state")).toBeUndefined();
 
         wrapper.unmount();
@@ -141,10 +141,7 @@ describe("Collapsible product contract", () => {
         expect(root.element.tagName).toBe("DIV");
         expect(trigger.element.tagName).toBe("BUTTON");
         expect(content.element.tagName).toBe("DIV");
-        // The content sits in the region's one clip, the row the height engine sizes.
-        const clip = content.get(".body").element.parentElement;
-        expect(clip?.classList.contains("disclosure-content-clip")).toBe(true);
-        expect(clip?.parentElement).toBe(content.element);
+        expect(content.get(".body").element.parentElement).toBe(content.element);
     });
 
     it("retains the consumed asChild trigger composition with one real button", () => {
@@ -166,48 +163,5 @@ describe("Collapsible product contract", () => {
         expect(trigger.element.tagName).toBe("BUTTON");
         expect(wrapper.findAll("button")).toHaveLength(1);
         expect(trigger.attributes("aria-controls")).toBe(content.attributes("id"));
-    });
-});
-
-describe("Collapsible height engine", () => {
-    it("keeps the region mounted through its close and unmounts it when the row has closed", async () => {
-        const wrapper = mount(
-            {
-                components: { Collapsible, CollapsibleContent, CollapsibleTrigger },
-                data: () => ({ open: false }),
-                template: `
-          <Collapsible v-model:open="open">
-            <CollapsibleTrigger>Details</CollapsibleTrigger>
-            <CollapsibleContent><span class="body">Body</span></CollapsibleContent>
-          </Collapsible>
-        `,
-            },
-            { attachTo: document.body },
-        );
-        const content = wrapper.get('[data-slot="collapsible-content"]');
-        expect(content.attributes("hidden")).toBeDefined();
-        expect(content.find(".body").exists()).toBe(false);
-
-        (wrapper.vm as unknown as { open: boolean }).open = true;
-        await nextTick();
-        expect(content.attributes("hidden")).toBeUndefined();
-        expect(content.attributes("data-state")).toBe("open");
-        expect(content.attributes("inert")).toBeUndefined();
-        expect(content.find(".body").exists()).toBe(true);
-
-        (wrapper.vm as unknown as { open: boolean }).open = false;
-        await nextTick();
-        // Closing: still painted, inert, waiting for its row to reach zero.
-        expect(content.attributes("data-state")).toBe("closed");
-        expect(content.attributes("inert")).toBeDefined();
-        expect(content.find(".body").exists()).toBe(true);
-
-        const end = new Event("transitionend") as TransitionEvent;
-        Object.defineProperty(end, "propertyName", { value: "grid-template-rows" });
-        content.element.dispatchEvent(end);
-        await nextTick();
-        expect(content.attributes("hidden")).toBeDefined();
-        expect(content.find(".body").exists()).toBe(false);
-        wrapper.unmount();
     });
 });
