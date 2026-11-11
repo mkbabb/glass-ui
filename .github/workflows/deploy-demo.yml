@@ -23,6 +23,11 @@ on:
                 required: false
                 type: boolean
                 default: false
+            ref:
+                description: "Build this ref in place of the tag. For the first deploy only: master carries v11.0.0's source plus this workflow, which the v11.0.0 tag lacks"
+                required: false
+                type: string
+                default: ""
 
 # Keyed by tag: concurrency applies when a run queues, before the job `if` and the
 # release-line skip, so one shared group would let a failed, prerelease or `--tag v10`
@@ -48,7 +53,7 @@ jobs:
         steps:
             - uses: actions/checkout@v5
               with:
-                  ref: ${{ github.event.workflow_run.head_sha || inputs.tag }}
+                  ref: ${{ github.event.workflow_run.head_sha || inputs.ref || inputs.tag }}
             - name: Built commit
               run: echo "BUILT_SHA=$(git rev-parse HEAD)" >> "$GITHUB_ENV"
             # The release line: a plain vX.Y.Z whose package.json version npm serves as
