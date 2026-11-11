@@ -506,10 +506,12 @@ describe("the route grammar — non-dock, and one window at a time", () => {
         // page flying into a short cell paints far outside the rect it is travelling to.
         // Found in paint, not in source; §9.6's "revealed by clip" is the cure and this
         // is what holds it.
+        // `lateral` lifts it (a card swap is two whole cards; its own block below).
         const clip = rules.filter(
             (rule) =>
                 rule.selector.includes("::view-transition-group(gl-route-window)") &&
-                declOf(rule, "overflow") !== null,
+                declOf(rule, "overflow") !== null &&
+                !typesOf(rule.selector).includes("lateral"),
         );
         expect(clip.length).toBe(1);
         expect(declOf(clip[0]!, "overflow")).toBe("clip");
@@ -597,9 +599,24 @@ describe("the route grammar — lateral is an opaque card swap", () => {
         expect(pair && declOf(pair, "animation-timing-function")).toBe(
             "var(--route-lateral-spring)",
         );
-        const group = lateral("::view-transition-group(gl-route-window)")[0];
+        const group = lateral("::view-transition-group(gl-route-window)").find(
+            (rule) => declOf(rule, "animation-timing-function") !== null,
+        );
         expect(group && declOf(group, "animation-timing-function")).toBe(
             "var(--route-lateral-spring)",
         );
+    });
+
+    it("never clips the arriving card to the departing card's rect", () => {
+        const unclipped = lateral("::view-transition-group(gl-route-window)").find(
+            (rule) => declOf(rule, "overflow") !== null,
+        );
+        expect(unclipped && declOf(unclipped, "overflow")).toBe("visible");
+    });
+
+    it("recedes the departing card by scale alone", () => {
+        const recede = keyframes.get("gl-route-card-recede")?.toString() ?? "";
+        expect(recede).toMatch(/scale:\s*var\(--route-card-recede\)/);
+        expect(recede).not.toMatch(/translate|filter|opacity/);
     });
 });

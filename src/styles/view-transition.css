@@ -159,6 +159,13 @@
         overflow: clip;
     }
 
+    /* A card swap is two whole cards, so `lateral` lifts the clip: the arriving card is
+       never cut to the departing card's rect. The clip stays for `zoom`, whose tall
+       snapshot flying into a short cell is what it is for. */
+    html:active-view-transition-type(lateral)::view-transition-group(gl-route-window) {
+        overflow: visible;
+    }
+
     html:active-view-transition-type(zoom)::view-transition-group(gl-route-window) {
         animation-duration: var(--route-zoom-clock);
         animation-timing-function: var(--route-zoom-spring);
@@ -378,14 +385,12 @@
     }
 }
 
-/* THE CARD SWAP — the lateral pair. The departing card recedes in place; the arriving
- * card travels in from the destination's side and grows the last 2% to full size. At
- * `--route-direction: 0` the arrival has no travel. */
+/* THE CARD SWAP — the lateral pair. The departing card recedes in place by scale alone;
+ * the arriving card travels in from the destination's side and grows the last 2% to
+ * full size. At `--route-direction: 0` the arrival has no travel. */
 @keyframes gl-route-card-recede {
     to {
         scale: var(--route-card-recede);
-        translate: 0 var(--route-card-sink);
-        filter: brightness(var(--route-card-dim));
     }
 }
 @keyframes gl-route-card-enter {

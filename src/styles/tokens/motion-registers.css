@@ -133,12 +133,10 @@
     --route-world-dim: 0.55;
     --route-world-travel: calc(var(--route-parallax) * 100lvb);
     /* The lateral card swap. The departing card recedes in place: it shrinks to
-       `--route-card-recede`, sinks by `--route-card-sink` of its own height and dims to
-       `--route-card-dim`. The arriving card travels `--route-card-travel` from the
-       destination's side and grows from `--route-card-enter-scale`. Nothing fades. */
+       `--route-card-recede`, and that is its one motion. The arriving card travels
+       `--route-card-travel` from the destination's side and grows from
+       `--route-card-enter-scale`. Nothing fades. */
     --route-card-recede: 0.94;
-    --route-card-sink: 1.5%;
-    --route-card-dim: 0.92;
     --route-card-travel: min(6rem, 24vw);
     --route-card-enter-scale: 0.98;
 
