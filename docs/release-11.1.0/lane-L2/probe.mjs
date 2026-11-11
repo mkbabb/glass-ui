@@ -176,10 +176,13 @@ async function sliderHand(browser, width, theme) {
 }
 
 // ── O-189 · the Collapsible's height ───────────────────────────────────────────────
-// Per frame: the root's height, the content box's height, the trigger's height and the
-// content's opacity. `extra` is the space the root holds beyond trigger and content: the
-// consumer's 12 px gap. Owned by the content it is 0 at every frame (it opens with the
-// height); held by the root it appears in one frame when the content mounts.
+// Per frame: the root's height and the content's opacity. AMENDED in fix 2: the gap now
+// lives inside the content's own box (a `::before` block), where the old `extra`
+// reading (root − trigger − content) cannot see it. The gate reads the root instead:
+// with the region's height animation held at its first instant, the root is within
+// 2 px of its closed height, and the same held at the close's last instant. A gap held outside
+// the content (a root `gap`, as on 11.0.0) snaps in and out by its whole size there.
+// The reversal cell is STRUCK for 11.1.0: a reversal restarts, as on 11.0.0.
 async function collapsible(browser, width, theme) {
     const cell = `${width}-${theme}`;
     const { context, page } = await open(browser, { width, theme, scene: "collapsible" });
@@ -194,7 +197,7 @@ async function collapsible(browser, width, theme) {
                 const r = root.getBoundingClientRect().height;
                 const t = trig.getBoundingClientRect().height;
                 const ch = shown ? c.getBoundingClientRect().height : 0;
-                return { h: r, extra: r - t - ch, op: shown ? Number(getComputedStyle(c).opacity) : null };
+                return { h: r, shown: !!shown, op: shown ? Number(getComputedStyle(c).opacity) : null };
             };
             const xs = [];
             await new Promise((r) => requestAnimationFrame(r));
@@ -214,46 +217,46 @@ async function collapsible(browser, width, theme) {
         const box = await page.locator('[data-probe="collapse-host"]').boundingBox();
         await shot(page, `o189-open-${cell}`, box);
         const closeRun = await page.evaluate(`(${sample})(() => window.__collapsible.set(false))`);
-        // Reversal: open, and close again four frames into the motion.
-        const reverse = await page.evaluate(async () => {
+        // The edges, read with the region's own height animation held at its first
+        // instant (open) and its last (close): a per-frame sample is already one frame
+        // into the motion, so only a held instant separates a snap from travel.
+        const edge = (open) => page.evaluate(async (open) => {
             const root = document.querySelector('[data-probe="collapse-root"]');
-            const hs = [];
+            const content = document.querySelector('[data-probe="collapse-content"]');
+            window.__collapsible.set(open);
             await new Promise((r) => requestAnimationFrame(r));
-            hs.push(root.getBoundingClientRect().height);
-            window.__collapsible.set(true);
-            for (let i = 0; i < 4; i++) {
-                await new Promise((r) => requestAnimationFrame(r));
-                hs.push(root.getBoundingClientRect().height);
+            const anims = content ? content.getAnimations() : [];
+            for (const a of anims) {
+                a.pause();
+                const t = a.effect.getComputedTiming();
+                a.currentTime = open ? 0 : Math.max(0, (t.delay ?? 0) + t.activeDuration - 1);
             }
-            const at = hs.length - 1;
-            window.__collapsible.set(false);
-            for (let i = 0; i < 30; i++) {
-                await new Promise((r) => requestAnimationFrame(r));
-                hs.push(root.getBoundingClientRect().height);
-            }
-            return { hs, at };
-        });
+            await new Promise((r) => requestAnimationFrame(r));
+            const h = root.getBoundingClientRect().height;
+            const shown = !!content && getComputedStyle(content).display !== "none";
+            for (const a of anims) a.finish();
+            await new Promise((r) => setTimeout(r, 50));
+            return { h, shown, held: anims.length };
+        }, open);
+        const atOpen = await edge(true);
+        const atClose = await edge(false);
         const moving = (xs) => xs.slice(1).filter((x, i) => Math.abs(x.h - xs[i].h) > 0.01).length;
-        const maxExtra = (xs) => Math.max(...xs.map((x) => Math.abs(x.extra)));
+        const closedH = openRun[0].h;
+        const firstStep = atOpen.shown && atOpen.held > 0 ? Math.abs(atOpen.h - closedH) : Infinity;
+        const lastStep = atClose.shown && atClose.held > 0 ? Math.abs(atClose.h - closedH) : Infinity;
         const ops = openRun.map((x) => x.op).filter((o) => o !== null);
         const minOpacity = ops.length ? Math.min(...ops) : null;
-        const rs = reverse.hs;
-        const closed = rs[0];
-        const before = rs[reverse.at];
-        const after = rs[reverse.at + 1];
-        // A reversal turns where it stands: the next frame lies between where it was and
-        // closed, never back up toward open.
-        const turnsInPlace = before > closed + 1 && after <= before + 0.5 && after >= closed - 0.5;
-        const pass = moving(openRun) >= 6 && moving(closeRun) >= 6 && maxExtra(openRun) <= 0.5 && maxExtra(closeRun) <= 0.5 && minOpacity !== null && minOpacity >= 0.999 && turnsInPlace;
+        const pass = moving(openRun) >= 6 && moving(closeRun) >= 6 && firstStep <= 2 && lastStep <= 2 && minOpacity !== null && minOpacity >= 0.999;
         verdict("O-189", cell, pass, {
             openFrames: moving(openRun),
             closeFrames: moving(closeRun),
-            maxExtraOpenPx: +maxExtra(openRun).toFixed(2),
-            maxExtraClosePx: +maxExtra(closeRun).toFixed(2),
+            closedPx: +closedH.toFixed(2),
+            firstOpenStepPx: +firstStep.toFixed(2),
+            lastCloseStepPx: +lastStep.toFixed(2),
+            heldEdges: { open: atOpen, close: atClose },
             minOpacity,
-            reversal: { closed: +closed.toFixed(1), before: +before.toFixed(1), after: +after.toFixed(1) },
             heightsOpen: openRun.map((x) => +x.h.toFixed(1)).slice(0, 30),
-            extraOpen: openRun.map((x) => +x.extra.toFixed(1)).slice(0, 30),
+            heightsClose: closeRun.map((x) => +x.h.toFixed(1)).slice(0, 40),
         });
     } finally {
         await context.close();
@@ -448,6 +451,9 @@ async function viz(browser, width, theme, reduce = false) {
         await page.evaluate(() => document.getAnimations().filter((a) => a.timeline === document.timeline).forEach((a) => a.finish()));
         await page.waitForTimeout(50);
         await shot(page, `o168-rest-${cell}`, box);
+        // After the entrance ends, a bar and the ripple keep no clip (fill mode
+        // `backwards`): a focus ring, an overhanging label or a hover shadow is never cut.
+        const clipsAfter = await page.evaluate(() => [...document.querySelectorAll('[data-probe="bar"], [data-probe="ripple"]')].map((el) => getComputedStyle(el).clipPath).filter((c) => c !== "none"));
         const lastStart = (xs) => Math.max(0, ...xs.map((a) => a.delay));
         let pass;
         if (!reduce) {
@@ -456,17 +462,47 @@ async function viz(browser, width, theme, reduce = false) {
                 read.marks.length === 12 && read.marks.every((a) => a.name === "gl-viz-land") &&
                 read.ripple.length === 1 && read.ripple[0].name === "gl-viz-ripple" &&
                 lastStart(read.bars) <= read.panelMs && lastStart(read.marks) <= read.panelMs &&
-                Math.abs(read.bars[1].delay - read.bars[0].delay - Math.min(80, read.panelMs / 12)) < 0.6;
+                Math.abs(read.bars[1].delay - read.bars[0].delay - Math.min(80, read.panelMs / 12)) < 0.6 &&
+                clipsAfter.length === 0;
         } else {
             pass = read.bars.length === 0 && read.marks.length === 0 && read.ripple.length === 0;
         }
-        verdict("O-168", cell, pass, { bars: read.bars.length, marks: read.marks.length, ripple: read.ripple.length, names: [...new Set([...read.bars, ...read.marks, ...read.ripple].map((a) => a.name))], staggerMs: read.bars.length > 1 ? read.bars[1].delay - read.bars[0].delay : null, lastBarStartMs: lastStart(read.bars), panelMs: read.panelMs });
+        verdict("O-168", cell, pass, { bars: read.bars.length, marks: read.marks.length, ripple: read.ripple.length, names: [...new Set([...read.bars, ...read.marks, ...read.ripple].map((a) => a.name))], staggerMs: read.bars.length > 1 ? read.bars[1].delay - read.bars[0].delay : null, lastBarStartMs: lastStart(read.bars), panelMs: read.panelMs, clipsAfterEnd: clipsAfter });
     } finally {
         await context.close();
     }
 }
 
 // ── O-173 G1 · the lateral card swap ───────────────────────────────────────────────
+// The arriving card is `.vt-b` (#d14f2f) on the forward swap. Its pixels' bounding box,
+// and a 3 px square at each corner of that box: a rounded card leaves its colour out of
+// all four; a card cut flat by a clip fills the cut side's two.
+function cardPaint(buf) {
+    const png = PNG.sync.read(buf);
+    const at = (x, y) => { const i = (y * png.width + x) * 4; return [png.data[i], png.data[i + 1], png.data[i + 2]]; };
+    const isCard = ([r, g, b]) => Math.abs(r - 0xd1) < 36 && Math.abs(g - 0x4f) < 36 && Math.abs(b - 0x2f) < 36;
+    let n = 0, x0 = Infinity, y0 = Infinity, x1 = -1, y1 = -1;
+    for (let y = 0; y < png.height; y++) for (let x = 0; x < png.width; x++) {
+        if (!isCard(at(x, y))) continue;
+        n++; if (x < x0) x0 = x; if (x > x1) x1 = x; if (y < y0) y0 = y; if (y > y1) y1 = y;
+    }
+    if (n === 0) return { cardPixels: 0, box: null, corners: [] };
+    // The ground is the strip's own top-left pixel (outside every card).
+    const g0 = at(0, 0);
+    const near = (a, b) => Math.abs(a[0] - b[0]) + Math.abs(a[1] - b[1]) + Math.abs(a[2] - b[2]) <= 24;
+    const corners = [[x0, y0, 1, 1], [x1, y0, -1, 1], [x0, y1, 1, -1], [x1, y1, -1, -1]].map(([cx, cy, dx, dy], k) => {
+        let card = 0, groundOk = true;
+        for (let j = 0; j < 3; j++) for (let i = 0; i < 3; i++) {
+            const px = at(cx + i * dx, cy + j * dy);
+            if (isCard(px)) card++;
+            if (!near(px, g0)) groundOk = false;
+        }
+        // A corner on the strip's own edge is cut by the screen, not by the group.
+        const offscreen = cx <= 0 || cx >= png.width - 1;
+        return { corner: ["tl", "tr", "bl", "br"][k], card, ground: groundOk, offscreen };
+    });
+    return { cardPixels: n, box: [x0, y0, x1, y1], groundPx: g0, corners };
+}
 async function vt(browser, width, theme, reduce = false) {
     const cell = `${width}-${theme}${reduce ? "-reduced" : ""}`;
     const { context, page } = await open(browser, { width, theme, scene: "vt", reduce });
@@ -498,12 +534,21 @@ async function vt(browser, width, theme, reduce = false) {
         };
         const fwd = await swap(1);
         const box = await page.locator('[data-probe="card"]').boundingBox();
+        const strip = { x: 0, y: box.y - 40, width: Math.min(width, 700), height: box.height + 80 };
+        let paint = null;
         if (!reduce) {
             await page.evaluate(() => document.getAnimations().forEach((a) => { if (a.effect?.pseudoElement && a.timeline === document.timeline) a.currentTime = 90; }));
-            await shot(page, `o173-mid-${cell}`, { x: 0, y: box.y - 40, width: Math.min(width, 700), height: box.height + 80 }, 0);
+            await page.evaluate(() => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r))));
+            const mid = await shot(page, `o173-mid-${cell}`, strip, 0);
+            paint = { mid: cardPaint(mid) };
         }
         await page.evaluate(() => document.getAnimations().filter((a) => a.timeline === document.timeline).forEach((a) => a.finish()));
         await page.waitForTimeout(150);
+        if (paint) {
+            // Control: the same strip at rest shows the arriving card, so a blank mid frame
+            // is the engine's capture of a paused transition, not a missing card.
+            paint.rest = cardPaint(await shot(page, `o173-rest-${cell}`, strip, 0));
+        }
         const back = await swap(-1);
         await page.evaluate(() => document.getAnimations().filter((a) => a.timeline === document.timeline).forEach((a) => a.finish()));
         await page.waitForTimeout(150);
@@ -521,7 +566,16 @@ async function vt(browser, width, theme, reduce = false) {
             const winOp = opacityOn(fwd, "::view-transition-old(gl-route-window)") + opacityOn(fwd, "::view-transition-new(gl-route-window)");
             const group = sel(fwd, "::view-transition-group(gl-route-window)").length;
             pass = rootOp === 0 && winOp === 0 && sign(fwd) === 1 && sign(back) === -1 && group >= 1;
-            detail = { rootOpacityKeyframes: rootOp, windowOpacityKeyframes: winOp, newTranslateSign: { forward: sign(fwd), back: sign(back) }, groupAnimations: group, forward: fwd };
+            detail = { rootOpacityKeyframes: rootOp, windowOpacityKeyframes: winOp, newTranslateSign: { forward: sign(fwd), back: sign(back) }, groupAnimations: group, forward: fwd, paint };
+            // THE PAINT CELL (fix 2): at 90 ms the arriving card is present, and each of
+            // its four corner squares is clear of its own colour (the arc, never a flat
+            // cut), and matches the page ground. Unmeasurable when the mid frame holds no
+            // arriving card while the rest frame (the control) does.
+            const m = paint.mid;
+            const measurable = m.cardPixels > 500 || paint.rest.cardPixels <= 500;
+            const onScreen = m.corners.filter((c) => !c.offscreen);
+            const paintPass = m.cardPixels > 500 && onScreen.length >= 2 && onScreen.every((c) => c.card === 0 && c.ground);
+            verdict("O-173 paint", cell, measurable ? paintPass : null, { measurable, ...paint });
         } else {
             pass = fwd.length === 0;
             detail = { animations: fwd.length, forward: fwd };
@@ -569,6 +623,7 @@ for (const v of verdicts) {
     summary[v.item] ??= { pass: 0, total: 0 };
     summary[v.item].total++;
     if (v.pass) summary[v.item].pass++;
+    else if (v.pass === null) summary[v.item].unmeasurable = (summary[v.item].unmeasurable ?? 0) + 1;
     else failed++;
 }
 results.summary = summary;

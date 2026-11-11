@@ -98,18 +98,35 @@ function groundCount(img, ground, threshold = 40) {
 }
 
 // ── in-page readers ───────────────────────────────────────────────────────────────────
-// A guide's draw position as a fraction: 1 is undrawn, 0 is drawn. The branch dashes in
-// `pathLength` units (dasharray 1); v11.0.0 dashes in px (dasharray = total length).
+// A line's draw position as a fraction: 1 is undrawn, 0 is drawn. Ported to the
+// compositor draw (fix 2): on the branch a line's draw unit is its clip window
+// (`.hm-reveal`, slid by translateX from -100% to 0), except the ring, which keeps its
+// dashed guide inside the window. v11.0.0 has no window; its unit is the guide, dashed in
+// px (dasharray = total length), as the branch ring is in `pathLength` units.
 const GUIDE_FRACTION = `(g) => {
+    if (g.classList.contains("hm-reveal")) {
+        const w = parseFloat(getComputedStyle(g).width);
+        const t = getComputedStyle(g).transform;
+        const x = t === "none" ? 0 : new DOMMatrix(t).m41;
+        return w > 0 ? -x / w : null;
+    }
     const cs = getComputedStyle(g);
     const arr = parseFloat(cs.strokeDasharray) || 0;
     const off = parseFloat(cs.strokeDashoffset) || 0;
     return arr > 0 ? off / arr : off === 0 ? 0 : null;
 }`;
+// The draw units under a host: each window's ring guide or the window itself; with no
+// window (v11.0.0), the guides.
+const UNITS = `(host) => {
+    const reveals = [...host.querySelectorAll(".hm-reveal")];
+    if (!reveals.length) return [...host.querySelectorAll("path.hm-guide")];
+    return reveals.map((r) => r.querySelector("path.hm-guide") ?? r);
+}`;
 
 async function readHeading(page) {
-    return page.evaluate((GF) => {
+    return page.evaluate(({ GF, U }) => {
         const frac = eval(GF);
+        const units = eval(U);
         const q = (s) => document.querySelector(s);
         const mark = (probe) => q(`[data-probe="${probe}"]`);
         const lineCount = (el) => {
@@ -129,7 +146,11 @@ async function readHeading(page) {
         const readMark = (probe) => {
             const el = mark(probe);
             const inks = [...el.querySelectorAll("path.hm-ink")];
-            const guides = [...el.querySelectorAll("path.hm-guide")];
+            const guides = units(el);
+            // The nib: the guide's stroke where there is one; the compositor draw has no
+            // guide on a straight mark, so the ink's own thickness stands in (both scale
+            // with the font size, which is all this hold reads).
+            const nib = (g) => g.tagName === "path" ? Number(g.getAttribute("stroke-width")) : g.querySelector("path.hm-ink")?.getBBox().height ?? NaN;
             const decor = [el, ...el.querySelectorAll("svg.hm-mark"), ...inks].map((n) => {
                 const cs = getComputedStyle(n);
                 return { filter: cs.filter, boxShadow: cs.boxShadow, textShadow: cs.textShadow };
@@ -139,7 +160,7 @@ async function readHeading(page) {
                 lines: lineCount(el),
                 fontSize: parseFloat(getComputedStyle(el).fontSize),
                 fill: inks[0] ? getComputedStyle(inks[0]).fill : null,
-                guideStroke: guides.map((g) => Number(g.getAttribute("stroke-width"))),
+                guideStroke: guides.map(nib),
                 guideFraction: guides.map(frac),
                 guideTiming: guides.map((g) =>
                     (g.getAnimations?.() ?? []).map((a) => {
@@ -166,7 +187,7 @@ async function readHeading(page) {
             section: readMark("section-mark"),
             body: readMark("body-mark"),
         };
-    }, GUIDE_FRACTION);
+    }, { GF: GUIDE_FRACTION, U: UNITS });
 }
 
 // ── O-183 · the heading mark: focal ink, the preset clock, wrapping, scale, no glow ──
@@ -186,7 +207,7 @@ async function heading(browser, width, theme) {
         verdict("O-183 focal ink", cell, r.hero.fill === r.focal && r.body.fill === r.focal, { focal: r.focal, hero: r.hero.fill, body: r.body.fill });
         const gap = band && focal ? hueGap(band.H, focal.H) : null;
         verdict("O-183 band takes the focal hue", cell, gap !== null && gap <= 2, { band: r.section.fill, focal: r.focal, focalOklch: focal, hueGap: gap });
-        const timings = [r.hero, r.section, r.body].flatMap((m) => m.guideTiming.map((ts) => ts.find((t) => (t.name ?? "").startsWith("hm-draw") || t.kind !== "CSSAnimation") ?? null));
+        const timings = [r.hero, r.section, r.body].flatMap((m) => m.guideTiming.map((ts) => ts.find((t) => /^hm-(draw|reveal)/.test(t.name ?? "") || t.kind !== "CSSAnimation") ?? null));
         const clockOk = timings.length > 0 && timings.every((t) => t && Math.abs(t.duration - r.presentMs) < 0.5 && t.cssEasing === r.presentEasing);
         verdict("O-183 draw on the present clock", cell, clockOk, { presentMs: r.presentMs, durations: timings.map((t) => t?.duration ?? null), easingMatch: timings.map((t) => t?.cssEasing === r.presentEasing) });
         const delays = r.hero.guideTiming.map((ts) => ts[0]?.delay ?? null);
@@ -209,15 +230,16 @@ async function frameZero(browser, width, theme, mode) {
         const { context, page } = await open(browser, { width, theme, query: `scene=${scene}`, settle: 0, ...opts });
         try {
             // Frame 0: the first read after mount, before any settle wait.
-            const r = await page.evaluate((GF) => {
+            const r = await page.evaluate(({ GF, U }) => {
                 const frac = eval(GF);
-                const guides = [...document.querySelectorAll("path.hm-guide")];
+                const guides = eval(U)(document.body);
+                const drawn = [...document.querySelectorAll(".hm-reveal, svg.hm-mark, path.hm-guide")];
                 return {
                     fractions: guides.map(frac),
-                    running: guides.flatMap((g) => g.getAnimations?.() ?? []).filter((a) => a.playState === "running").length,
+                    running: drawn.flatMap((g) => g.getAnimations?.() ?? []).filter((a) => a.playState === "running").length,
                     marks: document.querySelectorAll("svg.hm-mark").length,
                 };
-            }, GUIDE_FRACTION);
+            }, { GF: GUIDE_FRACTION, U: UNITS });
             if (scene === "heading") {
                 const hero = await page.locator('[data-probe="hero"]').boundingBox();
                 await shot(page, `o183-${mode}-frame0-${width}-${theme}`, hero, 12);
@@ -232,15 +254,15 @@ async function frameZero(browser, width, theme, mode) {
 }
 
 // ── O-190 · an off-screen in-view mark waits undrawn, then draws in when scrolled to ─
-const FIRST_GUIDE = '[data-probe="below-mark"] path.hm-guide';
+const FIRST_GUIDE = '[data-probe="below-mark"]';
 async function fold(browser, width, theme) {
     // (a) live: the computed draw while off-screen, then per frame after scrolling to it.
     {
         const { context, page } = await open(browser, { width, theme, query: "scene=fold", settle: 1500 });
         try {
-            const r = await page.evaluate(async ({ GF, SEL }) => {
+            const r = await page.evaluate(async ({ GF, U, SEL }) => {
                 const frac = eval(GF);
-                const g = document.querySelector(SEL);
+                const g = eval(U)(document.querySelector(SEL))[0];
                 const host = document.querySelector('[data-probe="below-mark"]');
                 const offscreen = { fraction: frac(g), top: Math.round(host.getBoundingClientRect().top), vh: innerHeight, ink: host.dataset.ink ?? null };
                 host.scrollIntoView({ block: "center" });
@@ -255,7 +277,7 @@ async function fold(browser, width, theme) {
                     requestAnimationFrame(step);
                 });
                 return { offscreen, samples };
-            }, { GF: GUIDE_FRACTION, SEL: FIRST_GUIDE });
+            }, { GF: GUIDE_FRACTION, U: UNITS, SEL: FIRST_GUIDE });
             const mids = r.samples.filter((f) => f > 0.02 && f < 0.98).length;
             results.cells.push({ item: "O-190", part: "live", width, theme, reading: r, drawFrames: mids });
             const cell = `${width} ${theme}`;
@@ -269,8 +291,8 @@ async function fold(browser, width, theme) {
     {
         const { context, page } = await open(browser, { width, theme, query: "scene=fold", settle: 1500 });
         try {
-            const entry = await page.evaluate(async (SEL) => {
-                const g = document.querySelector(SEL);
+            const entry = await page.evaluate(async ({ U, SEL }) => {
+                const g = eval(U)(document.querySelector(SEL))[0];
                 const host = document.querySelector('[data-probe="below-mark"]');
                 host.scrollIntoView({ block: "center" });
                 const t0 = performance.now();
@@ -280,11 +302,11 @@ async function fold(browser, width, theme) {
                     if (live.length) break;
                     await new Promise((r) => requestAnimationFrame(r));
                 }
-                const all = [...host.querySelectorAll("path.hm-guide, path.hm-ink")].flatMap((n) => n.getAnimations?.() ?? []);
+                const all = [...host.querySelectorAll(".hm-reveal, svg.hm-mark, path.hm-guide, path.hm-ink")].flatMap((n) => n.getAnimations?.() ?? []);
                 for (const a of all) a.pause();
                 window.__strip = all;
                 return { running: live.length, paused: all.length };
-            }, FIRST_GUIDE);
+            }, { U: UNITS, SEL: FIRST_GUIDE });
             const box = await page.evaluate(() => {
                 const svg = document.querySelector('[data-probe="below-mark"] svg.hm-mark');
                 const r = svg.getBoundingClientRect();
@@ -322,9 +344,9 @@ async function fold(browser, width, theme) {
     {
         const { context, page } = await open(browser, { width, theme, query: "scene=fold&retrigger=1", settle: 600 });
         try {
-            const r = await page.evaluate(async ({ GF, SEL }) => {
+            const r = await page.evaluate(async ({ GF, U, SEL }) => {
                 const frac = eval(GF);
-                const g = document.querySelector(SEL);
+                const g = eval(U)(document.querySelector(SEL))[0];
                 const host = document.querySelector('[data-probe="below-mark"]');
                 const wait = (ms) => new Promise((r) => setTimeout(r, ms));
                 const count = async () => {
@@ -348,7 +370,7 @@ async function fold(browser, width, theme) {
                 host.scrollIntoView({ block: "center" });
                 const second = await count();
                 return { first, away, second };
-            }, { GF: GUIDE_FRACTION, SEL: FIRST_GUIDE });
+            }, { GF: GUIDE_FRACTION, U: UNITS, SEL: FIRST_GUIDE });
             results.cells.push({ item: "O-183", part: "retrigger", width, theme, reading: r });
             verdict("O-183 retrigger redraws on each entry", `${width} ${theme}`, r.first >= 3 && Math.abs(r.away.fraction - 1) < 0.001 && r.second >= 3, r);
         } finally {
