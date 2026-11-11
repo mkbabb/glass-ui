@@ -1,0 +1,53 @@
+disk /dev/disk3s5   1.8Ti   1.6Ti   123Gi    94%     21M  1.3G    2%   /System/Volumes/Data
+04:03:38 witness green chromium exit 0
+04:05:01 witness red chromium exit 1
+04:07:40 lane L2 chromium: 04:05:53 green chromium tree=/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0 exit 0;04:06:46 red chromium tree=/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/c1-v1100 exit 1;04:07:40 pre chromium tree=/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/f2-pre exit 1;
+04:10:00 lane L1 chromium: 04:08:51 green chromium tree=/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0 exit 0;04:10:00 red chromium tree=/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/c1-v1100 exit 1;
+04:11:21 lane L3 chromium: 04:10:38 green chromium tree=/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0 exit 0;04:11:21 red chromium tree=/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/c1-v1100 exit 1;
+04:13:04 lane L4 chromium: 04:12:12 green chromium tree=/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0 pkg=/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0 exit 0;04:13:04 red chromium tree=/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/c1-v1100 pkg=/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l4-pack/package exit 1;
+04:14:24 lane L5 chromium: 04:13:41 green chromium tree=/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0 exit 0;04:14:24 red chromium tree=/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/c1-v1100 exit 1;
+04:20:29 lane L6 chromium: 04:17:26 green chromium tree=/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0 items=all exit 0;04:20:29 red chromium tree=/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/c1-v1100 items=all exit 1;
+04:24:33 lane L7 chromium: 04:22:30 green chromium tree=/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0 exit 0;04:24:33 red chromium tree=/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/c1-v1100 exit 1;
+04:24:33 CHAIN-DONE stages=[witness l2 lanes-chromium]
+disk /dev/disk3s5   1.8Ti   1.6Ti   132Gi    93%     21M  1.4G    1%   /System/Volumes/Data
+04:26:36 gates done: 6 zero exits
+04:26:36 CHAIN-DONE stages=[gates]
+disk /dev/disk3s5   1.8Ti   1.6Ti   133Gi    93%     21M  1.4G    1%   /System/Volumes/Data
+04:29:33 STOPPED by the critic while 'witness green webkit' waited on the webkit lock (no refusal, no browser launched): reordering so the critic's Chromium probe runs first
+04:38:20 critic probe green chromium exit 0
+04:40:04 the critic's first Chromium probe read nothing (a wrong relative import in its own harness; 17 cells timed out); stopped, cured, rerun
+04:40:44 critic probe green chromium exit 0
+04:41:25 critic probe red chromium exit 0
+disk /dev/disk3s5   1.8Ti   1.6Ti   182Gi    90%     21M  1.9G    1%   /System/Volumes/Data
+04:43:01 witness green webkit exit 0
+04:45:31 witness red webkit exit 1
+04:45:31 CHAIN-DONE stages=[witness]
+05:06:01 critic probe green webkit exit 0
+05:07:11 critic probe red webkit exit 0
+disk /dev/disk3s5   1.8Ti   1.6Ti   165Gi    91%     21M  1.7G    1%   /System/Volumes/Data
+05:08:26 drivers run-2..run-5 stopped by the critic to reorder what follows the WebKit lane stage (the running stage carries on); run-6 takes over
+05:10:01 lane L2 webkit: 05:08:08 green webkit tree=/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0 exit 1;05:09:04 red webkit tree=/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/c1-v1100 exit 1;05:10:01 pre webkit tree=/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/f2-pre exit 1;
+05:15:57 lane L6 webkit: 05:12:58 green webkit tree=/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0 items=all exit 0;05:15:57 red webkit tree=/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/c1-v1100 items=all exit 1;
+05:18:17 lane L1 webkit: 05:17:07 green webkit tree=/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0 exit 0;05:18:17 red webkit tree=/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/c1-v1100 exit 1;
+05:21:10 lane L3 webkit: 05:19:05 green webkit tree=/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0 exit 0;05:21:10 red webkit tree=/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/c1-v1100 exit 1;
+05:24:06 lane L4 webkit: 05:22:54 green webkit tree=/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0 pkg=/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0 exit 0;05:24:06 red webkit tree=/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/c1-v1100 pkg=/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l4-pack/package exit 1;
+05:26:42 lane L5 webkit: 05:25:54 green webkit tree=/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0 exit 0;05:26:42 red webkit tree=/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/c1-v1100 exit 1;
+05:30:13 lane L7 webkit: 05:28:27 green webkit tree=/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0 exit 1;05:30:13 red webkit tree=/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/c1-v1100 exit 1;
+05:30:13 CHAIN-DONE stages=[l2 lanes-webkit]
+05:31:17 critic probe (final) green chromium exit 0
+05:32:07 critic probe (final) red chromium exit 0
+05:33:02 critic probe (final) green webkit exit 0
+05:33:56 critic probe (final) red webkit exit 0
+05:33:56 PROBES-DONE
+disk /dev/disk3s5   1.8Ti   1.6Ti   168Gi    91%     21M  1.8G    1%   /System/Volumes/Data
+05:35:29 e2e chromium branch exit 1
+05:37:26 e2e webkit branch exit 1
+05:49:15 e2e webkit v1100 exit 1
+05:49:15 CHAIN-DONE stages=[e2e]
+05:50:53 e2e chromium v1100 exit 0
+05:50:53 RUN-6-DONE
+05:52:08 e2e handmark chromium branch exit 0
+05:52:39 e2e handmark chromium v1100 exit 0
+05:53:14 e2e handmark webkit branch exit 0
+06:11:18 e2e handmark webkit v1100 exit 0
+06:11:18 RUN-7-DONE
