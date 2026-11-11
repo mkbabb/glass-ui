@@ -1,8 +1,13 @@
 /* The disclosure travels by its height alone: the edge moves and the content keeps its
-   full opacity, so nothing fades in a region the reader is about to read. */
+   full opacity, so nothing fades in a region the reader is about to read. The content's
+   block padding rides the same progress from zero (the end it leaves out resolves to the
+   element's own padding), so a padded region is 0 px tall on its first frame and on its
+   last, never its padding. The measured size is the border box, padding included, so the
+   padding never outgrows the height. */
 @keyframes disclosure-open {
     from {
         block-size: 0;
+        padding-block: 0;
     }
 
     to {
@@ -17,6 +22,7 @@
 
     to {
         block-size: 0;
+        padding-block: 0;
     }
 }
 
@@ -86,6 +92,7 @@
     }
 
     .disclosure-content {
+        box-sizing: border-box;
         overflow: hidden;
         color: var(--muted-foreground-strong);
         font-size: var(--type-small);
@@ -98,14 +105,14 @@
         --disclosure-content-size: var(--reka-collapsible-content-height);
     }
 
-    /* `--collapsible-gap` is the space between the trigger and the content. It is a
-       block inside the region's clipped box, so it opens and closes with the height
-       (a `gap` on the root appears in one frame when the region mounts), and it adds no
-       wrapper: the region's children stay its own. */
-    .disclosure-content[data-disclosure="collapsible"]::before {
-        content: "";
-        display: block;
-        block-size: var(--collapsible-gap, 0px);
+    /* `--collapsible-gap` is the space between the trigger and the content: the region's
+       own top padding, so it lies inside the clipped box and opens and closes with the
+       height (a `gap` on the root appears in one frame when the region mounts). It adds
+       no box, so a content laid out as a grid or a flex container keeps its items as
+       they were. `:where()` holds the rule at zero specificity: a padding the consumer
+       gives the content sets that space instead. */
+    :where(.disclosure-content[data-disclosure="collapsible"]) {
+        padding-block-start: var(--collapsible-gap, 0px);
     }
 
     .disclosure-content[data-disclosure="accordion"] {
