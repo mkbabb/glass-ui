@@ -110,7 +110,7 @@
            so the whole dock-control family shares ONE glass-translucent hover fill.
            One source per state across icon/tab/picker (no four-vocabulary drift).
            Gated on a pointer that hovers: a touch `:hover` sticks to the tapped seat, so
-           an ungated fill and lift stayed painted after a tap (O-161). The tab, trigger,
+           an ungated fill and lift stayed painted after a tap. The tab, trigger,
            switcher and DarkModeToggle hovers take the same gate. */
         @media (hover: hover) {
             &:hover:not(:disabled):not([aria-disabled="true"]) {

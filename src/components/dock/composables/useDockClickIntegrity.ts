@@ -39,7 +39,7 @@
 // such pass: from DOM events alone a press on a control that just arrived looks the
 // same as race (b), so those still defer until settle.
 //
-// THE RE-AIM ARM [10.1.5 · O-177]. Race (b) is a STATIONARY pointer: the hover dwell
+// THE RE-AIM ARM. Race (b) is a STATIONARY pointer: the hover dwell
 // expanded the dock under it and the press lands where the pointer already was. A press
 // made after the flip by intent was aimed at the arriving layout, so it is not the race
 // even while the morph is in flight: it activates its seat once, like a press at rest.

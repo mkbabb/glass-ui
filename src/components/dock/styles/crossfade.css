@@ -36,7 +36,7 @@
         will-change: opacity;
     }
 
-    /* AN IDLE FACE ADDS NO SCROLLABLE OVERFLOW (O-205). A face that is neither active nor
+    /* AN IDLE FACE ADDS NO SCROLLABLE OVERFLOW. A face that is neither active nor
        leaving paints nothing (opacity 0), but its row is `max-content` inside a box the
        active face sizes, and an absolute box's overflow counts toward the run's
        scrollable overflow: a fitting run then scrolled a wider hidden face's width.

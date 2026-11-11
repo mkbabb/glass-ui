@@ -42,7 +42,7 @@
         touch-action: manipulation;
     }
 
-    /* The house keyboard ring, on `outline` (O-207 G3). The 30% `--focus-ring-shadow`
+    /* The house keyboard ring, on `outline`. The 30% `--focus-ring-shadow`
        measured about 2:1, and its `outline: none` also took the ring off a trigger that
        carries `.focus-ring` (a CollapsibleTrigger `as-child` over a Button). The recipe
        restates `.focus-ring:focus-visible` (`utilities/base.css`), as `.menu__trigger`

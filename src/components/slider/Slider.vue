@@ -80,7 +80,7 @@ function getRootEl(): HTMLElement | null {
 
 const { isHeld } = useDockHold(getRootEl);
 
-/* THE GRAB IS TAKEN AT THE PRESS (O-167). With `contain` alignment reka 2.10 records
+/* THE GRAB IS TAKEN AT THE PRESS. With `contain` alignment reka 2.10 records
    the thumb's grab offset, `clientX − thumb.left`, on the FIRST `pointermove` of a
    thumb drag rather than at the press, so the offset carries that first move's travel
    and the thumb trails the pointer by it for the whole drag (4 px per 4 px step,
