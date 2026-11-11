@@ -12,8 +12,10 @@ on the pill (`50%` to half the plate's measured cross extent); under
 the page ground deepened, O-182); the Slider's default `--liquid-fill-tint` in dark
 (`--glass-capsule-warm` to the foreground at 22%, O-167); and `--glass-level` on a
 static-backdrop dock's plate (the root's inherited 0 to 1, O-157). Two tokens are new, `--icon-label-gap` (0.25rem) and
-`--field-text-floor` (0 px, 16 px under a coarse pointer), and the dock publishes one new
-measured property, `--dock-plate-cross-px`.
+`--field-text-floor` (0 px, 16 px under a coarse pointer). The dock publishes four new
+measured properties on its root, `--dock-plate-cross-px`, `--dock-seat-max-inline-px`,
+`--dock-seat-max-block-px` and `--dock-run-room-block`, and a `data-run-fits` attribute on
+the run.
 
 - **The dock pill's corner is a circle at rest (O-129 r1).** The cut-cap keyframes
   rested at `--dock-cap-rest: 50%`. A percentage radius resolves per axis, so whenever
@@ -79,6 +81,29 @@ measured property, `--dock-plate-cross-px`.
   30% `--focus-ring-shadow`, about 2:1, and took the ring off a trigger that also
   carries `.focus-ring`. It now paints the `.focus-ring` outline (2 px, the perimeter
   ink, about 3:1).
+
+- **A tap leaves no hover behind (O-161).** On touch, `:hover` sticks to the tapped
+  element, so a dock seat kept its hover fill and lift after a tap, and the
+  DarkModeToggle its hover tint. The hover arms of the dock's icon, tab, trigger and
+  switcher seats and of the DarkModeToggle now sit under `@media (hover: hover)`.
+
+- **The folded dock's keyboard ring follows the pill (O-162).** The summary face painted
+  the browser's square focus ring inside the round plate. It now takes the dock seats'
+  ring on the plate's rest corner.
+
+- **Tab onto a folded dock opens it (O-177).** Keyboard focus reaching the summary
+  expands the dock, as focus anywhere in it does, and hands focus to the first seat, as
+  Enter does. The collapse's own focus hand-off and a pointer press on the summary do not
+  count as a reach.
+
+- **A press aimed at the opening dock activates (O-177).** The guard against a press
+  racing the expand swallowed every press while the morph ran. A press made by a click on
+  the folded face, or one the pointer travelled more than 6 px from its position at the
+  expand to make, was aimed at the new layout, and now activates its seat once.
+
+- **A dock that mounts open idles (O-176).** `collapse="open"` armed the idle window only
+  when the pointer or focus left, so an untouched dock never folded. It now arms the
+  window at mount.
 
 - **The Slider's thumb shows at min and max (O-129 r5).** The scrubber painted no thumb
   and a fill of `value x track`, so at the minimum there was a bare track and at the
