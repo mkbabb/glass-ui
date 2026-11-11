@@ -156,6 +156,11 @@ describe("sheetEntryShear — the opt-in entry shear on the slide's scalar", () 
         expect(sheetEntryShear("bottom", 0.5)).toBe("skewX(calc(var(--sheet-enter-skew) * 0.5))");
     });
 
+    it("never leans past zero on the slide's rebound", () => {
+        expect(sheetEntryShear("right", -0.04)).toBe("skewY(calc(var(--sheet-enter-skew) * 0))");
+        expect(sheetEntryShear("left", -0.04)).toBe("skewY(calc(var(--sheet-enter-skew) * 0))");
+    });
+
     it("mirrors on the left and top edges", () => {
         expect(sheetEntryShear("left", 1)).toBe("skewY(calc(var(--sheet-enter-skew) * -1))");
         expect(sheetEntryShear("top", 1)).toBe("skewX(calc(var(--sheet-enter-skew) * -1))");
