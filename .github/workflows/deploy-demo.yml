@@ -1,0 +1,239 @@
+# glass.babb.dev: the demo (dist-demo/) on the Cloudflare Pages project `glass`.
+# The site tracks the published package, so it deploys only after the `release`
+# workflow has published a plain vX.Y.Z tag that npm now serves as `latest`. A
+# prerelease tag or a `--tag v10` maintenance publish skips, loud and green.
+# Manual dispatch names a tag; `rollback` redeploys an older tag (it skips the
+# `latest` check). Only a tag that carries this workflow, demo/_headers and the two
+# check scripts can deploy: an older tag fails red at the _headers test.
+# Record: docs/release-infra/deploy-demo.md.
+name: deploy-demo
+
+on:
+    workflow_run:
+        workflows: ["release"]
+        types: [completed]
+    workflow_dispatch:
+        inputs:
+            tag:
+                description: "The released tag to deploy, e.g. v11.1.0"
+                required: true
+                type: string
+            rollback:
+                description: "Deploy an older tag: skip the npm `latest` check"
+                required: false
+                type: boolean
+                default: false
+
+# Keyed by tag: concurrency applies when a run queues, before the job `if` and the
+# release-line skip, so one shared group would let a failed, prerelease or `--tag v10`
+# release run cancel the in-flight `latest` deploy. Only a re-run of the same tag
+# supersedes.
+concurrency:
+    group: deploy-demo-${{ github.event.workflow_run.head_branch || inputs.tag }}
+    cancel-in-progress: true
+
+permissions:
+    contents: read
+
+jobs:
+    deploy:
+        name: build + ship → Cloudflare Pages (glass)
+        if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success'
+        runs-on: ubuntu-24.04
+        timeout-minutes: 30
+        env:
+            # A tag-push run's head_branch is the tag name.
+            TAG: ${{ github.event.workflow_run.head_branch || inputs.tag }}
+            ROLLBACK: ${{ inputs.rollback || false }}
+        steps:
+            - uses: actions/checkout@v5
+              with:
+                  ref: ${{ github.event.workflow_run.head_sha || inputs.tag }}
+            - name: Built commit
+              run: echo "BUILT_SHA=$(git rev-parse HEAD)" >> "$GITHUB_ENV"
+            # The release line: a plain vX.Y.Z whose package.json version npm serves as
+            # `latest`. npm can lag the publish, so poll until the version is visible
+            # under some dist-tag; under any tag but `latest` it is a maintenance or
+            # prerelease publish and the deploy skips.
+            - name: Release line (plain vX.Y.Z, npm `latest`)
+              id: line
+              run: |
+                  set -uo pipefail
+                  skip() { echo "::warning title=deploy SKIPPED::$1"; echo "go=false" >> "$GITHUB_OUTPUT"; exit 0; }
+                  [[ "$TAG" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]] || skip "tag '${TAG}' is not a plain vX.Y.Z: nothing was deployed."
+                  PKG="$(node -p "require('./package.json').version")"
+                  [ "v${PKG}" = "$TAG" ] || skip "tag ${TAG} != package.json ${PKG}: nothing was deployed."
+                  if [ "$ROLLBACK" = "true" ]; then
+                    echo "rollback: deploying ${TAG} without the npm latest check"; echo "go=true" >> "$GITHUB_OUTPUT"; exit 0
+                  fi
+                  for i in $(seq 1 20); do
+                    TAGS="$(npm view @mkbabb/glass-ui dist-tags --json 2>/dev/null || echo '{}')"
+                    LATEST="$(printf '%s' "$TAGS" | jq -r '.latest // empty')"
+                    if [ "$LATEST" = "$PKG" ]; then
+                      echo "npm latest = ${PKG}: deploying ${TAG}"; echo "go=true" >> "$GITHUB_OUTPUT"; exit 0
+                    fi
+                    OTHER="$(printf '%s' "$TAGS" | jq -r --arg v "$PKG" 'to_entries[] | select(.value == $v and .key != "latest") | .key' | head -1)"
+                    [ -n "$OTHER" ] && skip "${PKG} is published under the dist-tag '${OTHER}', not latest (${LATEST}): nothing was deployed."
+                    echo "try ${i}/20: npm latest is ${LATEST:-unknown}, ${PKG} not visible yet; waiting"
+                    sleep 15
+                  done
+                  skip "npm never showed ${PKG} as latest (latest: ${LATEST:-unknown}): nothing was deployed. Re-run, or dispatch with this tag once the registry catches up."
+            - uses: actions/setup-node@v5
+              if: steps.line.outputs.go == 'true'
+              with:
+                  node-version: 24
+                  cache: npm
+            - if: steps.line.outputs.go == 'true'
+              run: npm ci
+            - name: Build the demo (dist-demo/, with _headers)
+              if: steps.line.outputs.go == 'true'
+              run: |
+                  npm run demo:dist:build
+                  test -s dist-demo/_headers || { echo "::error title=headers::dist-demo/_headers was not written"; exit 1; }
+            - name: Credentials present?
+              id: creds
+              if: steps.line.outputs.go == 'true'
+              env:
+                  CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+                  CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+              run: |
+                  if [ -z "${CLOUDFLARE_API_TOKEN:-}" ] || [ -z "${CLOUDFLARE_ACCOUNT_ID:-}" ]; then
+                    echo "::warning title=deploy SKIPPED::CLOUDFLARE_API_TOKEN / CLOUDFLARE_ACCOUNT_ID are not set on this repo: the demo built, nothing was deployed, and the asserts did not run. Set both secrets to arm the deploy."
+                    echo "present=false" >> "$GITHUB_OUTPUT"
+                  else
+                    echo "present=true" >> "$GITHUB_OUTPUT"
+                  fi
+            # The project must exist before the first deploy; on every later run the
+            # create answers "already exists", which is the expected path.
+            - name: Pages project `glass` exists
+              if: steps.creds.outputs.present == 'true'
+              env:
+                  CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+                  CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+              run: |
+                  set -uo pipefail
+                  if OUT="$(npx --yes wrangler@4 pages project create glass --production-branch=master 2>&1)"; then
+                    echo "created the Pages project glass (production branch master)"
+                  elif printf '%s' "$OUT" | grep -qiE "already exists|8000002"; then
+                    echo "the Pages project glass already exists"
+                  else
+                    echo "$OUT"; echo "::error title=project::wrangler pages project create glass failed"; exit 1
+                  fi
+            # --branch=master is the project's production branch: any other name cuts a
+            # Preview deployment that exits 0 and never reaches the domain.
+            - name: Deploy to Cloudflare Pages
+              if: steps.creds.outputs.present == 'true'
+              env:
+                  CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+                  CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+              run: >-
+                  npx --yes wrangler@4 pages deploy dist-demo
+                  --project-name=glass
+                  --branch=master
+                  --commit-hash="$BUILT_SHA"
+                  --commit-dirty=true
+            # The project's own pages.dev host. Cloudflare suffixes the subdomain when
+            # `glass.pages.dev` is taken (it is: another account's), so it is read, never
+            # assumed, and a failed read is red.
+            - name: Pages host
+              id: host
+              if: steps.creds.outputs.present == 'true'
+              env:
+                  CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+                  CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+              run: |
+                  set -uo pipefail
+                  SUB="$(curl -sS -H "Authorization: Bearer ${CLOUDFLARE_API_TOKEN}" "https://api.cloudflare.com/client/v4/accounts/${CLOUDFLARE_ACCOUNT_ID}/pages/projects/glass" | jq -r '.result.subdomain // empty')"
+                  [ -n "$SUB" ] || { echo "::error title=project::could not read the Pages project's pages.dev host"; exit 1; }
+                  echo "pages host: ${SUB}"
+                  echo "sub=$SUB" >> "$GITHUB_OUTPUT"
+            # Attach glass.babb.dev if the token can: the Pages domain (Pages edit) and the
+            # proxied CNAME on babb.dev (Zone DNS edit). Reports what it could do and never
+            # fails; the dashboard act (Pages → glass → Custom domains) covers the rest.
+            # The asserts below run against the domain once it serves, else the pages.dev host.
+            - name: Custom domain glass.babb.dev (best effort)
+              id: domain
+              if: steps.creds.outputs.present == 'true'
+              continue-on-error: true
+              env:
+                  CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+                  CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+                  SUB: ${{ steps.host.outputs.sub }}
+              run: |
+                  set -uo pipefail
+                  API="https://api.cloudflare.com/client/v4"
+                  cf() { curl -sS -H "Authorization: Bearer ${CLOUDFLARE_API_TOKEN}" -H "Content-Type: application/json" "$@"; }
+                  PROJ="$API/accounts/${CLOUDFLARE_ACCOUNT_ID}/pages/projects/glass"
+                  DOM="$(cf "$PROJ/domains/glass.babb.dev")"
+                  if [ "$(printf '%s' "$DOM" | jq -r '.success')" = "true" ]; then
+                    echo "Pages domain: glass.babb.dev is on the project (status $(printf '%s' "$DOM" | jq -r '.result.status'))"
+                  else
+                    ADD="$(cf -X POST "$PROJ/domains" -d '{"name":"glass.babb.dev"}')"
+                    if [ "$(printf '%s' "$ADD" | jq -r '.success')" = "true" ]; then
+                      echo "Pages domain: attached glass.babb.dev (status $(printf '%s' "$ADD" | jq -r '.result.status'))"
+                    else
+                      echo "::warning title=domain::the token could not attach glass.babb.dev to the Pages project ($(printf '%s' "$ADD" | jq -c '[.errors[]?.message]')). Owner act: Pages → glass → Custom domains → add glass.babb.dev."
+                    fi
+                  fi
+                  ZONE="$(cf "$API/zones?name=babb.dev" | jq -r '.result[0].id // empty')"
+                  if [ -z "$ZONE" ]; then
+                    echo "::warning title=dns::the token cannot read the babb.dev zone, so the CNAME was not checked. The dashboard's Custom domains act writes it."
+                  elif [ "$(cf "$API/zones/${ZONE}/dns_records?name=glass.babb.dev" | jq -r '.result | length')" != "0" ]; then
+                    echo "DNS: a glass.babb.dev record exists"
+                  else
+                    REC="$(cf -X POST "$API/zones/${ZONE}/dns_records" -d "{\"type\":\"CNAME\",\"name\":\"glass\",\"content\":\"${SUB}\",\"proxied\":true}")"
+                    if [ "$(printf '%s' "$REC" | jq -r '.success')" = "true" ]; then
+                      echo "DNS: created the proxied CNAME glass.babb.dev → ${SUB}"
+                    else
+                      echo "::warning title=dns::the token could not create the glass.babb.dev CNAME ($(printf '%s' "$REC" | jq -c '[.errors[]?.message]')). The dashboard's Custom domains act writes it."
+                    fi
+                  fi
+                  if [ "$(curl -s -o /dev/null -w '%{http_code}' https://glass.babb.dev/)" = "200" ]; then
+                    echo "origin=https://glass.babb.dev/" >> "$GITHUB_OUTPUT"
+                  else
+                    echo "::warning title=domain::glass.babb.dev does not serve yet; the asserts run against https://${SUB}/"
+                    echo "origin=https://${SUB}/" >> "$GITHUB_OUTPUT"
+                  fi
+            - name: The Production deployment references the built commit
+              if: steps.creds.outputs.present == 'true'
+              env:
+                  CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+                  CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+              run: |
+                  set -uo pipefail
+                  SHORT="${BUILT_SHA:0:7}"
+                  LIST="$(npx --yes wrangler@4 pages deployment list --project-name=glass --environment=production 2>&1)" || {
+                    echo "::error title=lineage::wrangler pages deployment list failed"; echo "$LIST"; exit 1;
+                  }
+                  echo "$LIST"
+                  if printf '%s\n' "$LIST" | grep -q "$SHORT"; then
+                    echo "lineage PASS: a Production deployment references ${SHORT}."
+                  else
+                    echo "::error title=STALE-PROD::no Production deployment references ${SHORT}"
+                    exit 1
+                  fi
+            - name: The site serves this build
+              if: steps.creds.outputs.present == 'true'
+              env:
+                  ORIGIN: ${{ steps.domain.outputs.origin || format('https://{0}/', steps.host.outputs.sub) }}
+              run: node scripts/check-served.mjs "$ORIGIN" --headers
+            - name: Playwright version
+              if: steps.creds.outputs.present == 'true'
+              id: pw
+              run: echo "version=$(node -p 'require("playwright/package.json").version')" >> "$GITHUB_OUTPUT"
+            - name: Playwright headless shell (cache)
+              if: steps.creds.outputs.present == 'true'
+              id: pw-cache
+              uses: actions/cache@v4
+              with:
+                  path: ~/.cache/ms-playwright
+                  key: ms-playwright-${{ runner.os }}-${{ steps.pw.outputs.version }}-chromium-headless-shell
+            - name: Playwright headless shell (install)
+              if: steps.creds.outputs.present == 'true' && steps.pw-cache.outputs.cache-hit != 'true'
+              timeout-minutes: 3
+              run: npx playwright install --only-shell chromium
+            - name: Live — no console error, no CSP violation, no third-party request
+              if: steps.creds.outputs.present == 'true'
+              env:
+                  ORIGIN: ${{ steps.domain.outputs.origin || format('https://{0}/', steps.host.outputs.sub) }}
+              run: node scripts/check-live.mjs "$ORIGIN"
