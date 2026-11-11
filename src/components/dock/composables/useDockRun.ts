@@ -14,10 +14,10 @@
 // part the platform has no opinion about: WHICH seat to bring into view, and when.
 //
 // THE ANCHOR. A seat rests where the platform's own snap puts it: its start on the
-// scroll axis, measured from the seat's LAYOUT box (`offsetLeft`/`offsetTop`; the run
-// is positioned, so it is the seats' offset parent and the offset is in the run's
-// scroll coordinates), less the run's `scroll-padding` start (`P/2` plus the run's
-// reserve, run.css), clamped to [0, scrollMax]. A label-wide tab or the open seat is
+// scroll axis, measured from the seat's LAYOUT box (`offsetLeft`/`offsetTop`, summed up
+// the offset-parent chain to the run, which is positioned, so the offset is in the
+// run's scroll coordinates), less the run's `scroll-padding` start (`P/2` plus the
+// run's reserve, run.css), clamped to [0, scrollMax]. A label-wide tab or the open seat is
 // wider than one pitch, so the seat's measured start, not `i·P`, is the start the snap
 // reads. The clamp makes the terminals flush (0 and scrollMax): completeness at the
 // ends, peek in the middle.
@@ -171,14 +171,21 @@ export function useDockRun(options: UseDockRunOptions): UseDockRunReturn {
     }
 
     /**
-     * The seat's extent on the scroll axis, `[start, end]`, from its layout box: the
-     * hover `scale` and the morph's `scale` never reach `offset*`, so an engaged seat
-     * measures where it rests.
+     * The seat's extent on the scroll axis, `[start, end]`, in the run's coordinates,
+     * from its layout box: the hover `scale` and the morph's `scale` never reach
+     * `offset*`, so an engaged seat measures where it rests. A seat inside a layer
+     * group has the group or its face as its offset parent, so the offsets (and each
+     * intermediate parent's border) are summed up the chain until the run.
      */
-    function extentOf(seat: HTMLElement): [number, number] {
-        return vertical()
-            ? [seat.offsetTop, seat.offsetTop + seat.offsetHeight]
-            : [seat.offsetLeft, seat.offsetLeft + seat.offsetWidth];
+    function extentOf(run: HTMLElement, seat: HTMLElement): [number, number] {
+        let start = 0;
+        for (let el: HTMLElement | null = seat; el && el !== run; ) {
+            start += vertical() ? el.offsetTop : el.offsetLeft;
+            const parent = el.offsetParent as HTMLElement | null;
+            if (parent && parent !== run) start += vertical() ? parent.clientTop : parent.clientLeft;
+            el = parent;
+        }
+        return [start, start + (vertical() ? seat.offsetHeight : seat.offsetWidth)];
     }
 
     /** The run's reserve: its leading padding on the scroll axis (run.css `--dock-run-reserve-*`). */
@@ -192,7 +199,7 @@ export function useDockRun(options: UseDockRunOptions): UseDockRunReturn {
         const style = getComputedStyle(run);
         const padding =
             Number.parseFloat(vertical() ? style.scrollPaddingBlockStart : style.scrollPaddingInlineStart) || 0;
-        const [start] = extentOf(seat);
+        const [start] = extentOf(run, seat);
         return Math.min(Math.max(start - padding, 0), scrollMax(run));
     }
 
@@ -211,7 +218,7 @@ export function useDockRun(options: UseDockRunOptions): UseDockRunReturn {
         const pos = scrollPos(run);
         const port = vertical() ? run.clientHeight : run.clientWidth;
         const reserve = reserveOf(run);
-        const [start, end] = extentOf(seat);
+        const [start, end] = extentOf(run, seat);
         // Sub-pixel tolerance: `offset*` and the scroll offset round to whole pixels,
         // and reaching for a seat that is flush within that would glide by ~0px on
         // every focus — motion with no cause.
@@ -240,10 +247,19 @@ export function useDockRun(options: UseDockRunOptions): UseDockRunReturn {
         const run = runEl.value;
         if (!run) return;
         announce(seat);
-        if (!occluded(run, seat)) return;
+        // The latest reach owns the travel. A seat already in view (the engine's own
+        // focus scroll can bring it there before `focusin`) stops a glide still running
+        // toward an earlier seat, which would otherwise carry this one back out of view.
+        if (!occluded(run, seat)) {
+            glide.dispose();
+            return;
+        }
         const from = scrollPos(run);
         const to = anchorFor(run, seat);
-        if (Math.abs(to - from) < 1) return;
+        if (Math.abs(to - from) < 1) {
+            glide.dispose();
+            return;
+        }
         // The spring writes a 0→1 progress; the position is the lerp. `useDockSpring` is
         // armed `respectReducedMotion: true`, so under `reduce` this JUMPS in one frame
         // — the destination is identical, only the travel is removed.
@@ -362,6 +378,19 @@ export function useDockRun(options: UseDockRunOptions): UseDockRunReturn {
     }
 
     /**
+     * The seat reach brings into view for an event on `target`: the nearest declared
+     * seat inside the run that holds it, so a seat inside a layer group is reached by
+     * its own box rather than by the group frame around it, and otherwise the run's
+     * direct child that holds it.
+     */
+    function seatHolding(run: HTMLElement, target: Node): HTMLElement | undefined {
+        const el = target instanceof Element ? target : target.parentElement;
+        const declared = el?.closest<HTMLElement>(`[${DOCK_SEAT_ATTR}]`);
+        if (declared && declared !== run && run.contains(declared)) return declared;
+        return seatsOf(run).find((s) => s.contains(target));
+    }
+
+    /**
      * REACH ON ACTIVATION, in CAPTURE on the run's own subtree. Capture-phase on the
      * run — not a `DockContext` widening and not a public `seat` member — is the whole
      * mechanism: it is strictly fewer public bytes than the refused context member, it
@@ -371,7 +400,7 @@ export function useDockRun(options: UseDockRunOptions): UseDockRunReturn {
     function onActivate(event: Event): void {
         const run = runEl.value;
         if (!run) return;
-        const seat = seatsOf(run).find((s) => s.contains(event.target as Node));
+        const seat = seatHolding(run, event.target as Node);
         if (seat) reach(seat);
     }
 

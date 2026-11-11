@@ -157,7 +157,7 @@ function constraintOf(root: HTMLElement, axis: Axis): string {
     const parent = root.parentElement;
     if (!parent) return "";
     // The content box: the client box less the padding, so a host that moves only its
-    // padding moves the constraint too (critique 11 R4).
+    // padding moves the constraint too.
     const pcs = getComputedStyle(parent);
     return axis === "vertical"
         ? `${parent.clientHeight - parseFloat(pcs.paddingTop) - parseFloat(pcs.paddingBottom)} ${cs.minHeight} ${cs.maxHeight} ${window.innerHeight}`
@@ -228,11 +228,11 @@ export function useDockExpandedSize(
         // while nothing of it has moved since, a reading within the rounding band of the
         // endpoint is the same box read off another pixel phase (an ancestor `zoom` in
         // WebKit rounds the box the morph is moving 1 px either way, frame to frame), so
-        // the morph keeps the endpoint and the run keeps its yield (fix 9's D-1). Once the
+        // the morph keeps the endpoint and the run keeps its yield. Once the
         // host moves a constraint, by any amount, the morph takes every reading: the
         // endpoint follows it, and so does the run's yield, read from the rest port, on
-        // the frame it lands (O-101; P1, P2, and Q1: a 1-2 px host change across the fit
-        // edge, which the band alone held until the settle). A reading past the band with
+        // the frame it lands, a 1-2 px host change across the fit edge included, which
+        // the band alone would hold until the settle. A reading past the band with
         // no constraint moved (the pane's content changed) is taken as well.
         if (!morphing) {
             restEndpoint = expandedPx;
@@ -275,34 +275,33 @@ export function useDockExpandedSize(
 
     /*
      * WHETHER THE RUN'S SEATS FIT ITS PORT, `data-run-fits` on the root: present when
-     * the seats' span along the run's scroll axis (plus a ring's room at each end on a
-     * horizontal run) is no longer than the port. It is the
-     * one source of record for "the run hides nothing", and run.css reads it twice.
-     * On a horizontal run it sets `--dock-run-yield` to 1 (THE RESERVE YIELDS), so the
-     * two reserve boxes shrink into the room the seats leave and a run that hides
-     * nothing scrolls nothing. On either axis it takes the cut cap's scroll-driven
-     * animations off the plate and the run (THE CAP RUNS ONLY ON A RUN THAT HIDES
-     * SOMETHING), so a run whose overflow vanished while it was scrolled rests round
-     * rather than holding the keyframe its inactive timeline last resolved. The span
-     * is read from the seats' layout boxes (`offset*`), and neither it nor the port
-     * depends on the yield, so the flag is a pure reading of the layout. It is read
-     * wherever an endpoint is, since the same observers see the port and the seats
-     * change. On a vertical run whose seats fit it also writes `--dock-run-room-block`,
-     * half the room they leave, which the run's block reserve yields to.
+     * the seats' span along the run's scroll axis is no longer than the port. It is the
+     * one source of record for "the run hides nothing", and run.css reads it twice. On a
+     * horizontal run it sets `--dock-run-yield` to 1 (THE RESERVE YIELDS), so the two
+     * reserve boxes shrink into the room the seats leave, down to the ring's reach. On a
+     * vertical run whose seats fit it also writes `--dock-run-room-block`, half the room
+     * they leave, which the run's block padding yields to. On either axis it takes the cut
+     * cap's scroll-driven animations off the plate and the run (THE CAP RUNS ONLY ON A
+     * RUN THAT HIDES SOMETHING), so a run whose seats all show rests round, and a run
+     * whose overflow vanished while it was scrolled does not hold the keyframe its
+     * inactive timeline last resolved. The span is read from the seats' layout boxes
+     * (`offset*`), and neither it nor the port depends on the yield, so the flag is a
+     * pure reading of the layout. It is read wherever an endpoint is, since the same
+     * observers see the port and the seats change.
      *
      * IT IS THE EXPANDED RUN'S READING AT REST, in every frame. It is read only while
      * the full pane is the active one. At rest (an expand's arm, post-flush and before
      * `[data-morphing]`; at rest expanded; once more when a morph settles, `release`) the
      * port is the run's own. Through a morph the reading is held, so no seat moves when a
-     * morph starts or settles (O-166), and the panes the morph moves never see the run's
-     * padding change under them (the bottom-anchored D-1 cell under an ancestor `zoom` in
+     * morph starts or settles, and the panes the morph moves never see the run's
+     * padding change under them (a bottom-anchored dock under an ancestor `zoom` in
      * WebKit). It moves mid-morph only when the host moves the endpoint itself (a clamp,
-     * a stage resize, by any amount; `capture`): then the port is the rest port (`restPort`), the new
-     * endpoint less the expanded chrome and the run's edge (`runEdge`, its border box
-     * less its port), both read at rest. So the flag and the room move on the frame the
-     * host's change lands, where the morph carries it, not at the settle (P1, P2, Q1). While
-     * collapsing the full pane is out of flow, and the reading it held expanded stays
-     * until the next expand re-reads it.
+     * a stage resize, by any amount; `capture`): then the port is the rest port
+     * (`restPort`), the new endpoint less the expanded chrome and the run's edge
+     * (`runEdge`, its border box less its port), both read at rest. So the flag and the
+     * room move on the frame the host's change lands, where the morph carries it, not at the
+     * settle. While collapsing the full pane is out of flow, and the reading it held
+     * expanded stays until the next expand re-reads it.
      */
     let yieldPublished = "";
     let runEdge: number | null = null;
@@ -323,21 +322,10 @@ export function useDockExpandedSize(
         const client = horizontal ? run.clientWidth : run.clientHeight;
         if (!morphing) runEdge = getSize(run, axis.value) - client;
         const port = restPort ?? client;
-        // A horizontal run's seats fit only with a whole ring's room at each end (O-201):
-        // a yielded reserve never falls under `--dock-ring-reserve`, so a fitting run
-        // never clips a focused seat's ring. Under that room the run does not fit, keeps
-        // its reserves whole and scrolls them (its trailing reserve is a box, run.css),
-        // and the cap's cut says so. A vertical run keeps its block-end reserve as
-        // padding, which WebKit counts as scrollable overflow only once the seats pass
-        // it, so under that room it could neither scroll nor show the ring; it keeps the
-        // yield to half the room the seats leave.
-        const ring = horizontal
-            ? parseFloat(getComputedStyle(root).getPropertyValue("--dock-ring-reserve")) || 0
-            : 0;
-        const fits = end > start && end - start + 2 * ring <= port;
-        // The vertical reserve yields as padding (run.css THE VERTICAL RESERVE YIELDS
-        // TOO): half the room the seats leave in the port. The port is the run's padding
-        // box, which its margins fix, so the padding this writes does not move it.
+        const fits = end > start && end - start <= port;
+        // The vertical reserve yields as padding (run.css THE VERTICAL RESERVE YIELDS AS
+        // PADDING): half the room the seats leave in the port. The port is the run's
+        // padding box, which its margins fix, so the padding this writes does not move it.
         const room = !horizontal && fits ? `${Math.floor(((port - (end - start)) / 2) * 100) / 100}px` : "";
         const value = `${fits ? "1" : "0"} ${room}`;
         if (value === yieldPublished) return;
@@ -506,7 +494,7 @@ export function useDockExpandedSize(
             // A host that loosens the root's own constraint mid-morph (its `style` or
             // `class`: a larger max size) resizes nothing observed, since the root is held
             // at its reserved size. The morph reads it on the record, if it moved what
-            // `constraintOf` reads (Q1, a 1-2 px growth across the fit edge).
+            // `constraintOf` reads, a 1-2 px growth across the fit edge included.
             hostStyle = new MutationObserver(() => {
                 // Once the host has moved, the morph already takes every reading, and the
                 // capture's own `--dock-*-px` writes must not re-enter it.

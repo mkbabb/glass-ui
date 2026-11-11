@@ -403,7 +403,8 @@ describe("G-DOCK-REACH — the anchor is the seat's snap position, read from its
      */
     it("the anchor and the occlusion read the seat's layout box, and the anchor clamps to the terminals", () => {
         const js = read(`${DOCK}/composables/useDockRun.ts`);
-        expect(js).toMatch(/seat\.offsetLeft, seat\.offsetLeft \+ seat\.offsetWidth/);
+        expect(js).toMatch(/el\.offsetLeft/);
+        expect(js).toMatch(/seat\.offsetWidth/);
         expect(js).toMatch(/style\.scrollPaddingInlineStart/);
         expect(js).toMatch(/Math\.min\(Math\.max\(start - padding, 0\), scrollMax\(run\)\)/);
         expect(js).not.toMatch(/getBoundingClientRect/);
