@@ -48,3 +48,5 @@ The full release battery, the tag `v11.1.1`, the push and the CI publish under t
 - **O-229:** every `:has()` rule carries a subject compound. Gate: the Chromium 4x trace of one insertion (no more than 0.2 ms over the rules-removed page) and the static check over built CSS.
 - **O-230 (3):** a HandMark out of view does not run its settling transform at a scroll stop. Witness: no transform animation on an off-screen mark across a scroll stop.
 - **O-234:** a `PopoverTrigger` nested inside a `Tooltip` keeps its popover's anchor. Confirm the cause first (the trigger's anchor registering with the nearest Popper root), then cure it in glass's popover context. Witness as on the row, both engines.
+- **O-237 (b), (c):** a liquid reveal's episode runs on the row's settle clock, not 4× its response, and a reveal on a new trigger starts a fresh episode. Witness: Gregg's two-pick sequence, per-frame transform.
+- **O-238:** the dock layer paints no outline when it holds programmatic focus (WebKit witness); DataTable's idle sort glyph adds no scroll width.
