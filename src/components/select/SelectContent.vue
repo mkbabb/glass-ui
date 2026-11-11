@@ -127,7 +127,7 @@ const dock = useDockParticipation({
             :data-surface="sheet ? 'opaque' : undefined"
             :class="
                 cn(
-                    'relative z-popover min-w-(--overlay-min-width) overflow-hidden text-popover-foreground glass-reveal',
+                    'relative z-popover overflow-hidden text-popover-foreground glass-reveal',
                     sheet ? 'rounded-t-card' : 'rounded-card',
                     'glass-floating glass-field-portal',
                     props.class,
@@ -149,7 +149,7 @@ const dock = useDockParticipation({
                 data-fade-end
                 :class="
                     cn(
-                        'fading-scroll fading-scroll--y w-full min-w-(--reka-select-trigger-width)',
+                        'fading-scroll fading-scroll--y w-full',
                     )
                 "
             >
