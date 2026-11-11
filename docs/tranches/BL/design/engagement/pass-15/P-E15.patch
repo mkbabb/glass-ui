@@ -8309,10 +8309,10 @@ index 000000000..3e1dfc054
 +    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 diff --git a/src/composables/motion/engage/stage.ts b/src/composables/motion/engage/stage.ts
 new file mode 100644
-index 000000000..a325137f8
+index 000000000..25e331517
 --- /dev/null
 +++ b/src/composables/motion/engage/stage.ts
-@@ -0,0 +1,1275 @@
+@@ -0,0 +1,1285 @@
 +// THE ENGAGED STAGE: the ladder's ENGAGED rung (`engageLadder.ts`), built once, for every
 +// control of the `held` class whose door asks for it (useEngage's `stage`).
 +//
@@ -8477,6 +8477,9 @@ index 000000000..a325137f8
 +    p: Pt | null;
 +    /** a relatively positioned box's inset, `top`/`left` as computed (its own px): a carrier value (A12) */
 +    inset: Pt | null;
++    /** the computed values it was read from, and its `translate` (§S15-g rule 1: the reach's re-ask on a projective chain) */
++    v: string;
++    tr: string;
 +}
 +
 +/** THE LAYOUT KEY (above): layout values only. */
@@ -8553,7 +8556,7 @@ index 000000000..a325137f8
 +    grow: number;
 +    gutter: number;
 +    fx: number;
-+    /** the host's painted size when a paint-route frame was last asked */
++    /** what the probe frame was last asked on: the layout key and the carriers' computed values (an unseen carrier: the painted size) */
 +    fxAt: string;
 +    reach: string;
 +    walk: Walk | null;
@@ -8807,7 +8810,8 @@ index 000000000..a325137f8
 +        }
 +    }
 +    const o = c.transformOrigin.split(" ").map(Number.parseFloat);
-+    return { L, proj, ctx3d, path, tf, o: [o[0] || 0, o[1] || 0], p, inset };
++    const v = `${c.rotate}|${c.scale}|${c.transform}|${c.perspective}|${c.perspectiveOrigin}|${c.transformOrigin}|${c.offsetPath}|${c.transformStyle}|${c.left},${c.top}`;
++    return { L, proj, ctx3d, path, tf, o: [o[0] || 0, o[1] || 0], p, inset, v, tr: c.translate };
 +}
 +
 +/** The carriers of `links` (index 0: the host's own), and J: the host's zoom times every carrier's linear part above it. */
@@ -9309,10 +9313,14 @@ index 000000000..a325137f8
 + * Read the reach's inputs, loudly (the declared reads; THE REACH, above), and the host's
 + * frame along its inline axis: J's inline axis length from computed values (§S15-g rule 1),
 + * which leaves out the host's own scale (`translate` composes outside it). On a map that is
-+ * not affine or not seen, the probe map's, asked again only when the host's painted size
-+ * changes. A blocked host keeps the frame it was given at the hold.
++ * not affine, the probe map's, asked again only on a frame whose layout key or a carrier's
++ * computed value above the host changed, never because the stage's own glide moved the box
++ * (§S15-g rule 1): a translate on the host composes outside its own transform-family values,
++ * so the host's own carrier, where that glide composes, is not read. Under an unseen carrier
++ * the painted size is the only signal, so it is asked again when that changes. A blocked host
++ * keeps the frame it was given at the hold.
 + */
-+function readReach(h: Holder): void {
++function readReach(h: Holder, k: Key): void {
 +    const says = "the held control does not grow along its inline axis";
 +    h.grow = readOf(h.host, "--stage-read-grow", "number", { names: "--scale-engage", ok: (v) => v > 0, who: "engage stage", says });
 +    h.gutter = readOf(document.documentElement, "--stage-read-gutter", "px", {
@@ -9328,7 +9336,10 @@ index 000000000..a325137f8
 +        h.fxAt = "";
 +        return;
 +    }
-+    const at = sizeOf(h.host);
++    const at =
++        h.walk && h.walk.unseen !== Number.POSITIVE_INFINITY
++            ? `s ${sizeOf(h.host)}`
++            : `k ${k.lv.join(" ")} ${k.w},${k.h} ${k.ws.join(" ")} ${k.z.join(" ")} ${k.zp.join(" ")} ${k.S.join(" ")}|${h.cv.slice(1).map((c) => (c ? `${c.v}|${c.tr}` : "-")).join("|")}`;
 +    if (at !== h.fxAt) {
 +        h.fxAt = at;
 +        h.fx = axes(mapAt(h.host))[0];
@@ -9412,7 +9423,7 @@ index 000000000..a325137f8
 +            }
 +        }
 +        if (moved) {
-+            readReach(h);
++            readReach(h, h.prev!.k);
 +            writeReach(h);
 +            wrote.add(h);
 +        }
@@ -9544,8 +9555,7 @@ index 000000000..a325137f8
 +        const w = host.offsetWidth;
 +        h.fx = w > 0 ? host.getBoundingClientRect().width / w : 1;
 +    }
-+    rewalk(h);
-+    readReach(h);
++    readReach(h, rewalk(h));
 +    writeReach(h);
 +    host.setAttribute("data-engaged", "");
 +    startFrames();

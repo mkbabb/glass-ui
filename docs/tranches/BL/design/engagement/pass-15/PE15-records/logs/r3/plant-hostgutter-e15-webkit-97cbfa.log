@@ -1,0 +1,13 @@
+# PE15 plant-hostgutter-e15 webkit · 2026-11-10 19:45:37 · load { 9.16 13.88 16.07 } · harness 0c64ff33af43 · --only D8
+# E-15 · S15's members at their folded ranges (P-E15 §S15)
+# target /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p15/PE15/wt/.pe15out/builds/plant-hostgutter · engine webkit · lock wait 0.0 s (the deadline 5400 s counts from here) · other headless processes: chromium 12, webkit 0 · load 9.2/13.9/16.1 at start
+# scene app: harness scenes/App.vue (sha1 912fecf0a1aa)
+# webkit 26.5 (Playwright WebKit, not Safari; real Safari UNMEASURED (owner's safaridriver checkbox))
+# held control: scene slider root .glass-slider thumb [role="slider"] engaged [data-engaged], [data-held]; clock token --spring-dock-settle; cells D8; film read after the frame's resize step (class 7)
+  FAIL       D8 --space-section 2em on :root, host 14 px (D8 row 1) · against the page consumer · rest 632.0 px, 34.0 / 34.0 from the edges · engaged 644.0 px (×1.0190, --stage-reach "1.01899"), 28.0 / 28.0 · the page consumer's gutter 33.22 px · the held box stops -5.22 px off it (bound ±1) · errors 0 · load 9.2/13.9/16.1
+  FAIL       D8 --space-section 4cqi on :root, host in a 400 px container (D8 row 2) · against the page consumer · rest 640.0 px, 30.0 / 30.0 from the edges · engaged 668.0 px (×1.0437, --stage-reach "1.04375"), 16.0 / 16.0 · the page consumer's gutter 28.00 px · the held box stops -12.00 px off it (bound ±1) · errors 0 · load 9.4/13.9/16.0
+  PASS       D8 --space-section 2rem (the library's default) · against the page consumer · rest 632.0 px, 34.0 / 34.0 from the edges · engaged 636.0 px (×1.0063, --stage-reach "1.00633"), 32.0 / 32.0 · the page consumer's gutter 32.00 px · the held box stops -0.00 px off it (bound ±1) · errors 0 · load 9.4/13.9/16.0
+  FAIL       D8 --space-section 2rem on :root, 2em on main · against the page consumer · rest 632.0 px, 34.0 / 34.0 from the edges · engaged 644.0 px (×1.0190, --stage-reach "1.01899"), 28.0 / 28.0 · the page consumer's gutter 33.22 px · the held box stops -5.22 px off it (bound ±1) · errors 0 · load 9.4/13.9/16.0
+E-15 webkit FAIL · 1 pass, 3 fail, 0 unmeasured of 4 gating cells (0 reported) · load 9.2/13.9/16.1 at start, 9.4/13.9/16.0 at end
+# exit 1 · 2026-11-10 19:45:43 · load { 9.39 13.85 16.05 }
+# end · 2026-11-10 19:45:43 · load { 9.39 13.85 16.05 } · harness 0c64ff33af43

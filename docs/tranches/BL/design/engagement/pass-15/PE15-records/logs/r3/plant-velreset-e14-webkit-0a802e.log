@@ -1,0 +1,17 @@
+# PE15 plant-velreset-e14 webkit · 2026-11-10 19:49:16 · load { 19.06 17.94 17.41 } · harness 0c64ff33af43 · --only M27
+# E-14 · S14's members at their ranges (P-E14 §S14-c)
+# target /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p15/PE15/wt/.pe15out/builds/plant-velreset · engine webkit · lock wait 0.0 s (the deadline 5400 s counts from here) · other headless processes: chromium 8, webkit 0 · load 19.1/17.9/17.4 at start
+# scene app: harness scenes/App.vue (sha1 912fecf0a1aa)
+# webkit 26.5 (Playwright WebKit, not Safari; real Safari UNMEASURED (owner's safaridriver checkbox))
+# held control: scene slider root .glass-slider thumb [role="slider"] engaged [data-engaged], [data-held]; clock token --spring-dock-settle; cells M27; film: read after the frame's resize step (H15 class 7)
+  PASS       M27 a train of inserts above the root · 16 px every frame for 12 frames · by superposition · STATED LIMIT (S14 a.3, b.6: carried after its onset) · the onset's act frame 0.00 px (bound ≤ 0.5) · glides 12 (bound ≥ 1: the onset glided) · REPORT the train less the superposition: on the steps' frames max 0.07 px, over the film 0.12 px · errors 0 · load 18.4/17.8/17.4
+  PASS       M27 a train of inserts above the root · 16 px every second frame, 6 steps · by superposition · the train's paint less the sum of the one step's paint shifted to each step's frame: on the steps' frames [0.00 0.01 0.01 0.02 0.00 0.01] px, max over the film 0.06 px (bound ≤ 0.72 = 0.5 + the interpolation's own error) · glides 6 · the one step's act frame 0.00 px · errors 0 · load 17.4/17.6/17.3
+  PASS       M27 a train of inserts above the root · 8 px every frame for 12 frames · by superposition · STATED LIMIT (S14 a.3, b.6: carried after its onset) · the onset's act frame 0.00 px (bound ≤ 0.5) · glides 12 (bound ≥ 1: the onset glided) · REPORT the train less the superposition: on the steps' frames max 0.09 px, over the film 0.10 px · errors 0 · load 17.4/17.6/17.3
+  PASS       M27 a train of inserts above the root · 40 px every second frame, 6 steps · by superposition · the train's paint less the sum of the one step's paint shifted to each step's frame: on the steps' frames [0.00 0.02 0.03 0.03 0.05 0.06] px, max over the film 0.15 px (bound ≤ 1.07 = 0.5 + the interpolation's own error) · glides 6 · the one step's act frame 0.00 px · errors 0 · load 16.5/17.4/17.2
+  FAIL       M27 a slow margin ramp above C · 0.2 px a frame · glides over the ramp 8 (bound ≤ 2: the onset and one uneven frame; Y8 reads 0-1 at ≤ 200 px/s) · errors 0 · load 15.4/17.2/17.2
+  FAIL       M27 a slow margin ramp above C · 0.5 px a frame · glides over the ramp 21 (bound ≤ 2: the onset and one uneven frame; Y8 reads 0-1 at ≤ 200 px/s) · errors 0 · load 15.4/17.2/17.2
+  PASS       M27 a slow margin ramp above C · 1 px a frame · glides over the ramp 1 (bound ≤ 2: the onset and one uneven frame; Y8 reads 0-1 at ≤ 200 px/s) · errors 0 · load 14.7/17.0/17.1
+  PASS       M27 a slow margin ramp above C · 2 px a frame · glides over the ramp 1 (bound ≤ 2: the onset and one uneven frame; Y8 reads 0-1 at ≤ 200 px/s) · errors 0 · load 14.7/17.0/17.1
+E-14 webkit FAIL · 6 pass, 2 fail, 0 unmeasured of 8 gating cells (0 reported) · load 19.1/17.9/17.4 at start, 14.7/17.0/17.1 at end
+# exit 1 · 2026-11-10 19:49:43 · load { 14.67 17.01 17.09 }
+# end · 2026-11-10 19:49:43 · load { 14.67 17.01 17.09 } · harness 0c64ff33af43

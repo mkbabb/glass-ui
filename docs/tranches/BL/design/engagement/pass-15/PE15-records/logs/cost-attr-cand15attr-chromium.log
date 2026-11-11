@@ -1,0 +1,40 @@
+# COST-ATTR · the stage's forced layouts by function and frame (B-6 item 10)
+# target /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p15/PE15/wt/.pe15out/builds/cand15attr · engine chromium · lock wait 0.0 s (the deadline 800 s counts from here) · other headless processes: chromium 12, webkit 2 · load 25.3/26.2/18.4 at start
+# scene app: harness scenes/App.vue (sha1 912fecf0a1aa)
+# chromium 149.0.7827.55
+  REPORT     COST-ATTR held still, 30 frames · engaged true · CDP LayoutCount 35 (less the film's 30: 5), RecalcStyleCount 35 · trace Layout events 35 (0 forced, with a JS stack): stage-forced 0, the film's 0, lifecycle 35 · glides 0 · load 24.2/26.0/18.3
+    layouts   35  (lifecycle: no JS stack)
+    per frame (frame index from the film's first tick; the act at its frame 2), stage-forced only:
+    style    35  (lifecycle: no JS stack)
+  REPORT     COST-ATTR an affine step window: a 40 px insert above the root, 14 frames · engaged true · CDP LayoutCount 20 (less the film's 14: 6), RecalcStyleCount 20 · trace Layout events 20 (1 forced, with a JS stack): stage-forced 1, the film's 0, lifecycle 19 · glides 1 · load 24.2/26.0/18.3
+    layouts   19  (lifecycle: no JS stack)
+    layouts    1  writeReach < step
+    per frame (frame index from the film's first tick; the act at its frame 2), stage-forced only:
+      frame   0: 1× writeReach < step
+    style    19  (lifecycle: no JS stack)
+    style     1  readOf < readReach < step
+  REPORT     COST-ATTR a projective step window: C perspective(200px) rotateX(25deg), a 40 px insert inside C, 14 frames · engaged true · CDP LayoutCount 115 (less the film's 14: 101), RecalcStyleCount 152 · trace Layout events 115 (96 forced, with a JS stack): stage-forced 67, the film's 0, lifecycle 19 · glides 1 · load 24.2/26.0/18.3
+    layouts   36  centreOf < probe < mapAt < readReach
+    layouts   19  (lifecycle: no JS stack)
+    layouts   18  (anon) < probe < mapAt < readReach
+    layouts   18  writeReach < step
+    layouts    6  centreOf < probe < mapAt < read
+    layouts    6  (anon) < probe < mapAt < solve
+    layouts    6  centreOf < probe < mapAt < solve
+    layouts    5  (anon) < probe < mapAt < read
+    layouts    1  centreOf < land < step
+    per frame (frame index from the film's first tick; the act at its frame 2), stage-forced only:
+      frame   0: 6× centreOf < probe < mapAt < read · 6× centreOf < probe < mapAt < solve · 1× centreOf < land < step · 36× centreOf < probe < mapAt < readReach · 18× writeReach < step
+    style    54  centreOf < probe < mapAt < readReach
+    style    36  (anon) < probe < mapAt < readReach
+    style    19  (lifecycle: no JS stack)
+    style    18  writeReach < step
+    style     6  centreOf < probe < mapAt < read
+    style     6  (anon) < probe < mapAt < solve
+    style     6  centreOf < probe < mapAt < solve
+    style     5  (anon) < probe < mapAt < read
+  REPORT     COST-ATTR the projective card held still (no insert), 14 frames · engaged true · CDP LayoutCount 20 (less the film's 14: 6), RecalcStyleCount 20 · trace Layout events 20 (0 forced, with a JS stack): stage-forced 0, the film's 0, lifecycle 20 · glides 0 · load 23.1/25.7/18.3
+    layouts   20  (lifecycle: no JS stack)
+    per frame (frame index from the film's first tick; the act at its frame 2), stage-forced only:
+    style    20  (lifecycle: no JS stack)
+COST-ATTR chromium UNMEASURED · 0 pass, 0 fail, 0 unmeasured of 0 gating cells (4 reported) · load 25.3/26.2/18.4 at start, 23.1/25.7/18.3 at end

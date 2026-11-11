@@ -52,3 +52,9 @@ The profile is `~/.dev-logs/feedback-canon/fourier-apply/prof-unmin-morph.json`.
 ## Gates
 
 Every item is RED on 11.1.0 and GREEN on the branch, in Chromium and WebKit at 390 and 1440, light and dark. Each budget is a static check over the built CSS plus a paint check per component in the demo, and each check is shown to bite by a planted violation. The CHANGELOG's 12.0.0 entry lists every deleted export and the plain migration, in consumer prose.
+
+## Addendum 2026-11-10: from the Fable second look at 11.1.0 and 10.1.5
+
+- **One height engine for Collapsible and Accordion** (11.1.0 note item 1). 11.1.0 ships reka's content with a CSS-only change. 12.0.0 builds the one engine (the grid-row region from `8d3dc8d2d` on release/11.1.0 is the candidate), with the wrapper and the dropped reka variable declared as breaks.
+- **Delete the dock plate's grain** pseudo-element and its token on the dock (11.1.0 note item 8): imperceptible at its default strength, three radial gradients to exist.
+- **Retire `--focus-ring-shadow`** across its remaining readers together (O-225; witness c12e on release/10.1.5).

@@ -1,0 +1,50 @@
+# COST-ATTR · the stage's forced layouts by function and frame (B-6 item 10)
+# target /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p15/PE15/wt/.pe15out/builds/cand15attr · engine chromium · lock wait 0.0 s (the deadline 800 s counts from here) · other headless processes: chromium 8, webkit 2 · load 34.2/34.1/26.8 at start
+# scene app: harness scenes/App.vue (sha1 912fecf0a1aa)
+# chromium 149.0.7827.55
+  REPORT     COST-ATTR an affine step window: a 40 px insert above the root, 14 frames · engaged true · CDP LayoutCount 22 (less the film's 14: 8), RecalcStyleCount 22 · trace Layout events 23 (1 forced, with a JS stack): stage-forced 1, the film's 0, lifecycle 22 · glides 1 · load 34.2/34.1/26.8
+    layouts   22  (lifecycle: no JS stack)
+    layouts    1  writeReach < step
+    per frame (frame index from the film's first tick; the act at its frame 2), stage-forced only:
+      frame   2: 1× writeReach < step
+    style    22  (lifecycle: no JS stack)
+    style     1  readOf < readReach < step
+  REPORT     COST-ATTR a projective step window: C perspective(200px) rotateX(25deg), a 40 px insert inside C, 14 frames · engaged true · CDP LayoutCount 122 (less the film's 14: 108), RecalcStyleCount 161 · trace Layout events 123 (100 forced, with a JS stack): stage-forced 70, the film's 0, lifecycle 23 · glides 1 · load 34.0/34.0/26.8
+    layouts   38  centreOf < probe < mapAt < readReach
+    layouts   23  (lifecycle: no JS stack)
+    layouts   19  (anon) < probe < mapAt < readReach
+    layouts   19  writeReach < step
+    layouts    6  centreOf < probe < mapAt < read
+    layouts    6  (anon) < probe < mapAt < solve
+    layouts    6  centreOf < probe < mapAt < solve
+    layouts    5  (anon) < probe < mapAt < read
+    layouts    1  centreOf < land < step
+    per frame (frame index from the film's first tick; the act at its frame 2), stage-forced only:
+      frame   2: 6× centreOf < probe < mapAt < read · 6× centreOf < probe < mapAt < solve · 1× centreOf < land < step · 2× centreOf < probe < mapAt < readReach · 1× writeReach < step
+      frame   3: 2× centreOf < probe < mapAt < readReach · 1× writeReach < step
+      frame   4: 2× centreOf < probe < mapAt < readReach · 1× writeReach < step
+      frame   5: 2× centreOf < probe < mapAt < readReach · 1× writeReach < step
+      frame   6: 2× centreOf < probe < mapAt < readReach · 1× writeReach < step
+      frame   7: 2× centreOf < probe < mapAt < readReach · 1× writeReach < step
+      frame   8: 2× centreOf < probe < mapAt < readReach · 1× writeReach < step
+      frame   9: 2× centreOf < probe < mapAt < readReach · 1× writeReach < step
+      frame  10: 2× centreOf < probe < mapAt < readReach · 1× writeReach < step
+      frame  11: 2× centreOf < probe < mapAt < readReach · 1× writeReach < step
+      frame  12: 2× centreOf < probe < mapAt < readReach · 1× writeReach < step
+      frame  13: 2× centreOf < probe < mapAt < readReach · 1× writeReach < step
+      frame  14: 2× centreOf < probe < mapAt < readReach · 1× writeReach < step
+      frame  15: 2× centreOf < probe < mapAt < readReach · 1× writeReach < step
+      frame  16: 2× centreOf < probe < mapAt < readReach · 1× writeReach < step
+      frame  17: 2× centreOf < probe < mapAt < readReach · 1× writeReach < step
+      frame  18: 2× centreOf < probe < mapAt < readReach · 1× writeReach < step
+      frame  19: 2× centreOf < probe < mapAt < readReach · 1× writeReach < step
+      frame  20: 2× centreOf < probe < mapAt < readReach · 1× writeReach < step
+    style    57  centreOf < probe < mapAt < readReach
+    style    38  (anon) < probe < mapAt < readReach
+    style    23  (lifecycle: no JS stack)
+    style    19  writeReach < step
+    style     6  centreOf < probe < mapAt < read
+    style     6  (anon) < probe < mapAt < solve
+    style     6  centreOf < probe < mapAt < solve
+    style     5  (anon) < probe < mapAt < read
+COST-ATTR chromium UNMEASURED · 0 pass, 0 fail, 0 unmeasured of 0 gating cells (2 reported) · load 34.2/34.1/26.8 at start, 34.0/34.0/26.8 at end

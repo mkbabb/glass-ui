@@ -43,6 +43,10 @@ const narrow = innerWidth < 500;
    pages face; tip=1 wraps every page seat in daraksha's Tooltip (TooltipTrigger as-child, side top). */
 const menu = q.get("menu") === "1";
 const tip = q.get("tip") === "1";
+/* fold-3 isolation of challenge 3's WebKit goto crash: noprov=1 renders the page without the TooltipProvider
+   wrapper (a pass-through), every other default unchanged; nomenu-imports cannot be switched at runtime */
+const noprov = q.get("noprov") === "1";
+const Wrap = noprov ? ((_p: unknown, { slots }: { slots: { default?: () => unknown } }) => slots.default?.()) : TooltipProvider;
 const menuOpen = ref(false);
 
 onMounted(async () => {
@@ -65,7 +69,7 @@ onMounted(async () => {
 </script>
 
 <template>
-    <TooltipProvider :delay-duration="200"><main class="field" :data-mode="mode" :data-probe="mode !== 'design' ? '' : undefined">
+    <component :is="Wrap" :delay-duration="200"><main class="field" :data-mode="mode" :data-probe="mode !== 'design' ? '' : undefined">
         <button id="sentinel-before" class="sentinel">before</button>
         <div v-if="mode === 'design'" class="copy" aria-hidden="true">
             <p v-for="i in 9" :key="i">Glass reads what lies under it, line {{ i }}, and the dock sits on the page.</p>
@@ -150,7 +154,7 @@ onMounted(async () => {
             </component>
         </div>
         <button id="sentinel-after" class="sentinel after">after</button>
-    </main></TooltipProvider>
+    </main></component>
 </template>
 
 <style>

@@ -1,0 +1,58 @@
+2026-11-10 13:09:38 run: start pid 62693 pgid 62691 · load averages: 31.09 20.94 13.01
+2026-11-10 13:09:38 CHAIN start pid 62708 pgid 62691 (steps: pr f7); harness list 42 OK · load averages: 31.09 20.94 13.01
+2026-11-10 13:09:38 start PR · load averages: 31.09 20.94 13.01
+2026-11-10 13:09:46 end PR · load averages: 32.47 21.58 13.33
+2026-11-10 13:09:46 disk free 82 GB before F7 · load averages: 32.47 21.58 13.33
+2026-11-10 13:36:29 outside gate F7 at load 19.67 (bound 20, waited 1603 s) · load averages: 19.67 29.79 29.47
+2026-11-10 13:47:13 end F7: 64 files / 503777 B; ceiling 503808; margin 31 B · load averages: 36.13 35.03 32.91
+2026-11-10 13:47:13 same build: DIFFERS · load averages: 36.13 35.03 32.91
+2026-11-10 13:47:13 STOP: the build differs from pass 13's · load averages: 36.13 35.03 32.91
+2026-11-10 13:47:13 run: STOPPED at 'pr f7' (exit 4) · load averages: 36.13 35.03 32.91
+2026-11-10 14:55:51 F7 first read 12/13 (units, menu contract flake, load 30-38); re-runs 1 and 2 13/13 (in-slot 14.12, 14.66): NOT-REPRODUCED; same build: SAME
+2026-11-10 14:55:56 run: start pid 56753 pgid 56752 · load averages: 20.01 25.19 29.04
+2026-11-10 14:55:56 CHAIN start pid 56763 pgid 56752 (steps: rrwd); harness list 42 OK · load averages: 20.01 25.19 29.04
+2026-11-10 14:55:56 disk free 244 GB before rrwd · load averages: 20.01 25.19 29.04
+2026-11-10 14:55:56 disk free 244 GB before q rerun-webkit-dark · load averages: 20.01 25.19 29.04
+2026-11-10 15:53:01 outside gate q rerun-webkit-dark slot 1 at load 10.96 (next rr-swap-short-bp13-r1 gate 11, waited 3425 s, 8 lines left) · load averages: 10.96 15.55 22.62
+2026-11-10 16:26:55 end q rerun-webkit-dark slot 1 exit 0 · load averages: 9.57 12.29 15.09
+2026-11-10 16:26:55 end rrwd · load averages: 9.57 12.29 15.09
+2026-11-10 16:26:55 CHAIN-DONE (steps: rrwd) · load averages: 9.57 12.29 15.09
+2026-11-10 16:26:55 CHAIN start pid 65039 pgid 56752 (steps: bat); harness list 42 OK · load averages: 9.57 12.29 15.09
+2026-11-10 16:26:55 disk free 208 GB before battery cl r1 · load averages: 9.57 12.29 15.09
+2026-11-10 16:26:55 outside gate battery cl r1 at load 9.57 (bound 11, waited 0 s) · load averages: 9.57 12.29 15.09
+2026-11-10 16:26:55 queue battery cl r1 · load averages: 9.57 12.29 15.09
+2026-11-10 16:38:09 end battery slot cl r1 exit 0 · load averages: 11.13 10.26 12.49
+2026-11-10 16:38:09 battery cl r1 done; cells max load 16.99 · load averages: 11.13 10.26 12.49
+2026-11-10 16:38:10 battery cl: reading r1 of record (cells to 16.99) · load averages: 11.13 10.26 12.49
+2026-11-10 16:38:10 disk free 209 GB before battery cd r1 · load averages: 11.13 10.26 12.49
+2026-11-10 16:42:30 outside gate battery cd r1 at load 10.39 (bound 11, waited 260 s) · load averages: 10.39 12.37 13.01
+2026-11-10 16:42:30 queue battery cd r1 · load averages: 10.39 12.37 13.01
+2026-11-10 16:55:53 end battery slot cd r1 exit 0 · load averages: 9.67 9.47 10.71
+2026-11-10 16:55:53 battery cd r1 done; cells max load 16.19 · load averages: 9.67 9.47 10.71
+2026-11-10 16:55:53 battery cd: reading r1 of record (cells to 16.19) · load averages: 9.67 9.47 10.71
+2026-11-10 16:55:53 disk free 215 GB before battery wl r1 · load averages: 9.67 9.47 10.71
+2026-11-10 16:55:53 outside gate battery wl r1 at load 9.67 (bound 11, waited 0 s) · load averages: 9.67 9.47 10.71
+2026-11-10 16:55:53 queue battery wl r1 · load averages: 9.67 9.47 10.71
+2026-11-10 17:13:55 end battery slot wl r1 exit 0 · load averages: 17.99 11.15 9.79
+2026-11-10 17:13:55 battery wl r1 done; cells max load 18.6 · load averages: 17.99 11.15 9.79
+2026-11-10 17:13:56 battery wl: reading r1 of record (cells to 18.6) · load averages: 17.99 11.15 9.79
+2026-11-10 17:13:56 disk free 211 GB before battery wd r1 · load averages: 17.99 11.15 9.79
+2026-11-10 17:16:56 outside gate battery wd r1 at load 10.04 (bound 11, waited 180 s) · load averages: 10.04 11.65 10.33
+2026-11-10 17:16:56 queue battery wd r1 · load averages: 10.04 11.65 10.33
+2026-11-10 18:18:48 end battery slot wd r1 exit 75 · load averages: 23.29 19.67 17.78
+2026-11-10 18:18:48 disk free 220 GB before battery wd r1 · load averages: 23.29 19.67 17.78
+2026-11-10 18:26:29 outside gate battery wd r1 at load 9.99 (bound 11, waited 461 s) · load averages: 9.99 16.27 17.74
+2026-11-10 18:26:29 queue battery wd r1 · load averages: 9.99 16.27 17.74
+2026-11-10 19:23:02 end battery slot wd r1 exit 0 · load averages: 12.76 17.15 15.51
+2026-11-10 19:23:02 battery wd r1 done; cells max load 24.17 · load averages: 12.76 17.15 15.51
+2026-11-10 19:23:03 battery wd: reading r1 of record (cells to 24.17) · load averages: 12.76 17.15 15.51
+2026-11-10 19:23:03 CHAIN-DONE (steps: bat) · load averages: 12.76 17.15 15.51
+2026-11-10 19:23:03 CHAIN start pid 90447 pgid 56752 (steps: q); harness list 42 OK · load averages: 12.76 17.15 15.51
+2026-11-10 19:23:03 disk free 222 GB before q chromium-light · load averages: 12.76 17.15 15.51
+2026-11-10 19:44:24 outside gate q chromium-light slot 1 at load 10.31 (next rev-bp13-r1 gate 11, waited 1281 s, 144 lines left) · load averages: 10.31 15.39 16.76
+2026-11-10 21:03:03 end q chromium-light slot 1 exit 75 · load averages: 11.38 11.07 12.32
+2026-11-10 21:03:03 disk free 220 GB before q chromium-light · load averages: 11.38 11.07 12.32
+2026-11-10 21:03:23 outside gate q chromium-light slot 2 at load 9.74 (next swp-bp13-r1 gate 11, waited 20 s, 64 lines left) · load averages: 9.74 10.72 12.16
+2026-11-10 21:56:08 end q chromium-light slot 2 exit 0 · load averages: 8.08 9.40 9.73
+2026-11-10 21:56:08 disk free 227 GB before q chromium-dark · load averages: 8.08 9.40 9.73
+2026-11-10 21:56:08 outside gate q chromium-dark slot 1 at load 8.08 (next rev-bp13-r1 gate 11, waited 0 s, 136 lines left) · load averages: 8.08 9.40 9.73

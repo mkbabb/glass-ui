@@ -1,0 +1,37 @@
+{
+ "id": "E-15",
+ "engine": "chromium",
+ "version": "149.0.7827.55",
+ "target": {
+  "build": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p15/PE15/wt/.pe15out/builds/cand14"
+ },
+ "loadStart": "25.5/35.2/39.0",
+ "loadEnd": "24.2/34.7/38.7",
+ "verdict": "UNMEASURED",
+ "cells": [
+  {
+   "name": "COST held still, 30 frames",
+   "status": "REPORT",
+   "line": "engaged true · over 30 frames: layouts 37, style recalcs 37, script 5.0 ms (the film's own read is one layout a frame: 30) · less the film's: 7 layouts",
+   "load": "24.9/35.0/38.9"
+  },
+  {
+   "name": "COST a carrier-only window: C translate sine 80 px / 600 ms, 30 frames",
+   "status": "REPORT",
+   "line": "engaged true · over 30 frames: layouts 35, style recalcs 35, script 6.8 ms (the film's own read is one layout a frame: 30) · less the film's: 5 layouts",
+   "load": "24.9/35.0/38.9"
+  },
+  {
+   "name": "COST an affine step window: a 40 px insert above the root, 14 frames",
+   "status": "REPORT",
+   "line": "engaged true · over 14 frames: layouts 20, style recalcs 20, script 4.9 ms (the film's own read is one layout a frame: 14) · less the film's: 6 layouts",
+   "load": "24.9/35.0/38.9"
+  },
+  {
+   "name": "COST a projective step window: C perspective(200px) rotateX(25deg), a 40 px insert inside C, 14 frames",
+   "status": "REPORT",
+   "line": "engaged true · over 14 frames: layouts 109, style recalcs 146, script 7.6 ms (the film's own read is one layout a frame: 14) · less the film's: 95 layouts",
+   "load": "24.2/34.7/38.7"
+  }
+ ]
+}

@@ -19,3 +19,28 @@
 2026-11-09 23:44:45 · load { 3.04 4.00 4.72 } · df 58Gi · W1 exit 0 · held 1
 2026-11-09 23:44:45 · load { 3.04 4.00 4.72 } · df 58Gi · W2 queued for the WebKit lock (1 stages from W1.held)
 2026-11-09 23:44:45 · load { 3.04 4.00 4.72 } · df 58Gi · REFUSED by the guard in guard-W2.log: [guarded] REFUSED: kernel zone data.kalloc.1024 at 8.76M (panics near 20.8M; heavy and browser runs stop at 8M): reboot the Mac; the chain stops
+2026-11-10 13:07:45 · load { 27.04 14.49 9.83 } · df 83Gi · RESUME r3 (seat 3, after the reboot): P-E15.patch re-proved 6edc7321c665ab463c2bcc0b7ed3ceabf0cd639b, applied at eb845639f in a fresh worktree, src tree c09e913578fb; the first seat's builds were removed with its worktree, so cand15 + cand11 (+ cand15attr, cand12attr for the attribution) are re-made from the same patches; builds-r3 queued
+2026-11-10 13:28:58 · load { 36.25 34.91 28.71 } · df 79Gi · COST ATTRIBUTION (logs/cost-attr-cand15attr-chromium*.log): of the projective window's 100 forced layouts, readReach's painted-size re-ask 57 (3 a frame on 19 frames), writeReach 19, the step frame's paint solve 24 (read 11, solve 12, land 1). CURE r3 (S15-g rule 1): readReach re-asks on a projective chain only on a key or carrier-value change above the host (unseen: the painted size). gates4 queued
+2026-11-10 13:39:36 · load { 29.36 32.75 31.00 } · r3 · CURE written: P-E15.patch 4e987d66b55bac5b9923adf34017b524ab656584 (12,775 lines, 199 files; was 6edc7321, commit 5f1e81592), src tree d564e84f3244, gates4 green (logs/gates4.txt). The plan, split before it starts: builds-r3b; Chromium CQ3a, CQ3b, MCQ; WebKit WQ3a, WQ3b, MWQ (each queue's acquisitions named <queue>, <queue>-2, ...)
+2026-11-10 13:39:52 · r3 · the first chain-r3 launch failed before its first line (its output file's directory did not exist yet); nothing ran; relaunched
+2026-11-10 13:39:52 · load { 31.17 33.00 31.12 } · df 78Gi · r3 · chain-r3 start (pid 39363)
+2026-11-10 13:39:52 · load { 31.17 33.00 31.12 } · df 78Gi · r3 · builds queued (31: cand15 cured + references + 25 plants)
+2026-11-10 13:55:52 · load { 25.62 32.18 32.70 } · df 77Gi · r3 · builds exit 0 · 31 built · 
+2026-11-10 13:55:52 · load { 25.62 32.18 32.70 } · df 77Gi · r3 · CQ3a queued (8 stages from CQ3a.q)
+2026-11-10 15:06:49 · load { 50.92 34.12 30.55 } · df 245Gi · r3 · CQ3a exit 0 · held 0
+2026-11-10 15:06:50 · load { 50.92 34.12 30.55 } · df 245Gi · r3 · CQ3b queued (47 stages from CQ3b.q)
+2026-11-10 15:37:44 · load { 22.40 25.27 31.94 } · df 217Gi · r3 · CQ3b exit 0 · held 0
+2026-11-10 15:37:44 · load { 22.40 25.27 31.94 } · df 217Gi · r3 · MCQ queued (12 stages from MCQ.q)
+2026-11-10 16:55:01 · load { 16.19 10.20 11.03 } · df 215Gi · r3 · MCQ exit 0 · held 4
+2026-11-10 16:55:01 · load { 16.19 10.20 11.03 } · df 215Gi · r3 · MCQ-2 queued (4 stages from MCQ.held)
+2026-11-10 17:21:22 · load { 12.60 13.94 11.77 } · df 202Gi · r3 · MCQ-2 exit 0 · held 0
+2026-11-10 17:21:22 · load { 12.60 13.94 11.77 } · df 202Gi · r3 · WQ3a queued for the WebKit lock (5 stages from WQ3a.q)
+2026-11-10 19:07:05 · load { 8.73 11.36 13.04 } · df 226Gi · r3 · WQ3a exit 0 · held 0
+2026-11-10 19:07:05 · load { 8.73 11.36 13.04 } · df 226Gi · r3 · WQ3b queued for the WebKit lock (46 stages from WQ3b.q)
+2026-11-10 19:57:24 · load { 21.32 18.79 17.85 } · df 229Gi · r3 · WQ3b exit 0 · held 0
+2026-11-10 19:57:24 · load { 21.32 18.79 17.85 } · df 229Gi · r3 · MWQ queued for the WebKit lock (10 stages from MWQ.q)
+2026-11-10 21:56:49 · load { 7.73 9.18 9.64 } · df 228Gi · r3 · MWQ exit 0 · held 1
+2026-11-10 21:56:49 · load { 7.73 9.18 9.64 } · df 228Gi · r3 · MWQ-2 queued for the WebKit lock (1 stages from MWQ.held)
+2026-11-10 22:13:27 · load { 15.38 17.50 16.17 } · r3 · ADDED to MWQ.held before MWQ-2's admission (the queue is read on admission): two re-reads of cand15-hg13 webkit, for 'E-10 slider xf · outside · perspective rotateX 25deg' (FAIL 6.8 px against 6.5 at load 17.1 in WQ3b; P on the first seat's bytes): a fail seen under load is NOT-REPRODUCED until re-run twice
+2026-11-10 22:44:38 · load { 8.51 8.34 10.03 } · df 219Gi · r3 · MWQ-2 exit 0 · held 0
+2026-11-10 22:44:38 · load { 8.51 8.34 10.03 } · df 219Gi · r3 · chain-r3 end

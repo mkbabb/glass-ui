@@ -1,0 +1,22 @@
+# PE15 cand15-E-6 chromium · 2026-11-10 15:16:39 · load { 95.08 58.37 42.33 } · harness 0c64ff33af43 · 
+# E-6 · the idle rung under the compositor-only bound
+# target /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p15/PE15/wt/.pe15out/builds/cand15 · engine chromium · lock wait 0.0 s (the deadline 5400 s counts from here) · other headless processes: chromium 4, webkit 0 · load 95.1/58.4/42.3 at start
+# scene app: harness scenes/App.vue (sha1 912fecf0a1aa)
+# chromium 149.0.7827.55
+  FAIL       E-6 s6 present light · 0 running infinite animation(s) at rest · load 104.3/61.6/43.7
+  UNMEASURED E-6 s6 channel light · no idle animation to read · load 104.3/61.6/43.7
+  UNMEASURED E-6 s6 shape light · no idle animation to read · load 104.3/61.6/43.7
+  UNMEASURED E-6 s6 amplitude light · no idle animation to read · load 104.3/61.6/43.7
+  UNMEASURED E-6 s6 period light · no idle animation to read · load 104.3/61.6/43.7
+  PASS       E-6 s6 layouts/s light · layouts/s 0.0 · style recalcs/s 0.0 over 3 s at rest (bound 0 layouts/s) · load 104.3/61.6/43.7
+  PASS       E-6 s6 PRM light · 0 idle animation(s) under reduced motion, 0 spatial · load 104.3/61.6/43.7
+  FAIL       E-6 s6 present dark · 0 running infinite animation(s) at rest · load 104.6/62.3/44.0
+  UNMEASURED E-6 s6 channel dark · no idle animation to read · load 104.6/62.3/44.0
+  UNMEASURED E-6 s6 shape dark · no idle animation to read · load 104.6/62.3/44.0
+  UNMEASURED E-6 s6 amplitude dark · no idle animation to read · load 104.6/62.3/44.0
+  UNMEASURED E-6 s6 period dark · no idle animation to read · load 104.6/62.3/44.0
+  PASS       E-6 s6 layouts/s dark · layouts/s 0.0 · style recalcs/s 0.0 over 3 s at rest (bound 0 layouts/s) · load 104.6/62.3/44.0
+  PASS       E-6 s6 PRM dark · 0 idle animation(s) under reduced motion, 0 spatial · load 104.6/62.3/44.0
+E-6 chromium FAIL · 4 pass, 2 fail, 8 unmeasured of 14 gating cells (0 reported) · load 95.1/58.4/42.3 at start, 103.5/62.8/44.3 at end
+# exit 1 · 2026-11-10 15:16:56 · load { 103.53 62.80 44.30 }
+# end · 2026-11-10 15:16:56 · load { 103.53 62.80 44.30 } · harness 0c64ff33af43

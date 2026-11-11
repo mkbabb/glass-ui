@@ -1,0 +1,20 @@
+# PE15 plant-velnone-e14 chromium · 2026-11-10 15:23:48 · load { 38.35 46.16 43.11 } · harness 0c64ff33af43 · --only M18,M27
+# E-14 · S14's members at their ranges (P-E14 §S14-c)
+# target /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p15/PE15/wt/.pe15out/builds/plant-velnone · engine chromium · lock wait 0.0 s (the deadline 5400 s counts from here) · other headless processes: chromium 25, webkit 0 · load 38.4/46.2/43.1 at start
+# scene app: harness scenes/App.vue (sha1 912fecf0a1aa)
+# chromium 149.0.7827.55
+# held control: scene slider root .glass-slider thumb [role="slider"] engaged [data-engaged], [data-held]; clock token --spring-dock-settle; cells M18,M27; film: read after the frame's resize step (H15 class 7)
+  FAIL       M18 a constant margin ramp 200 px/s on a box above C · the ramp ran 40 frames · glides 42 (bound ≤ 2: the onset, one uneven frame)  · errors 0 · load 36.2/45.6/42.9
+  FAIL       M18 a constant margin ramp 1000 px/s on a box above C · the ramp ran 40 frames · glides 42 (bound ≤ 2: the onset, one uneven frame)  · errors 0 · load 36.2/45.6/42.9
+  FAIL       M18 a constant margin ramp 200 px/s + a 40 px insert at frame 30 on a box above C · the ramp ran 40 frames · glides 42 (bound ≤ 3: the onset, the insert, one uneven frame) · on the insert's frame the root's step departs from the ramp's by 1.59 px (bound ≤ 1.5) · errors 0 · load 36.2/45.6/42.9
+  PASS       M27 a train of inserts above the root · 16 px every frame for 12 frames · by superposition · STATED LIMIT (S14 a.3, b.6: carried after its onset) · the onset's act frame 0.00 px (bound ≤ 0.5) · glides 12 (bound ≥ 1: the onset glided) · REPORT the train less the superposition: on the steps' frames max 0.13 px, over the film 0.14 px · errors 0 · load 34.8/45.1/42.8
+  PASS       M27 a train of inserts above the root · 16 px every second frame, 6 steps · by superposition · the train's paint less the sum of the one step's paint shifted to each step's frame: on the steps' frames [0.00 0.05 0.06 0.03 0.01 0.06] px, max over the film 0.15 px (bound ≤ 0.66 = 0.5 + the interpolation's own error) · glides 6 · the one step's act frame 0.00 px · errors 0 · load 34.8/45.1/42.8
+  PASS       M27 a train of inserts above the root · 8 px every frame for 12 frames · by superposition · STATED LIMIT (S14 a.3, b.6: carried after its onset) · the onset's act frame 0.00 px (bound ≤ 0.5) · glides 12 (bound ≥ 1: the onset glided) · REPORT the train less the superposition: on the steps' frames max 0.06 px, over the film 0.11 px · errors 0 · load 33.2/44.6/42.6
+  PASS       M27 a train of inserts above the root · 40 px every second frame, 6 steps · by superposition · the train's paint less the sum of the one step's paint shifted to each step's frame: on the steps' frames [0.00 0.13 0.16 0.15 0.14 0.14] px, max over the film 0.24 px (bound ≤ 0.87 = 0.5 + the interpolation's own error) · glides 6 · the one step's act frame 0.00 px · errors 0 · load 34.0/44.6/42.6
+  PASS       M27 a slow margin ramp above C · 0.2 px a frame · glides over the ramp 0 (bound ≤ 2: the onset and one uneven frame; Y8 reads 0-1 at ≤ 200 px/s) · errors 0 · load 34.0/44.6/42.6
+  PASS       M27 a slow margin ramp above C · 0.5 px a frame · glides over the ramp 0 (bound ≤ 2: the onset and one uneven frame; Y8 reads 0-1 at ≤ 200 px/s) · errors 0 · load 34.0/44.6/42.6
+  PASS       M27 a slow margin ramp above C · 1 px a frame · glides over the ramp 0 (bound ≤ 2: the onset and one uneven frame; Y8 reads 0-1 at ≤ 200 px/s) · errors 0 · load 34.1/44.4/42.6
+  FAIL       M27 a slow margin ramp above C · 2 px a frame · glides over the ramp 42 (bound ≤ 2: the onset and one uneven frame; Y8 reads 0-1 at ≤ 200 px/s) · errors 0 · load 34.1/44.4/42.6
+E-14 chromium FAIL · 7 pass, 4 fail, 0 unmeasured of 11 gating cells (0 reported) · load 38.4/46.2/43.1 at start, 34.1/44.4/42.6 at end
+# exit 1 · 2026-11-10 15:24:13 · load { 34.06 44.44 42.57 }
+# end · 2026-11-10 15:24:13 · load { 34.06 44.44 42.57 } · harness 0c64ff33af43

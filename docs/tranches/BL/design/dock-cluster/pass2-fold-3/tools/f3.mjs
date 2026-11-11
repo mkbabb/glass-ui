@@ -39,10 +39,14 @@ async function open(browser, o = {}) {
     if (o.forced) ctxOpts.forcedColors = "active";
     const ctx = await browser.newContext(ctxOpts);
     const page = await ctx.newPage();
+    // PF3 §W: Playwright WebKit 26.5 kills the page on the lone dock plate's nested color-mix() border (AB.md §1,
+    // the dock harness's adapter-head.mjs). The shim pins that colour on the 11.0.0 row only, from an init script,
+    // as fold 2's probe does; cluster pages never match it (cluster.css already collapses that mix).
+    if (engine === "webkit") await page.addInitScript((css) => { const add = () => { const st = document.createElement("style"); st.textContent = css; (document.head || document.documentElement).appendChild(st); }; document.documentElement ? add() : document.addEventListener("readystatechange", add, { once: true }); }, ".naive-row .dock-plate { border-color: var(--dock-plate-expanded-border) !important; }");
     const errs = [];
     page.on("pageerror", (e) => errs.push(e.message));
     page.on("console", (m) => { if (m.type() === "error" || m.type() === "warning") errs.push(`${m.type()}: ${m.text()}`.slice(0, 300)); });
-    const q = new URLSearchParams({ mode: o.mode ?? "design", fused: "1", shape: "onedock", bind: "1", ...(o.q ?? {}), ...(o.theme === "dark" ? { dark: "1" } : {}) });
+    const q = new URLSearchParams({ mode: o.mode ?? "design", fused: "1", shape: "onedock", bind: "1", ...(o.q ?? {}), ...Object.fromEntries(new URLSearchParams(args.q ?? "")), ...(o.theme === "dark" ? { dark: "1" } : {}) });
     await page.goto(`${base}/?${q}`);
     await page.waitForFunction(() => window.__ab?.ready, null, { timeout: 15000 });
     await page.evaluate(() => document.fonts.ready);
