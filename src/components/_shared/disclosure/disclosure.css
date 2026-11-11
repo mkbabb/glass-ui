@@ -109,10 +109,12 @@
        own top padding, so it lies inside the clipped box and opens and closes with the
        height (a `gap` on the root appears in one frame when the region mounts). It adds
        no box, so a content laid out as a grid or a flex container keeps its items as
-       they were. `:where()` holds the rule at zero specificity: a padding the consumer
-       gives the content sets that space instead. */
+       they were. `:where()` holds the rule at zero specificity, so a padding the consumer
+       gives the content in this layer or a later one sets that space instead; unset, the
+       gap falls back to `revert-layer`, handing the property to the layers beneath, so a
+       padding declared in an earlier layer (`base`) stands as well. */
     :where(.disclosure-content[data-disclosure="collapsible"]) {
-        padding-block-start: var(--collapsible-gap, 0px);
+        padding-block-start: var(--collapsible-gap, revert-layer);
     }
 
     .disclosure-content[data-disclosure="accordion"] {
