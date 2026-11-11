@@ -10,6 +10,10 @@ Most of what is new is yours to opt into, but these defaults change how a page l
 without you doing anything, and each has its own entry below:
 
 - the dock rests as a capsule (`--radius-dock: 1rem` brings back the rounded bar);
+- a dock control marked with `aria-current` always shows the selected plate, glyph
+  controls included, and the plate glides when the current control changes;
+- a dock glyph control's hover and press fills sit inside the same rounded plate as its
+  selected fill, rather than filling the whole control;
 - a `#persistent-end` control sits as far from the dock's other controls as a
   `#persistent` one, and in a vertical dock the space after a `#persistent` control is
   half what it was;
@@ -44,7 +48,12 @@ on the left, the dock with reduced motion turned on, and the timing of HandMark'
   plate and moves it from the old tab to the new one on the dock's spring, instead of
   switching instantly. It scrolls with the dock's controls, and with reduced motion
   turned on it moves in a single step. Controls that sit inside their own scrolling strip
-  keep their own selected look.
+  keep their own selected look. Glyph controls take part too: a glyph `DockControl` that
+  carries `aria-current` now shows the selected plate, where before it showed one only
+  with `active`, so a row of glyph `RouterLink`s gains one after upgrading. The plate is
+  the same size however the control became current, by click, tap, keyboard or a route
+  change, because a glyph control's hover and press fills now sit inside that same plate
+  instead of filling the whole control.
 
 - **`ScrollProgressRim` can draw progress on the border itself.** Pass
   `edge="border"` and the progress becomes the host's own border: a stroke the width of
