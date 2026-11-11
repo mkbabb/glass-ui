@@ -38,3 +38,4 @@ Gates, in both engines, light and dark, at 390 and 1440:
 - O-223 (`useGlobalDark({ storageKey })`) is built here.
 - The close (tag v11.0.1, CI publish, notify the consumers) is the LAST step, after every item above.
 - 11.1.0 does not tag until `v11.0.1` is merged into `release/11.1.0`.
+- O-227 is built here: the dock plate edge lerps its strength inside one `color-mix()` with one translucent arm, so unshimmed Playwright WebKit loads a GlassDock page (RED on v11.0.0). The border's computed colour matches 11.0.0's at t = 0, 0.5 and 1 in Chromium.
