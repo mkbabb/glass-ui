@@ -1,0 +1,38 @@
+18:01:48 lane L1 start
+--- restart: critic probe first
+18:06:48 critic probe start
+18:08:14 critic green chromium exit 0
+--- restart 2 (selector + rc fix)
+18:09:14 critic probe start
+--- restart 3 (syntax)
+18:09:19 critic probe start
+18:23:01 critic green chromium exit 1
+--- handoff to chain2 (critic red chromium, lanes Chromium, then WebKit pass)
+18:57:18 critic red chromium exit 1
+18:57:18 lane L1 chromium start
+  L1 19:02:42 green chromium tree=/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0 exit 0
+  L1 19:08:48 red chromium tree=/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/c1-v1100 exit 1
+19:08:48 lane L2 chromium start
+  L2 19:10:33 green chromium tree=/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0 exit 3
+  L2 19:12:16 red chromium tree=/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/c1-v1100 exit 1
+19:12:16 lane L3 chromium start
+  L3 19:18:22 green chromium tree=/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0 exit 0
+  L3 19:24:43 red chromium tree=/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/c1-v1100 exit 1
+19:24:43 lane L4 chromium start
+  L4 19:25:36 green chromium tree=/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0 pkg=/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0 exit 0
+  L4 19:26:31 red chromium tree=/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/c1-v1100 pkg=/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l4-pack/package exit 1
+19:26:31 lane L5 chromium start
+  L5 19:27:16 green chromium tree=/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0 exit 1
+  L5 19:27:59 red chromium tree=/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/c1-v1100 exit 1
+19:27:59 lane L6 chromium start
+  L6 19:31:08 green chromium tree=/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0 items=all exit 0
+  L6 19:34:18 red chromium tree=/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/c1-v1100 items=all exit 1
+19:34:18 lane L7 chromium start
+  L7 19:36:25 green chromium tree=/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0 exit 0
+  L7 19:38:31 red chromium tree=/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/c1-v1100 exit 1
+LANES-chromium-DONE 19:38:31
+20:22:11 critic green webkit exit 1
+21:03:01 STOPPED the WebKit pass: critic red webkit waited 40+ min for the machine-wide webkit lock (not a refusal); lane WebKit reruns not taken
+CRITIC-CHAIN-DONE 21:03:01
+21:37:59 critic green chromium (with HEAD HandMark) exit 1
+21:47:51 STOPPED the tail: critic red chromium (HEAD HandMark) and lane L2 branch rerun queued 10+ min behind 13 browser waiters; the critic gates did not run
