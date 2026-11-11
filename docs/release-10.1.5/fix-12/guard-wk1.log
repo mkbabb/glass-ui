@@ -1,0 +1,26 @@
+[guarded] waiting for the 'webkit' lock
+23:46 c12a-tip-wk rc=0 load=10.40 20.30 27.22  1 passed (1.9m) 
+23:47 d1-tip-wk rc=0 load=11.13 18.82 26.20  16 passed (59.4s) 
+23:51 w-tip-wk rc=1 load=11.85 15.27 22.93  4 failed  2 passed (3.8m) 
+23:51 chain wk tip done: c12a d1 w
+ M src/components/_shared/disclosure/disclosure.css
+ M src/components/dock/composables/dockMorphMeasure.ts
+ M src/components/dock/composables/useDockClickIntegrity.ts
+ M src/components/dock/composables/useDockRun.ts
+ M src/components/dock/styles/adaptive-legibility.css
+ M src/components/dock/styles/controls/icon-button.css
+ M src/components/dock/styles/crossfade.css
+ M src/components/dock/styles/index.css
+ M src/components/dock/styles/run.css
+ M src/components/slider/Slider.vue
+ M src/components/slider/styles.css
+ M src/styles/glass/glass-capsule.css
+ M src/styles/tokens/dark-arm.css
+23:51 d1-branch-wk rc=0 load=12.20 14.88 22.35  16 passed (50.4s) 
+23:55 w-branch-wk rc=0 load=10.53 12.47 19.53  6 passed (3.7m) 
+23:57 c12a-branch-wk rc=0 load=7.68 11.00 18.07  1 passed (1.9m) 
+00:03 c12b-branch-wk rc=0 load=22.77 13.35 16.27  1 passed (6.1m) 
+00:16 branch-branch-wk rc=1 load=12.17 13.18 14.26  6 failed  100 passed (13.3m) 
+00:17 g6-4-branch-wk rc=0 load=10.95 12.84 14.12  8 skipped  15 passed (20.1s) 
+00:19 g6-3-branch-wk rc=1 load=10.29 12.38 13.77  1 failed  2 skipped  57 passed (2.3m) 
+00:19 chain wk branch done: d1 w c12a c12b branch g6-4 g6-3

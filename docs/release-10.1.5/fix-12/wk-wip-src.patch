@@ -1,0 +1,566 @@
+diff --git a/src/components/_shared/disclosure/disclosure.css b/src/components/_shared/disclosure/disclosure.css
+index f02c93760..7213b104f 100644
+--- a/src/components/_shared/disclosure/disclosure.css
++++ b/src/components/_shared/disclosure/disclosure.css
+@@ -42,7 +42,7 @@
+         touch-action: manipulation;
+     }
+ 
+-    /* The house keyboard ring, on `outline` (O-207 G3). The 30% `--focus-ring-shadow`
++    /* The house keyboard ring, on `outline`. The 30% `--focus-ring-shadow`
+        measured about 2:1, and its `outline: none` also took the ring off a trigger that
+        carries `.focus-ring` (a CollapsibleTrigger `as-child` over a Button). The recipe
+        restates `.focus-ring:focus-visible` (`utilities/base.css`), as `.menu__trigger`
+diff --git a/src/components/dock/composables/dockMorphMeasure.ts b/src/components/dock/composables/dockMorphMeasure.ts
+index 6622060f3..fe076c46e 100644
+--- a/src/components/dock/composables/dockMorphMeasure.ts
++++ b/src/components/dock/composables/dockMorphMeasure.ts
+@@ -157,7 +157,7 @@ function constraintOf(root: HTMLElement, axis: Axis): string {
+     const parent = root.parentElement;
+     if (!parent) return "";
+     // The content box: the client box less the padding, so a host that moves only its
+-    // padding moves the constraint too (critique 11 R4).
++    // padding moves the constraint too.
+     const pcs = getComputedStyle(parent);
+     return axis === "vertical"
+         ? `${parent.clientHeight - parseFloat(pcs.paddingTop) - parseFloat(pcs.paddingBottom)} ${cs.minHeight} ${cs.maxHeight} ${window.innerHeight}`
+@@ -228,11 +228,11 @@ export function useDockExpandedSize(
+         // while nothing of it has moved since, a reading within the rounding band of the
+         // endpoint is the same box read off another pixel phase (an ancestor `zoom` in
+         // WebKit rounds the box the morph is moving 1 px either way, frame to frame), so
+-        // the morph keeps the endpoint and the run keeps its yield (fix 9's D-1). Once the
++        // the morph keeps the endpoint and the run keeps its yield. Once the
+         // host moves a constraint, by any amount, the morph takes every reading: the
+         // endpoint follows it, and so does the run's yield, read from the rest port, on
+-        // the frame it lands (O-101; P1, P2, and Q1: a 1-2 px host change across the fit
+-        // edge, which the band alone held until the settle). A reading past the band with
++        // the frame it lands, a 1-2 px host change across the fit edge included, which
++        // the band alone would hold until the settle. A reading past the band with
+         // no constraint moved (the pane's content changed) is taken as well.
+         if (!morphing) {
+             restEndpoint = expandedPx;
+@@ -275,36 +275,33 @@ export function useDockExpandedSize(
+ 
+     /*
+      * WHETHER THE RUN'S SEATS FIT ITS PORT, `data-run-fits` on the root: present when
+-     * the seats' span along the run's scroll axis (plus a ring's room at each end on a
+-     * horizontal run) is no longer than the port. It is the
+-     * one source of record for "the run hides nothing", and run.css reads it twice.
+-     * On a horizontal run it sets `--dock-run-yield` to 1 (THE RESERVE YIELDS), so the
+-     * two reserve boxes shrink into the room the seats leave and a run that hides
+-     * nothing scrolls nothing. On either axis it takes the cut cap's scroll-driven
+-     * animations off the plate and the run (THE CAP RUNS ONLY ON A RUN THAT HIDES
+-     * SOMETHING), so a run whose overflow vanished while it was scrolled rests round
+-     * rather than holding the keyframe its inactive timeline last resolved. The span
+-     * is read from the seats' layout boxes (`offset*`), and neither it nor the port
+-     * depends on the yield, so the flag is a pure reading of the layout. It is read
+-     * wherever an endpoint is, since the same observers see the port and the seats
+-     * change. On a vertical run whose seats fit it also writes `--dock-run-room-block`,
+-     * half the room they leave, which the run's block reserve yields to.
++     * the seats' span along the run's scroll axis is no longer than the port. It is the
++     * one source of record for "the run hides nothing", and run.css reads it twice. It
++     * sets `--dock-run-yield` to 1 (THE RESERVE YIELDS), so the two reserve boxes shrink
++     * into the room the seats leave, down to the ring's reach. And it takes the cut
++     * cap's scroll-driven animations off the plate and the run (THE CAP RUNS ONLY ON A
++     * RUN THAT HIDES SOMETHING), so a run whose seats all show rests round, and a run
++     * whose overflow vanished while it was scrolled does not hold the keyframe its
++     * inactive timeline last resolved. The span is read from the seats' layout boxes
++     * (`offset*`), and neither it nor the port depends on the yield, so the flag is a
++     * pure reading of the layout. It is read wherever an endpoint is, since the same
++     * observers see the port and the seats change.
+      *
+      * IT IS THE EXPANDED RUN'S READING AT REST, in every frame. It is read only while
+      * the full pane is the active one. At rest (an expand's arm, post-flush and before
+      * `[data-morphing]`; at rest expanded; once more when a morph settles, `release`) the
+      * port is the run's own. Through a morph the reading is held, so no seat moves when a
+-     * morph starts or settles (O-166), and the panes the morph moves never see the run's
+-     * padding change under them (the bottom-anchored D-1 cell under an ancestor `zoom` in
++     * morph starts or settles, and the panes the morph moves never see the run's
++     * reserve change under them (a bottom-anchored dock under an ancestor `zoom` in
+      * WebKit). It moves mid-morph only when the host moves the endpoint itself (a clamp,
+-     * a stage resize, by any amount; `capture`): then the port is the rest port (`restPort`), the new
+-     * endpoint less the expanded chrome and the run's edge (`runEdge`, its border box
+-     * less its port), both read at rest. So the flag and the room move on the frame the
+-     * host's change lands, where the morph carries it, not at the settle (P1, P2, Q1). While
+-     * collapsing the full pane is out of flow, and the reading it held expanded stays
+-     * until the next expand re-reads it.
++     * a stage resize, by any amount; `capture`): then the port is the rest port
++     * (`restPort`), the new endpoint less the expanded chrome and the run's edge
++     * (`runEdge`, its border box less its port), both read at rest. So the flag moves
++     * on the frame the host's change lands, where the morph carries it, not at the
++     * settle. While collapsing the full pane is out of flow, and the reading it held
++     * expanded stays until the next expand re-reads it.
+      */
+-    let yieldPublished = "";
++    let yieldPublished: boolean | null = null;
+     let runEdge: number | null = null;
+ 
+     function publishYield(root: HTMLElement, run: HTMLElement, restPort?: number): void {
+@@ -323,27 +320,9 @@ export function useDockExpandedSize(
+         const client = horizontal ? run.clientWidth : run.clientHeight;
+         if (!morphing) runEdge = getSize(run, axis.value) - client;
+         const port = restPort ?? client;
+-        // A horizontal run's seats fit only with a whole ring's room at each end (O-201):
+-        // a yielded reserve never falls under `--dock-ring-reserve`, so a fitting run
+-        // never clips a focused seat's ring. Under that room the run does not fit, keeps
+-        // its reserves whole and scrolls them (its trailing reserve is a box, run.css),
+-        // and the cap's cut says so. A vertical run keeps its block-end reserve as
+-        // padding, which WebKit counts as scrollable overflow only once the seats pass
+-        // it, so under that room it could neither scroll nor show the ring; it keeps the
+-        // yield to half the room the seats leave.
+-        const ring = horizontal
+-            ? parseFloat(getComputedStyle(root).getPropertyValue("--dock-ring-reserve")) || 0
+-            : 0;
+-        const fits = end > start && end - start + 2 * ring <= port;
+-        // The vertical reserve yields as padding (run.css THE VERTICAL RESERVE YIELDS
+-        // TOO): half the room the seats leave in the port. The port is the run's padding
+-        // box, which its margins fix, so the padding this writes does not move it.
+-        const room = !horizontal && fits ? `${Math.floor(((port - (end - start)) / 2) * 100) / 100}px` : "";
+-        const value = `${fits ? "1" : "0"} ${room}`;
+-        if (value === yieldPublished) return;
+-        yieldPublished = value;
+-        if (room) root.style.setProperty("--dock-run-room-block", room);
+-        else root.style.removeProperty("--dock-run-room-block");
++        const fits = end > start && end - start <= port;
++        if (fits === yieldPublished) return;
++        yieldPublished = fits;
+         root.toggleAttribute("data-run-fits", fits);
+     }
+ 
+@@ -473,7 +452,7 @@ export function useDockExpandedSize(
+         hostStyle = null;
+         seatBoxes.clear();
+         seatsPublished = "";
+-        yieldPublished = "";
++        yieldPublished = null;
+         runEdge = null;
+         restEndpoint = null;
+         restConstraint = "";
+@@ -506,7 +485,7 @@ export function useDockExpandedSize(
+             // A host that loosens the root's own constraint mid-morph (its `style` or
+             // `class`: a larger max size) resizes nothing observed, since the root is held
+             // at its reserved size. The morph reads it on the record, if it moved what
+-            // `constraintOf` reads (Q1, a 1-2 px growth across the fit edge).
++            // `constraintOf` reads, a 1-2 px growth across the fit edge included.
+             hostStyle = new MutationObserver(() => {
+                 // Once the host has moved, the morph already takes every reading, and the
+                 // capture's own `--dock-*-px` writes must not re-enter it.
+diff --git a/src/components/dock/composables/useDockClickIntegrity.ts b/src/components/dock/composables/useDockClickIntegrity.ts
+index 653c87412..3f4779dc3 100644
+--- a/src/components/dock/composables/useDockClickIntegrity.ts
++++ b/src/components/dock/composables/useDockClickIntegrity.ts
+@@ -39,7 +39,7 @@
+ // such pass: from DOM events alone a press on a control that just arrived looks the
+ // same as race (b), so those still defer until settle.
+ //
+-// THE RE-AIM ARM [10.1.5 · O-177]. Race (b) is a STATIONARY pointer: the hover dwell
++// THE RE-AIM ARM. Race (b) is a STATIONARY pointer: the hover dwell
+ // expanded the dock under it and the press lands where the pointer already was. A press
+ // made after the flip by intent was aimed at the arriving layout, so it is not the race
+ // even while the morph is in flight: it activates its seat once, like a press at rest.
+diff --git a/src/components/dock/composables/useDockRun.ts b/src/components/dock/composables/useDockRun.ts
+index af70590d5..da7770a3d 100644
+--- a/src/components/dock/composables/useDockRun.ts
++++ b/src/components/dock/composables/useDockRun.ts
+@@ -14,10 +14,10 @@
+ // part the platform has no opinion about: WHICH seat to bring into view, and when.
+ //
+ // THE ANCHOR. A seat rests where the platform's own snap puts it: its start on the
+-// scroll axis, measured from the seat's LAYOUT box (`offsetLeft`/`offsetTop`; the run
+-// is positioned, so it is the seats' offset parent and the offset is in the run's
+-// scroll coordinates), less the run's `scroll-padding` start (`P/2` plus the run's
+-// reserve, run.css), clamped to [0, scrollMax]. A label-wide tab or the open seat is
++// scroll axis, measured from the seat's LAYOUT box (`offsetLeft`/`offsetTop`, summed up
++// the offset-parent chain to the run, which is positioned, so the offset is in the
++// run's scroll coordinates), less the run's `scroll-padding` start (`P/2` plus the
++// run's reserve, run.css), clamped to [0, scrollMax]. A label-wide tab or the open seat is
+ // wider than one pitch, so the seat's measured start, not `i·P`, is the start the snap
+ // reads. The clamp makes the terminals flush (0 and scrollMax): completeness at the
+ // ends, peek in the middle.
+@@ -171,14 +171,21 @@ export function useDockRun(options: UseDockRunOptions): UseDockRunReturn {
+     }
+ 
+     /**
+-     * The seat's extent on the scroll axis, `[start, end]`, from its layout box: the
+-     * hover `scale` and the morph's `scale` never reach `offset*`, so an engaged seat
+-     * measures where it rests.
++     * The seat's extent on the scroll axis, `[start, end]`, in the run's coordinates,
++     * from its layout box: the hover `scale` and the morph's `scale` never reach
++     * `offset*`, so an engaged seat measures where it rests. A seat inside a layer
++     * group has the group or its face as its offset parent, so the offsets (and each
++     * intermediate parent's border) are summed up the chain until the run.
+      */
+-    function extentOf(seat: HTMLElement): [number, number] {
+-        return vertical()
+-            ? [seat.offsetTop, seat.offsetTop + seat.offsetHeight]
+-            : [seat.offsetLeft, seat.offsetLeft + seat.offsetWidth];
++    function extentOf(run: HTMLElement, seat: HTMLElement): [number, number] {
++        let start = 0;
++        for (let el: HTMLElement | null = seat; el && el !== run; ) {
++            start += vertical() ? el.offsetTop : el.offsetLeft;
++            const parent = el.offsetParent as HTMLElement | null;
++            if (parent && parent !== run) start += vertical() ? parent.clientTop : parent.clientLeft;
++            el = parent;
++        }
++        return [start, start + (vertical() ? seat.offsetHeight : seat.offsetWidth)];
+     }
+ 
+     /** The run's reserve: its leading padding on the scroll axis (run.css `--dock-run-reserve-*`). */
+@@ -192,7 +199,7 @@ export function useDockRun(options: UseDockRunOptions): UseDockRunReturn {
+         const style = getComputedStyle(run);
+         const padding =
+             Number.parseFloat(vertical() ? style.scrollPaddingBlockStart : style.scrollPaddingInlineStart) || 0;
+-        const [start] = extentOf(seat);
++        const [start] = extentOf(run, seat);
+         return Math.min(Math.max(start - padding, 0), scrollMax(run));
+     }
+ 
+@@ -211,7 +218,7 @@ export function useDockRun(options: UseDockRunOptions): UseDockRunReturn {
+         const pos = scrollPos(run);
+         const port = vertical() ? run.clientHeight : run.clientWidth;
+         const reserve = reserveOf(run);
+-        const [start, end] = extentOf(seat);
++        const [start, end] = extentOf(run, seat);
+         // Sub-pixel tolerance: `offset*` and the scroll offset round to whole pixels,
+         // and reaching for a seat that is flush within that would glide by ~0px on
+         // every focus — motion with no cause.
+@@ -240,10 +247,19 @@ export function useDockRun(options: UseDockRunOptions): UseDockRunReturn {
+         const run = runEl.value;
+         if (!run) return;
+         announce(seat);
+-        if (!occluded(run, seat)) return;
++        // The latest reach owns the travel. A seat already in view (the engine's own
++        // focus scroll can bring it there before `focusin`) stops a glide still running
++        // toward an earlier seat, which would otherwise carry this one back out of view.
++        if (!occluded(run, seat)) {
++            glide.dispose();
++            return;
++        }
+         const from = scrollPos(run);
+         const to = anchorFor(run, seat);
+-        if (Math.abs(to - from) < 1) return;
++        if (Math.abs(to - from) < 1) {
++            glide.dispose();
++            return;
++        }
+         // The spring writes a 0→1 progress; the position is the lerp. `useDockSpring` is
+         // armed `respectReducedMotion: true`, so under `reduce` this JUMPS in one frame
+         // — the destination is identical, only the travel is removed.
+@@ -361,6 +377,19 @@ export function useDockRun(options: UseDockRunOptions): UseDockRunReturn {
+         moveTo(seats, to);
+     }
+ 
++    /**
++     * The seat reach brings into view for an event on `target`: the nearest declared
++     * seat inside the run that holds it, so a seat inside a layer group is reached by
++     * its own box rather than by the group frame around it, and otherwise the run's
++     * direct child that holds it.
++     */
++    function seatHolding(run: HTMLElement, target: Node): HTMLElement | undefined {
++        const el = target instanceof Element ? target : target.parentElement;
++        const declared = el?.closest<HTMLElement>(`[${DOCK_SEAT_ATTR}]`);
++        if (declared && declared !== run && run.contains(declared)) return declared;
++        return seatsOf(run).find((s) => s.contains(target));
++    }
++
+     /**
+      * REACH ON ACTIVATION, in CAPTURE on the run's own subtree. Capture-phase on the
+      * run — not a `DockContext` widening and not a public `seat` member — is the whole
+@@ -371,7 +400,7 @@ export function useDockRun(options: UseDockRunOptions): UseDockRunReturn {
+     function onActivate(event: Event): void {
+         const run = runEl.value;
+         if (!run) return;
+-        const seat = seatsOf(run).find((s) => s.contains(event.target as Node));
++        const seat = seatHolding(run, event.target as Node);
+         if (seat) reach(seat);
+     }
+ 
+diff --git a/src/components/dock/styles/adaptive-legibility.css b/src/components/dock/styles/adaptive-legibility.css
+index d0c2556ca..feff1720c 100644
+--- a/src/components/dock/styles/adaptive-legibility.css
++++ b/src/components/dock/styles/adaptive-legibility.css
+@@ -82,7 +82,7 @@
+         --glass-backdrop-luma: 0;
+     }
+ 
+-    /* THE STATIC PLATE IS THE LIVE PLATE'S VEIL OVER A CARD GROUND (O-157). The plate
++    /* THE STATIC PLATE IS THE LIVE PLATE'S VEIL OVER A CARD GROUND. The plate
+        composes the same veil as the live arm (glass/veil.css: the consumer's
+        `--glass-veil-ink` at the tier's rung), at the plate's full level, and lays it on
+        an opaque `--card` instead of a blurred backdrop: the ink reaches it, and nothing
+diff --git a/src/components/dock/styles/controls/icon-button.css b/src/components/dock/styles/controls/icon-button.css
+index 07d71b0df..ad784a3ed 100644
+--- a/src/components/dock/styles/controls/icon-button.css
++++ b/src/components/dock/styles/controls/icon-button.css
+@@ -110,7 +110,7 @@
+            so the whole dock-control family shares ONE glass-translucent hover fill.
+            One source per state across icon/tab/picker (no four-vocabulary drift).
+            Gated on a pointer that hovers: a touch `:hover` sticks to the tapped seat, so
+-           an ungated fill and lift stayed painted after a tap (O-161). The tab, trigger,
++           an ungated fill and lift stayed painted after a tap. The tab, trigger,
+            switcher and DarkModeToggle hovers take the same gate. */
+         @media (hover: hover) {
+             &:hover:not(:disabled):not([aria-disabled="true"]) {
+diff --git a/src/components/dock/styles/crossfade.css b/src/components/dock/styles/crossfade.css
+index da4adc56e..60f697935 100644
+--- a/src/components/dock/styles/crossfade.css
++++ b/src/components/dock/styles/crossfade.css
+@@ -36,7 +36,7 @@
+         will-change: opacity;
+     }
+ 
+-    /* AN IDLE FACE ADDS NO SCROLLABLE OVERFLOW (O-205). A face that is neither active nor
++    /* AN IDLE FACE ADDS NO SCROLLABLE OVERFLOW. A face that is neither active nor
+        leaving paints nothing (opacity 0), but its row is `max-content` inside a box the
+        active face sizes, and an absolute box's overflow counts toward the run's
+        scrollable overflow: a fitting run then scrolled a wider hidden face's width.
+diff --git a/src/components/dock/styles/index.css b/src/components/dock/styles/index.css
+index 96f4d77af..807564046 100644
+--- a/src/components/dock/styles/index.css
++++ b/src/components/dock/styles/index.css
+@@ -204,16 +204,6 @@
+     initial-value: 3;
+ }
+ 
+-/* The ring's outer extent, registered for the same reason as the pitch: the run's fit
+-   reading (`publishYield`, dockMorphMeasure.ts) reads it through `getComputedStyle` as
+-   a length, the floor a horizontal run's yielded reserves keep, so a fitting run never
+-   clips a focused seat's ring (O-201). Registering it moves no value. */
+-@property --dock-ring-reserve {
+-    syntax: "<length>";
+-    inherits: true;
+-    initial-value: 0px;
+-}
+-
+ @layer components {
+     :where(
+         .glass-dock,
+diff --git a/src/components/dock/styles/run.css b/src/components/dock/styles/run.css
+index d32ffd745..ac2a2a5e1 100644
+--- a/src/components/dock/styles/run.css
++++ b/src/components/dock/styles/run.css
+@@ -250,11 +250,11 @@
+        grandchildren of the flex run for no gain.
+ 
+        EVERY RUN RULE NAMES THE DOCK'S OWN RUN, the child of `.dock-layers`, never a
+-       `.dock-run` a consumer nests among the seats (O-187). The scroll container, the
++       `.dock-run` a consumer nests among the seats. The scroll container, the
+        reserve, the lattice and the timeline are the run's; a nested group given them
+        clipped its own seats' hover ink at its edge and named a second `--dock-run`
+        timeline in the dock's scope, so the plate read a timeline that was not the
+-       visible run's (O-186). `:where()` keeps each rule's specificity. */
++       visible run's. `:where()` keeps each rule's specificity. */
+     .glass-dock :where(.dock-layers) > .dock-run {
+         /* A capped axis IS a scroll axis. No `[data-dock-overflow]` attribute, no
+            observer, no FITS/OVERFLOW branch: the engine scrolls this box exactly when
+@@ -379,36 +379,31 @@
+         display: none;
+     }
+ 
+-    /* THE TRAILING RESERVE IS A BOX, not padding, on a horizontal run. WebKit counts a
+-       flex row scroller's END padding as scrollable overflow only once the seats pass
+-       the padding box, so a run whose seats overrun its content box by less than the
+-       reserve would read `scrollWidth = clientWidth`, never scroll, and clip its
+-       focused, hovered end seat's ink. A spacer box is overflow in every engine, and a
+-       whole-pixel reserve past it holds the end seat's ink at the end WebKit's
+-       whole-pixel scroll offset reaches. The spacer is the reserve long, and its
+-       leading margin takes back the run gap the flex layout puts before it, so its end
+-       lies the reserve past the last seat: the padding's own place, with the run's
+-       outer box and every seat unchanged. A run with no seat keeps its padding. The
+-       vertical run keeps its block-end padding: the same spacer, rotated, moves a
+-       bottom-anchored dock's leaving summary 2.6 px in one frame of the expand under
+-       an ancestor `zoom` in WebKit.
+-
+-       THE RESERVE YIELDS TO THE ROOM LEFT WHEN EVERY SEAT SHOWS. A run that hides
+-       nothing has nothing to scroll, so when the seats fit the port but not the port
+-       less both reserves (a viewport-capped dock a few pixels short of its content),
+-       each reserve shrinks to half the room the seats leave, and the run's scroll
+-       extent is its port. The leading reserve is a box for this too: `::before` takes
+-       back the leading padding by its own margin, so at full size it is the padding's
+-       twin and moves nothing, and the two boxes shrink as one flex pair, equally.
+-       `--dock-run-yield` is the flex shrink: 1 under `data-run-fits` (the seats fit the
+-       port, `useDockExpandedSize`, dockMorphMeasure.ts), 0 otherwise, so a run whose
+-       seats overflow keeps both reserves whole and scrolls them. A yielded reserve never
+-       falls under the ring's reach (`--dock-ring-reserve`): the flag is set only while
+-       the seats leave a whole ring's room at each end, so no fitting run clips a focused
+-       seat's ring (O-201). Under that room the run does not fit, the spacer boxes scroll
+-       in every engine, and the cap says so. The boxes' declared
+-       size is the reserve in either state, so the dock's own content size never reads
+-       the yield. */
++    /* THE TRAILING RESERVE IS A BOX, not padding. WebKit counts a flex scroller's END
++       padding as scrollable overflow only once the seats pass the padding box, so a run
++       whose seats overrun its content box by less than the reserve would read a scroll
++       extent equal to its port, never scroll, and clip its focused, hovered end seat's
++       ink. A spacer box is overflow in every engine, and a whole-pixel reserve past it
++       holds the end seat's ink at the end WebKit's whole-pixel scroll offset reaches.
++       The spacer is the reserve long, and its leading margin takes back the run gap the
++       flex layout puts before it, so its end lies the reserve past the last seat: the
++       padding's own place, with the run's outer box and every seat unchanged. The
++       leading reserve is a box as well: `::before` takes back the leading padding by its
++       own margin, so at full size it is the padding's twin and moves nothing, and the
++       two boxes shrink as one flex pair, equally. A vertical run is the same pair on the
++       block axis. A run with no seat keeps its padding.
++
++       THE RESERVE YIELDS TO THE ROOM LEFT WHEN EVERY SEAT SHOWS, down to the ring.
++       `--dock-run-yield` is the boxes' flex shrink: 1 under `data-run-fits` (the seats'
++       span is no longer than the port, `useDockExpandedSize`, dockMorphMeasure.ts), 0
++       otherwise, so a run whose seats overflow keeps both reserves whole and scrolls
++       them. A yielded box never falls under the ring's reach (`--dock-ring-reserve`), so
++       a run whose seats show but leave less than a ring's room at each end scrolls at
++       most twice the ring's reach, and reach (`useDockRun`) brings a focused end seat's
++       whole ring into view. Its cap animations are off (`data-run-fits`, THE CAP RUNS
++       ONLY ON A RUN THAT HIDES SOMETHING), so it rests round. The boxes' declared size
++       is the reserve in either state, so the dock's own content size never reads the
++       yield. */
+     .glass-dock {
+         --dock-run-yield: 0;
+     }
+@@ -417,19 +412,10 @@
+         --dock-run-yield: 1;
+     }
+ 
+-    /* THE VERTICAL RESERVE YIELDS TOO, as padding. The vertical run keeps its block
+-       reserve as padding (above: a rotated spacer box moves a bottom-anchored dock's
+-       leaving summary under an ancestor `zoom` in WebKit), and the run's border box is
+-       fixed by its margins, not its padding, so shrinking the padding leaves the port
+-       where it is. Under `data-run-fits` each end's reserve is the smaller of the reserve
+-       and half the room the seats leave, `--dock-run-room-block` (dockMorphMeasure.ts,
+-       from the same reading that sets the flag), so the flag and `scrollHeight =
+-       clientHeight` are one fact. The flag and the room are the expanded run's reading
+-       at rest, held through every morph (`publishYield`), so the yield the run rests in
+-       is the yield it morphs in: no seat moves when a morph starts or settles (O-166),
+-       and the panes the morph moves never see the run's padding change under them. */
+-    .glass-dock.vertical[data-run-fits] :where(.dock-layers) > .dock-run {
+-        padding-block: min(var(--dock-run-reserve-block), var(--dock-run-room-block, 0px));
++    .glass-dock :where(.dock-layers) > .dock-run:has(> *)::before,
++    .glass-dock :where(.dock-layers) > .dock-run:has(> *)::after {
++        content: "";
++        flex: 0 var(--dock-run-yield) auto;
+     }
+ 
+     .glass-dock:not(.vertical) :where(.dock-layers) > .dock-run:has(> *) {
+@@ -438,10 +424,8 @@
+ 
+     .glass-dock:not(.vertical) :where(.dock-layers) > .dock-run:has(> *)::before,
+     .glass-dock:not(.vertical) :where(.dock-layers) > .dock-run:has(> *)::after {
+-        content: "";
+-        flex: 0 var(--dock-run-yield) auto;
+         inline-size: var(--dock-run-reserve-inline);
+-        min-inline-size: 0;
++        min-inline-size: var(--dock-ring-reserve);
+     }
+ 
+     .glass-dock:not(.vertical) :where(.dock-layers) > .dock-run:has(> *)::before {
+@@ -452,6 +436,24 @@
+         margin-inline-start: calc(-1 * var(--dock-run-gap));
+     }
+ 
++    .glass-dock.vertical :where(.dock-layers) > .dock-run:has(> *) {
++        padding-block-end: 0;
++    }
++
++    .glass-dock.vertical :where(.dock-layers) > .dock-run:has(> *)::before,
++    .glass-dock.vertical :where(.dock-layers) > .dock-run:has(> *)::after {
++        block-size: var(--dock-run-reserve-block);
++        min-block-size: var(--dock-ring-reserve);
++    }
++
++    .glass-dock.vertical :where(.dock-layers) > .dock-run:has(> *)::before {
++        margin-block: calc(-1 * var(--dock-run-reserve-block)) calc(-1 * var(--dock-run-gap));
++    }
++
++    .glass-dock.vertical :where(.dock-layers) > .dock-run:has(> *)::after {
++        margin-block-start: calc(-1 * var(--dock-run-gap));
++    }
++
+     /* THE SEATS. Every direct child of the run is a snap target and none of them flex —
+        a seat that grows is a seat that is no longer an integer number of pitches, and
+        the lattice dies quietly the moment one does. `start` alignment is what the
+@@ -521,7 +523,7 @@
+        wrapper and `RouterLink` stamps the attribute on the anchor inside it, and like
+        `openIndexOf` it reads only a DECLARED seat (`data-glass-dock-seat`,
+        `DOCK_SEAT_ATTR`): a consumer's group of seats that holds the current one (a nested
+-       `.dock-run` of tabs, O-187) is plain markup, sized by its own content, never one
++       `.dock-run` of tabs) is plain markup, sized by its own content, never one
+        open seat whose tabs then paint over the seats beside it.
+ 
+        WHY `m·P − gap` AND NOT A MEASURED WIDTH. `--dock-open-pitches` is AUTHORED, so
+@@ -687,7 +689,7 @@
+        also takes the cap's animations off (THE CAP RUNS ONLY ON A RUN THAT HIDES
+        SOMETHING, below) and paints its rest corner: a circle.
+ 
+-       AN IDLE RUN IS NO SCROLL CONTAINER (O-205). The full pane at rest collapsed (not
++       AN IDLE RUN IS NO SCROLL CONTAINER. The full pane at rest collapsed (not
+        active, not leaving) is squeezed into the collapsed box and its seats overrun it,
+        so as a scroller it scrolled 180-700 px nobody can see. `overflow: clip` makes it
+        none: it has no scroll range and no timeline to hold. The leaving pane keeps its
+@@ -739,7 +741,7 @@
+     /* The run's half cross extent, as a length: the plate's half cross extent plus the
+        reserve the run hands back past the dock's padding on that axis. It is the clip's
+        cross radius, so the clip rounds the run's whole cross side as `50%` did, with no
+-       percentage (O-160). */
++       percentage. */
+     .glass-dock {
+         --dock-run-cross-half: calc(
+             var(--dock-plate-cross-px) / 2 + var(--dock-run-reserve-block) -
+@@ -911,7 +913,7 @@
+    is flush, then the plate's corner less the run's inset on the scroll axis and the run's
+    half cross extent on the cross axis, and square on an edge that is not the plate's.
+    Every radius is a length (`--dock-run-cross-half`, not `50%`): a percentage radius
+-   resolves per axis against a box the keyframe does not know (the r1 law, O-160). */
++   resolves per axis against a box the keyframe does not know. */
+ @keyframes gl-dock-clip-inline-start {
+     from {
+         border-start-start-radius: 0;
+diff --git a/src/components/slider/Slider.vue b/src/components/slider/Slider.vue
+index 3acb31af8..293f26a33 100644
+--- a/src/components/slider/Slider.vue
++++ b/src/components/slider/Slider.vue
+@@ -80,7 +80,7 @@ function getRootEl(): HTMLElement | null {
+ 
+ const { isHeld } = useDockHold(getRootEl);
+ 
+-/* THE GRAB IS TAKEN AT THE PRESS (O-167). With `contain` alignment reka 2.10 records
++/* THE GRAB IS TAKEN AT THE PRESS. With `contain` alignment reka 2.10 records
+    the thumb's grab offset, `clientX − thumb.left`, on the FIRST `pointermove` of a
+    thumb drag rather than at the press, so the offset carries that first move's travel
+    and the thumb trails the pointer by it for the whole drag (4 px per 4 px step,
+diff --git a/src/components/slider/styles.css b/src/components/slider/styles.css
+index e06d7e6d4..be2382ccc 100644
+--- a/src/components/slider/styles.css
++++ b/src/components/slider/styles.css
+@@ -136,7 +136,7 @@
+ /* The fill COMPOSES `.glass-liquid-fill`; this bridges the slider's one consumer
+    colour input onto the register's tint knob. `--slider-fill-ink` is the library's
+    default under it, read by the fill and the loupe's fill alike.
+-   THE DARK DEFAULT IS A CALM INK (O-167). The warm capsule floor's dark peer
++   THE DARK DEFAULT IS A CALM INK. The warm capsule floor's dark peer
+    (`oklch(0.42 0.06 75)`) is a floor, not a value: laid on a dark dock plate as a fill
+    it read as a brown stain. On the dark canvas the fill is the foreground's own ink at a
+    quiet strength, neutral and below the thumb's light, so the value reads without an
+diff --git a/src/styles/glass/glass-capsule.css b/src/styles/glass/glass-capsule.css
+index 44b3fb053..e18a2bf53 100644
+--- a/src/styles/glass/glass-capsule.css
++++ b/src/styles/glass/glass-capsule.css
+@@ -120,7 +120,7 @@
+        once here, for every capsule composer, rather than re-declared by each of them.
+        The dark arm rides softer; both live at `tokens/property-regs-specular.css`. */
+     /* Hover paint needs a pointer that hovers: on touch, `:hover` sticks to the last
+-       tapped element, so an ungated lift would stay lit after the tap (O-161). */
++       tapped element, so an ungated lift would stay lit after the tap. */
+     @media (hover: hover) {
+         .glass-capsule-hover:hover {
+             --glass-specular-intensity-hover: var(--glass-specular-capsule-hover);
+diff --git a/src/styles/tokens/dark-arm.css b/src/styles/tokens/dark-arm.css
+index a57fe0d71..d14b0f1b0 100644
+--- a/src/styles/tokens/dark-arm.css
++++ b/src/styles/tokens/dark-arm.css
+@@ -84,7 +84,7 @@
+        [2026-09-22 · O-32 CT2: twin by token name] (the §2c discipline —
+        both mode arms warm together or the FOUC/enhancement split paints two inks). */
+     --foreground: hsl(30 14% 90%);
+-    /* THE SHADOW IS A DARK ON THE DARK ARM (O-182). The root's `--shadow-color:
++    /* THE SHADOW IS A DARK ON THE DARK ARM. The root's `--shadow-color:
+        var(--foreground)` resolves under `.dark` to this light ink, so every elevation
+        shadow cast LIGHT on the night ground and read as a halo around the dock. In dark
+        the shadow is the page ground itself, deepened: one value, never lighter than the
