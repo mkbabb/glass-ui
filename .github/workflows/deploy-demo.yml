@@ -3,7 +3,9 @@
 # workflow has published a plain vX.Y.Z tag that npm now serves as `latest`. A
 # prerelease tag or a `--tag v10` maintenance publish skips, loud and green.
 # Manual dispatch names a tag; `rollback` redeploys an older tag (it skips the
-# `latest` check). Record: docs/release-infra/deploy-demo.md.
+# `latest` check). Only a tag that carries this workflow, demo/_headers and the two
+# check scripts can deploy: an older tag fails red at the _headers test.
+# Record: docs/release-infra/deploy-demo.md.
 name: deploy-demo
 
 on:
@@ -22,9 +24,12 @@ on:
                 type: boolean
                 default: false
 
-# One deploy at a time; a newer run supersedes a queued one.
+# Keyed by tag: concurrency applies when a run queues, before the job `if` and the
+# release-line skip, so one shared group would let a failed, prerelease or `--tag v10`
+# release run cancel the in-flight `latest` deploy. Only a re-run of the same tag
+# supersedes.
 concurrency:
-    group: deploy-demo
+    group: deploy-demo-${{ github.event.workflow_run.head_branch || inputs.tag }}
     cancel-in-progress: true
 
 permissions:
@@ -127,6 +132,21 @@ jobs:
                   --branch=master
                   --commit-hash="$BUILT_SHA"
                   --commit-dirty=true
+            # The project's own pages.dev host. Cloudflare suffixes the subdomain when
+            # `glass.pages.dev` is taken (it is: another account's), so it is read, never
+            # assumed, and a failed read is red.
+            - name: Pages host
+              id: host
+              if: steps.creds.outputs.present == 'true'
+              env:
+                  CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+                  CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+              run: |
+                  set -uo pipefail
+                  SUB="$(curl -sS -H "Authorization: Bearer ${CLOUDFLARE_API_TOKEN}" "https://api.cloudflare.com/client/v4/accounts/${CLOUDFLARE_ACCOUNT_ID}/pages/projects/glass" | jq -r '.result.subdomain // empty')"
+                  [ -n "$SUB" ] || { echo "::error title=project::could not read the Pages project's pages.dev host"; exit 1; }
+                  echo "pages host: ${SUB}"
+                  echo "sub=$SUB" >> "$GITHUB_OUTPUT"
             # Attach glass.babb.dev if the token can: the Pages domain (Pages edit) and the
             # proxied CNAME on babb.dev (Zone DNS edit). Reports what it could do and never
             # fails; the dashboard act (Pages → glass → Custom domains) covers the rest.
@@ -138,14 +158,12 @@ jobs:
               env:
                   CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
                   CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+                  SUB: ${{ steps.host.outputs.sub }}
               run: |
                   set -uo pipefail
                   API="https://api.cloudflare.com/client/v4"
                   cf() { curl -sS -H "Authorization: Bearer ${CLOUDFLARE_API_TOKEN}" -H "Content-Type: application/json" "$@"; }
                   PROJ="$API/accounts/${CLOUDFLARE_ACCOUNT_ID}/pages/projects/glass"
-                  SUB="$(cf "$PROJ" | jq -r '.result.subdomain // empty')"
-                  SUB="${SUB:-glass.pages.dev}"
-                  echo "pages host: ${SUB}"
                   DOM="$(cf "$PROJ/domains/glass.babb.dev")"
                   if [ "$(printf '%s' "$DOM" | jq -r '.success')" = "true" ]; then
                     echo "Pages domain: glass.babb.dev is on the project (status $(printf '%s' "$DOM" | jq -r '.result.status'))"
@@ -197,7 +215,7 @@ jobs:
             - name: The site serves this build
               if: steps.creds.outputs.present == 'true'
               env:
-                  ORIGIN: ${{ steps.domain.outputs.origin || 'https://glass.pages.dev/' }}
+                  ORIGIN: ${{ steps.domain.outputs.origin || format('https://{0}/', steps.host.outputs.sub) }}
               run: node scripts/check-served.mjs "$ORIGIN" --headers
             - name: Playwright version
               if: steps.creds.outputs.present == 'true'
@@ -217,5 +235,5 @@ jobs:
             - name: Live — no console error, no CSP violation, no third-party request
               if: steps.creds.outputs.present == 'true'
               env:
-                  ORIGIN: ${{ steps.domain.outputs.origin || 'https://glass.pages.dev/' }}
+                  ORIGIN: ${{ steps.domain.outputs.origin || format('https://{0}/', steps.host.outputs.sub) }}
               run: node scripts/check-live.mjs "$ORIGIN"

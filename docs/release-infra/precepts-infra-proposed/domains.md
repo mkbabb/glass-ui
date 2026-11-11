@@ -36,9 +36,11 @@ origin certificate and nothing to renew.
 with the sha256 of the one inline script (the dark-mode stamp) filled into
 `script-src`. Every response carries `Cache-Control: no-transform`, so the edge
 cannot inject a beacon; `/assets/*` (the hashed chunks) is immutable; `/` and
-`/index.html` are `no-cache`. The CSP is `'self'` throughout, plus `data:`
-images (the paper textures and the avatar fallback). It was measured against
-every route of the built demo, not guessed: see
+`/index.html` are `no-cache`. The CSP is `'self'` plus `data:` images (the
+paper textures and the avatar fallback) and inline styles: reka-ui's Select
+injects a `<style>` when it opens, so `style-src` carries `'unsafe-inline'`. It
+was measured, not guessed: a load of every route reachable from `/`, plus
+opening a Select under the enforced policy. See
 `docs/release-infra/deploy-demo.md` in glass-ui.
 
 There is no `_redirects`: the build ships no `404.html`, so Pages serves

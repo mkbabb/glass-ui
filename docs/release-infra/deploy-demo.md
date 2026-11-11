@@ -20,6 +20,13 @@ wins where the two differ. The shape copies daraksha's
 ### The workflow, step by step
 
 1. **Gate.** The job runs on dispatch, or when `release` concluded `success`.
+   Concurrency is keyed by tag (`deploy-demo-<head_branch || inputs.tag>`,
+   cancel-in-progress). It applies when the run queues, before this `if` and
+   the release-line skip, so a single shared group would let a failed,
+   prerelease or `--tag v10` release run cancel the in-flight `latest` deploy
+   and then skip itself. Paired tags (a `v10` publish and a forward-merged
+   `latest` minutes apart) are the normal case here. Only a re-run of the same
+   tag supersedes; daraksha keys its group by head_sha for the same reason.
    `TAG` is `workflow_run.head_branch` (a tag-push run's head_branch is the tag
    name) or `inputs.tag`. Checkout is `workflow_run.head_sha` or the tag.
 2. **Release line.** Each failure is a `::warning title=deploy SKIPPED::` plus
@@ -40,12 +47,18 @@ wins where the two differ. The shape copies daraksha's
    exists" (or code 8000002) is success; any other failure is red.
 6. `npx --yes wrangler@4 pages deploy dist-demo --project-name=glass
    --branch=master --commit-hash="$BUILT_SHA" --commit-dirty=true`.
-7. **Custom domain, best effort** (`continue-on-error`, never fails). It reads the
-   project's real pages.dev subdomain, GETs the Pages domain, POSTs it if absent,
+7. **Pages host** (`id: host`, not continue-on-error). It reads the project's
+   `result.subdomain` from the Pages API and fails red if it is empty. There
+   is no default: `glass.pages.dev` already answers 200 and belongs to another
+   account, so this project gets a suffixed subdomain.
+   **Custom domain, best effort** (`continue-on-error`, never fails). It gets
+   the subdomain from `steps.host` as env, GETs the Pages domain, POSTs it if absent,
    reads the babb.dev zone, and creates the proxied CNAME to the subdomain if no
    record exists. Each step logs what the token could or could not do. It outputs
    `origin`: `https://glass.babb.dev/` if it answers 200, else the pages.dev host
-   (with a warning).
+   (with a warning). If the step dies before writing `origin`, both asserts
+   fall back to `format('https://{0}/', steps.host.outputs.sub)`, the project's
+   own host, never a literal.
 8. **Lineage.** `wrangler pages deployment list --environment=production` must
    contain the short SHA (catches the Preview-that-exits-0 trap).
 9. **Served build.** `node scripts/check-served.mjs "$ORIGIN" --headers` (12 tries,
@@ -63,7 +76,7 @@ a header, no `set -x` is used, and GitHub masks secret values in logs anyway.
 /index.html    Cache-Control: no-cache
 /              Cache-Control: no-cache
 /*             Cache-Control: no-transform
-               Content-Security-Policy: default-src 'self'; script-src 'self' 'sha256-MOGEZdbxrYiPCsQApEdoFKYoqnbmCxzBPrGPG/EbfJk='; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'
+               Content-Security-Policy: default-src 'self'; script-src 'self' 'sha256-MOGEZdbxrYiPCsQApEdoFKYoqnbmCxzBPrGPG/EbfJk='; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'
                X-Content-Type-Options: nosniff
                Referrer-Policy: strict-origin-when-cross-origin
 ```
@@ -89,8 +102,11 @@ Static read of `dist-demo/assets`:
   avatar fallback;
 - the only `http(s)://` literals are doc links and placeholders, never fetched;
 - `fetch()` is used only by `textureUpload` on caller-given URLs;
-- `<style>` creators: vueuse `useColorMode`'s disableTransition and Vue's
-  custom-element shadow styles;
+- `<style>` creators: vueuse `useColorMode`'s disableTransition, Vue's
+  custom-element shadow styles, and reka-ui's `SelectViewport`
+  (`SelectItem-*.js` renders `{as:"style",nonce}`, the scrollbar-hiding rule
+  for `[data-reka-select-viewport]`; `src/components/select/SelectContent.vue`
+  uses it);
 - no stringified static tree carries a `style="` attribute.
 
 WebGPU has no CSP directive. Vue `:style` writes through the CSSOM, which
@@ -101,12 +117,20 @@ Dynamic, via `--emulate-headers` (see the gates):
   emulation enforces, and the hash is load-bearing.
 - Dropping `data:` from `img-src`: 14-25 `img-src blocked data` violations per
   load. `data:` is needed.
-- `style-src 'self'` without `'unsafe-inline'`: clean on `/` and the deep route.
-- **Census**: all 92 routes reachable in two link levels from `/`, at 1440, with
-  the CSP enforced and a stricter `style-src 'self'` as report-only. Chromium
-  showed 0 violations of either kind. WebKit: not run. The 92-route WebKit census was queued for the machine-wide WebKit lock for over 30 min behind other sessions and was stopped; the WebKit evidence is the live gate below.
-- Theme toggle (configurator → "Toggle dark mode") under the report-only strict
-  policy: 0 violations. So `'unsafe-inline'` was dropped from `style-src`.
+- **Inline styles are allowed** (`style-src 'self' 'unsafe-inline'`, daraksha's
+  value) because reka's Select injects a `<style>` when it opens. Under
+  `style-src 'self'`, opening the first `[role=combobox]` on `/motion/springs`,
+  `/motion/curve-gallery` and `/substrates/fourier-field` (Chromium, 1440, CSP
+  enforced) logs 2 violations each: "Applying inline style violates ...
+  'style-src 'self''" (hash `sha256-60LHlRjW/B3CtzIoE/Lf1/NEDvko9efWMFaGVhHu/cs=`)
+  plus a `style-src-elem` securitypolicyviolation. With the built policy the
+  same three opens log 0. A load-only census cannot see this: the earlier
+  92-route Chromium census and the theme toggle never opened a Select, and
+  showed 0 violations under the strict policy. A hash for the one rule would
+  break the next time reka changes it, so it is not used.
+- **Census** (load only): all 92 routes reachable in two link levels from `/`,
+  at 1440, CSP enforced. Chromium: 0 violations. WebKit: not run (queued over
+  30 min behind other sessions for the machine-wide WebKit lock and stopped).
 
 ## Gates run locally (all through `~/.claude/guard/guarded`)
 
@@ -122,8 +146,11 @@ Dynamic, via `--emulate-headers` (see the gates):
 | Live, Chromium, no WebGPU | the same with `navigator.gpu` deleted by an init script (CI's GPU-less headless shell) | PASS, 8 loads |
 | Live, WebKit | `guarded --exclusive webkit -- node scripts/check-live.mjs http://localhost:5202 --emulate-headers dist-demo/_headers --browser webkit` | **RED, engine build only**: `page.goto: Page crashed` on 16/16 loads, 8 with `--emulate-headers` and 8 without it. The crash does not depend on the CSP or the interception. It is the known Playwright-WebKit renderer crash on glass-ui (engine build, not the Safari app), which crashed every route while real Safari rendered them. The Safari-app cell is **OWED** (safaridriver). |
 | The emulation enforces | live with the hash stripped / with `data:` stripped from `img-src` | violations on every load (see above) |
-| CSP census, Chromium | 92 routes, CSP enforced plus strict style-src report-only | 0 violations |
-| Workflow parses | `actionlint .github/workflows/deploy-demo.yml` (with shellcheck) | exit 0, no findings |
+| CSP census, Chromium | 92 routes, load only, CSP enforced | 0 violations |
+| Select open under the CSP, Chromium | open the first combobox on `/motion/springs`, `/motion/curve-gallery`, `/substrates/fourier-field` at 1440, the CSP from `dist-demo/_headers` on every HTML response | built policy: 0 violations, viewport open on all 3. With `style-src 'self'` instead: 2 violations per route (the defect, reproduced) |
+| Live, Chromium, after the `style-src` fix | `check-live.mjs http://localhost:5200 --emulate-headers dist-demo/_headers` | PASS, 8 loads |
+| Served build, after the fix | `check-served.mjs http://localhost:5200/ --tries 1` | PASS: 69 in the index, 362 in `dist-demo/assets` |
+| Workflow parses | `actionlint .github/workflows/deploy-demo.yml` (with shellcheck), re-run after the concurrency and host fixes | exit 0, no findings |
 
 A check-live fix came out of the first WebKit attempt. An in-flight
 `route.fetch` threw unhandled when a cell's context closed, and killed the run.
@@ -151,11 +178,13 @@ Each path is traced through the release-line step:
 | `v11.1.0`, registry lagging | `v11.1.0` | polls until `latest == 11.1.0` (≤ 5 min), then deploys; if it never appears, a loud green skip |
 | tag ≠ package.json | e.g. `v11.1.0` vs `11.0.0` | `deploy SKIPPED` (release.yml already fails this case) |
 | dispatch `tag=master` | `master` | the regex fails: skip |
-| dispatch `tag=v11.0.0 rollback=true` | `v11.0.0` | deploys the old tree, no npm check |
+| dispatch `tag=<a release at or after the first one that carries this wave> rollback=true` | that tag | deploys the old tree, no npm check. An older tag (e.g. `v11.0.0`: `git ls-tree v11.0.0 -- demo/_headers scripts/check-served.mjs` lists nothing) fails red at the `_headers` test |
+| two release runs finish close together (a `v10` publish, then `latest`) | different tags | different concurrency groups: neither cancels the other; the `v10` one skips, the `latest` one deploys |
 | secrets absent | — | build runs, then `deploy SKIPPED`, green; project, deploy, domain and asserts are all gated off |
 | project already exists | — | create's "already exists" is accepted |
 | deploy lands as Preview | — | `--branch=master` prevents it; the lineage step fails red if no Production deployment carries the SHA |
-| domain not attached | — | the domain step warns and never fails; asserts run against the pages.dev host |
+| project subdomain unreadable | — | the host step fails red; nothing runs against a guessed host |
+| domain not attached | — | the domain step warns and never fails; asserts run against the project's pages.dev host |
 | stale edge / chunk not propagated | — | check-served retries 12 × 10 s, then fails red |
 | re-run of a deploy | same TAG | idempotent: create says exists, a new Production deployment of the same SHA |
 
@@ -200,9 +229,9 @@ Until both secrets exist, every release run of deploy-demo is green with
   owed before claiming WebKit coverage. CI's live assert runs Chromium only, as
   daraksha's does.
 - **The WebKit route census** (92 routes) was not run; the Chromium census was.
-  `'unsafe-inline'` was dropped from `style-src` on the Chromium census, a static
-  read and the WebKit live gate. If a WebKit-only path injects a style, the
-  post-deploy live assert names it.
+  The CSP check is load-only. A violation that needs an interaction (as the
+  Select's did) is caught only by an interaction probe, and CI's live assert
+  does none.
 - **The precepts submodule** needs the two proposed files copied in, in the
   precepts repo.
 - **`npx --yes wrangler@4`** in CI, per the addendum. The old sudoku precept
