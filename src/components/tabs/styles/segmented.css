@@ -172,6 +172,10 @@
         cursor: pointer;
         white-space: nowrap;
         padding: 0.25rem 0.625rem;
+        /* The touch floor: `--control-floor` is 0 on a fine pointer and the 44px target
+           under a coarse one (tokens/light-dark.css), so a tab, and the strip with it,
+           grows to a target a finger can hold. */
+        min-block-size: var(--control-floor);
         /* The button silhouette reads the SAME orientation-aware seam the indicator does
            (`--bouncy-slider-radius`): horizontal → `--radius-tab` (the control stadium),
            vertical → the parent's `--radius-strip` rebind (the bounded column-stack corner).
