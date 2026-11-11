@@ -65,6 +65,15 @@
  * @import-ed by index.css in `overflow.css`'s former slot, in the SAME
  * `@layer components`, so the cascade position is unchanged. */
 
+/* The active mark's box (useDockRunMark writes these five on the run, once a frame while
+   it glides). Registered, non-inheriting lengths: a write restyles the run and its
+   `::before`, never every seat inside it. */
+@property --dock-run-mark-x { syntax: "<length>"; inherits: false; initial-value: 0px; }
+@property --dock-run-mark-y { syntax: "<length>"; inherits: false; initial-value: 0px; }
+@property --dock-run-mark-w { syntax: "<length>"; inherits: false; initial-value: 0px; }
+@property --dock-run-mark-h { syntax: "<length>"; inherits: false; initial-value: 0px; }
+@property --dock-run-mark-r { syntax: "<length>"; inherits: false; initial-value: 0px; }
+
 @layer components {
     /* ── THE PITCH TOKENS ────────────────────────────────────────────────────────
        All series-derived, all `calc()` — never a literal px pitch, which breaks at a
@@ -396,6 +405,13 @@
        comes first in the tree) and under every seat's content. The seat it marks stops
        painting its own selected fill, so the run never shows two. */
     .glass-dock .dock-run[data-run-mark]::before {
+        /* The five lengths do not inherit (registered above), so the plate takes them
+           from the run by name. */
+        --dock-run-mark-x: inherit;
+        --dock-run-mark-y: inherit;
+        --dock-run-mark-w: inherit;
+        --dock-run-mark-h: inherit;
+        --dock-run-mark-r: inherit;
         content: "";
         position: absolute;
         top: 0;

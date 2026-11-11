@@ -75,6 +75,16 @@ describe("the run's active mark", () => {
         );
     });
 
+    it("writes five non-inheriting lengths that only the plate takes up", () => {
+        const mark = RUN_CSS.match(/\.glass-dock \.dock-run\[data-run-mark\]::before\s*\{([^}]*)\}/)?.[1] ?? "";
+        for (const prop of ["x", "y", "w", "h", "r"]) {
+            expect(RUN_CSS).toMatch(
+                new RegExp(`@property --dock-run-mark-${prop} \\{ syntax: "<length>"; inherits: false;`),
+            );
+            expect(mark).toMatch(new RegExp(`--dock-run-mark-${prop}:\\s*inherit;`));
+        }
+    });
+
     it("glides on the dock spring preset, never a literal", () => {
         const src = readFileSync(
             resolve(process.cwd(), "src/components/dock/composables/useDockRunMark.ts"),

@@ -165,7 +165,12 @@ export function useDockRunMark({ runEl }: UseDockRunMarkOptions): void {
     onMounted(() => {
         const run = runEl.value;
         if (!run) return;
-        mutations = new MutationObserver(sync);
+        // The destination moves when a seat's `aria-current` changes or a seat is added
+        // or removed. A change inside a seat (a label whose text ticks) is neither; its
+        // size, if it changes, reaches the mark through the seat's resize.
+        mutations = new MutationObserver((records) => {
+            if (records.some((r) => r.type === "attributes" || r.target === run)) sync();
+        });
         mutations.observe(run, {
             childList: true,
             subtree: true,
