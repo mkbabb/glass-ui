@@ -2464,6 +2464,57 @@ test("s4 a host padding change across the fit edge mid-expand holds every seat a
     expect(bad, "seat steps over 0.5 px at the settle, or a rest flag that is not the layout's truth").toEqual([]);
 });
 
+/* ── u · fix round 13 (docs/release-10.1.5/fix-13.md, critique 13 T1) ─────────────────
+   A collapsing run keeps the scroll it painted. n1's 332 px stage on a coarse pointer (a
+   vertical run 20 px short of fitting, at rest at 0): between the swap and the arm the root
+   lays out once unreserved, the leaving run's port grows and shrinks back, and WebKit
+   re-snapped it to its end on the first morph frame in about 1 collapse in 5 (every seat
+   20 px). Read as n1 reads it, many times over, with the run's own scroll beside it. */
+test.describe("fix 13, coarse phone", () => {
+    test.use({ hasTouch: true, isMobile: true, viewport: { width: 390, height: 844 } });
+    test("u1 a collapsing vertical run that does not fit keeps its scroll on the first morph frame", async ({ page }) => {
+        test.setTimeout(240_000);
+        await page.setViewportSize({ width: 1440, height: 800 });
+        const bad: unknown[] = [];
+        const N = Number(process.env.U1_N ?? 16);
+        for (let i = 0; i < N; i += 1) {
+            await open7(page, "scene=dock&collapse=closed&orientation=vertical&stageH=332&kinds=icon,icon,icon,icon,icon,icon");
+            await page.mouse.move(1430, 790);
+            await page.evaluate(() => (window as unknown as { __dock: Dock7 }).__dock.expand());
+            await page.waitForTimeout(1600);
+            const range = await page.evaluate(() => {
+                const run = document.querySelector<HTMLElement>(".glass-dock .dock-run")!;
+                return run.scrollHeight - run.clientHeight;
+            });
+            expect(range, "the run does not fit, so it has a scroll range").toBeGreaterThan(8);
+            const frames = page.evaluate(
+                () =>
+                    new Promise<{ morphing: boolean; s1: number; st: number }[]>((res) => {
+                        const out: { morphing: boolean; s1: number; st: number }[] = [];
+                        const dock = document.querySelector<HTMLElement>(".glass-dock")!;
+                        const run = dock.querySelector<HTMLElement>(".dock-run")!;
+                        const s1 = document.querySelector<HTMLElement>('[data-witness="S1"]')!;
+                        const t0 = performance.now();
+                        const step = () => {
+                            out.push({ morphing: dock.hasAttribute("data-morphing"), s1: s1.getBoundingClientRect().top, st: run.scrollTop });
+                            if (performance.now() - t0 < 400) requestAnimationFrame(step);
+                            else res(out);
+                        };
+                        requestAnimationFrame(step);
+                    }),
+            );
+            await page.waitForTimeout(100);
+            await page.evaluate(() => (window as unknown as { __dock: Dock7 }).__dock.collapse());
+            const c = await frames;
+            const m = c.findIndex((f) => f.morphing);
+            expect(m, "the collapse morphed").toBeGreaterThan(0);
+            const [p, q] = [c[m - 1]!, c[m]!];
+            if (q.st !== p.st || Math.abs(q.s1 - p.s1) > 0.5) bad.push({ i, p, q });
+        }
+        expect(bad, "collapse starts whose run scrolled or whose first seat stepped").toEqual([]);
+    });
+});
+
 /* M3 · O-159 and O-160, read from the source (no browser state). */
 test("m3 O-159 the dock README names every DockProps member and no other", async () => {
     const { readFileSync } = await import("node:fs");

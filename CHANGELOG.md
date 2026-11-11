@@ -40,19 +40,29 @@ measured property, `--dock-plate-cross-px`.
   overflow, so a wider hidden face no longer gives a fitting run a scroll range
   (O-205). The leaving face is not clipped, so its crossfade paints as before.
 
-- **A keyboard-focused seat keeps its whole ring at every width (O-201).** The run's
+- **A keyboard-focused seat keeps its ring at the fit edge (O-201).** The run's
   reserves yield to the room its seats leave, so a dock a few pixels short of its
   content has nothing to cut. They yielded down to zero, which cut a focused first or
-  last seat's ring by up to 4 px at the fit edge. They now yield down to
-  `--dock-ring-reserve`, on both axes: `data-run-fits` means only that the seats' span
-  fits the port, so a run whose seats show rests round, and with less than a ring's
-  room at each end it scrolls at most the difference, which reach uses to bring a
-  focused end seat's whole ring into view. A vertical run's reserves are now the same
-  two boxes as a horizontal run's (its yielded padding and `--dock-run-room-block` are
-  gone). Reach now measures a seat inside a `DockLayerGroup` by its own box, not the
+  last seat's ring by up to 4 px at the fit edge. On a horizontal run the two reserve
+  boxes now yield down to `--dock-ring-reserve`: `data-run-fits` means only that the
+  seats' span fits the port, so a run whose seats show rests round, and with less than
+  a ring's room at each end it scrolls at most the difference, which reach uses to
+  bring a focused end seat's whole ring into view. A vertical run keeps its padding
+  yield (each end's reserve is the smaller of the reserve and half the room the seats
+  leave, `--dock-run-room-block`), so in the 8 px above its fit edge a focused end
+  seat's ring is still cut by up to 4 px; 10.1.4 cut 4 px at every height under that
+  edge. Reach now measures a seat inside a `DockLayerGroup` by its own box, not the
   group's, so a focused seat at a face's end is brought into view on a run that does
   not fit; and a reach that needs no travel stops a glide still running toward an
   earlier seat. No token value moves.
+
+- **A collapsing dock's seats hold still in WebKit.** Between the posture swap and the
+  morph's first frame the dock lays out once without its reserved box, so a run that
+  does not fit grew and shrank back, and WebKit re-snapped it to its scroll end on that
+  return: in about one collapse in five on a coarse pointer, every seat jumped by the
+  run's whole scroll range as the collapse began. The morph now reads the run's scroll
+  before the swap and gives it back to the leaving run once the first frame's layout
+  is set.
 
 - **A disclosure trigger's keyboard ring is the house outline (O-207).** The
   CollapsibleTrigger and AccordionTrigger focus rule set `outline: none` and painted the
