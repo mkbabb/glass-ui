@@ -131,8 +131,8 @@ describe("useLiquidPress", () => {
         el.remove();
     });
 
-    // The `:root` tempo is one shared value: read once, and again only after its source
-    // changes. A scene of pressable controls mounting reads no style at all.
+    // The `:root` tempo is one shared value within a task: a scene of pressable controls
+    // mounting in one task reads it once at most.
     it("reads the root tempo once for a scene of presses", async () => {
         const spy = vi.spyOn(window, "getComputedStyle");
         const rootReads = () =>
@@ -142,7 +142,7 @@ describe("useLiquidPress", () => {
         );
         expect(rootReads()).toBeLessThanOrEqual(1);
 
-        // A later scene, nothing changed: no read.
+        // A later scene in the same task: no read.
         await Promise.resolve();
         const before = rootReads();
         const scene = Array.from({ length: 12 }, () =>
@@ -196,5 +196,21 @@ describe("useLiquidPress", () => {
 
         vi.unstubAllGlobals();
         document.documentElement.removeAttribute("data-tempo-probe");
+    });
+
+    // The shared value lasts one task. A rule inserted into a sheet, a width query or a
+    // stylesheet that loads later change no attribute; the next task reads the cascade.
+    it("reads the root tempo again in the next task", async () => {
+        vi.resetModules();
+        const { motionTempo } = await import("@glass/composables/motion/core/motionTempo");
+        const spy = vi.spyOn(window, "getComputedStyle");
+        const rootReads = () =>
+            spy.mock.calls.filter(([el]) => el === document.documentElement).length;
+
+        for (let i = 0; i < 12; i++) motionTempo();
+        expect(rootReads()).toBe(1);
+        await vi.advanceTimersByTimeAsync(0);
+        for (let i = 0; i < 12; i++) motionTempo();
+        expect(rootReads()).toBe(2);
     });
 });
