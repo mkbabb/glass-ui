@@ -1,6 +1,6 @@
 /* slider/styles.css — THE ONE SLIDER LANE.
  *
- * The scrubber's geometry, its affordance, the weight-train and the loupe. The SFC
+ * The scrubber's geometry, its affordance and the loupe. The SFC
  * ships no <style> block: one file authors every slider pixel.
  *
  * UNLAYERED ON PURPOSE. `track-well.css` and `liquid-fill.css` are `@layer
@@ -23,7 +23,6 @@
 }
 
 .glass-slider {
-    --slider-range-origin: left center;
     position: relative;
     display: flex;
     inline-size: 100%;
@@ -54,33 +53,26 @@
     cursor: not-allowed;
 }
 
-.glass-slider[data-inverted],
-.glass-slider:dir(rtl) {
-    --slider-range-origin: right center;
+/* The SIZE axis: one height. `--slider-track-height` (H) is the height of the track,
+   of the fill and of the scrubber's thumb, and every curve on the control is a circle
+   of radius H/2 whose centre is on the line: `--slider-radius`, read by the track, the
+   fill and the thumb. `--slider-thumb-size` has one job left, the spectrum's taller
+   track below. The rungs read `--slider-track-height-{sm,md,lg}` and
+   `--slider-thumb-size-{sm,md,lg}` from the token :root (`tokens/sizing.css`). */
+.glass-slider {
+    --slider-radius: calc(var(--slider-track-height, 0.375rem) / 2);
 }
-
-.glass-slider:dir(rtl)[data-inverted] {
-    --slider-range-origin: left center;
-}
-
-/* The SIZE axis. `--slider-track-height` is the capsule thickness; `--slider-thumb-size`
-   sizes the spectrum's visible handle and the scrubber's inscribed disc.
-   thumb ≤ track at every rung — the inscription law.
-   [2026-09-22 · O-23 L-3] The rungs read `--slider-track-height-{sm,md,lg}` and
-   `--slider-thumb-size-{sm,md,lg}` from the token :root (`tokens/sizing.css`), so a
-   consumer retunes a rung on a wrapper or on the slider instead of restating this
-   attribute selector; `min()` holds the inscription law by construction. */
 .glass-slider[data-size="sm"] {
     --slider-track-height: var(--slider-track-height-sm);
-    --slider-thumb-size: min(var(--slider-thumb-size-sm), var(--slider-track-height-sm));
+    --slider-thumb-size: var(--slider-thumb-size-sm);
 }
 .glass-slider[data-size="md"] {
     --slider-track-height: var(--slider-track-height-md);
-    --slider-thumb-size: min(var(--slider-thumb-size-md), var(--slider-track-height-md));
+    --slider-thumb-size: var(--slider-thumb-size-md);
 }
 .glass-slider[data-size="lg"] {
     --slider-track-height: var(--slider-track-height-lg);
-    --slider-thumb-size: min(var(--slider-thumb-size-lg), var(--slider-track-height-lg));
+    --slider-thumb-size: var(--slider-thumb-size-lg);
 }
 
 /* THE INSCRIPTION (S1). The spectrum recipe is a TALLER capsule, and it says so by
@@ -127,7 +119,16 @@
     width: 100%;
     flex-grow: 1;
     height: var(--slider-track-height, 0.375rem);
-    background: var(--glass-slider-track-background, var(--muted-medium));
+    border-radius: var(--slider-radius);
+    /* The ground is the control's own ink at a low strength, so it keeps its edge on
+       a plate of any colour. No inset line: the groove's lit lip made the band read
+       thinner than the fill laid in it. */
+    --slider-track-ink: 16%;
+    background: var(
+        --glass-slider-track-background,
+        color-mix(in oklab, currentColor var(--slider-track-ink), oklch(0 0 0 / 0))
+    );
+    box-shadow: none;
     transition:
         background var(--duration-fast) var(--ease-standard),
         border-color var(--duration-fast) var(--ease-standard);
@@ -148,13 +149,19 @@
 
 .dark .glass-slider,
 .dark .glass-loupe {
-    --slider-fill-ink: color-mix(in oklab, var(--foreground) 22%, transparent);
+    --slider-fill-ink: currentColor;
 }
 
+/* The fill is the band itself: one height, one radius, the ink at full strength, and
+   no rim (the rim's lit top line and lighter bottom line made a 12px fill read taller
+   than its 12px track). */
 .slider-range {
     position: absolute;
     height: 100%;
+    border-radius: var(--slider-radius);
     --liquid-fill-tint: var(--slider-range-bg, var(--slider-fill-ink));
+    --liquid-fill-strength: 100%;
+    box-shadow: none;
 }
 
 /* THE LANE — the range's containing block (Slider.vue). On the scrubber it is the track
@@ -181,7 +188,7 @@
 }
 
 .glass-slider:not([data-variant="spectrum"]) {
-    --slider-lane-cut: var(--slider-thumb-size, 1rem);
+    --slider-lane-cut: var(--slider-track-height, 0.375rem);
     --value-mark-inset: calc(var(--slider-lane-cut) / 2);
 }
 
@@ -215,23 +222,28 @@
     }
 }
 
-/* THE INTEGRATED THUMB. The scrubber is ONE continuous glass segment and its handle is
-   a disc INSCRIBED in the fill's leading end: `--slider-thumb-size` on both axes, which
-   the size rungs above hold at or under the track height (the inscription law), centred
-   on the cross axis by the root's own `align-items: center`. It is the same object at
-   min, mid and max, so the value's end is visible at both extremes. Its paint is the
-   switch thumb's (`--card` over `--shadow-sm`), the house's one knob. Keyboard focus does
-   not ring it — it ribbons the TRACK, below. The thumb is always painted: without it,
-   both extremes lose the handle. */
+/* THE THUMB IS THE FILL'S END. A disc of the band's own height, H, whose centre
+   travels `H/2 + p·(W − H)` (reka's `contain` alignment for a thumb of width H), so it
+   is concentric with the track's start cap at 0, with the end cap at 100, and with the
+   fill's end cap at every value between. `--slider-thumb-bg` is its colour (O-273):
+   light in both themes, so a full-height knob never reads as a bite out of the fill.
+   Its one shadow is what separates it from a fill of its own colour. Keyboard focus
+   rings the TRACK, below. */
+.glass-slider {
+    --slider-thumb-default: var(--card);
+}
+.dark .glass-slider {
+    --slider-thumb-default: var(--foreground);
+}
+
 .slider-thumb {
     display: block;
-    width: var(--slider-thumb-size, 1rem);
-    height: var(--slider-thumb-size, 1rem);
+    width: var(--slider-track-height, 0.375rem);
+    height: var(--slider-track-height, 0.375rem);
     border: none;
-    border-radius: var(--radius-pill);
-    background: var(--card);
+    border-radius: var(--slider-radius);
+    background: var(--slider-thumb-bg, var(--slider-thumb-default));
     box-shadow: var(--shadow-sm);
-    transition: transform var(--spring-press-duration) var(--spring-press);
 }
 
 /* The track carries the keyboard ring (below), so the UA outline is suppressed in the
@@ -251,8 +263,8 @@
    authorities on one channel would multiply (100% × 0.6 = 60%) and the grab would
    read LIGHTER than rest. Touch has no approach, and needs none — the grasp optic is
    its answer. */
-.glass-slider:not([data-variant="spectrum"]):hover .slider-range {
-    --liquid-fill-strength: 100%;
+.glass-slider:not([data-variant="spectrum"]):is(:hover, [data-held], :has(:focus-visible)) .slider-track {
+    --slider-track-ink: 24%;
 }
 
 /* Keyboard focus rings the TRACK, not the thumb. `:focus-visible` and not
@@ -261,49 +273,6 @@
    would paint back the very ring this predicate removes. */
 .glass-slider:not([data-variant="spectrum"]):has(:focus-visible) .slider-track {
     box-shadow: var(--focus-ring-shadow);
-}
-
-/* THE WEIGHT-TRAIN. The fill is a column of warm glass you PULL: it compresses Y and
-   widens X on the grab, smears toward the drag by the live `--atom-drag-v`, and
-   overshoots on release. The track never moves — only the fill deforms, on the
-   compositor. The smear SATURATES (`useDragVelocity` bounds the var at 0.7), so a
-   faster pull does not rubber-band. `--motion-weight` couples the amplitude; PRM
-   zeroes it to the plain squish floor. One `:active` rule, not two — an earlier pair
-   re-declared `transform`/`transform-origin` at equal specificity and only the
-   transition survived. */
-.glass-slider[data-held] .slider-range,
-.glass-slider:active .slider-range {
-    --smear: calc(var(--atom-drag-v, 0) * var(--motion-weight, 0.618));
-    transform: scale(
-        calc(1.02 + 0.16 * var(--smear)),
-        calc(0.94 - 0.06 * var(--smear))
-    );
-    transform-origin: var(--slider-range-origin);
-    transition: transform var(--spring-press-duration) var(--spring-press);
-}
-
-/* FOLLOW-THROUGH. The punch curve carries the >1.0 overshoot-and-settle knot home; a
-   monotone settle would be a dead spring.
-   IT ALSO CARRIES THE GRASP REGISTER'S INK CHANNEL, and must. This rule governs the
-   release window on the element the register releases on, and an unlayered rule
-   outranks the register's own `transition: --glass-veil-rung`. A shorthand that
-   omitted the channel would strand the ink at 0.6 → 1 in one frame under a blur still
-   fading. The clock is READ from the register, never re-typed.
-   `background` is deliberately NOT in this list: the fill's background is a function
-   of that same rung, so transitioning both would chase one change down two clocks. */
-.glass-slider:not(:active):not([data-held]) .slider-range {
-    transition:
-        transform var(--duration-normal) var(--ease-cartoon-punch),
-        --glass-veil-rung var(--spring-dock-duration) var(--ease-standard),
-        box-shadow var(--duration-fast) var(--ease-standard);
-}
-
-@media (prefers-reduced-motion: reduce) {
-    .glass-slider:active .slider-range,
-    .glass-slider[data-held] .slider-range {
-        --motion-weight: 0;
-        transform: scale(1, 0.97);
-    }
 }
 
 /* The disabled register dims the scrubber's whole value: the fill and the disc
@@ -396,32 +365,11 @@
     height: auto;
 }
 
-.glass-slider[data-orientation="vertical"]:active .slider-range,
-.glass-slider[data-orientation="vertical"][data-held] .slider-range {
-    --smear: calc(var(--atom-drag-v, 0) * var(--motion-weight, 0.618));
-    transform: scale(
-        calc(0.94 - 0.06 * var(--smear)),
-        calc(1.02 + 0.16 * var(--smear))
-    );
-    transform-origin: center bottom;
-}
-
-.glass-slider[data-orientation="vertical"][data-inverted] .slider-range {
-    transform-origin: center top;
-}
-
 /* The vertical spectrum thumb's cross axis is INLINE, and the same percentage trap
    applies: `width: 100%` would resolve against the coarse-inflated root. */
 .glass-slider[data-orientation="vertical"][data-variant="spectrum"] .slider-thumb {
     width: var(--slider-track-height, 0.375rem);
     height: calc(var(--slider-thumb-size, 1rem) * 0.75);
-}
-
-@media (prefers-reduced-motion: reduce) {
-    .glass-slider[data-orientation="vertical"]:active .slider-range,
-    .glass-slider[data-orientation="vertical"][data-held] .slider-range {
-        transform: scale(0.97, 1);
-    }
 }
 
 /* Forced colours: the material band flattens, so the value must survive in system ink
@@ -513,7 +461,7 @@
         opacity var(--spring-present-duration) var(--ease-standard);
     opacity: 0;
     overflow: hidden;
-    border-radius: var(--radius-pill);
+    border-radius: calc(var(--slider-track-height, 1.25rem) * var(--loupe-k-max) / 2);
     pointer-events: none;
     /* The HOUSING is the only material here, and it is the ONE plate recipe composed
        at the element (`glass-plate`, on the template) — this rule authors geometry
@@ -543,7 +491,7 @@
     inset-inline-start: 0;
     inline-size: calc(var(--loupe-track-w, 0px) * var(--s));
     block-size: calc(var(--slider-track-height, 1.25rem) * var(--s));
-    border-radius: calc(var(--radius-pill) * var(--s));
+    border-radius: calc(var(--slider-track-height, 1.25rem) / 2 * var(--s));
     overflow: hidden;
     background: var(--glass-slider-track-background, var(--muted-medium));
     transform: translate(
