@@ -380,3 +380,36 @@ title that is GREEN on v11.0.1, O-268 is reverted whole (f4557c102 touches only 
   and the seat stopped at the guard refusal above. It is owed, with
   `npm run demo:dist:build` first (the boot-graph arm reads a fresh `dist-demo/`).
 - No server or browser of this seat is left running.
+
+## The finish (third resume)
+
+No row was rebuilt. The guard's earlier refusal was a stale zone sampler under a load spike;
+the guard admitted every run below. `scripts/build-B-finish-chain.sh` ran them one at a time
+(chain log `logs/finish-chain-B.out`), on the branch at 3231530e0 (the four rows, nothing
+since). The WebKit sweep waited 40 minutes in the machine-wide `webkit` lock queue behind two
+other seats' runs, then ran.
+
+| run | log | result |
+|---|---|---|
+| WebKit 2287: release-11-0-2, release-10-1-2, release-10-1-5 (`release-11-0-2.config.ts`) | `sweep-B-branch-webkit.log` | 176 passed, 3 skipped, 0 failed (15.7 min) |
+| WebKit 2287: release-11-0-1, release-11-0-1-daraksha (`release-11-0-1.config.ts`) | `sweep-B-branch-webkit-1101.log` | 11 passed |
+| coarse-touch rerun of the 38 lines in `scripts/coarse-rerun-lines.txt` | `sweep-B-branch-coarse-rerun.log` | 56 passed, 2 skipped, 0 failed (8.4 min) |
+| `npm run demo:dist:build` | `demo-dist-build-B3.log` | exit 0 |
+| `npx vitest run --maxWorkers=2` | `vitest-final-B3.log` | 275 files, 2529 passed, 10 expected fail, 1 skipped; exit 0 |
+
+- The three WebKit skips are the Chromium-only titles (`edge · the plate edge computes`,
+  `fold · an idle fold lays out once per morph frame`, `blob · from 100 ms after a sweep`);
+  the two coarse-touch skips are `fill · the light scheme's seat fills` (no hover read on
+  touch) and the same `blob` title.
+- **O-268 stands.** Every release-10-1-2 reversal title, every release-10-1-5 fit-edge and
+  host-change title (p1, p2, s2, s4, t1, n1, u1) and every O-101/O-101a cell is GREEN in
+  WebKit 2287 on the branch, so nothing reds that passes on v11.0.1, and O-266's 24 WebKit
+  O-101 cells hold after O-268.
+- The four coarse-touch cells that failed during the load spike (`m3 O-167` Slider, `n1`
+  vertical fit edge, `p1` twice) are GREEN in the rerun: they were load, not regressions.
+- With the earlier `chromium-headless-new` 190/190 and coarse-touch 135 plus this rerun, the
+  post-O-268 sweep is complete and GREEN in all three projects.
+
+Final gates for the seat: typecheck exit 0 (`logs/typecheck-final-B2.log`; no source change
+since), full vitest exit 0 after the demo dist build (above). No server or browser of this
+seat is left running.

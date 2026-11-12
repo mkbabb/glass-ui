@@ -1,0 +1,2523 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "tests-visual/playwright.config.ts",
+      "release-10-1-5.spec.ts:1601",
+      "release-10-1-5.spec.ts:1777",
+      "release-10-1-5.spec.ts:1878",
+      "release-10-1-5.spec.ts:1924",
+      "release-10-1-5.spec.ts:2028",
+      "release-10-1-5.spec.ts:2058",
+      "release-10-1-5.spec.ts:2090",
+      "release-10-1-5.spec.ts:2109",
+      "release-10-1-5.spec.ts:2222",
+      "release-10-1-5.spec.ts:2331",
+      "release-10-1-5.spec.ts:2371",
+      "release-10-1-5.spec.ts:2426",
+      "release-10-1-5.spec.ts:2444",
+      "release-10-1-5.spec.ts:2492",
+      "release-10-1-5.spec.ts:2536",
+      "release-10-1-5.spec.ts:2550",
+      "release-11-0-1-daraksha.spec.ts:25",
+      "release-11-0-1-daraksha.spec.ts:39",
+      "release-11-0-1.spec.ts:102",
+      "release-11-0-1.spec.ts:112",
+      "release-11-0-1.spec.ts:123",
+      "release-11-0-1.spec.ts:139",
+      "release-11-0-1.spec.ts:70",
+      "release-11-0-1.spec.ts:82",
+      "release-11-0-2.spec.ts:125",
+      "release-11-0-2.spec.ts:171",
+      "release-11-0-2.spec.ts:202",
+      "release-11-0-2.spec.ts:225",
+      "release-11-0-2.spec.ts:244",
+      "release-11-0-2.spec.ts:288",
+      "release-11-0-2.spec.ts:338",
+      "release-11-0-2.spec.ts:374",
+      "release-11-0-2.spec.ts:409",
+      "release-11-0-2.spec.ts:448",
+      "release-11-0-2.spec.ts:455",
+      "release-11-0-2.spec.ts:513",
+      "release-11-0-2.spec.ts:52",
+      "release-11-0-2.spec.ts:69",
+      "--project=coarse-touch",
+      "--workers=1"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/playwright.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-headless-new",
+        "name": "chromium-headless-new",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "coarse-touch",
+        "name": "coarse-touch",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "safari-webgl.spec.ts",
+          "aurora-swraster.spec.ts",
+          "release-10-1-1.spec.ts",
+          "release-10-1-2.spec.ts",
+          "release-10-1-3.spec.ts",
+          "release-10-1-4.spec.ts",
+          "release-10-1-5.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/docs/release-11.0.2/logs/sweep-B-branch-coarse-rerun.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5341",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/",
+      "url": "http://localhost:5341",
+      "reuseExistingServer": true,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "release-10-1-5.spec.ts",
+      "file": "release-10-1-5.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "m3 O-167 the dock Slider's fill is a calm ink in dark and its thumb tracks the drag",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1715,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T21:53:38.936Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-684ae8b267250dda9cac",
+          "file": "release-10-1-5.spec.ts",
+          "line": 1601,
+          "column": 5
+        },
+        {
+          "title": "n1 a fitting vertical dock's seats do not step at the expand's settle or the collapse's start, across the fit edge",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 15611,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T21:53:56.232Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-e40a5c9bcb15caf24f27",
+          "file": "release-10-1-5.spec.ts",
+          "line": 1777,
+          "column": 5
+        },
+        {
+          "title": "p1 a dock its host resizes mid-expand holds every seat at the settle (horizontal clamp, vertical yield band)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 15621,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T21:54:27.489Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-21f962bdb96a9e2af6cb",
+          "file": "release-10-1-5.spec.ts",
+          "line": 1878,
+          "column": 5
+        },
+        {
+          "title": "p2 a 1-2 px host change across the fit edge mid-expand holds every seat at the settle",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 480000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 47493,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T21:55:30.658Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-2853325beb842f925a30",
+          "file": "release-10-1-5.spec.ts",
+          "line": 1924,
+          "column": 5
+        },
+        {
+          "title": "q1 O-186 at 1440: a fit-content static dock under hover on every control keeps one rest corner, half its cross extent, no percentage",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 12550,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T21:56:18.158Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-38eed625fa0667036f9f",
+          "file": "release-10-1-5.spec.ts",
+          "line": 2028,
+          "column": 5
+        },
+        {
+          "title": "q2 O-187 at 1440: a nested .dock-run group keeps each hovered control's whole ink",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3414,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T21:56:30.713Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-d1b10db8c087f08857ce",
+          "file": "release-10-1-5.spec.ts",
+          "line": 2058,
+          "column": 5
+        },
+        {
+          "title": "q3 O-187 at 1440: the plate has exactly one scroll timeline in scope, the visible run's",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 885,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T21:56:34.133Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-a8a5418e37d467bfb5b2",
+          "file": "release-10-1-5.spec.ts",
+          "line": 2090,
+          "column": 5
+        },
+        {
+          "title": "q1 O-186 at 390: a fit-content static dock under hover on every control keeps one rest corner, half its cross extent, no percentage",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 9044,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T21:56:35.023Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-284f88369c73b9eca214",
+          "file": "release-10-1-5.spec.ts",
+          "line": 2028,
+          "column": 5
+        },
+        {
+          "title": "q2 O-187 at 390: a nested .dock-run group keeps each hovered control's whole ink",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2153,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T21:56:44.073Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-0573bf5d8d0655ab88b2",
+          "file": "release-10-1-5.spec.ts",
+          "line": 2058,
+          "column": 5
+        },
+        {
+          "title": "q3 O-187 at 390: the plate has exactly one scroll timeline in scope, the visible run's",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 884,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T21:56:46.230Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-dd43f6726591f777e225",
+          "file": "release-10-1-5.spec.ts",
+          "line": 2090,
+          "column": 5
+        },
+        {
+          "title": "r1 Q2 at 1440: a nested group holding the current seat paints every seat clear of the others, and the run's flag is its layout",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2326,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T21:56:47.117Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-c56a61f5690ab02bb3f9",
+          "file": "release-10-1-5.spec.ts",
+          "line": 2109,
+          "column": 5
+        },
+        {
+          "title": "s1 O-205 at 1440: no collapsed dock has a scrolling run, and a hidden wider face adds nothing to a fitting run",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4994,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T21:56:51.810Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-fd726872b899b8c35fe3",
+          "file": "release-10-1-5.spec.ts",
+          "line": 2222,
+          "column": 5
+        },
+        {
+          "title": "s2 O-201 at 1440: at every cap through the fit edge the first and end seats keep their whole ring, and a run that hides nothing rests round",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 420000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 44397,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T21:56:56.808Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-1682a473d1791ee296d1",
+          "file": "release-10-1-5.spec.ts",
+          "line": 2331,
+          "column": 5
+        },
+        {
+          "title": "s3 O-207 G3 a disclosure trigger's keyboard ring is the house outline, whatever it composes",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2972,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T22:00:00.562Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-6de9146feb2935913b7d",
+          "file": "release-10-1-5.spec.ts",
+          "line": 2426,
+          "column": 1
+        },
+        {
+          "title": "s4 a host padding change across the fit edge mid-expand holds every seat at the settle (vertical)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 26727,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T22:00:03.540Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-37121dd20bb29ce9ee52",
+          "file": "release-10-1-5.spec.ts",
+          "line": 2444,
+          "column": 1
+        },
+        {
+          "title": "m3 O-159 the dock README names every DockProps member and no other",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T22:01:14.920Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-cafbeed0d3674afde479",
+          "file": "release-10-1-5.spec.ts",
+          "line": 2536,
+          "column": 1
+        },
+        {
+          "title": "m3 O-160 no cut-cap or clip keyframe carries a percentage radius",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 11,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T22:01:14.928Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-56dc61b89b0f3b391bd3",
+          "file": "release-10-1-5.spec.ts",
+          "line": 2550,
+          "column": 1
+        }
+      ],
+      "suites": [
+        {
+          "title": "critique 7, coarse phone",
+          "file": "release-10-1-5.spec.ts",
+          "line": 1737,
+          "column": 6,
+          "specs": [
+            {
+              "title": "m3 O-167 the dock Slider's fill is a calm ink in dark and its thumb tracks the drag",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "coarse-touch",
+                  "projectName": "coarse-touch",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1807,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T21:53:37.007Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ba3de8f038291be5029b-427e72d227fa3ac5f0aa",
+              "file": "release-10-1-5.spec.ts",
+              "line": 1601,
+              "column": 5
+            }
+          ]
+        },
+        {
+          "title": "critique 8, coarse phone",
+          "file": "release-10-1-5.spec.ts",
+          "line": 1815,
+          "column": 6,
+          "specs": [
+            {
+              "title": "n1 a fitting vertical dock's seats do not step at the expand's settle or the collapse's start, across the fit edge",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 240000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "coarse-touch",
+                  "projectName": "coarse-touch",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 15569,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T21:53:40.657Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ba3de8f038291be5029b-bb9ff9bd8942287beb76",
+              "file": "release-10-1-5.spec.ts",
+              "line": 1777,
+              "column": 5
+            }
+          ]
+        },
+        {
+          "title": "critique 9, coarse phone",
+          "file": "release-10-1-5.spec.ts",
+          "line": 1911,
+          "column": 6,
+          "specs": [
+            {
+              "title": "p1 a dock its host resizes mid-expand holds every seat at the settle (horizontal clamp, vertical yield band)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 240000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "coarse-touch",
+                  "projectName": "coarse-touch",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 15635,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T21:54:11.848Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ba3de8f038291be5029b-f7109b8de18e1969154f",
+              "file": "release-10-1-5.spec.ts",
+              "line": 1878,
+              "column": 5
+            }
+          ]
+        },
+        {
+          "title": "critique 10, coarse phone",
+          "file": "release-10-1-5.spec.ts",
+          "line": 2001,
+          "column": 6,
+          "specs": [
+            {
+              "title": "p2 a 1-2 px host change across the fit edge mid-expand holds every seat at the settle",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 480000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "coarse-touch",
+                  "projectName": "coarse-touch",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 47537,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T21:54:43.116Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ba3de8f038291be5029b-b896b2e2881ca75f7ead",
+              "file": "release-10-1-5.spec.ts",
+              "line": 1924,
+              "column": 5
+            }
+          ]
+        },
+        {
+          "title": "fix 10, coarse phone",
+          "file": "release-10-1-5.spec.ts",
+          "line": 2152,
+          "column": 6,
+          "specs": [
+            {
+              "title": "r1 Q2 at 390: a nested group holding the current seat paints every seat clear of the others, and the run's flag is its layout",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "coarse-touch",
+                  "projectName": "coarse-touch",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2356,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T21:56:49.447Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ba3de8f038291be5029b-22f60b79f96ae8cc4c1e",
+              "file": "release-10-1-5.spec.ts",
+              "line": 2109,
+              "column": 5
+            }
+          ]
+        },
+        {
+          "title": "fix 11, coarse phone",
+          "file": "release-10-1-5.spec.ts",
+          "line": 2410,
+          "column": 6,
+          "specs": [
+            {
+              "title": "s1 O-205 at 390: no collapsed dock has a scrolling run, and a hidden wider face adds nothing to a fitting run",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "coarse-touch",
+                  "projectName": "coarse-touch",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 4915,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T21:57:41.211Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ba3de8f038291be5029b-1ff5b90784ae471fa0c1",
+              "file": "release-10-1-5.spec.ts",
+              "line": 2222,
+              "column": 5
+            },
+            {
+              "title": "s2 O-201 at 390: at every cap through the fit edge the first and end seats keep their whole ring, and a run that hides nothing rests round",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 420000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "coarse-touch",
+                  "projectName": "coarse-touch",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 44292,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T21:57:46.132Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ba3de8f038291be5029b-0aa12c8f9c583fbc6241",
+              "file": "release-10-1-5.spec.ts",
+              "line": 2331,
+              "column": 5
+            }
+          ]
+        },
+        {
+          "title": "fix 12, desktop",
+          "file": "release-10-1-5.spec.ts",
+          "line": 2416,
+          "column": 6,
+          "specs": [
+            {
+              "title": "t1 O-201 vertical: through the fit edge the end seats keep their whole ring, bounded in the yield band",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 420000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "coarse-touch",
+                  "projectName": "coarse-touch",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 45034,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T21:58:30.428Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ba3de8f038291be5029b-d3a3509f9caaac92b926",
+              "file": "release-10-1-5.spec.ts",
+              "line": 2371,
+              "column": 5
+            }
+          ]
+        },
+        {
+          "title": "fix 12, coarse phone",
+          "file": "release-10-1-5.spec.ts",
+          "line": 2421,
+          "column": 6,
+          "specs": [
+            {
+              "title": "t1 O-201 vertical: through the fit edge the end seats keep their whole ring, bounded in the yield band",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 420000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "coarse-touch",
+                  "projectName": "coarse-touch",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 45088,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T21:59:15.468Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ba3de8f038291be5029b-48b801e04d810d04a743",
+              "file": "release-10-1-5.spec.ts",
+              "line": 2371,
+              "column": 5
+            }
+          ]
+        },
+        {
+          "title": "fix 13, coarse phone",
+          "file": "release-10-1-5.spec.ts",
+          "line": 2490,
+          "column": 6,
+          "specs": [
+            {
+              "title": "u1 a collapsing vertical run that does not fit keeps its scroll on the first morph frame",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 240000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "coarse-touch",
+                  "projectName": "coarse-touch",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 44642,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T22:00:30.271Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ba3de8f038291be5029b-29bdc58475299cf25308",
+              "file": "release-10-1-5.spec.ts",
+              "line": 2492,
+              "column": 5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "release-11-0-1-daraksha.spec.ts",
+      "file": "release-11-0-1-daraksha.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "daraksha dock-cutcap ?radius-dock=1.875rem&active=page&end=1: collapsed, then open",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2944,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "cutcap collapsed { \"glass\": \"see package.json\", \"active\": \"page\", \"end\": true, \"collapsed\": true, \"corners\": [ \"30px\", \"30px\", \"30px\", \"30px\" ], \"plateCorners\": [ \"30px\", \"30px\", \"30px\", \"30px\" ], \"runOverflow\": 0, \"plateClip\": \"inset(0px)\", \"seat\": { \"w\": 81.09375, \"h\": 32.78125, \"radius\": \"22px\" } }\n"
+                    },
+                    {
+                      "text": "cutcap open { \"glass\": \"see package.json\", \"active\": \"page\", \"end\": true, \"collapsed\": false, \"corners\": [ \"30px\", \"30px\", \"30px\", \"30px\" ], \"plateCorners\": [ \"30px\", \"30px\", \"30px\", \"30px\" ], \"runOverflow\": 0, \"plateClip\": \"inset(0px)\", \"seat\": { \"w\": 81.09375, \"h\": 32.78125, \"radius\": \"22px\" } }\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T22:01:14.950Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "57ad8628f9c5d9c98732-89933e1945846172561b",
+          "file": "release-11-0-1-daraksha.spec.ts",
+          "line": 25,
+          "column": 1
+        },
+        {
+          "title": "daraksha dock-press-scroll under reduced motion: open, then a quick press on Again",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2848,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "press-scroll before {\"presses\":0,\"scrollLeft\":0,\"scrollWidth\":121,\"clientWidth\":121}\n"
+                    },
+                    {
+                      "text": "press-scroll after {\"presses\":1,\"scrollLeft\":0,\"scrollWidth\":121,\"clientWidth\":121}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T22:01:17.900Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "57ad8628f9c5d9c98732-594830f091761ecea73f",
+          "file": "release-11-0-1-daraksha.spec.ts",
+          "line": 39,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "release-11-0-1.spec.ts",
+      "file": "release-11-0-1.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "o3 every frame of the expand and of the collapse paints a round end",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3371,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "o3 expand {\"frames\":169,\"morphing\":66,\"bad\":[]}\n"
+                    },
+                    {
+                      "text": "o3 collapse {\"frames\":169,\"morphing\":67,\"bad\":[]}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T22:01:25.892Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9b4b2e3355e572315838-f4b33b04e01b104bd05c",
+          "file": "release-11-0-1.spec.ts",
+          "line": 139,
+          "column": 1
+        }
+      ],
+      "suites": [
+        {
+          "title": "o1 the wide label seat",
+          "file": "release-11-0-1.spec.ts",
+          "line": 69,
+          "column": 6,
+          "specs": [
+            {
+              "title": "o1 the hover plate of a compact 'Focus' label seat is a capsule, never an ellipse",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "coarse-touch",
+                  "projectName": "coarse-touch",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 876,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "o1 focus hover {\"radii\":[\"22px\",\"22px\",\"22px\",\"22px\"],\"w\":77,\"h\":33}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T22:01:20.756Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "9b4b2e3355e572315838-9ef60d5912d8ad448e8b",
+              "file": "release-11-0-1.spec.ts",
+              "line": 70,
+              "column": 5
+            },
+            {
+              "title": "o1 the active 'Name ›' seat's plate, at rest and under hover, is a capsule",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "coarse-touch",
+                  "projectName": "coarse-touch",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 879,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "o1 name rest {\"radii\":[\"22px\",\"22px\",\"22px\",\"22px\"],\"w\":86,\"h\":33} hover {\"radii\":[\"22px\",\"22px\",\"22px\",\"22px\"],\"w\":86,\"h\":33}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T22:01:21.637Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "9b4b2e3355e572315838-47b6114648abbac0eded",
+              "file": "release-11-0-1.spec.ts",
+              "line": 82,
+              "column": 5
+            }
+          ]
+        },
+        {
+          "title": "o2 the dock's end, house tokens",
+          "file": "release-11-0-1.spec.ts",
+          "line": 101,
+          "column": 10,
+          "specs": [
+            {
+              "title": "o2 house tokens: open at rest, the plate and the box are round",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "coarse-touch",
+                  "projectName": "coarse-touch",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 563,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "o2 open house tokens plate {\"radii\":[\"30px\",\"30px\",\"30px\",\"30px\"],\"w\":264,\"h\":60} root {\"radii\":[\"30px\",\"30px\",\"30px\",\"30px\"],\"w\":264,\"h\":60}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T22:01:22.521Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "9b4b2e3355e572315838-b1ab40e3fcfb41d86af7",
+              "file": "release-11-0-1.spec.ts",
+              "line": 102,
+              "column": 9
+            },
+            {
+              "title": "o2 house tokens: collapsed with a persistent seat beside the summary, the plate and the box are round",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "coarse-touch",
+                  "projectName": "coarse-touch",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 583,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "o2 collapsed house tokens plate {\"radii\":[\"30px\",\"30px\",\"30px\",\"30px\"],\"w\":110,\"h\":60} root {\"radii\":[\"30px\",\"30px\",\"30px\",\"30px\"],\"w\":110,\"h\":60}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T22:01:23.089Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "9b4b2e3355e572315838-962db61c4642b6a74927",
+              "file": "release-11-0-1.spec.ts",
+              "line": 112,
+              "column": 9
+            },
+            {
+              "title": "o2 house tokens: open on the narrow face beside a wider one, with a #persistent-end seat, the plate is round",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "coarse-touch",
+                  "projectName": "coarse-touch",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 556,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "o2 narrow house tokens plate {\"radii\":[\"30px\",\"30px\",\"30px\",\"30px\"],\"w\":170,\"h\":60} root {\"radii\":[\"30px\",\"30px\",\"30px\",\"30px\"],\"w\":170,\"h\":60} run {\"scroll\":0}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T22:01:23.678Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "9b4b2e3355e572315838-2ffa1d6e1cd20557a178",
+              "file": "release-11-0-1.spec.ts",
+              "line": 123,
+              "column": 9
+            }
+          ]
+        },
+        {
+          "title": "o2 the dock's end, radius-dock 1.875rem",
+          "file": "release-11-0-1.spec.ts",
+          "line": 101,
+          "column": 10,
+          "specs": [
+            {
+              "title": "o2 radius-dock 1.875rem: open at rest, the plate and the box are round",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "coarse-touch",
+                  "projectName": "coarse-touch",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 562,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "o2 open radius-dock 1.875rem plate {\"radii\":[\"30px\",\"30px\",\"30px\",\"30px\"],\"w\":264,\"h\":60} root {\"radii\":[\"30px\",\"30px\",\"30px\",\"30px\"],\"w\":264,\"h\":60}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T22:01:24.242Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "9b4b2e3355e572315838-0fb56fb12827c0c6669e",
+              "file": "release-11-0-1.spec.ts",
+              "line": 102,
+              "column": 9
+            },
+            {
+              "title": "o2 radius-dock 1.875rem: collapsed with a persistent seat beside the summary, the plate and the box are round",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "coarse-touch",
+                  "projectName": "coarse-touch",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 536,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "o2 collapsed radius-dock 1.875rem plate {\"radii\":[\"30px\",\"30px\",\"30px\",\"30px\"],\"w\":110,\"h\":60} root {\"radii\":[\"30px\",\"30px\",\"30px\",\"30px\"],\"w\":110,\"h\":60}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T22:01:24.808Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "9b4b2e3355e572315838-b986e12e4f79dc0b0a7b",
+              "file": "release-11-0-1.spec.ts",
+              "line": 112,
+              "column": 9
+            },
+            {
+              "title": "o2 radius-dock 1.875rem: open on the narrow face beside a wider one, with a #persistent-end seat, the plate is round",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "coarse-touch",
+                  "projectName": "coarse-touch",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 539,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "o2 narrow radius-dock 1.875rem plate {\"radii\":[\"30px\",\"30px\",\"30px\",\"30px\"],\"w\":170,\"h\":60} root {\"radii\":[\"30px\",\"30px\",\"30px\",\"30px\"],\"w\":170,\"h\":60} run {\"scroll\":0}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T22:01:25.347Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "9b4b2e3355e572315838-8cd3b6f6ace3a5f0d48c",
+              "file": "release-11-0-1.spec.ts",
+              "line": 123,
+              "column": 9
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "release-11-0-2.spec.ts",
+      "file": "release-11-0-2.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "press · a quick press on Again lands under reduced motion at 1440",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "press",
+                  "description": "{\"rest\":{\"scrollLeft\":0,\"scrollWidth\":121,\"clientWidth\":121},\"presses\":{\"Again\":1},\"events\":[\"pointerdown:Again\",\"pointerup:Again\",\"click:Again\"],\"scrolls\":[0,0,0]}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2222,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T22:01:29.662Z",
+                  "annotations": [
+                    {
+                      "type": "press",
+                      "description": "{\"rest\":{\"scrollLeft\":0,\"scrollWidth\":121,\"clientWidth\":121},\"presses\":{\"Again\":1},\"events\":[\"pointerdown:Again\",\"pointerup:Again\",\"click:Again\"],\"scrolls\":[0,0,0]}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-3c42a0b74fc5fdc3e1c6",
+          "file": "release-11-0-2.spec.ts",
+          "line": 125,
+          "column": 5
+        },
+        {
+          "title": "press · a quick press on Again lands under reduced motion at 390",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "press",
+                  "description": "{\"rest\":{\"scrollLeft\":0,\"scrollWidth\":121,\"clientWidth\":121},\"presses\":{\"Again\":1},\"events\":[\"pointerdown:Again\",\"pointerup:Again\",\"click:Again\"],\"scrolls\":[0,0,0]}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2220,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T22:01:31.888Z",
+                  "annotations": [
+                    {
+                      "type": "press",
+                      "description": "{\"rest\":{\"scrollLeft\":0,\"scrollWidth\":121,\"clientWidth\":121},\"presses\":{\"Again\":1},\"events\":[\"pointerdown:Again\",\"pointerup:Again\",\"click:Again\"],\"scrolls\":[0,0,0]}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-42a562a770d30265075c",
+          "file": "release-11-0-2.spec.ts",
+          "line": 125,
+          "column": 5
+        },
+        {
+          "title": "slider · a scrubber at its minimum draws its value (sm)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "slider",
+                  "description": "{\"value\":\"50\",\"thumb\":{\"w\":8,\"h\":8,\"opacity\":1},\"range\":{\"left\":0,\"w\":8},\"track\":{\"x\":48,\"y\":54,\"w\":224,\"h\":12},\"diff\":12.189814814814815}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 467,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T22:01:34.111Z",
+                  "annotations": [
+                    {
+                      "type": "slider",
+                      "description": "{\"value\":\"50\",\"thumb\":{\"w\":8,\"h\":8,\"opacity\":1},\"range\":{\"left\":0,\"w\":8},\"track\":{\"x\":48,\"y\":54,\"w\":224,\"h\":12},\"diff\":12.189814814814815}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-74f6f10051e7d4dd5132",
+          "file": "release-11-0-2.spec.ts",
+          "line": 171,
+          "column": 5
+        },
+        {
+          "title": "slider · a scrubber at its minimum draws its value (md)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "slider",
+                  "description": "{\"value\":\"50\",\"thumb\":{\"w\":16,\"h\":16,\"opacity\":1},\"range\":{\"left\":0,\"w\":16},\"track\":{\"x\":48,\"y\":114,\"w\":224,\"h\":20},\"diff\":10.59}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 470,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T22:01:34.581Z",
+                  "annotations": [
+                    {
+                      "type": "slider",
+                      "description": "{\"value\":\"50\",\"thumb\":{\"w\":16,\"h\":16,\"opacity\":1},\"range\":{\"left\":0,\"w\":16},\"track\":{\"x\":48,\"y\":114,\"w\":224,\"h\":20},\"diff\":10.59}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-fda0e4d144a72b8abdc9",
+          "file": "release-11-0-2.spec.ts",
+          "line": 171,
+          "column": 5
+        },
+        {
+          "title": "slider · a scrubber at its minimum draws its value (lg)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "slider",
+                  "description": "{\"value\":\"50\",\"thumb\":{\"w\":24,\"h\":24,\"opacity\":1},\"range\":{\"left\":0,\"w\":24},\"track\":{\"x\":48,\"y\":176,\"w\":224,\"h\":28},\"diff\":9.223639455782314}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 464,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T22:01:35.055Z",
+                  "annotations": [
+                    {
+                      "type": "slider",
+                      "description": "{\"value\":\"50\",\"thumb\":{\"w\":24,\"h\":24,\"opacity\":1},\"range\":{\"left\":0,\"w\":24},\"track\":{\"x\":48,\"y\":176,\"w\":224,\"h\":28},\"diff\":9.223639455782314}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-b94dcde3e6af09620c4b",
+          "file": "release-11-0-2.spec.ts",
+          "line": 171,
+          "column": 5
+        },
+        {
+          "title": "slider · the thumb paints --card by default and --slider-thumb-bg when set",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "slider",
+                  "description": "{\"card\":\"rgb(253, 245, 236)\",\"unset\":\"rgb(253, 245, 236)\",\"set\":\"rgb(200, 30, 60)\"}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 430,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T22:01:35.522Z",
+                  "annotations": [
+                    {
+                      "type": "slider",
+                      "description": "{\"card\":\"rgb(253, 245, 236)\",\"unset\":\"rgb(253, 245, 236)\",\"set\":\"rgb(200, 30, 60)\"}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-baa3985357500d23db5b",
+          "file": "release-11-0-2.spec.ts",
+          "line": 202,
+          "column": 1
+        },
+        {
+          "title": "edge · a GlassDock page opens and stays alive",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "edge",
+                  "description": "{\"crashed\":false,\"border\":\"color(srgb 0.11 0.098 0.09 / 0.08)\"}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1996,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T22:01:35.956Z",
+                  "annotations": [
+                    {
+                      "type": "edge",
+                      "description": "{\"crashed\":false,\"border\":\"color(srgb 0.11 0.098 0.09 / 0.08)\"}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-d7762556018e43771084",
+          "file": "release-11-0-2.spec.ts",
+          "line": 225,
+          "column": 1
+        },
+        {
+          "title": "edge · the plate edge computes 11.0.0's colour at t = 0, 0.5 and 1",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "edge",
+                  "description": "[{\"t\":0,\"plate\":\"color(srgb 0.11 0.098 0.09 / 0.05)\",\"ref\":\"color(srgb 0.11 0.098 0.09 / 0.05)\",\"delta\":0},{\"t\":0.5,\"plate\":\"color(srgb 0.11 0.098 0.09 / 0.065)\",\"ref\":\"color(srgb 0.11 0.098 0.09 / 0.065)\",\"delta\":0},{\"t\":1,\"plate\":\"color(srgb 0.11 0.098 0.09 / 0.08)\",\"ref\":\"color(srgb 0.11 0.098 0.09 / 0.08)\",\"delta\":0}]"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 537,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T22:01:37.957Z",
+                  "annotations": [
+                    {
+                      "type": "edge",
+                      "description": "[{\"t\":0,\"plate\":\"color(srgb 0.11 0.098 0.09 / 0.05)\",\"ref\":\"color(srgb 0.11 0.098 0.09 / 0.05)\",\"delta\":0},{\"t\":0.5,\"plate\":\"color(srgb 0.11 0.098 0.09 / 0.065)\",\"ref\":\"color(srgb 0.11 0.098 0.09 / 0.065)\",\"delta\":0},{\"t\":1,\"plate\":\"color(srgb 0.11 0.098 0.09 / 0.08)\",\"ref\":\"color(srgb 0.11 0.098 0.09 / 0.08)\",\"delta\":0}]"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-92aef886a58e2d3e8a06",
+          "file": "release-11-0-2.spec.ts",
+          "line": 244,
+          "column": 1
+        },
+        {
+          "title": "static · a static dock's controls draw no backdrop-filter (light)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "static",
+                  "description": "{\"mode\":\"static\",\"hits\":[]}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3133,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T22:01:38.498Z",
+                  "annotations": [
+                    {
+                      "type": "static",
+                      "description": "{\"mode\":\"static\",\"hits\":[]}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-a286238481ed6dfc8b27",
+          "file": "release-11-0-2.spec.ts",
+          "line": 288,
+          "column": 5
+        },
+        {
+          "title": "static · a static dock's controls draw no backdrop-filter (dark)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "static",
+                  "description": "{\"mode\":\"static\",\"hits\":[]}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4620,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T22:01:41.635Z",
+                  "annotations": [
+                    {
+                      "type": "static",
+                      "description": "{\"mode\":\"static\",\"hits\":[]}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-3f29e8d89afa3e148bde",
+          "file": "release-11-0-2.spec.ts",
+          "line": 288,
+          "column": 5
+        },
+        {
+          "title": "fill · in dark a hovered, pressed or selected seat lifts the plate (static)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "fill",
+                  "description": "{\"plate\":0.021237872443114533,\"selected\":0.05563346038769309,\"selectedTab\":0.05566370420868531,\"restingTab\":0.02125501612123965,\"press\":0.04514466017408414}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1960,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T22:01:46.260Z",
+                  "annotations": [
+                    {
+                      "type": "fill",
+                      "description": "{\"plate\":0.021237872443114533,\"selected\":0.05563346038769309,\"selectedTab\":0.05566370420868531,\"restingTab\":0.02125501612123965,\"press\":0.04514466017408414}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-fc678a9527e011c44e41",
+          "file": "release-11-0-2.spec.ts",
+          "line": 338,
+          "column": 5
+        },
+        {
+          "title": "fill · in dark a hovered, pressed or selected seat lifts the plate (live)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "fill",
+                  "description": "{\"plate\":0.03271609371382661,\"selected\":0.07164364470335735,\"selectedTab\":0.07113686171383812,\"restingTab\":0.03271609371382663,\"press\":0.060151907099004684}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1952,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T22:01:48.224Z",
+                  "annotations": [
+                    {
+                      "type": "fill",
+                      "description": "{\"plate\":0.03271609371382661,\"selected\":0.07164364470335735,\"selectedTab\":0.07113686171383812,\"restingTab\":0.03271609371382663,\"press\":0.060151907099004684}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-e900eef0d2b77b5eb5c3",
+          "file": "release-11-0-2.spec.ts",
+          "line": 338,
+          "column": 5
+        },
+        {
+          "title": "fill · the light scheme's seat fills are the plate rungs",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "hover is a fine-pointer read",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts",
+                    "line": 375,
+                    "column": 10
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 35,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T22:01:50.182Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "hover is a fine-pointer read",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts",
+                        "line": 375,
+                        "column": 10
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-e888847873c2c5df695b",
+          "file": "release-11-0-2.spec.ts",
+          "line": 374,
+          "column": 1
+        },
+        {
+          "title": "fold · an idle fold lays out once per morph frame on a scrolling page",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "fold",
+                  "description": "{\"frames\":302,\"morphFrames\":68,\"collapsed\":true,\"layouts\":77}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5658,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T22:01:50.222Z",
+                  "annotations": [
+                    {
+                      "type": "fold",
+                      "description": "{\"frames\":302,\"morphFrames\":68,\"collapsed\":true,\"layouts\":77}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-41ef0b8a3b563a24f677",
+          "file": "release-11-0-2.spec.ts",
+          "line": 409,
+          "column": 1
+        },
+        {
+          "title": "static · a live dock's active control keeps its capsule lens",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 762,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T22:01:55.884Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-afb66db285576ea5c377",
+          "file": "release-11-0-2.spec.ts",
+          "line": 448,
+          "column": 1
+        },
+        {
+          "title": "blob · from 100 ms after a sweep and release the body stays a bead, not a filled box",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "one Chromium cell, as the row asks",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts",
+                    "line": 456,
+                    "column": 10
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 43,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T22:01:56.652Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "one Chromium cell, as the row asks",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts",
+                        "line": 456,
+                        "column": 10
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-611ca82b8931a434f270",
+          "file": "release-11-0-2.spec.ts",
+          "line": 455,
+          "column": 1
+        },
+        {
+          "title": "cutcap · the open narrow face with an end seat has four equal plate corners at 1440",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "cutcap",
+                  "description": "{\"collapsed\":false,\"corners\":[30,30,30,30],\"clip\":\"inset(0px)\",\"box\":[170,60],\"runOverflow\":0}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2205,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T22:01:56.700Z",
+                  "annotations": [
+                    {
+                      "type": "cutcap",
+                      "description": "{\"collapsed\":false,\"corners\":[30,30,30,30],\"clip\":\"inset(0px)\",\"box\":[170,60],\"runOverflow\":0}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-4139b320552494e0490c",
+          "file": "release-11-0-2.spec.ts",
+          "line": 513,
+          "column": 5
+        },
+        {
+          "title": "cutcap · the open narrow face with an end seat has four equal plate corners at 390",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "cutcap",
+                  "description": "{\"collapsed\":false,\"corners\":[30,30,30,30],\"clip\":\"inset(0px)\",\"box\":[170,60],\"runOverflow\":0}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2185,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T22:01:58.908Z",
+                  "annotations": [
+                    {
+                      "type": "cutcap",
+                      "description": "{\"collapsed\":false,\"corners\":[30,30,30,30],\"clip\":\"inset(0px)\",\"box\":[170,60],\"runOverflow\":0}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-892fc965a85c5cb3e6cc",
+          "file": "release-11-0-2.spec.ts",
+          "line": 513,
+          "column": 5
+        }
+      ],
+      "suites": [
+        {
+          "title": "dark · useGlobalDark",
+          "file": "release-11-0-2.spec.ts",
+          "line": 51,
+          "column": 6,
+          "specs": [
+            {
+              "title": "dark · a fresh key opens on initialValue while the default key holds auto",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "coarse-touch",
+                  "projectName": "coarse-touch",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 126,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T22:01:29.278Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "6be085e04bfac81dcd8c-3a24337ce62ca702ba19",
+              "file": "release-11-0-2.spec.ts",
+              "line": 52,
+              "column": 5
+            },
+            {
+              "title": "dark · night chosen twice on a dark system stays night when the system turns light",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "coarse-touch",
+                  "projectName": "coarse-touch",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 249,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T22:01:29.408Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "6be085e04bfac81dcd8c-d5ed21cdcba6a60169d3",
+              "file": "release-11-0-2.spec.ts",
+              "line": 69,
+              "column": 5
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-12T21:53:35.329Z",
+    "duration": 505820.283,
+    "expected": 56,
+    "skipped": 2,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}
