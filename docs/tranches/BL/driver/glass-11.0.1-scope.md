@@ -68,3 +68,5 @@ Gates, in both engines, light and dark, at 390 and 1440:
 - O-267 (FIRST in 11.0.2, before O-223): a focused Slider has no focus indicator under forced colors (regression in 10.1.5 and 11.0.1); the track takes a real outline there; audit every `outline: none` the 10.1.5 patch added. One source-and-tests commit so the 10.1.x line can cherry-pick it as 10.1.6.
 - O-268: while curing O-266, count the layouts a dock's idle fold costs on a scrolling page (color saw 37 where 5 are allowed) and cure it if the fold lays out per frame.
 - O-269: in dark, a dock control's hover and active fill lightens the plate (today it is a light-scheme ink and reads darker); witness by luminance against the plate, both engines.
+- O-271: dock rows overflow 4 to 8 px when a persistent region sits beside the layers (fourier; regression in 11.0.1).
+- O-270: every dock seat (control, trigger, tab) takes a corner of half its block size.
