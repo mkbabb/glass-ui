@@ -261,7 +261,7 @@ changes come first, each with what to do.
   and the rest) so they no longer depend on a source scan.
 - Installed TypeScript consumers no longer see stylesheet imports in the declarations.
 
-## 10.1.5 — 2026-11-11
+## 10.1.5 — 2026-11-12
 
 A patch for five paint defects value.js reported from color.babb.dev, keyframes.babb.dev
 and fourier.babb.dev on 10.1.4 (records: `docs/tranches/BL/audit/INBOUND.md` O-129 rows
@@ -273,10 +273,10 @@ on the pill (`50%` to half the plate's measured cross extent); under
 the page ground deepened, O-182); the Slider's default `--liquid-fill-tint` in dark
 (`--glass-capsule-warm` to the foreground at 22%, O-167); and `--glass-level` on a
 static-backdrop dock's plate (the root's inherited 0 to 1, O-157). Two tokens are new, `--icon-label-gap` (0.25rem) and
-`--field-text-floor` (0 px, 16 px under a coarse pointer). The dock publishes four new
-measured properties on its root, `--dock-plate-cross-px`, `--dock-seat-max-inline-px`,
-`--dock-seat-max-block-px` and `--dock-run-room-block`, and a `data-run-fits` attribute on
-the root.
+`--field-text-floor` (0 px, 16 px under a coarse pointer). The dock publishes on its root four new
+measured properties, `--dock-plate-cross-px`, `--dock-seat-max-inline-px`,
+`--dock-seat-max-block-px` and `--dock-run-room-block`, and a `data-run-fits` attribute
+(`.glass-dock[data-run-fits]`).
 
 - **The dock pill's corner is a circle at rest (O-129 r1).** The cut-cap keyframes
   rested at `--dock-cap-rest: 50%`. A percentage radius resolves per axis, so whenever
