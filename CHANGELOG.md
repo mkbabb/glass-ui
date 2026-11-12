@@ -17,6 +17,17 @@ A patch on 11.0.1. Nothing is removed or renamed.
   `initialValue`, a toggle now stores `dark` or `light`. A stored `auto` still follows
   the system, and without an `initialValue` the toggle behaves as before.
 
+- **A page with a GlassDock no longer crashes Playwright's WebKit.** The dock's edge
+  mixed two translucent colours that were each a mix themselves, a value the WebKit
+  build Playwright ships cannot compute, so every page with a dock died in it (Safari
+  was never affected). The edge now moves one ink strength between two new tokens,
+  `--glass-edge-floating` (5%) and `--glass-edge-dock` (8%), and computes the same
+  colour as before at rest, open and every step between. `--glass-border-floating` and
+  `--glass-border-dock` are now made from those strengths and keep their values. If you
+  recoloured the dock's edge by setting `--glass-border-dock`, the dock no longer reads
+  it: set `--glass-edge-dock` to a strength instead. The edge's ink is the dock's
+  `--foreground`.
+
 ## 11.0.1 — 2026-11-12
 
 A patch that brings the 10.1.5 fixes forward onto 11.0. If you saw the dock's hover

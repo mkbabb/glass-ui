@@ -95,9 +95,9 @@
             linear-gradient(var(--glass-veil), var(--glass-veil)),
             var(--card);
         /* The EXPANDED endpoint only — the collapsed one already resolves to
-           `--glass-border-floating` on the shell (shell.css), so re-declaring it here
+           `--glass-edge-floating` on the shell (shell.css), so re-declaring it here
            was a byte-identical no-op. */
-        --dock-plate-expanded-border: var(--glass-border-floating);
+        --dock-plate-expanded-edge: var(--glass-edge-floating);
         backdrop-filter: none;
         -webkit-backdrop-filter: none;
     }

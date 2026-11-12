@@ -128,11 +128,21 @@
            the 1.625× held optic derives from. */
         --glass-grasp-rest-filter: var(--dock-surface-blur);
         --glass-grasp-radius: var(--glass-blur-resting-radius);
+        /* The edge lerps its ink strength between the two endpoints inside one
+           `color-mix()` with one translucent arm. Mixing the two endpoint colours,
+           each itself a translucent mix, kills the page in Playwright WebKit. */
         border: 1.5px solid
             color-mix(
                 in srgb,
-                var(--dock-plate-expanded-border) calc(var(--dock-expand-t) * 100%),
-                var(--dock-plate-collapsed-border)
+                var(--foreground)
+                    calc(
+                        var(--dock-plate-collapsed-edge) +
+                            (
+                                var(--dock-plate-expanded-edge) -
+                                    var(--dock-plate-collapsed-edge)
+                            ) * var(--dock-expand-t)
+                    ),
+                transparent
             );
     }
 

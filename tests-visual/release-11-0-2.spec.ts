@@ -7,6 +7,9 @@
 //   press  under `prefers-reduced-motion: reduce`, a quick press on a seat of an open
 //          dock's active layer lands its click on that seat, by mouse and by touch
 //          (daraksha's glass-only repro `dock-press-scroll`, ported to `src/`)
+//   edge   a GlassDock page opens and stays alive in unshimmed Playwright WebKit (the
+//          `webkit-2311` project, the build Playwright resolves), and in Chromium the
+//          plate edge computes 11.0.0's colour at t = 0, 0.5 and 1
 //   slider a scrubber Slider at its minimum still draws its value: the fill is at least
 //          the thumb wide and the thumb is painted, so the well's leading end differs
 //          from its empty trailing end
@@ -181,3 +184,49 @@ for (const size of ["sm", "md", "lg"]) {
         expect(diff).toBeGreaterThan(8);
     });
 }
+
+test("edge · a GlassDock page opens and stays alive", async ({ page }, info) => {
+    let crashed = false;
+    page.on("crash", () => (crashed = true));
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await page.goto("/tests-visual/release-11-0-2/press-harness.html");
+    await page.locator(".press-dock .dock-plate").waitFor();
+    await page.waitForTimeout(600);
+    const summary = page.locator('[aria-label$="open the dock"]').first();
+    if (info.project.name === "coarse-touch") await summary.tap();
+    else await summary.hover();
+    await page.waitForTimeout(1200);
+    const border = await page.evaluate(
+        () => getComputedStyle(document.querySelector(".press-dock .dock-plate")!).borderTopColor,
+    );
+    info.annotations.push({ type: "edge", description: JSON.stringify({ crashed, border }) });
+    expect(crashed).toBe(false);
+    expect(border).toMatch(/\/ 0\.0[5-8]/);
+});
+
+test("edge · the plate edge computes 11.0.0's colour at t = 0, 0.5 and 1", async ({ page }, info) => {
+    test.skip(info.project.name.startsWith("webkit"), "the 11.0.0 reference form is the one WebKit cannot compute");
+    await page.goto("/tests-visual/release-11-0-2/press-harness.html");
+    await page.locator(".press-dock .dock-plate").waitFor();
+    await page.waitForTimeout(400);
+    const rows = await page.evaluate(() => {
+        const plate = document.querySelector<HTMLElement>(".press-dock .dock-plate")!;
+        // 11.0.0's edge: the dock hairline mixed into the floating one by t, each a
+        // translucent mix of the plate's own foreground.
+        const ref = document.createElement("span");
+        ref.style.cssText =
+            "position:absolute;border:1.5px solid color-mix(in srgb, color-mix(in srgb, var(--foreground) 8%, transparent) calc(var(--dock-expand-t) * 100%), color-mix(in srgb, var(--foreground) 5%, transparent))";
+        plate.append(ref);
+        const nums = (c: string) => (c.match(/[\d.]+/g) ?? []).map(Number);
+        const out = [];
+        for (const t of [0, 0.5, 1]) {
+            plate.style.setProperty("--dock-expand-t", String(t));
+            out.push({ t, plate: getComputedStyle(plate).borderTopColor, ref: getComputedStyle(ref).borderTopColor });
+        }
+        ref.remove();
+        plate.style.removeProperty("--dock-expand-t");
+        return out.map((r) => ({ ...r, delta: Math.max(...nums(r.plate).map((v, i) => Math.abs(v - (nums(r.ref)[i] ?? NaN)))) }));
+    });
+    info.annotations.push({ type: "edge", description: JSON.stringify(rows) });
+    for (const r of rows) expect(r.delta, `t = ${r.t}: ${r.plate} against ${r.ref}`).toBeLessThan(0.002);
+});
