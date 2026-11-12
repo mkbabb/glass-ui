@@ -1,0 +1,84 @@
+
+Running 1 test using 1 worker
+
+  ✘  1 [webkit] › tests-visual/release-10-1-5.spec.ts:2475:5 › fix 13, coarse phone › u1 a collapsing vertical run that does not fit keeps its scroll on the first morph frame (46.3s)
+
+
+  1) [webkit] › tests-visual/release-10-1-5.spec.ts:2475:5 › fix 13, coarse phone › u1 a collapsing vertical run that does not fit keeps its scroll on the first morph frame 
+
+    Error: collapse starts whose run scrolled or whose first seat stepped
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 54
+
+    - Array []
+    + Array [
+    +   Object {
+    +     "i": 0,
+    +     "p": Object {
+    +       "morphing": false,
+    +       "s1": 24,
+    +       "st": 0,
+    +     },
+    +     "q": Object {
+    +       "morphing": true,
+    +       "s1": 4,
+    +       "st": 20,
+    +     },
+    +   },
+    +   Object {
+    +     "i": 4,
+    +     "p": Object {
+    +       "morphing": false,
+    +       "s1": 24,
+    +       "st": 0,
+    +     },
+    +     "q": Object {
+    +       "morphing": true,
+    +       "s1": 4,
+    +       "st": 20,
+    +     },
+    +   },
+    +   Object {
+    +     "i": 6,
+    +     "p": Object {
+    +       "morphing": false,
+    +       "s1": 24,
+    +       "st": 0,
+    +     },
+    +     "q": Object {
+    +       "morphing": true,
+    +       "s1": 4,
+    +       "st": 20,
+    +     },
+    +   },
+    +   Object {
+    +     "i": 8,
+    +     "p": Object {
+    +       "morphing": false,
+    +       "s1": 24,
+    +       "st": 0,
+    +     },
+    +     "q": Object {
+    +       "morphing": true,
+    +       "s1": 4,
+    +       "st": 20,
+    +     },
+    +   },
+    + ]
+
+      2512 |             if (q.st !== p.st || Math.abs(q.s1 - p.s1) > 0.5) bad.push({ i, p, q });
+      2513 |         }
+    > 2514 |         expect(bad, "collapse starts whose run scrolled or whose first seat stepped").toEqual([]);
+           |                                                                                       ^
+      2515 |     });
+      2516 | });
+      2517 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:2514:87
+
+    Error Context: tests-visual/test-results/release-10-1-5-fix-13-coar-0f217-ll-on-the-first-morph-frame-webkit/error-context.md
+
+  1 failed
+    [webkit] › tests-visual/release-10-1-5.spec.ts:2475:5 › fix 13, coarse phone › u1 a collapsing vertical run that does not fit keeps its scroll on the first morph frame 

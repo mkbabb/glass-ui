@@ -1,0 +1,25 @@
+04:26 tip rc=0 load={ 19.68 14.50 12.31 } 
+04:28 v1 rc=0 load={ 15.28 14.28 12.42 } 
+04:29 v2 rc=0 load={ 13.46 14.07 12.51 } 
+04:30 v3 rc=0 load={ 11.79 13.63 12.49 } 
+04:33 f13a d1 webkit rc=0 load={ 12.58 13.46 12.61 } 
+04:35 f13a d1 webkit rc=0 load={ 18.58 14.63 13.14 } 
+04:37 f13a d1+c1 webkit rc=0 load={ 18.84 16.09 13.94 } 
+04:40 f13a d1+c2 webkit rc=0 load={ 14.88 15.66 14.09 } 
+04:43 u1-tip-wk rc=1 load=9.81 13.74 13.73  1 failed 
+04:43 chain wk tip done: u1
+04:46 u1-branch-wk rc=0 load=6.88 11.32 12.77  1 passed (48.0s) 
+04:47 c13b-branch-wk rc=0 load=5.11 9.73 12.03  1 passed (1.3m) 
+05:02 branch-branch-wk rc=1 load=22.43 12.11 11.04  1 failed  106 passed (14.7m) 
+05:02 g6-4-branch-wk rc=1 load=25.02 13.43 11.54  1 failed  8 skipped  14 passed (22.3s) 
+05:05 g6-3-branch-wk rc=0 load=20.34 15.82 12.81  2 skipped  58 passed (2.3m) 
+05:05 chain wk branch done: u1 c13b branch g6-4 g6-3
+05:05 u1-tip-ch rc=0 load=15.15 15.38 12.85  1 passed (46.8s) 
+05:05 chain ch tip done: u1
+05:06 u1-branch-ch rc=0 load=10.13 13.95 12.46  1 passed (46.7s) 
+05:19 branch-branch-ch rc=0 load=10.08 8.96 10.04  107 passed (12.9m) 
+05:20 g6-4-branch-ch rc=0 load=10.38 9.12 10.07  23 passed (16.7s) 
+05:22 g6-3-branch-ch rc=0 load=8.27 8.72 9.77  60 passed (2.2m) 
+05:22 chain ch branch done: u1 branch g6-4 g6-3
+05:24 q2-rerun-wk rc=0 load=7.11 8.36 9.47  8 passed (27.4s) 
+05:25 g6-4-rerun-wk rc=0 load=7.57 8.38 9.46  8 skipped  15 passed (18.3s) 

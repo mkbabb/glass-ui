@@ -1,0 +1,243 @@
+
+Running 2 tests using 1 worker
+
+  ✓  1 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1771:5 › critique 8, coarse phone › n1 a fitting vertical dock's seats do not step at the expand's settle or the collapse's start, across the fit edge (15.6s)
+  ✘  2 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1771:5 › n1 a fitting vertical dock's seats do not step at the expand's settle or the collapse's start, across the fit edge (13.5s)
+
+
+  1) [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1771:5 › n1 a fitting vertical dock's seats do not step at the expand's settle or the collapse's start, across the fit edge 
+
+    Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:5391/tests-visual/release-10-1-5/critic-7.html?scene=dock&collapse=closed&orientation=vertical&stageH=348&kinds=icon,icon,icon,icon,icon,icon
+    Call log:
+      - navigating to "http://localhost:5391/tests-visual/release-10-1-5/critic-7.html?scene=dock&collapse=closed&orientation=vertical&stageH=348&kinds=icon,icon,icon,icon,icon,icon", waiting until "load"
+
+
+      1329 |
+      1330 | async function open7(page: Page, query: string): Promise<void> {
+    > 1331 |     await page.goto(`/tests-visual/release-10-1-5/critic-7.html?${query}`);
+           |                ^
+      1332 |     await page.waitForFunction(() => (window as unknown as { __ready?: boolean }).__ready);
+      1333 |     await page.evaluate(() => document.fonts.ready);
+      1334 |     if (test.info().project.use.isMobile) await expectCoarse(page);
+        at open7 (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/release-10-1-5.spec.ts:1331:16)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/release-10-1-5.spec.ts:1779:19
+
+    Error Context: tests-visual/test-results/release-10-1-5-n1-a-fittin-3ab0a-s-start-across-the-fit-edge-chromium-headless-new/error-context.md
+
+  1 failed
+    [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1771:5 › n1 a fitting vertical dock's seats do not step at the expand's settle or the collapse's start, across the fit edge 
+  1 passed (29.7s)
+rogramming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/release-10-1-5/critic-11.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/release-10-1-5/critic-12-v1014.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/release-10-1-5/critic-12.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/release-10-1-5/critic-2-v1014.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/release-10-1-5/critic-2.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/release-10-1-5/critic-4-v1014.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/release-10-1-5/critic-4.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/release-10-1-5/critic-7-v1014.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/release-10-1-5/critic-7.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/release-10-1-5/harness.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/docs/release-10.1.4/critique-1/probe.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/docs/release-10.1.4/critique-2/probe.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/docs/release-10.1.4/critique-3/probe.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/docs/release-10.1.4/critique-4/probe.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/docs/release-11.0.0/critique-1/harness.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/docs/release-11.0.0/critique-2/harness.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/docs/release-11.0.1/daraksha-repro/dock-cutcap.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/docs/release-11.0.1/daraksha-repro/dock-press-scroll.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/b7-shape/harness.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/fixtures/dock-entering-child-lag.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-10-1-2/harness.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-10-1-1/harness.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-10-1-3/harness.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-10-1-4/harness.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-10-1-5/critic-1.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-10-1-5/critic-10-v1014.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-10-1-5/critic-10.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-10-1-5/critic-11-v1014.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-10-1-5/critic-11.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-10-1-5/critic-12-v1014.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-10-1-5/critic-12.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-10-1-5/critic-2-v1014.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-10-1-5/critic-2.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-10-1-5/critic-4-v1014.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-10-1-5/critic-4.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-10-1-5/critic-7-v1014.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-10-1-5/critic-7.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-10-1-5/harness.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1/harness.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/u-b7/harness.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/docs/tranches/BG/audit/glass-tier2-compile-harness.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/docs/tranches/BJ/coordination/webkit-dock-crash-repro.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/docs/release-11.0.1/daraksha-repro/dock-cutcap.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/docs/release-11.0.1/daraksha-repro/dock-press-scroll.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/docs/tranches/AY/audit/design/lh-til-briefing-desktop.report.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/docs/tranches/AY/audit/design/lh-til-briefing-mobile.report.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/docs/tranches/AY/audit/design/lh-til-briefing-xray-desktop.report.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/docs/tranches/AY/audit/design/lh-til-briefing-xray-mobile.report.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/docs/tranches/IOS27-MICRO/prototypes/f1-scalar-spine/index.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/docs/tranches/IOS27-MICRO/prototypes/f2-native-scroll/f2-u2-scrolltop.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/docs/tranches/IOS27-MICRO/prototypes/f2-native-scroll/f2-ur1-sda.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/docs/tranches/K/audit/lighthouse-2026-05-08/aurora.report.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/docs/tranches/K/audit/lighthouse-2026-05-08/buttons.report.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/docs/tranches/K/audit/lighthouse-2026-05-08/colors.report.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/docs/tranches/K/audit/lighthouse-2026-05-08/dock.report.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/docs/tranches/K/audit/lighthouse-2026-05-08/intro.report.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/docs/tranches/K/audit/lighthouse-2026-05-08/metaballs.report.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/docs/tranches/IOS27-MICRO/prototypes/f3-channel-conductor/index.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/docs/tranches/IOS27-MICRO/prototypes/f5-optical-medium/index.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/docs/tranches/IOS27-MICRO/prototypes/f4-energy-field/index.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/docs/tranches/IOS27-MICRO/prototypes/proto-assembly/index.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/docs/tranches/IOS27-MICRO/prototypes/spine-conductor/index.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/docs/tranches/L/audit/lighthouse-2026-05-11-W8-postclose/aurora.report.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/docs/tranches/L/audit/lighthouse-2026-05-11-W8-postclose/buttons.report.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/docs/tranches/L/audit/lighthouse-2026-05-11-W8-postclose/dock.report.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/docs/tranches/L/audit/lighthouse-2026-05-11-W8-postclose/metaballs.report.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/docs/tranches/L/audit/lighthouse-2026-05-11-postL/aurora.report.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/docs/tranches/L/audit/lighthouse-2026-05-11-postL/buttons.report.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/docs/tranches/L/audit/lighthouse-2026-05-11-postL/dock.report.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/docs/tranches/L/audit/lighthouse-2026-05-11-postL/metaballs.report.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/docs/tranches/AY/audit/design/lighthouse/aurora-desktop.report.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/docs/tranches/AY/audit/design/lighthouse/aurora-mobile.report.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/docs/tranches/AY/audit/design/lighthouse/dock-overview-desktop.report.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/docs/tranches/AY/audit/design/lighthouse/dock-overview-mobile.report.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/docs/tranches/AY/audit/design/lighthouse/forms-inputs-desktop.report.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/docs/tranches/AY/audit/design/lighthouse/forms-inputs-mobile.report.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/docs/tranches/AY/audit/design/lighthouse/home-desktop.report.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/docs/tranches/AY/audit/design/lighthouse/home-mobile.report.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/docs/tranches/BD/greenfield/aurora/golden/spike.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/docs/tranches/BD/greenfield/buttons/golden/spike.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/docs/tranches/BD/greenfield/blend-morph-engine/brainstorm/spike-houdini-paint.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/docs/tranches/BD/greenfield/blend-morph-engine/brainstorm/spike-webgl2-sdf.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/docs/tranches/BD/greenfield/blend-morph-engine/golden/field-weld-measured.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/docs/tranches/BD/greenfield/blend-morph-engine/golden/field-weld.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/docs/tranches/BD/greenfield/carousel-deck/golden/squash-refraction.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/docs/tranches/BD/greenfield/cards/golden/keyed-cel.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/docs/tranches/BD/greenfield/cartoon-shadow/golden/spike.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/docs/tranches/BD/greenfield/category-landing/golden/spike.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/docs/tranches/BD/greenfield/concentric/golden/spike.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/docs/tranches/BD/greenfield/configurator-presentation/golden/tier0-proof.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/docs/tranches/BD/greenfield/design-language-edicts/golden/cartoon-punch.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/docs/tranches/BD/greenfield/dock-core/golden/morph-spike.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/docs/tranches/BD/greenfield/dock-hub/golden/eruption-spike.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/docs/tranches/BD/greenfield/dock-fission/golden/dock-fission-barbell.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/docs/tranches/BD/greenfield/dot-flow-field/golden/spike.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/docs/tranches/BD/greenfield/dot-matrix/golden/spike.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/docs/tranches/BD/greenfield/fourier-field/golden/phosphor-bloom.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/docs/tranches/BD/greenfield/entrance-reveal/golden/liquid-enter-spike.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/docs/tranches/BD/greenfield/glass-atoms/golden/spike.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/docs/tranches/BD/greenfield/goo-morph/golden/barbell-neck.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/docs/tranches/BD/greenfield/glass-material/golden/spike.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/docs/tranches/BD/greenfield/goo-dot-matrix/golden/spike.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/docs/tranches/BD/greenfield/motion-spring-register/golden/spike.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/docs/tranches/BD/greenfield/overlays/golden/spike.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/docs/tranches/BD/greenfield/page-background/golden/spike.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/docs/tranches/BD/greenfield/page-chrome/golden/spike.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/docs/tranches/BD/greenfield/paper-morphism/golden/paper-grain-spike.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/docs/tranches/BD/greenfield/paper-grid/golden/paper-sheet-spike.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/docs/tranches/BD/greenfield/scroll-choreography/golden/pin-spike.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/docs/tranches/BD/greenfield/select-forms/golden/spike.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/docs/tranches/BD/greenfield/shell-layout/golden/spectrum-spike.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/docs/tranches/BD/greenfield/substrate/golden/index.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/docs/tranches/BD/greenfield/story-page-standard/golden/spike.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/docs/tranches/BD/greenfield/timeline/golden/timeline-golden.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/docs/tranches/BD/greenfield/tabs/golden/spike.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/docs/tranches/BD/greenfield/toggle-chip/golden/spike.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/docs/tranches/BK/execution/2026-08-03-row26-design/preview/springs.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/docs/tranches/IOS27-MICRO/prototypes/novelties/proto-constellation/index.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/docs/tranches/IOS27-MICRO/passes/PASS-2/salvage-wall9/f1-index.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/docs/tranches/IOS27-MICRO/passes/PASS-2/salvage-wall9/f4-index.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/docs/tranches/IOS27-MICRO/prototypes/novelties/v-alens/index.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/docs/tranches/IOS27-MICRO/prototypes/novelties/proto-frosted-cure/index.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/docs/tranches/IOS27-MICRO/prototypes/novelties/v-morphdock/index.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/docs/tranches/IOS27-MICRO/prototypes/novelties/v-thinkfield/index.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/docs/tranches/IOS27-MICRO/prototypes/novelties/v-perch/index.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/docs/tranches/IOS27-MICRO/prototypes/novelties/v-dotrel/index.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/docs/tranches/IOS27-MICRO/prototypes/novelties/v-vapor/index.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/docs/tranches/IOS27-MICRO/prototypes/novelties/v-wave/index.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/docs/tranches/BL/design/dock-cluster/AB/fixture/index.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/docs/tranches/BJ/audits/2026-07-28-claude-resume/salvage/blob-physics/viewer.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/docs/tranches/BL/design/dock-cluster/challenge/fixture/index.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/docs/tranches/BL/design/dock-cluster/fold/fixture/index.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/docs/tranches/BL/design/dock-cluster/pass2-challenge-2/fixture/index.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/docs/tranches/BL/design/dock-cluster/pass2/fixture/index.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/docs/tranches/BL/design/dock-cluster/pass2-challenge-1/fixture/index.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/docs/tranches/BL/design/dock-cluster/pass2-challenge-3/fixture/index.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/docs/tranches/BL/design/dock-cluster/pass2-fold-1/fixture/index.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/docs/tranches/BL/design/dock-cluster/pass2-fold-2/fixture/index.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/docs/tranches/BL/design/dock-cluster/pass2-fold-3/fixture/index.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/docs/tranches/BJ/audits/2026-07-28-claude-resume/salvage/blob-physics/fable-arm/viewer.html
+[WebServer] 
+[WebServer]   Build failed with 92 errors:
+[WebServer] 
+[WebServer] [UNRESOLVED_IMPORT] Could not resolve './v1014/src/components/dock/GlassDock.vue' in tests-visual/release-10-1-5/critic-10-v1014.ts
+[WebServer]     ╭─[ tests-visual/release-10-1-5/critic-10-v1014.ts:10:23 ]
+[WebServer]     │
+[WebServer]  10 │ import GlassDock from "./v1014/src/components/dock/GlassDock.vue";
+[WebServer]     │                       ─────────────────────┬─────────────────────  
+[WebServer]     │                                            ╰─────────────────────── Module not found.
+[WebServer]     │ 
+[WebServer]     │ Help: 'tests-visual/release-10-1-5/critic-10-v1014.ts' is imported by the following path:
+[WebServer]     │         - tests-visual/release-10-1-5/critic-10-v1014.ts
+[WebServer]     │         - tests-visual/release-10-1-5/critic-10-v1014.html
+[WebServer] ────╯
+[WebServer] 
+[WebServer] [UNRESOLVED_IMPORT] Could not resolve './v1014/src/components/dock/DockControl.vue' in tests-visual/release-10-1-5/critic-10-v1014.ts
+[WebServer]     ╭─[ tests-visual/release-10-1-5/critic-10-v1014.ts:11:25 ]
+[WebServer]     │
+[WebServer]  11 │ import DockControl from "./v1014/src/components/dock/DockControl.vue";
+[WebServer]     │                         ──────────────────────┬──────────────────────  
+[WebServer]     │                                               ╰──────────────────────── Module not found.
+[WebServer]     │ 
+[WebServer]     │ Help: 'tests-visual/release-10-1-5/critic-10-v1014.ts' is imported by the following path:
+[WebServer]     │         - tests-visual/release-10-1-5/critic-10-v1014.ts
+[WebServer]     │         - tests-visual/release-10-1-5/critic-10-v1014.html
+[WebServer] ────╯
+[WebServer] 
+[WebServer] [UNRESOLVED_IMPORT] Could not resolve './v1014/src/components/dark-mode-toggle/DarkModeToggle.vue' in tests-visual/release-10-1-5/critic-10-v1014.ts
+[WebServer]     ╭─[ tests-visual/release-10-1-5/critic-10-v1014.ts:12:28 ]
+[WebServer]     │
+[WebServer]  12 │ import DarkModeToggle from "./v1014/src/components/dark-mode-toggle/DarkModeToggle.vue";
+[WebServer]     │                            ──────────────────────────────┬─────────────────────────────  
+[WebServer]     │                                                          ╰─────────────────────────────── Module not found.
+[WebServer]     │ 
+[WebServer]     │ Help: 'tests-visual/release-10-1-5/critic-10-v1014.ts' is imported by the following path:
+[WebServer]     │         - tests-visual/release-10-1-5/critic-10-v1014.ts
+[WebServer]     │         - tests-visual/release-10-1-5/critic-10-v1014.html
+[WebServer] ────╯
+[WebServer] 
+[WebServer] [UNRESOLVED_IMPORT] Could not resolve './v1014/src/components/slider/Slider.vue' in tests-visual/release-10-1-5/critic-12-v1014.ts
+[WebServer]     ╭─[ tests-visual/release-10-1-5/critic-12-v1014.ts:11:20 ]
+[WebServer]     │
+[WebServer]  11 │ import Slider from "./v1014/src/components/slider/Slider.vue";
+[WebServer]     │                    ─────────────────────┬────────────────────  
+[WebServer]     │                                         ╰────────────────────── Module not found.
+[WebServer]     │ 
+[WebServer]     │ Help: 'tests-visual/release-10-1-5/critic-12-v1014.ts' is imported by the following path:
+[WebServer]     │         - tests-visual/release-10-1-5/critic-12-v1014.ts
+[WebServer]     │         - tests-visual/release-10-1-5/critic-12-v1014.html
+[WebServer] ────╯
+[WebServer] 
+[WebServer] [UNRESOLVED_IMPORT] Could not resolve './v1014/src/components/dock/GlassDock.vue' in tests-visual/release-10-1-5/critic-7-v1014.ts
+[WebServer]    ╭─[ tests-visual/release-10-1-5/critic-7-v1014.ts:9:23 ]
+[WebServer]    │
+[WebServer]  9 │ import GlassDock from "./v1014/src/components/dock/GlassDock.vue";
+[WebServer]    │                       ─────────────────────┬─────────────────────  
+[WebServer]    │                                            ╰─────────────────────── Module not found.
+[WebServer]    │ 
+[WebServer]    │ Help: 'tests-visual/release-10-1-5/critic-7-v1014.ts' is imported by the following path:
+[WebServer]    │         - tests-visual/release-10-1-5/critic-7-v1014.ts
+[WebServer]    │         - tests-visual/release-10-1-5/critic-7-v1014.html
+[WebServer] ───╯
+[WebServer] 
+[WebServer] ...
+[WebServer]     at aggregateBindingErrorsIntoJsError (file:///Users/mkbabb/Programming/glass-ui/node_modules/rolldown/dist/shared/error-BHRSI0R7.mjs:48:18)
+[WebServer]     at unwrapBindingResult (file:///Users/mkbabb/Programming/glass-ui/node_modules/rolldown/dist/shared/error-BHRSI0R7.mjs:18:128)
+[WebServer]     at scan (file:///Users/mkbabb/Programming/glass-ui/node_modules/rolldown/dist/experimental-index.mjs:187:3)
+[WebServer]     at async Object.build (file:///Users/mkbabb/Programming/glass-ui/node_modules/vite/dist/node/chunks/node.js:30762:3)
+[WebServer]     at async scan (file:///Users/mkbabb/Programming/glass-ui/node_modules/vite/dist/node/chunks/node.js:30701:4)
+[WebServer]     at async file:///Users/mkbabb/Programming/glass-ui/node_modules/vite/dist/node/chunks/node.js:33703:15
+  ✓  1 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1771:5 › critique 8, coarse phone › n1 a fitting vertical dock's seats do not step at the expand's settle or the collapse's start, across the fit edge (17.0s)
+  ✓  2 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1771:5 › n1 a fitting vertical dock's seats do not step at the expand's settle or the collapse's start, across the fit edge (15.6s)
+
+  2 passed (34.8s)

@@ -1,0 +1,238 @@
+
+Running 2 tests using 1 worker
+
+  ✘  1 [webkit] › tests-visual/release-10-1-5.spec.ts:1857:5 › critique 9, coarse phone › p1 a dock its host resizes mid-expand holds every seat at the settle (horizontal clamp, vertical yield band) (16.2s)
+  ✘  2 [webkit] › tests-visual/release-10-1-5.spec.ts:1857:5 › p1 a dock its host resizes mid-expand holds every seat at the settle (horizontal clamp, vertical yield band) (16.3s)
+
+
+  1) [webkit] › tests-visual/release-10-1-5.spec.ts:1857:5 › critique 9, coarse phone › p1 a dock its host resizes mid-expand holds every seat at the settle (horizontal clamp, vertical yield band) 
+
+    Error: seat steps over 0.5 px at the settle, or a rest flag that is not the layout's truth
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 74
+
+    - Array []
+    + Array [
+    +   Object {
+    +     "a": Object {
+    +       "fits": true,
+    +       "morphing": true,
+    +       "over": true,
+    +       "s1": 611,
+    +     },
+    +     "at": 110,
+    +     "b": Object {
+    +       "fits": false,
+    +       "morphing": false,
+    +       "over": true,
+    +       "s1": 622,
+    +     },
+    +     "cell": "h-to-220",
+    +     "edge": "settle",
+    +     "step": 11,
+    +   },
+    +   Object {
+    +     "a": Object {
+    +       "fits": true,
+    +       "morphing": true,
+    +       "over": true,
+    +       "s1": 611,
+    +     },
+    +     "at": 300,
+    +     "b": Object {
+    +       "fits": false,
+    +       "morphing": false,
+    +       "over": true,
+    +       "s1": 622,
+    +     },
+    +     "cell": "h-to-220",
+    +     "edge": "settle",
+    +     "step": 11,
+    +   },
+    +   Object {
+    +     "a": Object {
+    +       "fits": true,
+    +       "morphing": true,
+    +       "over": true,
+    +       "s1": 622,
+    +     },
+    +     "at": 110,
+    +     "b": Object {
+    +       "fits": false,
+    +       "morphing": false,
+    +       "over": true,
+    +       "s1": 632,
+    +     },
+    +     "cell": "h4-to-200",
+    +     "edge": "settle",
+    +     "step": 10,
+    +   },
+    +   Object {
+    +     "a": Object {
+    +       "fits": true,
+    +       "morphing": true,
+    +       "over": true,
+    +       "s1": 622,
+    +     },
+    +     "at": 300,
+    +     "b": Object {
+    +       "fits": false,
+    +       "morphing": false,
+    +       "over": true,
+    +       "s1": 632,
+    +     },
+    +     "cell": "h4-to-200",
+    +     "edge": "settle",
+    +     "step": 10,
+    +   },
+    + ]
+
+      1884 |             }
+      1885 |         }
+    > 1886 |         expect(bad, "seat steps over 0.5 px at the settle, or a rest flag that is not the layout's truth").toEqual([]);
+           |                                                                                                            ^
+      1887 |     });
+      1888 | }
+      1889 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:1886:108
+
+    Error Context: tests-visual/test-results/release-10-1-5-critique-9--07310--clamp-vertical-yield-band--webkit/error-context.md
+
+  2) [webkit] › tests-visual/release-10-1-5.spec.ts:1857:5 › p1 a dock its host resizes mid-expand holds every seat at the settle (horizontal clamp, vertical yield band) 
+
+    Error: seat steps over 0.5 px at the settle, or a rest flag that is not the layout's truth
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -   1
+    + Received  + 110
+
+    - Array []
+    + Array [
+    +   Object {
+    +     "a": Object {
+    +       "fits": true,
+    +       "morphing": true,
+    +       "over": true,
+    +       "s1": 611,
+    +     },
+    +     "at": 110,
+    +     "b": Object {
+    +       "fits": false,
+    +       "morphing": false,
+    +       "over": true,
+    +       "s1": 622,
+    +     },
+    +     "cell": "h-to-220",
+    +     "edge": "settle",
+    +     "step": 11,
+    +   },
+    +   Object {
+    +     "a": Object {
+    +       "fits": true,
+    +       "morphing": true,
+    +       "over": true,
+    +       "s1": 611,
+    +     },
+    +     "at": 300,
+    +     "b": Object {
+    +       "fits": false,
+    +       "morphing": false,
+    +       "over": true,
+    +       "s1": 622,
+    +     },
+    +     "cell": "h-to-220",
+    +     "edge": "settle",
+    +     "step": 11,
+    +   },
+    +   Object {
+    +     "a": Object {
+    +       "fits": true,
+    +       "morphing": true,
+    +       "over": true,
+    +       "s1": 622,
+    +     },
+    +     "at": 110,
+    +     "b": Object {
+    +       "fits": false,
+    +       "morphing": false,
+    +       "over": true,
+    +       "s1": 632,
+    +     },
+    +     "cell": "h4-to-200",
+    +     "edge": "settle",
+    +     "step": 10,
+    +   },
+    +   Object {
+    +     "a": Object {
+    +       "fits": true,
+    +       "morphing": true,
+    +       "over": true,
+    +       "s1": 622,
+    +     },
+    +     "at": 300,
+    +     "b": Object {
+    +       "fits": false,
+    +       "morphing": false,
+    +       "over": true,
+    +       "s1": 632,
+    +     },
+    +     "cell": "h4-to-200",
+    +     "edge": "settle",
+    +     "step": 10,
+    +   },
+    +   Object {
+    +     "a": Object {
+    +       "fits": true,
+    +       "morphing": true,
+    +       "over": false,
+    +       "s1": 23.984375,
+    +     },
+    +     "at": 110,
+    +     "b": Object {
+    +       "fits": true,
+    +       "morphing": false,
+    +       "over": false,
+    +       "s1": 20,
+    +     },
+    +     "cell": "v-to-320",
+    +     "edge": "settle",
+    +     "step": 3.98,
+    +   },
+    +   Object {
+    +     "a": Object {
+    +       "fits": true,
+    +       "morphing": true,
+    +       "over": false,
+    +       "s1": 23.984375,
+    +     },
+    +     "at": 300,
+    +     "b": Object {
+    +       "fits": true,
+    +       "morphing": false,
+    +       "over": false,
+    +       "s1": 20,
+    +     },
+    +     "cell": "v-to-320",
+    +     "edge": "settle",
+    +     "step": 3.98,
+    +   },
+    + ]
+
+      1884 |             }
+      1885 |         }
+    > 1886 |         expect(bad, "seat steps over 0.5 px at the settle, or a rest flag that is not the layout's truth").toEqual([]);
+           |                                                                                                            ^
+      1887 |     });
+      1888 | }
+      1889 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:1886:108
+
+    Error Context: tests-visual/test-results/release-10-1-5-p1-a-dock-i-3bdef--clamp-vertical-yield-band--webkit/error-context.md
+
+  2 failed
+    [webkit] › tests-visual/release-10-1-5.spec.ts:1857:5 › critique 9, coarse phone › p1 a dock its host resizes mid-expand holds every seat at the settle (horizontal clamp, vertical yield band) 
+    [webkit] › tests-visual/release-10-1-5.spec.ts:1857:5 › p1 a dock its host resizes mid-expand holds every seat at the settle (horizontal clamp, vertical yield band) 

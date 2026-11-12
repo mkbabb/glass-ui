@@ -170,8 +170,10 @@
     /* The collapsed horizontal dock at rest is a square box, and it is drawn as a
        circle (`--radius-circle`). `--radius-dock` (the pill rung, 1rem) is a corner on
        anything taller than 32px, so the circle is stated here, for the settled box
-       only: mid-morph the box carries the expanded footprint under a scale. */
-    .glass-dock.collapsed:not([data-morphing]):not(.vertical) {
+       only: mid-morph the box carries the expanded footprint under a scale. The
+       stadium shape is not named here: its corner is half its cross extent in every
+       posture (run.css), which is this circle on a square box. */
+    .glass-dock.collapsed:not([data-morphing]):not(.vertical):not(.shape-pill) {
         border-radius: var(--radius-circle);
     }
 
@@ -183,7 +185,7 @@
        collapse and the open dock share one corner, and the morph swaps no silhouette.
        The circle stays for the square cases: the summary alone, or a persistent
        control alone (the empty-summary case above). Two flat `:has()`, never nested. */
-    .glass-dock.collapsed:not([data-morphing]):not(.vertical):has(.dock-persistent):has(
+    .glass-dock.collapsed:not([data-morphing]):not(.vertical):not(.shape-pill):has(.dock-persistent):has(
             .dock-layer--summary:not(:empty)
         ) {
         border-radius: var(--radius-dock);
@@ -218,6 +220,16 @@
         );
         aspect-ratio: 1;
         justify-content: center;
+        /* The folded face is the pill's own shape: its corner is the plate's rest corner
+           (`--dock-cap-rest`, run.css), so its keyboard ring follows the pill. */
+        border-radius: var(--dock-cap-rest);
+    }
+
+    /* The folded face's keyboard ring is the dock seats' ring (index.css), on the
+       pill's corner, never the UA's square one. */
+    .glass-dock .dock-layer--summary:focus-visible {
+        outline: var(--dock-ring-width) solid var(--dock-ring-color);
+        outline-offset: var(--dock-ring-offset);
     }
 
     /* The collapsed/summary glyph appears WITH the pill, no added

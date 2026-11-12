@@ -25,16 +25,26 @@
      · --value-mark-position — the fraction along the track (set per dot).
      · --value-mark-size     — the dot diameter (default 0.375rem).
      · --value-mark-color    — the dot fill (default foreground @ 34%).
+     · --value-mark-inset    — the main-axis inset at both ends (default 0).
 
    @layer components, @import-ed in glass.css alongside the track-well +
    liquid-fill registers. Decorative only (`aria-hidden`, `pointer-events:none`).
    ════════════════════════════════════════════════════════════════════════ */
 
 @layer components {
+    /* `--value-mark-inset` insets the main axis at both ends, so a mark's fraction lands
+       on the composer's lane rather than the whole track (the slider's thumb centre,
+       `slider/styles.css`). Unset, the marks span the track. */
     .glass-value-marks {
         position: absolute;
-        inset: 0;
+        inset-block: 0;
+        inset-inline: var(--value-mark-inset, 0px);
         pointer-events: none;
+    }
+
+    .glass-value-marks[data-orientation="vertical"] {
+        inset-inline: 0;
+        inset-block: var(--value-mark-inset, 0px);
     }
 
     /* Horizontal (base): a full-height, zero-width line at the position. */

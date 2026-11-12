@@ -1,0 +1,125 @@
+[WebServer] (!) Failed to run dependency scan. Skipping dependency pre-bundling. Error:   Failed to scan for dependencies from entries:
+[WebServer]   /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/index.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/_aur-vangogh-harness.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/fixtures/dock-entering-child-lag.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/b7-shape/harness.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-10-1-4/harness.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-10-1-2/harness.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-10-1-3/harness.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-10-1-1/harness.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-10-1-5/critic-1.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-10-1-5/critic-10-v1014.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-10-1-5/critic-10.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-10-1-5/critic-11-v1014.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-10-1-5/critic-11.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-10-1-5/critic-12-v1014.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-10-1-5/critic-12.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-10-1-5/critic-2-v1014.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-10-1-5/critic-2.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-10-1-5/critic-4-v1014.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-10-1-5/critic-4.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-10-1-5/critic-7-v1014.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-10-1-5/critic-7.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-10-1-5/harness.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/u-b7/harness.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1/harness.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/docs/release-11.0.1/daraksha-repro/dock-cutcap.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/docs/release-11.0.1/daraksha-repro/dock-press-scroll.html
+[WebServer] 
+[WebServer]   Build failed with 46 errors:
+[WebServer] 
+[WebServer] [UNRESOLVED_IMPORT] Could not resolve './v1014/src/components/slider/Slider.vue' in tests-visual/release-10-1-5/critic-12-v1014.ts
+[WebServer]     ╭─[ tests-visual/release-10-1-5/critic-12-v1014.ts:11:20 ]
+[WebServer]     │
+[WebServer]  11 │ import Slider from "./v1014/src/components/slider/Slider.vue";
+[WebServer]     │                    ─────────────────────┬────────────────────  
+[WebServer]     │                                         ╰────────────────────── Module not found.
+[WebServer]     │ 
+[WebServer]     │ Help: 'tests-visual/release-10-1-5/critic-12-v1014.ts' is imported by the following path:
+[WebServer]     │         - tests-visual/release-10-1-5/critic-12-v1014.ts
+[WebServer]     │         - tests-visual/release-10-1-5/critic-12-v1014.html
+[WebServer] ────╯
+[WebServer] 
+[WebServer] [UNRESOLVED_IMPORT] Could not resolve './v1014/src/components/dock/GlassDock.vue' in tests-visual/release-10-1-5/critic-10-v1014.ts
+[WebServer]     ╭─[ tests-visual/release-10-1-5/critic-10-v1014.ts:10:23 ]
+[WebServer]     │
+[WebServer]  10 │ import GlassDock from "./v1014/src/components/dock/GlassDock.vue";
+[WebServer]     │                       ─────────────────────┬─────────────────────  
+[WebServer]     │                                            ╰─────────────────────── Module not found.
+[WebServer]     │ 
+[WebServer]     │ Help: 'tests-visual/release-10-1-5/critic-10-v1014.ts' is imported by the following path:
+[WebServer]     │         - tests-visual/release-10-1-5/critic-10-v1014.ts
+[WebServer]     │         - tests-visual/release-10-1-5/critic-10-v1014.html
+[WebServer] ────╯
+[WebServer] 
+[WebServer] [UNRESOLVED_IMPORT] Could not resolve './v1014/src/components/dock/DockControl.vue' in tests-visual/release-10-1-5/critic-10-v1014.ts
+[WebServer]     ╭─[ tests-visual/release-10-1-5/critic-10-v1014.ts:11:25 ]
+[WebServer]     │
+[WebServer]  11 │ import DockControl from "./v1014/src/components/dock/DockControl.vue";
+[WebServer]     │                         ──────────────────────┬──────────────────────  
+[WebServer]     │                                               ╰──────────────────────── Module not found.
+[WebServer]     │ 
+[WebServer]     │ Help: 'tests-visual/release-10-1-5/critic-10-v1014.ts' is imported by the following path:
+[WebServer]     │         - tests-visual/release-10-1-5/critic-10-v1014.ts
+[WebServer]     │         - tests-visual/release-10-1-5/critic-10-v1014.html
+[WebServer] ────╯
+[WebServer] 
+[WebServer] [UNRESOLVED_IMPORT] Could not resolve './v1014/src/components/dark-mode-toggle/DarkModeToggle.vue' in tests-visual/release-10-1-5/critic-10-v1014.ts
+[WebServer]     ╭─[ tests-visual/release-10-1-5/critic-10-v1014.ts:12:28 ]
+[WebServer]     │
+[WebServer]  12 │ import DarkModeToggle from "./v1014/src/components/dark-mode-toggle/DarkModeToggle.vue";
+[WebServer]     │                            ──────────────────────────────┬─────────────────────────────  
+[WebServer]     │                                                          ╰─────────────────────────────── Module not found.
+[WebServer]     │ 
+[WebServer]     │ Help: 'tests-visual/release-10-1-5/critic-10-v1014.ts' is imported by the following path:
+[WebServer]     │         - tests-visual/release-10-1-5/critic-10-v1014.ts
+[WebServer]     │         - tests-visual/release-10-1-5/critic-10-v1014.html
+[WebServer] ────╯
+[WebServer] 
+[WebServer] [UNRESOLVED_IMPORT] Could not resolve './v1014/src/components/dock/GlassDock.vue' in tests-visual/release-10-1-5/critic-7-v1014.ts
+[WebServer]    ╭─[ tests-visual/release-10-1-5/critic-7-v1014.ts:9:23 ]
+[WebServer]    │
+[WebServer]  9 │ import GlassDock from "./v1014/src/components/dock/GlassDock.vue";
+[WebServer]    │                       ─────────────────────┬─────────────────────  
+[WebServer]    │                                            ╰─────────────────────── Module not found.
+[WebServer]    │ 
+[WebServer]    │ Help: 'tests-visual/release-10-1-5/critic-7-v1014.ts' is imported by the following path:
+[WebServer]    │         - tests-visual/release-10-1-5/critic-7-v1014.ts
+[WebServer]    │         - tests-visual/release-10-1-5/critic-7-v1014.html
+[WebServer] ───╯
+[WebServer] 
+[WebServer] ...
+[WebServer]     at aggregateBindingErrorsIntoJsError (file:///Users/mkbabb/Programming/glass-ui/node_modules/rolldown/dist/shared/error-BHRSI0R7.mjs:48:18)
+[WebServer]     at unwrapBindingResult (file:///Users/mkbabb/Programming/glass-ui/node_modules/rolldown/dist/shared/error-BHRSI0R7.mjs:18:128)
+[WebServer]     at scan (file:///Users/mkbabb/Programming/glass-ui/node_modules/rolldown/dist/experimental-index.mjs:187:3)
+[WebServer]     at async Object.build (file:///Users/mkbabb/Programming/glass-ui/node_modules/vite/dist/node/chunks/node.js:30762:3)
+[WebServer]     at async scan (file:///Users/mkbabb/Programming/glass-ui/node_modules/vite/dist/node/chunks/node.js:30701:4)
+[WebServer]     at async file:///Users/mkbabb/Programming/glass-ui/node_modules/vite/dist/node/chunks/node.js:33703:15
+
+Running 22 tests using 1 worker
+
+  ✓   1 [chromium-desk] › tests-visual/u-b7.spec.ts:36:5 › U/B7 › D-5 · a seat pressed mid-morph after an owner-opened expand is hit and activated (1.6s)
+  ✓   2 [chromium-desk] › tests-visual/u-b7.spec.ts:68:5 › U/B7 › run · the wheel reaches every seat, returns to the top, and never scrolls the page (13.8s)
+  ✓   3 [chromium-desk] › tests-visual/u-b7.spec.ts:97:5 › U/B7 › run · the arrows walk every seat once, in order, each one in view (4.9s)
+  ✓   4 [chromium-desk] › tests-visual/u-b7.spec.ts:113:5 › U/B7 › run · every seat is clickable once reached (5.7s)
+  -   5 [chromium-desk] › tests-visual/u-b7.spec.ts:127:5 › U/B7 › run · a touch drag pans the run and not the page
+  ✓   6 [chromium-desk] › tests-visual/u-b7.spec.ts:160:5 › U/B7 › F6 · twelve scroll steps write nothing to the aurora ground (2.3s)
+  ✓   7 [chromium-desk] › tests-visual/u-b7.spec.ts:232:9 › anchor › anchor · an anchor="start" dock at its row's start (ltr) keeps that edge through expand and collapse (3.0s)
+  ✓   8 [chromium-desk] › tests-visual/u-b7.spec.ts:232:9 › anchor › anchor · an anchor="end" dock at its row's end (ltr) keeps that edge through expand and collapse (3.0s)
+  ✓   9 [chromium-desk] › tests-visual/u-b7.spec.ts:232:9 › anchor › anchor · an anchor="end" dock at its row's end (rtl) keeps that edge through expand and collapse (3.0s)
+  ✓  10 [chromium-desk] › tests-visual/u-b7.spec.ts:252:5 › anchor › anchor · the prop moves neither the dock nor its morph: start, end and center rest and open alike (8.8s)
+  ✓  11 [chromium-desk] › tests-visual/u-b7.spec.ts:279:5 › anchor › anchor · atlas's figure lane holds its end edge through expand and collapse (3.0s)
+  ✓  12 [chromium-coarse] › tests-visual/u-b7.spec.ts:36:5 › U/B7 › D-5 · a seat pressed mid-morph after an owner-opened expand is hit and activated (928ms)
+  ✓  13 [chromium-coarse] › tests-visual/u-b7.spec.ts:68:5 › U/B7 › run · the wheel reaches every seat, returns to the top, and never scrolls the page (13.8s)
+  ✓  14 [chromium-coarse] › tests-visual/u-b7.spec.ts:97:5 › U/B7 › run · the arrows walk every seat once, in order, each one in view (4.9s)
+  ✓  15 [chromium-coarse] › tests-visual/u-b7.spec.ts:113:5 › U/B7 › run · every seat is clickable once reached (5.7s)
+  ✓  16 [chromium-coarse] › tests-visual/u-b7.spec.ts:127:5 › U/B7 › run · a touch drag pans the run and not the page (8.4s)
+  ✓  17 [chromium-coarse] › tests-visual/u-b7.spec.ts:160:5 › U/B7 › F6 · twelve scroll steps write nothing to the aurora ground (2.3s)
+  ✓  18 [chromium-coarse] › tests-visual/u-b7.spec.ts:232:9 › anchor › anchor · an anchor="start" dock at its row's start (ltr) keeps that edge through expand and collapse (3.0s)
+  ✓  19 [chromium-coarse] › tests-visual/u-b7.spec.ts:232:9 › anchor › anchor · an anchor="end" dock at its row's end (ltr) keeps that edge through expand and collapse (3.0s)
+  ✓  20 [chromium-coarse] › tests-visual/u-b7.spec.ts:232:9 › anchor › anchor · an anchor="end" dock at its row's end (rtl) keeps that edge through expand and collapse (3.0s)
+  ✓  21 [chromium-coarse] › tests-visual/u-b7.spec.ts:252:5 › anchor › anchor · the prop moves neither the dock nor its morph: start, end and center rest and open alike (8.8s)
+  ✓  22 [chromium-coarse] › tests-visual/u-b7.spec.ts:279:5 › anchor › anchor · atlas's figure lane holds its end edge through expand and collapse (3.0s)
+
+  1 skipped
+  21 passed (1.8m)

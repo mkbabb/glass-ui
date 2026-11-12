@@ -1,0 +1,211 @@
+
+Running 9 tests using 1 worker
+
+  ✘  1 [webkit] › tests-visual/release-10-1-5.spec.ts:547:5 › critique 2, coarse phone › e1 at 390: a label-wide tab under the pointer gives the run no reach and cuts no corner (2.6s)
+  ✘  2 [webkit] › tests-visual/release-10-1-5.spec.ts:547:5 › critique 2, coarse phone › e1 at 844: a label-wide tab under the pointer gives the run no reach and cuts no corner (2.4s)
+  ✘  3 [webkit] › tests-visual/release-10-1-5.spec.ts:574:5 › critique 2, coarse phone › e2 at 390: focused, hovered tab seats keep their whole ring on every edge (2.3s)
+  ✘  4 [webkit] › tests-visual/release-10-1-5.spec.ts:586:5 › critique 2, coarse phone › e3 at 390: the run's clip and hit stop at the persistent seats, at rest and scrolled (2.1s)
+  ✘  5 [webkit] › tests-visual/release-10-1-5.spec.ts:547:5 › e1 at 390: a label-wide tab under the pointer gives the run no reach and cuts no corner (2.3s)
+  ✘  6 [webkit] › tests-visual/release-10-1-5.spec.ts:547:5 › e1 at 1440: a label-wide tab under the pointer gives the run no reach and cuts no corner (2.3s)
+  ✘  7 [webkit] › tests-visual/release-10-1-5.spec.ts:574:5 › e2 at 390: focused, hovered tab seats keep their whole ring on every edge (2.3s)
+  ✘  8 [webkit] › tests-visual/release-10-1-5.spec.ts:574:5 › e2 at 1440: focused, hovered tab seats keep their whole ring on every edge (2.2s)
+  ✘  9 [webkit] › tests-visual/release-10-1-5.spec.ts:586:5 › e3 at 390: the run's clip and hit stop at the persistent seats, at rest and scrolled (2.1s)
+
+
+  1) [webkit] › tests-visual/release-10-1-5.spec.ts:547:5 › critique 2, coarse phone › e1 at 390: a label-wide tab under the pointer gives the run no reach and cuts no corner 
+
+    Error: 390 hover on the wide tab: run scrollWidth = clientWidth ({"sw":244,"cw":242,"sh":57,"ch":57,"active":true})
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 242
+    Received: 244
+
+      106 |     const run = read.runs.find((r) => r.active)!;
+      107 |     expect(run, `${cell}: an active run`).toBeTruthy();
+    > 108 |     expect(run.sw, `${cell}: run scrollWidth = clientWidth (${JSON.stringify(run)})`).toBe(
+          |                                                                                       ^
+      109 |         run.cw,
+      110 |     );
+      111 |     expect(run.sh, `${cell}: run scrollHeight = clientHeight (${JSON.stringify(run)})`).toBe(
+        at expectNoReach (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:108:87)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:566:9
+
+    Error Context: tests-visual/test-results/release-10-1-5-critique-2--52919-no-reach-and-cuts-no-corner-webkit/error-context.md
+
+  2) [webkit] › tests-visual/release-10-1-5.spec.ts:547:5 › critique 2, coarse phone › e1 at 844: a label-wide tab under the pointer gives the run no reach and cuts no corner 
+
+    Error: 844 hover on the wide tab: run scrollWidth = clientWidth ({"sw":253,"cw":250,"sh":57,"ch":57,"active":true})
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 250
+    Received: 253
+
+      106 |     const run = read.runs.find((r) => r.active)!;
+      107 |     expect(run, `${cell}: an active run`).toBeTruthy();
+    > 108 |     expect(run.sw, `${cell}: run scrollWidth = clientWidth (${JSON.stringify(run)})`).toBe(
+          |                                                                                       ^
+      109 |         run.cw,
+      110 |     );
+      111 |     expect(run.sh, `${cell}: run scrollHeight = clientHeight (${JSON.stringify(run)})`).toBe(
+        at expectNoReach (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:108:87)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:566:9
+
+    Error Context: tests-visual/test-results/release-10-1-5-critique-2--c4b00-no-reach-and-cuts-no-corner-webkit/error-context.md
+
+  3) [webkit] › tests-visual/release-10-1-5.spec.ts:574:5 › critique 2, coarse phone › e2 at 390: focused, hovered tab seats keep their whole ring on every edge 
+
+    Error: S1 ({"focusVisible":true,"hover":true,"scale":1.1,"width":97.67655944824219,"outline":"solid","ink":4.4,"ring":{"l":33.68124923706055,"r":140.15780868530274,"t":20.700000381469728,"b":71.30000343322754},"clips":[{"cls":"dock-layer dock-layer--full dock-run is-active","l":35.9375,"r":354.0625,"t":17.40625,"b":74.59375}]}): ring inside dock-layer dock-layer--full dock-run is-active (left)
+
+    expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 35.4375
+    Received:    33.68124923706055
+
+      511 |     expect(read.clips.length, `${cell}: the run clips`).toBeGreaterThan(0);
+      512 |     for (const c of read.clips) {
+    > 513 |         expect(read.ring.l, `${cell}: ring inside ${c.cls} (left)`).toBeGreaterThanOrEqual(c.l - 0.5);
+          |                                                                     ^
+      514 |         expect(read.ring.r, `${cell}: ring inside ${c.cls} (right)`).toBeLessThanOrEqual(c.r + 0.5);
+      515 |         expect(read.ring.t, `${cell}: ring inside ${c.cls} (top)`).toBeGreaterThanOrEqual(c.t - 0.5);
+      516 |         expect(read.ring.b, `${cell}: ring inside ${c.cls} (bottom)`).toBeLessThanOrEqual(c.b + 0.5);
+        at expectFocusedRingWhole (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:513:69)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:577:42
+
+    Error Context: tests-visual/test-results/release-10-1-5-critique-2--c9524-ir-whole-ring-on-every-edge-webkit/error-context.md
+
+  4) [webkit] › tests-visual/release-10-1-5.spec.ts:586:5 › critique 2, coarse phone › e3 at 390: the run's clip and hit stop at the persistent seats, at rest and scrolled 
+
+    Error: 390 start ({"range":374,"scroll":0,"run":[70.40625,325.59375],"lead":[27,71],"tail":[319,363],"leadHit":"stage","tailHit":"tail"}): the clip starts at or after the lead seat
+
+    expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 71
+    Received:    70.40625
+
+      612 |             const cell = `${width} ${at} (${JSON.stringify(read)})`;
+      613 |             expect(read.range, `${cell}: the run overflows`).toBeGreaterThan(0);
+    > 614 |             expect(read.run[0], `${cell}: the clip starts at or after the lead seat`).toBeGreaterThanOrEqual(read.lead[1]);
+          |                                                                                       ^
+      615 |             expect(read.run[1], `${cell}: the clip ends at or before the tail seat`).toBeLessThanOrEqual(read.tail[0]);
+      616 |             expect(read.leadHit, `${cell}: the lead seat owns its own edge`).toBe("lead");
+      617 |             expect(read.tailHit, `${cell}: the tail seat owns its own edge`).toBe("tail");
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:614:87
+
+    Error Context: tests-visual/test-results/release-10-1-5-critique-2--d0cb9--seats-at-rest-and-scrolled-webkit/error-context.md
+
+  5) [webkit] › tests-visual/release-10-1-5.spec.ts:547:5 › e1 at 390: a label-wide tab under the pointer gives the run no reach and cuts no corner 
+
+    Error: 390 hover on the wide tab: run scrollWidth = clientWidth ({"sw":240,"cw":238,"sh":53,"ch":53,"active":true})
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 238
+    Received: 240
+
+      106 |     const run = read.runs.find((r) => r.active)!;
+      107 |     expect(run, `${cell}: an active run`).toBeTruthy();
+    > 108 |     expect(run.sw, `${cell}: run scrollWidth = clientWidth (${JSON.stringify(run)})`).toBe(
+          |                                                                                       ^
+      109 |         run.cw,
+      110 |     );
+      111 |     expect(run.sh, `${cell}: run scrollHeight = clientHeight (${JSON.stringify(run)})`).toBe(
+        at expectNoReach (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:108:87)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:566:9
+
+    Error Context: tests-visual/test-results/release-10-1-5-e1-at-390-a-46d87-no-reach-and-cuts-no-corner-webkit/error-context.md
+
+  6) [webkit] › tests-visual/release-10-1-5.spec.ts:547:5 › e1 at 1440: a label-wide tab under the pointer gives the run no reach and cuts no corner 
+
+    Error: 1440 hover on the wide tab: run scrollWidth = clientWidth ({"sw":263,"cw":260,"sh":53,"ch":53,"active":true})
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 260
+    Received: 263
+
+      106 |     const run = read.runs.find((r) => r.active)!;
+      107 |     expect(run, `${cell}: an active run`).toBeTruthy();
+    > 108 |     expect(run.sw, `${cell}: run scrollWidth = clientWidth (${JSON.stringify(run)})`).toBe(
+          |                                                                                       ^
+      109 |         run.cw,
+      110 |     );
+      111 |     expect(run.sh, `${cell}: run scrollHeight = clientHeight (${JSON.stringify(run)})`).toBe(
+        at expectNoReach (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:108:87)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:566:9
+
+    Error Context: tests-visual/test-results/release-10-1-5-e1-at-1440--81d45-no-reach-and-cuts-no-corner-webkit/error-context.md
+
+  7) [webkit] › tests-visual/release-10-1-5.spec.ts:574:5 › e2 at 390: focused, hovered tab seats keep their whole ring on every edge 
+
+    Error: S1 ({"focusVisible":true,"hover":true,"scale":1.1,"width":97.67655944824219,"outline":"solid","ink":4.4,"ring":{"l":37.68124923706055,"r":144.15780868530274,"t":18.700000381469728,"b":69.30000343322754},"clips":[{"cls":"dock-layer dock-layer--full dock-run is-active","l":40.140625,"r":349.859375,"t":17.609375,"b":70.390625}]}): ring inside dock-layer dock-layer--full dock-run is-active (left)
+
+    expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 39.640625
+    Received:    37.68124923706055
+
+      511 |     expect(read.clips.length, `${cell}: the run clips`).toBeGreaterThan(0);
+      512 |     for (const c of read.clips) {
+    > 513 |         expect(read.ring.l, `${cell}: ring inside ${c.cls} (left)`).toBeGreaterThanOrEqual(c.l - 0.5);
+          |                                                                     ^
+      514 |         expect(read.ring.r, `${cell}: ring inside ${c.cls} (right)`).toBeLessThanOrEqual(c.r + 0.5);
+      515 |         expect(read.ring.t, `${cell}: ring inside ${c.cls} (top)`).toBeGreaterThanOrEqual(c.t - 0.5);
+      516 |         expect(read.ring.b, `${cell}: ring inside ${c.cls} (bottom)`).toBeLessThanOrEqual(c.b + 0.5);
+        at expectFocusedRingWhole (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:513:69)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:577:42
+
+    Error Context: tests-visual/test-results/release-10-1-5-e2-at-390-f-e62d2-ir-whole-ring-on-every-edge-webkit/error-context.md
+
+  8) [webkit] › tests-visual/release-10-1-5.spec.ts:574:5 › e2 at 1440: focused, hovered tab seats keep their whole ring on every edge 
+
+    Error: S1 ({"focusVisible":true,"hover":true,"scale":1.1,"width":105.37652587890625,"outline":"solid","ink":4.4,"ring":{"l":554.0187622070313,"r":668.1952880859375,"t":18.700000381469728,"b":69.30000343322754},"clips":[{"cls":"dock-layer dock-layer--full dock-run is-active","l":556.828125,"r":883.171875,"t":17.609375,"b":70.390625}]}): ring inside dock-layer dock-layer--full dock-run is-active (left)
+
+    expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 556.328125
+    Received:    554.0187622070313
+
+      511 |     expect(read.clips.length, `${cell}: the run clips`).toBeGreaterThan(0);
+      512 |     for (const c of read.clips) {
+    > 513 |         expect(read.ring.l, `${cell}: ring inside ${c.cls} (left)`).toBeGreaterThanOrEqual(c.l - 0.5);
+          |                                                                     ^
+      514 |         expect(read.ring.r, `${cell}: ring inside ${c.cls} (right)`).toBeLessThanOrEqual(c.r + 0.5);
+      515 |         expect(read.ring.t, `${cell}: ring inside ${c.cls} (top)`).toBeGreaterThanOrEqual(c.t - 0.5);
+      516 |         expect(read.ring.b, `${cell}: ring inside ${c.cls} (bottom)`).toBeLessThanOrEqual(c.b + 0.5);
+        at expectFocusedRingWhole (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:513:69)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:577:42
+
+    Error Context: tests-visual/test-results/release-10-1-5-e2-at-1440--0ba7a-ir-whole-ring-on-every-edge-webkit/error-context.md
+
+  9) [webkit] › tests-visual/release-10-1-5.spec.ts:586:5 › e3 at 390: the run's clip and hit stop at the persistent seats, at rest and scrolled 
+
+    Error: 390 start ({"range":318,"scroll":0,"run":[66.609375,329.390625],"lead":[27,67],"tail":[323,363],"leadHit":"stage","tailHit":"tail"}): the clip starts at or after the lead seat
+
+    expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 67
+    Received:    66.609375
+
+      612 |             const cell = `${width} ${at} (${JSON.stringify(read)})`;
+      613 |             expect(read.range, `${cell}: the run overflows`).toBeGreaterThan(0);
+    > 614 |             expect(read.run[0], `${cell}: the clip starts at or after the lead seat`).toBeGreaterThanOrEqual(read.lead[1]);
+          |                                                                                       ^
+      615 |             expect(read.run[1], `${cell}: the clip ends at or before the tail seat`).toBeLessThanOrEqual(read.tail[0]);
+      616 |             expect(read.leadHit, `${cell}: the lead seat owns its own edge`).toBe("lead");
+      617 |             expect(read.tailHit, `${cell}: the tail seat owns its own edge`).toBe("tail");
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:614:87
+
+    Error Context: tests-visual/test-results/release-10-1-5-e3-at-390-t-1ec7a--seats-at-rest-and-scrolled-webkit/error-context.md
+
+  9 failed
+    [webkit] › tests-visual/release-10-1-5.spec.ts:547:5 › critique 2, coarse phone › e1 at 390: a label-wide tab under the pointer gives the run no reach and cuts no corner 
+    [webkit] › tests-visual/release-10-1-5.spec.ts:547:5 › critique 2, coarse phone › e1 at 844: a label-wide tab under the pointer gives the run no reach and cuts no corner 
+    [webkit] › tests-visual/release-10-1-5.spec.ts:574:5 › critique 2, coarse phone › e2 at 390: focused, hovered tab seats keep their whole ring on every edge 
+    [webkit] › tests-visual/release-10-1-5.spec.ts:586:5 › critique 2, coarse phone › e3 at 390: the run's clip and hit stop at the persistent seats, at rest and scrolled 
+    [webkit] › tests-visual/release-10-1-5.spec.ts:547:5 › e1 at 390: a label-wide tab under the pointer gives the run no reach and cuts no corner 
+    [webkit] › tests-visual/release-10-1-5.spec.ts:547:5 › e1 at 1440: a label-wide tab under the pointer gives the run no reach and cuts no corner 
+    [webkit] › tests-visual/release-10-1-5.spec.ts:574:5 › e2 at 390: focused, hovered tab seats keep their whole ring on every edge 
+    [webkit] › tests-visual/release-10-1-5.spec.ts:574:5 › e2 at 1440: focused, hovered tab seats keep their whole ring on every edge 
+    [webkit] › tests-visual/release-10-1-5.spec.ts:586:5 › e3 at 390: the run's clip and hit stop at the persistent seats, at rest and scrolled 

@@ -141,6 +141,27 @@ type FirstBoxes = Map<Element, Span>;
 
 const ORIGIN = "--dock-morph-origin";
 const PANE_SHIFT = "--dock-pane-shift";
+/** Two whole-pixel reads of one box under an ancestor `zoom` differ by up to 2 px. */
+const ENDPOINT_BAND_PX = 2;
+
+/**
+ * What the host constrains the dock's endpoint with, on the morph axis: the parent's
+ * content box, the root's own min and max size, and the viewport. Through a morph the
+ * root is held at its reserved size, so none of them moves, a parent sized by the dock
+ * included; a host that resizes the dock moves at least one. It is compared between
+ * morph frames only: at rest a parent sized by the dock is the posture's size.
+ */
+function constraintOf(root: HTMLElement, axis: Axis): string {
+    const cs = getComputedStyle(root);
+    const parent = root.parentElement;
+    if (!parent) return "";
+    // The content box: the client box less the padding, so a host that moves only its
+    // padding moves the constraint too.
+    const pcs = getComputedStyle(parent);
+    return axis === "vertical"
+        ? `${parent.clientHeight - parseFloat(pcs.paddingTop) - parseFloat(pcs.paddingBottom)} ${cs.minHeight} ${cs.maxHeight} ${window.innerHeight}`
+        : `${parent.clientWidth - parseFloat(pcs.paddingLeft) - parseFloat(pcs.paddingRight)} ${cs.minWidth} ${cs.maxWidth} ${window.innerWidth}`;
+}
 
 /**
  * Measure the dock's two endpoints, `--dock-expanded-px` and `--dock-collapsed-px`.
@@ -169,10 +190,15 @@ export function useDockExpandedSize(
 ): UseDockExpandedSizeReturn {
     const { rootEl, contentEl, expandedEl, collapsedEl, axis } = options;
     let observer: ResizeObserver | null = null;
+    let crossObserver: ResizeObserver | null = null;
     let mutations: MutationObserver | null = null;
+    let hostStyle: MutationObserver | null = null;
     let expandedChrome: number | null = null;
     let collapsedChrome: number | null = null;
     let collapsedPx: number | null = null;
+    let restEndpoint: number | null = null;
+    let restConstraint = "";
+    let hostMoved = false;
     let disposed = false;
 
     function capture(): void {
@@ -188,20 +214,55 @@ export function useDockExpandedSize(
         // and force the page through two more layouts to read the same number. A capture
         // runs on every content change in either pane (a dashboard's section label as it
         // scrolls), so only the other posture's endpoint pays for the overrides (U/B7d M1).
-        const resting = !root.hasAttribute("data-morphing");
-        const rootNow = resting ? getSize(root, a) : 0;
-        if (resting) {
+        const morphing = root.hasAttribute("data-morphing");
+        const rootNow = morphing ? 0 : getSize(root, a);
+        if (!morphing) {
             const chrome = rootNow - getSize(expanded ? full : summary, a);
             if (expanded) expandedChrome = chrome;
             else collapsedChrome = chrome;
         }
 
-        const expandedPx =
-            resting && expanded
+        let expandedPx =
+            !morphing && expanded
                 ? rootNow
                 : keepScroll(full, () => restSize(root, full, summary, a, expandedChrome));
+        // THE ENDPOINT A MORPH STARTS FROM HOLDS until the host moves it, and the hold
+        // is keyed on the cause, not the size. At rest the reading is the endpoint. The
+        // morph's first capture notes what constrains the dock (`constraintOf`), and
+        // while nothing of it has moved since, a reading within the rounding band of the
+        // endpoint is the same box read off another pixel phase (an ancestor `zoom` in
+        // WebKit rounds the box the morph is moving 1 px either way, frame to frame), so
+        // the morph keeps the endpoint and the run keeps its yield. Once the
+        // host moves a constraint, by any amount, the morph takes every reading: the
+        // endpoint follows it, and so does the run's yield, read from the rest port, on
+        // the frame it lands, a 1-2 px host change across the fit edge included, which
+        // the band alone would hold until the settle. A reading past the band with
+        // no constraint moved (the pane's content changed) is taken as well.
+        if (!morphing) {
+            restEndpoint = expandedPx;
+            restConstraint = "";
+            hostMoved = false;
+        } else {
+            const constraint = constraintOf(root, a);
+            if (!restConstraint) restConstraint = constraint;
+            hostMoved ||= constraint !== restConstraint;
+            if (
+                !hostMoved &&
+                restEndpoint !== null &&
+                Math.abs(expandedPx - restEndpoint) <= ENDPOINT_BAND_PX
+            ) {
+                expandedPx = restEndpoint;
+            }
+        }
+        publishYield(
+            root,
+            full,
+            morphing && expandedPx !== restEndpoint && expandedChrome !== null && runEdge !== null
+                ? expandedPx - expandedChrome - runEdge
+                : undefined,
+        );
         if (!expanded) {
-            collapsedPx = resting
+            collapsedPx = !morphing
                 ? rootNow
                 : keepScroll(full, () => restSize(root, summary, full, a, collapsedChrome));
         }
@@ -214,6 +275,68 @@ export function useDockExpandedSize(
             "--dock-expanded-px",
             `${Math.max(expandedPx, collapsedPx ?? 0)}px`,
         );
+    }
+
+    /*
+     * WHETHER THE RUN'S SEATS FIT ITS PORT, `data-run-fits` on the root: present when
+     * the seats' span along the run's scroll axis is no longer than the port. It is the
+     * one source of record for "the run hides nothing", and run.css reads it twice. On a
+     * horizontal run it sets `--dock-run-yield` to 1 (THE RESERVE YIELDS), so the two
+     * reserve boxes shrink into the room the seats leave, down to the ring's reach. On a
+     * vertical run whose seats fit it also writes `--dock-run-room-block`, half the room
+     * they leave, which the run's block padding yields to. On either axis it takes the cut
+     * cap's scroll-driven animations off the plate and the run (THE CAP RUNS ONLY ON A
+     * RUN THAT HIDES SOMETHING), so a run whose seats all show rests round, and a run
+     * whose overflow vanished while it was scrolled does not hold the keyframe its
+     * inactive timeline last resolved. The span is read from the seats' layout boxes
+     * (`offset*`), and neither it nor the port depends on the yield, so the flag is a
+     * pure reading of the layout. It is read wherever an endpoint is, since the same
+     * observers see the port and the seats change.
+     *
+     * IT IS THE EXPANDED RUN'S READING AT REST, in every frame. It is read only while
+     * the full pane is the active one. At rest (an expand's arm, post-flush and before
+     * `[data-morphing]`; at rest expanded; once more when a morph settles, `release`) the
+     * port is the run's own. Through a morph the reading is held, so no seat moves when a
+     * morph starts or settles, and the panes the morph moves never see the run's
+     * padding change under them (a bottom-anchored dock under an ancestor `zoom` in
+     * WebKit). It moves mid-morph only when the host moves the endpoint itself (a clamp,
+     * a stage resize, by any amount; `capture`): then the port is the rest port
+     * (`restPort`), the new endpoint less the expanded chrome and the run's edge
+     * (`runEdge`, its border box less its port), both read at rest. So the flag and the
+     * room move on the frame the host's change lands, where the morph carries it, not at the
+     * settle. While collapsing the full pane is out of flow, and the reading it held
+     * expanded stays until the next expand re-reads it.
+     */
+    let yieldPublished = "";
+    let runEdge: number | null = null;
+
+    function publishYield(root: HTMLElement, run: HTMLElement, restPort?: number): void {
+        if (!run.classList.contains("is-active")) return;
+        const morphing = root.hasAttribute("data-morphing");
+        if (morphing && restPort === undefined) return;
+        const horizontal = axis.value === "horizontal";
+        let start = Infinity;
+        let end = -Infinity;
+        for (const seat of run.children) {
+            if (!(seat instanceof HTMLElement) || seat.offsetParent !== run) continue;
+            const offset = horizontal ? seat.offsetLeft : seat.offsetTop;
+            start = Math.min(start, offset);
+            end = Math.max(end, offset + (horizontal ? seat.offsetWidth : seat.offsetHeight));
+        }
+        const client = horizontal ? run.clientWidth : run.clientHeight;
+        if (!morphing) runEdge = getSize(run, axis.value) - client;
+        const port = restPort ?? client;
+        const fits = end > start && end - start <= port;
+        // The vertical reserve yields as padding (run.css THE VERTICAL RESERVE YIELDS AS
+        // PADDING): half the room the seats leave in the port. The port is the run's
+        // padding box, which its margins fix, so the padding this writes does not move it.
+        const room = !horizontal && fits ? `${Math.floor(((port - (end - start)) / 2) * 100) / 100}px` : "";
+        const value = `${fits ? "1" : "0"} ${room}`;
+        if (value === yieldPublished) return;
+        yieldPublished = value;
+        if (room) root.style.setProperty("--dock-run-room-block", room);
+        else root.style.removeProperty("--dock-run-room-block");
+        root.toggleAttribute("data-run-fits", fits);
     }
 
     /**
@@ -236,16 +359,57 @@ export function useDockExpandedSize(
         }
     }
 
+    /*
+     * THE PLATE'S CROSS EXTENT, `--dock-plate-cross-px`: the plate's block size on a
+     * horizontal dock, its inline size on a vertical one. The stadium's rest corner is
+     * half of it (run.css `--dock-cap-rest`), a length, so the corner is a circle of the
+     * plate's own height on every box and at every point of the cut-cap timeline. It is
+     * read from the plate's layout box (`offset*`), so the morph's `scale` never reaches
+     * it, from the ResizeObserver's border box, which is fractional and delivered after
+     * layout and before paint, so the first painted frame already carries it and the
+     * attach forces no layout inside Vue's flush. Without an observer it is read once,
+     * at attach.
+     */
+    function publishCross(root: HTMLElement, inline: number, block: number): void {
+        const px = axis.value === "vertical" ? inline : block;
+        root.style.setProperty("--dock-plate-cross-px", `${px}px`);
+    }
+
+    function observeCross(root: HTMLElement): void {
+        const plate = root.querySelector<HTMLElement>(":scope > .dock-plate");
+        if (!plate) return;
+        if (typeof ResizeObserver === "undefined") {
+            publishCross(root, plate.offsetWidth, plate.offsetHeight);
+            return;
+        }
+        crossObserver = new ResizeObserver(([entry]) => {
+            const box = entry?.borderBoxSize?.[0];
+            if (box) publishCross(root, box.inlineSize, box.blockSize);
+        });
+        crossObserver.observe(plate);
+    }
+
     function attach(): void {
         observer?.disconnect();
         observer = null;
+        crossObserver?.disconnect();
+        crossObserver = null;
         mutations?.disconnect();
         mutations = null;
-        if (!rootEl.value) return;
+        hostStyle?.disconnect();
+        hostStyle = null;
+        yieldPublished = "";
+        runEdge = null;
+        restEndpoint = null;
+        restConstraint = "";
+        hostMoved = false;
+        const root = rootEl.value;
+        if (!root) return;
         if (typeof ResizeObserver !== "undefined") {
             observer = new ResizeObserver(() => capture());
             observe();
         }
+        observeCross(root);
         if (typeof MutationObserver !== "undefined") {
             // A pane's content changed: re-observe its children. With an observer, the
             // re-observe IS the capture: every target's initial delivery runs after this
@@ -267,6 +431,17 @@ export function useDockExpandedSize(
                     });
                 }
             }
+            // A host that loosens the root's own constraint mid-morph (its `style` or
+            // `class`: a larger max size) resizes nothing observed, since the root is held
+            // at its reserved size. The morph reads it on the record, if it moved what
+            // `constraintOf` reads, a 1-2 px growth across the fit edge included.
+            hostStyle = new MutationObserver(() => {
+                // Once the host has moved, the morph already takes every reading, and the
+                // capture's own `--dock-*-px` writes must not re-enter it.
+                if (hostMoved || !restConstraint || !root.hasAttribute("data-morphing")) return;
+                if (constraintOf(root, axis.value) !== restConstraint) capture();
+            });
+            hostStyle.observe(root, { attributes: true, attributeFilter: ["style", "class"] });
         }
         // The first capture rides the observer's initial delivery, which runs after the
         // frame's layout and before its paint, so the endpoints are on the root for the
@@ -292,8 +467,12 @@ export function useDockExpandedSize(
         disposed = true;
         observer?.disconnect();
         observer = null;
+        crossObserver?.disconnect();
+        crossObserver = null;
         mutations?.disconnect();
         mutations = null;
+        hostStyle?.disconnect();
+        hostStyle = null;
         if (typeof window !== "undefined") window.removeEventListener("resize", onResize);
     });
 
@@ -333,6 +512,17 @@ export function useDockExpandedSize(
      * paints its rest there, at scale 1).
      */
     let firstBoxes: FirstBoxes | null = null;
+    /*
+     * THE LEAVING RUN HOLDS THE SCROLL IT PAINTED, as the leaving pane holds its box.
+     * Between the swap and the arm the root lays out in the new posture with no
+     * reservation (the measure reads it there), so a collapsing run's port grows for one
+     * forced layout and shrinks back when `[data-morphing]` reserves the box. WebKit
+     * re-snaps a `mandatory` run on that return and can land it at its scroll end
+     * (a coarse vertical run 20 px short of fitting: 0 to 20, every seat stepping 20 px
+     * on the first frame). `first` reads the offset painted before the swap, and `anchor`,
+     * the arm's last layout read, gives it back to a leaving run that moved.
+     */
+    let firstScroll: { left: number; top: number } | null = null;
 
     function rigidRegions(root: HTMLElement): HTMLElement[] {
         return [...root.querySelectorAll<HTMLElement>(":scope > .dock-controls > .dock-persistent")];
@@ -349,6 +539,8 @@ export function useDockExpandedSize(
         firstBoxes = new Map(
             [root, ...rigidRegions(root), ...panes()].map((el) => [el, span(el, a)] as const),
         );
+        const run = expandedEl.value;
+        firstScroll = run ? { left: run.scrollLeft, top: run.scrollTop } : null;
     }
 
     function release(): void {
@@ -356,9 +548,28 @@ export function useDockExpandedSize(
         if (!root) return;
         for (const el of [root, ...rigidRegions(root), contentEl.value]) el?.style.removeProperty(ORIGIN);
         for (const pane of panes()) pane.style.removeProperty(PANE_SHIFT);
+        // At a settle (the morph flag already cleared) the run is at rest again.
+        if (expandedEl.value) publishYield(root, expandedEl.value);
     }
 
     function anchor(): void {
+        const run = expandedEl.value;
+        const held = firstScroll;
+        firstScroll = null;
+        try {
+            anchorPanes();
+        } finally {
+            if (
+                run?.classList.contains("is-leaving") &&
+                held &&
+                (run.scrollLeft !== held.left || run.scrollTop !== held.top)
+            ) {
+                run.scrollTo({ left: held.left, top: held.top, behavior: "instant" });
+            }
+        }
+    }
+
+    function anchorPanes(): void {
         const root = rootEl.value;
         const layers = contentEl.value;
         const boxes = firstBoxes;

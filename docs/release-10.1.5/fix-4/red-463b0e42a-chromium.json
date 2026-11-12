@@ -1,0 +1,597 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "tests-visual/playwright.config.ts",
+      "--project=chromium-headless-new",
+      "release-10-1-5.spec.ts",
+      "--grep",
+      " (f[12]|h[1-4]) ",
+      "--workers=1"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/playwright.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-headless-new",
+        "name": "chromium-headless-new",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "coarse-touch",
+        "name": "coarse-touch",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "safari-webgl.spec.ts",
+          "aurora-swraster.spec.ts",
+          "release-10-1-1.spec.ts",
+          "release-10-1-2.spec.ts",
+          "release-10-1-3.spec.ts",
+          "release-10-1-4.spec.ts",
+          "release-10-1-5.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/docs/release-10.1.5/fix-4/red-463b0e42a-chromium.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5263",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/",
+      "url": "http://localhost:5263",
+      "reuseExistingServer": true,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "release-10-1-5.spec.ts",
+      "file": "release-10-1-5.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "f1 a SegmentedTabs under a fixed z:1 header paints beneath it; its labels paint over the indicator",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 3134,
+                  "error": {
+                    "message": "Error: underline ({\"rest\":{\"tab\":[\"10\",\"10\",\"10\"],\"indicator\":\"0\"},\"glide\":{\"tab\":[\"10\",\"10\",\"10\"],\"indicator\":\"0\"},\"underTop\":\"segmented-tab\",\"tabTop\":40}): the fixed header paints over the strip\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"header\"\u001b[39m\nReceived: \u001b[31m\"segmented-tab\"\u001b[39m",
+                    "stack": "Error: underline ({\"rest\":{\"tab\":[\"10\",\"10\",\"10\"],\"indicator\":\"0\"},\"glide\":{\"tab\":[\"10\",\"10\",\"10\"],\"indicator\":\"0\"},\"underTop\":\"segmented-tab\",\"tabTop\":40}): the fixed header paints over the strip\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"header\"\u001b[39m\nReceived: \u001b[31m\"segmented-tab\"\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:746:82",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                      "column": 82,
+                      "line": 746
+                    },
+                    "snippet": "  744 |         const cell = `${variant} (${JSON.stringify(read)})`;\n  745 |         expect(read.tabTop, `${cell}: the tab lies under the header`).toBeLessThan(80);\n> 746 |         expect(read.underTop, `${cell}: the fixed header paints over the strip`).toBe(\"header\");\n      |                                                                                  ^\n  747 |         for (const at of [read.rest, read.glide]) {\n  748 |             expect(at.indicator, `${cell}: an indicator`).not.toBeNull();\n  749 |             for (const z of at.tab) {"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                        "column": 82,
+                        "line": 746
+                      },
+                      "message": "Error: underline ({\"rest\":{\"tab\":[\"10\",\"10\",\"10\"],\"indicator\":\"0\"},\"glide\":{\"tab\":[\"10\",\"10\",\"10\"],\"indicator\":\"0\"},\"underTop\":\"segmented-tab\",\"tabTop\":40}): the fixed header paints over the strip\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"header\"\u001b[39m\nReceived: \u001b[31m\"segmented-tab\"\u001b[39m\n\n  744 |         const cell = `${variant} (${JSON.stringify(read)})`;\n  745 |         expect(read.tabTop, `${cell}: the tab lies under the header`).toBeLessThan(80);\n> 746 |         expect(read.underTop, `${cell}: the fixed header paints over the strip`).toBe(\"header\");\n      |                                                                                  ^\n  747 |         for (const at of [read.rest, read.glide]) {\n  748 |             expect(at.indicator, `${cell}: an indicator`).not.toBeNull();\n  749 |             for (const z of at.tab) {\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:746:82"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-05T11:46:42.922Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/test-results/release-10-1-5-f1-a-Segmen-567d7-ls-paint-over-the-indicator-chromium-headless-new/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                    "column": 82,
+                    "line": 746
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-1ebdf84df7bb628b6d25",
+          "file": "release-10-1-5.spec.ts",
+          "line": 715,
+          "column": 1
+        },
+        {
+          "title": "f2 Table row and header rules paint in --border, light and dark",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 934,
+                  "error": {
+                    "message": "Error: light hrow ({\"border\":\"rgb(198, 180, 159)\",\"rules\":[{\"id\":\"hrow\",\"width\":\"1px\",\"colour\":\"rgb(28, 25, 23)\",\"text\":\"rgb(28, 25, 23)\"},{\"id\":\"row1\",\"width\":\"1px\",\"colour\":\"rgb(28, 25, 23)\",\"text\":\"rgb(28, 25, 23)\"},{\"id\":\"row2\",\"width\":\"1px\",\"colour\":\"rgb(28, 25, 23)\",\"text\":\"rgb(28, 25, 23)\"},{\"id\":\"row3\",\"width\":\"0px\",\"colour\":\"rgb(28, 25, 23)\",\"text\":\"rgb(28, 25, 23)\"}]}): the rule is --border\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"rgb(\u001b[7m19\u001b[27m8, \u001b[7m180, 159\u001b[27m)\"\u001b[39m\nReceived: \u001b[31m\"rgb(\u001b[7m2\u001b[27m8, \u001b[7m25, 23\u001b[27m)\"\u001b[39m",
+                    "stack": "Error: light hrow ({\"border\":\"rgb(198, 180, 159)\",\"rules\":[{\"id\":\"hrow\",\"width\":\"1px\",\"colour\":\"rgb(28, 25, 23)\",\"text\":\"rgb(28, 25, 23)\"},{\"id\":\"row1\",\"width\":\"1px\",\"colour\":\"rgb(28, 25, 23)\",\"text\":\"rgb(28, 25, 23)\"},{\"id\":\"row2\",\"width\":\"1px\",\"colour\":\"rgb(28, 25, 23)\",\"text\":\"rgb(28, 25, 23)\"},{\"id\":\"row3\",\"width\":\"0px\",\"colour\":\"rgb(28, 25, 23)\",\"text\":\"rgb(28, 25, 23)\"}]}): the rule is --border\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"rgb(\u001b[7m19\u001b[27m8, \u001b[7m180, 159\u001b[27m)\"\u001b[39m\nReceived: \u001b[31m\"rgb(\u001b[7m2\u001b[27m8, \u001b[7m25, 23\u001b[27m)\"\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:775:66",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                      "column": 66,
+                      "line": 775
+                    },
+                    "snippet": "  773 |         for (const rule of read.rules) {\n  774 |             const cell = `${dark ? \"dark\" : \"light\"} ${rule.id} (${JSON.stringify(read)})`;\n> 775 |             expect(rule.colour, `${cell}: the rule is --border`).toBe(read.border);\n      |                                                                  ^\n  776 |         }\n  777 |     }\n  778 | });"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                        "column": 66,
+                        "line": 775
+                      },
+                      "message": "Error: light hrow ({\"border\":\"rgb(198, 180, 159)\",\"rules\":[{\"id\":\"hrow\",\"width\":\"1px\",\"colour\":\"rgb(28, 25, 23)\",\"text\":\"rgb(28, 25, 23)\"},{\"id\":\"row1\",\"width\":\"1px\",\"colour\":\"rgb(28, 25, 23)\",\"text\":\"rgb(28, 25, 23)\"},{\"id\":\"row2\",\"width\":\"1px\",\"colour\":\"rgb(28, 25, 23)\",\"text\":\"rgb(28, 25, 23)\"},{\"id\":\"row3\",\"width\":\"0px\",\"colour\":\"rgb(28, 25, 23)\",\"text\":\"rgb(28, 25, 23)\"}]}): the rule is --border\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"rgb(\u001b[7m19\u001b[27m8, \u001b[7m180, 159\u001b[27m)\"\u001b[39m\nReceived: \u001b[31m\"rgb(\u001b[7m2\u001b[27m8, \u001b[7m25, 23\u001b[27m)\"\u001b[39m\n\n  773 |         for (const rule of read.rules) {\n  774 |             const cell = `${dark ? \"dark\" : \"light\"} ${rule.id} (${JSON.stringify(read)})`;\n> 775 |             expect(rule.colour, `${cell}: the rule is --border`).toBe(read.border);\n      |                                                                  ^\n  776 |         }\n  777 |     }\n  778 | });\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:775:66"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-05T11:46:46.544Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/test-results/release-10-1-5-f2-Table-ro-17a00--in---border-light-and-dark-chromium-headless-new/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                    "column": 66,
+                    "line": 775
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-ee821b9c4a4759ef0a54",
+          "file": "release-10-1-5.spec.ts",
+          "line": 757,
+          "column": 1
+        },
+        {
+          "title": "h2 at 844: a labelled DockTrigger adds no reserve; the run's room is the icon dock's",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 2148,
+                  "error": {
+                    "message": "Error: the trigger's dock reserves 19, the icon dock 8\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m8\u001b[39m\nReceived: \u001b[31m19\u001b[39m",
+                    "stack": "Error: the trigger's dock reserves 19, the icon dock 8\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m8\u001b[39m\nReceived: \u001b[31m19\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:918:95",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                      "column": 95,
+                      "line": 918
+                    },
+                    "snippet": "  916 |     ).toBeGreaterThan(132);\n  917 |     const withTrigger = await runReserve(page);\n> 918 |     expect(withTrigger, `the trigger's dock reserves ${withTrigger}, the icon dock ${icons}`).toBe(icons);\n      |                                                                                               ^\n  919 |     expect(icons, \"the icon dock reserves the ring and the icon's overhang\").toBeGreaterThan(0);\n  920 | });\n  921 |"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                        "column": 95,
+                        "line": 918
+                      },
+                      "message": "Error: the trigger's dock reserves 19, the icon dock 8\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m8\u001b[39m\nReceived: \u001b[31m19\u001b[39m\n\n  916 |     ).toBeGreaterThan(132);\n  917 |     const withTrigger = await runReserve(page);\n> 918 |     expect(withTrigger, `the trigger's dock reserves ${withTrigger}, the icon dock ${icons}`).toBe(icons);\n      |                                                                                               ^\n  919 |     expect(icons, \"the icon dock reserves the ring and the icon's overhang\").toBeGreaterThan(0);\n  920 | });\n  921 |\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:918:95"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-05T11:46:52.917Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/test-results/release-10-1-5-h2-at-844-a-6ba54-n-s-room-is-the-icon-dock-s-chromium-headless-new/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                    "column": 95,
+                    "line": 918
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-646cb9fc80befe8b7ca6",
+          "file": "release-10-1-5.spec.ts",
+          "line": 907,
+          "column": 1
+        },
+        {
+          "title": "h3 a ticking seat label constructs no ResizeObserver",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 2004,
+                  "error": {
+                    "message": "Error: 20 label ticks ({\"before\":4,\"after\":24})\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m4\u001b[39m\nReceived: \u001b[31m24\u001b[39m",
+                    "stack": "Error: 20 label ticks ({\"before\":4,\"after\":24})\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m4\u001b[39m\nReceived: \u001b[31m24\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:936:68",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                      "column": 68,
+                      "line": 936
+                    },
+                    "snippet": "  934 |     });\n  935 |     expect(read.before, \"the dock observes\").toBeGreaterThan(0);\n> 936 |     expect(read.after, `20 label ticks (${JSON.stringify(read)})`).toBe(read.before);\n      |                                                                    ^\n  937 |     expectNoReach(await readPlate(page), \"after the ticks\");\n  938 | });\n  939 |"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                        "column": 68,
+                        "line": 936
+                      },
+                      "message": "Error: 20 label ticks ({\"before\":4,\"after\":24})\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m4\u001b[39m\nReceived: \u001b[31m24\u001b[39m\n\n  934 |     });\n  935 |     expect(read.before, \"the dock observes\").toBeGreaterThan(0);\n> 936 |     expect(read.after, `20 label ticks (${JSON.stringify(read)})`).toBe(read.before);\n      |                                                                    ^\n  937 |     expectNoReach(await readPlate(page), \"after the ticks\");\n  938 | });\n  939 |\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:936:68"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-05T11:46:55.476Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/test-results/release-10-1-5-h3-a-tickin-d342c-onstructs-no-ResizeObserver-chromium-headless-new/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                    "column": 68,
+                    "line": 936
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-70d59a0aa1b2e22471d3",
+          "file": "release-10-1-5.spec.ts",
+          "line": 923,
+          "column": 1
+        },
+        {
+          "title": "h4 with no ResizeObserver the plate rests at half its block extent",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 6,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 1181,
+                  "error": {
+                    "message": "Error: no ResizeObserver: corner 0px = half the block extent 28 ({\"cls\":\"glass-dock horizontal shape-pill expanded pinned fit-content always-expanded\",\"w\":160,\"h\":56,\"radii\":[\"0px\",\"0px\",\"0px\",\"0px\"],\"runs\":[{\"sw\":136,\"cw\":136,\"sh\":40,\"ch\":40,\"active\":true}]})\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.5\u001b[39m\nReceived:    \u001b[31m28\u001b[39m",
+                    "stack": "Error: no ResizeObserver: corner 0px = half the block extent 28 ({\"cls\":\"glass-dock horizontal shape-pill expanded pinned fit-content always-expanded\",\"w\":160,\"h\":56,\"radii\":[\"0px\",\"0px\",\"0px\",\"0px\"],\"runs\":[{\"sw\":136,\"cw\":136,\"sh\":40,\"ch\":40,\"active\":true}]})\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.5\u001b[39m\nReceived:    \u001b[31m28\u001b[39m\n    at expectRestCorner (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:116:11)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:946:5",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                      "column": 11,
+                      "line": 116
+                    },
+                    "snippet": "  114 |             Math.abs(Number.parseFloat(r) - half),\n  115 |             `${cell}: corner ${r} = half the block extent ${half} (${JSON.stringify(read)})`,\n> 116 |         ).toBeLessThanOrEqual(0.5);\n      |           ^\n  117 |     }\n  118 | }\n  119 |"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                        "column": 11,
+                        "line": 116
+                      },
+                      "message": "Error: no ResizeObserver: corner 0px = half the block extent 28 ({\"cls\":\"glass-dock horizontal shape-pill expanded pinned fit-content always-expanded\",\"w\":160,\"h\":56,\"radii\":[\"0px\",\"0px\",\"0px\",\"0px\"],\"runs\":[{\"sw\":136,\"cw\":136,\"sh\":40,\"ch\":40,\"active\":true}]})\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.5\u001b[39m\nReceived:    \u001b[31m28\u001b[39m\n\n  114 |             Math.abs(Number.parseFloat(r) - half),\n  115 |             `${cell}: corner ${r} = half the block extent ${half} (${JSON.stringify(read)})`,\n> 116 |         ).toBeLessThanOrEqual(0.5);\n      |           ^\n  117 |     }\n  118 | }\n  119 |\n    at expectRestCorner (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:116:11)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:946:5"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-05T11:46:57.933Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/test-results/release-10-1-5-h4-with-no--6cc04-ts-at-half-its-block-extent-chromium-headless-new/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                    "column": 11,
+                    "line": 116
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-31a79ecaa964afd493b4",
+          "file": "release-10-1-5.spec.ts",
+          "line": 941,
+          "column": 1
+        }
+      ],
+      "suites": [
+        {
+          "title": "h1 at 2x",
+          "file": "release-10-1-5.spec.ts",
+          "line": 789,
+          "column": 6,
+          "specs": [
+            {
+              "title": "h1 house at 390: a seat cut by the trailing clip paints nothing past the plate's corner arc",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 2127,
+                      "error": {
+                        "message": "Error: house S8 ({\"hovered\":true,\"scroll\":87,\"range\":443,\"plate\":[15,16,375,72],\"radii\":[16,16,16,16],\"run\":\"0px\"}): no seat ink past the plate's arc ({\"probed\":648,\"count\":4,\"ink\":[[373.75,23.25,25],[373.75,23.75,31],[373.75,64.25,31],[373.75,64.75,25]]})\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m4\u001b[39m",
+                        "stack": "Error: house S8 ({\"hovered\":true,\"scroll\":87,\"range\":443,\"plate\":[15,16,375,72],\"radii\":[16,16,16,16],\"run\":\"0px\"}): no seat ink past the plate's arc ({\"probed\":648,\"count\":4,\"ink\":[[373.75,23.25,25],[373.75,23.75,31],[373.75,64.25,31],[373.75,64.75,25]]})\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m4\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:893:107",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                          "column": 107,
+                          "line": 893
+                        },
+                        "snippet": "  891 |                 );\n  892 |                 expect(read.probed, `${cell}: device pixels past the arcs were read`).toBeGreaterThan(0);\n> 893 |                 expect(read.count, `${cell}: no seat ink past the plate's arc (${JSON.stringify(read)})`).toBe(0);\n      |                                                                                                           ^\n  894 |             }\n  895 |         });\n  896 |     }"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                            "column": 107,
+                            "line": 893
+                          },
+                          "message": "Error: house S8 ({\"hovered\":true,\"scroll\":87,\"range\":443,\"plate\":[15,16,375,72],\"radii\":[16,16,16,16],\"run\":\"0px\"}): no seat ink past the plate's arc ({\"probed\":648,\"count\":4,\"ink\":[[373.75,23.25,25],[373.75,23.75,31],[373.75,64.25,31],[373.75,64.75,25]]})\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m4\u001b[39m\n\n  891 |                 );\n  892 |                 expect(read.probed, `${cell}: device pixels past the arcs were read`).toBeGreaterThan(0);\n> 893 |                 expect(read.count, `${cell}: no seat ink past the plate's arc (${JSON.stringify(read)})`).toBe(0);\n      |                                                                                                           ^\n  894 |             }\n  895 |         });\n  896 |     }\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:893:107"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-05T11:46:47.943Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/test-results/release-10-1-5-h1-at-2x-h1-33637-past-the-plate-s-corner-arc-chromium-headless-new/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                        "column": 107,
+                        "line": 893
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "ba3de8f038291be5029b-851ac5b2ab2e00ab193e",
+              "file": "release-10-1-5.spec.ts",
+              "line": 792,
+              "column": 9
+            },
+            {
+              "title": "h1 cockpit at 390: a seat cut by the trailing clip paints nothing past the plate's corner arc",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 2125,
+                      "error": {
+                        "message": "Error: cockpit S8 ({\"hovered\":true,\"scroll\":103,\"range\":457,\"plate\":[15,16,375,68],\"radii\":[16,16,16,16],\"run\":\"0px\"}): no seat ink past the plate's arc ({\"probed\":648,\"count\":26,\"ink\":[[373.75,23.25,12],[374.25,23.25,12],[374.75,23.25,12],[373.75,23.75,31],[374.25,23.75,31],[374.75,23.75,31]]})\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m26\u001b[39m",
+                        "stack": "Error: cockpit S8 ({\"hovered\":true,\"scroll\":103,\"range\":457,\"plate\":[15,16,375,68],\"radii\":[16,16,16,16],\"run\":\"0px\"}): no seat ink past the plate's arc ({\"probed\":648,\"count\":26,\"ink\":[[373.75,23.25,12],[374.25,23.25,12],[374.75,23.25,12],[373.75,23.75,31],[374.25,23.75,31],[374.75,23.75,31]]})\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m26\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:893:107",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                          "column": 107,
+                          "line": 893
+                        },
+                        "snippet": "  891 |                 );\n  892 |                 expect(read.probed, `${cell}: device pixels past the arcs were read`).toBeGreaterThan(0);\n> 893 |                 expect(read.count, `${cell}: no seat ink past the plate's arc (${JSON.stringify(read)})`).toBe(0);\n      |                                                                                                           ^\n  894 |             }\n  895 |         });\n  896 |     }"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                            "column": 107,
+                            "line": 893
+                          },
+                          "message": "Error: cockpit S8 ({\"hovered\":true,\"scroll\":103,\"range\":457,\"plate\":[15,16,375,68],\"radii\":[16,16,16,16],\"run\":\"0px\"}): no seat ink past the plate's arc ({\"probed\":648,\"count\":26,\"ink\":[[373.75,23.25,12],[374.25,23.25,12],[374.75,23.25,12],[373.75,23.75,31],[374.25,23.75,31],[374.75,23.75,31]]})\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m26\u001b[39m\n\n  891 |                 );\n  892 |                 expect(read.probed, `${cell}: device pixels past the arcs were read`).toBeGreaterThan(0);\n> 893 |                 expect(read.count, `${cell}: no seat ink past the plate's arc (${JSON.stringify(read)})`).toBe(0);\n      |                                                                                                           ^\n  894 |             }\n  895 |         });\n  896 |     }\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:893:107"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-05T11:46:50.436Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/test-results/release-10-1-5-h1-at-2x-h1-dba56-past-the-plate-s-corner-arc-chromium-headless-new/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                        "column": 107,
+                        "line": 893
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "ba3de8f038291be5029b-9a6baf9dbe779a6dcded",
+              "file": "release-10-1-5.spec.ts",
+              "line": 792,
+              "column": 9
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-05T11:46:41.261Z",
+    "duration": 18003.260000000002,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 7,
+    "flaky": 0
+  }
+}

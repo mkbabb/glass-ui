@@ -1,0 +1,32 @@
+21:36 branch-ch rc=0 load=8.11 13.23 16.52  98 passed (8.5m) 
+21:36 g6-4-ch rc=0 load=7.01 12.74 16.29  23 passed (15.9s) 
+21:38 g6-3-ch rc=0 load=9.79 11.55 15.26  60 passed (2.2m) 
+21:43 r10-ch rc=0 load=10.24 11.63 14.25  6 passed (4.8m) 
+21:49 r10b-ch rc=0 load=26.90 28.90 21.85  12 passed (6.6m) 
+21:52 r10c-ch rc=0 load=34.02 32.41 24.67  7 passed (2.8m) 
+21:53 d1-ch rc=1 load=42.85 35.25 26.21  3 failed  5 passed (52.7s) 
+21:53 chain ch done: branch g6-4 g6-3 r10 r10b r10c d1
+21:59 c11-ch stopped by PID (harness stage stretched the dock; align-items fixed), rerun
+22:03 c11-ch rc=0 load=13.75 19.60 22.51  8 passed (4.2m) 
+22:08 c11-v1014-ch rc=0 load=32.06 26.94 24.90  8 passed (4.6m) 
+22:08 chain ch done: c11 c11-v1014
+22:10 wk1 waiter (webkit lock held elsewhere) stopped by PID; Chromium follow-ups run first
+22:26 c11x-ch rc=0 load=68.63 62.63 46.29  3 passed (2.4m) 
+22:28 c11x-v1014-ch rc=0 load=24.69 47.55 42.48  3 passed (2.0m) 
+22:28 chain ch done: c11x c11x-v1014
+22:28 ch3+d1ab done
+22:29 d1ab-ch REFUSED by guarded (kernel zone data.kalloc.1024 at 8.19M); stop: no WebKit, no g7
+13:04 resume (post-reboot): wk chain, d1ab ch+wk, g7
+13:10 c11-wk rc=0 load=35.57 22.98 14.02  9 passed (5.3m) 
+13:15 c11-v1014-wk rc=0 load=23.11 25.72 18.28  9 passed (5.2m) 
+13:26 branch-wk rc=0 load=32.50 33.69 27.15  98 passed (11.1m) 
+13:26 chain wk done: c11 c11-v1014 branch
+13:32 g6-4-wk rc=1 load=38.79 37.23 30.98  2 failed  8 skipped  13 passed (49.9s) 
+13:34 g6-3-wk rc=0 load=24.27 32.47 30.21  2 skipped  58 passed (2.8m) 
+13:40 r10-wk rc=0 load=31.47 32.89 31.13  6 passed (5.3m) 
+13:47 r10b-wk rc=0 load=34.20 34.61 32.80  12 passed (7.2m) 
+13:50 r10c-wk rc=0 load=29.46 33.24 32.64  7 passed (3.2m) 
+13:51 d1-wk rc=1 load=37.38 34.36 33.08  4 failed  4 passed (58.5s) 
+13:51 chain wk done: g6-4 g6-3 r10 r10b r10c d1
+14:51 c11w-wk rc=0 load=16.24 31.04 32.11  2 passed (1.8m) 
+14:52 c11w-v1014-wk rc=0 load=19.81 27.42 30.54  2 passed (1.7m) 

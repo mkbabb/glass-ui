@@ -1,0 +1,52 @@
+
+Running 1 test using 1 worker
+
+  ✘  1 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:2325:5 › s2 O-201 at 1440: at every cap through the fit edge the first and end seats keep their whole ring, and a run that hides nothing rests round (45.5s)
+
+
+  1) [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:2325:5 › s2 O-201 at 1440: at every cap through the fit edge the first and end seats keep their whole ring, and a run that hides nothing rests round 
+
+    Error: a cap that cuts a focused seat's ring, a flag that is not the span, or a run that hides nothing and does not rest round
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 22
+
+    - Array []
+    + Array [
+    +   Object {
+    +     "cap": 275,
+    +     "cuts": Array [],
+    +     "focusVisible": false,
+    +     "ink": 3,
+    +     "outline": "none",
+    +     "seat": "S1",
+    +     "worst": 0,
+    +   },
+    +   Object {
+    +     "cap": 273,
+    +     "cuts": Array [
+    +       "dock-layer 1.11",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "home",
+    +     "worst": 1.11,
+    +   },
+    + ]
+
+      2350 |         }
+      2351 |         expect(unfit, `the sweep under ${natural} crosses the fit edge`).toBeGreaterThan(2);
+    > 2352 |         expect(bad, "a cap that cuts a focused seat's ring, a flag that is not the span, or a run that hides nothing and does not rest round").toEqual([]);
+           |                                                                                                                                                ^
+      2353 |     });
+      2354 | }
+      2355 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/release-10-1-5.spec.ts:2352:144
+
+    Error Context: tests-visual/test-results/release-10-1-5-s2-O-201-at-f97e1-t-hides-nothing-rests-round-chromium-headless-new/error-context.md
+
+  1 failed
+    [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:2325:5 › s2 O-201 at 1440: at every cap through the fit edge the first and end seats keep their whole ring, and a run that hides nothing rests round 

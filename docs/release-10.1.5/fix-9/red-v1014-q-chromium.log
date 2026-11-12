@@ -1,0 +1,742 @@
+
+Running 6 tests using 1 worker
+
+  ✘  1 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1917:5 › q1 O-186 at 1440: a fit-content static dock under hover on every control keeps one rest corner, half its cross extent, no percentage (12.7s)
+  ✘  2 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1947:5 › q2 O-187 at 1440: a nested .dock-run group keeps each hovered control's whole ink (1.6s)
+  ✘  3 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1979:5 › q3 O-187 at 1440: the plate has exactly one scroll timeline in scope, the visible run's (930ms)
+  ✘  4 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1917:5 › q1 O-186 at 390: a fit-content static dock under hover on every control keeps one rest corner, half its cross extent, no percentage (9.1s)
+  ✘  5 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1947:5 › q2 O-187 at 390: a nested .dock-run group keeps each hovered control's whole ink (1.6s)
+  ✘  6 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1979:5 › q3 O-187 at 390: the plate has exactly one scroll timeline in scope, the visible run's (928ms)
+
+
+  1) [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1917:5 › q1 O-186 at 1440: a fit-content static dock under hover on every control keeps one rest corner, half its cross extent, no percentage 
+
+    Error: reads whose corner is not one length of half the cross extent, or whose run scrolls
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -   1
+    + Received  + 314
+
+    - Array []
+    + Array [
+    +   Object {
+    +     "cell": "1440 nest=false rest",
+    +     "cw": 581,
+    +     "half": 28,
+    +     "radii": Array [
+    +       "9999px",
+    +       "9999px",
+    +       "9999px",
+    +       "9999px",
+    +     ],
+    +     "sw": 581,
+    +   },
+    +   Object {
+    +     "cell": "1440 nest=false hover S1 +150 ms",
+    +     "cw": 581,
+    +     "half": 28,
+    +     "radii": Array [
+    +       "9999px",
+    +       "9999px",
+    +       "9999px",
+    +       "9999px",
+    +     ],
+    +     "sw": 581,
+    +   },
+    +   Object {
+    +     "cell": "1440 nest=false hover S1 +700 ms",
+    +     "cw": 581,
+    +     "half": 28,
+    +     "radii": Array [
+    +       "9999px",
+    +       "9999px",
+    +       "9999px",
+    +       "9999px",
+    +     ],
+    +     "sw": 581,
+    +   },
+    +   Object {
+    +     "cell": "1440 nest=false hover S2 +150 ms",
+    +     "cw": 581,
+    +     "half": 28,
+    +     "radii": Array [
+    +       "9999px",
+    +       "9999px",
+    +       "9999px",
+    +       "9999px",
+    +     ],
+    +     "sw": 581,
+    +   },
+    +   Object {
+    +     "cell": "1440 nest=false hover S2 +700 ms",
+    +     "cw": 581,
+    +     "half": 28,
+    +     "radii": Array [
+    +       "9999px",
+    +       "9999px",
+    +       "9999px",
+    +       "9999px",
+    +     ],
+    +     "sw": 581,
+    +   },
+    +   Object {
+    +     "cell": "1440 nest=false hover S3 +150 ms",
+    +     "cw": 581,
+    +     "half": 28,
+    +     "radii": Array [
+    +       "9999px",
+    +       "9999px",
+    +       "9999px",
+    +       "9999px",
+    +     ],
+    +     "sw": 581,
+    +   },
+    +   Object {
+    +     "cell": "1440 nest=false hover S3 +700 ms",
+    +     "cw": 581,
+    +     "half": 28,
+    +     "radii": Array [
+    +       "9999px",
+    +       "9999px",
+    +       "9999px",
+    +       "9999px",
+    +     ],
+    +     "sw": 581,
+    +   },
+    +   Object {
+    +     "cell": "1440 nest=false hover S4 +150 ms",
+    +     "cw": 581,
+    +     "half": 28,
+    +     "radii": Array [
+    +       "9999px",
+    +       "9999px",
+    +       "9999px",
+    +       "9999px",
+    +     ],
+    +     "sw": 581,
+    +   },
+    +   Object {
+    +     "cell": "1440 nest=false hover S4 +700 ms",
+    +     "cw": 581,
+    +     "half": 28,
+    +     "radii": Array [
+    +       "9999px",
+    +       "9999px",
+    +       "9999px",
+    +       "9999px",
+    +     ],
+    +     "sw": 581,
+    +   },
+    +   Object {
+    +     "cell": "1440 nest=false hover S5 +150 ms",
+    +     "cw": 581,
+    +     "half": 28,
+    +     "radii": Array [
+    +       "9999px",
+    +       "9999px",
+    +       "9999px",
+    +       "9999px",
+    +     ],
+    +     "sw": 581,
+    +   },
+    +   Object {
+    +     "cell": "1440 nest=false hover S5 +700 ms",
+    +     "cw": 581,
+    +     "half": 28,
+    +     "radii": Array [
+    +       "9999px",
+    +       "9999px",
+    +       "9999px",
+    +       "9999px",
+    +     ],
+    +     "sw": 581,
+    +   },
+    +   Object {
+    +     "cell": "1440 nest=false hover S6 +150 ms",
+    +     "cw": 581,
+    +     "half": 28,
+    +     "radii": Array [
+    +       "50%",
+    +       "calc(47.9167% + 0.666667px)",
+    +       "calc(47.9167% + 0.666667px)",
+    +       "50%",
+    +     ],
+    +     "sw": 583,
+    +   },
+    +   Object {
+    +     "cell": "1440 nest=false hover S6 +700 ms",
+    +     "cw": 581,
+    +     "half": 28,
+    +     "radii": Array [
+    +       "50%",
+    +       "calc(47.9167% + 0.666667px)",
+    +       "calc(47.9167% + 0.666667px)",
+    +       "50%",
+    +     ],
+    +     "sw": 583,
+    +   },
+    +   Object {
+    +     "cell": "1440 nest=true rest",
+    +     "cw": 545,
+    +     "half": 28,
+    +     "radii": Array [
+    +       "9999px",
+    +       "9999px",
+    +       "9999px",
+    +       "9999px",
+    +     ],
+    +     "sw": 545,
+    +   },
+    +   Object {
+    +     "cell": "1440 nest=true hover S1 +150 ms",
+    +     "cw": 545,
+    +     "half": 28,
+    +     "radii": Array [
+    +       "9999px",
+    +       "9999px",
+    +       "9999px",
+    +       "9999px",
+    +     ],
+    +     "sw": 545,
+    +   },
+    +   Object {
+    +     "cell": "1440 nest=true hover S1 +700 ms",
+    +     "cw": 545,
+    +     "half": 28,
+    +     "radii": Array [
+    +       "9999px",
+    +       "9999px",
+    +       "9999px",
+    +       "9999px",
+    +     ],
+    +     "sw": 545,
+    +   },
+    +   Object {
+    +     "cell": "1440 nest=true hover S2 +150 ms",
+    +     "cw": 545,
+    +     "half": 28,
+    +     "radii": Array [
+    +       "9999px",
+    +       "9999px",
+    +       "9999px",
+    +       "9999px",
+    +     ],
+    +     "sw": 545,
+    +   },
+    +   Object {
+    +     "cell": "1440 nest=true hover S2 +700 ms",
+    +     "cw": 545,
+    +     "half": 28,
+    +     "radii": Array [
+    +       "9999px",
+    +       "9999px",
+    +       "9999px",
+    +       "9999px",
+    +     ],
+    +     "sw": 545,
+    +   },
+    +   Object {
+    +     "cell": "1440 nest=true hover S3 +150 ms",
+    +     "cw": 545,
+    +     "half": 28,
+    +     "radii": Array [
+    +       "9999px",
+    +       "9999px",
+    +       "9999px",
+    +       "9999px",
+    +     ],
+    +     "sw": 545,
+    +   },
+    +   Object {
+    +     "cell": "1440 nest=true hover S3 +700 ms",
+    +     "cw": 545,
+    +     "half": 28,
+    +     "radii": Array [
+    +       "9999px",
+    +       "9999px",
+    +       "9999px",
+    +       "9999px",
+    +     ],
+    +     "sw": 545,
+    +   },
+    +   Object {
+    +     "cell": "1440 nest=true hover S4 +150 ms",
+    +     "cw": 545,
+    +     "half": 28,
+    +     "radii": Array [
+    +       "9999px",
+    +       "9999px",
+    +       "9999px",
+    +       "9999px",
+    +     ],
+    +     "sw": 545,
+    +   },
+    +   Object {
+    +     "cell": "1440 nest=true hover S4 +700 ms",
+    +     "cw": 545,
+    +     "half": 28,
+    +     "radii": Array [
+    +       "9999px",
+    +       "9999px",
+    +       "9999px",
+    +       "9999px",
+    +     ],
+    +     "sw": 545,
+    +   },
+    +   Object {
+    +     "cell": "1440 nest=true hover S5 +150 ms",
+    +     "cw": 545,
+    +     "half": 28,
+    +     "radii": Array [
+    +       "9999px",
+    +       "9999px",
+    +       "9999px",
+    +       "9999px",
+    +     ],
+    +     "sw": 545,
+    +   },
+    +   Object {
+    +     "cell": "1440 nest=true hover S5 +700 ms",
+    +     "cw": 545,
+    +     "half": 28,
+    +     "radii": Array [
+    +       "9999px",
+    +       "9999px",
+    +       "9999px",
+    +       "9999px",
+    +     ],
+    +     "sw": 545,
+    +   },
+    +   Object {
+    +     "cell": "1440 nest=true hover S6 +150 ms",
+    +     "cw": 545,
+    +     "half": 28,
+    +     "radii": Array [
+    +       "9999px",
+    +       "9999px",
+    +       "9999px",
+    +       "9999px",
+    +     ],
+    +     "sw": 547,
+    +   },
+    +   Object {
+    +     "cell": "1440 nest=true hover S6 +700 ms",
+    +     "cw": 545,
+    +     "half": 28,
+    +     "radii": Array [
+    +       "9999px",
+    +       "9999px",
+    +       "9999px",
+    +       "9999px",
+    +     ],
+    +     "sw": 547,
+    +   },
+    + ]
+
+      1942 |             }
+      1943 |         }
+    > 1944 |         expect(bad, "reads whose corner is not one length of half the cross extent, or whose run scrolls").toEqual([]);
+           |                                                                                                            ^
+      1945 |     });
+      1946 |
+      1947 |     test(`q2 O-187 at ${width}: a nested .dock-run group keeps each hovered control's whole ink`, async ({ page }) => {
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:1944:108
+
+    Error Context: tests-visual/test-results/release-10-1-5-q1-O-186-at-1b596--cross-extent-no-percentage-chromium-headless-new/error-context.md
+
+  2) [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1947:5 › q2 O-187 at 1440: a nested .dock-run group keeps each hovered control's whole ink 
+
+    Error: 1440: nested S1's hover ink inside every clip
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 32
+
+    - Array []
+    + Array [
+    +   Object {
+    +     "box": Object {
+    +       "b": 67,
+    +       "l": 449.734375,
+    +       "r": 894.734375,
+    +       "t": 21,
+    +     },
+    +     "clip": "dock-run",
+    +     "ink": Array [
+    +       443.7476501464844,
+    +       575.4554443359375,
+    +       23.100000381469727,
+    +       64.90000343322754,
+    +     ],
+    +   },
+    +   Object {
+    +     "box": Object {
+    +       "b": 68,
+    +       "l": 449.734375,
+    +       "r": 990.734375,
+    +       "t": 20,
+    +     },
+    +     "clip": "dock-layer dock-layer--full dock-run is-active",
+    +     "ink": Array [
+    +       443.7476501464844,
+    +       575.4554443359375,
+    +       23.100000381469727,
+    +       64.90000343322754,
+    +     ],
+    +   },
+    + ]
+
+      1973 |             }, `S${i}`);
+      1974 |             await expectHoverScale(page, read.scale, `nested S${i}`);
+    > 1975 |             expect(read.cut, `${width}: nested S${i}'s hover ink inside every clip`).toEqual([]);
+           |                                                                                      ^
+      1976 |         }
+      1977 |     });
+      1978 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:1975:86
+
+    Error Context: tests-visual/test-results/release-10-1-5-q2-O-187-at-08ea0-hovered-control-s-whole-ink-chromium-headless-new/error-context.md
+
+  3) [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1979:5 › q3 O-187 at 1440: the plate has exactly one scroll timeline in scope, the visible run's 
+
+    Error: one --dock-run timeline (["dock-layer dock-layer--full dock-run is-active","dock-run"])
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 2
+
+      1985 |                 .map((el) => el.className),
+      1986 |         );
+    > 1987 |         expect(named.length, `one --dock-run timeline (${JSON.stringify(named)})`).toBe(1);
+           |                                                                                    ^
+      1988 |         expect(named[0], "it is the dock's active run").toMatch(/\bdock-layer--full\b.*\bis-active\b|\bis-active\b.*\bdock-layer--full\b/);
+      1989 |     });
+      1990 | }
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:1987:84
+
+    Error Context: tests-visual/test-results/release-10-1-5-q3-O-187-at-98b27--in-scope-the-visible-run-s-chromium-headless-new/error-context.md
+
+  4) [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1917:5 › q1 O-186 at 390: a fit-content static dock under hover on every control keeps one rest corner, half its cross extent, no percentage 
+
+    Error: reads whose corner is not one length of half the cross extent, or whose run scrolls
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -   1
+    + Received  + 218
+
+    - Array []
+    + Array [
+    +   Object {
+    +     "cell": "390 nest=false rest",
+    +     "cw": 326,
+    +     "half": 28,
+    +     "radii": Array [
+    +       "9999px",
+    +       "9999px",
+    +       "9999px",
+    +       "9999px",
+    +     ],
+    +     "sw": 326,
+    +   },
+    +   Object {
+    +     "cell": "390 nest=false hover S1 +150 ms",
+    +     "cw": 326,
+    +     "half": 28,
+    +     "radii": Array [
+    +       "9999px",
+    +       "9999px",
+    +       "9999px",
+    +       "9999px",
+    +     ],
+    +     "sw": 326,
+    +   },
+    +   Object {
+    +     "cell": "390 nest=false hover S1 +700 ms",
+    +     "cw": 326,
+    +     "half": 28,
+    +     "radii": Array [
+    +       "9999px",
+    +       "9999px",
+    +       "9999px",
+    +       "9999px",
+    +     ],
+    +     "sw": 326,
+    +   },
+    +   Object {
+    +     "cell": "390 nest=false hover S2 +150 ms",
+    +     "cw": 326,
+    +     "half": 28,
+    +     "radii": Array [
+    +       "9999px",
+    +       "9999px",
+    +       "9999px",
+    +       "9999px",
+    +     ],
+    +     "sw": 326,
+    +   },
+    +   Object {
+    +     "cell": "390 nest=false hover S2 +700 ms",
+    +     "cw": 326,
+    +     "half": 28,
+    +     "radii": Array [
+    +       "9999px",
+    +       "9999px",
+    +       "9999px",
+    +       "9999px",
+    +     ],
+    +     "sw": 326,
+    +   },
+    +   Object {
+    +     "cell": "390 nest=false hover S3 +150 ms",
+    +     "cw": 326,
+    +     "half": 28,
+    +     "radii": Array [
+    +       "9999px",
+    +       "9999px",
+    +       "9999px",
+    +       "9999px",
+    +     ],
+    +     "sw": 326,
+    +   },
+    +   Object {
+    +     "cell": "390 nest=false hover S3 +700 ms",
+    +     "cw": 326,
+    +     "half": 28,
+    +     "radii": Array [
+    +       "9999px",
+    +       "9999px",
+    +       "9999px",
+    +       "9999px",
+    +     ],
+    +     "sw": 326,
+    +   },
+    +   Object {
+    +     "cell": "390 nest=false hover S4 +150 ms",
+    +     "cw": 326,
+    +     "half": 28,
+    +     "radii": Array [
+    +       "50%",
+    +       "calc(47.9167% + 0.666667px)",
+    +       "calc(47.9167% + 0.666667px)",
+    +       "50%",
+    +     ],
+    +     "sw": 328,
+    +   },
+    +   Object {
+    +     "cell": "390 nest=false hover S4 +700 ms",
+    +     "cw": 326,
+    +     "half": 28,
+    +     "radii": Array [
+    +       "50%",
+    +       "calc(47.9167% + 0.666667px)",
+    +       "calc(47.9167% + 0.666667px)",
+    +       "50%",
+    +     ],
+    +     "sw": 328,
+    +   },
+    +   Object {
+    +     "cell": "390 nest=true rest",
+    +     "cw": 264,
+    +     "half": 28,
+    +     "radii": Array [
+    +       "9999px",
+    +       "9999px",
+    +       "9999px",
+    +       "9999px",
+    +     ],
+    +     "sw": 264,
+    +   },
+    +   Object {
+    +     "cell": "390 nest=true hover S1 +150 ms",
+    +     "cw": 264,
+    +     "half": 28,
+    +     "radii": Array [
+    +       "9999px",
+    +       "9999px",
+    +       "9999px",
+    +       "9999px",
+    +     ],
+    +     "sw": 264,
+    +   },
+    +   Object {
+    +     "cell": "390 nest=true hover S1 +700 ms",
+    +     "cw": 264,
+    +     "half": 28,
+    +     "radii": Array [
+    +       "9999px",
+    +       "9999px",
+    +       "9999px",
+    +       "9999px",
+    +     ],
+    +     "sw": 264,
+    +   },
+    +   Object {
+    +     "cell": "390 nest=true hover S2 +150 ms",
+    +     "cw": 264,
+    +     "half": 28,
+    +     "radii": Array [
+    +       "9999px",
+    +       "9999px",
+    +       "9999px",
+    +       "9999px",
+    +     ],
+    +     "sw": 264,
+    +   },
+    +   Object {
+    +     "cell": "390 nest=true hover S2 +700 ms",
+    +     "cw": 264,
+    +     "half": 28,
+    +     "radii": Array [
+    +       "9999px",
+    +       "9999px",
+    +       "9999px",
+    +       "9999px",
+    +     ],
+    +     "sw": 264,
+    +   },
+    +   Object {
+    +     "cell": "390 nest=true hover S3 +150 ms",
+    +     "cw": 264,
+    +     "half": 28,
+    +     "radii": Array [
+    +       "9999px",
+    +       "9999px",
+    +       "9999px",
+    +       "9999px",
+    +     ],
+    +     "sw": 264,
+    +   },
+    +   Object {
+    +     "cell": "390 nest=true hover S3 +700 ms",
+    +     "cw": 264,
+    +     "half": 28,
+    +     "radii": Array [
+    +       "9999px",
+    +       "9999px",
+    +       "9999px",
+    +       "9999px",
+    +     ],
+    +     "sw": 264,
+    +   },
+    +   Object {
+    +     "cell": "390 nest=true hover S4 +150 ms",
+    +     "cw": 264,
+    +     "half": 28,
+    +     "radii": Array [
+    +       "9999px",
+    +       "9999px",
+    +       "9999px",
+    +       "9999px",
+    +     ],
+    +     "sw": 266,
+    +   },
+    +   Object {
+    +     "cell": "390 nest=true hover S4 +700 ms",
+    +     "cw": 264,
+    +     "half": 28,
+    +     "radii": Array [
+    +       "9999px",
+    +       "9999px",
+    +       "9999px",
+    +       "9999px",
+    +     ],
+    +     "sw": 266,
+    +   },
+    + ]
+
+      1942 |             }
+      1943 |         }
+    > 1944 |         expect(bad, "reads whose corner is not one length of half the cross extent, or whose run scrolls").toEqual([]);
+           |                                                                                                            ^
+      1945 |     });
+      1946 |
+      1947 |     test(`q2 O-187 at ${width}: a nested .dock-run group keeps each hovered control's whole ink`, async ({ page }) => {
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:1944:108
+
+    Error Context: tests-visual/test-results/release-10-1-5-q1-O-186-at-ccb39--cross-extent-no-percentage-chromium-headless-new/error-context.md
+
+  5) [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1947:5 › q2 O-187 at 390: a nested .dock-run group keeps each hovered control's whole ink 
+
+    Error: 390: nested S1's hover ink inside every clip
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 32
+
+    - Array []
+    + Array [
+    +   Object {
+    +     "box": Object {
+    +       "b": 67,
+    +       "l": 64.296875,
+    +       "r": 229.296875,
+    +       "t": 21,
+    +     },
+    +     "clip": "dock-run",
+    +     "ink": Array [
+    +       60.34531021118164,
+    +       147.2796974182129,
+    +       23.100000381469727,
+    +       64.90000343322754,
+    +     ],
+    +   },
+    +   Object {
+    +     "box": Object {
+    +       "b": 68,
+    +       "l": 64.296875,
+    +       "r": 325.296875,
+    +       "t": 20,
+    +     },
+    +     "clip": "dock-layer dock-layer--full dock-run is-active",
+    +     "ink": Array [
+    +       60.34531021118164,
+    +       147.2796974182129,
+    +       23.100000381469727,
+    +       64.90000343322754,
+    +     ],
+    +   },
+    + ]
+
+      1973 |             }, `S${i}`);
+      1974 |             await expectHoverScale(page, read.scale, `nested S${i}`);
+    > 1975 |             expect(read.cut, `${width}: nested S${i}'s hover ink inside every clip`).toEqual([]);
+           |                                                                                      ^
+      1976 |         }
+      1977 |     });
+      1978 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:1975:86
+
+    Error Context: tests-visual/test-results/release-10-1-5-q2-O-187-at-f851f-hovered-control-s-whole-ink-chromium-headless-new/error-context.md
+
+  6) [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1979:5 › q3 O-187 at 390: the plate has exactly one scroll timeline in scope, the visible run's 
+
+    Error: one --dock-run timeline (["dock-layer dock-layer--full dock-run is-active","dock-run"])
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 2
+
+      1985 |                 .map((el) => el.className),
+      1986 |         );
+    > 1987 |         expect(named.length, `one --dock-run timeline (${JSON.stringify(named)})`).toBe(1);
+           |                                                                                    ^
+      1988 |         expect(named[0], "it is the dock's active run").toMatch(/\bdock-layer--full\b.*\bis-active\b|\bis-active\b.*\bdock-layer--full\b/);
+      1989 |     });
+      1990 | }
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:1987:84
+
+    Error Context: tests-visual/test-results/release-10-1-5-q3-O-187-at-b5c0a--in-scope-the-visible-run-s-chromium-headless-new/error-context.md
+
+  6 failed
+    [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1917:5 › q1 O-186 at 1440: a fit-content static dock under hover on every control keeps one rest corner, half its cross extent, no percentage 
+    [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1947:5 › q2 O-187 at 1440: a nested .dock-run group keeps each hovered control's whole ink 
+    [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1979:5 › q3 O-187 at 1440: the plate has exactly one scroll timeline in scope, the visible run's 
+    [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1917:5 › q1 O-186 at 390: a fit-content static dock under hover on every control keeps one rest corner, half its cross extent, no percentage 
+    [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1947:5 › q2 O-187 at 390: a nested .dock-run group keeps each hovered control's whole ink 
+    [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1979:5 › q3 O-187 at 390: the plate has exactly one scroll timeline in scope, the visible run's 

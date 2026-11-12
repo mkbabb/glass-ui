@@ -1,0 +1,414 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "tests-visual/release-10-1-5-critic-11.config.ts",
+      "--project=webkit",
+      "release-10-1-5.spec.ts",
+      "--grep",
+      " s[1-4] ",
+      "--repeat-each=1",
+      "--workers=1"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5-critic-11.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-headless-new",
+        "name": "chromium-headless-new",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "coarse-touch",
+        "name": "coarse-touch",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-10-1-5-critic-11.spec.ts",
+          "release-10-1-5-critic-11-r10.spec.ts",
+          "release-10-1-5-critic-11-r10b.spec.ts",
+          "release-10-1-5-critic-11-r10c.spec.ts",
+          "release-10-1-5.spec.ts",
+          "release-10-1-4.spec.ts",
+          "release-10-1-3.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/docs/release-10.1.5/fix-11/s-webkit.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5293",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/",
+      "url": "http://localhost:5293",
+      "reuseExistingServer": true,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "release-10-1-5.spec.ts",
+      "file": "release-10-1-5.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "s1 O-205 at 1440: no collapsed dock has a scrolling run, and a hidden wider face adds nothing to a fitting run",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 6419,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T20:36:45.352Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-81ccc2b10ff54fd49b68",
+          "file": "release-10-1-5.spec.ts",
+          "line": 2217,
+          "column": 5
+        },
+        {
+          "title": "s2 O-201 at 1440: across the fit edge the first and last seats keep their whole ring, and the flag is the layout",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 8038,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T20:36:52.049Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-b0fd852703a7cea09c90",
+          "file": "release-10-1-5.spec.ts",
+          "line": 2253,
+          "column": 5
+        },
+        {
+          "title": "s3 O-207 G3 a disclosure trigger's keyboard ring is the house outline, whatever it composes",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3487,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T20:37:12.970Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-9e6e3acf950fabf883a1",
+          "file": "release-10-1-5.spec.ts",
+          "line": 2295,
+          "column": 1
+        },
+        {
+          "title": "s4 a host padding change across the fit edge mid-expand holds every seat at the settle (vertical)",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 29563,
+                  "error": {
+                    "message": "Error: seat steps over 0.5 px at the settle, or a rest flag that is not the layout's truth\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 16\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"at\": 110,\u001b[39m\n\u001b[31m+     \"flag\": false,\u001b[39m\n\u001b[31m+     \"overflows\": false,\u001b[39m\n\u001b[31m+     \"pad\": 16.5,\u001b[39m\n\u001b[31m+     \"stageH\": 322,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"at\": 300,\u001b[39m\n\u001b[31m+     \"flag\": false,\u001b[39m\n\u001b[31m+     \"overflows\": false,\u001b[39m\n\u001b[31m+     \"pad\": 16.5,\u001b[39m\n\u001b[31m+     \"stageH\": 322,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+ ]\u001b[39m",
+                    "stack": "Error: seat steps over 0.5 px at the settle, or a rest flag that is not the layout's truth\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 16\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"at\": 110,\u001b[39m\n\u001b[31m+     \"flag\": false,\u001b[39m\n\u001b[31m+     \"overflows\": false,\u001b[39m\n\u001b[31m+     \"pad\": 16.5,\u001b[39m\n\u001b[31m+     \"stageH\": 322,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"at\": 300,\u001b[39m\n\u001b[31m+     \"flag\": false,\u001b[39m\n\u001b[31m+     \"overflows\": false,\u001b[39m\n\u001b[31m+     \"pad\": 16.5,\u001b[39m\n\u001b[31m+     \"stageH\": 322,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+ ]\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:2350:104",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                      "column": 104,
+                      "line": 2350
+                    },
+                    "snippet": "  2348 |             if (end.fits === end.over) bad.push({ stageH, pad, at, flag: end.fits, overflows: end.over });\n  2349 |         }\n> 2350 |     expect(bad, \"seat steps over 0.5 px at the settle, or a rest flag that is not the layout's truth\").toEqual([]);\n       |                                                                                                        ^\n  2351 | });\n  2352 |\n  2353 | /* M3 · O-159 and O-160, read from the source (no browser state). */"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                        "column": 104,
+                        "line": 2350
+                      },
+                      "message": "Error: seat steps over 0.5 px at the settle, or a rest flag that is not the layout's truth\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 16\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"at\": 110,\u001b[39m\n\u001b[31m+     \"flag\": false,\u001b[39m\n\u001b[31m+     \"overflows\": false,\u001b[39m\n\u001b[31m+     \"pad\": 16.5,\u001b[39m\n\u001b[31m+     \"stageH\": 322,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"at\": 300,\u001b[39m\n\u001b[31m+     \"flag\": false,\u001b[39m\n\u001b[31m+     \"overflows\": false,\u001b[39m\n\u001b[31m+     \"pad\": 16.5,\u001b[39m\n\u001b[31m+     \"stageH\": 322,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+ ]\u001b[39m\n\n  2348 |             if (end.fits === end.over) bad.push({ stageH, pad, at, flag: end.fits, overflows: end.over });\n  2349 |         }\n> 2350 |     expect(bad, \"seat steps over 0.5 px at the settle, or a rest flag that is not the layout's truth\").toEqual([]);\n       |                                                                                                        ^\n  2351 | });\n  2352 |\n  2353 | /* M3 · O-159 and O-160, read from the source (no browser state). */\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:2350:104"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T20:37:16.466Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/test-results/release-10-1-5-s4-a-host-p-92728-eat-at-the-settle-vertical--webkit/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                    "column": 104,
+                    "line": 2350
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-0e611fa043ab5e32309f",
+          "file": "release-10-1-5.spec.ts",
+          "line": 2313,
+          "column": 1
+        }
+      ],
+      "suites": [
+        {
+          "title": "fix 11, coarse phone",
+          "file": "release-10-1-5.spec.ts",
+          "line": 2289,
+          "column": 6,
+          "specs": [
+            {
+              "title": "s1 O-205 at 390: no collapsed dock has a scrolling run, and a hidden wider face adds nothing to a fitting run",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 5174,
+                      "error": {
+                        "message": "Error: mouse.wheel: Mouse wheel is not supported in mobile WebKit",
+                        "stack": "Error: mouse.wheel: Mouse wheel is not supported in mobile WebKit\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:2243:26",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                          "column": 26,
+                          "line": 2243
+                        },
+                        "snippet": "  2241 |         const box = (await page.locator(\".dock-layers > .dock-run.is-active\").boundingBox())!;\n  2242 |         await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);\n> 2243 |         await page.mouse.wheel(240, 0);\n       |                          ^\n  2244 |         await settle(page, 600);\n  2245 |         const wheeled = await runRead(page);\n  2246 |         if (wheeled.runs.find((r) => r.active)!.sl !== 0) bad.push({ cell: \"open, narrow face, after a wheel\", ...wheeled });"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                            "column": 26,
+                            "line": 2243
+                          },
+                          "message": "Error: mouse.wheel: Mouse wheel is not supported in mobile WebKit\n\n  2241 |         const box = (await page.locator(\".dock-layers > .dock-run.is-active\").boundingBox())!;\n  2242 |         await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);\n> 2243 |         await page.mouse.wheel(240, 0);\n       |                          ^\n  2244 |         await settle(page, 600);\n  2245 |         const wheeled = await runRead(page);\n  2246 |         if (wheeled.runs.find((r) => r.active)!.sl !== 0) bad.push({ cell: \"open, narrow face, after a wheel\", ...wheeled });\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:2243:26"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-10T20:37:00.093Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/test-results/release-10-1-5-fix-11-coar-cc038-ds-nothing-to-a-fitting-run-webkit/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                        "column": 26,
+                        "line": 2243
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "ba3de8f038291be5029b-e9c9f986baa33f812436",
+              "file": "release-10-1-5.spec.ts",
+              "line": 2217,
+              "column": 5
+            },
+            {
+              "title": "s2 O-201 at 390: across the fit edge the first and last seats keep their whole ring, and the flag is the layout",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 300000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 7173,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-10T20:37:05.615Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ba3de8f038291be5029b-7fd138609742c884ee13",
+              "file": "release-10-1-5.spec.ts",
+              "line": 2253,
+              "column": 5
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-10T20:36:42.812Z",
+    "duration": 63269.468,
+    "expected": 4,
+    "skipped": 0,
+    "unexpected": 2,
+    "flaky": 0
+  }
+}

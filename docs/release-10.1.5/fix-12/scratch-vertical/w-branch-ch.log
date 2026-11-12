@@ -1,0 +1,428 @@
+
+Running 6 tests using 1 worker
+
+  ✘  1 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1403:5 › critique 7, coarse phone › m2 a vertical run whose seats fit scrolls at most the ring floor's shortfall, across the fit edge (15.4s)
+  ✘  2 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1403:5 › m2 a vertical run whose seats fit scrolls at most the ring floor's shortfall, across the fit edge (15.3s)
+  ✘  3 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:2302:5 › s2 O-201 at 1440: at every cap through the fit edge the first and end seats keep their whole ring, and a run that hides nothing rests round (44.4s)
+  ✘  4 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:2302:5 › fix 11, coarse phone › s2 O-201 at 390: at every cap through the fit edge the first and end seats keep their whole ring, and a run that hides nothing rests round (45.3s)
+  ✘  5 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:2340:5 › fix 12, desktop › t1 O-201 vertical: at every stage through the fit edge the first and last seats keep their whole ring (30.1s)
+  ✘  6 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:2340:5 › fix 12, coarse phone › t1 O-201 vertical: at every stage through the fit edge the first and last seats keep their whole ring (30.2s)
+
+
+  1) [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1403:5 › critique 7, coarse phone › m2 a vertical run whose seats fit scrolls at most the ring floor's shortfall, across the fit edge 
+
+    Error: no row whose seats fit scrolls past the ring floor, and the flag is the span
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 21
+
+    - Array []
+    + Array [
+    +   Object {
+    +     "fits": true,
+    +     "hidden": 1,
+    +     "law": Array [
+    +       "a fitting run hides a seat",
+    +     ],
+    +     "port": 306,
+    +     "radii": Array [
+    +       "34px",
+    +       "34px",
+    +       "34px",
+    +       "34px",
+    +     ],
+    +     "range": 6,
+    +     "ring": 4,
+    +     "round": true,
+    +     "span": 304,
+    +     "stageH": 340,
+    +   },
+    + ]
+
+      1415 |         }
+      1416 |         expect(fitted, "the sweep crosses the fit edge").toBeGreaterThan(2);
+    > 1417 |         expect(bad, "no row whose seats fit scrolls past the ring floor, and the flag is the span").toEqual([]);
+           |                                                                                                     ^
+      1418 |     });
+      1419 | }
+      1420 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:1417:101
+
+    Error Context: tests-visual/test-results/release-10-1-5-critique-7--e7014-ortfall-across-the-fit-edge-chromium-headless-new/error-context.md
+
+  2) [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1403:5 › m2 a vertical run whose seats fit scrolls at most the ring floor's shortfall, across the fit edge 
+
+    Error: no row whose seats fit scrolls past the ring floor, and the flag is the span
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 21
+
+    - Array []
+    + Array [
+    +   Object {
+    +     "fits": true,
+    +     "hidden": 1,
+    +     "law": Array [
+    +       "a fitting run hides a seat",
+    +     ],
+    +     "port": 282,
+    +     "radii": Array [
+    +       "32px",
+    +       "32px",
+    +       "32px",
+    +       "32px",
+    +     ],
+    +     "range": 6,
+    +     "ring": 4,
+    +     "round": true,
+    +     "span": 280,
+    +     "stageH": 316,
+    +   },
+    + ]
+
+      1415 |         }
+      1416 |         expect(fitted, "the sweep crosses the fit edge").toBeGreaterThan(2);
+    > 1417 |         expect(bad, "no row whose seats fit scrolls past the ring floor, and the flag is the span").toEqual([]);
+           |                                                                                                     ^
+      1418 |     });
+      1419 | }
+      1420 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:1417:101
+
+    Error Context: tests-visual/test-results/release-10-1-5-m2-a-vertic-516f6-ortfall-across-the-fit-edge-chromium-headless-new/error-context.md
+
+  3) [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:2302:5 › s2 O-201 at 1440: at every cap through the fit edge the first and end seats keep their whole ring, and a run that hides nothing rests round 
+
+    Error: a cap that cuts a focused seat's ring, a flag that is not the span, or a run that hides nothing and does not rest round
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 78
+
+    - Array []
+    + Array [
+    +   Object {
+    +     "cap": 263,
+    +     "fits": true,
+    +     "hidden": 1,
+    +     "law": Array [
+    +       "a fitting run hides a seat",
+    +     ],
+    +     "port": 253,
+    +     "radii": Array [
+    +       "28px",
+    +       "28px",
+    +       "28px",
+    +       "28px",
+    +     ],
+    +     "range": 5,
+    +     "ring": 4,
+    +     "round": true,
+    +     "span": 250,
+    +   },
+    +   Object {
+    +     "cap": 262,
+    +     "fits": true,
+    +     "hidden": 1,
+    +     "law": Array [
+    +       "a fitting run hides a seat",
+    +     ],
+    +     "port": 252,
+    +     "radii": Array [
+    +       "28px",
+    +       "28px",
+    +       "28px",
+    +       "28px",
+    +     ],
+    +     "range": 6,
+    +     "ring": 4,
+    +     "round": true,
+    +     "span": 250,
+    +   },
+    +   Object {
+    +     "cap": 261,
+    +     "fits": true,
+    +     "hidden": 1,
+    +     "law": Array [
+    +       "a fitting run hides a seat",
+    +     ],
+    +     "port": 251,
+    +     "radii": Array [
+    +       "28px",
+    +       "28px",
+    +       "28px",
+    +       "28px",
+    +     ],
+    +     "range": 7,
+    +     "ring": 4,
+    +     "round": true,
+    +     "span": 250,
+    +   },
+    +   Object {
+    +     "cap": 260,
+    +     "fits": true,
+    +     "hidden": 1,
+    +     "law": Array [
+    +       "a fitting run hides a seat",
+    +     ],
+    +     "port": 250,
+    +     "radii": Array [
+    +       "28px",
+    +       "28px",
+    +       "28px",
+    +       "28px",
+    +     ],
+    +     "range": 8,
+    +     "ring": 4,
+    +     "round": true,
+    +     "span": 250,
+    +   },
+    + ]
+
+      2328 |         }
+      2329 |         expect(unfit, `the sweep under ${natural} crosses the fit edge`).toBeGreaterThan(2);
+    > 2330 |         expect(bad, "a cap that cuts a focused seat's ring, a flag that is not the span, or a run that hides nothing and does not rest round").toEqual([]);
+           |                                                                                                                                                ^
+      2331 |     });
+      2332 | }
+      2333 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:2330:144
+
+    Error Context: tests-visual/test-results/release-10-1-5-s2-O-201-at-f97e1-t-hides-nothing-rests-round-chromium-headless-new/error-context.md
+
+  4) [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:2302:5 › fix 11, coarse phone › s2 O-201 at 390: at every cap through the fit edge the first and end seats keep their whole ring, and a run that hides nothing rests round 
+
+    Error: a cap that cuts a focused seat's ring, a flag that is not the span, or a run that hides nothing and does not rest round
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 78
+
+    - Array []
+    + Array [
+    +   Object {
+    +     "cap": 268,
+    +     "fits": true,
+    +     "hidden": 1,
+    +     "law": Array [
+    +       "a fitting run hides a seat",
+    +     ],
+    +     "port": 258,
+    +     "radii": Array [
+    +       "30px",
+    +       "30px",
+    +       "30px",
+    +       "30px",
+    +     ],
+    +     "range": 5,
+    +     "ring": 4,
+    +     "round": true,
+    +     "span": 255,
+    +   },
+    +   Object {
+    +     "cap": 267,
+    +     "fits": true,
+    +     "hidden": 1,
+    +     "law": Array [
+    +       "a fitting run hides a seat",
+    +     ],
+    +     "port": 257,
+    +     "radii": Array [
+    +       "30px",
+    +       "30px",
+    +       "30px",
+    +       "30px",
+    +     ],
+    +     "range": 6,
+    +     "ring": 4,
+    +     "round": true,
+    +     "span": 255,
+    +   },
+    +   Object {
+    +     "cap": 266,
+    +     "fits": true,
+    +     "hidden": 1,
+    +     "law": Array [
+    +       "a fitting run hides a seat",
+    +     ],
+    +     "port": 256,
+    +     "radii": Array [
+    +       "30px",
+    +       "30px",
+    +       "30px",
+    +       "30px",
+    +     ],
+    +     "range": 7,
+    +     "ring": 4,
+    +     "round": true,
+    +     "span": 255,
+    +   },
+    +   Object {
+    +     "cap": 265,
+    +     "fits": true,
+    +     "hidden": 1,
+    +     "law": Array [
+    +       "a fitting run hides a seat",
+    +     ],
+    +     "port": 255,
+    +     "radii": Array [
+    +       "30px",
+    +       "30px",
+    +       "30px",
+    +       "30px",
+    +     ],
+    +     "range": 8,
+    +     "ring": 4,
+    +     "round": true,
+    +     "span": 255,
+    +   },
+    + ]
+
+      2328 |         }
+      2329 |         expect(unfit, `the sweep under ${natural} crosses the fit edge`).toBeGreaterThan(2);
+    > 2330 |         expect(bad, "a cap that cuts a focused seat's ring, a flag that is not the span, or a run that hides nothing and does not rest round").toEqual([]);
+           |                                                                                                                                                ^
+      2331 |     });
+      2332 | }
+      2333 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:2330:144
+
+    Error Context: tests-visual/test-results/release-10-1-5-fix-11-coar-b6824-t-hides-nothing-rests-round-chromium-headless-new/error-context.md
+
+  5) [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:2340:5 › fix 12, desktop › t1 O-201 vertical: at every stage through the fit edge the first and last seats keep their whole ring 
+
+    Error: a stage that cuts a focused end seat's ring, or a run that breaks the fit law
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 40
+
+    - Array []
+    + Array [
+    +   Object {
+    +     "fits": true,
+    +     "hidden": 1,
+    +     "law": Array [
+    +       "a fitting run hides a seat",
+    +     ],
+    +     "port": 282,
+    +     "radii": Array [
+    +       "32px",
+    +       "32px",
+    +       "32px",
+    +       "32px",
+    +     ],
+    +     "range": 6,
+    +     "ring": 4,
+    +     "round": true,
+    +     "span": 280,
+    +     "stage": 316,
+    +   },
+    +   Object {
+    +     "fits": true,
+    +     "hidden": 1,
+    +     "law": Array [
+    +       "a fitting run hides a seat",
+    +     ],
+    +     "port": 280,
+    +     "radii": Array [
+    +       "32px",
+    +       "32px",
+    +       "32px",
+    +       "32px",
+    +     ],
+    +     "range": 8,
+    +     "ring": 4,
+    +     "round": true,
+    +     "span": 280,
+    +     "stage": 314,
+    +   },
+    + ]
+
+      2369 |         }
+      2370 |         expect(unfit, "the sweep crosses the fit edge").toBeGreaterThan(2);
+    > 2371 |         expect(bad, "a stage that cuts a focused end seat's ring, or a run that breaks the fit law").toEqual([]);
+           |                                                                                                      ^
+      2372 |     });
+      2373 | }
+      2374 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:2371:102
+
+    Error Context: tests-visual/test-results/release-10-1-5-fix-12-desk-aa3e3-seats-keep-their-whole-ring-chromium-headless-new/error-context.md
+
+  6) [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:2340:5 › fix 12, coarse phone › t1 O-201 vertical: at every stage through the fit edge the first and last seats keep their whole ring 
+
+    Error: a stage that cuts a focused end seat's ring, or a run that breaks the fit law
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 40
+
+    - Array []
+    + Array [
+    +   Object {
+    +     "fits": true,
+    +     "hidden": 1,
+    +     "law": Array [
+    +       "a fitting run hides a seat",
+    +     ],
+    +     "port": 306,
+    +     "radii": Array [
+    +       "34px",
+    +       "34px",
+    +       "34px",
+    +       "34px",
+    +     ],
+    +     "range": 6,
+    +     "ring": 4,
+    +     "round": true,
+    +     "span": 304,
+    +     "stage": 340,
+    +   },
+    +   Object {
+    +     "fits": true,
+    +     "hidden": 1,
+    +     "law": Array [
+    +       "a fitting run hides a seat",
+    +     ],
+    +     "port": 304,
+    +     "radii": Array [
+    +       "34px",
+    +       "34px",
+    +       "34px",
+    +       "34px",
+    +     ],
+    +     "range": 8,
+    +     "ring": 4,
+    +     "round": true,
+    +     "span": 304,
+    +     "stage": 338,
+    +   },
+    + ]
+
+      2369 |         }
+      2370 |         expect(unfit, "the sweep crosses the fit edge").toBeGreaterThan(2);
+    > 2371 |         expect(bad, "a stage that cuts a focused end seat's ring, or a run that breaks the fit law").toEqual([]);
+           |                                                                                                      ^
+      2372 |     });
+      2373 | }
+      2374 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:2371:102
+
+    Error Context: tests-visual/test-results/release-10-1-5-fix-12-coar-aab9d-seats-keep-their-whole-ring-chromium-headless-new/error-context.md
+
+  6 failed
+    [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1403:5 › critique 7, coarse phone › m2 a vertical run whose seats fit scrolls at most the ring floor's shortfall, across the fit edge 
+    [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1403:5 › m2 a vertical run whose seats fit scrolls at most the ring floor's shortfall, across the fit edge 
+    [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:2302:5 › s2 O-201 at 1440: at every cap through the fit edge the first and end seats keep their whole ring, and a run that hides nothing rests round 
+    [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:2302:5 › fix 11, coarse phone › s2 O-201 at 390: at every cap through the fit edge the first and end seats keep their whole ring, and a run that hides nothing rests round 
+    [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:2340:5 › fix 12, desktop › t1 O-201 vertical: at every stage through the fit edge the first and last seats keep their whole ring 
+    [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:2340:5 › fix 12, coarse phone › t1 O-201 vertical: at every stage through the fit edge the first and last seats keep their whole ring 

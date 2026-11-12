@@ -1,0 +1,178 @@
+
+Running 2 tests using 1 worker
+
+  ✘  1 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1759:5 › critique 8, coarse phone › n1 a fitting vertical dock's seats do not step at the expand's settle or the collapse's start, across the fit edge (15.6s)
+  ✘  2 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1759:5 › n1 a fitting vertical dock's seats do not step at the expand's settle or the collapse's start, across the fit edge (15.6s)
+
+
+  1) [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1759:5 › critique 8, coarse phone › n1 a fitting vertical dock's seats do not step at the expand's settle or the collapse's start, across the fit edge 
+
+    Error: seat steps over 0.5 px at a morph's edge
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 62
+
+    - Array []
+    + Array [
+    +   Object {
+    +     "a": Object {
+    +       "morphing": true,
+    +       "s1": 23.984375,
+    +       "s6": 327.984375,
+    +     },
+    +     "b": Object {
+    +       "morphing": false,
+    +       "s1": 18,
+    +       "s6": 322,
+    +     },
+    +     "edge": "expand settle",
+    +     "pad": "1px",
+    +     "stageH": 340,
+    +   },
+    +   Object {
+    +     "edge": "collapse start",
+    +     "p": Object {
+    +       "morphing": false,
+    +       "s1": 18,
+    +       "s6": 322,
+    +     },
+    +     "pad": "1px",
+    +     "q": Object {
+    +       "morphing": true,
+    +       "s1": 24,
+    +       "s6": 328,
+    +     },
+    +     "stageH": 340,
+    +   },
+    +   Object {
+    +     "a": Object {
+    +       "morphing": true,
+    +       "s1": 23.984375,
+    +       "s6": 327.984375,
+    +     },
+    +     "b": Object {
+    +       "morphing": false,
+    +       "s1": 22,
+    +       "s6": 326,
+    +     },
+    +     "edge": "expand settle",
+    +     "pad": "5px",
+    +     "stageH": 348,
+    +   },
+    +   Object {
+    +     "edge": "collapse start",
+    +     "p": Object {
+    +       "morphing": false,
+    +       "s1": 22,
+    +       "s6": 326,
+    +     },
+    +     "pad": "5px",
+    +     "q": Object {
+    +       "morphing": true,
+    +       "s1": 24,
+    +       "s6": 328,
+    +     },
+    +     "stageH": 348,
+    +   },
+    + ]
+
+      1791 |         }
+      1792 |         expect(yielded, "the sweep reaches docks whose reserve yields").toBeGreaterThan(0);
+    > 1793 |         expect(bad, "seat steps over 0.5 px at a morph's edge").toEqual([]);
+           |                                                                 ^
+      1794 |     });
+      1795 | }
+      1796 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:1793:65
+
+    Error Context: tests-visual/test-results/release-10-1-5-critique-8--28df9-s-start-across-the-fit-edge-chromium-headless-new/error-context.md
+
+  2) [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1759:5 › n1 a fitting vertical dock's seats do not step at the expand's settle or the collapse's start, across the fit edge 
+
+    Error: seat steps over 0.5 px at a morph's edge
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 62
+
+    - Array []
+    + Array [
+    +   Object {
+    +     "a": Object {
+    +       "morphing": true,
+    +       "s1": 23.984375,
+    +       "s6": 303.984375,
+    +     },
+    +     "b": Object {
+    +       "morphing": false,
+    +       "s1": 18,
+    +       "s6": 298,
+    +     },
+    +     "edge": "expand settle",
+    +     "pad": "1px",
+    +     "stageH": 316,
+    +   },
+    +   Object {
+    +     "edge": "collapse start",
+    +     "p": Object {
+    +       "morphing": false,
+    +       "s1": 18,
+    +       "s6": 298,
+    +     },
+    +     "pad": "1px",
+    +     "q": Object {
+    +       "morphing": true,
+    +       "s1": 24,
+    +       "s6": 304,
+    +     },
+    +     "stageH": 316,
+    +   },
+    +   Object {
+    +     "a": Object {
+    +       "morphing": true,
+    +       "s1": 23.984375,
+    +       "s6": 303.984375,
+    +     },
+    +     "b": Object {
+    +       "morphing": false,
+    +       "s1": 22,
+    +       "s6": 302,
+    +     },
+    +     "edge": "expand settle",
+    +     "pad": "5px",
+    +     "stageH": 324,
+    +   },
+    +   Object {
+    +     "edge": "collapse start",
+    +     "p": Object {
+    +       "morphing": false,
+    +       "s1": 22,
+    +       "s6": 302,
+    +     },
+    +     "pad": "5px",
+    +     "q": Object {
+    +       "morphing": true,
+    +       "s1": 24,
+    +       "s6": 304,
+    +     },
+    +     "stageH": 324,
+    +   },
+    + ]
+
+      1791 |         }
+      1792 |         expect(yielded, "the sweep reaches docks whose reserve yields").toBeGreaterThan(0);
+    > 1793 |         expect(bad, "seat steps over 0.5 px at a morph's edge").toEqual([]);
+           |                                                                 ^
+      1794 |     });
+      1795 | }
+      1796 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:1793:65
+
+    Error Context: tests-visual/test-results/release-10-1-5-n1-a-fittin-3ab0a-s-start-across-the-fit-edge-chromium-headless-new/error-context.md
+
+  2 failed
+    [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1759:5 › critique 8, coarse phone › n1 a fitting vertical dock's seats do not step at the expand's settle or the collapse's start, across the fit edge 
+    [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1759:5 › n1 a fitting vertical dock's seats do not step at the expand's settle or the collapse's start, across the fit edge 

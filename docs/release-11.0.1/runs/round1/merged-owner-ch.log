@@ -1,0 +1,24 @@
+
+Running 9 tests using 1 worker
+
+o1 focus hover {"radii":["20px","20px","20px","20px"],"w":80,"h":35}
+  ✓  1 [chromium-headless-new] › tests-visual/release-11-0-1.spec.ts:70:5 › o1 the wide label seat › o1 the hover plate of a compact 'Focus' label seat is a capsule, never an ellipse (1.0s)
+o1 name rest {"radii":["20px","20px","20px","20px"],"w":91,"h":35} hover {"radii":["20px","20px","20px","20px"],"w":91,"h":35}
+  ✓  2 [chromium-headless-new] › tests-visual/release-11-0-1.spec.ts:82:5 › o1 the wide label seat › o1 the active 'Name ›' seat's plate, at rest and under hover, is a capsule (933ms)
+o2 open house tokens plate {"radii":["28px","28px","28px","28px"],"w":257,"h":56} root {"radii":["28px","28px","28px","28px"],"w":257,"h":56}
+  ✓  3 [chromium-headless-new] › tests-visual/release-11-0-1.spec.ts:102:9 › o2 the dock's end, house tokens › o2 house tokens: open at rest, the plate and the box are round (584ms)
+o2 collapsed house tokens plate {"radii":["28px","28px","28px","28px"],"w":102,"h":56} root {"radii":["28px","28px","28px","28px"],"w":102,"h":56}
+  ✓  4 [chromium-headless-new] › tests-visual/release-11-0-1.spec.ts:112:9 › o2 the dock's end, house tokens › o2 house tokens: collapsed with a persistent seat beside the summary, the plate and the box are round (578ms)
+o2 narrow house tokens plate {"radii":["28px","28px","28px","28px"],"w":158,"h":56} root {"radii":["28px","28px","28px","28px"],"w":158,"h":56} run {"scroll":0}
+  ✓  5 [chromium-headless-new] › tests-visual/release-11-0-1.spec.ts:123:9 › o2 the dock's end, house tokens › o2 house tokens: open on the narrow face beside a wider one, with a #persistent-end seat, the plate is round (580ms)
+o2 open radius-dock 1.875rem plate {"radii":["28px","28px","28px","28px"],"w":257,"h":56} root {"radii":["28px","28px","28px","28px"],"w":257,"h":56}
+  ✓  6 [chromium-headless-new] › tests-visual/release-11-0-1.spec.ts:102:9 › o2 the dock's end, radius-dock 1.875rem › o2 radius-dock 1.875rem: open at rest, the plate and the box are round (573ms)
+o2 collapsed radius-dock 1.875rem plate {"radii":["28px","28px","28px","28px"],"w":102,"h":56} root {"radii":["28px","28px","28px","28px"],"w":102,"h":56}
+  ✓  7 [chromium-headless-new] › tests-visual/release-11-0-1.spec.ts:112:9 › o2 the dock's end, radius-dock 1.875rem › o2 radius-dock 1.875rem: collapsed with a persistent seat beside the summary, the plate and the box are round (609ms)
+o2 narrow radius-dock 1.875rem plate {"radii":["28px","28px","28px","28px"],"w":158,"h":56} root {"radii":["28px","28px","28px","28px"],"w":158,"h":56} run {"scroll":0}
+  ✓  8 [chromium-headless-new] › tests-visual/release-11-0-1.spec.ts:123:9 › o2 the dock's end, radius-dock 1.875rem › o2 radius-dock 1.875rem: open on the narrow face beside a wider one, with a #persistent-end seat, the plate is round (570ms)
+o3 expand {"frames":168,"morphing":65,"bad":[]}
+o3 collapse {"frames":170,"morphing":66,"bad":[]}
+  ✓  9 [chromium-headless-new] › tests-visual/release-11-0-1.spec.ts:139:1 › o3 every frame of the expand and of the collapse paints a round end (3.4s)
+
+  9 passed (10.7s)

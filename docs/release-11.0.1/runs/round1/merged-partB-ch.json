@@ -1,0 +1,1047 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "tests-visual/playwright.config.ts",
+      "--project=chromium-headless-new",
+      "release-10-1-5.spec.ts",
+      "--grep",
+      "(^| )(n1|p[12]|q[123]|r1|s[1-4]|t1|u1) ",
+      "--workers=1"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/playwright.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-headless-new",
+        "name": "chromium-headless-new",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "coarse-touch",
+        "name": "coarse-touch",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "safari-webgl.spec.ts",
+          "aurora-swraster.spec.ts",
+          "release-10-1-1.spec.ts",
+          "release-10-1-2.spec.ts",
+          "release-10-1-3.spec.ts",
+          "release-10-1-4.spec.ts",
+          "release-10-1-5.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/docs/release-11.0.1/runs/merged-partB-ch.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5391",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/",
+      "url": "http://localhost:5391",
+      "reuseExistingServer": true,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "release-10-1-5.spec.ts",
+      "file": "release-10-1-5.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "n1 a fitting vertical dock's seats do not step at the expand's settle or the collapse's start, across the fit edge",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 15678,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T21:47:51.694Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-39601500959379670c20",
+          "file": "release-10-1-5.spec.ts",
+          "line": 1771,
+          "column": 5
+        },
+        {
+          "title": "p1 a dock its host resizes mid-expand holds every seat at the settle (horizontal clamp, vertical yield band)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 15817,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T21:48:23.079Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-dd9180fb034585261ff9",
+          "file": "release-10-1-5.spec.ts",
+          "line": 1872,
+          "column": 5
+        },
+        {
+          "title": "p2 a 1-2 px host change across the fit edge mid-expand holds every seat at the settle",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 480000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 49239,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T21:49:26.682Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-ee998d416db586b75333",
+          "file": "release-10-1-5.spec.ts",
+          "line": 1918,
+          "column": 5
+        },
+        {
+          "title": "q1 O-186 at 1440: a fit-content static dock under hover on every control keeps one rest corner, half its cross extent, no percentage",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 12545,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T21:50:15.926Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-db290965a0ef1bbbee3a",
+          "file": "release-10-1-5.spec.ts",
+          "line": 2022,
+          "column": 5
+        },
+        {
+          "title": "q2 O-187 at 1440: a nested .dock-run group keeps each hovered control's whole ink",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3382,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T21:50:28.476Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-796ad11efaa8ed78e35c",
+          "file": "release-10-1-5.spec.ts",
+          "line": 2052,
+          "column": 5
+        },
+        {
+          "title": "q3 O-187 at 1440: the plate has exactly one scroll timeline in scope, the visible run's",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 855,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T21:50:31.862Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-59f665237c5820814379",
+          "file": "release-10-1-5.spec.ts",
+          "line": 2084,
+          "column": 5
+        },
+        {
+          "title": "q1 O-186 at 390: a fit-content static dock under hover on every control keeps one rest corner, half its cross extent, no percentage",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 9018,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T21:50:32.722Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-1ec5c41b52a5844a6e18",
+          "file": "release-10-1-5.spec.ts",
+          "line": 2022,
+          "column": 5
+        },
+        {
+          "title": "q2 O-187 at 390: a nested .dock-run group keeps each hovered control's whole ink",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2124,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T21:50:41.743Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-970d913dd4d38682a0d8",
+          "file": "release-10-1-5.spec.ts",
+          "line": 2052,
+          "column": 5
+        },
+        {
+          "title": "q3 O-187 at 390: the plate has exactly one scroll timeline in scope, the visible run's",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 871,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T21:50:43.872Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-bc2b2183fef809bde2cf",
+          "file": "release-10-1-5.spec.ts",
+          "line": 2084,
+          "column": 5
+        },
+        {
+          "title": "r1 Q2 at 1440: a nested group holding the current seat paints every seat clear of the others, and the run's flag is its layout",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2320,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T21:50:44.748Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-6cad33af99ebd604e3bc",
+          "file": "release-10-1-5.spec.ts",
+          "line": 2103,
+          "column": 5
+        },
+        {
+          "title": "s1 O-205 at 1440: no collapsed dock has a scrolling run, and a hidden wider face adds nothing to a fitting run",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5536,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T21:50:49.397Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-fa24670aceca746b1c68",
+          "file": "release-10-1-5.spec.ts",
+          "line": 2216,
+          "column": 5
+        },
+        {
+          "title": "s2 O-201 at 1440: at every cap through the fit edge the first and end seats keep their whole ring, and a run that hides nothing rests round",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 420000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 44313,
+                  "error": {
+                    "message": "Error: a cap that cuts a focused seat's ring, a flag that is not the span, or a run that hides nothing and does not rest round\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 13\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 273,\u001b[39m\n\u001b[31m+     \"cuts\": Array [\u001b[39m\n\u001b[31m+       \"dock-layer 1.11\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"focusVisible\": true,\u001b[39m\n\u001b[31m+     \"ink\": 4,\u001b[39m\n\u001b[31m+     \"outline\": \"solid\",\u001b[39m\n\u001b[31m+     \"seat\": \"home\",\u001b[39m\n\u001b[31m+     \"worst\": 1.11,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+ ]\u001b[39m",
+                    "stack": "Error: a cap that cuts a focused seat's ring, a flag that is not the span, or a run that hides nothing and does not rest round\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 13\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 273,\u001b[39m\n\u001b[31m+     \"cuts\": Array [\u001b[39m\n\u001b[31m+       \"dock-layer 1.11\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"focusVisible\": true,\u001b[39m\n\u001b[31m+     \"ink\": 4,\u001b[39m\n\u001b[31m+     \"outline\": \"solid\",\u001b[39m\n\u001b[31m+     \"seat\": \"home\",\u001b[39m\n\u001b[31m+     \"worst\": 1.11,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+ ]\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/release-10-1-5.spec.ts:2352:144",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/release-10-1-5.spec.ts",
+                      "column": 144,
+                      "line": 2352
+                    },
+                    "snippet": "  2350 |         }\n  2351 |         expect(unfit, `the sweep under ${natural} crosses the fit edge`).toBeGreaterThan(2);\n> 2352 |         expect(bad, \"a cap that cuts a focused seat's ring, a flag that is not the span, or a run that hides nothing and does not rest round\").toEqual([]);\n       |                                                                                                                                                ^\n  2353 |     });\n  2354 | }\n  2355 |"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/release-10-1-5.spec.ts",
+                        "column": 144,
+                        "line": 2352
+                      },
+                      "message": "Error: a cap that cuts a focused seat's ring, a flag that is not the span, or a run that hides nothing and does not rest round\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 13\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 273,\u001b[39m\n\u001b[31m+     \"cuts\": Array [\u001b[39m\n\u001b[31m+       \"dock-layer 1.11\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"focusVisible\": true,\u001b[39m\n\u001b[31m+     \"ink\": 4,\u001b[39m\n\u001b[31m+     \"outline\": \"solid\",\u001b[39m\n\u001b[31m+     \"seat\": \"home\",\u001b[39m\n\u001b[31m+     \"worst\": 1.11,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+ ]\u001b[39m\n\n  2350 |         }\n  2351 |         expect(unfit, `the sweep under ${natural} crosses the fit edge`).toBeGreaterThan(2);\n> 2352 |         expect(bad, \"a cap that cuts a focused seat's ring, a flag that is not the span, or a run that hides nothing and does not rest round\").toEqual([]);\n       |                                                                                                                                                ^\n  2353 |     });\n  2354 | }\n  2355 |\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/release-10-1-5.spec.ts:2352:144"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T21:50:54.937Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/test-results/release-10-1-5-s2-O-201-at-f97e1-t-hides-nothing-rests-round-chromium-headless-new/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/release-10-1-5.spec.ts",
+                    "column": 144,
+                    "line": 2352
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-937a1a847e6a6bf5237b",
+          "file": "release-10-1-5.spec.ts",
+          "line": 2325,
+          "column": 5
+        },
+        {
+          "title": "s3 O-207 G3 a disclosure trigger's keyboard ring is the house outline, whatever it composes",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2949,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T21:54:00.017Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-a51bf6cad491433a1b7c",
+          "file": "release-10-1-5.spec.ts",
+          "line": 2420,
+          "column": 1
+        },
+        {
+          "title": "s4 a host padding change across the fit edge mid-expand holds every seat at the settle (vertical)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 28254,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T21:54:02.972Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-f84af98cee27bcd340b6",
+          "file": "release-10-1-5.spec.ts",
+          "line": 2438,
+          "column": 1
+        }
+      ],
+      "suites": [
+        {
+          "title": "critique 8, coarse phone",
+          "file": "release-10-1-5.spec.ts",
+          "line": 1809,
+          "column": 6,
+          "specs": [
+            {
+              "title": "n1 a fitting vertical dock's seats do not step at the expand's settle or the collapse's start, across the fit edge",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 240000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 16006,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T21:47:35.554Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ba3de8f038291be5029b-0047930eb690e0805303",
+              "file": "release-10-1-5.spec.ts",
+              "line": 1771,
+              "column": 5
+            }
+          ]
+        },
+        {
+          "title": "critique 9, coarse phone",
+          "file": "release-10-1-5.spec.ts",
+          "line": 1905,
+          "column": 6,
+          "specs": [
+            {
+              "title": "p1 a dock its host resizes mid-expand holds every seat at the settle (horizontal clamp, vertical yield band)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 240000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 15696,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T21:48:07.378Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ba3de8f038291be5029b-9b86759c276ee3c29dbe",
+              "file": "release-10-1-5.spec.ts",
+              "line": 1872,
+              "column": 5
+            }
+          ]
+        },
+        {
+          "title": "critique 10, coarse phone",
+          "file": "release-10-1-5.spec.ts",
+          "line": 1995,
+          "column": 6,
+          "specs": [
+            {
+              "title": "p2 a 1-2 px host change across the fit edge mid-expand holds every seat at the settle",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 480000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 47773,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T21:48:38.902Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ba3de8f038291be5029b-244fd12027c269c91a80",
+              "file": "release-10-1-5.spec.ts",
+              "line": 1918,
+              "column": 5
+            }
+          ]
+        },
+        {
+          "title": "fix 10, coarse phone",
+          "file": "release-10-1-5.spec.ts",
+          "line": 2146,
+          "column": 6,
+          "specs": [
+            {
+              "title": "r1 Q2 at 390: a nested group holding the current seat paints every seat clear of the others, and the run's flag is its layout",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2319,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T21:50:47.074Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ba3de8f038291be5029b-fb393cc9c6c047cdf897",
+              "file": "release-10-1-5.spec.ts",
+              "line": 2103,
+              "column": 5
+            }
+          ]
+        },
+        {
+          "title": "fix 11, coarse phone",
+          "file": "release-10-1-5.spec.ts",
+          "line": 2404,
+          "column": 6,
+          "specs": [
+            {
+              "title": "s1 O-205 at 390: no collapsed dock has a scrolling run, and a hidden wider face adds nothing to a fitting run",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 4929,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T21:51:39.554Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ba3de8f038291be5029b-0a4e82c55fcf798f9f1e",
+              "file": "release-10-1-5.spec.ts",
+              "line": 2216,
+              "column": 5
+            },
+            {
+              "title": "s2 O-201 at 390: at every cap through the fit edge the first and end seats keep their whole ring, and a run that hides nothing rests round",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 420000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 44439,
+                      "error": {
+                        "message": "Error: a cap that cuts a focused seat's ring, a flag that is not the span, or a run that hides nothing and does not rest round\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 13\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 278,\u001b[39m\n\u001b[31m+     \"cuts\": Array [\u001b[39m\n\u001b[31m+       \"dock-layer 0.80\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"focusVisible\": true,\u001b[39m\n\u001b[31m+     \"ink\": 4,\u001b[39m\n\u001b[31m+     \"outline\": \"solid\",\u001b[39m\n\u001b[31m+     \"seat\": \"home\",\u001b[39m\n\u001b[31m+     \"worst\": 0.8,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+ ]\u001b[39m",
+                        "stack": "Error: a cap that cuts a focused seat's ring, a flag that is not the span, or a run that hides nothing and does not rest round\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 13\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 278,\u001b[39m\n\u001b[31m+     \"cuts\": Array [\u001b[39m\n\u001b[31m+       \"dock-layer 0.80\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"focusVisible\": true,\u001b[39m\n\u001b[31m+     \"ink\": 4,\u001b[39m\n\u001b[31m+     \"outline\": \"solid\",\u001b[39m\n\u001b[31m+     \"seat\": \"home\",\u001b[39m\n\u001b[31m+     \"worst\": 0.8,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+ ]\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/release-10-1-5.spec.ts:2352:144",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/release-10-1-5.spec.ts",
+                          "column": 144,
+                          "line": 2352
+                        },
+                        "snippet": "  2350 |         }\n  2351 |         expect(unfit, `the sweep under ${natural} crosses the fit edge`).toBeGreaterThan(2);\n> 2352 |         expect(bad, \"a cap that cuts a focused seat's ring, a flag that is not the span, or a run that hides nothing and does not rest round\").toEqual([]);\n       |                                                                                                                                                ^\n  2353 |     });\n  2354 | }\n  2355 |"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/release-10-1-5.spec.ts",
+                            "column": 144,
+                            "line": 2352
+                          },
+                          "message": "Error: a cap that cuts a focused seat's ring, a flag that is not the span, or a run that hides nothing and does not rest round\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 13\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 278,\u001b[39m\n\u001b[31m+     \"cuts\": Array [\u001b[39m\n\u001b[31m+       \"dock-layer 0.80\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"focusVisible\": true,\u001b[39m\n\u001b[31m+     \"ink\": 4,\u001b[39m\n\u001b[31m+     \"outline\": \"solid\",\u001b[39m\n\u001b[31m+     \"seat\": \"home\",\u001b[39m\n\u001b[31m+     \"worst\": 0.8,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+ ]\u001b[39m\n\n  2350 |         }\n  2351 |         expect(unfit, `the sweep under ${natural} crosses the fit edge`).toBeGreaterThan(2);\n> 2352 |         expect(bad, \"a cap that cuts a focused seat's ring, a flag that is not the span, or a run that hides nothing and does not rest round\").toEqual([]);\n       |                                                                                                                                                ^\n  2353 |     });\n  2354 | }\n  2355 |\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/release-10-1-5.spec.ts:2352:144"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T21:51:44.561Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/test-results/release-10-1-5-fix-11-coar-b6824-t-hides-nothing-rests-round-chromium-headless-new/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/release-10-1-5.spec.ts",
+                        "column": 144,
+                        "line": 2352
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "ba3de8f038291be5029b-4bacda187aaca3dc78b9",
+              "file": "release-10-1-5.spec.ts",
+              "line": 2325,
+              "column": 5
+            }
+          ]
+        },
+        {
+          "title": "fix 12, desktop",
+          "file": "release-10-1-5.spec.ts",
+          "line": 2410,
+          "column": 6,
+          "specs": [
+            {
+              "title": "t1 O-201 vertical: through the fit edge the end seats keep their whole ring, bounded in the yield band",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 420000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 45404,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T21:52:29.296Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ba3de8f038291be5029b-13ddac7369b86e656939",
+              "file": "release-10-1-5.spec.ts",
+              "line": 2365,
+              "column": 5
+            }
+          ]
+        },
+        {
+          "title": "fix 12, coarse phone",
+          "file": "release-10-1-5.spec.ts",
+          "line": 2415,
+          "column": 6,
+          "specs": [
+            {
+              "title": "t1 O-201 vertical: through the fit edge the end seats keep their whole ring, bounded in the yield band",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 420000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 45223,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T21:53:14.789Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ba3de8f038291be5029b-11416c38db9fb31c5d71",
+              "file": "release-10-1-5.spec.ts",
+              "line": 2365,
+              "column": 5
+            }
+          ]
+        },
+        {
+          "title": "fix 13, coarse phone",
+          "file": "release-10-1-5.spec.ts",
+          "line": 2484,
+          "column": 6,
+          "specs": [
+            {
+              "title": "u1 a collapsing vertical run that does not fit keeps its scroll on the first morph frame",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 240000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 44601,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T21:54:31.230Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ba3de8f038291be5029b-ba7f9e3cad6de5b9f108",
+              "file": "release-10-1-5.spec.ts",
+              "line": 2486,
+              "column": 5
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-11T21:47:33.722Z",
+    "duration": 462175.371,
+    "expected": 21,
+    "skipped": 0,
+    "unexpected": 2,
+    "flaky": 0
+  }
+}

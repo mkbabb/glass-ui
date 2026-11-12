@@ -1,0 +1,534 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "tests-visual/release-10-1-5-critic-11.config.ts",
+      "--project=webkit",
+      "release-10-1-5.spec.ts",
+      "--grep",
+      " s[1-4] ",
+      "--repeat-each=1",
+      "--workers=1"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5-critic-11.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-headless-new",
+        "name": "chromium-headless-new",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "coarse-touch",
+        "name": "coarse-touch",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-10-1-5-critic-11.spec.ts",
+          "release-10-1-5-critic-11-r10.spec.ts",
+          "release-10-1-5-critic-11-r10b.spec.ts",
+          "release-10-1-5-critic-11-r10c.spec.ts",
+          "release-10-1-5.spec.ts",
+          "release-10-1-4.spec.ts",
+          "release-10-1-3.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/docs/release-10.1.5/fix-11/red-1e0f9d879-webkit.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5293",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/",
+      "url": "http://localhost:5293",
+      "reuseExistingServer": true,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "release-10-1-5.spec.ts",
+      "file": "release-10-1-5.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "s1 O-205 at 1440: no collapsed dock has a scrolling run, and a hidden wider face adds nothing to a fitting run",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 6079,
+                  "error": {
+                    "message": "Error: a collapsed dock whose plate is not round or whose run scrolls, or a fitting run that scrolls a hidden face\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -   1\u001b[39m\n\u001b[31m+ Received  + 110\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cell\": \"collapsed layers=1\",\u001b[39m\n\u001b[31m+     \"collapsed\": true,\u001b[39m\n\u001b[31m+     \"fits\": false,\u001b[39m\n\u001b[31m+     \"half\": 28,\u001b[39m\n\u001b[31m+     \"radii\": Array [\u001b[39m\n\u001b[31m+       \"28px\",\u001b[39m\n\u001b[31m+       \"28px\",\u001b[39m\n\u001b[31m+       \"28px\",\u001b[39m\n\u001b[31m+       \"28px\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"range\": Array [\u001b[39m\n\u001b[31m+       Object {\u001b[39m\n\u001b[31m+         \"overflow\": \"auto hidden\",\u001b[39m\n\u001b[31m+         \"sl\": 22,\u001b[39m\n\u001b[31m+         \"st\": 0,\u001b[39m\n\u001b[31m+         \"timeline\": \"none\",\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"round\": true,\u001b[39m\n\u001b[31m+     \"runs\": Array [\u001b[39m\n\u001b[31m+       Object {\u001b[39m\n\u001b[31m+         \"active\": false,\u001b[39m\n\u001b[31m+         \"ch\": 70,\u001b[39m\n\u001b[31m+         \"cw\": 128,\u001b[39m\n\u001b[31m+         \"sh\": 70,\u001b[39m\n\u001b[31m+         \"sl\": 0,\u001b[39m\n\u001b[31m+         \"sw\": 825,\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cell\": \"collapsed layers=0\",\u001b[39m\n\u001b[31m+     \"collapsed\": true,\u001b[39m\n\u001b[31m+     \"fits\": false,\u001b[39m\n\u001b[31m+     \"half\": 28,\u001b[39m\n\u001b[31m+     \"radii\": Array [\u001b[39m\n\u001b[31m+       \"28px\",\u001b[39m\n\u001b[31m+       \"28px\",\u001b[39m\n\u001b[31m+       \"28px\",\u001b[39m\n\u001b[31m+       \"28px\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"range\": Array [\u001b[39m\n\u001b[31m+       Object {\u001b[39m\n\u001b[31m+         \"overflow\": \"auto hidden\",\u001b[39m\n\u001b[31m+         \"sl\": 24,\u001b[39m\n\u001b[31m+         \"st\": 0,\u001b[39m\n\u001b[31m+         \"timeline\": \"none\",\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"round\": true,\u001b[39m\n\u001b[31m+     \"runs\": Array [\u001b[39m\n\u001b[31m+       Object {\u001b[39m\n\u001b[31m+         \"active\": false,\u001b[39m\n\u001b[31m+         \"ch\": 70,\u001b[39m\n\u001b[31m+         \"cw\": 126,\u001b[39m\n\u001b[31m+         \"sh\": 70,\u001b[39m\n\u001b[31m+         \"sl\": 0,\u001b[39m\n\u001b[31m+         \"sw\": 304,\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cell\": \"open, narrow face\",\u001b[39m\n\u001b[31m+     \"collapsed\": false,\u001b[39m\n\u001b[31m+     \"fits\": true,\u001b[39m\n\u001b[31m+     \"half\": 28,\u001b[39m\n\u001b[31m+     \"radii\": Array [\u001b[39m\n\u001b[31m+       \"28px\",\u001b[39m\n\u001b[31m+       \"28px\",\u001b[39m\n\u001b[31m+       \"28px\",\u001b[39m\n\u001b[31m+       \"28px\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"round\": true,\u001b[39m\n\u001b[31m+     \"runs\": Array [\u001b[39m\n\u001b[31m+       Object {\u001b[39m\n\u001b[31m+         \"active\": true,\u001b[39m\n\u001b[31m+         \"ch\": 54,\u001b[39m\n\u001b[31m+         \"cw\": 265,\u001b[39m\n\u001b[31m+         \"sh\": 54,\u001b[39m\n\u001b[31m+         \"sl\": 0,\u001b[39m\n\u001b[31m+         \"sw\": 825,\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cell\": \"open, narrow face, after a wheel\",\u001b[39m\n\u001b[31m+     \"collapsed\": false,\u001b[39m\n\u001b[31m+     \"fits\": true,\u001b[39m\n\u001b[31m+     \"half\": 28,\u001b[39m\n\u001b[31m+     \"radii\": Array [\u001b[39m\n\u001b[31m+       \"28px\",\u001b[39m\n\u001b[31m+       \"28px\",\u001b[39m\n\u001b[31m+       \"28px\",\u001b[39m\n\u001b[31m+       \"28px\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"round\": true,\u001b[39m\n\u001b[31m+     \"runs\": Array [\u001b[39m\n\u001b[31m+       Object {\u001b[39m\n\u001b[31m+         \"active\": true,\u001b[39m\n\u001b[31m+         \"ch\": 54,\u001b[39m\n\u001b[31m+         \"cw\": 265,\u001b[39m\n\u001b[31m+         \"sh\": 54,\u001b[39m\n\u001b[31m+         \"sl\": 175,\u001b[39m\n\u001b[31m+         \"sw\": 825,\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+ ]\u001b[39m",
+                    "stack": "Error: a collapsed dock whose plate is not round or whose run scrolls, or a fitting run that scrolls a hidden face\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -   1\u001b[39m\n\u001b[31m+ Received  + 110\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cell\": \"collapsed layers=1\",\u001b[39m\n\u001b[31m+     \"collapsed\": true,\u001b[39m\n\u001b[31m+     \"fits\": false,\u001b[39m\n\u001b[31m+     \"half\": 28,\u001b[39m\n\u001b[31m+     \"radii\": Array [\u001b[39m\n\u001b[31m+       \"28px\",\u001b[39m\n\u001b[31m+       \"28px\",\u001b[39m\n\u001b[31m+       \"28px\",\u001b[39m\n\u001b[31m+       \"28px\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"range\": Array [\u001b[39m\n\u001b[31m+       Object {\u001b[39m\n\u001b[31m+         \"overflow\": \"auto hidden\",\u001b[39m\n\u001b[31m+         \"sl\": 22,\u001b[39m\n\u001b[31m+         \"st\": 0,\u001b[39m\n\u001b[31m+         \"timeline\": \"none\",\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"round\": true,\u001b[39m\n\u001b[31m+     \"runs\": Array [\u001b[39m\n\u001b[31m+       Object {\u001b[39m\n\u001b[31m+         \"active\": false,\u001b[39m\n\u001b[31m+         \"ch\": 70,\u001b[39m\n\u001b[31m+         \"cw\": 128,\u001b[39m\n\u001b[31m+         \"sh\": 70,\u001b[39m\n\u001b[31m+         \"sl\": 0,\u001b[39m\n\u001b[31m+         \"sw\": 825,\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cell\": \"collapsed layers=0\",\u001b[39m\n\u001b[31m+     \"collapsed\": true,\u001b[39m\n\u001b[31m+     \"fits\": false,\u001b[39m\n\u001b[31m+     \"half\": 28,\u001b[39m\n\u001b[31m+     \"radii\": Array [\u001b[39m\n\u001b[31m+       \"28px\",\u001b[39m\n\u001b[31m+       \"28px\",\u001b[39m\n\u001b[31m+       \"28px\",\u001b[39m\n\u001b[31m+       \"28px\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"range\": Array [\u001b[39m\n\u001b[31m+       Object {\u001b[39m\n\u001b[31m+         \"overflow\": \"auto hidden\",\u001b[39m\n\u001b[31m+         \"sl\": 24,\u001b[39m\n\u001b[31m+         \"st\": 0,\u001b[39m\n\u001b[31m+         \"timeline\": \"none\",\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"round\": true,\u001b[39m\n\u001b[31m+     \"runs\": Array [\u001b[39m\n\u001b[31m+       Object {\u001b[39m\n\u001b[31m+         \"active\": false,\u001b[39m\n\u001b[31m+         \"ch\": 70,\u001b[39m\n\u001b[31m+         \"cw\": 126,\u001b[39m\n\u001b[31m+         \"sh\": 70,\u001b[39m\n\u001b[31m+         \"sl\": 0,\u001b[39m\n\u001b[31m+         \"sw\": 304,\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cell\": \"open, narrow face\",\u001b[39m\n\u001b[31m+     \"collapsed\": false,\u001b[39m\n\u001b[31m+     \"fits\": true,\u001b[39m\n\u001b[31m+     \"half\": 28,\u001b[39m\n\u001b[31m+     \"radii\": Array [\u001b[39m\n\u001b[31m+       \"28px\",\u001b[39m\n\u001b[31m+       \"28px\",\u001b[39m\n\u001b[31m+       \"28px\",\u001b[39m\n\u001b[31m+       \"28px\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"round\": true,\u001b[39m\n\u001b[31m+     \"runs\": Array [\u001b[39m\n\u001b[31m+       Object {\u001b[39m\n\u001b[31m+         \"active\": true,\u001b[39m\n\u001b[31m+         \"ch\": 54,\u001b[39m\n\u001b[31m+         \"cw\": 265,\u001b[39m\n\u001b[31m+         \"sh\": 54,\u001b[39m\n\u001b[31m+         \"sl\": 0,\u001b[39m\n\u001b[31m+         \"sw\": 825,\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cell\": \"open, narrow face, after a wheel\",\u001b[39m\n\u001b[31m+     \"collapsed\": false,\u001b[39m\n\u001b[31m+     \"fits\": true,\u001b[39m\n\u001b[31m+     \"half\": 28,\u001b[39m\n\u001b[31m+     \"radii\": Array [\u001b[39m\n\u001b[31m+       \"28px\",\u001b[39m\n\u001b[31m+       \"28px\",\u001b[39m\n\u001b[31m+       \"28px\",\u001b[39m\n\u001b[31m+       \"28px\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"round\": true,\u001b[39m\n\u001b[31m+     \"runs\": Array [\u001b[39m\n\u001b[31m+       Object {\u001b[39m\n\u001b[31m+         \"active\": true,\u001b[39m\n\u001b[31m+         \"ch\": 54,\u001b[39m\n\u001b[31m+         \"cw\": 265,\u001b[39m\n\u001b[31m+         \"sh\": 54,\u001b[39m\n\u001b[31m+         \"sl\": 175,\u001b[39m\n\u001b[31m+         \"sw\": 825,\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+ ]\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:2247:132",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                      "column": 132,
+                      "line": 2247
+                    },
+                    "snippet": "  2245 |         const wheeled = await runRead(page);\n  2246 |         if (wheeled.runs.find((r) => r.active)!.sl !== 0) bad.push({ cell: \"open, narrow face, after a wheel\", ...wheeled });\n> 2247 |         expect(bad, \"a collapsed dock whose plate is not round or whose run scrolls, or a fitting run that scrolls a hidden face\").toEqual([]);\n       |                                                                                                                                    ^\n  2248 |     });\n  2249 | }\n  2250 |"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                        "column": 132,
+                        "line": 2247
+                      },
+                      "message": "Error: a collapsed dock whose plate is not round or whose run scrolls, or a fitting run that scrolls a hidden face\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -   1\u001b[39m\n\u001b[31m+ Received  + 110\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cell\": \"collapsed layers=1\",\u001b[39m\n\u001b[31m+     \"collapsed\": true,\u001b[39m\n\u001b[31m+     \"fits\": false,\u001b[39m\n\u001b[31m+     \"half\": 28,\u001b[39m\n\u001b[31m+     \"radii\": Array [\u001b[39m\n\u001b[31m+       \"28px\",\u001b[39m\n\u001b[31m+       \"28px\",\u001b[39m\n\u001b[31m+       \"28px\",\u001b[39m\n\u001b[31m+       \"28px\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"range\": Array [\u001b[39m\n\u001b[31m+       Object {\u001b[39m\n\u001b[31m+         \"overflow\": \"auto hidden\",\u001b[39m\n\u001b[31m+         \"sl\": 22,\u001b[39m\n\u001b[31m+         \"st\": 0,\u001b[39m\n\u001b[31m+         \"timeline\": \"none\",\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"round\": true,\u001b[39m\n\u001b[31m+     \"runs\": Array [\u001b[39m\n\u001b[31m+       Object {\u001b[39m\n\u001b[31m+         \"active\": false,\u001b[39m\n\u001b[31m+         \"ch\": 70,\u001b[39m\n\u001b[31m+         \"cw\": 128,\u001b[39m\n\u001b[31m+         \"sh\": 70,\u001b[39m\n\u001b[31m+         \"sl\": 0,\u001b[39m\n\u001b[31m+         \"sw\": 825,\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cell\": \"collapsed layers=0\",\u001b[39m\n\u001b[31m+     \"collapsed\": true,\u001b[39m\n\u001b[31m+     \"fits\": false,\u001b[39m\n\u001b[31m+     \"half\": 28,\u001b[39m\n\u001b[31m+     \"radii\": Array [\u001b[39m\n\u001b[31m+       \"28px\",\u001b[39m\n\u001b[31m+       \"28px\",\u001b[39m\n\u001b[31m+       \"28px\",\u001b[39m\n\u001b[31m+       \"28px\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"range\": Array [\u001b[39m\n\u001b[31m+       Object {\u001b[39m\n\u001b[31m+         \"overflow\": \"auto hidden\",\u001b[39m\n\u001b[31m+         \"sl\": 24,\u001b[39m\n\u001b[31m+         \"st\": 0,\u001b[39m\n\u001b[31m+         \"timeline\": \"none\",\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"round\": true,\u001b[39m\n\u001b[31m+     \"runs\": Array [\u001b[39m\n\u001b[31m+       Object {\u001b[39m\n\u001b[31m+         \"active\": false,\u001b[39m\n\u001b[31m+         \"ch\": 70,\u001b[39m\n\u001b[31m+         \"cw\": 126,\u001b[39m\n\u001b[31m+         \"sh\": 70,\u001b[39m\n\u001b[31m+         \"sl\": 0,\u001b[39m\n\u001b[31m+         \"sw\": 304,\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cell\": \"open, narrow face\",\u001b[39m\n\u001b[31m+     \"collapsed\": false,\u001b[39m\n\u001b[31m+     \"fits\": true,\u001b[39m\n\u001b[31m+     \"half\": 28,\u001b[39m\n\u001b[31m+     \"radii\": Array [\u001b[39m\n\u001b[31m+       \"28px\",\u001b[39m\n\u001b[31m+       \"28px\",\u001b[39m\n\u001b[31m+       \"28px\",\u001b[39m\n\u001b[31m+       \"28px\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"round\": true,\u001b[39m\n\u001b[31m+     \"runs\": Array [\u001b[39m\n\u001b[31m+       Object {\u001b[39m\n\u001b[31m+         \"active\": true,\u001b[39m\n\u001b[31m+         \"ch\": 54,\u001b[39m\n\u001b[31m+         \"cw\": 265,\u001b[39m\n\u001b[31m+         \"sh\": 54,\u001b[39m\n\u001b[31m+         \"sl\": 0,\u001b[39m\n\u001b[31m+         \"sw\": 825,\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cell\": \"open, narrow face, after a wheel\",\u001b[39m\n\u001b[31m+     \"collapsed\": false,\u001b[39m\n\u001b[31m+     \"fits\": true,\u001b[39m\n\u001b[31m+     \"half\": 28,\u001b[39m\n\u001b[31m+     \"radii\": Array [\u001b[39m\n\u001b[31m+       \"28px\",\u001b[39m\n\u001b[31m+       \"28px\",\u001b[39m\n\u001b[31m+       \"28px\",\u001b[39m\n\u001b[31m+       \"28px\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"round\": true,\u001b[39m\n\u001b[31m+     \"runs\": Array [\u001b[39m\n\u001b[31m+       Object {\u001b[39m\n\u001b[31m+         \"active\": true,\u001b[39m\n\u001b[31m+         \"ch\": 54,\u001b[39m\n\u001b[31m+         \"cw\": 265,\u001b[39m\n\u001b[31m+         \"sh\": 54,\u001b[39m\n\u001b[31m+         \"sl\": 175,\u001b[39m\n\u001b[31m+         \"sw\": 825,\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+ ]\u001b[39m\n\n  2245 |         const wheeled = await runRead(page);\n  2246 |         if (wheeled.runs.find((r) => r.active)!.sl !== 0) bad.push({ cell: \"open, narrow face, after a wheel\", ...wheeled });\n> 2247 |         expect(bad, \"a collapsed dock whose plate is not round or whose run scrolls, or a fitting run that scrolls a hidden face\").toEqual([]);\n       |                                                                                                                                    ^\n  2248 |     });\n  2249 | }\n  2250 |\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:2247:132"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T20:37:51.634Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/test-results/release-10-1-5-s1-O-205-at-56316-ds-nothing-to-a-fitting-run-webkit/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                    "column": 132,
+                    "line": 2247
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-81ccc2b10ff54fd49b68",
+          "file": "release-10-1-5.spec.ts",
+          "line": 2217,
+          "column": 5
+        },
+        {
+          "title": "s2 O-201 at 1440: across the fit edge the first and last seats keep their whole ring, and the flag is the layout",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 14298,
+                  "error": {
+                    "message": "Error: a fitting cap that cuts a focused seat's ring, or a flag that is not the layout\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -   1\u001b[39m\n\u001b[31m+ Received  + 162\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 269,\u001b[39m\n\u001b[31m+     \"cuts\": Array [\u001b[39m\n\u001b[31m+       \"dock-layer 0.63\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"focusVisible\": true,\u001b[39m\n\u001b[31m+     \"outline\": \"solid\",\u001b[39m\n\u001b[31m+     \"seat\": \"S1\",\u001b[39m\n\u001b[31m+     \"worst\": 0.63,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 269,\u001b[39m\n\u001b[31m+     \"cuts\": Array [\u001b[39m\n\u001b[31m+       \"dock-layer 0.61\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"focusVisible\": true,\u001b[39m\n\u001b[31m+     \"outline\": \"solid\",\u001b[39m\n\u001b[31m+     \"seat\": \"home\",\u001b[39m\n\u001b[31m+     \"worst\": 0.61,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 268,\u001b[39m\n\u001b[31m+     \"cuts\": Array [\u001b[39m\n\u001b[31m+       \"dock-layer 1.13\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"focusVisible\": true,\u001b[39m\n\u001b[31m+     \"outline\": \"solid\",\u001b[39m\n\u001b[31m+     \"seat\": \"S1\",\u001b[39m\n\u001b[31m+     \"worst\": 1.13,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 268,\u001b[39m\n\u001b[31m+     \"cuts\": Array [\u001b[39m\n\u001b[31m+       \"dock-layer 1.11\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"focusVisible\": true,\u001b[39m\n\u001b[31m+     \"outline\": \"solid\",\u001b[39m\n\u001b[31m+     \"seat\": \"home\",\u001b[39m\n\u001b[31m+     \"worst\": 1.11,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 267,\u001b[39m\n\u001b[31m+     \"cuts\": Array [\u001b[39m\n\u001b[31m+       \"dock-layer 1.63\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"focusVisible\": true,\u001b[39m\n\u001b[31m+     \"outline\": \"solid\",\u001b[39m\n\u001b[31m+     \"seat\": \"S1\",\u001b[39m\n\u001b[31m+     \"worst\": 1.63,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 267,\u001b[39m\n\u001b[31m+     \"cuts\": Array [\u001b[39m\n\u001b[31m+       \"dock-layer 1.61\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"focusVisible\": true,\u001b[39m\n\u001b[31m+     \"outline\": \"solid\",\u001b[39m\n\u001b[31m+     \"seat\": \"home\",\u001b[39m\n\u001b[31m+     \"worst\": 1.61,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 266,\u001b[39m\n\u001b[31m+     \"cuts\": Array [\u001b[39m\n\u001b[31m+       \"dock-layer 2.13\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"focusVisible\": true,\u001b[39m\n\u001b[31m+     \"outline\": \"solid\",\u001b[39m\n\u001b[31m+     \"seat\": \"S1\",\u001b[39m\n\u001b[31m+     \"worst\": 2.13,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 266,\u001b[39m\n\u001b[31m+     \"cuts\": Array [\u001b[39m\n\u001b[31m+       \"dock-layer 2.11\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"focusVisible\": true,\u001b[39m\n\u001b[31m+     \"outline\": \"solid\",\u001b[39m\n\u001b[31m+     \"seat\": \"home\",\u001b[39m\n\u001b[31m+     \"worst\": 2.11,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 265,\u001b[39m\n\u001b[31m+     \"cuts\": Array [\u001b[39m\n\u001b[31m+       \"dock-layer 2.63\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"focusVisible\": true,\u001b[39m\n\u001b[31m+     \"outline\": \"solid\",\u001b[39m\n\u001b[31m+     \"seat\": \"S1\",\u001b[39m\n\u001b[31m+     \"worst\": 2.63,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 265,\u001b[39m\n\u001b[31m+     \"cuts\": Array [\u001b[39m\n\u001b[31m+       \"dock-layer 2.61\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"focusVisible\": true,\u001b[39m\n\u001b[31m+     \"outline\": \"solid\",\u001b[39m\n\u001b[31m+     \"seat\": \"home\",\u001b[39m\n\u001b[31m+     \"worst\": 2.61,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 264,\u001b[39m\n\u001b[31m+     \"cuts\": Array [\u001b[39m\n\u001b[31m+       \"dock-layer 3.13\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"focusVisible\": true,\u001b[39m\n\u001b[31m+     \"outline\": \"solid\",\u001b[39m\n\u001b[31m+     \"seat\": \"S1\",\u001b[39m\n\u001b[31m+     \"worst\": 3.13,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 264,\u001b[39m\n\u001b[31m+     \"cuts\": Array [\u001b[39m\n\u001b[31m+       \"dock-layer 3.11\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"focusVisible\": true,\u001b[39m\n\u001b[31m+     \"outline\": \"solid\",\u001b[39m\n\u001b[31m+     \"seat\": \"home\",\u001b[39m\n\u001b[31m+     \"worst\": 3.11,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 263,\u001b[39m\n\u001b[31m+     \"cuts\": Array [\u001b[39m\n\u001b[31m+       \"dock-layer 3.63\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"focusVisible\": true,\u001b[39m\n\u001b[31m+     \"outline\": \"solid\",\u001b[39m\n\u001b[31m+     \"seat\": \"S1\",\u001b[39m\n\u001b[31m+     \"worst\": 3.63,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 263,\u001b[39m\n\u001b[31m+     \"cuts\": Array [\u001b[39m\n\u001b[31m+       \"dock-layer 3.61\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"focusVisible\": true,\u001b[39m\n\u001b[31m+     \"outline\": \"solid\",\u001b[39m\n\u001b[31m+     \"seat\": \"home\",\u001b[39m\n\u001b[31m+     \"worst\": 3.61,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 262,\u001b[39m\n\u001b[31m+     \"cuts\": Array [\u001b[39m\n\u001b[31m+       \"dock-layer 4.00\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"focusVisible\": true,\u001b[39m\n\u001b[31m+     \"outline\": \"solid\",\u001b[39m\n\u001b[31m+     \"seat\": \"S1\",\u001b[39m\n\u001b[31m+     \"worst\": 4,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 262,\u001b[39m\n\u001b[31m+     \"cuts\": Array [\u001b[39m\n\u001b[31m+       \"dock-layer 4.23\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"focusVisible\": true,\u001b[39m\n\u001b[31m+     \"outline\": \"solid\",\u001b[39m\n\u001b[31m+     \"seat\": \"home\",\u001b[39m\n\u001b[31m+     \"worst\": 4.23,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+ ]\u001b[39m",
+                    "stack": "Error: a fitting cap that cuts a focused seat's ring, or a flag that is not the layout\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -   1\u001b[39m\n\u001b[31m+ Received  + 162\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 269,\u001b[39m\n\u001b[31m+     \"cuts\": Array [\u001b[39m\n\u001b[31m+       \"dock-layer 0.63\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"focusVisible\": true,\u001b[39m\n\u001b[31m+     \"outline\": \"solid\",\u001b[39m\n\u001b[31m+     \"seat\": \"S1\",\u001b[39m\n\u001b[31m+     \"worst\": 0.63,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 269,\u001b[39m\n\u001b[31m+     \"cuts\": Array [\u001b[39m\n\u001b[31m+       \"dock-layer 0.61\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"focusVisible\": true,\u001b[39m\n\u001b[31m+     \"outline\": \"solid\",\u001b[39m\n\u001b[31m+     \"seat\": \"home\",\u001b[39m\n\u001b[31m+     \"worst\": 0.61,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 268,\u001b[39m\n\u001b[31m+     \"cuts\": Array [\u001b[39m\n\u001b[31m+       \"dock-layer 1.13\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"focusVisible\": true,\u001b[39m\n\u001b[31m+     \"outline\": \"solid\",\u001b[39m\n\u001b[31m+     \"seat\": \"S1\",\u001b[39m\n\u001b[31m+     \"worst\": 1.13,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 268,\u001b[39m\n\u001b[31m+     \"cuts\": Array [\u001b[39m\n\u001b[31m+       \"dock-layer 1.11\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"focusVisible\": true,\u001b[39m\n\u001b[31m+     \"outline\": \"solid\",\u001b[39m\n\u001b[31m+     \"seat\": \"home\",\u001b[39m\n\u001b[31m+     \"worst\": 1.11,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 267,\u001b[39m\n\u001b[31m+     \"cuts\": Array [\u001b[39m\n\u001b[31m+       \"dock-layer 1.63\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"focusVisible\": true,\u001b[39m\n\u001b[31m+     \"outline\": \"solid\",\u001b[39m\n\u001b[31m+     \"seat\": \"S1\",\u001b[39m\n\u001b[31m+     \"worst\": 1.63,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 267,\u001b[39m\n\u001b[31m+     \"cuts\": Array [\u001b[39m\n\u001b[31m+       \"dock-layer 1.61\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"focusVisible\": true,\u001b[39m\n\u001b[31m+     \"outline\": \"solid\",\u001b[39m\n\u001b[31m+     \"seat\": \"home\",\u001b[39m\n\u001b[31m+     \"worst\": 1.61,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 266,\u001b[39m\n\u001b[31m+     \"cuts\": Array [\u001b[39m\n\u001b[31m+       \"dock-layer 2.13\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"focusVisible\": true,\u001b[39m\n\u001b[31m+     \"outline\": \"solid\",\u001b[39m\n\u001b[31m+     \"seat\": \"S1\",\u001b[39m\n\u001b[31m+     \"worst\": 2.13,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 266,\u001b[39m\n\u001b[31m+     \"cuts\": Array [\u001b[39m\n\u001b[31m+       \"dock-layer 2.11\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"focusVisible\": true,\u001b[39m\n\u001b[31m+     \"outline\": \"solid\",\u001b[39m\n\u001b[31m+     \"seat\": \"home\",\u001b[39m\n\u001b[31m+     \"worst\": 2.11,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 265,\u001b[39m\n\u001b[31m+     \"cuts\": Array [\u001b[39m\n\u001b[31m+       \"dock-layer 2.63\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"focusVisible\": true,\u001b[39m\n\u001b[31m+     \"outline\": \"solid\",\u001b[39m\n\u001b[31m+     \"seat\": \"S1\",\u001b[39m\n\u001b[31m+     \"worst\": 2.63,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 265,\u001b[39m\n\u001b[31m+     \"cuts\": Array [\u001b[39m\n\u001b[31m+       \"dock-layer 2.61\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"focusVisible\": true,\u001b[39m\n\u001b[31m+     \"outline\": \"solid\",\u001b[39m\n\u001b[31m+     \"seat\": \"home\",\u001b[39m\n\u001b[31m+     \"worst\": 2.61,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 264,\u001b[39m\n\u001b[31m+     \"cuts\": Array [\u001b[39m\n\u001b[31m+       \"dock-layer 3.13\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"focusVisible\": true,\u001b[39m\n\u001b[31m+     \"outline\": \"solid\",\u001b[39m\n\u001b[31m+     \"seat\": \"S1\",\u001b[39m\n\u001b[31m+     \"worst\": 3.13,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 264,\u001b[39m\n\u001b[31m+     \"cuts\": Array [\u001b[39m\n\u001b[31m+       \"dock-layer 3.11\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"focusVisible\": true,\u001b[39m\n\u001b[31m+     \"outline\": \"solid\",\u001b[39m\n\u001b[31m+     \"seat\": \"home\",\u001b[39m\n\u001b[31m+     \"worst\": 3.11,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 263,\u001b[39m\n\u001b[31m+     \"cuts\": Array [\u001b[39m\n\u001b[31m+       \"dock-layer 3.63\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"focusVisible\": true,\u001b[39m\n\u001b[31m+     \"outline\": \"solid\",\u001b[39m\n\u001b[31m+     \"seat\": \"S1\",\u001b[39m\n\u001b[31m+     \"worst\": 3.63,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 263,\u001b[39m\n\u001b[31m+     \"cuts\": Array [\u001b[39m\n\u001b[31m+       \"dock-layer 3.61\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"focusVisible\": true,\u001b[39m\n\u001b[31m+     \"outline\": \"solid\",\u001b[39m\n\u001b[31m+     \"seat\": \"home\",\u001b[39m\n\u001b[31m+     \"worst\": 3.61,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 262,\u001b[39m\n\u001b[31m+     \"cuts\": Array [\u001b[39m\n\u001b[31m+       \"dock-layer 4.00\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"focusVisible\": true,\u001b[39m\n\u001b[31m+     \"outline\": \"solid\",\u001b[39m\n\u001b[31m+     \"seat\": \"S1\",\u001b[39m\n\u001b[31m+     \"worst\": 4,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 262,\u001b[39m\n\u001b[31m+     \"cuts\": Array [\u001b[39m\n\u001b[31m+       \"dock-layer 4.23\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"focusVisible\": true,\u001b[39m\n\u001b[31m+     \"outline\": \"solid\",\u001b[39m\n\u001b[31m+     \"seat\": \"home\",\u001b[39m\n\u001b[31m+     \"worst\": 4.23,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+ ]\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:2282:104",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                      "column": 104,
+                      "line": 2282
+                    },
+                    "snippet": "  2280 |         }\n  2281 |         expect(Number.isFinite(edge), `the fit edge is found under ${natural}`).toBe(true);\n> 2282 |         expect(bad, \"a fitting cap that cuts a focused seat's ring, or a flag that is not the layout\").toEqual([]);\n       |                                                                                                        ^\n  2283 |     });\n  2284 | }\n  2285 |"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                        "column": 104,
+                        "line": 2282
+                      },
+                      "message": "Error: a fitting cap that cuts a focused seat's ring, or a flag that is not the layout\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -   1\u001b[39m\n\u001b[31m+ Received  + 162\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 269,\u001b[39m\n\u001b[31m+     \"cuts\": Array [\u001b[39m\n\u001b[31m+       \"dock-layer 0.63\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"focusVisible\": true,\u001b[39m\n\u001b[31m+     \"outline\": \"solid\",\u001b[39m\n\u001b[31m+     \"seat\": \"S1\",\u001b[39m\n\u001b[31m+     \"worst\": 0.63,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 269,\u001b[39m\n\u001b[31m+     \"cuts\": Array [\u001b[39m\n\u001b[31m+       \"dock-layer 0.61\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"focusVisible\": true,\u001b[39m\n\u001b[31m+     \"outline\": \"solid\",\u001b[39m\n\u001b[31m+     \"seat\": \"home\",\u001b[39m\n\u001b[31m+     \"worst\": 0.61,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 268,\u001b[39m\n\u001b[31m+     \"cuts\": Array [\u001b[39m\n\u001b[31m+       \"dock-layer 1.13\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"focusVisible\": true,\u001b[39m\n\u001b[31m+     \"outline\": \"solid\",\u001b[39m\n\u001b[31m+     \"seat\": \"S1\",\u001b[39m\n\u001b[31m+     \"worst\": 1.13,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 268,\u001b[39m\n\u001b[31m+     \"cuts\": Array [\u001b[39m\n\u001b[31m+       \"dock-layer 1.11\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"focusVisible\": true,\u001b[39m\n\u001b[31m+     \"outline\": \"solid\",\u001b[39m\n\u001b[31m+     \"seat\": \"home\",\u001b[39m\n\u001b[31m+     \"worst\": 1.11,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 267,\u001b[39m\n\u001b[31m+     \"cuts\": Array [\u001b[39m\n\u001b[31m+       \"dock-layer 1.63\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"focusVisible\": true,\u001b[39m\n\u001b[31m+     \"outline\": \"solid\",\u001b[39m\n\u001b[31m+     \"seat\": \"S1\",\u001b[39m\n\u001b[31m+     \"worst\": 1.63,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 267,\u001b[39m\n\u001b[31m+     \"cuts\": Array [\u001b[39m\n\u001b[31m+       \"dock-layer 1.61\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"focusVisible\": true,\u001b[39m\n\u001b[31m+     \"outline\": \"solid\",\u001b[39m\n\u001b[31m+     \"seat\": \"home\",\u001b[39m\n\u001b[31m+     \"worst\": 1.61,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 266,\u001b[39m\n\u001b[31m+     \"cuts\": Array [\u001b[39m\n\u001b[31m+       \"dock-layer 2.13\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"focusVisible\": true,\u001b[39m\n\u001b[31m+     \"outline\": \"solid\",\u001b[39m\n\u001b[31m+     \"seat\": \"S1\",\u001b[39m\n\u001b[31m+     \"worst\": 2.13,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 266,\u001b[39m\n\u001b[31m+     \"cuts\": Array [\u001b[39m\n\u001b[31m+       \"dock-layer 2.11\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"focusVisible\": true,\u001b[39m\n\u001b[31m+     \"outline\": \"solid\",\u001b[39m\n\u001b[31m+     \"seat\": \"home\",\u001b[39m\n\u001b[31m+     \"worst\": 2.11,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 265,\u001b[39m\n\u001b[31m+     \"cuts\": Array [\u001b[39m\n\u001b[31m+       \"dock-layer 2.63\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"focusVisible\": true,\u001b[39m\n\u001b[31m+     \"outline\": \"solid\",\u001b[39m\n\u001b[31m+     \"seat\": \"S1\",\u001b[39m\n\u001b[31m+     \"worst\": 2.63,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 265,\u001b[39m\n\u001b[31m+     \"cuts\": Array [\u001b[39m\n\u001b[31m+       \"dock-layer 2.61\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"focusVisible\": true,\u001b[39m\n\u001b[31m+     \"outline\": \"solid\",\u001b[39m\n\u001b[31m+     \"seat\": \"home\",\u001b[39m\n\u001b[31m+     \"worst\": 2.61,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 264,\u001b[39m\n\u001b[31m+     \"cuts\": Array [\u001b[39m\n\u001b[31m+       \"dock-layer 3.13\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"focusVisible\": true,\u001b[39m\n\u001b[31m+     \"outline\": \"solid\",\u001b[39m\n\u001b[31m+     \"seat\": \"S1\",\u001b[39m\n\u001b[31m+     \"worst\": 3.13,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 264,\u001b[39m\n\u001b[31m+     \"cuts\": Array [\u001b[39m\n\u001b[31m+       \"dock-layer 3.11\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"focusVisible\": true,\u001b[39m\n\u001b[31m+     \"outline\": \"solid\",\u001b[39m\n\u001b[31m+     \"seat\": \"home\",\u001b[39m\n\u001b[31m+     \"worst\": 3.11,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 263,\u001b[39m\n\u001b[31m+     \"cuts\": Array [\u001b[39m\n\u001b[31m+       \"dock-layer 3.63\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"focusVisible\": true,\u001b[39m\n\u001b[31m+     \"outline\": \"solid\",\u001b[39m\n\u001b[31m+     \"seat\": \"S1\",\u001b[39m\n\u001b[31m+     \"worst\": 3.63,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 263,\u001b[39m\n\u001b[31m+     \"cuts\": Array [\u001b[39m\n\u001b[31m+       \"dock-layer 3.61\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"focusVisible\": true,\u001b[39m\n\u001b[31m+     \"outline\": \"solid\",\u001b[39m\n\u001b[31m+     \"seat\": \"home\",\u001b[39m\n\u001b[31m+     \"worst\": 3.61,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 262,\u001b[39m\n\u001b[31m+     \"cuts\": Array [\u001b[39m\n\u001b[31m+       \"dock-layer 4.00\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"focusVisible\": true,\u001b[39m\n\u001b[31m+     \"outline\": \"solid\",\u001b[39m\n\u001b[31m+     \"seat\": \"S1\",\u001b[39m\n\u001b[31m+     \"worst\": 4,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 262,\u001b[39m\n\u001b[31m+     \"cuts\": Array [\u001b[39m\n\u001b[31m+       \"dock-layer 4.23\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"focusVisible\": true,\u001b[39m\n\u001b[31m+     \"outline\": \"solid\",\u001b[39m\n\u001b[31m+     \"seat\": \"home\",\u001b[39m\n\u001b[31m+     \"worst\": 4.23,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+ ]\u001b[39m\n\n  2280 |         }\n  2281 |         expect(Number.isFinite(edge), `the fit edge is found under ${natural}`).toBe(true);\n> 2282 |         expect(bad, \"a fitting cap that cuts a focused seat's ring, or a flag that is not the layout\").toEqual([]);\n       |                                                                                                        ^\n  2283 |     });\n  2284 | }\n  2285 |\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:2282:104"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T20:38:00.270Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/test-results/release-10-1-5-s2-O-201-at-3499e--and-the-flag-is-the-layout-webkit/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                    "column": 104,
+                    "line": 2282
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-b0fd852703a7cea09c90",
+          "file": "release-10-1-5.spec.ts",
+          "line": 2253,
+          "column": 5
+        },
+        {
+          "title": "s3 O-207 G3 a disclosure trigger's keyboard ring is the house outline, whatever it composes",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 3505,
+                  "error": {
+                    "message": "Error: a disclosure trigger whose focus ring is not the house outline (2px, the perimeter ink)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 50\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"alpha\": 1,\u001b[39m\n\u001b[31m+     \"dark\": 0,\u001b[39m\n\u001b[31m+     \"fv\": true,\u001b[39m\n\u001b[31m+     \"style\": \"none\",\u001b[39m\n\u001b[31m+     \"width\": \"3px\",\u001b[39m\n\u001b[31m+     \"witness\": \"card-trigger\",\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"alpha\": 1,\u001b[39m\n\u001b[31m+     \"dark\": 0,\u001b[39m\n\u001b[31m+     \"fv\": true,\u001b[39m\n\u001b[31m+     \"style\": \"none\",\u001b[39m\n\u001b[31m+     \"width\": \"3px\",\u001b[39m\n\u001b[31m+     \"witness\": \"plain-trigger\",\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"alpha\": 1,\u001b[39m\n\u001b[31m+     \"dark\": 0,\u001b[39m\n\u001b[31m+     \"fv\": true,\u001b[39m\n\u001b[31m+     \"style\": \"none\",\u001b[39m\n\u001b[31m+     \"width\": \"3px\",\u001b[39m\n\u001b[31m+     \"witness\": \"accordion\",\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"alpha\": 1,\u001b[39m\n\u001b[31m+     \"dark\": 1,\u001b[39m\n\u001b[31m+     \"fv\": true,\u001b[39m\n\u001b[31m+     \"style\": \"none\",\u001b[39m\n\u001b[31m+     \"width\": \"3px\",\u001b[39m\n\u001b[31m+     \"witness\": \"card-trigger\",\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"alpha\": 1,\u001b[39m\n\u001b[31m+     \"dark\": 1,\u001b[39m\n\u001b[31m+     \"fv\": true,\u001b[39m\n\u001b[31m+     \"style\": \"none\",\u001b[39m\n\u001b[31m+     \"width\": \"3px\",\u001b[39m\n\u001b[31m+     \"witness\": \"plain-trigger\",\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"alpha\": 1,\u001b[39m\n\u001b[31m+     \"dark\": 1,\u001b[39m\n\u001b[31m+     \"fv\": true,\u001b[39m\n\u001b[31m+     \"style\": \"none\",\u001b[39m\n\u001b[31m+     \"width\": \"3px\",\u001b[39m\n\u001b[31m+     \"witness\": \"accordion\",\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+ ]\u001b[39m",
+                    "stack": "Error: a disclosure trigger whose focus ring is not the house outline (2px, the perimeter ink)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 50\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"alpha\": 1,\u001b[39m\n\u001b[31m+     \"dark\": 0,\u001b[39m\n\u001b[31m+     \"fv\": true,\u001b[39m\n\u001b[31m+     \"style\": \"none\",\u001b[39m\n\u001b[31m+     \"width\": \"3px\",\u001b[39m\n\u001b[31m+     \"witness\": \"card-trigger\",\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"alpha\": 1,\u001b[39m\n\u001b[31m+     \"dark\": 0,\u001b[39m\n\u001b[31m+     \"fv\": true,\u001b[39m\n\u001b[31m+     \"style\": \"none\",\u001b[39m\n\u001b[31m+     \"width\": \"3px\",\u001b[39m\n\u001b[31m+     \"witness\": \"plain-trigger\",\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"alpha\": 1,\u001b[39m\n\u001b[31m+     \"dark\": 0,\u001b[39m\n\u001b[31m+     \"fv\": true,\u001b[39m\n\u001b[31m+     \"style\": \"none\",\u001b[39m\n\u001b[31m+     \"width\": \"3px\",\u001b[39m\n\u001b[31m+     \"witness\": \"accordion\",\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"alpha\": 1,\u001b[39m\n\u001b[31m+     \"dark\": 1,\u001b[39m\n\u001b[31m+     \"fv\": true,\u001b[39m\n\u001b[31m+     \"style\": \"none\",\u001b[39m\n\u001b[31m+     \"width\": \"3px\",\u001b[39m\n\u001b[31m+     \"witness\": \"card-trigger\",\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"alpha\": 1,\u001b[39m\n\u001b[31m+     \"dark\": 1,\u001b[39m\n\u001b[31m+     \"fv\": true,\u001b[39m\n\u001b[31m+     \"style\": \"none\",\u001b[39m\n\u001b[31m+     \"width\": \"3px\",\u001b[39m\n\u001b[31m+     \"witness\": \"plain-trigger\",\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"alpha\": 1,\u001b[39m\n\u001b[31m+     \"dark\": 1,\u001b[39m\n\u001b[31m+     \"fv\": true,\u001b[39m\n\u001b[31m+     \"style\": \"none\",\u001b[39m\n\u001b[31m+     \"width\": \"3px\",\u001b[39m\n\u001b[31m+     \"witness\": \"accordion\",\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+ ]\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:2309:108",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                      "column": 108,
+                      "line": 2309
+                    },
+                    "snippet": "  2307 |         }\n  2308 |     }\n> 2309 |     expect(bad, \"a disclosure trigger whose focus ring is not the house outline (2px, the perimeter ink)\").toEqual([]);\n       |                                                                                                            ^\n  2310 | });\n  2311 |\n  2312 | /** s4 (R4): a host that moves only its padding across the fit edge mid-expand moves the endpoint where the morph carries it. */"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                        "column": 108,
+                        "line": 2309
+                      },
+                      "message": "Error: a disclosure trigger whose focus ring is not the house outline (2px, the perimeter ink)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 50\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"alpha\": 1,\u001b[39m\n\u001b[31m+     \"dark\": 0,\u001b[39m\n\u001b[31m+     \"fv\": true,\u001b[39m\n\u001b[31m+     \"style\": \"none\",\u001b[39m\n\u001b[31m+     \"width\": \"3px\",\u001b[39m\n\u001b[31m+     \"witness\": \"card-trigger\",\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"alpha\": 1,\u001b[39m\n\u001b[31m+     \"dark\": 0,\u001b[39m\n\u001b[31m+     \"fv\": true,\u001b[39m\n\u001b[31m+     \"style\": \"none\",\u001b[39m\n\u001b[31m+     \"width\": \"3px\",\u001b[39m\n\u001b[31m+     \"witness\": \"plain-trigger\",\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"alpha\": 1,\u001b[39m\n\u001b[31m+     \"dark\": 0,\u001b[39m\n\u001b[31m+     \"fv\": true,\u001b[39m\n\u001b[31m+     \"style\": \"none\",\u001b[39m\n\u001b[31m+     \"width\": \"3px\",\u001b[39m\n\u001b[31m+     \"witness\": \"accordion\",\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"alpha\": 1,\u001b[39m\n\u001b[31m+     \"dark\": 1,\u001b[39m\n\u001b[31m+     \"fv\": true,\u001b[39m\n\u001b[31m+     \"style\": \"none\",\u001b[39m\n\u001b[31m+     \"width\": \"3px\",\u001b[39m\n\u001b[31m+     \"witness\": \"card-trigger\",\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"alpha\": 1,\u001b[39m\n\u001b[31m+     \"dark\": 1,\u001b[39m\n\u001b[31m+     \"fv\": true,\u001b[39m\n\u001b[31m+     \"style\": \"none\",\u001b[39m\n\u001b[31m+     \"width\": \"3px\",\u001b[39m\n\u001b[31m+     \"witness\": \"plain-trigger\",\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"alpha\": 1,\u001b[39m\n\u001b[31m+     \"dark\": 1,\u001b[39m\n\u001b[31m+     \"fv\": true,\u001b[39m\n\u001b[31m+     \"style\": \"none\",\u001b[39m\n\u001b[31m+     \"width\": \"3px\",\u001b[39m\n\u001b[31m+     \"witness\": \"accordion\",\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+ ]\u001b[39m\n\n  2307 |         }\n  2308 |     }\n> 2309 |     expect(bad, \"a disclosure trigger whose focus ring is not the house outline (2px, the perimeter ink)\").toEqual([]);\n       |                                                                                                            ^\n  2310 | });\n  2311 |\n  2312 | /** s4 (R4): a host that moves only its padding across the fit edge mid-expand moves the endpoint where the morph carries it. */\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:2309:108"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T20:38:34.634Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/test-results/release-10-1-5-s3-O-207-G3-fce13-utline-whatever-it-composes-webkit/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                    "column": 108,
+                    "line": 2309
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-9e6e3acf950fabf883a1",
+          "file": "release-10-1-5.spec.ts",
+          "line": 2295,
+          "column": 1
+        },
+        {
+          "title": "s4 a host padding change across the fit edge mid-expand holds every seat at the settle (vertical)",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 30577,
+                  "error": {
+                    "message": "Error: seat steps over 0.5 px at the settle, or a rest flag that is not the layout's truth\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 50\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"at\": 110,\u001b[39m\n\u001b[31m+     \"pad\": 16.5,\u001b[39m\n\u001b[31m+     \"stageH\": 314,\u001b[39m\n\u001b[31m+     \"step\": 7.02,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"at\": 300,\u001b[39m\n\u001b[31m+     \"pad\": 16.5,\u001b[39m\n\u001b[31m+     \"stageH\": 314,\u001b[39m\n\u001b[31m+     \"step\": 7.02,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"at\": 110,\u001b[39m\n\u001b[31m+     \"pad\": 17,\u001b[39m\n\u001b[31m+     \"stageH\": 314,\u001b[39m\n\u001b[31m+     \"step\": 7.02,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"at\": 300,\u001b[39m\n\u001b[31m+     \"pad\": 17,\u001b[39m\n\u001b[31m+     \"stageH\": 314,\u001b[39m\n\u001b[31m+     \"step\": 7.02,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"at\": 110,\u001b[39m\n\u001b[31m+     \"pad\": 15,\u001b[39m\n\u001b[31m+     \"stageH\": 313,\u001b[39m\n\u001b[31m+     \"step\": 6.48,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"at\": 300,\u001b[39m\n\u001b[31m+     \"pad\": 15,\u001b[39m\n\u001b[31m+     \"stageH\": 313,\u001b[39m\n\u001b[31m+     \"step\": 6.48,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"at\": 110,\u001b[39m\n\u001b[31m+     \"pad\": 15,\u001b[39m\n\u001b[31m+     \"stageH\": 312,\u001b[39m\n\u001b[31m+     \"step\": 6.98,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"at\": 300,\u001b[39m\n\u001b[31m+     \"pad\": 15,\u001b[39m\n\u001b[31m+     \"stageH\": 312,\u001b[39m\n\u001b[31m+     \"step\": 6.98,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+ ]\u001b[39m",
+                    "stack": "Error: seat steps over 0.5 px at the settle, or a rest flag that is not the layout's truth\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 50\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"at\": 110,\u001b[39m\n\u001b[31m+     \"pad\": 16.5,\u001b[39m\n\u001b[31m+     \"stageH\": 314,\u001b[39m\n\u001b[31m+     \"step\": 7.02,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"at\": 300,\u001b[39m\n\u001b[31m+     \"pad\": 16.5,\u001b[39m\n\u001b[31m+     \"stageH\": 314,\u001b[39m\n\u001b[31m+     \"step\": 7.02,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"at\": 110,\u001b[39m\n\u001b[31m+     \"pad\": 17,\u001b[39m\n\u001b[31m+     \"stageH\": 314,\u001b[39m\n\u001b[31m+     \"step\": 7.02,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"at\": 300,\u001b[39m\n\u001b[31m+     \"pad\": 17,\u001b[39m\n\u001b[31m+     \"stageH\": 314,\u001b[39m\n\u001b[31m+     \"step\": 7.02,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"at\": 110,\u001b[39m\n\u001b[31m+     \"pad\": 15,\u001b[39m\n\u001b[31m+     \"stageH\": 313,\u001b[39m\n\u001b[31m+     \"step\": 6.48,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"at\": 300,\u001b[39m\n\u001b[31m+     \"pad\": 15,\u001b[39m\n\u001b[31m+     \"stageH\": 313,\u001b[39m\n\u001b[31m+     \"step\": 6.48,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"at\": 110,\u001b[39m\n\u001b[31m+     \"pad\": 15,\u001b[39m\n\u001b[31m+     \"stageH\": 312,\u001b[39m\n\u001b[31m+     \"step\": 6.98,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"at\": 300,\u001b[39m\n\u001b[31m+     \"pad\": 15,\u001b[39m\n\u001b[31m+     \"stageH\": 312,\u001b[39m\n\u001b[31m+     \"step\": 6.98,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+ ]\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:2350:104",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                      "column": 104,
+                      "line": 2350
+                    },
+                    "snippet": "  2348 |             if (end.fits === end.over) bad.push({ stageH, pad, at, flag: end.fits, overflows: end.over });\n  2349 |         }\n> 2350 |     expect(bad, \"seat steps over 0.5 px at the settle, or a rest flag that is not the layout's truth\").toEqual([]);\n       |                                                                                                        ^\n  2351 | });\n  2352 |\n  2353 | /* M3 · O-159 and O-160, read from the source (no browser state). */"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                        "column": 104,
+                        "line": 2350
+                      },
+                      "message": "Error: seat steps over 0.5 px at the settle, or a rest flag that is not the layout's truth\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 50\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"at\": 110,\u001b[39m\n\u001b[31m+     \"pad\": 16.5,\u001b[39m\n\u001b[31m+     \"stageH\": 314,\u001b[39m\n\u001b[31m+     \"step\": 7.02,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"at\": 300,\u001b[39m\n\u001b[31m+     \"pad\": 16.5,\u001b[39m\n\u001b[31m+     \"stageH\": 314,\u001b[39m\n\u001b[31m+     \"step\": 7.02,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"at\": 110,\u001b[39m\n\u001b[31m+     \"pad\": 17,\u001b[39m\n\u001b[31m+     \"stageH\": 314,\u001b[39m\n\u001b[31m+     \"step\": 7.02,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"at\": 300,\u001b[39m\n\u001b[31m+     \"pad\": 17,\u001b[39m\n\u001b[31m+     \"stageH\": 314,\u001b[39m\n\u001b[31m+     \"step\": 7.02,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"at\": 110,\u001b[39m\n\u001b[31m+     \"pad\": 15,\u001b[39m\n\u001b[31m+     \"stageH\": 313,\u001b[39m\n\u001b[31m+     \"step\": 6.48,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"at\": 300,\u001b[39m\n\u001b[31m+     \"pad\": 15,\u001b[39m\n\u001b[31m+     \"stageH\": 313,\u001b[39m\n\u001b[31m+     \"step\": 6.48,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"at\": 110,\u001b[39m\n\u001b[31m+     \"pad\": 15,\u001b[39m\n\u001b[31m+     \"stageH\": 312,\u001b[39m\n\u001b[31m+     \"step\": 6.98,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"at\": 300,\u001b[39m\n\u001b[31m+     \"pad\": 15,\u001b[39m\n\u001b[31m+     \"stageH\": 312,\u001b[39m\n\u001b[31m+     \"step\": 6.98,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+ ]\u001b[39m\n\n  2348 |             if (end.fits === end.over) bad.push({ stageH, pad, at, flag: end.fits, overflows: end.over });\n  2349 |         }\n> 2350 |     expect(bad, \"seat steps over 0.5 px at the settle, or a rest flag that is not the layout's truth\").toEqual([]);\n       |                                                                                                        ^\n  2351 | });\n  2352 |\n  2353 | /* M3 · O-159 and O-160, read from the source (no browser state). */\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:2350:104"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T20:38:38.729Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/test-results/release-10-1-5-s4-a-host-p-92728-eat-at-the-settle-vertical--webkit/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                    "column": 104,
+                    "line": 2350
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-0e611fa043ab5e32309f",
+          "file": "release-10-1-5.spec.ts",
+          "line": 2313,
+          "column": 1
+        }
+      ],
+      "suites": [
+        {
+          "title": "fix 11, coarse phone",
+          "file": "release-10-1-5.spec.ts",
+          "line": 2289,
+          "column": 6,
+          "specs": [
+            {
+              "title": "s1 O-205 at 390: no collapsed dock has a scrolling run, and a hidden wider face adds nothing to a fitting run",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 5249,
+                      "error": {
+                        "message": "Error: mouse.wheel: Mouse wheel is not supported in mobile WebKit",
+                        "stack": "Error: mouse.wheel: Mouse wheel is not supported in mobile WebKit\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:2243:26",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                          "column": 26,
+                          "line": 2243
+                        },
+                        "snippet": "  2241 |         const box = (await page.locator(\".dock-layers > .dock-run.is-active\").boundingBox())!;\n  2242 |         await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);\n> 2243 |         await page.mouse.wheel(240, 0);\n       |                          ^\n  2244 |         await settle(page, 600);\n  2245 |         const wheeled = await runRead(page);\n  2246 |         if (wheeled.runs.find((r) => r.active)!.sl !== 0) bad.push({ cell: \"open, narrow face, after a wheel\", ...wheeled });"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                            "column": 26,
+                            "line": 2243
+                          },
+                          "message": "Error: mouse.wheel: Mouse wheel is not supported in mobile WebKit\n\n  2241 |         const box = (await page.locator(\".dock-layers > .dock-run.is-active\").boundingBox())!;\n  2242 |         await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);\n> 2243 |         await page.mouse.wheel(240, 0);\n       |                          ^\n  2244 |         await settle(page, 600);\n  2245 |         const wheeled = await runRead(page);\n  2246 |         if (wheeled.runs.find((r) => r.active)!.sl !== 0) bad.push({ cell: \"open, narrow face, after a wheel\", ...wheeled });\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:2243:26"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-10T20:38:15.558Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/test-results/release-10-1-5-fix-11-coar-cc038-ds-nothing-to-a-fitting-run-webkit/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                        "column": 26,
+                        "line": 2243
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "ba3de8f038291be5029b-e9c9f986baa33f812436",
+              "file": "release-10-1-5.spec.ts",
+              "line": 2217,
+              "column": 5
+            },
+            {
+              "title": "s2 O-201 at 390: across the fit edge the first and last seats keep their whole ring, and the flag is the layout",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 300000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 12736,
+                      "error": {
+                        "message": "Error: a fitting cap that cuts a focused seat's ring, or a flag that is not the layout\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -   1\u001b[39m\n\u001b[31m+ Received  + 142\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 273,\u001b[39m\n\u001b[31m+     \"cuts\": Array [\u001b[39m\n\u001b[31m+       \"dock-layer 0.81\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"focusVisible\": true,\u001b[39m\n\u001b[31m+     \"outline\": \"solid\",\u001b[39m\n\u001b[31m+     \"seat\": \"S1\",\u001b[39m\n\u001b[31m+     \"worst\": 0.81,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 273,\u001b[39m\n\u001b[31m+     \"cuts\": Array [\u001b[39m\n\u001b[31m+       \"dock-layer 0.81\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"focusVisible\": true,\u001b[39m\n\u001b[31m+     \"outline\": \"solid\",\u001b[39m\n\u001b[31m+     \"seat\": \"home\",\u001b[39m\n\u001b[31m+     \"worst\": 0.81,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 272,\u001b[39m\n\u001b[31m+     \"cuts\": Array [\u001b[39m\n\u001b[31m+       \"dock-layer 1.31\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"focusVisible\": true,\u001b[39m\n\u001b[31m+     \"outline\": \"solid\",\u001b[39m\n\u001b[31m+     \"seat\": \"S1\",\u001b[39m\n\u001b[31m+     \"worst\": 1.31,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 272,\u001b[39m\n\u001b[31m+     \"cuts\": Array [\u001b[39m\n\u001b[31m+       \"dock-layer 1.31\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"focusVisible\": true,\u001b[39m\n\u001b[31m+     \"outline\": \"solid\",\u001b[39m\n\u001b[31m+     \"seat\": \"home\",\u001b[39m\n\u001b[31m+     \"worst\": 1.31,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 271,\u001b[39m\n\u001b[31m+     \"cuts\": Array [\u001b[39m\n\u001b[31m+       \"dock-layer 1.81\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"focusVisible\": true,\u001b[39m\n\u001b[31m+     \"outline\": \"solid\",\u001b[39m\n\u001b[31m+     \"seat\": \"S1\",\u001b[39m\n\u001b[31m+     \"worst\": 1.81,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 271,\u001b[39m\n\u001b[31m+     \"cuts\": Array [\u001b[39m\n\u001b[31m+       \"dock-layer 1.81\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"focusVisible\": true,\u001b[39m\n\u001b[31m+     \"outline\": \"solid\",\u001b[39m\n\u001b[31m+     \"seat\": \"home\",\u001b[39m\n\u001b[31m+     \"worst\": 1.81,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 270,\u001b[39m\n\u001b[31m+     \"cuts\": Array [\u001b[39m\n\u001b[31m+       \"dock-layer 2.31\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"focusVisible\": true,\u001b[39m\n\u001b[31m+     \"outline\": \"solid\",\u001b[39m\n\u001b[31m+     \"seat\": \"S1\",\u001b[39m\n\u001b[31m+     \"worst\": 2.31,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 270,\u001b[39m\n\u001b[31m+     \"cuts\": Array [\u001b[39m\n\u001b[31m+       \"dock-layer 2.31\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"focusVisible\": true,\u001b[39m\n\u001b[31m+     \"outline\": \"solid\",\u001b[39m\n\u001b[31m+     \"seat\": \"home\",\u001b[39m\n\u001b[31m+     \"worst\": 2.31,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 269,\u001b[39m\n\u001b[31m+     \"cuts\": Array [\u001b[39m\n\u001b[31m+       \"dock-layer 2.81\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"focusVisible\": true,\u001b[39m\n\u001b[31m+     \"outline\": \"solid\",\u001b[39m\n\u001b[31m+     \"seat\": \"S1\",\u001b[39m\n\u001b[31m+     \"worst\": 2.81,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 269,\u001b[39m\n\u001b[31m+     \"cuts\": Array [\u001b[39m\n\u001b[31m+       \"dock-layer 2.81\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"focusVisible\": true,\u001b[39m\n\u001b[31m+     \"outline\": \"solid\",\u001b[39m\n\u001b[31m+     \"seat\": \"home\",\u001b[39m\n\u001b[31m+     \"worst\": 2.81,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 268,\u001b[39m\n\u001b[31m+     \"cuts\": Array [\u001b[39m\n\u001b[31m+       \"dock-layer 3.31\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"focusVisible\": true,\u001b[39m\n\u001b[31m+     \"outline\": \"solid\",\u001b[39m\n\u001b[31m+     \"seat\": \"S1\",\u001b[39m\n\u001b[31m+     \"worst\": 3.31,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 268,\u001b[39m\n\u001b[31m+     \"cuts\": Array [\u001b[39m\n\u001b[31m+       \"dock-layer 3.31\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"focusVisible\": true,\u001b[39m\n\u001b[31m+     \"outline\": \"solid\",\u001b[39m\n\u001b[31m+     \"seat\": \"home\",\u001b[39m\n\u001b[31m+     \"worst\": 3.31,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 267,\u001b[39m\n\u001b[31m+     \"cuts\": Array [\u001b[39m\n\u001b[31m+       \"dock-layer 3.81\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"focusVisible\": true,\u001b[39m\n\u001b[31m+     \"outline\": \"solid\",\u001b[39m\n\u001b[31m+     \"seat\": \"S1\",\u001b[39m\n\u001b[31m+     \"worst\": 3.81,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 267,\u001b[39m\n\u001b[31m+     \"cuts\": Array [\u001b[39m\n\u001b[31m+       \"dock-layer 3.81\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"focusVisible\": true,\u001b[39m\n\u001b[31m+     \"outline\": \"solid\",\u001b[39m\n\u001b[31m+     \"seat\": \"home\",\u001b[39m\n\u001b[31m+     \"worst\": 3.81,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+ ]\u001b[39m",
+                        "stack": "Error: a fitting cap that cuts a focused seat's ring, or a flag that is not the layout\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -   1\u001b[39m\n\u001b[31m+ Received  + 142\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 273,\u001b[39m\n\u001b[31m+     \"cuts\": Array [\u001b[39m\n\u001b[31m+       \"dock-layer 0.81\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"focusVisible\": true,\u001b[39m\n\u001b[31m+     \"outline\": \"solid\",\u001b[39m\n\u001b[31m+     \"seat\": \"S1\",\u001b[39m\n\u001b[31m+     \"worst\": 0.81,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 273,\u001b[39m\n\u001b[31m+     \"cuts\": Array [\u001b[39m\n\u001b[31m+       \"dock-layer 0.81\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"focusVisible\": true,\u001b[39m\n\u001b[31m+     \"outline\": \"solid\",\u001b[39m\n\u001b[31m+     \"seat\": \"home\",\u001b[39m\n\u001b[31m+     \"worst\": 0.81,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 272,\u001b[39m\n\u001b[31m+     \"cuts\": Array [\u001b[39m\n\u001b[31m+       \"dock-layer 1.31\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"focusVisible\": true,\u001b[39m\n\u001b[31m+     \"outline\": \"solid\",\u001b[39m\n\u001b[31m+     \"seat\": \"S1\",\u001b[39m\n\u001b[31m+     \"worst\": 1.31,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 272,\u001b[39m\n\u001b[31m+     \"cuts\": Array [\u001b[39m\n\u001b[31m+       \"dock-layer 1.31\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"focusVisible\": true,\u001b[39m\n\u001b[31m+     \"outline\": \"solid\",\u001b[39m\n\u001b[31m+     \"seat\": \"home\",\u001b[39m\n\u001b[31m+     \"worst\": 1.31,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 271,\u001b[39m\n\u001b[31m+     \"cuts\": Array [\u001b[39m\n\u001b[31m+       \"dock-layer 1.81\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"focusVisible\": true,\u001b[39m\n\u001b[31m+     \"outline\": \"solid\",\u001b[39m\n\u001b[31m+     \"seat\": \"S1\",\u001b[39m\n\u001b[31m+     \"worst\": 1.81,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 271,\u001b[39m\n\u001b[31m+     \"cuts\": Array [\u001b[39m\n\u001b[31m+       \"dock-layer 1.81\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"focusVisible\": true,\u001b[39m\n\u001b[31m+     \"outline\": \"solid\",\u001b[39m\n\u001b[31m+     \"seat\": \"home\",\u001b[39m\n\u001b[31m+     \"worst\": 1.81,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 270,\u001b[39m\n\u001b[31m+     \"cuts\": Array [\u001b[39m\n\u001b[31m+       \"dock-layer 2.31\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"focusVisible\": true,\u001b[39m\n\u001b[31m+     \"outline\": \"solid\",\u001b[39m\n\u001b[31m+     \"seat\": \"S1\",\u001b[39m\n\u001b[31m+     \"worst\": 2.31,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 270,\u001b[39m\n\u001b[31m+     \"cuts\": Array [\u001b[39m\n\u001b[31m+       \"dock-layer 2.31\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"focusVisible\": true,\u001b[39m\n\u001b[31m+     \"outline\": \"solid\",\u001b[39m\n\u001b[31m+     \"seat\": \"home\",\u001b[39m\n\u001b[31m+     \"worst\": 2.31,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 269,\u001b[39m\n\u001b[31m+     \"cuts\": Array [\u001b[39m\n\u001b[31m+       \"dock-layer 2.81\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"focusVisible\": true,\u001b[39m\n\u001b[31m+     \"outline\": \"solid\",\u001b[39m\n\u001b[31m+     \"seat\": \"S1\",\u001b[39m\n\u001b[31m+     \"worst\": 2.81,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 269,\u001b[39m\n\u001b[31m+     \"cuts\": Array [\u001b[39m\n\u001b[31m+       \"dock-layer 2.81\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"focusVisible\": true,\u001b[39m\n\u001b[31m+     \"outline\": \"solid\",\u001b[39m\n\u001b[31m+     \"seat\": \"home\",\u001b[39m\n\u001b[31m+     \"worst\": 2.81,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 268,\u001b[39m\n\u001b[31m+     \"cuts\": Array [\u001b[39m\n\u001b[31m+       \"dock-layer 3.31\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"focusVisible\": true,\u001b[39m\n\u001b[31m+     \"outline\": \"solid\",\u001b[39m\n\u001b[31m+     \"seat\": \"S1\",\u001b[39m\n\u001b[31m+     \"worst\": 3.31,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 268,\u001b[39m\n\u001b[31m+     \"cuts\": Array [\u001b[39m\n\u001b[31m+       \"dock-layer 3.31\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"focusVisible\": true,\u001b[39m\n\u001b[31m+     \"outline\": \"solid\",\u001b[39m\n\u001b[31m+     \"seat\": \"home\",\u001b[39m\n\u001b[31m+     \"worst\": 3.31,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 267,\u001b[39m\n\u001b[31m+     \"cuts\": Array [\u001b[39m\n\u001b[31m+       \"dock-layer 3.81\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"focusVisible\": true,\u001b[39m\n\u001b[31m+     \"outline\": \"solid\",\u001b[39m\n\u001b[31m+     \"seat\": \"S1\",\u001b[39m\n\u001b[31m+     \"worst\": 3.81,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 267,\u001b[39m\n\u001b[31m+     \"cuts\": Array [\u001b[39m\n\u001b[31m+       \"dock-layer 3.81\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"focusVisible\": true,\u001b[39m\n\u001b[31m+     \"outline\": \"solid\",\u001b[39m\n\u001b[31m+     \"seat\": \"home\",\u001b[39m\n\u001b[31m+     \"worst\": 3.81,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+ ]\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:2282:104",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                          "column": 104,
+                          "line": 2282
+                        },
+                        "snippet": "  2280 |         }\n  2281 |         expect(Number.isFinite(edge), `the fit edge is found under ${natural}`).toBe(true);\n> 2282 |         expect(bad, \"a fitting cap that cuts a focused seat's ring, or a flag that is not the layout\").toEqual([]);\n       |                                                                                                        ^\n  2283 |     });\n  2284 | }\n  2285 |"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                            "column": 104,
+                            "line": 2282
+                          },
+                          "message": "Error: a fitting cap that cuts a focused seat's ring, or a flag that is not the layout\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -   1\u001b[39m\n\u001b[31m+ Received  + 142\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 273,\u001b[39m\n\u001b[31m+     \"cuts\": Array [\u001b[39m\n\u001b[31m+       \"dock-layer 0.81\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"focusVisible\": true,\u001b[39m\n\u001b[31m+     \"outline\": \"solid\",\u001b[39m\n\u001b[31m+     \"seat\": \"S1\",\u001b[39m\n\u001b[31m+     \"worst\": 0.81,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 273,\u001b[39m\n\u001b[31m+     \"cuts\": Array [\u001b[39m\n\u001b[31m+       \"dock-layer 0.81\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"focusVisible\": true,\u001b[39m\n\u001b[31m+     \"outline\": \"solid\",\u001b[39m\n\u001b[31m+     \"seat\": \"home\",\u001b[39m\n\u001b[31m+     \"worst\": 0.81,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 272,\u001b[39m\n\u001b[31m+     \"cuts\": Array [\u001b[39m\n\u001b[31m+       \"dock-layer 1.31\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"focusVisible\": true,\u001b[39m\n\u001b[31m+     \"outline\": \"solid\",\u001b[39m\n\u001b[31m+     \"seat\": \"S1\",\u001b[39m\n\u001b[31m+     \"worst\": 1.31,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 272,\u001b[39m\n\u001b[31m+     \"cuts\": Array [\u001b[39m\n\u001b[31m+       \"dock-layer 1.31\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"focusVisible\": true,\u001b[39m\n\u001b[31m+     \"outline\": \"solid\",\u001b[39m\n\u001b[31m+     \"seat\": \"home\",\u001b[39m\n\u001b[31m+     \"worst\": 1.31,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 271,\u001b[39m\n\u001b[31m+     \"cuts\": Array [\u001b[39m\n\u001b[31m+       \"dock-layer 1.81\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"focusVisible\": true,\u001b[39m\n\u001b[31m+     \"outline\": \"solid\",\u001b[39m\n\u001b[31m+     \"seat\": \"S1\",\u001b[39m\n\u001b[31m+     \"worst\": 1.81,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 271,\u001b[39m\n\u001b[31m+     \"cuts\": Array [\u001b[39m\n\u001b[31m+       \"dock-layer 1.81\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"focusVisible\": true,\u001b[39m\n\u001b[31m+     \"outline\": \"solid\",\u001b[39m\n\u001b[31m+     \"seat\": \"home\",\u001b[39m\n\u001b[31m+     \"worst\": 1.81,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 270,\u001b[39m\n\u001b[31m+     \"cuts\": Array [\u001b[39m\n\u001b[31m+       \"dock-layer 2.31\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"focusVisible\": true,\u001b[39m\n\u001b[31m+     \"outline\": \"solid\",\u001b[39m\n\u001b[31m+     \"seat\": \"S1\",\u001b[39m\n\u001b[31m+     \"worst\": 2.31,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 270,\u001b[39m\n\u001b[31m+     \"cuts\": Array [\u001b[39m\n\u001b[31m+       \"dock-layer 2.31\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"focusVisible\": true,\u001b[39m\n\u001b[31m+     \"outline\": \"solid\",\u001b[39m\n\u001b[31m+     \"seat\": \"home\",\u001b[39m\n\u001b[31m+     \"worst\": 2.31,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 269,\u001b[39m\n\u001b[31m+     \"cuts\": Array [\u001b[39m\n\u001b[31m+       \"dock-layer 2.81\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"focusVisible\": true,\u001b[39m\n\u001b[31m+     \"outline\": \"solid\",\u001b[39m\n\u001b[31m+     \"seat\": \"S1\",\u001b[39m\n\u001b[31m+     \"worst\": 2.81,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 269,\u001b[39m\n\u001b[31m+     \"cuts\": Array [\u001b[39m\n\u001b[31m+       \"dock-layer 2.81\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"focusVisible\": true,\u001b[39m\n\u001b[31m+     \"outline\": \"solid\",\u001b[39m\n\u001b[31m+     \"seat\": \"home\",\u001b[39m\n\u001b[31m+     \"worst\": 2.81,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 268,\u001b[39m\n\u001b[31m+     \"cuts\": Array [\u001b[39m\n\u001b[31m+       \"dock-layer 3.31\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"focusVisible\": true,\u001b[39m\n\u001b[31m+     \"outline\": \"solid\",\u001b[39m\n\u001b[31m+     \"seat\": \"S1\",\u001b[39m\n\u001b[31m+     \"worst\": 3.31,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 268,\u001b[39m\n\u001b[31m+     \"cuts\": Array [\u001b[39m\n\u001b[31m+       \"dock-layer 3.31\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"focusVisible\": true,\u001b[39m\n\u001b[31m+     \"outline\": \"solid\",\u001b[39m\n\u001b[31m+     \"seat\": \"home\",\u001b[39m\n\u001b[31m+     \"worst\": 3.31,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 267,\u001b[39m\n\u001b[31m+     \"cuts\": Array [\u001b[39m\n\u001b[31m+       \"dock-layer 3.81\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"focusVisible\": true,\u001b[39m\n\u001b[31m+     \"outline\": \"solid\",\u001b[39m\n\u001b[31m+     \"seat\": \"S1\",\u001b[39m\n\u001b[31m+     \"worst\": 3.81,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 267,\u001b[39m\n\u001b[31m+     \"cuts\": Array [\u001b[39m\n\u001b[31m+       \"dock-layer 3.81\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"focusVisible\": true,\u001b[39m\n\u001b[31m+     \"outline\": \"solid\",\u001b[39m\n\u001b[31m+     \"seat\": \"home\",\u001b[39m\n\u001b[31m+     \"worst\": 3.81,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+ ]\u001b[39m\n\n  2280 |         }\n  2281 |         expect(Number.isFinite(edge), `the fit edge is found under ${natural}`).toBe(true);\n> 2282 |         expect(bad, \"a fitting cap that cuts a focused seat's ring, or a flag that is not the layout\").toEqual([]);\n       |                                                                                                        ^\n  2283 |     });\n  2284 | }\n  2285 |\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:2282:104"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-10T20:38:21.338Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/test-results/release-10-1-5-fix-11-coar-26e2f--and-the-flag-is-the-layout-webkit/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                        "column": 104,
+                        "line": 2282
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "ba3de8f038291be5029b-7fd138609742c884ee13",
+              "file": "release-10-1-5.spec.ts",
+              "line": 2253,
+              "column": 5
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-10T20:37:49.906Z",
+    "duration": 79690.837,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 6,
+    "flaky": 0
+  }
+}

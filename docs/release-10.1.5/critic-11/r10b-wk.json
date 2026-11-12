@@ -1,0 +1,594 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "tests-visual/release-10-1-5-critic-11.config.ts",
+      "--project=webkit",
+      "release-10-1-5-critic-11-r10b.spec.ts",
+      "--workers=1"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5-critic-11.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-headless-new",
+        "name": "chromium-headless-new",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "coarse-touch",
+        "name": "coarse-touch",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-10-1-5-critic-11.spec.ts",
+          "release-10-1-5-critic-11-r10.spec.ts",
+          "release-10-1-5-critic-11-r10b.spec.ts",
+          "release-10-1-5-critic-11-r10c.spec.ts",
+          "release-10-1-5.spec.ts",
+          "release-10-1-4.spec.ts",
+          "release-10-1-3.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/docs/release-10.1.5/critic-11/r10b-wk.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5324",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/",
+      "url": "http://localhost:5324",
+      "reuseExistingServer": true,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "release-10-1-5-critic-11-r10b.spec.ts",
+      "file": "release-10-1-5-critic-11-r10b.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "c9 fine",
+          "file": "release-10-1-5-critic-11-r10b.spec.ts",
+          "line": 129,
+          "column": 10,
+          "specs": [
+            {
+              "title": "c9a vertical fit band fine",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 400000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 81480,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-10T18:40:23.985Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b11e9517bc43dee175a6-a8e2e897f04d8f5db886",
+              "file": "release-10-1-5-critic-11-r10b.spec.ts",
+              "line": 136,
+              "column": 9
+            },
+            {
+              "title": "c9b stale held reading fine",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 400000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 36086,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-10T18:41:46.520Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b11e9517bc43dee175a6-35547ff7711930310f3e",
+              "file": "release-10-1-5-critic-11-r10b.spec.ts",
+              "line": 157,
+              "column": 9
+            },
+            {
+              "title": "c9c fit edge crossed mid-morph and at rest fine",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 300000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 18377,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-10T18:42:22.632Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b11e9517bc43dee175a6-a0bf95c2630420c919b5",
+              "file": "release-10-1-5-critic-11-r10b.spec.ts",
+              "line": 203,
+              "column": 9
+            },
+            {
+              "title": "c9d horizontal morph edges fine",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 300000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 15601,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-10T18:42:41.030Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b11e9517bc43dee175a6-9de7894febd14ad70c73",
+              "file": "release-10-1-5-critic-11-r10b.spec.ts",
+              "line": 232,
+              "column": 9
+            }
+          ]
+        },
+        {
+          "title": "c9 coarse",
+          "file": "release-10-1-5-critic-11-r10b.spec.ts",
+          "line": 129,
+          "column": 10,
+          "specs": [
+            {
+              "title": "c9a vertical fit band coarse",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 400000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 80679,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-10T18:42:56.650Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b11e9517bc43dee175a6-4739c724728080e5e66b",
+              "file": "release-10-1-5-critic-11-r10b.spec.ts",
+              "line": 136,
+              "column": 9
+            },
+            {
+              "title": "c9b stale held reading coarse",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 400000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 36052,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-10T18:44:17.341Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b11e9517bc43dee175a6-eb8c00bf234c34061813",
+              "file": "release-10-1-5-critic-11-r10b.spec.ts",
+              "line": 157,
+              "column": 9
+            },
+            {
+              "title": "c9c fit edge crossed mid-morph and at rest coarse",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 300000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 18784,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-10T18:44:53.411Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b11e9517bc43dee175a6-5f619b606f090881dcde",
+              "file": "release-10-1-5-critic-11-r10b.spec.ts",
+              "line": 203,
+              "column": 9
+            },
+            {
+              "title": "c9d horizontal morph edges coarse",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 300000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 15782,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-10T18:45:12.225Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b11e9517bc43dee175a6-517f1ab1baa2ebc6e998",
+              "file": "release-10-1-5-critic-11-r10b.spec.ts",
+              "line": 232,
+              "column": 9
+            }
+          ]
+        },
+        {
+          "title": "c9e fine",
+          "file": "release-10-1-5-critic-11-r10b.spec.ts",
+          "line": 252,
+          "column": 10,
+          "specs": [
+            {
+              "title": "c9e host resize mid-expand fine",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 300000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 18157,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-10T18:45:28.158Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b11e9517bc43dee175a6-541007b8f49638615b6f",
+              "file": "release-10-1-5-critic-11-r10b.spec.ts",
+              "line": 254,
+              "column": 9
+            }
+          ]
+        },
+        {
+          "title": "c9e coarse",
+          "file": "release-10-1-5-critic-11-r10b.spec.ts",
+          "line": 252,
+          "column": 10,
+          "specs": [
+            {
+              "title": "c9e host resize mid-expand coarse",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 300000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 18051,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-10T18:45:46.328Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b11e9517bc43dee175a6-eb2eaa24452eb4086536",
+              "file": "release-10-1-5-critic-11-r10b.spec.ts",
+              "line": 254,
+              "column": 9
+            }
+          ]
+        },
+        {
+          "title": "c9f fine",
+          "file": "release-10-1-5-critic-11-r10b.spec.ts",
+          "line": 286,
+          "column": 10,
+          "specs": [
+            {
+              "title": "c9f layered first expand fine",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 400000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 41463,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-10T18:46:04.391Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b11e9517bc43dee175a6-a89c665e30bb2ecc2e96",
+              "file": "release-10-1-5-critic-11-r10b.spec.ts",
+              "line": 288,
+              "column": 9
+            }
+          ]
+        },
+        {
+          "title": "c9f coarse",
+          "file": "release-10-1-5-critic-11-r10b.spec.ts",
+          "line": 286,
+          "column": 10,
+          "specs": [
+            {
+              "title": "c9f layered first expand coarse",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 400000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 41582,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-10T18:46:45.873Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b11e9517bc43dee175a6-4a721d690acd8213aa50",
+              "file": "release-10-1-5-critic-11-r10b.spec.ts",
+              "line": 288,
+              "column": 9
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-10T18:40:17.553Z",
+    "duration": 430021.448,
+    "expected": 12,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

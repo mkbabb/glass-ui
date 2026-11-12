@@ -42,9 +42,19 @@
         touch-action: manipulation;
     }
 
+    /* The house keyboard ring, on `outline`. The 30% `--focus-ring-shadow`
+       measured about 2:1, and its `outline: none` also took the ring off a trigger that
+       carries `.focus-ring` (a CollapsibleTrigger `as-child` over a Button). The recipe
+       restates `.focus-ring:focus-visible` (`utilities/base.css`), as `.menu__trigger`
+       does, so the trigger keeps one ring whatever it composes. */
     .disclosure-trigger:focus-visible {
-        outline: none;
-        box-shadow: var(--focus-ring-shadow);
+        outline: var(--focus-ring-width) solid
+            color-mix(
+                in oklab,
+                var(--foreground) calc(var(--ink-perimeter) * 100%),
+                transparent
+            );
+        outline-offset: 2px;
     }
 
     .disclosure-trigger:is(:disabled, [data-disabled]) {
@@ -134,9 +144,7 @@
         }
 
         .disclosure-trigger:focus-visible {
-            outline: 2px solid Highlight;
-            outline-offset: 2px;
-            box-shadow: none;
+            outline-color: Highlight;
         }
     }
 }

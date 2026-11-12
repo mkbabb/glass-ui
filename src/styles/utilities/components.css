@@ -57,7 +57,9 @@
            `controlSizeClass("sm")` rung re-points it to `--control-text-sm` (quieter);
            `default`/`lg` keep `--control-text`. So the search field type tracks the
            cohort under `--ui-scale`, NOT a static `--type-small` literal. */
-        font-size: var(--control-pill-text, var(--control-text));
+        /* The field floor (tokens/sizing.css `--field-text-floor`): 16px under a coarse
+           pointer, the iOS no-zoom line, whatever rung the seam names. */
+        font-size: max(var(--control-pill-text, var(--control-text)), var(--field-text-floor));
         background: transparent;
         border: none;
         outline: none;

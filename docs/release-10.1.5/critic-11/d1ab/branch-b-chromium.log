@@ -1,0 +1,36 @@
+
+Running 8 tests using 1 worker
+
+  ✘  1 [chromium-headless-new] › tests-visual/release-10-1-3.spec.ts:933:9 › 10.1.3 · 390 · bottom-anchored · ancestor zoom 1.25 › D-1 (critique-7) · the summary glyph holds its box through the expand and the collapse (3.0s)
+  ✓  2 [chromium-headless-new] › tests-visual/release-10-1-3.spec.ts:933:9 › 10.1.3 · 390 · bottom-anchored · ancestor zoom 1.25 › D-1 (critique-7) · the summary glyph holds its box through the expand and the collapse (4.1s)
+  ✓  3 [chromium-headless-new] › tests-visual/release-10-1-3.spec.ts:933:9 › 10.1.3 · 390 · bottom-anchored · ancestor zoom 1.25 › D-1 (critique-7) · the summary glyph holds its box through the expand and the collapse (4.0s)
+  ✓  4 [chromium-headless-new] › tests-visual/release-10-1-3.spec.ts:933:9 › 10.1.3 · 390 · bottom-anchored · ancestor zoom 1.25 › D-1 (critique-7) · the summary glyph holds its box through the expand and the collapse (3.9s)
+  ✓  5 [chromium-headless-new] › tests-visual/release-10-1-3.spec.ts:933:9 › 10.1.3 · 390 · bottom-anchored · ancestor zoom 1.25 › D-1 (critique-7) · the summary glyph holds its box through the expand and the collapse (4.0s)
+  ✓  6 [chromium-headless-new] › tests-visual/release-10-1-3.spec.ts:933:9 › 10.1.3 · 390 · bottom-anchored · ancestor zoom 1.25 › D-1 (critique-7) · the summary glyph holds its box through the expand and the collapse (4.0s)
+  ✓  7 [chromium-headless-new] › tests-visual/release-10-1-3.spec.ts:933:9 › 10.1.3 · 390 · bottom-anchored · ancestor zoom 1.25 › D-1 (critique-7) · the summary glyph holds its box through the expand and the collapse (4.0s)
+  ✓  8 [chromium-headless-new] › tests-visual/release-10-1-3.spec.ts:933:9 › 10.1.3 · 390 · bottom-anchored · ancestor zoom 1.25 › D-1 (critique-7) · the summary glyph holds its box through the expand and the collapse (4.0s)
+
+
+  1) [chromium-headless-new] › tests-visual/release-10-1-3.spec.ts:933:9 › 10.1.3 · 390 · bottom-anchored · ancestor zoom 1.25 › D-1 (critique-7) · the summary glyph holds its box through the expand and the collapse 
+
+    Error: the leaving summary's largest visible frame step
+
+    expect(received).toBeLessThan(expected)
+
+    Expected: < 2
+    Received:   3.82598876953125
+
+      987 |                 "the leaving summary paints its rest on the first morph frame",
+      988 |             ).toBeLessThan(1);
+    > 989 |             expect(jump(expand), "the leaving summary's largest visible frame step").toBeLessThan(2);
+          |                                                                                      ^
+      990 |
+      991 |             // The collapse: the public `collapse()`, with the pointer off the dock.
+      992 |             await glyph();
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-3.spec.ts:989:86
+
+    Error Context: tests-visual/test-results/release-10-1-3-10-1-3-·-39-f860e-the-expand-and-the-collapse-chromium-headless-new/error-context.md
+
+  1 failed
+    [chromium-headless-new] › tests-visual/release-10-1-3.spec.ts:933:9 › 10.1.3 · 390 · bottom-anchored · ancestor zoom 1.25 › D-1 (critique-7) · the summary glyph holds its box through the expand and the collapse 
+  7 passed (41.1s)

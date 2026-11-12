@@ -1,0 +1,68 @@
+
+Running 6 tests using 1 worker
+
+  ✓  1 [webkit] › tests-visual/release-10-1-5.spec.ts:2217:5 › s1 O-205 at 1440: no collapsed dock has a scrolling run, and a hidden wider face adds nothing to a fitting run (6.4s)
+  ✓  2 [webkit] › tests-visual/release-10-1-5.spec.ts:2253:5 › s2 O-201 at 1440: across the fit edge the first and last seats keep their whole ring, and the flag is the layout (8.0s)
+  ✘  3 [webkit] › tests-visual/release-10-1-5.spec.ts:2217:5 › fix 11, coarse phone › s1 O-205 at 390: no collapsed dock has a scrolling run, and a hidden wider face adds nothing to a fitting run (5.2s)
+  ✓  4 [webkit] › tests-visual/release-10-1-5.spec.ts:2253:5 › fix 11, coarse phone › s2 O-201 at 390: across the fit edge the first and last seats keep their whole ring, and the flag is the layout (7.2s)
+  ✓  5 [webkit] › tests-visual/release-10-1-5.spec.ts:2295:1 › s3 O-207 G3 a disclosure trigger's keyboard ring is the house outline, whatever it composes (3.5s)
+  ✘  6 [webkit] › tests-visual/release-10-1-5.spec.ts:2313:1 › s4 a host padding change across the fit edge mid-expand holds every seat at the settle (vertical) (29.6s)
+
+
+  1) [webkit] › tests-visual/release-10-1-5.spec.ts:2217:5 › fix 11, coarse phone › s1 O-205 at 390: no collapsed dock has a scrolling run, and a hidden wider face adds nothing to a fitting run 
+
+    Error: mouse.wheel: Mouse wheel is not supported in mobile WebKit
+
+      2241 |         const box = (await page.locator(".dock-layers > .dock-run.is-active").boundingBox())!;
+      2242 |         await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
+    > 2243 |         await page.mouse.wheel(240, 0);
+           |                          ^
+      2244 |         await settle(page, 600);
+      2245 |         const wheeled = await runRead(page);
+      2246 |         if (wheeled.runs.find((r) => r.active)!.sl !== 0) bad.push({ cell: "open, narrow face, after a wheel", ...wheeled });
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:2243:26
+
+    Error Context: tests-visual/test-results/release-10-1-5-fix-11-coar-cc038-ds-nothing-to-a-fitting-run-webkit/error-context.md
+
+  2) [webkit] › tests-visual/release-10-1-5.spec.ts:2313:1 › s4 a host padding change across the fit edge mid-expand holds every seat at the settle (vertical) 
+
+    Error: seat steps over 0.5 px at the settle, or a rest flag that is not the layout's truth
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 16
+
+    - Array []
+    + Array [
+    +   Object {
+    +     "at": 110,
+    +     "flag": false,
+    +     "overflows": false,
+    +     "pad": 16.5,
+    +     "stageH": 322,
+    +   },
+    +   Object {
+    +     "at": 300,
+    +     "flag": false,
+    +     "overflows": false,
+    +     "pad": 16.5,
+    +     "stageH": 322,
+    +   },
+    + ]
+
+      2348 |             if (end.fits === end.over) bad.push({ stageH, pad, at, flag: end.fits, overflows: end.over });
+      2349 |         }
+    > 2350 |     expect(bad, "seat steps over 0.5 px at the settle, or a rest flag that is not the layout's truth").toEqual([]);
+           |                                                                                                        ^
+      2351 | });
+      2352 |
+      2353 | /* M3 · O-159 and O-160, read from the source (no browser state). */
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:2350:104
+
+    Error Context: tests-visual/test-results/release-10-1-5-s4-a-host-p-92728-eat-at-the-settle-vertical--webkit/error-context.md
+
+  2 failed
+    [webkit] › tests-visual/release-10-1-5.spec.ts:2217:5 › fix 11, coarse phone › s1 O-205 at 390: no collapsed dock has a scrolling run, and a hidden wider face adds nothing to a fitting run 
+    [webkit] › tests-visual/release-10-1-5.spec.ts:2313:1 › s4 a host padding change across the fit edge mid-expand holds every seat at the settle (vertical) 
+  4 passed (1.1m)

@@ -1,0 +1,24 @@
+<!doctype html>
+<!--
+    glass repro (a quick press misses under reduced motion), no daraksha CSS:
+    a collapsed GlassDock shaped like the site's Motion dock (persistent and
+    persistent-end seats, a two-layer DockLayerGroup with the controls layer
+    active). `npm run dev`, open /test/glass-repro/dock-press-scroll.html with
+    prefers-reduced-motion: reduce, open the dock, and click Again quickly.
+    The layer's scroller (.dock-layer--full, overflow auto) rests scrolled;
+    the press zeroes scrollLeft in the same task, the seat moves out from under
+    the pointer, and the click lands on .dock-face-content. #readout counts
+    the presses Again received and reads the scroller.
+-->
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>glass repro: a press under reduced motion</title>
+    </head>
+    <body>
+        <div id="repro"></div>
+        <pre id="readout"></pre>
+        <script type="module" src="./dock-press-scroll.ts"></script>
+    </body>
+</html>
