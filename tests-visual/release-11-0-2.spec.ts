@@ -12,6 +12,9 @@
 //          plate edge computes 11.0.0's colour at t = 0, 0.5 and 1
 //   static every control inside a `backdrop-mode="static"` dock, and everything it
 //          draws, computes no backdrop-filter at rest, hover, press and active
+//   blob   from 100 ms after a sweep and release over the hero blob the body stays a
+//          bead: in every sampled frame its centre is painted and the canvas box's four
+//          corners show the page ground
 //   slider a scrubber Slider at its minimum still draws its value: the fill is at least
 //          the thumb wide and the thumb is painted, so the well's leading end differs
 //          from its empty trailing end
@@ -286,4 +289,61 @@ test("static · a live dock's active control keeps its capsule lens", async ({ p
     await page.locator("body[data-ready='1'] .static-dock").waitFor();
     await page.waitForTimeout(600);
     expect(await filtered(page, "Home")).toHaveLength(1);
+});
+
+test("blob · from 100 ms after a sweep and release the body stays a bead, not a filled box", async ({ page }, info) => {
+    test.skip(info.project.name !== "chromium-headless-new", "one Chromium cell, as the row asks");
+    await page.setViewportSize({ width: 800, height: 700 });
+    await page.goto("/tests-visual/release-11-0-2/blob-harness.html");
+    await page.locator("body[data-ready='1'] .goo-blob-hit").waitFor();
+    await page.waitForTimeout(1500);
+    const box = (await page.locator(".goo-blob-canvas").boundingBox())!;
+    const cx = box.x + box.width / 2;
+    const cy = box.y + box.height / 2;
+    // A sweep across the canvas box, as fast as the pointer moves, then a press and
+    // release on the body.
+    await page.mouse.move(cx - box.width, cy);
+    await page.waitForTimeout(800);
+    for (let i = 0; i <= 12; i++) {
+        await page.mouse.move(cx - box.width * 0.7 + i * box.width * 0.12, cy + Math.sin(i / 2) * box.height * 0.15);
+    }
+    await page.mouse.move(cx, cy);
+    await page.mouse.down();
+    await page.mouse.up();
+    await page.waitForTimeout(100);
+    // Painted share of the centre square and of each corner square (a fifth of the
+    // side) against the page ground, in frames from 100 ms to about 500 ms.
+    const frames = [];
+    for (let i = 0; i < 8; i++) {
+        const png = await page.screenshot({ clip: box });
+        frames.push(
+            await page.evaluate(async (b64) => {
+                const bmp = await createImageBitmap(await (await fetch(`data:image/png;base64,${b64}`)).blob());
+                const c = new OffscreenCanvas(bmp.width, bmp.height);
+                const g = c.getContext("2d")!;
+                g.drawImage(bmp, 0, 0);
+                const d = g.getImageData(0, 0, bmp.width, bmp.height).data;
+                const ground = [d[0]!, d[1]!, d[2]!];
+                const k = Math.round(bmp.width / 5);
+                const share = (x0: number, y0: number) => {
+                    let n = 0;
+                    for (let y = y0; y < y0 + k; y++)
+                        for (let x = x0; x < x0 + k; x++) {
+                            const i = (y * bmp.width + x) * 4;
+                            if (Math.abs(d[i]! - ground[0]) + Math.abs(d[i + 1]! - ground[1]) + Math.abs(d[i + 2]! - ground[2]) > 45) n++;
+                        }
+                    return +(n / (k * k)).toFixed(3);
+                };
+                const mid = Math.round(bmp.width / 2 - k / 2);
+                const far = bmp.width - k - 1;
+                return { centre: share(mid, mid), corners: [share(1, 1), share(far, 1), share(1, far), share(far, far)] };
+            }, png.toString("base64")),
+        );
+        await page.waitForTimeout(30);
+    }
+    info.annotations.push({ type: "blob", description: JSON.stringify(frames) });
+    for (const f of frames) {
+        expect(f.centre).toBeGreaterThan(0.5);
+        for (const c of f.corners) expect(c).toBeLessThan(0.05);
+    }
 });

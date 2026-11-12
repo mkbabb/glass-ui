@@ -53,6 +53,12 @@ A patch on 11.0.1. Nothing is removed or renamed.
   own blur, which read as a lit disc in dark. The controls of a static dock now carry no
   `backdrop-filter` at rest, on hover, on press or when active. A live dock is unchanged.
 
+- **The Blob stays a bead after a fast sweep.** A sweep, a drag or a release over a
+  `Blob` could flash a flat square that filled its canvas for a moment, because the
+  bounce fired again on every frame the pointer slowed and the kicks piled up. The
+  bounce now fires once each time the pointer slows, and the body's swell is held
+  inside its box. A still click looks as it did.
+
 ## 11.0.1 — 2026-11-12
 
 A patch that brings the 10.1.5 fixes forward onto 11.0. If you saw the dock's hover
