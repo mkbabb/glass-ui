@@ -174,13 +174,14 @@ test.describe("motion2 (π lane — the curve gallery REDRESS render, fail-CLOSE
     test("the page paints a calm substrate behind the glass card (not bare)", async ({ page }) => {
         await page.setViewportSize({ width: 1280, height: 900 });
         await page.goto("/motion/curve-gallery", { waitUntil: "networkidle" });
-        await page.waitForTimeout(300);
 
         // The page declares background: "grid" — the StoryHero substrate paints a grid
         // wash element behind the contained card. Assert a substrate element is present
         // (the grid/paper wash renders an element carrying a non-transparent paint or a
         // background-image), NOT a bare transparent ground.
-        const substrate = await page.evaluate(() => {
+        // Read until the substrate mounts or 5 s pass: one read 300 ms after network idle
+        // saw a bare ground in a long suite run and a painted one alone.
+        const read = () => page.evaluate(() => {
             // walk the candidate substrate layers the StoryHero chassis renders.
             const candidates = Array.from(
                 document.querySelectorAll(
@@ -198,10 +199,12 @@ test.describe("motion2 (π lane — the curve gallery REDRESS render, fail-CLOSE
             }
             return { found: false };
         });
-        expect(
-            substrate.found,
-            "a calm substrate (grid/paper wash) must paint behind the glass card — not the R7 bare rgba(0,0,0,0) ground",
-        ).toBe(true);
+        await expect
+            .poll(async () => (await read()).found, {
+                message: "a calm substrate (grid/paper wash) must paint behind the glass card — not the R7 bare rgba(0,0,0,0) ground",
+                timeout: 5_000,
+            })
+            .toBe(true);
     });
 
     // ── PURPLE-STILL-VIOLET-π: --motion-accent is the violet family, not red ──────
