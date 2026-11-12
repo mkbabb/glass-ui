@@ -28,6 +28,8 @@
 //          from its empty trailing end; the thumb paints `--card` with
 //          `--slider-thumb-bg` unset, and the token when it is set
 //   pager  a PagerDots neighbour hop paints a neck no wider than the pitch plus one dot
+//   wheel  a vertical wheel over a horizontal dock's overflowing run scrolls the page; each
+//          run contains overscroll on its own scroll axis only
 import { expect, test, type Page } from "@playwright/test";
 
 type DarkHandle = { stamped: boolean; isDark: () => boolean; toggle: () => void };
@@ -582,5 +584,43 @@ test("pager · a neighbour hop paints a neck no wider than the pitch plus a dot"
         expect(hop.frames, `the neck bridged the hop to ${hop.to}`).toBeGreaterThan(0);
         expect(hop.widest, `token ${geo.token}`).toBeLessThanOrEqual(geo.pitch + geo.dot + 0.5);
     }
+});
+
+test("wheel · a vertical wheel over a horizontal dock's run scrolls the page", async ({ page }, info) => {
+    test.skip(info.project.name === "coarse-touch", "a wheel is a fine-pointer gesture");
+    await page.goto("/tests-visual/release-11-0-2/wheel-harness.html");
+    const run = page.locator("body[data-ready='1'] [data-witness='dock'] .dock-run");
+    await run.waitFor();
+    await page.waitForTimeout(400);
+    const css = await run.evaluate((e) => {
+        const cs = getComputedStyle(e);
+        return { overflow: e.scrollWidth - e.clientWidth, x: cs.overscrollBehaviorX, y: cs.overscrollBehaviorY };
+    });
+    await run.scrollIntoViewIfNeeded();
+    const box = (await run.boundingBox())!;
+    await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
+    const y0 = await page.evaluate(() => scrollY);
+    for (let i = 0; i < 3; i++) {
+        await page.mouse.wheel(0, 100);
+        await page.waitForTimeout(80);
+    }
+    await page.waitForTimeout(250);
+    const moved = (await page.evaluate(() => scrollY)) - y0;
+    info.annotations.push({ type: "wheel", description: JSON.stringify({ css, moved }) });
+    expect(css.overflow, "the run is a real scroller").toBeGreaterThan(0);
+    expect(moved, "the page moved under the dock").toBeGreaterThan(150);
+    expect(css).toMatchObject({ x: "contain", y: "auto" });
+});
+
+test("wheel · a vertical dock's run contains its own axis and passes the other", async ({ page }, info) => {
+    await page.goto("/tests-visual/release-11-0-2/wheel-harness.html?orientation=vertical");
+    const run = page.locator("body[data-ready='1'] [data-witness='dock'] .dock-run");
+    await run.waitFor();
+    const css = await run.evaluate((e) => {
+        const cs = getComputedStyle(e);
+        return { x: cs.overscrollBehaviorX, y: cs.overscrollBehaviorY };
+    });
+    info.annotations.push({ type: "wheel", description: JSON.stringify(css) });
+    expect(css).toEqual({ x: "auto", y: "contain" });
 });
 

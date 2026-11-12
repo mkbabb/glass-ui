@@ -84,6 +84,12 @@ A patch on 11.0.1. Nothing is removed or renamed.
   worm now measures the dot from its own box, so a step to a neighbour draws a bridge
   no longer than the gap plus one dot, whatever unit the token is written in.
 
+- **A vertical wheel over a horizontal dock scrolls the page.** A dock's run contained
+  overscroll on both axes, so a vertical wheel over a horizontal dock whose seats
+  overflow stopped at the dock and the page did not move. The run now contains
+  overscroll on its own scroll axis only (`overscroll-behavior-x: contain` on a
+  horizontal run, `-y` on a vertical one), and the other axis passes to the page.
+
 ## 11.0.1 — 2026-11-12
 
 A patch that brings the 10.1.5 fixes forward onto 11.0. If you saw the dock's hover

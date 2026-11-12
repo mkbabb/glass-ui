@@ -29,7 +29,7 @@
  *
  * THE DETENT ENGINE IS THE PLATFORM. `scroll-snap-type: <axis> mandatory` +
  * `scroll-snap-align: start` + `scroll-padding: P/2` + `touch-action: pan-<axis>` +
- * `overscroll-behavior: contain`. All five measured supported in Chromium 149 AND real
+ * `overscroll-behavior-<axis>: contain`. All five measured supported in Chromium 149 AND real
  * Safari 26.4. A JS flick projector cannot coexist with them — `touchmove` is
  * non-cancelable once native scroll begins, so owning the gesture means
  * `touch-action: none`, which un-scrollers the run and takes reach and
@@ -261,9 +261,13 @@
            which is what makes the deleted `useDockTouchGate` a second owner rather than
            a collaborator, and `contain` keeps a bottomed-out flick from chaining into
            the page behind the dock. `overscroll-behavior` applies only to scroll
-           containers — which is exactly why the vertical port below must stay one. */
+           containers — which is exactly why the vertical port below must stay one.
+           It contains the run's own scroll axis only: the run cannot scroll on the
+           cross axis, and a two-axis `contain` stopped a wheel on that axis at this box
+           too, so the page under a horizontal dock did not move. */
         touch-action: pan-x;
-        overscroll-behavior: contain;
+        overscroll-behavior-x: contain;
+        overscroll-behavior-y: auto;
         scrollbar-width: none;
         /* Release the flex/grid `min-content` floor on the port itself; without it the
            run's own children hold it open and `overflow: auto` never engages. */
@@ -468,6 +472,9 @@
         scroll-snap-type: y mandatory;
         scroll-padding-block: calc(var(--dock-pitch) / 2 + var(--dock-run-reserve-block));
         touch-action: pan-y;
+        /* The base rule's axis split, rotated. */
+        overscroll-behavior-x: auto;
+        overscroll-behavior-y: contain;
         min-block-size: 0;
         /* The reserve is on both axes in the base rule, and this axis's
            `scroll-padding-block` adds it back, so it shifts no snap position.

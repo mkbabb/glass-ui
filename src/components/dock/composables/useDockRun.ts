@@ -406,9 +406,9 @@ export function useDockRun(options: UseDockRunOptions): UseDockRunReturn {
     }
 
     /**
-     * WHEEL CONTAINMENT AT THE ENDS [atlas U/B7, R-INTERACT §7]. `overscroll-behavior:
-     * contain` (run.css) keeps a wheel that reaches the run's end from scrolling the page in
-     * Chromium. Firefox honours it only inside one wheel transaction: once the run sits at
+     * WHEEL CONTAINMENT AT THE ENDS [atlas U/B7, R-INTERACT §7]. The run's
+     * `overscroll-behavior-<axis>: contain` (run.css) keeps a wheel that reaches the
+     * run's end from scrolling the page in Chromium. Firefox honours it only inside one wheel transaction: once the run sits at
      * its end and the transaction lapses (about 1.5 s), Firefox picks the next scroller
      * that can move, and the page behind the dock scrolls (measured: 10 of 20 wheel steps
      * scrolled the page 600 px at 1440 and 390). The platform cannot express "contain
