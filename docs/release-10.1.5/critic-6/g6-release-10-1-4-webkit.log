@@ -1,0 +1,34 @@
+
+Running 23 tests using 1 worker
+
+  ✓   1 [webkit] › tests-visual/release-10-1-4.spec.ts:104:5 › O-119 (g): DataTable learns its width on mount › a responsive DataTable in a 390 px box is a card list on the first observation, with no resize (773ms)
+  ✓   2 [webkit] › tests-visual/release-10-1-4.spec.ts:116:5 › O-119 (g): DataTable learns its width on mount › the same DataTable in a 900 px box stays a table (582ms)
+  ✓   3 [webkit] › tests-visual/release-10-1-4.spec.ts:136:9 › critique-3 F-4: a DataTable in a content-sized host settles › inline host: the projection settles from mount (2.3s)
+  ✓   4 [webkit] › tests-visual/release-10-1-4.spec.ts:136:9 › critique-3 F-4: a DataTable in a content-sized host settles › grid host: the projection settles from mount (2.4s)
+  ✓   5 [webkit] › tests-visual/release-10-1-4.spec.ts:136:9 › critique-3 F-4: a DataTable in a content-sized host settles › flex host: the projection settles from mount (2.3s)
+  ✓   6 [webkit] › tests-visual/release-10-1-4.spec.ts:136:9 › critique-3 F-4: a DataTable in a content-sized host settles › fit host: the projection settles from mount (2.4s)
+  ✓   7 [webkit] › tests-visual/release-10-1-4.spec.ts:146:5 › critique-3 F-4: a DataTable in a content-sized host settles › flex host, rows arriving after mount: the projection settles (2.7s)
+  ✓   8 [webkit] › tests-visual/release-10-1-4.spec.ts:158:5 › O-119 (f), the @page half: only a deck prints at slide geometry › a page without a deck keeps the reader's print defaults (363ms)
+  ✓   9 [webkit] › tests-visual/release-10-1-4.spec.ts:170:5 › O-119 (f), the @page half: only a deck prints at slide geometry › a deck page takes the deck's print resets and its named page (387ms)
+  ✓  10 [webkit] › tests-visual/release-10-1-4.spec.ts:187:5 › O-119 (f), the @page half: only a deck prints at slide geometry › a deck in a modal dialog (top layer, out of flow) hands its named page to the document (399ms)
+  ✓  11 [webkit] › tests-visual/release-10-1-4.spec.ts:199:5 › O-119 (f), the @page half: only a deck prints at slide geometry › a deck page in flow: the document takes the deck's page too (373ms)
+[WebServer] 7:23:09 PM [vite] (client) [console.warn] Warning: `DialogContent` requires a `DialogTitle` for the component to be accessible for screen reader users.
+[WebServer] 
+[WebServer] If you want to hide the `DialogTitle`, you can wrap it with our VisuallyHidden component.
+[WebServer] 
+[WebServer] For more information, see https://www.reka-ui.com/docs/components/dialog.html#title
+  ✓  12 [webkit] › tests-visual/release-10-1-4.spec.ts:212:9 › O-119 (f), the @page half: only a deck prints at slide geometry › a deck in the library's own Dialog (a fixed plate) hands its named page to the document (450ms)
+  -  13 [webkit] › tests-visual/release-10-1-4.spec.ts:224:9 › O-119 (f), the @page half: only a deck prints at slide geometry › page.pdf: a deck in the library's own Dialog (a fixed plate) prints at slide geometry
+  ✓  14 [webkit] › tests-visual/release-10-1-4.spec.ts:212:9 › O-119 (f), the @page half: only a deck prints at slide geometry › a deck in a fixed overlay hands its named page to the document (398ms)
+  -  15 [webkit] › tests-visual/release-10-1-4.spec.ts:224:9 › O-119 (f), the @page half: only a deck prints at slide geometry › page.pdf: a deck in a fixed overlay prints at slide geometry
+  ✓  16 [webkit] › tests-visual/release-10-1-4.spec.ts:212:9 › O-119 (f), the @page half: only a deck prints at slide geometry › a deck in a non-modal <dialog open> (absolute) hands its named page to the document (413ms)
+  -  17 [webkit] › tests-visual/release-10-1-4.spec.ts:224:9 › O-119 (f), the @page half: only a deck prints at slide geometry › page.pdf: a deck in a non-modal <dialog open> (absolute) prints at slide geometry
+  ✓  18 [webkit] › tests-visual/release-10-1-4.spec.ts:241:5 › O-119 (f), the @page half: only a deck prints at slide geometry › the deck's named page outranks a consumer's own @page (400ms)
+  -  19 [webkit] › tests-visual/release-10-1-4.spec.ts:257:5 › O-119 (f), the @page half: only a deck prints at slide geometry › page.pdf: a consumer's own @page does not resize the deck's sheets
+  -  20 [webkit] › tests-visual/release-10-1-4.spec.ts:271:5 › O-119 (f), the @page half: only a deck prints at slide geometry › page.pdf: a consumer's own @page still sets the paper of a page with no deck
+  -  21 [webkit] › tests-visual/release-10-1-4.spec.ts:284:5 › O-119 (f), the @page half: only a deck prints at slide geometry › page.pdf: a page without a deck prints on the default paper (Letter)
+  -  22 [webkit] › tests-visual/release-10-1-4.spec.ts:296:5 › O-119 (f), the @page half: only a deck prints at slide geometry › page.pdf: a deck page prints one 1280x720 page per slide
+  -  23 [webkit] › tests-visual/release-10-1-4.spec.ts:311:5 › O-119 (f), the @page half: only a deck prints at slide geometry › page.pdf: a deck in a modal dialog prints at slide geometry
+
+  8 skipped
+  15 passed (20.3s)

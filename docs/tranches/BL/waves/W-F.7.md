@@ -1,11 +1,11 @@
-# W-F.7 · W-THEME-SWAP: every theme flip is atomic · 11.0.0
+# W-F.7 · W-THEME-SWAP: every theme flip is atomic
 
 | field | value |
 |---|---|
 | seat | band-F wave-spec seat, formation (relaunch 2026-09-25) |
 | model | `claude-opus-5-5`, asserted from own system identity |
 | HEAD | `84b470aa` (`src`, `demo`, `scripts`, `tests` identical to `f3ad78d0`), scratch worktree, demo built and served on :5961 |
-| ships in | 11.0.0 |
+| release | `waves/INDEX.md`, the one record |
 | families | F-73 (member R2-02-08) |
 | inbound | O-60 KFA-115 (keyframes.js: the theme flip animates chrome) |
 | depends on | PLAN §5, the one record of edges |

@@ -1,11 +1,11 @@
-# W-D.2 · W-PERIPHERY: config, workflows, harness and demo on the shape W-D.1 fixes · 11.0.0
+# W-D.2 · W-PERIPHERY: config, workflows, harness and demo on the shape W-D.1 fixes
 
 | field | value |
 |---|---|
 | seat | band-D wave-spec seat, formation run `wf_68eb18d6-b21` |
 | model | `claude-opus-5-5`, asserted from own system identity |
 | HEAD | `8141658d` (the task named `f3ad78d0`; `git diff --stat f3ad78d0 HEAD -- . ':!docs'` prints nothing). Measured in scratch worktree `wt` at HEAD, on the converged tree W-D.1 lands (`3e8f99f9b` with the D1 convergence record's chain replayed, `K13/replay.mjs`, digest `6fdd4ec7…` over 1,587 files, `chain final MATCH`; D1 §P13-6.1; read at the W-D.1 re-point seat, round 2), and in a fixture repository built for the pass case |
-| ships in | 11.0.0 |
+| release | `waves/INDEX.md`, the one record |
 | families | F-60 whole (`audit/REGISTRY.md:1326-1336`); L14-01's execution (its decision is W-D.1's, F-55) |
 | depends on | PLAN §5, the one record of edges |
 | dependants | PLAN §5 (its inverse) |

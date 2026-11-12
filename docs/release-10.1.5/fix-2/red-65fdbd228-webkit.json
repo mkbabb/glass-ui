@@ -1,0 +1,725 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "tests-visual/webkit-2287.config.ts",
+      "--project=webkit",
+      "release-10-1-5.spec.ts",
+      "--grep",
+      " e[1-3] ",
+      "--workers=1"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/webkit-2287.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-headless-new",
+        "name": "chromium-headless-new",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "coarse-touch",
+        "name": "coarse-touch",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "safari-webgl.spec.ts",
+          "aurora-swraster.spec.ts",
+          "release-10-1-1.spec.ts",
+          "release-10-1-2.spec.ts",
+          "release-10-1-3.spec.ts",
+          "release-10-1-4.spec.ts",
+          "release-10-1-5.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/docs/release-10.1.5/fix-2/red-65fdbd228-webkit.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5247",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/",
+      "url": "http://localhost:5247",
+      "reuseExistingServer": true,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "release-10-1-5.spec.ts",
+      "file": "release-10-1-5.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "e1 at 390: a label-wide tab under the pointer gives the run no reach and cuts no corner",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 2333,
+                  "error": {
+                    "message": "Error: 390 hover on the wide tab: run scrollWidth = clientWidth ({\"sw\":240,\"cw\":238,\"sh\":53,\"ch\":53,\"active\":true})\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m238\u001b[39m\nReceived: \u001b[31m240\u001b[39m",
+                    "stack": "Error: 390 hover on the wide tab: run scrollWidth = clientWidth ({\"sw\":240,\"cw\":238,\"sh\":53,\"ch\":53,\"active\":true})\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m238\u001b[39m\nReceived: \u001b[31m240\u001b[39m\n    at expectNoReach (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:108:87)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:566:9",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                      "column": 87,
+                      "line": 108
+                    },
+                    "snippet": "  106 |     const run = read.runs.find((r) => r.active)!;\n  107 |     expect(run, `${cell}: an active run`).toBeTruthy();\n> 108 |     expect(run.sw, `${cell}: run scrollWidth = clientWidth (${JSON.stringify(run)})`).toBe(\n      |                                                                                       ^\n  109 |         run.cw,\n  110 |     );\n  111 |     expect(run.sh, `${cell}: run scrollHeight = clientHeight (${JSON.stringify(run)})`).toBe("
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                        "column": 87,
+                        "line": 108
+                      },
+                      "message": "Error: 390 hover on the wide tab: run scrollWidth = clientWidth ({\"sw\":240,\"cw\":238,\"sh\":53,\"ch\":53,\"active\":true})\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m238\u001b[39m\nReceived: \u001b[31m240\u001b[39m\n\n  106 |     const run = read.runs.find((r) => r.active)!;\n  107 |     expect(run, `${cell}: an active run`).toBeTruthy();\n> 108 |     expect(run.sw, `${cell}: run scrollWidth = clientWidth (${JSON.stringify(run)})`).toBe(\n      |                                                                                       ^\n  109 |         run.cw,\n  110 |     );\n  111 |     expect(run.sh, `${cell}: run scrollHeight = clientHeight (${JSON.stringify(run)})`).toBe(\n    at expectNoReach (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:108:87)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:566:9"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-05T00:17:25.936Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/test-results/release-10-1-5-e1-at-390-a-46d87-no-reach-and-cuts-no-corner-webkit/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                    "column": 87,
+                    "line": 108
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-51298042f26e977ae702",
+          "file": "release-10-1-5.spec.ts",
+          "line": 547,
+          "column": 5
+        },
+        {
+          "title": "e1 at 1440: a label-wide tab under the pointer gives the run no reach and cuts no corner",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 2269,
+                  "error": {
+                    "message": "Error: 1440 hover on the wide tab: run scrollWidth = clientWidth ({\"sw\":263,\"cw\":260,\"sh\":53,\"ch\":53,\"active\":true})\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m260\u001b[39m\nReceived: \u001b[31m263\u001b[39m",
+                    "stack": "Error: 1440 hover on the wide tab: run scrollWidth = clientWidth ({\"sw\":263,\"cw\":260,\"sh\":53,\"ch\":53,\"active\":true})\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m260\u001b[39m\nReceived: \u001b[31m263\u001b[39m\n    at expectNoReach (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:108:87)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:566:9",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                      "column": 87,
+                      "line": 108
+                    },
+                    "snippet": "  106 |     const run = read.runs.find((r) => r.active)!;\n  107 |     expect(run, `${cell}: an active run`).toBeTruthy();\n> 108 |     expect(run.sw, `${cell}: run scrollWidth = clientWidth (${JSON.stringify(run)})`).toBe(\n      |                                                                                       ^\n  109 |         run.cw,\n  110 |     );\n  111 |     expect(run.sh, `${cell}: run scrollHeight = clientHeight (${JSON.stringify(run)})`).toBe("
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                        "column": 87,
+                        "line": 108
+                      },
+                      "message": "Error: 1440 hover on the wide tab: run scrollWidth = clientWidth ({\"sw\":263,\"cw\":260,\"sh\":53,\"ch\":53,\"active\":true})\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m260\u001b[39m\nReceived: \u001b[31m263\u001b[39m\n\n  106 |     const run = read.runs.find((r) => r.active)!;\n  107 |     expect(run, `${cell}: an active run`).toBeTruthy();\n> 108 |     expect(run.sw, `${cell}: run scrollWidth = clientWidth (${JSON.stringify(run)})`).toBe(\n      |                                                                                       ^\n  109 |         run.cw,\n  110 |     );\n  111 |     expect(run.sh, `${cell}: run scrollHeight = clientHeight (${JSON.stringify(run)})`).toBe(\n    at expectNoReach (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:108:87)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:566:9"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-05T00:17:28.971Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/test-results/release-10-1-5-e1-at-1440--81d45-no-reach-and-cuts-no-corner-webkit/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                    "column": 87,
+                    "line": 108
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-721bb960d135205b5425",
+          "file": "release-10-1-5.spec.ts",
+          "line": 547,
+          "column": 5
+        },
+        {
+          "title": "e2 at 390: focused, hovered tab seats keep their whole ring on every edge",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 6,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 2297,
+                  "error": {
+                    "message": "Error: S1 ({\"focusVisible\":true,\"hover\":true,\"scale\":1.1,\"width\":97.67655944824219,\"outline\":\"solid\",\"ink\":4.4,\"ring\":{\"l\":37.68124923706055,\"r\":144.15780868530274,\"t\":18.700000381469728,\"b\":69.30000343322754},\"clips\":[{\"cls\":\"dock-layer dock-layer--full dock-run is-active\",\"l\":40.140625,\"r\":349.859375,\"t\":17.609375,\"b\":70.390625}]}): ring inside dock-layer dock-layer--full dock-run is-active (left)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m39.640625\u001b[39m\nReceived:    \u001b[31m37.68124923706055\u001b[39m",
+                    "stack": "Error: S1 ({\"focusVisible\":true,\"hover\":true,\"scale\":1.1,\"width\":97.67655944824219,\"outline\":\"solid\",\"ink\":4.4,\"ring\":{\"l\":37.68124923706055,\"r\":144.15780868530274,\"t\":18.700000381469728,\"b\":69.30000343322754},\"clips\":[{\"cls\":\"dock-layer dock-layer--full dock-run is-active\",\"l\":40.140625,\"r\":349.859375,\"t\":17.609375,\"b\":70.390625}]}): ring inside dock-layer dock-layer--full dock-run is-active (left)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m39.640625\u001b[39m\nReceived:    \u001b[31m37.68124923706055\u001b[39m\n    at expectFocusedRingWhole (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:513:69)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:577:42",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                      "column": 69,
+                      "line": 513
+                    },
+                    "snippet": "  511 |     expect(read.clips.length, `${cell}: the run clips`).toBeGreaterThan(0);\n  512 |     for (const c of read.clips) {\n> 513 |         expect(read.ring.l, `${cell}: ring inside ${c.cls} (left)`).toBeGreaterThanOrEqual(c.l - 0.5);\n      |                                                                     ^\n  514 |         expect(read.ring.r, `${cell}: ring inside ${c.cls} (right)`).toBeLessThanOrEqual(c.r + 0.5);\n  515 |         expect(read.ring.t, `${cell}: ring inside ${c.cls} (top)`).toBeGreaterThanOrEqual(c.t - 0.5);\n  516 |         expect(read.ring.b, `${cell}: ring inside ${c.cls} (bottom)`).toBeLessThanOrEqual(c.b + 0.5);"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                        "column": 69,
+                        "line": 513
+                      },
+                      "message": "Error: S1 ({\"focusVisible\":true,\"hover\":true,\"scale\":1.1,\"width\":97.67655944824219,\"outline\":\"solid\",\"ink\":4.4,\"ring\":{\"l\":37.68124923706055,\"r\":144.15780868530274,\"t\":18.700000381469728,\"b\":69.30000343322754},\"clips\":[{\"cls\":\"dock-layer dock-layer--full dock-run is-active\",\"l\":40.140625,\"r\":349.859375,\"t\":17.609375,\"b\":70.390625}]}): ring inside dock-layer dock-layer--full dock-run is-active (left)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m39.640625\u001b[39m\nReceived:    \u001b[31m37.68124923706055\u001b[39m\n\n  511 |     expect(read.clips.length, `${cell}: the run clips`).toBeGreaterThan(0);\n  512 |     for (const c of read.clips) {\n> 513 |         expect(read.ring.l, `${cell}: ring inside ${c.cls} (left)`).toBeGreaterThanOrEqual(c.l - 0.5);\n      |                                                                     ^\n  514 |         expect(read.ring.r, `${cell}: ring inside ${c.cls} (right)`).toBeLessThanOrEqual(c.r + 0.5);\n  515 |         expect(read.ring.t, `${cell}: ring inside ${c.cls} (top)`).toBeGreaterThanOrEqual(c.t - 0.5);\n  516 |         expect(read.ring.b, `${cell}: ring inside ${c.cls} (bottom)`).toBeLessThanOrEqual(c.b + 0.5);\n    at expectFocusedRingWhole (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:513:69)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:577:42"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-05T00:17:31.777Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/test-results/release-10-1-5-e2-at-390-f-e62d2-ir-whole-ring-on-every-edge-webkit/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                    "column": 69,
+                    "line": 513
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-938b5d7cae1606523602",
+          "file": "release-10-1-5.spec.ts",
+          "line": 574,
+          "column": 5
+        },
+        {
+          "title": "e2 at 1440: focused, hovered tab seats keep their whole ring on every edge",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 7,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 2225,
+                  "error": {
+                    "message": "Error: S1 ({\"focusVisible\":true,\"hover\":true,\"scale\":1.1,\"width\":105.37652587890625,\"outline\":\"solid\",\"ink\":4.4,\"ring\":{\"l\":554.0187622070313,\"r\":668.1952880859375,\"t\":18.700000381469728,\"b\":69.30000343322754},\"clips\":[{\"cls\":\"dock-layer dock-layer--full dock-run is-active\",\"l\":556.828125,\"r\":883.171875,\"t\":17.609375,\"b\":70.390625}]}): ring inside dock-layer dock-layer--full dock-run is-active (left)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m556.328125\u001b[39m\nReceived:    \u001b[31m554.0187622070313\u001b[39m",
+                    "stack": "Error: S1 ({\"focusVisible\":true,\"hover\":true,\"scale\":1.1,\"width\":105.37652587890625,\"outline\":\"solid\",\"ink\":4.4,\"ring\":{\"l\":554.0187622070313,\"r\":668.1952880859375,\"t\":18.700000381469728,\"b\":69.30000343322754},\"clips\":[{\"cls\":\"dock-layer dock-layer--full dock-run is-active\",\"l\":556.828125,\"r\":883.171875,\"t\":17.609375,\"b\":70.390625}]}): ring inside dock-layer dock-layer--full dock-run is-active (left)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m556.328125\u001b[39m\nReceived:    \u001b[31m554.0187622070313\u001b[39m\n    at expectFocusedRingWhole (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:513:69)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:577:42",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                      "column": 69,
+                      "line": 513
+                    },
+                    "snippet": "  511 |     expect(read.clips.length, `${cell}: the run clips`).toBeGreaterThan(0);\n  512 |     for (const c of read.clips) {\n> 513 |         expect(read.ring.l, `${cell}: ring inside ${c.cls} (left)`).toBeGreaterThanOrEqual(c.l - 0.5);\n      |                                                                     ^\n  514 |         expect(read.ring.r, `${cell}: ring inside ${c.cls} (right)`).toBeLessThanOrEqual(c.r + 0.5);\n  515 |         expect(read.ring.t, `${cell}: ring inside ${c.cls} (top)`).toBeGreaterThanOrEqual(c.t - 0.5);\n  516 |         expect(read.ring.b, `${cell}: ring inside ${c.cls} (bottom)`).toBeLessThanOrEqual(c.b + 0.5);"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                        "column": 69,
+                        "line": 513
+                      },
+                      "message": "Error: S1 ({\"focusVisible\":true,\"hover\":true,\"scale\":1.1,\"width\":105.37652587890625,\"outline\":\"solid\",\"ink\":4.4,\"ring\":{\"l\":554.0187622070313,\"r\":668.1952880859375,\"t\":18.700000381469728,\"b\":69.30000343322754},\"clips\":[{\"cls\":\"dock-layer dock-layer--full dock-run is-active\",\"l\":556.828125,\"r\":883.171875,\"t\":17.609375,\"b\":70.390625}]}): ring inside dock-layer dock-layer--full dock-run is-active (left)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m556.328125\u001b[39m\nReceived:    \u001b[31m554.0187622070313\u001b[39m\n\n  511 |     expect(read.clips.length, `${cell}: the run clips`).toBeGreaterThan(0);\n  512 |     for (const c of read.clips) {\n> 513 |         expect(read.ring.l, `${cell}: ring inside ${c.cls} (left)`).toBeGreaterThanOrEqual(c.l - 0.5);\n      |                                                                     ^\n  514 |         expect(read.ring.r, `${cell}: ring inside ${c.cls} (right)`).toBeLessThanOrEqual(c.r + 0.5);\n  515 |         expect(read.ring.t, `${cell}: ring inside ${c.cls} (top)`).toBeGreaterThanOrEqual(c.t - 0.5);\n  516 |         expect(read.ring.b, `${cell}: ring inside ${c.cls} (bottom)`).toBeLessThanOrEqual(c.b + 0.5);\n    at expectFocusedRingWhole (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:513:69)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:577:42"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-05T00:17:34.635Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/test-results/release-10-1-5-e2-at-1440--0ba7a-ir-whole-ring-on-every-edge-webkit/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                    "column": 69,
+                    "line": 513
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-c145929157fd54ff619f",
+          "file": "release-10-1-5.spec.ts",
+          "line": 574,
+          "column": 5
+        },
+        {
+          "title": "e3 at 390: the run's clip and hit stop at the persistent seats, at rest and scrolled",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 8,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 2089,
+                  "error": {
+                    "message": "Error: 390 start ({\"range\":318,\"scroll\":0,\"run\":[66.609375,329.390625],\"lead\":[27,67],\"tail\":[323,363],\"leadHit\":\"stage\",\"tailHit\":\"tail\"}): the clip starts at or after the lead seat\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m67\u001b[39m\nReceived:    \u001b[31m66.609375\u001b[39m",
+                    "stack": "Error: 390 start ({\"range\":318,\"scroll\":0,\"run\":[66.609375,329.390625],\"lead\":[27,67],\"tail\":[323,363],\"leadHit\":\"stage\",\"tailHit\":\"tail\"}): the clip starts at or after the lead seat\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m67\u001b[39m\nReceived:    \u001b[31m66.609375\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:614:87",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                      "column": 87,
+                      "line": 614
+                    },
+                    "snippet": "  612 |             const cell = `${width} ${at} (${JSON.stringify(read)})`;\n  613 |             expect(read.range, `${cell}: the run overflows`).toBeGreaterThan(0);\n> 614 |             expect(read.run[0], `${cell}: the clip starts at or after the lead seat`).toBeGreaterThanOrEqual(read.lead[1]);\n      |                                                                                       ^\n  615 |             expect(read.run[1], `${cell}: the clip ends at or before the tail seat`).toBeLessThanOrEqual(read.tail[0]);\n  616 |             expect(read.leadHit, `${cell}: the lead seat owns its own edge`).toBe(\"lead\");\n  617 |             expect(read.tailHit, `${cell}: the tail seat owns its own edge`).toBe(\"tail\");"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                        "column": 87,
+                        "line": 614
+                      },
+                      "message": "Error: 390 start ({\"range\":318,\"scroll\":0,\"run\":[66.609375,329.390625],\"lead\":[27,67],\"tail\":[323,363],\"leadHit\":\"stage\",\"tailHit\":\"tail\"}): the clip starts at or after the lead seat\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m67\u001b[39m\nReceived:    \u001b[31m66.609375\u001b[39m\n\n  612 |             const cell = `${width} ${at} (${JSON.stringify(read)})`;\n  613 |             expect(read.range, `${cell}: the run overflows`).toBeGreaterThan(0);\n> 614 |             expect(read.run[0], `${cell}: the clip starts at or after the lead seat`).toBeGreaterThanOrEqual(read.lead[1]);\n      |                                                                                       ^\n  615 |             expect(read.run[1], `${cell}: the clip ends at or before the tail seat`).toBeLessThanOrEqual(read.tail[0]);\n  616 |             expect(read.leadHit, `${cell}: the lead seat owns its own edge`).toBe(\"lead\");\n  617 |             expect(read.tailHit, `${cell}: the tail seat owns its own edge`).toBe(\"tail\");\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:614:87"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-05T00:17:37.345Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/test-results/release-10-1-5-e3-at-390-t-1ec7a--seats-at-rest-and-scrolled-webkit/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                    "column": 87,
+                    "line": 614
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-a61ba8a3a58ca28732dd",
+          "file": "release-10-1-5.spec.ts",
+          "line": 586,
+          "column": 5
+        }
+      ],
+      "suites": [
+        {
+          "title": "critique 2, coarse phone",
+          "file": "release-10-1-5.spec.ts",
+          "line": 626,
+          "column": 6,
+          "specs": [
+            {
+              "title": "e1 at 390: a label-wide tab under the pointer gives the run no reach and cuts no corner",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 2613,
+                      "error": {
+                        "message": "Error: 390 hover on the wide tab: run scrollWidth = clientWidth ({\"sw\":244,\"cw\":242,\"sh\":57,\"ch\":57,\"active\":true})\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m242\u001b[39m\nReceived: \u001b[31m244\u001b[39m",
+                        "stack": "Error: 390 hover on the wide tab: run scrollWidth = clientWidth ({\"sw\":244,\"cw\":242,\"sh\":57,\"ch\":57,\"active\":true})\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m242\u001b[39m\nReceived: \u001b[31m244\u001b[39m\n    at expectNoReach (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:108:87)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:566:9",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                          "column": 87,
+                          "line": 108
+                        },
+                        "snippet": "  106 |     const run = read.runs.find((r) => r.active)!;\n  107 |     expect(run, `${cell}: an active run`).toBeTruthy();\n> 108 |     expect(run.sw, `${cell}: run scrollWidth = clientWidth (${JSON.stringify(run)})`).toBe(\n      |                                                                                       ^\n  109 |         run.cw,\n  110 |     );\n  111 |     expect(run.sh, `${cell}: run scrollHeight = clientHeight (${JSON.stringify(run)})`).toBe("
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                            "column": 87,
+                            "line": 108
+                          },
+                          "message": "Error: 390 hover on the wide tab: run scrollWidth = clientWidth ({\"sw\":244,\"cw\":242,\"sh\":57,\"ch\":57,\"active\":true})\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m242\u001b[39m\nReceived: \u001b[31m244\u001b[39m\n\n  106 |     const run = read.runs.find((r) => r.active)!;\n  107 |     expect(run, `${cell}: an active run`).toBeTruthy();\n> 108 |     expect(run.sw, `${cell}: run scrollWidth = clientWidth (${JSON.stringify(run)})`).toBe(\n      |                                                                                       ^\n  109 |         run.cw,\n  110 |     );\n  111 |     expect(run.sh, `${cell}: run scrollHeight = clientHeight (${JSON.stringify(run)})`).toBe(\n    at expectNoReach (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:108:87)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:566:9"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-05T00:17:13.948Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/test-results/release-10-1-5-critique-2--52919-no-reach-and-cuts-no-corner-webkit/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                        "column": 87,
+                        "line": 108
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "ba3de8f038291be5029b-f3503e8ed2a7fe57aea7",
+              "file": "release-10-1-5.spec.ts",
+              "line": 547,
+              "column": 5
+            },
+            {
+              "title": "e1 at 844: a label-wide tab under the pointer gives the run no reach and cuts no corner",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 2365,
+                      "error": {
+                        "message": "Error: 844 hover on the wide tab: run scrollWidth = clientWidth ({\"sw\":253,\"cw\":250,\"sh\":57,\"ch\":57,\"active\":true})\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m250\u001b[39m\nReceived: \u001b[31m253\u001b[39m",
+                        "stack": "Error: 844 hover on the wide tab: run scrollWidth = clientWidth ({\"sw\":253,\"cw\":250,\"sh\":57,\"ch\":57,\"active\":true})\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m250\u001b[39m\nReceived: \u001b[31m253\u001b[39m\n    at expectNoReach (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:108:87)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:566:9",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                          "column": 87,
+                          "line": 108
+                        },
+                        "snippet": "  106 |     const run = read.runs.find((r) => r.active)!;\n  107 |     expect(run, `${cell}: an active run`).toBeTruthy();\n> 108 |     expect(run.sw, `${cell}: run scrollWidth = clientWidth (${JSON.stringify(run)})`).toBe(\n      |                                                                                       ^\n  109 |         run.cw,\n  110 |     );\n  111 |     expect(run.sh, `${cell}: run scrollHeight = clientHeight (${JSON.stringify(run)})`).toBe("
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                            "column": 87,
+                            "line": 108
+                          },
+                          "message": "Error: 844 hover on the wide tab: run scrollWidth = clientWidth ({\"sw\":253,\"cw\":250,\"sh\":57,\"ch\":57,\"active\":true})\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m250\u001b[39m\nReceived: \u001b[31m253\u001b[39m\n\n  106 |     const run = read.runs.find((r) => r.active)!;\n  107 |     expect(run, `${cell}: an active run`).toBeTruthy();\n> 108 |     expect(run.sw, `${cell}: run scrollWidth = clientWidth (${JSON.stringify(run)})`).toBe(\n      |                                                                                       ^\n  109 |         run.cw,\n  110 |     );\n  111 |     expect(run.sh, `${cell}: run scrollHeight = clientHeight (${JSON.stringify(run)})`).toBe(\n    at expectNoReach (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:108:87)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:566:9"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-05T00:17:17.293Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/test-results/release-10-1-5-critique-2--c4b00-no-reach-and-cuts-no-corner-webkit/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                        "column": 87,
+                        "line": 108
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "ba3de8f038291be5029b-088f26e260d0f432da7e",
+              "file": "release-10-1-5.spec.ts",
+              "line": 547,
+              "column": 5
+            },
+            {
+              "title": "e2 at 390: focused, hovered tab seats keep their whole ring on every edge",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 2305,
+                      "error": {
+                        "message": "Error: S1 ({\"focusVisible\":true,\"hover\":true,\"scale\":1.1,\"width\":97.67655944824219,\"outline\":\"solid\",\"ink\":4.4,\"ring\":{\"l\":33.68124923706055,\"r\":140.15780868530274,\"t\":20.700000381469728,\"b\":71.30000343322754},\"clips\":[{\"cls\":\"dock-layer dock-layer--full dock-run is-active\",\"l\":35.9375,\"r\":354.0625,\"t\":17.40625,\"b\":74.59375}]}): ring inside dock-layer dock-layer--full dock-run is-active (left)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m35.4375\u001b[39m\nReceived:    \u001b[31m33.68124923706055\u001b[39m",
+                        "stack": "Error: S1 ({\"focusVisible\":true,\"hover\":true,\"scale\":1.1,\"width\":97.67655944824219,\"outline\":\"solid\",\"ink\":4.4,\"ring\":{\"l\":33.68124923706055,\"r\":140.15780868530274,\"t\":20.700000381469728,\"b\":71.30000343322754},\"clips\":[{\"cls\":\"dock-layer dock-layer--full dock-run is-active\",\"l\":35.9375,\"r\":354.0625,\"t\":17.40625,\"b\":74.59375}]}): ring inside dock-layer dock-layer--full dock-run is-active (left)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m35.4375\u001b[39m\nReceived:    \u001b[31m33.68124923706055\u001b[39m\n    at expectFocusedRingWhole (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:513:69)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:577:42",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                          "column": 69,
+                          "line": 513
+                        },
+                        "snippet": "  511 |     expect(read.clips.length, `${cell}: the run clips`).toBeGreaterThan(0);\n  512 |     for (const c of read.clips) {\n> 513 |         expect(read.ring.l, `${cell}: ring inside ${c.cls} (left)`).toBeGreaterThanOrEqual(c.l - 0.5);\n      |                                                                     ^\n  514 |         expect(read.ring.r, `${cell}: ring inside ${c.cls} (right)`).toBeLessThanOrEqual(c.r + 0.5);\n  515 |         expect(read.ring.t, `${cell}: ring inside ${c.cls} (top)`).toBeGreaterThanOrEqual(c.t - 0.5);\n  516 |         expect(read.ring.b, `${cell}: ring inside ${c.cls} (bottom)`).toBeLessThanOrEqual(c.b + 0.5);"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                            "column": 69,
+                            "line": 513
+                          },
+                          "message": "Error: S1 ({\"focusVisible\":true,\"hover\":true,\"scale\":1.1,\"width\":97.67655944824219,\"outline\":\"solid\",\"ink\":4.4,\"ring\":{\"l\":33.68124923706055,\"r\":140.15780868530274,\"t\":20.700000381469728,\"b\":71.30000343322754},\"clips\":[{\"cls\":\"dock-layer dock-layer--full dock-run is-active\",\"l\":35.9375,\"r\":354.0625,\"t\":17.40625,\"b\":74.59375}]}): ring inside dock-layer dock-layer--full dock-run is-active (left)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m35.4375\u001b[39m\nReceived:    \u001b[31m33.68124923706055\u001b[39m\n\n  511 |     expect(read.clips.length, `${cell}: the run clips`).toBeGreaterThan(0);\n  512 |     for (const c of read.clips) {\n> 513 |         expect(read.ring.l, `${cell}: ring inside ${c.cls} (left)`).toBeGreaterThanOrEqual(c.l - 0.5);\n      |                                                                     ^\n  514 |         expect(read.ring.r, `${cell}: ring inside ${c.cls} (right)`).toBeLessThanOrEqual(c.r + 0.5);\n  515 |         expect(read.ring.t, `${cell}: ring inside ${c.cls} (top)`).toBeGreaterThanOrEqual(c.t - 0.5);\n  516 |         expect(read.ring.b, `${cell}: ring inside ${c.cls} (bottom)`).toBeLessThanOrEqual(c.b + 0.5);\n    at expectFocusedRingWhole (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:513:69)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:577:42"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-05T00:17:20.234Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/test-results/release-10-1-5-critique-2--c9524-ir-whole-ring-on-every-edge-webkit/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                        "column": 69,
+                        "line": 513
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "ba3de8f038291be5029b-c8b1afa8ee30b7f0f3c8",
+              "file": "release-10-1-5.spec.ts",
+              "line": 574,
+              "column": 5
+            },
+            {
+              "title": "e3 at 390: the run's clip and hit stop at the persistent seats, at rest and scrolled",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 2116,
+                      "error": {
+                        "message": "Error: 390 start ({\"range\":374,\"scroll\":0,\"run\":[70.40625,325.59375],\"lead\":[27,71],\"tail\":[319,363],\"leadHit\":\"stage\",\"tailHit\":\"tail\"}): the clip starts at or after the lead seat\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m71\u001b[39m\nReceived:    \u001b[31m70.40625\u001b[39m",
+                        "stack": "Error: 390 start ({\"range\":374,\"scroll\":0,\"run\":[70.40625,325.59375],\"lead\":[27,71],\"tail\":[319,363],\"leadHit\":\"stage\",\"tailHit\":\"tail\"}): the clip starts at or after the lead seat\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m71\u001b[39m\nReceived:    \u001b[31m70.40625\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:614:87",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                          "column": 87,
+                          "line": 614
+                        },
+                        "snippet": "  612 |             const cell = `${width} ${at} (${JSON.stringify(read)})`;\n  613 |             expect(read.range, `${cell}: the run overflows`).toBeGreaterThan(0);\n> 614 |             expect(read.run[0], `${cell}: the clip starts at or after the lead seat`).toBeGreaterThanOrEqual(read.lead[1]);\n      |                                                                                       ^\n  615 |             expect(read.run[1], `${cell}: the clip ends at or before the tail seat`).toBeLessThanOrEqual(read.tail[0]);\n  616 |             expect(read.leadHit, `${cell}: the lead seat owns its own edge`).toBe(\"lead\");\n  617 |             expect(read.tailHit, `${cell}: the tail seat owns its own edge`).toBe(\"tail\");"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                            "column": 87,
+                            "line": 614
+                          },
+                          "message": "Error: 390 start ({\"range\":374,\"scroll\":0,\"run\":[70.40625,325.59375],\"lead\":[27,71],\"tail\":[319,363],\"leadHit\":\"stage\",\"tailHit\":\"tail\"}): the clip starts at or after the lead seat\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m71\u001b[39m\nReceived:    \u001b[31m70.40625\u001b[39m\n\n  612 |             const cell = `${width} ${at} (${JSON.stringify(read)})`;\n  613 |             expect(read.range, `${cell}: the run overflows`).toBeGreaterThan(0);\n> 614 |             expect(read.run[0], `${cell}: the clip starts at or after the lead seat`).toBeGreaterThanOrEqual(read.lead[1]);\n      |                                                                                       ^\n  615 |             expect(read.run[1], `${cell}: the clip ends at or before the tail seat`).toBeLessThanOrEqual(read.tail[0]);\n  616 |             expect(read.leadHit, `${cell}: the lead seat owns its own edge`).toBe(\"lead\");\n  617 |             expect(read.tailHit, `${cell}: the tail seat owns its own edge`).toBe(\"tail\");\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:614:87"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-05T00:17:23.242Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/test-results/release-10-1-5-critique-2--d0cb9--seats-at-rest-and-scrolled-webkit/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                        "column": 87,
+                        "line": 614
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "ba3de8f038291be5029b-ad4a3e425063732c8bbc",
+              "file": "release-10-1-5.spec.ts",
+              "line": 586,
+              "column": 5
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-05T00:17:12.326Z",
+    "duration": 27369.446,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 9,
+    "flaky": 0
+  }
+}

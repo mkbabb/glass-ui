@@ -1,11 +1,11 @@
-# W-G.3 · W-LUMA-EVENTED and W-AURORA-CLOCK: the dock reads the field's published luma, no loop runs without a source, and a drifting field presents at 30 Hz or less at rest · 11.0.0
+# W-G.3 · W-LUMA-EVENTED and W-AURORA-CLOCK: the dock reads the field's published luma, no loop runs without a source, and a drifting field presents at 30 Hz or less at rest
 
 | field | value |
 |---|---|
 | seat | band-G wave-spec seat, formation (relaunch 2026-09-25) |
 | model | `claude-opus-5-5`, asserted from own system identity |
 | HEAD | `b37a37c3` (`src`, `demo`, `tests` identical to `f3ad78d0`), scratch worktree; the demo on :5987 and the band-G component harness (W-G.6 appendix D) on :5988; Chromium on Metal with WebGPU (adapter `apple/metal-3`); probe library in W-G.1 appendix A. Load average 30 to 137 during the runs; the gates are counts |
-| ships in | 11.0.0 |
+| release | `waves/INDEX.md`, the one record |
 | families | F-50 remainder (`audit/REGISTRY.md:1201-1219`): L07-02, L07-13, R2-04-16, R2-09-01, R2-09-02 (the subscriber half), R2-09-03, R2-09-04, R5-01-08. The blob's settle seam (R2-03-06, the quiescence ask) is W-G.5's |
 | depends on | PLAN §5, the one record of edges |
 | dependants | PLAN §5 (its inverse) |

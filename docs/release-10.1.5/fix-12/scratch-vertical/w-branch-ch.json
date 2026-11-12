@@ -1,0 +1,557 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "tests-visual/playwright.config.ts",
+      "--project=chromium-headless-new",
+      "release-10-1-5.spec.ts",
+      "--grep",
+      "s2 O-201|t1 O-201|m2 a vertical",
+      "--workers=1"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/playwright.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-headless-new",
+        "name": "chromium-headless-new",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "coarse-touch",
+        "name": "coarse-touch",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "safari-webgl.spec.ts",
+          "aurora-swraster.spec.ts",
+          "release-10-1-1.spec.ts",
+          "release-10-1-2.spec.ts",
+          "release-10-1-3.spec.ts",
+          "release-10-1-4.spec.ts",
+          "release-10-1-5.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/docs/release-10.1.5/fix-12/w-branch-ch.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5345",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/",
+      "url": "http://localhost:5345",
+      "reuseExistingServer": true,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "release-10-1-5.spec.ts",
+      "file": "release-10-1-5.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "m2 a vertical run whose seats fit scrolls at most the ring floor's shortfall, across the fit edge",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 15322,
+                  "error": {
+                    "message": "Error: no row whose seats fit scrolls past the ring floor, and the flag is the span\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 21\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"fits\": true,\u001b[39m\n\u001b[31m+     \"hidden\": 1,\u001b[39m\n\u001b[31m+     \"law\": Array [\u001b[39m\n\u001b[31m+       \"a fitting run hides a seat\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"port\": 282,\u001b[39m\n\u001b[31m+     \"radii\": Array [\u001b[39m\n\u001b[31m+       \"32px\",\u001b[39m\n\u001b[31m+       \"32px\",\u001b[39m\n\u001b[31m+       \"32px\",\u001b[39m\n\u001b[31m+       \"32px\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"range\": 6,\u001b[39m\n\u001b[31m+     \"ring\": 4,\u001b[39m\n\u001b[31m+     \"round\": true,\u001b[39m\n\u001b[31m+     \"span\": 280,\u001b[39m\n\u001b[31m+     \"stageH\": 316,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+ ]\u001b[39m",
+                    "stack": "Error: no row whose seats fit scrolls past the ring floor, and the flag is the span\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 21\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"fits\": true,\u001b[39m\n\u001b[31m+     \"hidden\": 1,\u001b[39m\n\u001b[31m+     \"law\": Array [\u001b[39m\n\u001b[31m+       \"a fitting run hides a seat\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"port\": 282,\u001b[39m\n\u001b[31m+     \"radii\": Array [\u001b[39m\n\u001b[31m+       \"32px\",\u001b[39m\n\u001b[31m+       \"32px\",\u001b[39m\n\u001b[31m+       \"32px\",\u001b[39m\n\u001b[31m+       \"32px\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"range\": 6,\u001b[39m\n\u001b[31m+     \"ring\": 4,\u001b[39m\n\u001b[31m+     \"round\": true,\u001b[39m\n\u001b[31m+     \"span\": 280,\u001b[39m\n\u001b[31m+     \"stageH\": 316,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+ ]\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:1417:101",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                      "column": 101,
+                      "line": 1417
+                    },
+                    "snippet": "  1415 |         }\n  1416 |         expect(fitted, \"the sweep crosses the fit edge\").toBeGreaterThan(2);\n> 1417 |         expect(bad, \"no row whose seats fit scrolls past the ring floor, and the flag is the span\").toEqual([]);\n       |                                                                                                     ^\n  1418 |     });\n  1419 | }\n  1420 |"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                        "column": 101,
+                        "line": 1417
+                      },
+                      "message": "Error: no row whose seats fit scrolls past the ring floor, and the flag is the span\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 21\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"fits\": true,\u001b[39m\n\u001b[31m+     \"hidden\": 1,\u001b[39m\n\u001b[31m+     \"law\": Array [\u001b[39m\n\u001b[31m+       \"a fitting run hides a seat\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"port\": 282,\u001b[39m\n\u001b[31m+     \"radii\": Array [\u001b[39m\n\u001b[31m+       \"32px\",\u001b[39m\n\u001b[31m+       \"32px\",\u001b[39m\n\u001b[31m+       \"32px\",\u001b[39m\n\u001b[31m+       \"32px\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"range\": 6,\u001b[39m\n\u001b[31m+     \"ring\": 4,\u001b[39m\n\u001b[31m+     \"round\": true,\u001b[39m\n\u001b[31m+     \"span\": 280,\u001b[39m\n\u001b[31m+     \"stageH\": 316,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+ ]\u001b[39m\n\n  1415 |         }\n  1416 |         expect(fitted, \"the sweep crosses the fit edge\").toBeGreaterThan(2);\n> 1417 |         expect(bad, \"no row whose seats fit scrolls past the ring floor, and the flag is the span\").toEqual([]);\n       |                                                                                                     ^\n  1418 |     });\n  1419 | }\n  1420 |\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:1417:101"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T03:58:56.384Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/test-results/release-10-1-5-m2-a-vertic-516f6-ortfall-across-the-fit-edge-chromium-headless-new/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                    "column": 101,
+                    "line": 1417
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-1230dfede1a506d2ea7e",
+          "file": "release-10-1-5.spec.ts",
+          "line": 1403,
+          "column": 5
+        },
+        {
+          "title": "s2 O-201 at 1440: at every cap through the fit edge the first and end seats keep their whole ring, and a run that hides nothing rests round",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 420000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 44396,
+                  "error": {
+                    "message": "Error: a cap that cuts a focused seat's ring, a flag that is not the span, or a run that hides nothing and does not rest round\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 78\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 263,\u001b[39m\n\u001b[31m+     \"fits\": true,\u001b[39m\n\u001b[31m+     \"hidden\": 1,\u001b[39m\n\u001b[31m+     \"law\": Array [\u001b[39m\n\u001b[31m+       \"a fitting run hides a seat\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"port\": 253,\u001b[39m\n\u001b[31m+     \"radii\": Array [\u001b[39m\n\u001b[31m+       \"28px\",\u001b[39m\n\u001b[31m+       \"28px\",\u001b[39m\n\u001b[31m+       \"28px\",\u001b[39m\n\u001b[31m+       \"28px\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"range\": 5,\u001b[39m\n\u001b[31m+     \"ring\": 4,\u001b[39m\n\u001b[31m+     \"round\": true,\u001b[39m\n\u001b[31m+     \"span\": 250,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 262,\u001b[39m\n\u001b[31m+     \"fits\": true,\u001b[39m\n\u001b[31m+     \"hidden\": 1,\u001b[39m\n\u001b[31m+     \"law\": Array [\u001b[39m\n\u001b[31m+       \"a fitting run hides a seat\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"port\": 252,\u001b[39m\n\u001b[31m+     \"radii\": Array [\u001b[39m\n\u001b[31m+       \"28px\",\u001b[39m\n\u001b[31m+       \"28px\",\u001b[39m\n\u001b[31m+       \"28px\",\u001b[39m\n\u001b[31m+       \"28px\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"range\": 6,\u001b[39m\n\u001b[31m+     \"ring\": 4,\u001b[39m\n\u001b[31m+     \"round\": true,\u001b[39m\n\u001b[31m+     \"span\": 250,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 261,\u001b[39m\n\u001b[31m+     \"fits\": true,\u001b[39m\n\u001b[31m+     \"hidden\": 1,\u001b[39m\n\u001b[31m+     \"law\": Array [\u001b[39m\n\u001b[31m+       \"a fitting run hides a seat\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"port\": 251,\u001b[39m\n\u001b[31m+     \"radii\": Array [\u001b[39m\n\u001b[31m+       \"28px\",\u001b[39m\n\u001b[31m+       \"28px\",\u001b[39m\n\u001b[31m+       \"28px\",\u001b[39m\n\u001b[31m+       \"28px\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"range\": 7,\u001b[39m\n\u001b[31m+     \"ring\": 4,\u001b[39m\n\u001b[31m+     \"round\": true,\u001b[39m\n\u001b[31m+     \"span\": 250,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 260,\u001b[39m\n\u001b[31m+     \"fits\": true,\u001b[39m\n\u001b[31m+     \"hidden\": 1,\u001b[39m\n\u001b[31m+     \"law\": Array [\u001b[39m\n\u001b[31m+       \"a fitting run hides a seat\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"port\": 250,\u001b[39m\n\u001b[31m+     \"radii\": Array [\u001b[39m\n\u001b[31m+       \"28px\",\u001b[39m\n\u001b[31m+       \"28px\",\u001b[39m\n\u001b[31m+       \"28px\",\u001b[39m\n\u001b[31m+       \"28px\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"range\": 8,\u001b[39m\n\u001b[31m+     \"ring\": 4,\u001b[39m\n\u001b[31m+     \"round\": true,\u001b[39m\n\u001b[31m+     \"span\": 250,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+ ]\u001b[39m",
+                    "stack": "Error: a cap that cuts a focused seat's ring, a flag that is not the span, or a run that hides nothing and does not rest round\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 78\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 263,\u001b[39m\n\u001b[31m+     \"fits\": true,\u001b[39m\n\u001b[31m+     \"hidden\": 1,\u001b[39m\n\u001b[31m+     \"law\": Array [\u001b[39m\n\u001b[31m+       \"a fitting run hides a seat\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"port\": 253,\u001b[39m\n\u001b[31m+     \"radii\": Array [\u001b[39m\n\u001b[31m+       \"28px\",\u001b[39m\n\u001b[31m+       \"28px\",\u001b[39m\n\u001b[31m+       \"28px\",\u001b[39m\n\u001b[31m+       \"28px\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"range\": 5,\u001b[39m\n\u001b[31m+     \"ring\": 4,\u001b[39m\n\u001b[31m+     \"round\": true,\u001b[39m\n\u001b[31m+     \"span\": 250,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 262,\u001b[39m\n\u001b[31m+     \"fits\": true,\u001b[39m\n\u001b[31m+     \"hidden\": 1,\u001b[39m\n\u001b[31m+     \"law\": Array [\u001b[39m\n\u001b[31m+       \"a fitting run hides a seat\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"port\": 252,\u001b[39m\n\u001b[31m+     \"radii\": Array [\u001b[39m\n\u001b[31m+       \"28px\",\u001b[39m\n\u001b[31m+       \"28px\",\u001b[39m\n\u001b[31m+       \"28px\",\u001b[39m\n\u001b[31m+       \"28px\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"range\": 6,\u001b[39m\n\u001b[31m+     \"ring\": 4,\u001b[39m\n\u001b[31m+     \"round\": true,\u001b[39m\n\u001b[31m+     \"span\": 250,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 261,\u001b[39m\n\u001b[31m+     \"fits\": true,\u001b[39m\n\u001b[31m+     \"hidden\": 1,\u001b[39m\n\u001b[31m+     \"law\": Array [\u001b[39m\n\u001b[31m+       \"a fitting run hides a seat\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"port\": 251,\u001b[39m\n\u001b[31m+     \"radii\": Array [\u001b[39m\n\u001b[31m+       \"28px\",\u001b[39m\n\u001b[31m+       \"28px\",\u001b[39m\n\u001b[31m+       \"28px\",\u001b[39m\n\u001b[31m+       \"28px\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"range\": 7,\u001b[39m\n\u001b[31m+     \"ring\": 4,\u001b[39m\n\u001b[31m+     \"round\": true,\u001b[39m\n\u001b[31m+     \"span\": 250,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 260,\u001b[39m\n\u001b[31m+     \"fits\": true,\u001b[39m\n\u001b[31m+     \"hidden\": 1,\u001b[39m\n\u001b[31m+     \"law\": Array [\u001b[39m\n\u001b[31m+       \"a fitting run hides a seat\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"port\": 250,\u001b[39m\n\u001b[31m+     \"radii\": Array [\u001b[39m\n\u001b[31m+       \"28px\",\u001b[39m\n\u001b[31m+       \"28px\",\u001b[39m\n\u001b[31m+       \"28px\",\u001b[39m\n\u001b[31m+       \"28px\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"range\": 8,\u001b[39m\n\u001b[31m+     \"ring\": 4,\u001b[39m\n\u001b[31m+     \"round\": true,\u001b[39m\n\u001b[31m+     \"span\": 250,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+ ]\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:2330:144",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                      "column": 144,
+                      "line": 2330
+                    },
+                    "snippet": "  2328 |         }\n  2329 |         expect(unfit, `the sweep under ${natural} crosses the fit edge`).toBeGreaterThan(2);\n> 2330 |         expect(bad, \"a cap that cuts a focused seat's ring, a flag that is not the span, or a run that hides nothing and does not rest round\").toEqual([]);\n       |                                                                                                                                                ^\n  2331 |     });\n  2332 | }\n  2333 |"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                        "column": 144,
+                        "line": 2330
+                      },
+                      "message": "Error: a cap that cuts a focused seat's ring, a flag that is not the span, or a run that hides nothing and does not rest round\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 78\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 263,\u001b[39m\n\u001b[31m+     \"fits\": true,\u001b[39m\n\u001b[31m+     \"hidden\": 1,\u001b[39m\n\u001b[31m+     \"law\": Array [\u001b[39m\n\u001b[31m+       \"a fitting run hides a seat\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"port\": 253,\u001b[39m\n\u001b[31m+     \"radii\": Array [\u001b[39m\n\u001b[31m+       \"28px\",\u001b[39m\n\u001b[31m+       \"28px\",\u001b[39m\n\u001b[31m+       \"28px\",\u001b[39m\n\u001b[31m+       \"28px\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"range\": 5,\u001b[39m\n\u001b[31m+     \"ring\": 4,\u001b[39m\n\u001b[31m+     \"round\": true,\u001b[39m\n\u001b[31m+     \"span\": 250,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 262,\u001b[39m\n\u001b[31m+     \"fits\": true,\u001b[39m\n\u001b[31m+     \"hidden\": 1,\u001b[39m\n\u001b[31m+     \"law\": Array [\u001b[39m\n\u001b[31m+       \"a fitting run hides a seat\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"port\": 252,\u001b[39m\n\u001b[31m+     \"radii\": Array [\u001b[39m\n\u001b[31m+       \"28px\",\u001b[39m\n\u001b[31m+       \"28px\",\u001b[39m\n\u001b[31m+       \"28px\",\u001b[39m\n\u001b[31m+       \"28px\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"range\": 6,\u001b[39m\n\u001b[31m+     \"ring\": 4,\u001b[39m\n\u001b[31m+     \"round\": true,\u001b[39m\n\u001b[31m+     \"span\": 250,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 261,\u001b[39m\n\u001b[31m+     \"fits\": true,\u001b[39m\n\u001b[31m+     \"hidden\": 1,\u001b[39m\n\u001b[31m+     \"law\": Array [\u001b[39m\n\u001b[31m+       \"a fitting run hides a seat\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"port\": 251,\u001b[39m\n\u001b[31m+     \"radii\": Array [\u001b[39m\n\u001b[31m+       \"28px\",\u001b[39m\n\u001b[31m+       \"28px\",\u001b[39m\n\u001b[31m+       \"28px\",\u001b[39m\n\u001b[31m+       \"28px\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"range\": 7,\u001b[39m\n\u001b[31m+     \"ring\": 4,\u001b[39m\n\u001b[31m+     \"round\": true,\u001b[39m\n\u001b[31m+     \"span\": 250,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 260,\u001b[39m\n\u001b[31m+     \"fits\": true,\u001b[39m\n\u001b[31m+     \"hidden\": 1,\u001b[39m\n\u001b[31m+     \"law\": Array [\u001b[39m\n\u001b[31m+       \"a fitting run hides a seat\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"port\": 250,\u001b[39m\n\u001b[31m+     \"radii\": Array [\u001b[39m\n\u001b[31m+       \"28px\",\u001b[39m\n\u001b[31m+       \"28px\",\u001b[39m\n\u001b[31m+       \"28px\",\u001b[39m\n\u001b[31m+       \"28px\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"range\": 8,\u001b[39m\n\u001b[31m+     \"ring\": 4,\u001b[39m\n\u001b[31m+     \"round\": true,\u001b[39m\n\u001b[31m+     \"span\": 250,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+ ]\u001b[39m\n\n  2328 |         }\n  2329 |         expect(unfit, `the sweep under ${natural} crosses the fit edge`).toBeGreaterThan(2);\n> 2330 |         expect(bad, \"a cap that cuts a focused seat's ring, a flag that is not the span, or a run that hides nothing and does not rest round\").toEqual([]);\n       |                                                                                                                                                ^\n  2331 |     });\n  2332 | }\n  2333 |\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:2330:144"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T03:59:12.254Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/test-results/release-10-1-5-s2-O-201-at-f97e1-t-hides-nothing-rests-round-chromium-headless-new/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                    "column": 144,
+                    "line": 2330
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-937a1a847e6a6bf5237b",
+          "file": "release-10-1-5.spec.ts",
+          "line": 2302,
+          "column": 5
+        }
+      ],
+      "suites": [
+        {
+          "title": "critique 7, coarse phone",
+          "file": "release-10-1-5.spec.ts",
+          "line": 1731,
+          "column": 6,
+          "specs": [
+            {
+              "title": "m2 a vertical run whose seats fit scrolls at most the ring floor's shortfall, across the fit edge",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 240000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 15416,
+                      "error": {
+                        "message": "Error: no row whose seats fit scrolls past the ring floor, and the flag is the span\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 21\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"fits\": true,\u001b[39m\n\u001b[31m+     \"hidden\": 1,\u001b[39m\n\u001b[31m+     \"law\": Array [\u001b[39m\n\u001b[31m+       \"a fitting run hides a seat\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"port\": 306,\u001b[39m\n\u001b[31m+     \"radii\": Array [\u001b[39m\n\u001b[31m+       \"34px\",\u001b[39m\n\u001b[31m+       \"34px\",\u001b[39m\n\u001b[31m+       \"34px\",\u001b[39m\n\u001b[31m+       \"34px\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"range\": 6,\u001b[39m\n\u001b[31m+     \"ring\": 4,\u001b[39m\n\u001b[31m+     \"round\": true,\u001b[39m\n\u001b[31m+     \"span\": 304,\u001b[39m\n\u001b[31m+     \"stageH\": 340,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+ ]\u001b[39m",
+                        "stack": "Error: no row whose seats fit scrolls past the ring floor, and the flag is the span\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 21\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"fits\": true,\u001b[39m\n\u001b[31m+     \"hidden\": 1,\u001b[39m\n\u001b[31m+     \"law\": Array [\u001b[39m\n\u001b[31m+       \"a fitting run hides a seat\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"port\": 306,\u001b[39m\n\u001b[31m+     \"radii\": Array [\u001b[39m\n\u001b[31m+       \"34px\",\u001b[39m\n\u001b[31m+       \"34px\",\u001b[39m\n\u001b[31m+       \"34px\",\u001b[39m\n\u001b[31m+       \"34px\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"range\": 6,\u001b[39m\n\u001b[31m+     \"ring\": 4,\u001b[39m\n\u001b[31m+     \"round\": true,\u001b[39m\n\u001b[31m+     \"span\": 304,\u001b[39m\n\u001b[31m+     \"stageH\": 340,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+ ]\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:1417:101",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                          "column": 101,
+                          "line": 1417
+                        },
+                        "snippet": "  1415 |         }\n  1416 |         expect(fitted, \"the sweep crosses the fit edge\").toBeGreaterThan(2);\n> 1417 |         expect(bad, \"no row whose seats fit scrolls past the ring floor, and the flag is the span\").toEqual([]);\n       |                                                                                                     ^\n  1418 |     });\n  1419 | }\n  1420 |"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                            "column": 101,
+                            "line": 1417
+                          },
+                          "message": "Error: no row whose seats fit scrolls past the ring floor, and the flag is the span\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 21\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"fits\": true,\u001b[39m\n\u001b[31m+     \"hidden\": 1,\u001b[39m\n\u001b[31m+     \"law\": Array [\u001b[39m\n\u001b[31m+       \"a fitting run hides a seat\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"port\": 306,\u001b[39m\n\u001b[31m+     \"radii\": Array [\u001b[39m\n\u001b[31m+       \"34px\",\u001b[39m\n\u001b[31m+       \"34px\",\u001b[39m\n\u001b[31m+       \"34px\",\u001b[39m\n\u001b[31m+       \"34px\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"range\": 6,\u001b[39m\n\u001b[31m+     \"ring\": 4,\u001b[39m\n\u001b[31m+     \"round\": true,\u001b[39m\n\u001b[31m+     \"span\": 304,\u001b[39m\n\u001b[31m+     \"stageH\": 340,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+ ]\u001b[39m\n\n  1415 |         }\n  1416 |         expect(fitted, \"the sweep crosses the fit edge\").toBeGreaterThan(2);\n> 1417 |         expect(bad, \"no row whose seats fit scrolls past the ring floor, and the flag is the span\").toEqual([]);\n       |                                                                                                     ^\n  1418 |     });\n  1419 | }\n  1420 |\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:1417:101"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T03:58:40.386Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/test-results/release-10-1-5-critique-7--e7014-ortfall-across-the-fit-edge-chromium-headless-new/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                        "column": 101,
+                        "line": 1417
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "ba3de8f038291be5029b-f44ce605ed98924afda9",
+              "file": "release-10-1-5.spec.ts",
+              "line": 1403,
+              "column": 5
+            }
+          ]
+        },
+        {
+          "title": "fix 11, coarse phone",
+          "file": "release-10-1-5.spec.ts",
+          "line": 2378,
+          "column": 6,
+          "specs": [
+            {
+              "title": "s2 O-201 at 390: at every cap through the fit edge the first and end seats keep their whole ring, and a run that hides nothing rests round",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 420000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 45313,
+                      "error": {
+                        "message": "Error: a cap that cuts a focused seat's ring, a flag that is not the span, or a run that hides nothing and does not rest round\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 78\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 268,\u001b[39m\n\u001b[31m+     \"fits\": true,\u001b[39m\n\u001b[31m+     \"hidden\": 1,\u001b[39m\n\u001b[31m+     \"law\": Array [\u001b[39m\n\u001b[31m+       \"a fitting run hides a seat\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"port\": 258,\u001b[39m\n\u001b[31m+     \"radii\": Array [\u001b[39m\n\u001b[31m+       \"30px\",\u001b[39m\n\u001b[31m+       \"30px\",\u001b[39m\n\u001b[31m+       \"30px\",\u001b[39m\n\u001b[31m+       \"30px\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"range\": 5,\u001b[39m\n\u001b[31m+     \"ring\": 4,\u001b[39m\n\u001b[31m+     \"round\": true,\u001b[39m\n\u001b[31m+     \"span\": 255,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 267,\u001b[39m\n\u001b[31m+     \"fits\": true,\u001b[39m\n\u001b[31m+     \"hidden\": 1,\u001b[39m\n\u001b[31m+     \"law\": Array [\u001b[39m\n\u001b[31m+       \"a fitting run hides a seat\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"port\": 257,\u001b[39m\n\u001b[31m+     \"radii\": Array [\u001b[39m\n\u001b[31m+       \"30px\",\u001b[39m\n\u001b[31m+       \"30px\",\u001b[39m\n\u001b[31m+       \"30px\",\u001b[39m\n\u001b[31m+       \"30px\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"range\": 6,\u001b[39m\n\u001b[31m+     \"ring\": 4,\u001b[39m\n\u001b[31m+     \"round\": true,\u001b[39m\n\u001b[31m+     \"span\": 255,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 266,\u001b[39m\n\u001b[31m+     \"fits\": true,\u001b[39m\n\u001b[31m+     \"hidden\": 1,\u001b[39m\n\u001b[31m+     \"law\": Array [\u001b[39m\n\u001b[31m+       \"a fitting run hides a seat\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"port\": 256,\u001b[39m\n\u001b[31m+     \"radii\": Array [\u001b[39m\n\u001b[31m+       \"30px\",\u001b[39m\n\u001b[31m+       \"30px\",\u001b[39m\n\u001b[31m+       \"30px\",\u001b[39m\n\u001b[31m+       \"30px\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"range\": 7,\u001b[39m\n\u001b[31m+     \"ring\": 4,\u001b[39m\n\u001b[31m+     \"round\": true,\u001b[39m\n\u001b[31m+     \"span\": 255,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 265,\u001b[39m\n\u001b[31m+     \"fits\": true,\u001b[39m\n\u001b[31m+     \"hidden\": 1,\u001b[39m\n\u001b[31m+     \"law\": Array [\u001b[39m\n\u001b[31m+       \"a fitting run hides a seat\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"port\": 255,\u001b[39m\n\u001b[31m+     \"radii\": Array [\u001b[39m\n\u001b[31m+       \"30px\",\u001b[39m\n\u001b[31m+       \"30px\",\u001b[39m\n\u001b[31m+       \"30px\",\u001b[39m\n\u001b[31m+       \"30px\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"range\": 8,\u001b[39m\n\u001b[31m+     \"ring\": 4,\u001b[39m\n\u001b[31m+     \"round\": true,\u001b[39m\n\u001b[31m+     \"span\": 255,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+ ]\u001b[39m",
+                        "stack": "Error: a cap that cuts a focused seat's ring, a flag that is not the span, or a run that hides nothing and does not rest round\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 78\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 268,\u001b[39m\n\u001b[31m+     \"fits\": true,\u001b[39m\n\u001b[31m+     \"hidden\": 1,\u001b[39m\n\u001b[31m+     \"law\": Array [\u001b[39m\n\u001b[31m+       \"a fitting run hides a seat\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"port\": 258,\u001b[39m\n\u001b[31m+     \"radii\": Array [\u001b[39m\n\u001b[31m+       \"30px\",\u001b[39m\n\u001b[31m+       \"30px\",\u001b[39m\n\u001b[31m+       \"30px\",\u001b[39m\n\u001b[31m+       \"30px\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"range\": 5,\u001b[39m\n\u001b[31m+     \"ring\": 4,\u001b[39m\n\u001b[31m+     \"round\": true,\u001b[39m\n\u001b[31m+     \"span\": 255,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 267,\u001b[39m\n\u001b[31m+     \"fits\": true,\u001b[39m\n\u001b[31m+     \"hidden\": 1,\u001b[39m\n\u001b[31m+     \"law\": Array [\u001b[39m\n\u001b[31m+       \"a fitting run hides a seat\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"port\": 257,\u001b[39m\n\u001b[31m+     \"radii\": Array [\u001b[39m\n\u001b[31m+       \"30px\",\u001b[39m\n\u001b[31m+       \"30px\",\u001b[39m\n\u001b[31m+       \"30px\",\u001b[39m\n\u001b[31m+       \"30px\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"range\": 6,\u001b[39m\n\u001b[31m+     \"ring\": 4,\u001b[39m\n\u001b[31m+     \"round\": true,\u001b[39m\n\u001b[31m+     \"span\": 255,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 266,\u001b[39m\n\u001b[31m+     \"fits\": true,\u001b[39m\n\u001b[31m+     \"hidden\": 1,\u001b[39m\n\u001b[31m+     \"law\": Array [\u001b[39m\n\u001b[31m+       \"a fitting run hides a seat\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"port\": 256,\u001b[39m\n\u001b[31m+     \"radii\": Array [\u001b[39m\n\u001b[31m+       \"30px\",\u001b[39m\n\u001b[31m+       \"30px\",\u001b[39m\n\u001b[31m+       \"30px\",\u001b[39m\n\u001b[31m+       \"30px\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"range\": 7,\u001b[39m\n\u001b[31m+     \"ring\": 4,\u001b[39m\n\u001b[31m+     \"round\": true,\u001b[39m\n\u001b[31m+     \"span\": 255,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 265,\u001b[39m\n\u001b[31m+     \"fits\": true,\u001b[39m\n\u001b[31m+     \"hidden\": 1,\u001b[39m\n\u001b[31m+     \"law\": Array [\u001b[39m\n\u001b[31m+       \"a fitting run hides a seat\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"port\": 255,\u001b[39m\n\u001b[31m+     \"radii\": Array [\u001b[39m\n\u001b[31m+       \"30px\",\u001b[39m\n\u001b[31m+       \"30px\",\u001b[39m\n\u001b[31m+       \"30px\",\u001b[39m\n\u001b[31m+       \"30px\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"range\": 8,\u001b[39m\n\u001b[31m+     \"ring\": 4,\u001b[39m\n\u001b[31m+     \"round\": true,\u001b[39m\n\u001b[31m+     \"span\": 255,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+ ]\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:2330:144",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                          "column": 144,
+                          "line": 2330
+                        },
+                        "snippet": "  2328 |         }\n  2329 |         expect(unfit, `the sweep under ${natural} crosses the fit edge`).toBeGreaterThan(2);\n> 2330 |         expect(bad, \"a cap that cuts a focused seat's ring, a flag that is not the span, or a run that hides nothing and does not rest round\").toEqual([]);\n       |                                                                                                                                                ^\n  2331 |     });\n  2332 | }\n  2333 |"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                            "column": 144,
+                            "line": 2330
+                          },
+                          "message": "Error: a cap that cuts a focused seat's ring, a flag that is not the span, or a run that hides nothing and does not rest round\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 78\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 268,\u001b[39m\n\u001b[31m+     \"fits\": true,\u001b[39m\n\u001b[31m+     \"hidden\": 1,\u001b[39m\n\u001b[31m+     \"law\": Array [\u001b[39m\n\u001b[31m+       \"a fitting run hides a seat\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"port\": 258,\u001b[39m\n\u001b[31m+     \"radii\": Array [\u001b[39m\n\u001b[31m+       \"30px\",\u001b[39m\n\u001b[31m+       \"30px\",\u001b[39m\n\u001b[31m+       \"30px\",\u001b[39m\n\u001b[31m+       \"30px\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"range\": 5,\u001b[39m\n\u001b[31m+     \"ring\": 4,\u001b[39m\n\u001b[31m+     \"round\": true,\u001b[39m\n\u001b[31m+     \"span\": 255,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 267,\u001b[39m\n\u001b[31m+     \"fits\": true,\u001b[39m\n\u001b[31m+     \"hidden\": 1,\u001b[39m\n\u001b[31m+     \"law\": Array [\u001b[39m\n\u001b[31m+       \"a fitting run hides a seat\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"port\": 257,\u001b[39m\n\u001b[31m+     \"radii\": Array [\u001b[39m\n\u001b[31m+       \"30px\",\u001b[39m\n\u001b[31m+       \"30px\",\u001b[39m\n\u001b[31m+       \"30px\",\u001b[39m\n\u001b[31m+       \"30px\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"range\": 6,\u001b[39m\n\u001b[31m+     \"ring\": 4,\u001b[39m\n\u001b[31m+     \"round\": true,\u001b[39m\n\u001b[31m+     \"span\": 255,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 266,\u001b[39m\n\u001b[31m+     \"fits\": true,\u001b[39m\n\u001b[31m+     \"hidden\": 1,\u001b[39m\n\u001b[31m+     \"law\": Array [\u001b[39m\n\u001b[31m+       \"a fitting run hides a seat\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"port\": 256,\u001b[39m\n\u001b[31m+     \"radii\": Array [\u001b[39m\n\u001b[31m+       \"30px\",\u001b[39m\n\u001b[31m+       \"30px\",\u001b[39m\n\u001b[31m+       \"30px\",\u001b[39m\n\u001b[31m+       \"30px\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"range\": 7,\u001b[39m\n\u001b[31m+     \"ring\": 4,\u001b[39m\n\u001b[31m+     \"round\": true,\u001b[39m\n\u001b[31m+     \"span\": 255,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 265,\u001b[39m\n\u001b[31m+     \"fits\": true,\u001b[39m\n\u001b[31m+     \"hidden\": 1,\u001b[39m\n\u001b[31m+     \"law\": Array [\u001b[39m\n\u001b[31m+       \"a fitting run hides a seat\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"port\": 255,\u001b[39m\n\u001b[31m+     \"radii\": Array [\u001b[39m\n\u001b[31m+       \"30px\",\u001b[39m\n\u001b[31m+       \"30px\",\u001b[39m\n\u001b[31m+       \"30px\",\u001b[39m\n\u001b[31m+       \"30px\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"range\": 8,\u001b[39m\n\u001b[31m+     \"ring\": 4,\u001b[39m\n\u001b[31m+     \"round\": true,\u001b[39m\n\u001b[31m+     \"span\": 255,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+ ]\u001b[39m\n\n  2328 |         }\n  2329 |         expect(unfit, `the sweep under ${natural} crosses the fit edge`).toBeGreaterThan(2);\n> 2330 |         expect(bad, \"a cap that cuts a focused seat's ring, a flag that is not the span, or a run that hides nothing and does not rest round\").toEqual([]);\n       |                                                                                                                                                ^\n  2331 |     });\n  2332 | }\n  2333 |\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:2330:144"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T03:59:57.190Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/test-results/release-10-1-5-fix-11-coar-b6824-t-hides-nothing-rests-round-chromium-headless-new/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                        "column": 144,
+                        "line": 2330
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "ba3de8f038291be5029b-4bacda187aaca3dc78b9",
+              "file": "release-10-1-5.spec.ts",
+              "line": 2302,
+              "column": 5
+            }
+          ]
+        },
+        {
+          "title": "fix 12, desktop",
+          "file": "release-10-1-5.spec.ts",
+          "line": 2384,
+          "column": 6,
+          "specs": [
+            {
+              "title": "t1 O-201 vertical: at every stage through the fit edge the first and last seats keep their whole ring",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 420000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 4,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 30135,
+                      "error": {
+                        "message": "Error: a stage that cuts a focused end seat's ring, or a run that breaks the fit law\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 40\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"fits\": true,\u001b[39m\n\u001b[31m+     \"hidden\": 1,\u001b[39m\n\u001b[31m+     \"law\": Array [\u001b[39m\n\u001b[31m+       \"a fitting run hides a seat\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"port\": 282,\u001b[39m\n\u001b[31m+     \"radii\": Array [\u001b[39m\n\u001b[31m+       \"32px\",\u001b[39m\n\u001b[31m+       \"32px\",\u001b[39m\n\u001b[31m+       \"32px\",\u001b[39m\n\u001b[31m+       \"32px\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"range\": 6,\u001b[39m\n\u001b[31m+     \"ring\": 4,\u001b[39m\n\u001b[31m+     \"round\": true,\u001b[39m\n\u001b[31m+     \"span\": 280,\u001b[39m\n\u001b[31m+     \"stage\": 316,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"fits\": true,\u001b[39m\n\u001b[31m+     \"hidden\": 1,\u001b[39m\n\u001b[31m+     \"law\": Array [\u001b[39m\n\u001b[31m+       \"a fitting run hides a seat\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"port\": 280,\u001b[39m\n\u001b[31m+     \"radii\": Array [\u001b[39m\n\u001b[31m+       \"32px\",\u001b[39m\n\u001b[31m+       \"32px\",\u001b[39m\n\u001b[31m+       \"32px\",\u001b[39m\n\u001b[31m+       \"32px\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"range\": 8,\u001b[39m\n\u001b[31m+     \"ring\": 4,\u001b[39m\n\u001b[31m+     \"round\": true,\u001b[39m\n\u001b[31m+     \"span\": 280,\u001b[39m\n\u001b[31m+     \"stage\": 314,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+ ]\u001b[39m",
+                        "stack": "Error: a stage that cuts a focused end seat's ring, or a run that breaks the fit law\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 40\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"fits\": true,\u001b[39m\n\u001b[31m+     \"hidden\": 1,\u001b[39m\n\u001b[31m+     \"law\": Array [\u001b[39m\n\u001b[31m+       \"a fitting run hides a seat\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"port\": 282,\u001b[39m\n\u001b[31m+     \"radii\": Array [\u001b[39m\n\u001b[31m+       \"32px\",\u001b[39m\n\u001b[31m+       \"32px\",\u001b[39m\n\u001b[31m+       \"32px\",\u001b[39m\n\u001b[31m+       \"32px\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"range\": 6,\u001b[39m\n\u001b[31m+     \"ring\": 4,\u001b[39m\n\u001b[31m+     \"round\": true,\u001b[39m\n\u001b[31m+     \"span\": 280,\u001b[39m\n\u001b[31m+     \"stage\": 316,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"fits\": true,\u001b[39m\n\u001b[31m+     \"hidden\": 1,\u001b[39m\n\u001b[31m+     \"law\": Array [\u001b[39m\n\u001b[31m+       \"a fitting run hides a seat\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"port\": 280,\u001b[39m\n\u001b[31m+     \"radii\": Array [\u001b[39m\n\u001b[31m+       \"32px\",\u001b[39m\n\u001b[31m+       \"32px\",\u001b[39m\n\u001b[31m+       \"32px\",\u001b[39m\n\u001b[31m+       \"32px\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"range\": 8,\u001b[39m\n\u001b[31m+     \"ring\": 4,\u001b[39m\n\u001b[31m+     \"round\": true,\u001b[39m\n\u001b[31m+     \"span\": 280,\u001b[39m\n\u001b[31m+     \"stage\": 314,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+ ]\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:2371:102",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                          "column": 102,
+                          "line": 2371
+                        },
+                        "snippet": "  2369 |         }\n  2370 |         expect(unfit, \"the sweep crosses the fit edge\").toBeGreaterThan(2);\n> 2371 |         expect(bad, \"a stage that cuts a focused end seat's ring, or a run that breaks the fit law\").toEqual([]);\n       |                                                                                                      ^\n  2372 |     });\n  2373 | }\n  2374 |"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                            "column": 102,
+                            "line": 2371
+                          },
+                          "message": "Error: a stage that cuts a focused end seat's ring, or a run that breaks the fit law\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 40\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"fits\": true,\u001b[39m\n\u001b[31m+     \"hidden\": 1,\u001b[39m\n\u001b[31m+     \"law\": Array [\u001b[39m\n\u001b[31m+       \"a fitting run hides a seat\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"port\": 282,\u001b[39m\n\u001b[31m+     \"radii\": Array [\u001b[39m\n\u001b[31m+       \"32px\",\u001b[39m\n\u001b[31m+       \"32px\",\u001b[39m\n\u001b[31m+       \"32px\",\u001b[39m\n\u001b[31m+       \"32px\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"range\": 6,\u001b[39m\n\u001b[31m+     \"ring\": 4,\u001b[39m\n\u001b[31m+     \"round\": true,\u001b[39m\n\u001b[31m+     \"span\": 280,\u001b[39m\n\u001b[31m+     \"stage\": 316,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"fits\": true,\u001b[39m\n\u001b[31m+     \"hidden\": 1,\u001b[39m\n\u001b[31m+     \"law\": Array [\u001b[39m\n\u001b[31m+       \"a fitting run hides a seat\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"port\": 280,\u001b[39m\n\u001b[31m+     \"radii\": Array [\u001b[39m\n\u001b[31m+       \"32px\",\u001b[39m\n\u001b[31m+       \"32px\",\u001b[39m\n\u001b[31m+       \"32px\",\u001b[39m\n\u001b[31m+       \"32px\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"range\": 8,\u001b[39m\n\u001b[31m+     \"ring\": 4,\u001b[39m\n\u001b[31m+     \"round\": true,\u001b[39m\n\u001b[31m+     \"span\": 280,\u001b[39m\n\u001b[31m+     \"stage\": 314,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+ ]\u001b[39m\n\n  2369 |         }\n  2370 |         expect(unfit, \"the sweep crosses the fit edge\").toBeGreaterThan(2);\n> 2371 |         expect(bad, \"a stage that cuts a focused end seat's ring, or a run that breaks the fit law\").toEqual([]);\n       |                                                                                                      ^\n  2372 |     });\n  2373 | }\n  2374 |\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:2371:102"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T04:00:43.637Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/test-results/release-10-1-5-fix-12-desk-aa3e3-seats-keep-their-whole-ring-chromium-headless-new/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                        "column": 102,
+                        "line": 2371
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "ba3de8f038291be5029b-144fbc0a226dbdec0107",
+              "file": "release-10-1-5.spec.ts",
+              "line": 2340,
+              "column": 5
+            }
+          ]
+        },
+        {
+          "title": "fix 12, coarse phone",
+          "file": "release-10-1-5.spec.ts",
+          "line": 2389,
+          "column": 6,
+          "specs": [
+            {
+              "title": "t1 O-201 vertical: at every stage through the fit edge the first and last seats keep their whole ring",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 420000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 5,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 30191,
+                      "error": {
+                        "message": "Error: a stage that cuts a focused end seat's ring, or a run that breaks the fit law\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 40\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"fits\": true,\u001b[39m\n\u001b[31m+     \"hidden\": 1,\u001b[39m\n\u001b[31m+     \"law\": Array [\u001b[39m\n\u001b[31m+       \"a fitting run hides a seat\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"port\": 306,\u001b[39m\n\u001b[31m+     \"radii\": Array [\u001b[39m\n\u001b[31m+       \"34px\",\u001b[39m\n\u001b[31m+       \"34px\",\u001b[39m\n\u001b[31m+       \"34px\",\u001b[39m\n\u001b[31m+       \"34px\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"range\": 6,\u001b[39m\n\u001b[31m+     \"ring\": 4,\u001b[39m\n\u001b[31m+     \"round\": true,\u001b[39m\n\u001b[31m+     \"span\": 304,\u001b[39m\n\u001b[31m+     \"stage\": 340,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"fits\": true,\u001b[39m\n\u001b[31m+     \"hidden\": 1,\u001b[39m\n\u001b[31m+     \"law\": Array [\u001b[39m\n\u001b[31m+       \"a fitting run hides a seat\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"port\": 304,\u001b[39m\n\u001b[31m+     \"radii\": Array [\u001b[39m\n\u001b[31m+       \"34px\",\u001b[39m\n\u001b[31m+       \"34px\",\u001b[39m\n\u001b[31m+       \"34px\",\u001b[39m\n\u001b[31m+       \"34px\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"range\": 8,\u001b[39m\n\u001b[31m+     \"ring\": 4,\u001b[39m\n\u001b[31m+     \"round\": true,\u001b[39m\n\u001b[31m+     \"span\": 304,\u001b[39m\n\u001b[31m+     \"stage\": 338,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+ ]\u001b[39m",
+                        "stack": "Error: a stage that cuts a focused end seat's ring, or a run that breaks the fit law\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 40\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"fits\": true,\u001b[39m\n\u001b[31m+     \"hidden\": 1,\u001b[39m\n\u001b[31m+     \"law\": Array [\u001b[39m\n\u001b[31m+       \"a fitting run hides a seat\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"port\": 306,\u001b[39m\n\u001b[31m+     \"radii\": Array [\u001b[39m\n\u001b[31m+       \"34px\",\u001b[39m\n\u001b[31m+       \"34px\",\u001b[39m\n\u001b[31m+       \"34px\",\u001b[39m\n\u001b[31m+       \"34px\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"range\": 6,\u001b[39m\n\u001b[31m+     \"ring\": 4,\u001b[39m\n\u001b[31m+     \"round\": true,\u001b[39m\n\u001b[31m+     \"span\": 304,\u001b[39m\n\u001b[31m+     \"stage\": 340,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"fits\": true,\u001b[39m\n\u001b[31m+     \"hidden\": 1,\u001b[39m\n\u001b[31m+     \"law\": Array [\u001b[39m\n\u001b[31m+       \"a fitting run hides a seat\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"port\": 304,\u001b[39m\n\u001b[31m+     \"radii\": Array [\u001b[39m\n\u001b[31m+       \"34px\",\u001b[39m\n\u001b[31m+       \"34px\",\u001b[39m\n\u001b[31m+       \"34px\",\u001b[39m\n\u001b[31m+       \"34px\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"range\": 8,\u001b[39m\n\u001b[31m+     \"ring\": 4,\u001b[39m\n\u001b[31m+     \"round\": true,\u001b[39m\n\u001b[31m+     \"span\": 304,\u001b[39m\n\u001b[31m+     \"stage\": 338,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+ ]\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:2371:102",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                          "column": 102,
+                          "line": 2371
+                        },
+                        "snippet": "  2369 |         }\n  2370 |         expect(unfit, \"the sweep crosses the fit edge\").toBeGreaterThan(2);\n> 2371 |         expect(bad, \"a stage that cuts a focused end seat's ring, or a run that breaks the fit law\").toEqual([]);\n       |                                                                                                      ^\n  2372 |     });\n  2373 | }\n  2374 |"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                            "column": 102,
+                            "line": 2371
+                          },
+                          "message": "Error: a stage that cuts a focused end seat's ring, or a run that breaks the fit law\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 40\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"fits\": true,\u001b[39m\n\u001b[31m+     \"hidden\": 1,\u001b[39m\n\u001b[31m+     \"law\": Array [\u001b[39m\n\u001b[31m+       \"a fitting run hides a seat\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"port\": 306,\u001b[39m\n\u001b[31m+     \"radii\": Array [\u001b[39m\n\u001b[31m+       \"34px\",\u001b[39m\n\u001b[31m+       \"34px\",\u001b[39m\n\u001b[31m+       \"34px\",\u001b[39m\n\u001b[31m+       \"34px\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"range\": 6,\u001b[39m\n\u001b[31m+     \"ring\": 4,\u001b[39m\n\u001b[31m+     \"round\": true,\u001b[39m\n\u001b[31m+     \"span\": 304,\u001b[39m\n\u001b[31m+     \"stage\": 340,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"fits\": true,\u001b[39m\n\u001b[31m+     \"hidden\": 1,\u001b[39m\n\u001b[31m+     \"law\": Array [\u001b[39m\n\u001b[31m+       \"a fitting run hides a seat\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"port\": 304,\u001b[39m\n\u001b[31m+     \"radii\": Array [\u001b[39m\n\u001b[31m+       \"34px\",\u001b[39m\n\u001b[31m+       \"34px\",\u001b[39m\n\u001b[31m+       \"34px\",\u001b[39m\n\u001b[31m+       \"34px\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"range\": 8,\u001b[39m\n\u001b[31m+     \"ring\": 4,\u001b[39m\n\u001b[31m+     \"round\": true,\u001b[39m\n\u001b[31m+     \"span\": 304,\u001b[39m\n\u001b[31m+     \"stage\": 338,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+ ]\u001b[39m\n\n  2369 |         }\n  2370 |         expect(unfit, \"the sweep crosses the fit edge\").toBeGreaterThan(2);\n> 2371 |         expect(bad, \"a stage that cuts a focused end seat's ring, or a run that breaks the fit law\").toEqual([]);\n       |                                                                                                      ^\n  2372 |     });\n  2373 | }\n  2374 |\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:2371:102"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T04:01:14.429Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/test-results/release-10-1-5-fix-12-coar-aab9d-seats-keep-their-whole-ring-chromium-headless-new/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                        "column": 102,
+                        "line": 2371
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "ba3de8f038291be5029b-db7c7ec5d18c0a4b5625",
+              "file": "release-10-1-5.spec.ts",
+              "line": 2340,
+              "column": 5
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-11T03:58:38.001Z",
+    "duration": 186820.98500000002,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 6,
+    "flaky": 0
+  }
+}

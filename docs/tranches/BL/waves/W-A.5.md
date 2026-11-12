@@ -1,11 +1,11 @@
-# W-A.5 · W-PAYLOAD-INVARIANT: one CI gate on what a consumer loads, and an exact surface for every subpath · 11.0.0
+# W-A.5 · W-PAYLOAD-INVARIANT: one CI gate on what a consumer loads, and an exact surface for every subpath
 
 | field | value |
 |---|---|
 | seat | band-A wave-spec seat, formation run `wf_68eb18d6-b21` |
 | model | `claude-opus-5-5`, asserted from own system identity |
 | HEAD | `fabc95e2` in a scratch worktree, `dist/` built there (`vite build`, exit 0, "declaration entries: projected 63 public entries") |
-| ships in | 11.0.0 |
+| release | `waves/INDEX.md`, the one record |
 | families | F-10 whole (`audit/REGISTRY.md:279-288`) |
 | depends on | PLAN §5, the one record of edges |
 | dependants | PLAN §5 (its inverse) |

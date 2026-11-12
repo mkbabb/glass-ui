@@ -1,11 +1,11 @@
-# W-L.4 · W-DRAG-MORPH-SETTLE: a press on the active pill stays put, and the fork's fixes land upstream · 11.0.0
+# W-L.4 · W-DRAG-MORPH-SETTLE: a press on the active pill stays put, and the fork's fixes land upstream
 
 | field | value |
 |---|---|
 | seat | band-L wave-spec seat, formation |
 | model | `claude-opus-5-5`, asserted from own system identity |
 | HEAD | `b3d7fa28` in a scratch worktree. `git diff --stat v10.1.0 HEAD -- src package.json tests scripts .github` prints nothing, so every reading measures the published 10.1.0 bytes. `npm run build` exit 0; `npm run demo:dist:build` exit 0; the built demo served by `vite preview` on :6411 |
-| ships in | 11.0.0 |
+| release | `waves/INDEX.md`, the one record |
 | families | F-69 whole (`audit/REGISTRY.md:1467-1476`): L06-02, R2-04-05 |
 | depends on | PLAN §5, the one record of edges |
 | dependants | PLAN §5 (its inverse) |

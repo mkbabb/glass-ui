@@ -1,0 +1,27 @@
+17:25 c10-ch rc=0  5 passed (4.7m) 
+17:29 c10-v1014-ch rc=0  5 passed (4.7m) 
+17:36 branch-ch rc=0  94 passed (6.8m) 
+17:37 g6-4-ch rc=0  23 passed (16.4s) 
+17:39 g6-3-ch rc=0  60 passed (2.2m) 
+17:45 c9cells-ch rc=0  12 passed (6.4m) 
+17:48 c1cells-ch rc=0  7 passed (2.5m) 
+17:48 chain ch done: c10 c10-v1014 branch g6-4 g6-3 c9cells c1cells
+17:48 ch guard rc=0
+17:55 c10-wk rc=0  6 passed (5.0m) 
+18:00 c10-v1014-wk rc=0  6 passed (5.0m) 
+18:08 branch-wk rc=0  94 passed (7.8m) 
+18:08 g6-4-wk rc=0  8 skipped  15 passed (20.2s) 
+18:08 chain wk done: c10 c10-v1014 branch g6-4
+18:09 wk1 guard rc=0
+18:12 g6-3-wk rc=0  2 skipped  58 passed (2.3m) 
+18:19 c9cells-wk rc=0  12 passed (6.6m) 
+18:22 c1cells-wk rc=0  7 passed (3.0m) 
+18:22 chain wk done: g6-3 c9cells c1cells
+18:22 wk2 guard rc=0
+18:22 all done
+18:44 g7 guard rc=0 (the queued g7 waiter, stopped by PID before admission; g7 re-queued by followup-critic-10.sh)
+18:44 g7 done
+18:46 followup-ch rc=0  2 passed (1.7m) 
+18:51 followup-ch-v1014 rc=0  2 passed (1.8m) 
+19:11 g7 guard rc=0
+19:11 followup done

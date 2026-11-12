@@ -1,0 +1,1869 @@
+
+Running 123 tests using 1 worker
+
+  ✘    1 [coarse-touch] › tests-visual/hierarchy.spec.ts:61:5 › AZ.W-HIERARCHY — the canonical section rung + Configurator vocabulary (π) › H1+H2 — every section <h2> resolves to 20.4px; no child <h3> > parent <h2> (3.3s)
+  ✘    2 [coarse-touch] › tests-visual/hierarchy.spec.ts:148:5 › AZ.W-HIERARCHY — the canonical section rung + Configurator vocabulary (π) › H3 — Configurator section label > row label; preset-row block-padding > body-row's (1.2s)
+  ✓    3 [coarse-touch] › tests-visual/hierarchy.spec.ts:235:5 › BB.W-HIERARCHY2 — the StoryHeader cluster (reading order + GRAVITY entrance + gutter) (π) › H2-ORDER — the cluster renders eyebrow→title→blurb top-to-bottom, one dominant focal (3.9s)
+  ✓    4 [coarse-touch] › tests-visual/hierarchy.spec.ts:307:5 › BB.W-HIERARCHY2 — the StoryHeader cluster (reading order + GRAVITY entrance + gutter) (π) › H2-GRAVITY — the title arrives NO-overshoot (translateY monotone to 0, never past) (1.0s)
+  ✓    5 [coarse-touch] › tests-visual/hierarchy.spec.ts:350:5 › BB.W-HIERARCHY2 — the StoryHeader cluster (reading order + GRAVITY entrance + gutter) (π) › H2-PRM — under reduce the cluster paints its static terminal (no rise) (565ms)
+  ✘    6 [coarse-touch] › tests-visual/hierarchy.spec.ts:398:5 › BB.W-HIERARCHY2 — the StoryHeader cluster (reading order + GRAVITY entrance + gutter) (π) › H2-GUTTER — the <main> reserves the --dock-content-safe-inset gutter (650ms)
+[WebServer] 7:32:12 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button data-scenario="button-as-child" as-child="" > 
+[WebServer]   at <Primitive material="content" shadow=true grain=false  ... > 
+[WebServer]   at <Surface material="content" tier="resting" surface="opaque"  ... > 
+[WebServer]   at <ShowcaseFrame caption="As-child" pad="sm" > 
+[WebServer]   at <StorySection heading="Keyboard, touch, and the linked command" blurb="One native button accepts Enter, Space, click, and coarse taps. `as-child` hands the whole command contract to another element without giving up the material." > 
+[WebServer]   at <TooltipProvider delay-duration=250 skip-delay-duration=300 > 
+[WebServer]   at <TooltipProvider delay-duration=250 > 
+[WebServer]   at <StoryPage> 
+[WebServer]   at <Buttons onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/display/buttons" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+[WebServer] 7:32:12 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button data-scenario="button-as-child-disabled" as-child="" disabled="" > 
+[WebServer]   at <Primitive material="content" shadow=true grain=false  ... > 
+[WebServer]   at <Surface material="content" tier="resting" surface="opaque"  ... > 
+[WebServer]   at <ShowcaseFrame caption="As-child" pad="sm" > 
+[WebServer]   at <StorySection heading="Keyboard, touch, and the linked command" blurb="One native button accepts Enter, Space, click, and coarse taps. `as-child` hands the whole command contract to another element without giving up the material." > 
+[WebServer]   at <TooltipProvider delay-duration=250 skip-delay-duration=300 > 
+[WebServer]   at <TooltipProvider delay-duration=250 > 
+[WebServer]   at <StoryPage> 
+[WebServer]   at <Buttons onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/display/buttons" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  ✓    7 [coarse-touch] › tests-visual/liquid-hover.spec.ts:82:5 › BB.W-LIQUIDHOVER — the tier-root pointer-following gleam (π) › (a) GLEAM TRACKS — two pointer positions read two distinct --mouse-x (off the dead-centre 50%) (1.3s)
+  ✓    8 [coarse-touch] › tests-visual/liquid-hover.spec.ts:114:5 › BB.W-LIQUIDHOVER — the tier-root pointer-following gleam (π) › (b) DOCK CONTROL — the dock control gleams pointer-following with zero wiring (1.1s)
+[WebServer] 7:32:15 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button data-scenario="button-as-child" as-child="" > 
+[WebServer]   at <Primitive material="content" shadow=true grain=false  ... > 
+[WebServer]   at <Surface material="content" tier="resting" surface="opaque"  ... > 
+[WebServer]   at <ShowcaseFrame caption="As-child" pad="sm" > 
+[WebServer]   at <StorySection heading="Keyboard, touch, and the linked command" blurb="One native button accepts Enter, Space, click, and coarse taps. `as-child` hands the whole command contract to another element without giving up the material." > 
+[WebServer]   at <TooltipProvider delay-duration=250 skip-delay-duration=300 > 
+[WebServer]   at <TooltipProvider delay-duration=250 > 
+[WebServer]   at <StoryPage> 
+[WebServer]   at <Buttons onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/display/buttons" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+[WebServer] 7:32:15 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button data-scenario="button-as-child-disabled" as-child="" disabled="" > 
+[WebServer]   at <Primitive material="content" shadow=true grain=false  ... > 
+[WebServer]   at <Surface material="content" tier="resting" surface="opaque"  ... > 
+[WebServer]   at <ShowcaseFrame caption="As-child" pad="sm" > 
+[WebServer]   at <StorySection heading="Keyboard, touch, and the linked command" blurb="One native button accepts Enter, Space, click, and coarse taps. `as-child` hands the whole command contract to another element without giving up the material." > 
+[WebServer]   at <TooltipProvider delay-duration=250 skip-delay-duration=300 > 
+[WebServer]   at <TooltipProvider delay-duration=250 > 
+[WebServer]   at <StoryPage> 
+[WebServer]   at <Buttons onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/display/buttons" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  ✘    9 [coarse-touch] › tests-visual/liquid-hover.spec.ts:136:5 › BB.W-LIQUIDHOVER — the tier-root pointer-following gleam (π) › (c) GRAIN NO-POP — the grain background-image stays constant across the hover onset (1.0s)
+[WebServer] 7:32:16 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button data-scenario="button-as-child" as-child="" > 
+[WebServer]   at <Primitive material="content" shadow=true grain=false  ... > 
+[WebServer]   at <Surface material="content" tier="resting" surface="opaque"  ... > 
+[WebServer]   at <ShowcaseFrame caption="As-child" pad="sm" > 
+[WebServer]   at <StorySection heading="Keyboard, touch, and the linked command" blurb="One native button accepts Enter, Space, click, and coarse taps. `as-child` hands the whole command contract to another element without giving up the material." > 
+[WebServer]   at <TooltipProvider delay-duration=250 skip-delay-duration=300 > 
+[WebServer]   at <TooltipProvider delay-duration=250 > 
+[WebServer]   at <StoryPage> 
+[WebServer]   at <Buttons onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/display/buttons" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+[WebServer] 7:32:16 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button data-scenario="button-as-child-disabled" as-child="" disabled="" > 
+[WebServer]   at <Primitive material="content" shadow=true grain=false  ... > 
+[WebServer]   at <Surface material="content" tier="resting" surface="opaque"  ... > 
+[WebServer]   at <ShowcaseFrame caption="As-child" pad="sm" > 
+[WebServer]   at <StorySection heading="Keyboard, touch, and the linked command" blurb="One native button accepts Enter, Space, click, and coarse taps. `as-child` hands the whole command contract to another element without giving up the material." > 
+[WebServer]   at <TooltipProvider delay-duration=250 skip-delay-duration=300 > 
+[WebServer]   at <TooltipProvider delay-duration=250 > 
+[WebServer]   at <StoryPage> 
+[WebServer]   at <Buttons onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/display/buttons" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  ✓   10 [coarse-touch] › tests-visual/liquid-hover.spec.ts:162:5 › BB.W-LIQUIDHOVER — the tier-root pointer-following gleam (π) › (d) PRM STATIC — under reduced-motion the gleam pins static at centre (1.1s)
+  ✘   11 [coarse-touch] › tests-visual/liquid-reveal.spec.ts:55:9 › BB.W-LIQUID-REVEAL — the bloom-from-source liquid open › popover blooms open on the spring clock (mobile) (1.0m)
+  ✘   12 [coarse-touch] › tests-visual/liquid-reveal.spec.ts:90:9 › BB.W-LIQUID-REVEAL — the bloom-from-source liquid open › dialog blooms open, dock expands, both modes (mobile) (1.0m)
+  ✘   13 [coarse-touch] › tests-visual/liquid-reveal.spec.ts:122:9 › BB.W-LIQUID-REVEAL — the bloom-from-source liquid open › PRM open is a single-paint fade — zero transform/blur frames (mobile) (1.0m)
+  ✘   14 [coarse-touch] › tests-visual/liquid-reveal.spec.ts:55:9 › BB.W-LIQUID-REVEAL — the bloom-from-source liquid open › popover blooms open on the spring clock (desktop) (1.0m)
+  ✘   15 [coarse-touch] › tests-visual/liquid-reveal.spec.ts:90:9 › BB.W-LIQUID-REVEAL — the bloom-from-source liquid open › dialog blooms open, dock expands, both modes (desktop) (1.0m)
+  ✘   16 [coarse-touch] › tests-visual/liquid-reveal.spec.ts:122:9 › BB.W-LIQUID-REVEAL — the bloom-from-source liquid open › PRM open is a single-paint fade — zero transform/blur frames (desktop) (1.0m)
+  ✓   17 [coarse-touch] › tests-visual/liquid-weight-default.spec.ts:93:13 › liquid-weight-default — light › tap-squish — DEFAULT spatial leg is a spring linear() (weight) (1.2s)
+  ✓   18 [coarse-touch] › tests-visual/liquid-weight-default.spec.ts:103:13 › liquid-weight-default — light › tap-squish — .motion-calm opts OUT to the flat bezier (no weight) (995ms)
+  ✓   19 [coarse-touch] › tests-visual/liquid-weight-default.spec.ts:93:13 › liquid-weight-default — light › interactive-item — DEFAULT spatial leg is a spring linear() (weight) (982ms)
+  ✓   20 [coarse-touch] › tests-visual/liquid-weight-default.spec.ts:103:13 › liquid-weight-default — light › interactive-item — .motion-calm opts OUT to the flat bezier (no weight) (965ms)
+  ✓   21 [coarse-touch] › tests-visual/liquid-weight-default.spec.ts:114:9 › liquid-weight-default — light › PRM — the default spatial leg snaps to the flat bezier (vestibular floor) (1.0s)
+  ✓   22 [coarse-touch] › tests-visual/liquid-weight-default.spec.ts:93:13 › liquid-weight-default — dark › tap-squish — DEFAULT spatial leg is a spring linear() (weight) (967ms)
+  ✓   23 [coarse-touch] › tests-visual/liquid-weight-default.spec.ts:103:13 › liquid-weight-default — dark › tap-squish — .motion-calm opts OUT to the flat bezier (no weight) (980ms)
+  ✓   24 [coarse-touch] › tests-visual/liquid-weight-default.spec.ts:93:13 › liquid-weight-default — dark › interactive-item — DEFAULT spatial leg is a spring linear() (weight) (949ms)
+  ✓   25 [coarse-touch] › tests-visual/liquid-weight-default.spec.ts:103:13 › liquid-weight-default — dark › interactive-item — .motion-calm opts OUT to the flat bezier (no weight) (946ms)
+  ✓   26 [coarse-touch] › tests-visual/liquid-weight-default.spec.ts:114:9 › liquid-weight-default — dark › PRM — the default spatial leg snaps to the flat bezier (vestibular floor) (1.0s)
+  ✓   27 [coarse-touch] › tests-visual/menu-glass.spec.ts:221:13 › menu-glass (π — the glass menu-row + menu-section register, fail-CLOSED) › (a-b) hovered row = glass tint + ≥44px @ mobile light (1.9s)
+  ✘   28 [coarse-touch] › tests-visual/menu-glass.spec.ts:247:13 › menu-glass (π — the glass menu-row + menu-section register, fail-CLOSED) › (d) section caption mono + hairline @ mobile light (1.0s)
+  ✓   29 [coarse-touch] › tests-visual/menu-glass.spec.ts:263:13 › menu-glass (π — the glass menu-row + menu-section register, fail-CLOSED) › (e) font-rung parity — trigger + item at ONE scale @ mobile light (1.1s)
+  ✓   30 [coarse-touch] › tests-visual/menu-glass.spec.ts:221:13 › menu-glass (π — the glass menu-row + menu-section register, fail-CLOSED) › (a-b) hovered row = glass tint + ≥44px @ mobile dark (2.0s)
+  ✘   31 [coarse-touch] › tests-visual/menu-glass.spec.ts:247:13 › menu-glass (π — the glass menu-row + menu-section register, fail-CLOSED) › (d) section caption mono + hairline @ mobile dark (1.1s)
+  ✓   32 [coarse-touch] › tests-visual/menu-glass.spec.ts:263:13 › menu-glass (π — the glass menu-row + menu-section register, fail-CLOSED) › (e) font-rung parity — trigger + item at ONE scale @ mobile dark (1.2s)
+  ✓   33 [coarse-touch] › tests-visual/menu-glass.spec.ts:221:13 › menu-glass (π — the glass menu-row + menu-section register, fail-CLOSED) › (a-b) hovered row = glass tint + ≥44px @ desktop light (2.1s)
+  ✘   34 [coarse-touch] › tests-visual/menu-glass.spec.ts:247:13 › menu-glass (π — the glass menu-row + menu-section register, fail-CLOSED) › (d) section caption mono + hairline @ desktop light (1.1s)
+  ✓   35 [coarse-touch] › tests-visual/menu-glass.spec.ts:263:13 › menu-glass (π — the glass menu-row + menu-section register, fail-CLOSED) › (e) font-rung parity — trigger + item at ONE scale @ desktop light (1.2s)
+  ✓   36 [coarse-touch] › tests-visual/menu-glass.spec.ts:221:13 › menu-glass (π — the glass menu-row + menu-section register, fail-CLOSED) › (a-b) hovered row = glass tint + ≥44px @ desktop dark (2.0s)
+  ✘   37 [coarse-touch] › tests-visual/menu-glass.spec.ts:247:13 › menu-glass (π — the glass menu-row + menu-section register, fail-CLOSED) › (d) section caption mono + hairline @ desktop dark (1.1s)
+  ✓   38 [coarse-touch] › tests-visual/menu-glass.spec.ts:263:13 › menu-glass (π — the glass menu-row + menu-section register, fail-CLOSED) › (e) font-rung parity — trigger + item at ONE scale @ desktop dark (1.1s)
+  ✓   39 [coarse-touch] › tests-visual/menu-glass.spec.ts:288:5 › menu-glass (π — the glass menu-row + menu-section register, fail-CLOSED) › (c) hover-lift register non-zero under motion @ desktop light (1.9s)
+  ✓   40 [coarse-touch] › tests-visual/menu-glass.spec.ts:301:5 › menu-glass (π — the glass menu-row + menu-section register, fail-CLOSED) › (c) PRM — hover-lift register is the identity (0) under prefers-reduced-motion @ desktop light (1.6s)
+  ✓   41 [coarse-touch] › tests-visual/menu-glass.spec.ts:318:5 › menu-glass (π — the glass menu-row + menu-section register, fail-CLOSED) › DELTA capture — the glassy menu open, a row hovered, both modes (3.5s)
+  ✓   42 [coarse-touch] › tests-visual/metal-shimmer.spec.ts:162:5 › BB.W-METAL-SHIMMER — the brand-metal triad + the parameterized shimmer (π) › (a) THE THREE METALS read DISTINCT + (b) the swept sweep runs the slow clock (1.4s)
+  ✘   43 [coarse-touch] › tests-visual/metal-shimmer.spec.ts:213:5 › BB.W-METAL-SHIMMER — the brand-metal triad + the parameterized shimmer (π) › (c) the border/mask swept RIM + (d) the rainbow rim (1.1s)
+  ✘   44 [coarse-touch] › tests-visual/metal-shimmer.spec.ts:258:5 › BB.W-METAL-SHIMMER — the brand-metal triad + the parameterized shimmer (π) › (e) PRM-STATIC — the metal reads with the slide OFF under reduced-motion (1.1s)
+  ✓   45 [coarse-touch] › tests-visual/metal-shimmer.spec.ts:306:5 › BB.W-METAL-SHIMMER — the brand-metal triad + the parameterized shimmer (π) › (f) the gold catch-light — LIT metal: a warm halo of the metal's OWN base hue (1.4s)
+  ✓   46 [coarse-touch] › tests-visual/metal-shimmer.spec.ts:352:5 › BB.W-METAL-SHIMMER — the brand-metal triad + the parameterized shimmer (π) › (g) the catch-light is PRM-STATIC — the lit metal halos with the sweep frozen + the opacity override retunes (1.3s)
+  ✓   47 [coarse-touch] › tests-visual/motion-axis.spec.ts:70:9 › motion-axis · tab drag is the full default + PRM-reduced unbinds it · mobile · light (2.0s)
+  ✓   48 [coarse-touch] › tests-visual/motion-axis.spec.ts:105:9 › motion-axis · slider full register + interactive-derived card press · mobile · light (2.0s)
+  ✓   49 [coarse-touch] › tests-visual/motion-axis.spec.ts:70:9 › motion-axis · tab drag is the full default + PRM-reduced unbinds it · mobile · dark (2.0s)
+  ✓   50 [coarse-touch] › tests-visual/motion-axis.spec.ts:105:9 › motion-axis · slider full register + interactive-derived card press · mobile · dark (2.0s)
+  ✓   51 [coarse-touch] › tests-visual/motion-axis.spec.ts:70:9 › motion-axis · tab drag is the full default + PRM-reduced unbinds it · desktop · light (2.3s)
+  ✓   52 [coarse-touch] › tests-visual/motion-axis.spec.ts:105:9 › motion-axis · slider full register + interactive-derived card press · desktop · light (2.4s)
+  ✓   53 [coarse-touch] › tests-visual/motion-axis.spec.ts:70:9 › motion-axis · tab drag is the full default + PRM-reduced unbinds it · desktop · dark (2.1s)
+  ✓   54 [coarse-touch] › tests-visual/motion-axis.spec.ts:105:9 › motion-axis · slider full register + interactive-derived card press · desktop · dark (2.1s)
+  ✘   55 [coarse-touch] › tests-visual/motion-demo.spec.ts:95:9 › motion-demo (π lane — the robust /motion render, fail-CLOSED) › gallery renders the full 10-family taxonomy + real-twin plots (light) (1.0s)
+  ✘   56 [coarse-touch] › tests-visual/motion-demo.spec.ts:95:9 › motion-demo (π lane — the robust /motion render, fail-CLOSED) › gallery renders the full 10-family taxonomy + real-twin plots (dark) (1.1s)
+  ✘   57 [coarse-touch] › tests-visual/motion-demo.spec.ts:116:9 › motion-demo (π lane — the robust /motion render, fail-CLOSED) › the plot stroke + dot read the violet --motion-accent (no warm-red) (light) (1.0m)
+  ✘   58 [coarse-touch] › tests-visual/motion-demo.spec.ts:116:9 › motion-demo (π lane — the robust /motion render, fail-CLOSED) › the plot stroke + dot read the violet --motion-accent (no warm-red) (dark) (1.0m)
+  ✓   59 [coarse-touch] › tests-visual/motion-demo.spec.ts:145:5 › motion-demo (π lane — the robust /motion render, fail-CLOSED) › the spring playground updates the linear() readout on slider drag (1.3s)
+  ✘   60 [coarse-touch] › tests-visual/motion-demo.spec.ts:179:5 › motion-demo (π lane — the robust /motion render, fail-CLOSED) › the scroll-register story mounts both native registers + the JS spine (841ms)
+  ✓   61 [coarse-touch] › tests-visual/motion-demo.spec.ts:198:9 › motion-demo (π lane — the robust /motion render, fail-CLOSED) › G-CLOSE — capture the motion-suite DELTA (light) (4.4s)
+  ✓   62 [coarse-touch] › tests-visual/motion-demo.spec.ts:198:9 › motion-demo (π lane — the robust /motion render, fail-CLOSED) › G-CLOSE — capture the motion-suite DELTA (dark) (4.2s)
+  ✓   63 [coarse-touch] › tests-visual/motion-demo.spec.ts:236:5 › motion-demo (π lane — the robust /motion render, fail-CLOSED) › G-CLOSE — write the purple-readback JSON (1.8s)
+  ✘   64 [coarse-touch] › tests-visual/motion-one-clock.spec.ts:114:13 › motion-one-clock — light › (a) tab-fling reads its OWN --spring-snappy-duration clock (the snappy register), never a generic --duration-* (913ms)
+  ✘   65 [coarse-touch] › tests-visual/motion-one-clock.spec.ts:114:13 › motion-one-clock — light › (a) dialog-open reads its OWN --spring-bouncy-duration clock (the bouncy register), never a generic --duration-* (978ms)
+  ✘   66 [coarse-touch] › tests-visual/motion-one-clock.spec.ts:114:13 › motion-one-clock — light › (a) dock-morph reads its OWN --spring-dock-duration clock (the dock register), never a generic --duration-* (1.1s)
+[WebServer] 7:41:43 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button data-scenario="button-as-child" as-child="" > 
+[WebServer]   at <Primitive material="content" shadow=true grain=false  ... > 
+[WebServer]   at <Surface material="content" tier="resting" surface="opaque"  ... > 
+[WebServer]   at <ShowcaseFrame caption="As-child" pad="sm" > 
+[WebServer]   at <StorySection heading="Keyboard, touch, and the linked command" blurb="One native button accepts Enter, Space, click, and coarse taps. `as-child` hands the whole command contract to another element without giving up the material." > 
+[WebServer]   at <TooltipProvider delay-duration=250 skip-delay-duration=300 > 
+[WebServer]   at <TooltipProvider delay-duration=250 > 
+[WebServer]   at <StoryPage> 
+[WebServer]   at <Buttons onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/display/buttons" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+[WebServer] 7:41:43 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button data-scenario="button-as-child-disabled" as-child="" disabled="" > 
+[WebServer]   at <Primitive material="content" shadow=true grain=false  ... > 
+[WebServer]   at <Surface material="content" tier="resting" surface="opaque"  ... > 
+[WebServer]   at <ShowcaseFrame caption="As-child" pad="sm" > 
+[WebServer]   at <StorySection heading="Keyboard, touch, and the linked command" blurb="One native button accepts Enter, Space, click, and coarse taps. `as-child` hands the whole command contract to another element without giving up the material." > 
+[WebServer]   at <TooltipProvider delay-duration=250 skip-delay-duration=300 > 
+[WebServer]   at <TooltipProvider delay-duration=250 > 
+[WebServer]   at <StoryPage> 
+[WebServer]   at <Buttons onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/display/buttons" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  ✘   67 [coarse-touch] › tests-visual/motion-one-clock.spec.ts:114:13 › motion-one-clock — light › (a) button-press reads its OWN --spring-smooth-duration clock (the smooth register), never a generic --duration-* (1.1s)
+[WebServer] 7:41:44 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button data-scenario="button-as-child" as-child="" > 
+[WebServer]   at <Primitive material="content" shadow=true grain=false  ... > 
+[WebServer]   at <Surface material="content" tier="resting" surface="opaque"  ... > 
+[WebServer]   at <ShowcaseFrame caption="As-child" pad="sm" > 
+[WebServer]   at <StorySection heading="Keyboard, touch, and the linked command" blurb="One native button accepts Enter, Space, click, and coarse taps. `as-child` hands the whole command contract to another element without giving up the material." > 
+[WebServer]   at <TooltipProvider delay-duration=250 skip-delay-duration=300 > 
+[WebServer]   at <TooltipProvider delay-duration=250 > 
+[WebServer]   at <StoryPage> 
+[WebServer]   at <Buttons onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/display/buttons" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+[WebServer] 7:41:44 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button data-scenario="button-as-child-disabled" as-child="" disabled="" > 
+[WebServer]   at <Primitive material="content" shadow=true grain=false  ... > 
+[WebServer]   at <Surface material="content" tier="resting" surface="opaque"  ... > 
+[WebServer]   at <ShowcaseFrame caption="As-child" pad="sm" > 
+[WebServer]   at <StorySection heading="Keyboard, touch, and the linked command" blurb="One native button accepts Enter, Space, click, and coarse taps. `as-child` hands the whole command contract to another element without giving up the material." > 
+[WebServer]   at <TooltipProvider delay-duration=250 skip-delay-duration=300 > 
+[WebServer]   at <TooltipProvider delay-duration=250 > 
+[WebServer]   at <StoryPage> 
+[WebServer]   at <Buttons onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/display/buttons" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  -   68 [coarse-touch] › tests-visual/motion-one-clock.spec.ts:139:9 › motion-one-clock — light › (b) ABSORB — a rapid re-press on the button re-seats velocity-continuously (no restart jump)
+[WebServer] 7:41:45 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button data-scenario="button-as-child" as-child="" > 
+[WebServer]   at <Primitive material="content" shadow=true grain=false  ... > 
+[WebServer]   at <Surface material="content" tier="resting" surface="opaque"  ... > 
+[WebServer]   at <ShowcaseFrame caption="As-child" pad="sm" > 
+[WebServer]   at <StorySection heading="Keyboard, touch, and the linked command" blurb="One native button accepts Enter, Space, click, and coarse taps. `as-child` hands the whole command contract to another element without giving up the material." > 
+[WebServer]   at <TooltipProvider delay-duration=250 skip-delay-duration=300 > 
+[WebServer]   at <TooltipProvider delay-duration=250 > 
+[WebServer]   at <StoryPage> 
+[WebServer]   at <Buttons onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/display/buttons" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+[WebServer] 7:41:45 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button data-scenario="button-as-child-disabled" as-child="" disabled="" > 
+[WebServer]   at <Primitive material="content" shadow=true grain=false  ... > 
+[WebServer]   at <Surface material="content" tier="resting" surface="opaque"  ... > 
+[WebServer]   at <ShowcaseFrame caption="As-child" pad="sm" > 
+[WebServer]   at <StorySection heading="Keyboard, touch, and the linked command" blurb="One native button accepts Enter, Space, click, and coarse taps. `as-child` hands the whole command contract to another element without giving up the material." > 
+[WebServer]   at <TooltipProvider delay-duration=250 skip-delay-duration=300 > 
+[WebServer]   at <TooltipProvider delay-duration=250 > 
+[WebServer]   at <StoryPage> 
+[WebServer]   at <Buttons onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/display/buttons" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  -   69 [coarse-touch] › tests-visual/motion-one-clock.spec.ts:189:9 › motion-one-clock — light › (c) PRM — every surface snaps to its endpoint with the fade kept + the transform dropped
+  ✘   70 [coarse-touch] › tests-visual/motion-one-clock.spec.ts:114:13 › motion-one-clock — dark › (a) tab-fling reads its OWN --spring-snappy-duration clock (the snappy register), never a generic --duration-* (974ms)
+  ✘   71 [coarse-touch] › tests-visual/motion-one-clock.spec.ts:114:13 › motion-one-clock — dark › (a) dialog-open reads its OWN --spring-bouncy-duration clock (the bouncy register), never a generic --duration-* (1.1s)
+  ✘   72 [coarse-touch] › tests-visual/motion-one-clock.spec.ts:114:13 › motion-one-clock — dark › (a) dock-morph reads its OWN --spring-dock-duration clock (the dock register), never a generic --duration-* (1.0s)
+[WebServer] 7:41:51 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button data-scenario="button-as-child" as-child="" > 
+[WebServer]   at <Primitive material="content" shadow=true grain=false  ... > 
+[WebServer]   at <Surface material="content" tier="resting" surface="opaque"  ... > 
+[WebServer]   at <ShowcaseFrame caption="As-child" pad="sm" > 
+[WebServer]   at <StorySection heading="Keyboard, touch, and the linked command" blurb="One native button accepts Enter, Space, click, and coarse taps. `as-child` hands the whole command contract to another element without giving up the material." > 
+[WebServer]   at <TooltipProvider delay-duration=250 skip-delay-duration=300 > 
+[WebServer]   at <TooltipProvider delay-duration=250 > 
+[WebServer]   at <StoryPage> 
+[WebServer]   at <Buttons onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/display/buttons" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+[WebServer] 7:41:51 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button data-scenario="button-as-child-disabled" as-child="" disabled="" > 
+[WebServer]   at <Primitive material="content" shadow=true grain=false  ... > 
+[WebServer]   at <Surface material="content" tier="resting" surface="opaque"  ... > 
+[WebServer]   at <ShowcaseFrame caption="As-child" pad="sm" > 
+[WebServer]   at <StorySection heading="Keyboard, touch, and the linked command" blurb="One native button accepts Enter, Space, click, and coarse taps. `as-child` hands the whole command contract to another element without giving up the material." > 
+[WebServer]   at <TooltipProvider delay-duration=250 skip-delay-duration=300 > 
+[WebServer]   at <TooltipProvider delay-duration=250 > 
+[WebServer]   at <StoryPage> 
+[WebServer]   at <Buttons onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/display/buttons" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  ✘   73 [coarse-touch] › tests-visual/motion-one-clock.spec.ts:114:13 › motion-one-clock — dark › (a) button-press reads its OWN --spring-smooth-duration clock (the smooth register), never a generic --duration-* (1.0s)
+[WebServer] 7:41:52 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button data-scenario="button-as-child" as-child="" > 
+[WebServer]   at <Primitive material="content" shadow=true grain=false  ... > 
+[WebServer]   at <Surface material="content" tier="resting" surface="opaque"  ... > 
+[WebServer]   at <ShowcaseFrame caption="As-child" pad="sm" > 
+[WebServer]   at <StorySection heading="Keyboard, touch, and the linked command" blurb="One native button accepts Enter, Space, click, and coarse taps. `as-child` hands the whole command contract to another element without giving up the material." > 
+[WebServer]   at <TooltipProvider delay-duration=250 skip-delay-duration=300 > 
+[WebServer]   at <TooltipProvider delay-duration=250 > 
+[WebServer]   at <StoryPage> 
+[WebServer]   at <Buttons onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/display/buttons" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+[WebServer] 7:41:52 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button data-scenario="button-as-child-disabled" as-child="" disabled="" > 
+[WebServer]   at <Primitive material="content" shadow=true grain=false  ... > 
+[WebServer]   at <Surface material="content" tier="resting" surface="opaque"  ... > 
+[WebServer]   at <ShowcaseFrame caption="As-child" pad="sm" > 
+[WebServer]   at <StorySection heading="Keyboard, touch, and the linked command" blurb="One native button accepts Enter, Space, click, and coarse taps. `as-child` hands the whole command contract to another element without giving up the material." > 
+[WebServer]   at <TooltipProvider delay-duration=250 skip-delay-duration=300 > 
+[WebServer]   at <TooltipProvider delay-duration=250 > 
+[WebServer]   at <StoryPage> 
+[WebServer]   at <Buttons onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/display/buttons" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  -   74 [coarse-touch] › tests-visual/motion-one-clock.spec.ts:139:9 › motion-one-clock — dark › (b) ABSORB — a rapid re-press on the button re-seats velocity-continuously (no restart jump)
+[WebServer] 7:41:53 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button data-scenario="button-as-child" as-child="" > 
+[WebServer]   at <Primitive material="content" shadow=true grain=false  ... > 
+[WebServer]   at <Surface material="content" tier="resting" surface="opaque"  ... > 
+[WebServer]   at <ShowcaseFrame caption="As-child" pad="sm" > 
+[WebServer]   at <StorySection heading="Keyboard, touch, and the linked command" blurb="One native button accepts Enter, Space, click, and coarse taps. `as-child` hands the whole command contract to another element without giving up the material." > 
+[WebServer]   at <TooltipProvider delay-duration=250 skip-delay-duration=300 > 
+[WebServer]   at <TooltipProvider delay-duration=250 > 
+[WebServer]   at <StoryPage> 
+[WebServer]   at <Buttons onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/display/buttons" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+[WebServer] 7:41:53 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button data-scenario="button-as-child-disabled" as-child="" disabled="" > 
+[WebServer]   at <Primitive material="content" shadow=true grain=false  ... > 
+[WebServer]   at <Surface material="content" tier="resting" surface="opaque"  ... > 
+[WebServer]   at <ShowcaseFrame caption="As-child" pad="sm" > 
+[WebServer]   at <StorySection heading="Keyboard, touch, and the linked command" blurb="One native button accepts Enter, Space, click, and coarse taps. `as-child` hands the whole command contract to another element without giving up the material." > 
+[WebServer]   at <TooltipProvider delay-duration=250 skip-delay-duration=300 > 
+[WebServer]   at <TooltipProvider delay-duration=250 > 
+[WebServer]   at <StoryPage> 
+[WebServer]   at <Buttons onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/display/buttons" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  -   75 [coarse-touch] › tests-visual/motion-one-clock.spec.ts:189:9 › motion-one-clock — dark › (c) PRM — every surface snaps to its endpoint with the fade kept + the transform dropped
+  -   76 [coarse-touch] › tests-visual/motion-one-clock.spec.ts:234:5 › motion-one-clock — WebKit-native spring spine › (d) the per-spring clocks resolve identically on WebKit (pure compositor, no backdrop-filter: url() on the spring path)
+  ✘   77 [coarse-touch] › tests-visual/motion2.spec.ts:94:9 › motion2 (π lane — the curve gallery REDRESS render, fail-CLOSED) › the plot stroke reads THICK (≥3px apparent) (light) (6.0s)
+  ✘   78 [coarse-touch] › tests-visual/motion2.spec.ts:94:9 › motion2 (π lane — the curve gallery REDRESS render, fail-CLOSED) › the plot stroke reads THICK (≥3px apparent) (dark) (6.1s)
+  ✘   79 [coarse-touch] › tests-visual/motion2.spec.ts:139:9 › motion2 (π lane — the curve gallery REDRESS render, fail-CLOSED) › the family picker is the underline panel-nav register at scale (light) (6.2s)
+  ✘   80 [coarse-touch] › tests-visual/motion2.spec.ts:139:9 › motion2 (π lane — the curve gallery REDRESS render, fail-CLOSED) › the family picker is the underline panel-nav register at scale (dark) (6.2s)
+  ✓   81 [coarse-touch] › tests-visual/motion2.spec.ts:174:5 › motion2 (π lane — the curve gallery REDRESS render, fail-CLOSED) › the page paints a calm substrate behind the glass card (not bare) (1.3s)
+  ✘   82 [coarse-touch] › tests-visual/motion2.spec.ts:210:9 › motion2 (π lane — the curve gallery REDRESS render, fail-CLOSED) › the plot stroke + accent read the violet --motion-accent (no warm-red) (light) (1.0m)
+  ✘   83 [coarse-touch] › tests-visual/motion2.spec.ts:210:9 › motion2 (π lane — the curve gallery REDRESS render, fail-CLOSED) › the plot stroke + accent read the violet --motion-accent (no warm-red) (dark) (1.0m)
+  ✘   84 [coarse-touch] › tests-visual/motion2.spec.ts:244:5 › motion2 (π lane — the curve gallery REDRESS render, fail-CLOSED) › the picker renders the full canon family set + plots real-twin polylines (878ms)
+  ✓   85 [coarse-touch] › tests-visual/motion2.spec.ts:268:9 › motion2 (π lane — the curve gallery REDRESS render, fail-CLOSED) › G-CLOSE — capture the curve-gallery after DELTA (light) (1.6s)
+  ✓   86 [coarse-touch] › tests-visual/motion2.spec.ts:268:9 › motion2 (π lane — the curve gallery REDRESS render, fail-CLOSED) › G-CLOSE — capture the curve-gallery after DELTA (dark) (1.5s)
+  ✘   87 [coarse-touch] › tests-visual/motion2.spec.ts:307:5 › motion2 (π lane — the curve gallery REDRESS render, fail-CLOSED) › G-CLOSE — write the stroke-readback JSON (1.0m)
+  ✓   88 [coarse-touch] › tests-visual/music-staff.spec.ts:5:1 › MusicStaff folio paints real backdrop glass in both modes (2.6s)
+  ✓   89 [coarse-touch] › tests-visual/music-staff.spec.ts:38:1 › MusicStaff loading reel streams while the clef stays parked (938ms)
+  ✘   90 [coarse-touch] › tests-visual/music-staff.spec.ts:74:1 › MusicStaff score scale is constant and the engraving never squashes (965ms)
+  ✓   91 [coarse-touch] › tests-visual/music-staff.spec.ts:101:1 › MusicStaff reduced motion stops the reel but keeps the busy signal (885ms)
+  ✘   92 [coarse-touch] › tests-visual/nav-dock-fix.spec.ts:73:13 › W-NAV-DOCK-FIX — the nav-dock binding π › light · mobile — nav-dock gestalt (798ms)
+  ✘   93 [coarse-touch] › tests-visual/nav-dock-fix.spec.ts:73:13 › W-NAV-DOCK-FIX — the nav-dock binding π › light · desktop — nav-dock gestalt (829ms)
+  ✘   94 [coarse-touch] › tests-visual/nav-dock-fix.spec.ts:73:13 › W-NAV-DOCK-FIX — the nav-dock binding π › dark · mobile — nav-dock gestalt (836ms)
+  ✘   95 [coarse-touch] › tests-visual/nav-dock-fix.spec.ts:73:13 › W-NAV-DOCK-FIX — the nav-dock binding π › dark · desktop — nav-dock gestalt (810ms)
+  ✓   96 [coarse-touch] › tests-visual/nav-dock-fix.spec.ts:198:5 › W-NAV-DOCK-FIX — the nav-dock binding π › bottom-dock tab strip + persistent prev/next (691ms)
+[W-A11Y-PERF G4] nested-depth=2 (ceiling 4) | frame p50=7.6ms p95=9.3ms (budget 16.7ms) | contain: card=paint btn=none
+  ✘   97 [coarse-touch] › tests-visual/nested-backdrop-budget.spec.ts:47:5 › nested-backdrop-budget (π lane — the maximal-glass nested stack, fail-CLOSED) › the glass-Button-in-Card-in-Dialog stack stays within the depth + frame budget (1.3s)
+  ✓   98 [coarse-touch] › tests-visual/no-gray.spec.ts:174:13 › no-gray (π — the warm-chroma floor, fail-CLOSED) › (a) the WARM-IT tokens resolve C ≥ floor at the warm hue [light] @ mobile (976ms)
+  ✓   99 [coarse-touch] › tests-visual/no-gray.spec.ts:174:13 › no-gray (π — the warm-chroma floor, fail-CLOSED) › (a) the WARM-IT tokens resolve C ≥ floor at the warm hue [dark] @ mobile (908ms)
+  ✓  100 [coarse-touch] › tests-visual/no-gray.spec.ts:174:13 › no-gray (π — the warm-chroma floor, fail-CLOSED) › (a) the WARM-IT tokens resolve C ≥ floor at the warm hue [light] @ desktop (929ms)
+  ✓  101 [coarse-touch] › tests-visual/no-gray.spec.ts:174:13 › no-gray (π — the warm-chroma floor, fail-CLOSED) › (a) the WARM-IT tokens resolve C ≥ floor at the warm hue [dark] @ desktop (915ms)
+  ✓  102 [coarse-touch] › tests-visual/no-gray.spec.ts:204:13 › no-gray (π — the warm-chroma floor, fail-CLOSED) › (b) the default Card + glass Button plates composite warm [light] @ mobile (892ms)
+  ✓  103 [coarse-touch] › tests-visual/no-gray.spec.ts:204:13 › no-gray (π — the warm-chroma floor, fail-CLOSED) › (b) the default Card + glass Button plates composite warm [dark] @ mobile (909ms)
+  ✓  104 [coarse-touch] › tests-visual/no-gray.spec.ts:204:13 › no-gray (π — the warm-chroma floor, fail-CLOSED) › (b) the default Card + glass Button plates composite warm [light] @ desktop (919ms)
+  ✓  105 [coarse-touch] › tests-visual/no-gray.spec.ts:204:13 › no-gray (π — the warm-chroma floor, fail-CLOSED) › (b) the default Card + glass Button plates composite warm [dark] @ desktop (929ms)
+  ✓  106 [coarse-touch] › tests-visual/no-gray.spec.ts:243:9 › no-gray (π — the warm-chroma floor, fail-CLOSED) › (e) the dark --foreground + the dark --surface-tint-15 chip read warm @ mobile (933ms)
+  ✓  107 [coarse-touch] › tests-visual/no-gray.spec.ts:243:9 › no-gray (π — the warm-chroma floor, fail-CLOSED) › (e) the dark --foreground + the dark --surface-tint-15 chip read warm @ desktop (930ms)
+[WebServer] 7:45:51 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button as-child="" > 
+[WebServer]   at <CardFooter class="justify-center" > 
+[WebServer]   at <Primitive data-slot="card" data-shadow=true data-size="md"  ... > 
+[WebServer]   at <Surface data-slot="card" tier="floating" surface=undefined  ... > 
+[WebServer]   at <Card tier="floating" class="w-full max-w-(--measure-cel) text-center" > 
+[WebServer]   at <NotFound onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/forms/select" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  ✘  108 [coarse-touch] › tests-visual/no-gray.spec.ts:306:13 › no-gray (π — the warm-chroma floor, fail-CLOSED) › (f) the LIVE Select dropdown panel composites warm [light] @ mobile (1.0m)
+[WebServer] 7:46:52 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button as-child="" > 
+[WebServer]   at <CardFooter class="justify-center" > 
+[WebServer]   at <Primitive data-slot="card" data-shadow=true data-size="md"  ... > 
+[WebServer]   at <Surface data-slot="card" tier="floating" surface=undefined  ... > 
+[WebServer]   at <Card tier="floating" class="w-full max-w-(--measure-cel) text-center" > 
+[WebServer]   at <NotFound onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/forms/select" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  ✘  109 [coarse-touch] › tests-visual/no-gray.spec.ts:306:13 › no-gray (π — the warm-chroma floor, fail-CLOSED) › (f) the LIVE Select dropdown panel composites warm [dark] @ mobile (1.0m)
+[WebServer] 7:47:52 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button as-child="" > 
+[WebServer]   at <CardFooter class="justify-center" > 
+[WebServer]   at <Primitive data-slot="card" data-shadow=true data-size="md"  ... > 
+[WebServer]   at <Surface data-slot="card" tier="floating" surface=undefined  ... > 
+[WebServer]   at <Card tier="floating" class="w-full max-w-(--measure-cel) text-center" > 
+[WebServer]   at <NotFound onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/forms/select" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  ✘  110 [coarse-touch] › tests-visual/no-gray.spec.ts:306:13 › no-gray (π — the warm-chroma floor, fail-CLOSED) › (f) the LIVE Select dropdown panel composites warm [light] @ desktop (1.0m)
+[WebServer] 7:48:52 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button as-child="" > 
+[WebServer]   at <CardFooter class="justify-center" > 
+[WebServer]   at <Primitive data-slot="card" data-shadow=true data-size="md"  ... > 
+[WebServer]   at <Surface data-slot="card" tier="floating" surface=undefined  ... > 
+[WebServer]   at <Card tier="floating" class="w-full max-w-(--measure-cel) text-center" > 
+[WebServer]   at <NotFound onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/forms/select" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  ✘  111 [coarse-touch] › tests-visual/no-gray.spec.ts:306:13 › no-gray (π — the warm-chroma floor, fail-CLOSED) › (f) the LIVE Select dropdown panel composites warm [dark] @ desktop (1.0m)
+  ✓  112 [coarse-touch] › tests-visual/no-gray.spec.ts:351:13 › no-gray (π — the warm-chroma floor, fail-CLOSED) › DELTA capture — the no-gray warm fixture [light] @ mobile (1.3s)
+  ✓  113 [coarse-touch] › tests-visual/no-gray.spec.ts:351:13 › no-gray (π — the warm-chroma floor, fail-CLOSED) › DELTA capture — the no-gray warm fixture [dark] @ mobile (1.2s)
+  ✓  114 [coarse-touch] › tests-visual/no-gray.spec.ts:351:13 › no-gray (π — the warm-chroma floor, fail-CLOSED) › DELTA capture — the no-gray warm fixture [light] @ desktop (1.2s)
+  ✓  115 [coarse-touch] › tests-visual/no-gray.spec.ts:351:13 › no-gray (π — the warm-chroma floor, fail-CLOSED) › DELTA capture — the no-gray warm fixture [dark] @ desktop (1.3s)
+[WebServer] 7:49:57 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button data-scenario="button-as-child" as-child="" > 
+[WebServer]   at <Primitive material="content" shadow=true grain=false  ... > 
+[WebServer]   at <Surface material="content" tier="resting" surface="opaque"  ... > 
+[WebServer]   at <ShowcaseFrame caption="As-child" pad="sm" > 
+[WebServer]   at <StorySection heading="Keyboard, touch, and the linked command" blurb="One native button accepts Enter, Space, click, and coarse taps. `as-child` hands the whole command contract to another element without giving up the material." > 
+[WebServer]   at <TooltipProvider delay-duration=250 skip-delay-duration=300 > 
+[WebServer]   at <TooltipProvider delay-duration=250 > 
+[WebServer]   at <StoryPage> 
+[WebServer]   at <Buttons onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/display/buttons" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+[WebServer] 7:49:57 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button data-scenario="button-as-child-disabled" as-child="" disabled="" > 
+[WebServer]   at <Primitive material="content" shadow=true grain=false  ... > 
+[WebServer]   at <Surface material="content" tier="resting" surface="opaque"  ... > 
+[WebServer]   at <ShowcaseFrame caption="As-child" pad="sm" > 
+[WebServer]   at <StorySection heading="Keyboard, touch, and the linked command" blurb="One native button accepts Enter, Space, click, and coarse taps. `as-child` hands the whole command contract to another element without giving up the material." > 
+[WebServer]   at <TooltipProvider delay-duration=250 skip-delay-duration=300 > 
+[WebServer]   at <TooltipProvider delay-duration=250 > 
+[WebServer]   at <StoryPage> 
+[WebServer]   at <Buttons onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/display/buttons" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  ✘  116 [coarse-touch] › tests-visual/no-shadcn-default.spec.ts:119:9 › no-shadcn-default (the reskinned ui/ surfaces read the glass/paper material, NOT shadcn-neutral) › light: Button outline/secondary/accent resolve a translucent warm glass fill — /display/buttons (979ms)
+  ✓  117 [coarse-touch] › tests-visual/no-shadcn-default.spec.ts:135:9 › no-shadcn-default (the reskinned ui/ surfaces read the glass/paper material, NOT shadcn-neutral) › light: Toggle outline resolves the glass-well material — /forms/toggle (1.0s)
+[WebServer] 7:50:00 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button as-child="" > 
+[WebServer]   at <CardFooter class="justify-center" > 
+[WebServer]   at <Primitive data-slot="card" data-shadow=true data-size="md"  ... > 
+[WebServer]   at <Surface data-slot="card" tier="floating" surface=undefined  ... > 
+[WebServer]   at <Card tier="floating" class="w-full max-w-(--measure-cel) text-center" > 
+[WebServer]   at <NotFound onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/data/tags-input" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  ✘  118 [coarse-touch] › tests-visual/no-shadcn-default.spec.ts:148:9 › no-shadcn-default (the reskinned ui/ surfaces read the glass/paper material, NOT shadcn-neutral) › light: TagsInput active item resolves the warm focus ring (NOT cold ring-ring) — /data/tags-input (895ms)
+  ✓  119 [coarse-touch] › tests-visual/no-shadcn-default.spec.ts:164:9 › no-shadcn-default (the reskinned ui/ surfaces read the glass/paper material, NOT shadcn-neutral) › light: Switch thumb resolves the warm material (NOT the page-background neutral) — /forms/checks (1.0s)
+[WebServer] 7:50:02 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button data-scenario="button-as-child" as-child="" > 
+[WebServer]   at <Primitive material="content" shadow=true grain=false  ... > 
+[WebServer]   at <Surface material="content" tier="resting" surface="opaque"  ... > 
+[WebServer]   at <ShowcaseFrame caption="As-child" pad="sm" > 
+[WebServer]   at <StorySection heading="Keyboard, touch, and the linked command" blurb="One native button accepts Enter, Space, click, and coarse taps. `as-child` hands the whole command contract to another element without giving up the material." > 
+[WebServer]   at <TooltipProvider delay-duration=250 skip-delay-duration=300 > 
+[WebServer]   at <TooltipProvider delay-duration=250 > 
+[WebServer]   at <StoryPage> 
+[WebServer]   at <Buttons onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/display/buttons" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+[WebServer] 7:50:02 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button data-scenario="button-as-child-disabled" as-child="" disabled="" > 
+[WebServer]   at <Primitive material="content" shadow=true grain=false  ... > 
+[WebServer]   at <Surface material="content" tier="resting" surface="opaque"  ... > 
+[WebServer]   at <ShowcaseFrame caption="As-child" pad="sm" > 
+[WebServer]   at <StorySection heading="Keyboard, touch, and the linked command" blurb="One native button accepts Enter, Space, click, and coarse taps. `as-child` hands the whole command contract to another element without giving up the material." > 
+[WebServer]   at <TooltipProvider delay-duration=250 skip-delay-duration=300 > 
+[WebServer]   at <TooltipProvider delay-duration=250 > 
+[WebServer]   at <StoryPage> 
+[WebServer]   at <Buttons onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/display/buttons" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  ✘  120 [coarse-touch] › tests-visual/no-shadcn-default.spec.ts:119:9 › no-shadcn-default (the reskinned ui/ surfaces read the glass/paper material, NOT shadcn-neutral) › dark: Button outline/secondary/accent resolve a translucent warm glass fill — /display/buttons (955ms)
+  ✓  121 [coarse-touch] › tests-visual/no-shadcn-default.spec.ts:135:9 › no-shadcn-default (the reskinned ui/ surfaces read the glass/paper material, NOT shadcn-neutral) › dark: Toggle outline resolves the glass-well material — /forms/toggle (1.0s)
+[WebServer] 7:50:04 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button as-child="" > 
+[WebServer]   at <CardFooter class="justify-center" > 
+[WebServer]   at <Primitive data-slot="card" data-shadow=true data-size="md"  ... > 
+[WebServer]   at <Surface data-slot="card" tier="floating" surface=undefined  ... > 
+[WebServer]   at <Card tier="floating" class="w-full max-w-(--measure-cel) text-center" > 
+[WebServer]   at <NotFound onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/data/tags-input" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  ✘  122 [coarse-touch] › tests-visual/no-shadcn-default.spec.ts:148:9 › no-shadcn-default (the reskinned ui/ surfaces read the glass/paper material, NOT shadcn-neutral) › dark: TagsInput active item resolves the warm focus ring (NOT cold ring-ring) — /data/tags-input (907ms)
+  ✓  123 [coarse-touch] › tests-visual/no-shadcn-default.spec.ts:164:9 › no-shadcn-default (the reskinned ui/ surfaces read the glass/paper material, NOT shadcn-neutral) › dark: Switch thumb resolves the warm material (NOT the page-background neutral) — /forms/checks (1.0s)
+
+
+  1) [coarse-touch] › tests-visual/hierarchy.spec.ts:61:5 › AZ.W-HIERARCHY — the canonical section rung + Configurator vocabulary (π) › H1+H2 — every section <h2> resolves to 20.4px; no child <h3> > parent <h2> 
+
+    Error: /display/card largest child <h3> (32.93px) must NOT exceed the smallest section <h2> (20.35px) — D1-2 inverted-scale guard
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 20.950000000000003
+    Received:    32.93
+
+      139 |                     maxH3,
+      140 |                     `${route} largest child <h3> (${maxH3}px) must NOT exceed the smallest section <h2> (${minH2}px) — D1-2 inverted-scale guard`,
+    > 141 |                 ).toBeLessThanOrEqual(minH2 + TOL);
+          |                   ^
+      142 |             }
+      143 |         }
+      144 |         paired.routes = perRoute;
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/hierarchy.spec.ts:141:19
+
+    Error Context: tests-visual/test-results/hierarchy-AZ-W-HIERARCHY-—-63a7b--4px-no-child-h3-parent-h2--coarse-touch/error-context.md
+
+  2) [coarse-touch] › tests-visual/hierarchy.spec.ts:148:5 › AZ.W-HIERARCHY — the canonical section rung + Configurator vocabulary (π) › H3 — Configurator section label > row label; preset-row block-padding > body-row's 
+
+    Error: row label resolved
+
+    expect(received).not.toBeNull()
+
+    Received: null
+
+      185 |         // The section label resolves ABOVE the control-row body label rung.
+      186 |         expect(cfg.sectionLabelFs, "section label resolved").not.toBeNull();
+    > 187 |         expect(cfg.rowLabelFs, "row label resolved").not.toBeNull();
+          |                                                          ^
+      188 |         expect(
+      189 |             cfg.sectionLabelFs!,
+      190 |             `Configurator section label (${cfg.sectionLabelFs}px) must resolve ABOVE the row body label (${cfg.rowLabelFs}px) — the D6-3 register differentiation`,
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/hierarchy.spec.ts:187:58
+
+    Error Context: tests-visual/test-results/hierarchy-AZ-W-HIERARCHY-—-c37d1-ow-block-padding-body-row-s-coarse-touch/error-context.md
+
+  3) [coarse-touch] › tests-visual/hierarchy.spec.ts:398:5 › BB.W-HIERARCHY2 — the StoryHeader cluster (reading order + GRAVITY entrance + gutter) (π) › H2-GUTTER — the <main> reserves the --dock-content-safe-inset gutter 
+
+    Error: the <main> reserves a non-zero --dock-content-safe-inset block-start gutter (got NaNpx)
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   NaN
+
+      426 |             g.scrollPaddingBlockStart,
+      427 |             `the <main> reserves a non-zero --dock-content-safe-inset block-start gutter (got ${g.scrollPaddingBlockStart}px)`,
+    > 428 |         ).toBeGreaterThan(0);
+          |           ^
+      429 |         expect(
+      430 |             g.scrollPaddingInlineStart,
+      431 |             `the <main> reserves a non-zero --dock-content-safe-inset inline-start gutter (got ${g.scrollPaddingInlineStart}px)`,
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/hierarchy.spec.ts:428:11
+
+    Error Context: tests-visual/test-results/hierarchy-BB-W-HIERARCHY2--7b37f-k-content-safe-inset-gutter-coarse-touch/error-context.md
+
+  4) [coarse-touch] › tests-visual/liquid-hover.spec.ts:136:5 › BB.W-LIQUIDHOVER — the tier-root pointer-following gleam (π) › (c) GRAIN NO-POP — the grain background-image stays constant across the hover onset 
+
+    Error: the grain ::after background-image is always present (never `none` — no decode-and-pop swap)
+
+    expect(received).not.toBe(expected) // Object.is equality
+
+    Expected: not "none"
+
+      156 |                 images,
+      157 |                 "the grain ::after background-image is always present (never `none` — no decode-and-pop swap)",
+    > 158 |             ).not.toBe("none");
+          |                   ^
+      159 |         }
+      160 |     });
+      161 |
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/liquid-hover.spec.ts:158:19
+
+    Error Context: tests-visual/test-results/liquid-hover-BB-W-LIQUIDHO-6d727-tant-across-the-hover-onset-coarse-touch/error-context.md
+
+  5) [coarse-touch] › tests-visual/liquid-reveal.spec.ts:55:9 › BB.W-LIQUID-REVEAL — the bloom-from-source liquid open › popover blooms open on the spring clock (mobile) 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: locator.click: Test timeout of 60000ms exceeded.
+    Call log:
+      - waiting for locator('button:has-text(\'Open\'), [data-reka-popover-trigger], button').first()
+        - locator resolved to <button type="button" data-press-armed="" data-state="closed" data-glass-dock-seat="" aria-label="Foundations" data-grace-area-trigger="" class="dock-icon-button glass-specular-track glass-capsule-hover demo-sidebar-item tap-squish text-muted-foreground">…</button>
+      - attempting click action
+        2 × waiting for element to be visible, enabled and stable
+          - element is not visible
+        - retrying click action
+        - waiting 20ms
+        2 × waiting for element to be visible, enabled and stable
+          - element is not visible
+        - retrying click action
+          - waiting 100ms
+        114 × waiting for element to be visible, enabled and stable
+            - element is not visible
+          - retrying click action
+            - waiting 500ms
+
+
+      59 |
+      60 |             const trigger = page.locator("button:has-text('Open'), [data-reka-popover-trigger], button").first();
+    > 61 |             await trigger.click();
+         |                           ^
+      62 |             // The first transition frame — the bloom is mid-flight (scale < 1, blurred).
+      63 |             await page.waitForTimeout(60);
+      64 |             const content = page.locator(".popover-content[data-state='open']").first();
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/liquid-reveal.spec.ts:61:27
+
+    Error Context: tests-visual/test-results/liquid-reveal-BB-W-LIQUID--1f2f7-on-the-spring-clock-mobile--coarse-touch/error-context.md
+
+  6) [coarse-touch] › tests-visual/liquid-reveal.spec.ts:90:9 › BB.W-LIQUID-REVEAL — the bloom-from-source liquid open › dialog blooms open, dock expands, both modes (mobile) 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: locator.click: Test timeout of 60000ms exceeded.
+    Call log:
+      - waiting for locator('button:has-text(\'Open\'), button').first()
+        - locator resolved to <button type="button" data-press-armed="" data-state="closed" data-glass-dock-seat="" aria-label="Foundations" data-grace-area-trigger="" class="dock-icon-button glass-specular-track glass-capsule-hover demo-sidebar-item tap-squish text-muted-foreground">…</button>
+      - attempting click action
+        2 × waiting for element to be visible, enabled and stable
+          - element is not visible
+        - retrying click action
+        - waiting 20ms
+        2 × waiting for element to be visible, enabled and stable
+          - element is not visible
+        - retrying click action
+          - waiting 100ms
+        114 × waiting for element to be visible, enabled and stable
+            - element is not visible
+          - retrying click action
+            - waiting 500ms
+        - waiting for element to be visible, enabled and stable
+
+
+       96 |
+       97 |                 const open = page.locator("button:has-text('Open'), button").first();
+    >  98 |                 await open.click();
+          |                            ^
+       99 |                 await page.waitForTimeout(60); // mid-bloom
+      100 |                 const dialog = page.locator("[role='dialog'][data-state='open'], .glass-reveal[data-state='open']").first();
+      101 |                 await expect(dialog).toBeVisible();
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/liquid-reveal.spec.ts:98:28
+
+    Error Context: tests-visual/test-results/liquid-reveal-BB-W-LIQUID--dc7d5--expands-both-modes-mobile--coarse-touch/error-context.md
+
+  7) [coarse-touch] › tests-visual/liquid-reveal.spec.ts:122:9 › BB.W-LIQUID-REVEAL — the bloom-from-source liquid open › PRM open is a single-paint fade — zero transform/blur frames (mobile) 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: locator.click: Test timeout of 60000ms exceeded.
+    Call log:
+      - waiting for locator('button:has-text(\'Open\'), button').first()
+        - locator resolved to <button type="button" data-press-armed="" data-state="closed" data-glass-dock-seat="" aria-label="Foundations" data-grace-area-trigger="" class="dock-icon-button glass-specular-track glass-capsule-hover demo-sidebar-item tap-squish text-muted-foreground">…</button>
+      - attempting click action
+        2 × waiting for element to be visible, enabled and stable
+          - element is not visible
+        - retrying click action
+        - waiting 20ms
+        2 × waiting for element to be visible, enabled and stable
+          - element is not visible
+        - retrying click action
+          - waiting 100ms
+        114 × waiting for element to be visible, enabled and stable
+            - element is not visible
+          - retrying click action
+            - waiting 500ms
+
+
+      127 |
+      128 |             const trigger = page.locator("button:has-text('Open'), button").first();
+    > 129 |             await trigger.click();
+          |                           ^
+      130 |             await page.waitForTimeout(40);
+      131 |             const content = page.locator(".popover-content[data-state='open']").first();
+      132 |             await expect(content).toBeVisible();
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/liquid-reveal.spec.ts:129:27
+
+    Error Context: tests-visual/test-results/liquid-reveal-BB-W-LIQUID--bacea-ansform-blur-frames-mobile--coarse-touch/error-context.md
+
+  8) [coarse-touch] › tests-visual/liquid-reveal.spec.ts:55:9 › BB.W-LIQUID-REVEAL — the bloom-from-source liquid open › popover blooms open on the spring clock (desktop) 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: locator.click: Test timeout of 60000ms exceeded.
+    Call log:
+      - waiting for locator('button:has-text(\'Open\'), [data-reka-popover-trigger], button').first()
+        - locator resolved to <button type="button" data-press-armed="" data-state="closed" data-glass-dock-seat="" aria-label="Foundations" data-grace-area-trigger="" class="dock-icon-button glass-specular-track glass-capsule-hover demo-sidebar-item tap-squish text-muted-foreground">…</button>
+      - attempting click action
+        2 × waiting for element to be visible, enabled and stable
+          - element is visible, enabled and stable
+          - scrolling into view if needed
+          - done scrolling
+          - <nav class="demo-sidebar-rail" aria-label="Category navigation" data-shell-region="category-navigation">…</nav> intercepts pointer events
+        - retrying click action
+        - waiting 20ms
+        2 × waiting for element to be visible, enabled and stable
+          - element is visible, enabled and stable
+          - scrolling into view if needed
+          - done scrolling
+          - <nav class="demo-sidebar-rail" aria-label="Category navigation" data-shell-region="category-navigation">…</nav> intercepts pointer events
+        - retrying click action
+          - waiting 100ms
+        114 × waiting for element to be visible, enabled and stable
+            - element is visible, enabled and stable
+            - scrolling into view if needed
+            - done scrolling
+            - <nav class="demo-sidebar-rail" aria-label="Category navigation" data-shell-region="category-navigation">…</nav> intercepts pointer events
+          - retrying click action
+            - waiting 500ms
+
+
+      59 |
+      60 |             const trigger = page.locator("button:has-text('Open'), [data-reka-popover-trigger], button").first();
+    > 61 |             await trigger.click();
+         |                           ^
+      62 |             // The first transition frame — the bloom is mid-flight (scale < 1, blurred).
+      63 |             await page.waitForTimeout(60);
+      64 |             const content = page.locator(".popover-content[data-state='open']").first();
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/liquid-reveal.spec.ts:61:27
+
+    Error Context: tests-visual/test-results/liquid-reveal-BB-W-LIQUID--1d9df-n-the-spring-clock-desktop--coarse-touch/error-context.md
+
+  9) [coarse-touch] › tests-visual/liquid-reveal.spec.ts:90:9 › BB.W-LIQUID-REVEAL — the bloom-from-source liquid open › dialog blooms open, dock expands, both modes (desktop) 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: locator.click: Test timeout of 60000ms exceeded.
+    Call log:
+      - waiting for locator('button:has-text(\'Open\'), button').first()
+        - locator resolved to <button type="button" data-press-armed="" data-state="closed" data-glass-dock-seat="" aria-label="Foundations" data-grace-area-trigger="" class="dock-icon-button glass-specular-track glass-capsule-hover demo-sidebar-item tap-squish text-muted-foreground">…</button>
+      - attempting click action
+        2 × waiting for element to be visible, enabled and stable
+          - element is visible, enabled and stable
+          - scrolling into view if needed
+          - done scrolling
+          - <nav class="demo-sidebar-rail" aria-label="Category navigation" data-shell-region="category-navigation">…</nav> intercepts pointer events
+        - retrying click action
+        - waiting 20ms
+        2 × waiting for element to be visible, enabled and stable
+          - element is visible, enabled and stable
+          - scrolling into view if needed
+          - done scrolling
+          - <nav class="demo-sidebar-rail" aria-label="Category navigation" data-shell-region="category-navigation">…</nav> intercepts pointer events
+        - retrying click action
+          - waiting 100ms
+        114 × waiting for element to be visible, enabled and stable
+            - element is visible, enabled and stable
+            - scrolling into view if needed
+            - done scrolling
+            - <nav class="demo-sidebar-rail" aria-label="Category navigation" data-shell-region="category-navigation">…</nav> intercepts pointer events
+          - retrying click action
+            - waiting 500ms
+
+
+       96 |
+       97 |                 const open = page.locator("button:has-text('Open'), button").first();
+    >  98 |                 await open.click();
+          |                            ^
+       99 |                 await page.waitForTimeout(60); // mid-bloom
+      100 |                 const dialog = page.locator("[role='dialog'][data-state='open'], .glass-reveal[data-state='open']").first();
+      101 |                 await expect(dialog).toBeVisible();
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/liquid-reveal.spec.ts:98:28
+
+    Error Context: tests-visual/test-results/liquid-reveal-BB-W-LIQUID--6253c-expands-both-modes-desktop--coarse-touch/error-context.md
+
+  10) [coarse-touch] › tests-visual/liquid-reveal.spec.ts:122:9 › BB.W-LIQUID-REVEAL — the bloom-from-source liquid open › PRM open is a single-paint fade — zero transform/blur frames (desktop) 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: locator.click: Test timeout of 60000ms exceeded.
+    Call log:
+      - waiting for locator('button:has-text(\'Open\'), button').first()
+        - locator resolved to <button type="button" data-press-armed="" data-state="closed" data-glass-dock-seat="" aria-label="Foundations" data-grace-area-trigger="" class="dock-icon-button glass-specular-track glass-capsule-hover demo-sidebar-item tap-squish text-muted-foreground">…</button>
+      - attempting click action
+        2 × waiting for element to be visible, enabled and stable
+          - element is visible, enabled and stable
+          - scrolling into view if needed
+          - done scrolling
+          - <nav class="demo-sidebar-rail" aria-label="Category navigation" data-shell-region="category-navigation">…</nav> intercepts pointer events
+        - retrying click action
+        - waiting 20ms
+        2 × waiting for element to be visible, enabled and stable
+          - element is visible, enabled and stable
+          - scrolling into view if needed
+          - done scrolling
+          - <nav class="demo-sidebar-rail" aria-label="Category navigation" data-shell-region="category-navigation">…</nav> intercepts pointer events
+        - retrying click action
+          - waiting 100ms
+        114 × waiting for element to be visible, enabled and stable
+            - element is visible, enabled and stable
+            - scrolling into view if needed
+            - done scrolling
+            - <nav class="demo-sidebar-rail" aria-label="Category navigation" data-shell-region="category-navigation">…</nav> intercepts pointer events
+          - retrying click action
+            - waiting 500ms
+
+
+      127 |
+      128 |             const trigger = page.locator("button:has-text('Open'), button").first();
+    > 129 |             await trigger.click();
+          |                           ^
+      130 |             await page.waitForTimeout(40);
+      131 |             const content = page.locator(".popover-content[data-state='open']").first();
+      132 |             await expect(content).toBeVisible();
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/liquid-reveal.spec.ts:129:27
+
+    Error Context: tests-visual/test-results/liquid-reveal-BB-W-LIQUID--8ec0d-nsform-blur-frames-desktop--coarse-touch/error-context.md
+
+  11) [coarse-touch] › tests-visual/menu-glass.spec.ts:247:13 › menu-glass (π — the glass menu-row + menu-section register, fail-CLOSED) › (d) section caption mono + hairline @ mobile light 
+
+    Error: the .glass-menu-section caption must read the mono register — got ""Plus Jakarta Sans", "Plus Jakarta Sans Fallback", system-ui, sans-serif"
+
+    expect(received).toMatch(expected)
+
+    Expected pattern: /mono|fira|menlo|monaco|consolas|courier/
+    Received string:  "\"plus jakarta sans\", \"plus jakarta sans fallback\", system-ui, sans-serif"
+
+      254 |                     fontFamily.toLowerCase(),
+      255 |                     `the .glass-menu-section caption must read the mono register — got "${fontFamily}"`,
+    > 256 |                 ).toMatch(/mono|fira|menlo|monaco|consolas|courier/);
+          |                   ^
+      257 |                 expect(
+      258 |                     boxShadow,
+      259 |                     "the .glass-menu-section must paint a hairline (a box-shadow divider, not none)",
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/menu-glass.spec.ts:256:19
+
+    Error Context: tests-visual/test-results/menu-glass-menu-glass-π-—--50191--mono-hairline-mobile-light-coarse-touch/error-context.md
+
+  12) [coarse-touch] › tests-visual/menu-glass.spec.ts:247:13 › menu-glass (π — the glass menu-row + menu-section register, fail-CLOSED) › (d) section caption mono + hairline @ mobile dark 
+
+    Error: the .glass-menu-section caption must read the mono register — got ""Plus Jakarta Sans", "Plus Jakarta Sans Fallback", system-ui, sans-serif"
+
+    expect(received).toMatch(expected)
+
+    Expected pattern: /mono|fira|menlo|monaco|consolas|courier/
+    Received string:  "\"plus jakarta sans\", \"plus jakarta sans fallback\", system-ui, sans-serif"
+
+      254 |                     fontFamily.toLowerCase(),
+      255 |                     `the .glass-menu-section caption must read the mono register — got "${fontFamily}"`,
+    > 256 |                 ).toMatch(/mono|fira|menlo|monaco|consolas|courier/);
+          |                   ^
+      257 |                 expect(
+      258 |                     boxShadow,
+      259 |                     "the .glass-menu-section must paint a hairline (a box-shadow divider, not none)",
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/menu-glass.spec.ts:256:19
+
+    Error Context: tests-visual/test-results/menu-glass-menu-glass-π-—--c5ce0-n-mono-hairline-mobile-dark-coarse-touch/error-context.md
+
+  13) [coarse-touch] › tests-visual/menu-glass.spec.ts:247:13 › menu-glass (π — the glass menu-row + menu-section register, fail-CLOSED) › (d) section caption mono + hairline @ desktop light 
+
+    Error: the .glass-menu-section caption must read the mono register — got ""Plus Jakarta Sans", "Plus Jakarta Sans Fallback", system-ui, sans-serif"
+
+    expect(received).toMatch(expected)
+
+    Expected pattern: /mono|fira|menlo|monaco|consolas|courier/
+    Received string:  "\"plus jakarta sans\", \"plus jakarta sans fallback\", system-ui, sans-serif"
+
+      254 |                     fontFamily.toLowerCase(),
+      255 |                     `the .glass-menu-section caption must read the mono register — got "${fontFamily}"`,
+    > 256 |                 ).toMatch(/mono|fira|menlo|monaco|consolas|courier/);
+          |                   ^
+      257 |                 expect(
+      258 |                     boxShadow,
+      259 |                     "the .glass-menu-section must paint a hairline (a box-shadow divider, not none)",
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/menu-glass.spec.ts:256:19
+
+    Error Context: tests-visual/test-results/menu-glass-menu-glass-π-—--91a23-mono-hairline-desktop-light-coarse-touch/error-context.md
+
+  14) [coarse-touch] › tests-visual/menu-glass.spec.ts:247:13 › menu-glass (π — the glass menu-row + menu-section register, fail-CLOSED) › (d) section caption mono + hairline @ desktop dark 
+
+    Error: the .glass-menu-section caption must read the mono register — got ""Plus Jakarta Sans", "Plus Jakarta Sans Fallback", system-ui, sans-serif"
+
+    expect(received).toMatch(expected)
+
+    Expected pattern: /mono|fira|menlo|monaco|consolas|courier/
+    Received string:  "\"plus jakarta sans\", \"plus jakarta sans fallback\", system-ui, sans-serif"
+
+      254 |                     fontFamily.toLowerCase(),
+      255 |                     `the .glass-menu-section caption must read the mono register — got "${fontFamily}"`,
+    > 256 |                 ).toMatch(/mono|fira|menlo|monaco|consolas|courier/);
+          |                   ^
+      257 |                 expect(
+      258 |                     boxShadow,
+      259 |                     "the .glass-menu-section must paint a hairline (a box-shadow divider, not none)",
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/menu-glass.spec.ts:256:19
+
+    Error Context: tests-visual/test-results/menu-glass-menu-glass-π-—--981e8--mono-hairline-desktop-dark-coarse-touch/error-context.md
+
+  15) [coarse-touch] › tests-visual/metal-shimmer.spec.ts:213:5 › BB.W-METAL-SHIMMER — the brand-metal triad + the parameterized shimmer (π) › (c) the border/mask swept RIM + (d) the rainbow rim 
+
+    Error: .metal-gold-border paints a border-image gradient (the RIM) in light
+
+    expect(received).toContain(expected) // indexOf
+
+    Expected substring: "gradient"
+    Received string:    "none"
+
+      225 |             expect(goldRim && bronzeRim, `the border rims resolve in ${scheme}`).toBeTruthy();
+      226 |             if (goldRim && bronzeRim) {
+    > 227 |                 expect(goldRim.borderImageSource, `.metal-gold-border paints a border-image gradient (the RIM) in ${scheme}`).toContain("gradient");
+          |                                                                                                                               ^
+      228 |                 expect(bronzeRim.borderImageSource, `.metal-bronze-border paints a border-image gradient in ${scheme}`).toContain("gradient");
+      229 |                 // NOT a text fill — the rim is a visible border, color stays inherited (not transparent).
+      230 |                 expect(goldRim.color.replace(/\s/g, ""), `.metal-gold-border is a RIM (text color NOT clipped-transparent) in ${scheme}`).not.toMatch(/^rgba?\(0,0,0,0\)$/);
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/metal-shimmer.spec.ts:227:127
+
+    Error Context: tests-visual/test-results/metal-shimmer-BB-W-METAL-S-c1ad3-swept-RIM-d-the-rainbow-rim-coarse-touch/error-context.md
+
+  16) [coarse-touch] › tests-visual/metal-shimmer.spec.ts:258:5 › BB.W-METAL-SHIMMER — the brand-metal triad + the parameterized shimmer (π) › (e) PRM-STATIC — the metal reads with the slide OFF under reduced-motion 
+
+    Error: [data-metal-border='gold']: the static metal gradient still PAINTS under PRM in light
+
+    expect(received).toBeTruthy()
+
+    Received: false
+
+      293 |                     const paints = (m.background && m.background.includes("gradient"))
+      294 |                         || (m.borderImageSource && m.borderImageSource.includes("gradient"));
+    > 295 |                     expect(paints, `${sel}: the static metal gradient still PAINTS under PRM in ${scheme}`).toBeTruthy();
+          |                                                                                                             ^
+      296 |                 }
+      297 |
+      298 |                 await page.screenshot({ path: resolve(VISUAL_DIR, `W-METAL-SHIMMER-prm-${scheme}.png`), fullPage: false });
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/metal-shimmer.spec.ts:295:109
+
+    Error Context: tests-visual/test-results/metal-shimmer-BB-W-METAL-S-f2e9a-de-OFF-under-reduced-motion-coarse-touch/error-context.md
+
+  17) [coarse-touch] › tests-visual/motion-demo.spec.ts:95:9 › motion-demo (π lane — the robust /motion render, fail-CLOSED) › gallery renders the full 10-family taxonomy + real-twin plots (light) 
+
+    Error: family Standard must render
+
+    expect(received).toContain(expected) // indexOf
+
+    Expected substring: "Standard"
+    Received string:    "Skip to content·
+    ←
+    Motion
+    Motion Lab·
+    Compare the shared spring characters, reverse them mid-flight, and author accessible easing curves with immediate visual feedback.·
+    PHYSICAL VOCABULARY·
+    Choose a motion character, then reverse the target mid-flight to see momentum carry continuously through the turn.·
+    press
+    press
+    response
+    0.2s
+    damping
+    ζ0.8
+    velocity
+    0.00
+    Move
+    Reset·
+    TRANSITION GRAMMAR·
+    The surface below mounts through Glass's real overlay register: spatial bloom on the named spring and its own clock, opacity on the effects curve, and a no-overshoot exit.·
+    Material arrives as one layer.·
+    scale · fade · decongest·
+    Spatial--enter-overlay-spring
+    Clock--enter-overlay-clock
+    Exit--ease-out
+    Replay arrival
+    Authoring boundary·
+    Shape a reusable curve with keyboard-accessible controls; the mode you are not editing stays on the plot as a ghost.·
+    0
+    1
+    Left and Right change x from 0 to 1. Up and Down change y from -0.6 to 1.6. Hold Shift for larger steps; Page Up and Page Down step further.
+    Bezier
+    Steps
+    ease-out-back
+    cubic-bezier(0.175, 0.885, 0.32, 1.275)
+    Preview
+    PREVIEW
+    Spring Orchestrator
+    Motion Lab
+    Scroll Register
+    Deck
+    Hand Mark
+    Text Motion"
+
+      102 |             const text = await page.locator("body").innerText();
+      103 |             for (const fam of REQUIRED) {
+    > 104 |                 expect(text, `family ${fam} must render`).toContain(fam);
+          |                                                           ^
+      105 |             }
+      106 |
+      107 |             // the active family plots a grid of real-twin polylines (not a fake hint-SVG).
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/motion-demo.spec.ts:104:59
+
+    Error Context: tests-visual/test-results/motion-demo-motion-demo-π--1040c-nomy-real-twin-plots-light--coarse-touch/error-context.md
+
+  18) [coarse-touch] › tests-visual/motion-demo.spec.ts:95:9 › motion-demo (π lane — the robust /motion render, fail-CLOSED) › gallery renders the full 10-family taxonomy + real-twin plots (dark) 
+
+    Error: family Standard must render
+
+    expect(received).toContain(expected) // indexOf
+
+    Expected substring: "Standard"
+    Received string:    "Skip to content·
+    ←
+    Motion
+    Motion Lab·
+    Compare the shared spring characters, reverse them mid-flight, and author accessible easing curves with immediate visual feedback.·
+    PHYSICAL VOCABULARY·
+    Choose a motion character, then reverse the target mid-flight to see momentum carry continuously through the turn.·
+    press
+    press
+    response
+    0.2s
+    damping
+    ζ0.8
+    velocity
+    0.00
+    Move
+    Reset·
+    TRANSITION GRAMMAR·
+    The surface below mounts through Glass's real overlay register: spatial bloom on the named spring and its own clock, opacity on the effects curve, and a no-overshoot exit.·
+    Material arrives as one layer.·
+    scale · fade · decongest·
+    Spatial--enter-overlay-spring
+    Clock--enter-overlay-clock
+    Exit--ease-out
+    Replay arrival
+    Authoring boundary·
+    Shape a reusable curve with keyboard-accessible controls; the mode you are not editing stays on the plot as a ghost.·
+    0
+    1
+    Left and Right change x from 0 to 1. Up and Down change y from -0.6 to 1.6. Hold Shift for larger steps; Page Up and Page Down step further.
+    Bezier
+    Steps
+    ease-out-back
+    cubic-bezier(0.175, 0.885, 0.32, 1.275)
+    Preview
+    PREVIEW
+    Spring Orchestrator
+    Motion Lab
+    Scroll Register
+    Deck
+    Hand Mark
+    Text Motion"
+
+      102 |             const text = await page.locator("body").innerText();
+      103 |             for (const fam of REQUIRED) {
+    > 104 |                 expect(text, `family ${fam} must render`).toContain(fam);
+          |                                                           ^
+      105 |             }
+      106 |
+      107 |             // the active family plots a grid of real-twin polylines (not a fake hint-SVG).
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/motion-demo.spec.ts:104:59
+
+    Error Context: tests-visual/test-results/motion-demo-motion-demo-π--cfa7f-onomy-real-twin-plots-dark--coarse-touch/error-context.md
+
+  19) [coarse-touch] › tests-visual/motion-demo.spec.ts:116:9 › motion-demo (π lane — the robust /motion render, fail-CLOSED) › the plot stroke + dot read the violet --motion-accent (no warm-red) (light) 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: locator.evaluate: Test timeout of 60000ms exceeded.
+    Call log:
+      - waiting for locator('svg polyline').first()
+
+
+      131 |
+      132 |             // the painted plot stroke reads the SAME violet (one color event).
+    > 133 |             const stroke = await page.locator("svg polyline").first().evaluate(
+          |                                                                       ^
+      134 |                 (el) => getComputedStyle(el).stroke,
+      135 |             );
+      136 |             const strokeRgb = parseColor(stroke);
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/motion-demo.spec.ts:133:71
+
+    Error Context: tests-visual/test-results/motion-demo-motion-demo-π--fdba4-n-accent-no-warm-red-light--coarse-touch/error-context.md
+
+  20) [coarse-touch] › tests-visual/motion-demo.spec.ts:116:9 › motion-demo (π lane — the robust /motion render, fail-CLOSED) › the plot stroke + dot read the violet --motion-accent (no warm-red) (dark) 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: locator.evaluate: Test timeout of 60000ms exceeded.
+    Call log:
+      - waiting for locator('svg polyline').first()
+
+
+      131 |
+      132 |             // the painted plot stroke reads the SAME violet (one color event).
+    > 133 |             const stroke = await page.locator("svg polyline").first().evaluate(
+          |                                                                       ^
+      134 |                 (el) => getComputedStyle(el).stroke,
+      135 |             );
+      136 |             const strokeRgb = parseColor(stroke);
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/motion-demo.spec.ts:133:71
+
+    Error Context: tests-visual/test-results/motion-demo-motion-demo-π--996ff-on-accent-no-warm-red-dark--coarse-touch/error-context.md
+
+  21) [coarse-touch] › tests-visual/motion-demo.spec.ts:179:5 › motion-demo (π lane — the robust /motion render, fail-CLOSED) › the scroll-register story mounts both native registers + the JS spine 
+
+    Error: expect(locator).toBeAttached() failed
+
+    Locator: locator('[style*="--scene-t"]')
+    Expected: attached
+    Error: strict mode violation: locator('[style*="--scene-t"]') resolved to 2 elements:
+        1) <div class="glass-card flex flex-col gap-2 p-6">…</div> aka locator('#demo-main div').filter({ hasText: 'useScrollScene — damped' })
+        2) <div class="h-full rounded-pill bg-[var(--motion-accent)]"></div> aka locator('.h-full.rounded-pill')
+
+    Call log:
+      - Expect "toBeAttached" with timeout 5000ms
+      - waiting for locator('[style*="--scene-t"]')
+
+
+      190 |         // The spine WRITES its damped value — the property is present on its host,
+      191 |         // which no native timeline can produce.
+    > 192 |         await expect(page.locator('[style*="--scene-t"]')).toBeAttached();
+          |                                                            ^
+      193 |     });
+      194 |
+      195 |     // ── G-CLOSE: capture the DELTA pair (gallery, springs, scroll, bezier) ────────
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/motion-demo.spec.ts:192:60
+
+    Error Context: tests-visual/test-results/motion-demo-motion-demo-π--f59f0-tive-registers-the-JS-spine-coarse-touch/error-context.md
+
+  22) [coarse-touch] › tests-visual/motion-one-clock.spec.ts:114:13 › motion-one-clock — light › (a) tab-fling reads its OWN --spring-snappy-duration clock (the snappy register), never a generic --duration-* 
+
+    Error: the SegmentedTabs indicator fling — the crisp position morph (CONTROL register) clocks to --spring-snappy-duration (NaNs) — its OWN analytic settle, not a generic --duration-*
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   NaN
+
+      126 |                     clock,
+      127 |                     `${surface.note} clocks to ${surface.clock} (${clock}s) — its OWN analytic settle, not a generic --duration-*`,
+    > 128 |                 ).toBeGreaterThan(0);
+          |                   ^
+      129 |                 // The five register clocks are distinct (snappy ~0.34 / smooth ~0.36 /
+      130 |                 // bouncy ~0.69 / gentle ~0.44 / dock ~0.28) — proof the surfaces are NOT
+      131 |                 // all running one wall clock (the R10-2 collapse). Each lands in its
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/motion-one-clock.spec.ts:128:19
+
+    Error Context: tests-visual/test-results/motion-one-clock-motion-on-2cf29-ever-a-generic---duration---coarse-touch/error-context.md
+
+  23) [coarse-touch] › tests-visual/motion-one-clock.spec.ts:114:13 › motion-one-clock — light › (a) dialog-open reads its OWN --spring-bouncy-duration clock (the bouncy register), never a generic --duration-* 
+
+    Error: the dialog bloom-open — the emphatic one-shot entrance (PLAYFUL register) clocks to --spring-bouncy-duration (NaNs) — its OWN analytic settle, not a generic --duration-*
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   NaN
+
+      126 |                     clock,
+      127 |                     `${surface.note} clocks to ${surface.clock} (${clock}s) — its OWN analytic settle, not a generic --duration-*`,
+    > 128 |                 ).toBeGreaterThan(0);
+          |                   ^
+      129 |                 // The five register clocks are distinct (snappy ~0.34 / smooth ~0.36 /
+      130 |                 // bouncy ~0.69 / gentle ~0.44 / dock ~0.28) — proof the surfaces are NOT
+      131 |                 // all running one wall clock (the R10-2 collapse). Each lands in its
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/motion-one-clock.spec.ts:128:19
+
+    Error Context: tests-visual/test-results/motion-one-clock-motion-on-9339b-ever-a-generic---duration---coarse-touch/error-context.md
+
+  24) [coarse-touch] › tests-visual/motion-one-clock.spec.ts:114:13 › motion-one-clock — light › (a) dock-morph reads its OWN --spring-dock-duration clock (the dock register), never a generic --duration-* 
+
+    Error: the dock V↔H / expand-collapse morph (DOCK register) clocks to --spring-dock-duration (NaNs) — its OWN analytic settle, not a generic --duration-*
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   NaN
+
+      126 |                     clock,
+      127 |                     `${surface.note} clocks to ${surface.clock} (${clock}s) — its OWN analytic settle, not a generic --duration-*`,
+    > 128 |                 ).toBeGreaterThan(0);
+          |                   ^
+      129 |                 // The five register clocks are distinct (snappy ~0.34 / smooth ~0.36 /
+      130 |                 // bouncy ~0.69 / gentle ~0.44 / dock ~0.28) — proof the surfaces are NOT
+      131 |                 // all running one wall clock (the R10-2 collapse). Each lands in its
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/motion-one-clock.spec.ts:128:19
+
+    Error Context: tests-visual/test-results/motion-one-clock-motion-on-ddefe-ever-a-generic---duration---coarse-touch/error-context.md
+
+  25) [coarse-touch] › tests-visual/motion-one-clock.spec.ts:114:13 › motion-one-clock — light › (a) button-press reads its OWN --spring-smooth-duration clock (the smooth register), never a generic --duration-* 
+
+    Error: the button press-squish (SETTLE register) clocks to --spring-smooth-duration (NaNs) — its OWN analytic settle, not a generic --duration-*
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   NaN
+
+      126 |                     clock,
+      127 |                     `${surface.note} clocks to ${surface.clock} (${clock}s) — its OWN analytic settle, not a generic --duration-*`,
+    > 128 |                 ).toBeGreaterThan(0);
+          |                   ^
+      129 |                 // The five register clocks are distinct (snappy ~0.34 / smooth ~0.36 /
+      130 |                 // bouncy ~0.69 / gentle ~0.44 / dock ~0.28) — proof the surfaces are NOT
+      131 |                 // all running one wall clock (the R10-2 collapse). Each lands in its
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/motion-one-clock.spec.ts:128:19
+
+    Error Context: tests-visual/test-results/motion-one-clock-motion-on-1cc3f-ever-a-generic---duration---coarse-touch/error-context.md
+
+  26) [coarse-touch] › tests-visual/motion-one-clock.spec.ts:114:13 › motion-one-clock — dark › (a) tab-fling reads its OWN --spring-snappy-duration clock (the snappy register), never a generic --duration-* 
+
+    Error: the SegmentedTabs indicator fling — the crisp position morph (CONTROL register) clocks to --spring-snappy-duration (NaNs) — its OWN analytic settle, not a generic --duration-*
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   NaN
+
+      126 |                     clock,
+      127 |                     `${surface.note} clocks to ${surface.clock} (${clock}s) — its OWN analytic settle, not a generic --duration-*`,
+    > 128 |                 ).toBeGreaterThan(0);
+          |                   ^
+      129 |                 // The five register clocks are distinct (snappy ~0.34 / smooth ~0.36 /
+      130 |                 // bouncy ~0.69 / gentle ~0.44 / dock ~0.28) — proof the surfaces are NOT
+      131 |                 // all running one wall clock (the R10-2 collapse). Each lands in its
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/motion-one-clock.spec.ts:128:19
+
+    Error Context: tests-visual/test-results/motion-one-clock-motion-on-5c266-ever-a-generic---duration---coarse-touch/error-context.md
+
+  27) [coarse-touch] › tests-visual/motion-one-clock.spec.ts:114:13 › motion-one-clock — dark › (a) dialog-open reads its OWN --spring-bouncy-duration clock (the bouncy register), never a generic --duration-* 
+
+    Error: the dialog bloom-open — the emphatic one-shot entrance (PLAYFUL register) clocks to --spring-bouncy-duration (NaNs) — its OWN analytic settle, not a generic --duration-*
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   NaN
+
+      126 |                     clock,
+      127 |                     `${surface.note} clocks to ${surface.clock} (${clock}s) — its OWN analytic settle, not a generic --duration-*`,
+    > 128 |                 ).toBeGreaterThan(0);
+          |                   ^
+      129 |                 // The five register clocks are distinct (snappy ~0.34 / smooth ~0.36 /
+      130 |                 // bouncy ~0.69 / gentle ~0.44 / dock ~0.28) — proof the surfaces are NOT
+      131 |                 // all running one wall clock (the R10-2 collapse). Each lands in its
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/motion-one-clock.spec.ts:128:19
+
+    Error Context: tests-visual/test-results/motion-one-clock-motion-on-71b50-ever-a-generic---duration---coarse-touch/error-context.md
+
+  28) [coarse-touch] › tests-visual/motion-one-clock.spec.ts:114:13 › motion-one-clock — dark › (a) dock-morph reads its OWN --spring-dock-duration clock (the dock register), never a generic --duration-* 
+
+    Error: the dock V↔H / expand-collapse morph (DOCK register) clocks to --spring-dock-duration (NaNs) — its OWN analytic settle, not a generic --duration-*
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   NaN
+
+      126 |                     clock,
+      127 |                     `${surface.note} clocks to ${surface.clock} (${clock}s) — its OWN analytic settle, not a generic --duration-*`,
+    > 128 |                 ).toBeGreaterThan(0);
+          |                   ^
+      129 |                 // The five register clocks are distinct (snappy ~0.34 / smooth ~0.36 /
+      130 |                 // bouncy ~0.69 / gentle ~0.44 / dock ~0.28) — proof the surfaces are NOT
+      131 |                 // all running one wall clock (the R10-2 collapse). Each lands in its
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/motion-one-clock.spec.ts:128:19
+
+    Error Context: tests-visual/test-results/motion-one-clock-motion-on-fbf25-ever-a-generic---duration---coarse-touch/error-context.md
+
+  29) [coarse-touch] › tests-visual/motion-one-clock.spec.ts:114:13 › motion-one-clock — dark › (a) button-press reads its OWN --spring-smooth-duration clock (the smooth register), never a generic --duration-* 
+
+    Error: the button press-squish (SETTLE register) clocks to --spring-smooth-duration (NaNs) — its OWN analytic settle, not a generic --duration-*
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   NaN
+
+      126 |                     clock,
+      127 |                     `${surface.note} clocks to ${surface.clock} (${clock}s) — its OWN analytic settle, not a generic --duration-*`,
+    > 128 |                 ).toBeGreaterThan(0);
+          |                   ^
+      129 |                 // The five register clocks are distinct (snappy ~0.34 / smooth ~0.36 /
+      130 |                 // bouncy ~0.69 / gentle ~0.44 / dock ~0.28) — proof the surfaces are NOT
+      131 |                 // all running one wall clock (the R10-2 collapse). Each lands in its
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/motion-one-clock.spec.ts:128:19
+
+    Error Context: tests-visual/test-results/motion-one-clock-motion-on-485b8-ever-a-generic---duration---coarse-touch/error-context.md
+
+  30) [coarse-touch] › tests-visual/motion2.spec.ts:94:9 › motion2 (π lane — the curve gallery REDRESS render, fail-CLOSED) › the plot stroke reads THICK (≥3px apparent) (light) 
+
+    Error: expect(locator).toBeAttached() failed
+
+    Locator: locator('svg polyline').first()
+    Expected: attached
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeAttached" with timeout 5000ms
+      - waiting for locator('svg polyline').first()
+
+
+      103 |             // Read the attribute + assert the rendered SVG getBBox path is non-degenerate.
+      104 |             const poly = page.locator("svg polyline").first();
+    > 105 |             await expect(poly).toBeAttached();
+          |                                ^
+      106 |             const widthInfo = await poly.evaluate((el) => {
+      107 |                 const cs = getComputedStyle(el);
+      108 |                 const ve = (el as SVGElement).getAttribute("vector-effect");
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/motion2.spec.ts:105:32
+
+    Error Context: tests-visual/test-results/motion2-motion2-π-lane-—-t-e2072--THICK-≥3px-apparent-light--coarse-touch/error-context.md
+
+  31) [coarse-touch] › tests-visual/motion2.spec.ts:94:9 › motion2 (π lane — the curve gallery REDRESS render, fail-CLOSED) › the plot stroke reads THICK (≥3px apparent) (dark) 
+
+    Error: expect(locator).toBeAttached() failed
+
+    Locator: locator('svg polyline').first()
+    Expected: attached
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeAttached" with timeout 5000ms
+      - waiting for locator('svg polyline').first()
+
+
+      103 |             // Read the attribute + assert the rendered SVG getBBox path is non-degenerate.
+      104 |             const poly = page.locator("svg polyline").first();
+    > 105 |             await expect(poly).toBeAttached();
+          |                                ^
+      106 |             const widthInfo = await poly.evaluate((el) => {
+      107 |                 const cs = getComputedStyle(el);
+      108 |                 const ve = (el as SVGElement).getAttribute("vector-effect");
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/motion2.spec.ts:105:32
+
+    Error Context: tests-visual/test-results/motion2-motion2-π-lane-—-t-1493a-s-THICK-≥3px-apparent-dark--coarse-touch/error-context.md
+
+  32) [coarse-touch] › tests-visual/motion2.spec.ts:139:9 › motion2 (π lane — the curve gallery REDRESS render, fail-CLOSED) › the family picker is the underline panel-nav register at scale (light) 
+
+    Error: the curve-family picker must be present
+
+    expect(locator).toBeAttached() failed
+
+    Locator: locator('.curve-family-picker').first()
+    Expected: attached
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - the curve-family picker must be present with timeout 5000ms
+      - waiting for locator('.curve-family-picker').first()
+
+
+      148 |             // the underline tablist (the variant class is on the same element).
+      149 |             const picker = page.locator(".curve-family-picker").first();
+    > 150 |             await expect(picker, "the curve-family picker must be present").toBeAttached();
+          |                                                                             ^
+      151 |
+      152 |             // the underline variant class + the tablist role are on the picker host.
+      153 |             const underlineClass = await picker.evaluate((el) =>
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/motion2.spec.ts:150:77
+
+    Error Context: tests-visual/test-results/motion2-motion2-π-lane-—-t-07b7f-av-register-at-scale-light--coarse-touch/error-context.md
+
+  33) [coarse-touch] › tests-visual/motion2.spec.ts:139:9 › motion2 (π lane — the curve gallery REDRESS render, fail-CLOSED) › the family picker is the underline panel-nav register at scale (dark) 
+
+    Error: the curve-family picker must be present
+
+    expect(locator).toBeAttached() failed
+
+    Locator: locator('.curve-family-picker').first()
+    Expected: attached
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - the curve-family picker must be present with timeout 5000ms
+      - waiting for locator('.curve-family-picker').first()
+
+
+      148 |             // the underline tablist (the variant class is on the same element).
+      149 |             const picker = page.locator(".curve-family-picker").first();
+    > 150 |             await expect(picker, "the curve-family picker must be present").toBeAttached();
+          |                                                                             ^
+      151 |
+      152 |             // the underline variant class + the tablist role are on the picker host.
+      153 |             const underlineClass = await picker.evaluate((el) =>
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/motion2.spec.ts:150:77
+
+    Error Context: tests-visual/test-results/motion2-motion2-π-lane-—-t-7c798-nav-register-at-scale-dark--coarse-touch/error-context.md
+
+  34) [coarse-touch] › tests-visual/motion2.spec.ts:210:9 › motion2 (π lane — the curve gallery REDRESS render, fail-CLOSED) › the plot stroke + accent read the violet --motion-accent (no warm-red) (light) 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: locator.evaluate: Test timeout of 60000ms exceeded.
+    Call log:
+      - waiting for locator('svg polyline').first()
+
+
+      229 |                 .locator("svg polyline")
+      230 |                 .first()
+    > 231 |                 .evaluate((el) => getComputedStyle(el).stroke);
+          |                  ^
+      232 |             const strokeRgb = parseColor(stroke);
+      233 |             if (strokeRgb) {
+      234 |                 const strokeHue = rgbHueDeg(...strokeRgb);
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/motion2.spec.ts:231:18
+
+    Error Context: tests-visual/test-results/motion2-motion2-π-lane-—-t-e0e59-n-accent-no-warm-red-light--coarse-touch/error-context.md
+
+  35) [coarse-touch] › tests-visual/motion2.spec.ts:210:9 › motion2 (π lane — the curve gallery REDRESS render, fail-CLOSED) › the plot stroke + accent read the violet --motion-accent (no warm-red) (dark) 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: locator.evaluate: Test timeout of 60000ms exceeded.
+    Call log:
+      - waiting for locator('svg polyline').first()
+
+
+      229 |                 .locator("svg polyline")
+      230 |                 .first()
+    > 231 |                 .evaluate((el) => getComputedStyle(el).stroke);
+          |                  ^
+      232 |             const strokeRgb = parseColor(stroke);
+      233 |             if (strokeRgb) {
+      234 |                 const strokeHue = rgbHueDeg(...strokeRgb);
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/motion2.spec.ts:231:18
+
+    Error Context: tests-visual/test-results/motion2-motion2-π-lane-—-t-9ff12-on-accent-no-warm-red-dark--coarse-touch/error-context.md
+
+  36) [coarse-touch] › tests-visual/motion2.spec.ts:244:5 › motion2 (π lane — the curve gallery REDRESS render, fail-CLOSED) › the picker renders the full canon family set + plots real-twin polylines 
+
+    Error: family Standard must render in the picker
+
+    expect(received).toContain(expected) // indexOf
+
+    Expected substring: "Standard"
+    Received string:    "Skip to content·
+    ←
+    Motion
+    Motion Lab·
+    Compare the shared spring characters, reverse them mid-flight, and author accessible easing curves with immediate visual feedback.·
+    PHYSICAL VOCABULARY·
+    Choose a motion character, then reverse the target mid-flight to see momentum carry continuously through the turn.·
+    press
+    press
+    response
+    0.2s
+    damping
+    ζ0.8
+    velocity
+    0.00
+    Move
+    Reset·
+    TRANSITION GRAMMAR·
+    The surface below mounts through Glass's real overlay register: spatial bloom on the named spring and its own clock, opacity on the effects curve, and a no-overshoot exit.·
+    Material arrives as one layer.·
+    scale · fade · decongest·
+    Spatial--enter-overlay-spring
+    Clock--enter-overlay-clock
+    Exit--ease-out
+    Replay arrival
+    Authoring boundary·
+    Shape a reusable curve with keyboard-accessible controls; the mode you are not editing stays on the plot as a ghost.·
+    0
+    1
+    Left and Right change x from 0 to 1. Up and Down change y from -0.6 to 1.6. Hold Shift for larger steps; Page Up and Page Down step further.
+    Bezier
+    Steps
+    ease-out-back
+    cubic-bezier(0.175, 0.885, 0.32, 1.275)
+    Preview
+    PREVIEW
+    Spring Orchestrator
+    Motion Lab
+    Scroll Register
+    Deck
+    Hand Mark
+    Text Motion"
+
+      252 |         const text = await page.locator("body").innerText();
+      253 |         for (const fam of REQUIRED) {
+    > 254 |             expect(text, `family ${fam} must render in the picker`).toContain(fam);
+          |                                                                     ^
+      255 |         }
+      256 |
+      257 |         // the active family plots a grid of real-twin polylines.
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/motion2.spec.ts:254:69
+
+    Error Context: tests-visual/test-results/motion2-motion2-π-lane-—-t-b950b-t-plots-real-twin-polylines-coarse-touch/error-context.md
+
+  37) [coarse-touch] › tests-visual/motion2.spec.ts:307:5 › motion2 (π lane — the curve gallery REDRESS render, fail-CLOSED) › G-CLOSE — write the stroke-readback JSON 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: locator.evaluate: Test timeout of 60000ms exceeded.
+    Call log:
+      - waiting for locator('svg polyline').first()
+
+
+      320 |
+      321 |             const poly = page.locator("svg polyline").first();
+    > 322 |             const stroke = await poly.evaluate((el) => {
+          |                                       ^
+      323 |                 const cs = getComputedStyle(el);
+      324 |                 return {
+      325 |                     attr: (el as SVGElement).getAttribute("stroke-width"),
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/motion2.spec.ts:322:39
+
+    Error Context: tests-visual/test-results/motion2-motion2-π-lane-—-t-6f1d2-te-the-stroke-readback-JSON-coarse-touch/error-context.md
+
+  38) [coarse-touch] › tests-visual/music-staff.spec.ts:74:1 › MusicStaff score scale is constant and the engraving never squashes 
+
+    Error: expect(received).toBeCloseTo(expected, precision)
+
+    Expected: 0.5
+    Received: 7.999763974329956
+
+    Expected precision:    1
+    Expected difference: < 0.05
+    Received difference:   7.499763974329956
+
+      93 |         });
+      94 |
+    > 95 |     expect(state.scale).toBeCloseTo(state.space, 1);
+         |                         ^
+      96 |     expect(state.overflowX).toBe("auto");
+      97 |     expect(state.tabindex).toBe("0");
+      98 |     expect(state.scrolls).toBe(true);
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/music-staff.spec.ts:95:25
+
+    Error Context: tests-visual/test-results/music-staff-MusicStaff-sco-f0f23-he-engraving-never-squashes-coarse-touch/error-context.md
+
+  39) [coarse-touch] › tests-visual/nav-dock-fix.spec.ts:73:13 › W-NAV-DOCK-FIX — the nav-dock binding π › light · mobile — nav-dock gestalt 
+
+    Error: the rail renders mode="facets"
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "facets"
+    Received: null
+
+      138 |                     return rail?.getAttribute("data-mode") ?? null;
+      139 |                 });
+    > 140 |                 expect(railMode, 'the rail renders mode="facets"').toBe("facets");
+          |                                                                    ^
+      141 |
+      142 |                 // Distinct per-facet --glass-accent (read the inline style hue).
+      143 |                 const accents = await page.evaluate(() => {
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/nav-dock-fix.spec.ts:140:68
+
+    Error Context: tests-visual/test-results/nav-dock-fix-W-NAV-DOCK-FI-e4817-·-mobile-—-nav-dock-gestalt-coarse-touch/error-context.md
+
+  40) [coarse-touch] › tests-visual/nav-dock-fix.spec.ts:73:13 › W-NAV-DOCK-FIX — the nav-dock binding π › light · desktop — nav-dock gestalt 
+
+    Error: the rail renders mode="facets"
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "facets"
+    Received: null
+
+      138 |                     return rail?.getAttribute("data-mode") ?? null;
+      139 |                 });
+    > 140 |                 expect(railMode, 'the rail renders mode="facets"').toBe("facets");
+          |                                                                    ^
+      141 |
+      142 |                 // Distinct per-facet --glass-accent (read the inline style hue).
+      143 |                 const accents = await page.evaluate(() => {
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/nav-dock-fix.spec.ts:140:68
+
+    Error Context: tests-visual/test-results/nav-dock-fix-W-NAV-DOCK-FI-c3b61--desktop-—-nav-dock-gestalt-coarse-touch/error-context.md
+
+  41) [coarse-touch] › tests-visual/nav-dock-fix.spec.ts:73:13 › W-NAV-DOCK-FIX — the nav-dock binding π › dark · mobile — nav-dock gestalt 
+
+    Error: the rail renders mode="facets"
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "facets"
+    Received: null
+
+      138 |                     return rail?.getAttribute("data-mode") ?? null;
+      139 |                 });
+    > 140 |                 expect(railMode, 'the rail renders mode="facets"').toBe("facets");
+          |                                                                    ^
+      141 |
+      142 |                 // Distinct per-facet --glass-accent (read the inline style hue).
+      143 |                 const accents = await page.evaluate(() => {
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/nav-dock-fix.spec.ts:140:68
+
+    Error Context: tests-visual/test-results/nav-dock-fix-W-NAV-DOCK-FI-abc92-·-mobile-—-nav-dock-gestalt-coarse-touch/error-context.md
+
+  42) [coarse-touch] › tests-visual/nav-dock-fix.spec.ts:73:13 › W-NAV-DOCK-FIX — the nav-dock binding π › dark · desktop — nav-dock gestalt 
+
+    Error: the rail renders mode="facets"
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "facets"
+    Received: null
+
+      138 |                     return rail?.getAttribute("data-mode") ?? null;
+      139 |                 });
+    > 140 |                 expect(railMode, 'the rail renders mode="facets"').toBe("facets");
+          |                                                                    ^
+      141 |
+      142 |                 // Distinct per-facet --glass-accent (read the inline style hue).
+      143 |                 const accents = await page.evaluate(() => {
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/nav-dock-fix.spec.ts:140:68
+
+    Error Context: tests-visual/test-results/nav-dock-fix-W-NAV-DOCK-FI-5fb77--desktop-—-nav-dock-gestalt-coarse-touch/error-context.md
+
+  43) [coarse-touch] › tests-visual/nested-backdrop-budget.spec.ts:47:5 › nested-backdrop-budget (π lane — the maximal-glass nested stack, fail-CLOSED) › the glass-Button-in-Card-in-Dialog stack stays within the depth + frame budget 
+
+    Error: .glass-btn `contain` is "none" — O-4 must include `paint`.
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      182 |             containment.btn?.hasPaint,
+      183 |             `.glass-btn \`contain\` is "${containment.btn?.contain}" — O-4 must include \`paint\`.`,
+    > 184 |         ).toBe(true);
+          |           ^
+      185 |
+      186 |         // Frame budget: the MEDIAN frame stays under the 60fps budget + the CI slack
+      187 |         // (the contained stack holds the cap; an uncontained nested stack that re-samples
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/nested-backdrop-budget.spec.ts:184:11
+
+    Error Context: tests-visual/test-results/nested-backdrop-budget-nes-c75a5-thin-the-depth-frame-budget-coarse-touch/error-context.md
+
+  44) [coarse-touch] › tests-visual/no-gray.spec.ts:306:13 › no-gray (π — the warm-chroma floor, fail-CLOSED) › (f) the LIVE Select dropdown panel composites warm [light] @ mobile 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: locator.click: Test timeout of 60000ms exceeded.
+    Call log:
+      - waiting for locator('[data-slot="select-trigger"], [role="combobox"]').first()
+
+
+      312 |                 // open the first Select trigger.
+      313 |                 const trigger = page.locator('[data-slot="select-trigger"], [role="combobox"]').first();
+    > 314 |                 await trigger.click();
+          |                               ^
+      315 |                 await page.waitForTimeout(260); // the glass-reveal bloom settles
+      316 |                 const read = await page.evaluate(() => {
+      317 |                     const panel = document.querySelector(
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/no-gray.spec.ts:314:31
+
+    Error Context: tests-visual/test-results/no-gray-no-gray-π-—-the-wa-9a93b-omposites-warm-light-mobile-coarse-touch/error-context.md
+
+  45) [coarse-touch] › tests-visual/no-gray.spec.ts:306:13 › no-gray (π — the warm-chroma floor, fail-CLOSED) › (f) the LIVE Select dropdown panel composites warm [dark] @ mobile 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: locator.click: Test timeout of 60000ms exceeded.
+    Call log:
+      - waiting for locator('[data-slot="select-trigger"], [role="combobox"]').first()
+
+
+      312 |                 // open the first Select trigger.
+      313 |                 const trigger = page.locator('[data-slot="select-trigger"], [role="combobox"]').first();
+    > 314 |                 await trigger.click();
+          |                               ^
+      315 |                 await page.waitForTimeout(260); // the glass-reveal bloom settles
+      316 |                 const read = await page.evaluate(() => {
+      317 |                     const panel = document.querySelector(
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/no-gray.spec.ts:314:31
+
+    Error Context: tests-visual/test-results/no-gray-no-gray-π-—-the-wa-64a05-composites-warm-dark-mobile-coarse-touch/error-context.md
+
+  46) [coarse-touch] › tests-visual/no-gray.spec.ts:306:13 › no-gray (π — the warm-chroma floor, fail-CLOSED) › (f) the LIVE Select dropdown panel composites warm [light] @ desktop 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: locator.click: Test timeout of 60000ms exceeded.
+    Call log:
+      - waiting for locator('[data-slot="select-trigger"], [role="combobox"]').first()
+
+
+      312 |                 // open the first Select trigger.
+      313 |                 const trigger = page.locator('[data-slot="select-trigger"], [role="combobox"]').first();
+    > 314 |                 await trigger.click();
+          |                               ^
+      315 |                 await page.waitForTimeout(260); // the glass-reveal bloom settles
+      316 |                 const read = await page.evaluate(() => {
+      317 |                     const panel = document.querySelector(
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/no-gray.spec.ts:314:31
+
+    Error Context: tests-visual/test-results/no-gray-no-gray-π-—-the-wa-dd3e1-mposites-warm-light-desktop-coarse-touch/error-context.md
+
+  47) [coarse-touch] › tests-visual/no-gray.spec.ts:306:13 › no-gray (π — the warm-chroma floor, fail-CLOSED) › (f) the LIVE Select dropdown panel composites warm [dark] @ desktop 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: locator.click: Test timeout of 60000ms exceeded.
+    Call log:
+      - waiting for locator('[data-slot="select-trigger"], [role="combobox"]').first()
+
+
+      312 |                 // open the first Select trigger.
+      313 |                 const trigger = page.locator('[data-slot="select-trigger"], [role="combobox"]').first();
+    > 314 |                 await trigger.click();
+          |                               ^
+      315 |                 await page.waitForTimeout(260); // the glass-reveal bloom settles
+      316 |                 const read = await page.evaluate(() => {
+      317 |                     const panel = document.querySelector(
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/no-gray.spec.ts:314:31
+
+    Error Context: tests-visual/test-results/no-gray-no-gray-π-—-the-wa-34730-omposites-warm-dark-desktop-coarse-touch/error-context.md
+
+  48) [coarse-touch] › tests-visual/no-shadcn-default.spec.ts:119:9 › no-shadcn-default (the reskinned ui/ surfaces read the glass/paper material, NOT shadcn-neutral) › light: Button outline/secondary/accent resolve a translucent warm glass fill — /display/buttons 
+
+    Error: Button variant="outline" (light): no element matched (the reskinned surface must render on this route)
+
+    expect(received).not.toBeNull()
+
+    Received: null
+
+      87 |     surf: { bg: string; borderColor: string; boxShadow: string } | null,
+      88 | ): void {
+    > 89 |     expect(surf, `${label}: no element matched (the reskinned surface must render on this route)`).not.toBeNull();
+         |                                                                                                        ^
+      90 |     const s = surf!;
+      91 |     const stats = statsFromResolvedBg(s.bg);
+      92 |     expect(
+        at assertMaterial (/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/no-shadcn-default.spec.ts:89:104)
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/no-shadcn-default.spec.ts:130:17
+
+    Error Context: tests-visual/test-results/no-shadcn-default-no-shadc-218f9-lass-fill-—-display-buttons-coarse-touch/error-context.md
+
+  49) [coarse-touch] › tests-visual/no-shadcn-default.spec.ts:148:9 › no-shadcn-default (the reskinned ui/ surfaces read the glass/paper material, NOT shadcn-neutral) › light: TagsInput active item resolves the warm focus ring (NOT cold ring-ring) — /data/tags-input 
+
+    Error: TagsInput item (light): no element matched (the reskinned surface must render on this route)
+
+    expect(received).not.toBeNull()
+
+    Received: null
+
+      87 |     surf: { bg: string; borderColor: string; boxShadow: string } | null,
+      88 | ): void {
+    > 89 |     expect(surf, `${label}: no element matched (the reskinned surface must render on this route)`).not.toBeNull();
+         |                                                                                                        ^
+      90 |     const s = surf!;
+      91 |     const stats = statsFromResolvedBg(s.bg);
+      92 |     expect(
+        at assertMaterial (/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/no-shadcn-default.spec.ts:89:104)
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/no-shadcn-default.spec.ts:160:13
+
+    Error Context: tests-visual/test-results/no-shadcn-default-no-shadc-01caf-ring-ring-—-data-tags-input-coarse-touch/error-context.md
+
+  50) [coarse-touch] › tests-visual/no-shadcn-default.spec.ts:119:9 › no-shadcn-default (the reskinned ui/ surfaces read the glass/paper material, NOT shadcn-neutral) › dark: Button outline/secondary/accent resolve a translucent warm glass fill — /display/buttons 
+
+    Error: Button variant="outline" (dark): no element matched (the reskinned surface must render on this route)
+
+    expect(received).not.toBeNull()
+
+    Received: null
+
+      87 |     surf: { bg: string; borderColor: string; boxShadow: string } | null,
+      88 | ): void {
+    > 89 |     expect(surf, `${label}: no element matched (the reskinned surface must render on this route)`).not.toBeNull();
+         |                                                                                                        ^
+      90 |     const s = surf!;
+      91 |     const stats = statsFromResolvedBg(s.bg);
+      92 |     expect(
+        at assertMaterial (/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/no-shadcn-default.spec.ts:89:104)
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/no-shadcn-default.spec.ts:130:17
+
+    Error Context: tests-visual/test-results/no-shadcn-default-no-shadc-9ba83-lass-fill-—-display-buttons-coarse-touch/error-context.md
+
+  51) [coarse-touch] › tests-visual/no-shadcn-default.spec.ts:148:9 › no-shadcn-default (the reskinned ui/ surfaces read the glass/paper material, NOT shadcn-neutral) › dark: TagsInput active item resolves the warm focus ring (NOT cold ring-ring) — /data/tags-input 
+
+    Error: TagsInput item (dark): no element matched (the reskinned surface must render on this route)
+
+    expect(received).not.toBeNull()
+
+    Received: null
+
+      87 |     surf: { bg: string; borderColor: string; boxShadow: string } | null,
+      88 | ): void {
+    > 89 |     expect(surf, `${label}: no element matched (the reskinned surface must render on this route)`).not.toBeNull();
+         |                                                                                                        ^
+      90 |     const s = surf!;
+      91 |     const stats = statsFromResolvedBg(s.bg);
+      92 |     expect(
+        at assertMaterial (/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/no-shadcn-default.spec.ts:89:104)
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/no-shadcn-default.spec.ts:160:13
+
+    Error Context: tests-visual/test-results/no-shadcn-default-no-shadc-e9bf2-ring-ring-—-data-tags-input-coarse-touch/error-context.md
+
+  51 failed
+    [coarse-touch] › tests-visual/hierarchy.spec.ts:61:5 › AZ.W-HIERARCHY — the canonical section rung + Configurator vocabulary (π) › H1+H2 — every section <h2> resolves to 20.4px; no child <h3> > parent <h2> 
+    [coarse-touch] › tests-visual/hierarchy.spec.ts:148:5 › AZ.W-HIERARCHY — the canonical section rung + Configurator vocabulary (π) › H3 — Configurator section label > row label; preset-row block-padding > body-row's 
+    [coarse-touch] › tests-visual/hierarchy.spec.ts:398:5 › BB.W-HIERARCHY2 — the StoryHeader cluster (reading order + GRAVITY entrance + gutter) (π) › H2-GUTTER — the <main> reserves the --dock-content-safe-inset gutter 
+    [coarse-touch] › tests-visual/liquid-hover.spec.ts:136:5 › BB.W-LIQUIDHOVER — the tier-root pointer-following gleam (π) › (c) GRAIN NO-POP — the grain background-image stays constant across the hover onset 
+    [coarse-touch] › tests-visual/liquid-reveal.spec.ts:55:9 › BB.W-LIQUID-REVEAL — the bloom-from-source liquid open › popover blooms open on the spring clock (mobile) 
+    [coarse-touch] › tests-visual/liquid-reveal.spec.ts:90:9 › BB.W-LIQUID-REVEAL — the bloom-from-source liquid open › dialog blooms open, dock expands, both modes (mobile) 
+    [coarse-touch] › tests-visual/liquid-reveal.spec.ts:122:9 › BB.W-LIQUID-REVEAL — the bloom-from-source liquid open › PRM open is a single-paint fade — zero transform/blur frames (mobile) 
+    [coarse-touch] › tests-visual/liquid-reveal.spec.ts:55:9 › BB.W-LIQUID-REVEAL — the bloom-from-source liquid open › popover blooms open on the spring clock (desktop) 
+    [coarse-touch] › tests-visual/liquid-reveal.spec.ts:90:9 › BB.W-LIQUID-REVEAL — the bloom-from-source liquid open › dialog blooms open, dock expands, both modes (desktop) 
+    [coarse-touch] › tests-visual/liquid-reveal.spec.ts:122:9 › BB.W-LIQUID-REVEAL — the bloom-from-source liquid open › PRM open is a single-paint fade — zero transform/blur frames (desktop) 
+    [coarse-touch] › tests-visual/menu-glass.spec.ts:247:13 › menu-glass (π — the glass menu-row + menu-section register, fail-CLOSED) › (d) section caption mono + hairline @ mobile light 
+    [coarse-touch] › tests-visual/menu-glass.spec.ts:247:13 › menu-glass (π — the glass menu-row + menu-section register, fail-CLOSED) › (d) section caption mono + hairline @ mobile dark 
+    [coarse-touch] › tests-visual/menu-glass.spec.ts:247:13 › menu-glass (π — the glass menu-row + menu-section register, fail-CLOSED) › (d) section caption mono + hairline @ desktop light 
+    [coarse-touch] › tests-visual/menu-glass.spec.ts:247:13 › menu-glass (π — the glass menu-row + menu-section register, fail-CLOSED) › (d) section caption mono + hairline @ desktop dark 
+    [coarse-touch] › tests-visual/metal-shimmer.spec.ts:213:5 › BB.W-METAL-SHIMMER — the brand-metal triad + the parameterized shimmer (π) › (c) the border/mask swept RIM + (d) the rainbow rim 
+    [coarse-touch] › tests-visual/metal-shimmer.spec.ts:258:5 › BB.W-METAL-SHIMMER — the brand-metal triad + the parameterized shimmer (π) › (e) PRM-STATIC — the metal reads with the slide OFF under reduced-motion 
+    [coarse-touch] › tests-visual/motion-demo.spec.ts:95:9 › motion-demo (π lane — the robust /motion render, fail-CLOSED) › gallery renders the full 10-family taxonomy + real-twin plots (light) 
+    [coarse-touch] › tests-visual/motion-demo.spec.ts:95:9 › motion-demo (π lane — the robust /motion render, fail-CLOSED) › gallery renders the full 10-family taxonomy + real-twin plots (dark) 
+    [coarse-touch] › tests-visual/motion-demo.spec.ts:116:9 › motion-demo (π lane — the robust /motion render, fail-CLOSED) › the plot stroke + dot read the violet --motion-accent (no warm-red) (light) 
+    [coarse-touch] › tests-visual/motion-demo.spec.ts:116:9 › motion-demo (π lane — the robust /motion render, fail-CLOSED) › the plot stroke + dot read the violet --motion-accent (no warm-red) (dark) 
+    [coarse-touch] › tests-visual/motion-demo.spec.ts:179:5 › motion-demo (π lane — the robust /motion render, fail-CLOSED) › the scroll-register story mounts both native registers + the JS spine 
+    [coarse-touch] › tests-visual/motion-one-clock.spec.ts:114:13 › motion-one-clock — light › (a) tab-fling reads its OWN --spring-snappy-duration clock (the snappy register), never a generic --duration-* 
+    [coarse-touch] › tests-visual/motion-one-clock.spec.ts:114:13 › motion-one-clock — light › (a) dialog-open reads its OWN --spring-bouncy-duration clock (the bouncy register), never a generic --duration-* 
+    [coarse-touch] › tests-visual/motion-one-clock.spec.ts:114:13 › motion-one-clock — light › (a) dock-morph reads its OWN --spring-dock-duration clock (the dock register), never a generic --duration-* 
+    [coarse-touch] › tests-visual/motion-one-clock.spec.ts:114:13 › motion-one-clock — light › (a) button-press reads its OWN --spring-smooth-duration clock (the smooth register), never a generic --duration-* 
+    [coarse-touch] › tests-visual/motion-one-clock.spec.ts:114:13 › motion-one-clock — dark › (a) tab-fling reads its OWN --spring-snappy-duration clock (the snappy register), never a generic --duration-* 
+    [coarse-touch] › tests-visual/motion-one-clock.spec.ts:114:13 › motion-one-clock — dark › (a) dialog-open reads its OWN --spring-bouncy-duration clock (the bouncy register), never a generic --duration-* 
+    [coarse-touch] › tests-visual/motion-one-clock.spec.ts:114:13 › motion-one-clock — dark › (a) dock-morph reads its OWN --spring-dock-duration clock (the dock register), never a generic --duration-* 
+    [coarse-touch] › tests-visual/motion-one-clock.spec.ts:114:13 › motion-one-clock — dark › (a) button-press reads its OWN --spring-smooth-duration clock (the smooth register), never a generic --duration-* 
+    [coarse-touch] › tests-visual/motion2.spec.ts:94:9 › motion2 (π lane — the curve gallery REDRESS render, fail-CLOSED) › the plot stroke reads THICK (≥3px apparent) (light) 
+    [coarse-touch] › tests-visual/motion2.spec.ts:94:9 › motion2 (π lane — the curve gallery REDRESS render, fail-CLOSED) › the plot stroke reads THICK (≥3px apparent) (dark) 
+    [coarse-touch] › tests-visual/motion2.spec.ts:139:9 › motion2 (π lane — the curve gallery REDRESS render, fail-CLOSED) › the family picker is the underline panel-nav register at scale (light) 
+    [coarse-touch] › tests-visual/motion2.spec.ts:139:9 › motion2 (π lane — the curve gallery REDRESS render, fail-CLOSED) › the family picker is the underline panel-nav register at scale (dark) 
+    [coarse-touch] › tests-visual/motion2.spec.ts:210:9 › motion2 (π lane — the curve gallery REDRESS render, fail-CLOSED) › the plot stroke + accent read the violet --motion-accent (no warm-red) (light) 
+    [coarse-touch] › tests-visual/motion2.spec.ts:210:9 › motion2 (π lane — the curve gallery REDRESS render, fail-CLOSED) › the plot stroke + accent read the violet --motion-accent (no warm-red) (dark) 
+    [coarse-touch] › tests-visual/motion2.spec.ts:244:5 › motion2 (π lane — the curve gallery REDRESS render, fail-CLOSED) › the picker renders the full canon family set + plots real-twin polylines 
+    [coarse-touch] › tests-visual/motion2.spec.ts:307:5 › motion2 (π lane — the curve gallery REDRESS render, fail-CLOSED) › G-CLOSE — write the stroke-readback JSON 
+    [coarse-touch] › tests-visual/music-staff.spec.ts:74:1 › MusicStaff score scale is constant and the engraving never squashes 
+    [coarse-touch] › tests-visual/nav-dock-fix.spec.ts:73:13 › W-NAV-DOCK-FIX — the nav-dock binding π › light · mobile — nav-dock gestalt 
+    [coarse-touch] › tests-visual/nav-dock-fix.spec.ts:73:13 › W-NAV-DOCK-FIX — the nav-dock binding π › light · desktop — nav-dock gestalt 
+    [coarse-touch] › tests-visual/nav-dock-fix.spec.ts:73:13 › W-NAV-DOCK-FIX — the nav-dock binding π › dark · mobile — nav-dock gestalt 
+    [coarse-touch] › tests-visual/nav-dock-fix.spec.ts:73:13 › W-NAV-DOCK-FIX — the nav-dock binding π › dark · desktop — nav-dock gestalt 
+    [coarse-touch] › tests-visual/nested-backdrop-budget.spec.ts:47:5 › nested-backdrop-budget (π lane — the maximal-glass nested stack, fail-CLOSED) › the glass-Button-in-Card-in-Dialog stack stays within the depth + frame budget 
+    [coarse-touch] › tests-visual/no-gray.spec.ts:306:13 › no-gray (π — the warm-chroma floor, fail-CLOSED) › (f) the LIVE Select dropdown panel composites warm [light] @ mobile 
+    [coarse-touch] › tests-visual/no-gray.spec.ts:306:13 › no-gray (π — the warm-chroma floor, fail-CLOSED) › (f) the LIVE Select dropdown panel composites warm [dark] @ mobile 
+    [coarse-touch] › tests-visual/no-gray.spec.ts:306:13 › no-gray (π — the warm-chroma floor, fail-CLOSED) › (f) the LIVE Select dropdown panel composites warm [light] @ desktop 
+    [coarse-touch] › tests-visual/no-gray.spec.ts:306:13 › no-gray (π — the warm-chroma floor, fail-CLOSED) › (f) the LIVE Select dropdown panel composites warm [dark] @ desktop 
+    [coarse-touch] › tests-visual/no-shadcn-default.spec.ts:119:9 › no-shadcn-default (the reskinned ui/ surfaces read the glass/paper material, NOT shadcn-neutral) › light: Button outline/secondary/accent resolve a translucent warm glass fill — /display/buttons 
+    [coarse-touch] › tests-visual/no-shadcn-default.spec.ts:148:9 › no-shadcn-default (the reskinned ui/ surfaces read the glass/paper material, NOT shadcn-neutral) › light: TagsInput active item resolves the warm focus ring (NOT cold ring-ring) — /data/tags-input 
+    [coarse-touch] › tests-visual/no-shadcn-default.spec.ts:119:9 › no-shadcn-default (the reskinned ui/ surfaces read the glass/paper material, NOT shadcn-neutral) › dark: Button outline/secondary/accent resolve a translucent warm glass fill — /display/buttons 
+    [coarse-touch] › tests-visual/no-shadcn-default.spec.ts:148:9 › no-shadcn-default (the reskinned ui/ surfaces read the glass/paper material, NOT shadcn-neutral) › dark: TagsInput active item resolves the warm focus ring (NOT cold ring-ring) — /data/tags-input 
+  5 skipped
+  67 passed (18.1m)

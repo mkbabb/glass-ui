@@ -1,11 +1,11 @@
-# W-G.6 · W-MOUNT-PATH: no synchronous cost on the mount path that scales with anything but the work · 11.0.0
+# W-G.6 · W-MOUNT-PATH: no synchronous cost on the mount path that scales with anything but the work
 
 | field | value |
 |---|---|
 | seat | band-G wave-spec seat, formation (relaunch 2026-09-25) |
 | model | `claude-opus-5-5`, asserted from own system identity |
 | HEAD | `b37a37c3` (`src`, `demo`, `tests` identical to `f3ad78d0`); scratch worktree built with `npm run build`; the band-G component harness (appendix D) served from that build on :5988; the demo on :5987; Chromium on Metal |
-| ships in | 11.0.0 |
+| release | `waves/INDEX.md`, the one record |
 | families | F-51, synchronous costs on the mount path (`audit/REGISTRY.md:1221-1235`): L07-08, L07-10, L07-11, L07-12, R2-02-15, R2-04-06, R7-02-03. Inbound: O-60 KFA-164 (partly) |
 | depends on | PLAN §5, the one record of edges |
 | dependants | PLAN §5 (its inverse) |
@@ -234,7 +234,7 @@ The `b` page, W-G.7's one-Button consumer (its G7-G8 reads it):
 - `src/b.css`: `@import "tailwindcss"; @import "tw-animate-css"; @import "@mkbabb/glass-ui/styles";` and nothing else.
 - `src/b.js`: `import "./b.css"; import { createApp, h } from "vue"; import { Button } from "@mkbabb/glass-ui/button"; createApp({ render: () => h(Button, null, () => "One") }).mount("#app");`
 
-W-G.3's dock fixture (`c=dock`) and W-G.5's `c=blob` use the `h` page.
+W-G.3's dock fixture (`c=dock`) uses the `h` page. W-G.5 does not: it drives `c=blob` on the blob run's own harness, `tests-visual/blob-run/harness.html`, which W-G.1 lands (`W-G.1.md` §3 item 8), so W-G.5 does not wait on this wave.
 
 ## Addendum (2026-11-04): value.js O-99 R-3 (INBOUND O-136)
 `useScrollTrigger`'s synchronous first layout at mount (`scrollReader` `position`, 17.4 ms in value's boot task, called by first-paint pane primitives and `card`) is a member of this wave's law. Gate: value's boot-task profile (`W12U-evidence/o5c/boot-profile-r1.txt` instrument) shows no layout forced from `scrollReader` inside the boot task.

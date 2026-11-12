@@ -1,11 +1,11 @@
-# W-C.2 · W-DEMETA-II: live artefacts carry no tranche meta, and comments state the present · 11.0.0
+# W-C.2 · W-DEMETA-II: live artefacts carry no tranche meta, and comments state the present
 
 | field | value |
 |---|---|
 | seat | band-C wave-spec seat, formation run `wf_68eb18d6-b21` |
 | model | `claude-opus-5-5`, asserted from own system identity |
 | HEAD | `26d193b7` in a scratch worktree, with `dist/` built there (`npm run build`, exit 0). `git diff --stat v10.1.0 HEAD -- src` prints nothing |
-| ships in | 11.0.0 |
+| release | `waves/INDEX.md`, the one record |
 | families | F-62 whole (`audit/REGISTRY.md:1349-1358`) |
 | depends on | PLAN §5, the one record of edges |
 | dependants | PLAN §5 (its inverse) |

@@ -84,6 +84,12 @@
        [2026-09-22 · O-32 CT2: twin by token name] (the §2c discipline —
        both mode arms warm together or the FOUC/enhancement split paints two inks). */
     --foreground: hsl(30 14% 90%);
+    /* THE SHADOW IS A DARK ON THE DARK ARM. The root's `--shadow-color:
+       var(--foreground)` resolves under `.dark` to this light ink, so every elevation
+       shadow cast LIGHT on the night ground and read as a halo around the dock. In dark
+       the shadow is the page ground itself, deepened: one value, never lighter than the
+       ground it falls on. The light arm keeps the foreground. */
+    --shadow-color: color-mix(in oklab, var(--neutral-0), black 50%);
     /* The --card plate LIFTS L10→~~L16~~ (a warm-dark elevated
        surface, macOS-window territory) so it ~~sits ~5×~~ sits ≈ 8× the deepened L4 page relL — a
        clearly distinct surface the five glass rungs ladder up from. LOCKSTEP light-dark.css

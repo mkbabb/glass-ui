@@ -1,0 +1,17 @@
+diff --git a/src/components/dock/composables/dockMorphMeasure.ts b/src/components/dock/composables/dockMorphMeasure.ts
+index 9490720dc..ed069d526 100644
+--- a/src/components/dock/composables/dockMorphMeasure.ts
++++ b/src/components/dock/composables/dockMorphMeasure.ts
+@@ -595,6 +595,12 @@ export function useDockExpandedSize(
+     }
+ 
+     function anchor(): void {
++        const run = expandedEl.value;
++        if (run) keepScroll(run, anchorNow);
++        else anchorNow();
++    }
++
++    function anchorNow(): void {
+         const root = rootEl.value;
+         const layers = contentEl.value;
+         const boxes = firstBoxes;

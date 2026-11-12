@@ -1,0 +1,20 @@
+@import "tailwindcss" source("../../src");
+@import "tw-animate-css";
+@import "../../src/styles/index.css";
+
+@font-face { font-family: "PJS C"; font-style: normal; font-weight: 200 800; font-display: block;
+  src: url("../../src/fonts/plus-jakarta-sans/plus-jakarta-sans-latin.woff2") format("woff2"); }
+@font-face { font-family: "Plex C"; font-style: normal; font-weight: 100 700; font-display: block;
+  src: url("../../src/fonts/ibm-plex-sans/ibm-plex-sans-latin.woff2") format("woff2"); }
+
+body { margin: 0; background: var(--background); color: var(--foreground); font-family: "PJS C", sans-serif; }
+.sheet { padding: 24px 24px 80px; display: flex; flex-direction: column; align-items: flex-start; }
+.srow { margin: 0; white-space: nowrap; padding: 0 12px; }
+.bl { display: inline-block; width: 0; height: 0; }
+.crow { margin: 0 0 28px; }
+
+html[data-pass] body { background: #fff !important; }
+html[data-pass] { --mark-ink: #ff00ff; --mark-band: #ff00ff; }
+html[data-pass="glyph"] .sheet, html[data-pass="glyph"] .sheet * { color: transparent !important; }
+html[data-pass="glyph"] .sheet [data-m], html[data-pass="glyph"] .sheet [data-m] * { color: #000 !important; text-decoration: none !important; }
+html[data-pass="mark"] .sheet, html[data-pass="mark"] .sheet * { color: transparent !important; -webkit-text-fill-color: transparent !important; }

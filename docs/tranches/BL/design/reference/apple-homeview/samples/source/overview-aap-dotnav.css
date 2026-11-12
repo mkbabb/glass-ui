@@ -1,0 +1,836 @@
+/* excerpt of https://www.apple.com/v/apple-homeview/a/built/styles/overview.built.css (pretty-printed), fetched 2026-10-15 */
+.dotnav .dotnav-link::before {
+  content:"";
+  border-radius:999px;
+  position:absolute;
+  top:calc(50% - var(--sk-dotnav-size)/2);
+  left:calc(50% - var(--sk-dotnav-size)/2);
+  scale:var(--sk-dotnav-scale);
+  background:var(--sk-dotnav-background);
+  opacity:var(--sk-dotnav-opacity);
+  transition:background-color var(--sk-dotnav-hover-animation-duration) linear,transform var(--sk-dotnav-hover-animation-duration) ease-in-out,scale var(--sk-dotnav-hover-animation-duration) ease-in-out
+}
+.dotnav .dotnav-link:hover::before {
+  background:var(--sk-dotnav-background-hover);
+  transition:top var(--sk-dotnav-hover-animation-duration) linear,left var(--sk-dotnav-hover-animation-duration) linear,height var(--sk-dotnav-hover-animation-duration) linear,width var(--sk-dotnav-hover-animation-duration) linear,scale var(--sk-dotnav-hover-animation-duration) linear,transform var(--sk-dotnav-hover-animation-duration) linear
+}
+.dotnav .dotnav-focused.dotnav-item .dotnav-link::before,.dotnav .dotnav-focused.dotnav-link::before {
+  transition:none
+}
+.dotnav .current.dotnav-item .dotnav-link,.dotnav .current.dotnav-link {
+  cursor:default;
+  pointer-events:none
+}
+.dotnav .current.dotnav-item .dotnav-link::before,.dotnav .current.dotnav-link::before {
+  background:var(--sk-dotnav-background-current)
+}
+.dotnav .dotnav-items:has(:focus-visible) .dotnav-focused.dotnav-item .dotnav-link::before,.dotnav .dotnav-items:has(:focus-visible) .dotnav-focused.dotnav-link::before {
+  outline:2px solid var(--sk-dotnav-focus-color);
+  outline-offset:var(--sk-focus-offset-container,3px)
+}
+.dotnav .dotnav-truncate-2 {
+  --sk-dotnav-scale:var(--sk-dotnav-scale-2)
+}
+.dotnav .dotnav-truncate-2 .dotnav-link:hover::before {
+  --sk-dotnav-size:calc(1/var(--sk-dotnav-scale)*8px)
+}
+.dotnav .dotnav-truncate-3 {
+  --sk-dotnav-scale:var(--sk-dotnav-scale-3)
+}
+.dotnav .dotnav-truncate-3 .dotnav-link:hover::before {
+  --sk-dotnav-size:calc(1/var(--sk-dotnav-scale)*6px)
+}
+.dotnav .dotnav-transitioning .dotnav-link {
+  pointer-events:none
+}
+.dotnav .dotnav-transitioning .dotnav-link::before {
+  transition:transform var(--sk-dotnav-variable-duration) ease-in-out,scale var(--sk-dotnav-variable-duration) ease-in-out;
+  pointer-events:none
+}
+.dotnav .dotnav-truncate-4,.dotnav .dotnav-truncate-hidden {
+  --sk-dotnav-scale:var(--sk-dotnav-scale-3);
+  --sk-dotnav-margin-block:0;
+  --sk-dotnav-margin-inline:0;
+  --sk-dotnav-size:0;
+  --sk-dotnav-opacity:0
+}
+.dotnav .dotnav-truncate-4:not(.dotnav-transitioning),.dotnav .dotnav-truncate-hidden:not(.dotnav-transitioning) {
+  position:absolute;
+  top:0;
+  left:0
+}
+.dotnav .dotnav-truncate-4:not(.dotnav-transitioning) .dotnav-link,.dotnav .dotnav-truncate-hidden:not(.dotnav-transitioning) .dotnav-link {
+  position:absolute;
+  clip:rect(1px,1px,1px,1px);
+  clip-path:inset(0 0 99.9% 99.9%);
+  overflow:hidden;
+  height:1px;
+  width:1px;
+  padding:0;
+  border:0
+}
+.dotnav .dotnav-truncate-4 .dotnav-link,.dotnav .dotnav-truncate-hidden .dotnav-link {
+  transition:width var(--sk-dotnav-variable-duration) ease-in-out,height var(--sk-dotnav-variable-duration) ease-in-out,padding-block var(--sk-dotnav-variable-duration) ease-in-out,padding-inline var(--sk-dotnav-variable-duration) ease-in-out,padding var(--sk-dotnav-variable-duration) ease-in-out
+}
+.dotnav .dotnav-truncate-4 .dotnav-link::before,.dotnav .dotnav-truncate-hidden .dotnav-link::before {
+  transition:width var(--sk-dotnav-variable-duration) ease-in-out,height var(--sk-dotnav-variable-duration) ease-in-out,left var(--sk-dotnav-variable-duration) ease-in-out,opacity var(--sk-dotnav-variable-duration) ease-in-out,background-color var(--sk-dotnav-variable-duration) ease-in-out,scale var(--sk-dotnav-variable-duration) ease-in-out,transform var(--sk-dotnav-variable-duration) ease-in-out
+}
+.dotnav .dotnav-truncate-4.dotnav-dot-stop-transitions .dotnav-link,.dotnav .dotnav-truncate-4.dotnav-dot-stop-transitions .dotnav-link::before,.dotnav .dotnav-truncate-hidden.dotnav-dot-stop-transitions .dotnav-link,.dotnav .dotnav-truncate-hidden.dotnav-dot-stop-transitions .dotnav-link::before {
+  transition:none!important
+}
+.dotnav .dotnav-becoming-visible-1 .dotnav-link {
+  animation:dotnav-become-visible var(--sk-dotnav-fade-in-out-duration) ease-in-out calc(var(--sk-dotnav-fade-in-delay) - var(--sk-dotnav-animation-stagger-duration)*2) both
+}
+.dotnav .dotnav-becoming-invisible-1 .dotnav-link {
+  animation:dotnav-become-invisible var(--sk-dotnav-fade-in-out-duration) ease-in-out calc(var(--sk-dotnav-animation-stagger-duration)*0) both
+}
+.dotnav .dotnav-becoming-visible-2 .dotnav-link {
+  animation:dotnav-become-visible var(--sk-dotnav-fade-in-out-duration) ease-in-out calc(var(--sk-dotnav-fade-in-delay) - var(--sk-dotnav-animation-stagger-duration)*1) both
+}
+.dotnav .dotnav-becoming-invisible-2 .dotnav-link {
+  animation:dotnav-become-invisible var(--sk-dotnav-fade-in-out-duration) ease-in-out calc(var(--sk-dotnav-animation-stagger-duration)*1) both
+}
+.dotnav .dotnav-becoming-visible-3 .dotnav-link {
+  animation:dotnav-become-visible var(--sk-dotnav-fade-in-out-duration) ease-in-out calc(var(--sk-dotnav-fade-in-delay) - var(--sk-dotnav-animation-stagger-duration)*0) both
+}
+.dotnav .dotnav-becoming-invisible-3 .dotnav-link {
+  animation:dotnav-become-invisible var(--sk-dotnav-fade-in-out-duration) ease-in-out calc(var(--sk-dotnav-animation-stagger-duration)*2) both
+}
+@keyframes dotnav-shift-start-1 {
+  0% {
+    translate:calc(8px*var(--sk-dotnav-logical-factor))
+  }
+  100% {
+    translate:0
+  }
+}
+@keyframes dotnav-shift-end-1 {
+  0% {
+    translate:calc(-8px*var(--sk-dotnav-logical-factor))
+  }
+  100% {
+    translate:0
+  }
+}
+@keyframes dotnav-shift-start-2 {
+  0% {
+    translate:calc(16px*var(--sk-dotnav-logical-factor))
+  }
+  100% {
+    translate:0
+  }
+}
+@keyframes dotnav-shift-end-2 {
+  0% {
+    translate:calc(-16px*var(--sk-dotnav-logical-factor))
+  }
+  100% {
+    translate:0
+  }
+}
+@keyframes dotnav-shift-start-3 {
+  0% {
+    translate:calc(24px*var(--sk-dotnav-logical-factor))
+  }
+  100% {
+    translate:0
+  }
+}
+@keyframes dotnav-shift-end-3 {
+  0% {
+    translate:calc(-24px*var(--sk-dotnav-logical-factor))
+  }
+  100% {
+    translate:0
+  }
+}
+@keyframes dotnav-shift-start-expand {
+  0% {
+    translate:calc(-24px*var(--sk-dotnav-logical-factor))
+  }
+  19% {
+    translate:calc(-24px*var(--sk-dotnav-logical-factor))
+  }
+  100% {
+    translate:0
+  }
+}
+@keyframes dotnav-shift-end-expand {
+  0% {
+    translate:calc(20px*var(--sk-dotnav-logical-factor))
+  }
+  19% {
+    translate:calc(20px*var(--sk-dotnav-logical-factor))
+  }
+  100% {
+    translate:0
+  }
+}
+@keyframes dotnav-become-visible {
+  0% {
+    opacity:0;
+    scale:0
+  }
+  100% {
+    opacity:1;
+    scale:1
+  }
+}
+@keyframes dotnav-become-invisible {
+  0% {
+    opacity:1
+  }
+  100% {
+    opacity:0
+  }
+}
+.dotnav .dotnav-shift-start-1 .dotnav-link::before {
+  animation:dotnav-shift-start-1 var(--sk-dotnav-variable-duration) ease-in-out both
+}
+.dotnav .dotnav-shift-start-2 .dotnav-link::before {
+  animation:dotnav-shift-start-2 var(--sk-dotnav-variable-duration) ease-in-out both
+}
+.dotnav .dotnav-shift-start-3 .dotnav-link::before {
+  animation:dotnav-shift-start-3 var(--sk-dotnav-variable-duration) ease-in-out both
+}
+.dotnav .dotnav-shift-end-1 .dotnav-link::before {
+  animation:dotnav-shift-end-1 var(--sk-dotnav-variable-duration) ease-in-out both
+}
+.dotnav .dotnav-shift-end-2 .dotnav-link::before {
+  animation:dotnav-shift-end-2 var(--sk-dotnav-variable-duration) ease-in-out both
+}
+.dotnav .dotnav-shift-end-3 .dotnav-link::before {
+  animation:dotnav-shift-end-3 var(--sk-dotnav-variable-duration) ease-in-out both
+}
+.dotnav .dotnav-collapse {
+  transition:width var(--sk-dotnav-variable-duration) ease-in-out 60ms
+}
+.dotnav .dotnav-collapse .dotnav-dot-4 .dotnav-link::before,.dotnav .dotnav-collapse .dotnav-dot-5 .dotnav-link::before {
+  transition:transform 320ms ease-in-out 60ms
+}
+.dotnav .dotnav-collapse .dotnav-dot-6 .dotnav-link::before {
+  transition:opacity 160ms ease-in-out 80ms,transform 160ms ease-in-out 80ms
+}
+.dotnav .dotnav-collapse .dotnav-dot-7 .dotnav-link::before {
+  transition:opacity 160ms ease-in-out,transform 160ms ease-in-out
+}
+.dotnav .dotnav-expand {
+  transition:width var(--sk-dotnav-variable-duration) ease-in-out
+}
+.dotnav .dotnav-expand.dotnav-expand-left .dotnav-link::before {
+  animation:dotnav-shift-start-expand var(--sk-dotnav-variable-duration) both
+}
+.dotnav .dotnav-expand.dotnav-expand-right .dotnav-link::before {
+  animation:dotnav-shift-end-expand var(--sk-dotnav-variable-duration) both
+}
+.dotnav .dotnav-expand .dotnav-dot-6 .dotnav-link::before {
+  transition:opacity 160ms ease-in-out 120ms,padding-block 0ms ease-in-out 120ms,padding-inline 0ms ease-in-out 120ms,transform 120ms ease-in-out 160ms
+}
+.dotnav .dotnav-expand .dotnav-dot-7 .dotnav-link::before {
+  transition:opacity 160ms ease-in-out 200ms,transform 160ms ease-in-out 200ms
+}
+.dotnav.dotnav-scrim {
+  --sk-dotnav-items-padding-inline:calc(var(--sk-dotnav-scrim-height)/2 - var(--sk-dotnav-size)/2 - var(--sk-dotnav-margin-inline)*2/2);
+  --sk-dotnav-height:var(--sk-dotnav-scrim-height);
+  --sk-dotnav-scrim-backdrop-filter:saturate(180%) blur(20px)
+}
+.dotnav.dotnav-scrim .dotnav-items {
+  border-radius:999px;
+  background:var(--sk-dotnav-scrim-background-color);
+  backdrop-filter:var(--sk-dotnav-scrim-backdrop-filter)
+}
+.dotnav.dotnav-scrim-solid {
+  --sk-dotnav-items-padding-inline:calc(var(--sk-dotnav-scrim-height)/2 - var(--sk-dotnav-size)/2 - var(--sk-dotnav-margin-inline)*2/2);
+  --sk-dotnav-height:var(--sk-dotnav-scrim-height);
+  --sk-dotnav-scrim-backdrop-filter:none
+}
+.dotnav.dotnav-scrim-solid .dotnav-items {
+  border-radius:999px;
+  background:var(--sk-dotnav-scrim-background-color);
+  backdrop-filter:var(--sk-dotnav-scrim-backdrop-filter);
+  background:var(--sk-dotnav-scrim-solid-background-color)
+}
+.dotnav.dotnav-scrim-no-blur {
+  --sk-dotnav-items-padding-inline:calc(var(--sk-dotnav-scrim-height)/2 - var(--sk-dotnav-size)/2 - var(--sk-dotnav-margin-inline)*2/2);
+  --sk-dotnav-height:var(--sk-dotnav-scrim-height);
+  --sk-dotnav-scrim-backdrop-filter:none
+}
+.dotnav.dotnav-scrim-no-blur .dotnav-items {
+  border-radius:999px;
+  background:var(--sk-dotnav-scrim-background-color);
+  backdrop-filter:var(--sk-dotnav-scrim-backdrop-filter)
+}
+.dotnav-timed {
+  --sk-dotnav-timed-track-width:32px;
+  --sk-dotnav-timed-duration:3000ms;
+  --sk-dotnav-iconcontrol-margin:4px;
+  --sk-dotnav-iconcontrol-icon-size:36px;
+  --sk-dotnav-iconcontrol-border-radius:0px;
+  --sk-dotnav-timed-track-color:rgb(0,0,0);
+  --sk-dotnav-timed-track-background-color:rgba(0,0,0,0.42);
+  --sk-dotnav-scrim-timed-track-color:rgb(0,0,0);
+  --sk-dotnav-scrim-timed-track-background-color:rgba(0,0,0,0.48);
+  --sk-dotnav-iconcontrol-content-color:rgba(0,0,0,0.42);
+  --sk-dotnav-iconcontrol-content-color-hover:rgba(0,0,0,0.54);
+  --sk-dotnav-scrim-iconcontrol-scrim-color:rgba(210,210,215,0.64);
+  --sk-dotnav-scrim-iconcontrol-scrim-color-hover:rgba(223,223,227,0.6976);
+  --sk-dotnav-scrim-iconcontrol-scrim-color-active:rgba(193,193,198,0.6544);
+  --sk-dotnav-scrim-iconcontrol-content-color:rgba(0,0,0,0.48);
+  --sk-dotnav-scrim-iconcontrol-content-color-hover:rgba(0,0,0,0.72);
+  --sk-dotnav-scrim-solid-iconcontrol-scrim-color:rgb(232,232,237);
+  --sk-dotnav-scrim-solid-iconcontrol-scrim-color-hover:#ececf0;
+  --sk-dotnav-scrim-solid-iconcontrol-scrim-color-active:#dfdfe4;
+  --sk-dotnav-scrim-solid-iconcontrol-content-color:rgba(0,0,0,0.48);
+  --sk-dotnav-scrim-solid-iconcontrol-content-color-hover:rgba(0,0,0,0.72)
+}
+@keyframes dotnav-timed-animation {
+  0% {
+    width:var(--sk-dotnav-size)
+  }
+  100% {
+    width:calc(100% - var(--sk-dotnav-margin-inline)*2)
+  }
+}
+@keyframes dotnav-timed-dot-expand {
+  0% {
+    left:calc(50% - var(--sk-dotnav-size)/2);
+    width:8px
+  }
+  100% {
+    left:calc(50% - 16px);
+    width:32px
+  }
+}
+@keyframes dotnav-timed-dot-shrink {
+  0% {
+    left:calc(50% - 16px);
+    width:32px
+  }
+  100% {
+    left:calc(50% - var(--sk-dotnav-size)/2);
+    width:8px
+  }
+}
+.dotnav-timed {
+  display:flex;
+  align-items:center;
+  flex-direction:row-reverse
+}
+.dotnav-timed .dotnav-items {
+  width:calc(var(--sk-dotnav-width) + var(--sk-dotnav-timed-track-width) - var(--sk-dotnav-size))
+}
+.dotnav-timed .dotnav-link {
+  transition:width 250ms linear
+}
+.dotnav-timed .dotnav-link::after {
+  content:"";
+  position:absolute;
+  display:block;
+  inset-block:var(--sk-dotnav-margin-block);
+  left:var(--sk-dotnav-margin-inline);
+  width:var(--sk-dotnav-size);
+  border-radius:999px;
+  opacity:0;
+  animation-iteration-count:1;
+  animation-play-state:paused;
+  animation-fill-mode:forwards;
+  animation-duration:var(--sk-dotnav-timed-duration);
+  animation-timing-function:linear
+}
+.dotnav-timed .dotnav-focused.dotnav-item .dotnav-link,.dotnav-timed .dotnav-focused.dotnav-link {
+  width:var(--sk-dotnav-timed-track-width)
+}
+.dotnav-timed .dotnav-focused.dotnav-item .dotnav-link::before,.dotnav-timed .dotnav-focused.dotnav-link::before {
+  left:calc(50% - 16px);
+  width:calc(100% - var(--sk-dotnav-margin-inline)*2);
+  background:var(--sk-dotnav-timed-track-background-color);
+  animation:dotnav-timed-dot-expand 250ms ease-in
+}
+.dotnav-timed .current:not(.dotnav-focused).dotnav-item .dotnav-link::before,.dotnav-timed .current:not(.dotnav-focused).dotnav-link::before {
+  background:var(--sk-dotnav-background-current)
+}
+.dotnav-timed .current.dotnav-focused.dotnav-item .dotnav-link,.dotnav-timed .current.dotnav-focused.dotnav-link {
+  width:var(--sk-dotnav-timed-track-width);
+  pointer-events:none
+}
+.dotnav-timed .current.dotnav-focused.dotnav-item .dotnav-link::before,.dotnav-timed .current.dotnav-focused.dotnav-link::before {
+  left:calc(50% - 16px);
+  width:calc(100% - var(--sk-dotnav-margin-inline)*2);
+  background:var(--sk-dotnav-timed-track-background-color);
+  animation:dotnav-timed-dot-expand 250ms ease-in
+}
+.dotnav-timed .current.dotnav-focused.dotnav-item .dotnav-link::after,.dotnav-timed .current.dotnav-focused.dotnav-link::after {
+  background:var(--sk-dotnav-background-current);
+  animation-name:dotnav-timed-animation;
+  animation-play-state:running;
+  animation-delay:calc(var(--sk-dotnav-variable-duration) - 160ms);
+  opacity:1;
+  transition:opacity 80ms ease-in calc(var(--sk-dotnav-variable-duration) - 80ms)
+}
+.dotnav-timed .dotnav-previous-current.dotnav-item .dotnav-link::before,.dotnav-timed .dotnav-previous-current.dotnav-link::before {
+  animation:dotnav-timed-dot-shrink 250ms ease-out;
+  transition:scale calc(var(--sk-dotnav-variable-duration) - 200ms) ease-in-out 200ms
+}
+.dotnav-timed .dotnav-previous-current.dotnav-item .dotnav-link:hover::before,.dotnav-timed .dotnav-previous-current.dotnav-link:hover::before {
+  transition:top var(--sk-dotnav-hover-animation-duration) linear,left var(--sk-dotnav-hover-animation-duration) linear,height var(--sk-dotnav-hover-animation-duration) linear,width var(--sk-dotnav-hover-animation-duration) linear,scale var(--sk-dotnav-hover-animation-duration) linear,transform var(--sk-dotnav-hover-animation-duration) linear
+}
+.dotnav-timed .dotnav-focused.dotnav-item.dotnav-shift-start-1 .dotnav-link::before {
+  animation:dotnav-timed-dot-expand 250ms ease-in,dotnav-shift-start-1 var(--sk-dotnav-variable-duration) ease-in-out both
+}
+.dotnav-timed .dotnav-focused.dotnav-item.dotnav-shift-start-2 .dotnav-link::before {
+  animation:dotnav-timed-dot-expand 250ms ease-in,dotnav-shift-start-2 var(--sk-dotnav-variable-duration) ease-in-out both
+}
+.dotnav-timed .dotnav-focused.dotnav-item.dotnav-shift-start-3 .dotnav-link::before {
+  animation:dotnav-timed-dot-expand 250ms ease-in,dotnav-shift-start-3 var(--sk-dotnav-variable-duration) ease-in-out both
+}
+.dotnav-timed .dotnav-focused.dotnav-item.dotnav-shift-end-1 .dotnav-link::before {
+  animation:dotnav-timed-dot-expand 250ms ease-in,dotnav-shift-end-1 var(--sk-dotnav-variable-duration) ease-in-out both
+}
+.dotnav-timed .dotnav-focused.dotnav-item.dotnav-shift-end-2 .dotnav-link::before {
+  animation:dotnav-timed-dot-expand 250ms ease-in,dotnav-shift-end-2 var(--sk-dotnav-variable-duration) ease-in-out both
+}
+.dotnav-timed .dotnav-focused.dotnav-item.dotnav-shift-end-3 .dotnav-link::before {
+  animation:dotnav-timed-dot-expand 250ms ease-in,dotnav-shift-end-3 var(--sk-dotnav-variable-duration) ease-in-out both
+}
+.dotnav-timed .dotnav-previous-current.dotnav-item.dotnav-shift-start-1 .dotnav-link::before {
+  animation:dotnav-timed-dot-shrink 250ms ease-out,dotnav-shift-start-1 var(--sk-dotnav-variable-duration) ease-in-out both
+}
+.dotnav-timed .dotnav-previous-current.dotnav-item.dotnav-shift-start-2 .dotnav-link::before {
+  animation:dotnav-timed-dot-shrink 250ms ease-out,dotnav-shift-start-2 var(--sk-dotnav-variable-duration) ease-in-out both
+}
+.dotnav-timed .dotnav-previous-current.dotnav-item.dotnav-shift-start-3 .dotnav-link::before {
+  animation:dotnav-timed-dot-shrink 250ms ease-out,dotnav-shift-start-3 var(--sk-dotnav-variable-duration) ease-in-out both
+}
+.dotnav-timed .dotnav-previous-current.dotnav-item.dotnav-shift-end-1 .dotnav-link::before {
+  animation:dotnav-timed-dot-shrink 250ms ease-out,dotnav-shift-end-1 var(--sk-dotnav-variable-duration) ease-in-out both
+}
+.dotnav-timed .dotnav-previous-current.dotnav-item.dotnav-shift-end-2 .dotnav-link::before {
+  animation:dotnav-timed-dot-shrink 250ms ease-out,dotnav-shift-end-2 var(--sk-dotnav-variable-duration) ease-in-out both
+}
+.dotnav-timed .dotnav-previous-current.dotnav-item.dotnav-shift-end-3 .dotnav-link::before {
+  animation:dotnav-timed-dot-shrink 250ms ease-out,dotnav-shift-end-3 var(--sk-dotnav-variable-duration) ease-in-out both
+}
+.dotnav-timed .dotnav-truncate-4.dotnav-previous-current.dotnav-item.dotnav-shift-start-1 .dotnav-link::before {
+  animation:dotnav-timed-dot-shrink 250ms ease-out,dotnav-shift-start-1 calc(var(--sk-dotnav-variable-duration) - 80ms) ease-in-out 80ms both
+}
+.dotnav-timed .dotnav-truncate-4.dotnav-previous-current.dotnav-item.dotnav-shift-start-1 .dotnav-link::before,.dotnav-timed .dotnav-truncate-4.dotnav-previous-current.dotnav-item.dotnav-shift-start-2 .dotnav-link::before {
+  transition:left 250ms linear,width var(--sk-dotnav-variable-duration) linear,height var(--sk-dotnav-variable-duration) ease-in-out,opacity 140ms ease-in-out,background-color var(--sk-dotnav-variable-duration) ease-in-out,transform var(--sk-dotnav-variable-duration) ease-in-out,scale 0ms 140ms
+}
+.dotnav-timed .dotnav-truncate-4.dotnav-previous-current.dotnav-item.dotnav-shift-start-2 .dotnav-link::before {
+  animation:dotnav-timed-dot-shrink 250ms ease-out,dotnav-shift-start-2 calc(var(--sk-dotnav-variable-duration) - 80ms) ease-in-out 80ms both
+}
+.dotnav-timed .dotnav-truncate-4.dotnav-previous-current.dotnav-item.dotnav-shift-start-3 .dotnav-link::before {
+  animation:dotnav-timed-dot-shrink 250ms ease-out,dotnav-shift-start-3 calc(var(--sk-dotnav-variable-duration) - 80ms) ease-in-out 80ms both
+}
+.dotnav-timed .dotnav-truncate-4.dotnav-previous-current.dotnav-item.dotnav-shift-end-1 .dotnav-link::before,.dotnav-timed .dotnav-truncate-4.dotnav-previous-current.dotnav-item.dotnav-shift-start-3 .dotnav-link::before {
+  transition:left 250ms linear,width var(--sk-dotnav-variable-duration) linear,height var(--sk-dotnav-variable-duration) ease-in-out,opacity 140ms ease-in-out,background-color var(--sk-dotnav-variable-duration) ease-in-out,transform var(--sk-dotnav-variable-duration) ease-in-out,scale 0ms 140ms
+}
+.dotnav-timed .dotnav-truncate-4.dotnav-previous-current.dotnav-item.dotnav-shift-end-1 .dotnav-link::before {
+  animation:dotnav-timed-dot-shrink 250ms ease-out,dotnav-shift-end-1 calc(var(--sk-dotnav-variable-duration) - 80ms) ease-in-out 80ms both
+}
+.dotnav-timed .dotnav-truncate-4.dotnav-previous-current.dotnav-item.dotnav-shift-end-2 .dotnav-link::before {
+  animation:dotnav-timed-dot-shrink 250ms ease-out,dotnav-shift-end-2 calc(var(--sk-dotnav-variable-duration) - 80ms) ease-in-out 80ms both
+}
+.dotnav-timed .dotnav-truncate-4.dotnav-previous-current.dotnav-item.dotnav-shift-end-2 .dotnav-link::before,.dotnav-timed .dotnav-truncate-4.dotnav-previous-current.dotnav-item.dotnav-shift-end-3 .dotnav-link::before {
+  transition:left 250ms linear,width var(--sk-dotnav-variable-duration) linear,height var(--sk-dotnav-variable-duration) ease-in-out,opacity 140ms ease-in-out,background-color var(--sk-dotnav-variable-duration) ease-in-out,transform var(--sk-dotnav-variable-duration) ease-in-out,scale 0ms 140ms
+}
+.dotnav-timed .dotnav-truncate-4.dotnav-previous-current.dotnav-item.dotnav-shift-end-3 .dotnav-link::before {
+  animation:dotnav-timed-dot-shrink 250ms ease-out,dotnav-shift-end-3 calc(var(--sk-dotnav-variable-duration) - 80ms) ease-in-out 80ms both
+}
+.dotnav-timed.dotnav-timed-paused .current.dotnav-item .dotnav-link::after,.dotnav-timed.dotnav-timed-paused .current.dotnav-link::after {
+  animation-play-state:paused
+}
+.dotnav-timed.dotnav-stop-transitions .dotnav-items .dotnav-link {
+  transition:none
+}
+.dotnav-timed.dotnav-stop-transitions .dotnav-items .dotnav-link::before {
+  transition:background-color var(--sk-dotnav-hover-animation-duration) linear
+}
+.dotnav-timed.dotnav-stop-transitions .dotnav-items .dotnav-focused .dotnav-link::before {
+  animation-duration:0ms;
+  width:var(--sk-dotnav-timed-track-width)
+}
+.dotnav-timed .dotnav-iconcontrol {
+  margin-inline-start:var(--sk-dotnav-iconcontrol-margin);
+  margin-block:0;
+  padding:0;
+  border-radius:var(--sk-dotnav-iconcontrol-border-radius);
+  color:var(--sk-dotnav-iconcontrol-content-color);
+  transition:color var(--sk-dotnav-hover-animation-duration) linear;
+  background:rgba(0,0,0,0)
+}
+.dotnav-timed .dotnav-iconcontrol path {
+/* ... */
+}
+.theme-light,body {
+  --aap-stagger-fast:50;
+  --aap-stagger-slow:200;
+  --aap-content-delay-fast:100ms;
+  --aap-content-delay-slow:150ms;
+  --aap-background-color-alpha:0.28;
+  --aap-min-height:56px;
+  --aap-blur:7px;
+  --aap-margin:32px;
+  --aap-top-margin:0;
+  --aap-top-margin-large:380px;
+  --aap-top-margin-medium:340px;
+  --aap-top-margin-small:340px;
+  --aap-close-button-margin-factor:1.5;
+  --aap-bubble-gap:16px;
+  --aap-background-color:rgba(232,232,237,0.72);
+  --aap-background-color-solid:232 232 237;
+  --aap-inner-glow-color:rgba(0,0,0,0.11);
+  --aap-text-color:rgb(29,29,31);
+  --aap-accent-color:rgb(0,113,227);
+  --aap-button-hover:rgba(223,223,227,0.698);
+  --aap-button-active:rgba(193,193,198,0.654)
+}
+.theme-dark {
+  --aap-background-color:rgba(51,51,54,0.7);
+  --aap-background-color-solid:42 42 45;
+  --aap-inner-glow-color:rgba(232,232,237,0.11);
+  --aap-text-color:rgb(245,245,247);
+  --aap-accent-color:rgb(0,113,227);
+  --aap-button-hover:rgba(73,73,76,0.726);
+  --aap-button-active:rgba(57,57,60,0.742)
+}
+.all-access-pass {
+  --aap-top-margin:var(--aap-top-margin-large);
+  align-items:center;
+  bottom:var(--aap-margin);
+  display:flex;
+  margin-bottom:var(--global-section-padding-top-reduced);
+  margin-top:var(--aap-top-margin);
+  pointer-events:auto;
+  position:sticky;
+  will-change:transform;
+  z-index:1
+}
+@media(max-width:1068px) {
+  .all-access-pass {
+    --aap-top-margin:var(--aap-top-margin-medium)
+  }
+}
+@media(max-width:734px) {
+  .all-access-pass {
+    --aap-margin:20px;
+    --aap-top-margin:var(--aap-top-margin-small)
+  }
+}
+html.no-js .all-access-pass {
+  opacity:0;
+  visibility:hidden
+}
+html.no-js .all-access-pass:has(a.action-handler) {
+  opacity:1;
+  visibility:visible
+}
+.all-access-pass:focus {
+  outline:none
+}
+.all-access-pass.all-access-pass-inline {
+  bottom:0;
+  margin-bottom:var(--global-section-padding-top-reduced);
+  position:absolute
+}
+.all-access-pass.aap-intro-complete {
+  will-change:unset
+}
+.all-access-pass__element {
+  --alpha:1;
+  background-color:rgba(0,0,0,0);
+  border-radius:28px;
+  color:var(--aap-text-color);
+  display:flex;
+  opacity:0;
+  position:relative
+}
+html.no-enhanced .all-access-pass__element,html.no-js .all-access-pass__element:has(a.action-handler) {
+  opacity:1
+}
+html.no-js .all-access-pass__element:has(a.action-handler) .all-access-pass__background {
+  opacity:1;
+  width:100%
+}
+.activated .all-access-pass__element {
+  opacity:1
+}
+.all-access-pass__background {
+  --scale:1;
+  align-self:center;
+  backdrop-filter:blur(calc(var(--aap-blur)*(2 - var(--alpha))));
+  background-color:rgba(var(--aap-background-color-solid)/calc(1 - var(--alpha)*var(--aap-background-color-alpha)));
+  border-radius:28px;
+  height:var(--aap-min-height);
+  justify-self:center;
+  left:50%;
+  opacity:0;
+  position:absolute;
+  top:50%;
+  transform:translate(-50%,-50%) scale(var(--scale));
+  width:var(--aap-min-height);
+  will-change:transform;
+  z-index:-1
+}
+html.no-enhanced .all-access-pass__background {
+  opacity:1;
+  width:100%
+}
+.activated .all-access-pass__background {
+  opacity:1
+}
+.aap-intro-complete .all-access-pass__background {
+  will-change:unset
+}
+.all-access-pass__container {
+  align-items:flex-end;
+  display:flex;
+  height:100%;
+  justify-content:center;
+  left:0;
+  margin:0;
+  overflow:clip;
+  pointer-events:none;
+  position:absolute;
+  top:0;
+  width:100%
+}
+.ric-modal-content-wrapper .all-access-pass__container {
+  z-index:11002
+}
+.all-access-pass__intro-element {
+  border-radius:var(--aap-min-height);
+  background-color:rgb(var(--aap-background-color-solid));
+  box-sizing:border-box;
+  height:var(--aap-min-height);
+  left:50%;
+  opacity:0;
+  position:absolute;
+  top:0;
+  transform:translateX(-50%) scale(0.01);
+  width:var(--aap-min-height)
+}
+html.no-enhanced .all-access-pass__intro-element {
+  display:none
+}
+.tp-dfwv {
+  position:fixed!important;
+  z-index:9999999
+}
+.theme-light,body {
+  --aap-icon-color:rgb(29,29,31);
+  --aap-active-fill-color:#29292a;
+  --aap-inactive-fill-color:#a1a1a2
+}
+.theme-dark {
+  --aap-icon-color:rgb(245,245,247);
+  --aap-active-fill-color:rgb(245,245,247);
+  --aap-inactive-fill-color:#767677
+}
+.aap-media-card-gallery {
+  --button-margin:10px;
+  --progress-bar-active-width:48px;
+  --animation-duration:var(--autoplay-persist-duration,6.25s);
+  --animation-timing-function:linear;
+  --aap-background-transition-duration:250ms;
+  --ltr:1;
+  --dotnav-opacity-delay:740ms;
+  --dotnav-opacity-duration:100ms;
+  --playpause-opacity-delay:940ms;
+  --playpause-opacity-duration:100ms;
+  --playpause-scale-delay:940ms;
+  --playpause-scale-duration:200ms;
+  z-index:1
+}
+@media(max-width:734px) {
+  .aap-media-card-gallery {
+    --progress-bar-active-width:32px;
+    max-width:calc(100vw - 40px)
+  }
+}
+.aap-media-card-gallery.all-access-pass::before {
+  width:var(--aap-min-height)
+}
+.aap-media-card-gallery__timed-dotnav {
+  --progress-intro:1
+}
+html.enhanced .aap-media-card-gallery__dotnav-item {
+  opacity:0;
+  transform:scale(0.5)
+}
+html.enhanced .activated .aap-media-card-gallery__dotnav-item {
+  opacity:1;
+  transform:scale(1);
+  transition:opacity var(--dotnav-opacity-duration) ease-in var(--dotnav-opacity-delay)
+}
+.aap-media-card-gallery__button {
+  --animation-offset:calc(var(--item-index) + 1)
+}
+html.enhanced .aap-media-card-gallery__button {
+  opacity:0;
+  transform:scale(0.5)
+}
+html.enhanced .activated .aap-media-card-gallery__button {
+  opacity:1;
+  transform:scale(1);
+  transition:background-color linear 100ms,opacity var(--playpause-opacity-duration) ease-in var(--playpause-opacity-delay),transform var(--playpause-scale-duration) ease-out var(--playpause-scale-delay)
+}
+.aap-media-card-gallery .all-access-pass__element .dotnav {
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  line-height:0
+}
+.aap-media-card-gallery .all-access-pass__element .dotnav .dotnav-items {
+  overflow-x:unset
+}
+.aap-media-card-gallery .all-access-pass__element .dotnav .dotnav-items .dotnav-item {
+  --item-index:0;
+  margin-inline:var(--sk-dotnav-margin-inline);
+  width:auto
+}
+.aap-media-card-gallery .all-access-pass__element .dotnav .dotnav-items .dotnav-item .dotnav-link {
+  border-radius:10px;
+  background-color:var(--sk-dotnav-background);
+  position:relative;
+  cursor:pointer;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:0
+}
+.aap-media-card-gallery .all-access-pass__element .dotnav .dotnav-items .dotnav-item .dotnav-link::before {
+  background:unset;
+  content:"";
+  position:absolute;
+  padding:var(--sk-dotnav-size);
+  width:100%;
+  height:100%;
+  top:unset;
+  left:unset
+}
+.aap-media-card-gallery .all-access-pass__element .dotnav .dotnav-items .dotnav-item .dotnav-link:focus-visible {
+  outline:2px solid var(--sk-focus-color,#0071e3);
+  outline-offset:var(--sk-focus-offset-container,3px)
+}
+.aap-media-card-gallery .all-access-pass__element .dotnav .dotnav-items .dotnav-item .dotnav-link.current {
+  overflow:hidden;
+  cursor:default;
+  background-color:var(--aap-active-fill-color)
+}
+.aap-media-card-gallery .all-access-pass__element .dotnav .dotnav-items .dotnav-item .dotnav-link:hover:not(.current) {
+  background-color:var(--sk-dotnav-background-hover)
+}
+.aap-media-card-gallery .all-access-pass__element {
+  align-items:center;
+  box-sizing:border-box;
+  display:flex;
+  justify-content:space-between;
+  min-height:var(--aap-min-height);
+  pointer-events:auto;
+  position:relative
+}
+.aap-media-card-gallery .all-access-pass__element .dotnav {
+  padding:0 16px
+}
+.aap-media-card-gallery .all-access-pass__element .dotnav .dotnav-items {
+  --dotnav-count:0;
+  --dot-width-total:calc((var(--dotnav-count) - 1)*var(--sk-dotnav-size)*3);
+  --progress-width-total:calc(var(--progress-bar-active-width)*var(--progress-intro) + var(--sk-dotnav-size)*2);
+  min-width:calc(var(--dot-width-total) + var(--progress-width-total))
+}
+.aap-media-card-gallery .all-access-pass__element .dotnav .dotnav-items .dotnav-item .dotnav-link {
+  --item-progress:calc(var(--item-index) - var(--autoplay-progress));
+  --abs-item-progress:max(var(--item-progress),-1 * var(--item-progress));
+  --item-expand-amount:min((1 - var(--abs-item-progress)),1);
+  --progress-bar-delta-width:calc(var(--progress-bar-active-width) - var(--sk-dotnav-size));
+  max-width:calc(var(--progress-bar-active-width));
+  min-width:calc(var(--progress-bar-delta-width)*var(--item-expand-amount)*var(--progress-intro) + var(--sk-dotnav-size));
+  transition:background-color linear var(--aap-background-transition-duration)
+}
+.aap-media-card-gallery .all-access-pass__element .dotnav .dotnav-items .dotnav-item .dotnav-link.current {
+  background-color:var(--sk-dotnav-background)
+}
+.aap-media-card-gallery .all-access-pass__element .dotnav .dotnav-items .dotnav-item .dotnav-link.current::after {
+  content:"";
+  width:0;
+  height:100%;
+  min-width:15%;
+  margin-inline-start:-15%;
+  border-radius:10px;
+  background-color:var(--aap-active-fill-color);
+  position:absolute;
+  top:0;
+  inset-inline-start:0;
+  animation-name:aap-animate-progress;
+  animation-duration:var(--animation-duration);
+  animation-timing-function:var(--animation-timing-function);
+  animation-play-state:paused;
+  animation-fill-mode:forwards;
+  transition:background-color linear var(--aap-background-transition-duration)
+}
+@keyframes aap-animate-progress {
+  from {
+    width:0
+  }
+  to {
+    width:115%
+  }
+}
+.aap-media-card-gallery .play-pause-button-wrapper {
+  order:2;
+  height:var(--aap-min-height);
+  width:var(--aap-min-height);
+  margin-inline-start:var(--aap-bubble-gap)
+}
+.aap-media-card-gallery .play-pause-button-wrapper .play-pause-button {
+  height:100%;
+  width:100%;
+  pointer-events:all;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  border-radius:32px
+}
+.aap-media-card-gallery .play-pause-button-wrapper .play-pause-button .svg-icon {
+  height:100%;
+  width:100%;
+  display:none;
+  fill:var(--aap-icon-color);
+  transition:fill linear var(--aap-background-transition-duration)
+}
+.aap-media-card-gallery .play-pause-button-wrapper .play-pause-button:hover {
+  background-color:var(--aap-button-hover)
+}
+.aap-media-card-gallery .play-pause-button-wrapper .play-pause-button:active {
+  background-color:var(--aap-button-active)
+}
+.playing .tablist-wrapper .dotnav .dotnav-items .dotnav-item .dotnav-link.current::after {
+  animation-play-state:running
+}
+.playing .play-pause-button .svg-icon.pause-icon {
+  display:block
+}
+.paused .tablist-wrapper .dotnav .dotnav-items .dotnav-item .dotnav-link.current::after {
+  animation-play-state:paused
+}
+.paused .play-pause-button .svg-icon.play-icon {
+  display:block
+}
+.ended .tablist-wrapper .dotnav .dotnav-items .dotnav-item .dotnav-link.current::after {
+  animation-play-state:paused
+}
+.ended .play-pause-button .svg-icon.replay-icon {
+  display:block
+}
+.media-card-set {
+  --shared-media-gallery-transition-duration:1s;
+  --shared-media-gallery-responsive-content-absolute-max-width:var(--global-content-max-width);
+  --shared-media-gallery-responsive-content-absolute-min-width:280px;
+  --shared-media-gallery-viewport-content:max(87.5vw - var(--global-scrollbar-width),var(--shared-media-gallery-responsive-content-absolute-min-width));
+  --shared-media-gallery-padding:max(6.25vw,(100vw - var(--shared-media-gallery-responsive-content-absolute-max-width))/2,env(safe-area-inset-left),env(safe-area-inset-right));
+  --shared-media-gallery-width:min(var(--shared-media-gallery-viewport-content),var(--shared-media-gallery-responsive-content-absolute-max-width));
+  --shared-media-gallery-height:612px
+}
+@media(max-width:1068px) {
+  .media-card-set {

@@ -1,0 +1,1398 @@
+diff --git a/src/components/dock/DockCluster.vue b/src/components/dock/DockCluster.vue
+new file mode 100644
+index 000000000..9d28841aa
+--- /dev/null
++++ b/src/components/dock/DockCluster.vue
+@@ -0,0 +1,744 @@
++<script setup lang="ts">
++/**
++ * DockCluster (W-I.8, PASS-2 FOLD round 1 build, scratch only). Pass 2's mechanism, with the
++ * round-1 challenge folded in:
++ *   C1  the cluster holds every member open while the pointer or focus is anywhere in it
++ *       (R-13): reaching from the dock to the theme is not leaving the dock;
++ *   C2  a leaver's phantom and an arriver are ONE run of px span on one spring: a phantom
++ *       outlives later membership changes, an arriver at a live phantom's place adopts its run,
++ *       and a leaver that was still opening hands its run to its phantom. A handover is a
++ *       retarget: the span and its velocity never change units or restart;
++ *   C3  a width glide is two px springs (one per edge) anchored where the glide began; a
++ *       layout change of a glider RETARGETS them, so each edge keeps its value and velocity
++ *       and no frame stalls (a re-created spring's first frame has no elapsed time);
++ *   C4  the whole-px grid's sub-pixel remainder is a translate on the members, never an inset
++ *       on the root the consumer positions; the overflow report measures the row against the
++ *       box it lays out in;
++ *   C6  inside a cluster no member descendant carries a backdrop-filter (cluster.css), so the
++ *       glide's and the arriver's content clips (on `.dock-controls`' boxes) sit over no blur;
++ *   N2  one tone element; no `%` clip anywhere (empty `path()` defaults).
++ *   R-14 one clock: every cluster spring is stepped by the cluster's own frame loop, then the
++ *       frame paints (`useDockSpring(…, { clock: "host" })`); a loop woken from rest paints its
++ *       first frame at zero elapsed time.
++ * Pass 2: the painted extent and the chain (R-12), one ink and one tone (R-1, R-2), the capsule
++ * corner (R-4), the PRM seat (R-5).
++ */
++import { useMediaQuery } from "@vueuse/core";
++import { computed, onMounted, onUnmounted, ref, useTemplateRef, watch } from "vue";
++import { DOCK_SPRING } from "./constants";
++import { useDockSpring, type DockSpring } from "./composables/useDockSpring";
++import {
++    GLASS_BACKDROP_SHARED_ATTR,
++    useGlassBackdropLuminance,
++} from "../../composables/glass/useGlassBackdropLuminance";
++import { clusterShape, rectPath, shiftPath, type PlateBox } from "./composables/dockClusterShape";
++import { provideDockClusterContext, type DockClusterMember } from "./composables/dockClusterContext";
++import { isTeleportedTarget } from "../_shared/overlay/isTeleportedTarget";
++
++const props = withDefaults(defineProps<{ fused?: boolean | readonly boolean[] }>(), {
++    fused: false,
++});
++
++const SHADOW_PAD = 40;
++/** Every cluster spring is stepped by the cluster's one frame loop (`tick`), then painted. */
++const HOST = { clock: "host" } as const;
++
++const root = useTemplateRef<HTMLElement>("root");
++const shadowEl = useTemplateRef<HTMLElement>("shadowEl");
++const shadowFill = useTemplateRef<HTMLElement>("shadowFill");
++const toneEl = useTemplateRef<HTMLElement>("toneEl");
++const lensEls = ref<HTMLElement[]>([]);
++useGlassBackdropLuminance(root, { shared: true });
++const count = ref(0);
++const reduced = useMediaQuery("(prefers-reduced-motion: reduce)");
++
++const target = computed(() =>
++    Array.from({ length: Math.max(0, count.value - 1) }, (_, i) =>
++        (typeof props.fused === "boolean" ? props.fused : props.fused[i]) ? 1 : 0,
++    ),
++);
++
++/* ── C1 / R-13: the cluster's hold ─────────────────────────────────────────────────
++   A member's own hover and focus regions end at its box. In a cluster the reader reaches
++   from the dock to a sibling member (the theme), which would read as leaving the dock and
++   collapse it under a resting pointer. So the cluster takes one posture hold on every
++   member while the reader is in it. PF2 D1: "in" follows the lone dock's own rule. The
++   pointer holds while it is inside. Focus holds from a `focusin` until the pointer leaves
++   or focus leaves: a click seats focus on the control it hit, and that focus must not
++   outlast the pointer, or the dock never collapses again (a lone dock's `mouseleave`
++   schedules its collapse with focus still inside). A keyboard move inside the cluster is
++   a fresh `focusin`, so a reader who Tabs is held again. On release every member runs its
++   own leave, so the collapse keeps the lone dock's delay, not the release grace on top. */
++const registered = new Set<DockClusterMember>();
++let pointerIn = false;
++let focusIn = false;
++let holding = false;
++function syncHold(): void {
++    const want = pointerIn || focusIn;
++    if (want === holding) return;
++    holding = want;
++    for (const m of registered) {
++        if (want) m.keepOpen();
++        else { m.release(); m.leave(); }
++    }
++}
++/* PF2 D3 / R-8: at most one member carries its own collapse. Two collapsing members would
++   morph at once, and the one ink cannot follow two scaled boxes. Asserted on every
++   registration and every membership change; the throw paints nothing (as R-10's layout
++   asserts do), so the failure is loud, never a half-inked silhouette. */
++function assertOneCollapsible(): void {
++    const live = [...registered].filter((m) => m.el.isConnected && m.collapsible());
++    if (live.length < 2) return;
++    const name = (m: DockClusterMember) => `"${m.el.getAttribute("aria-label") ?? m.el.id ?? "unnamed"}"`;
++    throw new Error(`DockCluster: ${live.map(name).join(" and ")} both collapse; at most one member of a cluster may carry its own collapse (W-I.8 R-8)`);
++}
++provideDockClusterContext({
++    register(m) {
++        registered.add(m);
++        if (holding) m.keepOpen();
++        assertOneCollapsible();
++        return () => {
++            if (holding) m.release();
++            registered.delete(m);
++        };
++    },
++});
++function onPointerEnter(): void { pointerIn = true; syncHold(); }
++/* CHALLENGE-3 CURE SKETCH (C3-1): a leave into a member's own portalled overlay is not a leave,
++   as a lone dock's onMouseLeave/onFocusOut read it (isTeleportedTarget). */
++function onPointerLeave(e: PointerEvent): void { if (isTeleportedTarget(e.relatedTarget)) return; pointerIn = false; focusIn = false; syncHold(); }
++function onFocusIn(): void { focusIn = true; syncHold(); }
++/* (C3-2): a primary press outside the cluster and its overlays ends the hold first, so each
++   member's own click-away runs as it does alone (a touch tap leaves no pointerleave after its focus). */
++function onDocPointerDown(e: PointerEvent): void {
++    const t = e.target as Node | null;
++    if (!holding || (t && root.value?.contains(t)) || isTeleportedTarget(e.target)) return;
++    pointerIn = false; focusIn = false; syncHold();
++}
++function onFocusOut(e: FocusEvent): void {
++    const to = e.relatedTarget as Node | null;
++    if (to && root.value?.contains(to)) return;
++    if (isTeleportedTarget(to)) return;
++    focusIn = false;
++    syncHold();
++}
++
++let members: HTMLElement[] = [];
++let now: number[] = [];
++let springs: DockSpring[] = [];
++const offsets = new Map<HTMLElement, { o: number; spring: DockSpring }>();
++let painted = new Map<HTMLElement, { x0: number; x1: number }>();
++let raf = 0;
++let morphingChildren = 0;
++(window as unknown as { __clusterNow?: () => number[] }).__clusterNow = () => [...now];
++
++function docks(): HTMLElement[] {
++    return root.value ? [...root.value.querySelectorAll<HTMLElement>(":scope > .glass-dock")] : [];
++}
++
++/** F10/F11: the share path is physical LTR along one row. Anything else throws. */
++function assertLayout(): void {
++    const el = root.value;
++    if (!el) return;
++    const cs = getComputedStyle(el);
++    const bad =
++        cs.direction !== "ltr" ? `direction: ${cs.direction}` :
++        cs.flexDirection !== "row" ? `flex-direction: ${cs.flexDirection}` :
++        cs.flexWrap !== "nowrap" ? `flex-wrap: ${cs.flexWrap}` : "";
++    if (bad) throw new Error(`DockCluster: ${bad} is not supported; a cluster is one LTR row (W-I.8 R-10, §6)`);
++}
++
++type Span = { x0: number; x1: number };
++const W = (x: Span) => x.x1 - x.x0;
++
++/* PF2 (D2's read): a member's own scale is read from its computed transform and `scale`, never
++   inferred from `rect.width / offsetWidth`. GlassDock's morph is a size morph (no transform),
++   and `offsetWidth` is a whole number, so the inferred `k` was off 1 by up to 0.5 / w and the
++   unscaled width by up to 0.5 px: the gap the chain hangs the next member on wobbled 0–1 px a
++   frame through every collapse. */
++function scaleOf(d: HTMLElement, _r: DOMRect): { k: number; o: number } {
++    if (!d.hasAttribute("data-morphing")) return { k: 1, o: 0 };
++    const cs = getComputedStyle(d);
++    const m = cs.transform && cs.transform !== "none" ? new DOMMatrixReadOnly(cs.transform).a : 1;
++    const sx = cs.scale && cs.scale !== "none" ? Number.parseFloat(cs.scale) || 1 : 1;
++    const k = m * sx;
++    if (Math.abs(k - 1) < 1e-6) return { k: 1, o: 0 };
++    return { k, o: Number.parseFloat(cs.transformOrigin) || 0 };
++}
++
++/** A member's pure layout box: every translate the cluster wrote, and its own scale, removed. */
++const tr = new Map<HTMLElement, number>();
++function pureBox(d: HTMLElement, r = d.getBoundingClientRect()): Span {
++    const { k, o } = scaleOf(d, r);
++    const x0 = r.left - (tr.get(d) ?? 0) - o * (1 - k);
++    return { x0, x1: x0 + r.width / k };
++}
++
++/* ── C4: the whole-px grid ──────────────────────────────────────────────────────────
++   Every member but the last takes `margin-inline-end: ceil(w) − w`, and every member
++   rides `shift`, the first member's sub-pixel remainder, as part of its translate. The
++   root, which the consumer positions (daraksha: `position: fixed; inset-inline: gutter`),
++   is never written. */
++let shift = 0;
++let overflowing = false;
++function regrid(list: HTMLElement[]): void {
++    const el = root.value;
++    if (!el || !list.length) return;
++    list.forEach((d, i) => {
++        if (i === list.length - 1) return;
++        // PF2: the layout width, never the painted rect. Under its own morph a member's rect is
++        // scaled, and `ceil(w) − w` of a scaled width wrote a margin anywhere in [0, 1) on each
++        // ResizeObserver pass: the next member's layout gap wobbled up to 1 px a frame
++        const w = W(pureBox(d));
++        const m = Math.ceil(w - 0.01) - w;
++        // full precision: both engines lay out in 1/64 px (fold F5, WebKit)
++        const v = m > 1e-3 ? `${m}px` : "";
++        if (d.style.marginInlineEnd !== v) d.style.marginInlineEnd = v;
++    });
++    const p0 = pureBox(list[0]!).x0;
++    shift = Math.ceil(p0 - 1e-3) - p0;
++    // F12 / R-10: the row is reported against the box it lays out in. A root sized by its
++    // content (a flex item) overflows its parent; a root the consumer sizes (fixed, inset)
++    // overflows itself.
++    const rr = el.getBoundingClientRect();
++    const first = pureBox(list[0]!), last = pureBox(list.at(-1)!);
++    const need = last.x1 - first.x0;
++    const pos = getComputedStyle(el).position;
++    const host =
++        pos === "fixed" ? { left: 0, right: document.documentElement.clientWidth } :
++        pos === "absolute" ? (el.offsetParent ?? el.parentElement)?.getBoundingClientRect() :
++        el.parentElement?.getBoundingClientRect();
++    const overSelf = Math.max(rr.left - first.x0, last.x1 - rr.right);
++    const overHost = host ? Math.max(host.left - rr.left, rr.right - host.right) : 0;
++    const over = Math.max(overSelf, overHost);
++    const given = overSelf >= overHost ? rr.width : host ? host.right - host.left : rr.width;
++    if (over > 0.5 && !overflowing) {
++        console.error(`DockCluster: the row needs ${need.toFixed(1)}px and its container gives ${given.toFixed(1)}px; compose two rows (W-I.8 R-10)`);
++        el.setAttribute("data-overflow", "");
++    } else if (over <= 0.5 && overflowing) el.removeAttribute("data-overflow");
++    overflowing = over > 0.5;
++}
++
++/* ── the painted extent (R-12) ──────────────────────────────────────────────────────
++   C3: a glide is two px springs, one per edge, anchored at the painted edges where the glide
++   began (`b0`, `b1`): painted edge = anchor + offset, and each offset springs toward
++   (layout edge − anchor). A later layout change of the glider RETARGETS both springs, which
++   re-seats each from its own current value and velocity: no edge stalls, none reverses.
++   C2: an arriving member and a leaver's phantom are one RUN, a span in px on one spring. An
++   arriver paints `o = span / (its width + one gap)` of its width and of one gap; a phantom
++   holds its span where it stood. A run changes role by retarget, so a swap that turns back
++   keeps its span and its velocity.
++   PF2 D2: a member's own morph that starts while it glides takes the glide over. The anchors
++   then ride the morph's painted rect (`onMorph`), and each offset is re-seated to where the
++   glide painted this frame, relative to that rect, springing to 0 on the same spring (a
++   `playTo` on a live spring keeps its velocity). When the morph settles the anchors return
++   to the layout box with the same re-seat. So the extent neither steps where the morph
++   starts nor repaints a stale glide where it ends. */
++interface Glide { b0: number; b1: number; d0: number; d1: number; s0: DockSpring; s1: DockSpring; onMorph: boolean }
++const glides = new Map<HTMLElement, Glide>();
++interface Run { s: number; full: number; role: "slot" | "phantom"; el: HTMLElement | null; after: HTMLElement | null; spring: DockSpring }
++const slots = new Map<HTMLElement, Run>();
++let phantoms: Run[] = [];
++let lastBase = new Map<HTMLElement, Span>();
++let lastExtent = new Map<HTMLElement, Span>();
++let lastGap = new Map<HTMLElement, number>();
++
++/** Map every x of an absolute M/L/C/Z path through `fx` (y untouched). */
++function mapX(d: string, fx: (x: number) => number): string {
++    return d.replace(/(-?\d+(?:\.\d+)?) (-?\d+(?:\.\d+)?)/g, (_, x: string, y: string) => `${+fx(Number(x)).toFixed(3)} ${y}`);
++}
++
++function glideTo(d: HTMLElement, from: Span, L: Span): void {
++    const g0 = glides.get(d);
++    if (g0) {
++        // retarget from the current value and velocity; a settled edge restarts from rest
++        for (const [s, k, t] of [[g0.s0, "d0", L.x0 - g0.b0], [g0.s1, "d1", L.x1 - g0.b1]] as const) {
++            if (s.live) s.retarget(t);
++            else s.playTo(g0[k], t, { onFrame: (v) => { g0[k] = v; }, onSettle: () => queueMicrotask(() => done(d, g0)) });
++        }
++        wake();
++        return;
++    }
++    const g: Glide = { b0: from.x0, b1: from.x1, d0: 0, d1: 0, s0: useDockSpring(DOCK_SPRING, HOST), s1: useDockSpring(DOCK_SPRING, HOST), onMorph: false };
++    glides.set(d, g);
++    const t0 = L.x0 - g.b0, t1 = L.x1 - g.b1;
++    // onFrame has already written the settled value (a retarget may have moved the target)
++    g.s0.playTo(0, t0, { onFrame: (v) => { g.d0 = v; }, onSettle: () => queueMicrotask(() => done(d, g)) });
++    g.s1.playTo(0, t1, { onFrame: (v) => { g.d1 = v; }, onSettle: () => queueMicrotask(() => done(d, g)) });
++    wake();
++}
++/** PF2 D2: move a glide's anchors to `to` and keep its painted edges. Each offset is re-seated
++    by the anchor's step and springs to 0, so the extent converges on `to`; `playTo` on a live
++    spring carries its velocity. */
++function reanchor(d: HTMLElement, g: Glide, to: Span): void {
++    for (const [s, k, b, n] of [[g.s0, "d0", "b0", to.x0], [g.s1, "d1", "b1", to.x1]] as const) {
++        const v = g[b] + g[k] - n;
++        g[b] = n;
++        g[k] = v;
++        s.playTo(v, 0, { onFrame: (x) => { g[k] = x; }, onSettle: () => queueMicrotask(() => done(d, g)) });
++    }
++    wake();
++}
++function done(d: HTMLElement, g: Glide): void {
++    if (g.s0.live || g.s1.live || glides.get(d) !== g) return;
++    glides.delete(d);
++    clearContentClip(d);
++    paint();
++}
++
++/** A run toward `to` (a slot opens to `full`, a phantom closes to 0): retarget a live one. */
++function runTo(r: Run, to: number): void {
++    if (r.spring.live) { r.spring.retarget(to); wake(); return; }
++    r.spring.playTo(r.s, to, {
++        onFrame: (v) => { r.s = v; },
++        onSettle: () => {
++            if (r.role === "slot") {
++                if (r.el && slots.get(r.el) === r) slots.delete(r.el);
++                if (r.el) { r.el.style.opacity = ""; clearContentClip(r.el); }
++            } else phantoms = phantoms.filter((x) => x !== r);
++            paint();
++        },
++    });
++    wake();
++}
++
++/** Read the painted boxes and write every clip. */
++function paint(): void {
++    const el = root.value;
++    if (!el) return;
++    const list = members;
++    if (list.length !== count.value || !list.length) return;
++    const dpr = window.devicePixelRatio || 1;
++    const base = el.getBoundingClientRect();
++    const raw = list.map((d) => d.getBoundingClientRect());
++    const sc = list.map((d, i) => scaleOf(d, raw[i]!));
++    const morph = list.map((d) => d.hasAttribute("data-morphing"));
++    const tCur = list.map((d) => tr.get(d) ?? 0);
++    const o = list.map((d) => offsets.get(d)?.o ?? 0);
++    // the member's layout box on the whole-px grid (its pure box plus the grid's shift)
++    const lay0: Span[] = list.map((d, i) => {
++        const p = pureBox(d, raw[i]!);
++        return { x0: p.x0 + shift, x1: p.x1 + shift };
++    });
++    // with the membership glide's offset (R-7: a leaver's survivors)
++    const lay: Span[] = lay0.map((L, i) => ({ x0: L.x0 + o[i]!, x1: L.x1 + o[i]! }));
++    // C3: a width change with no morph glides from the last painted extent; a glider whose
++    // layout moved at all re-bases its offsets from where it was painted
++    list.forEach((d, i) => {
++        const was = lastBase.get(d), from = lastExtent.get(d);
++        const L = lay0[i]!;
++        if (!was || !from || morph[i] || slots.has(d) || reduced.value) return;
++        const moved = Math.abs(was.x0 - lay[i]!.x0) > 0.01 || Math.abs(was.x1 - lay[i]!.x1) > 0.01;
++        if (glides.has(d) ? !moved : Math.abs(W(was) - W(L)) < 0.5) return;
++        if (Math.abs(from.x0 - L.x0) < 0.5 && Math.abs(from.x1 - L.x1) < 0.5 && !glides.has(d)) return;
++        const e = offsets.get(d);
++        if (e) { e.spring.dispose(); offsets.delete(d); lay[i] = { ...L }; o[i] = 0; }
++        glideTo(d, from, L);
++    });
++    // PF2 D2: a glide that a morph interrupts rides the morph's rect; one whose morph has
++    // settled returns to the layout box. Both keep the painted edges and their velocity.
++    list.forEach((d, i) => {
++        const g = glides.get(d);
++        if (!g || reduced.value) return;
++        if (morph[i] && !g.onMorph) {
++            g.onMorph = true;
++            clearContentClip(d);
++            reanchor(d, g, { x0: raw[i]!.left - tCur[i]! + shift + o[i]!, x1: raw[i]!.right - tCur[i]! + shift + o[i]! });
++        } else if (!morph[i] && g.onMorph) {
++            g.onMorph = false;
++            reanchor(d, g, lay[i]!);
++        }
++    });
++    // each member's painted extent: its scaled rect under its own morph (plus a glide it took
++    // over); its layout box plus its glide offsets; an opening slot is a droplet of `o` of its
++    // width; else its layout box
++    const ext: Span[] = list.map((d, i) => {
++        if (morph[i]) {
++            const x0 = raw[i]!.left - tCur[i]! + shift + o[i]!, x1 = raw[i]!.right - tCur[i]! + shift + o[i]!;
++            const g = glides.get(d);
++            if (!g?.onMorph) return { x0, x1 };
++            g.b0 = x0; g.b1 = x1;
++            return { x0: x0 + g.d0, x1: x1 + g.d1 };
++        }
++        const L = lay[i]!;
++        const s = slots.get(d);
++        if (s) { const c = (L.x0 + L.x1) / 2, w = W(L) * openOf(s); return { x0: c - w / 2, x1: c + w / 2 }; }
++        const g = glides.get(d);
++        return g ? { x0: g.b0 + g.d0, x1: g.b1 + g.d1 } : { ...L };
++    });
++    const open = list.map((d) => { const s = slots.get(d); return s ? openOf(s) : 1; });
++    // THE CHAIN: while anything moves, the row is painted from the first mover's extent outward,
++    // each member at its painted width, each gap its layout gap. An opening slot scales ONE of
++    // its gaps (its left one; its right one when it is first), so a slot at o and a phantom at
++    // o hold the same span; a phantom adds o of its width plus its gap where it stood.
++    const m = list.findIndex((d, i) => morph[i] || glides.has(d) || slots.has(d));
++    const P: Span[] = m < 0 ? lay.map((x) => ({ ...x })) : ext.map((x) => ({ ...x }));
++    const gapAt = (i: number) => {
++        // the gap between member i - 1 and member i
++        const lg = lay0[i]!.x0 - lay0[i - 1]!.x1;
++        const f = slots.has(list[i]!) ? open[i]! : i - 1 === 0 && slots.has(list[0]!) ? open[0]! : 1;
++        const ph = phantoms.reduce((a, p) => a + (p.after === list[i - 1] ? Math.max(0, p.s) : 0), 0);
++        return lg * f + ph;
++    };
++    if (m >= 0) {
++        for (let i = m + 1; i < list.length; i++) { const g = gapAt(i); P[i] = { x0: P[i - 1]!.x1 + g, x1: P[i - 1]!.x1 + g + W(ext[i]!) }; }
++        for (let i = m - 1; i >= 0; i--) { const g = gapAt(i + 1); P[i] = { x0: P[i + 1]!.x0 - g - W(ext[i]!), x1: P[i + 1]!.x0 - g }; }
++    }
++    // the translate that paints each member box there (C4: every one carries the grid's shift)
++    const tNew = list.map((d, i) => {
++        const p0 = lay0[i]!.x0 - shift; // the pure layout x
++        if (m < 0 || i === m) return o[i]! + shift;
++        if (morph[i]) return P[i]!.x0 - (glides.get(d)?.onMorph ? glides.get(d)!.d0 : 0) - p0 - sc[i]!.o * (1 - sc[i]!.k);
++        if (open[i]! < 1) return (P[i]!.x0 + P[i]!.x1) / 2 - (lay0[i]!.x0 + lay0[i]!.x1) / 2 + shift;
++        if (glides.has(d)) { const g = glides.get(d)!; return P[i]!.x0 - (g.b0 + g.d0 - lay0[i]!.x0) - p0; }
++        return P[i]!.x0 - p0;
++    });
++    list.forEach((d, i) => {
++        const t = Math.abs(tNew[i]!) < 1e-4 ? 0 : tNew[i]!;
++        tr.set(d, t);
++        const v = t === 0 ? "" : `${t}px 0`;
++        if (d.style.translate !== v) d.style.translate = v;
++        const op = open[i]! >= 0.999 ? "" : `${open[i]!.toFixed(3)}`;
++        if (d.style.opacity !== op) d.style.opacity = op;
++    });
++    lastBase = new Map(list.map((d, i) => [d, lay[i]!]));
++    lastExtent = new Map(list.map((d, i) => [d, P[i]!]));
++    lastGap = new Map(list.map((d, i) => [d, i > 0 ? lay0[i]!.x0 - lay0[i - 1]!.x1 : i + 1 < list.length ? lay0[1]!.x0 - lay0[0]!.x1 : 0]));
++    const rects = raw.map((r, i) => ({ left: P[i]!.x0, right: P[i]!.x1, top: r.top, bottom: r.bottom, height: r.height }));
++    const boxes: PlateBox[] = list.map((_, i) => {
++        const r = rects[i]!;
++        const x0 = r.left - base.left, x1 = r.right - base.left;
++        // O-199: the corner is half the cross extent, in px; the silhouette is a capsule run.
++        // An opening member is a droplet: while narrower than tall it is a circle of its width.
++        const cy = (r.top + r.bottom) / 2 - base.top, h = Math.min(r.height, Math.max(0, x1 - x0));
++        return { x0, x1, y0: cy - h / 2, y1: cy + h / 2, r: h / 2 };
++    });
++    painted = new Map(list.map((d, i) => [d, { x0: rects[i]!.left, x1: rects[i]!.right }]));
++    const snap = (x: number) => Math.round((x + base.left) * dpr) / dpr - base.left;
++    // ONE INK (R-1): the first member not under its own morph inks the whole silhouette; the
++    // others stand their ink down. It sits at z 0, under every other member's controls.
++    const painter = Math.max(0, morph.findIndex((v) => !v));
++    const joins = now.length === boxes.length - 1 ? now : target.value;
++    const { shares, silhouette, necks, cuts } = clusterShape(boxes, joins, (x) => snap(x));
++    const rim = Number.parseFloat(getComputedStyle(el).getPropertyValue("--dock-cluster-rim")) || 1.5;
++    const inner = clusterShape(boxes, joins, (x) => snap(x), rim).silhouette;
++    // the lenses, the tone and the shadow overhang the root by the painted excess (R-12)
++    const minX = Math.min(...boxes.map((b) => b.x0)), maxX = Math.max(...boxes.map((b) => b.x1));
++    const pad = Math.ceil(Math.max(0, -minX, maxX - base.width)) + 2;
++    const padIn = `${-pad}px`;
++    for (const e of [...lensEls.value, toneEl.value]) if (e && e.style.insetInline !== padIn) e.style.insetInline = padIn;
++    const atPad = (d: string) => shiftPath(d, pad, 0);
++    // ONE TONE (R-2): one element, the whole silhouette
++    if (toneEl.value) toneEl.value.style.clipPath = `path("${atPad(silhouette)}")`;
++    shares.forEach((d, i) => {
++        // the kernel lenses overlap by one px across each contacted neck (R-2, r7)
++        const lens = lensEls.value[i];
++        let lp = d;
++        if (i > 0 && necks[i - 1]) lp += " " + rectPath(cuts[i - 1]! - 1, necks[i - 1]![0], cuts[i - 1]! + 1, necks[i - 1]![1]);
++        if (i < shares.length - 1 && necks[i]) lp += " " + rectPath(cuts[i]! - 1, necks[i]![0], cuts[i]! + 1, necks[i]![1]);
++        if (lens) lens.style.clipPath = `path("${atPad(lp)}")`;
++        const member = list[i]!;
++        const plate = member.querySelector<HTMLElement>(":scope > .dock-plate");
++        const df = tNew[i]! - tCur[i]!;
++        // C6 + G18: a member whose painted extent is not its box (a glide, an opening slot) has
++        // its controls held inside its glass. No member descendant carries a backdrop-filter in
++        // a cluster (cluster.css), so this clip sits over no blur (I8-G8).
++        // `.dock-controls` is `display: contents`, so each of its boxes is clipped on its own
++        if ((glides.has(member) && !glides.get(member)!.onMorph) || slots.has(member)) {
++            for (const ctl of member.querySelectorAll<HTMLElement>(":scope > .dock-controls > *")) {
++                const r = ctl.getBoundingClientRect();
++                if (r.width <= 0) continue;
++                // read after this frame's translate is written: the rect is already where it paints
++                const L = base.left + boxes[i]!.x0 - r.left, R = r.right - (base.left + boxes[i]!.x1);
++                ctl.style.clipPath = `inset(-24px ${R.toFixed(2)}px -24px ${L.toFixed(2)}px)`;
++            }
++        }
++        if (!plate) return;
++        const inks = i === painter;
++        const ink = inks ? "" : "hidden";
++        if (plate.style.visibility !== ink) plate.style.visibility = ink;
++        const z = inks ? "0" : "";
++        if (member.style.zIndex !== z) member.style.zIndex = z;
++        if (!inks) return;
++        // the painter's plate spans the whole silhouette, in the member's own (unscaled) px
++        const bl = raw[i]!.left + df, br = raw[i]!.right + df;
++        const k = sc[i]!.k;
++        const X0 = Math.floor(boxes[0]!.x0) - 1;
++        const X1 = Math.ceil(boxes.at(-1)!.x1) + 1;
++        const inset = `${base.top - raw[i]!.top}px ${(br - (base.left + X1)) / k}px ${raw[i]!.bottom - base.bottom}px ${(base.left + X0 - bl) / k}px`;
++        if (plate.style.inset !== inset) plate.style.inset = inset;
++        plate.style.setProperty("--dock-cluster-grain-x", `${-X0}px`);
++        const toLocal = (x: number) => (x - X0) / k;
++        plate.style.clipPath = `path("${mapX(silhouette, toLocal)}")`;
++        plate.style.setProperty("--dock-ring-clip", `path(evenodd, "${mapX(silhouette, toLocal)} ${mapX(inner, toLocal)}")`);
++    });
++    const shifted = shiftPath(silhouette, SHADOW_PAD + pad, SHADOW_PAD);
++    if (shadowFill.value) shadowFill.value.style.clipPath = `path("${shifted}")`;
++    if (shadowEl.value) {
++        const sIn = `${-(SHADOW_PAD + pad)}px`;
++        if (shadowEl.value.style.insetInline !== sIn) shadowEl.value.style.insetInline = sIn;
++        const SW = base.width + 2 * (SHADOW_PAD + pad);
++        const SH = base.height + 2 * SHADOW_PAD;
++        shadowEl.value.style.clipPath = `path(evenodd, "M0 0 L${SW} 0 L${SW} ${SH} L0 ${SH} Z ${shifted}")`;
++    }
++    (window as unknown as { __clusterPaint?: unknown }).__clusterPaint = { m, follow: tNew, boxes: boxes.map((b) => [b.x0 + base.left, b.x1 + base.left]), k: sc.map((s) => s.k), morph, gliding: list.map((d) => glides.has(d) || slots.has(d)), shift };
++}
++function clearContentClip(d: HTMLElement): void {
++    for (const c of d.querySelectorAll<HTMLElement>(":scope > .dock-controls > *")) c.style.removeProperty("clip-path");
++}
++
++const live = () =>
++    springs.some((s) => s.live) || [...offsets.values()].some((v) => v.spring.live) || morphingChildren > 0 || glides.size > 0 || slots.size > 0 || phantoms.length > 0;
++const openOf = (r: Run) => Math.max(0, Math.min(1, r.s / Math.max(1e-6, r.full)));
++/* One clock (fold-1 resume): every cluster spring advances by the same true frame and only then
++   does the frame paint. On their own loops a spring minted outside this frame (a membership change)
++   ticked after the paint, and its loop's first step was a nominal 16.7 ms: one frame late, then two
++   frames at once whenever a ResizeObserver paint landed after the tick. A loop woken from rest
++   paints its first frame at zero elapsed time (as a CSS transition does), then true intervals. */
++let lastT = 0;
++function clocked(): Set<DockSpring> {
++    const all = new Set<DockSpring>(springs);
++    for (const g of glides.values()) { all.add(g.s0); all.add(g.s1); }
++    for (const r of slots.values()) all.add(r.spring);
++    for (const r of phantoms) all.add(r.spring);
++    for (const e of offsets.values()) all.add(e.spring);
++    return all;
++}
++function tick(t: number): void {
++    raf = 0;
++    const dt = lastT ? t - lastT : 0;
++    lastT = t;
++    for (const s of clocked()) s.step(dt);
++    paint();
++    if (live()) raf = requestAnimationFrame(tick);
++    else lastT = 0;
++}
++function wake(): void {
++    if (!raf) raf = requestAnimationFrame(tick);
++}
++
++/** F1: one spring per join. A join whose target is unchanged is not touched. */
++const joinTo: number[] = [];
++function play(next: number[]): void {
++    if (now.length !== next.length) {
++        now = [...next];
++        paint();
++        return;
++    }
++    if (reduced.value) {
++        crossfade(next);
++        return;
++    }
++    next.forEach((t, i) => {
++        if (t === joinTo[i] && springs[i]!.live) return;
++        if (!springs[i]!.live && Math.abs(now[i]! - t) < 1e-6) return;
++        joinTo[i] = t;
++        if (springs[i]!.live) { springs[i]!.retarget(t); return; }
++        springs[i]!.playTo(now[i]!, t, {
++            onFrame: (v) => { now[i] = v; },
++            onSettle: () => { now[i] = joinTo[i] ?? t; paint(); },
++        });
++    });
++    wake();
++}
++
++let fading: Animation[] = [];
++/* O-198 in a cluster: a member's own state change snaps its geometry at once (GlassDock's
++   reduced-motion path); the joins seat in that same frame, so the change is one geometry
++   frame, never two. A join-only change still seats at the floor of the dip. */
++let pendingSeat: number[] | null = null;
++function crossfade(next: number[]): void {
++    const el = root.value;
++    if (!el) return;
++    const mats = [
++        ...lensEls.value,
++        ...(toneEl.value ? [toneEl.value] : []),
++        ...(shadowEl.value ? [shadowEl.value] : []),
++        ...members.map((d) => d.querySelector<HTMLElement>(":scope > .dock-plate")).filter((x): x is HTMLElement => !!x),
++    ];
++    const raw = getComputedStyle(el).getPropertyValue("--dock-cluster-swap").trim();
++    const ms = raw.endsWith("ms") ? Number.parseFloat(raw) : Number.parseFloat(raw) * 1000;
++    const duration = Number.isFinite(ms) && ms > 0 ? ms : 0;
++    fading.forEach((a) => a.cancel());
++    pendingSeat = next;
++    const out = mats.map((m) => m.animate([{ opacity: 1 }, { opacity: 0 }], { duration, easing: "ease-in", fill: "forwards" }));
++    fading = out;
++    void Promise.all(out.map((a) => a.finished)).then(() => {
++        pendingSeat = null;
++        now = [...next];
++        paint();
++        const back = mats.map((m) => m.animate([{ opacity: 0 }, { opacity: 1 }], { duration, easing: "ease-out" }));
++        out.forEach((a) => a.cancel());
++        fading = back;
++    }, () => {});
++}
++
++watch(target, (next) => play(next));
++
++/** The surviving member to the left of `d` in `prev`, or null. */
++function leftSurvivor(d: HTMLElement | null, prev: HTMLElement[], list: HTMLElement[]): HTMLElement | null {
++    if (!d || list.includes(d)) return d;
++    for (let i = prev.indexOf(d) - 1; i >= 0; i--) if (list.includes(prev[i]!)) return prev[i]!;
++    return null;
++}
++
++/** Membership: re-index joins by member, glide survivors, hand slots and phantoms over. */
++function observe(): void {
++    const list = docks();
++    const prev = members;
++    const changed = list.length !== prev.length || list.some((d, i) => d !== prev[i]);
++    assertLayout();
++    assertOneCollapsible();
++    if (changed) {
++        const oldJoin = new Map(prev.slice(0, -1).map((d, i) => [d, now[i] ?? 0]));
++        const t = Array.from({ length: Math.max(0, list.length - 1) }, (_, i) =>
++            (typeof props.fused === "boolean" ? props.fused : props.fused[i]) ? 1 : 0,
++        );
++        const nextNow = t.map((tv, k) => {
++            const a = list[k]!;
++            if (oldJoin.has(a)) return oldJoin.get(a)!;
++            const left = k > 0 ? list[k - 1] : undefined;
++            if (left && oldJoin.has(left)) return oldJoin.get(left)!;
++            return tv;
++        });
++        springs.forEach((s) => s.dispose());
++        springs = t.map(() => useDockSpring(DOCK_SPRING, HOST));
++        joinTo.length = 0;
++        const firstMount = prev.length === 0;
++        members = list;
++        count.value = list.length;
++        now = nextNow;
++        for (const d of [...offsets.keys()]) if (!list.includes(d)) { offsets.get(d)!.spring.dispose(); offsets.delete(d); }
++        for (const d of [...glides.keys()]) if (!list.includes(d)) { const g = glides.get(d)!; g.s0.dispose(); g.s1.dispose(); glides.delete(d); }
++        regrid(list);
++        if (!firstMount && !reduced.value) {
++            const arrivers = list.filter((d) => !prev.includes(d));
++            const leavers = prev.filter((d) => !list.includes(d));
++            // C2: a live phantom outlives this change; its place is re-read against the new row
++            for (const ph of phantoms) ph.after = leftSurvivor(ph.after, prev, list);
++            // a leaver leaves a phantom of its painted width plus its gap, closing on the dock
++            // spring; one that was still opening hands over its run, span and velocity
++            for (const d of leavers) {
++                const was = painted.get(d);
++                if (!was) continue;
++                const idx = prev.indexOf(d);
++                const after = leftSurvivor(prev[idx - 1] ?? null, prev, list);
++                let r = slots.get(d);
++                slots.delete(d);
++                if (r) { r.role = "phantom"; r.el = null; r.after = after; }
++                else r = { s: W(was) + (lastGap.get(d) ?? 0), full: W(was) + (lastGap.get(d) ?? 0), role: "phantom", el: null, after, spring: useDockSpring(DOCK_SPRING, HOST) };
++                phantoms.push(r);
++                runTo(r, 0);
++            }
++            // an arrival opens in the chain; only a pure leave needs the survivors' own glide (R-7)
++            if (!arrivers.length) {
++                for (const d of list) {
++                    const was = painted.get(d);
++                    if (!was) continue;
++                    const layoutX0 = pureBox(d).x0 + shift;
++                    const from = was.x0 - layoutX0;
++                    if (Math.abs(from) < 0.25 || glides.has(d)) continue;
++                    const entry = offsets.get(d) ?? { o: 0, spring: useDockSpring(DOCK_SPRING, HOST) };
++                    offsets.set(d, entry);
++                    entry.o = from;
++                    entry.spring.playTo(from, 0, { onFrame: (v) => { entry.o = v; }, onSettle: () => { entry.o = 0; } });
++                }
++            }
++            // an arriver at a live phantom's place adopts its run: the same span, the same velocity
++            for (const d of arrivers) {
++                const i = list.indexOf(d);
++                const after = list[i - 1] ?? null;
++                const box = pureBox(d);
++                const gap = i > 0 ? box.x0 - pureBox(list[i - 1]!).x1 : i + 1 < list.length ? pureBox(list[i + 1]!).x0 - box.x1 : 0;
++                d.style.opacity = "0";
++                const ph = phantoms.find((p) => p.after === after && p.spring.live);
++                let r: Run;
++                if (ph) { phantoms = phantoms.filter((x) => x !== ph); r = ph; r.role = "slot"; r.el = d; r.full = W(box) + gap; }
++                else r = { s: 0, full: W(box) + gap, role: "slot", el: d, after, spring: useDockSpring(DOCK_SPRING, HOST) };
++                slots.set(d, r);
++                runTo(r, r.full);
++            }
++        }
++        t.forEach((tv, i) => {
++            if (Math.abs(now[i]! - tv) < 1e-6) return;
++            joinTo[i] = tv;
++            springs[i]!.playTo(now[i]!, tv, { onFrame: (v) => (now[i] = v), onSettle: () => { now[i] = joinTo[i] ?? tv; paint(); } });
++        });
++    }
++    ro?.disconnect();
++    if (root.value) ro?.observe(root.value);
++    if (root.value?.parentElement) ro?.observe(root.value.parentElement);
++    for (const d of list) ro?.observe(d);
++    ms?.disconnect();
++    for (const d of list) ms?.observe(d, { attributes: true, attributeFilter: ["style"] });
++    morphingChildren = list.filter((d) => d.hasAttribute("data-morphing")).length;
++    paint();
++    if (live()) wake();
++}
++
++let ro: ResizeObserver | null = null;
++let mo: MutationObserver | null = null;
++let ms: MutationObserver | null = null;
++const seenT = new WeakMap<HTMLElement, string>();
++onMounted(() => {
++    ro = new ResizeObserver(() => {
++        assertLayout();
++        assertOneCollapsible();
++        if (reduced.value && pendingSeat && pendingSeat.length === now.length) now = [...pendingSeat];
++        regrid(members);
++        paint();
++        if (live()) wake();
++    });
++    mo = new MutationObserver(() => observe());
++    // the member's own morph writes its scalar on its root's style each spring frame (the wave:
++    // a dockClusterContext hook from the morph's onFrame); only that scalar wakes this observer
++    ms = new MutationObserver(() => {
++        let moved = false;
++        for (const d of members) {
++            const t = d.style.getPropertyValue("--dock-morph-t");
++            if (seenT.get(d) !== t) { seenT.set(d, t); moved = true; }
++        }
++        if (moved) paint();
++    });
++    if (root.value) mo.observe(root.value, { childList: true, subtree: true, attributes: true, attributeFilter: ["data-morphing", "dir"] });
++    document.addEventListener("pointerdown", onDocPointerDown, true);
++    observe();
++    now = [...target.value];
++    paint();
++});
++
++onUnmounted(() => {
++    document.removeEventListener("pointerdown", onDocPointerDown, true);
++    ro?.disconnect();
++    mo?.disconnect();
++    ms?.disconnect();
++    if (raf) cancelAnimationFrame(raf);
++    springs.forEach((s) => s.dispose());
++    offsets.forEach((v) => v.spring.dispose());
++    glides.forEach((g) => { g.s0.dispose(); g.s1.dispose(); });
++    slots.forEach((s) => s.spring.dispose());
++    phantoms.forEach((p) => p.spring.dispose());
++    if (holding) for (const m of registered) m.release();
++});
++</script>
++
++<template>
++    <div
++        ref="root"
++        class="dock-cluster"
++        :[GLASS_BACKDROP_SHARED_ATTR]="''"
++        @pointerenter="onPointerEnter"
++        @pointerleave="onPointerLeave"
++        @focusin="onFocusIn"
++        @focusout="onFocusOut"
++    >
++        <div ref="shadowEl" class="dock-cluster-shadow" aria-hidden="true">
++            <div class="dock-cluster-shadow-blur">
++                <div ref="shadowFill" class="dock-cluster-shadow-fill"></div>
++            </div>
++        </div>
++        <div v-for="i in count" :key="i" :ref="(el) => { if (el) lensEls[i - 1] = el as HTMLElement }" class="dock-cluster-lens" aria-hidden="true"></div>
++        <div ref="toneEl" class="dock-cluster-tone" aria-hidden="true"></div>
++        <slot />
++    </div>
++</template>
+diff --git a/src/components/dock/GlassDock.vue b/src/components/dock/GlassDock.vue
+index 21db6397c..b56acedbc 100644
+--- a/src/components/dock/GlassDock.vue
++++ b/src/components/dock/GlassDock.vue
+@@ -32,6 +32,7 @@ import { useGlassBackdropLuminance } from "../../composables/glass/useGlassBackd
+ import { OPEN_DISMISSABLE_LAYER_SELECTOR } from "./constants";
+ import { DockFace, provideDockContext } from "./composables/dockContext";
+ import { useDockState } from "./composables/useDockState";
++import { useDockClusterMember } from "./composables/dockClusterContext";
+ import { useDockMorphOrchestrator } from "./composables/useDockMorph";
+ import { useDockExpandedSize } from "./composables/dockMorphMeasure";
+ import { useDockShellProps, type DockProps } from "./composables/useDockShellProps";
+@@ -176,6 +177,15 @@ const {
+    published as a flag — nothing should paint off "a popover is open". */
+ const visualExpanded = computed(() => alwaysExpanded.value || expanded.value);
+ 
++/* W-I.8 R-13: in a DockCluster the member registers its root, its posture hold and its
++   own leave; R-8: and whether it collapses. */
++useDockClusterMember(dockEl, {
++    keepOpen,
++    release,
++    leave: () => onMouseLeave(),
++    collapsible: () => !alwaysExpanded.value,
++});
++
+ provideDockContext({
+     id: dockId,
+     orientation,
+diff --git a/src/components/dock/composables/dockClusterContext.ts b/src/components/dock/composables/dockClusterContext.ts
+new file mode 100644
+index 000000000..452463249
+--- /dev/null
++++ b/src/components/dock/composables/dockClusterContext.ts
+@@ -0,0 +1,45 @@
++import { inject, onBeforeUnmount, onMounted, provide, type InjectionKey, type Ref } from "vue";
++import type { DockHoldKind } from "./dockContext";
++
++/**
++ * A DockCluster member as the cluster sees it: its root, the hold it already
++ * publishes to its own descendants (`keepOpen`/`release`), its own leave, and
++ * whether it can collapse. The cluster takes one posture hold on every member
++ * while the reader is in the cluster, so reaching from the dock to a sibling
++ * member (the theme) never reads as leaving the dock (W-I.8 R-13). When the
++ * reader leaves the cluster, each member runs its own leave, so the collapse
++ * keeps the lone dock's timing. At most one member may be collapsible (R-8).
++ */
++export interface DockClusterMember {
++    el: HTMLElement;
++    keepOpen: (kind?: DockHoldKind) => void;
++    release: (kind?: DockHoldKind) => void;
++    /** The member's own pointer-leave (its collapse delay), run when the reader leaves the cluster. */
++    leave: () => void;
++    /** True when the member carries its own collapse (`collapse` is not `false`). */
++    collapsible: () => boolean;
++}
++
++export interface DockClusterContext {
++    register: (member: DockClusterMember) => () => void;
++}
++
++const DOCK_CLUSTER_KEY: InjectionKey<DockClusterContext> = Symbol("dock-cluster");
++
++export function provideDockClusterContext(ctx: DockClusterContext): void {
++    provide(DOCK_CLUSTER_KEY, ctx);
++}
++
++/** A GlassDock registers with its cluster, if it sits in one. */
++export function useDockClusterMember(
++    el: Readonly<Ref<HTMLElement | null>>,
++    hold: Omit<DockClusterMember, "el">,
++): void {
++    const cluster = inject(DOCK_CLUSTER_KEY, null);
++    if (!cluster) return;
++    let off: (() => void) | null = null;
++    onMounted(() => {
++        if (el.value) off = cluster.register({ el: el.value, ...hold });
++    });
++    onBeforeUnmount(() => off?.());
++}
+diff --git a/src/components/dock/composables/dockClusterShape.ts b/src/components/dock/composables/dockClusterShape.ts
+new file mode 100644
+index 000000000..a6e7900d9
+--- /dev/null
++++ b/src/components/dock/composables/dockClusterShape.ts
+@@ -0,0 +1,180 @@
++/**
++ * The dock cluster's ONE silhouette, in px, as `path()` strings.
++ *
++ * A cluster is an ordered row of plates. Between each neighbouring pair sits a join
++ * scalar `j` in [0, 1]: 0 is two capsules a gap apart, 1 is one capsule. The outline is
++ * the union of per-plate SHARES; a share is the plate's own capsule plus its half of the
++ * bridge, cut at the gap's midpoint `cx`. The shares partition the silhouette exactly,
++ * so a fused run is one outline and each plate's backdrop paints only its share of it.
++ *
++ * The join runs in two phases, the honest goo spec (DOCK-LADDER §3):
++ *   - j in [0, JC]: each facing cap bulges toward the partner, its tip travelling from
++ *     the plate edge to `cx` (the lobe bulge), meeting at a point at JC;
++ *   - j in (JC, 1]: the waist opens from that point to the full height (`v`), the
++ *     tangent at `cx` turning from vertical to horizontal so the two shares meet
++ *     smoothly, until the top and bottom edges run straight across.
++ *
++ * Everything is px. No percentage radius exists anywhere in the output (the r1 law:
++ * a `%` radius resolves per axis and turns a pill into an ellipse). The spring runs in
++ * JS and a fresh path is written each frame, so no engine is asked to INTERPOLATE a
++ * `path()`/`shape()`; only static `path()` support is required (Chromium 88, Safari 13.1).
++ */
++
++export interface PlateBox {
++    /** The plate's own corner radius in px (clamped to half its height). */
++    r?: number;
++    /** Left/right/top/bottom in the cluster layer's own px coordinates. */
++    x0: number;
++    x1: number;
++    y0: number;
++    y1: number;
++}
++
++/** The waist opens past this join value; below it the facing caps bulge to contact. */
++export const JC = 0.4;
++/** The cubic quarter-circle constant. */
++const K = 0.5523;
++
++const f = (n: number) => (Math.round(n * 100) / 100).toString();
++
++interface End {
++    /** The tip x (the cap's extreme, or `cx` once in contact). */
++    tip: number;
++    /** The top and bottom y the end reaches at its tip (equal before the waist opens). */
++    top: number;
++    bot: number;
++    /** Waist progress, 0 (cap / point contact) to 1 (straight edges). */
++    v: number;
++    /** Lobe progress, 0 (own cap) to 1 (tip at cx). */
++    p: number;
++}
++
++function endFor(
++    own: PlateBox,
++    partner: PlateBox | null,
++    j: number,
++    side: 1 | -1,
++    cx: number,
++): End {
++    const cy = (own.y0 + own.y1) / 2;
++    const hf = Math.max(0, (own.y1 - own.y0) / 2 - rad(own));
++    const edge = side === 1 ? own.x1 : own.x0;
++    if (!partner || j <= 0) return { tip: edge, top: cy - hf, bot: cy + hf, v: 0, p: 0 };
++    const jj = Math.min(1, j);
++    const p = Math.min(1, jj / JC);
++    const v = jj <= JC ? 0 : Math.sqrt((jj - JC) / (1 - JC));
++    const pcy = (partner.y0 + partner.y1) / 2;
++    // The neck centre and its full half-height: the mean of the two plates.
++    const ncy = cy + ((cy + pcy) / 2 - cy) * p;
++    const nTop = (own.y0 + partner.y0) / 2;
++    const nBot = (own.y1 + partner.y1) / 2;
++    return {
++        tip: edge + (cx - edge) * p,
++        top: ncy - hf + (nTop - (ncy - hf)) * v,
++        bot: ncy + hf + (nBot - (ncy + hf)) * v,
++        v,
++        p,
++    };
++}
++
++/**
++ * One share's closed outline. `left`/`right` describe its two ends; a plate with no
++ * neighbour on a side, or a join at 0, ends in its own cap there.
++ */
++const rad = (b: PlateBox) => Math.max(0, Math.min(b.r ?? Infinity, (b.y1 - b.y0) / 2, (b.x1 - b.x0) / 2));
++function sharePath(b: PlateBox, left: End, right: End): string {
++    const r = rad(b);
++    const cy0 = b.y0 + r;
++    const cy1 = b.y1 - r;
++    const xl = b.x0 + r;
++    const xr = b.x1 - r;
++    const m = 0.5 * r;
++    // Right end, top quarter: (xr, y0) → (tip, top).
++    const rc1x = xr + K * (right.tip - xr);
++    const rc2x = right.tip - m * right.v;
++    const rc2yT = (cy0 - K * r) * (1 - right.v) + right.top * right.v;
++    const rc2yB = (cy1 + K * r) * (1 - right.v) + right.bot * right.v;
++    // Left end mirrors it about the plate's own left.
++    const lc1x = xl - K * (xl - left.tip);
++    const lc2x = left.tip + m * left.v;
++    const lc2yT = (cy0 - K * r) * (1 - left.v) + left.top * left.v;
++    const lc2yB = (cy1 + K * r) * (1 - left.v) + left.bot * left.v;
++    return [
++        `M${f(xl)} ${f(b.y0)}`,
++        `L${f(xr)} ${f(b.y0)}`,
++        `C${f(rc1x)} ${f(b.y0)} ${f(rc2x)} ${f(rc2yT)} ${f(right.tip)} ${f(right.top)}`,
++        right.bot > right.top ? `L${f(right.tip)} ${f(right.bot)}` : "",
++        `C${f(rc2x)} ${f(rc2yB)} ${f(rc1x)} ${f(b.y1)} ${f(xr)} ${f(b.y1)}`,
++        `L${f(xl)} ${f(b.y1)}`,
++        `C${f(lc1x)} ${f(b.y1)} ${f(lc2x)} ${f(lc2yB)} ${f(left.tip)} ${f(left.bot)}`,
++        left.bot > left.top ? `L${f(left.tip)} ${f(left.top)}` : "",
++        `C${f(lc2x)} ${f(lc2yT)} ${f(lc1x)} ${f(b.y0)} ${f(xl)} ${f(b.y0)}`,
++        "Z",
++    ]
++        .filter(Boolean)
++        .join(" ");
++}
++
++export interface ClusterShape {
++    /** One closed outline per plate: its share of the silhouette. */
++    shares: string[];
++    /**
++     * Per join, the neck's [top, bottom] at the cut once the facing ends are in contact
++     * (j >= JC), else null. A member plate adds a rect over the cut there, so the ink's
++     * edge at the cut is the plate BOX edge (layout-snapped, shared by both neighbours),
++     * never a path edge rastered from two different layer origins.
++     */
++    necks: ([number, number] | null)[];
++    /** Per join, the cut x in the cluster's own px. */
++    cuts: number[];
++    /** The whole silhouette (every share in one path, so abutting shares rasterize as one). */
++    silhouette: string;
++}
++
++/**
++ * The silhouette for `boxes` (left to right) under `joins` (length `boxes.length - 1`).
++ * `snap` rounds each join's cut to a device pixel (the layer's own offset folded in),
++ * so the two shares meeting there both end on a pixel boundary and no anti-aliased
++ * column is painted twice or half.
++ */
++export function clusterShape(
++    boxes: readonly PlateBox[],
++    joins: readonly number[],
++    snap: (x: number, i: number) => number = (x) => x,
++    inset = 0,
++): ClusterShape {
++    const bx = boxes.map((b) => ({
++        r: b.r === undefined ? undefined : Math.max(0, b.r - inset),
++        x0: b.x0 + inset,
++        x1: b.x1 - inset,
++        y0: b.y0 + inset,
++        y1: b.y1 - inset,
++    }));
++    const cuts = joins.map((_, i) => snap((boxes[i]!.x1 + boxes[i + 1]!.x0) / 2, i));
++    const shares = bx.map((b, i) => {
++        const jl = i > 0 ? joins[i - 1]! : 0;
++        const jr = i < bx.length - 1 ? joins[i]! : 0;
++        const left = endFor(b, i > 0 ? bx[i - 1]! : null, jl, -1, i > 0 ? cuts[i - 1]! : b.x0);
++        const right = endFor(b, i < bx.length - 1 ? bx[i + 1]! : null, jr, 1, i < bx.length - 1 ? cuts[i]! : b.x1);
++        return sharePath(b, left, right);
++    });
++    const necks = joins.map((j, i) => {
++        if (!(j >= JC)) return null;
++        const e = endFor(bx[i]!, bx[i + 1]!, j, 1, cuts[i]!);
++        const t = Math.min(e.top, e.bot), b = Math.max(e.top, e.bot);
++        return b - t > 0.01 ? ([t, b] as [number, number]) : null;
++    });
++    return { shares, silhouette: shares.join(" "), necks, cuts };
++}
++
++/** A clockwise rect sub-path (same winding as a share, so nonzero fill unions it). */
++export function rectPath(x0: number, y0: number, x1: number, y1: number): string {
++    return `M${f(x0)} ${f(y0)} L${f(x1)} ${f(y0)} L${f(x1)} ${f(y1)} L${f(x0)} ${f(y1)} Z`;
++}
++
++/** Shift every coordinate of a path by (dx, dy). Our paths are absolute M/L/C/Z only. */
++export function shiftPath(d: string, dx: number, dy: number): string {
++    return d.replace(/(-?\d+(?:\.\d+)?) (-?\d+(?:\.\d+)?)/g, (_, x: string, y: string) =>
++        `${f(Number(x) + dx)} ${f(Number(y) + dy)}`,
++    );
++}
+diff --git a/src/components/dock/composables/useDockSpring.ts b/src/components/dock/composables/useDockSpring.ts
+index 5f0b44751..dd9012dd1 100644
+--- a/src/components/dock/composables/useDockSpring.ts
++++ b/src/components/dock/composables/useDockSpring.ts
+@@ -69,15 +69,36 @@ export interface DockSpring {
+     readonly velocity: number;
+     /** Tear down any running spring (idempotent). */
+     dispose(): void;
++    /**
++     * Advance a `clock: "host"` spring by `dt` ms and emit its frame (and its
++     * settle). The host calls it once per frame for every spring it owns, then
++     * paints; a no-op when parked or on the spring's own clock.
++     */
++    step(dt: number): void;
+ }
+ 
+-export function useDockSpring(config: DockSpringConfig): DockSpring {
++export interface DockSpringClock {
++    /**
++     * `"own"` (the default): the spring drives its own rAF loop. `"host"`: the
++     * caller steps it from its one frame loop, so every spring it owns has
++     * advanced by the same true frame before it paints. A host with several
++     * springs needs this: own loops tick in rAF registration order, so a spring
++     * minted outside the host's frame ticks after the host's paint, and a fresh
++     * own loop's first step is a nominal 16.7 ms (two 120 Hz frames).
++     */
++    clock?: "own" | "host";
++}
++
++export function useDockSpring(config: DockSpringConfig, { clock = "own" }: DockSpringClock = {}): DockSpring {
+     // The single live morph driver for this handle. `null` when parked.
+     let spring: SpringProgress | null = null;
++    // the host-clocked episode's writer (null on the own clock or when parked)
++    let hosted: DockSpringPlayOptions | null = null;
+ 
+     const isLive = (): boolean => spring !== null && !spring.settled;
+ 
+     function dispose(): void {
++        hosted = null;
+         if (spring) {
+             spring.dispose();
+             spring = null;
+@@ -105,6 +126,15 @@ export function useDockSpring(config: DockSpringConfig): DockSpring {
+         spring = active;
+         active.reset(from, inheritedVelocity);
+         active.target = to;
++        if (clock === "host") {
++            hosted = options;
++            // the PRM jump `play` performs: one frame at the target, settled
++            if (window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) {
++                active.snap();
++                emit(active, options);
++            }
++            return;
++        }
+         active.play((value: number, velocity: number) => {
+             options.onFrame(value, velocity);
+             if (active.settled) {
+@@ -116,6 +146,21 @@ export function useDockSpring(config: DockSpringConfig): DockSpring {
+         });
+     }
+ 
++    function emit(active: SpringProgress, options: DockSpringPlayOptions): void {
++        options.onFrame(active.value, active.velocity);
++        if (active.settled) {
++            options.onSettle?.();
++            if (spring === active) dispose();
++        }
++    }
++
++    function step(dt: number): void {
++        if (!hosted || !isLive()) return;
++        const active = spring!;
++        active.tickDt(dt);
++        emit(active, hosted);
++    }
++
+     function retarget(to: number): void {
+         // `set target` re-seats the closed form from the current `(value,
+         // velocity)`, so the mid-flight retarget is continuous by construction.
+@@ -132,5 +177,6 @@ export function useDockSpring(config: DockSpringConfig): DockSpring {
+             return isLive() ? spring!.velocity : 0;
+         },
+         dispose,
++        step,
+     };
+ }
+diff --git a/src/components/dock/index.ts b/src/components/dock/index.ts
+index 29a95047e..5bb95ed5e 100644
+--- a/src/components/dock/index.ts
++++ b/src/components/dock/index.ts
+@@ -41,6 +41,7 @@ export { default as DockBackgroundToggle } from "./DockBackgroundToggle.vue";
+ // [2026-08-12 · BK #47 W1 SURFACE] ~~full-row section break in a grid dock~~ — the
+ // `layout="grid"` tile panel is struck with its prop.
+ export { default as DockSeparator } from "./DockSeparator.vue";
++export { default as DockCluster } from "./DockCluster.vue";
+ // Re-export composable types so consumers can
+ // type wrappers around the published surface. `UseDockStateOptions`
+ // and `DockState` need to be reachable through the `@mkbabb/glass-ui/dock`
+diff --git a/src/components/dock/styles/cluster.css b/src/components/dock/styles/cluster.css
+new file mode 100644
+index 000000000..ffa4cfb0a
+--- /dev/null
++++ b/src/components/dock/styles/cluster.css
+@@ -0,0 +1,146 @@
++/* DockCluster (W-I.8 spec graft, prototype): N GlassDocks fuse into one plate and
++ * fission back by shape alone.
++ *
++ * Paint order inside the cluster's own stack, bottom to top:
++ *   .dock-cluster-shadow   one drop shadow, outside the silhouette only (B)
++ *   .dock-cluster-lens × N one backdrop-filter per member dock, spanning the cluster box,
++ *                          clipped to that dock's share (B's geometry). No ink: every lens
++ *                          paints before any ink, so a lens never samples a neighbour's veil
++ *   .glass-dock × N        each member's OWN .dock-plate paints its ink (luma darken, ink
++ *                          tier, grain) over its share, plus the rim ring sliced to its share;
++ *                          its backdrop-filter, border and box-shadow stand down here only
++ */
++@property --dock-cluster-swap {
++    syntax: "<time>";
++    inherits: true;
++    initial-value: 0s;
++}
++
++@layer components {
++    .dock-cluster {
++        --dock-cluster-swap: var(--spring-dock-exit-duration);
++        position: relative;
++        z-index: 0;
++        display: flex;
++        flex-wrap: nowrap;
++        /* F12: the row never squeezes a member below its content; an overflow is reported. */
++        flex-shrink: 0;
++        align-items: center;
++        gap: var(--dock-cluster-gap, 0.625rem);
++        --dock-cluster-rim: 1.5px;
++        /* PROTOTYPE ONLY: the wave widens shell.css's token block to
++           `:is(.glass-dock, .dock-cluster)` instead of restating it here. */
++        --glass-blur-resting: blur(calc(var(--glass-blur-resting-radius) * var(--glass-level)))
++            saturate(1.2);
++        --dock-surface-blur: var(--glass-blur-resting);
++    }
++    .dark .dock-cluster {
++        --glass-blur-resting: blur(calc(var(--glass-blur-resting-radius) * var(--glass-level)))
++            saturate(1.3) brightness(1.14);
++    }
++
++    /* The dock's backdrop filter, split in two. The KERNEL (blur) lenses paint first;
++       a later lens samples an earlier lens's output near a cut, and a second blur of a
++       blurred field moves no mean. The TONE (saturate, brightness) is pointwise, so its
++       lenses paint after every kernel lens and each reads only the pixels under its own
++       share: a tone is applied exactly once per pixel. */
++    /* N2: an unpainted layer clips to an empty path, never a `%` inset (I8-G4) */
++    .dock-cluster-lens,
++    .dock-cluster-tone {
++        position: absolute;
++        inset: 0;
++        pointer-events: none;
++        clip-path: path("M0 0");
++    }
++    .dock-cluster-lens {
++        backdrop-filter: blur(calc(var(--glass-blur-resting-radius) * var(--glass-level)));
++    }
++    .dock-cluster-tone {
++        backdrop-filter: saturate(1.2);
++    }
++    .dark .dock-cluster-tone {
++        backdrop-filter: saturate(1.3) brightness(1.14);
++    }
++
++    .dock-cluster-shadow {
++        position: absolute;
++        inset: -40px;
++        pointer-events: none;
++        clip-path: path("M0 0");
++    }
++    .dock-cluster-shadow-blur {
++        position: absolute;
++        inset: 0;
++        filter: blur(10px);
++    }
++    .dock-cluster-shadow-fill {
++        position: absolute;
++        inset: 0;
++        background: color-mix(in srgb, var(--shadow-color) 14%, transparent);
++        clip-path: path("M0 0");
++    }
++
++    .dock-cluster > .glass-dock {
++        /* PASS 2: one material. A member's collapse lerps its ink between the wash and the
++           dock tier; in a cluster every member paints the dock tier, so a collapsed member
++           fused to an expanded one reads as one plate, not two tones. */
++        --dock-plate-collapsed-tier: var(--dock-plate-expanded-tier);
++        --dock-plate-collapsed-border: var(--dock-plate-expanded-border);
++        flex-shrink: 0;
++        /* C4: the row is the cluster's; a member's own centring margin (shell.css
++           `margin: 0 auto`) would spread the members across a root the consumer sizes */
++        margin-inline: 0;
++        position: relative;
++        z-index: 1;
++        box-shadow: none;
++    }
++    /* The member's own plate: spans the cluster box (inset written by the cluster on
++       layout change), clipped to its share (written per frame). Ink, tier, luma, grain:
++       GlassDock's own. */
++    .dock-cluster > .glass-dock > .dock-plate {
++        backdrop-filter: none;
++        border: 0;
++        /* The share path draws every corner. The run's scroll-driven cut cap
++           (run.css) animates this radius, so it stands down here with it. */
++        border-radius: 0;
++        animation: none;
++    }
++    /* one ink: the painter's grain is anchored to the cluster, so a change of painter moves no grain */
++    .dock-cluster > .glass-dock > .dock-plate::after {
++        background-position: var(--dock-cluster-grain-x, 0px) 0px;
++    }
++    .dock-cluster > .glass-dock > .dock-plate::before {
++        content: "";
++        position: absolute;
++        inset: 0;
++        pointer-events: none;
++        /* restraint (O-203): the rim is flat, one colour; no lit gradient */
++        background: var(--glass-border-dock);
++        clip-path: var(--dock-ring-clip, path("M0 0"));
++    }
++
++    /* C6 (restraint: one blur value, no blur in a blur). Inside a cluster the lenses are
++       the only backdrop-filter: no member descendant carries one (the active seat's
++       `.glass-capsule`, a capsule track). The glide's and the arriver's content clips then
++       sit over no blur, and a face's cross-fade opacity sits over no blur (I8-G8). */
++    .dock-cluster > .glass-dock * {
++        /* unprefixed only: the build emits the -webkit- pair, and a hand-written pair is
++           folded to the prefixed declaration alone (measured: Chromium kept the blur) */
++        backdrop-filter: none;
++    }
++    /* PF2 D4 (restraint: no gleam on docks). The controls' specular `::before` (the active
++       seat's rest gleam, the hover and press lift) does not paint in the fused plate. The
++       pseudo is the gleam alone (material.css), so it is not generated. The lone dock's
++       gleam is master's, struck by O-203. */
++    .dock-cluster
++        > .glass-dock
++        :is(
++            .glass-specular-track,
++            .dock-icon-button,
++            .dock-tab-button,
++            .dock-select-trigger,
++            .dock-dropdown-trigger
++        )::before {
++        content: none;
++    }
++}
+diff --git a/src/components/dock/styles/index.css b/src/components/dock/styles/index.css
+index 10d2c8e09..d70318c53 100644
+--- a/src/components/dock/styles/index.css
++++ b/src/components/dock/styles/index.css
+@@ -84,6 +84,8 @@
+    SURFACE] ~~`[data-search]`~~); the pill→field morph is the dock's OWN `--dock-morph-t`
+    glide (box-inviolate); CONSUMES the tint seam + the menu-row recipe, re-authors neither. */
+ @import "./search.css";
++/* DockCluster: fused/fissioned plate rows (shape-only, per-plate backdrop). */
++@import "./cluster.css";
+ 
+ /* The SINGLE morph scalar. The dock morph orchestrator writes it once per frame
+    to the `.glass-dock` root; EVERY morph axis (box size, padding, radius, scale,
+diff --git a/tests/components/dock/dock-cluster-spring.spec.ts b/tests/components/dock/dock-cluster-spring.spec.ts
+new file mode 100644
+index 000000000..c9b100db5
+--- /dev/null
++++ b/tests/components/dock/dock-cluster-spring.spec.ts
+@@ -0,0 +1,113 @@
++// I8-G5 source arm: every spring the cluster mints is handed the DOCK_SPRING constant itself.
++// C7 (pass 2, challenge 1): the test drives every site that mints one, a join, a width glide,
++// a pure leave (survivor offsets and a phantom) and an arrival, and asserts each stage minted
++// at least the springs that site owns, so a site the test does not reach fails it too.
++import { mount } from "@vue/test-utils";
++import { h, nextTick, ref } from "vue";
++import { describe, expect, it, vi } from "vitest";
++
++// fold-1 resume: and every one is stepped by the cluster's one clock (`clock: "host"`), so a site
++// on its own rAF loop (one frame late, then two at once) fails it too
++const seen: unknown[] = [];
++const clocks: unknown[] = [];
++vi.mock("@glass/components/dock/composables/useDockSpring", async (orig) => {
++    const real = (await orig()) as typeof import("@glass/components/dock/composables/useDockSpring");
++    return { ...real, useDockSpring: (cfg: never, o?: { clock?: string }) => { seen.push(cfg); clocks.push(o?.clock); return real.useDockSpring(cfg, o); } };
++});
++
++/* happy-dom lays nothing out: each member's box comes from its `data-w`, in a row from
++   x = 100 with a 10 px gap; the root spans the row. */
++const GAP = 10;
++function stubLayout(): void {
++    const rowOf = (root: Element) => {
++        let x = 100;
++        const boxes = new Map<Element, [number, number]>();
++        for (const d of root.querySelectorAll(":scope > .glass-dock")) {
++            const w = Number((d as HTMLElement).dataset.w);
++            boxes.set(d, [x, x + w]);
++            x += w + GAP;
++        }
++        return { boxes, end: x - GAP };
++    };
++    const rect = (l: number, r: number) => ({ left: l, right: r, x: l, y: 0, top: 0, bottom: 56, width: r - l, height: 56, toJSON() {} }) as DOMRect;
++    vi.spyOn(HTMLElement.prototype, "getBoundingClientRect").mockImplementation(function (this: HTMLElement) {
++        const root = this.closest(".dock-cluster");
++        if (!root) return rect(0, 1440);
++        const { boxes, end } = rowOf(root);
++        if (this === root) return rect(100, end);
++        const d = this.closest(".dock-cluster > .glass-dock");
++        const b = d ? boxes.get(d) : undefined;
++        return b ? rect(b[0], b[1]) : rect(100, end);
++    });
++}
++
++describe("I8-G5 · the cluster's springs are springPreset('dock') by reference, at every site", () => {
++    it("passes DOCK_SPRING at the joins, a width glide, a leave and an arrival", async () => {
++        stubLayout();
++        // no frame runs: a spring is minted and never ticks, so no paint lands between a drive
++        // and the MutationObserver delivery (happy-dom delivers it as a task, a browser does not)
++        vi.stubGlobal("requestAnimationFrame", () => 1);
++        vi.stubGlobal("cancelAnimationFrame", () => {});
++        const { DOCK_SPRING } = await import("@glass/components/dock/constants");
++        const { default: DockCluster } = await import("@glass/components/dock/DockCluster.vue");
++        const widths = ref<Record<string, number>>({ a: 100, b: 60, c: 40 });
++        const ids = ref(["a", "b", "c"]);
++        const w = mount(DockCluster, {
++            props: { fused: [true, false] },
++            attrs: { style: "display:flex;flex-direction:row;flex-wrap:nowrap;direction:ltr" },
++            slots: {
++                default: () => ids.value.map((id) => h("div", { class: "glass-dock", key: id, "data-w": widths.value[id] }, [h("div", { class: "dock-plate" }), h("div", { class: "dock-controls" })])),
++            },
++            attachTo: document.body,
++        });
++        const settle = async () => { await nextTick(); await new Promise((r) => setTimeout(r, 20)); };
++
++        // a layout change: deliver to every observer, each entry with its stubbed content rect
++        type RO = { targets: Set<Element>; callback: ResizeObserverCallback };
++        const deliver = () => {
++            for (const ro of [...(globalThis.ResizeObserver as unknown as { instances: Set<RO> }).instances]) {
++                const entries = [...ro.targets].map((target) => ({ target, contentRect: target.getBoundingClientRect() }) as unknown as ResizeObserverEntry);
++                if (entries.length) ro.callback(entries, ro as unknown as ResizeObserver);
++            }
++        };
++        await settle();
++        deliver();
++        await settle();
++        // a stage waits (up to 3 s) for the springs its site mints, then counts them
++        const stage = async (name: string, from: number, atLeast: number) => {
++            for (let t = 0; t < 150 && seen.length - from < atLeast; t++) await new Promise((r) => setTimeout(r, 20));
++            const minted = seen.length - from;
++            expect(minted, `${name}: springs minted`).toBeGreaterThanOrEqual(atLeast);
++            return seen.length;
++        };
++        let n = await stage("mount (one per join)", 0, 2);
++
++        // a width change with no morph: the glide mints one spring per edge
++        widths.value = { ...widths.value, a: 160 };
++        await settle();
++        deliver();
++        await settle();
++        n = await stage("width glide", n, 2);
++
++        // a pure leave: one join, a phantom, and a survivor offset for the member that moves
++        ids.value = ["a", "c"];
++        await settle();
++        deliver();
++        await settle();
++        n = await stage("leave (join, phantom, survivor offset)", n, 3);
++
++        // an arrival: the joins and the arriver's open slot
++        ids.value = ["a", "c", "d"];
++        widths.value = { ...widths.value, d: 50 };
++        await settle();
++        deliver();
++        await settle();
++        await stage("arrive (joins, slot)", n, 3);
++
++        for (const cfg of seen) expect(cfg).toBe(DOCK_SPRING);
++        clocks.forEach((c, i) => expect(c, `spring ${i}: the cluster's clock`).toBe("host"));
++        w.unmount();
++        vi.restoreAllMocks();
++        vi.unstubAllGlobals();
++    }, 20_000);
++});

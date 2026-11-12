@@ -117,9 +117,12 @@
            bounded rung directly so its type is invariant across `sm`/`md`/`lg`
            AND across `--ui-scale` — comfort scales the BOX, not the letterform.
            The shared `--control-text{,-sm}` cure is library-wide and routed to
-           the PROPORTION adoption wave; this is the lane's local re-point. */
+           the PROPORTION adoption wave; this is the lane's local re-point.
+           The field floor (tokens/sizing.css `--field-text-floor`) lifts it to
+           16px under a coarse pointer, the iOS no-zoom line every text field
+           holds (Input, Textarea, NumberField); on a fine pointer it is 0. */
         font: inherit;
-        font-size: var(--type-small);
+        font-size: max(var(--type-small), var(--field-text-floor));
 
         /* The ring's RESTING colour, at ZERO alpha. `outline-color`'s initial
            value is `currentColor` — fully opaque `--foreground` — so without

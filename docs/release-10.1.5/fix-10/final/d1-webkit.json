@@ -1,0 +1,1024 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "tests-visual/release-10-1-5-fix-10.config.ts",
+      "--project=webkit",
+      "release-10-1-3.spec.ts",
+      "--grep",
+      "bottom-anchored · ancestor zoom",
+      "--repeat-each=16",
+      "--workers=1"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5-fix-10.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-headless-new",
+        "name": "chromium-headless-new",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "coarse-touch",
+        "name": "coarse-touch",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/test-results",
+        "repeatEach": 16,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-10-1-5-fix-10-p4.spec.ts",
+          "release-10-1-5-fix-10-zoom.spec.ts",
+          "release-10-1-5-fix-10-edge.spec.ts",
+          "release-10-1-5-critic-10.spec.ts",
+          "release-10-1-5-critic-10b.spec.ts",
+          "release-10-1-5.spec.ts",
+          "release-10-1-4.spec.ts",
+          "release-10-1-3.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/docs/release-10.1.5/fix-10/final/d1-webkit.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5294",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/",
+      "url": "http://localhost:5294",
+      "reuseExistingServer": true,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "release-10-1-3.spec.ts",
+      "file": "release-10-1-3.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "10.1.3 · 390 · bottom-anchored · ancestor zoom 1.25",
+          "file": "release-10-1-3.spec.ts",
+          "line": 931,
+          "column": 10,
+          "specs": [
+            {
+              "title": "D-1 (critique-7) · the summary glyph holds its box through the expand and the collapse",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 3443,
+                      "error": {
+                        "message": "Error: the leaving summary's largest visible frame step\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m2\u001b[39m\nReceived:   \u001b[31m2.01953125\u001b[39m",
+                        "stack": "Error: the leaving summary's largest visible frame step\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m2\u001b[39m\nReceived:   \u001b[31m2.01953125\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-3.spec.ts:989:86",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-3.spec.ts",
+                          "column": 86,
+                          "line": 989
+                        },
+                        "snippet": "  987 |                 \"the leaving summary paints its rest on the first morph frame\",\n  988 |             ).toBeLessThan(1);\n> 989 |             expect(jump(expand), \"the leaving summary's largest visible frame step\").toBeLessThan(2);\n      |                                                                                      ^\n  990 |\n  991 |             // The collapse: the public `collapse()`, with the pointer off the dock.\n  992 |             await glyph();"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-3.spec.ts",
+                            "column": 86,
+                            "line": 989
+                          },
+                          "message": "Error: the leaving summary's largest visible frame step\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m2\u001b[39m\nReceived:   \u001b[31m2.01953125\u001b[39m\n\n  987 |                 \"the leaving summary paints its rest on the first morph frame\",\n  988 |             ).toBeLessThan(1);\n> 989 |             expect(jump(expand), \"the leaving summary's largest visible frame step\").toBeLessThan(2);\n      |                                                                                      ^\n  990 |\n  991 |             // The collapse: the public `collapse()`, with the pointer off the dock.\n  992 |             await glyph();\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-3.spec.ts:989:86"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-10T01:52:40.868Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/test-results/release-10-1-3-10-1-3-·-39-f860e-the-expand-and-the-collapse-webkit/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-3.spec.ts",
+                        "column": 86,
+                        "line": 989
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-bef704e9a7fc59ae4c23",
+              "file": "release-10-1-3.spec.ts",
+              "line": 933,
+              "column": 9
+            },
+            {
+              "title": "D-1 (critique-7) · the summary glyph holds its box through the expand and the collapse",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 3728,
+                      "error": {
+                        "message": "Error: the leaving summary's largest visible frame step\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m2\u001b[39m\nReceived:   \u001b[31m3.817138671875\u001b[39m",
+                        "stack": "Error: the leaving summary's largest visible frame step\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m2\u001b[39m\nReceived:   \u001b[31m3.817138671875\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-3.spec.ts:989:86",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-3.spec.ts",
+                          "column": 86,
+                          "line": 989
+                        },
+                        "snippet": "  987 |                 \"the leaving summary paints its rest on the first morph frame\",\n  988 |             ).toBeLessThan(1);\n> 989 |             expect(jump(expand), \"the leaving summary's largest visible frame step\").toBeLessThan(2);\n      |                                                                                      ^\n  990 |\n  991 |             // The collapse: the public `collapse()`, with the pointer off the dock.\n  992 |             await glyph();"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-3.spec.ts",
+                            "column": 86,
+                            "line": 989
+                          },
+                          "message": "Error: the leaving summary's largest visible frame step\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m2\u001b[39m\nReceived:   \u001b[31m3.817138671875\u001b[39m\n\n  987 |                 \"the leaving summary paints its rest on the first morph frame\",\n  988 |             ).toBeLessThan(1);\n> 989 |             expect(jump(expand), \"the leaving summary's largest visible frame step\").toBeLessThan(2);\n      |                                                                                      ^\n  990 |\n  991 |             // The collapse: the public `collapse()`, with the pointer off the dock.\n  992 |             await glyph();\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-3.spec.ts:989:86"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-10T01:52:47.301Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/test-results/release-10-1-3-10-1-3-·-39-f860e-the-expand-and-the-collapse-webkit-repeat1/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-3.spec.ts",
+                        "column": 86,
+                        "line": 989
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-e47dc8e1ba7174e8899b",
+              "file": "release-10-1-3.spec.ts",
+              "line": 933,
+              "column": 9
+            },
+            {
+              "title": "D-1 (critique-7) · the summary glyph holds its box through the expand and the collapse",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 4444,
+                      "error": {
+                        "message": "Error: the leaving summary's largest visible frame step\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m2\u001b[39m\nReceived:   \u001b[31m2.02130126953125\u001b[39m",
+                        "stack": "Error: the leaving summary's largest visible frame step\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m2\u001b[39m\nReceived:   \u001b[31m2.02130126953125\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-3.spec.ts:989:86",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-3.spec.ts",
+                          "column": 86,
+                          "line": 989
+                        },
+                        "snippet": "  987 |                 \"the leaving summary paints its rest on the first morph frame\",\n  988 |             ).toBeLessThan(1);\n> 989 |             expect(jump(expand), \"the leaving summary's largest visible frame step\").toBeLessThan(2);\n      |                                                                                      ^\n  990 |\n  991 |             // The collapse: the public `collapse()`, with the pointer off the dock.\n  992 |             await glyph();"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-3.spec.ts",
+                            "column": 86,
+                            "line": 989
+                          },
+                          "message": "Error: the leaving summary's largest visible frame step\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m2\u001b[39m\nReceived:   \u001b[31m2.02130126953125\u001b[39m\n\n  987 |                 \"the leaving summary paints its rest on the first morph frame\",\n  988 |             ).toBeLessThan(1);\n> 989 |             expect(jump(expand), \"the leaving summary's largest visible frame step\").toBeLessThan(2);\n      |                                                                                      ^\n  990 |\n  991 |             // The collapse: the public `collapse()`, with the pointer off the dock.\n  992 |             await glyph();\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-3.spec.ts:989:86"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-10T01:52:57.719Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/test-results/release-10-1-3-10-1-3-·-39-f860e-the-expand-and-the-collapse-webkit-repeat2/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-3.spec.ts",
+                        "column": 86,
+                        "line": 989
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-b38c50c4fb0601addcbd",
+              "file": "release-10-1-3.spec.ts",
+              "line": 933,
+              "column": 9
+            },
+            {
+              "title": "D-1 (critique-7) · the summary glyph holds its box through the expand and the collapse",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 3904,
+                      "error": {
+                        "message": "Error: the leaving summary's largest visible frame step\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m2\u001b[39m\nReceived:   \u001b[31m2.03387451171875\u001b[39m",
+                        "stack": "Error: the leaving summary's largest visible frame step\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m2\u001b[39m\nReceived:   \u001b[31m2.03387451171875\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-3.spec.ts:989:86",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-3.spec.ts",
+                          "column": 86,
+                          "line": 989
+                        },
+                        "snippet": "  987 |                 \"the leaving summary paints its rest on the first morph frame\",\n  988 |             ).toBeLessThan(1);\n> 989 |             expect(jump(expand), \"the leaving summary's largest visible frame step\").toBeLessThan(2);\n      |                                                                                      ^\n  990 |\n  991 |             // The collapse: the public `collapse()`, with the pointer off the dock.\n  992 |             await glyph();"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-3.spec.ts",
+                            "column": 86,
+                            "line": 989
+                          },
+                          "message": "Error: the leaving summary's largest visible frame step\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m2\u001b[39m\nReceived:   \u001b[31m2.03387451171875\u001b[39m\n\n  987 |                 \"the leaving summary paints its rest on the first morph frame\",\n  988 |             ).toBeLessThan(1);\n> 989 |             expect(jump(expand), \"the leaving summary's largest visible frame step\").toBeLessThan(2);\n      |                                                                                      ^\n  990 |\n  991 |             // The collapse: the public `collapse()`, with the pointer off the dock.\n  992 |             await glyph();\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-3.spec.ts:989:86"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-10T01:53:04.199Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/test-results/release-10-1-3-10-1-3-·-39-f860e-the-expand-and-the-collapse-webkit-repeat3/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-3.spec.ts",
+                        "column": 86,
+                        "line": 989
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-8aeb76d369963249ff7e",
+              "file": "release-10-1-3.spec.ts",
+              "line": 933,
+              "column": 9
+            },
+            {
+              "title": "D-1 (critique-7) · the summary glyph holds its box through the expand and the collapse",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 4,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 3612,
+                      "error": {
+                        "message": "Error: the leaving summary's largest visible frame step\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m2\u001b[39m\nReceived:   \u001b[31m2.01953125\u001b[39m",
+                        "stack": "Error: the leaving summary's largest visible frame step\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m2\u001b[39m\nReceived:   \u001b[31m2.01953125\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-3.spec.ts:989:86",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-3.spec.ts",
+                          "column": 86,
+                          "line": 989
+                        },
+                        "snippet": "  987 |                 \"the leaving summary paints its rest on the first morph frame\",\n  988 |             ).toBeLessThan(1);\n> 989 |             expect(jump(expand), \"the leaving summary's largest visible frame step\").toBeLessThan(2);\n      |                                                                                      ^\n  990 |\n  991 |             // The collapse: the public `collapse()`, with the pointer off the dock.\n  992 |             await glyph();"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-3.spec.ts",
+                            "column": 86,
+                            "line": 989
+                          },
+                          "message": "Error: the leaving summary's largest visible frame step\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m2\u001b[39m\nReceived:   \u001b[31m2.01953125\u001b[39m\n\n  987 |                 \"the leaving summary paints its rest on the first morph frame\",\n  988 |             ).toBeLessThan(1);\n> 989 |             expect(jump(expand), \"the leaving summary's largest visible frame step\").toBeLessThan(2);\n      |                                                                                      ^\n  990 |\n  991 |             // The collapse: the public `collapse()`, with the pointer off the dock.\n  992 |             await glyph();\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-3.spec.ts:989:86"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-10T01:53:09.787Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/test-results/release-10-1-3-10-1-3-·-39-f860e-the-expand-and-the-collapse-webkit-repeat4/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-3.spec.ts",
+                        "column": 86,
+                        "line": 989
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-960125c7540a2c197dc3",
+              "file": "release-10-1-3.spec.ts",
+              "line": 933,
+              "column": 9
+            },
+            {
+              "title": "D-1 (critique-7) · the summary glyph holds its box through the expand and the collapse",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 5,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 3462,
+                      "error": {
+                        "message": "Error: the leaving summary's largest visible frame step\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m2\u001b[39m\nReceived:   \u001b[31m2.00970458984375\u001b[39m",
+                        "stack": "Error: the leaving summary's largest visible frame step\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m2\u001b[39m\nReceived:   \u001b[31m2.00970458984375\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-3.spec.ts:989:86",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-3.spec.ts",
+                          "column": 86,
+                          "line": 989
+                        },
+                        "snippet": "  987 |                 \"the leaving summary paints its rest on the first morph frame\",\n  988 |             ).toBeLessThan(1);\n> 989 |             expect(jump(expand), \"the leaving summary's largest visible frame step\").toBeLessThan(2);\n      |                                                                                      ^\n  990 |\n  991 |             // The collapse: the public `collapse()`, with the pointer off the dock.\n  992 |             await glyph();"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-3.spec.ts",
+                            "column": 86,
+                            "line": 989
+                          },
+                          "message": "Error: the leaving summary's largest visible frame step\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m2\u001b[39m\nReceived:   \u001b[31m2.00970458984375\u001b[39m\n\n  987 |                 \"the leaving summary paints its rest on the first morph frame\",\n  988 |             ).toBeLessThan(1);\n> 989 |             expect(jump(expand), \"the leaving summary's largest visible frame step\").toBeLessThan(2);\n      |                                                                                      ^\n  990 |\n  991 |             // The collapse: the public `collapse()`, with the pointer off the dock.\n  992 |             await glyph();\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-3.spec.ts:989:86"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-10T01:53:14.984Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/test-results/release-10-1-3-10-1-3-·-39-f860e-the-expand-and-the-collapse-webkit-repeat5/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-3.spec.ts",
+                        "column": 86,
+                        "line": 989
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-fd95cad0a42a7f9a49a9",
+              "file": "release-10-1-3.spec.ts",
+              "line": 933,
+              "column": 9
+            },
+            {
+              "title": "D-1 (critique-7) · the summary glyph holds its box through the expand and the collapse",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 6,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 3746,
+                      "error": {
+                        "message": "Error: the leaving summary's largest visible frame step\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m2\u001b[39m\nReceived:   \u001b[31m2.01953125\u001b[39m",
+                        "stack": "Error: the leaving summary's largest visible frame step\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m2\u001b[39m\nReceived:   \u001b[31m2.01953125\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-3.spec.ts:989:86",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-3.spec.ts",
+                          "column": 86,
+                          "line": 989
+                        },
+                        "snippet": "  987 |                 \"the leaving summary paints its rest on the first morph frame\",\n  988 |             ).toBeLessThan(1);\n> 989 |             expect(jump(expand), \"the leaving summary's largest visible frame step\").toBeLessThan(2);\n      |                                                                                      ^\n  990 |\n  991 |             // The collapse: the public `collapse()`, with the pointer off the dock.\n  992 |             await glyph();"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-3.spec.ts",
+                            "column": 86,
+                            "line": 989
+                          },
+                          "message": "Error: the leaving summary's largest visible frame step\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m2\u001b[39m\nReceived:   \u001b[31m2.01953125\u001b[39m\n\n  987 |                 \"the leaving summary paints its rest on the first morph frame\",\n  988 |             ).toBeLessThan(1);\n> 989 |             expect(jump(expand), \"the leaving summary's largest visible frame step\").toBeLessThan(2);\n      |                                                                                      ^\n  990 |\n  991 |             // The collapse: the public `collapse()`, with the pointer off the dock.\n  992 |             await glyph();\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-3.spec.ts:989:86"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-10T01:53:19.809Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/test-results/release-10-1-3-10-1-3-·-39-f860e-the-expand-and-the-collapse-webkit-repeat6/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-3.spec.ts",
+                        "column": 86,
+                        "line": 989
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-ac9493a9bcd4e2f79eab",
+              "file": "release-10-1-3.spec.ts",
+              "line": 933,
+              "column": 9
+            },
+            {
+              "title": "D-1 (critique-7) · the summary glyph holds its box through the expand and the collapse",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 7,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 3360,
+                      "error": {
+                        "message": "Error: the leaving summary's largest visible frame step\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m2\u001b[39m\nReceived:   \u001b[31m2\u001b[39m",
+                        "stack": "Error: the leaving summary's largest visible frame step\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m2\u001b[39m\nReceived:   \u001b[31m2\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-3.spec.ts:989:86",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-3.spec.ts",
+                          "column": 86,
+                          "line": 989
+                        },
+                        "snippet": "  987 |                 \"the leaving summary paints its rest on the first morph frame\",\n  988 |             ).toBeLessThan(1);\n> 989 |             expect(jump(expand), \"the leaving summary's largest visible frame step\").toBeLessThan(2);\n      |                                                                                      ^\n  990 |\n  991 |             // The collapse: the public `collapse()`, with the pointer off the dock.\n  992 |             await glyph();"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-3.spec.ts",
+                            "column": 86,
+                            "line": 989
+                          },
+                          "message": "Error: the leaving summary's largest visible frame step\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m2\u001b[39m\nReceived:   \u001b[31m2\u001b[39m\n\n  987 |                 \"the leaving summary paints its rest on the first morph frame\",\n  988 |             ).toBeLessThan(1);\n> 989 |             expect(jump(expand), \"the leaving summary's largest visible frame step\").toBeLessThan(2);\n      |                                                                                      ^\n  990 |\n  991 |             // The collapse: the public `collapse()`, with the pointer off the dock.\n  992 |             await glyph();\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-3.spec.ts:989:86"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-10T01:53:24.797Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/test-results/release-10-1-3-10-1-3-·-39-f860e-the-expand-and-the-collapse-webkit-repeat7/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-3.spec.ts",
+                        "column": 86,
+                        "line": 989
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-519c3aa4b1eb8a080eb4",
+              "file": "release-10-1-3.spec.ts",
+              "line": 933,
+              "column": 9
+            },
+            {
+              "title": "D-1 (critique-7) · the summary glyph holds its box through the expand and the collapse",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 8,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 5068,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-10T01:53:29.182Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-2d75d34f1627ce58908e",
+              "file": "release-10-1-3.spec.ts",
+              "line": 933,
+              "column": 9
+            },
+            {
+              "title": "D-1 (critique-7) · the summary glyph holds its box through the expand and the collapse",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 9,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 4909,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-10T01:53:35.264Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-fafb562f7a9e3782eaca",
+              "file": "release-10-1-3.spec.ts",
+              "line": 933,
+              "column": 9
+            },
+            {
+              "title": "D-1 (critique-7) · the summary glyph holds its box through the expand and the collapse",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 10,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 5468,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-10T01:53:40.983Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-fe839a8f7741cf0d4874",
+              "file": "release-10-1-3.spec.ts",
+              "line": 933,
+              "column": 9
+            },
+            {
+              "title": "D-1 (critique-7) · the summary glyph holds its box through the expand and the collapse",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 11,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 5534,
+                      "error": {
+                        "message": "Error: the entering summary's largest visible frame step\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m3\u001b[39m\nReceived:   \u001b[31m3.14892578125\u001b[39m",
+                        "stack": "Error: the entering summary's largest visible frame step\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m3\u001b[39m\nReceived:   \u001b[31m3.14892578125\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-3.spec.ts:1003:89",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-3.spec.ts",
+                          "column": 89,
+                          "line": 1003
+                        },
+                        "snippet": "  1001 |             expect(morph.length, \"the collapse morphed\").toBeGreaterThan(3);\n  1002 |             expect(collapse.at(-1)!.morphing, \"the morph settled\").toBe(false);\n> 1003 |             expect(jump(collapse), \"the entering summary's largest visible frame step\").toBeLessThan(3);\n       |                                                                                         ^\n  1004 |             expect(\n  1005 |                 Math.abs(axis(morph.at(-1)!) - restAt),\n  1006 |                 \"the entering summary's last morph frame is its rest\","
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-3.spec.ts",
+                            "column": 89,
+                            "line": 1003
+                          },
+                          "message": "Error: the entering summary's largest visible frame step\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m3\u001b[39m\nReceived:   \u001b[31m3.14892578125\u001b[39m\n\n  1001 |             expect(morph.length, \"the collapse morphed\").toBeGreaterThan(3);\n  1002 |             expect(collapse.at(-1)!.morphing, \"the morph settled\").toBe(false);\n> 1003 |             expect(jump(collapse), \"the entering summary's largest visible frame step\").toBeLessThan(3);\n       |                                                                                         ^\n  1004 |             expect(\n  1005 |                 Math.abs(axis(morph.at(-1)!) - restAt),\n  1006 |                 \"the entering summary's last morph frame is its rest\",\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-3.spec.ts:1003:89"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-10T01:53:47.544Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/test-results/release-10-1-3-10-1-3-·-39-f860e-the-expand-and-the-collapse-webkit-repeat11/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-3.spec.ts",
+                        "column": 89,
+                        "line": 1003
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-63ac4c5b4b8397ba14d3",
+              "file": "release-10-1-3.spec.ts",
+              "line": 933,
+              "column": 9
+            },
+            {
+              "title": "D-1 (critique-7) · the summary glyph holds its box through the expand and the collapse",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 12,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 3593,
+                      "error": {
+                        "message": "Error: the leaving summary's largest visible frame step\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m2\u001b[39m\nReceived:   \u001b[31m2.00970458984375\u001b[39m",
+                        "stack": "Error: the leaving summary's largest visible frame step\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m2\u001b[39m\nReceived:   \u001b[31m2.00970458984375\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-3.spec.ts:989:86",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-3.spec.ts",
+                          "column": 86,
+                          "line": 989
+                        },
+                        "snippet": "  987 |                 \"the leaving summary paints its rest on the first morph frame\",\n  988 |             ).toBeLessThan(1);\n> 989 |             expect(jump(expand), \"the leaving summary's largest visible frame step\").toBeLessThan(2);\n      |                                                                                      ^\n  990 |\n  991 |             // The collapse: the public `collapse()`, with the pointer off the dock.\n  992 |             await glyph();"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-3.spec.ts",
+                            "column": 86,
+                            "line": 989
+                          },
+                          "message": "Error: the leaving summary's largest visible frame step\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m2\u001b[39m\nReceived:   \u001b[31m2.00970458984375\u001b[39m\n\n  987 |                 \"the leaving summary paints its rest on the first morph frame\",\n  988 |             ).toBeLessThan(1);\n> 989 |             expect(jump(expand), \"the leaving summary's largest visible frame step\").toBeLessThan(2);\n      |                                                                                      ^\n  990 |\n  991 |             // The collapse: the public `collapse()`, with the pointer off the dock.\n  992 |             await glyph();\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-3.spec.ts:989:86"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-10T01:53:54.238Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/test-results/release-10-1-3-10-1-3-·-39-f860e-the-expand-and-the-collapse-webkit-repeat12/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-3.spec.ts",
+                        "column": 86,
+                        "line": 989
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-6106f832a3cea7376a67",
+              "file": "release-10-1-3.spec.ts",
+              "line": 933,
+              "column": 9
+            },
+            {
+              "title": "D-1 (critique-7) · the summary glyph holds its box through the expand and the collapse",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 13,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 4929,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-10T01:53:59.109Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-7808f4233dab49932183",
+              "file": "release-10-1-3.spec.ts",
+              "line": 933,
+              "column": 9
+            },
+            {
+              "title": "D-1 (critique-7) · the summary glyph holds its box through the expand and the collapse",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 14,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 3324,
+                      "error": {
+                        "message": "Error: the leaving summary's largest visible frame step\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m2\u001b[39m\nReceived:   \u001b[31m2\u001b[39m",
+                        "stack": "Error: the leaving summary's largest visible frame step\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m2\u001b[39m\nReceived:   \u001b[31m2\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-3.spec.ts:989:86",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-3.spec.ts",
+                          "column": 86,
+                          "line": 989
+                        },
+                        "snippet": "  987 |                 \"the leaving summary paints its rest on the first morph frame\",\n  988 |             ).toBeLessThan(1);\n> 989 |             expect(jump(expand), \"the leaving summary's largest visible frame step\").toBeLessThan(2);\n      |                                                                                      ^\n  990 |\n  991 |             // The collapse: the public `collapse()`, with the pointer off the dock.\n  992 |             await glyph();"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-3.spec.ts",
+                            "column": 86,
+                            "line": 989
+                          },
+                          "message": "Error: the leaving summary's largest visible frame step\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m2\u001b[39m\nReceived:   \u001b[31m2\u001b[39m\n\n  987 |                 \"the leaving summary paints its rest on the first morph frame\",\n  988 |             ).toBeLessThan(1);\n> 989 |             expect(jump(expand), \"the leaving summary's largest visible frame step\").toBeLessThan(2);\n      |                                                                                      ^\n  990 |\n  991 |             // The collapse: the public `collapse()`, with the pointer off the dock.\n  992 |             await glyph();\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-3.spec.ts:989:86"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-10T01:54:04.948Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/test-results/release-10-1-3-10-1-3-·-39-f860e-the-expand-and-the-collapse-webkit-repeat14/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-3.spec.ts",
+                        "column": 86,
+                        "line": 989
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-ed649564fd9e90d02370",
+              "file": "release-10-1-3.spec.ts",
+              "line": 933,
+              "column": 9
+            },
+            {
+              "title": "D-1 (critique-7) · the summary glyph holds its box through the expand and the collapse",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 15,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 5006,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-10T01:54:09.308Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-61ada115a73c60a1e0b9",
+              "file": "release-10-1-3.spec.ts",
+              "line": 933,
+              "column": 9
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-10T01:52:34.969Z",
+    "duration": 99787.142,
+    "expected": 5,
+    "skipped": 0,
+    "unexpected": 11,
+    "flaky": 0
+  }
+}

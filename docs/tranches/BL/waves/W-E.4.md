@@ -1,11 +1,11 @@
-# W-E.4 · the overlay layer contract: z, edge, dismissal, host, outside, block ceilings, one cast · 11.0.0
+# W-E.4 · the overlay layer contract: z, edge, dismissal, host, outside, block ceilings, one cast
 
 | field | value |
 |---|---|
 | seat | band-E wave-spec seat, formation (relaunch 2026-09-25) |
 | model | `claude-opus-5-5`, asserted from own system identity |
 | HEAD | `4d2e3123` (`src`/`demo` identical to `f3ad78d0`), scratch worktree; probes drive the band-E fixture app (W-E.1 appendix B) on the packed build |
-| ships in | 11.0.0 |
+| release | `waves/INDEX.md`, the one record |
 | families | F-22 remainder (#89 residue; O-74's F-22 rows; G-38 LOCKED-DISMISS from the W-A.2 roster; the W-B.4 fold B4-G4 "an open floating plate computes one cast"; the W-B.2 fold UIA-F-77 Popover content-fit width) |
 | depends on | PLAN §5, the one record of edges |
 | dependants | PLAN §5 (its inverse) |

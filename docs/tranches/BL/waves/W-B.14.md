@@ -1,11 +1,11 @@
-# W-B.14 · The source-derived colour registers decided: RETIRE under E-5, the owner's words asked for · 11.0.0
+# W-B.14 · The source-derived colour registers decided: RETIRE under E-5, the owner's words asked for
 
 | field | value |
 |---|---|
 | seat | band-B wave-spec seat, formation run `wf_68eb18d6-b21` |
 | model | `claude-opus-5-5`, asserted from own system identity |
 | HEAD | `19bf6569` in a scratch worktree |
-| ships in | 11.0.0 |
+| release | `waves/INDEX.md`, the one record |
 | families | F-14, the R2-06-03 split (W-COLOR-SOURCE-DECIDE, `audit/REGISTRY.md:329,340`) |
 | depends on | PLAN §5, the one record of edges |
 | dependants | PLAN §5 (its inverse) |

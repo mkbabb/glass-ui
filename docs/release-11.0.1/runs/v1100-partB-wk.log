@@ -1,0 +1,4192 @@
+
+Running 23 tests using 1 worker
+
+[WebServer] (!) Failed to run dependency scan. Skipping dependency pre-bundling. Error:   Failed to scan for dependencies from entries:
+[WebServer]   /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/index.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/_aur-vangogh-harness.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/fixtures/dock-entering-child-lag.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/b7-shape/harness.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-10-1-1/harness.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-10-1-2/harness.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-10-1-3/harness.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-10-1-4/harness.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1/harness.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-10-1-5/critic-1.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-10-1-5/critic-10-v1014.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-10-1-5/critic-10.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-10-1-5/critic-11-v1014.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-10-1-5/critic-11.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-10-1-5/critic-12-v1014.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-10-1-5/critic-12.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-10-1-5/critic-2-v1014.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-10-1-5/critic-2.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-10-1-5/critic-4-v1014.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-10-1-5/critic-4.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-10-1-5/critic-7-v1014.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-10-1-5/critic-7.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-10-1-5/harness.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/u-b7/harness.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/docs/release-11.0.1/daraksha-repro/dock-cutcap.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/docs/release-11.0.1/daraksha-repro/dock-press-scroll.html
+[WebServer] 
+[WebServer]   Build failed with 46 errors:
+[WebServer] 
+[WebServer] [UNRESOLVED_IMPORT] Could not resolve './v1014/src/components/dock/GlassDock.vue' in tests-visual/release-10-1-5/critic-10-v1014.ts
+[WebServer]     ╭─[ tests-visual/release-10-1-5/critic-10-v1014.ts:10:23 ]
+[WebServer]     │
+[WebServer]  10 │ import GlassDock from "./v1014/src/components/dock/GlassDock.vue";
+[WebServer]     │                       ─────────────────────┬─────────────────────  
+[WebServer]     │                                            ╰─────────────────────── Module not found.
+[WebServer]     │ 
+[WebServer]     │ Help: 'tests-visual/release-10-1-5/critic-10-v1014.ts' is imported by the following path:
+[WebServer]     │         - tests-visual/release-10-1-5/critic-10-v1014.ts
+[WebServer]     │         - tests-visual/release-10-1-5/critic-10-v1014.html
+[WebServer] ────╯
+[WebServer] 
+[WebServer] [UNRESOLVED_IMPORT] Could not resolve './v1014/src/components/dock/DockControl.vue' in tests-visual/release-10-1-5/critic-10-v1014.ts
+[WebServer]     ╭─[ tests-visual/release-10-1-5/critic-10-v1014.ts:11:25 ]
+[WebServer]     │
+[WebServer]  11 │ import DockControl from "./v1014/src/components/dock/DockControl.vue";
+[WebServer]     │                         ──────────────────────┬──────────────────────  
+[WebServer]     │                                               ╰──────────────────────── Module not found.
+[WebServer]     │ 
+[WebServer]     │ Help: 'tests-visual/release-10-1-5/critic-10-v1014.ts' is imported by the following path:
+[WebServer]     │         - tests-visual/release-10-1-5/critic-10-v1014.ts
+[WebServer]     │         - tests-visual/release-10-1-5/critic-10-v1014.html
+[WebServer] ────╯
+[WebServer] 
+[WebServer] [UNRESOLVED_IMPORT] Could not resolve './v1014/src/components/dark-mode-toggle/DarkModeToggle.vue' in tests-visual/release-10-1-5/critic-10-v1014.ts
+[WebServer]     ╭─[ tests-visual/release-10-1-5/critic-10-v1014.ts:12:28 ]
+[WebServer]     │
+[WebServer]  12 │ import DarkModeToggle from "./v1014/src/components/dark-mode-toggle/DarkModeToggle.vue";
+[WebServer]     │                            ──────────────────────────────┬─────────────────────────────  
+[WebServer]     │                                                          ╰─────────────────────────────── Module not found.
+[WebServer]     │ 
+[WebServer]     │ Help: 'tests-visual/release-10-1-5/critic-10-v1014.ts' is imported by the following path:
+[WebServer]     │         - tests-visual/release-10-1-5/critic-10-v1014.ts
+[WebServer]     │         - tests-visual/release-10-1-5/critic-10-v1014.html
+[WebServer] ────╯
+[WebServer] 
+[WebServer] [UNRESOLVED_IMPORT] Could not resolve './v1014/src/components/slider/Slider.vue' in tests-visual/release-10-1-5/critic-12-v1014.ts
+[WebServer]     ╭─[ tests-visual/release-10-1-5/critic-12-v1014.ts:11:20 ]
+[WebServer]     │
+[WebServer]  11 │ import Slider from "./v1014/src/components/slider/Slider.vue";
+[WebServer]     │                    ─────────────────────┬────────────────────  
+[WebServer]     │                                         ╰────────────────────── Module not found.
+[WebServer]     │ 
+[WebServer]     │ Help: 'tests-visual/release-10-1-5/critic-12-v1014.ts' is imported by the following path:
+[WebServer]     │         - tests-visual/release-10-1-5/critic-12-v1014.ts
+[WebServer]     │         - tests-visual/release-10-1-5/critic-12-v1014.html
+[WebServer] ────╯
+[WebServer] 
+[WebServer] [UNRESOLVED_IMPORT] Could not resolve './v1014/src/components/dock/GlassDock.vue' in tests-visual/release-10-1-5/critic-7-v1014.ts
+[WebServer]    ╭─[ tests-visual/release-10-1-5/critic-7-v1014.ts:9:23 ]
+[WebServer]    │
+[WebServer]  9 │ import GlassDock from "./v1014/src/components/dock/GlassDock.vue";
+[WebServer]    │                       ─────────────────────┬─────────────────────  
+[WebServer]    │                                            ╰─────────────────────── Module not found.
+[WebServer]    │ 
+[WebServer]    │ Help: 'tests-visual/release-10-1-5/critic-7-v1014.ts' is imported by the following path:
+[WebServer]    │         - tests-visual/release-10-1-5/critic-7-v1014.ts
+[WebServer]    │         - tests-visual/release-10-1-5/critic-7-v1014.html
+[WebServer] ───╯
+[WebServer] 
+[WebServer] ...
+[WebServer]     at aggregateBindingErrorsIntoJsError (file:///Users/mkbabb/Programming/glass-ui/node_modules/rolldown/dist/shared/error-BHRSI0R7.mjs:48:18)
+[WebServer]     at unwrapBindingResult (file:///Users/mkbabb/Programming/glass-ui/node_modules/rolldown/dist/shared/error-BHRSI0R7.mjs:18:128)
+[WebServer]     at scan (file:///Users/mkbabb/Programming/glass-ui/node_modules/rolldown/dist/experimental-index.mjs:187:3)
+[WebServer]     at async Object.build (file:///Users/mkbabb/Programming/glass-ui/node_modules/vite/dist/node/chunks/node.js:30762:3)
+[WebServer]     at async scan (file:///Users/mkbabb/Programming/glass-ui/node_modules/vite/dist/node/chunks/node.js:30701:4)
+[WebServer]     at async file:///Users/mkbabb/Programming/glass-ui/node_modules/vite/dist/node/chunks/node.js:33703:15
+  ✓   1 [webkit] › tests-visual/release-10-1-5.spec.ts:1777:5 › critique 8, coarse phone › n1 a fitting vertical dock's seats do not step at the expand's settle or the collapse's start, across the fit edge (17.0s)
+  ✓   2 [webkit] › tests-visual/release-10-1-5.spec.ts:1777:5 › n1 a fitting vertical dock's seats do not step at the expand's settle or the collapse's start, across the fit edge (16.4s)
+  ✓   3 [webkit] › tests-visual/release-10-1-5.spec.ts:1878:5 › critique 9, coarse phone › p1 a dock its host resizes mid-expand holds every seat at the settle (horizontal clamp, vertical yield band) (16.5s)
+  ✓   4 [webkit] › tests-visual/release-10-1-5.spec.ts:1878:5 › p1 a dock its host resizes mid-expand holds every seat at the settle (horizontal clamp, vertical yield band) (16.3s)
+  ✘   5 [webkit] › tests-visual/release-10-1-5.spec.ts:1924:5 › critique 10, coarse phone › p2 a 1-2 px host change across the fit edge mid-expand holds every seat at the settle (4.8s)
+  ✘   6 [webkit] › tests-visual/release-10-1-5.spec.ts:1924:5 › p2 a 1-2 px host change across the fit edge mid-expand holds every seat at the settle (5.1s)
+  ✘   7 [webkit] › tests-visual/release-10-1-5.spec.ts:2028:5 › q1 O-186 at 1440: a fit-content static dock under hover on every control keeps one rest corner, half its cross extent, no percentage (13.2s)
+  ✓   8 [webkit] › tests-visual/release-10-1-5.spec.ts:2058:5 › q2 O-187 at 1440: a nested .dock-run group keeps each hovered control's whole ink (4.0s)
+  ✘   9 [webkit] › tests-visual/release-10-1-5.spec.ts:2090:5 › q3 O-187 at 1440: the plate has exactly one scroll timeline in scope, the visible run's (1.2s)
+  ✘  10 [webkit] › tests-visual/release-10-1-5.spec.ts:2028:5 › q1 O-186 at 390: a fit-content static dock under hover on every control keeps one rest corner, half its cross extent, no percentage (9.8s)
+  ✓  11 [webkit] › tests-visual/release-10-1-5.spec.ts:2058:5 › q2 O-187 at 390: a nested .dock-run group keeps each hovered control's whole ink (3.0s)
+  ✘  12 [webkit] › tests-visual/release-10-1-5.spec.ts:2090:5 › q3 O-187 at 390: the plate has exactly one scroll timeline in scope, the visible run's (1.4s)
+  ✘  13 [webkit] › tests-visual/release-10-1-5.spec.ts:2109:5 › r1 Q2 at 1440: a nested group holding the current seat paints every seat clear of the others, and the run's flag is its layout (3.2s)
+  ✘  14 [webkit] › tests-visual/release-10-1-5.spec.ts:2109:5 › fix 10, coarse phone › r1 Q2 at 390: a nested group holding the current seat paints every seat clear of the others, and the run's flag is its layout (3.1s)
+  ✘  15 [webkit] › tests-visual/release-10-1-5.spec.ts:2222:5 › s1 O-205 at 1440: no collapsed dock has a scrolling run, and a hidden wider face adds nothing to a fitting run (6.6s)
+  ✘  16 [webkit] › tests-visual/release-10-1-5.spec.ts:2331:5 › s2 O-201 at 1440: at every cap through the fit edge the first and end seats keep their whole ring, and a run that hides nothing rests round (45.7s)
+  ✘  17 [webkit] › tests-visual/release-10-1-5.spec.ts:2222:5 › fix 11, coarse phone › s1 O-205 at 390: no collapsed dock has a scrolling run, and a hidden wider face adds nothing to a fitting run (5.8s)
+  ✘  18 [webkit] › tests-visual/release-10-1-5.spec.ts:2331:5 › fix 11, coarse phone › s2 O-201 at 390: at every cap through the fit edge the first and end seats keep their whole ring, and a run that hides nothing rests round (45.6s)
+  ✘  19 [webkit] › tests-visual/release-10-1-5.spec.ts:2371:5 › fix 12, desktop › t1 O-201 vertical: through the fit edge the end seats keep their whole ring, bounded in the yield band (46.9s)
+  ✘  20 [webkit] › tests-visual/release-10-1-5.spec.ts:2371:5 › fix 12, coarse phone › t1 O-201 vertical: through the fit edge the end seats keep their whole ring, bounded in the yield band (46.4s)
+  ✘  21 [webkit] › tests-visual/release-10-1-5.spec.ts:2426:1 › s3 O-207 G3 a disclosure trigger's keyboard ring is the house outline, whatever it composes (3.7s)
+  ✘  22 [webkit] › tests-visual/release-10-1-5.spec.ts:2444:1 › s4 a host padding change across the fit edge mid-expand holds every seat at the settle (vertical) (2.8s)
+  ✓  23 [webkit] › tests-visual/release-10-1-5.spec.ts:2492:5 › fix 13, coarse phone › u1 a collapsing vertical run that does not fit keeps its scroll on the first morph frame (46.2s)
+
+
+  1) [webkit] › tests-visual/release-10-1-5.spec.ts:1924:5 › critique 10, coarse phone › p2 a 1-2 px host change across the fit edge mid-expand holds every seat at the settle 
+
+    Error: fit edges found (E NaN, Ev NaN)
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      1960 |         await page.waitForTimeout(1300);
+      1961 |         const Ev = await sweep(true, 400, 280);
+    > 1962 |         expect(Number.isFinite(E) && Number.isFinite(Ev), `fit edges found (E ${E}, Ev ${Ev})`).toBe(true);
+           |                                                                                                 ^
+      1963 |         const cells: [string, string, number, number][] = [
+      1964 |             ...([[E, E - 1], [E, E - 2], [E - 1, E + 1], [E - 2, E]] as const).map(
+      1965 |                 ([from, to]) => [`h ${from}->${to}`, H, to, from] as [string, string, number, number],
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-10-1-5.spec.ts:1962:97
+
+    Error Context: tests-visual/test-results/release-10-1-5-critique-10-44e23-ds-every-seat-at-the-settle-webkit/error-context.md
+
+  2) [webkit] › tests-visual/release-10-1-5.spec.ts:1924:5 › p2 a 1-2 px host change across the fit edge mid-expand holds every seat at the settle 
+
+    Error: fit edges found (E NaN, Ev NaN)
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      1960 |         await page.waitForTimeout(1300);
+      1961 |         const Ev = await sweep(true, 400, 280);
+    > 1962 |         expect(Number.isFinite(E) && Number.isFinite(Ev), `fit edges found (E ${E}, Ev ${Ev})`).toBe(true);
+           |                                                                                                 ^
+      1963 |         const cells: [string, string, number, number][] = [
+      1964 |             ...([[E, E - 1], [E, E - 2], [E - 1, E + 1], [E - 2, E]] as const).map(
+      1965 |                 ([from, to]) => [`h ${from}->${to}`, H, to, from] as [string, string, number, number],
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-10-1-5.spec.ts:1962:97
+
+    Error Context: tests-visual/test-results/release-10-1-5-p2-a-1-2-px-60fdf-ds-every-seat-at-the-settle-webkit/error-context.md
+
+  3) [webkit] › tests-visual/release-10-1-5.spec.ts:2028:5 › q1 O-186 at 1440: a fit-content static dock under hover on every control keeps one rest corner, half its cross extent, no percentage 
+
+    Error: reads whose corner is not one length of half the cross extent, or whose run scrolls
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -   1
+    + Received  + 314
+
+    - Array []
+    + Array [
+    +   Object {
+    +     "cell": "1440 nest=false rest",
+    +     "cw": 583,
+    +     "half": 28,
+    +     "radii": Array [
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +     ],
+    +     "sw": 583,
+    +   },
+    +   Object {
+    +     "cell": "1440 nest=false hover S1 +150 ms",
+    +     "cw": 583,
+    +     "half": 28,
+    +     "radii": Array [
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +     ],
+    +     "sw": 583,
+    +   },
+    +   Object {
+    +     "cell": "1440 nest=false hover S1 +700 ms",
+    +     "cw": 583,
+    +     "half": 28,
+    +     "radii": Array [
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +     ],
+    +     "sw": 583,
+    +   },
+    +   Object {
+    +     "cell": "1440 nest=false hover S2 +150 ms",
+    +     "cw": 583,
+    +     "half": 28,
+    +     "radii": Array [
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +     ],
+    +     "sw": 583,
+    +   },
+    +   Object {
+    +     "cell": "1440 nest=false hover S2 +700 ms",
+    +     "cw": 583,
+    +     "half": 28,
+    +     "radii": Array [
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +     ],
+    +     "sw": 583,
+    +   },
+    +   Object {
+    +     "cell": "1440 nest=false hover S3 +150 ms",
+    +     "cw": 583,
+    +     "half": 28,
+    +     "radii": Array [
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +     ],
+    +     "sw": 583,
+    +   },
+    +   Object {
+    +     "cell": "1440 nest=false hover S3 +700 ms",
+    +     "cw": 583,
+    +     "half": 28,
+    +     "radii": Array [
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +     ],
+    +     "sw": 583,
+    +   },
+    +   Object {
+    +     "cell": "1440 nest=false hover S4 +150 ms",
+    +     "cw": 583,
+    +     "half": 28,
+    +     "radii": Array [
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +     ],
+    +     "sw": 583,
+    +   },
+    +   Object {
+    +     "cell": "1440 nest=false hover S4 +700 ms",
+    +     "cw": 583,
+    +     "half": 28,
+    +     "radii": Array [
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +     ],
+    +     "sw": 583,
+    +   },
+    +   Object {
+    +     "cell": "1440 nest=false hover S5 +150 ms",
+    +     "cw": 583,
+    +     "half": 28,
+    +     "radii": Array [
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +     ],
+    +     "sw": 583,
+    +   },
+    +   Object {
+    +     "cell": "1440 nest=false hover S5 +700 ms",
+    +     "cw": 583,
+    +     "half": 28,
+    +     "radii": Array [
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +     ],
+    +     "sw": 583,
+    +   },
+    +   Object {
+    +     "cell": "1440 nest=false hover S6 +150 ms",
+    +     "cw": 583,
+    +     "half": 28,
+    +     "radii": Array [
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +     ],
+    +     "sw": 583,
+    +   },
+    +   Object {
+    +     "cell": "1440 nest=false hover S6 +700 ms",
+    +     "cw": 583,
+    +     "half": 28,
+    +     "radii": Array [
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +     ],
+    +     "sw": 583,
+    +   },
+    +   Object {
+    +     "cell": "1440 nest=true rest",
+    +     "cw": 545,
+    +     "half": 28,
+    +     "radii": Array [
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +     ],
+    +     "sw": 545,
+    +   },
+    +   Object {
+    +     "cell": "1440 nest=true hover S1 +150 ms",
+    +     "cw": 545,
+    +     "half": 28,
+    +     "radii": Array [
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +     ],
+    +     "sw": 545,
+    +   },
+    +   Object {
+    +     "cell": "1440 nest=true hover S1 +700 ms",
+    +     "cw": 545,
+    +     "half": 28,
+    +     "radii": Array [
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +     ],
+    +     "sw": 545,
+    +   },
+    +   Object {
+    +     "cell": "1440 nest=true hover S2 +150 ms",
+    +     "cw": 545,
+    +     "half": 28,
+    +     "radii": Array [
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +     ],
+    +     "sw": 545,
+    +   },
+    +   Object {
+    +     "cell": "1440 nest=true hover S2 +700 ms",
+    +     "cw": 545,
+    +     "half": 28,
+    +     "radii": Array [
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +     ],
+    +     "sw": 545,
+    +   },
+    +   Object {
+    +     "cell": "1440 nest=true hover S3 +150 ms",
+    +     "cw": 545,
+    +     "half": 28,
+    +     "radii": Array [
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +     ],
+    +     "sw": 545,
+    +   },
+    +   Object {
+    +     "cell": "1440 nest=true hover S3 +700 ms",
+    +     "cw": 545,
+    +     "half": 28,
+    +     "radii": Array [
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +     ],
+    +     "sw": 545,
+    +   },
+    +   Object {
+    +     "cell": "1440 nest=true hover S4 +150 ms",
+    +     "cw": 545,
+    +     "half": 28,
+    +     "radii": Array [
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +     ],
+    +     "sw": 545,
+    +   },
+    +   Object {
+    +     "cell": "1440 nest=true hover S4 +700 ms",
+    +     "cw": 545,
+    +     "half": 28,
+    +     "radii": Array [
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +     ],
+    +     "sw": 545,
+    +   },
+    +   Object {
+    +     "cell": "1440 nest=true hover S5 +150 ms",
+    +     "cw": 545,
+    +     "half": 28,
+    +     "radii": Array [
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +     ],
+    +     "sw": 545,
+    +   },
+    +   Object {
+    +     "cell": "1440 nest=true hover S5 +700 ms",
+    +     "cw": 545,
+    +     "half": 28,
+    +     "radii": Array [
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +     ],
+    +     "sw": 545,
+    +   },
+    +   Object {
+    +     "cell": "1440 nest=true hover S6 +150 ms",
+    +     "cw": 545,
+    +     "half": 28,
+    +     "radii": Array [
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +     ],
+    +     "sw": 545,
+    +   },
+    +   Object {
+    +     "cell": "1440 nest=true hover S6 +700 ms",
+    +     "cw": 545,
+    +     "half": 28,
+    +     "radii": Array [
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +     ],
+    +     "sw": 545,
+    +   },
+    + ]
+
+      2053 |             }
+      2054 |         }
+    > 2055 |         expect(bad, "reads whose corner is not one length of half the cross extent, or whose run scrolls").toEqual([]);
+           |                                                                                                            ^
+      2056 |     });
+      2057 |
+      2058 |     test(`q2 O-187 at ${width}: a nested .dock-run group keeps each hovered control's whole ink`, async ({ page }) => {
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-10-1-5.spec.ts:2055:108
+
+    Error Context: tests-visual/test-results/release-10-1-5-q1-O-186-at-1b596--cross-extent-no-percentage-webkit/error-context.md
+
+  4) [webkit] › tests-visual/release-10-1-5.spec.ts:2090:5 › q3 O-187 at 1440: the plate has exactly one scroll timeline in scope, the visible run's 
+
+    Error: one --dock-run timeline (["dock-layer dock-layer--full dock-run is-active","dock-run"])
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 2
+
+      2096 |                 .map((el) => el.className),
+      2097 |         );
+    > 2098 |         expect(named.length, `one --dock-run timeline (${JSON.stringify(named)})`).toBe(1);
+           |                                                                                    ^
+      2099 |         expect(named[0], "it is the dock's active run").toMatch(/\bdock-layer--full\b.*\bis-active\b|\bis-active\b.*\bdock-layer--full\b/);
+      2100 |     });
+      2101 | }
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-10-1-5.spec.ts:2098:84
+
+    Error Context: tests-visual/test-results/release-10-1-5-q3-O-187-at-98b27--in-scope-the-visible-run-s-webkit/error-context.md
+
+  5) [webkit] › tests-visual/release-10-1-5.spec.ts:2028:5 › q1 O-186 at 390: a fit-content static dock under hover on every control keeps one rest corner, half its cross extent, no percentage 
+
+    Error: reads whose corner is not one length of half the cross extent, or whose run scrolls
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -   1
+    + Received  + 218
+
+    - Array []
+    + Array [
+    +   Object {
+    +     "cell": "390 nest=false rest",
+    +     "cw": 328,
+    +     "half": 28,
+    +     "radii": Array [
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +     ],
+    +     "sw": 328,
+    +   },
+    +   Object {
+    +     "cell": "390 nest=false hover S1 +150 ms",
+    +     "cw": 328,
+    +     "half": 28,
+    +     "radii": Array [
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +     ],
+    +     "sw": 328,
+    +   },
+    +   Object {
+    +     "cell": "390 nest=false hover S1 +700 ms",
+    +     "cw": 328,
+    +     "half": 28,
+    +     "radii": Array [
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +     ],
+    +     "sw": 328,
+    +   },
+    +   Object {
+    +     "cell": "390 nest=false hover S2 +150 ms",
+    +     "cw": 328,
+    +     "half": 28,
+    +     "radii": Array [
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +     ],
+    +     "sw": 328,
+    +   },
+    +   Object {
+    +     "cell": "390 nest=false hover S2 +700 ms",
+    +     "cw": 328,
+    +     "half": 28,
+    +     "radii": Array [
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +     ],
+    +     "sw": 328,
+    +   },
+    +   Object {
+    +     "cell": "390 nest=false hover S3 +150 ms",
+    +     "cw": 328,
+    +     "half": 28,
+    +     "radii": Array [
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +     ],
+    +     "sw": 328,
+    +   },
+    +   Object {
+    +     "cell": "390 nest=false hover S3 +700 ms",
+    +     "cw": 328,
+    +     "half": 28,
+    +     "radii": Array [
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +     ],
+    +     "sw": 328,
+    +   },
+    +   Object {
+    +     "cell": "390 nest=false hover S4 +150 ms",
+    +     "cw": 328,
+    +     "half": 28,
+    +     "radii": Array [
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +     ],
+    +     "sw": 328,
+    +   },
+    +   Object {
+    +     "cell": "390 nest=false hover S4 +700 ms",
+    +     "cw": 328,
+    +     "half": 28,
+    +     "radii": Array [
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +     ],
+    +     "sw": 328,
+    +   },
+    +   Object {
+    +     "cell": "390 nest=true rest",
+    +     "cw": 264,
+    +     "half": 28,
+    +     "radii": Array [
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +     ],
+    +     "sw": 264,
+    +   },
+    +   Object {
+    +     "cell": "390 nest=true hover S1 +150 ms",
+    +     "cw": 264,
+    +     "half": 28,
+    +     "radii": Array [
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +     ],
+    +     "sw": 264,
+    +   },
+    +   Object {
+    +     "cell": "390 nest=true hover S1 +700 ms",
+    +     "cw": 264,
+    +     "half": 28,
+    +     "radii": Array [
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +     ],
+    +     "sw": 264,
+    +   },
+    +   Object {
+    +     "cell": "390 nest=true hover S2 +150 ms",
+    +     "cw": 264,
+    +     "half": 28,
+    +     "radii": Array [
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +     ],
+    +     "sw": 264,
+    +   },
+    +   Object {
+    +     "cell": "390 nest=true hover S2 +700 ms",
+    +     "cw": 264,
+    +     "half": 28,
+    +     "radii": Array [
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +     ],
+    +     "sw": 264,
+    +   },
+    +   Object {
+    +     "cell": "390 nest=true hover S3 +150 ms",
+    +     "cw": 264,
+    +     "half": 28,
+    +     "radii": Array [
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +     ],
+    +     "sw": 264,
+    +   },
+    +   Object {
+    +     "cell": "390 nest=true hover S3 +700 ms",
+    +     "cw": 264,
+    +     "half": 28,
+    +     "radii": Array [
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +     ],
+    +     "sw": 264,
+    +   },
+    +   Object {
+    +     "cell": "390 nest=true hover S4 +150 ms",
+    +     "cw": 264,
+    +     "half": 28,
+    +     "radii": Array [
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +     ],
+    +     "sw": 264,
+    +   },
+    +   Object {
+    +     "cell": "390 nest=true hover S4 +700 ms",
+    +     "cw": 264,
+    +     "half": 28,
+    +     "radii": Array [
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +     ],
+    +     "sw": 264,
+    +   },
+    + ]
+
+      2053 |             }
+      2054 |         }
+    > 2055 |         expect(bad, "reads whose corner is not one length of half the cross extent, or whose run scrolls").toEqual([]);
+           |                                                                                                            ^
+      2056 |     });
+      2057 |
+      2058 |     test(`q2 O-187 at ${width}: a nested .dock-run group keeps each hovered control's whole ink`, async ({ page }) => {
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-10-1-5.spec.ts:2055:108
+
+    Error Context: tests-visual/test-results/release-10-1-5-q1-O-186-at-ccb39--cross-extent-no-percentage-webkit/error-context.md
+
+  6) [webkit] › tests-visual/release-10-1-5.spec.ts:2090:5 › q3 O-187 at 390: the plate has exactly one scroll timeline in scope, the visible run's 
+
+    Error: one --dock-run timeline (["dock-layer dock-layer--full dock-run is-active","dock-run"])
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 2
+
+      2096 |                 .map((el) => el.className),
+      2097 |         );
+    > 2098 |         expect(named.length, `one --dock-run timeline (${JSON.stringify(named)})`).toBe(1);
+           |                                                                                    ^
+      2099 |         expect(named[0], "it is the dock's active run").toMatch(/\bdock-layer--full\b.*\bis-active\b|\bis-active\b.*\bdock-layer--full\b/);
+      2100 |     });
+      2101 | }
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-10-1-5.spec.ts:2098:84
+
+    Error Context: tests-visual/test-results/release-10-1-5-q3-O-187-at-b5c0a--in-scope-the-visible-run-s-webkit/error-context.md
+
+  7) [webkit] › tests-visual/release-10-1-5.spec.ts:2109:5 › r1 Q2 at 1440: a nested group holding the current seat paints every seat clear of the others, and the run's flag is its layout 
+
+    Error: seats that paint over each other or whose centre misses them, or a run that scrolls or whose flag is not its layout
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 36
+
+    - Array []
+    + Array [
+    +   Object {
+    +     "cell": "1440 current=1",
+    +     "misses": Array [
+    +       "S2 hits dock-icon-button glass-specular-track glass-capsule-hover",
+    +       "S3 hits ",
+    +     ],
+    +     "overlaps": Array [
+    +       "S2/S4 40.0",
+    +       "S2/S5 40.0",
+    +     ],
+    +   },
+    +   Object {
+    +     "cell": "1440 current=1",
+    +     "cw": 232,
+    +     "flag": false,
+    +     "sw": 232,
+    +   },
+    +   Object {
+    +     "cell": "1440 current=2",
+    +     "misses": Array [
+    +       "S2 hits dock-layer dock-layer--full dock-run is-active",
+    +       "S3 hits ",
+    +     ],
+    +     "overlaps": Array [
+    +       "S2/S4 40.0",
+    +       "S2/S5 40.0",
+    +     ],
+    +   },
+    +   Object {
+    +     "cell": "1440 current=2",
+    +     "cw": 232,
+    +     "flag": false,
+    +     "sw": 232,
+    +   },
+    + ]
+
+      2144 |             if (read.sw > read.cw) bad.push({ cell, scrolls: [read.sw, read.cw] });
+      2145 |         }
+    > 2146 |         expect(bad, "seats that paint over each other or whose centre misses them, or a run that scrolls or whose flag is not its layout").toEqual([]);
+           |                                                                                                                                            ^
+      2147 |     });
+      2148 | }
+      2149 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-10-1-5.spec.ts:2146:140
+
+    Error Context: tests-visual/test-results/release-10-1-5-r1-Q2-at-14-d07d8-he-run-s-flag-is-its-layout-webkit/error-context.md
+
+  8) [webkit] › tests-visual/release-10-1-5.spec.ts:2109:5 › fix 10, coarse phone › r1 Q2 at 390: a nested group holding the current seat paints every seat clear of the others, and the run's flag is its layout 
+
+    Error: seats that paint over each other or whose centre misses them, or a run that scrolls or whose flag is not its layout
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 34
+
+    - Array []
+    + Array [
+    +   Object {
+    +     "cell": "390 current=1",
+    +     "misses": Array [
+    +       "S2 hits dock-icon-button glass-specular-track glass-capsule-hover",
+    +     ],
+    +     "overlaps": Array [
+    +       "S2/S3 44.0",
+    +       "S2/S4 28.2",
+    +     ],
+    +   },
+    +   Object {
+    +     "cell": "390 current=1",
+    +     "cw": 252,
+    +     "flag": false,
+    +     "sw": 252,
+    +   },
+    +   Object {
+    +     "cell": "390 current=2",
+    +     "misses": Array [
+    +       "S2 hits dock-layer dock-layer--full dock-run is-active",
+    +     ],
+    +     "overlaps": Array [
+    +       "S2/S3 44.0",
+    +       "S2/S4 19.4",
+    +     ],
+    +   },
+    +   Object {
+    +     "cell": "390 current=2",
+    +     "cw": 252,
+    +     "flag": false,
+    +     "sw": 252,
+    +   },
+    + ]
+
+      2144 |             if (read.sw > read.cw) bad.push({ cell, scrolls: [read.sw, read.cw] });
+      2145 |         }
+    > 2146 |         expect(bad, "seats that paint over each other or whose centre misses them, or a run that scrolls or whose flag is not its layout").toEqual([]);
+           |                                                                                                                                            ^
+      2147 |     });
+      2148 | }
+      2149 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-10-1-5.spec.ts:2146:140
+
+    Error Context: tests-visual/test-results/release-10-1-5-fix-10-coar-544e7-he-run-s-flag-is-its-layout-webkit/error-context.md
+
+  9) [webkit] › tests-visual/release-10-1-5.spec.ts:2222:5 › s1 O-205 at 1440: no collapsed dock has a scrolling run, and a hidden wider face adds nothing to a fitting run 
+
+    Error: a collapsed dock whose plate is not round or whose run scrolls, or a fitting run that scrolls a hidden face
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 87
+
+    - Array []
+    + Array [
+    +   Object {
+    +     "cell": "collapsed layers=1",
+    +     "collapsed": true,
+    +     "fits": false,
+    +     "half": 28,
+    +     "radii": Array [
+    +       "16px",
+    +       "4px",
+    +       "4px",
+    +       "16px",
+    +     ],
+    +     "range": Array [
+    +       Object {
+    +         "overflow": "auto hidden",
+    +         "sl": 0,
+    +         "st": 0,
+    +         "timeline": "--dock-run",
+    +       },
+    +     ],
+    +     "round": false,
+    +     "runs": Array [
+    +       Object {
+    +         "active": false,
+    +         "ch": 64,
+    +         "cw": 102,
+    +         "sh": 64,
+    +         "sl": 0,
+    +         "sw": 812,
+    +       },
+    +     ],
+    +   },
+    +   Object {
+    +     "cell": "collapsed layers=0",
+    +     "collapsed": true,
+    +     "fits": false,
+    +     "half": 28,
+    +     "radii": Array [
+    +       "16px",
+    +       "4px",
+    +       "4px",
+    +       "16px",
+    +     ],
+    +     "range": Array [
+    +       Object {
+    +         "overflow": "auto hidden",
+    +         "sl": 24,
+    +         "st": 0,
+    +         "timeline": "--dock-run",
+    +       },
+    +     ],
+    +     "round": false,
+    +     "runs": Array [
+    +       Object {
+    +         "active": false,
+    +         "ch": 64,
+    +         "cw": 102,
+    +         "sh": 64,
+    +         "sl": 0,
+    +         "sw": 280,
+    +       },
+    +     ],
+    +   },
+    +   Object {
+    +     "cell": "open, narrow face",
+    +     "collapsed": false,
+    +     "fits": false,
+    +     "half": 28,
+    +     "radii": Array [
+    +       "16px",
+    +       "4px",
+    +       "4px",
+    +       "16px",
+    +     ],
+    +     "round": false,
+    +     "runs": Array [
+    +       Object {
+    +         "active": true,
+    +         "ch": 48,
+    +         "cw": 136,
+    +         "sh": 48,
+    +         "sl": 0,
+    +         "sw": 812,
+    +       },
+    +     ],
+    +   },
+    + ]
+
+      2257 |         const wheeled = await runRead(page);
+      2258 |         if (wheeled.runs.find((r) => r.active)!.sl !== 0) bad.push({ cell: "open, narrow face, after a wheel", ...wheeled });
+    > 2259 |         expect(bad, "a collapsed dock whose plate is not round or whose run scrolls, or a fitting run that scrolls a hidden face").toEqual([]);
+           |                                                                                                                                    ^
+      2260 |     });
+      2261 | }
+      2262 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-10-1-5.spec.ts:2259:132
+
+    Error Context: tests-visual/test-results/release-10-1-5-s1-O-205-at-56316-ds-nothing-to-a-fitting-run-webkit/error-context.md
+
+  10) [webkit] › tests-visual/release-10-1-5.spec.ts:2331:5 › s2 O-201 at 1440: at every cap through the fit edge the first and end seats keep their whole ring, and a run that hides nothing rests round 
+
+    Error: a cap that cuts a focused seat's ring, a flag that is not the span, or a run that hides nothing and does not rest round
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -   1
+    + Received  + 612
+
+    - Array []
+    + Array [
+    +   Object {
+    +     "cap": 277,
+    +     "fits": false,
+    +     "law": Array [
+    +       "flag is not the span",
+    +     ],
+    +     "over": 0,
+    +     "port": 252,
+    +     "radii": Array [
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +     ],
+    +     "range": 0,
+    +     "ring": 0,
+    +     "round": false,
+    +     "span": 252,
+    +   },
+    +   Object {
+    +     "cap": 277,
+    +     "cuts": Array [
+    +       "dock-layer 4.23",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "home",
+    +     "worst": 4.23,
+    +   },
+    +   Object {
+    +     "cap": 277,
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cap": 276,
+    +     "fits": false,
+    +     "law": Array [
+    +       "flag is not the span",
+    +     ],
+    +     "over": 0,
+    +     "port": 252,
+    +     "radii": Array [
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +     ],
+    +     "range": 0,
+    +     "ring": 0,
+    +     "round": false,
+    +     "span": 252,
+    +   },
+    +   Object {
+    +     "cap": 276,
+    +     "cuts": Array [
+    +       "dock-layer 4.23",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "home",
+    +     "worst": 4.23,
+    +   },
+    +   Object {
+    +     "cap": 276,
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cap": 275,
+    +     "cuts": Array [
+    +       "dock-layer 5.23",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "home",
+    +     "worst": 5.23,
+    +   },
+    +   Object {
+    +     "cap": 275,
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cap": 274,
+    +     "cuts": Array [
+    +       "dock-layer 6.23",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "home",
+    +     "worst": 6.23,
+    +   },
+    +   Object {
+    +     "cap": 274,
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cap": 273,
+    +     "cuts": Array [
+    +       "dock-layer 7.23",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "home",
+    +     "worst": 7.23,
+    +   },
+    +   Object {
+    +     "cap": 273,
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cap": 272,
+    +     "cuts": Array [
+    +       "dock-layer 8.23",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "home",
+    +     "worst": 8.23,
+    +   },
+    +   Object {
+    +     "cap": 272,
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cap": 271,
+    +     "cuts": Array [
+    +       "dock-layer 9.23",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "home",
+    +     "worst": 9.23,
+    +   },
+    +   Object {
+    +     "cap": 271,
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cap": 270,
+    +     "cuts": Array [
+    +       "dock-layer 10.23",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "home",
+    +     "worst": 10.23,
+    +   },
+    +   Object {
+    +     "cap": 270,
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cap": 269,
+    +     "cuts": Array [
+    +       "dock-layer 11.23",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "home",
+    +     "worst": 11.23,
+    +   },
+    +   Object {
+    +     "cap": 269,
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cap": 268,
+    +     "cuts": Array [
+    +       "dock-layer 12.23",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "home",
+    +     "worst": 12.23,
+    +   },
+    +   Object {
+    +     "cap": 268,
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cap": 267,
+    +     "cuts": Array [
+    +       "dock-layer 13.23",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "home",
+    +     "worst": 13.23,
+    +   },
+    +   Object {
+    +     "cap": 267,
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cap": 266,
+    +     "cuts": Array [
+    +       "dock-layer 14.23",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "home",
+    +     "worst": 14.23,
+    +   },
+    +   Object {
+    +     "cap": 266,
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cap": 265,
+    +     "cuts": Array [
+    +       "dock-layer 15.23",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "home",
+    +     "worst": 15.23,
+    +   },
+    +   Object {
+    +     "cap": 265,
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cap": 264,
+    +     "cuts": Array [
+    +       "dock-layer 16.23",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "home",
+    +     "worst": 16.23,
+    +   },
+    +   Object {
+    +     "cap": 264,
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cap": 263,
+    +     "cuts": Array [
+    +       "dock-layer 17.23",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "home",
+    +     "worst": 17.23,
+    +   },
+    +   Object {
+    +     "cap": 263,
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cap": 262,
+    +     "cuts": Array [
+    +       "dock-layer 18.23",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "home",
+    +     "worst": 18.23,
+    +   },
+    +   Object {
+    +     "cap": 262,
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cap": 261,
+    +     "cuts": Array [
+    +       "dock-layer 19.23",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "home",
+    +     "worst": 19.23,
+    +   },
+    +   Object {
+    +     "cap": 261,
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cap": 260,
+    +     "cuts": Array [
+    +       "dock-layer 20.23",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "home",
+    +     "worst": 20.23,
+    +   },
+    +   Object {
+    +     "cap": 260,
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cap": 259,
+    +     "cuts": Array [
+    +       "dock-layer 21.23",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "home",
+    +     "worst": 21.23,
+    +   },
+    +   Object {
+    +     "cap": 259,
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cap": 258,
+    +     "cuts": Array [
+    +       "dock-layer 22.23",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "home",
+    +     "worst": 22.23,
+    +   },
+    +   Object {
+    +     "cap": 258,
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cap": 257,
+    +     "cuts": Array [
+    +       "dock-layer 23.23",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "home",
+    +     "worst": 23.23,
+    +   },
+    +   Object {
+    +     "cap": 257,
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cap": 253,
+    +     "cuts": Array [
+    +       "dock-layer 27.23",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "home",
+    +     "worst": 27.23,
+    +   },
+    +   Object {
+    +     "cap": 253,
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cap": 249,
+    +     "cuts": Array [
+    +       "dock-layer 31.23",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "home",
+    +     "worst": 31.23,
+    +   },
+    +   Object {
+    +     "cap": 249,
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cap": 245,
+    +     "cuts": Array [
+    +       "dock-layer 35.23",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "home",
+    +     "worst": 35.23,
+    +   },
+    +   Object {
+    +     "cap": 245,
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cap": 241,
+    +     "cuts": Array [
+    +       "dock-layer 39.23",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "home",
+    +     "worst": 39.23,
+    +   },
+    +   Object {
+    +     "cap": 241,
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cap": 237,
+    +     "cuts": Array [
+    +       "dock-layer 43.23",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "home",
+    +     "worst": 43.23,
+    +   },
+    +   Object {
+    +     "cap": 237,
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "worst": 4,
+    +   },
+    + ]
+
+      2356 |         }
+      2357 |         expect(unfit, `the sweep under ${natural} crosses the fit edge`).toBeGreaterThan(2);
+    > 2358 |         expect(bad, "a cap that cuts a focused seat's ring, a flag that is not the span, or a run that hides nothing and does not rest round").toEqual([]);
+           |                                                                                                                                                ^
+      2359 |     });
+      2360 | }
+      2361 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-10-1-5.spec.ts:2358:144
+
+    Error Context: tests-visual/test-results/release-10-1-5-s2-O-201-at-f97e1-t-hides-nothing-rests-round-webkit/error-context.md
+
+  11) [webkit] › tests-visual/release-10-1-5.spec.ts:2222:5 › fix 11, coarse phone › s1 O-205 at 390: no collapsed dock has a scrolling run, and a hidden wider face adds nothing to a fitting run 
+
+    Error: a collapsed dock whose plate is not round or whose run scrolls, or a fitting run that scrolls a hidden face
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 87
+
+    - Array []
+    + Array [
+    +   Object {
+    +     "cell": "collapsed layers=1",
+    +     "collapsed": true,
+    +     "fits": false,
+    +     "half": 30,
+    +     "radii": Array [
+    +       "16px",
+    +       "4px",
+    +       "4px",
+    +       "16px",
+    +     ],
+    +     "range": Array [
+    +       Object {
+    +         "overflow": "auto hidden",
+    +         "sl": 0,
+    +         "st": 0,
+    +         "timeline": "--dock-run",
+    +       },
+    +     ],
+    +     "round": false,
+    +     "runs": Array [
+    +       Object {
+    +         "active": false,
+    +         "ch": 68,
+    +         "cw": 110,
+    +         "sh": 68,
+    +         "sl": 0,
+    +         "sw": 740,
+    +       },
+    +     ],
+    +   },
+    +   Object {
+    +     "cell": "collapsed layers=0",
+    +     "collapsed": true,
+    +     "fits": false,
+    +     "half": 30,
+    +     "radii": Array [
+    +       "16px",
+    +       "4px",
+    +       "4px",
+    +       "16px",
+    +     ],
+    +     "range": Array [
+    +       Object {
+    +         "overflow": "auto hidden",
+    +         "sl": 60,
+    +         "st": 0,
+    +         "timeline": "--dock-run",
+    +       },
+    +     ],
+    +     "round": false,
+    +     "runs": Array [
+    +       Object {
+    +         "active": false,
+    +         "ch": 68,
+    +         "cw": 110,
+    +         "sh": 68,
+    +         "sl": 0,
+    +         "sw": 304,
+    +       },
+    +     ],
+    +   },
+    +   Object {
+    +     "cell": "open, narrow face",
+    +     "collapsed": false,
+    +     "fits": false,
+    +     "half": 30,
+    +     "radii": Array [
+    +       "16px",
+    +       "4px",
+    +       "4px",
+    +       "16px",
+    +     ],
+    +     "round": false,
+    +     "runs": Array [
+    +       Object {
+    +         "active": true,
+    +         "ch": 52,
+    +         "cw": 148,
+    +         "sh": 52,
+    +         "sl": 0,
+    +         "sw": 740,
+    +       },
+    +     ],
+    +   },
+    + ]
+
+      2257 |         const wheeled = await runRead(page);
+      2258 |         if (wheeled.runs.find((r) => r.active)!.sl !== 0) bad.push({ cell: "open, narrow face, after a wheel", ...wheeled });
+    > 2259 |         expect(bad, "a collapsed dock whose plate is not round or whose run scrolls, or a fitting run that scrolls a hidden face").toEqual([]);
+           |                                                                                                                                    ^
+      2260 |     });
+      2261 | }
+      2262 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-10-1-5.spec.ts:2259:132
+
+    Error Context: tests-visual/test-results/release-10-1-5-fix-11-coar-cc038-ds-nothing-to-a-fitting-run-webkit/error-context.md
+
+  12) [webkit] › tests-visual/release-10-1-5.spec.ts:2331:5 › fix 11, coarse phone › s2 O-201 at 390: at every cap through the fit edge the first and end seats keep their whole ring, and a run that hides nothing rests round 
+
+    Error: a cap that cuts a focused seat's ring, a flag that is not the span, or a run that hides nothing and does not rest round
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -   1
+    + Received  + 593
+
+    - Array []
+    + Array [
+    +   Object {
+    +     "cap": 281,
+    +     "fits": false,
+    +     "law": Array [
+    +       "flag is not the span",
+    +     ],
+    +     "over": 0,
+    +     "port": 257,
+    +     "radii": Array [
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +     ],
+    +     "range": 0,
+    +     "ring": 0,
+    +     "round": false,
+    +     "span": 257,
+    +   },
+    +   Object {
+    +     "cap": 281,
+    +     "cuts": Array [
+    +       "dock-layer 3.63",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "home",
+    +     "worst": 3.63,
+    +   },
+    +   Object {
+    +     "cap": 281,
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cap": 280,
+    +     "cuts": Array [
+    +       "dock-layer 4.63",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "home",
+    +     "worst": 4.63,
+    +   },
+    +   Object {
+    +     "cap": 280,
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cap": 279,
+    +     "cuts": Array [
+    +       "dock-layer 5.63",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "home",
+    +     "worst": 5.63,
+    +   },
+    +   Object {
+    +     "cap": 279,
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cap": 278,
+    +     "cuts": Array [
+    +       "dock-layer 6.63",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "home",
+    +     "worst": 6.63,
+    +   },
+    +   Object {
+    +     "cap": 278,
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cap": 277,
+    +     "cuts": Array [
+    +       "dock-layer 7.63",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "home",
+    +     "worst": 7.63,
+    +   },
+    +   Object {
+    +     "cap": 277,
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cap": 276,
+    +     "cuts": Array [
+    +       "dock-layer 8.63",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "home",
+    +     "worst": 8.63,
+    +   },
+    +   Object {
+    +     "cap": 276,
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cap": 275,
+    +     "cuts": Array [
+    +       "dock-layer 9.63",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "home",
+    +     "worst": 9.63,
+    +   },
+    +   Object {
+    +     "cap": 275,
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cap": 274,
+    +     "cuts": Array [
+    +       "dock-layer 10.63",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "home",
+    +     "worst": 10.63,
+    +   },
+    +   Object {
+    +     "cap": 274,
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cap": 273,
+    +     "cuts": Array [
+    +       "dock-layer 11.63",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "home",
+    +     "worst": 11.63,
+    +   },
+    +   Object {
+    +     "cap": 273,
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cap": 272,
+    +     "cuts": Array [
+    +       "dock-layer 12.63",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "home",
+    +     "worst": 12.63,
+    +   },
+    +   Object {
+    +     "cap": 272,
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cap": 271,
+    +     "cuts": Array [
+    +       "dock-layer 13.63",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "home",
+    +     "worst": 13.63,
+    +   },
+    +   Object {
+    +     "cap": 271,
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cap": 270,
+    +     "cuts": Array [
+    +       "dock-layer 14.63",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "home",
+    +     "worst": 14.63,
+    +   },
+    +   Object {
+    +     "cap": 270,
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cap": 269,
+    +     "cuts": Array [
+    +       "dock-layer 15.63",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "home",
+    +     "worst": 15.63,
+    +   },
+    +   Object {
+    +     "cap": 269,
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cap": 268,
+    +     "cuts": Array [
+    +       "dock-layer 16.63",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "home",
+    +     "worst": 16.63,
+    +   },
+    +   Object {
+    +     "cap": 268,
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cap": 267,
+    +     "cuts": Array [
+    +       "dock-layer 17.63",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "home",
+    +     "worst": 17.63,
+    +   },
+    +   Object {
+    +     "cap": 267,
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cap": 266,
+    +     "cuts": Array [
+    +       "dock-layer 18.63",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "home",
+    +     "worst": 18.63,
+    +   },
+    +   Object {
+    +     "cap": 266,
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cap": 265,
+    +     "cuts": Array [
+    +       "dock-layer 19.63",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "home",
+    +     "worst": 19.63,
+    +   },
+    +   Object {
+    +     "cap": 265,
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cap": 264,
+    +     "cuts": Array [
+    +       "dock-layer 20.63",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "home",
+    +     "worst": 20.63,
+    +   },
+    +   Object {
+    +     "cap": 264,
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cap": 263,
+    +     "cuts": Array [
+    +       "dock-layer 21.63",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "home",
+    +     "worst": 21.63,
+    +   },
+    +   Object {
+    +     "cap": 263,
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cap": 262,
+    +     "cuts": Array [
+    +       "dock-layer 22.63",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "home",
+    +     "worst": 22.63,
+    +   },
+    +   Object {
+    +     "cap": 262,
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cap": 261,
+    +     "cuts": Array [
+    +       "dock-layer 23.63",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "home",
+    +     "worst": 23.63,
+    +   },
+    +   Object {
+    +     "cap": 261,
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cap": 257,
+    +     "cuts": Array [
+    +       "dock-layer 27.63",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "home",
+    +     "worst": 27.63,
+    +   },
+    +   Object {
+    +     "cap": 257,
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cap": 253,
+    +     "cuts": Array [
+    +       "dock-layer 31.63",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "home",
+    +     "worst": 31.63,
+    +   },
+    +   Object {
+    +     "cap": 253,
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cap": 249,
+    +     "cuts": Array [
+    +       "dock-layer 35.63",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "home",
+    +     "worst": 35.63,
+    +   },
+    +   Object {
+    +     "cap": 249,
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cap": 245,
+    +     "cuts": Array [
+    +       "dock-layer 39.63",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "home",
+    +     "worst": 39.63,
+    +   },
+    +   Object {
+    +     "cap": 245,
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cap": 241,
+    +     "cuts": Array [
+    +       "dock-layer 43.63",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "home",
+    +     "worst": 43.63,
+    +   },
+    +   Object {
+    +     "cap": 241,
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "worst": 4,
+    +   },
+    + ]
+
+      2356 |         }
+      2357 |         expect(unfit, `the sweep under ${natural} crosses the fit edge`).toBeGreaterThan(2);
+    > 2358 |         expect(bad, "a cap that cuts a focused seat's ring, a flag that is not the span, or a run that hides nothing and does not rest round").toEqual([]);
+           |                                                                                                                                                ^
+      2359 |     });
+      2360 | }
+      2361 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-10-1-5.spec.ts:2358:144
+
+    Error Context: tests-visual/test-results/release-10-1-5-fix-11-coar-b6824-t-hides-nothing-rests-round-webkit/error-context.md
+
+  13) [webkit] › tests-visual/release-10-1-5.spec.ts:2371:5 › fix 12, desktop › t1 O-201 vertical: through the fit edge the end seats keep their whole ring, bounded in the yield band 
+
+    Error: a stage that cuts a focused end seat's ring past the yield band's bound, or a run that breaks the fit law
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -   1
+    + Received  + 886
+
+    - Array []
+    + Array [
+    +   Object {
+    +     "fits": false,
+    +     "law": Array [
+    +       "flag is not the span",
+    +     ],
+    +     "over": 0,
+    +     "port": 312,
+    +     "radii": Array [
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +     ],
+    +     "range": 0,
+    +     "ring": 0,
+    +     "round": false,
+    +     "span": 280,
+    +     "stage": 360,
+    +   },
+    +   Object {
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "stage": 360,
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "fits": false,
+    +     "law": Array [
+    +       "flag is not the span",
+    +     ],
+    +     "over": 0,
+    +     "port": 310,
+    +     "radii": Array [
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +     ],
+    +     "range": 0,
+    +     "ring": 0,
+    +     "round": false,
+    +     "span": 280,
+    +     "stage": 358,
+    +   },
+    +   Object {
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "stage": 358,
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "fits": false,
+    +     "law": Array [
+    +       "flag is not the span",
+    +     ],
+    +     "over": 0,
+    +     "port": 308,
+    +     "radii": Array [
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +     ],
+    +     "range": 0,
+    +     "ring": 0,
+    +     "round": false,
+    +     "span": 280,
+    +     "stage": 356,
+    +   },
+    +   Object {
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "stage": 356,
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "fits": false,
+    +     "law": Array [
+    +       "flag is not the span",
+    +     ],
+    +     "over": 0,
+    +     "port": 306,
+    +     "radii": Array [
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +     ],
+    +     "range": 0,
+    +     "ring": 0,
+    +     "round": false,
+    +     "span": 280,
+    +     "stage": 354,
+    +   },
+    +   Object {
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "stage": 354,
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "fits": false,
+    +     "law": Array [
+    +       "flag is not the span",
+    +     ],
+    +     "over": 0,
+    +     "port": 304,
+    +     "radii": Array [
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +     ],
+    +     "range": 0,
+    +     "ring": 0,
+    +     "round": false,
+    +     "span": 280,
+    +     "stage": 352,
+    +   },
+    +   Object {
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "stage": 352,
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "fits": false,
+    +     "law": Array [
+    +       "flag is not the span",
+    +     ],
+    +     "over": 0,
+    +     "port": 302,
+    +     "radii": Array [
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +     ],
+    +     "range": 0,
+    +     "ring": 0,
+    +     "round": false,
+    +     "span": 280,
+    +     "stage": 350,
+    +   },
+    +   Object {
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "stage": 350,
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "fits": false,
+    +     "law": Array [
+    +       "flag is not the span",
+    +     ],
+    +     "over": 0,
+    +     "port": 300,
+    +     "radii": Array [
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +     ],
+    +     "range": 0,
+    +     "ring": 0,
+    +     "round": false,
+    +     "span": 280,
+    +     "stage": 348,
+    +   },
+    +   Object {
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "stage": 348,
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "fits": false,
+    +     "law": Array [
+    +       "flag is not the span",
+    +     ],
+    +     "over": 0,
+    +     "port": 298,
+    +     "radii": Array [
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +     ],
+    +     "range": 0,
+    +     "ring": 0,
+    +     "round": false,
+    +     "span": 280,
+    +     "stage": 346,
+    +   },
+    +   Object {
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "stage": 346,
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "fits": false,
+    +     "law": Array [
+    +       "flag is not the span",
+    +     ],
+    +     "over": 0,
+    +     "port": 296,
+    +     "radii": Array [
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +     ],
+    +     "range": 0,
+    +     "ring": 0,
+    +     "round": false,
+    +     "span": 280,
+    +     "stage": 344,
+    +   },
+    +   Object {
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "stage": 344,
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "fits": false,
+    +     "law": Array [
+    +       "flag is not the span",
+    +     ],
+    +     "over": 0,
+    +     "port": 294,
+    +     "radii": Array [
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +     ],
+    +     "range": 0,
+    +     "ring": 0,
+    +     "round": false,
+    +     "span": 280,
+    +     "stage": 342,
+    +   },
+    +   Object {
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "stage": 342,
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "fits": false,
+    +     "law": Array [
+    +       "flag is not the span",
+    +     ],
+    +     "over": 0,
+    +     "port": 292,
+    +     "radii": Array [
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +     ],
+    +     "range": 0,
+    +     "ring": 0,
+    +     "round": false,
+    +     "span": 280,
+    +     "stage": 340,
+    +   },
+    +   Object {
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "stage": 340,
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "fits": false,
+    +     "law": Array [
+    +       "flag is not the span",
+    +     ],
+    +     "over": 0,
+    +     "port": 290,
+    +     "radii": Array [
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +     ],
+    +     "range": 0,
+    +     "ring": 0,
+    +     "round": false,
+    +     "span": 280,
+    +     "stage": 338,
+    +   },
+    +   Object {
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "stage": 338,
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "fits": false,
+    +     "law": Array [
+    +       "flag is not the span",
+    +     ],
+    +     "over": 0,
+    +     "port": 288,
+    +     "radii": Array [
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +     ],
+    +     "range": 0,
+    +     "ring": 0,
+    +     "round": false,
+    +     "span": 280,
+    +     "stage": 336,
+    +   },
+    +   Object {
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "stage": 336,
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "fits": false,
+    +     "law": Array [
+    +       "flag is not the span",
+    +     ],
+    +     "over": 0,
+    +     "port": 286,
+    +     "radii": Array [
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +     ],
+    +     "range": 0,
+    +     "ring": 0,
+    +     "round": false,
+    +     "span": 280,
+    +     "stage": 334,
+    +   },
+    +   Object {
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "stage": 334,
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "fits": false,
+    +     "law": Array [
+    +       "flag is not the span",
+    +     ],
+    +     "over": 0,
+    +     "port": 284,
+    +     "radii": Array [
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +     ],
+    +     "range": 0,
+    +     "ring": 0,
+    +     "round": false,
+    +     "span": 280,
+    +     "stage": 332,
+    +   },
+    +   Object {
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "stage": 332,
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "fits": false,
+    +     "law": Array [
+    +       "flag is not the span",
+    +     ],
+    +     "over": 0,
+    +     "port": 282,
+    +     "radii": Array [
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +     ],
+    +     "range": 0,
+    +     "ring": 0,
+    +     "round": false,
+    +     "span": 280,
+    +     "stage": 330,
+    +   },
+    +   Object {
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "stage": 330,
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cuts": Array [
+    +       "dock-layer 2.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S6",
+    +     "stage": 330,
+    +     "worst": 2,
+    +   },
+    +   Object {
+    +     "fits": false,
+    +     "law": Array [
+    +       "flag is not the span",
+    +     ],
+    +     "over": 0,
+    +     "port": 280,
+    +     "radii": Array [
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +     ],
+    +     "range": 0,
+    +     "ring": 0,
+    +     "round": false,
+    +     "span": 280,
+    +     "stage": 328,
+    +   },
+    +   Object {
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "stage": 328,
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S6",
+    +     "stage": 328,
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "stage": 326,
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S6",
+    +     "stage": 326,
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "stage": 324,
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S6",
+    +     "stage": 324,
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "stage": 322,
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S6",
+    +     "stage": 322,
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "stage": 320,
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S6",
+    +     "stage": 320,
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "stage": 318,
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S6",
+    +     "stage": 318,
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "stage": 316,
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S6",
+    +     "stage": 316,
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "stage": 314,
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S6",
+    +     "stage": 314,
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "stage": 312,
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S6",
+    +     "stage": 312,
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "stage": 310,
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S6",
+    +     "stage": 310,
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "stage": 308,
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S6",
+    +     "stage": 308,
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "stage": 306,
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S6",
+    +     "stage": 306,
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "stage": 304,
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S6",
+    +     "stage": 304,
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "stage": 302,
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S6",
+    +     "stage": 302,
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "stage": 300,
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S6",
+    +     "stage": 300,
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "stage": 298,
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S6",
+    +     "stage": 298,
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "stage": 296,
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S6",
+    +     "stage": 296,
+    +     "worst": 4,
+    +   },
+    + ]
+
+      2401 |         }
+      2402 |         expect(unfit, "the sweep crosses the fit edge").toBeGreaterThan(2);
+    > 2403 |         expect(bad, "a stage that cuts a focused end seat's ring past the yield band's bound, or a run that breaks the fit law").toEqual([]);
+           |                                                                                                                                  ^
+      2404 |     });
+      2405 | }
+      2406 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-10-1-5.spec.ts:2403:130
+
+    Error Context: tests-visual/test-results/release-10-1-5-fix-12-desk-b45be-g-bounded-in-the-yield-band-webkit/error-context.md
+
+  14) [webkit] › tests-visual/release-10-1-5.spec.ts:2371:5 › fix 12, coarse phone › t1 O-201 vertical: through the fit edge the end seats keep their whole ring, bounded in the yield band 
+
+    Error: a stage that cuts a focused end seat's ring past the yield band's bound, or a run that breaks the fit law
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -   1
+    + Received  + 790
+
+    - Array []
+    + Array [
+    +   Object {
+    +     "fits": false,
+    +     "law": Array [
+    +       "flag is not the span",
+    +     ],
+    +     "over": 0,
+    +     "port": 312,
+    +     "radii": Array [
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +     ],
+    +     "range": 0,
+    +     "ring": 0,
+    +     "round": false,
+    +     "span": 304,
+    +     "stage": 360,
+    +   },
+    +   Object {
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "stage": 360,
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "fits": false,
+    +     "law": Array [
+    +       "flag is not the span",
+    +     ],
+    +     "over": 0,
+    +     "port": 310,
+    +     "radii": Array [
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +     ],
+    +     "range": 0,
+    +     "ring": 0,
+    +     "round": false,
+    +     "span": 304,
+    +     "stage": 358,
+    +   },
+    +   Object {
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "stage": 358,
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "fits": false,
+    +     "law": Array [
+    +       "flag is not the span",
+    +     ],
+    +     "over": 0,
+    +     "port": 308,
+    +     "radii": Array [
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +     ],
+    +     "range": 0,
+    +     "ring": 0,
+    +     "round": false,
+    +     "span": 304,
+    +     "stage": 356,
+    +   },
+    +   Object {
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "stage": 356,
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "fits": false,
+    +     "law": Array [
+    +       "flag is not the span",
+    +     ],
+    +     "over": 0,
+    +     "port": 306,
+    +     "radii": Array [
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +     ],
+    +     "range": 0,
+    +     "ring": 0,
+    +     "round": false,
+    +     "span": 304,
+    +     "stage": 354,
+    +   },
+    +   Object {
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "stage": 354,
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cuts": Array [
+    +       "dock-layer 2.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S6",
+    +     "stage": 354,
+    +     "worst": 2,
+    +   },
+    +   Object {
+    +     "fits": false,
+    +     "law": Array [
+    +       "flag is not the span",
+    +     ],
+    +     "over": 0,
+    +     "port": 304,
+    +     "radii": Array [
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +       "16px",
+    +     ],
+    +     "range": 0,
+    +     "ring": 0,
+    +     "round": false,
+    +     "span": 304,
+    +     "stage": 352,
+    +   },
+    +   Object {
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "stage": 352,
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S6",
+    +     "stage": 352,
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "stage": 350,
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S6",
+    +     "stage": 350,
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "stage": 348,
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S6",
+    +     "stage": 348,
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "stage": 346,
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S6",
+    +     "stage": 346,
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "stage": 344,
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S6",
+    +     "stage": 344,
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "stage": 342,
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S6",
+    +     "stage": 342,
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "stage": 340,
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S6",
+    +     "stage": 340,
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "stage": 338,
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S6",
+    +     "stage": 338,
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "stage": 336,
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S6",
+    +     "stage": 336,
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "stage": 334,
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S6",
+    +     "stage": 334,
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "stage": 332,
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S6",
+    +     "stage": 332,
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "stage": 330,
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S6",
+    +     "stage": 330,
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "stage": 328,
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S6",
+    +     "stage": 328,
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "stage": 326,
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S6",
+    +     "stage": 326,
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "stage": 324,
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S6",
+    +     "stage": 324,
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "stage": 322,
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S6",
+    +     "stage": 322,
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "stage": 320,
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S6",
+    +     "stage": 320,
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "stage": 318,
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S6",
+    +     "stage": 318,
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "stage": 316,
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S6",
+    +     "stage": 316,
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "stage": 314,
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S6",
+    +     "stage": 314,
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "stage": 312,
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S6",
+    +     "stage": 312,
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "stage": 310,
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S6",
+    +     "stage": 310,
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "stage": 308,
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S6",
+    +     "stage": 308,
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "stage": 306,
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S6",
+    +     "stage": 306,
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "stage": 304,
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S6",
+    +     "stage": 304,
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "stage": 302,
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S6",
+    +     "stage": 302,
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "stage": 300,
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S6",
+    +     "stage": 300,
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "stage": 298,
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S6",
+    +     "stage": 298,
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "stage": 296,
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "S6",
+    +     "stage": 296,
+    +     "worst": 4,
+    +   },
+    + ]
+
+      2401 |         }
+      2402 |         expect(unfit, "the sweep crosses the fit edge").toBeGreaterThan(2);
+    > 2403 |         expect(bad, "a stage that cuts a focused end seat's ring past the yield band's bound, or a run that breaks the fit law").toEqual([]);
+           |                                                                                                                                  ^
+      2404 |     });
+      2405 | }
+      2406 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-10-1-5.spec.ts:2403:130
+
+    Error Context: tests-visual/test-results/release-10-1-5-fix-12-coar-d77da-g-bounded-in-the-yield-band-webkit/error-context.md
+
+  15) [webkit] › tests-visual/release-10-1-5.spec.ts:2426:1 › s3 O-207 G3 a disclosure trigger's keyboard ring is the house outline, whatever it composes 
+
+    Error: a disclosure trigger whose focus ring is not the house outline (2px, the perimeter ink)
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 50
+
+    - Array []
+    + Array [
+    +   Object {
+    +     "alpha": 1,
+    +     "dark": 0,
+    +     "fv": true,
+    +     "style": "none",
+    +     "width": "3px",
+    +     "witness": "card-trigger",
+    +   },
+    +   Object {
+    +     "alpha": 1,
+    +     "dark": 0,
+    +     "fv": true,
+    +     "style": "none",
+    +     "width": "3px",
+    +     "witness": "plain-trigger",
+    +   },
+    +   Object {
+    +     "alpha": 1,
+    +     "dark": 0,
+    +     "fv": true,
+    +     "style": "none",
+    +     "width": "3px",
+    +     "witness": "accordion",
+    +   },
+    +   Object {
+    +     "alpha": 1,
+    +     "dark": 1,
+    +     "fv": true,
+    +     "style": "none",
+    +     "width": "3px",
+    +     "witness": "card-trigger",
+    +   },
+    +   Object {
+    +     "alpha": 1,
+    +     "dark": 1,
+    +     "fv": true,
+    +     "style": "none",
+    +     "width": "3px",
+    +     "witness": "plain-trigger",
+    +   },
+    +   Object {
+    +     "alpha": 1,
+    +     "dark": 1,
+    +     "fv": true,
+    +     "style": "none",
+    +     "width": "3px",
+    +     "witness": "accordion",
+    +   },
+    + ]
+
+      2438 |         }
+      2439 |     }
+    > 2440 |     expect(bad, "a disclosure trigger whose focus ring is not the house outline (2px, the perimeter ink)").toEqual([]);
+           |                                                                                                            ^
+      2441 | });
+      2442 |
+      2443 | /** s4 (R4): a host that moves only its padding across the fit edge mid-expand moves the endpoint where the morph carries it. */
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-10-1-5.spec.ts:2440:108
+
+    Error Context: tests-visual/test-results/release-10-1-5-s3-O-207-G3-fce13-utline-whatever-it-composes-webkit/error-context.md
+
+  16) [webkit] › tests-visual/release-10-1-5.spec.ts:2444:1 › s4 a host padding change across the fit edge mid-expand holds every seat at the settle (vertical) 
+
+    Error: the fit edge is found (NaN)
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      2464 |         return edge;
+      2465 |     });
+    > 2466 |     expect(Number.isFinite(Ev), `the fit edge is found (${Ev})`).toBe(true);
+           |                                                                  ^
+      2467 |     const bad: unknown[] = [];
+      2468 |     for (const [stageH, pad] of [[Ev, 16.5], [Ev, 17], [Ev - 1, 15], [Ev - 2, 15]] as const)
+      2469 |         for (const at of [110, 300]) {
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-10-1-5.spec.ts:2466:66
+
+    Error Context: tests-visual/test-results/release-10-1-5-s4-a-host-p-92728-eat-at-the-settle-vertical--webkit/error-context.md
+
+  16 failed
+    [webkit] › tests-visual/release-10-1-5.spec.ts:1924:5 › critique 10, coarse phone › p2 a 1-2 px host change across the fit edge mid-expand holds every seat at the settle 
+    [webkit] › tests-visual/release-10-1-5.spec.ts:1924:5 › p2 a 1-2 px host change across the fit edge mid-expand holds every seat at the settle 
+    [webkit] › tests-visual/release-10-1-5.spec.ts:2028:5 › q1 O-186 at 1440: a fit-content static dock under hover on every control keeps one rest corner, half its cross extent, no percentage 
+    [webkit] › tests-visual/release-10-1-5.spec.ts:2090:5 › q3 O-187 at 1440: the plate has exactly one scroll timeline in scope, the visible run's 
+    [webkit] › tests-visual/release-10-1-5.spec.ts:2028:5 › q1 O-186 at 390: a fit-content static dock under hover on every control keeps one rest corner, half its cross extent, no percentage 
+    [webkit] › tests-visual/release-10-1-5.spec.ts:2090:5 › q3 O-187 at 390: the plate has exactly one scroll timeline in scope, the visible run's 
+    [webkit] › tests-visual/release-10-1-5.spec.ts:2109:5 › r1 Q2 at 1440: a nested group holding the current seat paints every seat clear of the others, and the run's flag is its layout 
+    [webkit] › tests-visual/release-10-1-5.spec.ts:2109:5 › fix 10, coarse phone › r1 Q2 at 390: a nested group holding the current seat paints every seat clear of the others, and the run's flag is its layout 
+    [webkit] › tests-visual/release-10-1-5.spec.ts:2222:5 › s1 O-205 at 1440: no collapsed dock has a scrolling run, and a hidden wider face adds nothing to a fitting run 
+    [webkit] › tests-visual/release-10-1-5.spec.ts:2331:5 › s2 O-201 at 1440: at every cap through the fit edge the first and end seats keep their whole ring, and a run that hides nothing rests round 
+    [webkit] › tests-visual/release-10-1-5.spec.ts:2222:5 › fix 11, coarse phone › s1 O-205 at 390: no collapsed dock has a scrolling run, and a hidden wider face adds nothing to a fitting run 
+    [webkit] › tests-visual/release-10-1-5.spec.ts:2331:5 › fix 11, coarse phone › s2 O-201 at 390: at every cap through the fit edge the first and end seats keep their whole ring, and a run that hides nothing rests round 
+    [webkit] › tests-visual/release-10-1-5.spec.ts:2371:5 › fix 12, desktop › t1 O-201 vertical: through the fit edge the end seats keep their whole ring, bounded in the yield band 
+    [webkit] › tests-visual/release-10-1-5.spec.ts:2371:5 › fix 12, coarse phone › t1 O-201 vertical: through the fit edge the end seats keep their whole ring, bounded in the yield band 
+    [webkit] › tests-visual/release-10-1-5.spec.ts:2426:1 › s3 O-207 G3 a disclosure trigger's keyboard ring is the house outline, whatever it composes 
+    [webkit] › tests-visual/release-10-1-5.spec.ts:2444:1 › s4 a host padding change across the fit edge mid-expand holds every seat at the settle (vertical) 
+  7 passed (6.3m)

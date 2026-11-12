@@ -152,8 +152,11 @@ describe("W-FIELD — the forms-seam lane battery", () => {
         expect(register).not.toMatch(/--field-control-font/);
         expect(register).not.toMatch(/--control-text/);
 
-        // ONE type rung: the bounded clamp, never multiplied past its own ceiling.
-        expect(register).toMatch(/font-size:\s*var\(--type-small\)/);
+        // ONE type rung: the bounded clamp, never multiplied past its own ceiling,
+        // floored at the field's no-zoom line (16px on a coarse pointer, 0 on fine).
+        expect(register).toMatch(
+            /font-size:\s*max\(var\(--type-small\),\s*var\(--field-text-floor\)\)/,
+        );
 
         // NumberField no longer hard-pins a rung of its own.
         expect(nf).not.toMatch(/--field-control-height:\s*var\(--control-h-/);

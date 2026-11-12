@@ -1,0 +1,723 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "tests-visual/webkit-2287.config.ts",
+      "--project=webkit",
+      "release-10-1-5.spec.ts",
+      "--workers=1"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/webkit-2287.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-headless-new",
+        "name": "chromium-headless-new",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "coarse-touch",
+        "name": "coarse-touch",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "safari-webgl.spec.ts",
+          "aurora-swraster.spec.ts",
+          "release-10-1-1.spec.ts",
+          "release-10-1-2.spec.ts",
+          "release-10-1-3.spec.ts",
+          "release-10-1-4.spec.ts",
+          "release-10-1-5.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/docs/release-10.1.5/logs/g1-g5-v1014-webkit.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5231",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/",
+      "url": "http://localhost:5231",
+      "reuseExistingServer": true,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "release-10-1-5.spec.ts",
+      "file": "release-10-1-5.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "g1 rest dock at 1280: one corner = half its height, nothing to scroll, pointer off and on the trailing seat",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 2146,
+                  "error": {
+                    "message": "Error: 1280 hover on the trailing seat: run scrollWidth = clientWidth ({\"sw\":258,\"cw\":256,\"sh\":48,\"ch\":48,\"active\":true})\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m256\u001b[39m\nReceived: \u001b[31m258\u001b[39m",
+                    "stack": "Error: 1280 hover on the trailing seat: run scrollWidth = clientWidth ({\"sw\":258,\"cw\":256,\"sh\":48,\"ch\":48,\"active\":true})\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m256\u001b[39m\nReceived: \u001b[31m258\u001b[39m\n    at expectNoReach (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:92:87)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:129:9",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                      "column": 87,
+                      "line": 92
+                    },
+                    "snippet": "  90 |     const run = read.runs.find((r) => r.active)!;\n  91 |     expect(run, `${cell}: an active run`).toBeTruthy();\n> 92 |     expect(run.sw, `${cell}: run scrollWidth = clientWidth (${JSON.stringify(run)})`).toBe(\n     |                                                                                       ^\n  93 |         run.cw,\n  94 |     );\n  95 |     expect(run.sh, `${cell}: run scrollHeight = clientHeight (${JSON.stringify(run)})`).toBe("
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                        "column": 87,
+                        "line": 92
+                      },
+                      "message": "Error: 1280 hover on the trailing seat: run scrollWidth = clientWidth ({\"sw\":258,\"cw\":256,\"sh\":48,\"ch\":48,\"active\":true})\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m256\u001b[39m\nReceived: \u001b[31m258\u001b[39m\n\n  90 |     const run = read.runs.find((r) => r.active)!;\n  91 |     expect(run, `${cell}: an active run`).toBeTruthy();\n> 92 |     expect(run.sw, `${cell}: run scrollWidth = clientWidth (${JSON.stringify(run)})`).toBe(\n     |                                                                                       ^\n  93 |         run.cw,\n  94 |     );\n  95 |     expect(run.sh, `${cell}: run scrollHeight = clientHeight (${JSON.stringify(run)})`).toBe(\n    at expectNoReach (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:92:87)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:129:9"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-04T13:06:31.728Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/test-results/release-10-1-5-g1-rest-doc-dccb9-ff-and-on-the-trailing-seat-webkit/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                    "column": 87,
+                    "line": 92
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-808b628252789fdc1aeb",
+          "file": "release-10-1-5.spec.ts",
+          "line": 114,
+          "column": 5
+        },
+        {
+          "title": "g1 an overflowing run at scroll 0: the leading cap rests at half the block extent, a length; the trailing cap is cut",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 1502,
+                  "error": {
+                    "message": "Error: leading corner 50% is one length ({\"cls\":\"glass-dock horizontal shape-pill expanded pinned fit-content always-expanded\",\"w\":390,\"h\":56,\"radii\":[\"50%\",\"calc(0% + 16px)\",\"calc(0% + 16px)\",\"50%\"],\"runs\":[{\"sw\":683,\"cw\":366,\"sh\":48,\"ch\":48,\"active\":true}]})\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoMatch\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected pattern: \u001b[32m/^[\\d.]+px$/\u001b[39m\nReceived string:  \u001b[31m\"50%\"\u001b[39m",
+                    "stack": "Error: leading corner 50% is one length ({\"cls\":\"glass-dock horizontal shape-pill expanded pinned fit-content always-expanded\",\"w\":390,\"h\":56,\"radii\":[\"50%\",\"calc(0% + 16px)\",\"calc(0% + 16px)\",\"50%\"],\"runs\":[{\"sw\":683,\"cw\":366,\"sh\":48,\"ch\":48,\"active\":true}]})\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoMatch\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected pattern: \u001b[32m/^[\\d.]+px$/\u001b[39m\nReceived string:  \u001b[31m\"50%\"\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:201:82",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                      "column": 82,
+                      "line": 201
+                    },
+                    "snippet": "  199 |     const [tl, tr, br, bl] = read.radii;\n  200 |     for (const r of [tl, bl]) {\n> 201 |         expect(r, `leading corner ${r} is one length (${JSON.stringify(read)})`).toMatch(/^[\\d.]+px$/);\n      |                                                                                  ^\n  202 |         expect(Math.abs(Number.parseFloat(r) - read.h / 2), `leading ${r} = h/2`).toBeLessThanOrEqual(0.5);\n  203 |     }\n  204 |     for (const r of [tr, br]) {"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                        "column": 82,
+                        "line": 201
+                      },
+                      "message": "Error: leading corner 50% is one length ({\"cls\":\"glass-dock horizontal shape-pill expanded pinned fit-content always-expanded\",\"w\":390,\"h\":56,\"radii\":[\"50%\",\"calc(0% + 16px)\",\"calc(0% + 16px)\",\"50%\"],\"runs\":[{\"sw\":683,\"cw\":366,\"sh\":48,\"ch\":48,\"active\":true}]})\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoMatch\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected pattern: \u001b[32m/^[\\d.]+px$/\u001b[39m\nReceived string:  \u001b[31m\"50%\"\u001b[39m\n\n  199 |     const [tl, tr, br, bl] = read.radii;\n  200 |     for (const r of [tl, bl]) {\n> 201 |         expect(r, `leading corner ${r} is one length (${JSON.stringify(read)})`).toMatch(/^[\\d.]+px$/);\n      |                                                                                  ^\n  202 |         expect(Math.abs(Number.parseFloat(r) - read.h / 2), `leading ${r} = h/2`).toBeLessThanOrEqual(0.5);\n  203 |     }\n  204 |     for (const r of [tr, br]) {\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:201:82"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-04T13:06:34.261Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/test-results/release-10-1-5-g1-an-overf-f9764-gth-the-trailing-cap-is-cut-webkit/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                    "column": 82,
+                    "line": 201
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-7eb0e24f62356e7a98c2",
+          "file": "release-10-1-5.spec.ts",
+          "line": 189,
+          "column": 1
+        },
+        {
+          "title": "g2 collapsed: the plate is a circle, half its extent on both axes",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 1633,
+                  "error": {
+                    "message": "Error: collapsed: corner 50% is one length ({\"cls\":\"glass-dock horizontal shape-pill collapsed fit-content\",\"w\":56,\"h\":56,\"radii\":[\"50%\",\"calc(0% + 16px)\",\"calc(0% + 16px)\",\"50%\"],\"runs\":[{\"sw\":256,\"cw\":56,\"sh\":64,\"ch\":64,\"active\":false}]})\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoMatch\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected pattern: \u001b[32m/^-?[\\d.]+px$/\u001b[39m\nReceived string:  \u001b[31m\"50%\"\u001b[39m",
+                    "stack": "Error: collapsed: corner 50% is one length ({\"cls\":\"glass-dock horizontal shape-pill collapsed fit-content\",\"w\":56,\"h\":56,\"radii\":[\"50%\",\"calc(0% + 16px)\",\"calc(0% + 16px)\",\"50%\"],\"runs\":[{\"sw\":256,\"cw\":56,\"sh\":64,\"ch\":64,\"active\":false}]})\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoMatch\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected pattern: \u001b[32m/^-?[\\d.]+px$/\u001b[39m\nReceived string:  \u001b[31m\"50%\"\u001b[39m\n    at expectRestCorner (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:78:83)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:220:5",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                      "column": 83,
+                      "line": 78
+                    },
+                    "snippet": "  76 |     const half = read.h / 2;\n  77 |     for (const r of read.radii) {\n> 78 |         expect(r, `${cell}: corner ${r} is one length (${JSON.stringify(read)})`).toMatch(\n     |                                                                                   ^\n  79 |             /^-?[\\d.]+px$/,\n  80 |         );\n  81 |         expect("
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                        "column": 83,
+                        "line": 78
+                      },
+                      "message": "Error: collapsed: corner 50% is one length ({\"cls\":\"glass-dock horizontal shape-pill collapsed fit-content\",\"w\":56,\"h\":56,\"radii\":[\"50%\",\"calc(0% + 16px)\",\"calc(0% + 16px)\",\"50%\"],\"runs\":[{\"sw\":256,\"cw\":56,\"sh\":64,\"ch\":64,\"active\":false}]})\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoMatch\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected pattern: \u001b[32m/^-?[\\d.]+px$/\u001b[39m\nReceived string:  \u001b[31m\"50%\"\u001b[39m\n\n  76 |     const half = read.h / 2;\n  77 |     for (const r of read.radii) {\n> 78 |         expect(r, `${cell}: corner ${r} is one length (${JSON.stringify(read)})`).toMatch(\n     |                                                                                   ^\n  79 |             /^-?[\\d.]+px$/,\n  80 |         );\n  81 |         expect(\n    at expectRestCorner (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:78:83)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:220:5"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-04T13:06:36.119Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/test-results/release-10-1-5-g2-collapse-09b64-alf-its-extent-on-both-axes-webkit/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                    "column": 83,
+                    "line": 78
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-883492fef8fa06d875fa",
+          "file": "release-10-1-5.spec.ts",
+          "line": 211,
+          "column": 1
+        },
+        {
+          "title": "g2 expanded (collapsible), each layer and input mode hold g1",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 6,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 1235,
+                  "error": {
+                    "message": "Error: expanded: corner 9999px = half the block extent 28 ({\"cls\":\"glass-dock horizontal shape-pill expanded fit-content\",\"w\":280.203125,\"h\":56,\"radii\":[\"9999px\",\"9999px\",\"9999px\",\"9999px\"],\"runs\":[{\"sw\":256,\"cw\":256,\"sh\":48,\"ch\":48,\"active\":true}]})\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.5\u001b[39m\nReceived:    \u001b[31m9971\u001b[39m",
+                    "stack": "Error: expanded: corner 9999px = half the block extent 28 ({\"cls\":\"glass-dock horizontal shape-pill expanded fit-content\",\"w\":280.203125,\"h\":56,\"radii\":[\"9999px\",\"9999px\",\"9999px\",\"9999px\"],\"runs\":[{\"sw\":256,\"cw\":256,\"sh\":48,\"ch\":48,\"active\":true}]})\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.5\u001b[39m\nReceived:    \u001b[31m9971\u001b[39m\n    at expectRestCorner (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:84:11)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:234:5",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                      "column": 11,
+                      "line": 84
+                    },
+                    "snippet": "  82 |             Math.abs(Number.parseFloat(r) - half),\n  83 |             `${cell}: corner ${r} = half the block extent ${half} (${JSON.stringify(read)})`,\n> 84 |         ).toBeLessThanOrEqual(0.5);\n     |           ^\n  85 |     }\n  86 | }\n  87 |"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                        "column": 11,
+                        "line": 84
+                      },
+                      "message": "Error: expanded: corner 9999px = half the block extent 28 ({\"cls\":\"glass-dock horizontal shape-pill expanded fit-content\",\"w\":280.203125,\"h\":56,\"radii\":[\"9999px\",\"9999px\",\"9999px\",\"9999px\"],\"runs\":[{\"sw\":256,\"cw\":256,\"sh\":48,\"ch\":48,\"active\":true}]})\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.5\u001b[39m\nReceived:    \u001b[31m9971\u001b[39m\n\n  82 |             Math.abs(Number.parseFloat(r) - half),\n  83 |             `${cell}: corner ${r} = half the block extent ${half} (${JSON.stringify(read)})`,\n> 84 |         ).toBeLessThanOrEqual(0.5);\n     |           ^\n  85 |     }\n  86 | }\n  87 |\n    at expectRestCorner (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:84:11)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:234:5"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-04T13:06:38.107Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/test-results/release-10-1-5-g2-expanded-a9b97-ayer-and-input-mode-hold-g1-webkit/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                    "column": 11,
+                    "line": 84
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-344e0bfd3f56461fd112",
+          "file": "release-10-1-5.spec.ts",
+          "line": 229,
+          "column": 1
+        },
+        {
+          "title": "g3 the Slider thumb is visible and one size at min, mid and max, inside the fill",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 7,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 1210,
+                  "error": {
+                    "message": "Error: min ({\"id\":\"min\",\"thumb\":{\"l\":24,\"r\":24,\"t\":12,\"b\":32,\"w\":0,\"h\":20},\"range\":{\"l\":24,\"r\":24,\"t\":12,\"b\":32,\"w\":0,\"h\":20},\"track\":{\"l\":24,\"r\":296,\"t\":12,\"b\":32,\"w\":272,\"h\":20},\"opacity\":0,\"visibility\":\"visible\",\"paint\":\"rgba(0, 0, 0, 0)\"}): thumb has a box\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m4\u001b[39m\nReceived:   \u001b[31m0\u001b[39m",
+                    "stack": "Error: min ({\"id\":\"min\",\"thumb\":{\"l\":24,\"r\":24,\"t\":12,\"b\":32,\"w\":0,\"h\":20},\"range\":{\"l\":24,\"r\":24,\"t\":12,\"b\":32,\"w\":0,\"h\":20},\"track\":{\"l\":24,\"r\":296,\"t\":12,\"b\":32,\"w\":272,\"h\":20},\"opacity\":0,\"visibility\":\"visible\",\"paint\":\"rgba(0, 0, 0, 0)\"}): thumb has a box\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m4\u001b[39m\nReceived:   \u001b[31m0\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:282:57",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                      "column": 57,
+                      "line": 282
+                    },
+                    "snippet": "  280 |     for (const row of rows) {\n  281 |         const cell = `${row.id} (${JSON.stringify(row)})`;\n> 282 |         expect(row.thumb.w, `${cell}: thumb has a box`).toBeGreaterThan(4);\n      |                                                         ^\n  283 |         expect(row.opacity, `${cell}: thumb opaque`).toBe(1);\n  284 |         expect(row.visibility, `${cell}: thumb visible`).toBe(\"visible\");\n  285 |         expect(row.paint, `${cell}: thumb painted`).not.toMatch(/rgba\\(0, 0, 0, 0\\)|transparent/);"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                        "column": 57,
+                        "line": 282
+                      },
+                      "message": "Error: min ({\"id\":\"min\",\"thumb\":{\"l\":24,\"r\":24,\"t\":12,\"b\":32,\"w\":0,\"h\":20},\"range\":{\"l\":24,\"r\":24,\"t\":12,\"b\":32,\"w\":0,\"h\":20},\"track\":{\"l\":24,\"r\":296,\"t\":12,\"b\":32,\"w\":272,\"h\":20},\"opacity\":0,\"visibility\":\"visible\",\"paint\":\"rgba(0, 0, 0, 0)\"}): thumb has a box\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m4\u001b[39m\nReceived:   \u001b[31m0\u001b[39m\n\n  280 |     for (const row of rows) {\n  281 |         const cell = `${row.id} (${JSON.stringify(row)})`;\n> 282 |         expect(row.thumb.w, `${cell}: thumb has a box`).toBeGreaterThan(4);\n      |                                                         ^\n  283 |         expect(row.opacity, `${cell}: thumb opaque`).toBe(1);\n  284 |         expect(row.visibility, `${cell}: thumb visible`).toBe(\"visible\");\n  285 |         expect(row.paint, `${cell}: thumb painted`).not.toMatch(/rgba\\(0, 0, 0, 0\\)|transparent/);\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:282:57"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-04T13:06:39.694Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/test-results/release-10-1-5-g3-the-Slid-64159-mid-and-max-inside-the-fill-webkit/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                    "column": 57,
+                    "line": 282
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-07e2c8167209403ddc0d",
+          "file": "release-10-1-5.spec.ts",
+          "line": 255,
+          "column": 1
+        },
+        {
+          "title": "g5 the DropdownMenuItem icon-to-label gap is the icon-slot token, the dock trigger's own",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 8,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 1220,
+                  "error": {
+                    "message": "Error: the token resolves ({\"token\":0,\"gap\":0})\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0\u001b[39m\nReceived:   \u001b[31m0\u001b[39m",
+                    "stack": "Error: the token resolves ({\"token\":0,\"gap\":0})\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0\u001b[39m\nReceived:   \u001b[31m0\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:316:72",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                      "column": 72,
+                      "line": 316
+                    },
+                    "snippet": "  314 |         return { token, gap: label.left - icon.right };\n  315 |     });\n> 316 |     expect(menu.token, `the token resolves (${JSON.stringify(menu)})`).toBeGreaterThan(0);\n      |                                                                        ^\n  317 |     expect(Math.abs(menu.gap - menu.token), `menu gap = token (${JSON.stringify(menu)})`).toBeLessThanOrEqual(0.5);\n  318 |\n  319 |     await open(page, \"scene=dock\");"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                        "column": 72,
+                        "line": 316
+                      },
+                      "message": "Error: the token resolves ({\"token\":0,\"gap\":0})\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0\u001b[39m\nReceived:   \u001b[31m0\u001b[39m\n\n  314 |         return { token, gap: label.left - icon.right };\n  315 |     });\n> 316 |     expect(menu.token, `the token resolves (${JSON.stringify(menu)})`).toBeGreaterThan(0);\n      |                                                                        ^\n  317 |     expect(Math.abs(menu.gap - menu.token), `menu gap = token (${JSON.stringify(menu)})`).toBeLessThanOrEqual(0.5);\n  318 |\n  319 |     await open(page, \"scene=dock\");\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:316:72"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-04T13:06:41.293Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/test-results/release-10-1-5-g5-the-Drop-0f319-oken-the-dock-trigger-s-own-webkit/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                    "column": 72,
+                    "line": 316
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-2f7e84a0c699469259f9",
+          "file": "release-10-1-5.spec.ts",
+          "line": 302,
+          "column": 1
+        }
+      ],
+      "suites": [
+        {
+          "title": "coarse phone",
+          "file": "release-10-1-5.spec.ts",
+          "line": 141,
+          "column": 6,
+          "specs": [
+            {
+              "title": "g1 rest dock at 390: one corner = half its height, nothing to scroll, pointer off and on the trailing seat",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 2144,
+                      "error": {
+                        "message": "Error: 390 hover on the trailing seat: run scrollWidth = clientWidth ({\"sw\":265,\"cw\":263,\"sh\":52,\"ch\":52,\"active\":true})\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m263\u001b[39m\nReceived: \u001b[31m265\u001b[39m",
+                        "stack": "Error: 390 hover on the trailing seat: run scrollWidth = clientWidth ({\"sw\":265,\"cw\":263,\"sh\":52,\"ch\":52,\"active\":true})\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m263\u001b[39m\nReceived: \u001b[31m265\u001b[39m\n    at expectNoReach (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:92:87)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:129:9",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                          "column": 87,
+                          "line": 92
+                        },
+                        "snippet": "  90 |     const run = read.runs.find((r) => r.active)!;\n  91 |     expect(run, `${cell}: an active run`).toBeTruthy();\n> 92 |     expect(run.sw, `${cell}: run scrollWidth = clientWidth (${JSON.stringify(run)})`).toBe(\n     |                                                                                       ^\n  93 |         run.cw,\n  94 |     );\n  95 |     expect(run.sh, `${cell}: run scrollHeight = clientHeight (${JSON.stringify(run)})`).toBe("
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                            "column": 87,
+                            "line": 92
+                          },
+                          "message": "Error: 390 hover on the trailing seat: run scrollWidth = clientWidth ({\"sw\":265,\"cw\":263,\"sh\":52,\"ch\":52,\"active\":true})\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m263\u001b[39m\nReceived: \u001b[31m265\u001b[39m\n\n  90 |     const run = read.runs.find((r) => r.active)!;\n  91 |     expect(run, `${cell}: an active run`).toBeTruthy();\n> 92 |     expect(run.sw, `${cell}: run scrollWidth = clientWidth (${JSON.stringify(run)})`).toBe(\n     |                                                                                       ^\n  93 |         run.cw,\n  94 |     );\n  95 |     expect(run.sh, `${cell}: run scrollHeight = clientHeight (${JSON.stringify(run)})`).toBe(\n    at expectNoReach (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:92:87)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:129:9"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-04T13:06:25.079Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/test-results/release-10-1-5-coarse-phon-a994e-ff-and-on-the-trailing-seat-webkit/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                        "column": 87,
+                        "line": 92
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "ba3de8f038291be5029b-76eee5367d5987376445",
+              "file": "release-10-1-5.spec.ts",
+              "line": 114,
+              "column": 5
+            },
+            {
+              "title": "g1 rest dock at 844: one corner = half its height, nothing to scroll, pointer off and on the trailing seat",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 2146,
+                      "error": {
+                        "message": "Error: 844 hover on the trailing seat: run scrollWidth = clientWidth ({\"sw\":267,\"cw\":265,\"sh\":52,\"ch\":52,\"active\":true})\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m265\u001b[39m\nReceived: \u001b[31m267\u001b[39m",
+                        "stack": "Error: 844 hover on the trailing seat: run scrollWidth = clientWidth ({\"sw\":267,\"cw\":265,\"sh\":52,\"ch\":52,\"active\":true})\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m265\u001b[39m\nReceived: \u001b[31m267\u001b[39m\n    at expectNoReach (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:92:87)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:129:9",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                          "column": 87,
+                          "line": 92
+                        },
+                        "snippet": "  90 |     const run = read.runs.find((r) => r.active)!;\n  91 |     expect(run, `${cell}: an active run`).toBeTruthy();\n> 92 |     expect(run.sw, `${cell}: run scrollWidth = clientWidth (${JSON.stringify(run)})`).toBe(\n     |                                                                                       ^\n  93 |         run.cw,\n  94 |     );\n  95 |     expect(run.sh, `${cell}: run scrollHeight = clientHeight (${JSON.stringify(run)})`).toBe("
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                            "column": 87,
+                            "line": 92
+                          },
+                          "message": "Error: 844 hover on the trailing seat: run scrollWidth = clientWidth ({\"sw\":267,\"cw\":265,\"sh\":52,\"ch\":52,\"active\":true})\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m265\u001b[39m\nReceived: \u001b[31m267\u001b[39m\n\n  90 |     const run = read.runs.find((r) => r.active)!;\n  91 |     expect(run, `${cell}: an active run`).toBeTruthy();\n> 92 |     expect(run.sw, `${cell}: run scrollWidth = clientWidth (${JSON.stringify(run)})`).toBe(\n     |                                                                                       ^\n  93 |         run.cw,\n  94 |     );\n  95 |     expect(run.sh, `${cell}: run scrollHeight = clientHeight (${JSON.stringify(run)})`).toBe(\n    at expectNoReach (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:92:87)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:129:9"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-04T13:06:27.605Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/test-results/release-10-1-5-coarse-phon-2730d-ff-and-on-the-trailing-seat-webkit/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                        "column": 87,
+                        "line": 92
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "ba3de8f038291be5029b-7bf0597bf44bf87651a1",
+              "file": "release-10-1-5.spec.ts",
+              "line": 114,
+              "column": 5
+            },
+            {
+              "title": "g4 at 390 coarse the field type is at most 16px and at most 1.25x the pane subtitle",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 1195,
+                      "error": {
+                        "message": "Error: bar type ({\"subtitle\":14.186435,\"bar\":21,\"pill\":14,\"picker\":21,\"barH\":54})\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m16\u001b[39m\nReceived:    \u001b[31m21\u001b[39m",
+                        "stack": "Error: bar type ({\"subtitle\":14.186435,\"bar\":21,\"pill\":14,\"picker\":21,\"barH\":54})\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m16\u001b[39m\nReceived:    \u001b[31m21\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:176:76",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                          "column": 76,
+                          "line": 176
+                        },
+                        "snippet": "  174 |         expect(read.picker, `picker keeps the no-zoom floor (${JSON.stringify(read)})`).toBeGreaterThanOrEqual(16);\n  175 |         for (const field of [\"bar\", \"pill\", \"picker\"] as const) {\n> 176 |             expect(read[field], `${field} type (${JSON.stringify(read)})`).toBeLessThanOrEqual(16);\n      |                                                                            ^\n  177 |             expect(\n  178 |                 read[field] / read.subtitle,\n  179 |                 `${field} ÷ subtitle (${JSON.stringify(read)})`,"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                            "column": 76,
+                            "line": 176
+                          },
+                          "message": "Error: bar type ({\"subtitle\":14.186435,\"bar\":21,\"pill\":14,\"picker\":21,\"barH\":54})\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m16\u001b[39m\nReceived:    \u001b[31m21\u001b[39m\n\n  174 |         expect(read.picker, `picker keeps the no-zoom floor (${JSON.stringify(read)})`).toBeGreaterThanOrEqual(16);\n  175 |         for (const field of [\"bar\", \"pill\", \"picker\"] as const) {\n> 176 |             expect(read[field], `${field} type (${JSON.stringify(read)})`).toBeLessThanOrEqual(16);\n      |                                                                            ^\n  177 |             expect(\n  178 |                 read[field] / read.subtitle,\n  179 |                 `${field} ÷ subtitle (${JSON.stringify(read)})`,\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:176:76"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-04T13:06:30.154Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/test-results/release-10-1-5-coarse-phon-073ae-ost-1-25x-the-pane-subtitle-webkit/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                        "column": 76,
+                        "line": 176
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "ba3de8f038291be5029b-5313cefcae731d0cd06a",
+              "file": "release-10-1-5.spec.ts",
+              "line": 147,
+              "column": 5
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-04T13:06:23.550Z",
+    "duration": 19126.497,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 9,
+    "flaky": 0
+  }
+}

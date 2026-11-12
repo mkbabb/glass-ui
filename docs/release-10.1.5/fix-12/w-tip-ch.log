@@ -1,0 +1,774 @@
+
+Running 6 tests using 1 worker
+
+  ✓  1 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1403:5 › critique 7, coarse phone › m2 a vertical run whose seats fit scrolls at most the ring floor's shortfall, across the fit edge (14.8s)
+  ✓  2 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1403:5 › m2 a vertical run whose seats fit scrolls at most the ring floor's shortfall, across the fit edge (14.7s)
+  ✘  3 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:2314:5 › s2 O-201 at 1440: at every cap through the fit edge the first and end seats keep their whole ring, and a run that hides nothing rests round (44.0s)
+  ✘  4 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:2314:5 › fix 11, coarse phone › s2 O-201 at 390: at every cap through the fit edge the first and end seats keep their whole ring, and a run that hides nothing rests round (44.1s)
+  ✓  5 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:2354:5 › fix 12, desktop › t1 O-201 vertical: through the fit edge the end seats keep their whole ring, bounded in the yield band (45.2s)
+  ✓  6 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:2354:5 › fix 12, coarse phone › t1 O-201 vertical: through the fit edge the end seats keep their whole ring, bounded in the yield band (45.3s)
+
+
+  1) [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:2314:5 › s2 O-201 at 1440: at every cap through the fit edge the first and end seats keep their whole ring, and a run that hides nothing rests round 
+
+    Error: a cap that cuts a focused seat's ring, a flag that is not the span, or a run that hides nothing and does not rest round
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -   1
+    + Received  + 352
+
+    - Array []
+    + Array [
+    +   Object {
+    +     "cap": 267,
+    +     "fits": false,
+    +     "law": Array [
+    +       "flag is not the span",
+    +     ],
+    +     "over": 0,
+    +     "port": 257,
+    +     "radii": Array [
+    +       "28px",
+    +       "26.25px",
+    +       "26.25px",
+    +       "28px",
+    +     ],
+    +     "range": 7,
+    +     "ring": 0,
+    +     "round": false,
+    +     "span": 250,
+    +   },
+    +   Object {
+    +     "cap": 267,
+    +     "cuts": Array [
+    +       "dock-layer 4.11",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "home",
+    +     "worst": 4.11,
+    +   },
+    +   Object {
+    +     "cap": 266,
+    +     "fits": false,
+    +     "law": Array [
+    +       "flag is not the span",
+    +     ],
+    +     "over": 1,
+    +     "port": 256,
+    +     "radii": Array [
+    +       "28px",
+    +       "26px",
+    +       "26px",
+    +       "28px",
+    +     ],
+    +     "range": 8,
+    +     "ring": 0,
+    +     "round": false,
+    +     "span": 250,
+    +   },
+    +   Object {
+    +     "cap": 266,
+    +     "cuts": Array [
+    +       "dock-layer 5.11",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "home",
+    +     "worst": 5.11,
+    +   },
+    +   Object {
+    +     "cap": 265,
+    +     "fits": false,
+    +     "law": Array [
+    +       "flag is not the span",
+    +     ],
+    +     "over": 2,
+    +     "port": 255,
+    +     "radii": Array [
+    +       "28px",
+    +       "25.75px",
+    +       "25.75px",
+    +       "28px",
+    +     ],
+    +     "range": 9,
+    +     "ring": 0,
+    +     "round": false,
+    +     "span": 250,
+    +   },
+    +   Object {
+    +     "cap": 265,
+    +     "cuts": Array [
+    +       "dock-layer 6.11",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "home",
+    +     "worst": 6.11,
+    +   },
+    +   Object {
+    +     "cap": 264,
+    +     "fits": false,
+    +     "law": Array [
+    +       "flag is not the span",
+    +     ],
+    +     "over": 3,
+    +     "port": 254,
+    +     "radii": Array [
+    +       "28px",
+    +       "25.5px",
+    +       "25.5px",
+    +       "28px",
+    +     ],
+    +     "range": 10,
+    +     "ring": 0,
+    +     "round": false,
+    +     "span": 250,
+    +   },
+    +   Object {
+    +     "cap": 264,
+    +     "cuts": Array [
+    +       "dock-layer 7.11",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "home",
+    +     "worst": 7.11,
+    +   },
+    +   Object {
+    +     "cap": 263,
+    +     "fits": false,
+    +     "law": Array [
+    +       "flag is not the span",
+    +     ],
+    +     "over": 4,
+    +     "port": 253,
+    +     "radii": Array [
+    +       "28px",
+    +       "25.25px",
+    +       "25.25px",
+    +       "28px",
+    +     ],
+    +     "range": 11,
+    +     "ring": 0,
+    +     "round": false,
+    +     "span": 250,
+    +   },
+    +   Object {
+    +     "cap": 263,
+    +     "cuts": Array [
+    +       "dock-layer 8.11",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "home",
+    +     "worst": 8.11,
+    +   },
+    +   Object {
+    +     "cap": 262,
+    +     "fits": false,
+    +     "law": Array [
+    +       "flag is not the span",
+    +     ],
+    +     "over": 5,
+    +     "port": 252,
+    +     "radii": Array [
+    +       "28px",
+    +       "25px",
+    +       "25px",
+    +       "28px",
+    +     ],
+    +     "range": 12,
+    +     "ring": 0,
+    +     "round": false,
+    +     "span": 250,
+    +   },
+    +   Object {
+    +     "cap": 262,
+    +     "cuts": Array [
+    +       "dock-layer 9.11",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "home",
+    +     "worst": 9.11,
+    +   },
+    +   Object {
+    +     "cap": 261,
+    +     "fits": false,
+    +     "law": Array [
+    +       "flag is not the span",
+    +     ],
+    +     "over": 6,
+    +     "port": 251,
+    +     "radii": Array [
+    +       "28px",
+    +       "24.75px",
+    +       "24.75px",
+    +       "28px",
+    +     ],
+    +     "range": 13,
+    +     "ring": 0,
+    +     "round": false,
+    +     "span": 250,
+    +   },
+    +   Object {
+    +     "cap": 261,
+    +     "cuts": Array [
+    +       "dock-layer 10.11",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "home",
+    +     "worst": 10.11,
+    +   },
+    +   Object {
+    +     "cap": 260,
+    +     "fits": false,
+    +     "law": Array [
+    +       "flag is not the span",
+    +     ],
+    +     "over": 7,
+    +     "port": 250,
+    +     "radii": Array [
+    +       "28px",
+    +       "24.5px",
+    +       "24.5px",
+    +       "28px",
+    +     ],
+    +     "range": 14,
+    +     "ring": 0,
+    +     "round": false,
+    +     "span": 250,
+    +   },
+    +   Object {
+    +     "cap": 260,
+    +     "cuts": Array [
+    +       "dock-layer 11.11",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "home",
+    +     "worst": 11.11,
+    +   },
+    +   Object {
+    +     "cap": 259,
+    +     "cuts": Array [
+    +       "dock-layer 12.11",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "home",
+    +     "worst": 12.11,
+    +   },
+    +   Object {
+    +     "cap": 258,
+    +     "cuts": Array [
+    +       "dock-layer 13.11",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "home",
+    +     "worst": 13.11,
+    +   },
+    +   Object {
+    +     "cap": 257,
+    +     "cuts": Array [
+    +       "dock-layer 14.11",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "home",
+    +     "worst": 14.11,
+    +   },
+    +   Object {
+    +     "cap": 256,
+    +     "cuts": Array [
+    +       "dock-layer 15.11",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "home",
+    +     "worst": 15.11,
+    +   },
+    +   Object {
+    +     "cap": 255,
+    +     "cuts": Array [
+    +       "dock-layer 16.11",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "home",
+    +     "worst": 16.11,
+    +   },
+    +   Object {
+    +     "cap": 251,
+    +     "cuts": Array [
+    +       "dock-layer 20.11",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "home",
+    +     "worst": 20.11,
+    +   },
+    +   Object {
+    +     "cap": 247,
+    +     "cuts": Array [
+    +       "dock-layer 24.11",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "home",
+    +     "worst": 24.11,
+    +   },
+    +   Object {
+    +     "cap": 243,
+    +     "cuts": Array [
+    +       "dock-layer 28.11",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "home",
+    +     "worst": 28.11,
+    +   },
+    +   Object {
+    +     "cap": 239,
+    +     "cuts": Array [
+    +       "dock-layer 32.11",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "home",
+    +     "worst": 32.11,
+    +   },
+    +   Object {
+    +     "cap": 235,
+    +     "cuts": Array [
+    +       "dock-layer 36.11",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "home",
+    +     "worst": 36.11,
+    +   },
+    + ]
+
+      2339 |         }
+      2340 |         expect(unfit, `the sweep under ${natural} crosses the fit edge`).toBeGreaterThan(2);
+    > 2341 |         expect(bad, "a cap that cuts a focused seat's ring, a flag that is not the span, or a run that hides nothing and does not rest round").toEqual([]);
+           |                                                                                                                                                ^
+      2342 |     });
+      2343 | }
+      2344 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:2341:144
+
+    Error Context: tests-visual/test-results/release-10-1-5-s2-O-201-at-f97e1-t-hides-nothing-rests-round-chromium-headless-new/error-context.md
+
+  2) [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:2314:5 › fix 11, coarse phone › s2 O-201 at 390: at every cap through the fit edge the first and end seats keep their whole ring, and a run that hides nothing rests round 
+
+    Error: a cap that cuts a focused seat's ring, a flag that is not the span, or a run that hides nothing and does not rest round
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -   1
+    + Received  + 363
+
+    - Array []
+    + Array [
+    +   Object {
+    +     "cap": 272,
+    +     "fits": false,
+    +     "law": Array [
+    +       "flag is not the span",
+    +     ],
+    +     "over": 0,
+    +     "port": 262,
+    +     "radii": Array [
+    +       "30px",
+    +       "28.1154px",
+    +       "28.1154px",
+    +       "30px",
+    +     ],
+    +     "range": 7,
+    +     "ring": 0,
+    +     "round": false,
+    +     "span": 255,
+    +   },
+    +   Object {
+    +     "cap": 272,
+    +     "cuts": Array [
+    +       "dock-layer 3.80",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "home",
+    +     "worst": 3.8,
+    +   },
+    +   Object {
+    +     "cap": 271,
+    +     "fits": false,
+    +     "law": Array [
+    +       "flag is not the span",
+    +     ],
+    +     "over": 1,
+    +     "port": 261,
+    +     "radii": Array [
+    +       "30px",
+    +       "27.8462px",
+    +       "27.8462px",
+    +       "30px",
+    +     ],
+    +     "range": 8,
+    +     "ring": 0,
+    +     "round": false,
+    +     "span": 255,
+    +   },
+    +   Object {
+    +     "cap": 271,
+    +     "cuts": Array [
+    +       "dock-layer 4.80",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "home",
+    +     "worst": 4.8,
+    +   },
+    +   Object {
+    +     "cap": 270,
+    +     "fits": false,
+    +     "law": Array [
+    +       "flag is not the span",
+    +     ],
+    +     "over": 2,
+    +     "port": 260,
+    +     "radii": Array [
+    +       "30px",
+    +       "27.5769px",
+    +       "27.5769px",
+    +       "30px",
+    +     ],
+    +     "range": 9,
+    +     "ring": 0,
+    +     "round": false,
+    +     "span": 255,
+    +   },
+    +   Object {
+    +     "cap": 270,
+    +     "cuts": Array [
+    +       "dock-layer 5.80",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "home",
+    +     "worst": 5.8,
+    +   },
+    +   Object {
+    +     "cap": 269,
+    +     "fits": false,
+    +     "law": Array [
+    +       "flag is not the span",
+    +     ],
+    +     "over": 3,
+    +     "port": 259,
+    +     "radii": Array [
+    +       "30px",
+    +       "27.3077px",
+    +       "27.3077px",
+    +       "30px",
+    +     ],
+    +     "range": 10,
+    +     "ring": 0,
+    +     "round": false,
+    +     "span": 255,
+    +   },
+    +   Object {
+    +     "cap": 269,
+    +     "cuts": Array [
+    +       "dock-layer 6.80",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "home",
+    +     "worst": 6.8,
+    +   },
+    +   Object {
+    +     "cap": 268,
+    +     "fits": false,
+    +     "law": Array [
+    +       "flag is not the span",
+    +     ],
+    +     "over": 4,
+    +     "port": 258,
+    +     "radii": Array [
+    +       "30px",
+    +       "27.0385px",
+    +       "27.0385px",
+    +       "30px",
+    +     ],
+    +     "range": 11,
+    +     "ring": 0,
+    +     "round": false,
+    +     "span": 255,
+    +   },
+    +   Object {
+    +     "cap": 268,
+    +     "cuts": Array [
+    +       "dock-layer 7.80",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "home",
+    +     "worst": 7.8,
+    +   },
+    +   Object {
+    +     "cap": 267,
+    +     "fits": false,
+    +     "law": Array [
+    +       "flag is not the span",
+    +     ],
+    +     "over": 5,
+    +     "port": 257,
+    +     "radii": Array [
+    +       "30px",
+    +       "26.7692px",
+    +       "26.7692px",
+    +       "30px",
+    +     ],
+    +     "range": 12,
+    +     "ring": 0,
+    +     "round": false,
+    +     "span": 255,
+    +   },
+    +   Object {
+    +     "cap": 267,
+    +     "cuts": Array [
+    +       "dock-layer 8.80",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "home",
+    +     "worst": 8.8,
+    +   },
+    +   Object {
+    +     "cap": 266,
+    +     "fits": false,
+    +     "law": Array [
+    +       "flag is not the span",
+    +     ],
+    +     "over": 6,
+    +     "port": 256,
+    +     "radii": Array [
+    +       "30px",
+    +       "26.5px",
+    +       "26.5px",
+    +       "30px",
+    +     ],
+    +     "range": 13,
+    +     "ring": 0,
+    +     "round": false,
+    +     "span": 255,
+    +   },
+    +   Object {
+    +     "cap": 266,
+    +     "cuts": Array [
+    +       "dock-layer 9.80",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "home",
+    +     "worst": 9.8,
+    +   },
+    +   Object {
+    +     "cap": 265,
+    +     "fits": false,
+    +     "law": Array [
+    +       "flag is not the span",
+    +     ],
+    +     "over": 7,
+    +     "port": 255,
+    +     "radii": Array [
+    +       "30px",
+    +       "26.2308px",
+    +       "26.2308px",
+    +       "30px",
+    +     ],
+    +     "range": 14,
+    +     "ring": 0,
+    +     "round": false,
+    +     "span": 255,
+    +   },
+    +   Object {
+    +     "cap": 265,
+    +     "cuts": Array [
+    +       "dock-layer 10.80",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "home",
+    +     "worst": 10.8,
+    +   },
+    +   Object {
+    +     "cap": 264,
+    +     "cuts": Array [
+    +       "dock-layer 11.80",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "home",
+    +     "worst": 11.8,
+    +   },
+    +   Object {
+    +     "cap": 263,
+    +     "cuts": Array [
+    +       "dock-layer 12.80",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "home",
+    +     "worst": 12.8,
+    +   },
+    +   Object {
+    +     "cap": 262,
+    +     "cuts": Array [
+    +       "dock-layer 13.80",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "home",
+    +     "worst": 13.8,
+    +   },
+    +   Object {
+    +     "cap": 261,
+    +     "cuts": Array [
+    +       "dock-layer 14.80",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "home",
+    +     "worst": 14.8,
+    +   },
+    +   Object {
+    +     "cap": 260,
+    +     "cuts": Array [
+    +       "dock-layer 15.80",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "home",
+    +     "worst": 15.8,
+    +   },
+    +   Object {
+    +     "cap": 259,
+    +     "cuts": Array [
+    +       "dock-layer 16.80",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "home",
+    +     "worst": 16.8,
+    +   },
+    +   Object {
+    +     "cap": 255,
+    +     "cuts": Array [
+    +       "dock-layer 20.80",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "home",
+    +     "worst": 20.8,
+    +   },
+    +   Object {
+    +     "cap": 251,
+    +     "cuts": Array [
+    +       "dock-layer 24.80",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "home",
+    +     "worst": 24.8,
+    +   },
+    +   Object {
+    +     "cap": 247,
+    +     "cuts": Array [
+    +       "dock-layer 28.80",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "home",
+    +     "worst": 28.8,
+    +   },
+    +   Object {
+    +     "cap": 243,
+    +     "cuts": Array [
+    +       "dock-layer 32.80",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "home",
+    +     "worst": 32.8,
+    +   },
+    +   Object {
+    +     "cap": 239,
+    +     "cuts": Array [
+    +       "dock-layer 36.80",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "home",
+    +     "worst": 36.8,
+    +   },
+    + ]
+
+      2339 |         }
+      2340 |         expect(unfit, `the sweep under ${natural} crosses the fit edge`).toBeGreaterThan(2);
+    > 2341 |         expect(bad, "a cap that cuts a focused seat's ring, a flag that is not the span, or a run that hides nothing and does not rest round").toEqual([]);
+           |                                                                                                                                                ^
+      2342 |     });
+      2343 | }
+      2344 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:2341:144
+
+    Error Context: tests-visual/test-results/release-10-1-5-fix-11-coar-b6824-t-hides-nothing-rests-round-chromium-headless-new/error-context.md
+
+  2 failed
+    [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:2314:5 › s2 O-201 at 1440: at every cap through the fit edge the first and end seats keep their whole ring, and a run that hides nothing rests round 
+    [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:2314:5 › fix 11, coarse phone › s2 O-201 at 390: at every cap through the fit edge the first and end seats keep their whole ring, and a run that hides nothing rests round 
+  4 passed (3.5m)

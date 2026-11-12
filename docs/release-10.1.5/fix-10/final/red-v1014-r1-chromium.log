@@ -1,0 +1,124 @@
+
+Running 2 tests using 1 worker
+
+  ✘  1 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:2099:5 › r1 Q2 at 1440: a nested group holding the current seat paints every seat clear of the others, and the run's flag is its layout (3.1s)
+  ✘  2 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:2099:5 › fix 10, coarse phone › r1 Q2 at 390: a nested group holding the current seat paints every seat clear of the others, and the run's flag is its layout (2.5s)
+
+
+  1) [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:2099:5 › r1 Q2 at 1440: a nested group holding the current seat paints every seat clear of the others, and the run's flag is its layout 
+
+    Error: seats that paint over each other or whose centre misses them, or a run that scrolls or whose flag is not its layout
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 36
+
+    - Array []
+    + Array [
+    +   Object {
+    +     "cell": "1440 current=1",
+    +     "misses": Array [
+    +       "S2 hits dock-icon-button glass-specular-track glass-capsule-hover",
+    +       "S3 hits ",
+    +     ],
+    +     "overlaps": Array [
+    +       "S2/S4 40.0",
+    +       "S2/S5 40.0",
+    +     ],
+    +   },
+    +   Object {
+    +     "cell": "1440 current=1",
+    +     "cw": 232,
+    +     "flag": false,
+    +     "sw": 232,
+    +   },
+    +   Object {
+    +     "cell": "1440 current=2",
+    +     "misses": Array [
+    +       "S2 hits dock-layer dock-layer--full dock-run is-active",
+    +       "S3 hits ",
+    +     ],
+    +     "overlaps": Array [
+    +       "S2/S4 40.0",
+    +       "S2/S5 40.0",
+    +     ],
+    +   },
+    +   Object {
+    +     "cell": "1440 current=2",
+    +     "cw": 232,
+    +     "flag": false,
+    +     "sw": 232,
+    +   },
+    + ]
+
+      2134 |             if (read.sw > read.cw) bad.push({ cell, scrolls: [read.sw, read.cw] });
+      2135 |         }
+    > 2136 |         expect(bad, "seats that paint over each other or whose centre misses them, or a run that scrolls or whose flag is not its layout").toEqual([]);
+           |                                                                                                                                            ^
+      2137 |     });
+      2138 | }
+      2139 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:2136:140
+
+    Error Context: tests-visual/test-results/release-10-1-5-r1-Q2-at-14-d07d8-he-run-s-flag-is-its-layout-chromium-headless-new/error-context.md
+
+  2) [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:2099:5 › fix 10, coarse phone › r1 Q2 at 390: a nested group holding the current seat paints every seat clear of the others, and the run's flag is its layout 
+
+    Error: seats that paint over each other or whose centre misses them, or a run that scrolls or whose flag is not its layout
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 34
+
+    - Array []
+    + Array [
+    +   Object {
+    +     "cell": "390 current=1",
+    +     "misses": Array [
+    +       "S2 hits dock-icon-button glass-specular-track glass-capsule-hover",
+    +     ],
+    +     "overlaps": Array [
+    +       "S2/S3 44.0",
+    +       "S2/S4 26.4",
+    +     ],
+    +   },
+    +   Object {
+    +     "cell": "390 current=1",
+    +     "cw": 252,
+    +     "flag": false,
+    +     "sw": 252,
+    +   },
+    +   Object {
+    +     "cell": "390 current=2",
+    +     "misses": Array [
+    +       "S2 hits dock-layer dock-layer--full dock-run is-active",
+    +     ],
+    +     "overlaps": Array [
+    +       "S2/S3 44.0",
+    +       "S2/S4 19.0",
+    +     ],
+    +   },
+    +   Object {
+    +     "cell": "390 current=2",
+    +     "cw": 252,
+    +     "flag": false,
+    +     "sw": 252,
+    +   },
+    + ]
+
+      2134 |             if (read.sw > read.cw) bad.push({ cell, scrolls: [read.sw, read.cw] });
+      2135 |         }
+    > 2136 |         expect(bad, "seats that paint over each other or whose centre misses them, or a run that scrolls or whose flag is not its layout").toEqual([]);
+           |                                                                                                                                            ^
+      2137 |     });
+      2138 | }
+      2139 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:2136:140
+
+    Error Context: tests-visual/test-results/release-10-1-5-fix-10-coar-544e7-he-run-s-flag-is-its-layout-chromium-headless-new/error-context.md
+
+  2 failed
+    [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:2099:5 › r1 Q2 at 1440: a nested group holding the current seat paints every seat clear of the others, and the run's flag is its layout 
+    [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:2099:5 › fix 10, coarse phone › r1 Q2 at 390: a nested group holding the current seat paints every seat clear of the others, and the run's flag is its layout 

@@ -1,11 +1,11 @@
-# W-K.5 · One current-row channel · 11.0.0
+# W-K.5 · One current-row channel
 
 | field | value |
 |---|---|
 | seat | band-K wave-spec seat, formation |
 | model | `claude-opus-5-5`, asserted from own system identity |
 | HEAD | `9866d229` (`src` = `f3ad78d0` = published 10.1.0); the band-K fixture (W-K.1 appendix B), reka 2.10.5 and 2.10.1 builds, Chromium and Playwright WebKit |
-| ships in | 11.0.0 |
+| release | `waves/INDEX.md`, the one record |
 | families | F-40 remainder and its inbound rows. The option focus model (C-9, L01a-42, L04-F09, L08-12) is W-K.11's, a disease row's own wave (fix-2, FA-21) |
 | depends on | PLAN §5, the one record of edges |
 | dependants | PLAN §5 (its inverse) |

@@ -258,7 +258,7 @@ describe("GlassDock — collapsed-face disclosure contract", () => {
             .findAll(".dock-layer")
             .filter((face) => !face.element.hasAttribute("inert"));
 
-    it("focuses the summary without expanding and keeps exactly one face reachable", async () => {
+    it("keyboard focus on the summary expands the dock and hands focus to the first seat (O-177)", async () => {
         const wrapper = mountDock(
             { collapse: "closed" },
             {
@@ -278,13 +278,14 @@ describe("GlassDock — collapsed-face disclosure contract", () => {
         });
         expect(summary.attributes("aria-controls")).toBe(full.attributes("id"));
         expect(full.attributes("inert")).toBe("");
-        summary.element.focus();
-        await nextTick();
-
-        expect(document.activeElement).toBe(summary.element);
-        expect(wrapper.find(".glass-dock").classes()).toContain("collapsed");
         expect(reachableFaces(wrapper)).toHaveLength(1);
         expect(reachableFaces(wrapper)[0]!.element).toBe(summary.element);
+        summary.element.focus();
+        await nextTick();
+        await nextTick();
+
+        expect(wrapper.find(".glass-dock").classes()).toContain("expanded");
+        expect(document.activeElement).toBe(wrapper.get("[data-testid='full-first']").element);
     });
 
     it.each(["Enter", " "])(

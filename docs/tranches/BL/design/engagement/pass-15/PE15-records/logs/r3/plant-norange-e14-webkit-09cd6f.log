@@ -1,0 +1,12 @@
+# PE15 plant-norange-e14 webkit · 2026-11-10 19:48:34 · load { 24.14 18.55 17.59 } · harness 0c64ff33af43 · --only M24
+# E-14 · S14's members at their ranges (P-E14 §S14-c)
+# target /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p15/PE15/wt/.pe15out/builds/plant-norange · engine webkit · lock wait 0.0 s (the deadline 5400 s counts from here) · other headless processes: chromium 12, webkit 0 · load 24.1/18.5/17.6 at start
+# scene app: harness scenes/App.vue (sha1 912fecf0a1aa)
+# webkit 26.5 (Playwright WebKit, not Safari; real Safari UNMEASURED (owner's safaridriver checkbox))
+# held control: scene slider root .glass-slider thumb [role="slider"] engaged [data-engaged], [data-held]; clock token --spring-dock-settle; cells M24; film: read after the frame's resize step (H15 class 7)
+  FAIL       M24 scroll-snap y mandatory, align center: the snapped item grows 300 → 400 px below the root · the act on frame 8 · paint moved 0.0, -50.0 px in all; on the act's frame 0.00, -50.00 = 50.00 px (bound ≤ 0.50) · largest move over any 16.7 ms 49.0 px at +17 ms (bound 12.0) · glides 0 (moved ≥ 5 px, no glide) · scrollY 154 → 154 → 154, scroller 600 → 650 → 650 · path [0.0,0.0 0.0,-50.0 0.0,-50.0 0.0,-50.0 0.0,-50.0] · errors 0 · load 23.2/18.4/17.6
+  FAIL       M24 scroll-snap y mandatory, align end: the snapped item grows 300 → 400 px below the root · the act on frame 8 · paint moved 0.0, -100.0 px in all; on the act's frame 0.00, -100.00 = 100.00 px (bound ≤ 0.50) · largest move over any 16.7 ms 92.6 px at +18 ms (bound 22.9) · glides 0 (moved ≥ 5 px, no glide) · scrollY 154 → 154 → 154, scroller 600 → 700 → 700 · path [0.0,0.0 0.0,-100.0 0.0,-100.0 0.0,-100.0 0.0,-100.0] · errors 0 · load 22.2/18.3/17.5
+  PASS       M24 scroll-snap y mandatory, align start: the snapped item grows 300 → 400 px below the root · the act on frame 8 · paint moved 0.0, 0.0 px in all; on the act's frame 0.00, 0.00 = 0.00 px (bound ≤ 0.50) · largest move over any 16.7 ms 0.0 px at +NaN ms (bound 1.0) · glides 0 · scrollY 154 → 154 → 154, scroller 600 → 600 → 600 · path [0.0,0.0 0.0,0.0 0.0,0.0 0.0,0.0 0.0,0.0] · errors 0 · load 22.2/18.3/17.5
+E-14 webkit FAIL · 1 pass, 2 fail, 0 unmeasured of 3 gating cells (0 reported) · load 24.1/18.5/17.6 at start, 22.2/18.3/17.5 at end
+# exit 1 · 2026-11-10 19:48:42 · load { 22.20 18.31 17.52 }
+# end · 2026-11-10 19:48:42 · load { 22.20 18.31 17.52 } · harness 0c64ff33af43

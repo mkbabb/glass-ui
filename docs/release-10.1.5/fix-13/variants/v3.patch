@@ -1,0 +1,27 @@
+diff --git a/src/components/dock/styles/run.css b/src/components/dock/styles/run.css
+index 8d207181e..2c3ac5ae2 100644
+--- a/src/components/dock/styles/run.css
++++ b/src/components/dock/styles/run.css
+@@ -203,7 +203,7 @@
+         margin-inline-end: var(--dock-run-reserve-inline);
+     }
+ 
+-    .glass-dock.vertical:not(.collapsed) > .dock-controls > .dock-layers {
++    .glass-dock.vertical > .dock-controls > .dock-layers {
+         margin-block: max(
+             0px,
+             var(--dock-run-reserve-block) - var(--dock-padding-block, 0.375rem)
+@@ -214,11 +214,11 @@
+         margin-block-start: var(--dock-layer-gap, 0.375rem);
+     }
+ 
+-    .glass-dock.vertical:not(.collapsed) > .dock-controls > .dock-persistent + .dock-layers {
++    .glass-dock.vertical > .dock-controls > .dock-persistent + .dock-layers {
+         margin-block-start: calc(var(--dock-layer-gap, 0.375rem) + var(--dock-run-reserve-block));
+     }
+ 
+-    .glass-dock.vertical:not(.collapsed)
++    .glass-dock.vertical
+         > .dock-controls
+         > .dock-layers:has(+ .dock-persistent-end) {
+         margin-block-end: var(--dock-run-reserve-block);

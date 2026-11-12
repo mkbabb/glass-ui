@@ -1,0 +1,13 @@
+diff --git a/src/components/dock/DockCluster.vue.bak b/src/components/dock/DockCluster.vue
+index c638b3a09..2d0eb29e5 100644
+--- a/src/components/dock/DockCluster.vue.bak
++++ b/src/components/dock/DockCluster.vue
+@@ -546,7 +546,7 @@ function observe(): void {
+                 let r = slots.get(d);
+                 slots.delete(d);
+                 if (r) { r.role = "phantom"; r.el = null; r.after = after; }
+-                else r = { s: W(was) + (lastGap.get(d) ?? 0), full: W(was) + (lastGap.get(d) ?? 0), role: "phantom", el: null, after, spring: useDockSpring(DOCK_SPRING, HOST) };
++                else r = { s: W(was) + (lastGap.get(d) ?? 0), full: W(was) + (lastGap.get(d) ?? 0), role: "phantom", el: null, after, spring: useDockSpring(DOCK_SPRING) };
+                 phantoms.push(r);
+                 runTo(r, 0);
+             }

@@ -1,0 +1,2839 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "tests-visual/playwright.config.ts",
+      "--project=chromium-headless-new",
+      "--workers=1",
+      "tests-visual/CommandDialog.b7c.spec.ts",
+      "tests-visual/DropdownMenu.scroll-lock.spec.ts",
+      "tests-visual/SegmentedTabs.glide.spec.ts",
+      "tests-visual/Select.bound.spec.ts",
+      "tests-visual/Sheet.position.spec.ts",
+      "tests-visual/_capture_css.spec.ts",
+      "tests-visual/_cfg-readback.spec.ts",
+      "tests-visual/_cohere-capture.spec.ts",
+      "tests-visual/_cohere-debug.spec.ts",
+      "tests-visual/_cohere-shadow-debug.spec.ts",
+      "tests-visual/_dock-context-capture.spec.ts",
+      "tests-visual/_egg-capture.spec.ts",
+      "tests-visual/_fix-glassui-dark-capture.spec.ts",
+      "tests-visual/_prim-polish-capture.spec.ts",
+      "tests-visual/_r4-shell-config-capture.spec.ts"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/playwright.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-headless-new",
+        "name": "chromium-headless-new",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "coarse-touch",
+        "name": "coarse-touch",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "safari-webgl.spec.ts",
+          "aurora-swraster.spec.ts",
+          "release-10-1-1.spec.ts",
+          "release-10-1-2.spec.ts",
+          "release-10-1-3.spec.ts",
+          "release-10-1-4.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/reports/ch-aa.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5321",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/",
+      "url": "http://localhost:5321",
+      "reuseExistingServer": true,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "_capture_css.spec.ts",
+      "file": "_capture_css.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "capture union CSS",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 6317,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "CAPTURED 394485 bytes, 378 unique rules\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T21:14:44.477Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "0bad619f45e5d4e78110-2b839eb055bec9a6affe",
+          "file": "_capture_css.spec.ts",
+          "line": 57,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "_cfg-readback.spec.ts",
+      "file": "_cfg-readback.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "configurator dark bloom token + auth-shell ink readback",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 3311,
+                  "error": {
+                    "message": "Error: page.evaluate: TypeError: Failed to execute 'getComputedStyle' on 'Window': parameter 1 is not of type 'Element'.\n    at eval (eval at evaluate (:303:30), <anonymous>:8:21)\n    at UtilityScript.evaluate (<anonymous>:305:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+                    "stack": "Error: page.evaluate: TypeError: Failed to execute 'getComputedStyle' on 'Window': parameter 1 is not of type 'Element'.\n    at eval (eval at evaluate (:303:30), <anonymous>:8:21)\n    at UtilityScript.evaluate (<anonymous>:305:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)\n    at eval (eval at evaluate (:303:30), <anonymous>:8:21)\n    at UtilityScript.evaluate (<anonymous>:305:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)\n    at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/_cfg-readback.spec.ts:30:29",
+                    "location": {
+                      "file": "eval at evaluate (:303:30), <anonymous>",
+                      "column": 21,
+                      "line": 8
+                    }
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "eval at evaluate (:303:30), <anonymous>",
+                        "column": 21,
+                        "line": 8
+                      },
+                      "message": "Error: page.evaluate: TypeError: Failed to execute 'getComputedStyle' on 'Window': parameter 1 is not of type 'Element'.\n    at eval (eval at evaluate (:303:30), <anonymous>:8:21)\n    at UtilityScript.evaluate (<anonymous>:305:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)\n    at eval (eval at evaluate (:303:30), <anonymous>:8:21)\n    at UtilityScript.evaluate (<anonymous>:305:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)\n    at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/_cfg-readback.spec.ts:30:29"
+                    }
+                  ],
+                  "stdout": [
+                    {
+                      "text": "CONFIG_DARK {\"specBg\":\"oklab(0.259484 0.00975362 0.0163501)\",\"bloomBlue\":\"oklch(0.633 0.162 252.1)\",\"bloomViolet\":\"oklch(0.684 0.250 327.9)\",\"rainbowBlue\":\"oklch(0.633 0.162 252.1)\",\"gradient\":\"radial-gradient(49% 42.14% at 18% 37.2%, color(srgb 0.190229 0.549899 0.910072 / 0.88), rgba(0, 0, 0, 0) 57%) repeat scr\"}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T21:14:50.880Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/test-results/_cfg-readback-configurator-8f397-ken-auth-shell-ink-readback-chromium-headless-new/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "eval at evaluate (:303:30), <anonymous>",
+                    "column": 21,
+                    "line": 8
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "e5e4a6522f9aaeac2d8f-45e64c752b6ca9da79ab",
+          "file": "_cfg-readback.spec.ts",
+          "line": 3,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "_cohere-capture.spec.ts",
+      "file": "_cohere-capture.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "W-COHERE set capture — desktop1280 light",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 7732,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T21:14:54.441Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "c26b822df2eb30c8b3d1-7e9340b662ddacbc614d",
+          "file": "_cohere-capture.spec.ts",
+          "line": 47,
+          "column": 9
+        },
+        {
+          "title": "W-COHERE set capture — desktop1280 dark",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 7560,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T21:15:02.273Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "c26b822df2eb30c8b3d1-3892d96c6fcd24cb4d2f",
+          "file": "_cohere-capture.spec.ts",
+          "line": 47,
+          "column": 9
+        },
+        {
+          "title": "W-COHERE set capture — mobile390 light",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 7506,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T21:15:09.839Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "c26b822df2eb30c8b3d1-929f25f9c9dbb84bea54",
+          "file": "_cohere-capture.spec.ts",
+          "line": 47,
+          "column": 9
+        },
+        {
+          "title": "W-COHERE set capture — mobile390 dark",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 7530,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T21:15:17.351Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "c26b822df2eb30c8b3d1-41453c396859838603c3",
+          "file": "_cohere-capture.spec.ts",
+          "line": 47,
+          "column": 9
+        }
+      ]
+    },
+    {
+      "title": "_cohere-debug.spec.ts",
+      "file": "_cohere-debug.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "debug blob + constellation",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4938,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "BLOB canvas count: \u001b[33m2\u001b[39m\n"
+                    },
+                    {
+                      "text": "BUTTONS: [\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"Reset clicks\",\"Poke\",\"Interaction\\n--interaction-*\",\"Mood + palette\\n--color-*\",\"Surface\\n--surface-*\",\"Geometry / Satellites\\n--geometry-* · --membrane-*\",\"\",\"\",\"Aurora\",\"Blob\",\"Constellation\",\"Fourier Field\",\"Glass Material\",\"Glass Panel\",\"\"]\n"
+                    },
+                    {
+                      "text": "blob default(calm): dims 768x769 bg=200,184,184 bodyN=65774 L=0.840 C=0.031 h=67.9\n"
+                    },
+                    {
+                      "text": "excited tab count: \u001b[33m1\u001b[39m\n"
+                    },
+                    {
+                      "text": "blob excited: dims 768x769 bg=200,184,184 bodyN=93444 L=0.745 C=0.091 h=23.2\n"
+                    },
+                    {
+                      "text": "shadow CONTRAST 480x481 bgL=0.796 castN=115680 peakContrast(top5%)=0.296\n"
+                    },
+                    {
+                      "text": "con frame 0: SUM full=494809 dim=530759 ratio=1.073 | meanPainted full=15.6 dim=16.7 ratio=1.073 | paintedN full=31734 dim=31737\n"
+                    },
+                    {
+                      "text": "con frame 1: SUM full=494694 dim=530607 ratio=1.073 | meanPainted full=15.6 dim=16.7 ratio=1.073 | paintedN full=31734 dim=31729\n"
+                    },
+                    {
+                      "text": "con frame 2: SUM full=494524 dim=530391 ratio=1.073 | meanPainted full=15.6 dim=16.7 ratio=1.073 | paintedN full=31748 dim=31723\n"
+                    },
+                    {
+                      "text": "con frame 3: SUM full=494558 dim=530395 ratio=1.072 | meanPainted full=15.6 dim=16.7 ratio=1.073 | paintedN full=31732 dim=31724\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T21:15:24.898Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "220f1f4c83ca3004fb19-5005d8e6695bb22b67ad",
+          "file": "_cohere-debug.spec.ts",
+          "line": 33,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "_cohere-shadow-debug.spec.ts",
+      "file": "_cohere-shadow-debug.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "shadow light",
+          "file": "_cohere-shadow-debug.spec.ts",
+          "line": 18,
+          "column": 8,
+          "specs": [
+            {
+              "title": "measure light",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1204,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "SHADOW light: 480x481 bg=200,184,184 bgL=0.796 castN=230880 peakContrast(top5%)=0.194\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T21:15:29.843Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "6abd9c0ace885968f99d-3c55edd0b88ab82db436",
+              "file": "_cohere-shadow-debug.spec.ts",
+              "line": 20,
+              "column": 5
+            }
+          ]
+        },
+        {
+          "title": "shadow dark",
+          "file": "_cohere-shadow-debug.spec.ts",
+          "line": 18,
+          "column": 8,
+          "specs": [
+            {
+              "title": "measure dark",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1226,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "SHADOW dark: 480x481 bg=56,40,40 bgL=0.296 castN=220713 peakContrast(top5%)=0.612\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T21:15:31.053Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "6abd9c0ace885968f99d-9cb9fbadabf2533d0f23",
+              "file": "_cohere-shadow-debug.spec.ts",
+              "line": 20,
+              "column": 5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "_dock-context-capture.spec.ts",
+      "file": "_dock-context-capture.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "AZ.W-DOCK-CONTEXT W3 — per-route DockLayer swap on the shell docks",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 2417,
+                  "error": {
+                    "message": "Error: bottom context group present on route A\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m",
+                    "stack": "Error: bottom context group present on route A\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/_dock-context-capture.spec.ts:96:72",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/_dock-context-capture.spec.ts",
+                      "column": 72,
+                      "line": 96
+                    },
+                    "snippet": "  94 |     // The binding assertion: the SHELL dock renders a DIFFERENT facet layer set on\n  95 |     // the two routes (route→layer determinism). Both shell docks must swap.\n> 96 |     expect(bottomA.present, \"bottom context group present on route A\").toBe(true);\n     |                                                                        ^\n  97 |     expect(bottomB.present, \"bottom context group present on route B\").toBe(true);\n  98 |     expect(bottomA.railTabs.length, \"route A has facet layers\").toBeGreaterThan(0);\n  99 |     expect("
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/_dock-context-capture.spec.ts",
+                        "column": 72,
+                        "line": 96
+                      },
+                      "message": "Error: bottom context group present on route A\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n\n  94 |     // The binding assertion: the SHELL dock renders a DIFFERENT facet layer set on\n  95 |     // the two routes (route→layer determinism). Both shell docks must swap.\n> 96 |     expect(bottomA.present, \"bottom context group present on route A\").toBe(true);\n     |                                                                        ^\n  97 |     expect(bottomB.present, \"bottom context group present on route B\").toBe(true);\n  98 |     expect(bottomA.railTabs.length, \"route A has facet layers\").toBeGreaterThan(0);\n  99 |     expect(\n    at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/_dock-context-capture.spec.ts:96:72"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T21:15:32.291Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/test-results/_dock-context-capture-AZ-W-28b46-yer-swap-on-the-shell-docks-chromium-headless-new/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/_dock-context-capture.spec.ts",
+                    "column": 72,
+                    "line": 96
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "7006f3925c3963827ff4-445873d653189ea06357",
+          "file": "_dock-context-capture.spec.ts",
+          "line": 50,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "_egg-capture.spec.ts",
+      "file": "_egg-capture.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "E3 cmd+K palette opens + navigates (light)",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 6586,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-slot=\"command\"]').first()\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('[data-slot=\"command\"]').first()\u001b[22m\n",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-slot=\"command\"]').first()\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('[data-slot=\"command\"]').first()\u001b[22m\n\n    at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/_egg-capture.spec.ts:44:31",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/_egg-capture.spec.ts",
+                      "column": 31,
+                      "line": 44
+                    },
+                    "snippet": "  42 |         }\n  43 |         const palette = page.locator('[data-slot=\"command\"]').first();\n> 44 |         await expect(palette).toBeVisible();\n     |                               ^\n  45 |\n  46 |         // Type a query → the list filters.\n  47 |         await page.keyboard.type(\"dialog\");"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/_egg-capture.spec.ts",
+                        "column": 31,
+                        "line": 44
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-slot=\"command\"]').first()\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('[data-slot=\"command\"]').first()\u001b[22m\n\n\n  42 |         }\n  43 |         const palette = page.locator('[data-slot=\"command\"]').first();\n> 44 |         await expect(palette).toBeVisible();\n     |                               ^\n  45 |\n  46 |         // Type a query → the list filters.\n  47 |         await page.keyboard.type(\"dialog\");\n    at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/_egg-capture.spec.ts:44:31"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T21:15:34.939Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/test-results/_egg-capture-E3-cmd-K-palette-opens-navigates-light--chromium-headless-new/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/_egg-capture.spec.ts",
+                    "column": 31,
+                    "line": 44
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "d091b82fc166f7c1ff8c-2376252a07e6aaab7029",
+          "file": "_egg-capture.spec.ts",
+          "line": 25,
+          "column": 5
+        },
+        {
+          "title": "E3 cmd+K palette opens + navigates (dark)",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 6575,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-slot=\"command\"]').first()\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('[data-slot=\"command\"]').first()\u001b[22m\n",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-slot=\"command\"]').first()\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('[data-slot=\"command\"]').first()\u001b[22m\n\n    at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/_egg-capture.spec.ts:44:31",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/_egg-capture.spec.ts",
+                      "column": 31,
+                      "line": 44
+                    },
+                    "snippet": "  42 |         }\n  43 |         const palette = page.locator('[data-slot=\"command\"]').first();\n> 44 |         await expect(palette).toBeVisible();\n     |                               ^\n  45 |\n  46 |         // Type a query → the list filters.\n  47 |         await page.keyboard.type(\"dialog\");"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/_egg-capture.spec.ts",
+                        "column": 31,
+                        "line": 44
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('[data-slot=\"command\"]').first()\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('[data-slot=\"command\"]').first()\u001b[22m\n\n\n  42 |         }\n  43 |         const palette = page.locator('[data-slot=\"command\"]').first();\n> 44 |         await expect(palette).toBeVisible();\n     |                               ^\n  45 |\n  46 |         // Type a query → the list filters.\n  47 |         await page.keyboard.type(\"dialog\");\n    at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/_egg-capture.spec.ts:44:31"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T21:15:41.862Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/test-results/_egg-capture-E3-cmd-K-palette-opens-navigates-dark--chromium-headless-new/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/_egg-capture.spec.ts",
+                    "column": 31,
+                    "line": 44
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "d091b82fc166f7c1ff8c-115c08f68c36d503c36c",
+          "file": "_egg-capture.spec.ts",
+          "line": 25,
+          "column": 5
+        },
+        {
+          "title": "E1 ℱ-redraw paints an epicycle overlay (light)",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 1877,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/_egg-capture.spec.ts:91:33",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/_egg-capture.spec.ts",
+                      "column": 33,
+                      "line": 91
+                    },
+                    "snippet": "  89 |             return { present: true, painted };\n  90 |         });\n> 91 |         expect(overlay.present).toBe(true);\n     |                                 ^\n  92 |         expect(overlay.painted).toBeGreaterThan(200);\n  93 |\n  94 |         await page.screenshot({"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/_egg-capture.spec.ts",
+                        "column": 33,
+                        "line": 91
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n\n  89 |             return { present: true, painted };\n  90 |         });\n> 91 |         expect(overlay.present).toBe(true);\n     |                                 ^\n  92 |         expect(overlay.painted).toBeGreaterThan(200);\n  93 |\n  94 |         await page.screenshot({\n    at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/_egg-capture.spec.ts:91:33"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T21:15:48.786Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/test-results/_egg-capture-E1-ℱ-redraw-paints-an-epicycle-overlay-light--chromium-headless-new/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/_egg-capture.spec.ts",
+                    "column": 33,
+                    "line": 91
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "d091b82fc166f7c1ff8c-04bcf57340e61700c856",
+          "file": "_egg-capture.spec.ts",
+          "line": 65,
+          "column": 5
+        },
+        {
+          "title": "E1 ℱ-redraw paints an epicycle overlay (dark)",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 1872,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/_egg-capture.spec.ts:91:33",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/_egg-capture.spec.ts",
+                      "column": 33,
+                      "line": 91
+                    },
+                    "snippet": "  89 |             return { present: true, painted };\n  90 |         });\n> 91 |         expect(overlay.present).toBe(true);\n     |                                 ^\n  92 |         expect(overlay.painted).toBeGreaterThan(200);\n  93 |\n  94 |         await page.screenshot({"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/_egg-capture.spec.ts",
+                        "column": 33,
+                        "line": 91
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n\n  89 |             return { present: true, painted };\n  90 |         });\n> 91 |         expect(overlay.present).toBe(true);\n     |                                 ^\n  92 |         expect(overlay.painted).toBeGreaterThan(200);\n  93 |\n  94 |         await page.screenshot({\n    at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/_egg-capture.spec.ts:91:33"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T21:15:50.977Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/test-results/_egg-capture-E1-ℱ-redraw-paints-an-epicycle-overlay-dark--chromium-headless-new/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/_egg-capture.spec.ts",
+                    "column": 33,
+                    "line": 91
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "d091b82fc166f7c1ff8c-28e6009b519578dc4600",
+          "file": "_egg-capture.spec.ts",
+          "line": 65,
+          "column": 5
+        },
+        {
+          "title": "E2 konami reveals the full-bleed aurora",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 6,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 2005,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/_egg-capture.spec.ts:134:28",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/_egg-capture.spec.ts",
+                      "column": 28,
+                      "line": 134
+                    },
+                    "snippet": "  132 |         };\n  133 |     });\n> 134 |     expect(reveal.present).toBe(true);\n      |                            ^\n  135 |     expect(reveal.shown).toBe(true);\n  136 |\n  137 |     await page.screenshot({"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/_egg-capture.spec.ts",
+                        "column": 28,
+                        "line": 134
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n\n  132 |         };\n  133 |     });\n> 134 |     expect(reveal.present).toBe(true);\n      |                            ^\n  135 |     expect(reveal.shown).toBe(true);\n  136 |\n  137 |     await page.screenshot({\n    at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/_egg-capture.spec.ts:134:28"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T21:15:53.159Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/test-results/_egg-capture-E2-konami-reveals-the-full-bleed-aurora-chromium-headless-new/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/_egg-capture.spec.ts",
+                    "column": 28,
+                    "line": 134
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "d091b82fc166f7c1ff8c-6c7e7253c8d93e49893c",
+          "file": "_egg-capture.spec.ts",
+          "line": 102,
+          "column": 1
+        },
+        {
+          "title": "E4 404 paints the lattice (light)",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 7,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 1471,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/_egg-capture.spec.ts:156:24",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/_egg-capture.spec.ts",
+                      "column": 24,
+                      "line": 156
+                    },
+                    "snippet": "  154 |             document.body.textContent?.includes(\"Lost in the lattice\"),\n  155 |         );\n> 156 |         expect(has404).toBe(true);\n      |                        ^\n  157 |\n  158 |         await page.screenshot({\n  159 |             path: `${OUT}/W-EGG-404-lattice-desktop1280-${scheme}.png`,"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/_egg-capture.spec.ts",
+                        "column": 24,
+                        "line": 156
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n\n  154 |             document.body.textContent?.includes(\"Lost in the lattice\"),\n  155 |         );\n> 156 |         expect(has404).toBe(true);\n      |                        ^\n  157 |\n  158 |         await page.screenshot({\n  159 |             path: `${OUT}/W-EGG-404-lattice-desktop1280-${scheme}.png`,\n    at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/_egg-capture.spec.ts:156:24"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T21:15:55.476Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/test-results/_egg-capture-E4-404-paints-the-lattice-light--chromium-headless-new/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/_egg-capture.spec.ts",
+                    "column": 24,
+                    "line": 156
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "d091b82fc166f7c1ff8c-0c9ff271d577f74a41ab",
+          "file": "_egg-capture.spec.ts",
+          "line": 145,
+          "column": 5
+        },
+        {
+          "title": "E4 404 paints the lattice (dark)",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 8,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 1460,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/_egg-capture.spec.ts:156:24",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/_egg-capture.spec.ts",
+                      "column": 24,
+                      "line": 156
+                    },
+                    "snippet": "  154 |             document.body.textContent?.includes(\"Lost in the lattice\"),\n  155 |         );\n> 156 |         expect(has404).toBe(true);\n      |                        ^\n  157 |\n  158 |         await page.screenshot({\n  159 |             path: `${OUT}/W-EGG-404-lattice-desktop1280-${scheme}.png`,"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/_egg-capture.spec.ts",
+                        "column": 24,
+                        "line": 156
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n\n  154 |             document.body.textContent?.includes(\"Lost in the lattice\"),\n  155 |         );\n> 156 |         expect(has404).toBe(true);\n      |                        ^\n  157 |\n  158 |         await page.screenshot({\n  159 |             path: `${OUT}/W-EGG-404-lattice-desktop1280-${scheme}.png`,\n    at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/_egg-capture.spec.ts:156:24"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T21:15:57.249Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/test-results/_egg-capture-E4-404-paints-the-lattice-dark--chromium-headless-new/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/_egg-capture.spec.ts",
+                    "column": 24,
+                    "line": 156
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "d091b82fc166f7c1ff8c-becf488233fd981fc85d",
+          "file": "_egg-capture.spec.ts",
+          "line": 145,
+          "column": 5
+        },
+        {
+          "title": "E4 empty-states mascot is mounted (light·mobile390)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 9,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1539,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T21:15:59.010Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d091b82fc166f7c1ff8c-1cc99920e5402cda2c0d",
+          "file": "_egg-capture.spec.ts",
+          "line": 165,
+          "column": 1
+        },
+        {
+          "title": "E5/E6 shell dark toggle present + eclipse register (light)",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 9,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 5965,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('.demo-sidebar-dark-toggle').first()\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('.demo-sidebar-dark-toggle').first()\u001b[22m\n",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('.demo-sidebar-dark-toggle').first()\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('.demo-sidebar-dark-toggle').first()\u001b[22m\n\n    at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/_egg-capture.spec.ts:194:30",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/_egg-capture.spec.ts",
+                      "column": 30,
+                      "line": 194
+                    },
+                    "snippet": "  192 |         // E6 — the toggle is in the rail chrome.\n  193 |         const toggle = page.locator(\".demo-sidebar-dark-toggle\").first();\n> 194 |         await expect(toggle).toBeVisible();\n      |                              ^\n  195 |\n  196 |         // E5 — a long-press fires the eclipse register (data-eclipsing flips).\n  197 |         const box = await toggle.boundingBox();"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/_egg-capture.spec.ts",
+                        "column": 30,
+                        "line": 194
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('.demo-sidebar-dark-toggle').first()\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('.demo-sidebar-dark-toggle').first()\u001b[22m\n\n\n  192 |         // E6 — the toggle is in the rail chrome.\n  193 |         const toggle = page.locator(\".demo-sidebar-dark-toggle\").first();\n> 194 |         await expect(toggle).toBeVisible();\n      |                              ^\n  195 |\n  196 |         // E5 — a long-press fires the eclipse register (data-eclipsing flips).\n  197 |         const box = await toggle.boundingBox();\n    at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/_egg-capture.spec.ts:194:30"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T21:16:00.626Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/test-results/_egg-capture-E5-E6-shell-d-d6a67-ent-eclipse-register-light--chromium-headless-new/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/_egg-capture.spec.ts",
+                    "column": 30,
+                    "line": 194
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "d091b82fc166f7c1ff8c-76fff308affb81438e38",
+          "file": "_egg-capture.spec.ts",
+          "line": 185,
+          "column": 5
+        },
+        {
+          "title": "E5/E6 shell dark toggle present + eclipse register (dark)",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 10,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 5966,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('.demo-sidebar-dark-toggle').first()\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('.demo-sidebar-dark-toggle').first()\u001b[22m\n",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('.demo-sidebar-dark-toggle').first()\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('.demo-sidebar-dark-toggle').first()\u001b[22m\n\n    at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/_egg-capture.spec.ts:194:30",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/_egg-capture.spec.ts",
+                      "column": 30,
+                      "line": 194
+                    },
+                    "snippet": "  192 |         // E6 — the toggle is in the rail chrome.\n  193 |         const toggle = page.locator(\".demo-sidebar-dark-toggle\").first();\n> 194 |         await expect(toggle).toBeVisible();\n      |                              ^\n  195 |\n  196 |         // E5 — a long-press fires the eclipse register (data-eclipsing flips).\n  197 |         const box = await toggle.boundingBox();"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/_egg-capture.spec.ts",
+                        "column": 30,
+                        "line": 194
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('.demo-sidebar-dark-toggle').first()\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('.demo-sidebar-dark-toggle').first()\u001b[22m\n\n\n  192 |         // E6 — the toggle is in the rail chrome.\n  193 |         const toggle = page.locator(\".demo-sidebar-dark-toggle\").first();\n> 194 |         await expect(toggle).toBeVisible();\n      |                              ^\n  195 |\n  196 |         // E5 — a long-press fires the eclipse register (data-eclipsing flips).\n  197 |         const box = await toggle.boundingBox();\n    at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/_egg-capture.spec.ts:194:30"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T21:16:06.899Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/test-results/_egg-capture-E5-E6-shell-d-393c7-sent-eclipse-register-dark--chromium-headless-new/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/_egg-capture.spec.ts",
+                    "column": 30,
+                    "line": 194
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "d091b82fc166f7c1ff8c-597c1df60fdbe6fa11a8",
+          "file": "_egg-capture.spec.ts",
+          "line": 185,
+          "column": 5
+        }
+      ]
+    },
+    {
+      "title": "_fix-glassui-dark-capture.spec.ts",
+      "file": "_fix-glassui-dark-capture.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "auth-shell light",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 11,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2368,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T21:16:13.189Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ddcda4f7a1e5a9b35772-21605060c4de3a981b96",
+          "file": "_fix-glassui-dark-capture.spec.ts",
+          "line": 32,
+          "column": 9
+        },
+        {
+          "title": "configurator light",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 11,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2421,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T21:16:15.647Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ddcda4f7a1e5a9b35772-8e9c4ea4a346a40ed832",
+          "file": "_fix-glassui-dark-capture.spec.ts",
+          "line": 32,
+          "column": 9
+        },
+        {
+          "title": "icons-pops light",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 11,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 10479,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T21:16:18.072Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ddcda4f7a1e5a9b35772-da25840d9881e0c2d30e",
+          "file": "_fix-glassui-dark-capture.spec.ts",
+          "line": 32,
+          "column": 9
+        },
+        {
+          "title": "404-egg light",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 11,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 10436,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T21:16:28.555Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ddcda4f7a1e5a9b35772-4234297f318d4c987af0",
+          "file": "_fix-glassui-dark-capture.spec.ts",
+          "line": 32,
+          "column": 9
+        },
+        {
+          "title": "auth-shell dark",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 11,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2334,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T21:16:38.999Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ddcda4f7a1e5a9b35772-486f7070971c9f77b21c",
+          "file": "_fix-glassui-dark-capture.spec.ts",
+          "line": 32,
+          "column": 9
+        },
+        {
+          "title": "configurator dark",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 11,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2445,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T21:16:41.336Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ddcda4f7a1e5a9b35772-fb92cf686fc4850237ae",
+          "file": "_fix-glassui-dark-capture.spec.ts",
+          "line": 32,
+          "column": 9
+        },
+        {
+          "title": "icons-pops dark",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 11,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 10445,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T21:16:43.787Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ddcda4f7a1e5a9b35772-abb385445eed3f0ae7c2",
+          "file": "_fix-glassui-dark-capture.spec.ts",
+          "line": 32,
+          "column": 9
+        },
+        {
+          "title": "404-egg dark",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 11,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 10400,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T21:16:54.236Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ddcda4f7a1e5a9b35772-e36270da54d8756b0569",
+          "file": "_fix-glassui-dark-capture.spec.ts",
+          "line": 32,
+          "column": 9
+        }
+      ]
+    },
+    {
+      "title": "_prim-polish-capture.spec.ts",
+      "file": "_prim-polish-capture.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "dialog scrim — dark recedes to ink (mobile390)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 15,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1645,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T21:21:16.256Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "0393fce87a8d66a1c3aa-1291a1583bfd048fe40a",
+          "file": "_prim-polish-capture.spec.ts",
+          "line": 125,
+          "column": 5
+        },
+        {
+          "title": "dialog scrim — dark recedes to ink (desktop1280)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 15,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1694,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T21:21:17.906Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "0393fce87a8d66a1c3aa-330bf6980ce9205b9336",
+          "file": "_prim-polish-capture.spec.ts",
+          "line": 125,
+          "column": 5
+        }
+      ],
+      "suites": [
+        {
+          "title": "W-PRIM-POLISH capture (light · mobile390)",
+          "file": "_prim-polish-capture.spec.ts",
+          "line": 27,
+          "column": 14,
+          "specs": [
+            {
+              "title": "buttons — gold CTA hover + the corrected specimen (light·mobile390)",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 11,
+                      "parallelIndex": 0,
+                      "status": "timedOut",
+                      "duration": 60018,
+                      "error": {
+                        "message": "\u001b[31mTest timeout of 60000ms exceeded.\u001b[39m",
+                        "stack": "\u001b[31mTest timeout of 60000ms exceeded.\u001b[39m"
+                      },
+                      "errors": [
+                        {
+                          "message": "\u001b[31mTest timeout of 60000ms exceeded.\u001b[39m"
+                        },
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/_prim-polish-capture.spec.ts",
+                            "column": 32,
+                            "line": 41
+                          },
+                          "message": "Error: locator.scrollIntoViewIfNeeded: Test timeout of 60000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('button').filter({ hasText: 'Hover (sim.)' }).first()\u001b[22m\n\n\n  39 |                     .locator(\"button\", { hasText: \"Hover (sim.)\" })\n  40 |                     .first();\n> 41 |                 await specimen.scrollIntoViewIfNeeded();\n     |                                ^\n  42 |                 await page.waitForTimeout(120);\n  43 |                 const sBox = (await specimen.boundingBox())!;\n  44 |                 await page.screenshot({\n    at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/_prim-polish-capture.spec.ts:41:32"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T21:17:04.645Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/test-results/_prim-polish-capture-W-PRI-cbdf2-d-specimen-light·mobile390--chromium-headless-new/error-context.md"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "0393fce87a8d66a1c3aa-6caa8a8a0112bd405cbb",
+              "file": "_prim-polish-capture.spec.ts",
+              "line": 28,
+              "column": 13
+            },
+            {
+              "title": "badge — dark destructive plate (light·mobile390)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 12,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1262,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T21:18:05.027Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "0393fce87a8d66a1c3aa-49d7d90a01a542d801f2",
+              "file": "_prim-polish-capture.spec.ts",
+              "line": 71,
+              "column": 13
+            },
+            {
+              "title": "checks — switch glass track (light·mobile390)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 12,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1159,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T21:18:06.400Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "0393fce87a8d66a1c3aa-06b87168e1c85d48fba5",
+              "file": "_prim-polish-capture.spec.ts",
+              "line": 96,
+              "column": 13
+            }
+          ]
+        },
+        {
+          "title": "W-PRIM-POLISH capture (light · desktop1280)",
+          "file": "_prim-polish-capture.spec.ts",
+          "line": 27,
+          "column": 14,
+          "specs": [
+            {
+              "title": "buttons — gold CTA hover + the corrected specimen (light·desktop1280)",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 12,
+                      "parallelIndex": 0,
+                      "status": "timedOut",
+                      "duration": 60015,
+                      "error": {
+                        "message": "\u001b[31mTest timeout of 60000ms exceeded.\u001b[39m",
+                        "stack": "\u001b[31mTest timeout of 60000ms exceeded.\u001b[39m"
+                      },
+                      "errors": [
+                        {
+                          "message": "\u001b[31mTest timeout of 60000ms exceeded.\u001b[39m"
+                        },
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/_prim-polish-capture.spec.ts",
+                            "column": 32,
+                            "line": 41
+                          },
+                          "message": "Error: locator.scrollIntoViewIfNeeded: Test timeout of 60000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('button').filter({ hasText: 'Hover (sim.)' }).first()\u001b[22m\n\n\n  39 |                     .locator(\"button\", { hasText: \"Hover (sim.)\" })\n  40 |                     .first();\n> 41 |                 await specimen.scrollIntoViewIfNeeded();\n     |                                ^\n  42 |                 await page.waitForTimeout(120);\n  43 |                 const sBox = (await specimen.boundingBox())!;\n  44 |                 await page.screenshot({\n    at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/_prim-polish-capture.spec.ts:41:32"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T21:18:07.565Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/test-results/_prim-polish-capture-W-PRI-a92fe-specimen-light·desktop1280--chromium-headless-new/error-context.md"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "0393fce87a8d66a1c3aa-441772821874abe17b6a",
+              "file": "_prim-polish-capture.spec.ts",
+              "line": 28,
+              "column": 13
+            },
+            {
+              "title": "badge — dark destructive plate (light·desktop1280)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 13,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1296,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T21:19:07.972Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "0393fce87a8d66a1c3aa-20f37c9930498a67ece0",
+              "file": "_prim-polish-capture.spec.ts",
+              "line": 71,
+              "column": 13
+            },
+            {
+              "title": "checks — switch glass track (light·desktop1280)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 13,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1195,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T21:19:09.406Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "0393fce87a8d66a1c3aa-4d80363b0398b5fb6842",
+              "file": "_prim-polish-capture.spec.ts",
+              "line": 96,
+              "column": 13
+            }
+          ]
+        },
+        {
+          "title": "W-PRIM-POLISH capture (dark · mobile390)",
+          "file": "_prim-polish-capture.spec.ts",
+          "line": 27,
+          "column": 14,
+          "specs": [
+            {
+              "title": "buttons — gold CTA hover + the corrected specimen (dark·mobile390)",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 13,
+                      "parallelIndex": 0,
+                      "status": "timedOut",
+                      "duration": 60015,
+                      "error": {
+                        "message": "\u001b[31mTest timeout of 60000ms exceeded.\u001b[39m",
+                        "stack": "\u001b[31mTest timeout of 60000ms exceeded.\u001b[39m"
+                      },
+                      "errors": [
+                        {
+                          "message": "\u001b[31mTest timeout of 60000ms exceeded.\u001b[39m"
+                        },
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/_prim-polish-capture.spec.ts",
+                            "column": 32,
+                            "line": 41
+                          },
+                          "message": "Error: locator.scrollIntoViewIfNeeded: Test timeout of 60000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('button').filter({ hasText: 'Hover (sim.)' }).first()\u001b[22m\n\n\n  39 |                     .locator(\"button\", { hasText: \"Hover (sim.)\" })\n  40 |                     .first();\n> 41 |                 await specimen.scrollIntoViewIfNeeded();\n     |                                ^\n  42 |                 await page.waitForTimeout(120);\n  43 |                 const sBox = (await specimen.boundingBox())!;\n  44 |                 await page.screenshot({\n    at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/_prim-polish-capture.spec.ts:41:32"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T21:19:10.607Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/test-results/_prim-polish-capture-W-PRI-ea2a4-ed-specimen-dark·mobile390--chromium-headless-new/error-context.md"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "0393fce87a8d66a1c3aa-894a394ef1762103b38f",
+              "file": "_prim-polish-capture.spec.ts",
+              "line": 28,
+              "column": 13
+            },
+            {
+              "title": "badge — dark destructive plate (dark·mobile390)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 14,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1225,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T21:20:10.922Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "0393fce87a8d66a1c3aa-72a850808829d42229b5",
+              "file": "_prim-polish-capture.spec.ts",
+              "line": 71,
+              "column": 13
+            },
+            {
+              "title": "checks — switch glass track (dark·mobile390)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 14,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1156,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T21:20:12.243Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "0393fce87a8d66a1c3aa-1b0cbbd8feb6a118fb2a",
+              "file": "_prim-polish-capture.spec.ts",
+              "line": 96,
+              "column": 13
+            }
+          ]
+        },
+        {
+          "title": "W-PRIM-POLISH capture (dark · desktop1280)",
+          "file": "_prim-polish-capture.spec.ts",
+          "line": 27,
+          "column": 14,
+          "specs": [
+            {
+              "title": "buttons — gold CTA hover + the corrected specimen (dark·desktop1280)",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 14,
+                      "parallelIndex": 0,
+                      "status": "timedOut",
+                      "duration": 60014,
+                      "error": {
+                        "message": "\u001b[31mTest timeout of 60000ms exceeded.\u001b[39m",
+                        "stack": "\u001b[31mTest timeout of 60000ms exceeded.\u001b[39m"
+                      },
+                      "errors": [
+                        {
+                          "message": "\u001b[31mTest timeout of 60000ms exceeded.\u001b[39m"
+                        },
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/_prim-polish-capture.spec.ts",
+                            "column": 32,
+                            "line": 41
+                          },
+                          "message": "Error: locator.scrollIntoViewIfNeeded: Test timeout of 60000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('button').filter({ hasText: 'Hover (sim.)' }).first()\u001b[22m\n\n\n  39 |                     .locator(\"button\", { hasText: \"Hover (sim.)\" })\n  40 |                     .first();\n> 41 |                 await specimen.scrollIntoViewIfNeeded();\n     |                                ^\n  42 |                 await page.waitForTimeout(120);\n  43 |                 const sBox = (await specimen.boundingBox())!;\n  44 |                 await page.screenshot({\n    at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/_prim-polish-capture.spec.ts:41:32"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T21:20:13.405Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/test-results/_prim-polish-capture-W-PRI-217d0--specimen-dark·desktop1280--chromium-headless-new/error-context.md"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "0393fce87a8d66a1c3aa-1b2f202cb6a2702d22af",
+              "file": "_prim-polish-capture.spec.ts",
+              "line": 28,
+              "column": 13
+            },
+            {
+              "title": "badge — dark destructive plate (dark·desktop1280)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 15,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1230,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T21:21:13.776Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "0393fce87a8d66a1c3aa-60834ca9175605609bdc",
+              "file": "_prim-polish-capture.spec.ts",
+              "line": 71,
+              "column": 13
+            },
+            {
+              "title": "checks — switch glass track (dark·desktop1280)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 15,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1148,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T21:21:15.102Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "0393fce87a8d66a1c3aa-ac721d691ad5eae0a6e0",
+              "file": "_prim-polish-capture.spec.ts",
+              "line": 96,
+              "column": 13
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "_r4-shell-config-capture.spec.ts",
+      "file": "_r4-shell-config-capture.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "AZ.R4-SHELL — gear→PresetEditor, glassy rows, panel padding (shell)",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 15,
+                  "parallelIndex": 0,
+                  "status": "timedOut",
+                  "duration": 60015,
+                  "error": {
+                    "message": "\u001b[31mTest timeout of 60000ms exceeded.\u001b[39m",
+                    "stack": "\u001b[31mTest timeout of 60000ms exceeded.\u001b[39m"
+                  },
+                  "errors": [
+                    {
+                      "message": "\u001b[31mTest timeout of 60000ms exceeded.\u001b[39m"
+                    },
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/_r4-shell-config-capture.spec.ts",
+                        "column": 23,
+                        "line": 190
+                      },
+                      "message": "Error: locator.waitFor: Test timeout of 60000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('.dropdown-menu-content').first() to be visible\u001b[22m\n\n\n  188 |         await trigger.click();\n  189 |         const content = page.locator(\".dropdown-menu-content\").first();\n> 190 |         await content.waitFor({ state: \"visible\" });\n      |                       ^\n  191 |         await page.waitForTimeout(250);\n  192 |         const padding = await content.evaluate((el) => {\n  193 |             const cs = getComputedStyle(el as HTMLElement);\n    at measureDropdown (/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/_r4-shell-config-capture.spec.ts:190:23)\n    at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/_r4-shell-config-capture.spec.ts:207:27"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T21:21:19.614Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/test-results/_r4-shell-config-capture-A-3f756-y-rows-panel-padding-shell--chromium-headless-new/error-context.md"
+                    }
+                  ]
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "8f2a09d99387c0ff0105-43e0f14b99e4082bd5f5",
+          "file": "_r4-shell-config-capture.spec.ts",
+          "line": 115,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "CommandDialog.b7c.spec.ts",
+      "file": "CommandDialog.b7c.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "C3-1: the modal finder holds the page through the root and lets go without a jump",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 16,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1844,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T21:22:20.073Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "503c9d84a81ca72339a0-a2d6c071f9caa559d404",
+          "file": "CommandDialog.b7c.spec.ts",
+          "line": 34,
+          "column": 1
+        },
+        {
+          "title": "C3-2: the short first group keeps its rows in view under its own heading",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 16,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 681,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T21:22:22.056Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "503c9d84a81ca72339a0-d6be773ae200103fa13e",
+          "file": "CommandDialog.b7c.spec.ts",
+          "line": 66,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "DropdownMenu.scroll-lock.spec.ts",
+      "file": "DropdownMenu.scroll-lock.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "DropdownMenu: opening it keeps body scroll and the sticky row in place",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 16,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 657,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T21:22:22.748Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1117f1828b61353d0f00-064c60d97f9adee87bc4",
+          "file": "DropdownMenu.scroll-lock.spec.ts",
+          "line": 25,
+          "column": 5
+        },
+        {
+          "title": "Select: opening it keeps body scroll and the sticky row in place",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 16,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 659,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T21:22:23.411Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1117f1828b61353d0f00-2c73e4df019650538eee",
+          "file": "DropdownMenu.scroll-lock.spec.ts",
+          "line": 25,
+          "column": 5
+        }
+      ]
+    },
+    {
+      "title": "SegmentedTabs.glide.spec.ts",
+      "file": "SegmentedTabs.glide.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "adjacent hop: the indicator glides at its own size in one monotone leg",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 16,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1333,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T21:22:24.083Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "81df10900155336a1b1b-b5d5730a8577dbf92d2c",
+          "file": "SegmentedTabs.glide.spec.ts",
+          "line": 70,
+          "column": 5
+        },
+        {
+          "title": "far hop: the indicator glides at its own size in one monotone leg",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 16,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1328,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T21:22:25.424Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "81df10900155336a1b1b-81914cfb2c006241a7af",
+          "file": "SegmentedTabs.glide.spec.ts",
+          "line": 70,
+          "column": 5
+        },
+        {
+          "title": "hover on an inactive tab changes its colour and nothing else",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 16,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1086,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T21:22:26.761Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "81df10900155336a1b1b-c705fc00bc1c036e285c",
+          "file": "SegmentedTabs.glide.spec.ts",
+          "line": 115,
+          "column": 1
+        },
+        {
+          "title": "re-clicking the active tab on its centre moves nothing",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 16,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1500,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T21:22:27.852Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "81df10900155336a1b1b-d74418b0667e72a3e3e3",
+          "file": "SegmentedTabs.glide.spec.ts",
+          "line": 164,
+          "column": 5
+        },
+        {
+          "title": "re-clicking the active tab off its centre moves nothing",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 16,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1466,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T21:22:29.358Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "81df10900155336a1b1b-1bf8fb3f39af5c68038b",
+          "file": "SegmentedTabs.glide.spec.ts",
+          "line": 164,
+          "column": 5
+        },
+        {
+          "title": "the indicator can be dragged to the next tab, and stays under the label it commits",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 16,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1593,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T21:22:30.829Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "81df10900155336a1b1b-06627c651d0de99d679f",
+          "file": "SegmentedTabs.glide.spec.ts",
+          "line": 179,
+          "column": 1
+        },
+        {
+          "title": "a 8 px drag out and back, released on its start, leaves the next hop gliding",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 16,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1796,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T21:22:32.427Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "81df10900155336a1b1b-8313c96b4521f18dfde5",
+          "file": "SegmentedTabs.glide.spec.ts",
+          "line": 205,
+          "column": 5
+        },
+        {
+          "title": "a 24 px drag out and back, released on its start, leaves the next hop gliding",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 16,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1787,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T21:22:34.228Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "81df10900155336a1b1b-00334c562871d9ff53d6",
+          "file": "SegmentedTabs.glide.spec.ts",
+          "line": 205,
+          "column": 5
+        }
+      ]
+    },
+    {
+      "title": "Select.bound.spec.ts",
+      "file": "Select.bound.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "a twelve-row list that fits the room shows whole",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 16,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 573,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T21:22:36.027Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d3b8c31450e710e3fb68-1763c0b54515d55b6525",
+          "file": "Select.bound.spec.ts",
+          "line": 17,
+          "column": 1
+        },
+        {
+          "title": "a short viewport bounds the list 16px from the edge and it scrolls inside",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 16,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 589,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T21:22:36.604Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d3b8c31450e710e3fb68-f1f5a48529eadf1497d6",
+          "file": "Select.bound.spec.ts",
+          "line": 35,
+          "column": 1
+        },
+        {
+          "title": "below 30rem the listbox is a bottom sheet at full width",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 16,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 571,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T21:22:37.197Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d3b8c31450e710e3fb68-004fbb5f81faaaf30b84",
+          "file": "Select.bound.spec.ts",
+          "line": 53,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "Sheet.position.spec.ts",
+      "file": "Sheet.position.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "sheet opened deep in the page is fixed and on screen (consumer layer)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 16,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 894,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T21:22:37.776Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "635c9b867fa96b29ee77-1b0f6f91b109964dc1c3",
+          "file": "Sheet.position.spec.ts",
+          "line": 14,
+          "column": 5
+        },
+        {
+          "title": "sheet opened deep in the page is fixed and on screen (unlayered)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 16,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 900,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T21:22:38.676Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "635c9b867fa96b29ee77-189a6cc1330886044094",
+          "file": "Sheet.position.spec.ts",
+          "line": 14,
+          "column": 5
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-11T21:14:42.829Z",
+    "duration": 476803.357,
+    "expected": 44,
+    "skipped": 0,
+    "unexpected": 16,
+    "flaky": 0
+  }
+}

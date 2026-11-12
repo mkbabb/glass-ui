@@ -1,11 +1,11 @@
-# W-B.4 · Owner glances: one paired capture per conflicting ask, a seat default, the owner's word recorded · 11.0.0
+# W-B.4 · Owner glances: one paired capture per conflicting ask, a seat default, the owner's word recorded
 
 | field | value |
 |---|---|
 | seat | band-B wave-spec seat, formation run `wf_68eb18d6-b21` |
 | model | `claude-opus-5-5`, asserted from own system identity |
 | HEAD | `19bf6569` in a scratch worktree; docs-only since `f3ad78d0` |
-| ships in | 11.0.0 (records; each default is built by its named wave) |
+| release | `waves/INDEX.md`, the one record. Formation's placement, superseded there: 11.0.0 (records; each default is built by its named wave) |
 | families | F-15 whole (`audit/REGISTRY.md:342-352`) |
 | depends on | PLAN §5, the one record of edges |
 | dependants | PLAN §5 (its inverse) |

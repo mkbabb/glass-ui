@@ -1,0 +1,209 @@
+
+Running 9 tests using 1 worker
+
+  ✘  1 [webkit] › tests-visual/release-10-1-5.spec.ts:114:5 › coarse phone › g1 rest dock at 390: one corner = half its height, nothing to scroll, pointer off and on the trailing seat (2.1s)
+  ✘  2 [webkit] › tests-visual/release-10-1-5.spec.ts:114:5 › coarse phone › g1 rest dock at 844: one corner = half its height, nothing to scroll, pointer off and on the trailing seat (2.1s)
+  ✘  3 [webkit] › tests-visual/release-10-1-5.spec.ts:147:5 › coarse phone › g4 at 390 coarse the field type is at most 16px and at most 1.25x the pane subtitle (1.2s)
+  ✘  4 [webkit] › tests-visual/release-10-1-5.spec.ts:114:5 › g1 rest dock at 1280: one corner = half its height, nothing to scroll, pointer off and on the trailing seat (2.1s)
+  ✘  5 [webkit] › tests-visual/release-10-1-5.spec.ts:189:1 › g1 an overflowing run at scroll 0: the leading cap rests at half the block extent, a length; the trailing cap is cut (1.5s)
+  ✘  6 [webkit] › tests-visual/release-10-1-5.spec.ts:211:1 › g2 collapsed: the plate is a circle, half its extent on both axes (1.6s)
+  ✘  7 [webkit] › tests-visual/release-10-1-5.spec.ts:229:1 › g2 expanded (collapsible), each layer and input mode hold g1 (1.2s)
+  ✘  8 [webkit] › tests-visual/release-10-1-5.spec.ts:255:1 › g3 the Slider thumb is visible and one size at min, mid and max, inside the fill (1.2s)
+  ✘  9 [webkit] › tests-visual/release-10-1-5.spec.ts:302:1 › g5 the DropdownMenuItem icon-to-label gap is the icon-slot token, the dock trigger's own (1.2s)
+
+
+  1) [webkit] › tests-visual/release-10-1-5.spec.ts:114:5 › coarse phone › g1 rest dock at 390: one corner = half its height, nothing to scroll, pointer off and on the trailing seat 
+
+    Error: 390 hover on the trailing seat: run scrollWidth = clientWidth ({"sw":265,"cw":263,"sh":52,"ch":52,"active":true})
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 263
+    Received: 265
+
+      90 |     const run = read.runs.find((r) => r.active)!;
+      91 |     expect(run, `${cell}: an active run`).toBeTruthy();
+    > 92 |     expect(run.sw, `${cell}: run scrollWidth = clientWidth (${JSON.stringify(run)})`).toBe(
+         |                                                                                       ^
+      93 |         run.cw,
+      94 |     );
+      95 |     expect(run.sh, `${cell}: run scrollHeight = clientHeight (${JSON.stringify(run)})`).toBe(
+        at expectNoReach (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:92:87)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:129:9
+
+    Error Context: tests-visual/test-results/release-10-1-5-coarse-phon-a994e-ff-and-on-the-trailing-seat-webkit/error-context.md
+
+  2) [webkit] › tests-visual/release-10-1-5.spec.ts:114:5 › coarse phone › g1 rest dock at 844: one corner = half its height, nothing to scroll, pointer off and on the trailing seat 
+
+    Error: 844 hover on the trailing seat: run scrollWidth = clientWidth ({"sw":267,"cw":265,"sh":52,"ch":52,"active":true})
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 265
+    Received: 267
+
+      90 |     const run = read.runs.find((r) => r.active)!;
+      91 |     expect(run, `${cell}: an active run`).toBeTruthy();
+    > 92 |     expect(run.sw, `${cell}: run scrollWidth = clientWidth (${JSON.stringify(run)})`).toBe(
+         |                                                                                       ^
+      93 |         run.cw,
+      94 |     );
+      95 |     expect(run.sh, `${cell}: run scrollHeight = clientHeight (${JSON.stringify(run)})`).toBe(
+        at expectNoReach (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:92:87)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:129:9
+
+    Error Context: tests-visual/test-results/release-10-1-5-coarse-phon-2730d-ff-and-on-the-trailing-seat-webkit/error-context.md
+
+  3) [webkit] › tests-visual/release-10-1-5.spec.ts:147:5 › coarse phone › g4 at 390 coarse the field type is at most 16px and at most 1.25x the pane subtitle 
+
+    Error: bar type ({"subtitle":14.186435,"bar":21,"pill":14,"picker":21,"barH":54})
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 16
+    Received:    21
+
+      174 |         expect(read.picker, `picker keeps the no-zoom floor (${JSON.stringify(read)})`).toBeGreaterThanOrEqual(16);
+      175 |         for (const field of ["bar", "pill", "picker"] as const) {
+    > 176 |             expect(read[field], `${field} type (${JSON.stringify(read)})`).toBeLessThanOrEqual(16);
+          |                                                                            ^
+      177 |             expect(
+      178 |                 read[field] / read.subtitle,
+      179 |                 `${field} ÷ subtitle (${JSON.stringify(read)})`,
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:176:76
+
+    Error Context: tests-visual/test-results/release-10-1-5-coarse-phon-073ae-ost-1-25x-the-pane-subtitle-webkit/error-context.md
+
+  4) [webkit] › tests-visual/release-10-1-5.spec.ts:114:5 › g1 rest dock at 1280: one corner = half its height, nothing to scroll, pointer off and on the trailing seat 
+
+    Error: 1280 hover on the trailing seat: run scrollWidth = clientWidth ({"sw":258,"cw":256,"sh":48,"ch":48,"active":true})
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 256
+    Received: 258
+
+      90 |     const run = read.runs.find((r) => r.active)!;
+      91 |     expect(run, `${cell}: an active run`).toBeTruthy();
+    > 92 |     expect(run.sw, `${cell}: run scrollWidth = clientWidth (${JSON.stringify(run)})`).toBe(
+         |                                                                                       ^
+      93 |         run.cw,
+      94 |     );
+      95 |     expect(run.sh, `${cell}: run scrollHeight = clientHeight (${JSON.stringify(run)})`).toBe(
+        at expectNoReach (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:92:87)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:129:9
+
+    Error Context: tests-visual/test-results/release-10-1-5-g1-rest-doc-dccb9-ff-and-on-the-trailing-seat-webkit/error-context.md
+
+  5) [webkit] › tests-visual/release-10-1-5.spec.ts:189:1 › g1 an overflowing run at scroll 0: the leading cap rests at half the block extent, a length; the trailing cap is cut 
+
+    Error: leading corner 50% is one length ({"cls":"glass-dock horizontal shape-pill expanded pinned fit-content always-expanded","w":390,"h":56,"radii":["50%","calc(0% + 16px)","calc(0% + 16px)","50%"],"runs":[{"sw":683,"cw":366,"sh":48,"ch":48,"active":true}]})
+
+    expect(received).toMatch(expected)
+
+    Expected pattern: /^[\d.]+px$/
+    Received string:  "50%"
+
+      199 |     const [tl, tr, br, bl] = read.radii;
+      200 |     for (const r of [tl, bl]) {
+    > 201 |         expect(r, `leading corner ${r} is one length (${JSON.stringify(read)})`).toMatch(/^[\d.]+px$/);
+          |                                                                                  ^
+      202 |         expect(Math.abs(Number.parseFloat(r) - read.h / 2), `leading ${r} = h/2`).toBeLessThanOrEqual(0.5);
+      203 |     }
+      204 |     for (const r of [tr, br]) {
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:201:82
+
+    Error Context: tests-visual/test-results/release-10-1-5-g1-an-overf-f9764-gth-the-trailing-cap-is-cut-webkit/error-context.md
+
+  6) [webkit] › tests-visual/release-10-1-5.spec.ts:211:1 › g2 collapsed: the plate is a circle, half its extent on both axes 
+
+    Error: collapsed: corner 50% is one length ({"cls":"glass-dock horizontal shape-pill collapsed fit-content","w":56,"h":56,"radii":["50%","calc(0% + 16px)","calc(0% + 16px)","50%"],"runs":[{"sw":256,"cw":56,"sh":64,"ch":64,"active":false}]})
+
+    expect(received).toMatch(expected)
+
+    Expected pattern: /^-?[\d.]+px$/
+    Received string:  "50%"
+
+      76 |     const half = read.h / 2;
+      77 |     for (const r of read.radii) {
+    > 78 |         expect(r, `${cell}: corner ${r} is one length (${JSON.stringify(read)})`).toMatch(
+         |                                                                                   ^
+      79 |             /^-?[\d.]+px$/,
+      80 |         );
+      81 |         expect(
+        at expectRestCorner (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:78:83)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:220:5
+
+    Error Context: tests-visual/test-results/release-10-1-5-g2-collapse-09b64-alf-its-extent-on-both-axes-webkit/error-context.md
+
+  7) [webkit] › tests-visual/release-10-1-5.spec.ts:229:1 › g2 expanded (collapsible), each layer and input mode hold g1 
+
+    Error: expanded: corner 9999px = half the block extent 28 ({"cls":"glass-dock horizontal shape-pill expanded fit-content","w":280.203125,"h":56,"radii":["9999px","9999px","9999px","9999px"],"runs":[{"sw":256,"cw":256,"sh":48,"ch":48,"active":true}]})
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.5
+    Received:    9971
+
+      82 |             Math.abs(Number.parseFloat(r) - half),
+      83 |             `${cell}: corner ${r} = half the block extent ${half} (${JSON.stringify(read)})`,
+    > 84 |         ).toBeLessThanOrEqual(0.5);
+         |           ^
+      85 |     }
+      86 | }
+      87 |
+        at expectRestCorner (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:84:11)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:234:5
+
+    Error Context: tests-visual/test-results/release-10-1-5-g2-expanded-a9b97-ayer-and-input-mode-hold-g1-webkit/error-context.md
+
+  8) [webkit] › tests-visual/release-10-1-5.spec.ts:255:1 › g3 the Slider thumb is visible and one size at min, mid and max, inside the fill 
+
+    Error: min ({"id":"min","thumb":{"l":24,"r":24,"t":12,"b":32,"w":0,"h":20},"range":{"l":24,"r":24,"t":12,"b":32,"w":0,"h":20},"track":{"l":24,"r":296,"t":12,"b":32,"w":272,"h":20},"opacity":0,"visibility":"visible","paint":"rgba(0, 0, 0, 0)"}): thumb has a box
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 4
+    Received:   0
+
+      280 |     for (const row of rows) {
+      281 |         const cell = `${row.id} (${JSON.stringify(row)})`;
+    > 282 |         expect(row.thumb.w, `${cell}: thumb has a box`).toBeGreaterThan(4);
+          |                                                         ^
+      283 |         expect(row.opacity, `${cell}: thumb opaque`).toBe(1);
+      284 |         expect(row.visibility, `${cell}: thumb visible`).toBe("visible");
+      285 |         expect(row.paint, `${cell}: thumb painted`).not.toMatch(/rgba\(0, 0, 0, 0\)|transparent/);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:282:57
+
+    Error Context: tests-visual/test-results/release-10-1-5-g3-the-Slid-64159-mid-and-max-inside-the-fill-webkit/error-context.md
+
+  9) [webkit] › tests-visual/release-10-1-5.spec.ts:302:1 › g5 the DropdownMenuItem icon-to-label gap is the icon-slot token, the dock trigger's own 
+
+    Error: the token resolves ({"token":0,"gap":0})
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   0
+
+      314 |         return { token, gap: label.left - icon.right };
+      315 |     });
+    > 316 |     expect(menu.token, `the token resolves (${JSON.stringify(menu)})`).toBeGreaterThan(0);
+          |                                                                        ^
+      317 |     expect(Math.abs(menu.gap - menu.token), `menu gap = token (${JSON.stringify(menu)})`).toBeLessThanOrEqual(0.5);
+      318 |
+      319 |     await open(page, "scene=dock");
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:316:72
+
+    Error Context: tests-visual/test-results/release-10-1-5-g5-the-Drop-0f319-oken-the-dock-trigger-s-own-webkit/error-context.md
+
+  9 failed
+    [webkit] › tests-visual/release-10-1-5.spec.ts:114:5 › coarse phone › g1 rest dock at 390: one corner = half its height, nothing to scroll, pointer off and on the trailing seat 
+    [webkit] › tests-visual/release-10-1-5.spec.ts:114:5 › coarse phone › g1 rest dock at 844: one corner = half its height, nothing to scroll, pointer off and on the trailing seat 
+    [webkit] › tests-visual/release-10-1-5.spec.ts:147:5 › coarse phone › g4 at 390 coarse the field type is at most 16px and at most 1.25x the pane subtitle 
+    [webkit] › tests-visual/release-10-1-5.spec.ts:114:5 › g1 rest dock at 1280: one corner = half its height, nothing to scroll, pointer off and on the trailing seat 
+    [webkit] › tests-visual/release-10-1-5.spec.ts:189:1 › g1 an overflowing run at scroll 0: the leading cap rests at half the block extent, a length; the trailing cap is cut 
+    [webkit] › tests-visual/release-10-1-5.spec.ts:211:1 › g2 collapsed: the plate is a circle, half its extent on both axes 
+    [webkit] › tests-visual/release-10-1-5.spec.ts:229:1 › g2 expanded (collapsible), each layer and input mode hold g1 
+    [webkit] › tests-visual/release-10-1-5.spec.ts:255:1 › g3 the Slider thumb is visible and one size at min, mid and max, inside the fill 
+    [webkit] › tests-visual/release-10-1-5.spec.ts:302:1 › g5 the DropdownMenuItem icon-to-label gap is the icon-slot token, the dock trigger's own 

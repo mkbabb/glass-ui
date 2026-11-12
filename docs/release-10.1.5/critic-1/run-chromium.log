@@ -1,0 +1,104 @@
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1793759449 slope=40.7/s inuse=30389 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. Finish what you are doing and report it; the owner decides on the reboot.
+
+Running 7 tests using 1 worker
+
+[1/7] [chromium-headless-new] › tests-visual/release-10-1-5-critic-1.spec.ts:103:9 › fine › dock postures fine
+  1) [chromium-headless-new] › tests-visual/release-10-1-5-critic-1.spec.ts:103:9 › fine › dock postures fine 
+
+    Test timeout of 240000ms exceeded.
+
+    Error: locator.click: Test timeout of 240000ms exceeded.
+    Call log:
+      - waiting for locator('body')
+        - locator resolved to <body>…</body>
+      - attempting click action
+        2 × waiting for element to be visible, enabled and stable
+          - element is visible, enabled and stable
+          - scrolling into view if needed
+          - done scrolling
+          - <html lang="en">…</html> intercepts pointer events
+        - retrying click action
+        - waiting 20ms
+        2 × waiting for element to be visible, enabled and stable
+          - element is visible, enabled and stable
+          - scrolling into view if needed
+          - done scrolling
+          - <html lang="en">…</html> intercepts pointer events
+        - retrying click action
+          - waiting 100ms
+        457 × waiting for element to be visible, enabled and stable
+            - element is visible, enabled and stable
+            - scrolling into view if needed
+            - done scrolling
+            - <html lang="en">…</html> intercepts pointer events
+          - retrying click action
+            - waiting 500ms
+
+
+      123 |                 await settle(page, 500);
+      124 |                 // keyboard focus ring on each seat (pointer off)
+    > 125 |                 await page.locator("body").click({ position: { x: 2, y: 790 } });
+          |                                            ^
+      126 |                 for (let i = 0; i < 5; i++) {
+      127 |                     await page.keyboard.press("Tab");
+      128 |                     await settle(page, 300);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5-critic-1.spec.ts:125:44
+
+    Error Context: tests-visual/test-results/release-10-1-5-critic-1-fine-dock-postures-fine-chromium-headless-new/error-context.md
+
+
+[2/7] [chromium-headless-new] › tests-visual/release-10-1-5-critic-1.spec.ts:146:9 › fine › dock overflow, collapse, vertical, shapes fine
+[3/7] [chromium-headless-new] › tests-visual/release-10-1-5-critic-1.spec.ts:238:9 › fine › type and menu fine
+[4/7] [chromium-headless-new] › tests-visual/release-10-1-5-critic-1.spec.ts:103:9 › coarse › dock postures coarse
+  2) [chromium-headless-new] › tests-visual/release-10-1-5-critic-1.spec.ts:103:9 › coarse › dock postures coarse 
+
+    Test timeout of 240000ms exceeded.
+
+    Error: locator.click: Test timeout of 240000ms exceeded.
+    Call log:
+      - waiting for locator('body')
+        - locator resolved to <body>…</body>
+      - attempting click action
+        2 × waiting for element to be visible, enabled and stable
+          - element is visible, enabled and stable
+          - scrolling into view if needed
+          - done scrolling
+          - <html lang="en">…</html> intercepts pointer events
+        - retrying click action
+        - waiting 20ms
+        2 × waiting for element to be visible, enabled and stable
+          - element is visible, enabled and stable
+          - scrolling into view if needed
+          - done scrolling
+          - <html lang="en">…</html> intercepts pointer events
+        - retrying click action
+          - waiting 100ms
+        457 × waiting for element to be visible, enabled and stable
+            - element is visible, enabled and stable
+            - scrolling into view if needed
+            - done scrolling
+            - <html lang="en">…</html> intercepts pointer events
+          - retrying click action
+            - waiting 500ms
+
+
+      123 |                 await settle(page, 500);
+      124 |                 // keyboard focus ring on each seat (pointer off)
+    > 125 |                 await page.evaluate(() => (document.activeElement as HTMLElement | null)?.blur());
+          |                                            ^
+      126 |                 for (let i = 0; i < 5; i++) {
+      127 |                     await page.keyboard.press("Tab");
+      128 |                     await settle(page, 300);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5-critic-1.spec.ts:125:44
+
+    Error Context: tests-visual/test-results/release-10-1-5-critic-1-coarse-dock-postures-coarse-chromium-headless-new/error-context.md
+
+
+[5/7] [chromium-headless-new] › tests-visual/release-10-1-5-critic-1.spec.ts:146:9 › coarse › dock overflow, collapse, vertical, shapes coarse
+[6/7] [chromium-headless-new] › tests-visual/release-10-1-5-critic-1.spec.ts:238:9 › coarse › type and menu coarse
+[7/7] [chromium-headless-new] › tests-visual/release-10-1-5-critic-1.spec.ts:313:1 › slider rungs and edges
+  2 failed
+    [chromium-headless-new] › tests-visual/release-10-1-5-critic-1.spec.ts:103:9 › fine › dock postures fine 
+    [chromium-headless-new] › tests-visual/release-10-1-5-critic-1.spec.ts:103:9 › coarse › dock postures coarse 
+  5 passed (9.4m)
+exit=1

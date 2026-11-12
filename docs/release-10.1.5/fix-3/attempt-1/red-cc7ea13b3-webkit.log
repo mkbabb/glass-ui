@@ -1,0 +1,75 @@
+
+Running 4 tests using 1 worker
+
+  ✘  1 [webkit] › tests-visual/release-10-1-5.spec.ts:590:5 › critique 2, coarse phone › e3 at 390: the run's clip and hit stop at the persistent seats, at rest and scrolled (5.9s)
+  ✘  2 [webkit] › tests-visual/release-10-1-5.spec.ts:637:5 › critique 2, coarse phone › e4 at 390: the run's end padding holds a focused, hovered end seat's ink and the scroll step (2.4s)
+  ✓  3 [webkit] › tests-visual/release-10-1-5.spec.ts:590:5 › e3 at 390: the run's clip and hit stop at the persistent seats, at rest and scrolled (5.7s)
+  ✘  4 [webkit] › tests-visual/release-10-1-5.spec.ts:637:5 › e4 at 1440: the run's end padding holds a focused, hovered end seat's ink and the scroll step (2.3s)
+
+
+  1) [webkit] › tests-visual/release-10-1-5.spec.ts:590:5 › critique 2, coarse phone › e3 at 390: the run's clip and hit stop at the persistent seats, at rest and scrolled 
+
+    Error: S3 ({"focusVisible":true,"hover":true,"scale":1.1,"width":114.55467224121094,"outline":"solid","ink":4.4,"ring":{"l":211.1968780517578,"r":334.5515502929687,"t":20.700000381469728,"b":71.30000343322754},"clips":[{"cls":"dock-layer dock-layer--full dock-run is-active","l":62,"r":334,"t":17,"b":75}]}): ring inside dock-layer dock-layer--full dock-run is-active (right)
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 334.5
+    Received:    334.5515502929687
+
+      516 |     for (const c of read.clips) {
+      517 |         expect(read.ring.l, `${cell}: ring inside ${c.cls} (left)`).toBeGreaterThanOrEqual(c.l - 0.5);
+    > 518 |         expect(read.ring.r, `${cell}: ring inside ${c.cls} (right)`).toBeLessThanOrEqual(c.r + 0.5);
+          |                                                                      ^
+      519 |         expect(read.ring.t, `${cell}: ring inside ${c.cls} (top)`).toBeGreaterThanOrEqual(c.t - 0.5);
+      520 |         expect(read.ring.b, `${cell}: ring inside ${c.cls} (bottom)`).toBeLessThanOrEqual(c.b + 0.5);
+      521 |     }
+        at expectFocusedRingWhole (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:518:70)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:625:42
+
+    Error Context: tests-visual/test-results/release-10-1-5-critique-2--d0cb9--seats-at-rest-and-scrolled-webkit/error-context.md
+
+  2) [webkit] › tests-visual/release-10-1-5.spec.ts:637:5 › critique 2, coarse phone › e4 at 390: the run's end padding holds a focused, hovered end seat's ink and the scroll step 
+
+    Error: 390 persistent=1&kinds=tab:Home,icon,tab:Settings ({"s":1.1,"ring":4.4,"overhang":5.207030556418687,"ink":9.607030556418687,"pad":10}): end padding past the ink
+
+    expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 0.99
+    Received:    0.3929694435813129
+
+      664 |             const cell = `${width} ${query} (${JSON.stringify(read)})`;
+      665 |             expect(read.s, `${cell}: hover-scaled`).toBeGreaterThan(1);
+    > 666 |             expect(read.pad - read.ink, `${cell}: end padding past the ink`).toBeGreaterThanOrEqual(1 - 0.01);
+          |                                                                              ^
+      667 |             await pointerOff(page);
+      668 |         }
+      669 |     });
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:666:78
+
+    Error Context: tests-visual/test-results/release-10-1-5-critique-2--694a6-t-s-ink-and-the-scroll-step-webkit/error-context.md
+
+  3) [webkit] › tests-visual/release-10-1-5.spec.ts:637:5 › e4 at 1440: the run's end padding holds a focused, hovered end seat's ink and the scroll step 
+
+    Error: 1440 persistent=1&kinds=tab:Home,icon,tab:Settings ({"s":1.1,"ring":4.4,"overhang":5.688282359730117,"ink":10.088282359730117,"pad":11}): end padding past the ink
+
+    expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 0.99
+    Received:    0.9117176402698828
+
+      664 |             const cell = `${width} ${query} (${JSON.stringify(read)})`;
+      665 |             expect(read.s, `${cell}: hover-scaled`).toBeGreaterThan(1);
+    > 666 |             expect(read.pad - read.ink, `${cell}: end padding past the ink`).toBeGreaterThanOrEqual(1 - 0.01);
+          |                                                                              ^
+      667 |             await pointerOff(page);
+      668 |         }
+      669 |     });
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:666:78
+
+    Error Context: tests-visual/test-results/release-10-1-5-e4-at-1440--6bcad-t-s-ink-and-the-scroll-step-webkit/error-context.md
+
+  3 failed
+    [webkit] › tests-visual/release-10-1-5.spec.ts:590:5 › critique 2, coarse phone › e3 at 390: the run's clip and hit stop at the persistent seats, at rest and scrolled 
+    [webkit] › tests-visual/release-10-1-5.spec.ts:637:5 › critique 2, coarse phone › e4 at 390: the run's end padding holds a focused, hovered end seat's ink and the scroll step 
+    [webkit] › tests-visual/release-10-1-5.spec.ts:637:5 › e4 at 1440: the run's end padding holds a focused, hovered end seat's ink and the scroll step 
+  1 passed (19.5s)

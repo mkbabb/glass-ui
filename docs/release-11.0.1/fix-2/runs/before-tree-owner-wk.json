@@ -1,0 +1,539 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/fix2-before/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "tests-visual/release-11-0-1-fix-2.config.ts",
+      "--project=webkit",
+      "release-11-0-1.spec.ts",
+      "--workers=1"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/fix2-before/tests-visual/release-11-0-1-fix-2.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/fix2-before/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/fix2-before/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-headless-new",
+        "name": "chromium-headless-new",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/fix2-before/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/fix2-before/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "coarse-touch",
+        "name": "coarse-touch",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/fix2-before/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/fix2-before/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/fix2-before/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-0-1.spec.ts",
+          "release-11-0-1-daraksha.spec.ts",
+          "release-10-1-5.spec.ts",
+          "release-10-1-4.spec.ts",
+          "release-10-1-3.spec.ts",
+          "release-11-0-1-critic-1.spec.ts",
+          "release-11-0-1-critic-1b.spec.ts",
+          "release-11-0-1-fix-2.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/docs/release-11.0.1/fix-2/runs/before-tree-owner-wk.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5406",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/fix2-before/",
+      "url": "http://localhost:5406",
+      "reuseExistingServer": true,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "release-11-0-1.spec.ts",
+      "file": "release-11-0-1.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "o3 every frame of the expand and of the collapse paints a round end",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 3663,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 21\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"35ms 28px 28px 28px 28px painted 13.3x28.0 13.3x28.0 13.3x28.0 13.3x28.0 half=28\",\u001b[39m\n\u001b[31m+   \"50ms 28px 28px 28px 28px painted 14.1x28.0 14.1x28.0 14.1x28.0 14.1x28.0 half=28\",\u001b[39m\n\u001b[31m+   \"61ms 28px 28px 28px 28px painted 15.5x28.0 15.5x28.0 15.5x28.0 15.5x28.0 half=28\",\u001b[39m\n\u001b[31m+   \"72ms 28px 28px 28px 28px painted 16.8x28.0 16.8x28.0 16.8x28.0 16.8x28.0 half=28\",\u001b[39m\n\u001b[31m+   \"82ms 28px 28px 28px 28px painted 18.2x28.0 18.2x28.0 18.2x28.0 18.2x28.0 half=28\",\u001b[39m\n\u001b[31m+   \"93ms 28px 28px 28px 28px painted 19.4x28.0 19.4x28.0 19.4x28.0 19.4x28.0 half=28\",\u001b[39m\n\u001b[31m+   \"103ms 28px 28px 28px 28px painted 20.6x28.0 20.6x28.0 20.6x28.0 20.6x28.0 half=28\",\u001b[39m\n\u001b[31m+   \"112ms 28px 28px 28px 28px painted 21.7x28.0 21.7x28.0 21.7x28.0 21.7x28.0 half=28\",\u001b[39m\n\u001b[31m+   \"124ms 28px 28px 28px 28px painted 22.6x28.0 22.6x28.0 22.6x28.0 22.6x28.0 half=28\",\u001b[39m\n\u001b[31m+   \"134ms 28px 28px 28px 28px painted 23.5x28.0 23.5x28.0 23.5x28.0 23.5x28.0 half=28\",\u001b[39m\n\u001b[31m+   \"147ms 28px 28px 28px 28px painted 24.3x28.0 24.3x28.0 24.3x28.0 24.3x28.0 half=28\",\u001b[39m\n\u001b[31m+   \"159ms 28px 28px 28px 28px painted 25.2x28.0 25.2x28.0 25.2x28.0 25.2x28.0 half=28\",\u001b[39m\n\u001b[31m+   \"165ms 28px 28px 28px 28px painted 25.8x28.0 25.8x28.0 25.8x28.0 25.8x28.0 half=28\",\u001b[39m\n\u001b[31m+   \"174ms 28px 28px 28px 28px painted 26.1x28.0 26.1x28.0 26.1x28.0 26.1x28.0 half=28\",\u001b[39m\n\u001b[31m+   \"184ms 28px 28px 28px 28px painted 26.4x28.0 26.4x28.0 26.4x28.0 26.4x28.0 half=28\",\u001b[39m\n\u001b[31m+   \"195ms 28px 28px 28px 28px painted 26.8x28.0 26.8x28.0 26.8x28.0 26.8x28.0 half=28\",\u001b[39m\n\u001b[31m+   \"205ms 28px 28px 28px 28px painted 27.1x28.0 27.1x28.0 27.1x28.0 27.1x28.0 half=28\",\u001b[39m\n\u001b[31m+   \"215ms 28px 28px 28px 28px painted 27.3x28.0 27.3x28.0 27.3x28.0 27.3x28.0 half=28\",\u001b[39m\n\u001b[31m+   \"225ms 28px 28px 28px 28px painted 27.5x28.0 27.5x28.0 27.5x28.0 27.5x28.0 half=28\",\u001b[39m\n\u001b[31m+ ]\u001b[39m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 21\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"35ms 28px 28px 28px 28px painted 13.3x28.0 13.3x28.0 13.3x28.0 13.3x28.0 half=28\",\u001b[39m\n\u001b[31m+   \"50ms 28px 28px 28px 28px painted 14.1x28.0 14.1x28.0 14.1x28.0 14.1x28.0 half=28\",\u001b[39m\n\u001b[31m+   \"61ms 28px 28px 28px 28px painted 15.5x28.0 15.5x28.0 15.5x28.0 15.5x28.0 half=28\",\u001b[39m\n\u001b[31m+   \"72ms 28px 28px 28px 28px painted 16.8x28.0 16.8x28.0 16.8x28.0 16.8x28.0 half=28\",\u001b[39m\n\u001b[31m+   \"82ms 28px 28px 28px 28px painted 18.2x28.0 18.2x28.0 18.2x28.0 18.2x28.0 half=28\",\u001b[39m\n\u001b[31m+   \"93ms 28px 28px 28px 28px painted 19.4x28.0 19.4x28.0 19.4x28.0 19.4x28.0 half=28\",\u001b[39m\n\u001b[31m+   \"103ms 28px 28px 28px 28px painted 20.6x28.0 20.6x28.0 20.6x28.0 20.6x28.0 half=28\",\u001b[39m\n\u001b[31m+   \"112ms 28px 28px 28px 28px painted 21.7x28.0 21.7x28.0 21.7x28.0 21.7x28.0 half=28\",\u001b[39m\n\u001b[31m+   \"124ms 28px 28px 28px 28px painted 22.6x28.0 22.6x28.0 22.6x28.0 22.6x28.0 half=28\",\u001b[39m\n\u001b[31m+   \"134ms 28px 28px 28px 28px painted 23.5x28.0 23.5x28.0 23.5x28.0 23.5x28.0 half=28\",\u001b[39m\n\u001b[31m+   \"147ms 28px 28px 28px 28px painted 24.3x28.0 24.3x28.0 24.3x28.0 24.3x28.0 half=28\",\u001b[39m\n\u001b[31m+   \"159ms 28px 28px 28px 28px painted 25.2x28.0 25.2x28.0 25.2x28.0 25.2x28.0 half=28\",\u001b[39m\n\u001b[31m+   \"165ms 28px 28px 28px 28px painted 25.8x28.0 25.8x28.0 25.8x28.0 25.8x28.0 half=28\",\u001b[39m\n\u001b[31m+   \"174ms 28px 28px 28px 28px painted 26.1x28.0 26.1x28.0 26.1x28.0 26.1x28.0 half=28\",\u001b[39m\n\u001b[31m+   \"184ms 28px 28px 28px 28px painted 26.4x28.0 26.4x28.0 26.4x28.0 26.4x28.0 half=28\",\u001b[39m\n\u001b[31m+   \"195ms 28px 28px 28px 28px painted 26.8x28.0 26.8x28.0 26.8x28.0 26.8x28.0 half=28\",\u001b[39m\n\u001b[31m+   \"205ms 28px 28px 28px 28px painted 27.1x28.0 27.1x28.0 27.1x28.0 27.1x28.0 half=28\",\u001b[39m\n\u001b[31m+   \"215ms 28px 28px 28px 28px painted 27.3x28.0 27.3x28.0 27.3x28.0 27.3x28.0 half=28\",\u001b[39m\n\u001b[31m+   \"225ms 28px 28px 28px 28px painted 27.5x28.0 27.5x28.0 27.5x28.0 27.5x28.0 half=28\",\u001b[39m\n\u001b[31m+ ]\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/fix2-before/tests-visual/release-11-0-1.spec.ts:187:24",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/fix2-before/tests-visual/release-11-0-1.spec.ts",
+                      "column": 24,
+                      "line": 187
+                    },
+                    "snippet": "  185 |     expect(expand.morphing, \"the expand morphed\").toBeGreaterThan(2);\n  186 |     expect(collapse.morphing, \"the collapse morphed\").toBeGreaterThan(2);\n> 187 |     expect(expand.bad).toEqual([]);\n      |                        ^\n  188 |     expect(collapse.bad).toEqual([]);\n  189 | });\n  190 |"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/fix2-before/tests-visual/release-11-0-1.spec.ts",
+                        "column": 24,
+                        "line": 187
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 21\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"35ms 28px 28px 28px 28px painted 13.3x28.0 13.3x28.0 13.3x28.0 13.3x28.0 half=28\",\u001b[39m\n\u001b[31m+   \"50ms 28px 28px 28px 28px painted 14.1x28.0 14.1x28.0 14.1x28.0 14.1x28.0 half=28\",\u001b[39m\n\u001b[31m+   \"61ms 28px 28px 28px 28px painted 15.5x28.0 15.5x28.0 15.5x28.0 15.5x28.0 half=28\",\u001b[39m\n\u001b[31m+   \"72ms 28px 28px 28px 28px painted 16.8x28.0 16.8x28.0 16.8x28.0 16.8x28.0 half=28\",\u001b[39m\n\u001b[31m+   \"82ms 28px 28px 28px 28px painted 18.2x28.0 18.2x28.0 18.2x28.0 18.2x28.0 half=28\",\u001b[39m\n\u001b[31m+   \"93ms 28px 28px 28px 28px painted 19.4x28.0 19.4x28.0 19.4x28.0 19.4x28.0 half=28\",\u001b[39m\n\u001b[31m+   \"103ms 28px 28px 28px 28px painted 20.6x28.0 20.6x28.0 20.6x28.0 20.6x28.0 half=28\",\u001b[39m\n\u001b[31m+   \"112ms 28px 28px 28px 28px painted 21.7x28.0 21.7x28.0 21.7x28.0 21.7x28.0 half=28\",\u001b[39m\n\u001b[31m+   \"124ms 28px 28px 28px 28px painted 22.6x28.0 22.6x28.0 22.6x28.0 22.6x28.0 half=28\",\u001b[39m\n\u001b[31m+   \"134ms 28px 28px 28px 28px painted 23.5x28.0 23.5x28.0 23.5x28.0 23.5x28.0 half=28\",\u001b[39m\n\u001b[31m+   \"147ms 28px 28px 28px 28px painted 24.3x28.0 24.3x28.0 24.3x28.0 24.3x28.0 half=28\",\u001b[39m\n\u001b[31m+   \"159ms 28px 28px 28px 28px painted 25.2x28.0 25.2x28.0 25.2x28.0 25.2x28.0 half=28\",\u001b[39m\n\u001b[31m+   \"165ms 28px 28px 28px 28px painted 25.8x28.0 25.8x28.0 25.8x28.0 25.8x28.0 half=28\",\u001b[39m\n\u001b[31m+   \"174ms 28px 28px 28px 28px painted 26.1x28.0 26.1x28.0 26.1x28.0 26.1x28.0 half=28\",\u001b[39m\n\u001b[31m+   \"184ms 28px 28px 28px 28px painted 26.4x28.0 26.4x28.0 26.4x28.0 26.4x28.0 half=28\",\u001b[39m\n\u001b[31m+   \"195ms 28px 28px 28px 28px painted 26.8x28.0 26.8x28.0 26.8x28.0 26.8x28.0 half=28\",\u001b[39m\n\u001b[31m+   \"205ms 28px 28px 28px 28px painted 27.1x28.0 27.1x28.0 27.1x28.0 27.1x28.0 half=28\",\u001b[39m\n\u001b[31m+   \"215ms 28px 28px 28px 28px painted 27.3x28.0 27.3x28.0 27.3x28.0 27.3x28.0 half=28\",\u001b[39m\n\u001b[31m+   \"225ms 28px 28px 28px 28px painted 27.5x28.0 27.5x28.0 27.5x28.0 27.5x28.0 half=28\",\u001b[39m\n\u001b[31m+ ]\u001b[39m\n\n  185 |     expect(expand.morphing, \"the expand morphed\").toBeGreaterThan(2);\n  186 |     expect(collapse.morphing, \"the collapse morphed\").toBeGreaterThan(2);\n> 187 |     expect(expand.bad).toEqual([]);\n      |                        ^\n  188 |     expect(collapse.bad).toEqual([]);\n  189 | });\n  190 |\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/fix2-before/tests-visual/release-11-0-1.spec.ts:187:24"
+                    }
+                  ],
+                  "stdout": [
+                    {
+                      "text": "o3 expand {\"frames\":139,\"morphing\":54,\"bad\":[\"35ms 28px 28px 28px 28px painted 13.3x28.0 13.3x28.0 13.3x28.0 13.3x28.0 half=28\",\"50ms 28px 28px 28px 28px painted 14.1x28.0 14.1x28.0 14.1x28.0 14.1x28.0 half=28\",\"61ms 28px 28px 28px 28px painted 15.5x28.0 15.5x28.0 15.5x28.0 15.5x28.0 half=28\",\"72ms 28px 28px 28px 28px painted 16.8x28.0 16.8x28.0 16.8x28.0 16.8x28.0 half=28\",\"82ms 28px 28px 28px 28px painted 18.2x28.0 18.2x28.0 18.2x28.0 18.2x28.0 half=28\",\"93ms 28px 28px 28px 28px painted 19.4x28.0 19.4x28.0 19.4x28.0 19.4x28.0 half=28\"]}\n"
+                    },
+                    {
+                      "text": "o3 collapse {\"frames\":139,\"morphing\":56,\"bad\":[\"31ms 28px 28px 28px 28px painted 27.3x28.0 27.3x28.0 27.3x28.0 27.3x28.0 half=28\",\"44ms 28px 28px 28px 28px painted 25.9x28.0 25.9x28.0 25.9x28.0 25.9x28.0 half=28\",\"56ms 28px 28px 28px 28px painted 24.3x28.0 24.3x28.0 24.3x28.0 24.3x28.0 half=28\",\"65ms 28px 28px 28px 28px painted 22.8x28.0 22.8x28.0 22.8x28.0 22.8x28.0 half=28\",\"73ms 28px 28px 28px 28px painted 21.7x28.0 21.7x28.0 21.7x28.0 21.7x28.0 half=28\",\"85ms 28px 28px 28px 28px painted 20.8x28.0 20.8x28.0 20.8x28.0 20.8x28.0 half=28\"]}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T02:09:00.343Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/fix2-before/tests-visual/test-results/release-11-0-1-o3-every-fr-1c7bf-collapse-paints-a-round-end-webkit/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/fix2-before/tests-visual/release-11-0-1.spec.ts",
+                    "column": 24,
+                    "line": 187
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "9b4b2e3355e572315838-0ddd7d0369557701374f",
+          "file": "release-11-0-1.spec.ts",
+          "line": 139,
+          "column": 1
+        }
+      ],
+      "suites": [
+        {
+          "title": "o1 the wide label seat",
+          "file": "release-11-0-1.spec.ts",
+          "line": 69,
+          "column": 6,
+          "specs": [
+            {
+              "title": "o1 the hover plate of a compact 'Focus' label seat is a capsule, never an ellipse",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1369,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "o1 focus hover {\"radii\":[\"20px\",\"20px\",\"20px\",\"20px\"],\"w\":81,\"h\":35}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T02:08:52.368Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "9b4b2e3355e572315838-4afb04d2b4006e0546cf",
+              "file": "release-11-0-1.spec.ts",
+              "line": 70,
+              "column": 5
+            },
+            {
+              "title": "o1 the active 'Name ›' seat's plate, at rest and under hover, is a capsule",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1218,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "o1 name rest {\"radii\":[\"20px\",\"20px\",\"20px\",\"20px\"],\"w\":88,\"h\":35} hover {\"radii\":[\"20px\",\"20px\",\"20px\",\"20px\"],\"w\":88,\"h\":35}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T02:08:53.926Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "9b4b2e3355e572315838-22011325dedf8c080b8e",
+              "file": "release-11-0-1.spec.ts",
+              "line": 82,
+              "column": 5
+            }
+          ]
+        },
+        {
+          "title": "o2 the dock's end, house tokens",
+          "file": "release-11-0-1.spec.ts",
+          "line": 101,
+          "column": 10,
+          "specs": [
+            {
+              "title": "o2 house tokens: open at rest, the plate and the box are round",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 869,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "o2 open house tokens plate {\"radii\":[\"28px\",\"28px\",\"28px\",\"28px\"],\"w\":254,\"h\":56} root {\"radii\":[\"28px\",\"28px\",\"28px\",\"28px\"],\"w\":254,\"h\":56}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T02:08:55.150Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "9b4b2e3355e572315838-a56375208c3e1ac320f1",
+              "file": "release-11-0-1.spec.ts",
+              "line": 102,
+              "column": 9
+            },
+            {
+              "title": "o2 house tokens: collapsed with a persistent seat beside the summary, the plate and the box are round",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 840,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "o2 collapsed house tokens plate {\"radii\":[\"28px\",\"28px\",\"28px\",\"28px\"],\"w\":102,\"h\":56} root {\"radii\":[\"28px\",\"28px\",\"28px\",\"28px\"],\"w\":102,\"h\":56}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T02:08:56.025Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "9b4b2e3355e572315838-ac7ce80139f00a7e1a8f",
+              "file": "release-11-0-1.spec.ts",
+              "line": 112,
+              "column": 9
+            },
+            {
+              "title": "o2 house tokens: open on the narrow face beside a wider one, with a #persistent-end seat, the plate is round",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 846,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "o2 narrow house tokens plate {\"radii\":[\"28px\",\"28px\",\"28px\",\"28px\"],\"w\":158,\"h\":56} root {\"radii\":[\"28px\",\"28px\",\"28px\",\"28px\"],\"w\":158,\"h\":56} run {\"scroll\":0}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T02:08:56.870Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "9b4b2e3355e572315838-4a7ce59d6ca1b5ea54ea",
+              "file": "release-11-0-1.spec.ts",
+              "line": 123,
+              "column": 9
+            }
+          ]
+        },
+        {
+          "title": "o2 the dock's end, radius-dock 1.875rem",
+          "file": "release-11-0-1.spec.ts",
+          "line": 101,
+          "column": 10,
+          "specs": [
+            {
+              "title": "o2 radius-dock 1.875rem: open at rest, the plate and the box are round",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 865,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "o2 open radius-dock 1.875rem plate {\"radii\":[\"28px\",\"28px\",\"28px\",\"28px\"],\"w\":254,\"h\":56} root {\"radii\":[\"28px\",\"28px\",\"28px\",\"28px\"],\"w\":254,\"h\":56}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T02:08:57.720Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "9b4b2e3355e572315838-a2452a901bc23c6665b4",
+              "file": "release-11-0-1.spec.ts",
+              "line": 102,
+              "column": 9
+            },
+            {
+              "title": "o2 radius-dock 1.875rem: collapsed with a persistent seat beside the summary, the plate and the box are round",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 879,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "o2 collapsed radius-dock 1.875rem plate {\"radii\":[\"28px\",\"28px\",\"28px\",\"28px\"],\"w\":102,\"h\":56} root {\"radii\":[\"28px\",\"28px\",\"28px\",\"28px\"],\"w\":102,\"h\":56}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T02:08:58.590Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "9b4b2e3355e572315838-ad4700d5cbaa7d1003bf",
+              "file": "release-11-0-1.spec.ts",
+              "line": 112,
+              "column": 9
+            },
+            {
+              "title": "o2 radius-dock 1.875rem: open on the narrow face beside a wider one, with a #persistent-end seat, the plate is round",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 861,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "o2 narrow radius-dock 1.875rem plate {\"radii\":[\"28px\",\"28px\",\"28px\",\"28px\"],\"w\":158,\"h\":56} root {\"radii\":[\"28px\",\"28px\",\"28px\",\"28px\"],\"w\":158,\"h\":56} run {\"scroll\":0}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T02:08:59.476Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "9b4b2e3355e572315838-cf236a75065f9114d6c4",
+              "file": "release-11-0-1.spec.ts",
+              "line": 123,
+              "column": 9
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-12T02:08:50.651Z",
+    "duration": 13416.835,
+    "expected": 8,
+    "skipped": 0,
+    "unexpected": 1,
+    "flaky": 0
+  }
+}

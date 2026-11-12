@@ -82,12 +82,18 @@
         --glass-backdrop-luma: 0;
     }
 
-    /* No plate-colour re-point: `--glass-level: 0` above resolves the veil recipe to
-       solid `--card` through the SAME machinery every plate uses (glass/veil.css), so
-       re-declaring the endpoints as `--card` here would be a parallel recipe for the
-       value the one recipe already produces. Only the border and the lens are
-       per-instance. */
+    /* THE STATIC PLATE IS THE LIVE PLATE'S VEIL OVER A CARD GROUND. The plate
+       composes the same veil as the live arm (glass/veil.css: the consumer's
+       `--glass-veil-ink` at the tier's rung), at the plate's full level, and lays it on
+       an opaque `--card` instead of a blurred backdrop: the ink reaches it, and nothing
+       behind the dock shows through. `--glass-level: 0` on the root still holds every
+       other glass surface in the dock at its solid endpoint; only the plate reads its
+       veil. Only the border and the lens are otherwise per-instance. */
     .glass-dock[data-backdrop-mode="static"] .dock-plate {
+        --glass-level: 1;
+        background:
+            linear-gradient(var(--glass-veil), var(--glass-veil)),
+            var(--card);
         /* The EXPANDED endpoint only — the collapsed one already resolves to
            `--glass-border-floating` on the shell (shell.css), so re-declaring it here
            was a byte-identical no-op. */

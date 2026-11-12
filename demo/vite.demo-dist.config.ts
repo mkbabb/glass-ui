@@ -1,3 +1,5 @@
+import { createHash } from "node:crypto";
+import { readFileSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 import tailwindcss from "@tailwindcss/vite";
 import vue from "@vitejs/plugin-vue";
@@ -42,6 +44,32 @@ function normalizeDemoCssAssets(): Plugin {
     };
 }
 
+// Cloudflare Pages reads `_headers` from the deployed directory. The template is
+// `demo/_headers`; its CSP allows inline scripts by hash only, and the one inline
+// script (the dark-mode stamp) is known only once the HTML is written, so the hash
+// is computed here from the built index.html rather than pasted by hand.
+function pagesHeaders(): Plugin {
+    let outDir = "";
+    return {
+        name: "glass-ui:pages-headers",
+        apply: "build",
+        configResolved(config) {
+            outDir = config.build.outDir;
+        },
+        writeBundle() {
+            const html = readFileSync(resolve(outDir, "index.html"), "utf8");
+            const hashes = [...html.matchAll(/<script(?![^>]*\bsrc=)[^>]*>([\s\S]*?)<\/script>/g)].map(
+                (m) => `'sha256-${createHash("sha256").update(m[1]).digest("base64")}'`,
+            );
+            const template = readFileSync(resolve(__dirname, "_headers"), "utf8");
+            writeFileSync(
+                resolve(outDir, "_headers"),
+                template.replaceAll("__INLINE_SCRIPT_HASHES__", hashes.join(" ")),
+            );
+        },
+    };
+}
+
 export default defineConfig({
     root: repoRoot,
     // `base: "/"` — the deep-SPA-route asset-resolution fix. A deep route
@@ -60,12 +88,14 @@ export default defineConfig({
     // the one module both configs import). It is listed here because this config
     // replaces the root one wholesale: without the line, the BUILT demo — the bytes
     // the paint-judge serves — carries the FOUC the dev server no longer has.
-    plugins: [tailwindcss(), vue(), darkModeStamp(), normalizeDemoCssAssets()],
+    plugins: [tailwindcss(), vue(), darkModeStamp(), normalizeDemoCssAssets(), pagesHeaders()],
     build: {
         cssTarget: glassCssTarget,
         // A dedicated output dir — NEVER the library `dist/` (which the
         // published package + the d.ts emit own).
         outDir: resolve(repoRoot, "dist-demo"),
+        // `pagesHeaders()` sets `immutable` on `/assets/*`: the hashed chunks land here.
+        assetsDir: "assets",
         emptyOutDir: true,
     },
 });

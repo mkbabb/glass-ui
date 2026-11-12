@@ -1,0 +1,25 @@
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1794252999 slope=43.3/s inuse=29715 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+admitted wk webkit-light 2026-11-09 21:18:23 · 21:18  up 10:45, 2 users, load averages: 8.47 17.36 22.51
+admitted rerun-webkit-light 2026-11-09 21:18:23 · 21:18  up 10:45, 2 users, load averages: 8.47 17.36 22.51
+21:18:23 start rr-swap-short-bp13-r1 gate 11 load 8.47
+21:19:04 end rr-swap-short-bp13-r1 load 11.05
+21:21:04 start rr-swap-short-bp12-r1 gate 11 load 10.83
+21:21:41 end rr-swap-short-bp12-r1 load 9.07
+21:21:41 start rr-swap-short-bp13-r2 gate 11 load 9.07
+21:22:17 end rr-swap-short-bp13-r2 load 14.13
+21:23:07 start rr-swap-short-bp12-r2 gate 11 load 10.99
+21:23:51 end rr-swap-short-bp12-r2 load 13.45
+21:24:21 start rr-first-expand-bp13-r1 gate 11 load 10.94
+21:25:10 end rr-first-expand-bp13-r1 load 11.92
+21:29:01 start rr-first-expand-bp12-r1 gate 11 load 10.76
+21:29:49 end rr-first-expand-bp12-r1 load 11.32
+21:30:09 start rr-first-expand-bp13-r2 gate 11 load 10.72
+21:31:03 end rr-first-expand-bp13-r2 load 36.48
+21:34:44 start rr-first-expand-bp12-r2 gate 11 load 10.46
+21:35:29 end rr-first-expand-bp12-r2 load 8.44
+queue end rerun-webkit-light 2026-11-09 21:35:29 · 21:35  up 11:02, 2 users, load averages: 8.44 13.87 16.86
+rerun end 21:35:29 exit 0
+battery end 21:47:16 exit 0
+fmlow end 21:57:20 exit 0
+admitted webkit-light 2026-11-09 21:57:20 · 21:57  up 11:24, 2 users, load averages: 27.05 30.35 26.21
+gate 11 unmet before rev-bp13-r1 at load 33.33 22:27:29; releasing

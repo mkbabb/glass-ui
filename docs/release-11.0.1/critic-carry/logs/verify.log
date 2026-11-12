@@ -1,0 +1,17 @@
+
+> @mkbabb/glass-ui@11.0.1 verify:package
+> node scripts/verify-export-types.mjs
+
+file:///Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/scripts/verify-export-types.mjs:1001
+    if (!firstAdoption && candidate > datum) throw new Error(`G-BUNDLE-RATCHET: bundle ratchet increase forbidden: ${unpackedBytes} > ${datum}`);
+                                                   ^
+
+Error: G-BUNDLE-RATCHET: bundle ratchet increase forbidden: 2911472 > 2911439
+    at ratchetEvidence (file:///Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/scripts/verify-export-types.mjs:1001:52)
+    at verifyExportTypes (file:///Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/scripts/verify-export-types.mjs:1082:23)
+    at file:///Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/scripts/verify-export-types.mjs:1120:22
+    at ModuleJob.run (node:internal/modules/esm/module_job:437:25)
+    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:642:26)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v26.0.0

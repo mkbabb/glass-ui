@@ -1,4 +1,4 @@
-# W-H.3 · W-GLASS-REGISTER-DECIDE: the unbuilt glass registers decided on the converged ladder · 11.0.0
+# W-H.3 · W-GLASS-REGISTER-DECIDE: the unbuilt glass registers decided on the converged ladder
 
 | field | value |
 |---|---|
@@ -6,7 +6,7 @@
 | model | `claude-opus-5-5`, asserted from own system identity |
 | HEAD | `80ebfd72` in a scratch worktree; `src` is the published 10.1.0 |
 | kind | a DECIDE wave (the charter's form for a disease row: F-14's asks rode BI, BJ and BK without a terminal, `CHARTER.md:23`). Not a loop wave, but it decides against D3's converged ladder, so it runs after W-H.1 and W-H.2 |
-| ships in | 11.0.0 (any BUILD lands in this wave) |
+| release | `waves/INDEX.md`, the one record. Formation's placement, superseded there: 11.0.0 (any BUILD lands in this wave) |
 | families | F-14, the R2-06-02 split (`audit/REGISTRY.md:329,340`), with the #24 and #71 register remnants the census routes here |
 | depends on | PLAN §5, the one record of edges |
 | dependants | PLAN §5 (its inverse) |

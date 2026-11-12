@@ -1,11 +1,11 @@
-# W-C.5 · one source per quantity: one dark authority, one colour leaf, one randomness source, one table per constant · 11.0.0
+# W-C.5 · one source per quantity: one dark authority, one colour leaf, one randomness source, one table per constant
 
 | field | value |
 |---|---|
 | seat | band-C wave-spec seat, formation run `wf_68eb18d6-b21` |
 | model | `claude-opus-5-5`, asserted from own system identity |
 | HEAD | `26d193b7` in a scratch worktree, with `dist/` and `dist-demo/` built there |
-| ships in | 11.0.0 |
+| release | `waves/INDEX.md`, the one record |
 | families | F-65 remainder (`audit/REGISTRY.md:1394-1412`) |
 | depends on | PLAN §5, the one record of edges |
 | dependants | PLAN §5 (its inverse) |

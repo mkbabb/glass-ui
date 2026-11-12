@@ -1,11 +1,11 @@
-# W-B.5 · V-A95 decided: RETIRE, with a tracked drag e2e that re-opens it on any reproduction · 11.0.0
+# W-B.5 · V-A95 decided: RETIRE, with a tracked drag e2e that re-opens it on any reproduction
 
 | field | value |
 |---|---|
 | seat | band-B wave-spec seat, formation run `wf_68eb18d6-b21` |
 | model | `claude-opus-5-5`, asserted from own system identity |
 | HEAD | `19bf6569` in a scratch worktree, `dist-demo/` built there (`vite build --config demo/vite.demo-dist.config.ts`, 3 s) |
-| ships in | 11.0.0 |
+| release | `waves/INDEX.md`, the one record |
 | families | F-13, the C-4 split (member L04-F06; `audit/REGISTRY.md:312-320`) |
 | depends on | PLAN §5, the one record of edges |
 | dependants | PLAN §5 (its inverse) |

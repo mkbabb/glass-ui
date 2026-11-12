@@ -1,0 +1,55 @@
+
+ RUN  v4.1.10 /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p15/PE15/wt
+
+(node:66057) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ❯ tests/styles/spring-authority.test.ts (14 tests | 1 failed) 112ms
+     × no source line names a row AND states a spring figure beside it 12ms
+ ❯ tests/gates/boot-graph.test.ts (14 tests | 1 failed) 60ms
+     × the eager graph stays under the modulepreload and byte ceilings 2ms
+(node:66742) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:66873) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/gates/boot-graph.test.ts > gate:boot-graph — build arm > the eager graph stays under the modulepreload and byte ceilings
+AssertionError: eager graph: 63 modulepreloads + 1 entry = 64 files / 510820 B: expected 510820 to be less than or equal to 503808
+ ❯ tests/gates/boot-graph.test.ts:597:44
+    595|
+    596|         expect(graph.modulepreloads, report).toBeLessThanOrEqual(MAX_M…
+    597|         expect(graph.eagerJsBytes, report).toBeLessThanOrEqual(MAX_EAG…
+       |                                            ^
+    598|     });
+    599| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  tests/styles/spring-authority.test.ts > G-SPRING-HONEST — a register may claim a rebound iff its own band ships one > no source line names a row AND states a spring figure beside it
+AssertionError: src/composables/motion/engage/settle.ts:127  const DOCK_EXIT_CLOCK = "--spring-dock-exit-duration (calc(clamp(0.12s, var(--spring-dock-settle) * 0.6, 0.25s) * var(--motion-tempo)), at the root)";: expected [ Array(1) ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   "src/composables/motion/engage/settle.ts:127  const DOCK_EXIT_CLOCK = \"--spring-dock-exit-duration (calc(clamp(0.12s, var(--spring-dock-settle) * 0.6, 0.25s) * var(--motion-tempo)), at the root)\";",
++ ]
+
+ ❯ tests/styles/spring-authority.test.ts:114:43
+    112|             });
+    113|         }
+    114|         expect(claims, claims.join("\n")).toEqual([]);
+       |                                           ^
+    115|     });
+    116|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  2 failed | 245 passed (247)
+      Tests  2 failed | 2454 passed | 10 expected fail | 1 skipped (2467)
+   Start at  17:15:00
+   Duration  46.43s (transform 2.82s, setup 6.57s, import 20.03s, tests 17.80s, environment 25.66s)
+

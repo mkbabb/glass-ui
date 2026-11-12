@@ -27,7 +27,7 @@
         flex-shrink: 0;
         /* identity base */
         scale: 1;
-        gap: var(--dock-trigger-gap, 0.25rem);
+        gap: var(--dock-trigger-gap, var(--icon-label-gap));
         min-height: var(--dock-trigger-min-height, auto);
         padding: var(--dock-trigger-padding-block, 0.25rem)
             var(--dock-trigger-padding-inline, 0.5rem);
@@ -69,9 +69,11 @@
     /* Hover lifts the FILL only; the hover-SCALE is RETIRED across
        the whole trigger family so portaled content anchors smoothly (the SelectTrigger's
        documented no-scale reason, generalized — clean break, no alias). */
-    .dock-trigger:hover:not([aria-disabled="true"]) {
-        background: var(--dock-control-hover-bg);
-        color: var(--btn-hover-color, var(--foreground));
+    @media (hover: hover) {
+        .dock-trigger:hover:not([aria-disabled="true"]) {
+            background: var(--dock-control-hover-bg);
+            color: var(--btn-hover-color, var(--foreground));
+        }
     }
 
     /* The iOS press darken-plus-shrink (see the icon-button). */

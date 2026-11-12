@@ -1,0 +1,14 @@
+# PE15 plant-inlineread-e14 webkit · 2026-11-10 19:50:32 · load { 17.30 17.29 17.18 } · harness 0c64ff33af43 · --only residue
+# E-14 · S14's members at their ranges (P-E14 §S14-c)
+# target /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p15/PE15/wt/.pe15out/builds/plant-inlineread · engine webkit · lock wait 0.0 s (the deadline 5400 s counts from here) · other headless processes: chromium 12, webkit 0 · load 17.3/17.3/17.2 at start
+# scene app: harness scenes/App.vue (sha1 912fecf0a1aa)
+# webkit 26.5 (Playwright WebKit, not Safari; real Safari UNMEASURED (owner's safaridriver checkbox))
+# held control: scene slider root .glass-slider thumb [role="slider"] engaged [data-engaged], [data-held]; clock token --spring-dock-settle; cells residue; film: read after the frame's resize step (H15 class 7)
+  FAIL       residue · switch · no style="" written by a read at load · elements carrying an empty style attribute at load: 1 (bound 0) · button.switch.control-bit · load 17.3/17.3/17.2
+  FAIL       residue · checkbox · no style="" written by a read at load · elements carrying an empty style attribute at load: 1 (bound 0) · button.checkbox.control-bit · load 17.3/17.3/17.2
+  FAIL       residue · button · no style="" written by a read at load · elements carrying an empty style attribute at load: 1 (bound 0) · button.button.engage-pressed · load 16.4/17.1/17.1
+  FAIL       residue · tabs · no style="" written by a read at load · elements carrying an empty style attribute at load: 1 (bound 0) · div.segmented-tabs.engage-chosen · load 16.4/17.1/17.1
+  FAIL       residue · chip · no style="" written by a read at load · elements carrying an empty style attribute at load: 1 (bound 0) · button.glass-chip.glass-capsule · load 16.4/17.1/17.1
+E-14 webkit FAIL · 0 pass, 5 fail, 0 unmeasured of 5 gating cells (0 reported) · load 17.3/17.3/17.2 at start, 16.4/17.1/17.1 at end
+# exit 1 · 2026-11-10 19:50:37 · load { 16.39 17.10 17.12 }
+# end · 2026-11-10 19:50:37 · load { 16.39 17.10 17.12 } · harness 0c64ff33af43

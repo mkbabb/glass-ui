@@ -1,0 +1,11 @@
+21:08 before-tree before-tree-fix2-wk rc=1 load=12.34 10.55 10.31  10 failed 
+21:08 before-tree before-tree-critic-wk rc=1 load=14.00 11.04 10.49  6 failed 
+21:09 before-tree before-tree-owner-wk rc=1 load=13.31 11.04 10.50  1 failed  8 passed (13.4s) 
+21:09 chain wk before-tree done: fix2 critic owner
+21:09 after after-fix2-wk rc=0 load=13.22 11.13 10.54  10 passed (14.3s) 
+21:09 after after-critic-wk rc=0 load=12.76 11.18 10.57  6 passed (21.1s) 
+21:09 after after-owner-wk rc=0 load=13.74 11.48 10.69  9 passed (13.0s) 
+21:15 after after-partA-wk rc=0 load=19.12 14.49 12.23  84 passed (5.9m) 
+21:23 after after-partB-wk rc=0 load=18.20 16.54 13.92  23 passed (8.1m) 
+21:23 chain wk after done: fix2 critic owner partA partB
+docs/release-11.0.1/scripts/fix-2-chain.sh:32: parse error near `;;'

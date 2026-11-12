@@ -1,4 +1,4 @@
-# W-J.1 · the selectable multi-line tile (loop D4) · 11.0.0
+# W-J.1 · the selectable multi-line tile (loop D4)
 
 | field | value |
 |---|---|
@@ -6,7 +6,7 @@
 | model | `claude-opus-5-5`, asserted from own system identity |
 | HEAD | `7f92584c` in a scratch worktree (the task named `f3ad78d0`; every commit since is under `docs/`). `git diff --stat v10.1.0 HEAD -- src` prints nothing, so every reading measures the published 10.1.0 bytes. The tile is the v10.0.1 tile (10.1.0 changed the Configurator only) |
 | kind | LOOP WAVE, owned by design loop D4 (`design/tile/`). It lands only from D4's converged specification and never before D4 meets its gate (§3.1). It builds nothing the loop has not converged on |
-| ships in | 11.0.0 |
+| release | `waves/INDEX.md`, the one record |
 | families | F-30b (whole) |
 | depends on | PLAN §5, the one record of edges |
 | dependants | PLAN §5 (its inverse) |

@@ -1,11 +1,11 @@
-# W-E.1 · W-SAFE-EDGE: every edge-anchored surface reads the safe-area insets through four root tokens · 11.0.0
+# W-E.1 · W-SAFE-EDGE: every edge-anchored surface reads the safe-area insets through four root tokens
 
 | field | value |
 |---|---|
 | seat | band-E wave-spec seat, formation (relaunch 2026-09-25) |
 | model | `claude-opus-5-5`, asserted from own system identity |
 | HEAD | `4d2e3123` (`src` and `demo` byte-identical to `f3ad78d0` and `8141658d`) in a scratch worktree, `npm run build` and `npm run demo:dist:build` both exit 0; the probe consumer app installs `npm pack` of that worktree (`mkbabb-glass-ui-10.1.0.tgz`) |
-| ships in | 11.0.0 |
+| release | `waves/INDEX.md`, the one record |
 | families | F-85 (the O-74 F-85 rows) |
 | depends on | PLAN §5, the one record of edges |
 | dependants | PLAN §5 (its inverse) |

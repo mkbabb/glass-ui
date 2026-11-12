@@ -1,0 +1,716 @@
+
+Running 60 tests using 1 worker
+
+[WebServer] 4:25:38 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button as-child="" > 
+[WebServer]   at <CardFooter class="justify-center" > 
+[WebServer]   at <Primitive data-slot="card" data-shadow=true data-size="md"  ... > 
+[WebServer]   at <Surface data-slot="card" tier="floating" surface=undefined  ... > 
+[WebServer]   at <Card tier="floating" class="w-full max-w-(--measure-cel) text-center" > 
+[WebServer]   at <NotFound onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/data/tags-input" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+CAPTURED 394485 bytes, 378 unique rules
+  ✓   1 [coarse-touch] › tests-visual/_capture_css.spec.ts:57:1 › capture union CSS (6.7s)
+CONFIG_DARK {"specBg":"oklab(0.259484 0.00975362 0.0163501)","bloomBlue":"oklch(0.633 0.162 252.1)","bloomViolet":"oklch(0.684 0.250 327.9)","rainbowBlue":"oklch(0.633 0.162 252.1)","gradient":"radial-gradient(49% 42.14% at 18% 37.2%, color(srgb 0.190229 0.549899 0.910072 / 0.88), rgba(0, 0, 0, 0) 57%) repeat scr"}
+  ✘   2 [coarse-touch] › tests-visual/_cfg-readback.spec.ts:3:1 › configurator dark bloom token + auth-shell ink readback (3.4s)
+  ✓   3 [coarse-touch] › tests-visual/_cohere-capture.spec.ts:47:9 › W-COHERE set capture — desktop1280 light (8.1s)
+  ✓   4 [coarse-touch] › tests-visual/_cohere-capture.spec.ts:47:9 › W-COHERE set capture — desktop1280 dark (7.8s)
+  ✓   5 [coarse-touch] › tests-visual/_cohere-capture.spec.ts:47:9 › W-COHERE set capture — mobile390 light (7.7s)
+  ✓   6 [coarse-touch] › tests-visual/_cohere-capture.spec.ts:47:9 › W-COHERE set capture — mobile390 dark (7.7s)
+BLOB canvas count: 2
+BUTTONS: ["","","Reset clicks","Poke","Interaction\n--interaction-*","Mood + palette\n--color-*","Surface\n--surface-*","Geometry / Satellites\n--geometry-* · --membrane-*","","","","Aurora","Blob","Constellation","Fourier Field","Glass Material","Glass Panel","","","",""]
+blob default(calm): dims 386x385 bg=200,184,184 bodyN=8537 L=0.799 C=0.030 h=61.8
+excited tab count: 1
+blob excited: dims 386x385 bg=200,184,184 bodyN=21792 L=0.715 C=0.109 h=19.1
+shadow CONTRAST 242x241 bgL=0.796 castN=29281 peakContrast(top5%)=0.328
+con frame 0: SUM full=838799 dim=756984 ratio=0.902 | meanPainted full=14.1 dim=12.7 ratio=0.903 | paintedN full=59449 dim=59280
+con frame 1: SUM full=837290 dim=756343 ratio=0.903 | meanPainted full=14.0 dim=12.7 ratio=0.904 | paintedN full=59432 dim=59286
+con frame 2: SUM full=837141 dim=756259 ratio=0.903 | meanPainted full=14.0 dim=12.7 ratio=0.904 | paintedN full=59398 dim=59263
+con frame 3: SUM full=837335 dim=756668 ratio=0.904 | meanPainted full=14.0 dim=12.7 ratio=0.904 | paintedN full=59373 dim=59307
+  ✓   7 [coarse-touch] › tests-visual/_cohere-debug.spec.ts:33:1 › debug blob + constellation (4.8s)
+SHADOW light: 242x241 bg=200,184,184 bgL=0.796 castN=58321 peakContrast(top5%)=0.189
+  ✓   8 [coarse-touch] › tests-visual/_cohere-shadow-debug.spec.ts:20:5 › shadow light › measure light (1.2s)
+SHADOW dark: 242x241 bg=56,40,40 bgL=0.296 castN=56064 peakContrast(top5%)=0.598
+  ✓   9 [coarse-touch] › tests-visual/_cohere-shadow-debug.spec.ts:20:5 › shadow dark › measure dark (1.2s)
+  ✘  10 [coarse-touch] › tests-visual/_dock-context-capture.spec.ts:50:1 › AZ.W-DOCK-CONTEXT W3 — per-route DockLayer swap on the shell docks (2.5s)
+  ✘  11 [coarse-touch] › tests-visual/_egg-capture.spec.ts:25:5 › E3 cmd+K palette opens + navigates (light) (6.7s)
+  ✘  12 [coarse-touch] › tests-visual/_egg-capture.spec.ts:25:5 › E3 cmd+K palette opens + navigates (dark) (6.7s)
+  ✘  13 [coarse-touch] › tests-visual/_egg-capture.spec.ts:65:5 › E1 ℱ-redraw paints an epicycle overlay (light) (1.9s)
+  ✘  14 [coarse-touch] › tests-visual/_egg-capture.spec.ts:65:5 › E1 ℱ-redraw paints an epicycle overlay (dark) (2.0s)
+  ✘  15 [coarse-touch] › tests-visual/_egg-capture.spec.ts:102:1 › E2 konami reveals the full-bleed aurora (2.0s)
+[WebServer] 4:26:48 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button as-child="" > 
+[WebServer]   at <CardFooter class="justify-center" > 
+[WebServer]   at <Primitive data-slot="card" data-shadow=true data-size="md"  ... > 
+[WebServer]   at <Surface data-slot="card" tier="floating" surface=undefined  ... > 
+[WebServer]   at <Card tier="floating" class="w-full max-w-(--measure-cel) text-center" > 
+[WebServer]   at <NotFound onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/this/route/does/not/exist" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  ✘  16 [coarse-touch] › tests-visual/_egg-capture.spec.ts:145:5 › E4 404 paints the lattice (light) (1.5s)
+[WebServer] 4:26:50 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button as-child="" > 
+[WebServer]   at <CardFooter class="justify-center" > 
+[WebServer]   at <Primitive data-slot="card" data-shadow=true data-size="md"  ... > 
+[WebServer]   at <Surface data-slot="card" tier="floating" surface=undefined  ... > 
+[WebServer]   at <Card tier="floating" class="w-full max-w-(--measure-cel) text-center" > 
+[WebServer]   at <NotFound onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/this/route/does/not/exist" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  ✘  17 [coarse-touch] › tests-visual/_egg-capture.spec.ts:145:5 › E4 404 paints the lattice (dark) (1.5s)
+  ✓  18 [coarse-touch] › tests-visual/_egg-capture.spec.ts:165:1 › E4 empty-states mascot is mounted (light·mobile390) (1.6s)
+  ✘  19 [coarse-touch] › tests-visual/_egg-capture.spec.ts:185:5 › E5/E6 shell dark toggle present + eclipse register (light) (6.0s)
+  ✘  20 [coarse-touch] › tests-visual/_egg-capture.spec.ts:185:5 › E5/E6 shell dark toggle present + eclipse register (dark) (6.0s)
+  ✓  21 [coarse-touch] › tests-visual/_fix-glassui-dark-capture.spec.ts:32:9 › auth-shell light (2.4s)
+  ✓  22 [coarse-touch] › tests-visual/_fix-glassui-dark-capture.spec.ts:32:9 › configurator light (2.4s)
+  ✓  23 [coarse-touch] › tests-visual/_fix-glassui-dark-capture.spec.ts:32:9 › icons-pops light (10.4s)
+[WebServer] 4:27:21 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button as-child="" > 
+[WebServer]   at <CardFooter class="justify-center" > 
+[WebServer]   at <Primitive data-slot="card" data-shadow=true data-size="md"  ... > 
+[WebServer]   at <Surface data-slot="card" tier="floating" surface=undefined  ... > 
+[WebServer]   at <Card tier="floating" class="w-full max-w-(--measure-cel) text-center" > 
+[WebServer]   at <NotFound onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/this-route-does-not-exist" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  ✓  24 [coarse-touch] › tests-visual/_fix-glassui-dark-capture.spec.ts:32:9 › 404-egg light (10.3s)
+  ✓  25 [coarse-touch] › tests-visual/_fix-glassui-dark-capture.spec.ts:32:9 › auth-shell dark (2.3s)
+  ✓  26 [coarse-touch] › tests-visual/_fix-glassui-dark-capture.spec.ts:32:9 › configurator dark (2.4s)
+  ✓  27 [coarse-touch] › tests-visual/_fix-glassui-dark-capture.spec.ts:32:9 › icons-pops dark (10.4s)
+[WebServer] 4:27:47 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button as-child="" > 
+[WebServer]   at <CardFooter class="justify-center" > 
+[WebServer]   at <Primitive data-slot="card" data-shadow=true data-size="md"  ... > 
+[WebServer]   at <Surface data-slot="card" tier="floating" surface=undefined  ... > 
+[WebServer]   at <Card tier="floating" class="w-full max-w-(--measure-cel) text-center" > 
+[WebServer]   at <NotFound onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/this-route-does-not-exist" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  ✓  28 [coarse-touch] › tests-visual/_fix-glassui-dark-capture.spec.ts:32:9 › 404-egg dark (10.3s)
+[WebServer] 4:27:57 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button data-scenario="button-as-child" as-child="" > 
+[WebServer]   at <Primitive material="content" shadow=true grain=false  ... > 
+[WebServer]   at <Surface material="content" tier="resting" surface="opaque"  ... > 
+[WebServer]   at <ShowcaseFrame caption="As-child" pad="sm" > 
+[WebServer]   at <StorySection heading="Keyboard, touch, and the linked command" blurb="One native button accepts Enter, Space, click, and coarse taps. `as-child` hands the whole command contract to another element without giving up the material." > 
+[WebServer]   at <TooltipProvider delay-duration=250 skip-delay-duration=300 > 
+[WebServer]   at <TooltipProvider delay-duration=250 > 
+[WebServer]   at <StoryPage> 
+[WebServer]   at <Buttons onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/display/buttons" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+[WebServer] 4:27:57 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button data-scenario="button-as-child-disabled" as-child="" disabled="" > 
+[WebServer]   at <Primitive material="content" shadow=true grain=false  ... > 
+[WebServer]   at <Surface material="content" tier="resting" surface="opaque"  ... > 
+[WebServer]   at <ShowcaseFrame caption="As-child" pad="sm" > 
+[WebServer]   at <StorySection heading="Keyboard, touch, and the linked command" blurb="One native button accepts Enter, Space, click, and coarse taps. `as-child` hands the whole command contract to another element without giving up the material." > 
+[WebServer]   at <TooltipProvider delay-duration=250 skip-delay-duration=300 > 
+[WebServer]   at <TooltipProvider delay-duration=250 > 
+[WebServer]   at <StoryPage> 
+[WebServer]   at <Buttons onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/display/buttons" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  ✘  29 [coarse-touch] › tests-visual/_prim-polish-capture.spec.ts:28:13 › W-PRIM-POLISH capture (light · mobile390) › buttons — gold CTA hover + the corrected specimen (light·mobile390) (1.0m)
+  ✓  30 [coarse-touch] › tests-visual/_prim-polish-capture.spec.ts:71:13 › W-PRIM-POLISH capture (light · mobile390) › badge — dark destructive plate (light·mobile390) (1.3s)
+  ✓  31 [coarse-touch] › tests-visual/_prim-polish-capture.spec.ts:96:13 › W-PRIM-POLISH capture (light · mobile390) › checks — switch glass track (light·mobile390) (1.2s)
+[WebServer] 4:29:00 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button data-scenario="button-as-child" as-child="" > 
+[WebServer]   at <Primitive material="content" shadow=true grain=false  ... > 
+[WebServer]   at <Surface material="content" tier="resting" surface="opaque"  ... > 
+[WebServer]   at <ShowcaseFrame caption="As-child" pad="sm" > 
+[WebServer]   at <StorySection heading="Keyboard, touch, and the linked command" blurb="One native button accepts Enter, Space, click, and coarse taps. `as-child` hands the whole command contract to another element without giving up the material." > 
+[WebServer]   at <TooltipProvider delay-duration=250 skip-delay-duration=300 > 
+[WebServer]   at <TooltipProvider delay-duration=250 > 
+[WebServer]   at <StoryPage> 
+[WebServer]   at <Buttons onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/display/buttons" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+[WebServer] 4:29:00 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button data-scenario="button-as-child-disabled" as-child="" disabled="" > 
+[WebServer]   at <Primitive material="content" shadow=true grain=false  ... > 
+[WebServer]   at <Surface material="content" tier="resting" surface="opaque"  ... > 
+[WebServer]   at <ShowcaseFrame caption="As-child" pad="sm" > 
+[WebServer]   at <StorySection heading="Keyboard, touch, and the linked command" blurb="One native button accepts Enter, Space, click, and coarse taps. `as-child` hands the whole command contract to another element without giving up the material." > 
+[WebServer]   at <TooltipProvider delay-duration=250 skip-delay-duration=300 > 
+[WebServer]   at <TooltipProvider delay-duration=250 > 
+[WebServer]   at <StoryPage> 
+[WebServer]   at <Buttons onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/display/buttons" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  ✘  32 [coarse-touch] › tests-visual/_prim-polish-capture.spec.ts:28:13 › W-PRIM-POLISH capture (light · desktop1280) › buttons — gold CTA hover + the corrected specimen (light·desktop1280) (1.0m)
+  ✓  33 [coarse-touch] › tests-visual/_prim-polish-capture.spec.ts:71:13 › W-PRIM-POLISH capture (light · desktop1280) › badge — dark destructive plate (light·desktop1280) (1.2s)
+  ✓  34 [coarse-touch] › tests-visual/_prim-polish-capture.spec.ts:96:13 › W-PRIM-POLISH capture (light · desktop1280) › checks — switch glass track (light·desktop1280) (1.2s)
+[WebServer] 4:30:03 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button data-scenario="button-as-child" as-child="" > 
+[WebServer]   at <Primitive material="content" shadow=true grain=false  ... > 
+[WebServer]   at <Surface material="content" tier="resting" surface="opaque"  ... > 
+[WebServer]   at <ShowcaseFrame caption="As-child" pad="sm" > 
+[WebServer]   at <StorySection heading="Keyboard, touch, and the linked command" blurb="One native button accepts Enter, Space, click, and coarse taps. `as-child` hands the whole command contract to another element without giving up the material." > 
+[WebServer]   at <TooltipProvider delay-duration=250 skip-delay-duration=300 > 
+[WebServer]   at <TooltipProvider delay-duration=250 > 
+[WebServer]   at <StoryPage> 
+[WebServer]   at <Buttons onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/display/buttons" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+[WebServer] 4:30:03 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button data-scenario="button-as-child-disabled" as-child="" disabled="" > 
+[WebServer]   at <Primitive material="content" shadow=true grain=false  ... > 
+[WebServer]   at <Surface material="content" tier="resting" surface="opaque"  ... > 
+[WebServer]   at <ShowcaseFrame caption="As-child" pad="sm" > 
+[WebServer]   at <StorySection heading="Keyboard, touch, and the linked command" blurb="One native button accepts Enter, Space, click, and coarse taps. `as-child` hands the whole command contract to another element without giving up the material." > 
+[WebServer]   at <TooltipProvider delay-duration=250 skip-delay-duration=300 > 
+[WebServer]   at <TooltipProvider delay-duration=250 > 
+[WebServer]   at <StoryPage> 
+[WebServer]   at <Buttons onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/display/buttons" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  ✘  35 [coarse-touch] › tests-visual/_prim-polish-capture.spec.ts:28:13 › W-PRIM-POLISH capture (dark · mobile390) › buttons — gold CTA hover + the corrected specimen (dark·mobile390) (1.0m)
+  ✓  36 [coarse-touch] › tests-visual/_prim-polish-capture.spec.ts:71:13 › W-PRIM-POLISH capture (dark · mobile390) › badge — dark destructive plate (dark·mobile390) (1.2s)
+  ✓  37 [coarse-touch] › tests-visual/_prim-polish-capture.spec.ts:96:13 › W-PRIM-POLISH capture (dark · mobile390) › checks — switch glass track (dark·mobile390) (1.1s)
+[WebServer] 4:31:05 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button data-scenario="button-as-child" as-child="" > 
+[WebServer]   at <Primitive material="content" shadow=true grain=false  ... > 
+[WebServer]   at <Surface material="content" tier="resting" surface="opaque"  ... > 
+[WebServer]   at <ShowcaseFrame caption="As-child" pad="sm" > 
+[WebServer]   at <StorySection heading="Keyboard, touch, and the linked command" blurb="One native button accepts Enter, Space, click, and coarse taps. `as-child` hands the whole command contract to another element without giving up the material." > 
+[WebServer]   at <TooltipProvider delay-duration=250 skip-delay-duration=300 > 
+[WebServer]   at <TooltipProvider delay-duration=250 > 
+[WebServer]   at <StoryPage> 
+[WebServer]   at <Buttons onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/display/buttons" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+[WebServer] 4:31:05 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button data-scenario="button-as-child-disabled" as-child="" disabled="" > 
+[WebServer]   at <Primitive material="content" shadow=true grain=false  ... > 
+[WebServer]   at <Surface material="content" tier="resting" surface="opaque"  ... > 
+[WebServer]   at <ShowcaseFrame caption="As-child" pad="sm" > 
+[WebServer]   at <StorySection heading="Keyboard, touch, and the linked command" blurb="One native button accepts Enter, Space, click, and coarse taps. `as-child` hands the whole command contract to another element without giving up the material." > 
+[WebServer]   at <TooltipProvider delay-duration=250 skip-delay-duration=300 > 
+[WebServer]   at <TooltipProvider delay-duration=250 > 
+[WebServer]   at <StoryPage> 
+[WebServer]   at <Buttons onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/display/buttons" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  ✘  38 [coarse-touch] › tests-visual/_prim-polish-capture.spec.ts:28:13 › W-PRIM-POLISH capture (dark · desktop1280) › buttons — gold CTA hover + the corrected specimen (dark·desktop1280) (1.0m)
+  ✓  39 [coarse-touch] › tests-visual/_prim-polish-capture.spec.ts:71:13 › W-PRIM-POLISH capture (dark · desktop1280) › badge — dark destructive plate (dark·desktop1280) (1.3s)
+  ✓  40 [coarse-touch] › tests-visual/_prim-polish-capture.spec.ts:96:13 › W-PRIM-POLISH capture (dark · desktop1280) › checks — switch glass track (dark·desktop1280) (1.2s)
+  ✓  41 [coarse-touch] › tests-visual/_prim-polish-capture.spec.ts:125:5 › dialog scrim — dark recedes to ink (mobile390) (1.7s)
+  ✓  42 [coarse-touch] › tests-visual/_prim-polish-capture.spec.ts:125:5 › dialog scrim — dark recedes to ink (desktop1280) (1.7s)
+[WebServer] 4:32:13 PM [vite] (client) [console.warn] [Slider] no accessible name: a single-thumb <Slider> has no `aria-label` or `aria-labelledby`, so its role="slider" thumb is nameless to a screen reader (reka mints no fallback name for one thumb). Wrap it in <LabeledField>, or pass an explicit `aria-label`.
+[WebServer] 4:32:13 PM [vite] (client) [console.warn] [Slider] no accessible name: a single-thumb <Slider> has no `aria-label` or `aria-labelledby`, so its role="slider" thumb is nameless to a screen reader (reka mints no fallback name for one thumb). Wrap it in <LabeledField>, or pass an explicit `aria-label`.
+[WebServer] 4:32:13 PM [vite] (client) [console.warn] [Slider] no accessible name: a single-thumb <Slider> has no `aria-label` or `aria-labelledby`, so its role="slider" thumb is nameless to a screen reader (reka mints no fallback name for one thumb). Wrap it in <LabeledField>, or pass an explicit `aria-label`.
+[WebServer] 4:32:13 PM [vite] (client) [console.warn] [Slider] no accessible name: a single-thumb <Slider> has no `aria-label` or `aria-labelledby`, so its role="slider" thumb is nameless to a screen reader (reka mints no fallback name for one thumb). Wrap it in <LabeledField>, or pass an explicit `aria-label`.
+[WebServer] 4:32:13 PM [vite] (client) [console.warn] [Slider] no accessible name: a single-thumb <Slider> has no `aria-label` or `aria-labelledby`, so its role="slider" thumb is nameless to a screen reader (reka mints no fallback name for one thumb). Wrap it in <LabeledField>, or pass an explicit `aria-label`.
+[WebServer] 4:32:13 PM [vite] (client) [console.warn] [Slider] no accessible name: a single-thumb <Slider> has no `aria-label` or `aria-labelledby`, so its role="slider" thumb is nameless to a screen reader (reka mints no fallback name for one thumb). Wrap it in <LabeledField>, or pass an explicit `aria-label`.
+[WebServer] 4:32:15 PM [vite] (client) [console.warn] [Slider] no accessible name: a single-thumb <Slider> has no `aria-label` or `aria-labelledby`, so its role="slider" thumb is nameless to a screen reader (reka mints no fallback name for one thumb). Wrap it in <LabeledField>, or pass an explicit `aria-label`.
+[WebServer] 4:32:15 PM [vite] (client) [console.warn] [Slider] no accessible name: a single-thumb <Slider> has no `aria-label` or `aria-labelledby`, so its role="slider" thumb is nameless to a screen reader (reka mints no fallback name for one thumb). Wrap it in <LabeledField>, or pass an explicit `aria-label`.
+[WebServer] 4:32:15 PM [vite] (client) [console.warn] [Slider] no accessible name: a single-thumb <Slider> has no `aria-label` or `aria-labelledby`, so its role="slider" thumb is nameless to a screen reader (reka mints no fallback name for one thumb). Wrap it in <LabeledField>, or pass an explicit `aria-label`.
+[WebServer] 4:32:15 PM [vite] (client) [console.warn] [Slider] no accessible name: a single-thumb <Slider> has no `aria-label` or `aria-labelledby`, so its role="slider" thumb is nameless to a screen reader (reka mints no fallback name for one thumb). Wrap it in <LabeledField>, or pass an explicit `aria-label`.
+[WebServer] 4:32:15 PM [vite] (client) [console.warn] [Slider] no accessible name: a single-thumb <Slider> has no `aria-label` or `aria-labelledby`, so its role="slider" thumb is nameless to a screen reader (reka mints no fallback name for one thumb). Wrap it in <LabeledField>, or pass an explicit `aria-label`.
+[WebServer] 4:32:15 PM [vite] (client) [console.warn] [Slider] no accessible name: a single-thumb <Slider> has no `aria-label` or `aria-labelledby`, so its role="slider" thumb is nameless to a screen reader (reka mints no fallback name for one thumb). Wrap it in <LabeledField>, or pass an explicit `aria-label`.
+  ✘  43 [coarse-touch] › tests-visual/_r4-shell-config-capture.spec.ts:115:1 › AZ.R4-SHELL — gear→PresetEditor, glassy rows, panel padding (shell) (1.0m)
+  ✓  44 [coarse-touch] › tests-visual/CommandDialog.b7c.spec.ts:34:1 › C3-1: the modal finder holds the page through the root and lets go without a jump (1.9s)
+  ✓  45 [coarse-touch] › tests-visual/CommandDialog.b7c.spec.ts:66:1 › C3-2: the short first group keeps its rows in view under its own heading (659ms)
+  ✓  46 [coarse-touch] › tests-visual/DropdownMenu.scroll-lock.spec.ts:25:5 › DropdownMenu: opening it keeps body scroll and the sticky row in place (618ms)
+  ✘  47 [coarse-touch] › tests-visual/DropdownMenu.scroll-lock.spec.ts:25:5 › Select: opening it keeps body scroll and the sticky row in place (636ms)
+  ✘  48 [coarse-touch] › tests-visual/SegmentedTabs.glide.spec.ts:70:5 › adjacent hop: the indicator glides at its own size in one monotone leg (1.3s)
+  ✘  49 [coarse-touch] › tests-visual/SegmentedTabs.glide.spec.ts:70:5 › far hop: the indicator glides at its own size in one monotone leg (1.3s)
+  ✓  50 [coarse-touch] › tests-visual/SegmentedTabs.glide.spec.ts:115:1 › hover on an inactive tab changes its colour and nothing else (1.1s)
+  ✓  51 [coarse-touch] › tests-visual/SegmentedTabs.glide.spec.ts:164:5 › re-clicking the active tab on its centre moves nothing (1.6s)
+  ✘  52 [coarse-touch] › tests-visual/SegmentedTabs.glide.spec.ts:164:5 › re-clicking the active tab off its centre moves nothing (1.5s)
+  ✘  53 [coarse-touch] › tests-visual/SegmentedTabs.glide.spec.ts:179:1 › the indicator can be dragged to the next tab, and stays under the label it commits (938ms)
+  ✓  54 [coarse-touch] › tests-visual/SegmentedTabs.glide.spec.ts:205:5 › a 8 px drag out and back, released on its start, leaves the next hop gliding (1.8s)
+  ✓  55 [coarse-touch] › tests-visual/SegmentedTabs.glide.spec.ts:205:5 › a 24 px drag out and back, released on its start, leaves the next hop gliding (1.8s)
+  ✓  56 [coarse-touch] › tests-visual/Select.bound.spec.ts:17:1 › a twelve-row list that fits the room shows whole (619ms)
+  ✓  57 [coarse-touch] › tests-visual/Select.bound.spec.ts:35:1 › a short viewport bounds the list 16px from the edge and it scrolls inside (619ms)
+  ✓  58 [coarse-touch] › tests-visual/Select.bound.spec.ts:53:1 › below 30rem the listbox is a bottom sheet at full width (572ms)
+  ✓  59 [coarse-touch] › tests-visual/Sheet.position.spec.ts:14:5 › sheet opened deep in the page is fixed and on screen (consumer layer) (877ms)
+  ✓  60 [coarse-touch] › tests-visual/Sheet.position.spec.ts:14:5 › sheet opened deep in the page is fixed and on screen (unlayered) (891ms)
+
+
+  1) [coarse-touch] › tests-visual/_cfg-readback.spec.ts:3:1 › configurator dark bloom token + auth-shell ink readback 
+
+    Error: page.evaluate: TypeError: Failed to execute 'getComputedStyle' on 'Window': parameter 1 is not of type 'Element'.
+        at eval (eval at evaluate (:303:30), <anonymous>:8:21)
+        at UtilityScript.evaluate (<anonymous>:305:16)
+        at UtilityScript.<anonymous> (<anonymous>:1:44)
+        at eval (eval at evaluate (:303:30), <anonymous>:8:21)
+        at UtilityScript.evaluate (<anonymous>:305:16)
+        at UtilityScript.<anonymous> (<anonymous>:1:44)
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/_cfg-readback.spec.ts:30:29
+
+    Error Context: tests-visual/test-results/_cfg-readback-configurator-8f397-ken-auth-shell-ink-readback-coarse-touch/error-context.md
+
+  2) [coarse-touch] › tests-visual/_dock-context-capture.spec.ts:50:1 › AZ.W-DOCK-CONTEXT W3 — per-route DockLayer swap on the shell docks 
+
+    Error: bottom context group present on route A
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      94 |     // The binding assertion: the SHELL dock renders a DIFFERENT facet layer set on
+      95 |     // the two routes (route→layer determinism). Both shell docks must swap.
+    > 96 |     expect(bottomA.present, "bottom context group present on route A").toBe(true);
+         |                                                                        ^
+      97 |     expect(bottomB.present, "bottom context group present on route B").toBe(true);
+      98 |     expect(bottomA.railTabs.length, "route A has facet layers").toBeGreaterThan(0);
+      99 |     expect(
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/_dock-context-capture.spec.ts:96:72
+
+    Error Context: tests-visual/test-results/_dock-context-capture-AZ-W-28b46-yer-swap-on-the-shell-docks-coarse-touch/error-context.md
+
+  3) [coarse-touch] › tests-visual/_egg-capture.spec.ts:25:5 › E3 cmd+K palette opens + navigates (light) 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: locator('[data-slot="command"]').first()
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" with timeout 5000ms
+      - waiting for locator('[data-slot="command"]').first()
+
+
+      42 |         }
+      43 |         const palette = page.locator('[data-slot="command"]').first();
+    > 44 |         await expect(palette).toBeVisible();
+         |                               ^
+      45 |
+      46 |         // Type a query → the list filters.
+      47 |         await page.keyboard.type("dialog");
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/_egg-capture.spec.ts:44:31
+
+    Error Context: tests-visual/test-results/_egg-capture-E3-cmd-K-palette-opens-navigates-light--coarse-touch/error-context.md
+
+  4) [coarse-touch] › tests-visual/_egg-capture.spec.ts:25:5 › E3 cmd+K palette opens + navigates (dark) 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: locator('[data-slot="command"]').first()
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" with timeout 5000ms
+      - waiting for locator('[data-slot="command"]').first()
+
+
+      42 |         }
+      43 |         const palette = page.locator('[data-slot="command"]').first();
+    > 44 |         await expect(palette).toBeVisible();
+         |                               ^
+      45 |
+      46 |         // Type a query → the list filters.
+      47 |         await page.keyboard.type("dialog");
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/_egg-capture.spec.ts:44:31
+
+    Error Context: tests-visual/test-results/_egg-capture-E3-cmd-K-palette-opens-navigates-dark--coarse-touch/error-context.md
+
+  5) [coarse-touch] › tests-visual/_egg-capture.spec.ts:65:5 › E1 ℱ-redraw paints an epicycle overlay (light) 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      89 |             return { present: true, painted };
+      90 |         });
+    > 91 |         expect(overlay.present).toBe(true);
+         |                                 ^
+      92 |         expect(overlay.painted).toBeGreaterThan(200);
+      93 |
+      94 |         await page.screenshot({
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/_egg-capture.spec.ts:91:33
+
+    Error Context: tests-visual/test-results/_egg-capture-E1-ℱ-redraw-paints-an-epicycle-overlay-light--coarse-touch/error-context.md
+
+  6) [coarse-touch] › tests-visual/_egg-capture.spec.ts:65:5 › E1 ℱ-redraw paints an epicycle overlay (dark) 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      89 |             return { present: true, painted };
+      90 |         });
+    > 91 |         expect(overlay.present).toBe(true);
+         |                                 ^
+      92 |         expect(overlay.painted).toBeGreaterThan(200);
+      93 |
+      94 |         await page.screenshot({
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/_egg-capture.spec.ts:91:33
+
+    Error Context: tests-visual/test-results/_egg-capture-E1-ℱ-redraw-paints-an-epicycle-overlay-dark--coarse-touch/error-context.md
+
+  7) [coarse-touch] › tests-visual/_egg-capture.spec.ts:102:1 › E2 konami reveals the full-bleed aurora 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      132 |         };
+      133 |     });
+    > 134 |     expect(reveal.present).toBe(true);
+          |                            ^
+      135 |     expect(reveal.shown).toBe(true);
+      136 |
+      137 |     await page.screenshot({
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/_egg-capture.spec.ts:134:28
+
+    Error Context: tests-visual/test-results/_egg-capture-E2-konami-reveals-the-full-bleed-aurora-coarse-touch/error-context.md
+
+  8) [coarse-touch] › tests-visual/_egg-capture.spec.ts:145:5 › E4 404 paints the lattice (light) ──
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      154 |             document.body.textContent?.includes("Lost in the lattice"),
+      155 |         );
+    > 156 |         expect(has404).toBe(true);
+          |                        ^
+      157 |
+      158 |         await page.screenshot({
+      159 |             path: `${OUT}/W-EGG-404-lattice-desktop1280-${scheme}.png`,
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/_egg-capture.spec.ts:156:24
+
+    Error Context: tests-visual/test-results/_egg-capture-E4-404-paints-the-lattice-light--coarse-touch/error-context.md
+
+  9) [coarse-touch] › tests-visual/_egg-capture.spec.ts:145:5 › E4 404 paints the lattice (dark) ───
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      154 |             document.body.textContent?.includes("Lost in the lattice"),
+      155 |         );
+    > 156 |         expect(has404).toBe(true);
+          |                        ^
+      157 |
+      158 |         await page.screenshot({
+      159 |             path: `${OUT}/W-EGG-404-lattice-desktop1280-${scheme}.png`,
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/_egg-capture.spec.ts:156:24
+
+    Error Context: tests-visual/test-results/_egg-capture-E4-404-paints-the-lattice-dark--coarse-touch/error-context.md
+
+  10) [coarse-touch] › tests-visual/_egg-capture.spec.ts:185:5 › E5/E6 shell dark toggle present + eclipse register (light) 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: locator('.demo-sidebar-dark-toggle').first()
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" with timeout 5000ms
+      - waiting for locator('.demo-sidebar-dark-toggle').first()
+
+
+      192 |         // E6 — the toggle is in the rail chrome.
+      193 |         const toggle = page.locator(".demo-sidebar-dark-toggle").first();
+    > 194 |         await expect(toggle).toBeVisible();
+          |                              ^
+      195 |
+      196 |         // E5 — a long-press fires the eclipse register (data-eclipsing flips).
+      197 |         const box = await toggle.boundingBox();
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/_egg-capture.spec.ts:194:30
+
+    Error Context: tests-visual/test-results/_egg-capture-E5-E6-shell-d-d6a67-ent-eclipse-register-light--coarse-touch/error-context.md
+
+  11) [coarse-touch] › tests-visual/_egg-capture.spec.ts:185:5 › E5/E6 shell dark toggle present + eclipse register (dark) 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: locator('.demo-sidebar-dark-toggle').first()
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" with timeout 5000ms
+      - waiting for locator('.demo-sidebar-dark-toggle').first()
+
+
+      192 |         // E6 — the toggle is in the rail chrome.
+      193 |         const toggle = page.locator(".demo-sidebar-dark-toggle").first();
+    > 194 |         await expect(toggle).toBeVisible();
+          |                              ^
+      195 |
+      196 |         // E5 — a long-press fires the eclipse register (data-eclipsing flips).
+      197 |         const box = await toggle.boundingBox();
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/_egg-capture.spec.ts:194:30
+
+    Error Context: tests-visual/test-results/_egg-capture-E5-E6-shell-d-393c7-sent-eclipse-register-dark--coarse-touch/error-context.md
+
+  12) [coarse-touch] › tests-visual/_prim-polish-capture.spec.ts:28:13 › W-PRIM-POLISH capture (light · mobile390) › buttons — gold CTA hover + the corrected specimen (light·mobile390) 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: locator.scrollIntoViewIfNeeded: Test timeout of 60000ms exceeded.
+    Call log:
+      - waiting for locator('button').filter({ hasText: 'Hover (sim.)' }).first()
+
+
+      39 |                     .locator("button", { hasText: "Hover (sim.)" })
+      40 |                     .first();
+    > 41 |                 await specimen.scrollIntoViewIfNeeded();
+         |                                ^
+      42 |                 await page.waitForTimeout(120);
+      43 |                 const sBox = (await specimen.boundingBox())!;
+      44 |                 await page.screenshot({
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/_prim-polish-capture.spec.ts:41:32
+
+    Error Context: tests-visual/test-results/_prim-polish-capture-W-PRI-cbdf2-d-specimen-light·mobile390--coarse-touch/error-context.md
+
+  13) [coarse-touch] › tests-visual/_prim-polish-capture.spec.ts:28:13 › W-PRIM-POLISH capture (light · desktop1280) › buttons — gold CTA hover + the corrected specimen (light·desktop1280) 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: locator.scrollIntoViewIfNeeded: Test timeout of 60000ms exceeded.
+    Call log:
+      - waiting for locator('button').filter({ hasText: 'Hover (sim.)' }).first()
+
+
+      39 |                     .locator("button", { hasText: "Hover (sim.)" })
+      40 |                     .first();
+    > 41 |                 await specimen.scrollIntoViewIfNeeded();
+         |                                ^
+      42 |                 await page.waitForTimeout(120);
+      43 |                 const sBox = (await specimen.boundingBox())!;
+      44 |                 await page.screenshot({
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/_prim-polish-capture.spec.ts:41:32
+
+    Error Context: tests-visual/test-results/_prim-polish-capture-W-PRI-a92fe-specimen-light·desktop1280--coarse-touch/error-context.md
+
+  14) [coarse-touch] › tests-visual/_prim-polish-capture.spec.ts:28:13 › W-PRIM-POLISH capture (dark · mobile390) › buttons — gold CTA hover + the corrected specimen (dark·mobile390) 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: locator.scrollIntoViewIfNeeded: Test timeout of 60000ms exceeded.
+    Call log:
+      - waiting for locator('button').filter({ hasText: 'Hover (sim.)' }).first()
+
+
+      39 |                     .locator("button", { hasText: "Hover (sim.)" })
+      40 |                     .first();
+    > 41 |                 await specimen.scrollIntoViewIfNeeded();
+         |                                ^
+      42 |                 await page.waitForTimeout(120);
+      43 |                 const sBox = (await specimen.boundingBox())!;
+      44 |                 await page.screenshot({
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/_prim-polish-capture.spec.ts:41:32
+
+    Error Context: tests-visual/test-results/_prim-polish-capture-W-PRI-ea2a4-ed-specimen-dark·mobile390--coarse-touch/error-context.md
+
+  15) [coarse-touch] › tests-visual/_prim-polish-capture.spec.ts:28:13 › W-PRIM-POLISH capture (dark · desktop1280) › buttons — gold CTA hover + the corrected specimen (dark·desktop1280) 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: locator.scrollIntoViewIfNeeded: Test timeout of 60000ms exceeded.
+    Call log:
+      - waiting for locator('button').filter({ hasText: 'Hover (sim.)' }).first()
+
+
+      39 |                     .locator("button", { hasText: "Hover (sim.)" })
+      40 |                     .first();
+    > 41 |                 await specimen.scrollIntoViewIfNeeded();
+         |                                ^
+      42 |                 await page.waitForTimeout(120);
+      43 |                 const sBox = (await specimen.boundingBox())!;
+      44 |                 await page.screenshot({
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/_prim-polish-capture.spec.ts:41:32
+
+    Error Context: tests-visual/test-results/_prim-polish-capture-W-PRI-217d0--specimen-dark·desktop1280--coarse-touch/error-context.md
+
+  16) [coarse-touch] › tests-visual/_r4-shell-config-capture.spec.ts:115:1 › AZ.R4-SHELL — gear→PresetEditor, glassy rows, panel padding (shell) 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: locator.waitFor: Test timeout of 60000ms exceeded.
+    Call log:
+      - waiting for locator('.dropdown-menu-content').first() to be visible
+
+
+      188 |         await trigger.click();
+      189 |         const content = page.locator(".dropdown-menu-content").first();
+    > 190 |         await content.waitFor({ state: "visible" });
+          |                       ^
+      191 |         await page.waitForTimeout(250);
+      192 |         const padding = await content.evaluate((el) => {
+      193 |             const cs = getComputedStyle(el as HTMLElement);
+        at measureDropdown (/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/_r4-shell-config-capture.spec.ts:190:23)
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/_r4-shell-config-capture.spec.ts:207:27
+
+    Error Context: tests-visual/test-results/_r4-shell-config-capture-A-3f756-y-rows-panel-padding-shell--coarse-touch/error-context.md
+
+  17) [coarse-touch] › tests-visual/DropdownMenu.scroll-lock.spec.ts:25:5 › Select: opening it keeps body scroll and the sticky row in place 
+
+    Error: expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 12
+    Received:    631
+
+      52 |         ]);
+      53 |         expect(p.top).toBeGreaterThanOrEqual(t.bottom - 1);
+    > 54 |         expect(p.top - t.bottom).toBeLessThanOrEqual(12);
+         |                                  ^
+      55 |         // The plate's own scroll contains overscroll.
+      56 |         const contain = await plate.evaluate((el) => {
+      57 |             const port = el.querySelector<HTMLElement>('[data-slot="select-viewport"]') ?? el;
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/DropdownMenu.scroll-lock.spec.ts:54:34
+
+    Error Context: tests-visual/test-results/DropdownMenu.scroll-lock-S-d0fe6-and-the-sticky-row-in-place-coarse-touch/error-context.md
+
+  18) [coarse-touch] › tests-visual/SegmentedTabs.glide.spec.ts:70:5 › adjacent hop: the indicator glides at its own size in one monotone leg 
+
+    Error: width rose to 66.1875
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.5
+    Received:    31.984375
+
+      86 |         const widths = frames.map((f) => f.w);
+      87 |         const heights = frames.map((f) => f.h);
+    > 88 |         expect(Math.max(...widths) - rest.w, `width rose to ${Math.max(...widths)}`).toBeLessThanOrEqual(0.5);
+         |                                                                                      ^
+      89 |         expect(rest.w - Math.min(...widths), `width fell to ${Math.min(...widths)}`).toBeLessThanOrEqual(0.5);
+      90 |         expect(Math.max(...heights) - rest.h).toBeLessThanOrEqual(0.5);
+      91 |         expect(rest.h - Math.min(...heights)).toBeLessThanOrEqual(0.5);
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/SegmentedTabs.glide.spec.ts:88:86
+
+    Error Context: tests-visual/test-results/SegmentedTabs.glide-adjace-23002-wn-size-in-one-monotone-leg-coarse-touch/error-context.md
+
+  19) [coarse-touch] › tests-visual/SegmentedTabs.glide.spec.ts:70:5 › far hop: the indicator glides at its own size in one monotone leg 
+
+    Error: width rose to 63.359375
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.5
+    Received:    29.15625
+
+      86 |         const widths = frames.map((f) => f.w);
+      87 |         const heights = frames.map((f) => f.h);
+    > 88 |         expect(Math.max(...widths) - rest.w, `width rose to ${Math.max(...widths)}`).toBeLessThanOrEqual(0.5);
+         |                                                                                      ^
+      89 |         expect(rest.w - Math.min(...widths), `width fell to ${Math.min(...widths)}`).toBeLessThanOrEqual(0.5);
+      90 |         expect(Math.max(...heights) - rest.h).toBeLessThanOrEqual(0.5);
+      91 |         expect(rest.h - Math.min(...heights)).toBeLessThanOrEqual(0.5);
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/SegmentedTabs.glide.spec.ts:88:86
+
+    Error Context: tests-visual/test-results/SegmentedTabs.glide-far-ho-815b1-wn-size-in-one-monotone-leg-coarse-touch/error-context.md
+
+  20) [coarse-touch] › tests-visual/SegmentedTabs.glide.spec.ts:164:5 › re-clicking the active tab off its centre moves nothing 
+
+    Error: indicator at 52.76041030883789, rest 51
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.5
+    Received:    1.7604103088378906
+
+      170 |         const frames = await page.evaluate(() => (window as unknown as { __xs: Promise<number[]> }).__xs);
+      171 |         expect(frames.length).toBeGreaterThan(10);
+    > 172 |         for (const x of frames) expect(Math.abs(x - restX), `indicator at ${x}, rest ${restX}`).toBeLessThanOrEqual(0.5);
+          |                                                                                                 ^
+      173 |         const style = await page.locator(".segmented-indicator").getAttribute("style");
+      174 |         expect(style ?? "", "gesture residue on the indicator").not.toMatch(/transform:\s*translate/);
+      175 |         await expect(page.locator(".segmented-tab[data-active]")).toHaveCount(1);
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/SegmentedTabs.glide.spec.ts:172:97
+
+    Error Context: tests-visual/test-results/SegmentedTabs.glide-re-cli-1f013-ff-its-centre-moves-nothing-coarse-touch/error-context.md
+
+  21) [coarse-touch] › tests-visual/SegmentedTabs.glide.spec.ts:179:1 › the indicator can be dragged to the next tab, and stays under the label it commits 
+
+    Error: mid-drag indicator at 101.27742004394531, next tab at 85.203125
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 12
+    Received:    16.074295043945312
+
+      187 |     await page.waitForTimeout(250);
+      188 |     const mid = await page.locator(".segmented-indicator").evaluate((el) => el.getBoundingClientRect().left);
+    > 189 |     expect(Math.abs(mid - b!.x), `mid-drag indicator at ${mid}, next tab at ${b!.x}`).toBeLessThanOrEqual(12);
+          |                                                                                       ^
+      190 |     await page.mouse.up();
+      191 |     await page.waitForTimeout(700);
+      192 |     const rest = await page.locator(".segmented-indicator").evaluate((el) => el.getBoundingClientRect().left);
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/SegmentedTabs.glide.spec.ts:189:87
+
+    Error Context: tests-visual/test-results/SegmentedTabs.glide-the-in-a7741--under-the-label-it-commits-coarse-touch/error-context.md
+
+  21 failed
+    [coarse-touch] › tests-visual/_cfg-readback.spec.ts:3:1 › configurator dark bloom token + auth-shell ink readback 
+    [coarse-touch] › tests-visual/_dock-context-capture.spec.ts:50:1 › AZ.W-DOCK-CONTEXT W3 — per-route DockLayer swap on the shell docks 
+    [coarse-touch] › tests-visual/_egg-capture.spec.ts:25:5 › E3 cmd+K palette opens + navigates (light) 
+    [coarse-touch] › tests-visual/_egg-capture.spec.ts:25:5 › E3 cmd+K palette opens + navigates (dark) 
+    [coarse-touch] › tests-visual/_egg-capture.spec.ts:65:5 › E1 ℱ-redraw paints an epicycle overlay (light) 
+    [coarse-touch] › tests-visual/_egg-capture.spec.ts:65:5 › E1 ℱ-redraw paints an epicycle overlay (dark) 
+    [coarse-touch] › tests-visual/_egg-capture.spec.ts:102:1 › E2 konami reveals the full-bleed aurora 
+    [coarse-touch] › tests-visual/_egg-capture.spec.ts:145:5 › E4 404 paints the lattice (light) ───
+    [coarse-touch] › tests-visual/_egg-capture.spec.ts:145:5 › E4 404 paints the lattice (dark) ────
+    [coarse-touch] › tests-visual/_egg-capture.spec.ts:185:5 › E5/E6 shell dark toggle present + eclipse register (light) 
+    [coarse-touch] › tests-visual/_egg-capture.spec.ts:185:5 › E5/E6 shell dark toggle present + eclipse register (dark) 
+    [coarse-touch] › tests-visual/_prim-polish-capture.spec.ts:28:13 › W-PRIM-POLISH capture (light · mobile390) › buttons — gold CTA hover + the corrected specimen (light·mobile390) 
+    [coarse-touch] › tests-visual/_prim-polish-capture.spec.ts:28:13 › W-PRIM-POLISH capture (light · desktop1280) › buttons — gold CTA hover + the corrected specimen (light·desktop1280) 
+    [coarse-touch] › tests-visual/_prim-polish-capture.spec.ts:28:13 › W-PRIM-POLISH capture (dark · mobile390) › buttons — gold CTA hover + the corrected specimen (dark·mobile390) 
+    [coarse-touch] › tests-visual/_prim-polish-capture.spec.ts:28:13 › W-PRIM-POLISH capture (dark · desktop1280) › buttons — gold CTA hover + the corrected specimen (dark·desktop1280) 
+    [coarse-touch] › tests-visual/_r4-shell-config-capture.spec.ts:115:1 › AZ.R4-SHELL — gear→PresetEditor, glassy rows, panel padding (shell) 
+    [coarse-touch] › tests-visual/DropdownMenu.scroll-lock.spec.ts:25:5 › Select: opening it keeps body scroll and the sticky row in place 
+    [coarse-touch] › tests-visual/SegmentedTabs.glide.spec.ts:70:5 › adjacent hop: the indicator glides at its own size in one monotone leg 
+    [coarse-touch] › tests-visual/SegmentedTabs.glide.spec.ts:70:5 › far hop: the indicator glides at its own size in one monotone leg 
+    [coarse-touch] › tests-visual/SegmentedTabs.glide.spec.ts:164:5 › re-clicking the active tab off its centre moves nothing 
+    [coarse-touch] › tests-visual/SegmentedTabs.glide.spec.ts:179:1 › the indicator can be dragged to the next tab, and stays under the label it commits 
+  39 passed (8.0m)

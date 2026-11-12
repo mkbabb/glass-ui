@@ -1,0 +1,1633 @@
+diff --git a/docs/tranches/BL/design/marks/proposal-B/fixture/all.sh b/docs/tranches/BL/design/marks/proposal-B/fixture/all.sh
+new file mode 100755
+index 000000000..d65965a7d
+--- /dev/null
++++ b/docs/tranches/BL/design/marks/proposal-B/fixture/all.sh
+@@ -0,0 +1,14 @@
++#!/usr/bin/env bash
++# The whole record for one engine, each probe in its own guarded run.
++#   all.sh <engine> <out-dir>      (WebKit waits on the machine-wide webkit lock)
++set -u
++ENGINE=$1; OUT=$2
++HERE=$(cd "$(dirname "$0")" && pwd)
++G=~/.claude/guard/guarded
++if [ "$ENGINE" = webkit ]; then EX="--exclusive webkit"; PORT=7997; else EX=""; PORT=7996; fi
++mkdir -p "$OUT"
++for SCRIPT in probe.mjs stall.mjs; do
++  $G $EX --timeout 30 -- bash "$HERE/run.sh" "$PORT" "$ENGINE" "$SCRIPT" "$OUT" > "$OUT/$ENGINE-${SCRIPT%.mjs}.log" 2>&1
++  echo "$(date +%T) $ENGINE $SCRIPT exit $?" >> "$OUT/chain.log"
++done
++echo "DONE $ENGINE $(date +%T)" >> "$OUT/chain.log"
+diff --git a/docs/tranches/BL/design/marks/proposal-B/fixture/diag.mjs b/docs/tranches/BL/design/marks/proposal-B/fixture/diag.mjs
+new file mode 100644
+index 000000000..4ab472eb6
+--- /dev/null
++++ b/docs/tranches/BL/design/marks/proposal-B/fixture/diag.mjs
+@@ -0,0 +1,49 @@
++// What the canvas measures against what layout set.  diag.mjs <engine> <url> <out>
++import { writeFileSync } from "node:fs";
++import { join } from "node:path";
++import { launch, open } from "./lib.mjs";
++const [engine, url, out] = process.argv.slice(2);
++const browser = await launch(engine);
++try {
++    const { context, page } = await open(browser, url, { query: "scene=sheet&shape=underline&draw=none", height: 1100 });
++    try {
++        const r = await page.evaluate(() => {
++            const rows = [];
++            for (const k of ["h112", "wake", "google", "rtl"]) {
++                const host = document.querySelector(`[data-probe="${k}"]`);
++                const cs = getComputedStyle(host);
++                const walk = document.createTreeWalker(host, NodeFilter.SHOW_TEXT);
++                let n = walk.nextNode();
++                while (n && !n.data.trim()) n = walk.nextNode();
++                const range = document.createRange();
++                range.selectNodeContents(n);
++                const dom = range.getBoundingClientRect();
++                const c = document.createElement("canvas").getContext("2d");
++                const font = `${cs.fontStyle} ${cs.fontWeight} ${cs.fontSize} ${cs.fontFamily}`;
++                const tryFont = (f, ls) => {
++                    c.font = f;
++                    if ("letterSpacing" in c) c.letterSpacing = ls;
++                    c.direction = cs.direction;
++                    c.textAlign = "left";
++                    const m = c.measureText(n.data);
++                    const d = c.measureText("-");
++                    return { set: c.font, width: +m.width.toFixed(2), abl: +m.actualBoundingBoxLeft.toFixed(2), abr: +m.actualBoundingBoxRight.toFixed(2), rule: +(d.actualBoundingBoxAscent + d.actualBoundingBoxDescent).toFixed(2), fbA: m.fontBoundingBoxAscent, fbD: m.fontBoundingBoxDescent };
++                };
++                rows.push({
++                    k, font, fontShorthand: cs.font, letterSpacing: cs.letterSpacing, hasLetterSpacing: "letterSpacing" in c,
++                    domWidth: +dom.width.toFixed(2), domHeight: +dom.height.toFixed(2),
++                    built: tryFont(font, cs.letterSpacing === "normal" ? "0px" : cs.letterSpacing),
++                    shorthand: cs.font ? tryFont(cs.font, cs.letterSpacing === "normal" ? "0px" : cs.letterSpacing) : null,
++                    check: document.fonts.check(font),
++                });
++            }
++            return rows;
++        });
++        writeFileSync(join(out, `diag-${engine}.json`), JSON.stringify(r, null, 2));
++        console.log(JSON.stringify(r, null, 1));
++    } finally {
++        await context.close();
++    }
++} finally {
++    await browser.close();
++}
+diff --git a/docs/tranches/BL/design/marks/proposal-B/fixture/fixture.css b/docs/tranches/BL/design/marks/proposal-B/fixture/fixture.css
+new file mode 100644
+index 000000000..6b3da631f
+--- /dev/null
++++ b/docs/tranches/BL/design/marks/proposal-B/fixture/fixture.css
+@@ -0,0 +1,38 @@
++@import "tailwindcss" source("../../../../../../../src");
++@import "tw-animate-css";
++@import "../../../../../../../src/styles/index.css";
++
++/* The brand face ships `font-display: optional`; the fixture needs it for certain, so it
++   declares the same file under its own name and waits for it before mounting. */
++@font-face {
++    font-family: "PJS Fixture";
++    font-style: normal;
++    font-weight: 200 800;
++    font-display: block;
++    src: url("../../../../../../../src/fonts/plus-jakarta-sans/plus-jakarta-sans-latin.woff2") format("woff2");
++}
++body { margin: 0; font-family: "PJS Fixture", "Plus Jakarta Sans", sans-serif; background: var(--background); color: var(--foreground); }
++.sheet { padding: 40px 48px; display: flex; flex-direction: column; gap: 36px; align-items: flex-start; }
++.sheet section { padding: 12px 16px 20px; }
++/* Gregg's headline: Plus Jakarta Sans 800, tight tracking and leading. */
++.head { margin: 0; font-family: "PJS Fixture", sans-serif; font-weight: 800; letter-spacing: -0.045em; line-height: 1.04; white-space: nowrap; }
++.tuck { margin-inline: -0.03em -0.02em; }
++.body { margin: 0; font-size: 18px; line-height: 1.5; font-weight: 400; max-width: 620px; }
++.wrap { margin: 0; font-size: 24px; line-height: 1.35; font-weight: 600; max-width: 360px; }
++.rtl { margin: 0; font-size: 28px; line-height: 1.6; font-weight: 500; }
++.stage { padding: 60px 48px; }
++.spring-probe { animation-duration: var(--spring-present-duration); animation-timing-function: var(--spring-present); position: absolute; opacity: 0; }
++
++/* Capture modes. hold: the draw is paused so the probe can seek it. */
++html[data-hold] :is(.tm-window, .tm-frame, .hm-reveal, .hm-mark) { animation-play-state: paused !important; }
++/* only=mark: the strokes alone. only=marked: the marked words alone. */
++html[data-only="mark"] .sheet { color: transparent; }
++html[data-only="marked"] .sheet { color: transparent; }
++html[data-only="marked"] :is(.tm, .hm) { color: #000; }
++html[data-only="marked"] :is(.tm-window, .hm-reveal) { visibility: hidden; }
++html[data-only] body { background: #fff; }
++html[data-only] :is(.tm, .hm) { --mark-ink: #000; --tm-band: #000 !important; --hm-band: #000 !important; }
++
++#pm { position: fixed; left: 0; top: 0; width: 20px; height: 20px; background: transparent; }
++#ctl { position: fixed; left: 30px; top: 0; width: 20px; height: 20px; background: rgb(255, 0, 255); animation: ctl 1s linear infinite; }
++@keyframes ctl { to { transform: translateX(200px); } }
+diff --git a/docs/tranches/BL/design/marks/proposal-B/fixture/fixture.ts b/docs/tranches/BL/design/marks/proposal-B/fixture/fixture.ts
+new file mode 100644
+index 000000000..c1b0b391e
+--- /dev/null
++++ b/docs/tranches/BL/design/marks/proposal-B/fixture/fixture.ts
+@@ -0,0 +1,140 @@
++// Marks proposal B fixture. One page, chosen by ?scene=.
++//
++//   ?scene=sheet   every specimen at once: the comma headline at 48, 85 and 112 px, two
++//                  body phrases, a three-line run and an RTL run.
++//                  &shape=underline|highlight  &impl=new|old|css (old = 11.1.0's HandMark;
++//                  css = the no-script fallback: the bare element with the class)
++//                  &draw=none|mount|in-view    &hold=1 (the draw paused, for seeking)
++//                  &only=mark|marked           (ink-only renderings the probe measures)
++//   ?scene=draw    one mark, mounted on demand by `__mount()`, for the stall reading.
++//                  &case=h112|body|wrap
++import "./fixture.css";
++import { createApp, defineComponent, h, nextTick, ref, type Component } from "vue";
++import { TextMark } from "../../../../../../../src/components/text-mark";
++import { HandMark } from "../../../../../../../src/components/handmark";
++
++const q = new URLSearchParams(location.search);
++const scene = q.get("scene") ?? "sheet";
++const shape = (q.get("shape") ?? "underline") as "underline" | "highlight";
++const impl = q.get("impl") ?? "new";
++const draw = (q.get("draw") ?? "none") as "none" | "mount" | "in-view";
++document.documentElement.classList.toggle("dark", q.get("theme") === "dark");
++if (q.get("hold")) document.documentElement.dataset.hold = "1";
++if (q.get("only")) document.documentElement.dataset.only = q.get("only")!;
++const w = window as unknown as Record<string, any>;
++
++// ── the read ledger: every layout or style read, with the phase it happened in ────────
++const reads: Array<{ api: string; phase: string; t: number }> = [];
++w.__reads = reads;
++w.__phase = "idle";
++function tap(proto: any, name: string, label: string) {
++    const d = Object.getOwnPropertyDescriptor(proto, name);
++    if (!d) return;
++    const note = () => reads.push({ api: label, phase: w.__phase, t: performance.now() });
++    if (typeof d.value === "function")
++        Object.defineProperty(proto, name, { ...d, value(this: any, ...a: any[]) { note(); return d.value.apply(this, a); } });
++    else if (d.get) Object.defineProperty(proto, name, { ...d, get(this: any) { note(); return d.get!.call(this); } });
++}
++tap(Element.prototype, "getBoundingClientRect", "Element.getBoundingClientRect");
++tap(Element.prototype, "getClientRects", "Element.getClientRects");
++tap(Range.prototype, "getBoundingClientRect", "Range.getBoundingClientRect");
++tap(Range.prototype, "getClientRects", "Range.getClientRects");
++for (const k of ["offsetWidth", "offsetHeight", "offsetLeft", "offsetTop", "offsetParent"]) tap(HTMLElement.prototype, k, `HTMLElement.${k}`);
++for (const k of ["clientWidth", "clientHeight", "scrollWidth", "scrollHeight", "scrollTop", "scrollLeft"]) tap(Element.prototype, k, `Element.${k}`);
++tap(window, "getComputedStyle", "getComputedStyle");
++tap(CanvasRenderingContext2D.prototype, "measureText", "canvas.measureText");
++tap(CanvasRenderingContext2D.prototype, "getImageData", "canvas.getImageData");
++
++const drawn: number[] = [];
++w.__drawn = drawn;
++const pm = document.createElement("div");
++pm.id = "pm";
++document.body.appendChild(pm);
++w.__marker = (c: string) => (pm.style.background = c);
++document.addEventListener("animationstart", (e) => { if (/^(tm-window|hm-reveal)/.test(e.animationName) && w.__phase !== "done" && w.__phase !== "draw") { w.__phase = "draw"; performance.mark("tm-draw"); } }, true);
++function onDrawn() {
++    drawn.push(performance.now());
++    performance.mark("tm-drawn");
++    w.__phase = "done";
++    pm.style.background = "rgb(0, 200, 0)";
++}
++
++const Mark: Component = impl === "old" ? HandMark : TextMark;
++const mark = (text: string, probe: string, s = shape) =>
++    impl === "css"
++        ? // The no-script fallback: the bare element and the library's class, no component.
++          h(s === "highlight" ? "mark" : "span", { class: "tm", "data-probe": probe }, text)
++        : h(
++        Mark as any,
++        impl === "old"
++            ? { shape: s, draw: draw !== "none", trigger: draw === "in-view" ? "in-view" : "mount", "data-probe": probe, onDrawn }
++            : { shape: s, draw, "data-probe": probe, onDrawn },
++        () => text,
++    );
++
++const head = (px: number) =>
++    h("section", { "data-spec": `h${px}` }, [
++        h("h1", { class: "head", style: `font-size:${px}px` }, ["The Gregg Museum counted", h("br"), mark("4,485", `h${px}`), " visits"]),
++    ]);
++
++const Sheet = defineComponent(() => () =>
++    h("div", { class: "sheet" }, [
++        head(48),
++        head(85),
++        head(112),
++        // Gregg's own markup: the figure in a word span, its comma tucked by a negative margin.
++        h("section", { "data-spec": "nest" }, [
++            h("h1", { class: "head", style: "font-size:85px" }, [
++                h(
++                    impl === "css" ? (shape === "highlight" ? "mark" : "span") : (Mark as any),
++                    impl === "css" ? { class: "tm", "data-probe": "nest" } : impl === "old" ? { shape, draw: draw !== "none", "data-probe": "nest" } : { shape, draw, "data-probe": "nest" },
++                    impl === "css" ? [h("span", { class: "word" }, ["4", h("span", { class: "tuck" }, ","), "485"])] : () => h("span", { class: "word" }, ["4", h("span", { class: "tuck" }, ","), "485"]),
++                ),
++                " visits",
++            ]),
++        ]),
++        h("section", { "data-spec": "body" }, [
++            h("p", { class: "body" }, ["Most visitors came from ", mark("Wake County", "wake"), " and found the museum through ", mark("Google", "google"), ", then came back."]),
++        ]),
++        h("section", { "data-spec": "wrap" }, [
++            h("p", { class: "wrap" }, ["September drew ", mark("more visits than any other month, by a wide and growing margin", "wrap"), " over July."]),
++        ]),
++        h("section", { "data-spec": "rtl" }, [
++            h("p", { class: "rtl", dir: "rtl", lang: "ar" }, ["زار المتحف ", mark("أربعة آلاف وأربعمئة زائر", "rtl"), " هذا الخريف."]),
++        ]),
++    ]),
++);
++
++// ── draw scene ───────────────────────────────────────────────────────────────────────
++const mounted = ref(false);
++w.__mount = () => {
++    w.__phase = "mount";
++    performance.mark("tm-mount");
++    mounted.value = true;
++    // The mount task is this call plus the microtasks it queues: Vue's flush (render,
++    // mounted hooks) and whatever those queue. Once that has drained, the task is over.
++    void nextTick().then(() => queueMicrotask(() => { if (w.__phase === "mount") w.__phase = "post-mount"; }));
++};
++const which = q.get("case") ?? "h112";
++const Draw = defineComponent(() => () =>
++    h("div", { class: "stage" }, [
++        which === "h112"
++            ? h("h1", { class: "head", style: "font-size:112px", "data-probe": "line" }, [mounted.value ? mark("4,485", "mark") : "4,485", " visits"])
++            : which === "wrap"
++              ? h("p", { class: "wrap", "data-probe": "line" }, ["September drew ", mounted.value ? mark("more visits than any other month, by a wide and growing margin", "mark") : "more visits than any other month, by a wide and growing margin", " over July."])
++              : h("p", { class: "body", "data-probe": "line" }, ["Most visitors came from ", mounted.value ? mark("Wake County", "mark") : "Wake County", "."]),
++        h("span", { class: "spring-probe", "data-probe": "spring" }, "s"),
++    ]),
++);
++if (scene === "draw") {
++    const ctl = document.createElement("div");
++    ctl.id = "ctl";
++    document.body.appendChild(ctl);
++}
++
++const raf = window.requestAnimationFrame.bind(window);
++void Promise.all([document.fonts.load('800 48px "PJS Fixture"'), document.fonts.load('400 18px "PJS Fixture"')]).then(() => {
++    w.__face = document.fonts.check('800 48px "PJS Fixture"');
++    createApp(scene === "draw" ? Draw : Sheet).mount("#app");
++    raf(() => raf(() => (w.__ready = true)));
++});
+diff --git a/docs/tranches/BL/design/marks/proposal-B/fixture/index.html b/docs/tranches/BL/design/marks/proposal-B/fixture/index.html
+new file mode 100644
+index 000000000..1ed71b8b9
+--- /dev/null
++++ b/docs/tranches/BL/design/marks/proposal-B/fixture/index.html
+@@ -0,0 +1,12 @@
++<!doctype html>
++<html lang="en">
++<head>
++  <meta charset="utf-8" />
++  <meta name="viewport" content="width=device-width, initial-scale=1" />
++  <title>marks proposal B fixture</title>
++</head>
++<body>
++  <div id="app"></div>
++  <script type="module" src="./fixture.ts"></script>
++</body>
++</html>
+diff --git a/docs/tranches/BL/design/marks/proposal-B/fixture/inview.mjs b/docs/tranches/BL/design/marks/proposal-B/fixture/inview.mjs
+new file mode 100644
+index 000000000..faca30772
+--- /dev/null
++++ b/docs/tranches/BL/design/marks/proposal-B/fixture/inview.mjs
+@@ -0,0 +1,39 @@
++// draw="in-view": a mark below the fold waits undrawn, then draws once when scrolled to.
++//   inview.mjs <engine> <url> <out>
++import { writeFileSync } from "node:fs";
++import { join } from "node:path";
++import { launch, open } from "./lib.mjs";
++const [engine, url, out] = process.argv.slice(2);
++const browser = await launch(engine);
++const record = [];
++try {
++    for (const shape of ["underline", "highlight"]) {
++        const { context, page } = await open(browser, url, { query: `scene=sheet&shape=${shape}&draw=in-view`, height: 420 });
++        try {
++            const read = () => page.evaluate(() => {
++                const host = document.querySelector('[data-probe="rtl"]');
++                const win = host.querySelector(".tm-window");
++                const r = host.getBoundingClientRect();
++                return { top: Math.round(r.top), viewport: innerHeight, ink: host.dataset.ink, windows: host.querySelectorAll(".tm-window").length,
++                    windowTransform: win ? getComputedStyle(win).transform : null, drawnEvents: window.__drawn.length };
++            });
++            await page.waitForTimeout(1500);
++            const below = await read();
++            await page.locator('[data-probe="rtl"]').evaluate((el) => el.scrollIntoView({ block: "center" }));
++            await page.waitForTimeout(1200);
++            const reached = await read();
++            await page.evaluate(() => scrollTo(0, 0));
++            await page.waitForTimeout(600);
++            await page.locator('[data-probe="rtl"]').evaluate((el) => el.scrollIntoView({ block: "center" }));
++            await page.waitForTimeout(800);
++            const again = await read();
++            record.push({ shape, below, reached, again });
++        } finally {
++            await context.close();
++        }
++    }
++} finally {
++    await browser.close();
++}
++writeFileSync(join(out, `inview-${engine}.json`), JSON.stringify(record, null, 2));
++console.log(JSON.stringify(record));
+diff --git a/docs/tranches/BL/design/marks/proposal-B/fixture/lib.mjs b/docs/tranches/BL/design/marks/proposal-B/fixture/lib.mjs
+new file mode 100644
+index 000000000..206956c31
+--- /dev/null
++++ b/docs/tranches/BL/design/marks/proposal-B/fixture/lib.mjs
+@@ -0,0 +1,26 @@
++// Shared by the probes: one browser per run, a new context per cell, both closed in `finally`.
++import { chromium, webkit } from "playwright";
++import { createRequire } from "node:module";
++import { existsSync } from "node:fs";
++import { homedir } from "node:os";
++import { dirname, join } from "node:path";
++
++const require = createRequire(import.meta.url);
++export const { PNG, jpegjs } = require(join(dirname(require.resolve("playwright-core")), "lib/utilsBundle.js"));
++
++const WEBKIT_2287 = join(homedir(), "Library/Caches/ms-playwright/webkit-2287/pw_run.sh");
++export const launch = (engine) =>
++    engine === "webkit" ? webkit.launch(existsSync(WEBKIT_2287) ? { executablePath: WEBKIT_2287 } : {}) : chromium.launch();
++
++export async function open(browser, url, { width = 1440, height = 900, theme = "light", query = "", reducedMotion = "no-preference", media = "screen", forcedColors = "none", dpr = 2 } = {}) {
++    const context = await browser.newContext({ viewport: { width, height }, deviceScaleFactor: dpr, colorScheme: theme, reducedMotion, forcedColors });
++    const page = await context.newPage();
++    const errors = [];
++    page.on("pageerror", (e) => errors.push(String(e)));
++    page.on("console", (m) => m.type() === "error" && errors.push(m.text()));
++    await page.emulateMedia({ media, reducedMotion, colorScheme: theme, forcedColors });
++    await page.goto(`${url}?${query}&theme=${theme}`, { waitUntil: "load" });
++    await page.waitForFunction(() => window.__ready === true, null, { timeout: 120_000 });
++    await page.waitForTimeout(400);
++    return { context, page, errors };
++}
+diff --git a/docs/tranches/BL/design/marks/proposal-B/fixture/look.mjs b/docs/tranches/BL/design/marks/proposal-B/fixture/look.mjs
+new file mode 100644
+index 000000000..7b8fa5002
+--- /dev/null
++++ b/docs/tranches/BL/design/marks/proposal-B/fixture/look.mjs
+@@ -0,0 +1,35 @@
++// A first look: every specimen at rest.  look.mjs <engine> <url> <out> [themes] [shapes] [impls]
++import { mkdirSync, writeFileSync } from "node:fs";
++import { join } from "node:path";
++import { launch, open } from "./lib.mjs";
++
++const [engine, url, out, themes = "light", shapes = "underline,highlight", impls = "new"] = process.argv.slice(2);
++mkdirSync(out, { recursive: true });
++const browser = await launch(engine);
++const log = {};
++try {
++    for (const theme of themes.split(","))
++        for (const shape of shapes.split(","))
++            for (const impl of impls.split(",")) {
++                const { context, page, errors } = await open(browser, url, { theme, query: `scene=sheet&shape=${shape}&impl=${impl}&draw=none`, height: 1100 });
++                try {
++                    await page.waitForTimeout(600);
++                    for (const spec of ["h48", "h85", "h112", "body", "wrap", "rtl"])
++                        await page.locator(`[data-spec="${spec}"]`).screenshot({ path: join(out, `${engine}-${impl}-${shape}-${theme}-${spec}.png`) });
++                    log[`${theme}-${shape}-${impl}`] = { errors, face: await page.evaluate(() => {
++                        const c = document.createElement("canvas").getContext("2d");
++                        const cs = getComputedStyle(document.querySelector(".head"));
++                        c.font = `${cs.fontStyle} ${cs.fontWeight} 100px ${cs.fontFamily}`;
++                        const d = c.measureText("-"), x = c.measureText("x"), p = c.measureText("p"), H = c.measureText("H"), comma = c.measureText(",");
++                        return { font: c.font, letterSpacing: "letterSpacing" in c, rule: d.actualBoundingBoxAscent + d.actualBoundingBoxDescent, x: x.actualBoundingBoxAscent, cap: H.actualBoundingBoxAscent, desc: p.actualBoundingBoxDescent, comma: comma.actualBoundingBoxDescent, fbA: x.fontBoundingBoxAscent, fbD: x.fontBoundingBoxDescent,
++                            marks: [...document.querySelectorAll(".tm-window")].length };
++                    }) };
++                } finally {
++                    await context.close();
++                }
++            }
++} finally {
++    await browser.close();
++}
++writeFileSync(join(out, `look-${engine}.json`), JSON.stringify(log, null, 2));
++console.log(JSON.stringify(log, null, 1));
+diff --git a/docs/tranches/BL/design/marks/proposal-B/fixture/probe.mjs b/docs/tranches/BL/design/marks/proposal-B/fixture/probe.mjs
+new file mode 100644
+index 000000000..1dbbc54a1
+--- /dev/null
++++ b/docs/tranches/BL/design/marks/proposal-B/fixture/probe.mjs
+@@ -0,0 +1,227 @@
++// The paint record.  probe.mjs <engine> <url> <out>
++//   rest      every specimen at rest, light and dark, both shapes; 11.1.0's HandMark beside it
++//   draw      three frames of the draw, the animations paused and sought
++//   fit       measured in paint: where the stroke's ends land against the marked glyphs'
++//             ink, and how many pixels of stroke and glyph overlap
++//   still     reduced motion, print, forced colours, and the no-script fallback
++import { mkdirSync, writeFileSync } from "node:fs";
++import { join } from "node:path";
++import { PNG, launch, open } from "./lib.mjs";
++
++const [engine, url, out, only = ""] = process.argv.slice(2);
++const png = join(out, "png");
++mkdirSync(png, { recursive: true });
++const SPECS = ["h48", "h85", "h112", "nest", "body", "wrap", "rtl"];
++const want = (k) => !only || only.split(",").includes(k);
++const record = { engine, errors: [], fit: [], draw: [], still: [] };
++
++const shot = (page, spec, name) => page.locator(`[data-spec="${spec}"]`).screenshot({ path: join(png, `${name}.png`) });
++
++async function rest(browser) {
++    for (const theme of ["light", "dark"])
++        for (const shape of ["underline", "highlight"]) {
++            const { context, page, errors } = await open(browser, url, { theme, query: `scene=sheet&shape=${shape}&draw=none`, height: 1100 });
++            try {
++                await page.waitForTimeout(500);
++                for (const spec of SPECS) await shot(page, spec, `rest-${engine}-${shape}-${theme}-${spec}`);
++                record.errors.push(...errors);
++            } finally {
++                await context.close();
++            }
++        }
++    // 11.1.0's HandMark on the same specimens, for the before frame.
++    for (const shape of ["underline", "highlight"]) {
++        const { context, page } = await open(browser, url, { query: `scene=sheet&shape=${shape}&impl=old&draw=none`, height: 1100 });
++        try {
++            await page.waitForTimeout(800);
++            for (const spec of ["h112", "body", "wrap"]) await shot(page, spec, `before-${engine}-${shape}-light-${spec}`);
++        } finally {
++            await context.close();
++        }
++    }
++}
++
++async function draw(browser) {
++    for (const [theme, shape, specs] of [
++        ["light", "underline", ["h112", "body", "wrap", "rtl"]],
++        ["light", "highlight", ["h112", "wrap", "rtl"]],
++        ["dark", "underline", ["h112"]],
++        ["dark", "highlight", ["h112"]],
++    ]) {
++        const { context, page } = await open(browser, url, { theme, query: `scene=sheet&shape=${shape}&draw=mount&hold=1`, height: 1100 });
++        try {
++            await page.waitForTimeout(500);
++            for (const p of [0.1, 0.25, 0.5]) {
++                // Seek every mark to the same share of its own clock (lines × the spring's duration).
++                const read = await page.evaluate((p) => {
++                    const out = {};
++                    for (const host of document.querySelectorAll(".tm")) {
++                        const anims = host.getAnimations({ subtree: true });
++                        const lines = host.querySelectorAll(".tm-window").length;
++                        const dur = anims.length ? anims[0].effect.getComputedTiming().duration : 0;
++                        for (const a of anims) a.currentTime = p * lines * dur;
++                        const win = host.querySelector(".tm-window");
++                        const m = new DOMMatrix(getComputedStyle(win).transform);
++                        out[host.dataset.probe] = { lines, dur, animations: anims.length, playState: anims[0]?.playState, firstLineOpen: +(1 - Math.abs(m.m41) / win.offsetWidth).toFixed(3) };
++                    }
++                    return out;
++                }, p);
++                await page.waitForTimeout(120);
++                for (const spec of specs) await shot(page, spec, `draw-${engine}-${shape}-${theme}-${spec}-${String(p * 100).padStart(2, "0")}`);
++                record.draw.push({ theme, shape, p, read });
++            }
++        } finally {
++            await context.close();
++        }
++    }
++}
++
++/** Dark-pixel mask of a PNG buffer. */
++function mask(buf) {
++    const img = PNG.sync.read(buf);
++    const m = new Uint8Array(img.width * img.height);
++    for (let i = 0; i < m.length; i++) m[i] = img.data[i * 4] + img.data[i * 4 + 1] + img.data[i * 4 + 2] < 384 ? 1 : 0;
++    return { m, w: img.width, h: img.height };
++}
++
++async function fit(browser) {
++    const DPR = 2;
++    for (const impl of ["new", "old"])
++        for (const shape of ["underline", "highlight"]) {
++            const masks = {};
++            let lines = null;
++            for (const mode of ["marked", "mark"]) {
++                const { context, page } = await open(browser, url, { query: `scene=sheet&shape=${shape}&impl=${impl}&draw=none&only=${mode}`, height: 1100, dpr: DPR });
++                try {
++                    await page.waitForTimeout(800);
++                    masks[mode] = mask(await page.screenshot({ fullPage: true }));
++                    // Each marked line's layout rect: the region its ink is read in.
++                    lines ??= await page.evaluate(() =>
++                        [...document.querySelectorAll("[data-probe]")].flatMap((host) => {
++                            const fs = parseFloat(getComputedStyle(host).fontSize);
++                            const rows = [];
++                            const walk = document.createTreeWalker(host, NodeFilter.SHOW_TEXT);
++                            const range = document.createRange();
++                            for (let n = walk.nextNode(); n; n = walk.nextNode()) {
++                                if (!n.data.trim() || n.parentElement.closest("svg")) continue;
++                                range.selectNodeContents(n);
++                                for (const r of range.getClientRects()) {
++                                    const row = rows.find((q) => Math.abs(q.top - r.top) < r.height / 2);
++                                    if (row) { row.left = Math.min(row.left, r.left); row.right = Math.max(row.right, r.right); }
++                                    else rows.push({ top: r.top + scrollY, bottom: r.bottom + scrollY, left: r.left, right: r.right });
++                                }
++                            }
++                            return rows.map((r, i) => ({ probe: host.dataset.probe, line: i, fs, ...r }));
++                        }),
++                    );
++                } finally {
++                    await context.close();
++                }
++            }
++            const { w } = masks.marked;
++            for (const ln of lines) {
++                const pad = ln.fs * 0.6;
++                const x0 = Math.max(0, Math.floor((ln.left - pad) * DPR)), x1 = Math.min(w, Math.ceil((ln.right + pad) * DPR));
++                // A line owns the rows from its own top to just above the next line's glyphs.
++                const y0 = Math.floor((ln.top - ln.fs * 0.1) * DPR), y1 = Math.ceil((ln.bottom + ln.fs * 0.12) * DPR);
++                const ext = (m) => {
++                    let l = Infinity, r = -Infinity, t = Infinity, b = -Infinity;
++                    for (let y = y0; y < y1; y++) for (let x = x0; x < x1; x++) if (m[y * w + x]) { l = Math.min(l, x); r = Math.max(r, x); t = Math.min(t, y); b = Math.max(b, y); }
++                    return { l: l / DPR, r: (r + 1) / DPR, t: t / DPR, b: (b + 1) / DPR };
++                };
++                const text = ext(masks.marked.m), stroke = ext(masks.mark.m);
++                let overlap = 0;
++                for (let y = y0; y < y1; y++) for (let x = x0; x < x1; x++) if (masks.marked.m[y * w + x] && masks.mark.m[y * w + x]) overlap++;
++                record.fit.push({
++                    impl, shape, probe: ln.probe, line: ln.line, fontSize: ln.fs,
++                    startDelta: +(stroke.l - text.l).toFixed(2), endDelta: +(stroke.r - text.r).toFixed(2),
++                    strokeTop: +stroke.t.toFixed(2), strokeBottom: +stroke.b.toFixed(2), strokeHeight: +(stroke.b - stroke.t).toFixed(2),
++                    overlapPx: +(overlap / (DPR * DPR)).toFixed(1),
++                });
++            }
++        }
++}
++
++async function still(browser) {
++    const cells = [
++        ["reduced-motion", { reducedMotion: "reduce" }, "draw=in-view"],
++        ["print", { media: "print" }, "draw=in-view"],
++        ["forced-colors", { forcedColors: "active" }, "draw=none"],
++        ["no-script", {}, "impl=css"],
++    ];
++    for (const [name, opts, q] of cells)
++        for (const shape of ["underline", "highlight"]) {
++            let ctx;
++            try {
++                const { context, page } = (ctx = await open(browser, url, { ...opts, query: `scene=sheet&shape=${shape}&${q}`, height: 1100 }));
++                await page.waitForTimeout(500);
++                const read = await page.evaluate(() => {
++                    const host = document.querySelector('[data-probe="h85"]');
++                    const win = host.querySelector(".tm-window");
++                    const cs = getComputedStyle(host);
++                    return {
++                        tag: host.tagName, ink: host.dataset.ink ?? null, live: host.hasAttribute("data-live"),
++                        windows: document.querySelectorAll(".tm-window").length,
++                        windowDisplay: win ? getComputedStyle(win).display : null,
++                        windowTransform: win ? getComputedStyle(win).transform : null,
++                        running: document.getAnimations().filter((a) => a.playState === "running").length,
++                        decorationLine: cs.textDecorationLine, background: cs.backgroundColor, drawn: window.__drawn.length,
++                    };
++                });
++                for (const spec of ["h85", "body", "wrap"]) await shot(page, spec, `still-${engine}-${name}-${shape}-${spec}`);
++                record.still.push({ name, shape, read });
++            } catch (e) {
++                record.still.push({ name, shape, error: String(e).slice(0, 300) });
++            } finally {
++                await ctx?.context.close();
++            }
++        }
++}
++
++/** A narrower viewport re-wraps the three-line run: does each stroke follow its line? */
++async function resize(browser) {
++    record.resize = [];
++    for (const impl of ["new", "old"]) {
++        const { context, page } = await open(browser, url, { query: `scene=sheet&shape=underline&impl=${impl}&draw=none`, height: 1100 });
++        try {
++            const read = () => page.evaluate(() => {
++                const host = document.querySelector('[data-probe="wrap"]');
++                const walk = document.createTreeWalker(host, NodeFilter.SHOW_TEXT);
++                let n = walk.nextNode();
++                while (n && !n.data.trim()) n = walk.nextNode();
++                const range = document.createRange();
++                range.selectNodeContents(n);
++                const lines = [...range.getClientRects()].map((r) => ({ left: r.left, bottom: r.bottom }));
++                const strokes = [...host.querySelectorAll(".tm-window, .hm-reveal")].map((w) => w.getBoundingClientRect()).map((r) => ({ left: r.left, top: r.top }));
++                return {
++                    textLines: lines.length, strokes: strokes.length,
++                    // each stroke against the line it was made for: its left end from the line's left, its top from the line's bottom
++                    worstLeftPx: +Math.max(...strokes.map((s, i) => (lines[i] ? Math.abs(s.left - lines[i].left) : Infinity))).toFixed(1),
++                    worstTopPx: +Math.max(...strokes.map((s, i) => (lines[i] ? Math.abs(s.top - lines[i].bottom) : Infinity))).toFixed(1),
++                };
++            });
++            await page.waitForTimeout(600);
++            const wide = await read();
++            await page.setViewportSize({ width: 340, height: 1400 });
++            await page.waitForTimeout(900);
++            const narrow = await read();
++            await shot(page, "wrap", `resize-${engine}-${impl}-340`);
++            record.resize.push({ impl, wide, narrow });
++        } finally {
++            await context.close();
++        }
++    }
++}
++
++const browser = await launch(engine);
++try {
++    if (want("rest")) await rest(browser);
++    if (want("draw")) await draw(browser);
++    if (want("fit")) await fit(browser);
++    if (want("still")) await still(browser);
++    if (want("resize")) await resize(browser);
++} finally {
++    await browser.close();
++}
++writeFileSync(join(out, `paint-${engine}${only ? "-" + only.replace(/,/g, "-") : ""}.json`), JSON.stringify(record, null, 2));
++console.log(`${engine}: fit rows ${record.fit.length}, draw ${record.draw.length}, still ${record.still.length}, errors ${record.errors.length}`);
+diff --git a/docs/tranches/BL/design/marks/proposal-B/fixture/run.sh b/docs/tranches/BL/design/marks/proposal-B/fixture/run.sh
+new file mode 100755
+index 000000000..2bdae85dc
+--- /dev/null
++++ b/docs/tranches/BL/design/marks/proposal-B/fixture/run.sh
+@@ -0,0 +1,18 @@
++#!/usr/bin/env bash
++# One guarded browser run: serve this worktree with vite on <port>, run <script> in
++# <engine>, stop the server.   run.sh <port> <engine> <script.mjs> <out-dir> [args...]
++set -u
++PORT=$1; ENGINE=$2; SCRIPT=$3; OUT=$4; shift 4
++HERE=$(cd "$(dirname "$0")" && pwd)
++ROOT=$(cd "$HERE/../../../../../../.." && pwd)
++mkdir -p "$OUT"
++( cd "$ROOT" && exec npx vite --host 127.0.0.1 --port "$PORT" --strictPort ) > "$OUT/server-$ENGINE.log" 2>&1 &
++SRV=$!
++trap 'kill $SRV 2>/dev/null; wait $SRV 2>/dev/null' EXIT
++URL="http://127.0.0.1:$PORT/docs/tranches/BL/design/marks/proposal-B/fixture/index.html"
++for i in $(seq 1 90); do
++  curl -sf "$URL" > /dev/null && break
++  kill -0 $SRV 2>/dev/null || { echo "server exited early"; exit 3; }
++  sleep 2
++done
++cd "$HERE" && node "$HERE/$SCRIPT" "$ENGINE" "$URL" "$OUT" "$@"
+diff --git a/docs/tranches/BL/design/marks/proposal-B/fixture/sheets.py b/docs/tranches/BL/design/marks/proposal-B/fixture/sheets.py
+new file mode 100644
+index 000000000..c2ed37f51
+--- /dev/null
++++ b/docs/tranches/BL/design/marks/proposal-B/fixture/sheets.py
+@@ -0,0 +1,47 @@
++"""Contact sheets from the probe's cropped captures.  sheets.py <captures-dir> <engine>
++
++Each sheet stacks the cropped frames of one question so a reader opens one file:
++  sheets/<engine>-rest-<shape>-<theme>.png   every specimen at rest
++  sheets/<engine>-draw-<shape>-<spec>.png    three frames of the draw (10 %, 25 %, 50 % of the clock) and the rest frame
++  sheets/<engine>-before-after-<shape>.png   11.1.0's HandMark above this proposal, same specimens
++  sheets/<engine>-still.png                  reduced motion, print, forced colours, no script
++"""
++import sys
++from pathlib import Path
++from PIL import Image
++
++root, engine = Path(sys.argv[1]), sys.argv[2]
++png = root / engine / "png"
++out = root / "sheets"
++out.mkdir(exist_ok=True)
++
++
++def stack(names, dest, bg):
++    ims = [Image.open(png / f"{n}.png").convert("RGB") for n in names if (png / f"{n}.png").exists()]
++    if not ims:
++        return
++    w, h = max(i.width for i in ims), sum(i.height for i in ims)
++    sheet = Image.new("RGB", (w, h), bg)
++    y = 0
++    for i in ims:
++        sheet.paste(i, (0, y))
++        y += i.height
++    sheet.save(out / dest, optimize=True)
++
++
++SPECS = ["h48", "h85", "h112", "nest", "body", "wrap", "rtl"]
++for shape in ["underline", "highlight"]:
++    for theme, bg in [("light", "white"), ("dark", "black")]:
++        stack([f"rest-{engine}-{shape}-{theme}-{s}" for s in SPECS], f"{engine}-rest-{shape}-{theme}.png", bg)
++    for spec in ["h112", "body", "wrap", "rtl"]:
++        stack([f"draw-{engine}-{shape}-light-{spec}-{p}" for p in ["10", "25", "50"]] + [f"rest-{engine}-{shape}-light-{spec}"], f"{engine}-draw-{shape}-{spec}.png", "white")
++    stack([f"draw-{engine}-{shape}-dark-h112-{p}" for p in ["10", "25", "50"]] + [f"rest-{engine}-{shape}-dark-h112"], f"{engine}-draw-{shape}-h112-dark.png", "black")
++    pairs = []
++    for spec in ["h112", "body", "wrap"]:
++        pairs += [f"before-{engine}-{shape}-light-{spec}", f"rest-{engine}-{shape}-light-{spec}"]
++    stack(pairs, f"{engine}-before-after-{shape}.png", "white")
++stack(
++    [f"still-{engine}-{n}-{shape}-{spec}" for n in ["reduced-motion", "print", "forced-colors", "no-script"] for shape in ["underline", "highlight"] for spec in ["h85", "wrap"]],
++    f"{engine}-still.png",
++    "white",
++)
+diff --git a/docs/tranches/BL/design/marks/proposal-B/fixture/stall.mjs b/docs/tranches/BL/design/marks/proposal-B/fixture/stall.mjs
+new file mode 100644
+index 000000000..6746e053c
+--- /dev/null
++++ b/docs/tranches/BL/design/marks/proposal-B/fixture/stall.mjs
+@@ -0,0 +1,191 @@
++// The draw under load.  stall.mjs <engine> <url> <out>
++//
++// Per case: mount one mark, wait until its draw is 40 ms in, then block the main thread for
++// 50 ms. Chromium runs at a 4× CPU throttle. Paint is read from the page's screencast, whose
++// frames come from the compositor; frames are placed by a corner marker, not by a clock
++// (A = the last frame before the task, B = the first after it, C = `drawn`). A control
++// square on a plain transform animation proves the screencast can see compositor frames
++// inside the task; where it cannot, the cell is unmeasurable, never a pass.
++// The page's read ledger says which layout and style reads ran in which phase.
++// A second, traced pass (Chromium) counts main-thread Layout and style events in the draw.
++import { mkdirSync, writeFileSync, readFileSync } from "node:fs";
++import { join } from "node:path";
++import { PNG, jpegjs, launch, open } from "./lib.mjs";
++
++const [engine, url, out] = process.argv.slice(2);
++const png = join(out, "png");
++mkdirSync(png, { recursive: true });
++const W = 1440, H = 600, THROTTLE = 4, TASK_MS = 50;
++const CASES = [["h112", "underline"], ["h112", "highlight"], ["wrap", "underline"], ["wrap", "highlight"], ["body", "underline"]];
++const record = { engine, throttle: engine === "chromium" ? THROTTLE : null, taskMs: TASK_MS, cells: [] };
++
++const decode = (f) => { const img = jpegjs.decode(f.data, { useTArray: true }); return { ...img, scale: img.width / f.viewportWidth }; };
++function crop(img, r) {
++    const s = img.scale, x0 = Math.round(r.x * s), y0 = Math.round(r.y * s);
++    const w = Math.min(img.width - x0, Math.round(r.width * s)), h = Math.min(img.height - y0, Math.round(r.height * s));
++    const o = new PNG({ width: w, height: h });
++    for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) {
++        const i = ((y0 + y) * img.width + x0 + x) * 4, k = (y * w + x) * 4;
++        o.data[k] = img.data[i]; o.data[k + 1] = img.data[i + 1]; o.data[k + 2] = img.data[i + 2]; o.data[k + 3] = 255;
++    }
++    return o;
++}
++function markerOf(img) {
++    const s = img.scale, i = (Math.round(10 * s) * img.width + Math.round(10 * s)) * 4;
++    const [r, g, b] = [img.data[i], img.data[i + 1], img.data[i + 2]];
++    return r > 180 && g < 90 && b < 90 ? "A" : b > 180 && r < 90 && g < 90 ? "B" : g > 140 && r < 90 && b < 90 ? "C" : "-";
++}
++function diff(a, b, th = 48) {
++    let n = 0;
++    for (let i = 0; i < Math.min(a.data.length, b.data.length); i += 4)
++        if (Math.max(Math.abs(a.data[i] - b.data[i]), Math.abs(a.data[i + 1] - b.data[i + 1]), Math.abs(a.data[i + 2] - b.data[i + 2])) > th) n++;
++    return n;
++}
++
++const mountAndBlock = (page) => page.evaluate(async (TASK_MS) => {
++    const anims = () => (document.querySelector('[data-probe="mark"]')?.getAnimations({ subtree: true }) ?? []).filter((a) => a.playState === "running");
++    const raf = () => new Promise((r) => requestAnimationFrame(r));
++    window.__mount();
++    let run = [];
++    for (let i = 0; i < 400; i++) {
++        await raf();
++        run = anims();
++        if (run[0] && (run[0].currentTime ?? 0) - (run[0].effect.getTiming().delay || 0) >= 40) break;
++    }
++    window.__marker("rgb(255, 0, 0)");
++    await new Promise((r) => setTimeout(r, 0));
++    window.__marker("rgb(0, 0, 255)");
++    const props = [...new Set(run.flatMap((a) => a.effect.getKeyframes().flatMap((k) => Object.keys(k))))].filter((k) => !["offset", "computedOffset", "easing", "composite"].includes(k));
++    const ct0 = run.map((a) => a.currentTime);
++    const before = window.__reads.length;
++    const s = performance.now();
++    while (performance.now() - s < TASK_MS) { /* the injected task */ }
++    const taskMs = performance.now() - s;
++    const inTask = window.__reads.length - before;
++    const was = window.__phase;
++    window.__phase = "probe"; // the probe's own reads, kept out of the mark's ledger
++    setTimeout(() => window.__phase === "probe" && (window.__phase = was), 0);
++    const sp = getComputedStyle(document.querySelector('[data-probe="spring"]'));
++    const win = document.querySelector('[data-probe="mark"] .tm-window');
++    return {
++        props, taskMs, readsInTask: inTask,
++        currentTimeAtTaskStart: ct0, currentTimeAtTaskEnd: run.map((a) => a.currentTime),
++        timing: run.map((a) => ({ name: a.animationName, duration: a.effect.getComputedTiming().duration, delay: a.effect.getComputedTiming().delay })),
++        presentDuration: parseFloat(sp.animationDuration) * 1000, presentEasing: sp.animationTimingFunction,
++        drawEasing: win ? getComputedStyle(win).animationTimingFunction : null,
++    };
++}, TASK_MS);
++
++async function cell(browser, spec, shape) {
++    const name = `${spec}-${shape}`;
++    const { context, page, errors } = await open(browser, url, { width: W, height: H, dpr: 1, query: `scene=draw&case=${spec}&shape=${shape}&draw=mount` });
++    const frames = [];
++    try {
++        if (engine === "chromium") await (await context.newCDPSession(page)).send("Emulation.setCPUThrottlingRate", { rate: THROTTLE });
++        await page.screencast.start({ onFrame: (f) => frames.push({ data: f.data, viewportWidth: f.viewportWidth, ts: f.timestamp }), size: { width: W, height: H }, quality: 90 });
++        await page.waitForTimeout(400);
++        const before = frames.length;
++        const run = await mountAndBlock(page);
++        await page.waitForTimeout(1500);
++        await page.screencast.stop();
++        const after = await page.evaluate(() => {
++            window.__phase = "probe";
++            const rs = [...document.querySelectorAll('[data-probe="mark"] .tm-window')].map((p) => p.getBoundingClientRect());
++            const x0 = Math.min(...rs.map((r) => r.left)) - 6, y0 = Math.min(...rs.map((r) => r.top)) - 6;
++            const x1 = Math.max(...rs.map((r) => r.right)) + 6, y1 = Math.max(...rs.map((r) => r.bottom)) + 6;
++            const by = {};
++            for (const r of window.__reads) (by[r.phase] ??= {}), (by[r.phase][r.api] = (by[r.phase][r.api] ?? 0) + 1);
++            return { region: { x: Math.max(0, Math.floor(x0)), y: Math.max(0, Math.floor(y0)), width: Math.ceil(x1 - x0), height: Math.ceil(y1 - y0) }, reads: by, drawn: window.__drawn.length, lines: rs.length };
++        });
++        const ref = crop(decode(frames[Math.max(0, before - 1)]), after.region);
++        const fin = crop(decode(frames[frames.length - 1]), after.region);
++        const full = diff(fin, ref) || 1;
++        const CTL = { x: 30, y: 0, width: 220, height: 20 };
++        const seq = frames.map((f, i) => { const img = decode(f); const c = crop(img, after.region); return { i, m: markerOf(img), p: diff(c, ref) / full, c, ctl: crop(img, CTL) }; });
++        const a = seq.filter((s) => s.m === "A");
++        const inTask = a.slice(1);
++        const first = a[0], last = a[a.length - 1];
++        const controlMoved = first ? inTask.some((s) => diff(s.ctl, first.ctl) > 20) : false;
++        const b = seq.find((s) => s.m === "B");
++        const c0 = seq.findIndex((s) => s.m === "C");
++        const strip = [first, ...inTask, b].filter(Boolean);
++        strip.forEach((s, k) => writeFileSync(join(png, `stall-${engine}-${name}-${k}.png`), PNG.sync.write(s.c)));
++        record.cells.push({
++            cell: name, lines: after.lines, errors,
++            animatedProperties: run.props, timing: run.timing,
++            onPresentClock: run.timing.every((t) => Math.abs(t.duration - run.presentDuration) < 0.5) && run.drawEasing === run.presentEasing,
++            presentDuration: run.presentDuration,
++            task: { ms: +run.taskMs.toFixed(1), readsInsideTask: run.readsInTask },
++            mainThreadClockInTask: { start: run.currentTimeAtTaskStart, end: run.currentTimeAtTaskEnd },
++            framesInsideTask: inTask.length, controlMovedInsideTask: controlMoved,
++            measurable: controlMoved && inTask.length > 0,
++            progressAtTaskStart: first ? +first.p.toFixed(3) : null,
++            progressInsideTask: inTask.map((s) => +s.p.toFixed(3)),
++            progressFirstFrameAfterTask: b ? +b.p.toFixed(3) : null,
++            rise: inTask.length ? +(last.p - first.p).toFixed(3) : 0,
++            drawnEvents: after.drawn,
++            wholeFromDrawnOn: c0 > 0 ? seq.slice(c0).every((s) => s.p >= 0.99) : null,
++            reads: after.reads,
++            progressAll: seq.slice(Math.max(0, before - 1)).map((s) => `${s.m}${s.p.toFixed(2)}`).join(" "),
++        });
++    } finally {
++        await context.close();
++    }
++}
++
++/** The traced pass: main-thread events between the draw's start and `drawn`, with the 50 ms task inside. */
++async function traced(browser, spec, shape) {
++    const { context, page } = await open(browser, url, { width: W, height: H, dpr: 1, query: `scene=draw&case=${spec}&shape=${shape}&draw=mount` });
++    try {
++        await (await context.newCDPSession(page)).send("Emulation.setCPUThrottlingRate", { rate: THROTTLE });
++        const path = join(out, `trace-${spec}-${shape}.json`);
++        await browser.startTracing(page, { path, categories: ["devtools.timeline", "blink.user_timing", "disabled-by-default-devtools.timeline", "cc", "viz"] });
++        await mountAndBlock(page);
++        await page.waitForTimeout(1200);
++        await browser.stopTracing();
++        const ev = JSON.parse(readFileSync(path, "utf8")).traceEvents;
++        const at = (n) => ev.find((e) => e.cat?.includes("blink.user_timing") && e.name === n)?.ts;
++        const [tMount, tDraw, tDrawn] = [at("tm-mount"), at("tm-draw"), at("tm-drawn")];
++        const main = ev.find((e) => e.name === "tm-mount")?.tid;
++        const count = (from, to) => {
++            const by = {};
++            for (const e of ev) {
++                if (e.ts < from || e.ts > to || !e.name) continue;
++                const mine = e.tid === main;
++                const key = `${mine ? "main" : "other"}:${e.name}`;
++                if (!/^(main:(Layout|UpdateLayoutTree|ScheduleStyleRecalculation|InvalidateLayout|PrePaint|Paint|Layerize|Commit|FunctionCall|RunTask|TimerFire|FireAnimationFrame)|other:(DrawFrame|BeginFrame|ActivateLayerTree|Display::DrawAndSwap|Graphics\.Pipeline))$/.test(key)) continue;
++                const b = (by[key] ??= { n: 0, ms: 0 });
++                b.n++;
++                b.ms += (e.dur ?? 0) / 1000;
++            }
++            for (const k in by) by[k].ms = +by[k].ms.toFixed(2);
++            return by;
++        };
++        // Frames the display compositor drew and swapped during the draw, and the gaps between them.
++        const draws = ev.filter((e) => e.name === "Display::DrawAndSwap" && e.ph !== "E" && e.ts >= tDraw && e.ts <= tDrawn).map((e) => e.ts).sort((a, b) => a - b);
++        const gaps = draws.slice(1).map((t, i) => +((t - draws[i]) / 1000).toFixed(1));
++        record.cells.push({
++            cell: `trace-${spec}-${shape}`,
++            mountToDrawMs: +((tDraw - tMount) / 1000).toFixed(1), drawToDrawnMs: +((tDrawn - tDraw) / 1000).toFixed(1),
++            mountToDraw: count(tMount, tDraw), duringDraw: count(tDraw, tDrawn),
++            compositorFramesDuringDraw: draws.length, frameGapsMs: gaps, worstFrameGapMs: gaps.length ? Math.max(...gaps) : null,
++        });
++        writeFileSync(path, ""); // the raw trace is large; the counts are the record
++    } finally {
++        await context.close();
++    }
++}
++
++const browser = await launch(engine);
++try {
++    {   // warm the dev server before any throttled cell
++        const { context } = await open(browser, url, { query: "scene=sheet&draw=none" });
++        await context.close();
++    }
++    for (const [spec, shape] of CASES) await cell(browser, spec, shape);
++    if (engine === "chromium") for (const [spec, shape] of [["h112", "underline"], ["wrap", "highlight"]]) await traced(browser, spec, shape);
++} finally {
++    await browser.close();
++}
++writeFileSync(join(out, `stall-${engine}.json`), JSON.stringify(record, null, 2));
++for (const c of record.cells) console.log(JSON.stringify(c).slice(0, 1500));
+diff --git a/scripts/lib/subpath-policy.mjs b/scripts/lib/subpath-policy.mjs
+index 23c7b2c56..f292762f6 100644
+--- a/scripts/lib/subpath-policy.mjs
++++ b/scripts/lib/subpath-policy.mjs
+@@ -103,7 +103,7 @@ export const COMPONENT_CLASS = {
+     easing: "PUBLISH", "expandable-container": "PUBLISH",
+     // BI.W-GLASS-DEDUP retired glass-panel (FAM-10; the Surface/Card axis is the one plate).
+     "fading-scroll": "PUBLISH", "fourier-field": "PUBLISH",
+-    blob: "PUBLISH", handmark: "PUBLISH",
++    blob: "PUBLISH", handmark: "PUBLISH", "text-mark": "PUBLISH",
+     // BI.W-OVERLAY-UNION retired hover-popover (folded onto <Popover trigger="hover">).
+     "labeled-field": "PUBLISH",
+     metric: "PUBLISH",
+diff --git a/src/components/text-mark/TextMark.vue b/src/components/text-mark/TextMark.vue
+new file mode 100644
+index 000000000..0310732f2
+--- /dev/null
++++ b/src/components/text-mark/TextMark.vue
+@@ -0,0 +1,296 @@
++<!--
++  TextMark: one stroke that says which words carry the weight.
++
++  The words stay real text in the page's own element (`<span>`, or `<mark>` for the band),
++  and without script they keep a plain `text-decoration` underline or a `<mark>` ground.
++  With script, each line of the run gets one stroke whose every dimension is read from the
++  text: its ends from the glyphs' ink box, its seat from the baseline, its weight from the
++  face's own hyphen. Nothing is measured in the mount task or in a frame of the draw.
++-->
++<script setup lang="ts">
++import { computed, onBeforeUnmount, onMounted, ref, watch } from "vue";
++import { type Face, type MarkShape, markSeed, markStroke, seatOf } from "./geometry";
++import { measure } from "./measure";
++
++const props = withDefaults(
++    defineProps<{
++        shape?: MarkShape;
++        /** The ink, any CSS colour. Default: the page's focal colour, `--primary`. */
++        color?: string;
++        /**
++         * When the stroke draws in: when the reader reaches it, as soon as it is measured,
++         * or not at all (it stands drawn).
++         */
++        draw?: "in-view" | "mount" | "none";
++    }>(),
++    { shape: "underline", draw: "in-view" },
++);
++
++const emit = defineEmits<{
++    /** The mark stands complete: after its last line's last frame, or at once when nothing moves. */
++    drawn: [];
++}>();
++
++interface Drawn {
++    d: string;
++    x: number;
++    y: number;
++    width: number;
++    height: number;
++    dir: 1 | -1;
++}
++
++const root = ref<HTMLElement | null>(null);
++const origin = ref<HTMLElement | null>(null);
++const marks = ref<Drawn[]>([]);
++const live = ref(false);
++const ink = ref<"wait" | "draw" | "rest">(props.draw === "none" ? "rest" : "wait");
++
++/** The underline's extra drop, in em, read from `--mark-offset` (a token, not a prop). */
++function seat(face: Face, offsetEm: number) {
++    const s = seatOf(props.shape, face, offsetEm * face.em);
++    // The rows the stroke can reach: its seat plus the deepest sag.
++    return { ...s, bottom: s.bottom + 0.02 * face.em };
++}
++
++/** Read the text, then write the strokes. Runs only where layout is already clean. */
++function remeasure(): void {
++    const el = root.value;
++    const at = origin.value;
++    if (!el || !at) return;
++    const offsetEm = parseFloat(getComputedStyle(el).getPropertyValue("--mark-offset")) || 0;
++    const o = at.getBoundingClientRect();
++    const { face, lines } = measure(el, props.shape === "underline" ? (f) => seat(f, offsetEm) : null);
++    const seed = markSeed((el.textContent ?? "").trim());
++    marks.value = lines.map((line, i) => {
++        const local = {
++            ...line,
++            x0: line.x0 - o.left,
++            x1: line.x1 - o.left,
++            baseline: line.baseline - o.top,
++            skips: line.skips.map(([a, b]) => [a - o.left, b - o.left] as [number, number]),
++        };
++        const s = markStroke(props.shape, local, face, seed + i, offsetEm * face.em);
++        return { d: s.d, ...s.box, dir: line.rtl ? -1 : 1 };
++    });
++}
++
++const MOTION = "screen and (prefers-reduced-motion: no-preference)";
++const still = () => !(window.matchMedia?.(MOTION)?.matches ?? true);
++
++let done = false;
++function finish(): void {
++    if (done) return;
++    done = true;
++    emit("drawn");
++}
++
++function onEnd(e: AnimationEvent): void {
++    if (ink.value !== "draw" || e.animationName.indexOf("tm-window") !== 0) return;
++    if (Number((e.target as Element).getAttribute("data-i")) !== marks.value.length - 1) return;
++    // `animationend` runs before its frame is on screen; `drawn` lands one frame later.
++    requestAnimationFrame(finish);
++}
++
++let seen: IntersectionObserver | null = null;
++let sized: ResizeObserver | null = null;
++let first = true;
++let skip = true;
++
++/** The nearest block ancestor: the box whose resize can re-wrap this run. */
++function block(el: HTMLElement): HTMLElement {
++    let p = el.parentElement;
++    while (p && getComputedStyle(p).display.startsWith("inline")) p = p.parentElement;
++    return p ?? document.body;
++}
++
++function onSeen(entries: IntersectionObserverEntry[]): void {
++    const el = root.value;
++    if (!el) return;
++    if (first) {
++        // The observer's first report arrives in a task of its own, after the first layout:
++        // the first measure happens here, and the block ancestor is found here.
++        first = false;
++        remeasure();
++        // The observer's own first report repeats this measure, so it is skipped.
++        sized = new ResizeObserver(() => (skip ? (skip = false) : remeasure()));
++        sized.observe(block(el));
++        // A face that arrives late changes the ink without resizing anything.
++        if (document.fonts && document.fonts.status !== "loaded") void document.fonts.ready.then(again);
++        if (ink.value === "rest" || still()) finish();
++        if (props.draw === "mount") ink.value = "draw";
++    }
++    if (props.draw !== "in-view" || ink.value !== "wait") return;
++    if (entries.some((e) => e.intersectionRatio >= 0.5)) {
++        ink.value = "draw";
++        if (still()) finish();
++    }
++}
++
++onMounted(() => {
++    // No read here: the mount task writes one attribute and registers one observer.
++    live.value = true;
++    if (typeof IntersectionObserver === "undefined") {
++        throw new Error("[TextMark] IntersectionObserver is required.");
++    }
++    seen = new IntersectionObserver(onSeen, { threshold: [0, 0.5] });
++    if (root.value) seen.observe(root.value);
++});
++
++onBeforeUnmount(() => {
++    seen?.disconnect();
++    sized?.disconnect();
++});
++
++/** Measure again in the resize observer's own callback, where layout is clean. */
++function again(): void {
++    if (!sized || !root.value) return;
++    const b = block(root.value);
++    skip = false;
++    sized.unobserve(b);
++    sized.observe(b);
++}
++
++watch(() => props.shape, again, { flush: "post" });
++
++const tag = computed(() => (props.shape === "highlight" ? "mark" : "span"));
++</script>
++
++<template>
++    <component
++        :is="tag"
++        ref="root"
++        class="tm"
++        :data-shape="shape"
++        :data-ink="ink"
++        :data-live="live ? '' : undefined"
++        :style="color ? { '--mark-ink': color } : undefined"
++        @animationend="onEnd"
++    >
++        <slot /><span ref="origin" class="tm-origin" aria-hidden="true" /><span
++            v-for="(m, i) in marks"
++            :key="i"
++            class="tm-window"
++            :data-i="i"
++            aria-hidden="true"
++            :style="{
++                left: `${m.x}px`,
++                top: `${m.y}px`,
++                width: `${m.width}px`,
++                height: `${m.height}px`,
++                '--tm-i': i,
++                '--tm-dir': m.dir,
++                '--tm-wipe': `${m.width * m.dir}px`,
++            }"
++            ><svg class="tm-frame" :width="m.width" :height="m.height" :viewBox="`${m.x} ${m.y} ${m.width} ${m.height}`" focusable="false">
++                <path :d="m.d" /></svg
++        ></span>
++    </component>
++</template>
++
++<style>
++@layer components {
++    /* Without script (and until the component is live): the plain typographic mark. */
++    .tm {
++        /* `--mark-ink` is the consumer's token; with none, the page's focal colour. */
++        --tm-ink: var(--mark-ink, var(--primary));
++        --tm-band: light-dark(oklch(from var(--tm-ink) 0.86 0.16 h), oklch(from var(--tm-ink) 0.44 0.16 h));
++        text-decoration: underline;
++        text-decoration-color: var(--tm-ink);
++        text-decoration-thickness: 0.07em;
++        text-underline-offset: 0.09em;
++        text-decoration-skip-ink: auto;
++    }
++    mark.tm {
++        text-decoration: none;
++        color: inherit;
++        background: var(--tm-band);
++        -webkit-box-decoration-break: clone;
++        box-decoration-break: clone;
++    }
++
++    /* Live: the stroke replaces the decoration. Forced colours keep the decoration (below). */
++    @media not (forced-colors: active) {
++        .tm[data-live] {
++            position: relative;
++            isolation: isolate;
++            text-decoration: none;
++            background: none;
++        }
++    }
++    .tm-origin {
++        position: absolute;
++        left: 0;
++        top: 0;
++        width: 0;
++        height: 0;
++    }
++    .tm-window {
++        position: absolute;
++        overflow: hidden;
++        pointer-events: none;
++        user-select: none;
++    }
++    .tm-frame {
++        display: block;
++        fill: var(--tm-ink);
++    }
++    .tm[data-shape="highlight"] .tm-window {
++        z-index: -1;
++    }
++    .tm[data-shape="highlight"] .tm-frame {
++        fill: var(--tm-band);
++    }
++
++    /* The draw: a clip window slides open along the line while the stroke inside slides
++       back by the same distance, so the ink holds still. `transform` only, on the
++       `present` spring and its own clock; line i waits for the i lines before it. */
++    @media screen and (prefers-reduced-motion: no-preference) {
++        .tm[data-ink="wait"] .tm-window {
++            transform: translateX(calc(-100% * var(--tm-dir)));
++        }
++        .tm[data-ink="wait"] .tm-frame {
++            transform: translateX(var(--tm-wipe));
++        }
++        .tm[data-ink="draw"] :is(.tm-window, .tm-frame) {
++            animation-duration: var(--spring-present-duration);
++            animation-timing-function: var(--spring-present);
++            animation-delay: calc(var(--tm-i) * var(--spring-present-duration));
++            animation-fill-mode: both;
++        }
++        .tm[data-ink="draw"] .tm-window {
++            animation-name: tm-window;
++        }
++        .tm[data-ink="draw"] .tm-frame {
++            animation-name: tm-frame;
++        }
++    }
++
++    /* Forced colours: the system's own underline and highlight, and no stroke. */
++    @media (forced-colors: active) {
++        .tm-window {
++            display: none;
++        }
++        mark.tm {
++            background: Mark;
++            color: MarkText;
++        }
++    }
++}
++@keyframes tm-window {
++    from {
++        transform: translateX(calc(-100% * var(--tm-dir)));
++    }
++    to {
++        transform: translateX(0);
++    }
++}
++@keyframes tm-frame {
++    from {
++        transform: translateX(var(--tm-wipe));
++    }
++    to {
++        transform: translateX(0);
++    }
++}
++</style>
+diff --git a/src/components/text-mark/geometry.ts b/src/components/text-mark/geometry.ts
+new file mode 100644
+index 000000000..d1c008c54
+--- /dev/null
++++ b/src/components/text-mark/geometry.ts
+@@ -0,0 +1,164 @@
++/**
++ * The mark's geometry: one stroke, every dimension read from the text it marks.
++ *
++ * Pure and framework-free. A caller hands in what the text measured (the ink box of one
++ * line, its baseline, the face's own metrics) and gets back one closed SVG path in CSS px.
++ * Nothing here knows a typeface: there is no em constant for an x-height or a descender.
++ */
++
++import { hashString, mulberry32 } from "../../composables/glass/procedural/prng";
++
++export const SHAPES = ["underline", "highlight"] as const;
++export type MarkShape = (typeof SHAPES)[number];
++
++/** The marked face at its rendered size, in px. Each field is the font's own answer. */
++export interface Face {
++    /** The font size. */
++    em: number;
++    /** Ink height of a lowercase x above the baseline. */
++    xHeight: number;
++    /** Ink thickness of the face's hyphen: the weight of a free horizontal stroke in this face. */
++    rule: number;
++}
++
++/** One line of the marked run, in CSS px, in the frame that draws it. */
++export interface Line {
++    /** The ink box's left and right edges: where the first and last glyph's ink ends. */
++    x0: number;
++    x1: number;
++    /** The alphabetic baseline. */
++    baseline: number;
++    /** The inline direction: a stroke starts at the line's inline start. */
++    rtl: boolean;
++    /** Spans of x where glyph ink crosses the stroke's seat (descenders, commas). */
++    skips: Array<[number, number]>;
++}
++
++export interface Stroke {
++    /** The closed outline, as an SVG path. */
++    d: string;
++    /** The outline's bounds. */
++    box: { x: number; y: number; width: number; height: number };
++}
++
++/** 1/φ: the stroke's weight as a share of the face's own horizontal stroke. */
++const WEIGHT = 0.618;
++
++/**
++ * The stroke's vertical seat for a face, from the baseline (+ is down): its top and bottom
++ * at the stroke's start, and the clearance it keeps from glyph ink.
++ */
++export function seatOf(shape: MarkShape, face: Face, offset = 0): { top: number; bottom: number; clear: number } {
++    if (shape === "highlight") {
++        // The band covers the lowercase body, x-height to baseline, and bleeds by one rule
++        // above and below so the letterforms sit in it and not on its edge.
++        return { top: -face.xHeight - face.rule, bottom: face.rule, clear: 0 };
++    }
++    // The underline is the face's own horizontal stroke, lightened by 1/φ so it sits under
++    // the letterforms' weight, and never under 1.25px. It hangs its own thickness below the
++    // baseline, and never closer than the round letters' overshoot plus a pixel.
++    const t = Math.max(face.rule * WEIGHT, 1.25);
++    const gap = Math.max(t, 0.06 * face.em + 1) + offset;
++    return { top: gap, bottom: gap + t, clear: Math.max(0.5, Math.min(Math.max(1, t / 2), gap - 0.03 * face.em)) };
++}
++
++/** The hand: two seeded numbers, a bow and where it is deepest. Nothing else varies. */
++export function handOf(seed: number): { bow: number; lean: number } {
++    const next = mulberry32(seed >>> 0);
++    return {
++        // The stroke's sag as a share of its length: a wrist's arc, 0.3% to 0.55%.
++        bow: 0.003 + next() * 0.0025,
++        // Where the arc is deepest, as a signed skew of the two control points.
++        lean: (next() - 0.5) * 0.5,
++    };
++}
++
++export function markSeed(text: string): number {
++    return hashString(text) >>> 0;
++}
++
++const r3 = (n: number): number => Math.round(n * 1000) / 1000;
++
++/**
++ * The stroke over one line.
++ *
++ * The centreline is a single cubic from the ink box's start to its end, level at both
++ * ends, sagging by `bow × length` and never by more than 0.02em. The underline thins from full weight at its start to 0.8 at its end, as a
++ * pen lifts; the band keeps its height. Ends are round on the underline and softly
++ * squared on the band. Where glyph ink crosses the underline's seat the stroke stops and
++ * starts again, as a signwriter's underline does.
++ */
++export function markStroke(shape: MarkShape, line: Line, face: Face, seed: number, offset = 0): Stroke {
++    const band = shape === "highlight";
++    const seat = seatOf(shape, face, offset);
++    const t = seat.bottom - seat.top;
++    // The band bleeds past the ink box by one rule a side, inside the word space.
++    const bleed = band ? face.rule : 0;
++    const X0 = line.x0 - bleed;
++    const X1 = line.x1 + bleed;
++    const L = Math.max(0, X1 - X0);
++    const { bow, lean } = handOf(seed);
++    const sag = Math.min(bow * L, 0.02 * face.em);
++    const y1 = (sag / 0.75) * (1 + lean);
++    const y2 = (sag / 0.75) * (1 - lean);
++    const mid = line.baseline + (seat.top + seat.bottom) / 2;
++    const taper = band ? 0 : 0.2;
++
++    // u runs 0 → 1 from the inline start to the inline end.
++    const uOf = (x: number) => (L === 0 ? 0 : line.rtl ? (X1 - x) / L : (x - X0) / L);
++    const du = L === 0 ? 0 : (line.rtl ? -1 : 1) / L;
++    const centre = (u: number) => mid + 3 * y1 * u + (3 * y2 - 6 * y1) * u * u + (3 * y1 - 3 * y2) * u * u * u;
++    const centreD = (u: number) => 3 * y1 + 2 * (3 * y2 - 6 * y1) * u + 3 * (3 * y1 - 3 * y2) * u * u;
++    const half = (u: number) => (t / 2) * (1 - taper * u);
++    const halfD = -(t / 2) * taper;
++    /** An edge (−1 top, +1 bottom) as y(x) and dy/dx. */
++    const edge = (side: 1 | -1, x: number) => centre(uOf(x)) + side * half(uOf(x));
++    const edgeD = (side: 1 | -1, x: number) => (centreD(uOf(x)) + side * halfD) * du;
++    /** The cubic that IS the edge between xa and xb: both are cubics in x, so this is exact. */
++    const curve = (side: 1 | -1, xa: number, xb: number) => {
++        const k = (xb - xa) / 3;
++        return `C${r3(xa + k)} ${r3(edge(side, xa) + edgeD(side, xa) * k)} ${r3(xb - k)} ${r3(edge(side, xb) - edgeD(side, xb) * k)} ${r3(xb)} ${r3(edge(side, xb))}`;
++    };
++    /** The end radius at x: a full round on the underline, a soft corner on the band. */
++    const radius = (x: number) => half(uOf(x)) * (band ? 0.28 : 1);
++
++    // The pieces: the ink box less the skips. A piece shorter than three strokes is a blot, not a stroke.
++    const pieces: Array<[number, number]> = [];
++    let from = X0;
++    for (const [a, b] of band ? [] : [...line.skips].sort((p, q) => p[0] - q[0])) {
++        if (b <= from) continue;
++        if (a > from) pieces.push([from, Math.min(a, X1)]);
++        from = Math.max(from, b);
++        if (from >= X1) break;
++    }
++    if (from < X1) pieces.push([from, X1]);
++
++    let d = "";
++    for (const [xa, xb] of pieces) {
++        if (xb - xa < 3 * t && pieces.length > 1) continue;
++        const ra = Math.min(radius(xa), (xb - xa) / 2);
++        const rb = Math.min(radius(xb), (xb - xa) / 2);
++        const a = xa + ra;
++        const b = xb - rb;
++        const ya = centre(uOf(a));
++        const yb = centre(uOf(b));
++        const ha = half(uOf(a));
++        const hb = half(uOf(b));
++        d +=
++            `M${r3(a)} ${r3(ya - ha)}` +
++            curve(-1, a, b) +
++            `A${r3(rb)} ${r3(rb)} 0 0 1 ${r3(xb)} ${r3(yb - hb + rb)}` +
++            `L${r3(xb)} ${r3(yb + hb - rb)}` +
++            `A${r3(rb)} ${r3(rb)} 0 0 1 ${r3(b)} ${r3(yb + hb)}` +
++            curve(1, b, a) +
++            `A${r3(ra)} ${r3(ra)} 0 0 1 ${r3(xa)} ${r3(ya + ha - ra)}` +
++            `L${r3(xa)} ${r3(ya - ha + ra)}` +
++            `A${r3(ra)} ${r3(ra)} 0 0 1 ${r3(a)} ${r3(ya - ha)}Z`;
++    }
++    const top = mid - t / 2;
++    const bottom = mid + t / 2 + Math.max(y1, y2);
++    return {
++        d,
++        box: { x: Math.floor(X0) - 1, y: Math.floor(top) - 1, width: Math.ceil(L) + 3, height: Math.ceil(bottom - top) + 3 },
++    };
++}
+diff --git a/src/components/text-mark/index.ts b/src/components/text-mark/index.ts
+new file mode 100644
+index 000000000..de8afe30b
+--- /dev/null
++++ b/src/components/text-mark/index.ts
+@@ -0,0 +1,6 @@
++/**
++ * TextMark public barrel. The component is the surface; `markStroke` ships with it so a
++ * caller that owns its own line (a rule, a chart leader) inks it with the same stroke.
++ */
++export { default as TextMark } from "./TextMark.vue";
++export { SHAPES, markStroke, seatOf, type Face, type Line, type MarkShape, type Stroke } from "./geometry";
+diff --git a/src/components/text-mark/measure.ts b/src/components/text-mark/measure.ts
+new file mode 100644
+index 000000000..ad8be65f3
+--- /dev/null
++++ b/src/components/text-mark/measure.ts
+@@ -0,0 +1,222 @@
++/**
++ * What the text measures: the lines of a marked run, their ink boxes, their baselines,
++ * and where glyph ink crosses the underline's seat.
++ *
++ * Layout answers where each line sits (`Range` rects, the text's own boxes). The glyphs
++ * answer everything about ink: each piece of the run is drawn once into a small canvas in
++ * its own font and read back. `TextMetrics` is not used for ink: WebKit reports the
++ * advance box as `actualBoundingBoxLeft/Right` and clamps a negative descent to 0, so the
++ * two engines would disagree. Pixels agree.
++ *
++ * Call this where layout is already clean (an observer callback), never in a mount task
++ * and never in a frame of the draw.
++ */
++
++import type { Face, Line } from "./geometry";
++
++let ctx: CanvasRenderingContext2D | null = null;
++function pen(): CanvasRenderingContext2D {
++    if (!ctx) {
++        ctx = document.createElement("canvas").getContext("2d", { willReadFrequently: true });
++        if (!ctx) throw new Error("[TextMark] no 2D canvas: the mark cannot measure its text.");
++    }
++    return ctx;
++}
++
++type Spaced = CanvasRenderingContext2D & { letterSpacing?: string; wordSpacing?: string };
++
++/** Point the pen at an element's own font, as layout shaped it. */
++function load(cs: CSSStyleDeclaration): CanvasRenderingContext2D {
++    const c = pen() as Spaced;
++    c.font = `${cs.fontStyle} ${cs.fontWeight} ${cs.fontSize} ${cs.fontFamily}`;
++    c.direction = cs.direction === "rtl" ? "rtl" : "ltr";
++    c.textAlign = "left";
++    c.textBaseline = "alphabetic";
++    if ("letterSpacing" in c) c.letterSpacing = cs.letterSpacing === "normal" ? "0px" : cs.letterSpacing;
++    if ("wordSpacing" in c) c.wordSpacing = cs.wordSpacing === "normal" ? "0px" : cs.wordSpacing;
++    if ("fontKerning" in c) c.fontKerning = cs.fontKerning as CanvasFontKerning;
++    return c;
++}
++
++interface Ink {
++    /** Ink extent in px from the text's left advance edge (x) and from the baseline (y, + down). */
++    left: number;
++    right: number;
++    top: number;
++    bottom: number;
++    /** Spans of x (same origin) whose columns carry ink between `rows[0]` and `rows[1]`. */
++    spans: Array<[number, number]>;
++}
++
++/** Draw `text` once in the element's font and read its ink. `rows` is a band from the baseline. */
++function inkOf(cs: CSSStyleDeclaration, text: string, rows: [number, number] | null): Ink | null {
++    const m = load(cs).measureText(text);
++    const em = parseFloat(cs.fontSize) || 16;
++    const S = em > 96 ? 1 : 2;
++    const pad = Math.ceil(em * 0.3) + 2;
++    const up = Math.ceil(m.fontBoundingBoxAscent) + 2;
++    const down = Math.ceil(Math.max(m.fontBoundingBoxDescent, rows ? rows[1] : 0)) + 2;
++    const w = Math.ceil((m.width + 2 * pad) * S);
++    const h = (up + down) * S;
++    const cv = pen().canvas;
++    cv.width = w;
++    cv.height = h;
++    // Resizing a canvas resets its state: load the font again.
++    const c = load(cs);
++    c.setTransform(S, 0, 0, S, 0, 0);
++    c.fillStyle = "#000";
++    c.fillText(text, pad, up);
++    const px = c.getImageData(0, 0, w, h).data;
++    c.setTransform(1, 0, 0, 1, 0, 0);
++    const r0 = rows ? Math.max(0, Math.floor((up + rows[0]) * S)) : 0;
++    const r1 = rows ? Math.min(h, Math.ceil((up + rows[1]) * S)) : 0;
++    let left = -1, right = -1, top = h, bottom = -1, open = -1;
++    const spans: Array<[number, number]> = [];
++    for (let x = 0; x <= w; x++) {
++        let any = false, inRows = false;
++        if (x < w)
++            for (let y = 0; y < h; y++)
++                if (px[(y * w + x) * 4 + 3] > 64) {
++                    any = true;
++                    if (y < top) top = y;
++                    if (y > bottom) bottom = y;
++                    if (y >= r0 && y < r1) inRows = true;
++                }
++        if (any) {
++            if (left < 0) left = x;
++            right = x + 1;
++        }
++        if (inRows && open < 0) open = x;
++        if (!inRows && open >= 0) {
++            spans.push([open / S - pad, x / S - pad]);
++            open = -1;
++        }
++    }
++    if (left < 0) return null;
++    return { left: left / S - pad, right: right / S - pad, top: top / S - up, bottom: (bottom + 1) / S - up, spans };
++}
++
++const faces = new Map<string, Face>();
++
++/** The face's own metrics at its rendered size: read once per font from an x and a hyphen. */
++export function faceOf(cs: CSSStyleDeclaration): Face {
++    const key = `${cs.fontStyle} ${cs.fontWeight} ${cs.fontSize} ${cs.fontFamily}`;
++    const known = faces.get(key);
++    if (known) return known;
++    const em = parseFloat(cs.fontSize) || 16;
++    const x = inkOf(cs, "x", null);
++    const dash = inkOf(cs, "-", null);
++    const rule = dash ? dash.bottom - dash.top : 0;
++    const face: Face = {
++        em,
++        xHeight: x ? -x.top : em * 0.5,
++        // A face with no usable hyphen still gets a stroke: a fifteenth of an em.
++        rule: rule > em * 0.02 && rule < em * 0.25 ? rule : em / 15,
++    };
++    faces.set(key, face);
++    return face;
++}
++
++/** A run of one text node on one line. */
++interface Piece {
++    node: Text;
++    start: number;
++    end: number;
++    rect: DOMRect;
++}
++
++/** Split the host's text into pieces: one per text node per line, whitespace trimmed at the ends. */
++function pieces(host: HTMLElement): Piece[] {
++    const walk = document.createTreeWalker(host, NodeFilter.SHOW_TEXT);
++    const range = document.createRange();
++    const out: Piece[] = [];
++    for (let n = walk.nextNode() as Text | null; n; n = walk.nextNode() as Text | null) {
++        const text = n.data;
++        let open: { start: number; end: number; top: number; bottom: number } | null = null;
++        const close = () => {
++            if (!open) return;
++            range.setStart(n!, open.start);
++            range.setEnd(n!, open.end);
++            out.push({ node: n!, start: open.start, end: open.end, rect: range.getBoundingClientRect() });
++            open = null;
++        };
++        for (let i = 0; i < text.length; ) {
++            const step = text.codePointAt(i)! > 0xffff ? 2 : 1;
++            range.setStart(n, i);
++            range.setEnd(n, i + step);
++            const r = range.getBoundingClientRect();
++            const space = /\s/.test(text[i]);
++            if (r.width > 0 && r.height > 0 && !space) {
++                const same = open && Math.min(open.bottom, r.bottom) - Math.max(open.top, r.top) > r.height / 2;
++                if (!same) {
++                    close();
++                    open = { start: i, end: i + step, top: r.top, bottom: r.bottom };
++                } else open!.end = i + step;
++            }
++            i += step;
++        }
++        close();
++    }
++    return out;
++}
++
++export interface Measured {
++    face: Face;
++    /** Lines in client coordinates. */
++    lines: Line[];
++}
++
++/**
++ * Measure the host. `seat` is the underline's band from the baseline (top, bottom and its
++ * clearance, in px, + down); when given, each line reports the spans where glyph ink enters it.
++ */
++export function measure(
++    host: HTMLElement,
++    seat: ((face: Face) => { top: number; bottom: number; clear: number }) | null,
++): Measured {
++    const face = faceOf(getComputedStyle(host));
++    const band = seat ? seat(face) : null;
++    const styles = new Map<Element, CSSStyleDeclaration>();
++    const rows: Array<Line & { top: number; bottom: number }> = [];
++
++    for (const p of pieces(host)) {
++        const parent = p.node.parentElement ?? host;
++        let cs = styles.get(parent);
++        if (!cs) styles.set(parent, (cs = getComputedStyle(parent)));
++        const text = p.node.data.slice(p.start, p.end);
++        const m = load(cs).measureText(text);
++        const asc = m.fontBoundingBoxAscent;
++        const desc = m.fontBoundingBoxDescent;
++        const baseline = p.rect.top + (p.rect.height * asc) / (asc + desc);
++        let row = rows.find((q) => Math.min(q.bottom, p.rect.bottom) - Math.max(q.top, p.rect.top) > Math.min(q.bottom - q.top, p.rect.height) / 2);
++        const shift = row ? baseline - row.baseline : 0;
++        const ink = inkOf(cs, text, band ? [band.top - band.clear - shift, band.bottom + band.clear - shift] : null);
++        if (!ink) continue;
++        // Layout is the authority on width; the canvas is scaled onto it.
++        const k = m.width > 0 ? p.rect.width / m.width : 1;
++        const fit = Math.abs(k - 1) < 0.08 ? k : 1;
++        const inkL = p.rect.left + ink.left * fit;
++        const inkR = p.rect.left + ink.right * fit;
++        if (!row) {
++            row = { x0: inkL, x1: inkR, baseline, rtl: cs.direction === "rtl", skips: [], top: p.rect.top, bottom: p.rect.bottom };
++            rows.push(row);
++        } else {
++            row.x0 = Math.min(row.x0, inkL);
++            row.x1 = Math.max(row.x1, inkR);
++        }
++        if (band) for (const [a, b] of ink.spans) row.skips.push([p.rect.left + a * fit - band.clear, p.rect.left + b * fit + band.clear]);
++    }
++    // Merge the skips that touch.
++    for (const row of rows) {
++        row.skips.sort((a, b) => a[0] - b[0]);
++        const merged: Array<[number, number]> = [];
++        for (const s of row.skips) {
++            const last = merged[merged.length - 1];
++            if (last && s[0] <= last[1]) last[1] = Math.max(last[1], s[1]);
++            else merged.push([s[0], s[1]]);
++        }
++        row.skips = merged;
++    }
++    rows.sort((a, b) => a.top - b.top);
++    return { face, lines: rows.map(({ top: _t, bottom: _b, ...line }) => line) };
++}

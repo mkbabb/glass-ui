@@ -1,0 +1,777 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "tests-visual/playwright.config.ts",
+      "--project=chromium-headless-new",
+      "release-11-0-1.spec.ts",
+      "--workers=1"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/playwright.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-headless-new",
+        "name": "chromium-headless-new",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "coarse-touch",
+        "name": "coarse-touch",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "safari-webgl.spec.ts",
+          "aurora-swraster.spec.ts",
+          "release-10-1-1.spec.ts",
+          "release-10-1-2.spec.ts",
+          "release-10-1-3.spec.ts",
+          "release-10-1-4.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/docs/release-11.0.1/runs/v1100-owner-ch.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5395",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/",
+      "url": "http://localhost:5395",
+      "reuseExistingServer": true,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "release-11-0-1.spec.ts",
+      "file": "release-11-0-1.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "o3 every frame of the expand and of the collapse paints a round end",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 8,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 3482,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -   1\u001b[39m\n\u001b[31m+ Received  + 184\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"0ms 16px 5.75px 5.75px 16px half=28\",\u001b[39m\n\u001b[31m+   \"13ms 16px 5.75px 5.75px 16px half=28\",\u001b[39m\n\u001b[31m+   \"23ms 16px 5.75px 5.75px 16px half=28\",\u001b[39m\n\u001b[31m+   \"49ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"52ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"58ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"61ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"71ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"77ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"86ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"89ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"99ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"107ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"116ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"121ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"128ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"135ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"144ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"151ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"160ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"169ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"177ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"187ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"192ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"199ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"208ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"214ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"222ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"231ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"241ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"248ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"254ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"262ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"269ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"278ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"286ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"291ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"299ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"307ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"314ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"320ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"327ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"336ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"343ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"352ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"358ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"365ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"373ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"382ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"387ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"395ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"401ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"411ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"418ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"426ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"436ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"444ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"452ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"458ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"464ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"474ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"482ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"487ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"495ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"503ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"510ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"519ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"525ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"531ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"539ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"548ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"554ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"562ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"569ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"577ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"586ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"594ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"601ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"607ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"617ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"623ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"629ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"637ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"644ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"653ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"661ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"666ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"673ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"682ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"690ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"695ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"702ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"711ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"719ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"729ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"734ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"741ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"747ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"757ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"762ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"771ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"778ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"788ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"794ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"802ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"811ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"819ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"827ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"834ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"840ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"848ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"856ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"865ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"872ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"880ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"890ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"895ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"903ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"913ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"918ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"927ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"933ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"940ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"949ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"955ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"964ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"969ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"980ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"986ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"995ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"999ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1009ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1015ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1025ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1032ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1038ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1044ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1054ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1060ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1069ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1076ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1085ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1094ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1100ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1108ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1114ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1123ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1131ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1140ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1148ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1158ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1165ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1173ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1183ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1190ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1198ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1204ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1211ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1221ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1229ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1235ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1245ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1253ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1260ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1270ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1277ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1286ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1294ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1302ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1311ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1318ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1326ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1336ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1345ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1352ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1362ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1366ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1375ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1382ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1390ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1398ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1405ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+ ]\u001b[39m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -   1\u001b[39m\n\u001b[31m+ Received  + 184\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"0ms 16px 5.75px 5.75px 16px half=28\",\u001b[39m\n\u001b[31m+   \"13ms 16px 5.75px 5.75px 16px half=28\",\u001b[39m\n\u001b[31m+   \"23ms 16px 5.75px 5.75px 16px half=28\",\u001b[39m\n\u001b[31m+   \"49ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"52ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"58ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"61ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"71ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"77ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"86ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"89ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"99ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"107ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"116ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"121ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"128ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"135ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"144ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"151ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"160ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"169ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"177ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"187ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"192ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"199ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"208ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"214ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"222ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"231ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"241ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"248ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"254ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"262ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"269ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"278ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"286ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"291ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"299ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"307ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"314ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"320ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"327ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"336ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"343ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"352ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"358ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"365ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"373ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"382ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"387ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"395ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"401ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"411ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"418ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"426ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"436ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"444ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"452ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"458ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"464ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"474ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"482ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"487ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"495ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"503ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"510ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"519ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"525ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"531ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"539ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"548ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"554ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"562ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"569ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"577ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"586ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"594ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"601ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"607ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"617ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"623ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"629ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"637ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"644ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"653ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"661ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"666ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"673ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"682ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"690ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"695ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"702ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"711ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"719ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"729ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"734ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"741ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"747ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"757ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"762ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"771ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"778ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"788ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"794ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"802ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"811ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"819ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"827ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"834ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"840ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"848ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"856ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"865ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"872ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"880ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"890ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"895ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"903ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"913ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"918ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"927ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"933ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"940ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"949ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"955ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"964ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"969ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"980ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"986ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"995ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"999ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1009ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1015ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1025ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1032ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1038ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1044ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1054ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1060ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1069ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1076ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1085ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1094ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1100ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1108ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1114ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1123ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1131ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1140ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1148ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1158ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1165ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1173ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1183ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1190ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1198ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1204ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1211ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1221ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1229ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1235ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1245ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1253ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1260ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1270ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1277ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1286ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1294ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1302ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1311ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1318ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1326ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1336ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1345ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1352ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1362ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1366ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1375ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1382ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1390ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1398ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1405ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+ ]\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1.spec.ts:178:24",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1.spec.ts",
+                      "column": 24,
+                      "line": 178
+                    },
+                    "snippet": "  176 |     expect(expand.morphing, \"the expand morphed\").toBeGreaterThan(2);\n  177 |     expect(collapse.morphing, \"the collapse morphed\").toBeGreaterThan(2);\n> 178 |     expect(expand.bad).toEqual([]);\n      |                        ^\n  179 |     expect(collapse.bad).toEqual([]);\n  180 | });\n  181 |"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1.spec.ts",
+                        "column": 24,
+                        "line": 178
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -   1\u001b[39m\n\u001b[31m+ Received  + 184\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"0ms 16px 5.75px 5.75px 16px half=28\",\u001b[39m\n\u001b[31m+   \"13ms 16px 5.75px 5.75px 16px half=28\",\u001b[39m\n\u001b[31m+   \"23ms 16px 5.75px 5.75px 16px half=28\",\u001b[39m\n\u001b[31m+   \"49ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"52ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"58ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"61ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"71ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"77ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"86ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"89ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"99ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"107ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"116ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"121ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"128ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"135ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"144ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"151ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"160ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"169ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"177ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"187ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"192ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"199ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"208ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"214ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"222ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"231ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"241ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"248ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"254ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"262ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"269ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"278ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"286ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"291ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"299ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"307ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"314ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"320ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"327ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"336ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"343ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"352ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"358ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"365ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"373ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"382ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"387ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"395ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"401ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"411ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"418ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"426ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"436ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"444ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"452ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"458ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"464ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"474ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"482ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"487ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"495ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"503ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"510ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"519ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"525ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"531ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"539ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"548ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"554ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"562ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"569ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"577ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"586ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"594ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"601ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"607ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"617ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"623ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"629ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"637ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"644ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"653ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"661ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"666ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"673ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"682ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"690ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"695ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"702ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"711ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"719ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"729ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"734ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"741ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"747ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"757ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"762ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"771ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"778ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"788ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"794ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"802ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"811ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"819ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"827ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"834ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"840ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"848ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"856ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"865ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"872ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"880ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"890ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"895ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"903ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"913ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"918ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"927ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"933ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"940ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"949ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"955ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"964ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"969ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"980ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"986ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"995ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"999ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1009ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1015ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1025ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1032ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1038ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1044ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1054ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1060ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1069ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1076ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1085ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1094ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1100ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1108ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1114ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1123ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1131ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1140ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1148ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1158ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1165ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1173ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1183ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1190ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1198ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1204ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1211ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1221ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1229ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1235ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1245ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1253ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1260ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1270ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1277ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1286ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1294ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1302ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1311ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1318ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1326ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1336ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1345ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1352ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1362ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1366ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1375ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1382ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1390ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1398ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+   \"1405ms 16px 16px 16px 16px half=28\",\u001b[39m\n\u001b[31m+ ]\u001b[39m\n\n  176 |     expect(expand.morphing, \"the expand morphed\").toBeGreaterThan(2);\n  177 |     expect(collapse.morphing, \"the collapse morphed\").toBeGreaterThan(2);\n> 178 |     expect(expand.bad).toEqual([]);\n      |                        ^\n  179 |     expect(collapse.bad).toEqual([]);\n  180 | });\n  181 |\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1.spec.ts:178:24"
+                    }
+                  ],
+                  "stdout": [
+                    {
+                      "text": "o3 expand {\"frames\":182,\"morphing\":71,\"bad\":[\"0ms 16px 5.75px 5.75px 16px half=28\",\"13ms 16px 5.75px 5.75px 16px half=28\",\"23ms 16px 5.75px 5.75px 16px half=28\",\"49ms 16px 16px 16px 16px half=28\",\"52ms 16px 16px 16px 16px half=28\",\"58ms 16px 16px 16px 16px half=28\"]}\n"
+                    },
+                    {
+                      "text": "o3 collapse {\"frames\":188,\"morphing\":74,\"bad\":[\"9ms 16px 16px 16px 16px half=28\",\"15ms 16px 16px 16px 16px half=28\",\"21ms 16px 16px 16px 16px half=28\",\"30ms 16px 16px 16px 16px half=28\",\"38ms 16px 16px 16px 16px half=28\",\"44ms 16px 16px 16px 16px half=28\"]}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T23:29:53.103Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/test-results/release-11-0-1-o3-every-fr-1c7bf-collapse-paints-a-round-end-chromium-headless-new/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1.spec.ts",
+                    "column": 24,
+                    "line": 178
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "9b4b2e3355e572315838-263003309cb61aaa052d",
+          "file": "release-11-0-1.spec.ts",
+          "line": 139,
+          "column": 1
+        }
+      ],
+      "suites": [
+        {
+          "title": "o1 the wide label seat",
+          "file": "release-11-0-1.spec.ts",
+          "line": 69,
+          "column": 6,
+          "specs": [
+            {
+              "title": "o1 the hover plate of a compact 'Focus' label seat is a capsule, never an ellipse",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 1272,
+                      "error": {
+                        "message": "Error: {\"radii\":[\"50%\",\"50%\",\"50%\",\"50%\"],\"w\":80,\"h\":35}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m",
+                        "stack": "Error: {\"radii\":[\"50%\",\"50%\",\"50%\",\"50%\"],\"w\":80,\"h\":35}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1.spec.ts:79:53",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1.spec.ts",
+                          "column": 53,
+                          "line": 79
+                        },
+                        "snippet": "  77 |         console.log(`o1 focus hover ${JSON.stringify(read)}`);\n  78 |         expect(read.w).toBeGreaterThan(read.h + 4);\n> 79 |         expect(stadium(read), JSON.stringify(read)).toBe(true);\n     |                                                     ^\n  80 |     });\n  81 |\n  82 |     test(\"o1 the active 'Name ›' seat's plate, at rest and under hover, is a capsule\", async ({ page }, info) => {"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1.spec.ts",
+                            "column": 53,
+                            "line": 79
+                          },
+                          "message": "Error: {\"radii\":[\"50%\",\"50%\",\"50%\",\"50%\"],\"w\":80,\"h\":35}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n\n  77 |         console.log(`o1 focus hover ${JSON.stringify(read)}`);\n  78 |         expect(read.w).toBeGreaterThan(read.h + 4);\n> 79 |         expect(stadium(read), JSON.stringify(read)).toBe(true);\n     |                                                     ^\n  80 |     });\n  81 |\n  82 |     test(\"o1 the active 'Name ›' seat's plate, at rest and under hover, is a capsule\", async ({ page }, info) => {\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1.spec.ts:79:53"
+                        }
+                      ],
+                      "stdout": [
+                        {
+                          "text": "o1 focus hover {\"radii\":[\"50%\",\"50%\",\"50%\",\"50%\"],\"w\":80,\"h\":35}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T23:29:42.662Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/test-results/release-11-0-1-o1-the-wide-45049--a-capsule-never-an-ellipse-chromium-headless-new/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1.spec.ts",
+                        "column": 53,
+                        "line": 79
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "9b4b2e3355e572315838-0d845e9f1ea2b1eb6d3f",
+              "file": "release-11-0-1.spec.ts",
+              "line": 70,
+              "column": 5
+            },
+            {
+              "title": "o1 the active 'Name ›' seat's plate, at rest and under hover, is a capsule",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 1055,
+                      "error": {
+                        "message": "Error: {\"radii\":[\"50%\",\"50%\",\"50%\",\"50%\"],\"w\":91,\"h\":35}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m",
+                        "stack": "Error: {\"radii\":[\"50%\",\"50%\",\"50%\",\"50%\"],\"w\":91,\"h\":35}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1.spec.ts:93:53",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1.spec.ts",
+                          "column": 53,
+                          "line": 93
+                        },
+                        "snippet": "  91 |         console.log(`o1 name rest ${JSON.stringify(rest)} hover ${JSON.stringify(hover)}`);\n  92 |         expect(rest.w).toBeGreaterThan(rest.h + 4);\n> 93 |         expect(stadium(rest), JSON.stringify(rest)).toBe(true);\n     |                                                     ^\n  94 |         expect(stadium(hover), JSON.stringify(hover)).toBe(true);\n  95 |     });\n  96 | });"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1.spec.ts",
+                            "column": 53,
+                            "line": 93
+                          },
+                          "message": "Error: {\"radii\":[\"50%\",\"50%\",\"50%\",\"50%\"],\"w\":91,\"h\":35}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n\n  91 |         console.log(`o1 name rest ${JSON.stringify(rest)} hover ${JSON.stringify(hover)}`);\n  92 |         expect(rest.w).toBeGreaterThan(rest.h + 4);\n> 93 |         expect(stadium(rest), JSON.stringify(rest)).toBe(true);\n     |                                                     ^\n  94 |         expect(stadium(hover), JSON.stringify(hover)).toBe(true);\n  95 |     });\n  96 | });\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1.spec.ts:93:53"
+                        }
+                      ],
+                      "stdout": [
+                        {
+                          "text": "o1 name rest {\"radii\":[\"50%\",\"50%\",\"50%\",\"50%\"],\"w\":91,\"h\":35} hover {\"radii\":[\"50%\",\"50%\",\"50%\",\"50%\"],\"w\":91,\"h\":35}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T23:29:44.440Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/test-results/release-11-0-1-o1-the-wide-93085-nd-under-hover-is-a-capsule-chromium-headless-new/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1.spec.ts",
+                        "column": 53,
+                        "line": 93
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "9b4b2e3355e572315838-bb8b559be619e171ff79",
+              "file": "release-11-0-1.spec.ts",
+              "line": 82,
+              "column": 5
+            }
+          ]
+        },
+        {
+          "title": "o2 the dock's end, house tokens",
+          "file": "release-11-0-1.spec.ts",
+          "line": 101,
+          "column": 10,
+          "specs": [
+            {
+              "title": "o2 house tokens: open at rest, the plate and the box are round",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 694,
+                      "error": {
+                        "message": "Error: {\"radii\":[\"16px\",\"16px\",\"16px\",\"16px\"],\"w\":253,\"h\":56}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m",
+                        "stack": "Error: {\"radii\":[\"16px\",\"16px\",\"16px\",\"16px\"],\"w\":253,\"h\":56}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1.spec.ts:108:57",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1.spec.ts",
+                          "column": 57,
+                          "line": 108
+                        },
+                        "snippet": "  106 |             await shoot(page, page.locator(ROOT), `o2-open-${radius ? \"rd\" : \"house\"}-${info.project.name}`);\n  107 |             console.log(`o2 open ${tag} plate ${JSON.stringify(plate)} root ${JSON.stringify(root)}`);\n> 108 |             expect(round(plate), JSON.stringify(plate)).toBe(true);\n      |                                                         ^\n  109 |             expect(root.radii).toEqual(plate.radii);\n  110 |         });\n  111 |"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1.spec.ts",
+                            "column": 57,
+                            "line": 108
+                          },
+                          "message": "Error: {\"radii\":[\"16px\",\"16px\",\"16px\",\"16px\"],\"w\":253,\"h\":56}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n\n  106 |             await shoot(page, page.locator(ROOT), `o2-open-${radius ? \"rd\" : \"house\"}-${info.project.name}`);\n  107 |             console.log(`o2 open ${tag} plate ${JSON.stringify(plate)} root ${JSON.stringify(root)}`);\n> 108 |             expect(round(plate), JSON.stringify(plate)).toBe(true);\n      |                                                         ^\n  109 |             expect(root.radii).toEqual(plate.radii);\n  110 |         });\n  111 |\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1.spec.ts:108:57"
+                        }
+                      ],
+                      "stdout": [
+                        {
+                          "text": "o2 open house tokens plate {\"radii\":[\"16px\",\"16px\",\"16px\",\"16px\"],\"w\":253,\"h\":56} root {\"radii\":[\"16px\",\"16px\",\"16px\",\"16px\"],\"w\":253,\"h\":56}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T23:29:45.992Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/test-results/release-11-0-1-o2-the-dock-5effe-plate-and-the-box-are-round-chromium-headless-new/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1.spec.ts",
+                        "column": 57,
+                        "line": 108
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "9b4b2e3355e572315838-be86b3466756b89bc785",
+              "file": "release-11-0-1.spec.ts",
+              "line": 102,
+              "column": 9
+            },
+            {
+              "title": "o2 house tokens: collapsed with a persistent seat beside the summary, the plate and the box are round",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 713,
+                      "error": {
+                        "message": "Error: {\"radii\":[\"16px\",\"4px\",\"4px\",\"16px\"],\"w\":102,\"h\":56}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m",
+                        "stack": "Error: {\"radii\":[\"16px\",\"4px\",\"4px\",\"16px\"],\"w\":102,\"h\":56}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1.spec.ts:119:57",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1.spec.ts",
+                          "column": 57,
+                          "line": 119
+                        },
+                        "snippet": "  117 |             await shoot(page, page.locator(ROOT), `o2-collapsed-${radius ? \"rd\" : \"house\"}-${info.project.name}`);\n  118 |             console.log(`o2 collapsed ${tag} plate ${JSON.stringify(plate)} root ${JSON.stringify(root)}`);\n> 119 |             expect(round(plate), JSON.stringify(plate)).toBe(true);\n      |                                                         ^\n  120 |             expect(root.radii).toEqual(plate.radii);\n  121 |         });\n  122 |"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1.spec.ts",
+                            "column": 57,
+                            "line": 119
+                          },
+                          "message": "Error: {\"radii\":[\"16px\",\"4px\",\"4px\",\"16px\"],\"w\":102,\"h\":56}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n\n  117 |             await shoot(page, page.locator(ROOT), `o2-collapsed-${radius ? \"rd\" : \"house\"}-${info.project.name}`);\n  118 |             console.log(`o2 collapsed ${tag} plate ${JSON.stringify(plate)} root ${JSON.stringify(root)}`);\n> 119 |             expect(round(plate), JSON.stringify(plate)).toBe(true);\n      |                                                         ^\n  120 |             expect(root.radii).toEqual(plate.radii);\n  121 |         });\n  122 |\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1.spec.ts:119:57"
+                        }
+                      ],
+                      "stdout": [
+                        {
+                          "text": "o2 collapsed house tokens plate {\"radii\":[\"16px\",\"4px\",\"4px\",\"16px\"],\"w\":102,\"h\":56} root {\"radii\":[\"16px\",\"16px\",\"16px\",\"16px\"],\"w\":102,\"h\":56}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T23:29:47.274Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/test-results/release-11-0-1-o2-the-dock-b7623-plate-and-the-box-are-round-chromium-headless-new/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1.spec.ts",
+                        "column": 57,
+                        "line": 119
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "9b4b2e3355e572315838-e3d77567fb15a1c5180f",
+              "file": "release-11-0-1.spec.ts",
+              "line": 112,
+              "column": 9
+            },
+            {
+              "title": "o2 house tokens: open on the narrow face beside a wider one, with a #persistent-end seat, the plate is round",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 4,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 681,
+                      "error": {
+                        "message": "Error: {\"radii\":[\"16px\",\"4px\",\"4px\",\"16px\"],\"w\":150,\"h\":56}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m",
+                        "stack": "Error: {\"radii\":[\"16px\",\"4px\",\"4px\",\"16px\"],\"w\":150,\"h\":56}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1.spec.ts:133:57",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1.spec.ts",
+                          "column": 57,
+                          "line": 133
+                        },
+                        "snippet": "  131 |             await shoot(page, page.locator(ROOT), `o2-narrow-${radius ? \"rd\" : \"house\"}-${info.project.name}`);\n  132 |             console.log(`o2 narrow ${tag} plate ${JSON.stringify(plate)} root ${JSON.stringify(root)} run ${JSON.stringify(run)}`);\n> 133 |             expect(round(plate), JSON.stringify(plate)).toBe(true);\n      |                                                         ^\n  134 |             expect(root.radii).toEqual(plate.radii);\n  135 |         });\n  136 |     });"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1.spec.ts",
+                            "column": 57,
+                            "line": 133
+                          },
+                          "message": "Error: {\"radii\":[\"16px\",\"4px\",\"4px\",\"16px\"],\"w\":150,\"h\":56}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n\n  131 |             await shoot(page, page.locator(ROOT), `o2-narrow-${radius ? \"rd\" : \"house\"}-${info.project.name}`);\n  132 |             console.log(`o2 narrow ${tag} plate ${JSON.stringify(plate)} root ${JSON.stringify(root)} run ${JSON.stringify(run)}`);\n> 133 |             expect(round(plate), JSON.stringify(plate)).toBe(true);\n      |                                                         ^\n  134 |             expect(root.radii).toEqual(plate.radii);\n  135 |         });\n  136 |     });\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1.spec.ts:133:57"
+                        }
+                      ],
+                      "stdout": [
+                        {
+                          "text": "o2 narrow house tokens plate {\"radii\":[\"16px\",\"4px\",\"4px\",\"16px\"],\"w\":150,\"h\":56} root {\"radii\":[\"16px\",\"16px\",\"16px\",\"16px\"],\"w\":150,\"h\":56} run {\"scroll\":143}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T23:29:48.562Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/test-results/release-11-0-1-o2-the-dock-b862f-end-seat-the-plate-is-round-chromium-headless-new/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1.spec.ts",
+                        "column": 57,
+                        "line": 133
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "9b4b2e3355e572315838-ee119933fb0251244b8c",
+              "file": "release-11-0-1.spec.ts",
+              "line": 123,
+              "column": 9
+            }
+          ]
+        },
+        {
+          "title": "o2 the dock's end, radius-dock 1.875rem",
+          "file": "release-11-0-1.spec.ts",
+          "line": 101,
+          "column": 10,
+          "specs": [
+            {
+              "title": "o2 radius-dock 1.875rem: open at rest, the plate and the box are round",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 5,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 634,
+                      "error": {
+                        "message": "Error: {\"radii\":[\"30px\",\"30px\",\"30px\",\"30px\"],\"w\":253,\"h\":56}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m",
+                        "stack": "Error: {\"radii\":[\"30px\",\"30px\",\"30px\",\"30px\"],\"w\":253,\"h\":56}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1.spec.ts:108:57",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1.spec.ts",
+                          "column": 57,
+                          "line": 108
+                        },
+                        "snippet": "  106 |             await shoot(page, page.locator(ROOT), `o2-open-${radius ? \"rd\" : \"house\"}-${info.project.name}`);\n  107 |             console.log(`o2 open ${tag} plate ${JSON.stringify(plate)} root ${JSON.stringify(root)}`);\n> 108 |             expect(round(plate), JSON.stringify(plate)).toBe(true);\n      |                                                         ^\n  109 |             expect(root.radii).toEqual(plate.radii);\n  110 |         });\n  111 |"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1.spec.ts",
+                            "column": 57,
+                            "line": 108
+                          },
+                          "message": "Error: {\"radii\":[\"30px\",\"30px\",\"30px\",\"30px\"],\"w\":253,\"h\":56}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n\n  106 |             await shoot(page, page.locator(ROOT), `o2-open-${radius ? \"rd\" : \"house\"}-${info.project.name}`);\n  107 |             console.log(`o2 open ${tag} plate ${JSON.stringify(plate)} root ${JSON.stringify(root)}`);\n> 108 |             expect(round(plate), JSON.stringify(plate)).toBe(true);\n      |                                                         ^\n  109 |             expect(root.radii).toEqual(plate.radii);\n  110 |         });\n  111 |\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1.spec.ts:108:57"
+                        }
+                      ],
+                      "stdout": [
+                        {
+                          "text": "o2 open radius-dock 1.875rem plate {\"radii\":[\"30px\",\"30px\",\"30px\",\"30px\"],\"w\":253,\"h\":56} root {\"radii\":[\"30px\",\"30px\",\"30px\",\"30px\"],\"w\":253,\"h\":56}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T23:29:49.728Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/test-results/release-11-0-1-o2-the-dock-ce341-plate-and-the-box-are-round-chromium-headless-new/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1.spec.ts",
+                        "column": 57,
+                        "line": 108
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "9b4b2e3355e572315838-da2332ba798835522bc9",
+              "file": "release-11-0-1.spec.ts",
+              "line": 102,
+              "column": 9
+            },
+            {
+              "title": "o2 radius-dock 1.875rem: collapsed with a persistent seat beside the summary, the plate and the box are round",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 6,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 656,
+                      "error": {
+                        "message": "Error: {\"radii\":[\"30px\",\"4px\",\"4px\",\"30px\"],\"w\":102,\"h\":56}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m",
+                        "stack": "Error: {\"radii\":[\"30px\",\"4px\",\"4px\",\"30px\"],\"w\":102,\"h\":56}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1.spec.ts:119:57",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1.spec.ts",
+                          "column": 57,
+                          "line": 119
+                        },
+                        "snippet": "  117 |             await shoot(page, page.locator(ROOT), `o2-collapsed-${radius ? \"rd\" : \"house\"}-${info.project.name}`);\n  118 |             console.log(`o2 collapsed ${tag} plate ${JSON.stringify(plate)} root ${JSON.stringify(root)}`);\n> 119 |             expect(round(plate), JSON.stringify(plate)).toBe(true);\n      |                                                         ^\n  120 |             expect(root.radii).toEqual(plate.radii);\n  121 |         });\n  122 |"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1.spec.ts",
+                            "column": 57,
+                            "line": 119
+                          },
+                          "message": "Error: {\"radii\":[\"30px\",\"4px\",\"4px\",\"30px\"],\"w\":102,\"h\":56}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n\n  117 |             await shoot(page, page.locator(ROOT), `o2-collapsed-${radius ? \"rd\" : \"house\"}-${info.project.name}`);\n  118 |             console.log(`o2 collapsed ${tag} plate ${JSON.stringify(plate)} root ${JSON.stringify(root)}`);\n> 119 |             expect(round(plate), JSON.stringify(plate)).toBe(true);\n      |                                                         ^\n  120 |             expect(root.radii).toEqual(plate.radii);\n  121 |         });\n  122 |\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1.spec.ts:119:57"
+                        }
+                      ],
+                      "stdout": [
+                        {
+                          "text": "o2 collapsed radius-dock 1.875rem plate {\"radii\":[\"30px\",\"4px\",\"4px\",\"30px\"],\"w\":102,\"h\":56} root {\"radii\":[\"30px\",\"30px\",\"30px\",\"30px\"],\"w\":102,\"h\":56}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T23:29:50.837Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/test-results/release-11-0-1-o2-the-dock-fa514-plate-and-the-box-are-round-chromium-headless-new/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1.spec.ts",
+                        "column": 57,
+                        "line": 119
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "9b4b2e3355e572315838-71c701d729c95275ae1d",
+              "file": "release-11-0-1.spec.ts",
+              "line": 112,
+              "column": 9
+            },
+            {
+              "title": "o2 radius-dock 1.875rem: open on the narrow face beside a wider one, with a #persistent-end seat, the plate is round",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 7,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 644,
+                      "error": {
+                        "message": "Error: {\"radii\":[\"30px\",\"4px\",\"4px\",\"30px\"],\"w\":150,\"h\":56}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m",
+                        "stack": "Error: {\"radii\":[\"30px\",\"4px\",\"4px\",\"30px\"],\"w\":150,\"h\":56}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1.spec.ts:133:57",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1.spec.ts",
+                          "column": 57,
+                          "line": 133
+                        },
+                        "snippet": "  131 |             await shoot(page, page.locator(ROOT), `o2-narrow-${radius ? \"rd\" : \"house\"}-${info.project.name}`);\n  132 |             console.log(`o2 narrow ${tag} plate ${JSON.stringify(plate)} root ${JSON.stringify(root)} run ${JSON.stringify(run)}`);\n> 133 |             expect(round(plate), JSON.stringify(plate)).toBe(true);\n      |                                                         ^\n  134 |             expect(root.radii).toEqual(plate.radii);\n  135 |         });\n  136 |     });"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1.spec.ts",
+                            "column": 57,
+                            "line": 133
+                          },
+                          "message": "Error: {\"radii\":[\"30px\",\"4px\",\"4px\",\"30px\"],\"w\":150,\"h\":56}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n\n  131 |             await shoot(page, page.locator(ROOT), `o2-narrow-${radius ? \"rd\" : \"house\"}-${info.project.name}`);\n  132 |             console.log(`o2 narrow ${tag} plate ${JSON.stringify(plate)} root ${JSON.stringify(root)} run ${JSON.stringify(run)}`);\n> 133 |             expect(round(plate), JSON.stringify(plate)).toBe(true);\n      |                                                         ^\n  134 |             expect(root.radii).toEqual(plate.radii);\n  135 |         });\n  136 |     });\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1.spec.ts:133:57"
+                        }
+                      ],
+                      "stdout": [
+                        {
+                          "text": "o2 narrow radius-dock 1.875rem plate {\"radii\":[\"30px\",\"4px\",\"4px\",\"30px\"],\"w\":150,\"h\":56} root {\"radii\":[\"30px\",\"30px\",\"30px\",\"30px\"],\"w\":150,\"h\":56} run {\"scroll\":143}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T23:29:51.944Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/test-results/release-11-0-1-o2-the-dock-b74d4-end-seat-the-plate-is-round-chromium-headless-new/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1.spec.ts",
+                        "column": 57,
+                        "line": 133
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "9b4b2e3355e572315838-fb7e64612354cba2d5fc",
+              "file": "release-11-0-1.spec.ts",
+              "line": 123,
+              "column": 9
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-11T23:29:41.079Z",
+    "duration": 15682.823,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 9,
+    "flaky": 0
+  }
+}

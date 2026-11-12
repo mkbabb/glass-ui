@@ -42,28 +42,13 @@
         align-items: stretch;
     }
 
-    /* EACH REGION OWNS ITS GAP. A persistent region keeps the dock's gap rhythm
-       (`--dock-layer-gap`) on the side that faces the morph region: the leading region
-       after itself, the trailing region before itself, on the dock's axis in either
-       orientation. A rule on the layers' side (`.dock-persistent + .dock-layers`) only
-       ever saw the leading region, so a trailing seat abutted the run and its hit cell
-       ran under the run's last seat. The regions render only when authored
-       (GlassDock.vue's `v-if`), so a dock with no persistent seats is unchanged. */
-    .glass-dock:not(.vertical) .dock-persistent-start {
-        margin-inline-end: var(--dock-layer-gap, 0.375rem);
-    }
-
-    .glass-dock:not(.vertical) .dock-persistent-end {
-        margin-inline-start: var(--dock-layer-gap, 0.375rem);
-    }
-
-    .glass-dock.vertical .dock-persistent-start {
-        margin-block-end: var(--dock-layer-gap, 0.375rem);
-    }
-
-    .glass-dock.vertical .dock-persistent-end {
-        margin-block-start: var(--dock-layer-gap, 0.375rem);
-    }
+    /* The persistent region + the morph region share the dock's gap rhythm. The
+       region renders only when the consumer authors a `#persistent` slot
+       (GlassDock.vue guards it with `v-if="$slots.persistent"`), so a dock with no
+       persistent controls is byte-identical to before (no empty flex item). */
+    /* The gap between a leading persistent region and the layers is `run.css`'s (THE
+       ROOM FOR THE RESERVE): it lies past the run's reserve, and one rule set owns the
+       layers' scroll-axis margins. */
 
     /* The VERTICAL dock's layer panes lay their content
        out as a COLUMN. The dock body is the SAME orientation-agnostic

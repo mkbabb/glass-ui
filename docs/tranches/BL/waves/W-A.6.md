@@ -1,11 +1,11 @@
-# W-A.6 · W-SAFARI-BAND: step 0 the owner's checkbox and a machine check; then the owed Safari cells, re-derived at HEAD, in one serialized session · 11.0.0
+# W-A.6 · W-SAFARI-BAND: step 0 the owner's checkbox and a machine check; then the owed Safari cells, re-derived at HEAD, in one serialized session
 
 | field | value |
 |---|---|
 | seat | band-A wave-spec seat, formation run `wf_68eb18d6-b21` |
 | model | `claude-opus-5-5`, asserted from own system identity |
 | HEAD | `fabc95e2` in a scratch worktree. macOS 26.4.1 (`sw_vers`), Safari 26.4 (`safaridriver --version` → "Included with Safari 26.4 (21624.1.16.11.4)"). No Safari session was attempted at this seat; the operative pref was read with `plutil` |
-| ships in | 11.0.0 |
+| release | `waves/INDEX.md`, the one record |
 | families | F-07 whole (`audit/REGISTRY.md:240-252`) |
 | depends on | PLAN §5, the one record of edges |
 | dependants | PLAN §5 (its inverse) |

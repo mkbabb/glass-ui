@@ -1,0 +1,14 @@
+# PE15 plant-inlineread-e14 chromium · 2026-11-09 21:03:28 · load { 20.68 22.84 25.41 } · harness 0c64ff33af43 · --only residue
+# E-14 · S14's members at their ranges (P-E14 §S14-c)
+# target /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p15/PE15/wt/.pe15out/builds/plant-inlineread · engine chromium · lock wait 0.0 s (the deadline 5400 s counts from here) · other headless processes: chromium 11, webkit 2 · load 20.7/22.8/25.4 at start
+# scene app: harness scenes/App.vue (sha1 912fecf0a1aa)
+# chromium 149.0.7827.55
+# held control: scene slider root .glass-slider thumb [role="slider"] engaged [data-engaged], [data-held]; clock token --spring-dock-settle; cells residue; film: read after the frame's resize step (H15 class 7)
+  FAIL       residue · switch · no style="" written by a read at load · elements carrying an empty style attribute at load: 1 (bound 0) · button.switch.control-bit · load 20.7/22.8/25.4
+  FAIL       residue · checkbox · no style="" written by a read at load · elements carrying an empty style attribute at load: 1 (bound 0) · button.checkbox.control-bit · load 20.7/22.8/25.4
+  FAIL       residue · button · no style="" written by a read at load · elements carrying an empty style attribute at load: 1 (bound 0) · button.button.engage-pressed · load 20.7/22.8/25.4
+  FAIL       residue · tabs · no style="" written by a read at load · elements carrying an empty style attribute at load: 1 (bound 0) · div.segmented-tabs.engage-chosen · load 22.1/23.1/25.5
+  FAIL       residue · chip · no style="" written by a read at load · elements carrying an empty style attribute at load: 1 (bound 0) · button.glass-chip.glass-capsule · load 22.1/23.1/25.5
+E-14 chromium FAIL · 0 pass, 5 fail, 0 unmeasured of 5 gating cells (0 reported) · load 20.7/22.8/25.4 at start, 22.1/23.1/25.5 at end
+# exit 1 · 2026-11-09 21:03:34 · load { 22.07 23.09 25.48 }
+# end · 2026-11-09 21:03:34 · load { 22.07 23.09 25.48 } · harness 0c64ff33af43

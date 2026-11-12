@@ -1,0 +1,24 @@
+# glass.babb.dev's Cloudflare Pages headers. The build writes this file to
+# dist-demo/_headers (demo/vite.demo-dist.config.ts, pagesHeaders()), filling the
+# script-src placeholder with the sha256 of each inline <script> in the built
+# index.html (the dark-mode stamp), so the CSP never drifts from the bytes it guards.
+#
+# Every response carries `no-transform`: the edge may not rewrite the HTML, so no
+# analytics beacon is injected. scripts/check-live.mjs proves it after each deploy.
+# style-src allows inline styles: reka-ui's SelectViewport injects a <style> each
+# time a Select opens (the scrollbar-hiding rule for [data-reka-select-viewport]).
+# Pages merges every matching rule, so a hashed asset gets `immutable` and `no-transform`.
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/index.html
+  Cache-Control: no-cache
+
+/
+  Cache-Control: no-cache
+
+/*
+  Cache-Control: no-transform
+  Content-Security-Policy: default-src 'self'; script-src 'self' __INLINE_SCRIPT_HASHES__; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin

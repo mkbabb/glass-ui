@@ -1,11 +1,11 @@
-# W-L.1 · the API asks: each one cured, answered or declined, with a gate on the ones that ship · 11.0.0
+# W-L.1 · the API asks: each one cured, answered or declined, with a gate on the ones that ship
 
 | field | value |
 |---|---|
 | seat | band-L wave-spec seat, formation |
 | model | `claude-opus-5-5`, asserted from own system identity |
 | HEAD | `78922b26` in a scratch worktree (docs-only since `f3ad78d0`; `git diff --stat v10.1.0 HEAD -- src package.json tests scripts .github` prints nothing, so every reading measures the published 10.1.0 bytes). `dist/` built there (`npm run build`, exit 0, "projected 63 public entries"). A minimal consumer app (Vite 8 + `@tailwindcss/vite`, `@mkbabb/glass-ui` linked to the worktree's package) served on :6391 for the Chromium probes (appendix B) |
-| ships in | 11.0.0 |
+| release | `waves/INDEX.md`, the one record |
 | families | F-71, the API-ask cures split (`audit/REGISTRY.md:1511-1526`). The intake, the reply letter and every other F-71 row are W-B.2's; the badge seat (O-67 R-3) is W-I.1's |
 | depends on | PLAN §5, the one record of edges |
 | dependants | PLAN §5 (its inverse) |

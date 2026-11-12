@@ -1,11 +1,11 @@
-# W-B.7 · The tags field decided: RETIRE, and its tombstones leave `src` · 11.0.0
+# W-B.7 · The tags field decided: RETIRE, and its tombstones leave `src`
 
 | field | value |
 |---|---|
 | seat | band-B wave-spec seat, formation run `wf_68eb18d6-b21` |
 | model | `claude-opus-5-5`, asserted from own system identity |
 | HEAD | `19bf6569` in a scratch worktree |
-| ships in | 11.0.0 |
+| release | `waves/INDEX.md`, the one record |
 | families | F-13, the #44 split (`audit/REGISTRY.md:312-320`) |
 | depends on | PLAN §5, the one record of edges |
 | dependants | PLAN §5 (its inverse) |

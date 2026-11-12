@@ -1,0 +1,37 @@
+{
+ "id": "COST-ATTR",
+ "engine": "chromium",
+ "version": "149.0.7827.55",
+ "target": {
+  "build": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p15/PE15/wt/.pe15out/builds/cand15attr"
+ },
+ "loadStart": "25.3/26.2/18.4",
+ "loadEnd": "23.1/25.7/18.3",
+ "verdict": "UNMEASURED",
+ "cells": [
+  {
+   "name": "COST-ATTR held still, 30 frames",
+   "status": "REPORT",
+   "line": "engaged true · CDP LayoutCount 35 (less the film's 30: 5), RecalcStyleCount 35 · trace Layout events 35 (0 forced, with a JS stack): stage-forced 0, the film's 0, lifecycle 35 · glides 0",
+   "load": "24.2/26.0/18.3"
+  },
+  {
+   "name": "COST-ATTR an affine step window: a 40 px insert above the root, 14 frames",
+   "status": "REPORT",
+   "line": "engaged true · CDP LayoutCount 20 (less the film's 14: 6), RecalcStyleCount 20 · trace Layout events 20 (1 forced, with a JS stack): stage-forced 1, the film's 0, lifecycle 19 · glides 1",
+   "load": "24.2/26.0/18.3"
+  },
+  {
+   "name": "COST-ATTR a projective step window: C perspective(200px) rotateX(25deg), a 40 px insert inside C, 14 frames",
+   "status": "REPORT",
+   "line": "engaged true · CDP LayoutCount 115 (less the film's 14: 101), RecalcStyleCount 152 · trace Layout events 115 (96 forced, with a JS stack): stage-forced 67, the film's 0, lifecycle 19 · glides 1",
+   "load": "24.2/26.0/18.3"
+  },
+  {
+   "name": "COST-ATTR the projective card held still (no insert), 14 frames",
+   "status": "REPORT",
+   "line": "engaged true · CDP LayoutCount 20 (less the film's 14: 6), RecalcStyleCount 20 · trace Layout events 20 (0 forced, with a JS stack): stage-forced 0, the film's 0, lifecycle 20 · glides 0",
+   "load": "23.1/25.7/18.3"
+  }
+ ]
+}

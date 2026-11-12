@@ -1,11 +1,11 @@
-# W-K.1 · W-ROOT-RELATIVE: the host is read from the node's own root · 11.0.0
+# W-K.1 · W-ROOT-RELATIVE: the host is read from the node's own root
 
 | field | value |
 |---|---|
 | seat | band-K wave-spec seat, formation |
 | model | `claude-opus-5-5`, asserted from own system identity |
 | HEAD | `9866d229` (the task named `f3ad78d0`; `git diff --stat f3ad78d0 HEAD -- src demo package.json` is empty, so `src` is the published 10.1.0). Probes ran in the scratch worktree `scratchpad/formation/band-K/wt` against the packed HEAD build (`npm pack` of that tree) installed in a consumer app, and against the built demo |
-| ships in | 11.0.0 |
+| release | `waves/INDEX.md`, the one record |
 | families | F-81 (all four members) |
 | depends on | PLAN §5, the one record of edges |
 | dependants | PLAN §5 (its inverse) |

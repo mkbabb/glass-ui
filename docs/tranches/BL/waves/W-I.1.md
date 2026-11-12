@@ -1,4 +1,4 @@
-# W-I.1 · W-DOCK-EXTENT: the dock's plate, run and state from D2's converged specification, on W-0.8's carrier (loop D2) · 11.0.0
+# W-I.1 · W-DOCK-EXTENT: the dock's plate, run and state from D2's converged specification, on W-I.8's carrier (loop D2)
 
 | field | value |
 |---|---|
@@ -6,7 +6,7 @@
 | model | `claude-opus-5-5`, asserted from own system identity |
 | HEAD | `8536f2cc` in a scratch worktree (the task named `f3ad78d0`; every commit since is under `docs/`). `git diff --stat v10.1.0 HEAD -- src` prints nothing, so every reading measures the published 10.1.0 bytes, and the dock is the 10.0.1 dock (10.1.0 changed the Configurator only). A second worktree carries HEAD + `design/dock/pass-2/floor.patch` (`git apply --check` clean, 38 files) to say which rows D2's floor already cures |
 | kind | LOOP WAVE, owned by design loop D2 (`design/dock/`). It lands only from D2's converged specification and never before D2 meets its gate (§3.1). It builds nothing the loop has not converged on |
-| ships in | 11.0.0 |
+| release | `waves/INDEX.md`, the one record |
 | families | F-18 (whole), F-16 split (the plate's corner, W1, and O-67's edge witness family, W7), F-71 (split: O-67 R-3, the badge seat). F-16's extent and morph, F-17 and F-29's O-84a split are W-0.8's in 10.2.0 by the owner's O-88 ruling (`audit/INBOUND.md:45`; fix-10): this wave lands the rest of D2's converged spec on that carrier and re-runs W-0.8's harness gates unshimmed. The dock hallmarks (#67, #90) are W-I.6's and the run box (C-8) W-I.7's |
 | depends on | PLAN §5, the one record of edges |
 | dependants | PLAN §5 (its inverse) |
@@ -115,6 +115,8 @@ fix-2's probe (`formation-audit/fix-2.md` appendix P), at `183e021a`, reproduced
 - **The metric (O-84a).** Three Metrics, `1 ×`, `12 ×`, `123 ×`. The value box is 37.33 px (3ch) at every length; the reading gap is 5.45 px (0.3em); the ink gap to the unit is 30.83, 18.89 and 6.95 px. 3 of 3 FAIL in Chromium and in Playwright WebKit.
 
 ## 3 · The cure
+
+**The carrier is W-I.8's.** D2 closed with its carrier landing in 11.2.0 through `waves/W-I.8.md` §1.2, rebuilt on master (`design/dock/LANDING.md`): D2-B′'s measured scene, with Q-6 (a). The content exchange is not built; content fades on a timed window (W-I.8 §1.3). This wave lands the rest of D2's spec on that landed scene, and §3.3's route table is the record of how the carrier was chosen. Where this section says W-0.8 lands the carrier, read W-I.8.
 
 D2 owns the design. §3.2 and §3.3 are the one description of D2's converged specification: the floor every route shares and the carrier the loop converges on. Two waves land it. W-0.8 lands the collapse unit in 10.2.0 (the rim, the coarse press, the P4 machine, the endpoint model, the carrier and its rows 1 to 5, O-83's length and O-84a); **`W-0.8.md` §3.2 is the one record of the split**. This wave lands every other item at 11.0.0, on the tree W-0.8, W-F.1, W-F.2, W-F.5, W-E.7 and W-H.1 leave, with the F-18 residue the loop's checklist does not hold. It lands nothing D2 has not converged on.
 

@@ -1,11 +1,11 @@
-# W-E.6 · W-CHIP: per-instance composites on their reading class, `cn()` resolves shorthands, the chip's X-gates · 11.0.0
+# W-E.6 · W-CHIP: per-instance composites on their reading class, `cn()` resolves shorthands, the chip's X-gates
 
 | field | value |
 |---|---|
 | seat | band-E wave-spec seat, formation (relaunch 2026-09-25) |
 | model | `claude-opus-5-5`, asserted from own system identity |
 | HEAD | `4d2e3123` (`src`/`demo` identical to `f3ad78d0`), scratch worktree; probes drive the band-E fixture app scene `chips` (W-E.1 appendix B) |
-| ships in | 11.0.0 |
+| release | `waves/INDEX.md`, the one record |
 | families | F-26, F-27, F-28 less X-G1's fill, which is W-H.1's (fix-5, FD-02) (#43 W-CHIP; the X-gate row at `BJ/addenda/2026-07-24-refinement/DESIGN-NOW.md:483-490`, X-G4 as amended there to admit 4) |
 | depends on | PLAN §5, the one record of edges |
 | dependants | PLAN §5 (its inverse) |

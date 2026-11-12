@@ -1,11 +1,11 @@
-# W-F.3 · offsets and releases from position: scroll chrome, the carousel lag, the worm's trail, the detent throw · 11.0.0
+# W-F.3 · offsets and releases from position: scroll chrome, the carousel lag, the worm's trail, the detent throw
 
 | field | value |
 |---|---|
 | seat | band-F wave-spec seat, formation (relaunch 2026-09-25) |
 | model | `claude-opus-5-5`, asserted from own system identity |
 | HEAD | `84b470aa` (`src`, `demo`, `scripts`, `tests` identical to `f3ad78d0`), scratch worktree, demo built and served on :5961; the Sheet cells run on the harness `sheet.html` (W-F.2 appendix E) on :5964 |
-| ships in | 11.0.0 |
+| release | `waves/INDEX.md`, the one record |
 | families | F-46 (members L03a-10, L03b-08, R2-02-14, R2-06-09, R3-01-02, R3-01-03, R10-01-04) |
 | depends on | PLAN §5, the one record of edges |
 | dependants | PLAN §5 (its inverse) |

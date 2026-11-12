@@ -1,0 +1,77 @@
+
+Running 4 tests using 1 worker
+
+  ✘  1 [webkit] › tests-visual/release-10-1-5.spec.ts:619:5 › critique 2, coarse phone › e3 at 390: the run's clip and hit stop at the persistent seats, at rest and scrolled (5.6s)
+  ✘  2 [webkit] › tests-visual/release-10-1-5.spec.ts:670:5 › critique 2, coarse phone › e4 at 390: a run overrun by less than its reserve scrolls it and keeps the end seat's ring (3.1s)
+  ✓  3 [webkit] › tests-visual/release-10-1-5.spec.ts:619:5 › e3 at 390: the run's clip and hit stop at the persistent seats, at rest and scrolled (6.0s)
+  ✘  4 [webkit] › tests-visual/release-10-1-5.spec.ts:670:5 › e4 at 1440: a run overrun by less than its reserve scrolls it and keeps the end seat's ring (2.9s)
+
+
+  1) [webkit] › tests-visual/release-10-1-5.spec.ts:619:5 › critique 2, coarse phone › e3 at 390: the run's clip and hit stop at the persistent seats, at rest and scrolled 
+
+    Error: S3 ({"focusVisible":true,"hover":true,"scale":1.1,"width":114.55467224121094,"outline":"solid","ink":4.4,"ring":{"l":211.1968780517578,"r":334.5515502929687,"t":20.700000381469728,"b":71.30000343322754},"clips":[{"cls":"dock-layer dock-layer--full dock-run is-active","l":62,"r":334,"t":17,"b":75}]}): ring inside dock-layer dock-layer--full dock-run is-active (right)
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 334.5
+    Received:    334.5515502929687
+
+      545 |     for (const c of read.clips) {
+      546 |         expect(read.ring.l, `${cell}: ring inside ${c.cls} (left)`).toBeGreaterThanOrEqual(c.l - 0.5);
+    > 547 |         expect(read.ring.r, `${cell}: ring inside ${c.cls} (right)`).toBeLessThanOrEqual(c.r + 0.5);
+          |                                                                      ^
+      548 |         expect(read.ring.t, `${cell}: ring inside ${c.cls} (top)`).toBeGreaterThanOrEqual(c.t - 0.5);
+      549 |         expect(read.ring.b, `${cell}: ring inside ${c.cls} (bottom)`).toBeLessThanOrEqual(c.b + 0.5);
+      550 |     }
+        at expectFocusedRingWhole (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:547:70)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:654:42
+
+    Error Context: tests-visual/test-results/release-10-1-5-critique-2--d0cb9--seats-at-rest-and-scrolled-webkit/error-context.md
+
+  2) [webkit] › tests-visual/release-10-1-5.spec.ts:670:5 › critique 2, coarse phone › e4 at 390: a run overrun by less than its reserve scrolls it and keeps the end seat's ring 
+
+    Error: 390 capped 4 px under 346.140625 ({"reach":0,"overrun":4.140625,"reserve":10}): reach = the seats' overrun
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 1
+    Received:    4.140625
+
+      144 |     });
+      145 |     const at = `${cell} (${JSON.stringify(read)})`;
+    > 146 |     expect(Math.abs(read.reach - read.overrun), `${at}: reach = the seats' overrun`).toBeLessThanOrEqual(1);
+          |                                                                                      ^
+      147 | }
+      148 |
+      149 | async function pointerOff(page: Page): Promise<void> {
+        at expectHonestReach (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:146:86)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:680:9
+
+    Error Context: tests-visual/test-results/release-10-1-5-critique-2--b9cbd-d-keeps-the-end-seat-s-ring-webkit/error-context.md
+
+  3) [webkit] › tests-visual/release-10-1-5.spec.ts:670:5 › e4 at 1440: a run overrun by less than its reserve scrolls it and keeps the end seat's ring 
+
+    Error: 1440 capped 4 px under 341.765625 ({"reach":0,"overrun":4.765625,"reserve":11}): reach = the seats' overrun
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 1
+    Received:    4.765625
+
+      144 |     });
+      145 |     const at = `${cell} (${JSON.stringify(read)})`;
+    > 146 |     expect(Math.abs(read.reach - read.overrun), `${at}: reach = the seats' overrun`).toBeLessThanOrEqual(1);
+          |                                                                                      ^
+      147 | }
+      148 |
+      149 | async function pointerOff(page: Page): Promise<void> {
+        at expectHonestReach (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:146:86)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:680:9
+
+    Error Context: tests-visual/test-results/release-10-1-5-e4-at-1440--c12d2-d-keeps-the-end-seat-s-ring-webkit/error-context.md
+
+  3 failed
+    [webkit] › tests-visual/release-10-1-5.spec.ts:619:5 › critique 2, coarse phone › e3 at 390: the run's clip and hit stop at the persistent seats, at rest and scrolled 
+    [webkit] › tests-visual/release-10-1-5.spec.ts:670:5 › critique 2, coarse phone › e4 at 390: a run overrun by less than its reserve scrolls it and keeps the end seat's ring 
+    [webkit] › tests-visual/release-10-1-5.spec.ts:670:5 › e4 at 1440: a run overrun by less than its reserve scrolls it and keeps the end seat's ring 
+  1 passed (20.7s)

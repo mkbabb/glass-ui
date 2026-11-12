@@ -1,0 +1,72 @@
+# static reads on bp13 (worktree at 392ff1e3c + fv5 + p13), Mon Nov  9 17:50:01 EST 2026
+## boundary grep: scale/rotate/transform declarations under src/components/dock
+styles/scroll-rungs.css:78:        scale: var(--dock-rim-t) 1;
+styles/scroll-rungs.css:97:        scale: 1 var(--dock-rim-t);
+styles/morph.css:105:    /* ~~`.glass-dock.collapsed:hover:not([data-morphing]) { scale:
+styles/controls/triggers.css:29:        scale: 1;
+styles/controls/triggers.css:92:        scale: var(--scale-press-dock);
+styles/controls/triggers.css:160:        rotate: 0deg;
+styles/controls/triggers.css:165:        rotate: 180deg;
+styles/controls/touch-floor.css:51:            transform: translate(-50%, -50%);
+styles/controls/tab-button.css:53:        scale: 1;
+styles/controls/tab-button.css:73:                scale: var(--scale-hover-dock);
+styles/controls/tab-button.css:80:            scale: var(--scale-press-dock);
+styles/controls/icon-button.css:32:        scale: 1;
+styles/controls/icon-button.css:117:                scale: var(--scale-hover-dock);
+styles/controls/icon-button.css:130:            scale: var(--scale-press-dock);
+styles/controls/icon-button.css:179:            scale: var(--dock-active-scale);
+## writeClip (bp13)
+    /** Clip a unit to [v0, v1] on the main axis and to the plate's silhouette. An edge
+        inside the plate (a seam's) is a ramp: the mask rises from 0 at the edge to 1 one
+        seam in, so a glyph it crosses fades across its width and none is cut sharp. */
+    function writeClip(m: Mover, box: Span, v0: number, v1: number, P: Span, R: number, vert: boolean): void {
+        const whole =
+            v0 <= box.lo + 0.01 && v1 >= box.hi - 0.01 &&
+            box.lo >= P.lo + R && box.hi <= P.hi - R && box.clo >= P.clo && box.chi <= P.chi;
+        if (whole) {
+            setClip(m, null);
+            setMask(m, null);
+            return;
+        }
+        const n = (v: number): string => `${Math.round(v * 100) / 100}px`;
+        const startR = v0 <= P.lo + 0.01 ? R : 0;
+        const endR = v1 >= P.hi - 0.01 ? R : 0;
+        // inset(top right bottom left round tl tr br bl), in the unit's own box
+        const [t, r, b, l, tl, tr, br, bl] = vert
+            ? [v0 - box.lo, box.chi - P.chi, box.hi - v1, P.clo - box.clo, startR, startR, endR, endR]
+            : [P.clo - box.clo, box.hi - v1, box.chi - P.chi, v0 - box.lo, startR, endR, endR, startR];
+        setClip(m, `inset(${n(t)} ${n(r)} ${n(b)} ${n(l)} round ${n(tl)} ${n(tr)} ${n(br)} ${n(bl)})`);
+        // The seam's ramps, in the unit's own px: each cut edge's alpha rises linearly to 1 one
+        // seam in, from 0 at an edge cut a touch deep or more (its depth from the plate's or the
+        // box's own edge) and from 1 − depth / touch at a shallower one (The seam edge is a ramp).
+        // A unit closing on its heir's place (The handoff) keeps the ink at its middle to its
+        // last frame: its ramps rise to full by its middle, so the middle paints whole until the
+        // frame it hands the place on.
+        const ds = v0 - Math.max(box.lo, P.lo);
+        const de = Math.min(box.hi, P.hi) - v1;
+        if (ds <= 0.01 && de <= 0.01) {
+            setMask(m, null);
+            return;
+        }
+        const a0 = v0 - box.lo;
+        const a1 = v1 - box.lo;
+        const q = Math.min(m.seam, (a1 - a0) / 2);
+        const k = (m.exit?.heir && q) || m.seam;
+        const at = [a0, a0 + q, a1 - q, a1];
+        const ramp = (d: number, x: number): number => {
+            const f = clamp01(1 - d / TOUCH_PX);
+            return d > 0.01 ? f + ((1 - f) * x) / k : 1;
+        };
+        const alpha = (x: number): number => clamp01(Math.min(ramp(ds, x - a0), ramp(de, a1 - x)));
+        const stops = at.map((x) => `rgb(0 0 0 / ${Math.round(alpha(x) * 1000) / 1000}) ${n(x)}`);
+        setMask(m, `linear-gradient(${vert ? "to bottom" : "to right"}, ${stops.join(", ")})`);
+    }
+## header paragraph
+// The seam edge is a ramp. A hard edge inside the plate cuts glyphs, and a cut glyph reads
+// as another glyph ("B" as "3") at any ink. So every edge a seam puts inside the plate is
+// a mask that rises from nothing at the edge to full one seam in: a glyph crossing it
+// fades across its own width, and nothing is cut sharp. The plate's own edge stays hard. An
+// edge less than a touch inside the plate's edge (or the unit's own box) is a ramp too, from
+// 1 − depth / touch at the edge: a cut grows into its ramp with no step, and on every frame
+// the only hard edge across a glyph is the plate's.
+//

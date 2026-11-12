@@ -1,0 +1,13 @@
+# PE15 cand15-e15 chromium · 2026-11-10 15:29:48 · load { 25.93 35.49 39.08 } · harness 0c64ff33af43 · --only COST
+# E-15 · S15's members at their folded ranges (P-E15 §S15)
+# target /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p15/PE15/wt/.pe15out/builds/cand15 · engine chromium · lock wait 0.0 s (the deadline 5400 s counts from here) · other headless processes: chromium 16, webkit 2 · load 25.9/35.5/39.1 at start
+# scene app: harness scenes/App.vue (sha1 912fecf0a1aa)
+# chromium 149.0.7827.55
+# held control: scene slider root .glass-slider thumb [role="slider"] engaged [data-engaged], [data-held]; clock token --spring-dock-settle; cells COST; film read after the frame's resize step (class 7)
+  REPORT     COST held still, 30 frames · engaged true · over 30 frames: layouts 36, style recalcs 36, script 3.6 ms (the film's own read is one layout a frame: 30) · less the film's: 6 layouts · load 25.5/35.2/39.0
+  REPORT     COST a carrier-only window: C translate sine 80 px / 600 ms, 30 frames · engaged true · over 30 frames: layouts 35, style recalcs 35, script 7.8 ms (the film's own read is one layout a frame: 30) · less the film's: 5 layouts · load 25.5/35.2/39.0
+  REPORT     COST an affine step window: a 40 px insert above the root, 14 frames · engaged true · over 14 frames: layouts 20, style recalcs 20, script 3.4 ms (the film's own read is one layout a frame: 14) · less the film's: 6 layouts · load 25.5/35.2/39.0
+  REPORT     COST a projective step window: C perspective(200px) rotateX(25deg), a 40 px insert inside C, 14 frames · engaged true · over 14 frames: layouts 47, style recalcs 50, script 7.7 ms (the film's own read is one layout a frame: 14) · less the film's: 33 layouts · load 25.5/35.2/39.0
+E-15 chromium UNMEASURED · 0 pass, 0 fail, 0 unmeasured of 0 gating cells (4 reported) · load 25.9/35.5/39.1 at start, 25.5/35.2/39.0 at end
+# exit 3 · 2026-11-10 15:29:54 · load { 25.45 35.24 38.97 }
+# end · 2026-11-10 15:29:54 · load { 25.45 35.24 38.97 } · harness 0c64ff33af43

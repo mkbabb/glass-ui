@@ -4,8 +4,11 @@
 // natively; `useDockRun.openIndexOf` and run.css's open seat read the same predicate).
 // Each seat used to paint its own selected plate, so a change of destination cut: one
 // plate vanished and another appeared. This composable paints ONE plate for the run (the
-// run's `::before`, run.css) and moves it from the seat it leaves to the seat it reaches
-// on the dock spring.
+// inert `.dock-run-mark` element the run renders while `marked`, run.css) and moves it
+// from the seat it leaves to the seat it reaches on the dock spring.
+//
+// THE MARK IS NOT A SEAT. It is a child of the run, so every enumeration of the run's
+// children reads `isRunSeat` (below), the one place script says so.
 //
 // THE MARK RIDES THE RUN'S OWN COORDINATES. Its box is the run's scrolled content box, so
 // a run that scrolls carries the mark with it natively: no scroll listener, no per-scroll
@@ -20,6 +23,9 @@
 // THE MARK'S INLINE OFFSET IS LOGICAL. It is written from the run's inline-start edge
 // and painted at `inset-inline-start`, so a run whose direction flips on a live page
 // mirrors its mark with its seats, with no measure: a direction change resizes nothing.
+// The edge is the RUN's inline start, read from the run's own direction: the element the
+// offset is applied on. A seat with a `dir` of its own (a language switch) lies in the
+// run's coordinates like any other.
 //
 // THE FIRST MEASURE WAITS ONE FRAME. Reading a seat's box in the mount task would force
 // the new dock's layout there; the first animation frame runs before the first paint, so
@@ -28,7 +34,7 @@
 // A seat inside its own scroller (a tab strip in a fading scroll region) is not on the
 // run's coordinates, so it keeps its own plate and the run draws no mark.
 
-import { onMounted, onUnmounted, type Ref } from "vue";
+import { onMounted, onUnmounted, readonly, ref, type Ref } from "vue";
 
 import { DOCK_SPRING } from "../constants";
 import { useDockSpring } from "./useDockSpring";
@@ -38,8 +44,13 @@ export interface UseDockRunMarkOptions {
     runEl: Ref<HTMLElement | null>;
 }
 
-/** The run's attribute while it draws a mark (run.css paints `::before` under it). */
-const DOCK_RUN_MARK_ATTR = "data-run-mark";
+/** The class of the run's mark element (run.css, THE ACTIVE MARK). */
+export const DOCK_RUN_MARK_CLASS = "dock-run-mark";
+
+/** False for the run's mark, the one child of the run that is not a seat. */
+export function isRunSeat(el: Element): boolean {
+    return !el.classList.contains(DOCK_RUN_MARK_CLASS);
+}
 
 const CURRENT = '[aria-current]:not([aria-current="false"])';
 
@@ -79,7 +90,7 @@ const px = (value: string): number => {
  * selected background would fill (its `background-clip` box), at the corner that box
  * takes from the seat's radius. `x` is the offset from the run's inline-start edge.
  */
-function plateOf(run: HTMLElement, seat: HTMLElement): Box {
+function plateOf(run: HTMLElement, seat: HTMLElement, rtl: boolean): Box {
     const port = run.getBoundingClientRect();
     const rect = seat.getBoundingClientRect();
     const style = getComputedStyle(seat);
@@ -96,7 +107,7 @@ function plateOf(run: HTMLElement, seat: HTMLElement): Box {
     // Right to left, the inline-start edge is the padding box's right edge, and
     // `scrollLeft` runs from 0 at that edge to negative values toward the end.
     const x =
-        style.direction === "rtl"
+        rtl
             ? port.left + run.clientLeft + run.clientWidth - rect.right - run.scrollLeft + right
             : rect.left - port.left - run.clientLeft + run.scrollLeft + left;
     return {
@@ -116,8 +127,14 @@ const mix = (a: Box, b: Box, t: number): Box => ({
     r: a.r + (b.r - a.r) * t,
 });
 
-export function useDockRunMark({ runEl }: UseDockRunMarkOptions): void {
+export interface UseDockRunMarkReturn {
+    /** True while the run draws a mark: the run renders its `.dock-run-mark` element. */
+    marked: Readonly<Ref<boolean>>;
+}
+
+export function useDockRunMark({ runEl }: UseDockRunMarkOptions): UseDockRunMarkReturn {
     const spring = useDockSpring(DOCK_SPRING);
+    const marked = ref(false);
     let seat: HTMLElement | null = null;
     let mark: Box | null = null;
     let from: Box | null = null;
@@ -129,15 +146,19 @@ export function useDockRunMark({ runEl }: UseDockRunMarkOptions): void {
         run.style.setProperty("--dock-run-mark-w", `${box.w}px`);
         run.style.setProperty("--dock-run-mark-h", `${box.h}px`);
         run.style.setProperty("--dock-run-mark-r", `${box.r}px`);
-        run.setAttribute(DOCK_RUN_MARK_ATTR, "");
+        marked.value = true;
     }
 
     function clear(run: HTMLElement): void {
         spring.dispose();
         seat = null;
         mark = null;
-        run.removeAttribute(DOCK_RUN_MARK_ATTR);
+        marked.value = false;
     }
+
+    /** The seat's plate, measured from the run's own inline-start edge. */
+    const plate = (run: HTMLElement, at: HTMLElement): Box =>
+        plateOf(run, at, getComputedStyle(run).direction === "rtl");
 
     /** Re-read the destination; glide to a new one, re-seat on the same one. */
     function sync(): void {
@@ -149,7 +170,7 @@ export function useDockRunMark({ runEl }: UseDockRunMarkOptions): void {
             return;
         }
         if (next === seat) {
-            if (!spring.live) paint(run, plateOf(run, next));
+            if (!spring.live) paint(run, plate(run, next));
             return;
         }
         resizes?.disconnect();
@@ -158,17 +179,17 @@ export function useDockRunMark({ runEl }: UseDockRunMarkOptions): void {
         const start = mark;
         seat = next;
         if (!start) {
-            paint(run, plateOf(run, next));
+            paint(run, plate(run, next));
             return;
         }
         from = start;
         spring.playTo(0, 1, {
             inheritVelocityScale: 0,
             onFrame: (p) => {
-                if (seat && from) paint(run, mix(from, plateOf(run, seat), p));
+                if (seat && from) paint(run, mix(from, plate(run, seat), p));
             },
             onSettle: () => {
-                if (seat) paint(run, plateOf(run, seat));
+                if (seat) paint(run, plate(run, seat));
             },
         });
     }
@@ -207,4 +228,6 @@ export function useDockRunMark({ runEl }: UseDockRunMarkOptions): void {
         resizes?.disconnect();
         spring.dispose();
     });
+
+    return { marked: readonly(marked) };
 }

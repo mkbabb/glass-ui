@@ -1,11 +1,11 @@
-# W-A.4 · The GPU leg: aurora, blob and fourier floors read the WebGPU primary on Metal, with a chroma floor, and the tag verifies the receipt · 11.0.0
+# W-A.4 · The GPU leg: aurora, blob and fourier floors read the WebGPU primary on Metal, with a chroma floor, and the tag verifies the receipt
 
 | field | value |
 |---|---|
 | seat | band-A wave-spec seat, formation run `wf_68eb18d6-b21` |
 | model | `claude-opus-5-5`, asserted from own system identity |
 | HEAD | `fabc95e2` in a scratch worktree, `dist-demo/` built there and served by `vite preview` on :5793 for three runs of `substrate-paints-color.spec.ts -g "aurora paints"` (Playwright Chromium headless, `PI_ANGLE` defaulting to `metal` on darwin, `playwright.config.ts:35-39`), the server stopped after each |
-| ships in | 11.0.0 |
+| release | `waves/INDEX.md`, the one record |
 | families | F-08 whole (`audit/REGISTRY.md:254-265`) |
 | depends on | PLAN §5, the one record of edges |
 | dependants | PLAN §5 (its inverse) |

@@ -11,7 +11,7 @@ const props = defineProps<{
     <tr
         :class="
             cn(
-                'border-b',
+                'border-b border-border',
                 props.class,
             )
         "

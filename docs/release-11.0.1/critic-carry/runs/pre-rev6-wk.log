@@ -1,0 +1,235 @@
+[guarded] waiting for the 'webkit' lock
+[WebServer] (!) Failed to run dependency scan. Skipping dependency pre-bundling. Error:   Failed to scan for dependencies from entries:
+[WebServer]   /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/.cache/carry-pre/index.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/.cache/carry-pre/tests-visual/_aur-vangogh-harness.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/.cache/carry-pre/tests-visual/b7-shape/harness.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/.cache/carry-pre/tests-visual/fixtures/dock-entering-child-lag.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/.cache/carry-pre/tests-visual/release-10-1-2/harness.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/.cache/carry-pre/tests-visual/release-10-1-1/harness.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/.cache/carry-pre/tests-visual/release-11-0-1/critic-2.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/.cache/carry-pre/tests-visual/release-11-0-1/harness.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/.cache/carry-pre/tests-visual/release-10-1-3/harness.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/.cache/carry-pre/tests-visual/release-10-1-4/harness.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/.cache/carry-pre/tests-visual/release-10-1-5/critic-1.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/.cache/carry-pre/tests-visual/release-10-1-5/critic-10-v1014.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/.cache/carry-pre/tests-visual/release-10-1-5/critic-10.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/.cache/carry-pre/tests-visual/release-10-1-5/critic-11-v1014.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/.cache/carry-pre/tests-visual/release-10-1-5/critic-11.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/.cache/carry-pre/tests-visual/release-10-1-5/critic-12-v1014.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/.cache/carry-pre/tests-visual/release-10-1-5/critic-12.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/.cache/carry-pre/tests-visual/release-10-1-5/critic-2-v1014.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/.cache/carry-pre/tests-visual/release-10-1-5/critic-2.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/.cache/carry-pre/tests-visual/release-10-1-5/critic-4-v1014.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/.cache/carry-pre/tests-visual/release-10-1-5/critic-4.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/.cache/carry-pre/tests-visual/release-10-1-5/critic-7-v1014.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/.cache/carry-pre/tests-visual/release-10-1-5/critic-7.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/.cache/carry-pre/tests-visual/release-10-1-5/harness.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/.cache/carry-pre/tests-visual/u-b7/harness.html
+[WebServer] 
+[WebServer]   Build failed with 46 errors:
+[WebServer] 
+[WebServer] [UNRESOLVED_IMPORT] Could not resolve './v1014/src/components/slider/Slider.vue' in tests-visual/release-10-1-5/critic-12-v1014.ts
+[WebServer]     ╭─[ tests-visual/release-10-1-5/critic-12-v1014.ts:11:20 ]
+[WebServer]     │
+[WebServer]  11 │ import Slider from "./v1014/src/components/slider/Slider.vue";
+[WebServer]     │                    ─────────────────────┬────────────────────  
+[WebServer]     │                                         ╰────────────────────── Module not found.
+[WebServer]     │ 
+[WebServer]     │ Help: 'tests-visual/release-10-1-5/critic-12-v1014.ts' is imported by the following path:
+[WebServer]     │         - tests-visual/release-10-1-5/critic-12-v1014.ts
+[WebServer]     │         - tests-visual/release-10-1-5/critic-12-v1014.html
+[WebServer] ────╯
+[WebServer] 
+[WebServer] [UNRESOLVED_IMPORT] Could not resolve './v1014/src/components/dock/GlassDock.vue' in tests-visual/release-10-1-5/critic-10-v1014.ts
+[WebServer]     ╭─[ tests-visual/release-10-1-5/critic-10-v1014.ts:10:23 ]
+[WebServer]     │
+[WebServer]  10 │ import GlassDock from "./v1014/src/components/dock/GlassDock.vue";
+[WebServer]     │                       ─────────────────────┬─────────────────────  
+[WebServer]     │                                            ╰─────────────────────── Module not found.
+[WebServer]     │ 
+[WebServer]     │ Help: 'tests-visual/release-10-1-5/critic-10-v1014.ts' is imported by the following path:
+[WebServer]     │         - tests-visual/release-10-1-5/critic-10-v1014.ts
+[WebServer]     │         - tests-visual/release-10-1-5/critic-10-v1014.html
+[WebServer] ────╯
+[WebServer] 
+[WebServer] [UNRESOLVED_IMPORT] Could not resolve './v1014/src/components/dock/DockControl.vue' in tests-visual/release-10-1-5/critic-10-v1014.ts
+[WebServer]     ╭─[ tests-visual/release-10-1-5/critic-10-v1014.ts:11:25 ]
+[WebServer]     │
+[WebServer]  11 │ import DockControl from "./v1014/src/components/dock/DockControl.vue";
+[WebServer]     │                         ──────────────────────┬──────────────────────  
+[WebServer]     │                                               ╰──────────────────────── Module not found.
+[WebServer]     │ 
+[WebServer]     │ Help: 'tests-visual/release-10-1-5/critic-10-v1014.ts' is imported by the following path:
+[WebServer]     │         - tests-visual/release-10-1-5/critic-10-v1014.ts
+[WebServer]     │         - tests-visual/release-10-1-5/critic-10-v1014.html
+[WebServer] ────╯
+[WebServer] 
+[WebServer] [UNRESOLVED_IMPORT] Could not resolve './v1014/src/components/dark-mode-toggle/DarkModeToggle.vue' in tests-visual/release-10-1-5/critic-10-v1014.ts
+[WebServer]     ╭─[ tests-visual/release-10-1-5/critic-10-v1014.ts:12:28 ]
+[WebServer]     │
+[WebServer]  12 │ import DarkModeToggle from "./v1014/src/components/dark-mode-toggle/DarkModeToggle.vue";
+[WebServer]     │                            ──────────────────────────────┬─────────────────────────────  
+[WebServer]     │                                                          ╰─────────────────────────────── Module not found.
+[WebServer]     │ 
+[WebServer]     │ Help: 'tests-visual/release-10-1-5/critic-10-v1014.ts' is imported by the following path:
+[WebServer]     │         - tests-visual/release-10-1-5/critic-10-v1014.ts
+[WebServer]     │         - tests-visual/release-10-1-5/critic-10-v1014.html
+[WebServer] ────╯
+[WebServer] 
+[WebServer] [UNRESOLVED_IMPORT] Could not resolve './v1014/src/components/dock/GlassDock.vue' in tests-visual/release-10-1-5/critic-7-v1014.ts
+[WebServer]    ╭─[ tests-visual/release-10-1-5/critic-7-v1014.ts:9:23 ]
+[WebServer]    │
+[WebServer]  9 │ import GlassDock from "./v1014/src/components/dock/GlassDock.vue";
+[WebServer]    │                       ─────────────────────┬─────────────────────  
+[WebServer]    │                                            ╰─────────────────────── Module not found.
+[WebServer]    │ 
+[WebServer]    │ Help: 'tests-visual/release-10-1-5/critic-7-v1014.ts' is imported by the following path:
+[WebServer]    │         - tests-visual/release-10-1-5/critic-7-v1014.ts
+[WebServer]    │         - tests-visual/release-10-1-5/critic-7-v1014.html
+[WebServer] ───╯
+[WebServer] 
+[WebServer] ...
+[WebServer]     at aggregateBindingErrorsIntoJsError (file:///Users/mkbabb/Programming/glass-ui/node_modules/rolldown/dist/shared/error-BHRSI0R7.mjs:48:18)
+[WebServer]     at unwrapBindingResult (file:///Users/mkbabb/Programming/glass-ui/node_modules/rolldown/dist/shared/error-BHRSI0R7.mjs:18:128)
+[WebServer]     at scan (file:///Users/mkbabb/Programming/glass-ui/node_modules/rolldown/dist/experimental-index.mjs:187:3)
+[WebServer]     at async Object.build (file:///Users/mkbabb/Programming/glass-ui/node_modules/vite/dist/node/chunks/node.js:30762:3)
+[WebServer]     at async scan (file:///Users/mkbabb/Programming/glass-ui/node_modules/vite/dist/node/chunks/node.js:30701:4)
+[WebServer]     at async file:///Users/mkbabb/Programming/glass-ui/node_modules/vite/dist/node/chunks/node.js:33703:15
+
+Running 6 tests using 1 worker
+
+  ✘  1 [webkit] › tests-visual/release-10-1-2.spec.ts:481:9 › O-101a · a host change during the morph · reversal (390->1440) (2.5s)
+  ✘  2 [webkit] › tests-visual/release-10-1-2.spec.ts:481:9 › O-101a · a host change during the morph · reversal (390->1440) (2.3s)
+  ✘  3 [webkit] › tests-visual/release-10-1-2.spec.ts:481:9 › O-101a · a host change during the morph · reversal (390->1440) (2.2s)
+  ✘  4 [webkit] › tests-visual/release-10-1-2.spec.ts:481:9 › O-101a · a host change during the morph · reversal (390->1440) (2.2s)
+  ✘  5 [webkit] › tests-visual/release-10-1-2.spec.ts:481:9 › O-101a · a host change during the morph · reversal (390->1440) (2.2s)
+  ✘  6 [webkit] › tests-visual/release-10-1-2.spec.ts:481:9 › O-101a · a host change during the morph · reversal (390->1440) (2.2s)
+
+
+  1) [webkit] › tests-visual/release-10-1-2.spec.ts:481:9 › O-101a · a host change during the morph · reversal (390->1440) 
+
+    Error: morphing frames after the change reserving other than the settled 976px (980)
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 1
+
+      493 |                 stale.length,
+      494 |                 `morphing frames after the change reserving other than the settled ${rest.size}px (${[...new Set(stale.map((f) => f.reserved))].join(", ")})`,
+    > 495 |             ).toBe(0);
+          |               ^
+      496 |             const over = seq.filter((f) => f.scroll > f.client);
+      497 |             expect
+      498 |                 .soft(
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/.cache/carry-pre/tests-visual/release-10-1-2.spec.ts:495:15
+
+    Error Context: tests-visual/test-results/release-10-1-2-O-101a-·-a--5cea7-morph-·-reversal-390--1440--webkit/error-context.md
+
+  2) [webkit] › tests-visual/release-10-1-2.spec.ts:481:9 › O-101a · a host change during the morph · reversal (390->1440) 
+
+    Error: morphing frames after the change reserving other than the settled 976px (980)
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 1
+
+      493 |                 stale.length,
+      494 |                 `morphing frames after the change reserving other than the settled ${rest.size}px (${[...new Set(stale.map((f) => f.reserved))].join(", ")})`,
+    > 495 |             ).toBe(0);
+          |               ^
+      496 |             const over = seq.filter((f) => f.scroll > f.client);
+      497 |             expect
+      498 |                 .soft(
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/.cache/carry-pre/tests-visual/release-10-1-2.spec.ts:495:15
+
+    Error Context: tests-visual/test-results/release-10-1-2-O-101a-·-a--5cea7-morph-·-reversal-390--1440--webkit-repeat1/error-context.md
+
+  3) [webkit] › tests-visual/release-10-1-2.spec.ts:481:9 › O-101a · a host change during the morph · reversal (390->1440) 
+
+    Error: morphing frames after the change reserving other than the settled 976px (980)
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 1
+
+      493 |                 stale.length,
+      494 |                 `morphing frames after the change reserving other than the settled ${rest.size}px (${[...new Set(stale.map((f) => f.reserved))].join(", ")})`,
+    > 495 |             ).toBe(0);
+          |               ^
+      496 |             const over = seq.filter((f) => f.scroll > f.client);
+      497 |             expect
+      498 |                 .soft(
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/.cache/carry-pre/tests-visual/release-10-1-2.spec.ts:495:15
+
+    Error Context: tests-visual/test-results/release-10-1-2-O-101a-·-a--5cea7-morph-·-reversal-390--1440--webkit-repeat2/error-context.md
+
+  4) [webkit] › tests-visual/release-10-1-2.spec.ts:481:9 › O-101a · a host change during the morph · reversal (390->1440) 
+
+    Error: morphing frames after the change reserving other than the settled 976px (980)
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 1
+
+      493 |                 stale.length,
+      494 |                 `morphing frames after the change reserving other than the settled ${rest.size}px (${[...new Set(stale.map((f) => f.reserved))].join(", ")})`,
+    > 495 |             ).toBe(0);
+          |               ^
+      496 |             const over = seq.filter((f) => f.scroll > f.client);
+      497 |             expect
+      498 |                 .soft(
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/.cache/carry-pre/tests-visual/release-10-1-2.spec.ts:495:15
+
+    Error Context: tests-visual/test-results/release-10-1-2-O-101a-·-a--5cea7-morph-·-reversal-390--1440--webkit-repeat3/error-context.md
+
+  5) [webkit] › tests-visual/release-10-1-2.spec.ts:481:9 › O-101a · a host change during the morph · reversal (390->1440) 
+
+    Error: morphing frames after the change reserving other than the settled 976px (980)
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 1
+
+      493 |                 stale.length,
+      494 |                 `morphing frames after the change reserving other than the settled ${rest.size}px (${[...new Set(stale.map((f) => f.reserved))].join(", ")})`,
+    > 495 |             ).toBe(0);
+          |               ^
+      496 |             const over = seq.filter((f) => f.scroll > f.client);
+      497 |             expect
+      498 |                 .soft(
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/.cache/carry-pre/tests-visual/release-10-1-2.spec.ts:495:15
+
+    Error Context: tests-visual/test-results/release-10-1-2-O-101a-·-a--5cea7-morph-·-reversal-390--1440--webkit-repeat4/error-context.md
+
+  6) [webkit] › tests-visual/release-10-1-2.spec.ts:481:9 › O-101a · a host change during the morph · reversal (390->1440) 
+
+    Error: morphing frames after the change reserving other than the settled 976px (980)
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 1
+
+      493 |                 stale.length,
+      494 |                 `morphing frames after the change reserving other than the settled ${rest.size}px (${[...new Set(stale.map((f) => f.reserved))].join(", ")})`,
+    > 495 |             ).toBe(0);
+          |               ^
+      496 |             const over = seq.filter((f) => f.scroll > f.client);
+      497 |             expect
+      498 |                 .soft(
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/.cache/carry-pre/tests-visual/release-10-1-2.spec.ts:495:15
+
+    Error Context: tests-visual/test-results/release-10-1-2-O-101a-·-a--5cea7-morph-·-reversal-390--1440--webkit-repeat5/error-context.md
+
+  6 failed
+    [webkit] › tests-visual/release-10-1-2.spec.ts:481:9 › O-101a · a host change during the morph · reversal (390->1440) 
+    [webkit] › tests-visual/release-10-1-2.spec.ts:481:9 › O-101a · a host change during the morph · reversal (390->1440) 
+    [webkit] › tests-visual/release-10-1-2.spec.ts:481:9 › O-101a · a host change during the morph · reversal (390->1440) 
+    [webkit] › tests-visual/release-10-1-2.spec.ts:481:9 › O-101a · a host change during the morph · reversal (390->1440) 
+    [webkit] › tests-visual/release-10-1-2.spec.ts:481:9 › O-101a · a host change during the morph · reversal (390->1440) 
+    [webkit] › tests-visual/release-10-1-2.spec.ts:481:9 › O-101a · a host change during the morph · reversal (390->1440) 

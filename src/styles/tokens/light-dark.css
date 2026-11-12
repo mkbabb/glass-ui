@@ -18,6 +18,22 @@
     :root {
         --ui-scale: var(--ui-coarse-scale, 1.5);
         --control-floor: var(--touch-target, 2.75rem);
+        /* THE TYPE TAKES THE NO-ZOOM FLOOR, NOT THE COMFORT SCALE. The coarse 1.5×
+           applied to the type would paint 21px field text in a 54px bar at 390, 1.72×
+           its pane subtitle against 1.14× on desktop. A touch target is BOX — the heights above keep the 1.5× — and the one type law touch
+           adds is iOS Safari's: a focused field under 16px zooms the page. So the
+           default rung floors at 16px over its unscaled fluid base, and the `-sm` rung
+           floors at the SAME floor times the base pair's own floor ratio (`--type-caption`
+           0.75rem over `--type-small` 0.875rem = 6/7, 13.71px), so it stays the
+           quieter rung on touch as it is on desktop (0.86-0.88 of the default); a 1rem
+           `-sm` floor would flatten menu labels, shortcuts, group headings and sm
+           buttons onto the primary 16px. The no-zoom law binds FIELDS only, so the field recipes floor
+           there: `--field-text-floor` below, read by `.input-pill`,
+           `.input-bar-field` and `.field-control`, lifts a field to 16px and nothing
+           else. */
+        --control-text: max(var(--type-small), 1rem);
+        --control-text-sm: max(var(--type-caption), calc(1rem * 6 / 7));
+        --field-text-floor: 1rem;
     }
 }
 

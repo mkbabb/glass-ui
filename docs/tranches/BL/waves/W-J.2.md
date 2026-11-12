@@ -1,12 +1,12 @@
-# W-J.2 · the engagement register, component-wide (loop D5, to open) · 11.0.0
+# W-J.2 · the engagement register, component-wide (loop D5, closed)
 
 | field | value |
 |---|---|
 | seat | band-J wave-spec seat, formation run `wf_68eb18d6-b21` |
 | model | `claude-opus-5-5`, asserted from own system identity |
 | HEAD | `7f92584c` in a scratch worktree (the task named `f3ad78d0`; every commit since is under `docs/`). `git diff --stat v10.1.0 HEAD -- src` prints nothing: the published 10.1.0 bytes |
-| kind | LOOP WAVE, owned by design loop D5, which does not exist yet. `ls docs/tranches/BL/design/` lists `dock`, `material`, `structure`, `tile`: D5 has no portfolio and no REGISTRY (PLAN §6, `PLAN.md:336`). The wave lands only from D5's converged specification (§3.1). This spec fixes the scope, the born-RED gates and the inputs D5's round 0 must carry; it designs no rung |
-| ships in | 11.0.0 |
+| kind | LOOP WAVE of design loop D5, which is closed at pass 15 (`design/engagement/LANDING.md`). Its landing is built inside `waves/W-R.1.md` §2.3 on the 12.0.0 branch, and W-R.1 carries its gates (E-2 re-cut there). This spec was written before D5 had a portfolio (PLAN §6); it fixed the scope, the born-RED gates and the inputs D5's round 0 carried, and designs no rung |
+| release | `waves/INDEX.md`, the one record |
 | families | F-54 (remainder: the engaged rung and hallmark 6; the dock hallmarks 1, 2 and 5 are W-I.1's, `W-I.1.md` §1) |
 | depends on | PLAN §5, the one record of edges |
 | dependants | PLAN §5 (its inverse) |

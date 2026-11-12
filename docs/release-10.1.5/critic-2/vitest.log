@@ -1,0 +1,42 @@
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1793759449 slope=40.7/s inuse=30389 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. Finish what you are doing and report it; the owner decides on the reboot.
+
+ RUN  v4.1.10 /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5
+
+(node:52495) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:52501) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ❯ tests/styles/typed-track-seam.test.ts (31 tests | 1 failed) 38ms
+     × the generated manifest folds both register partials BEFORE the SFC bundle 3ms
+(node:53042) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:53224) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/styles/typed-track-seam.test.ts > W4 typed-seam — the component-only export is completed (§4.1) > the generated manifest folds both register partials BEFORE the SFC bundle
+AssertionError: expected [ …(5) ] to have a length of 4 but got 5
+
+- Expected
++ Received
+
+- 4
++ 5
+
+ ❯ tests/styles/typed-track-seam.test.ts:169:23
+    167|         expect(order).toContain("./styles/glass/value-marks.css");
+    168|         expect(order.at(-1)).toBe("./glass-ui.css");
+    169|         expect(order).toHaveLength(4);
+       |                       ^
+    170|     });
+    171|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 246 passed (247)
+      Tests  1 failed | 2396 passed | 10 expected fail | 1 skipped (2408)
+   Start at  10:36:29
+   Duration  54.47s (transform 3.72s, setup 7.26s, import 23.62s, tests 20.63s, environment 30.90s)
+

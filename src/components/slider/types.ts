@@ -3,8 +3,8 @@ import type { Motion, Orientation } from "../_shared/axes";
 import type { Direction, FormFieldProps } from "../_shared/primitive";
 
 /**
- * `scrubber` is the continuous-cylinder recipe — one glass segment whose leading edge
- * IS the handle, with no visible thumb. `spectrum` is the gradient colour-picker
+ * `scrubber` is the continuous-cylinder recipe — one glass segment with a disc thumb
+ * inscribed in its leading end, never narrower than that disc. `spectrum` is the gradient colour-picker
  * recipe with a visible slim squircle handle.
  */
 export type SliderVariant = "scrubber" | "spectrum";

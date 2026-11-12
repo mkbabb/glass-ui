@@ -1,0 +1,43 @@
+
+ RUN  v4.1.10 /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5
+
+(node:62449) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:62487) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ❯ tests/gates/boot-graph.test.ts (14 tests | 1 failed) 231ms
+     × the dist-demo it measures is NEWER than every source it is built from 31ms
+ ❯ tests/components/custom/dock/dockMorphMeasure.test.ts (18 tests | 1 failed) 168ms
+     × a capture keeps the run's scroll position 12ms
+(node:65925) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:68481) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/gates/boot-graph.test.ts > gate:boot-graph — build arm > the dist-demo it measures is NEWER than every source it is built from
+AssertionError: dist-demo/index.html is STALE (built 2026-11-10T21:38:35.860Z, newest source 2026-11-10T21:43:08.345Z) — run `npm run demo:dist:build`; a stale build greens a regressed graph: expected 1794346715860.5127 to be greater than 1794346988345.1477
+ ❯ tests/gates/boot-graph.test.ts:576:11
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  tests/components/custom/dock/dockMorphMeasure.test.ts > useDockExpandedSize > a capture keeps the run's scroll position
+AssertionError: expected "vi.fn()" to be called at least once
+ ❯ tests/components/custom/dock/dockMorphMeasure.test.ts:414:36
+    412|         await mutationsSettle();
+    413|         expect(dock.px("expanded")).toBe("390px");
+    414|         expect(dock.full.scrollTo).toHaveBeenCalled();
+       |                                    ^
+    415|         expect(dock.model.scroll).toBe(312);
+    416|         unmount();
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  2 failed | 245 passed (247)
+      Tests  2 failed | 2395 passed | 10 expected fail | 1 skipped (2408)
+   Start at  18:03:09
+   Duration  75.50s (transform 4.84s, setup 9.40s, import 38.18s, tests 25.91s, environment 43.78s)
+

@@ -1,0 +1,147 @@
+--- src/components/mark/Mark.vue
++++ src/components/mark/Mark.vue
+@@ -24,7 +24,7 @@
+ function watch(el: Element, fn: Entered): void {
+     io ??= new IntersectionObserver(
+         (entries) => entries.map((e) => seen.get(e.target)?.(e)).forEach((write) => write?.()),
+-        { threshold: [0, 0.5] },
++        { threshold: 0 },
+     );
+     seen.set(el, fn);
+     io.observe(el);
+@@ -86,9 +86,10 @@
+         wrap.appendChild(content);
+         content = wrap;
+     }
+-    const copy = host.cloneNode(false) as HTMLElement;
+-    copy.removeAttribute("data-ink");
+-    copy.removeAttribute("id");
++    // The copy carries what sets the decoration and nothing else: the class and the inline style.
++    const copy = document.createElement(host.localName);
++    copy.className = host.className;
++    if (host.style.cssText) copy.style.cssText = host.style.cssText;
+     copy.appendChild(content);
+     return copy;
+ }
+@@ -142,6 +143,12 @@
+     const host = root.value;
+     const at = layer.value;
+     if (!host || !at) return;
++    // The draw is for an inline box. A host its parent has made a block (a flex or grid item,
++    // inline-block) has no line fragments to read, so it stands drawn.
++    if (getComputedStyle(host).display !== "inline") {
++        if (import.meta.env.DEV) console.warn("[Mark] the host is not an inline box; the mark stands drawn with no draw.");
++        return rest;
++    }
+     const origin = at.getBoundingClientRect();
+     const found = lines(host, at);
+     if (found.length === 0) return rest;
+@@ -164,12 +171,17 @@
+         at.replaceChildren(...windows);
+         pending = windows.length;
+         ink.value = "draw";
++        // A face that lands under the draw moves the text and the copies would be stale, so the draw lands with it.
++        if (document.fonts?.status === "loading")
++            void document.fonts.ready.then(() => {
++                if (ink.value === "draw") rest();
++            });
+     };
+ }
+ 
+ function onEntry(entry: IntersectionObserverEntry): (() => void) | void {
+     if (still()) return rest;
+-    if (ink.value === "wait" && entry.intersectionRatio >= 0.5) return begin();
++    if (ink.value === "wait" && entry.isIntersecting) return begin();
+     if (ink.value === "rest" && props.retrigger && !entry.isIntersecting) ink.value = "wait";
+ }
+ 
+@@ -210,6 +222,6 @@
+         :data-ink="ink"
+         @animationend="onEnd"
+     >
+-        <slot /><span v-if="ink !== 'rest'" ref="layer" class="mark-layer" aria-hidden="true" />
++        <slot /><span v-if="ink !== 'rest'" ref="layer" class="mark-layer" aria-hidden="true" inert />
+     </component>
+ </template>
+--- src/components/mark/mark.css
++++ src/components/mark/mark.css
+@@ -19,30 +19,49 @@
+         text-decoration-skip-ink: auto;
+     }
+ 
++    /* The clear seat: one unbroken rule set under the descenders, with nothing skipped. */
++    .mark-clear {
++        --mark-offset: 0.26em;
++        text-decoration-skip-ink: none;
++    }
++
+     /* The highlight is the same decoration grown to the x-height and pulled up behind
+        the glyphs: `ex` is the font's own x-height, so the band sits on the lowercase in
+-       any face. An underline paints under its text, so the words stay on top. */
++       any face. An underline paints under its text, so the words stay on top.
++       The band takes the ink's hue; an ink with no hue gives a band with none. */
+     .mark-highlight {
++        --mark-band-paint: var(
++            --mark-band,
++            light-dark(
++                oklch(from var(--mark-ink, var(--primary)) 0.86 min(0.16, c * 40) h),
++                oklch(from var(--mark-ink, var(--primary)) 0.44 min(0.16, c * 40) h)
++            )
++        );
+         background: none;
+         color: inherit;
+-        text-decoration: underline solid
+-            var(
+-                --mark-band,
+-                light-dark(
+-                    oklch(from var(--mark-ink, var(--primary)) 0.86 0.16 h),
+-                    oklch(from var(--mark-ink, var(--primary)) 0.44 0.16 h)
+-                )
+-            );
++    }
++    /* Selected, the band fills the line. Chromium repaints a selected run's decoration in
++       the text colour, so the selection repeats the band over it; WebKit drops its own
++       tint under any selection rule, so the selection's ground is the band too. */
++    .mark-highlight,
++    .mark-highlight::selection {
++        text-decoration: underline solid var(--mark-band-paint);
+         text-decoration-thickness: calc(1ex + 0.16em);
+         text-underline-offset: calc(-1ex - 0.08em);
+         text-decoration-skip-ink: none;
+     }
++    .mark-highlight::selection {
++        background-color: var(--mark-band-paint);
++    }
+ 
+     /* Forced colours repaint a decoration in the text's own colour, which would bury the
+        words under the band. The highlight becomes the system's real one. */
+     @media (forced-colors: active) {
+-        .mark-highlight {
++        .mark-highlight,
++        .mark-highlight::selection {
+             text-decoration: none;
++        }
++        .mark-highlight {
+             background: Mark;
+             color: MarkText;
+         }
+@@ -62,7 +81,6 @@
+         height: 0;
+         z-index: -1;
+         pointer-events: none;
+-        user-select: none;
+     }
+     .mark-line {
+         position: absolute;
+@@ -76,6 +94,11 @@
+     .mark-slide {
+         display: block;
+     }
++    /* The window's strut is the line's own box. Nothing inside the copy may grow it, or a
++       larger child would push the copy's baseline down. */
++    .mark-slide * {
++        line-height: 0;
++    }
+     .mark-line:dir(rtl) {
+         --mark-dir: -1;
+     }

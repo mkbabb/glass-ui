@@ -1,11 +1,11 @@
-# W-K.7 · W-ARRIVAL: one owner per arrival · 11.0.0
+# W-K.7 · W-ARRIVAL: one owner per arrival
 
 | field | value |
 |---|---|
 | seat | band-K wave-spec seat, formation |
 | model | `claude-opus-5-5`, asserted from own system identity |
 | HEAD | `9866d229` (`src` = `f3ad78d0` = published 10.1.0); the band-K fixture (W-K.1 appendix B) and the built demo on :6271 |
-| ships in | 11.0.0 |
+| release | `waves/INDEX.md`, the one record |
 | families | F-43 (all members) and its inbound rows; #29's RT-29C and #32's capture clause (census) |
 | depends on | PLAN §5, the one record of edges |
 | dependants | PLAN §5 (its inverse) |

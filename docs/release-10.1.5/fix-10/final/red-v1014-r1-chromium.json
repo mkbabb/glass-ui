@@ -1,0 +1,278 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "tests-visual/playwright.config.ts",
+      "--project=chromium-headless-new",
+      "release-10-1-5.spec.ts",
+      "--grep",
+      " r1 ",
+      "--repeat-each=1",
+      "--workers=1"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/playwright.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-headless-new",
+        "name": "chromium-headless-new",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "coarse-touch",
+        "name": "coarse-touch",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "safari-webgl.spec.ts",
+          "aurora-swraster.spec.ts",
+          "release-10-1-1.spec.ts",
+          "release-10-1-2.spec.ts",
+          "release-10-1-3.spec.ts",
+          "release-10-1-4.spec.ts",
+          "release-10-1-5.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/docs/release-10.1.5/fix-10/final/red-v1014-r1-chromium.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5293",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/",
+      "url": "http://localhost:5293",
+      "reuseExistingServer": true,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "release-10-1-5.spec.ts",
+      "file": "release-10-1-5.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "r1 Q2 at 1440: a nested group holding the current seat paints every seat clear of the others, and the run's flag is its layout",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 3051,
+                  "error": {
+                    "message": "Error: seats that paint over each other or whose centre misses them, or a run that scrolls or whose flag is not its layout\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 36\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cell\": \"1440 current=1\",\u001b[39m\n\u001b[31m+     \"misses\": Array [\u001b[39m\n\u001b[31m+       \"S2 hits dock-icon-button glass-specular-track glass-capsule-hover\",\u001b[39m\n\u001b[31m+       \"S3 hits \",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"overlaps\": Array [\u001b[39m\n\u001b[31m+       \"S2/S4 40.0\",\u001b[39m\n\u001b[31m+       \"S2/S5 40.0\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cell\": \"1440 current=1\",\u001b[39m\n\u001b[31m+     \"cw\": 232,\u001b[39m\n\u001b[31m+     \"flag\": false,\u001b[39m\n\u001b[31m+     \"sw\": 232,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cell\": \"1440 current=2\",\u001b[39m\n\u001b[31m+     \"misses\": Array [\u001b[39m\n\u001b[31m+       \"S2 hits dock-layer dock-layer--full dock-run is-active\",\u001b[39m\n\u001b[31m+       \"S3 hits \",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"overlaps\": Array [\u001b[39m\n\u001b[31m+       \"S2/S4 40.0\",\u001b[39m\n\u001b[31m+       \"S2/S5 40.0\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cell\": \"1440 current=2\",\u001b[39m\n\u001b[31m+     \"cw\": 232,\u001b[39m\n\u001b[31m+     \"flag\": false,\u001b[39m\n\u001b[31m+     \"sw\": 232,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+ ]\u001b[39m",
+                    "stack": "Error: seats that paint over each other or whose centre misses them, or a run that scrolls or whose flag is not its layout\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 36\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cell\": \"1440 current=1\",\u001b[39m\n\u001b[31m+     \"misses\": Array [\u001b[39m\n\u001b[31m+       \"S2 hits dock-icon-button glass-specular-track glass-capsule-hover\",\u001b[39m\n\u001b[31m+       \"S3 hits \",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"overlaps\": Array [\u001b[39m\n\u001b[31m+       \"S2/S4 40.0\",\u001b[39m\n\u001b[31m+       \"S2/S5 40.0\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cell\": \"1440 current=1\",\u001b[39m\n\u001b[31m+     \"cw\": 232,\u001b[39m\n\u001b[31m+     \"flag\": false,\u001b[39m\n\u001b[31m+     \"sw\": 232,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cell\": \"1440 current=2\",\u001b[39m\n\u001b[31m+     \"misses\": Array [\u001b[39m\n\u001b[31m+       \"S2 hits dock-layer dock-layer--full dock-run is-active\",\u001b[39m\n\u001b[31m+       \"S3 hits \",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"overlaps\": Array [\u001b[39m\n\u001b[31m+       \"S2/S4 40.0\",\u001b[39m\n\u001b[31m+       \"S2/S5 40.0\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cell\": \"1440 current=2\",\u001b[39m\n\u001b[31m+     \"cw\": 232,\u001b[39m\n\u001b[31m+     \"flag\": false,\u001b[39m\n\u001b[31m+     \"sw\": 232,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+ ]\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:2136:140",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                      "column": 140,
+                      "line": 2136
+                    },
+                    "snippet": "  2134 |             if (read.sw > read.cw) bad.push({ cell, scrolls: [read.sw, read.cw] });\n  2135 |         }\n> 2136 |         expect(bad, \"seats that paint over each other or whose centre misses them, or a run that scrolls or whose flag is not its layout\").toEqual([]);\n       |                                                                                                                                            ^\n  2137 |     });\n  2138 | }\n  2139 |"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                        "column": 140,
+                        "line": 2136
+                      },
+                      "message": "Error: seats that paint over each other or whose centre misses them, or a run that scrolls or whose flag is not its layout\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 36\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cell\": \"1440 current=1\",\u001b[39m\n\u001b[31m+     \"misses\": Array [\u001b[39m\n\u001b[31m+       \"S2 hits dock-icon-button glass-specular-track glass-capsule-hover\",\u001b[39m\n\u001b[31m+       \"S3 hits \",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"overlaps\": Array [\u001b[39m\n\u001b[31m+       \"S2/S4 40.0\",\u001b[39m\n\u001b[31m+       \"S2/S5 40.0\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cell\": \"1440 current=1\",\u001b[39m\n\u001b[31m+     \"cw\": 232,\u001b[39m\n\u001b[31m+     \"flag\": false,\u001b[39m\n\u001b[31m+     \"sw\": 232,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cell\": \"1440 current=2\",\u001b[39m\n\u001b[31m+     \"misses\": Array [\u001b[39m\n\u001b[31m+       \"S2 hits dock-layer dock-layer--full dock-run is-active\",\u001b[39m\n\u001b[31m+       \"S3 hits \",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"overlaps\": Array [\u001b[39m\n\u001b[31m+       \"S2/S4 40.0\",\u001b[39m\n\u001b[31m+       \"S2/S5 40.0\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cell\": \"1440 current=2\",\u001b[39m\n\u001b[31m+     \"cw\": 232,\u001b[39m\n\u001b[31m+     \"flag\": false,\u001b[39m\n\u001b[31m+     \"sw\": 232,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+ ]\u001b[39m\n\n  2134 |             if (read.sw > read.cw) bad.push({ cell, scrolls: [read.sw, read.cw] });\n  2135 |         }\n> 2136 |         expect(bad, \"seats that paint over each other or whose centre misses them, or a run that scrolls or whose flag is not its layout\").toEqual([]);\n       |                                                                                                                                            ^\n  2137 |     });\n  2138 | }\n  2139 |\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:2136:140"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T01:36:35.378Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/test-results/release-10-1-5-r1-Q2-at-14-d07d8-he-run-s-flag-is-its-layout-chromium-headless-new/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                    "column": 140,
+                    "line": 2136
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-6cad33af99ebd604e3bc",
+          "file": "release-10-1-5.spec.ts",
+          "line": 2099,
+          "column": 5
+        }
+      ],
+      "suites": [
+        {
+          "title": "fix 10, coarse phone",
+          "file": "release-10-1-5.spec.ts",
+          "line": 2142,
+          "column": 6,
+          "specs": [
+            {
+              "title": "r1 Q2 at 390: a nested group holding the current seat paints every seat clear of the others, and the run's flag is its layout",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 2491,
+                      "error": {
+                        "message": "Error: seats that paint over each other or whose centre misses them, or a run that scrolls or whose flag is not its layout\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 34\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cell\": \"390 current=1\",\u001b[39m\n\u001b[31m+     \"misses\": Array [\u001b[39m\n\u001b[31m+       \"S2 hits dock-icon-button glass-specular-track glass-capsule-hover\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"overlaps\": Array [\u001b[39m\n\u001b[31m+       \"S2/S3 44.0\",\u001b[39m\n\u001b[31m+       \"S2/S4 26.4\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cell\": \"390 current=1\",\u001b[39m\n\u001b[31m+     \"cw\": 252,\u001b[39m\n\u001b[31m+     \"flag\": false,\u001b[39m\n\u001b[31m+     \"sw\": 252,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cell\": \"390 current=2\",\u001b[39m\n\u001b[31m+     \"misses\": Array [\u001b[39m\n\u001b[31m+       \"S2 hits dock-layer dock-layer--full dock-run is-active\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"overlaps\": Array [\u001b[39m\n\u001b[31m+       \"S2/S3 44.0\",\u001b[39m\n\u001b[31m+       \"S2/S4 19.0\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cell\": \"390 current=2\",\u001b[39m\n\u001b[31m+     \"cw\": 252,\u001b[39m\n\u001b[31m+     \"flag\": false,\u001b[39m\n\u001b[31m+     \"sw\": 252,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+ ]\u001b[39m",
+                        "stack": "Error: seats that paint over each other or whose centre misses them, or a run that scrolls or whose flag is not its layout\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 34\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cell\": \"390 current=1\",\u001b[39m\n\u001b[31m+     \"misses\": Array [\u001b[39m\n\u001b[31m+       \"S2 hits dock-icon-button glass-specular-track glass-capsule-hover\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"overlaps\": Array [\u001b[39m\n\u001b[31m+       \"S2/S3 44.0\",\u001b[39m\n\u001b[31m+       \"S2/S4 26.4\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cell\": \"390 current=1\",\u001b[39m\n\u001b[31m+     \"cw\": 252,\u001b[39m\n\u001b[31m+     \"flag\": false,\u001b[39m\n\u001b[31m+     \"sw\": 252,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cell\": \"390 current=2\",\u001b[39m\n\u001b[31m+     \"misses\": Array [\u001b[39m\n\u001b[31m+       \"S2 hits dock-layer dock-layer--full dock-run is-active\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"overlaps\": Array [\u001b[39m\n\u001b[31m+       \"S2/S3 44.0\",\u001b[39m\n\u001b[31m+       \"S2/S4 19.0\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cell\": \"390 current=2\",\u001b[39m\n\u001b[31m+     \"cw\": 252,\u001b[39m\n\u001b[31m+     \"flag\": false,\u001b[39m\n\u001b[31m+     \"sw\": 252,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+ ]\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:2136:140",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                          "column": 140,
+                          "line": 2136
+                        },
+                        "snippet": "  2134 |             if (read.sw > read.cw) bad.push({ cell, scrolls: [read.sw, read.cw] });\n  2135 |         }\n> 2136 |         expect(bad, \"seats that paint over each other or whose centre misses them, or a run that scrolls or whose flag is not its layout\").toEqual([]);\n       |                                                                                                                                            ^\n  2137 |     });\n  2138 | }\n  2139 |"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                            "column": 140,
+                            "line": 2136
+                          },
+                          "message": "Error: seats that paint over each other or whose centre misses them, or a run that scrolls or whose flag is not its layout\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 34\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cell\": \"390 current=1\",\u001b[39m\n\u001b[31m+     \"misses\": Array [\u001b[39m\n\u001b[31m+       \"S2 hits dock-icon-button glass-specular-track glass-capsule-hover\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"overlaps\": Array [\u001b[39m\n\u001b[31m+       \"S2/S3 44.0\",\u001b[39m\n\u001b[31m+       \"S2/S4 26.4\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cell\": \"390 current=1\",\u001b[39m\n\u001b[31m+     \"cw\": 252,\u001b[39m\n\u001b[31m+     \"flag\": false,\u001b[39m\n\u001b[31m+     \"sw\": 252,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cell\": \"390 current=2\",\u001b[39m\n\u001b[31m+     \"misses\": Array [\u001b[39m\n\u001b[31m+       \"S2 hits dock-layer dock-layer--full dock-run is-active\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"overlaps\": Array [\u001b[39m\n\u001b[31m+       \"S2/S3 44.0\",\u001b[39m\n\u001b[31m+       \"S2/S4 19.0\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cell\": \"390 current=2\",\u001b[39m\n\u001b[31m+     \"cw\": 252,\u001b[39m\n\u001b[31m+     \"flag\": false,\u001b[39m\n\u001b[31m+     \"sw\": 252,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+ ]\u001b[39m\n\n  2134 |             if (read.sw > read.cw) bad.push({ cell, scrolls: [read.sw, read.cw] });\n  2135 |         }\n> 2136 |         expect(bad, \"seats that paint over each other or whose centre misses them, or a run that scrolls or whose flag is not its layout\").toEqual([]);\n       |                                                                                                                                            ^\n  2137 |     });\n  2138 | }\n  2139 |\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:2136:140"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-10T01:36:39.571Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/test-results/release-10-1-5-fix-10-coar-544e7-he-run-s-flag-is-its-layout-chromium-headless-new/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                        "column": 140,
+                        "line": 2136
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "ba3de8f038291be5029b-fb393cc9c6c047cdf897",
+              "file": "release-10-1-5.spec.ts",
+              "line": 2099,
+              "column": 5
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-10T01:36:33.607Z",
+    "duration": 8862.732,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 2,
+    "flaky": 0
+  }
+}

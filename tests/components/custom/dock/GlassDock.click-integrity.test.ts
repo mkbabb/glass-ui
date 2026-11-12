@@ -118,11 +118,11 @@ describe("GlassDock click integrity — a press begun mid-morph", () => {
     });
 });
 
-// atlas U/B7 D-5 — the deferral is scoped to an expand an approach opened. A phone sheet
-// opened by its owner (or by a press inside the dock) is aimed at, not raced: a row
-// pressed and clicked mid-morph is a genuine activation. 10.1.1 swallowed it for the
-// whole 840 ms settle window.
-describe("GlassDock click integrity — the approach scope", () => {
+// atlas U/B7 D-5 — the deferral is scoped to the race it defends: a stationary pointer the
+// hover dwell opened the dock under. A phone sheet opened by its owner (or by a press inside
+// the dock) is aimed at, not raced: a row pressed and clicked mid-morph is a genuine
+// activation. 10.1.1 swallowed it for the whole 840 ms settle window.
+describe("GlassDock click integrity — the re-aim arm", () => {
     afterEach(() => {
         document.body.innerHTML = "";
     });
@@ -151,9 +151,11 @@ describe("GlassDock click integrity — the approach scope", () => {
         return { wrapper, onFull, dockRef };
     }
 
-    function pointer(el: Element, type: string, pointerType: string) {
-        const event = new Event(type, { bubbles: type !== "pointerenter" && type !== "pointerleave", cancelable: true });
+    function pointer(el: Element, type: string, pointerType: string, at = { x: 0, y: 0 }) {
+        const event = new Event(type, { bubbles: true, cancelable: true });
         Object.defineProperty(event, "pointerType", { value: pointerType });
+        Object.defineProperty(event, "clientX", { value: at.x });
+        Object.defineProperty(event, "clientY", { value: at.y });
         el.dispatchEvent(event);
     }
 
@@ -171,16 +173,16 @@ describe("GlassDock click integrity — the approach scope", () => {
         wrapper.unmount();
     });
 
-    it("still defers a mid-morph press after a hover approach opened the dock", async () => {
+    it("still defers a mid-morph press where the pointer stood when the hover opened the dock", async () => {
         const { wrapper, onFull, dockRef } = mountClosed();
         await wrapper.vm.$nextTick();
         const root = wrapper.get<HTMLElement>(".glass-dock").element;
-        pointer(root, "pointerenter", "mouse");
+        pointer(root, "pointermove", "mouse", { x: 40, y: 20 });
         dockRef.value!.expand();
         await wrapper.vm.$nextTick();
         root.setAttribute("data-morphing", "");
         const row = wrapper.get<HTMLElement>("[data-testid='full']").element;
-        pointer(row, "pointerdown", "mouse");
+        pointer(row, "pointerdown", "mouse", { x: 41, y: 21 });
         row.click();
         expect(onFull).not.toHaveBeenCalled();
         wrapper.unmount();

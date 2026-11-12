@@ -1,11 +1,11 @@
-# W-E.12 · the pager worm reads its dot as a measured length · 11.0.0
+# W-E.12 · the pager worm reads its dot as a measured length
 
 | field | value |
 |---|---|
 | seat | band-E wave-spec seat, formation (relaunch 2026-09-25) |
 | model | `claude-opus-5-5`, asserted from own system identity |
 | HEAD | `4d2e3123` (`src`/`demo` identical to `f3ad78d0`), scratch worktree, demo built there |
-| ships in | 11.0.0 |
+| release | `waves/INDEX.md`, the one record |
 | families | F-36 (G-33 GOO-MORPH-SIGNATURE from the W-A.2 roster) |
 | depends on | PLAN §5, the one record of edges |
 | dependants | PLAN §5 (its inverse) |

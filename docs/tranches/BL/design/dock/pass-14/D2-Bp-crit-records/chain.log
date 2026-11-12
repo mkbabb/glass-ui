@@ -1,0 +1,50 @@
+2026-11-09 17:01:07 run: start pid 36299 pgid 36295 · load averages: 7.84 6.42 7.38
+--- relaunch 17:0x after a script fix (attempt 2 killed at once, nothing ran)
+2026-11-09 17:01:21 run: start pid 36726 pgid 36721 · load averages: 7.45 6.40 7.35
+2026-11-09 17:49:16 run: BUILD STOPPED (exit 5) · load averages: 24.53 16.17 12.97
+NOTE 2026-11-09 17:49:36: the 17:49:16 stop was that false match; relaunch with SKIPBUILD=1
+2026-11-09 17:49:36 run: start pid 73577 pgid 73572 · load averages: 27.23 17.33 13.46
+2026-11-09 17:49:36 run: SKIPBUILD: builds of record are the BUILDS-DONE in apply.log · load averages: 27.23 17.33 13.46
+2026-11-09 17:49:36 run: builds done: bp12: 21483 bp13: 21473  · load averages: 27.23 17.33 13.46
+2026-11-09 17:49:36 CHAIN start pid 73604 (steps: pr f7); harness list 42 OK · load averages: 27.23 17.33 13.46
+2026-11-09 17:49:36 start PR · load averages: 27.23 17.33 13.46
+2026-11-09 17:49:42 end PR · load averages: 28.49 17.75 13.63
+2026-11-09 17:49:42 disk free 86 GB before F7 · load averages: 28.49 17.75 13.63
+2026-11-09 17:55:14 start-gate F7 at load 19.17 (bound 20, waited 332 s) · load averages: 19.17 23.82 18.34
+2026-11-09 18:14:46 end F7: 64 files / 503777 B; ceiling 503808; margin 31 B · load averages: 16.17 14.46 15.52
+2026-11-09 18:14:46 same build: SAME · load averages: 16.17 14.46 15.52
+2026-11-09 18:14:46 CHAIN-DONE (steps: pr f7) · load averages: 16.17 14.46 15.52
+2026-11-09 18:14:46 CHAIN start pid 54250 (steps: rr); harness list 42 OK · load averages: 16.17 14.46 15.52
+2026-11-09 18:18:46 start-gate rr rerun-chromium-dark at load 10.99 (bound 11, waited 240 s) · load averages: 10.99 13.25 14.78
+2026-11-09 19:07:11 end rr rerun-chromium-dark exit 0 · load averages: 10.32 13.73 15.17
+2026-11-09 19:07:11 CHAIN-DONE (steps: rr) · load averages: 10.32 13.73 15.17
+2026-11-09 19:07:11 CHAIN start pid 4054 (steps: batc); harness list 42 OK · load averages: 10.32 13.73 15.17
+2026-11-09 19:07:11 disk free 75 GB before battery chromium light · load averages: 10.32 13.73 15.17
+2026-11-09 19:07:11 start-gate bp13 chromium light at load 10.32 (bound 20, waited 0 s) · load averages: 10.32 13.73 15.17
+2026-11-09 19:07:11 start bp13 chromium light · load averages: 10.32 13.73 15.17
+2026-11-09 19:52:38 end bp13 chromium light exit 0; cells max load 57.32 · load averages: 28.23 30.62 31.79
+2026-11-09 19:56:09 start-gate bp13 chromium light re-read at load 17.90 (bound 20, waited 210 s) · load averages: 17.90 27.84 30.69
+2026-11-09 19:56:09 start bp13 chromium light RE-READ (first read's cells to 57.32) · load averages: 17.90 27.84 30.69
+2026-11-09 20:29:28 end bp13 chromium light RE-READ exit 0; cells max load 37.46 · load averages: 32.75 31.21 30.40
+2026-11-09 20:29:28 disk free 63 GB before battery chromium dark · load averages: 32.75 31.21 30.40
+2026-11-09 20:47:30 start-gate bp13 chromium dark at load 18.51 (bound 20, waited 1082 s) · load averages: 18.51 25.32 28.35
+2026-11-09 20:47:30 start bp13 chromium dark · load averages: 18.51 25.32 28.35
+2026-11-09 21:01:02 end bp13 chromium dark exit 0; cells max load 48.92 · load averages: 25.86 23.05 25.87
+2026-11-09 21:08:06 start-gate bp13 chromium dark re-read at load 18.78 (bound 20, waited 422 s) · load averages: 18.78 24.89 26.08
+2026-11-09 21:08:06 start bp13 chromium dark RE-READ (first read's cells to 48.92) · load averages: 18.78 24.89 26.08
+2026-11-09 21:18:23 end bp13 chromium dark RE-READ exit 0; cells max load 32.59 · load averages: 8.47 17.36 22.51
+2026-11-09 21:18:23 CHAIN-DONE (steps: batc) · load averages: 8.47 17.36 22.51
+2026-11-09 21:18:23 CHAIN start pid 79743 (steps: wk); harness list 42 OK · load averages: 8.47 17.36 22.51
+2026-11-09 21:18:23 disk free 48 GB before wk webkit-light · load averages: 8.47 17.36 22.51
+2026-11-09 21:18:23 start-gate wk webkit-light at load 8.47 (bound 20, waited 0 s) · load averages: 8.47 17.36 22.51
+2026-11-09 21:18:23 queue wk webkit-light · load averages: 8.47 17.36 22.51
+2026-11-09 22:27:32 end wk webkit-light exit 75; cells max load 47.20 · load averages: 33.33 53.12 43.98
+2026-11-09 22:30:33 start-gate bp13 webkit light re-read at load 17.81 (bound 20, waited 180 s) · load averages: 17.81 38.16 39.50
+2026-11-09 22:30:33 start bp13 webkit light RE-READ (first read's cells to 47.20) · load averages: 17.81 38.16 39.50
+2026-11-09 22:30:33 end bp13 webkit light RE-READ exit 1; cells max load  · load averages: 17.81 38.16 39.50
+2026-11-09 22:30:33 disk free 51 GB before wk webkit-dark · load averages: 17.81 38.16 39.50
+2026-11-09 22:30:33 start-gate wk webkit-dark at load 17.81 (bound 20, waited 0 s) · load averages: 17.81 38.16 39.50
+2026-11-09 22:30:33 queue wk webkit-dark · load averages: 17.81 38.16 39.50
+2026-11-09 22:30:33 end wk webkit-dark exit 75; cells max load  · load averages: 17.81 38.16 39.50
+2026-11-09 22:30:33 GUARD-REFUSED in slot-webkit-dark.log: [guarded] REFUSED: kernel zone data.kalloc.1024 at 8.22M (panics near 20.8M; heavy and browser runs stop at 8M): reboot the Mac · load averages: 17.81 38.16 39.50
+2026-11-09 22:30:33 run: STOPPED at 'wk' (exit 5) · load averages: 17.81 38.16 39.50

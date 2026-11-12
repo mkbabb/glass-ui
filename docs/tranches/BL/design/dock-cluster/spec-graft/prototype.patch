@@ -1,0 +1,765 @@
+diff --git a/demo/fixtures/DockClusterFixture.vue b/demo/fixtures/DockClusterFixture.vue
+new file mode 100644
+index 000000000..8032bc478
+--- /dev/null
++++ b/demo/fixtures/DockClusterFixture.vue
+@@ -0,0 +1,104 @@
++<script setup lang="ts">
++/* Fixture for DockCluster (O-195 proposal B). Query: n=2|3, fused=0|1, variant=cluster|ancestor. */
++import { computed, nextTick, onMounted, ref, useTemplateRef } from "vue";
++import { Bookmark, Moon, Search, Sun } from "@lucide/vue";
++import { DockCluster, DockControl, GlassDock } from "../../src/components/dock";
++
++const q = new URLSearchParams(location.search);
++const n = Number(q.get("n") ?? 3);
++const variant = q.get("variant") ?? "cluster";
++const dark = q.get("dark") === "1";
++const narrow = window.innerWidth < 500;
++const tabs = narrow ? ["Home", "Read"] : ["Home", "Read", "Listen", "About"];
++const active = ref(1);
++const fused = ref(q.get("fused") === "1");
++const joins = computed(() => Array.from({ length: n - 1 }, () => fused.value));
++const cluster = useTemplateRef<InstanceType<typeof DockCluster>>("cluster");
++
++declare global {
++    interface Window {
++        __cluster?: { set(f: boolean): void; seat(j: number[]): void };
++        __ready?: boolean;
++    }
++}
++onMounted(async () => {
++    window.__cluster = {
++        set: (f) => (fused.value = f),
++        seat: (j) => cluster.value?.seat(j),
++    };
++    await document.fonts.ready;
++    await nextTick();
++    requestAnimationFrame(() => requestAnimationFrame(() => (window.__ready = true)));
++});
++</script>
++
++<template>
++    <main class="stage" :data-variant="variant" :data-exp="q.get('exp') ?? ''">
++        <div class="field" aria-hidden="true">
++            <p v-for="i in 14" :key="i">glass reads what lies under it — {{ i }}</p>
++        </div>
++
++        <DockCluster v-if="variant === 'cluster'" ref="cluster" :joins="joins" class="probe" data-testid="cluster">
++            <GlassDock fit-content :collapse="false" aria-label="Pages">
++                <DockControl v-for="(t, i) in tabs" :key="t" shape="tab" :active="i === active" @click="active = i">{{ t }}</DockControl>
++            </GlassDock>
++            <GlassDock fit-content :collapse="false" aria-label="Controls">
++                <DockControl aria-label="Search"><Search /></DockControl>
++                <DockControl aria-label="Bookmark"><Bookmark /></DockControl>
++                <DockControl v-if="n === 2" :aria-label="dark ? 'Light theme' : 'Dark theme'"><Moon v-if="!dark" /><Sun v-else /></DockControl>
++            </GlassDock>
++            <GlassDock v-if="n === 3" fit-content :collapse="false" aria-label="Theme">
++                <DockControl :aria-label="dark ? 'Light theme' : 'Dark theme'"><Moon v-if="!dark" /><Sun v-else /></DockControl>
++            </GlassDock>
++        </DockCluster>
++
++        <!-- The naive shared silhouette: ONE ancestor owns the clip, plates blur beneath it. -->
++        <div v-else-if="variant === 'ancestor'" class="probe ancestor-clip" data-testid="cluster">
++            <div class="ancestor-plate"></div>
++        </div>
++        <!-- Reference: the same backdrop under a lone plate with no ancestor clip. -->
++        <div v-else class="probe" data-testid="cluster">
++            <div class="ancestor-plate"></div>
++        </div>
++    </main>
++</template>
++
++<style>
++html, body { margin: 0; }
++.stage {
++    position: relative;
++    min-height: 100vh;
++    display: grid;
++    place-items: center;
++    overflow: hidden;
++    background:
++        radial-gradient(circle at 30% 40%, oklch(0.75 0.17 25 / 0.9), transparent 40%),
++        radial-gradient(circle at 70% 60%, oklch(0.7 0.15 250 / 0.9), transparent 45%),
++        repeating-linear-gradient(90deg, oklch(0.25 0 0) 0 6px, oklch(0.97 0 0) 6px 12px);
++}
++.dark .stage {
++    background:
++        radial-gradient(circle at 30% 40%, oklch(0.55 0.17 25 / 0.9), transparent 40%),
++        radial-gradient(circle at 70% 60%, oklch(0.5 0.15 250 / 0.9), transparent 45%),
++        repeating-linear-gradient(90deg, oklch(0.12 0 0) 0 6px, oklch(0.6 0 0) 6px 12px);
++}
++.field {
++    position: absolute;
++    inset: 0;
++    display: grid;
++    align-content: center;
++    font: 600 22px/1.3 system-ui, sans-serif;
++    color: oklch(0.2 0 0 / 0.8);
++    text-align: center;
++    pointer-events: none;
++}
++.probe { position: relative; z-index: 1; }
++.ancestor-clip, .probe:has(> .ancestor-plate) { width: 320px; height: 56px; }
++.ancestor-clip { clip-path: path("M28 0 L292 0 C307.5 0 320 12.5 320 28 C320 43.5 307.5 56 292 56 L28 56 C12.5 56 0 43.5 0 28 C0 12.5 12.5 0 28 0 Z"); }
++.ancestor-plate { position: absolute; inset: 0; backdrop-filter: blur(16px) saturate(1.2); background: oklch(1 0 0 / 0.25); border-radius: 28px; }
++[data-exp~="noafter"] .dock-cluster-plate::after { display: none; }
++[data-exp~="noclip"] .dock-cluster-plate { clip-path: none !important; }
++[data-exp~="noz"] .dock-cluster { z-index: auto; }
++[data-exp~="noz"] .probe { z-index: auto; }
++[data-exp~="nobg"] .dock-cluster-plate { background: none; }
++</style>
+diff --git a/demo/fixtures/dock-cluster.html b/demo/fixtures/dock-cluster.html
+new file mode 100644
+index 000000000..4ef2bbb4b
+--- /dev/null
++++ b/demo/fixtures/dock-cluster.html
+@@ -0,0 +1,12 @@
++<!doctype html>
++<html lang="en">
++    <head>
++        <meta charset="UTF-8" />
++        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
++        <title>DockCluster fixture</title>
++    </head>
++    <body>
++        <div id="app"></div>
++        <script type="module" src="./dock-cluster.ts"></script>
++    </body>
++</html>
+diff --git a/demo/fixtures/dock-cluster.ts b/demo/fixtures/dock-cluster.ts
+new file mode 100644
+index 000000000..4e5850166
+--- /dev/null
++++ b/demo/fixtures/dock-cluster.ts
+@@ -0,0 +1,7 @@
++import "../demo.css";
++import { createApp } from "vue";
++import Fixture from "./DockClusterFixture.vue";
++
++const q = new URLSearchParams(location.search);
++if (q.get("dark") === "1") document.documentElement.classList.add("dark");
++createApp(Fixture).mount("#app");
+diff --git a/src/components/dock/DockCluster.vue b/src/components/dock/DockCluster.vue
+new file mode 100644
+index 000000000..4104fc702
+--- /dev/null
++++ b/src/components/dock/DockCluster.vue
+@@ -0,0 +1,314 @@
++<script setup lang="ts">
++/**
++ * DockCluster: N GlassDock plates in one row that FUSE into one capsule and FISSION
++ * back, by shape alone.
++ *
++ * The cluster owns the outline. It paints one backdrop layer per child dock (each with
++ * its own `backdrop-filter`, all spanning the cluster's box so every layer blurs the
++ * SAME field), clips each to that dock's SHARE of the one silhouette (`clip-path:
++ * path()`), and draws ONE rim and ONE shadow from the whole silhouette, so a fused run
++ * shows no doubled edge or doubled shadow at its seam. The child docks keep their
++ * controls, roles, order, focus and collapse machinery; only their own plate paint
++ * stands down (styles/cluster.css).
++ *
++ * `joins[i]` fuses child i with child i + 1. A change of `joins` plays the join
++ * scalars on the dock spring (`DOCK_SPRING`, `springPreset("dock")`) and writes a fresh
++ * px path per frame: no `path()` interpolation is asked of any engine. A child whose
++ * painted box moves (a collapse morph, a control set change) is tracked every frame
++ * while it morphs and on every resize otherwise. Reduced motion fades the material
++ * out, seats the new outline, and fades it in.
++ */
++import { useMediaQuery } from "@vueuse/core";
++import { computed, onMounted, onUnmounted, ref, useTemplateRef, watch } from "vue";
++import { DOCK_SPRING } from "./constants";
++import { useDockSpring } from "./composables/useDockSpring";
++import {
++    GLASS_BACKDROP_SHARED_ATTR,
++    useGlassBackdropLuminance,
++} from "../../composables/glass/useGlassBackdropLuminance";
++import { clusterShape, shiftPath, type PlateBox } from "./composables/dockClusterShape";
++
++const props = withDefaults(
++    defineProps<{
++        /** Per gap: `true` fuses the plates on either side. Shorter arrays leave the rest split. */
++        joins?: readonly boolean[];
++    }>(),
++    { joins: () => [] },
++);
++
++const SHADOW_PAD = 40;
++
++const root = useTemplateRef<HTMLElement>("root");
++const shadowEl = useTemplateRef<HTMLElement>("shadowEl");
++const shadowFill = useTemplateRef<HTMLElement>("shadowFill");
++const lensEls = ref<HTMLElement[]>([]);
++const toneEls = ref<HTMLElement[]>([]);
++// ONE luminance observer for the cluster: every member's own observer stands down under
++// the shared marker and its plate inherits this one luma (one tint across a fused run).
++useGlassBackdropLuminance(root, { shared: true });
++const count = ref(0);
++
++const reduced = useMediaQuery("(prefers-reduced-motion: reduce)");
++const spring = useDockSpring({
++    response: DOCK_SPRING.response,
++    dampingFraction: DOCK_SPRING.dampingFraction,
++});
++
++const target = computed(() =>
++    Array.from({ length: Math.max(0, count.value - 1) }, (_, i) => (props.joins[i] ? 1 : 0)),
++);
++// The painted join vector, and the episode it is travelling.
++let now: number[] = [];
++let from: number[] = [];
++let to: number[] = [];
++let s = 1;
++let raf = 0;
++let morphingChildren = 0;
++
++function docks(): HTMLElement[] {
++    return root.value
++        ? [...root.value.querySelectorAll<HTMLElement>(":scope > .glass-dock")]
++        : [];
++}
++
++let shift = 0;
++// The grid is whole CSS px, not device px: Chromium paints a member's clipped plate at
++// its stacking context's offset rounded to a whole CSS px (measured: a member at x.5
++// paints its share one device pixel late, leaving a field-coloured column at the cut).
++const GRID = 1;
++function grid(list: HTMLElement[], rects: DOMRect[], dpr: number): boolean {
++    const el = root.value;
++    if (!el || !rects.length) return false;
++    let changed = false;
++    list.forEach((d, i) => {
++        const w = rects[i]!.width;
++        const W = Math.ceil(w * GRID - 0.01) / GRID;
++        if (W - w > 1e-3) {
++            d.style.minInlineSize = `${W}px`;
++            changed = true;
++        }
++    });
++    const left0 = rects[0]!.left - shift;
++    const target = -(((left0 * GRID) % 1) / GRID);
++    if (Math.abs(target - shift) > 1e-3) {
++        shift = target;
++        el.style.left = `${shift}px`;
++        changed = true;
++    }
++    return changed;
++}
++
++/** Read the painted boxes and write every clip. */
++function paint(): void {
++    const el = root.value;
++    if (!el) return;
++    const list = docks();
++    if (list.length !== count.value) return;
++    const dpr = window.devicePixelRatio || 1;
++    let rects = list.map((d) => d.getBoundingClientRect());
++    // THE DEVICE-PIXEL GRID (proposal A §2.3, measured there: a 21-unit line at a
++    // fractional seam, 1.9 after). Each member's width rounds up to whole device pixels
++    // and the cluster takes the sub-pixel remainder of its first member, so every member
++    // (and its plate) starts on a device pixel. Written only when a value changes.
++    if (grid(list, rects, dpr)) {
++        rects = list.map((d) => d.getBoundingClientRect());
++    }
++    const base = el.getBoundingClientRect();
++    const boxes: PlateBox[] = list.map((d, i) => {
++        const r = rects[i]!;
++        // The member's own corner (px), never a stadium: the dock's `--radius-dock`.
++        const rad = Number.parseFloat(getComputedStyle(d).borderTopLeftRadius) || 0;
++        return { x0: r.left - base.left, x1: r.right - base.left, y0: r.top - base.top, y1: r.bottom - base.top, r: rad };
++    });
++    // Snap a cut to a device pixel in page space, then back to layer space.
++    const snap = (x: number) => Math.round((x + base.left) * dpr) / dpr - base.left;
++    const joins = now.length === boxes.length - 1 ? now : target.value;
++    const { shares, silhouette } = clusterShape(boxes, joins, snap);
++    const w = Number.parseFloat(getComputedStyle(el).getPropertyValue("--dock-cluster-rim")) || 1.5;
++    const inner = clusterShape(boxes, joins, snap, w).silhouette;
++    shares.forEach((d, i) => {
++        const lens = lensEls.value[i];
++        if (lens) lens.style.clipPath = `path("${d}")`;
++        const tone = toneEls.value[i];
++        if (tone) tone.style.clipPath = `path("${d}")`;
++        // The member's own plate covers its share's band only: from the cut on its left
++        // to the cut on its right (whole CSS px), the cluster's full height. Its ink and
++        // grain then raster over about 1/N of the cluster, not all of it.
++        const plate = list[i]!.querySelector<HTMLElement>(":scope > .dock-plate");
++        const r = rects[i]!;
++        if (plate) {
++            const X0 = i > 0 ? Math.floor(snap((boxes[i - 1]!.x1 + boxes[i]!.x0) / 2)) : Math.floor(boxes[i]!.x0);
++            const X1 = i < boxes.length - 1 ? Math.ceil(snap((boxes[i]!.x1 + boxes[i + 1]!.x0) / 2)) : Math.ceil(boxes[i]!.x1);
++            const inset = `${base.top - r.top}px ${r.right - (base.left + X1)}px ${r.bottom - base.bottom}px ${base.left + X0 - r.left}px`;
++            if (plate.style.inset !== inset) plate.style.inset = inset;
++            plate.style.clipPath = `path("${shiftPath(d, -X0, 0)}")`;
++            plate.style.setProperty("--dock-ring-clip", `path(evenodd, "${shiftPath(silhouette, -X0, 0)} ${shiftPath(inner, -X0, 0)}")`);
++        }
++    });
++    const pad = SHADOW_PAD;
++    const shifted = shiftPath(silhouette, pad, pad);
++    if (shadowFill.value) shadowFill.value.style.clipPath = `path("${shifted}")`;
++    if (shadowEl.value) {
++        const W = base.width + 2 * pad;
++        const H = base.height + 2 * pad;
++        shadowEl.value.style.clipPath = `path(evenodd, "M0 0 L${W} 0 L${W} ${H} L0 ${H} Z ${shifted}")`;
++    }
++}
++
++/** One frame loop while anything moves: the join spring, or a child's own morph. */
++function tick(): void {
++    raf = 0;
++    const t0 = performance.now();
++    paint();
++    // Prototype instrumentation (proposal-B harness): per-frame paint() cost.
++    const w = window as unknown as { __clusterPaintStats?: { calls: number; total: number; max: number } };
++    const st = (w.__clusterPaintStats ??= { calls: 0, total: 0, max: 0 });
++    const dt = performance.now() - t0;
++    st.calls++;
++    st.total += dt;
++    st.max = Math.max(st.max, dt);
++    if (spring.live || morphingChildren > 0) raf = requestAnimationFrame(tick);
++}
++function wake(): void {
++    if (!raf) raf = requestAnimationFrame(tick);
++}
++
++function play(next: number[]): void {
++    if (now.length !== next.length) {
++        now = [...next];
++        paint();
++        return;
++    }
++    if (reduced.value) {
++        crossfade(next);
++        return;
++    }
++    // Carry the live velocity onto the new episode along the join that moves most.
++    let k = 0;
++    for (let i = 1; i < next.length; i++) {
++        if (Math.abs(next[i]! - now[i]!) > Math.abs(next[k]! - now[k]!)) k = i;
++    }
++    const newSpan = next[k]! - now[k]!;
++    const oldSpan = to[k] !== undefined && from[k] !== undefined ? to[k]! - from[k]! : 0;
++    const scale = spring.live && newSpan !== 0 ? oldSpan / newSpan : 1;
++    from = [...now];
++    to = [...next];
++    spring.playTo(0, 1, {
++        inheritVelocityScale: scale,
++        onFrame: (value) => {
++            s = value;
++            now = from.map((f0, i) => f0 + (to[i]! - f0) * s);
++        },
++        onSettle: () => {
++            now = [...to];
++            paint();
++        },
++    });
++    wake();
++}
++
++/** Reduced motion: the material dips and returns on WAAPI (outside the PRM transition
++ *  carve); the outline is seated at the floor. Controls never fade. */
++let fading: Animation[] = [];
++function crossfade(next: number[]): void {
++    const el = root.value;
++    if (!el) return;
++    const mats = [
++        ...lensEls.value,
++        ...toneEls.value,
++        ...(shadowEl.value ? [shadowEl.value] : []),
++        ...docks().map((d) => d.querySelector<HTMLElement>(":scope > .dock-plate")).filter((x): x is HTMLElement => !!x),
++    ];
++    // `--dock-cluster-swap` is a registered <time>, so it computes resolved.
++    const raw = getComputedStyle(el).getPropertyValue("--dock-cluster-swap").trim();
++    const ms = raw.endsWith("ms") ? Number.parseFloat(raw) : Number.parseFloat(raw) * 1000;
++    const duration = Number.isFinite(ms) && ms > 0 ? ms : 0;
++    fading.forEach((a) => a.cancel());
++    const out = mats.map((m) => m.animate([{ opacity: 1 }, { opacity: 0 }], { duration, easing: "ease-in", fill: "forwards" }));
++    fading = out;
++    void Promise.all(out.map((a) => a.finished)).then(() => {
++        now = [...next];
++        paint();
++        const back = mats.map((m) => m.animate([{ opacity: 0 }, { opacity: 1 }], { duration, easing: "ease-out" }));
++        out.forEach((a) => a.cancel());
++        fading = back;
++    }, () => {});
++}
++
++watch(target, (next) => play(next));
++
++let ro: ResizeObserver | null = null;
++let mo: MutationObserver | null = null;
++
++function observe(): void {
++    const list = docks();
++    count.value = list.length;
++    ro?.disconnect();
++    if (root.value) ro?.observe(root.value);
++    for (const d of list) ro?.observe(d);
++    morphingChildren = list.filter((d) => d.hasAttribute("data-morphing")).length;
++    if (morphingChildren) wake();
++}
++
++onMounted(() => {
++    ro = new ResizeObserver(() => paint());
++    mo = new MutationObserver(() => observe());
++    if (root.value) {
++        mo.observe(root.value, {
++            childList: true,
++            subtree: true,
++            attributes: true,
++            attributeFilter: ["data-morphing"],
++        });
++    }
++    observe();
++    now = [...target.value];
++    paint();
++});
++watch(count, () => {
++    now = [...target.value];
++    requestAnimationFrame(paint);
++});
++
++onUnmounted(() => {
++    ro?.disconnect();
++    mo?.disconnect();
++    if (raf) cancelAnimationFrame(raf);
++    spring.dispose();
++});
++
++defineExpose({
++    /** Paint a frozen frame at join vector `joins` (capture and test harness). */
++    seat(joins: number[]): void {
++        spring.dispose();
++        now = [...joins];
++        paint();
++    },
++    paint,
++});
++</script>
++
++<template>
++    <div ref="root" class="dock-cluster" :[GLASS_BACKDROP_SHARED_ATTR]="''">
++        <div ref="shadowEl" class="dock-cluster-shadow" aria-hidden="true">
++            <div class="dock-cluster-shadow-blur">
++                <div ref="shadowFill" class="dock-cluster-shadow-fill"></div>
++            </div>
++        </div>
++        <div
++            v-for="i in count"
++            :key="i"
++            :ref="(el) => { if (el) lensEls[i - 1] = el as HTMLElement }"
++            class="dock-cluster-lens"
++            aria-hidden="true"
++        ></div>
++        <div
++            v-for="i in count"
++            :key="`t${i}`"
++            :ref="(el) => { if (el) toneEls[i - 1] = el as HTMLElement }"
++            class="dock-cluster-tone"
++            aria-hidden="true"
++        ></div>
++        <slot />
++    </div>
++</template>
+diff --git a/src/components/dock/composables/dockClusterShape.ts b/src/components/dock/composables/dockClusterShape.ts
+new file mode 100644
+index 000000000..2df767c51
+--- /dev/null
++++ b/src/components/dock/composables/dockClusterShape.ts
+@@ -0,0 +1,160 @@
++/**
++ * The dock cluster's ONE silhouette, in px, as `path()` strings.
++ *
++ * A cluster is an ordered row of plates. Between each neighbouring pair sits a join
++ * scalar `j` in [0, 1]: 0 is two capsules a gap apart, 1 is one capsule. The outline is
++ * the union of per-plate SHARES; a share is the plate's own capsule plus its half of the
++ * bridge, cut at the gap's midpoint `cx`. The shares partition the silhouette exactly,
++ * so a fused run is one outline and each plate's backdrop paints only its share of it.
++ *
++ * The join runs in two phases, the honest goo spec (DOCK-LADDER §3):
++ *   - j in [0, JC]: each facing cap bulges toward the partner, its tip travelling from
++ *     the plate edge to `cx` (the lobe bulge), meeting at a point at JC;
++ *   - j in (JC, 1]: the waist opens from that point to the full height (`v`), the
++ *     tangent at `cx` turning from vertical to horizontal so the two shares meet
++ *     smoothly, until the top and bottom edges run straight across.
++ *
++ * Everything is px. No percentage radius exists anywhere in the output (the r1 law:
++ * a `%` radius resolves per axis and turns a pill into an ellipse). The spring runs in
++ * JS and a fresh path is written each frame, so no engine is asked to INTERPOLATE a
++ * `path()`/`shape()`; only static `path()` support is required (Chromium 88, Safari 13.1).
++ */
++
++export interface PlateBox {
++    /** The plate's own corner radius in px (clamped to half its height). */
++    r?: number;
++    /** Left/right/top/bottom in the cluster layer's own px coordinates. */
++    x0: number;
++    x1: number;
++    y0: number;
++    y1: number;
++}
++
++/** The waist opens past this join value; below it the facing caps bulge to contact. */
++export const JC = 0.4;
++/** The cubic quarter-circle constant. */
++const K = 0.5523;
++
++const f = (n: number) => (Math.round(n * 100) / 100).toString();
++
++interface End {
++    /** The tip x (the cap's extreme, or `cx` once in contact). */
++    tip: number;
++    /** The top and bottom y the end reaches at its tip (equal before the waist opens). */
++    top: number;
++    bot: number;
++    /** Waist progress, 0 (cap / point contact) to 1 (straight edges). */
++    v: number;
++    /** Lobe progress, 0 (own cap) to 1 (tip at cx). */
++    p: number;
++}
++
++function endFor(
++    own: PlateBox,
++    partner: PlateBox | null,
++    j: number,
++    side: 1 | -1,
++    cx: number,
++): End {
++    const cy = (own.y0 + own.y1) / 2;
++    const hf = Math.max(0, (own.y1 - own.y0) / 2 - rad(own));
++    const edge = side === 1 ? own.x1 : own.x0;
++    if (!partner || j <= 0) return { tip: edge, top: cy - hf, bot: cy + hf, v: 0, p: 0 };
++    const jj = Math.min(1, j);
++    const p = Math.min(1, jj / JC);
++    const v = jj <= JC ? 0 : Math.sqrt((jj - JC) / (1 - JC));
++    const pcy = (partner.y0 + partner.y1) / 2;
++    // The neck centre and its full half-height: the mean of the two plates.
++    const ncy = cy + ((cy + pcy) / 2 - cy) * p;
++    const nTop = (own.y0 + partner.y0) / 2;
++    const nBot = (own.y1 + partner.y1) / 2;
++    return {
++        tip: edge + (cx - edge) * p,
++        top: ncy - hf + (nTop - (ncy - hf)) * v,
++        bot: ncy + hf + (nBot - (ncy + hf)) * v,
++        v,
++        p,
++    };
++}
++
++/**
++ * One share's closed outline. `left`/`right` describe its two ends; a plate with no
++ * neighbour on a side, or a join at 0, ends in its own cap there.
++ */
++const rad = (b: PlateBox) => Math.min(b.r ?? Infinity, (b.y1 - b.y0) / 2);
++function sharePath(b: PlateBox, left: End, right: End): string {
++    const r = rad(b);
++    const cy0 = b.y0 + r;
++    const cy1 = b.y1 - r;
++    const xl = b.x0 + r;
++    const xr = b.x1 - r;
++    const m = 0.5 * r;
++    // Right end, top quarter: (xr, y0) → (tip, top).
++    const rc1x = xr + K * (right.tip - xr);
++    const rc2x = right.tip - m * right.v;
++    const rc2yT = (cy0 - K * r) * (1 - right.v) + right.top * right.v;
++    const rc2yB = (cy1 + K * r) * (1 - right.v) + right.bot * right.v;
++    // Left end mirrors it about the plate's own left.
++    const lc1x = xl - K * (xl - left.tip);
++    const lc2x = left.tip + m * left.v;
++    const lc2yT = (cy0 - K * r) * (1 - left.v) + left.top * left.v;
++    const lc2yB = (cy1 + K * r) * (1 - left.v) + left.bot * left.v;
++    return [
++        `M${f(xl)} ${f(b.y0)}`,
++        `L${f(xr)} ${f(b.y0)}`,
++        `C${f(rc1x)} ${f(b.y0)} ${f(rc2x)} ${f(rc2yT)} ${f(right.tip)} ${f(right.top)}`,
++        right.bot > right.top ? `L${f(right.tip)} ${f(right.bot)}` : "",
++        `C${f(rc2x)} ${f(rc2yB)} ${f(rc1x)} ${f(b.y1)} ${f(xr)} ${f(b.y1)}`,
++        `L${f(xl)} ${f(b.y1)}`,
++        `C${f(lc1x)} ${f(b.y1)} ${f(lc2x)} ${f(lc2yB)} ${f(left.tip)} ${f(left.bot)}`,
++        left.bot > left.top ? `L${f(left.tip)} ${f(left.top)}` : "",
++        `C${f(lc2x)} ${f(lc2yT)} ${f(lc1x)} ${f(b.y0)} ${f(xl)} ${f(b.y0)}`,
++        "Z",
++    ]
++        .filter(Boolean)
++        .join(" ");
++}
++
++export interface ClusterShape {
++    /** One closed outline per plate: its share of the silhouette. */
++    shares: string[];
++    /** The whole silhouette (every share in one path, so abutting shares rasterize as one). */
++    silhouette: string;
++}
++
++/**
++ * The silhouette for `boxes` (left to right) under `joins` (length `boxes.length - 1`).
++ * `snap` rounds each join's cut to a device pixel (the layer's own offset folded in),
++ * so the two shares meeting there both end on a pixel boundary and no anti-aliased
++ * column is painted twice or half.
++ */
++export function clusterShape(
++    boxes: readonly PlateBox[],
++    joins: readonly number[],
++    snap: (x: number) => number = (x) => x,
++    inset = 0,
++): ClusterShape {
++    const bx = boxes.map((b) => ({
++        r: b.r === undefined ? undefined : Math.max(0, b.r - inset),
++        x0: b.x0 + inset,
++        x1: b.x1 - inset,
++        y0: b.y0 + inset,
++        y1: b.y1 - inset,
++    }));
++    const cuts = joins.map((_, i) => snap((boxes[i]!.x1 + boxes[i + 1]!.x0) / 2));
++    const shares = bx.map((b, i) => {
++        const jl = i > 0 ? joins[i - 1]! : 0;
++        const jr = i < bx.length - 1 ? joins[i]! : 0;
++        const left = endFor(b, i > 0 ? bx[i - 1]! : null, jl, -1, i > 0 ? cuts[i - 1]! : b.x0);
++        const right = endFor(b, i < bx.length - 1 ? bx[i + 1]! : null, jr, 1, i < bx.length - 1 ? cuts[i]! : b.x1);
++        return sharePath(b, left, right);
++    });
++    return { shares, silhouette: shares.join(" ") };
++}
++
++/** Shift every coordinate of a path by (dx, dy). Our paths are absolute M/L/C/Z only. */
++export function shiftPath(d: string, dx: number, dy: number): string {
++    return d.replace(/(-?\d+(?:\.\d+)?) (-?\d+(?:\.\d+)?)/g, (_, x: string, y: string) =>
++        `${f(Number(x) + dx)} ${f(Number(y) + dy)}`,
++    );
++}
+diff --git a/src/components/dock/index.ts b/src/components/dock/index.ts
+index 29a95047e..5bb95ed5e 100644
+--- a/src/components/dock/index.ts
++++ b/src/components/dock/index.ts
+@@ -41,6 +41,7 @@ export { default as DockBackgroundToggle } from "./DockBackgroundToggle.vue";
+ // [2026-08-12 · BK #47 W1 SURFACE] ~~full-row section break in a grid dock~~ — the
+ // `layout="grid"` tile panel is struck with its prop.
+ export { default as DockSeparator } from "./DockSeparator.vue";
++export { default as DockCluster } from "./DockCluster.vue";
+ // Re-export composable types so consumers can
+ // type wrappers around the published surface. `UseDockStateOptions`
+ // and `DockState` need to be reachable through the `@mkbabb/glass-ui/dock`
+diff --git a/src/components/dock/styles/cluster.css b/src/components/dock/styles/cluster.css
+new file mode 100644
+index 000000000..f07e5206a
+--- /dev/null
++++ b/src/components/dock/styles/cluster.css
+@@ -0,0 +1,107 @@
++/* DockCluster (W-I.8 spec graft, prototype): N GlassDocks fuse into one plate and
++ * fission back by shape alone.
++ *
++ * Paint order inside the cluster's own stack, bottom to top:
++ *   .dock-cluster-shadow   one drop shadow, outside the silhouette only (B)
++ *   .dock-cluster-lens × N one backdrop-filter per member dock, spanning the cluster box,
++ *                          clipped to that dock's share (B's geometry). No ink: every lens
++ *                          paints before any ink, so a lens never samples a neighbour's veil
++ *   .glass-dock × N        each member's OWN .dock-plate paints its ink (luma darken, ink
++ *                          tier, grain) over its share, plus the rim ring sliced to its share;
++ *                          its backdrop-filter, border and box-shadow stand down here only
++ */
++@property --dock-cluster-swap {
++    syntax: "<time>";
++    inherits: true;
++    initial-value: 0s;
++}
++
++@layer components {
++    .dock-cluster {
++        --dock-cluster-swap: var(--spring-dock-exit-duration);
++        position: relative;
++        z-index: 0;
++        display: flex;
++        align-items: center;
++        gap: var(--dock-cluster-gap, 0.625rem);
++        --dock-cluster-rim: 1.5px;
++        /* PROTOTYPE ONLY: the wave widens shell.css's token block to
++           `:is(.glass-dock, .dock-cluster)` instead of restating it here. */
++        --glass-blur-resting: blur(calc(var(--glass-blur-resting-radius) * var(--glass-level)))
++            saturate(1.2);
++        --dock-surface-blur: var(--glass-blur-resting);
++    }
++    .dark .dock-cluster {
++        --glass-blur-resting: blur(calc(var(--glass-blur-resting-radius) * var(--glass-level)))
++            saturate(1.3) brightness(1.14);
++    }
++
++    /* The dock's backdrop filter, split in two. The KERNEL (blur) lenses paint first;
++       a later lens samples an earlier lens's output near a cut, and a second blur of a
++       blurred field moves no mean. The TONE (saturate, brightness) is pointwise, so its
++       lenses paint after every kernel lens and each reads only the pixels under its own
++       share: a tone is applied exactly once per pixel. */
++    .dock-cluster-lens,
++    .dock-cluster-tone {
++        position: absolute;
++        inset: 0;
++        pointer-events: none;
++        clip-path: inset(50%);
++    }
++    .dock-cluster-lens {
++        backdrop-filter: blur(calc(var(--glass-blur-resting-radius) * var(--glass-level)));
++    }
++    .dock-cluster-tone {
++        backdrop-filter: saturate(1.2);
++    }
++    .dark .dock-cluster-tone {
++        backdrop-filter: saturate(1.3) brightness(1.14);
++    }
++
++    .dock-cluster-shadow {
++        position: absolute;
++        inset: -40px;
++        pointer-events: none;
++        clip-path: inset(50%);
++    }
++    .dock-cluster-shadow-blur {
++        position: absolute;
++        inset: 0;
++        filter: blur(10px);
++    }
++    .dock-cluster-shadow-fill {
++        position: absolute;
++        inset: 0;
++        background: color-mix(in srgb, var(--shadow-color) 14%, transparent);
++        clip-path: inset(50%);
++    }
++
++    .dock-cluster > .glass-dock {
++        position: relative;
++        z-index: 1;
++        box-shadow: none;
++    }
++    /* The member's own plate: spans the cluster box (inset written by the cluster on
++       layout change), clipped to its share (written per frame). Ink, tier, luma, grain:
++       GlassDock's own. */
++    .dock-cluster > .glass-dock > .dock-plate {
++        backdrop-filter: none;
++        border: 0;
++        /* The share path draws every corner. The run's scroll-driven cut cap
++           (run.css) animates this radius, so it stands down here with it. */
++        border-radius: 0;
++        animation: none;
++    }
++    .dock-cluster > .glass-dock > .dock-plate::before {
++        content: "";
++        position: absolute;
++        inset: 0;
++        pointer-events: none;
++        background: linear-gradient(
++            to bottom,
++            color-mix(in srgb, white calc(22% * var(--glass-level)), var(--glass-border-dock)),
++            var(--glass-border-dock) 45%
++        );
++        clip-path: var(--dock-ring-clip, inset(50%));
++    }
++}
+diff --git a/src/components/dock/styles/index.css b/src/components/dock/styles/index.css
+index 10d2c8e09..d70318c53 100644
+--- a/src/components/dock/styles/index.css
++++ b/src/components/dock/styles/index.css
+@@ -84,6 +84,8 @@
+    SURFACE] ~~`[data-search]`~~); the pill→field morph is the dock's OWN `--dock-morph-t`
+    glide (box-inviolate); CONSUMES the tint seam + the menu-row recipe, re-authors neither. */
+ @import "./search.css";
++/* DockCluster: fused/fissioned plate rows (shape-only, per-plate backdrop). */
++@import "./cluster.css";
+ 
+ /* The SINGLE morph scalar. The dock morph orchestrator writes it once per frame
+    to the `.glass-dock` root; EVERY morph axis (box size, padding, radius, scale,

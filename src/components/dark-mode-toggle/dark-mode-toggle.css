@@ -21,9 +21,11 @@
             box-shadow var(--duration-fast) var(--ease-standard);
     }
 
-    .dark-mode-toggle-button:hover {
-        background: var(--surface-tint-10);
-        opacity: 1;
+    @media (hover: hover) {
+        .dark-mode-toggle-button:hover {
+            background: var(--surface-tint-10);
+            opacity: 1;
+        }
     }
 
     .dark-mode-toggle-button:focus-visible {

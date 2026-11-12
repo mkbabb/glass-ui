@@ -1,0 +1,9 @@
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1794252999 slope=43.3/s inuse=29715 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+21:36 branch-ch rc=0 load=8.11 13.23 16.52  98 passed (8.5m) 
+21:36 g6-4-ch rc=0 load=7.01 12.74 16.29  23 passed (15.9s) 
+21:38 g6-3-ch rc=0 load=9.79 11.55 15.26  60 passed (2.2m) 
+21:43 r10-ch rc=0 load=10.24 11.63 14.25  6 passed (4.8m) 
+21:49 r10b-ch rc=0 load=26.90 28.90 21.85  12 passed (6.6m) 
+21:52 r10c-ch rc=0 load=34.02 32.41 24.67  7 passed (2.8m) 
+21:53 d1-ch rc=1 load=42.85 35.25 26.21  3 failed  5 passed (52.7s) 
+21:53 chain ch done: branch g6-4 g6-3 r10 r10b r10c d1

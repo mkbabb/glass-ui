@@ -68,3 +68,49 @@
 2026-11-09 09:16:25 harness end: 42 OK · load averages: 9.03 7.67 9.76
 2026-11-09 09:16:25 CHAIN-DONE · load averages: 9.03 7.67 9.76
 2026-11-09 09:16:25 run: RUN-DONE · load averages: 9.03 7.67 9.76
+2026-11-09 11:41:45 resume: start pid 26590 (steps: prove reread cost digest hend) · load averages: 37.36 54.55 41.95
+2026-11-09 11:41:45 resume: harness start: 42 OK · load averages: 37.36 54.55 41.95
+2026-11-09 11:42:19 resume: disk free 187 GB before build fv5 · load averages: 34.96 52.29 41.57
+2026-11-09 11:42:44 resume: built fv5: build exit 0 · load averages: 34.56 50.81 41.34
+2026-11-09 11:42:44 resume: disk free 185 GB before build bp12 · load averages: 34.56 50.81 41.34
+2026-11-09 11:42:52 resume: built bp12: build exit 0 · load averages: 34.30 50.22 41.24
+2026-11-09 11:42:53 resume: disk free 185 GB before build bp13 · load averages: 34.30 50.22 41.24
+2026-11-09 11:44:26 resume: built bp13: build exit 0 · load averages: 21.10 41.45 38.80
+2026-11-09 11:44:26 resume: same build: DIFFERS (scene chunk bp13 21473 (want 21473); bp12 21483 (want 21483); boot graph: 64 files / 525445 B; ceiling 503808; margin -21637 B (want 503777 B)) · load averages: 21.10 41.45 38.80
+2026-11-09 11:44:26 resume: STOP: the build differs; the pass becomes a build pass · load averages: 21.10 41.45 38.80
+2026-11-09 11:45:04 resume: start pid 39541 (steps: bootproof reread cost digest hend) · load averages: 21.08 39.14 38.06
+2026-11-09 11:45:04 resume: disk free 183 GB before F7 · load averages: 21.08 39.14 38.06
+2026-11-09 11:46:04 resume: start-gate F7 at load 18.90 (bound 20, waited 60 s) · load averages: 18.90 35.37 36.73
+2026-11-09 12:04:04 resume: F7 exit 0; boot graph: 64 files / 503777 B; ceiling 503808; margin 31 B · load averages: 14.43 14.41 19.76
+2026-11-09 12:04:04 resume: same build: SAME (scene chunk bp13 21473 (want 21473); bp12 21483 (want 21483); boot graph: 64 files / 503777 B; ceiling 503808; margin 31 B (want 503777 B); F7 13/13 (want 13/13)) · load averages: 14.43 14.41 19.76
+2026-11-09 12:04:04 resume: disk free 176 GB before C·d re-read · load averages: 14.43 14.41 19.76
+2026-11-09 12:04:04 resume: start-gate bp13 chromium dark RE-READ at load 14.43 (bound 20, waited 0 s) · load averages: 14.43 14.41 19.76
+2026-11-09 12:04:04 resume: start bp13 chromium dark RE-READ (first read's cells to 31.83) · load averages: 14.43 14.41 19.76
+2026-11-09 12:40:43 resume: end bp13 chromium dark RE-READ exit 0; cells max load 19.73 · load averages: 14.11 12.73 11.98
+2026-11-09 12:40:43 resume: start cost · load averages: 14.11 12.73 11.98
+2026-11-09 13:03:04 resume: start-gate cost bp13 r1 at load 9.80 (bound 11, waited 1341 s) · load averages: 9.80 16.34 16.41
+2026-11-09 13:04:03 resume: end cost bp13 r1: exit 0 · load averages: 9.89 15.12 15.95
+2026-11-09 13:04:03 resume: start-gate cost bp12 r1 at load 9.89 (bound 11, waited 0 s) · load averages: 9.89 15.12 15.95
+2026-11-09 13:05:03 resume: end cost bp12 r1: exit 0 · load averages: 12.34 14.78 15.76
+2026-11-09 13:06:03 resume: start-gate cost fv5 r1 at load 10.50 (bound 11, waited 60 s) · load averages: 10.50 13.82 15.33
+2026-11-09 13:07:07 resume: end cost fv5 r1: exit 0 · load averages: 10.90 13.34 15.04
+2026-11-09 13:07:07 resume: start-gate cost bp13 r2 at load 10.90 (bound 11, waited 0 s) · load averages: 10.90 13.34 15.04
+2026-11-09 13:08:06 resume: end cost bp13 r2: exit 0 · load averages: 12.66 13.35 14.92
+2026-11-09 13:10:06 resume: start-gate cost bp12 r2 at load 10.60 (bound 11, waited 120 s) · load averages: 10.60 12.66 14.46
+2026-11-09 13:11:51 resume: end cost bp12 r2: exit 0 · load averages: 10.29 11.92 13.95
+2026-11-09 13:11:51 resume: start-gate cost fv5 r2 at load 10.29 (bound 11, waited 0 s) · load averages: 10.29 11.92 13.95
+2026-11-09 13:12:55 resume: end cost fv5 r2: exit 0 · load averages: 8.25 10.97 13.46
+2026-11-09 13:12:55 resume: start-gate cost bp13 r3 at load 8.25 (bound 11, waited 0 s) · load averages: 8.25 10.97 13.46
+2026-11-09 13:16:36 resume: end cost bp13 r3: exit 0 · load averages: 11.54 11.63 13.19
+2026-11-09 13:44:57 resume: start-gate cost bp12 r3 at load 10.25 (bound 11, waited 1701 s) · load averages: 10.25 14.74 15.85
+2026-11-09 14:53:34 resume: end cost bp12 r3: exit 0 · load averages: 10.14 12.15 14.69
+2026-11-09 14:53:34 resume: start-gate cost fv5 r3 at load 10.14 (bound 11, waited 0 s) · load averages: 10.14 12.15 14.69
+2026-11-09 15:02:06 resume: end cost fv5 r3: exit 0 · load averages: 23.34 23.60 18.76
+2026-11-09 15:02:06 resume: end cost · load averages: 23.34 23.60 18.76
+2026-11-09 15:02:06 resume: start digest (re-read alone, and the four columns with C·d's re-read) · load averages: 23.34 23.60 18.76
+2026-11-09 15:02:23 resume: end digest · load averages: 21.01 23.03 18.67
+2026-11-09 15:02:23 resume: harness end: 42 OK · load averages: 21.01 23.03 18.67
+2026-11-09 15:02:23 resume: COMPLETE-DONE · load averages: 21.01 23.03 18.67
+2026-11-09 15:11:27 resume-fv5: end cost fv5 r4: in-slot start load 10.76 15:10:24; exit 0 · load averages: 17.00 15.41 16.31
+2026-11-09 15:34:46 resume-fv5: end cost fv5 r5: in-slot start load 9.85 15:33:44; exit 0 · load averages: 6.42 11.88 14.29
+2026-11-09 15:34:46 resume-fv5: FV5-DONE · load averages: 6.42 11.88 14.29

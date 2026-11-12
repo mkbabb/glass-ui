@@ -1,0 +1,277 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "tests-visual/webkit-2287.config.ts",
+      "--project=webkit",
+      "release-10-1-5.spec.ts",
+      "--grep",
+      " n1 ",
+      "--workers=1"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/webkit-2287.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-headless-new",
+        "name": "chromium-headless-new",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "coarse-touch",
+        "name": "coarse-touch",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "safari-webgl.spec.ts",
+          "aurora-swraster.spec.ts",
+          "release-10-1-1.spec.ts",
+          "release-10-1-2.spec.ts",
+          "release-10-1-3.spec.ts",
+          "release-10-1-4.spec.ts",
+          "release-10-1-5.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/docs/release-10.1.5/fix-8/red-3592aeb0d-webkit.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5294",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/",
+      "url": "http://localhost:5294",
+      "reuseExistingServer": true,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "release-10-1-5.spec.ts",
+      "file": "release-10-1-5.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "n1 a fitting vertical dock's seats do not step at the expand's settle or the collapse's start, across the fit edge",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 16207,
+                  "error": {
+                    "message": "Error: seat steps over 0.5 px at a morph's edge\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 62\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"a\": Object {\u001b[39m\n\u001b[31m+       \"morphing\": true,\u001b[39m\n\u001b[31m+       \"s1\": 23.984375,\u001b[39m\n\u001b[31m+       \"s6\": 303.984375,\u001b[39m\n\u001b[31m+     },\u001b[39m\n\u001b[31m+     \"b\": Object {\u001b[39m\n\u001b[31m+       \"morphing\": false,\u001b[39m\n\u001b[31m+       \"s1\": 18,\u001b[39m\n\u001b[31m+       \"s6\": 298,\u001b[39m\n\u001b[31m+     },\u001b[39m\n\u001b[31m+     \"edge\": \"expand settle\",\u001b[39m\n\u001b[31m+     \"pad\": \"1px\",\u001b[39m\n\u001b[31m+     \"stageH\": 316,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"edge\": \"collapse start\",\u001b[39m\n\u001b[31m+     \"p\": Object {\u001b[39m\n\u001b[31m+       \"morphing\": false,\u001b[39m\n\u001b[31m+       \"s1\": 18,\u001b[39m\n\u001b[31m+       \"s6\": 298,\u001b[39m\n\u001b[31m+     },\u001b[39m\n\u001b[31m+     \"pad\": \"1px\",\u001b[39m\n\u001b[31m+     \"q\": Object {\u001b[39m\n\u001b[31m+       \"morphing\": true,\u001b[39m\n\u001b[31m+       \"s1\": 24,\u001b[39m\n\u001b[31m+       \"s6\": 304,\u001b[39m\n\u001b[31m+     },\u001b[39m\n\u001b[31m+     \"stageH\": 316,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"a\": Object {\u001b[39m\n\u001b[31m+       \"morphing\": true,\u001b[39m\n\u001b[31m+       \"s1\": 23.984375,\u001b[39m\n\u001b[31m+       \"s6\": 303.984375,\u001b[39m\n\u001b[31m+     },\u001b[39m\n\u001b[31m+     \"b\": Object {\u001b[39m\n\u001b[31m+       \"morphing\": false,\u001b[39m\n\u001b[31m+       \"s1\": 22,\u001b[39m\n\u001b[31m+       \"s6\": 302,\u001b[39m\n\u001b[31m+     },\u001b[39m\n\u001b[31m+     \"edge\": \"expand settle\",\u001b[39m\n\u001b[31m+     \"pad\": \"5px\",\u001b[39m\n\u001b[31m+     \"stageH\": 324,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"edge\": \"collapse start\",\u001b[39m\n\u001b[31m+     \"p\": Object {\u001b[39m\n\u001b[31m+       \"morphing\": false,\u001b[39m\n\u001b[31m+       \"s1\": 22,\u001b[39m\n\u001b[31m+       \"s6\": 302,\u001b[39m\n\u001b[31m+     },\u001b[39m\n\u001b[31m+     \"pad\": \"5px\",\u001b[39m\n\u001b[31m+     \"q\": Object {\u001b[39m\n\u001b[31m+       \"morphing\": true,\u001b[39m\n\u001b[31m+       \"s1\": 24,\u001b[39m\n\u001b[31m+       \"s6\": 304,\u001b[39m\n\u001b[31m+     },\u001b[39m\n\u001b[31m+     \"stageH\": 324,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+ ]\u001b[39m",
+                    "stack": "Error: seat steps over 0.5 px at a morph's edge\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 62\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"a\": Object {\u001b[39m\n\u001b[31m+       \"morphing\": true,\u001b[39m\n\u001b[31m+       \"s1\": 23.984375,\u001b[39m\n\u001b[31m+       \"s6\": 303.984375,\u001b[39m\n\u001b[31m+     },\u001b[39m\n\u001b[31m+     \"b\": Object {\u001b[39m\n\u001b[31m+       \"morphing\": false,\u001b[39m\n\u001b[31m+       \"s1\": 18,\u001b[39m\n\u001b[31m+       \"s6\": 298,\u001b[39m\n\u001b[31m+     },\u001b[39m\n\u001b[31m+     \"edge\": \"expand settle\",\u001b[39m\n\u001b[31m+     \"pad\": \"1px\",\u001b[39m\n\u001b[31m+     \"stageH\": 316,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"edge\": \"collapse start\",\u001b[39m\n\u001b[31m+     \"p\": Object {\u001b[39m\n\u001b[31m+       \"morphing\": false,\u001b[39m\n\u001b[31m+       \"s1\": 18,\u001b[39m\n\u001b[31m+       \"s6\": 298,\u001b[39m\n\u001b[31m+     },\u001b[39m\n\u001b[31m+     \"pad\": \"1px\",\u001b[39m\n\u001b[31m+     \"q\": Object {\u001b[39m\n\u001b[31m+       \"morphing\": true,\u001b[39m\n\u001b[31m+       \"s1\": 24,\u001b[39m\n\u001b[31m+       \"s6\": 304,\u001b[39m\n\u001b[31m+     },\u001b[39m\n\u001b[31m+     \"stageH\": 316,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"a\": Object {\u001b[39m\n\u001b[31m+       \"morphing\": true,\u001b[39m\n\u001b[31m+       \"s1\": 23.984375,\u001b[39m\n\u001b[31m+       \"s6\": 303.984375,\u001b[39m\n\u001b[31m+     },\u001b[39m\n\u001b[31m+     \"b\": Object {\u001b[39m\n\u001b[31m+       \"morphing\": false,\u001b[39m\n\u001b[31m+       \"s1\": 22,\u001b[39m\n\u001b[31m+       \"s6\": 302,\u001b[39m\n\u001b[31m+     },\u001b[39m\n\u001b[31m+     \"edge\": \"expand settle\",\u001b[39m\n\u001b[31m+     \"pad\": \"5px\",\u001b[39m\n\u001b[31m+     \"stageH\": 324,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"edge\": \"collapse start\",\u001b[39m\n\u001b[31m+     \"p\": Object {\u001b[39m\n\u001b[31m+       \"morphing\": false,\u001b[39m\n\u001b[31m+       \"s1\": 22,\u001b[39m\n\u001b[31m+       \"s6\": 302,\u001b[39m\n\u001b[31m+     },\u001b[39m\n\u001b[31m+     \"pad\": \"5px\",\u001b[39m\n\u001b[31m+     \"q\": Object {\u001b[39m\n\u001b[31m+       \"morphing\": true,\u001b[39m\n\u001b[31m+       \"s1\": 24,\u001b[39m\n\u001b[31m+       \"s6\": 304,\u001b[39m\n\u001b[31m+     },\u001b[39m\n\u001b[31m+     \"stageH\": 324,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+ ]\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:1793:65",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                      "column": 65,
+                      "line": 1793
+                    },
+                    "snippet": "  1791 |         }\n  1792 |         expect(yielded, \"the sweep reaches docks whose reserve yields\").toBeGreaterThan(0);\n> 1793 |         expect(bad, \"seat steps over 0.5 px at a morph's edge\").toEqual([]);\n       |                                                                 ^\n  1794 |     });\n  1795 | }\n  1796 |"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                        "column": 65,
+                        "line": 1793
+                      },
+                      "message": "Error: seat steps over 0.5 px at a morph's edge\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 62\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"a\": Object {\u001b[39m\n\u001b[31m+       \"morphing\": true,\u001b[39m\n\u001b[31m+       \"s1\": 23.984375,\u001b[39m\n\u001b[31m+       \"s6\": 303.984375,\u001b[39m\n\u001b[31m+     },\u001b[39m\n\u001b[31m+     \"b\": Object {\u001b[39m\n\u001b[31m+       \"morphing\": false,\u001b[39m\n\u001b[31m+       \"s1\": 18,\u001b[39m\n\u001b[31m+       \"s6\": 298,\u001b[39m\n\u001b[31m+     },\u001b[39m\n\u001b[31m+     \"edge\": \"expand settle\",\u001b[39m\n\u001b[31m+     \"pad\": \"1px\",\u001b[39m\n\u001b[31m+     \"stageH\": 316,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"edge\": \"collapse start\",\u001b[39m\n\u001b[31m+     \"p\": Object {\u001b[39m\n\u001b[31m+       \"morphing\": false,\u001b[39m\n\u001b[31m+       \"s1\": 18,\u001b[39m\n\u001b[31m+       \"s6\": 298,\u001b[39m\n\u001b[31m+     },\u001b[39m\n\u001b[31m+     \"pad\": \"1px\",\u001b[39m\n\u001b[31m+     \"q\": Object {\u001b[39m\n\u001b[31m+       \"morphing\": true,\u001b[39m\n\u001b[31m+       \"s1\": 24,\u001b[39m\n\u001b[31m+       \"s6\": 304,\u001b[39m\n\u001b[31m+     },\u001b[39m\n\u001b[31m+     \"stageH\": 316,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"a\": Object {\u001b[39m\n\u001b[31m+       \"morphing\": true,\u001b[39m\n\u001b[31m+       \"s1\": 23.984375,\u001b[39m\n\u001b[31m+       \"s6\": 303.984375,\u001b[39m\n\u001b[31m+     },\u001b[39m\n\u001b[31m+     \"b\": Object {\u001b[39m\n\u001b[31m+       \"morphing\": false,\u001b[39m\n\u001b[31m+       \"s1\": 22,\u001b[39m\n\u001b[31m+       \"s6\": 302,\u001b[39m\n\u001b[31m+     },\u001b[39m\n\u001b[31m+     \"edge\": \"expand settle\",\u001b[39m\n\u001b[31m+     \"pad\": \"5px\",\u001b[39m\n\u001b[31m+     \"stageH\": 324,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"edge\": \"collapse start\",\u001b[39m\n\u001b[31m+     \"p\": Object {\u001b[39m\n\u001b[31m+       \"morphing\": false,\u001b[39m\n\u001b[31m+       \"s1\": 22,\u001b[39m\n\u001b[31m+       \"s6\": 302,\u001b[39m\n\u001b[31m+     },\u001b[39m\n\u001b[31m+     \"pad\": \"5px\",\u001b[39m\n\u001b[31m+     \"q\": Object {\u001b[39m\n\u001b[31m+       \"morphing\": true,\u001b[39m\n\u001b[31m+       \"s1\": 24,\u001b[39m\n\u001b[31m+       \"s6\": 304,\u001b[39m\n\u001b[31m+     },\u001b[39m\n\u001b[31m+     \"stageH\": 324,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+ ]\u001b[39m\n\n  1791 |         }\n  1792 |         expect(yielded, \"the sweep reaches docks whose reserve yields\").toBeGreaterThan(0);\n> 1793 |         expect(bad, \"seat steps over 0.5 px at a morph's edge\").toEqual([]);\n       |                                                                 ^\n  1794 |     });\n  1795 | }\n  1796 |\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:1793:65"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-09T10:36:35.025Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/test-results/release-10-1-5-n1-a-fittin-3ab0a-s-start-across-the-fit-edge-webkit/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                    "column": 65,
+                    "line": 1793
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-607c3fc1d352bdc36cc6",
+          "file": "release-10-1-5.spec.ts",
+          "line": 1759,
+          "column": 5
+        }
+      ],
+      "suites": [
+        {
+          "title": "critique 8, coarse phone",
+          "file": "release-10-1-5.spec.ts",
+          "line": 1797,
+          "column": 6,
+          "specs": [
+            {
+              "title": "n1 a fitting vertical dock's seats do not step at the expand's settle or the collapse's start, across the fit edge",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 240000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 16149,
+                      "error": {
+                        "message": "Error: seat steps over 0.5 px at a morph's edge\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 62\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"a\": Object {\u001b[39m\n\u001b[31m+       \"morphing\": true,\u001b[39m\n\u001b[31m+       \"s1\": 11.984375,\u001b[39m\n\u001b[31m+       \"s6\": 315.984375,\u001b[39m\n\u001b[31m+     },\u001b[39m\n\u001b[31m+     \"b\": Object {\u001b[39m\n\u001b[31m+       \"morphing\": false,\u001b[39m\n\u001b[31m+       \"s1\": 18,\u001b[39m\n\u001b[31m+       \"s6\": 322,\u001b[39m\n\u001b[31m+     },\u001b[39m\n\u001b[31m+     \"edge\": \"expand settle\",\u001b[39m\n\u001b[31m+     \"pad\": \"1px\",\u001b[39m\n\u001b[31m+     \"stageH\": 340,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"edge\": \"collapse start\",\u001b[39m\n\u001b[31m+     \"p\": Object {\u001b[39m\n\u001b[31m+       \"morphing\": false,\u001b[39m\n\u001b[31m+       \"s1\": 18,\u001b[39m\n\u001b[31m+       \"s6\": 322,\u001b[39m\n\u001b[31m+     },\u001b[39m\n\u001b[31m+     \"pad\": \"1px\",\u001b[39m\n\u001b[31m+     \"q\": Object {\u001b[39m\n\u001b[31m+       \"morphing\": true,\u001b[39m\n\u001b[31m+       \"s1\": 12,\u001b[39m\n\u001b[31m+       \"s6\": 316,\u001b[39m\n\u001b[31m+     },\u001b[39m\n\u001b[31m+     \"stageH\": 340,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"a\": Object {\u001b[39m\n\u001b[31m+       \"morphing\": true,\u001b[39m\n\u001b[31m+       \"s1\": 23.984375,\u001b[39m\n\u001b[31m+       \"s6\": 327.984375,\u001b[39m\n\u001b[31m+     },\u001b[39m\n\u001b[31m+     \"b\": Object {\u001b[39m\n\u001b[31m+       \"morphing\": false,\u001b[39m\n\u001b[31m+       \"s1\": 22,\u001b[39m\n\u001b[31m+       \"s6\": 326,\u001b[39m\n\u001b[31m+     },\u001b[39m\n\u001b[31m+     \"edge\": \"expand settle\",\u001b[39m\n\u001b[31m+     \"pad\": \"5px\",\u001b[39m\n\u001b[31m+     \"stageH\": 348,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"edge\": \"collapse start\",\u001b[39m\n\u001b[31m+     \"p\": Object {\u001b[39m\n\u001b[31m+       \"morphing\": false,\u001b[39m\n\u001b[31m+       \"s1\": 22,\u001b[39m\n\u001b[31m+       \"s6\": 326,\u001b[39m\n\u001b[31m+     },\u001b[39m\n\u001b[31m+     \"pad\": \"5px\",\u001b[39m\n\u001b[31m+     \"q\": Object {\u001b[39m\n\u001b[31m+       \"morphing\": true,\u001b[39m\n\u001b[31m+       \"s1\": 24,\u001b[39m\n\u001b[31m+       \"s6\": 328,\u001b[39m\n\u001b[31m+     },\u001b[39m\n\u001b[31m+     \"stageH\": 348,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+ ]\u001b[39m",
+                        "stack": "Error: seat steps over 0.5 px at a morph's edge\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 62\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"a\": Object {\u001b[39m\n\u001b[31m+       \"morphing\": true,\u001b[39m\n\u001b[31m+       \"s1\": 11.984375,\u001b[39m\n\u001b[31m+       \"s6\": 315.984375,\u001b[39m\n\u001b[31m+     },\u001b[39m\n\u001b[31m+     \"b\": Object {\u001b[39m\n\u001b[31m+       \"morphing\": false,\u001b[39m\n\u001b[31m+       \"s1\": 18,\u001b[39m\n\u001b[31m+       \"s6\": 322,\u001b[39m\n\u001b[31m+     },\u001b[39m\n\u001b[31m+     \"edge\": \"expand settle\",\u001b[39m\n\u001b[31m+     \"pad\": \"1px\",\u001b[39m\n\u001b[31m+     \"stageH\": 340,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"edge\": \"collapse start\",\u001b[39m\n\u001b[31m+     \"p\": Object {\u001b[39m\n\u001b[31m+       \"morphing\": false,\u001b[39m\n\u001b[31m+       \"s1\": 18,\u001b[39m\n\u001b[31m+       \"s6\": 322,\u001b[39m\n\u001b[31m+     },\u001b[39m\n\u001b[31m+     \"pad\": \"1px\",\u001b[39m\n\u001b[31m+     \"q\": Object {\u001b[39m\n\u001b[31m+       \"morphing\": true,\u001b[39m\n\u001b[31m+       \"s1\": 12,\u001b[39m\n\u001b[31m+       \"s6\": 316,\u001b[39m\n\u001b[31m+     },\u001b[39m\n\u001b[31m+     \"stageH\": 340,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"a\": Object {\u001b[39m\n\u001b[31m+       \"morphing\": true,\u001b[39m\n\u001b[31m+       \"s1\": 23.984375,\u001b[39m\n\u001b[31m+       \"s6\": 327.984375,\u001b[39m\n\u001b[31m+     },\u001b[39m\n\u001b[31m+     \"b\": Object {\u001b[39m\n\u001b[31m+       \"morphing\": false,\u001b[39m\n\u001b[31m+       \"s1\": 22,\u001b[39m\n\u001b[31m+       \"s6\": 326,\u001b[39m\n\u001b[31m+     },\u001b[39m\n\u001b[31m+     \"edge\": \"expand settle\",\u001b[39m\n\u001b[31m+     \"pad\": \"5px\",\u001b[39m\n\u001b[31m+     \"stageH\": 348,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"edge\": \"collapse start\",\u001b[39m\n\u001b[31m+     \"p\": Object {\u001b[39m\n\u001b[31m+       \"morphing\": false,\u001b[39m\n\u001b[31m+       \"s1\": 22,\u001b[39m\n\u001b[31m+       \"s6\": 326,\u001b[39m\n\u001b[31m+     },\u001b[39m\n\u001b[31m+     \"pad\": \"5px\",\u001b[39m\n\u001b[31m+     \"q\": Object {\u001b[39m\n\u001b[31m+       \"morphing\": true,\u001b[39m\n\u001b[31m+       \"s1\": 24,\u001b[39m\n\u001b[31m+       \"s6\": 328,\u001b[39m\n\u001b[31m+     },\u001b[39m\n\u001b[31m+     \"stageH\": 348,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+ ]\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:1793:65",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                          "column": 65,
+                          "line": 1793
+                        },
+                        "snippet": "  1791 |         }\n  1792 |         expect(yielded, \"the sweep reaches docks whose reserve yields\").toBeGreaterThan(0);\n> 1793 |         expect(bad, \"seat steps over 0.5 px at a morph's edge\").toEqual([]);\n       |                                                                 ^\n  1794 |     });\n  1795 | }\n  1796 |"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                            "column": 65,
+                            "line": 1793
+                          },
+                          "message": "Error: seat steps over 0.5 px at a morph's edge\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 62\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"a\": Object {\u001b[39m\n\u001b[31m+       \"morphing\": true,\u001b[39m\n\u001b[31m+       \"s1\": 11.984375,\u001b[39m\n\u001b[31m+       \"s6\": 315.984375,\u001b[39m\n\u001b[31m+     },\u001b[39m\n\u001b[31m+     \"b\": Object {\u001b[39m\n\u001b[31m+       \"morphing\": false,\u001b[39m\n\u001b[31m+       \"s1\": 18,\u001b[39m\n\u001b[31m+       \"s6\": 322,\u001b[39m\n\u001b[31m+     },\u001b[39m\n\u001b[31m+     \"edge\": \"expand settle\",\u001b[39m\n\u001b[31m+     \"pad\": \"1px\",\u001b[39m\n\u001b[31m+     \"stageH\": 340,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"edge\": \"collapse start\",\u001b[39m\n\u001b[31m+     \"p\": Object {\u001b[39m\n\u001b[31m+       \"morphing\": false,\u001b[39m\n\u001b[31m+       \"s1\": 18,\u001b[39m\n\u001b[31m+       \"s6\": 322,\u001b[39m\n\u001b[31m+     },\u001b[39m\n\u001b[31m+     \"pad\": \"1px\",\u001b[39m\n\u001b[31m+     \"q\": Object {\u001b[39m\n\u001b[31m+       \"morphing\": true,\u001b[39m\n\u001b[31m+       \"s1\": 12,\u001b[39m\n\u001b[31m+       \"s6\": 316,\u001b[39m\n\u001b[31m+     },\u001b[39m\n\u001b[31m+     \"stageH\": 340,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"a\": Object {\u001b[39m\n\u001b[31m+       \"morphing\": true,\u001b[39m\n\u001b[31m+       \"s1\": 23.984375,\u001b[39m\n\u001b[31m+       \"s6\": 327.984375,\u001b[39m\n\u001b[31m+     },\u001b[39m\n\u001b[31m+     \"b\": Object {\u001b[39m\n\u001b[31m+       \"morphing\": false,\u001b[39m\n\u001b[31m+       \"s1\": 22,\u001b[39m\n\u001b[31m+       \"s6\": 326,\u001b[39m\n\u001b[31m+     },\u001b[39m\n\u001b[31m+     \"edge\": \"expand settle\",\u001b[39m\n\u001b[31m+     \"pad\": \"5px\",\u001b[39m\n\u001b[31m+     \"stageH\": 348,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"edge\": \"collapse start\",\u001b[39m\n\u001b[31m+     \"p\": Object {\u001b[39m\n\u001b[31m+       \"morphing\": false,\u001b[39m\n\u001b[31m+       \"s1\": 22,\u001b[39m\n\u001b[31m+       \"s6\": 326,\u001b[39m\n\u001b[31m+     },\u001b[39m\n\u001b[31m+     \"pad\": \"5px\",\u001b[39m\n\u001b[31m+     \"q\": Object {\u001b[39m\n\u001b[31m+       \"morphing\": true,\u001b[39m\n\u001b[31m+       \"s1\": 24,\u001b[39m\n\u001b[31m+       \"s6\": 328,\u001b[39m\n\u001b[31m+     },\u001b[39m\n\u001b[31m+     \"stageH\": 348,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+ ]\u001b[39m\n\n  1791 |         }\n  1792 |         expect(yielded, \"the sweep reaches docks whose reserve yields\").toBeGreaterThan(0);\n> 1793 |         expect(bad, \"seat steps over 0.5 px at a morph's edge\").toEqual([]);\n       |                                                                 ^\n  1794 |     });\n  1795 | }\n  1796 |\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:1793:65"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-09T10:36:18.407Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/test-results/release-10-1-5-critique-8--28df9-s-start-across-the-fit-edge-webkit/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                        "column": 65,
+                        "line": 1793
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "ba3de8f038291be5029b-230202a5188bed82cf74",
+              "file": "release-10-1-5.spec.ts",
+              "line": 1759,
+              "column": 5
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-09T10:36:17.375Z",
+    "duration": 34057.350000000006,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 2,
+    "flaky": 0
+  }
+}

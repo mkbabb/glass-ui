@@ -1,11 +1,11 @@
-# W-G.4 · W-AURORA-GREENFIELD: six deposition bodies in WGSL, a gamut-honest living field, the register at ten, and one studio contract for every viz · 11.0.0
+# W-G.4 · W-AURORA-GREENFIELD: six deposition bodies in WGSL, a gamut-honest living field, the register at ten, and one studio contract for every viz
 
 | field | value |
 |---|---|
 | seat | band-G wave-spec seat, formation (relaunch 2026-09-25) |
 | model | `claude-opus-5-5`, asserted from own system identity |
 | HEAD | `b37a37c3` (`src`, `demo`, `tests` identical to `f3ad78d0`), scratch worktree, demo on :5987, Chromium on Metal with WebGPU (adapter `apple/metal-3`); probe library in W-G.1 appendix A |
-| ships in | 11.0.0 |
+| release | `waves/INDEX.md`, the one record |
 | families | F-48, the aurora split (`audit/REGISTRY.md:1171-1183`): L01b-49, R2-06-04 (the VizStudio contract). F-47's medium clause that W-G.1 hands over (§0 there): L05a-01 and L10-02's paint half, C-13a's paint half (R9), C-13b (R10). Inbound: UIA-V-46, UIA-V-154 (`INBOUND-MAP.md:407,411`); O-49 (strip-scale aurora motion) and A2-KE-L1-26 (`followPointer`), both routed here by W-B.2 (`W-B.2.md:89,91`) |
 | a disease row | #49 GF-AURORA rode BJ and BK at W0 (`census-register-a.md:56`); deciding it is this wave (CH:23) |
 | depends on | PLAN §5, the one record of edges |

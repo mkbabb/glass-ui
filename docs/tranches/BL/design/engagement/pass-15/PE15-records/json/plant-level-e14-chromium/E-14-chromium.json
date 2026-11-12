@@ -1,0 +1,37 @@
+{
+ "id": "E-14",
+ "engine": "chromium",
+ "version": "149.0.7827.55",
+ "target": {
+  "build": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p15/PE15/wt/.pe15out/builds/plant-level"
+ },
+ "loadStart": "21.2/23.1/25.6",
+ "loadEnd": "20.8/23.0/25.5",
+ "verdict": "FAIL",
+ "cells": [
+  {
+   "name": "M3 the host's glide · outside · scale 0.5",
+   "status": "PASS",
+   "line": "the act on frame 8 · paint moved 0.0, 40.0 px in all; on the act's frame 0.00, 0.00 = 0.00 px (bound ≤ 0.50) · largest move over any 16.7 ms 5.5 px at +66 ms (bound 6.5) · glides 1 (210 ms) · scrollY 34 → 34 → 34, scroller 0 → 0 → 0 · path [0.0,0.0 0.0,0.0 0.0,0.6 0.0,2.0 0.0,4.0] · errors 0",
+   "load": "21.1/23.1/25.5"
+  },
+  {
+   "name": "M3 the host's glide · outside · skewX 30deg",
+   "status": "PASS",
+   "line": "the act on frame 8 · paint moved 0.0, 40.0 px in all; on the act's frame -0.36, 0.10 = 0.37 px (bound ≤ 0.50) · largest move over any 16.7 ms 5.5 px at +67 ms (bound 6.5) · glides 1 (210 ms) · scrollY 39 → 39 → 39, scroller 0 → 0 → 0 · path [0.0,0.0 -0.4,0.1 -0.4,0.6 -0.3,2.1 -0.3,4.1] · errors 0",
+   "load": "21.1/23.1/25.5"
+  },
+  {
+   "name": "M3 the host's glide · outside · rotate 180deg centre",
+   "status": "FAIL",
+   "line": "the act on frame 8 · paint moved 0.0, 40.0 px in all; on the act's frame 0.00, 320.00 = 320.00 px (bound ≤ 0.50) · largest move over any 16.7 ms 38.8 px at +67 ms (bound 6.5) · glides 1 (210 ms) · scrollY 39 → 39 → 39, scroller 0 → 0 → 0 · path [0.0,0.0 0.0,320.0 0.0,316.5 0.0,305.8 0.0,291.7] · errors 0",
+   "load": "20.8/23.0/25.5"
+  },
+  {
+   "name": "M3 the host's glide · outside · matrix rotate 30 + scale 1.5",
+   "status": "FAIL",
+   "line": "the act on frame 8 · paint moved 0.0, 40.0 px in all; on the act's frame -3.92, -3.92 = 5.55 px (bound ≤ 0.50) · largest move over any 16.7 ms 6.1 px at +66 ms (bound 6.5) · glides 1 (210 ms) · scrollY 177 → 177 → 177, scroller 0 → 0 → 0 · path [0.0,0.0 -3.9,-3.9 -3.9,-3.3 -3.7,-1.9 -3.5,0.5] · errors 0",
+   "load": "20.8/23.0/25.5"
+  }
+ ]
+}

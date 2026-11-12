@@ -1,0 +1,53 @@
+01:42 branch-ch rc=0 load=9.91 13.65 16.38  106 passed (12.2m) 
+01:43 g6-4-ch rc=0 load=9.37 13.34 16.23  23 passed (15.7s) 
+01:45 g6-3-ch rc=0 load=13.58 13.00 15.64  60 passed (2.2m) 
+01:47 c12a-ch rc=0 load=16.12 14.48 15.91  1 passed (1.9m) 
+01:53 c12b-ch rc=0 load=18.77 20.06 18.11  1 passed (6.0m) 
+02:03 obs-ch rc=130 load=7.62 12.81 15.42  1 interrupted 
+02:03 chain ch done: branch g6-4 g6-3 c12a c12b obs
+02:20 branch-wk rc=1 load=7.01 8.58 11.37  1 failed  105 passed (14.0m) 
+02:20 g6-4-wk rc=0 load=6.72 8.42 11.25  8 skipped  15 passed (19.2s) 
+02:22 g6-3-wk rc=0 load=7.54 8.19 10.75  2 skipped  58 passed (2.2m) 
+02:24 c12a-wk rc=0 load=6.63 7.96 10.35  1 passed (1.9m) 
+02:30 c12b-wk rc=0 load=9.64 8.51 9.71  1 passed (6.1m) 
+02:30 chain wk done: branch g6-4 g6-3 c12a c12b
+02:33 q2-wk rc=0 load=9.83 9.29 9.84  8 passed (28.0s) 
+02:34 obs-ch rc=0 load=19.33 12.13 10.84  1 passed (1.5m) 
+02:34 chain ch done: obs
+02:36 q2-wk rc=0 load=13.78 12.38 11.08  8 passed (29.2s) 
+02:37 p4-tip-1-wk rc=0 load=11.54 11.99 11.03  2 passed (1.2m) 
+02:38 p4-v1014-1-wk rc=0 load=10.90 11.62 10.97  2 passed (1.2m) 
+02:39 p4-tip-2-wk rc=0 load=8.50 10.82 10.72  2 passed (1.2m) 
+02:41 p4-v1014-2-wk rc=0 load=7.18 9.93 10.39  2 passed (1.2m) 
+02:42 p4-tip-3-wk rc=0 load=9.60 10.15 10.44  2 passed (1.2m) 
+02:43 p4-v1014-3-wk rc=0 load=7.54 9.41 10.13  2 passed (1.2m) 
+02:44 p4-tip-4-wk rc=0 load=9.78 9.72 10.19  2 passed (1.2m) 
+02:46 p4-v1014-4-wk rc=0 load=10.13 10.12 10.32  2 passed (1.2m) 
+02:47 p4-tip-5-wk rc=0 load=8.04 9.56 10.09  2 passed (1.2m) 
+02:48 p4-v1014-5-wk rc=0 load=8.40 9.27 9.93  2 passed (1.2m) 
+02:49 p4-tip-6-wk rc=0 load=11.32 10.05 10.18  2 passed (1.2m) 
+02:51 p4-v1014-6-wk rc=0 load=10.21 9.89 10.10  2 passed (1.2m) 
+02:52 p4-tip-7-wk rc=0 load=6.92 9.00 9.75  2 passed (1.2m) 
+02:53 p4-v1014-7-wk rc=0 load=5.65 8.15 9.36  2 passed (1.2m) 
+02:54 p4-tip-8-wk rc=0 load=7.11 7.90 9.15  2 passed (1.2m) 
+02:56 p4-v1014-8-wk rc=0 load=7.99 8.02 9.09  2 passed (1.2m) 
+02:57 p4-tip-9-wk rc=0 load=12.64 9.34 9.49  2 passed (1.2m) 
+02:58 p4-v1014-9-wk rc=0 load=8.60 8.79 9.27  2 passed (1.2m) 
+02:59 p4-tip-10-wk rc=0 load=7.06 8.22 9.01  2 passed (1.2m) 
+03:01 p4-v1014-10-wk rc=0 load=6.14 7.69 8.74  2 passed (1.2m) 
+03:01 chain wk done: p4
+03:03 obs-ch rc=0 load=6.60 7.52 8.53  1 passed (1.5m) 
+03:03 chain ch done: obs
+03:19 branch-wk rc=1 load=5.20 5.56 6.64  1 failed  105 passed (13.9m) 
+03:19 chain wk done: branch
+03:46 branch-wk (pass 3; --shard=1/2 of a one-file spec is the whole spec) rc=1 load=6.21 7.14 6.97  1 failed  105 passed (13.1m) 
+03:46 chain wk done: shard1 shard2
+03:55 n1-wk rc=0 load=11.92 10.38 8.49  24 passed (6.7m) 
+03:55 chain wk done: n1
+04:00 c13b-wk rc=0 load=13.59 12.10 9.80  1 passed (3.4m) 
+04:00 chain wk done: c13b
+04:06 c13b-ch rc=0 load=9.91 10.21 9.60  1 passed (4.1m) 
+04:06 chain ch done: c13b
+04:10 c13b-wk rc=0 load=12.78 11.68 10.37  1 passed (4.3m) 
+04:12 c13b-f11-wk rc=0 load=10.21 10.90 10.23  1 passed (2.1m) 
+04:12 chain wk done: c13b c13b-f11

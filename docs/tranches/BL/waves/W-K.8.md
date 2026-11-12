@@ -1,11 +1,11 @@
-# W-K.8 · W-FORM-PARTICIPATION: one participation seam per control · 11.0.0
+# W-K.8 · W-FORM-PARTICIPATION: one participation seam per control
 
 | field | value |
 |---|---|
 | seat | band-K wave-spec seat, formation |
 | model | `claude-opus-5-5`, asserted from own system identity |
 | HEAD | `9866d229` (`src` = `f3ad78d0` = published 10.1.0); the band-K fixture (W-K.1 appendix B, scene `s=form`), consumer app on reka 2.10.5; the checkout's own `node_modules` holds reka 2.10.1 |
-| ships in | 11.0.0 |
+| release | `waves/INDEX.md`, the one record |
 | families | F-82 (all members) |
 | depends on | PLAN §5, the one record of edges |
 | dependants | PLAN §5 (its inverse) |

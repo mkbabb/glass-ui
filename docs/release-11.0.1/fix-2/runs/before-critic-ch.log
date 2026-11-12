@@ -1,0 +1,240 @@
+
+Running 6 tests using 1 worker
+
+c1 {"cell":"ch unpublished open","published":{"inline":"56px","root":"28px","plate":"28px","h":56},"unpublished":{"inline":"","root":"0px","plate":"0px","h":56}}
+  ✘  1 [chromium-headless-new] › tests-visual/release-11-0-1-critic-1.spec.ts:124:9 › critic 1 e › e the stadium dock's corner before the script publishes its cross extent, open (1.1s)
+c1 {"cell":"ch unpublished closed","published":{"inline":"56px","root":"28px","plate":"28px","h":56},"unpublished":{"inline":"","root":"0px","plate":"0px","h":56}}
+  ✘  2 [chromium-headless-new] › tests-visual/release-11-0-1-critic-1.spec.ts:124:9 › critic 1 e › e the stadium dock's corner before the script publishes its cross extent, closed (1.1s)
+c1 {"cell":"light-1440f ch painted-corner expand","frames":193,"morphing":66,"morphMs":528,"minScale":0.47,"minPaintedX":13.2,"squashed":20,"squashedMs":144,"first":"44ms 13.2x28 half=28","last":"188ms 26.8x28 half=28"}
+c1 {"cell":"light-1440f ch painted-corner collapse","frames":193,"morphing":66,"morphMs":538,"minScale":0.47,"minPaintedX":13.2,"squashed":64,"squashedMs":526,"first":"21ms 26.5x28 half=28","last":"547ms 13.2x28 half=28"}
+  ✘  3 [chromium-headless-new] › tests-visual/release-11-0-1-critic-1.spec.ts:215:13 › critic 1 light-1440f › d light-1440f: the painted corner per frame of the expand and the collapse (3.9s)
+c1 {"cell":"light-390c ch painted-corner expand","frames":194,"morphing":66,"morphMs":542,"minScale":0.494,"minPaintedX":14.8,"squashed":21,"squashedMs":165,"first":"32ms 14.8x30 half=30","last":"197ms 29.0x30 half=30"}
+c1 {"cell":"light-390c ch painted-corner collapse","frames":193,"morphing":67,"morphMs":549,"minScale":0.494,"minPaintedX":14.8,"squashed":65,"squashedMs":533,"first":"31ms 28.5x30 half=30","last":"564ms 14.8x30 half=30"}
+  ✘  4 [chromium-headless-new] › tests-visual/release-11-0-1-critic-1.spec.ts:215:13 › critic 1 light-390c › d light-390c: the painted corner per frame of the expand and the collapse (3.9s)
+c1 {"cell":"dark-1440f ch painted-corner expand","frames":192,"morphing":65,"morphMs":525,"minScale":0.47,"minPaintedX":13.2,"squashed":19,"squashedMs":142,"first":"46ms 13.2x28 half=28","last":"188ms 26.8x28 half=28"}
+c1 {"cell":"dark-1440f ch painted-corner collapse","frames":193,"morphing":66,"morphMs":539,"minScale":0.47,"minPaintedX":13.2,"squashed":64,"squashedMs":525,"first":"21ms 26.3x28 half=28","last":"546ms 13.2x28 half=28"}
+  ✘  5 [chromium-headless-new] › tests-visual/release-11-0-1-critic-1.spec.ts:215:13 › critic 1 dark-1440f › d dark-1440f: the painted corner per frame of the expand and the collapse (3.9s)
+c1 {"cell":"dark-390c ch painted-corner expand","frames":193,"morphing":66,"morphMs":540,"minScale":0.494,"minPaintedX":14.8,"squashed":20,"squashedMs":157,"first":"41ms 14.8x30 half=30","last":"197ms 28.8x30 half=30"}
+c1 {"cell":"dark-390c ch painted-corner collapse","frames":193,"morphing":67,"morphMs":548,"minScale":0.494,"minPaintedX":14.8,"squashed":65,"squashedMs":535,"first":"30ms 28.6x30 half=30","last":"565ms 14.8x30 half=30"}
+  ✘  6 [chromium-headless-new] › tests-visual/release-11-0-1-critic-1.spec.ts:215:13 › critic 1 dark-390c › d dark-390c: the painted corner per frame of the expand and the collapse (3.9s)
+
+
+  1) [chromium-headless-new] › tests-visual/release-11-0-1-critic-1.spec.ts:124:9 › critic 1 e › e the stadium dock's corner before the script publishes its cross extent, open 
+
+    Error: the box's corner with no published cross extent
+
+    expect(received).not.toBe(expected) // Object.is equality
+
+    Expected: not "0px"
+
+      142 |             await snap(page, await clipOf(page, ".witness-dock", 14), `e-${eng}-${state}-unpublished`);
+      143 |             console.log(`c1 ${JSON.stringify({ cell: `${eng} unpublished ${state}`, published, unpublished })}`);
+    > 144 |             expect.soft(unpublished.root, "the box's corner with no published cross extent").not.toBe("0px");
+          |                                                                                                  ^
+      145 |             expect.soft(unpublished.plate, "the plate's corner with no published cross extent").not.toBe("0px");
+      146 |         });
+      147 |     }
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/release-11-0-1-critic-1.spec.ts:144:98
+
+    Error: the plate's corner with no published cross extent
+
+    expect(received).not.toBe(expected) // Object.is equality
+
+    Expected: not "0px"
+
+      143 |             console.log(`c1 ${JSON.stringify({ cell: `${eng} unpublished ${state}`, published, unpublished })}`);
+      144 |             expect.soft(unpublished.root, "the box's corner with no published cross extent").not.toBe("0px");
+    > 145 |             expect.soft(unpublished.plate, "the plate's corner with no published cross extent").not.toBe("0px");
+          |                                                                                                     ^
+      146 |         });
+      147 |     }
+      148 | });
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/release-11-0-1-critic-1.spec.ts:145:101
+
+    Error Context: tests-visual/test-results/release-11-0-1-critic-1-cr-8f2d1-ishes-its-cross-extent-open-chromium-headless-new/error-context.md
+
+  2) [chromium-headless-new] › tests-visual/release-11-0-1-critic-1.spec.ts:124:9 › critic 1 e › e the stadium dock's corner before the script publishes its cross extent, closed 
+
+    Error: the box's corner with no published cross extent
+
+    expect(received).not.toBe(expected) // Object.is equality
+
+    Expected: not "0px"
+
+      142 |             await snap(page, await clipOf(page, ".witness-dock", 14), `e-${eng}-${state}-unpublished`);
+      143 |             console.log(`c1 ${JSON.stringify({ cell: `${eng} unpublished ${state}`, published, unpublished })}`);
+    > 144 |             expect.soft(unpublished.root, "the box's corner with no published cross extent").not.toBe("0px");
+          |                                                                                                  ^
+      145 |             expect.soft(unpublished.plate, "the plate's corner with no published cross extent").not.toBe("0px");
+      146 |         });
+      147 |     }
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/release-11-0-1-critic-1.spec.ts:144:98
+
+    Error: the plate's corner with no published cross extent
+
+    expect(received).not.toBe(expected) // Object.is equality
+
+    Expected: not "0px"
+
+      143 |             console.log(`c1 ${JSON.stringify({ cell: `${eng} unpublished ${state}`, published, unpublished })}`);
+      144 |             expect.soft(unpublished.root, "the box's corner with no published cross extent").not.toBe("0px");
+    > 145 |             expect.soft(unpublished.plate, "the plate's corner with no published cross extent").not.toBe("0px");
+          |                                                                                                     ^
+      146 |         });
+      147 |     }
+      148 | });
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/release-11-0-1-critic-1.spec.ts:145:101
+
+    Error Context: tests-visual/test-results/release-11-0-1-critic-1-cr-667ba-hes-its-cross-extent-closed-chromium-headless-new/error-context.md
+
+  3) [chromium-headless-new] › tests-visual/release-11-0-1-critic-1.spec.ts:215:13 › critic 1 light-1440f › d light-1440f: the painted corner per frame of the expand and the collapse 
+
+    Error: expand: frames whose painted end is not half the height ({"frames":193,"morphing":66,"morphMs":528,"minScale":0.47,"minPaintedX":13.2,"squashed":20,"squashedMs":144,"first":"44ms 13.2x28 half=28","last":"188ms 26.8x28 half=28"})
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 20
+
+      263 |                 console.log(`c1 ${JSON.stringify({ cell: `${tag} ${e} painted-corner expand`, ...expand })}`);
+      264 |                 console.log(`c1 ${JSON.stringify({ cell: `${tag} ${e} painted-corner collapse`, ...collapse })}`);
+    > 265 |                 expect.soft(expand.squashed, `expand: frames whose painted end is not half the height (${JSON.stringify(expand)})`).toBe(0);
+          |                                                                                                                                     ^
+      266 |                 expect.soft(collapse.squashed, `collapse: frames whose painted end is not half the height (${JSON.stringify(collapse)})`).toBe(0);
+      267 |             });
+      268 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/release-11-0-1-critic-1.spec.ts:265:133
+
+    Error: collapse: frames whose painted end is not half the height ({"frames":193,"morphing":66,"morphMs":538,"minScale":0.47,"minPaintedX":13.2,"squashed":64,"squashedMs":526,"first":"21ms 26.5x28 half=28","last":"547ms 13.2x28 half=28"})
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 64
+
+      264 |                 console.log(`c1 ${JSON.stringify({ cell: `${tag} ${e} painted-corner collapse`, ...collapse })}`);
+      265 |                 expect.soft(expand.squashed, `expand: frames whose painted end is not half the height (${JSON.stringify(expand)})`).toBe(0);
+    > 266 |                 expect.soft(collapse.squashed, `collapse: frames whose painted end is not half the height (${JSON.stringify(collapse)})`).toBe(0);
+          |                                                                                                                                           ^
+      267 |             });
+      268 |
+      269 |             test(`c ${tag}: frames through the expand and the collapse`, async ({ page }, info) => {
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/release-11-0-1-critic-1.spec.ts:266:139
+
+    Error Context: tests-visual/test-results/release-11-0-1-critic-1-cr-383d1-the-expand-and-the-collapse-chromium-headless-new/error-context.md
+
+  4) [chromium-headless-new] › tests-visual/release-11-0-1-critic-1.spec.ts:215:13 › critic 1 light-390c › d light-390c: the painted corner per frame of the expand and the collapse 
+
+    Error: expand: frames whose painted end is not half the height ({"frames":194,"morphing":66,"morphMs":542,"minScale":0.494,"minPaintedX":14.8,"squashed":21,"squashedMs":165,"first":"32ms 14.8x30 half=30","last":"197ms 29.0x30 half=30"})
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 21
+
+      263 |                 console.log(`c1 ${JSON.stringify({ cell: `${tag} ${e} painted-corner expand`, ...expand })}`);
+      264 |                 console.log(`c1 ${JSON.stringify({ cell: `${tag} ${e} painted-corner collapse`, ...collapse })}`);
+    > 265 |                 expect.soft(expand.squashed, `expand: frames whose painted end is not half the height (${JSON.stringify(expand)})`).toBe(0);
+          |                                                                                                                                     ^
+      266 |                 expect.soft(collapse.squashed, `collapse: frames whose painted end is not half the height (${JSON.stringify(collapse)})`).toBe(0);
+      267 |             });
+      268 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/release-11-0-1-critic-1.spec.ts:265:133
+
+    Error: collapse: frames whose painted end is not half the height ({"frames":193,"morphing":67,"morphMs":549,"minScale":0.494,"minPaintedX":14.8,"squashed":65,"squashedMs":533,"first":"31ms 28.5x30 half=30","last":"564ms 14.8x30 half=30"})
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 65
+
+      264 |                 console.log(`c1 ${JSON.stringify({ cell: `${tag} ${e} painted-corner collapse`, ...collapse })}`);
+      265 |                 expect.soft(expand.squashed, `expand: frames whose painted end is not half the height (${JSON.stringify(expand)})`).toBe(0);
+    > 266 |                 expect.soft(collapse.squashed, `collapse: frames whose painted end is not half the height (${JSON.stringify(collapse)})`).toBe(0);
+          |                                                                                                                                           ^
+      267 |             });
+      268 |
+      269 |             test(`c ${tag}: frames through the expand and the collapse`, async ({ page }, info) => {
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/release-11-0-1-critic-1.spec.ts:266:139
+
+    Error Context: tests-visual/test-results/release-11-0-1-critic-1-cr-cdc68-the-expand-and-the-collapse-chromium-headless-new/error-context.md
+
+  5) [chromium-headless-new] › tests-visual/release-11-0-1-critic-1.spec.ts:215:13 › critic 1 dark-1440f › d dark-1440f: the painted corner per frame of the expand and the collapse 
+
+    Error: expand: frames whose painted end is not half the height ({"frames":192,"morphing":65,"morphMs":525,"minScale":0.47,"minPaintedX":13.2,"squashed":19,"squashedMs":142,"first":"46ms 13.2x28 half=28","last":"188ms 26.8x28 half=28"})
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 19
+
+      263 |                 console.log(`c1 ${JSON.stringify({ cell: `${tag} ${e} painted-corner expand`, ...expand })}`);
+      264 |                 console.log(`c1 ${JSON.stringify({ cell: `${tag} ${e} painted-corner collapse`, ...collapse })}`);
+    > 265 |                 expect.soft(expand.squashed, `expand: frames whose painted end is not half the height (${JSON.stringify(expand)})`).toBe(0);
+          |                                                                                                                                     ^
+      266 |                 expect.soft(collapse.squashed, `collapse: frames whose painted end is not half the height (${JSON.stringify(collapse)})`).toBe(0);
+      267 |             });
+      268 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/release-11-0-1-critic-1.spec.ts:265:133
+
+    Error: collapse: frames whose painted end is not half the height ({"frames":193,"morphing":66,"morphMs":539,"minScale":0.47,"minPaintedX":13.2,"squashed":64,"squashedMs":525,"first":"21ms 26.3x28 half=28","last":"546ms 13.2x28 half=28"})
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 64
+
+      264 |                 console.log(`c1 ${JSON.stringify({ cell: `${tag} ${e} painted-corner collapse`, ...collapse })}`);
+      265 |                 expect.soft(expand.squashed, `expand: frames whose painted end is not half the height (${JSON.stringify(expand)})`).toBe(0);
+    > 266 |                 expect.soft(collapse.squashed, `collapse: frames whose painted end is not half the height (${JSON.stringify(collapse)})`).toBe(0);
+          |                                                                                                                                           ^
+      267 |             });
+      268 |
+      269 |             test(`c ${tag}: frames through the expand and the collapse`, async ({ page }, info) => {
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/release-11-0-1-critic-1.spec.ts:266:139
+
+    Error Context: tests-visual/test-results/release-11-0-1-critic-1-cr-1b217-the-expand-and-the-collapse-chromium-headless-new/error-context.md
+
+  6) [chromium-headless-new] › tests-visual/release-11-0-1-critic-1.spec.ts:215:13 › critic 1 dark-390c › d dark-390c: the painted corner per frame of the expand and the collapse 
+
+    Error: expand: frames whose painted end is not half the height ({"frames":193,"morphing":66,"morphMs":540,"minScale":0.494,"minPaintedX":14.8,"squashed":20,"squashedMs":157,"first":"41ms 14.8x30 half=30","last":"197ms 28.8x30 half=30"})
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 20
+
+      263 |                 console.log(`c1 ${JSON.stringify({ cell: `${tag} ${e} painted-corner expand`, ...expand })}`);
+      264 |                 console.log(`c1 ${JSON.stringify({ cell: `${tag} ${e} painted-corner collapse`, ...collapse })}`);
+    > 265 |                 expect.soft(expand.squashed, `expand: frames whose painted end is not half the height (${JSON.stringify(expand)})`).toBe(0);
+          |                                                                                                                                     ^
+      266 |                 expect.soft(collapse.squashed, `collapse: frames whose painted end is not half the height (${JSON.stringify(collapse)})`).toBe(0);
+      267 |             });
+      268 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/release-11-0-1-critic-1.spec.ts:265:133
+
+    Error: collapse: frames whose painted end is not half the height ({"frames":193,"morphing":67,"morphMs":548,"minScale":0.494,"minPaintedX":14.8,"squashed":65,"squashedMs":535,"first":"30ms 28.6x30 half=30","last":"565ms 14.8x30 half=30"})
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 65
+
+      264 |                 console.log(`c1 ${JSON.stringify({ cell: `${tag} ${e} painted-corner collapse`, ...collapse })}`);
+      265 |                 expect.soft(expand.squashed, `expand: frames whose painted end is not half the height (${JSON.stringify(expand)})`).toBe(0);
+    > 266 |                 expect.soft(collapse.squashed, `collapse: frames whose painted end is not half the height (${JSON.stringify(collapse)})`).toBe(0);
+          |                                                                                                                                           ^
+      267 |             });
+      268 |
+      269 |             test(`c ${tag}: frames through the expand and the collapse`, async ({ page }, info) => {
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/release-11-0-1-critic-1.spec.ts:266:139
+
+    Error Context: tests-visual/test-results/release-11-0-1-critic-1-cr-fb9d3-the-expand-and-the-collapse-chromium-headless-new/error-context.md
+
+  6 failed
+    [chromium-headless-new] › tests-visual/release-11-0-1-critic-1.spec.ts:124:9 › critic 1 e › e the stadium dock's corner before the script publishes its cross extent, open 
+    [chromium-headless-new] › tests-visual/release-11-0-1-critic-1.spec.ts:124:9 › critic 1 e › e the stadium dock's corner before the script publishes its cross extent, closed 
+    [chromium-headless-new] › tests-visual/release-11-0-1-critic-1.spec.ts:215:13 › critic 1 light-1440f › d light-1440f: the painted corner per frame of the expand and the collapse 
+    [chromium-headless-new] › tests-visual/release-11-0-1-critic-1.spec.ts:215:13 › critic 1 light-390c › d light-390c: the painted corner per frame of the expand and the collapse 
+    [chromium-headless-new] › tests-visual/release-11-0-1-critic-1.spec.ts:215:13 › critic 1 dark-1440f › d dark-1440f: the painted corner per frame of the expand and the collapse 
+    [chromium-headless-new] › tests-visual/release-11-0-1-critic-1.spec.ts:215:13 › critic 1 dark-390c › d dark-390c: the painted corner per frame of the expand and the collapse 

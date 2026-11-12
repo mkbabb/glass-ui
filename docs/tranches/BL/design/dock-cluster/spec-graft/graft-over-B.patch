@@ -1,0 +1,436 @@
+diff --git a/src/components/dock/DockCluster.vue b/src/components/dock/DockCluster.vue
+index 755ccd6d8..4104fc702 100644
+--- a/src/components/dock/DockCluster.vue
++++ b/src/components/dock/DockCluster.vue
+@@ -22,6 +22,10 @@ import { useMediaQuery } from "@vueuse/core";
+ import { computed, onMounted, onUnmounted, ref, useTemplateRef, watch } from "vue";
+ import { DOCK_SPRING } from "./constants";
+ import { useDockSpring } from "./composables/useDockSpring";
++import {
++    GLASS_BACKDROP_SHARED_ATTR,
++    useGlassBackdropLuminance,
++} from "../../composables/glass/useGlassBackdropLuminance";
+ import { clusterShape, shiftPath, type PlateBox } from "./composables/dockClusterShape";
+ 
+ const props = withDefaults(
+@@ -37,8 +41,11 @@ const SHADOW_PAD = 40;
+ const root = useTemplateRef<HTMLElement>("root");
+ const shadowEl = useTemplateRef<HTMLElement>("shadowEl");
+ const shadowFill = useTemplateRef<HTMLElement>("shadowFill");
+-const rimEl = useTemplateRef<HTMLElement>("rimEl");
+-const plateEls = ref<HTMLElement[]>([]);
++const lensEls = ref<HTMLElement[]>([]);
++const toneEls = ref<HTMLElement[]>([]);
++// ONE luminance observer for the cluster: every member's own observer stands down under
++// the shared marker and its plate inherits this one luma (one tint across a fused run).
++useGlassBackdropLuminance(root, { shared: true });
+ const count = ref(0);
+ 
+ const reduced = useMediaQuery("(prefers-reduced-motion: reduce)");
+@@ -64,29 +71,80 @@ function docks(): HTMLElement[] {
+         : [];
+ }
+ 
++let shift = 0;
++// The grid is whole CSS px, not device px: Chromium paints a member's clipped plate at
++// its stacking context's offset rounded to a whole CSS px (measured: a member at x.5
++// paints its share one device pixel late, leaving a field-coloured column at the cut).
++const GRID = 1;
++function grid(list: HTMLElement[], rects: DOMRect[], dpr: number): boolean {
++    const el = root.value;
++    if (!el || !rects.length) return false;
++    let changed = false;
++    list.forEach((d, i) => {
++        const w = rects[i]!.width;
++        const W = Math.ceil(w * GRID - 0.01) / GRID;
++        if (W - w > 1e-3) {
++            d.style.minInlineSize = `${W}px`;
++            changed = true;
++        }
++    });
++    const left0 = rects[0]!.left - shift;
++    const target = -(((left0 * GRID) % 1) / GRID);
++    if (Math.abs(target - shift) > 1e-3) {
++        shift = target;
++        el.style.left = `${shift}px`;
++        changed = true;
++    }
++    return changed;
++}
++
+ /** Read the painted boxes and write every clip. */
+ function paint(): void {
+     const el = root.value;
+     if (!el) return;
+     const list = docks();
+     if (list.length !== count.value) return;
+-    const base = el.getBoundingClientRect();
+     const dpr = window.devicePixelRatio || 1;
+-    const boxes: PlateBox[] = list.map((d) => {
+-        const r = d.getBoundingClientRect();
+-        return { x0: r.left - base.left, x1: r.right - base.left, y0: r.top - base.top, y1: r.bottom - base.top };
++    let rects = list.map((d) => d.getBoundingClientRect());
++    // THE DEVICE-PIXEL GRID (proposal A §2.3, measured there: a 21-unit line at a
++    // fractional seam, 1.9 after). Each member's width rounds up to whole device pixels
++    // and the cluster takes the sub-pixel remainder of its first member, so every member
++    // (and its plate) starts on a device pixel. Written only when a value changes.
++    if (grid(list, rects, dpr)) {
++        rects = list.map((d) => d.getBoundingClientRect());
++    }
++    const base = el.getBoundingClientRect();
++    const boxes: PlateBox[] = list.map((d, i) => {
++        const r = rects[i]!;
++        // The member's own corner (px), never a stadium: the dock's `--radius-dock`.
++        const rad = Number.parseFloat(getComputedStyle(d).borderTopLeftRadius) || 0;
++        return { x0: r.left - base.left, x1: r.right - base.left, y0: r.top - base.top, y1: r.bottom - base.top, r: rad };
+     });
+     // Snap a cut to a device pixel in page space, then back to layer space.
+     const snap = (x: number) => Math.round((x + base.left) * dpr) / dpr - base.left;
+     const joins = now.length === boxes.length - 1 ? now : target.value;
+     const { shares, silhouette } = clusterShape(boxes, joins, snap);
+-    shares.forEach((d, i) => {
+-        const p = plateEls.value[i];
+-        if (p) p.style.clipPath = `path("${d}")`;
+-    });
+     const w = Number.parseFloat(getComputedStyle(el).getPropertyValue("--dock-cluster-rim")) || 1.5;
+     const inner = clusterShape(boxes, joins, snap, w).silhouette;
+-    if (rimEl.value) rimEl.value.style.clipPath = `path(evenodd, "${silhouette} ${inner}")`;
++    shares.forEach((d, i) => {
++        const lens = lensEls.value[i];
++        if (lens) lens.style.clipPath = `path("${d}")`;
++        const tone = toneEls.value[i];
++        if (tone) tone.style.clipPath = `path("${d}")`;
++        // The member's own plate covers its share's band only: from the cut on its left
++        // to the cut on its right (whole CSS px), the cluster's full height. Its ink and
++        // grain then raster over about 1/N of the cluster, not all of it.
++        const plate = list[i]!.querySelector<HTMLElement>(":scope > .dock-plate");
++        const r = rects[i]!;
++        if (plate) {
++            const X0 = i > 0 ? Math.floor(snap((boxes[i - 1]!.x1 + boxes[i]!.x0) / 2)) : Math.floor(boxes[i]!.x0);
++            const X1 = i < boxes.length - 1 ? Math.ceil(snap((boxes[i]!.x1 + boxes[i + 1]!.x0) / 2)) : Math.ceil(boxes[i]!.x1);
++            const inset = `${base.top - r.top}px ${r.right - (base.left + X1)}px ${r.bottom - base.bottom}px ${base.left + X0 - r.left}px`;
++            if (plate.style.inset !== inset) plate.style.inset = inset;
++            plate.style.clipPath = `path("${shiftPath(d, -X0, 0)}")`;
++            plate.style.setProperty("--dock-ring-clip", `path(evenodd, "${shiftPath(silhouette, -X0, 0)} ${shiftPath(inner, -X0, 0)}")`);
++        }
++    });
+     const pad = SHADOW_PAD;
+     const shifted = shiftPath(silhouette, pad, pad);
+     if (shadowFill.value) shadowFill.value.style.clipPath = `path("${shifted}")`;
+@@ -149,17 +207,32 @@ function play(next: number[]): void {
+     wake();
+ }
+ 
+-/** Reduced motion: fade the material out, seat the new outline, fade it in. */
++/** Reduced motion: the material dips and returns on WAAPI (outside the PRM transition
++ *  carve); the outline is seated at the floor. Controls never fade. */
++let fading: Animation[] = [];
+ function crossfade(next: number[]): void {
+     const el = root.value;
+     if (!el) return;
+-    el.setAttribute("data-cluster-fade", "out");
+-    window.setTimeout(() => {
++    const mats = [
++        ...lensEls.value,
++        ...toneEls.value,
++        ...(shadowEl.value ? [shadowEl.value] : []),
++        ...docks().map((d) => d.querySelector<HTMLElement>(":scope > .dock-plate")).filter((x): x is HTMLElement => !!x),
++    ];
++    // `--dock-cluster-swap` is a registered <time>, so it computes resolved.
++    const raw = getComputedStyle(el).getPropertyValue("--dock-cluster-swap").trim();
++    const ms = raw.endsWith("ms") ? Number.parseFloat(raw) : Number.parseFloat(raw) * 1000;
++    const duration = Number.isFinite(ms) && ms > 0 ? ms : 0;
++    fading.forEach((a) => a.cancel());
++    const out = mats.map((m) => m.animate([{ opacity: 1 }, { opacity: 0 }], { duration, easing: "ease-in", fill: "forwards" }));
++    fading = out;
++    void Promise.all(out.map((a) => a.finished)).then(() => {
+         now = [...next];
+         paint();
+-        el.setAttribute("data-cluster-fade", "in");
+-        window.setTimeout(() => el.removeAttribute("data-cluster-fade"), 120);
+-    }, 120);
++        const back = mats.map((m) => m.animate([{ opacity: 0 }, { opacity: 1 }], { duration, easing: "ease-out" }));
++        out.forEach((a) => a.cancel());
++        fading = back;
++    }, () => {});
+ }
+ 
+ watch(target, (next) => play(next));
+@@ -216,7 +289,7 @@ defineExpose({
+ </script>
+ 
+ <template>
+-    <div ref="root" class="dock-cluster">
++    <div ref="root" class="dock-cluster" :[GLASS_BACKDROP_SHARED_ATTR]="''">
+         <div ref="shadowEl" class="dock-cluster-shadow" aria-hidden="true">
+             <div class="dock-cluster-shadow-blur">
+                 <div ref="shadowFill" class="dock-cluster-shadow-fill"></div>
+@@ -225,11 +298,17 @@ defineExpose({
+         <div
+             v-for="i in count"
+             :key="i"
+-            :ref="(el) => { if (el) plateEls[i - 1] = el as HTMLElement }"
+-            class="dock-cluster-plate"
++            :ref="(el) => { if (el) lensEls[i - 1] = el as HTMLElement }"
++            class="dock-cluster-lens"
++            aria-hidden="true"
++        ></div>
++        <div
++            v-for="i in count"
++            :key="`t${i}`"
++            :ref="(el) => { if (el) toneEls[i - 1] = el as HTMLElement }"
++            class="dock-cluster-tone"
+             aria-hidden="true"
+         ></div>
+-        <div ref="rimEl" class="dock-cluster-rim" aria-hidden="true"></div>
+         <slot />
+     </div>
+ </template>
+diff --git a/src/components/dock/composables/dockClusterShape.ts b/src/components/dock/composables/dockClusterShape.ts
+index a266ef3c9..2df767c51 100644
+--- a/src/components/dock/composables/dockClusterShape.ts
++++ b/src/components/dock/composables/dockClusterShape.ts
+@@ -21,6 +21,8 @@
+  */
+ 
+ export interface PlateBox {
++    /** The plate's own corner radius in px (clamped to half its height). */
++    r?: number;
+     /** Left/right/top/bottom in the cluster layer's own px coordinates. */
+     x0: number;
+     x1: number;
+@@ -55,8 +57,9 @@ function endFor(
+     cx: number,
+ ): End {
+     const cy = (own.y0 + own.y1) / 2;
++    const hf = Math.max(0, (own.y1 - own.y0) / 2 - rad(own));
+     const edge = side === 1 ? own.x1 : own.x0;
+-    if (!partner || j <= 0) return { tip: edge, top: cy, bot: cy, v: 0, p: 0 };
++    if (!partner || j <= 0) return { tip: edge, top: cy - hf, bot: cy + hf, v: 0, p: 0 };
+     const jj = Math.min(1, j);
+     const p = Math.min(1, jj / JC);
+     const v = jj <= JC ? 0 : Math.sqrt((jj - JC) / (1 - JC));
+@@ -67,8 +70,8 @@ function endFor(
+     const nBot = (own.y1 + partner.y1) / 2;
+     return {
+         tip: edge + (cx - edge) * p,
+-        top: ncy + (nTop - ncy) * v,
+-        bot: ncy + (nBot - ncy) * v,
++        top: ncy - hf + (nTop - (ncy - hf)) * v,
++        bot: ncy + hf + (nBot - (ncy + hf)) * v,
+         v,
+         p,
+     };
+@@ -78,31 +81,33 @@ function endFor(
+  * One share's closed outline. `left`/`right` describe its two ends; a plate with no
+  * neighbour on a side, or a join at 0, ends in its own cap there.
+  */
++const rad = (b: PlateBox) => Math.min(b.r ?? Infinity, (b.y1 - b.y0) / 2);
+ function sharePath(b: PlateBox, left: End, right: End): string {
+-    const r = (b.y1 - b.y0) / 2;
+-    const cy = (b.y0 + b.y1) / 2;
++    const r = rad(b);
++    const cy0 = b.y0 + r;
++    const cy1 = b.y1 - r;
+     const xl = b.x0 + r;
+     const xr = b.x1 - r;
+     const m = 0.5 * r;
+     // Right end, top quarter: (xr, y0) → (tip, top).
+     const rc1x = xr + K * (right.tip - xr);
+     const rc2x = right.tip - m * right.v;
+-    const rc2yT = (cy - K * r) * (1 - right.v) + right.top * right.v;
+-    const rc2yB = (cy + K * r) * (1 - right.v) + right.bot * right.v;
++    const rc2yT = (cy0 - K * r) * (1 - right.v) + right.top * right.v;
++    const rc2yB = (cy1 + K * r) * (1 - right.v) + right.bot * right.v;
+     // Left end mirrors it about the plate's own left.
+     const lc1x = xl - K * (xl - left.tip);
+     const lc2x = left.tip + m * left.v;
+-    const lc2yT = (cy - K * r) * (1 - left.v) + left.top * left.v;
+-    const lc2yB = (cy + K * r) * (1 - left.v) + left.bot * left.v;
++    const lc2yT = (cy0 - K * r) * (1 - left.v) + left.top * left.v;
++    const lc2yB = (cy1 + K * r) * (1 - left.v) + left.bot * left.v;
+     return [
+         `M${f(xl)} ${f(b.y0)}`,
+         `L${f(xr)} ${f(b.y0)}`,
+         `C${f(rc1x)} ${f(b.y0)} ${f(rc2x)} ${f(rc2yT)} ${f(right.tip)} ${f(right.top)}`,
+-        right.v > 0 ? `L${f(right.tip)} ${f(right.bot)}` : "",
++        right.bot > right.top ? `L${f(right.tip)} ${f(right.bot)}` : "",
+         `C${f(rc2x)} ${f(rc2yB)} ${f(rc1x)} ${f(b.y1)} ${f(xr)} ${f(b.y1)}`,
+         `L${f(xl)} ${f(b.y1)}`,
+         `C${f(lc1x)} ${f(b.y1)} ${f(lc2x)} ${f(lc2yB)} ${f(left.tip)} ${f(left.bot)}`,
+-        left.v > 0 ? `L${f(left.tip)} ${f(left.top)}` : "",
++        left.bot > left.top ? `L${f(left.tip)} ${f(left.top)}` : "",
+         `C${f(lc2x)} ${f(lc2yT)} ${f(lc1x)} ${f(b.y0)} ${f(xl)} ${f(b.y0)}`,
+         "Z",
+     ]
+@@ -130,6 +135,7 @@ export function clusterShape(
+     inset = 0,
+ ): ClusterShape {
+     const bx = boxes.map((b) => ({
++        r: b.r === undefined ? undefined : Math.max(0, b.r - inset),
+         x0: b.x0 + inset,
+         x1: b.x1 - inset,
+         y0: b.y0 + inset,
+diff --git a/src/components/dock/styles/cluster.css b/src/components/dock/styles/cluster.css
+index c0c986f45..f07e5206a 100644
+--- a/src/components/dock/styles/cluster.css
++++ b/src/components/dock/styles/cluster.css
+@@ -1,26 +1,32 @@
+-/* DockCluster: the fused/fissioned plate row (DockCluster.vue).
++/* DockCluster (W-I.8 spec graft, prototype): N GlassDocks fuse into one plate and
++ * fission back by shape alone.
+  *
+- * The cluster owns the material; its child docks keep their controls. Every layer below
+- * spans the cluster's box and is shaped by a px `clip-path: path()` the component writes
+- * per frame (dockClusterShape.ts). No layer here is an ANCESTOR of a backdrop-filter:
+- * `clip-path`, `filter` and `opacity` sit only on the elements that paint, so no
+- * backdrop root forms above a plate (Filter Effects 2), and no filter touches one.
+- *
+- *   .dock-cluster-shadow   the one drop shadow, outside the silhouette only
+- *   .dock-cluster-plate    one per child dock: its own backdrop-filter + ink, its share
+- *   .dock-cluster-rim      the one rim ring (evenodd: silhouette minus its 1.5px inset)
+- *   .glass-dock            the child docks, controls only (z above the material)
++ * Paint order inside the cluster's own stack, bottom to top:
++ *   .dock-cluster-shadow   one drop shadow, outside the silhouette only (B)
++ *   .dock-cluster-lens × N one backdrop-filter per member dock, spanning the cluster box,
++ *                          clipped to that dock's share (B's geometry). No ink: every lens
++ *                          paints before any ink, so a lens never samples a neighbour's veil
++ *   .glass-dock × N        each member's OWN .dock-plate paints its ink (luma darken, ink
++ *                          tier, grain) over its share, plus the rim ring sliced to its share;
++ *                          its backdrop-filter, border and box-shadow stand down here only
+  */
++@property --dock-cluster-swap {
++    syntax: "<time>";
++    inherits: true;
++    initial-value: 0s;
++}
++
+ @layer components {
+     .dock-cluster {
++        --dock-cluster-swap: var(--spring-dock-exit-duration);
+         position: relative;
+         z-index: 0;
+         display: flex;
+         align-items: center;
+         gap: var(--dock-cluster-gap, 0.625rem);
+         --dock-cluster-rim: 1.5px;
+-        /* The dock's own surface tokens, declared where the cluster layers inherit them
+-           (they sit beside the docks, not inside them). Same recipe as shell.css. */
++        /* PROTOTYPE ONLY: the wave widens shell.css's token block to
++           `:is(.glass-dock, .dock-cluster)` instead of restating it here. */
+         --glass-blur-resting: blur(calc(var(--glass-blur-resting-radius) * var(--glass-level)))
+             saturate(1.2);
+         --dock-surface-blur: var(--glass-blur-resting);
+@@ -30,41 +36,26 @@
+             saturate(1.3) brightness(1.14);
+     }
+ 
+-    .dock-cluster-plate,
+-    .dock-cluster-rim {
++    /* The dock's backdrop filter, split in two. The KERNEL (blur) lenses paint first;
++       a later lens samples an earlier lens's output near a cut, and a second blur of a
++       blurred field moves no mean. The TONE (saturate, brightness) is pointwise, so its
++       lenses paint after every kernel lens and each reads only the pixels under its own
++       share: a tone is applied exactly once per pixel. */
++    .dock-cluster-lens,
++    .dock-cluster-tone {
+         position: absolute;
+         inset: 0;
+         pointer-events: none;
+-    }
+-
+-    .dock-cluster-plate {
+-        backdrop-filter: var(--dock-surface-blur);
+-        --glass-veil-tier: var(--glass-veil-dock);
+-        @apply glass-plate;
+         clip-path: inset(50%);
+     }
+-    .dock-cluster-plate::after {
+-        content: "";
+-        position: absolute;
+-        inset: 0;
+-        background: var(--paper-clean-texture);
+-        background-size: var(--paper-texture-size);
+-        opacity: var(--glass-grain-opacity);
+-        mix-blend-mode: overlay;
++    .dock-cluster-lens {
++        backdrop-filter: blur(calc(var(--glass-blur-resting-radius) * var(--glass-level)));
+     }
+-    .dark .dock-cluster-plate::after {
+-        mix-blend-mode: soft-light;
++    .dock-cluster-tone {
++        backdrop-filter: saturate(1.2);
+     }
+-
+-    /* The rim: the dock's border hue, lit from the top (the --glass-rim-top catch-light
+-       folded into the ring rather than a second inset layer). */
+-    .dock-cluster-rim {
+-        background: linear-gradient(
+-            to bottom,
+-            color-mix(in srgb, white calc(22% * var(--glass-level)), var(--glass-border-dock)),
+-            var(--glass-border-dock) 45%
+-        );
+-        clip-path: inset(50%);
++    .dark .dock-cluster-tone {
++        backdrop-filter: saturate(1.3) brightness(1.14);
+     }
+ 
+     .dock-cluster-shadow {
+@@ -76,7 +67,6 @@
+     .dock-cluster-shadow-blur {
+         position: absolute;
+         inset: 0;
+-        /* --shadow-dock is `0 0 20px` at 14%: a 20px blur radius is σ = 10px. */
+         filter: blur(10px);
+     }
+     .dock-cluster-shadow-fill {
+@@ -86,30 +76,32 @@
+         clip-path: inset(50%);
+     }
+ 
+-    /* The child docks: controls only. Their plate keeps its box (it still absorbs
+-       presses between controls) and stands its paint down; the cluster's plate for this
+-       dock is its backdrop. */
+     .dock-cluster > .glass-dock {
+         position: relative;
+         z-index: 1;
+         box-shadow: none;
+     }
++    /* The member's own plate: spans the cluster box (inset written by the cluster on
++       layout change), clipped to its share (written per frame). Ink, tier, luma, grain:
++       GlassDock's own. */
+     .dock-cluster > .glass-dock > .dock-plate {
+-        background: none;
+         backdrop-filter: none;
+-        border-color: transparent;
+-    }
+-    .dock-cluster > .glass-dock > .dock-plate::after {
+-        display: none;
+-    }
+-
+-    /* Reduced motion: the outline is seated, never travelled; the material fades out and
+-       back in around the swap. Opacity sits on each painting layer, never an ancestor. */
+-    .dock-cluster :is(.dock-cluster-plate, .dock-cluster-rim, .dock-cluster-shadow) {
+-        transition: opacity 120ms linear;
++        border: 0;
++        /* The share path draws every corner. The run's scroll-driven cut cap
++           (run.css) animates this radius, so it stands down here with it. */
++        border-radius: 0;
++        animation: none;
+     }
+-    .dock-cluster[data-cluster-fade="out"]
+-        :is(.dock-cluster-plate, .dock-cluster-rim, .dock-cluster-shadow) {
+-        opacity: 0;
++    .dock-cluster > .glass-dock > .dock-plate::before {
++        content: "";
++        position: absolute;
++        inset: 0;
++        pointer-events: none;
++        background: linear-gradient(
++            to bottom,
++            color-mix(in srgb, white calc(22% * var(--glass-level)), var(--glass-border-dock)),
++            var(--glass-border-dock) 45%
++        );
++        clip-path: var(--dock-ring-clip, inset(50%));
+     }
+ }

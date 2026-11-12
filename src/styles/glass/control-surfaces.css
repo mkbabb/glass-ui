@@ -53,7 +53,9 @@
            re-points it to `--control-text-sm` (the quieter register); `default`/`lg`
            keep `--control-text`. This is the C1 close — the input register reads
            `--control-text` via the recipe, NOT a bare `text-sm` literal. */
-        font-size: var(--control-pill-text, var(--control-text));
+        /* The field floor (tokens/sizing.css `--field-text-floor`): 16px under a coarse
+           pointer, the iOS no-zoom line, whatever rung the seam names. */
+        font-size: max(var(--control-pill-text, var(--control-text)), var(--field-text-floor));
         color: var(--foreground);
         transition:
             background-color var(--duration-fast) var(--ease-standard),

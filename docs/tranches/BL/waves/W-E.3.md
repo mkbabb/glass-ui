@@ -1,11 +1,11 @@
-# W-E.3 · the Sheet: the dock's reach, a resolved detent ladder at rest and in motion, and a bleed from the anchored edge · 11.0.0
+# W-E.3 · the Sheet: the dock's reach, a resolved detent ladder at rest and in motion, and a bleed from the anchored edge
 
 | field | value |
 |---|---|
 | seat | band-E wave-spec seat, formation (relaunch 2026-09-25) |
 | model | `claude-opus-5-5`, asserted from own system identity |
 | HEAD | `4d2e3123` (`src`/`demo` identical to `f3ad78d0`), scratch worktree; probes drive the band-E fixture app (W-E.1 appendix B) on the packed build |
-| ships in | 11.0.0 |
+| release | `waves/INDEX.md`, the one record |
 | families | F-32 (#39 W-DIALOG-DETENT), F-74, F-65 split (W-DETENT-FLOOR: the detent ladder is the one source for the rung quantities; W-C.5 PLAN row names it W-E.3's) |
 | depends on | PLAN §5, the one record of edges |
 | dependants | PLAN §5 (its inverse) |

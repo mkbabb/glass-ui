@@ -233,8 +233,11 @@ for (const [label, viewport] of [
 // select, dropdown and popover DockTrigger, each disabled, then an enabled popover
 // trigger. Each disabled arm computes `opacity` equal to `--opacity-disabled` and
 // `cursor: not-allowed`, and a hover and a press over it leave its fill and scale at
-// rest. The enabled trigger takes the hover fill, so the pointer is known to reach the
-// run. These cells read computed style, the one place in this spec that reads paint, in
+// rest. Where the pointer can hover (`(hover: hover)`), the enabled trigger takes the
+// hover fill, so the pointer is known to reach the run. Where it cannot (the
+// coarse-touch project), a dock seat's hover sits under `@media (hover: hover)`, so the
+// enabled trigger takes no hover fill either, and the disabled arms are read the same
+// way. These cells read computed style, the one place in this spec that reads paint, in
 // both schemes. RED on abd829944 (the trigger paint keyed on `:disabled`, which 2b4efe77e
 // had moved to `aria-disabled`: opacity 1, cursor pointer, the enabled hover fill).
 type Paint = { opacity: string; token: string; cursor: string; background: string; scale: string };
@@ -272,10 +275,16 @@ for (const [label, viewport] of [
 
                 const live = page.locator('[data-witness="live"]');
                 const liveRest = await paintOf(page, "live");
+                const hovers = await page.evaluate(() => matchMedia("(hover: hover)").matches);
                 await live.hover();
-                expect((await paintOf(page, "live")).background, "the enabled trigger's hover fill").not.toBe(
-                    liveRest.background,
-                );
+                const liveHovered = (await paintOf(page, "live")).background;
+                if (hovers) {
+                    expect(liveHovered, "the enabled trigger's hover fill").not.toBe(liveRest.background);
+                } else {
+                    expect(liveHovered, "no hover fill where the pointer cannot hover").toBe(
+                        liveRest.background,
+                    );
+                }
 
                 for (const arm of ["select", "dropdown", "popover"]) {
                     const seat = page.locator(`[data-witness="${arm}"]`);

@@ -1,0 +1,648 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "tests-visual/playwright.config.ts",
+      "--project=chromium-headless-new",
+      "release-11-0-1-critic-1.spec.ts",
+      "--grep",
+      "painted corner per frame|before the script publishes",
+      "--workers=1"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/playwright.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-headless-new",
+        "name": "chromium-headless-new",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "coarse-touch",
+        "name": "coarse-touch",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "safari-webgl.spec.ts",
+          "aurora-swraster.spec.ts",
+          "release-10-1-1.spec.ts",
+          "release-10-1-2.spec.ts",
+          "release-10-1-3.spec.ts",
+          "release-10-1-4.spec.ts",
+          "release-10-1-5.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/docs/release-11.0.1/fix-2/runs/before-critic-ch.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5401",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/",
+      "url": "http://localhost:5401",
+      "reuseExistingServer": true,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "release-11-0-1-critic-1.spec.ts",
+      "file": "release-11-0-1-critic-1.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "critic 1 e",
+          "file": "release-11-0-1-critic-1.spec.ts",
+          "line": 121,
+          "column": 6,
+          "specs": [
+            {
+              "title": "e the stadium dock's corner before the script publishes its cross extent, open",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 1148,
+                      "error": {
+                        "message": "Error: the box's corner with no published cross extent\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: not \u001b[32m\"0px\"\u001b[39m",
+                        "stack": "Error: the box's corner with no published cross extent\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: not \u001b[32m\"0px\"\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/release-11-0-1-critic-1.spec.ts:144:98",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/release-11-0-1-critic-1.spec.ts",
+                          "column": 98,
+                          "line": 144
+                        },
+                        "snippet": "  142 |             await snap(page, await clipOf(page, \".witness-dock\", 14), `e-${eng}-${state}-unpublished`);\n  143 |             console.log(`c1 ${JSON.stringify({ cell: `${eng} unpublished ${state}`, published, unpublished })}`);\n> 144 |             expect.soft(unpublished.root, \"the box's corner with no published cross extent\").not.toBe(\"0px\");\n      |                                                                                                  ^\n  145 |             expect.soft(unpublished.plate, \"the plate's corner with no published cross extent\").not.toBe(\"0px\");\n  146 |         });\n  147 |     }"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/release-11-0-1-critic-1.spec.ts",
+                            "column": 98,
+                            "line": 144
+                          },
+                          "message": "Error: the box's corner with no published cross extent\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: not \u001b[32m\"0px\"\u001b[39m\n\n  142 |             await snap(page, await clipOf(page, \".witness-dock\", 14), `e-${eng}-${state}-unpublished`);\n  143 |             console.log(`c1 ${JSON.stringify({ cell: `${eng} unpublished ${state}`, published, unpublished })}`);\n> 144 |             expect.soft(unpublished.root, \"the box's corner with no published cross extent\").not.toBe(\"0px\");\n      |                                                                                                  ^\n  145 |             expect.soft(unpublished.plate, \"the plate's corner with no published cross extent\").not.toBe(\"0px\");\n  146 |         });\n  147 |     }\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/release-11-0-1-critic-1.spec.ts:144:98"
+                        },
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/release-11-0-1-critic-1.spec.ts",
+                            "column": 101,
+                            "line": 145
+                          },
+                          "message": "Error: the plate's corner with no published cross extent\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: not \u001b[32m\"0px\"\u001b[39m\n\n  143 |             console.log(`c1 ${JSON.stringify({ cell: `${eng} unpublished ${state}`, published, unpublished })}`);\n  144 |             expect.soft(unpublished.root, \"the box's corner with no published cross extent\").not.toBe(\"0px\");\n> 145 |             expect.soft(unpublished.plate, \"the plate's corner with no published cross extent\").not.toBe(\"0px\");\n      |                                                                                                     ^\n  146 |         });\n  147 |     }\n  148 | });\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/release-11-0-1-critic-1.spec.ts:145:101"
+                        }
+                      ],
+                      "stdout": [
+                        {
+                          "text": "c1 {\"cell\":\"ch unpublished open\",\"published\":{\"inline\":\"56px\",\"root\":\"28px\",\"plate\":\"28px\",\"h\":56},\"unpublished\":{\"inline\":\"\",\"root\":\"0px\",\"plate\":\"0px\",\"h\":56}}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T01:50:10.436Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/test-results/release-11-0-1-critic-1-cr-8f2d1-ishes-its-cross-extent-open-chromium-headless-new/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/release-11-0-1-critic-1.spec.ts",
+                        "column": 98,
+                        "line": 144
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "2eea307d6b42cca3e519-0cc7d772a9b7f09e8635",
+              "file": "release-11-0-1-critic-1.spec.ts",
+              "line": 124,
+              "column": 9
+            },
+            {
+              "title": "e the stadium dock's corner before the script publishes its cross extent, closed",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 1065,
+                      "error": {
+                        "message": "Error: the box's corner with no published cross extent\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: not \u001b[32m\"0px\"\u001b[39m",
+                        "stack": "Error: the box's corner with no published cross extent\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: not \u001b[32m\"0px\"\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/release-11-0-1-critic-1.spec.ts:144:98",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/release-11-0-1-critic-1.spec.ts",
+                          "column": 98,
+                          "line": 144
+                        },
+                        "snippet": "  142 |             await snap(page, await clipOf(page, \".witness-dock\", 14), `e-${eng}-${state}-unpublished`);\n  143 |             console.log(`c1 ${JSON.stringify({ cell: `${eng} unpublished ${state}`, published, unpublished })}`);\n> 144 |             expect.soft(unpublished.root, \"the box's corner with no published cross extent\").not.toBe(\"0px\");\n      |                                                                                                  ^\n  145 |             expect.soft(unpublished.plate, \"the plate's corner with no published cross extent\").not.toBe(\"0px\");\n  146 |         });\n  147 |     }"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/release-11-0-1-critic-1.spec.ts",
+                            "column": 98,
+                            "line": 144
+                          },
+                          "message": "Error: the box's corner with no published cross extent\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: not \u001b[32m\"0px\"\u001b[39m\n\n  142 |             await snap(page, await clipOf(page, \".witness-dock\", 14), `e-${eng}-${state}-unpublished`);\n  143 |             console.log(`c1 ${JSON.stringify({ cell: `${eng} unpublished ${state}`, published, unpublished })}`);\n> 144 |             expect.soft(unpublished.root, \"the box's corner with no published cross extent\").not.toBe(\"0px\");\n      |                                                                                                  ^\n  145 |             expect.soft(unpublished.plate, \"the plate's corner with no published cross extent\").not.toBe(\"0px\");\n  146 |         });\n  147 |     }\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/release-11-0-1-critic-1.spec.ts:144:98"
+                        },
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/release-11-0-1-critic-1.spec.ts",
+                            "column": 101,
+                            "line": 145
+                          },
+                          "message": "Error: the plate's corner with no published cross extent\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: not \u001b[32m\"0px\"\u001b[39m\n\n  143 |             console.log(`c1 ${JSON.stringify({ cell: `${eng} unpublished ${state}`, published, unpublished })}`);\n  144 |             expect.soft(unpublished.root, \"the box's corner with no published cross extent\").not.toBe(\"0px\");\n> 145 |             expect.soft(unpublished.plate, \"the plate's corner with no published cross extent\").not.toBe(\"0px\");\n      |                                                                                                     ^\n  146 |         });\n  147 |     }\n  148 | });\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/release-11-0-1-critic-1.spec.ts:145:101"
+                        }
+                      ],
+                      "stdout": [
+                        {
+                          "text": "c1 {\"cell\":\"ch unpublished closed\",\"published\":{\"inline\":\"56px\",\"root\":\"28px\",\"plate\":\"28px\",\"h\":56},\"unpublished\":{\"inline\":\"\",\"root\":\"0px\",\"plate\":\"0px\",\"h\":56}}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T01:50:12.068Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/test-results/release-11-0-1-critic-1-cr-667ba-hes-its-cross-extent-closed-chromium-headless-new/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/release-11-0-1-critic-1.spec.ts",
+                        "column": 98,
+                        "line": 144
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "2eea307d6b42cca3e519-24850547d1303a5cfee6",
+              "file": "release-11-0-1-critic-1.spec.ts",
+              "line": 124,
+              "column": 9
+            }
+          ]
+        },
+        {
+          "title": "critic 1 light-1440f",
+          "file": "release-11-0-1-critic-1.spec.ts",
+          "line": 153,
+          "column": 14,
+          "specs": [
+            {
+              "title": "d light-1440f: the painted corner per frame of the expand and the collapse",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 3928,
+                      "error": {
+                        "message": "Error: expand: frames whose painted end is not half the height ({\"frames\":193,\"morphing\":66,\"morphMs\":528,\"minScale\":0.47,\"minPaintedX\":13.2,\"squashed\":20,\"squashedMs\":144,\"first\":\"44ms 13.2x28 half=28\",\"last\":\"188ms 26.8x28 half=28\"})\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m20\u001b[39m",
+                        "stack": "Error: expand: frames whose painted end is not half the height ({\"frames\":193,\"morphing\":66,\"morphMs\":528,\"minScale\":0.47,\"minPaintedX\":13.2,\"squashed\":20,\"squashedMs\":144,\"first\":\"44ms 13.2x28 half=28\",\"last\":\"188ms 26.8x28 half=28\"})\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m20\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/release-11-0-1-critic-1.spec.ts:265:133",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/release-11-0-1-critic-1.spec.ts",
+                          "column": 133,
+                          "line": 265
+                        },
+                        "snippet": "  263 |                 console.log(`c1 ${JSON.stringify({ cell: `${tag} ${e} painted-corner expand`, ...expand })}`);\n  264 |                 console.log(`c1 ${JSON.stringify({ cell: `${tag} ${e} painted-corner collapse`, ...collapse })}`);\n> 265 |                 expect.soft(expand.squashed, `expand: frames whose painted end is not half the height (${JSON.stringify(expand)})`).toBe(0);\n      |                                                                                                                                     ^\n  266 |                 expect.soft(collapse.squashed, `collapse: frames whose painted end is not half the height (${JSON.stringify(collapse)})`).toBe(0);\n  267 |             });\n  268 |"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/release-11-0-1-critic-1.spec.ts",
+                            "column": 133,
+                            "line": 265
+                          },
+                          "message": "Error: expand: frames whose painted end is not half the height ({\"frames\":193,\"morphing\":66,\"morphMs\":528,\"minScale\":0.47,\"minPaintedX\":13.2,\"squashed\":20,\"squashedMs\":144,\"first\":\"44ms 13.2x28 half=28\",\"last\":\"188ms 26.8x28 half=28\"})\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m20\u001b[39m\n\n  263 |                 console.log(`c1 ${JSON.stringify({ cell: `${tag} ${e} painted-corner expand`, ...expand })}`);\n  264 |                 console.log(`c1 ${JSON.stringify({ cell: `${tag} ${e} painted-corner collapse`, ...collapse })}`);\n> 265 |                 expect.soft(expand.squashed, `expand: frames whose painted end is not half the height (${JSON.stringify(expand)})`).toBe(0);\n      |                                                                                                                                     ^\n  266 |                 expect.soft(collapse.squashed, `collapse: frames whose painted end is not half the height (${JSON.stringify(collapse)})`).toBe(0);\n  267 |             });\n  268 |\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/release-11-0-1-critic-1.spec.ts:265:133"
+                        },
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/release-11-0-1-critic-1.spec.ts",
+                            "column": 139,
+                            "line": 266
+                          },
+                          "message": "Error: collapse: frames whose painted end is not half the height ({\"frames\":193,\"morphing\":66,\"morphMs\":538,\"minScale\":0.47,\"minPaintedX\":13.2,\"squashed\":64,\"squashedMs\":526,\"first\":\"21ms 26.5x28 half=28\",\"last\":\"547ms 13.2x28 half=28\"})\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m64\u001b[39m\n\n  264 |                 console.log(`c1 ${JSON.stringify({ cell: `${tag} ${e} painted-corner collapse`, ...collapse })}`);\n  265 |                 expect.soft(expand.squashed, `expand: frames whose painted end is not half the height (${JSON.stringify(expand)})`).toBe(0);\n> 266 |                 expect.soft(collapse.squashed, `collapse: frames whose painted end is not half the height (${JSON.stringify(collapse)})`).toBe(0);\n      |                                                                                                                                           ^\n  267 |             });\n  268 |\n  269 |             test(`c ${tag}: frames through the expand and the collapse`, async ({ page }, info) => {\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/release-11-0-1-critic-1.spec.ts:266:139"
+                        }
+                      ],
+                      "stdout": [
+                        {
+                          "text": "c1 {\"cell\":\"light-1440f ch painted-corner expand\",\"frames\":193,\"morphing\":66,\"morphMs\":528,\"minScale\":0.47,\"minPaintedX\":13.2,\"squashed\":20,\"squashedMs\":144,\"first\":\"44ms 13.2x28 half=28\",\"last\":\"188ms 26.8x28 half=28\"}\n"
+                        },
+                        {
+                          "text": "c1 {\"cell\":\"light-1440f ch painted-corner collapse\",\"frames\":193,\"morphing\":66,\"morphMs\":538,\"minScale\":0.47,\"minPaintedX\":13.2,\"squashed\":64,\"squashedMs\":526,\"first\":\"21ms 26.5x28 half=28\",\"last\":\"547ms 13.2x28 half=28\"}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T01:50:13.615Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/test-results/release-11-0-1-critic-1-cr-383d1-the-expand-and-the-collapse-chromium-headless-new/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/release-11-0-1-critic-1.spec.ts",
+                        "column": 133,
+                        "line": 265
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "2eea307d6b42cca3e519-dc5389885090691a0722",
+              "file": "release-11-0-1-critic-1.spec.ts",
+              "line": 215,
+              "column": 13
+            }
+          ]
+        },
+        {
+          "title": "critic 1 light-390c",
+          "file": "release-11-0-1-critic-1.spec.ts",
+          "line": 153,
+          "column": 14,
+          "specs": [
+            {
+              "title": "d light-390c: the painted corner per frame of the expand and the collapse",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 3928,
+                      "error": {
+                        "message": "Error: expand: frames whose painted end is not half the height ({\"frames\":194,\"morphing\":66,\"morphMs\":542,\"minScale\":0.494,\"minPaintedX\":14.8,\"squashed\":21,\"squashedMs\":165,\"first\":\"32ms 14.8x30 half=30\",\"last\":\"197ms 29.0x30 half=30\"})\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m21\u001b[39m",
+                        "stack": "Error: expand: frames whose painted end is not half the height ({\"frames\":194,\"morphing\":66,\"morphMs\":542,\"minScale\":0.494,\"minPaintedX\":14.8,\"squashed\":21,\"squashedMs\":165,\"first\":\"32ms 14.8x30 half=30\",\"last\":\"197ms 29.0x30 half=30\"})\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m21\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/release-11-0-1-critic-1.spec.ts:265:133",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/release-11-0-1-critic-1.spec.ts",
+                          "column": 133,
+                          "line": 265
+                        },
+                        "snippet": "  263 |                 console.log(`c1 ${JSON.stringify({ cell: `${tag} ${e} painted-corner expand`, ...expand })}`);\n  264 |                 console.log(`c1 ${JSON.stringify({ cell: `${tag} ${e} painted-corner collapse`, ...collapse })}`);\n> 265 |                 expect.soft(expand.squashed, `expand: frames whose painted end is not half the height (${JSON.stringify(expand)})`).toBe(0);\n      |                                                                                                                                     ^\n  266 |                 expect.soft(collapse.squashed, `collapse: frames whose painted end is not half the height (${JSON.stringify(collapse)})`).toBe(0);\n  267 |             });\n  268 |"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/release-11-0-1-critic-1.spec.ts",
+                            "column": 133,
+                            "line": 265
+                          },
+                          "message": "Error: expand: frames whose painted end is not half the height ({\"frames\":194,\"morphing\":66,\"morphMs\":542,\"minScale\":0.494,\"minPaintedX\":14.8,\"squashed\":21,\"squashedMs\":165,\"first\":\"32ms 14.8x30 half=30\",\"last\":\"197ms 29.0x30 half=30\"})\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m21\u001b[39m\n\n  263 |                 console.log(`c1 ${JSON.stringify({ cell: `${tag} ${e} painted-corner expand`, ...expand })}`);\n  264 |                 console.log(`c1 ${JSON.stringify({ cell: `${tag} ${e} painted-corner collapse`, ...collapse })}`);\n> 265 |                 expect.soft(expand.squashed, `expand: frames whose painted end is not half the height (${JSON.stringify(expand)})`).toBe(0);\n      |                                                                                                                                     ^\n  266 |                 expect.soft(collapse.squashed, `collapse: frames whose painted end is not half the height (${JSON.stringify(collapse)})`).toBe(0);\n  267 |             });\n  268 |\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/release-11-0-1-critic-1.spec.ts:265:133"
+                        },
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/release-11-0-1-critic-1.spec.ts",
+                            "column": 139,
+                            "line": 266
+                          },
+                          "message": "Error: collapse: frames whose painted end is not half the height ({\"frames\":193,\"morphing\":67,\"morphMs\":549,\"minScale\":0.494,\"minPaintedX\":14.8,\"squashed\":65,\"squashedMs\":533,\"first\":\"31ms 28.5x30 half=30\",\"last\":\"564ms 14.8x30 half=30\"})\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m65\u001b[39m\n\n  264 |                 console.log(`c1 ${JSON.stringify({ cell: `${tag} ${e} painted-corner collapse`, ...collapse })}`);\n  265 |                 expect.soft(expand.squashed, `expand: frames whose painted end is not half the height (${JSON.stringify(expand)})`).toBe(0);\n> 266 |                 expect.soft(collapse.squashed, `collapse: frames whose painted end is not half the height (${JSON.stringify(collapse)})`).toBe(0);\n      |                                                                                                                                           ^\n  267 |             });\n  268 |\n  269 |             test(`c ${tag}: frames through the expand and the collapse`, async ({ page }, info) => {\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/release-11-0-1-critic-1.spec.ts:266:139"
+                        }
+                      ],
+                      "stdout": [
+                        {
+                          "text": "c1 {\"cell\":\"light-390c ch painted-corner expand\",\"frames\":194,\"morphing\":66,\"morphMs\":542,\"minScale\":0.494,\"minPaintedX\":14.8,\"squashed\":21,\"squashedMs\":165,\"first\":\"32ms 14.8x30 half=30\",\"last\":\"197ms 29.0x30 half=30\"}\n"
+                        },
+                        {
+                          "text": "c1 {\"cell\":\"light-390c ch painted-corner collapse\",\"frames\":193,\"morphing\":67,\"morphMs\":549,\"minScale\":0.494,\"minPaintedX\":14.8,\"squashed\":65,\"squashedMs\":533,\"first\":\"31ms 28.5x30 half=30\",\"last\":\"564ms 14.8x30 half=30\"}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T01:50:18.020Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/test-results/release-11-0-1-critic-1-cr-cdc68-the-expand-and-the-collapse-chromium-headless-new/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/release-11-0-1-critic-1.spec.ts",
+                        "column": 133,
+                        "line": 265
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "2eea307d6b42cca3e519-5452f41966183219491c",
+              "file": "release-11-0-1-critic-1.spec.ts",
+              "line": 215,
+              "column": 13
+            }
+          ]
+        },
+        {
+          "title": "critic 1 dark-1440f",
+          "file": "release-11-0-1-critic-1.spec.ts",
+          "line": 153,
+          "column": 14,
+          "specs": [
+            {
+              "title": "d dark-1440f: the painted corner per frame of the expand and the collapse",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 4,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 3947,
+                      "error": {
+                        "message": "Error: expand: frames whose painted end is not half the height ({\"frames\":192,\"morphing\":65,\"morphMs\":525,\"minScale\":0.47,\"minPaintedX\":13.2,\"squashed\":19,\"squashedMs\":142,\"first\":\"46ms 13.2x28 half=28\",\"last\":\"188ms 26.8x28 half=28\"})\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m19\u001b[39m",
+                        "stack": "Error: expand: frames whose painted end is not half the height ({\"frames\":192,\"morphing\":65,\"morphMs\":525,\"minScale\":0.47,\"minPaintedX\":13.2,\"squashed\":19,\"squashedMs\":142,\"first\":\"46ms 13.2x28 half=28\",\"last\":\"188ms 26.8x28 half=28\"})\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m19\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/release-11-0-1-critic-1.spec.ts:265:133",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/release-11-0-1-critic-1.spec.ts",
+                          "column": 133,
+                          "line": 265
+                        },
+                        "snippet": "  263 |                 console.log(`c1 ${JSON.stringify({ cell: `${tag} ${e} painted-corner expand`, ...expand })}`);\n  264 |                 console.log(`c1 ${JSON.stringify({ cell: `${tag} ${e} painted-corner collapse`, ...collapse })}`);\n> 265 |                 expect.soft(expand.squashed, `expand: frames whose painted end is not half the height (${JSON.stringify(expand)})`).toBe(0);\n      |                                                                                                                                     ^\n  266 |                 expect.soft(collapse.squashed, `collapse: frames whose painted end is not half the height (${JSON.stringify(collapse)})`).toBe(0);\n  267 |             });\n  268 |"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/release-11-0-1-critic-1.spec.ts",
+                            "column": 133,
+                            "line": 265
+                          },
+                          "message": "Error: expand: frames whose painted end is not half the height ({\"frames\":192,\"morphing\":65,\"morphMs\":525,\"minScale\":0.47,\"minPaintedX\":13.2,\"squashed\":19,\"squashedMs\":142,\"first\":\"46ms 13.2x28 half=28\",\"last\":\"188ms 26.8x28 half=28\"})\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m19\u001b[39m\n\n  263 |                 console.log(`c1 ${JSON.stringify({ cell: `${tag} ${e} painted-corner expand`, ...expand })}`);\n  264 |                 console.log(`c1 ${JSON.stringify({ cell: `${tag} ${e} painted-corner collapse`, ...collapse })}`);\n> 265 |                 expect.soft(expand.squashed, `expand: frames whose painted end is not half the height (${JSON.stringify(expand)})`).toBe(0);\n      |                                                                                                                                     ^\n  266 |                 expect.soft(collapse.squashed, `collapse: frames whose painted end is not half the height (${JSON.stringify(collapse)})`).toBe(0);\n  267 |             });\n  268 |\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/release-11-0-1-critic-1.spec.ts:265:133"
+                        },
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/release-11-0-1-critic-1.spec.ts",
+                            "column": 139,
+                            "line": 266
+                          },
+                          "message": "Error: collapse: frames whose painted end is not half the height ({\"frames\":193,\"morphing\":66,\"morphMs\":539,\"minScale\":0.47,\"minPaintedX\":13.2,\"squashed\":64,\"squashedMs\":525,\"first\":\"21ms 26.3x28 half=28\",\"last\":\"546ms 13.2x28 half=28\"})\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m64\u001b[39m\n\n  264 |                 console.log(`c1 ${JSON.stringify({ cell: `${tag} ${e} painted-corner collapse`, ...collapse })}`);\n  265 |                 expect.soft(expand.squashed, `expand: frames whose painted end is not half the height (${JSON.stringify(expand)})`).toBe(0);\n> 266 |                 expect.soft(collapse.squashed, `collapse: frames whose painted end is not half the height (${JSON.stringify(collapse)})`).toBe(0);\n      |                                                                                                                                           ^\n  267 |             });\n  268 |\n  269 |             test(`c ${tag}: frames through the expand and the collapse`, async ({ page }, info) => {\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/release-11-0-1-critic-1.spec.ts:266:139"
+                        }
+                      ],
+                      "stdout": [
+                        {
+                          "text": "c1 {\"cell\":\"dark-1440f ch painted-corner expand\",\"frames\":192,\"morphing\":65,\"morphMs\":525,\"minScale\":0.47,\"minPaintedX\":13.2,\"squashed\":19,\"squashedMs\":142,\"first\":\"46ms 13.2x28 half=28\",\"last\":\"188ms 26.8x28 half=28\"}\n"
+                        },
+                        {
+                          "text": "c1 {\"cell\":\"dark-1440f ch painted-corner collapse\",\"frames\":193,\"morphing\":66,\"morphMs\":539,\"minScale\":0.47,\"minPaintedX\":13.2,\"squashed\":64,\"squashedMs\":525,\"first\":\"21ms 26.3x28 half=28\",\"last\":\"546ms 13.2x28 half=28\"}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T01:50:22.423Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/test-results/release-11-0-1-critic-1-cr-1b217-the-expand-and-the-collapse-chromium-headless-new/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/release-11-0-1-critic-1.spec.ts",
+                        "column": 133,
+                        "line": 265
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "2eea307d6b42cca3e519-e6a3cc0f6a572237eca6",
+              "file": "release-11-0-1-critic-1.spec.ts",
+              "line": 215,
+              "column": 13
+            }
+          ]
+        },
+        {
+          "title": "critic 1 dark-390c",
+          "file": "release-11-0-1-critic-1.spec.ts",
+          "line": 153,
+          "column": 14,
+          "specs": [
+            {
+              "title": "d dark-390c: the painted corner per frame of the expand and the collapse",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 5,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 3924,
+                      "error": {
+                        "message": "Error: expand: frames whose painted end is not half the height ({\"frames\":193,\"morphing\":66,\"morphMs\":540,\"minScale\":0.494,\"minPaintedX\":14.8,\"squashed\":20,\"squashedMs\":157,\"first\":\"41ms 14.8x30 half=30\",\"last\":\"197ms 28.8x30 half=30\"})\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m20\u001b[39m",
+                        "stack": "Error: expand: frames whose painted end is not half the height ({\"frames\":193,\"morphing\":66,\"morphMs\":540,\"minScale\":0.494,\"minPaintedX\":14.8,\"squashed\":20,\"squashedMs\":157,\"first\":\"41ms 14.8x30 half=30\",\"last\":\"197ms 28.8x30 half=30\"})\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m20\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/release-11-0-1-critic-1.spec.ts:265:133",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/release-11-0-1-critic-1.spec.ts",
+                          "column": 133,
+                          "line": 265
+                        },
+                        "snippet": "  263 |                 console.log(`c1 ${JSON.stringify({ cell: `${tag} ${e} painted-corner expand`, ...expand })}`);\n  264 |                 console.log(`c1 ${JSON.stringify({ cell: `${tag} ${e} painted-corner collapse`, ...collapse })}`);\n> 265 |                 expect.soft(expand.squashed, `expand: frames whose painted end is not half the height (${JSON.stringify(expand)})`).toBe(0);\n      |                                                                                                                                     ^\n  266 |                 expect.soft(collapse.squashed, `collapse: frames whose painted end is not half the height (${JSON.stringify(collapse)})`).toBe(0);\n  267 |             });\n  268 |"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/release-11-0-1-critic-1.spec.ts",
+                            "column": 133,
+                            "line": 265
+                          },
+                          "message": "Error: expand: frames whose painted end is not half the height ({\"frames\":193,\"morphing\":66,\"morphMs\":540,\"minScale\":0.494,\"minPaintedX\":14.8,\"squashed\":20,\"squashedMs\":157,\"first\":\"41ms 14.8x30 half=30\",\"last\":\"197ms 28.8x30 half=30\"})\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m20\u001b[39m\n\n  263 |                 console.log(`c1 ${JSON.stringify({ cell: `${tag} ${e} painted-corner expand`, ...expand })}`);\n  264 |                 console.log(`c1 ${JSON.stringify({ cell: `${tag} ${e} painted-corner collapse`, ...collapse })}`);\n> 265 |                 expect.soft(expand.squashed, `expand: frames whose painted end is not half the height (${JSON.stringify(expand)})`).toBe(0);\n      |                                                                                                                                     ^\n  266 |                 expect.soft(collapse.squashed, `collapse: frames whose painted end is not half the height (${JSON.stringify(collapse)})`).toBe(0);\n  267 |             });\n  268 |\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/release-11-0-1-critic-1.spec.ts:265:133"
+                        },
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/release-11-0-1-critic-1.spec.ts",
+                            "column": 139,
+                            "line": 266
+                          },
+                          "message": "Error: collapse: frames whose painted end is not half the height ({\"frames\":193,\"morphing\":67,\"morphMs\":548,\"minScale\":0.494,\"minPaintedX\":14.8,\"squashed\":65,\"squashedMs\":535,\"first\":\"30ms 28.6x30 half=30\",\"last\":\"565ms 14.8x30 half=30\"})\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m65\u001b[39m\n\n  264 |                 console.log(`c1 ${JSON.stringify({ cell: `${tag} ${e} painted-corner collapse`, ...collapse })}`);\n  265 |                 expect.soft(expand.squashed, `expand: frames whose painted end is not half the height (${JSON.stringify(expand)})`).toBe(0);\n> 266 |                 expect.soft(collapse.squashed, `collapse: frames whose painted end is not half the height (${JSON.stringify(collapse)})`).toBe(0);\n      |                                                                                                                                           ^\n  267 |             });\n  268 |\n  269 |             test(`c ${tag}: frames through the expand and the collapse`, async ({ page }, info) => {\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/release-11-0-1-critic-1.spec.ts:266:139"
+                        }
+                      ],
+                      "stdout": [
+                        {
+                          "text": "c1 {\"cell\":\"dark-390c ch painted-corner expand\",\"frames\":193,\"morphing\":66,\"morphMs\":540,\"minScale\":0.494,\"minPaintedX\":14.8,\"squashed\":20,\"squashedMs\":157,\"first\":\"41ms 14.8x30 half=30\",\"last\":\"197ms 28.8x30 half=30\"}\n"
+                        },
+                        {
+                          "text": "c1 {\"cell\":\"dark-390c ch painted-corner collapse\",\"frames\":193,\"morphing\":67,\"morphMs\":548,\"minScale\":0.494,\"minPaintedX\":14.8,\"squashed\":65,\"squashedMs\":535,\"first\":\"30ms 28.6x30 half=30\",\"last\":\"565ms 14.8x30 half=30\"}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T01:50:26.858Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/test-results/release-11-0-1-critic-1-cr-fb9d3-the-expand-and-the-collapse-chromium-headless-new/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/release-11-0-1-critic-1.spec.ts",
+                        "column": 133,
+                        "line": 265
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "2eea307d6b42cca3e519-485a2a211067fbd47fae",
+              "file": "release-11-0-1-critic-1.spec.ts",
+              "line": 215,
+              "column": 13
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-12T01:50:08.789Z",
+    "duration": 22132.843,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 6,
+    "flaky": 0
+  }
+}

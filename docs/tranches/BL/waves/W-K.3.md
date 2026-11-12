@@ -1,11 +1,11 @@
-# W-K.3 · W-FOCUS-LIFECYCLE: focus moves on the logical open and close · 11.0.0
+# W-K.3 · W-FOCUS-LIFECYCLE: focus moves on the logical open and close
 
 | field | value |
 |---|---|
 | seat | band-K wave-spec seat, formation |
 | model | `claude-opus-5-5`, asserted from own system identity |
 | HEAD | `9866d229` (`src` = `f3ad78d0` = published 10.1.0); the band-K fixture (W-K.1 appendix B), reka 2.10.5 and 2.10.1 builds, Chromium and Playwright WebKit |
-| ships in | 11.0.0 |
+| release | `waves/INDEX.md`, the one record |
 | families | F-38 (all members) |
 | depends on | PLAN §5, the one record of edges |
 | dependants | PLAN §5 (its inverse) |

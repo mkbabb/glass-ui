@@ -1,0 +1,34 @@
+
+ RUN  v4.1.10 /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5
+
+(node:80462) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:80513) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ❯ tests/components/custom/dock/dockMorphMeasure.test.ts (18 tests | 1 failed) 1060ms
+     × a capture keeps the run's scroll position 1009ms
+(node:81671) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:81710) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/components/custom/dock/dockMorphMeasure.test.ts > useDockExpandedSize > a capture keeps the run's scroll position
+AssertionError: expected "vi.fn()" to be called at least once
+ ❯ tests/components/custom/dock/dockMorphMeasure.test.ts:414:59
+    412|         // The capture runs on the pane's mutation record; under load …
+    413|         // deliver it after a zero timeout, so wait for the restore it…
+    414|         await vi.waitFor(() => expect(dock.full.scrollTo).toHaveBeenCa…
+       |                                                           ^
+    415|         expect(dock.px("expanded")).toBe("390px");
+    416|         expect(dock.model.scroll).toBe(312);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 246 passed (247)
+      Tests  1 failed | 2396 passed | 10 expected fail | 1 skipped (2408)
+   Start at  05:22:42
+   Duration  56.78s (transform 3.36s, setup 7.40s, import 24.79s, tests 22.64s, environment 31.79s)
+

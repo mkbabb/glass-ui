@@ -1,0 +1,16 @@
+# PE15 plant-insetlevel-e15 webkit · 2026-11-09 23:13:50 · load { 5.02 5.39 9.09 } · harness 0c64ff33af43 · --only A12
+# E-15 · S15's members at their folded ranges (P-E15 §S15)
+# target /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p15/PE15/wt/.pe15out/builds/plant-insetlevel · engine webkit · lock wait 0.0 s (the deadline 5400 s counts from here) · other headless processes: chromium 0, webkit 0 · load 4.9/5.3/9.1 at start
+# scene app: harness scenes/App.vue (sha1 912fecf0a1aa)
+# webkit 26.5 (Playwright WebKit, not Safari; real Safari UNMEASURED (owner's safaridriver checkbox))
+# held control: scene slider root .glass-slider thumb [role="slider"] engaged [data-engaged], [data-held]; clock token --spring-dock-settle; cells A12; film read after the frame's resize step (class 7)
+  FAIL       A12 C's top 0 → 120 px, 400 ms linear, during the hold · the card moved 120.0, 0.0 px · the root's centre apart from its card's: max 3.00 px, frames over 2 px 6 (bound ≤ 0.5) · glides started 4 (bound 0) · errors 0 · load 4.9/5.3/9.1
+  FAIL       A12 C's top 0 → 120 px, 400 ms ease-in-out, during the hold · the card moved 120.0, 0.0 px · the root's centre apart from its card's: max 3.56 px, frames over 2 px 10 (bound ≤ 0.5) · glides started 4 (bound 0) · errors 0 · load 4.9/5.3/9.1
+  FAIL       A12 C's top 0 → 200 px, 150 ms ease, during the hold · the card moved 200.0, 0.0 px · the root's centre apart from its card's: max 134.49 px, frames over 2 px 27 (bound ≤ 0.5) · glides started 13 (bound 0) · errors 0 · load 4.8/5.3/9.0
+  FAIL       A12 C's left 0 → 120 px, 400 ms ease, during the hold · the card moved 0.0, 120.0 px · the root's centre apart from its card's: max 24.11 px, frames over 2 px 29 (bound ≤ 0.5) · glides started 15 (bound 0) · errors 0 · load 4.8/5.3/9.0
+  FAIL       A12 C's inset-block-start 0 → 120 px, 600 ms on the dock row, during the hold · the card moved 107.7, 0.0 px · the root's centre apart from its card's: max 4.66 px, frames over 2 px 5 (bound ≤ 0.5) · glides started 5 (bound 0) · errors 0 · load 4.8/5.3/9.0
+  FAIL       A12 C's bottom auto → top: auto; bottom 0 → 60 px, 400 ms linear (X6's form), during the hold · the card moved -60.0, 0.0 px · the root's centre apart from its card's: max 8.40 px, frames over 2 px 41 (bound ≤ 0.5) · glides started 16 (bound 0) · errors 0 · load 4.6/5.3/9.0
+  REPORT     A12 C absolute, top 0 → 120 px, 400 ms linear · STATED LIMIT (a level change, b.6), REPORT, during the hold · the card moved 120.0, 0.0 px · the root's centre apart from its card's: max 3.94 px, frames over 2 px 9 (bound ≤ 0.5) · glides started 9 (bound 0) · errors 0 · load 4.6/5.3/9.0
+E-15 webkit FAIL · 0 pass, 6 fail, 0 unmeasured of 6 gating cells (1 reported) · load 4.9/5.3/9.1 at start, 4.6/5.3/9.0 at end
+# exit 1 · 2026-11-09 23:14:04 · load { 4.65 5.29 8.99 }
+# end · 2026-11-09 23:14:04 · load { 4.65 5.29 8.99 } · harness 0c64ff33af43

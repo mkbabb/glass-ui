@@ -7,9 +7,8 @@
 //
 // I-3: a collapsed horizontal dock was always drawn as `--radius-circle` (50%). A dock
 // whose `#persistent` control sits beside the summary is two cells wide, so 50% drew an
-// oval lozenge over 40 px (atlas F-20). The dock now rests as a capsule in every
-// posture (`--radius-dock` is the stadium): that two-cell dock is a capsule, the square
-// one a circle, both from the one corner rule, with no collapsed posture rule.
+// oval lozenge over 40 px (atlas F-20). A stadium dock takes half its cross extent there,
+// a capsule; a finite shape keeps the bar corner `--radius-dock`.
 //
 // jsdom has no cascade, so these are source detectors on comment-stripped CSS. The
 // engine half is atlas's `PlateDock.browser.spec.ts` (computed `scale` under hover and
@@ -52,16 +51,28 @@ describe("U/B8r I-2: no dock control scales on hover", () => {
 
 describe("U/B8r I-3: the two-cell collapsed dock is not drawn as a circle", () => {
     const morph = decomment(read("src/components/dock/styles/morph.css"));
+    const run = decomment(read("src/components/dock/styles/run.css"));
 
-    // One corner for every posture: the engine clamps the stadium to half the box's
-    // shorter side, a circle on the square box and round ends on a wider one.
-    it("the dock's corner is the stadium, with no collapsed posture rule", () => {
-        expect(decomment(read("src/styles/theme/radius.css"))).toMatch(
-            /--radius-dock:\s*var\(--radius-stadium\);/,
+    it("the circle stays for the square collapsed dock of a finite shape", () => {
+        expect(morph).toMatch(
+            /\.glass-dock\.collapsed:not\(\[data-morphing\]\):not\(\.vertical\):not\(\.shape-pill\)\s*\{\s*border-radius:\s*var\(--radius-circle\);/,
         );
-        expect(decomment(read("src/components/dock/styles/shape.css"))).toMatch(
-            /\.glass-dock \{\s*border-radius:\s*var\(--radius-dock\);/,
+    });
+
+    it("a finite-shape collapsed dock with a persistent control beside a summary keeps --radius-dock", () => {
+        expect(morph).toMatch(
+            /\.glass-dock\.collapsed:not\(\[data-morphing\]\):not\(\.vertical\):not\(\.shape-pill\):has\(\.dock-persistent\):has\(\s*\.dock-layer--summary:not\(:empty\)\s*\)\s*\{\s*border-radius:\s*var\(--radius-dock\);/,
         );
-        expect(morph).not.toMatch(/\.glass-dock\.collapsed[^{]*\{[^}]*border-radius/);
+    });
+
+    it("the stadium's corner is half its cross extent in every posture: a circle on one cell, a capsule on two", () => {
+        expect(run).toMatch(/\.glass-dock\.shape-pill\s*\{\s*border-radius:\s*var\(--dock-cap-rest\);/);
+        expect(run).toMatch(/--dock-cap-rest:\s*calc\(var\(--dock-cross\) \/ 2\)/);
+        // The cross extent is the measure, and before the script runs the same extent
+        // from the density tokens: the first paint is already a stadium.
+        expect(run).toMatch(/--dock-cross:\s*var\(\s*--dock-plate-cross-px,\s*calc\(var\(--dock-layer-height\) \+ 2 \* var\(--dock-padding-block\)\)\s*\)/);
+        expect(run).toMatch(/\.glass-dock\.vertical\s*\{\s*--dock-cross:\s*var\(\s*--dock-plate-cross-px,\s*calc\(var\(--dock-control-size\) \+ 2 \* var\(--dock-padding-inline\)\)\s*\)/);
+        // Mid-morph the corner's morph-axis radius is divided by the box's scale.
+        expect(run).toMatch(/\.glass-dock\.shape-pill\[data-morphing\]:not\(\.vertical\)\s*\{\s*border-radius:\s*calc\(var\(--dock-cap-rest\) \/ max\(var\(--dock-size-scale, 1\), 0\.06\)\) \/\s*var\(--dock-cap-rest\);/);
     });
 });

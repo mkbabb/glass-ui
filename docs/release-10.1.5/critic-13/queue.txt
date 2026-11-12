@@ -1,0 +1,24 @@
+01:30 chain-ch queued
+02:04 chain-ch guard-rc=0 
+02:04 chain-wk queued
+02:30 chain-wk guard-rc=0 
+02:30 g7 queued
+02:32 g7 guard-rc=0 
+02:32 chain-p4 queued
+02:33 critic stopped its own p4 chain by pid 1263 (meant as an unadmitted waiter; it had just been admitted and had run q2 8/8, and c9f run 1 was starting) to run obs first; p4 requeued whole
+02:33 chain-obs queued
+02:33 chain-p4 guard-rc=143 
+02:33 queue done: ch wk g7 p4
+02:34 chain-obs guard-rc=0 
+02:34 chain-p4 queued
+03:01 chain-p4 guard-rc=0 
+03:01 queue done: obs p4
+03:01 chain-obs queued
+03:03 chain-obs guard-rc=0 
+03:03 queue done: obs
+03:03 chain-wk2 queued (the release spec in WebKit, second pass; pass 1 kept as branch-wk-pass1.*)
+03:20 chain-wk3 queued (the release spec in WebKit as two shards, one browser each; pass 2 kept as branch-wk-pass2.*)
+03:47 chain-wk4 queued (n1 alone in WebKit, 12 repeats per pointer)
+03:55 chain-wk5 queued (c13b, n1's collapse start per frame, tip and v10.1.4)
+04:01 chain-ch2 queued (c13b in Chromium)
+04:06 chain-wk6 queued (c13b five stages, then the fix-11 src arm, WebKit)

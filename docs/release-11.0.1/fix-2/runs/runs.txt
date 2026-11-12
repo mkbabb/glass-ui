@@ -1,0 +1,55 @@
+20:50 before before-fix2-ch rc=1 load=7.82 8.85 10.98  10 failed 
+20:50 before before-critic-ch rc=1 load=9.60 9.20 11.05  6 failed 
+20:50 chain ch before done: fix2 critic
+20:53 after after-fix2-ch rc=0 load=14.04 10.61 11.25  10 passed (11.9s) 
+20:53 after after-critic-ch rc=0 load=12.82 10.54 11.21  6 passed (19.4s) 
+20:53 after after-owner-ch rc=0 load=11.71 10.38 11.14  9 passed (10.0s) 
+20:58 after after-partA-ch rc=0 load=12.33 9.57 10.36  84 passed (5.2m) 
+21:06 after after-partB-ch rc=0 load=9.86 9.63 10.00  23 passed (7.7m) 
+21:06 chain ch after done: fix2 critic owner partA partB
+ch-after guard exit 0
+21:08 before-tree before-tree-fix2-wk rc=1 load=12.34 10.55 10.31  10 failed 
+21:08 before-tree before-tree-critic-wk rc=1 load=14.00 11.04 10.49  6 failed 
+21:09 before-tree before-tree-owner-wk rc=1 load=13.31 11.04 10.50  1 failed  8 passed (13.4s) 
+21:09 chain wk before-tree done: fix2 critic owner
+21:09 after after-fix2-wk rc=0 load=13.22 11.13 10.54  10 passed (14.3s) 
+21:09 after after-critic-wk rc=0 load=12.76 11.18 10.57  6 passed (21.1s) 
+21:09 after after-owner-wk rc=0 load=13.74 11.48 10.69  9 passed (13.0s) 
+21:15 after after-partA-wk rc=0 load=19.12 14.49 12.23  84 passed (5.9m) 
+21:23 after after-partB-wk rc=0 load=18.20 16.54 13.92  23 passed (8.1m) 
+21:23 chain wk after done: fix2 critic owner partA partB
+wk guard exit 1
+21:26 before-tree before-tree-owner-ch rc=1 load=14.93 16.04 14.18  1 failed  8 passed (12.1s) 
+21:26 before-tree before-tree-frames-ch rc=0 load=15.42 16.12 14.22  1 passed (3.9s) 
+21:26 chain ch before-tree done: owner frames
+21:26 after after-frames-ch rc=0 load=15.71 16.15 14.25  1 passed (5.4s) 
+21:26 chain ch after done: frames
+ch-2 guard exit 0
+21:37 before-tree before-tree-fix2-ch rc=1 load=13.80 12.42 13.06  14 failed 
+21:37 chain ch before-tree done: fix2
+21:37 after after-fix2-ch rc=1 load=13.30 12.39 13.04  4 failed  10 passed (17.6s) 
+21:37 chain ch after done: fix2
+ch-3 guard exit 0
+21:38 after after-fix2-ch rc=1 load=14.31 12.71 13.10  4 failed  10 passed (18.0s) 
+21:38 chain ch after done: fix2
+21:41 after after-fix2-ch rc=1 load=8.40 11.28 12.50  4 failed  10 passed (16.5s) 
+21:41 chain ch after done: fix2
+21:41 before-tree before-tree-fix2-ch rc=1 load=11.40 11.54 12.52  14 failed 
+21:41 chain ch before-tree done: fix2
+21:42 after after-fix2-ch rc=0 load=12.14 11.70 12.56  14 passed (16.4s) 
+21:42 chain ch after done: fix2
+21:46 before-tree before-tree-fix2-wk rc=1 load=8.74 10.13 11.64 
+21:46 chain wk before-tree done: fix2
+21:46 after after-fix2-wk rc=0 load=10.12 10.34 11.68  14 passed (20.2s) 
+21:46 chain wk after done: fix2
+wk-2 guard exit 0
+21:47 before-tree before-tree-fix2-wk rc=1 load=14.62 11.55 12.06  14 failed 
+21:47 chain wk before-tree done: fix2
+wk-3 guard exit 0
+21:52 after after-g6-4-ch rc=0 load=11.05 11.51 11.93  23 passed (16.9s) 
+21:54 after after-g6-3-ch rc=0 load=10.87 11.41 11.84  60 passed (2.2m) 
+21:54 chain ch after done: g6-4 g6-3
+21:54 after after-g6-4-wk rc=0 load=10.72 11.34 11.81  8 skipped  15 passed (21.7s) 
+21:57 after after-g6-3-wk rc=0 load=11.30 11.38 11.75  2 skipped  58 passed (2.3m) 
+21:57 chain wk after done: g6-4 g6-3
+g6 guards done

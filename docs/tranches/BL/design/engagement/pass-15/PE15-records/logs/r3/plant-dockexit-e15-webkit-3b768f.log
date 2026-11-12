@@ -1,0 +1,11 @@
+# PE15 plant-dockexit-e15 webkit · 2026-11-10 19:47:20 · load { 16.43 15.59 16.52 } · harness 0c64ff33af43 · --only EXIT
+# E-15 · S15's members at their folded ranges (P-E15 §S15)
+# target /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p15/PE15/wt/.pe15out/builds/plant-dockexit · engine webkit · lock wait 0.0 s (the deadline 5400 s counts from here) · other headless processes: chromium 4, webkit 0 · load 15.8/15.5/16.5 at start
+# scene app: harness scenes/App.vue (sha1 912fecf0a1aa)
+# webkit 26.5 (Playwright WebKit, not Safari; real Safari UNMEASURED (owner's safaridriver checkbox))
+# held control: scene slider root .glass-slider thumb [role="slider"] engaged [data-engaged], [data-held]; clock token --spring-dock-settle; cells EXIT; film read after the frame's resize step (class 7)
+  PASS       EXIT --spring-dock-settle 0.08s on <html>: the released root's painted width across the stage's hide · width 381.6 → 360.0 px over 30 frames · the stage hid on frame 9 (+133 ms) · the width's change on that frame 0.63 px against the grow's own return just before it 2.48 px a frame (bound ≤ 2 × that + 0.5: continuous) · per-frame changes [-2.6 -5.5 -4.6 -3.5 -2.5 -1.5 -0.8 -0.6 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0] · errors 0 · load 15.8/15.5/16.5
+  PASS       EXIT --spring-dock-settle 0.21s on <html>: the released root's painted width across the stage's hide (the library's settle: control) · width 381.6 → 360.0 px over 30 frames · the stage hid on frame 14 (+216 ms) · the width's change on that frame 0.00 px against the grow's own return just before it 0.50 px a frame (bound ≤ 2 × that + 0.5: continuous) · per-frame changes [-2.4 -4.9 -4.8 -3.5 -2.6 -1.6 -1.0 -0.9 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0] · errors 0 · load 19.4/16.2/16.7
+E-15 webkit PASS · 2 pass, 0 fail, 0 unmeasured of 2 gating cells (0 reported) · load 15.8/15.5/16.5 at start, 19.4/16.2/16.7 at end
+# exit 0 · 2026-11-10 19:47:25 · load { 19.38 16.22 16.73 }
+# end · 2026-11-10 19:47:25 · load { 19.38 16.22 16.73 } · harness 0c64ff33af43

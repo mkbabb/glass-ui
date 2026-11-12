@@ -1,0 +1,26 @@
+<!doctype html>
+<!--
+    glass repro (O-193 hover ellipse, O-205 cut cap), no daraksha CSS: one
+    collapsed GlassDock with a persistent seat and a two-layer DockLayerGroup,
+    exactly glass's reference shape. `npm run dev`, then open
+    /test/glass-repro/dock-cutcap.html. On glass 11.0.0 the plate's corners
+    read [30,4,4,30]-style unequal and the open page's compact seat hovers as an
+    ellipse (its radius is --radius-circle, 50 %, on a wide box). Measured on
+    11.0.0: the collapsed .dock-plate paints [16,4,4,16] (glass's own corner)
+    and [30,4,4,30] with ?radius-dock=1.875rem (the site's); the seat 92x36
+    at 50 %. `?active=page&end=1` is the site's Motion dock (a narrow active
+    layer beside a wider one, and a #persistent-end seat). The page writes what
+    it measures into #readout.
+-->
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>glass repro: dock cut cap</title>
+    </head>
+    <body>
+        <div id="repro"></div>
+        <pre id="readout"></pre>
+        <script type="module" src="./dock-cutcap.ts"></script>
+    </body>
+</html>

@@ -1,0 +1,31 @@
+{
+ "id": "E-14",
+ "engine": "webkit",
+ "version": "26.5",
+ "target": {
+  "build": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p15/PE15/wt/.pe15out/builds/plant-norange"
+ },
+ "loadStart": "4.2/5.0/8.6",
+ "loadEnd": "4.3/5.0/8.6",
+ "verdict": "FAIL",
+ "cells": [
+  {
+   "name": "M24 scroll-snap y mandatory, align center: the snapped item grows 300 → 400 px below the root",
+   "status": "FAIL",
+   "line": "the act on frame 8 · paint moved 0.0, -50.0 px in all; on the act's frame 0.00, -50.00 = 50.00 px (bound ≤ 0.50) · largest move over any 16.7 ms 38.3 px at +19 ms (bound 12.0) · glides 0 (moved ≥ 5 px, no glide) · scrollY 154 → 154 → 154, scroller 600 → 650 → 650 · path [0.0,0.0 0.0,-50.0 0.0,-50.0 0.0,-50.0 0.0,-50.0] · errors 0",
+   "load": "4.2/5.0/8.6"
+  },
+  {
+   "name": "M24 scroll-snap y mandatory, align end: the snapped item grows 300 → 400 px below the root",
+   "status": "FAIL",
+   "line": "the act on frame 8 · paint moved 0.0, -100.0 px in all; on the act's frame 0.00, -100.00 = 100.00 px (bound ≤ 0.50) · largest move over any 16.7 ms 66.7 px at +20 ms (bound 22.9) · glides 0 (moved ≥ 5 px, no glide) · scrollY 154 → 154 → 154, scroller 600 → 700 → 700 · path [0.0,0.0 0.0,-100.0 0.0,-100.0 0.0,-100.0 0.0,-100.0] · errors 0",
+   "load": "4.2/5.0/8.6"
+  },
+  {
+   "name": "M24 scroll-snap y mandatory, align start: the snapped item grows 300 → 400 px below the root",
+   "status": "PASS",
+   "line": "the act on frame 8 · paint moved 0.0, 0.0 px in all; on the act's frame 0.00, 0.00 = 0.00 px (bound ≤ 0.50) · largest move over any 16.7 ms 0.0 px at +NaN ms (bound 1.0) · glides 0 · scrollY 154 → 154 → 154, scroller 600 → 600 → 600 · path [0.0,0.0 0.0,0.0 0.0,0.0 0.0,0.0 0.0,0.0] · errors 0",
+   "load": "4.3/5.0/8.6"
+  }
+ ]
+}

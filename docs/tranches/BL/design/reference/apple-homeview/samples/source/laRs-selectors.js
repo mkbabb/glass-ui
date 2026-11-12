@@ -1,0 +1,2 @@
+// excerpt of https://www.apple.com/v/apple-homeview/a/built/scripts/overview/main.built.js module laRs, fetched 2026-10-15
+laRs:function(e,t,i){"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.default=void 0;t.default={selectors:{background:".all-access-pass__background",timedDotNav:".aap-media-card-gallery__timed-dotnav",playPauseIcon:".icons",playPauseButton:".play-pause-button-wrapper",tablistWrapper:".tablist-wrapper",dotNavItem:".aap-media-card-gallery__dotnav-item"}}}

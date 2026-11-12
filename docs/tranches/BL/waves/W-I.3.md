@@ -1,4 +1,4 @@
-# W-I.3 · W-HOVER-GUARD: no hover paint from an input that has no hover · 11.0.0
+# W-I.3 · W-HOVER-GUARD: no hover paint from an input that has no hover
 
 | field | value |
 |---|---|
@@ -6,7 +6,7 @@
 | model | `claude-opus-5-5`, asserted from own system identity |
 | HEAD | `8536f2cc` in a scratch worktree (the task named `f3ad78d0`; every commit since is under `docs/`). `git diff --stat v10.1.0 HEAD -- src` prints nothing, so every reading below measures the published 10.1.0 bytes |
 | kind | a BUILD wave. Not a loop wave: the dock's share of the guard is D2's floor row 3 and lands in W-I.1; this wave takes the rest of the library and the invariant |
-| ships in | 11.0.0 |
+| release | `waves/INDEX.md`, the one record |
 | families | F-77 (whole: R3-02-01, R4-01-15), `audit/REGISTRY.md:747-757` |
 | depends on | PLAN §5, the one record of edges |
 | dependants | PLAN §5 (its inverse) |

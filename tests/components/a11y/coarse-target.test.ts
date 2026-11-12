@@ -157,14 +157,24 @@ describe("G-COARSE-TARGET — the Slider's operable target clears the measured f
         expect(media![1]).not.toMatch(/position:\s*absolute/);
     });
 
-    it("the invisible standard thumb is still invisible — the target is the TRACK", () => {
-        // The premise the whole exoneration rests on. If the thumb ever regains paint,
-        // "the operable target is the track" stops being true and the finding must be
-        // re-derived rather than inherited.
+    it("the standard thumb is inscribed in the track — the target is still the TRACK", () => {
+        // The premise the whole exoneration rests on, re-derived at 10.1.5 (O-129 r5),
+        // when the scrubber's thumb regained paint so its value end shows at min and max.
+        // It paints a disc of `--slider-thumb-size`, and every size rung takes that as
+        // `min(thumb, track)`, so the disc lies inside the track on both axes: it adds no
+        // region a pointer could acquire that the track does not already cover, and the
+        // operable target is the track (reka binds the slide to the root) as before.
         const thumb = live.match(/\n\.slider-thumb\s*\{([\s\S]*?)\}/);
         expect(thumb).not.toBeNull();
-        expect(thumb![1]).toMatch(/width:\s*0;/);
-        expect(thumb![1]).toMatch(/opacity:\s*0;/);
+        expect(thumb![1]).toMatch(/width:\s*var\(--slider-thumb-size, 1rem\);/);
+        expect(thumb![1]).toMatch(/height:\s*var\(--slider-thumb-size, 1rem\);/);
+        for (const rung of ["sm", "md", "lg"]) {
+            expect(live).toMatch(
+                new RegExp(
+                    `--slider-thumb-size: min\\(var\\(--slider-thumb-size-${rung}\\), var\\(--slider-track-height-${rung}\\)\\)`,
+                ),
+            );
+        }
     });
 });
 

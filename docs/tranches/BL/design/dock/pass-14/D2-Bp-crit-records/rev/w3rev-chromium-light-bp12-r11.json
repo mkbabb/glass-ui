@@ -1,0 +1,165 @@
+{
+ "witness": "W3",
+ "target": "bp12@392ff1e3",
+ "when": "2026-11-11T01:09:24.405Z",
+ "load": 8.78,
+ "cells": [
+  {
+   "engine": "chromium",
+   "cell": "reversal",
+   "pass": false,
+   "failed": [
+    "window",
+    "stub"
+   ],
+   "D": 0,
+   "start": 481.66,
+   "target": 481.66,
+   "frames": 127,
+   "travelMs": 333.3,
+   "continuity": {
+    "ok": true,
+    "ratio": 0.66,
+    "step": 26.25,
+    "bound": 40.07,
+    "atMs": 58.3,
+    "dt": 8.3
+   },
+   "landing": {
+    "ok": true,
+    "why": "dead",
+    "overshoot": 0,
+    "reversals": 1
+   },
+   "window": {
+    "ok": false,
+    "why": "window 274.9 ms after the retarget > clock 214.2 + 2×16.7 + stall 10.4 = 258 ms (O-64 R-4, H-3d)",
+    "open": 8.300000000001091,
+    "close": 341.60000000000036,
+    "land": 341.60000000000036,
+    "motionStart": 8.300000000001091,
+    "clockMs": 214.2,
+    "frameMs": 16.7,
+    "duration": 333.3,
+    "fromRetargetMs": 274.9,
+    "allowMs": 258,
+    "q4": true,
+    "q4AllowMs": 313.8,
+    "q4a": {
+     "ok": true,
+     "allowMs": 289.8,
+     "why": "274.9 ms ≤ 289.8"
+    },
+    "q4c": {
+     "ok": true,
+     "allowMs": 313.8,
+     "why": "274.9 ms ≤ 313.8"
+    }
+   },
+   "owners": {
+    "ok": true,
+    "frames": 0
+   },
+   "trajectory": {
+    "ok": true,
+    "dev1": 0.62,
+    "tol1": 16.19,
+    "dev2": 0.6,
+    "tol2": 7.97,
+    "vAtRetarget": -3.13,
+    "D1": 160.14,
+    "why": "before the retarget 0.62 px (tol 16.19); after it, released at 342.37 px with -3.13 px/ms: 0.6 px (tol 7.97)"
+   },
+   "terminal": {
+    "ok": true,
+    "last": 0.59,
+    "prev": 0.47,
+    "bound": 1.2,
+    "why": "last step 0.59 px after 0.47 px (bound 1.2)"
+   },
+   "spec": {
+    "vmaxNorm": 8.37,
+    "M": 0.002966,
+    "band": 0.02,
+    "clockMs": 214.2
+   },
+   "seats": {
+    "step": {
+     "ok": true,
+     "ratio": 0.65,
+     "step": 13.3,
+     "bound": 20.54,
+     "seat": 1,
+     "atMs": 50
+    },
+    "overlap": {
+     "ok": true,
+     "frames": 0,
+     "first": null
+    }
+   },
+   "blank": {
+    "ok": true,
+    "entering": 7,
+    "movingFrames": 41,
+    "blankFrames": 0,
+    "longestRun": 0,
+    "atMs": null,
+    "why": "0 blank of 41 moving frame(s), longest run 0 (bound 1)"
+   },
+   "leaving": {
+    "ok": true,
+    "leaving": 0,
+    "failing": 0,
+    "lengthMs": 333.3,
+    "rows": [],
+    "vanish": {
+     "ok": true,
+     "drop": 0
+    },
+    "inkMax": 1,
+    "inkOk": true,
+    "why": "no seat leaves"
+   },
+   "splice": {
+    "ok": true,
+    "spliceFrames": 0,
+    "sliverFrames": 0,
+    "firstSplice": null,
+    "firstSliver": null,
+    "why": "0 splice frame(s), 0 sliver frame(s) (bound 0 each)"
+   },
+   "stub": {
+    "ok": false,
+    "judged": 42,
+    "stubFrames": 1,
+    "glyphs": 24,
+    "first": {
+     "atMs": 116.7,
+     "label": "button.dock-tab-button.glass-specular-track",
+     "ch": "n",
+     "frac": 0.3,
+     "edgePx": 886.9,
+     "opacity": 1,
+     "edgeWidthPx": 0.24,
+     "inFrame": 1
+    },
+    "rampPx": null,
+    "unreadGlyphs": 0,
+    "why": "1 stub frame(s) of 42 judged (up to 24 glyphs a frame); first at 116.7 ms: \"n\" in button.dock-tab-button.glass-specular-track painted 30 % at opacity 1, a hard edge (10→90 % alpha in 0.24 px) at 886.9 px (1 stub(s) in that frame) (bound 0; a stub is a glyph painted 10-90 %, at any opacity, by an edge whose alpha goes 10→90 % inside 2 px, inside the plate)"
+   },
+   "lanes": {
+    "ok": true,
+    "judged": true,
+    "flagClosedMs": 341.6,
+    "lanes": 3,
+    "worst": null,
+    "cancels": [],
+    "seatAfterFlag": null,
+    "why": "every lane (3) at its final value from the frame the flag closed; no lane cancelled to identity; every seat at its final position from the flag"
+   },
+   "summary": "D 0 px (481.66→481.66); step ×0.66; dead, 1 reversal(s); window 333.3 ms (allow 258, clock 214.2) — window 274.9 ms after the retarget > clock 214.2 + 2×16.7 + stall 10.4 = 258 ms (O-64 R-4, H-3d); trajectory before the retarget 0.62 px (tol 16.19); after it, released at 342.37 px with -3.13 px/ms: 0.6 px (tol 7.97); terminal last step 0.59 px after 0.47 px (bound 1.2); owners 0; seat step ×0.65 (13.3 px), seat overlap 0 frame(s); blank 0 blank of 41 moving frame(s), longest run 0 (bound 1); leaving no seat leaves; splice 0 splice frame(s), 0 sliver frame(s) (bound 0 each); stub 1 stub frame(s) of 42 judged (up to 24 glyphs a frame); first at 116.7 ms: \"n\" in button.dock-tab-button.glass-specular-track painted 30 % at opacity 1, a hard edge (10→90 % alpha in 0.24 px) at 886.9 px (1 stub(s) in that frame) (bound 0; a stub is a glyph painted 10-90 %, at any opacity, by an edge whose alpha goes 10→90 % inside 2 px, inside the plate); lanes every lane (3) at its final value from the frame the flag closed; no lane cancelled to identity; every seat at its final position from the flag; Q-4 lenient window holds (allow 313.8 ms); Q-4 (a) flag at the 2 % band holds (274.9 ms ≤ 289.8); Q-4 (c) 270 ms dock clock holds (274.9 ms ≤ 313.8); retargeted at 342.05 px  ⟶ FAILED: window, stub",
+   "load": 8.78
+  }
+ ]
+}

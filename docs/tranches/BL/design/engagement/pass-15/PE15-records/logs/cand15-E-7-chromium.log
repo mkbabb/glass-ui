@@ -1,0 +1,16 @@
+# PE15 cand15-E-7 chromium · 2026-11-09 20:54:08 · load { 19.84 27.52 28.78 } · harness 0c64ff33af43 · 
+# E-7 static arm: the worktree holds the build's src tree 04068604b856 (668 files)
+# E-7 · one writer of data-engaged, meaning held
+# target /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p15/PE15/wt/.pe15out/builds/cand15 · engine chromium · lock wait 0.0 s (the deadline 5400 s counts from here) · other headless processes: chromium 12, webkit 0 · load 19.8/27.5/28.8 at start
+# scene app: harness scenes/App.vue (sha1 912fecf0a1aa)
+# chromium 149.0.7827.55
+  PASS       E-7 writers data-engaged (static) · 1 writer file(s): src/composables/motion/engage/stage.ts · bound ≤ 1, under src/composables/motion/engage/ · tree /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p15/PE15/wt · load 19.8/27.5/28.8
+  FAIL       E-7 writers data-held (static) · 2 writer file(s): src/components/dock/GlassDock.vue, src/composables/motion/engage/useEngage.ts · bound ≤ 1, under src/composables/motion/engage/ · tree /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p15/PE15/wt · load 19.8/27.5/28.8
+  PASS       E-7 writers data-press (static) · 1 writer file(s): src/composables/motion/engage/press.ts · bound ≤ 1, under src/composables/motion/engage/ · tree /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p15/PE15/wt · load 19.8/27.5/28.8
+  PASS       E-7 writers data-commit (static) · 1 writer file(s): src/composables/motion/engage/useEngage.ts · bound ≤ 1, under src/composables/motion/engage/ · tree /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p15/PE15/wt · load 19.8/27.5/28.8
+  PASS       E-7 slider held · [data-engaged] nodes while pointer-held 1 · bound ≥ 1 · load 19.8/27.5/28.8
+  PASS       E-7 slider held PRM · reduce · [data-engaged] nodes while pointer-held 1 · bound ≥ 1 · load 19.8/27.5/28.8
+  PASS       E-7 modal open, nothing held · dialog open true · veil nodes 1 · [data-engaged] nodes 0 · bound 0 · load 19.3/27.3/28.7
+E-7 chromium FAIL · 6 pass, 1 fail, 0 unmeasured of 7 gating cells (0 reported) · load 19.8/27.5/28.8 at start, 19.3/27.3/28.7 at end
+# exit 1 · 2026-11-09 20:54:14 · load { 19.29 27.28 28.69 }
+# end · 2026-11-09 20:54:14 · load { 19.29 27.28 28.69 } · harness 0c64ff33af43

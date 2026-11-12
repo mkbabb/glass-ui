@@ -1,0 +1,165 @@
+
+Running 7 tests using 1 worker
+
+  ✘  1 [webkit] › tests-visual/release-10-1-5.spec.ts:688:5 › critique 2, coarse phone › e4 at 390: a run whose seats all show, capped under its reserve, scrolls nothing and keeps the end seat's ring (2.8s)
+  ✘  2 [webkit] › tests-visual/release-10-1-5.spec.ts:688:5 › e4 at 1440: a run whose seats all show, capped under its reserve, scrolls nothing and keeps the end seat's ring (2.8s)
+  ✘  3 [webkit] › tests-visual/release-10-1-5.spec.ts:1114:1 › k2 vertical: a wide tab at a flush edge keeps its whole ring, at the start and at the end (2.2s)
+  ✘  4 [webkit] › tests-visual/release-10-1-5.spec.ts:1051:5 › critique 5, coarse phone › k1 at 320: End, focus() and hover+focus land the end seat flush with its ring whole; Home lands the first (3.6s)
+  ✘  5 [webkit] › tests-visual/release-10-1-5.spec.ts:1153:5 › critique 5, coarse phone › k3 at 320: a capped dock whose seats all show has nothing to scroll and rests round (1.8s)
+  ✘  6 [webkit] › tests-visual/release-10-1-5.spec.ts:1051:5 › k1 at 320: End, focus() and hover+focus land the end seat flush with its ring whole; Home lands the first (3.6s)
+  ✘  7 [webkit] › tests-visual/release-10-1-5.spec.ts:1153:5 › k3 at 320: a capped dock whose seats all show has nothing to scroll and rests round (1.8s)
+
+
+  1) [webkit] › tests-visual/release-10-1-5.spec.ts:688:5 › critique 2, coarse phone › e4 at 390: a run whose seats all show, capped under its reserve, scrolls nothing and keeps the end seat's ring 
+
+    Error: 390 capped 4 px under 346.140625: run scrollWidth = clientWidth ({"sw":228,"cw":224,"sh":58,"ch":58,"active":true})
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 224
+    Received: 228
+
+      131 |     const run = read.runs.find((r) => r.active)!;
+      132 |     expect(run, `${cell}: an active run`).toBeTruthy();
+    > 133 |     expect(run.sw, `${cell}: run scrollWidth = clientWidth (${JSON.stringify(run)})`).toBe(
+          |                                                                                       ^
+      134 |         run.cw,
+      135 |     );
+      136 |     expect(run.sh, `${cell}: run scrollHeight = clientHeight (${JSON.stringify(run)})`).toBe(
+        at expectNoReach (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:133:87)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:699:9
+
+    Error Context: tests-visual/test-results/release-10-1-5-critique-2--59329-d-keeps-the-end-seat-s-ring-webkit/error-context.md
+
+  2) [webkit] › tests-visual/release-10-1-5.spec.ts:688:5 › e4 at 1440: a run whose seats all show, capped under its reserve, scrolls nothing and keeps the end seat's ring 
+
+    Error: 1440 capped 4 px under 341.765625: run scrollWidth = clientWidth ({"sw":232,"cw":227,"sh":54,"ch":54,"active":true})
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 227
+    Received: 232
+
+      131 |     const run = read.runs.find((r) => r.active)!;
+      132 |     expect(run, `${cell}: an active run`).toBeTruthy();
+    > 133 |     expect(run.sw, `${cell}: run scrollWidth = clientWidth (${JSON.stringify(run)})`).toBe(
+          |                                                                                       ^
+      134 |         run.cw,
+      135 |     );
+      136 |     expect(run.sh, `${cell}: run scrollHeight = clientHeight (${JSON.stringify(run)})`).toBe(
+        at expectNoReach (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:133:87)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:699:9
+
+    Error Context: tests-visual/test-results/release-10-1-5-e4-at-1440--4d0bd-d-keeps-the-end-seat-s-ring-webkit/error-context.md
+
+  3) [webkit] › tests-visual/release-10-1-5.spec.ts:1114:1 › k2 vertical: a wide tab at a flush edge keeps its whole ring, at the start and at the end 
+
+    Error: flush at the start: the run's start corner at a flush edge is square (50% 63.085938px,50% 63.085938px)
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 50
+
+      1032 |     for (const c of corners) {
+      1033 |         const parts = c.split(" ").map((v) => Number.parseFloat(v));
+    > 1034 |         expect(Math.min(...parts), `${cell}: the run's ${edge} corner at a flush edge is square (${corners})`).toBe(0);
+           |                                                                                                                ^
+      1035 |     }
+      1036 | }
+      1037 |
+        at expectRunSquare (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:1034:112)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:1123:5
+
+    Error Context: tests-visual/test-results/release-10-1-5-k2-vertical-a91e6-at-the-start-and-at-the-end-webkit/error-context.md
+
+  4) [webkit] › tests-visual/release-10-1-5.spec.ts:1051:5 › critique 5, coarse phone › k1 at 320: End, focus() and hover+focus land the end seat flush with its ring whole; Home lands the first 
+
+    Error: End lands at the run's end ({"pos":539,"max":569})
+
+    expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 568
+    Received:    539
+
+      1064 |         let at = await runAt(page);
+      1065 |         expect(at.max, "the run overflows").toBeGreaterThan(0);
+    > 1066 |         expect(at.pos, `End lands at the run's end (${JSON.stringify(at)})`).toBeGreaterThanOrEqual(at.max - 1);
+           |                                                                              ^
+      1067 |         await expectRunSquare(page, "end", "End");
+      1068 |         await expectRingInsideRun(page, "S12", "End");
+      1069 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:1066:78
+
+    Error Context: tests-visual/test-results/release-10-1-5-critique-5--aa884--whole-Home-lands-the-first-webkit/error-context.md
+
+  5) [webkit] › tests-visual/release-10-1-5.spec.ts:1153:5 › critique 5, coarse phone › k3 at 320: a capped dock whose seats all show has nothing to scroll and rests round 
+
+    Error: 320 rest: run scrollWidth = clientWidth ({"sw":325,"cw":316,"sh":58,"ch":58,"active":true})
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 316
+    Received: 325
+
+      131 |     const run = read.runs.find((r) => r.active)!;
+      132 |     expect(run, `${cell}: an active run`).toBeTruthy();
+    > 133 |     expect(run.sw, `${cell}: run scrollWidth = clientWidth (${JSON.stringify(run)})`).toBe(
+          |                                                                                       ^
+      134 |         run.cw,
+      135 |     );
+      136 |     expect(run.sh, `${cell}: run scrollHeight = clientHeight (${JSON.stringify(run)})`).toBe(
+        at expectNoReach (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:133:87)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:1164:9
+
+    Error Context: tests-visual/test-results/release-10-1-5-critique-5--87702-g-to-scroll-and-rests-round-webkit/error-context.md
+
+  6) [webkit] › tests-visual/release-10-1-5.spec.ts:1051:5 › k1 at 320: End, focus() and hover+focus land the end seat flush with its ring whole; Home lands the first 
+
+    Error: End lands at the run's end ({"pos":505,"max":521})
+
+    expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 520
+    Received:    505
+
+      1064 |         let at = await runAt(page);
+      1065 |         expect(at.max, "the run overflows").toBeGreaterThan(0);
+    > 1066 |         expect(at.pos, `End lands at the run's end (${JSON.stringify(at)})`).toBeGreaterThanOrEqual(at.max - 1);
+           |                                                                              ^
+      1067 |         await expectRunSquare(page, "end", "End");
+      1068 |         await expectRingInsideRun(page, "S12", "End");
+      1069 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:1066:78
+
+    Error Context: tests-visual/test-results/release-10-1-5-k1-at-320-E-c7c26--whole-Home-lands-the-first-webkit/error-context.md
+
+  7) [webkit] › tests-visual/release-10-1-5.spec.ts:1153:5 › k3 at 320: a capped dock whose seats all show has nothing to scroll and rests round 
+
+    Error: 320 rest: run scrollWidth = clientWidth ({"sw":317,"cw":316,"sh":54,"ch":54,"active":true})
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 316
+    Received: 317
+
+      131 |     const run = read.runs.find((r) => r.active)!;
+      132 |     expect(run, `${cell}: an active run`).toBeTruthy();
+    > 133 |     expect(run.sw, `${cell}: run scrollWidth = clientWidth (${JSON.stringify(run)})`).toBe(
+          |                                                                                       ^
+      134 |         run.cw,
+      135 |     );
+      136 |     expect(run.sh, `${cell}: run scrollHeight = clientHeight (${JSON.stringify(run)})`).toBe(
+        at expectNoReach (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:133:87)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:1164:9
+
+    Error Context: tests-visual/test-results/release-10-1-5-k3-at-320-a-51e83-g-to-scroll-and-rests-round-webkit/error-context.md
+
+  7 failed
+    [webkit] › tests-visual/release-10-1-5.spec.ts:688:5 › critique 2, coarse phone › e4 at 390: a run whose seats all show, capped under its reserve, scrolls nothing and keeps the end seat's ring 
+    [webkit] › tests-visual/release-10-1-5.spec.ts:688:5 › e4 at 1440: a run whose seats all show, capped under its reserve, scrolls nothing and keeps the end seat's ring 
+    [webkit] › tests-visual/release-10-1-5.spec.ts:1114:1 › k2 vertical: a wide tab at a flush edge keeps its whole ring, at the start and at the end 
+    [webkit] › tests-visual/release-10-1-5.spec.ts:1051:5 › critique 5, coarse phone › k1 at 320: End, focus() and hover+focus land the end seat flush with its ring whole; Home lands the first 
+    [webkit] › tests-visual/release-10-1-5.spec.ts:1153:5 › critique 5, coarse phone › k3 at 320: a capped dock whose seats all show has nothing to scroll and rests round 
+    [webkit] › tests-visual/release-10-1-5.spec.ts:1051:5 › k1 at 320: End, focus() and hover+focus land the end seat flush with its ring whole; Home lands the first 
+    [webkit] › tests-visual/release-10-1-5.spec.ts:1153:5 › k3 at 320: a capped dock whose seats all show has nothing to scroll and rests round 

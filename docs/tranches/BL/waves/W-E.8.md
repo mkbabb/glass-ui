@@ -1,11 +1,11 @@
-# W-E.8 · the off-role 12 px rung re-seated; a role invariant replaces the latch · 11.0.0
+# W-E.8 · the off-role 12 px rung re-seated; a role invariant replaces the latch
 
 | field | value |
 |---|---|
 | seat | band-E wave-spec seat, formation (relaunch 2026-09-25) |
 | model | `claude-opus-5-5`, asserted from own system identity |
 | HEAD | `4d2e3123` (`src`/`demo` identical to `f3ad78d0`), scratch worktree, demo built there |
-| ships in | 11.0.0 |
+| release | `waves/INDEX.md`, the one record |
 | families | F-30a (#23 W-RADIUS-ROLE; the latch W-A.2 retires to this wave: `tests/styles/radius-role-canon.test.ts:458`) |
 | depends on | PLAN §5, the one record of edges |
 | dependants | PLAN §5 (its inverse) |

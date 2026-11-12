@@ -1,11 +1,11 @@
-# W-E.14 · the configurator envelope keeps its controls · 11.0.0
+# W-E.14 · the configurator envelope keeps its controls
 
 | field | value |
 |---|---|
 | seat | formation fix seat 2 (`formation-audit/fix-2.md`, FA-21); the item, its gates and its cure move here from W-E.9 |
 | model | `claude-opus-5-5`, asserted from own system identity |
 | HEAD | W-E.9's readings (scratch worktree, `src`/`demo` identical to `f3ad78d0`); appendix A is W-E.9's `e9.mjs`, cells G1 and G2 |
-| ships in | 11.0.0 |
+| release | `waves/INDEX.md`, the one record |
 | families | F-33 split: C-13c, a disease row (BK FINAL §7 carry, open at two closes, LEDGER `C-13c`), with R11 and R4-02-07 |
 | depends on | PLAN §5, the one record of edges |
 | dependants | PLAN §5 (its inverse) |

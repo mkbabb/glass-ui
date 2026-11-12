@@ -1,0 +1,41 @@
+[guarded] waiting for the 'webkit' lock
+
+Running 11 tests using 1 worker
+
+  ✓   1 [webkit] › tests-visual/release-10-1-5.spec.ts:552:5 › critique 2, coarse phone › e1 at 390: a label-wide tab under the pointer gives the run no reach and cuts no corner (2.4s)
+  ✓   2 [webkit] › tests-visual/release-10-1-5.spec.ts:552:5 › critique 2, coarse phone › e1 at 844: a label-wide tab under the pointer gives the run no reach and cuts no corner (2.1s)
+  ✓   3 [webkit] › tests-visual/release-10-1-5.spec.ts:579:5 › critique 2, coarse phone › e2 at 390: focused, hovered tab seats keep their whole ring on every edge (5.3s)
+  ✘   4 [webkit] › tests-visual/release-10-1-5.spec.ts:591:5 › critique 2, coarse phone › e3 at 390: the run's clip and hit stop at the persistent seats, at rest and scrolled (5.5s)
+  ✓   5 [webkit] › tests-visual/release-10-1-5.spec.ts:639:5 › critique 2, coarse phone › e4 at 390: an overflowing run at its end keeps the end seat's whole ring (4.9s)
+  ✓   6 [webkit] › tests-visual/release-10-1-5.spec.ts:552:5 › e1 at 390: a label-wide tab under the pointer gives the run no reach and cuts no corner (2.1s)
+  ✓   7 [webkit] › tests-visual/release-10-1-5.spec.ts:552:5 › e1 at 1440: a label-wide tab under the pointer gives the run no reach and cuts no corner (2.1s)
+  ✓   8 [webkit] › tests-visual/release-10-1-5.spec.ts:579:5 › e2 at 390: focused, hovered tab seats keep their whole ring on every edge (5.2s)
+  ✓   9 [webkit] › tests-visual/release-10-1-5.spec.ts:579:5 › e2 at 1440: focused, hovered tab seats keep their whole ring on every edge (5.2s)
+  ✓  10 [webkit] › tests-visual/release-10-1-5.spec.ts:591:5 › e3 at 390: the run's clip and hit stop at the persistent seats, at rest and scrolled (5.3s)
+  ✓  11 [webkit] › tests-visual/release-10-1-5.spec.ts:639:5 › e4 at 1440: an overflowing run at its end keeps the end seat's whole ring (4.9s)
+
+
+  1) [webkit] › tests-visual/release-10-1-5.spec.ts:591:5 › critique 2, coarse phone › e3 at 390: the run's clip and hit stop at the persistent seats, at rest and scrolled 
+
+    Error: 390 persistent, after the focused hovers: run scrollWidth = clientWidth ({"sw":275,"cw":272,"sh":58,"ch":58,"active":true})
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 272
+    Received: 275
+
+      111 |     const run = read.runs.find((r) => r.active)!;
+      112 |     expect(run, `${cell}: an active run`).toBeTruthy();
+    > 113 |     expect(run.sw, `${cell}: run scrollWidth = clientWidth (${JSON.stringify(run)})`).toBe(
+          |                                                                                       ^
+      114 |         run.cw,
+      115 |     );
+      116 |     expect(run.sh, `${cell}: run scrollHeight = clientHeight (${JSON.stringify(run)})`).toBe(
+        at expectNoReach (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:113:87)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:627:9
+
+    Error Context: tests-visual/test-results/release-10-1-5-critique-2--d0cb9--seats-at-rest-and-scrolled-webkit/error-context.md
+
+  1 failed
+    [webkit] › tests-visual/release-10-1-5.spec.ts:591:5 › critique 2, coarse phone › e3 at 390: the run's clip and hit stop at the persistent seats, at rest and scrolled 
+  10 passed (47.4s)

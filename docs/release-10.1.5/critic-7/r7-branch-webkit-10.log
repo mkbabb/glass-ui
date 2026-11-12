@@ -1,0 +1,23 @@
+
+Running 1 test using 1 worker
+
+  ✘  1 [webkit] › tests-visual/release-10-1-5-critic-7b.spec.ts:532:5 › r7l coarse › r7l layered rest coarse (3.3s)
+
+
+  1) [webkit] › tests-visual/release-10-1-5-critic-7b.spec.ts:532:5 › r7l coarse › r7l layered rest coarse 
+
+    Error: mouse.wheel: Mouse wheel is not supported in mobile WebKit
+
+      564 |             const box = await page.locator(".dock-run").boundingBox();
+      565 |             await page.mouse.move(box!.x + box!.width / 2, box!.y + box!.height / 2);
+    > 566 |             await page.mouse.wheel(400, 0);
+          |                              ^
+      567 |             await page.waitForTimeout(900);
+      568 |             rows.push(await look(`${width} after wheel +400`));
+      569 |         }
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5-critic-7b.spec.ts:566:30
+
+    Error Context: tests-visual/test-results/release-10-1-5-critic-7b-r7l-coarse-r7l-layered-rest-coarse-webkit/error-context.md
+
+  1 failed
+    [webkit] › tests-visual/release-10-1-5-critic-7b.spec.ts:532:5 › r7l coarse › r7l layered rest coarse 

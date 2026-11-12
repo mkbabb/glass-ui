@@ -1,0 +1,22 @@
+# PE15 cand15-E-6 webkit · 2026-11-10 19:40:28 · load { 18.15 19.23 18.14 } · harness 0c64ff33af43 · 
+# E-6 · the idle rung under the compositor-only bound
+# target /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/D5/p15/PE15/wt/.pe15out/builds/cand15 · engine webkit · lock wait 0.0 s (the deadline 5400 s counts from here) · other headless processes: chromium 8, webkit 0 · load 18.2/19.2/18.1 at start
+# scene app: harness scenes/App.vue (sha1 912fecf0a1aa)
+# webkit 26.5 (Playwright WebKit, not Safari; real Safari UNMEASURED (owner's safaridriver checkbox))
+  FAIL       E-6 s6 present light · 0 running infinite animation(s) at rest · load 17.7/19.1/18.1
+  UNMEASURED E-6 s6 channel light · no idle animation to read · load 17.7/19.1/18.1
+  UNMEASURED E-6 s6 shape light · no idle animation to read · load 17.7/19.1/18.1
+  UNMEASURED E-6 s6 amplitude light · no idle animation to read · load 17.7/19.1/18.1
+  UNMEASURED E-6 s6 period light · no idle animation to read · load 17.7/19.1/18.1
+  REPORT     E-6 s6 layouts/s light · n/a: Playwright WebKit exposes no layout counter · load 17.7/19.1/18.1
+  PASS       E-6 s6 PRM light · 0 idle animation(s) under reduced motion, 0 spatial · load 17.7/19.1/18.1
+  FAIL       E-6 s6 present dark · 0 running infinite animation(s) at rest · load 17.7/19.1/18.1
+  UNMEASURED E-6 s6 channel dark · no idle animation to read · load 17.7/19.1/18.1
+  UNMEASURED E-6 s6 shape dark · no idle animation to read · load 17.7/19.1/18.1
+  UNMEASURED E-6 s6 amplitude dark · no idle animation to read · load 17.7/19.1/18.1
+  UNMEASURED E-6 s6 period dark · no idle animation to read · load 17.7/19.1/18.1
+  REPORT     E-6 s6 layouts/s dark · n/a: Playwright WebKit exposes no layout counter · load 17.7/19.1/18.1
+  PASS       E-6 s6 PRM dark · 0 idle animation(s) under reduced motion, 0 spatial · load 17.7/19.1/18.1
+E-6 webkit FAIL · 2 pass, 2 fail, 8 unmeasured of 12 gating cells (2 reported) · load 18.2/19.2/18.1 at start, 17.7/19.1/18.1 at end
+# exit 1 · 2026-11-10 19:40:33 · load { 17.66 19.11 18.10 }
+# end · 2026-11-10 19:40:33 · load { 17.66 19.11 18.10 } · harness 0c64ff33af43

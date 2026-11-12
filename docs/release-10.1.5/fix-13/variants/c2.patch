@@ -1,0 +1,42 @@
+diff --git a/src/components/dock/composables/dockMorphMeasure.ts b/src/components/dock/composables/dockMorphMeasure.ts
+index 9490720dc..11a53c212 100644
+--- a/src/components/dock/composables/dockMorphMeasure.ts
++++ b/src/components/dock/composables/dockMorphMeasure.ts
+@@ -567,6 +567,7 @@ export function useDockExpandedSize(
+      * paints its rest there, at scale 1).
+      */
+     let firstBoxes: FirstBoxes | null = null;
++    let firstScroll: { left: number; top: number } | null = null;
+ 
+     function rigidRegions(root: HTMLElement): HTMLElement[] {
+         return [...root.querySelectorAll<HTMLElement>(":scope > .dock-controls > .dock-persistent")];
+@@ -583,6 +584,8 @@ export function useDockExpandedSize(
+         firstBoxes = new Map(
+             [root, ...rigidRegions(root), ...panes()].map((el) => [el, span(el, a)] as const),
+         );
++        const run = expandedEl.value;
++        firstScroll = run ? { left: run.scrollLeft, top: run.scrollTop } : null;
+     }
+ 
+     function release(): void {
+@@ -595,6 +598,20 @@ export function useDockExpandedSize(
+     }
+ 
+     function anchor(): void {
++        const run = expandedEl.value;
++        const held = firstScroll;
++        firstScroll = null;
++        try {
++            anchorNow();
++        } finally {
++            if (run && held && run.classList.contains("is-leaving") && (run.scrollLeft !== held.left || run.scrollTop !== held.top)) {
++                (globalThis as unknown as { __t1log?: unknown[] }).__t1log?.push({ k: "restore", from: run.scrollTop, to: held.top });
++                run.scrollTo({ left: held.left, top: held.top, behavior: "instant" });
++            }
++        }
++    }
++
++    function anchorNow(): void {
+         const root = rootEl.value;
+         const layers = contentEl.value;
+         const boxes = firstBoxes;
