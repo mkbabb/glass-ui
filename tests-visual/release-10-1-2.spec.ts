@@ -314,7 +314,8 @@ for (const [label, viewport] of [
 
 // O-101 · DOCK-STALE-EXPANDED-ENDPOINT (value.js letter 2026-10-19; INBOUND O-101,
 // O-101a). The scene's full pane is a breakpoint's (12 seats at >= 768px, 3 below), so a
-// resize across 768px changes it. Every frame is sampled from just before the change.
+// resize across 768px changes it. Every painted frame is sampled from just before the
+// change.
 // RED on 10.1.1, which latched the expanded endpoint only while expanded, so a morph
 // reserved the old pane's span.
 //
@@ -388,17 +389,28 @@ async function driveStaleEndpoint(
             const w = window as unknown as { __frames: Frame[]; __stop: boolean };
             w.__frames = [];
             w.__stop = false;
-            const tick = () => {
+            // Each frame is read in a task posted from its rAF callback, so the sample is
+            // the state that frame painted: the resize step and the rAF callbacks run
+            // before the ResizeObserver delivery that writes the new endpoint. The frame's
+            // width is the one its rAF saw; a task that finds the viewport changed since
+            // then reads a state no frame painted (WebKit can resize between a frame's paint
+            // and its task), so it is not a sample, and the next frame reads that paint.
+            const painted = new MessageChannel();
+            painted.port1.onmessage = (e: MessageEvent<number>) => {
+                if (innerWidth !== e.data) return;
                 const el = document.querySelector<HTMLElement>(".glass-dock")!;
                 const root = document.documentElement;
                 w.__frames.push({
                     morphing: el.hasAttribute("data-morphing"),
-                    changed: innerWidth === to,
+                    changed: e.data === to,
                     reserved: Number.parseFloat(el.style.getPropertyValue("--dock-expanded-px")),
                     size: vertical ? el.offsetHeight : el.offsetWidth,
                     scroll: vertical ? root.scrollHeight : root.scrollWidth,
                     client: vertical ? root.clientHeight : root.clientWidth,
                 });
+            };
+            const tick = () => {
+                painted.port2.postMessage(innerWidth);
                 if (!w.__stop) requestAnimationFrame(tick);
             };
             requestAnimationFrame(tick);
