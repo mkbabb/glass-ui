@@ -111,6 +111,8 @@ Mechanism, as measured:
 
 **Deleted in 12.0.0:** `src/components/handmark/` (`HandMark.vue`, `stroke.ts`, the barrel and its exports `SHAPES`, `handBand`, `handLine`, `handRing`, `markDuration`, `minJerk`, `serialize`, `strokeRibbon` and the types), the `./handmark` export, the strike and the ring, `trigger`, `seed`, `play()`, the hue-number form of `color`, the re-ink, the ink-lag and `.hm-mark--settling`, the frame-rank lead, `tests/components/handmark/`, `tests/components/custom/handmark/`, `tests-visual/handmark.spec.ts`, the `handmark` rows of `scripts/lib/subpath-policy.mjs` and `scripts/lib/canon-doc.mjs` (the latter points at `src/components/handmark/README.md`, which does not exist on `release/11.1.0`). The demo route `/motion/handmark` is re-authored on the A/B harness's rows. In 11.2.0 HandMark is untouched; the CHANGELOG names its successor.
 
+**A consumer of the pen, recorded 2026-11-12 (atlas):** atlas imports `handLine`, `handRing`, `strokeRibbon` and the `Point` type from the `./handmark` barrel in `src/charts/glyph/InkStroke.vue` (used by AnimatedRule, EChartOrnament and PaperCallout; `handLine` with kind "strike", and `handRing`). Nothing in atlas or its dashboards mounts HandMark with the strike or ring shape. Atlas replaces those three with plain rules before 12.0.0 by its own choice. The barrel and every export stay unchanged through 11.x; they leave with HandMark in 12.0.0, and atlas is told at the 12.0.0 booking and at publish.
+
 **Not in this wave.**
 - An automatic choice of seat (OQ-2).
 - A draw for a host that is not inline (R-10).
