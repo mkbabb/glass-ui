@@ -43,7 +43,7 @@ A round is clean when the release spec is GREEN in both engines on the tip, g6 a
 7. **Consumer markup.** A nested `.dock-run` is plain markup. Witnesses q1 to q3, r1.
 8. **Slider, type, menu.** g3, c1, c3, m3 O-167; g4, c2; g5.
 9. **One-row cures.** f1, f2, the m3 rows, m5, s3.
-10. **Regression gates.** g6 (`release-10-1-3`, `release-10-1-4`) in both engines and g7. The D-1 and F-4 cells are read only at a 1-minute load under 10 and only as an A/B against v10.1.4's `src`; critique 11 showed v10.1.4 itself fails D-1 8 of 8 under load (`critique-11.md`, the resume table).
+10. **Regression gates.** g6 (`release-10-1-2`, `release-10-1-3`, `release-10-1-4`) in both engines and g7. (`release-10-1-2` added by fix-close-1: the close found its O-101 reversal family red and unwitnessed, `fix-close-1.md`.) The D-1 and F-4 cells are read only at a 1-minute load under 10 and only as an A/B against v10.1.4's `src`; critique 11 showed v10.1.4 itself fails D-1 8 of 8 under load (`critique-11.md`, the resume table).
 11. **Source and records.** No comment line the patch adds in `src` carries a row id, round id or seat vocabulary (item 8); no export removed or renamed; every moved token value named in the CHANGELOG.
 
 ## 3. The mid-morph host-resize class is closed where it stands
