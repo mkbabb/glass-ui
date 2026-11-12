@@ -90,6 +90,15 @@ A patch on 11.0.1. Nothing is removed or renamed.
   overscroll on its own scroll axis only (`overscroll-behavior-x: contain` on a
   horizontal run, `-y` on a vertical one), and the other axis passes to the page.
 
+- **A dock pinned to an edge opens and closes from that edge.** A vertical dock with
+  `anchor="start"` whose page hides its open content on the closed face
+  (`.collapsed:not([data-morphing])`) shrank toward its middle as it closed, and as it
+  opened its crest drew above the plate and its foot flashed at the page's corner. A
+  close now starts from the open size it leaves, so the top edge and the crest hold
+  and the bottom edge travels. A region that differs in size between the two faces
+  holds the dock's own anchored edge rather than its centre, and a region that was
+  hidden on the closed face appears where it rests. Centred docks move as before.
+
 ## 11.0.1 — 2026-11-12
 
 A patch that brings the 10.1.5 fixes forward onto 11.0. If you saw the dock's hover

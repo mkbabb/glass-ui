@@ -30,6 +30,9 @@
 //   pager  a PagerDots neighbour hop paints a neck no wider than the pitch plus one dot
 //   wheel  a vertical wheel over a horizontal dock's overflowing run scrolls the page; each
 //          run contains overscroll on its own scroll axis only
+//   rail   a start-anchored vertical dock whose consumer yields its open content on the
+//          collapsed face: the close holds its top edge and crest and ends on the disc;
+//          the open holds the crest from its first frame and keeps the foot in the plate
 import { expect, test, type Page } from "@playwright/test";
 
 type DarkHandle = { stamped: boolean; isDark: () => boolean; toggle: () => void };
@@ -624,3 +627,83 @@ test("wheel · a vertical dock's run contains its own axis and passes the other"
     expect(css).toEqual({ x: "auto", y: "contain" });
 });
 
+type Box = [number, number, number, number];
+type RailFrame = { morphing: boolean; root: Box; crest: Box; foot: Box | null };
+
+async function openRail(page: Page): Promise<void> {
+    await page.goto("/tests-visual/release-11-0-2/rail-harness.html?theme=dark");
+    await page.locator("body[data-ready='1'] [data-witness='rail']").waitFor();
+    await page.waitForTimeout(400);
+}
+
+/** One record per rAF for `ms` after `act` runs. */
+function railFrames(page: Page, act: "__expand" | "__collapse", ms: number): Promise<RailFrame[]> {
+    return page.evaluate(
+        ({ act, ms }) =>
+            new Promise<RailFrame[]>((resolve) => {
+                const q = (s: string) => document.querySelector<HTMLElement>(`[data-witness="${s}"]`);
+                const box = (e: HTMLElement | null): Box | null => {
+                    if (!e || !e.getClientRects().length) return null;
+                    const r = e.getBoundingClientRect();
+                    return [r.left, r.top, r.width, r.height];
+                };
+                const out: RailFrame[] = [];
+                const t0 = performance.now();
+                const tick = () => {
+                    const root = q("rail")!;
+                    out.push({ morphing: root.hasAttribute("data-morphing"), root: box(root)!, crest: box(q("crest"))!, foot: box(q("foot")) });
+                    if (performance.now() - t0 < ms) requestAnimationFrame(tick);
+                    else resolve(out);
+                };
+                (window as unknown as Record<string, () => void>)[act]!();
+                requestAnimationFrame(tick);
+            }),
+        { act, ms },
+    );
+}
+
+test("rail · a start-anchored rail's close holds its top edge and crest, and ends on the disc", async ({ page }, info) => {
+    await openRail(page);
+    await page.evaluate(() => (window as unknown as Record<string, () => void>).__expand());
+    await page.waitForTimeout(900);
+    const rest = await page.evaluate(() => {
+        const r = document.querySelector('[data-witness="rail"]')!.getBoundingClientRect();
+        return [r.left, r.top, r.width, r.height];
+    });
+    const frames = await railFrames(page, "__collapse", 900);
+    const moving = frames.filter((f) => f.morphing);
+    info.annotations.push({ type: "rail", description: JSON.stringify({ rest, frames: frames.map((f) => [f.morphing ? 1 : 0, ...f.root.map(Math.round), Math.round(f.crest[1])]) }) });
+    expect(moving.length, "the close is a morph").toBeGreaterThan(6);
+    for (const f of frames) {
+        expect(Math.abs(f.root[1] - rest[1]!), `root top ${f.root[1]}`).toBeLessThan(1.5);
+        expect(f.crest[1] - f.root[1], `crest offset ${f.crest[1]}`).toBeLessThan(20);
+        expect(f.crest[1]).toBeGreaterThanOrEqual(f.root[1] - 1.5);
+    }
+    const bottoms = moving.map((f) => f.root[1] + f.root[3]);
+    for (let i = 1; i < bottoms.length; i++) expect(bottoms[i]!).toBeLessThanOrEqual(bottoms[i - 1]! + 1);
+    const last = moving.at(-1)!;
+    const settled = frames.at(-1)!;
+    expect(settled.morphing).toBe(false);
+    expect(Math.abs(last.root[3] - settled.root[3])).toBeLessThan(2);
+    expect(Math.abs(last.root[1] - settled.root[1])).toBeLessThan(1.5);
+});
+
+test("rail · a start-anchored rail's open holds the crest from its first frame, the foot inside the plate", async ({ page }, info) => {
+    await openRail(page);
+    const disc = await page.evaluate(() => {
+        const r = document.querySelector('[data-witness="crest"]')!.getBoundingClientRect();
+        return [r.left, r.top];
+    });
+    const frames = await railFrames(page, "__expand", 900);
+    const moving = frames.filter((f) => f.morphing);
+    info.annotations.push({ type: "rail", description: JSON.stringify({ disc, frames: moving.map((f) => [...f.root.map(Math.round), Math.round(f.crest[1]), f.foot ? f.foot.map(Math.round) : null]) }) });
+    expect(moving.length, "the open is a morph").toBeGreaterThan(6);
+    expect(Math.abs(moving[0]!.crest[1] - disc[1]!)).toBeLessThan(2);
+    for (const f of moving) {
+        expect(f.crest[1], "crest never above the plate").toBeGreaterThanOrEqual(f.root[1] - 1.5);
+        if (f.foot) {
+            expect(f.foot[0], "foot never left of the plate").toBeGreaterThanOrEqual(f.root[0] - 1.5);
+            expect(f.foot[1], "foot never above the plate").toBeGreaterThanOrEqual(f.root[1] - 1.5);
+        }
+    }
+});

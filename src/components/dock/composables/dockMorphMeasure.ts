@@ -208,9 +208,14 @@ export function useDockExpandedSize(
     let restEndpoint: number | null = null;
     let restConstraint = "";
     let hostMoved = false;
+    /* The expanded endpoint the last capture in the expanded posture read, and whether
+       the last capture was in that posture. A collapse arm starts from it. */
+    let lastExpandedPx: number | null = null;
+    let lastPostureExpanded = false;
     let disposed = false;
 
-    function capture(): void {
+    /** `arming`: the posture morph's own read as it arms (`measure`). */
+    function capture(arming = false): void {
         const root = rootEl.value;
         const layers = contentEl.value;
         const full = expandedEl.value;
@@ -232,12 +237,24 @@ export function useDockExpandedSize(
             else collapsedChrome = chrome;
         }
 
+        // A COLLAPSE ARM KEEPS THE EXPANDED BOX IT IS LEAVING. The arm runs after the
+        // posture class has flipped to `.collapsed` and before `[data-morphing]` is set,
+        // and a consumer that yields its open-only content on
+        // `.collapsed:not([data-morphing])` lays the expanded pane out empty in exactly
+        // that window, so a re-read there gives the collapsed box (44 px for a 583 px
+        // vertical dock): the morph starts on a unit scale, every origin falls back to
+        // the centre, and the plate shrinks toward its middle. The box it leaves is the
+        // one the last capture in the expanded posture read, at rest or at an expand's
+        // own arm; every content change while expanded re-captures, so it is current.
+        const keepExpanded = arming && !expanded && lastPostureExpanded && lastExpandedPx !== null;
         let expandedPx =
             !morphing && expanded
                 ? rootNow
-                : keepScroll(full, () =>
-                      restSize(root, layers, full, summary, a, expandedChrome),
-                  );
+                : keepExpanded
+                  ? lastExpandedPx!
+                  : keepScroll(full, () =>
+                        restSize(root, layers, full, summary, a, expandedChrome),
+                    );
         // THE ENDPOINT A MORPH STARTS FROM HOLDS until the host moves it, and the hold
         // is keyed on the cause, not the size. At rest the reading is the endpoint. The
         // morph's first capture notes what constrains the dock (`constraintOf`), and
@@ -266,6 +283,8 @@ export function useDockExpandedSize(
                 expandedPx = restEndpoint;
             }
         }
+        lastPostureExpanded = expanded;
+        if (expanded) lastExpandedPx = expandedPx;
         publishYield(
             root,
             full,
@@ -418,6 +437,8 @@ export function useDockExpandedSize(
         restEndpoint = null;
         restConstraint = "";
         hostMoved = false;
+        lastExpandedPx = null;
+        lastPostureExpanded = false;
         const root = rootEl.value;
         if (!root) return;
         if (typeof ResizeObserver !== "undefined") {
@@ -653,21 +674,36 @@ export function useDockExpandedSize(
 
         const toLocal = (viewport: number) => (viewport - box.start) / k;
         const fixedPoint = (to: number, from: number) => (unit(s) ? null : (to - from) / (1 - s));
-        const centre = (b: Span) => toLocal(b.start + b.size / 2);
         // The root's origin, root-local; a no-op scale takes any (the centre).
         const origin = fixedPoint(toLocal(target.get(root)!.start), 0) ?? local / 2;
         const percent = (px: number, size: number) => `${(px / size) * 100}%`;
         root.style.setProperty(ORIGIN, percent(origin, local));
+
+        // THE POINT A REGION HOLDS is the root's own anchor, read as a fraction of the
+        // root: 0 for a dock pinned at its start, 1 at its end, 1/2 for a centred one. A
+        // region whose box differs between the postures (a vertical dock's crest region
+        // that carries a site layer open and the crest alone on the disc) held at its
+        // centre put, on a start-anchored dock, the open region's centre on the disc's
+        // centre in the first frame, so the crest drew above the plate and slid into
+        // place. Holding the anchored edge keeps the crest where the disc was from the
+        // first frame, and the rest of the region comes in under the plate's clip. A
+        // centred dock holds the centre, as before.
+        const f = Math.min(1, Math.max(0, origin / local));
+        const point = (b: Span) => toLocal(b.start + f * b.size);
 
         for (const region of rigid) {
             const to = target.get(region);
             const now = laid.get(region)!;
             const size = getSize(region, a);
             if (!to || !(size > 0)) continue;
-            // The origin that holds the region's centre at its target box at scale `s`
-            // (the region is rigid, so its centre is its box; a glyph floor that sizes it
-            // differently per posture splits the difference evenly).
-            const held = fixedPoint(centre(to), centre(now));
+            // The origin that holds the region's anchor point at its target box at scale
+            // `s` (the region is rigid, so a translation carries all of it). A region that
+            // painted nothing in that box (a foot the consumer yields on the disc,
+            // `display: none`) has a zero rect at the viewport origin, and holding it there
+            // drags it to the page's corner, outside the plate, for the first frames of an
+            // open. It takes the root's own fixed point instead, like the layers: it lays
+            // out where it rests and the plate's clip uncovers it.
+            const held = to.size > 0 ? fixedPoint(point(to), point(now)) : null;
             region.style.setProperty(
                 ORIGIN,
                 percent((held === null ? origin : origin - held) - toLocal(now.start), size),
@@ -708,5 +744,5 @@ export function useDockExpandedSize(
         }
     }
 
-    return { measure: capture, first, anchor, release };
+    return { measure: () => capture(true), first, anchor, release };
 }
