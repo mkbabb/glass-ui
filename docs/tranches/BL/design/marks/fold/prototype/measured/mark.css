@@ -1,0 +1,154 @@
+/*
+  The mark: a text decoration. The browser places it from the run's own glyphs and the
+  font's own metrics, per line box, in either direction, and it never leaves the text.
+  These two classes are the whole mark and need no script. `Mark.vue` adds the draw.
+
+  Tokens (retune on :root or any ancestor):
+    --mark-ink     the underline's colour             default var(--primary)
+    --mark-band    the highlight's colour             default the focal hue, tinted
+    --mark-weight  the underline's thickness          default max(0.07em, 2px)
+    --mark-offset  baseline to the underline's top    default 0.08em
+*/
+@layer components {
+    .mark-underline {
+        text-decoration: underline solid var(--mark-ink, var(--primary));
+        text-decoration-thickness: var(--mark-weight, max(0.07em, 2px));
+        /* 0.08em: at 0.10 to 0.14em Chromium leaves a descender uncut at 2 or 3 of every 64
+           sub-pixel line positions (16 px text, a 2 px line); at 0.08em and under it cuts at all 64. */
+        text-underline-offset: var(--mark-offset, 0.08em);
+        text-decoration-skip-ink: auto;
+    }
+
+    /* The clear seat: one unbroken rule set under the descenders, with nothing skipped. */
+    .mark-clear {
+        --mark-offset: 0.26em;
+        text-decoration-skip-ink: none;
+    }
+
+    /* The highlight is the same decoration grown to the x-height and pulled up behind
+       the glyphs: `ex` is the font's own x-height, so the band sits on the lowercase in
+       any face. An underline paints under its text, so the words stay on top.
+       The band takes the ink's hue; an ink with no hue gives a band with none. */
+    .mark-highlight {
+        --mark-band-paint: var(
+            --mark-band,
+            light-dark(
+                oklch(from var(--mark-ink, var(--primary)) 0.86 min(0.16, c * 40) h),
+                oklch(from var(--mark-ink, var(--primary)) 0.44 min(0.16, c * 40) h)
+            )
+        );
+        background: none;
+        color: inherit;
+    }
+    /* Selected, the band fills the line. Chromium repaints a selected run's decoration in
+       the text colour, so the selection repeats the band over it; WebKit drops its own
+       tint under any selection rule, so the selection's ground is the band too. */
+    .mark-highlight,
+    .mark-highlight::selection {
+        text-decoration: underline solid var(--mark-band-paint);
+        text-decoration-thickness: calc(1ex + 0.16em);
+        text-underline-offset: calc(-1ex - 0.08em);
+        text-decoration-skip-ink: none;
+    }
+    .mark-highlight::selection {
+        background-color: var(--mark-band-paint);
+    }
+
+    /* Forced colours repaint a decoration in the text's own colour, which would bury the
+       words under the band. The highlight becomes the system's real one. */
+    @media (forced-colors: active) {
+        .mark-highlight,
+        .mark-highlight::selection {
+            text-decoration: none;
+        }
+        .mark-highlight {
+            background: Mark;
+            color: MarkText;
+        }
+    }
+
+    /* ── The draw (Mark.vue only) ──────────────────────────────────────────────────── */
+
+    .mark-underline[data-ink],
+    .mark-highlight[data-ink] {
+        position: relative;
+    }
+    .mark-layer {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 0;
+        height: 0;
+        z-index: -1;
+        pointer-events: none;
+        -webkit-user-select: none;
+        user-select: none;
+    }
+    .mark-line {
+        position: absolute;
+        box-sizing: border-box;
+        padding-inline: 1px;
+        overflow-x: clip;
+        overflow-y: visible;
+        text-align: start;
+        white-space: nowrap;
+    }
+    .mark-slide {
+        display: block;
+    }
+    /* The window's strut is the line's own box. Nothing inside the copy may grow it, or a
+       larger child would push the copy's baseline down. */
+    .mark-slide * {
+        line-height: 0;
+    }
+    .mark-line:dir(rtl) {
+        --mark-dir: -1;
+    }
+    .mark-layer :is(.mark-underline, .mark-highlight),
+    .mark-layer :is(.mark-underline, .mark-highlight) * {
+        color: transparent;
+    }
+
+    /* The mark waits and draws only where a draw can run: a screen, motion allowed,
+       script on, author colours. Everywhere else it stands drawn from the first frame.
+       `Mark.vue` reads the same condition (MOTION). */
+    @media screen and (prefers-reduced-motion: no-preference) and (scripting: enabled) and (forced-colors: none) {
+        :is(.mark-underline, .mark-highlight):is([data-ink="wait"], [data-ink="draw"]) {
+            isolation: isolate;
+            text-decoration-color: transparent;
+        }
+        /* One line's window slides open along the writing direction while its copy slides
+           back by the same distance: the ink holds still and the window's edge travels.
+           Line i starts when line i-1 lands. The travel is the line's width and one pixel,
+           so a window that waits on a fractional edge shows no sliver of the ink. */
+        .mark-line,
+        .mark-slide {
+            animation-duration: var(--spring-present-duration);
+            animation-timing-function: var(--spring-present);
+            animation-delay: calc(var(--mark-i, 0) * var(--spring-present-duration));
+            animation-fill-mode: both;
+        }
+        .mark-line {
+            animation-name: mark-window;
+        }
+        .mark-slide {
+            animation-name: mark-slide;
+        }
+    }
+}
+@keyframes mark-window {
+    from {
+        transform: translateX(calc((-100% - 1px) * var(--mark-dir, 1)));
+    }
+    to {
+        transform: translateX(0);
+    }
+}
+@keyframes mark-slide {
+    from {
+        transform: translateX(calc((var(--mark-w) + 1px) * var(--mark-dir, 1)));
+    }
+    to {
+        transform: translateX(0);
+    }
+}
