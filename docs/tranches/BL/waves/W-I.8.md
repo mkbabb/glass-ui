@@ -222,3 +222,11 @@ The owner's words on daraksha's dock (frames `~/.dev-logs/owner-1111/shots/1.png
 This is the wave's subject stated as a law, and it widens §1.6 from width to both extents: **every dock state change animates the plate's width and height on the dock spring with an eased start and end, and the plate is round at every frame.** The changes: collapse, expand, a layer in or out, a page change that alters seat count or label width, a seat appearing or leaving (the bare seat included). The build's gate matrix is that list, one cell per change, each reading per-frame plate width and height: no step over the spring's own peak frame, no frame with unequal corners, first and last frames within 1 px of rest. daraksha is sending the list of changes that jump today; it is merged into the matrix when it arrives, and a change it names that this list lacks is added, not argued.
 
 **Inputs banked 2026-11-12 (O-274):** `../design/dock/inbound/daraksha-dock-jumps-2026-11-11.md` (every daraksha dock state change that jumps) and `../design/dock/inbound/atlas-rail-state-changes-2026-11-11.md` (atlas's rail list; its asks 1, 3 and 4 are open). The build seat reads both against O-248 and gates each listed change. Also here: a rest-fill token on DockControl (one token, hover and active derived from it).
+
+## Owner law added 2026-11-12 (O-275, O-276)
+
+His words on atlas: "When you un-hover the dock, it should not instantly teleport away. It should persist a bit, based on dwell time too." and "we must standardize our filter docks on each viz to have proper collapse states … these docks should have animations and expanding on interact/hover, too."
+
+- **The linger.** A dock opened by hover never closes on the leave frame. The linger is a function of dwell (a floor, a ceiling and one curve, as tokens; today's fixed 3600 ms idle window is the starting point to measure against), re-entry cancels it, and the close is the eased morph. First reproduce what vanished at once on atlas production.
+- **Three states owned by GlassDock:** resting collapsed to its essentials, expanded on hover, focus or tap, and pinned open as a declared member (today only `keepOpen()` / `release()`). A figure dock is this dock with a preset, not a consumer composition.
+- Gates for both are in the INBOUND rows; they join the finite list.
