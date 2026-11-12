@@ -59,6 +59,13 @@ A patch on 11.0.1. Nothing is removed or renamed.
   bounce now fires once each time the pointer slows, and the body's swell is held
   inside its box. A still click looks as it did.
 
+- **A dock's fold or expand lays out once a frame.** While it moved, the dock measured
+  both of its resting sizes again on every frame, each time forcing the page through
+  extra layouts, because the boxes the motion resizes also told it to look for a change
+  in its host. The fold of an untouched `collapse="open"` dock cost about 245 layouts
+  over 67 frames; it now costs one a frame. A host or content change during the motion
+  is still measured on the frame it lands.
+
 ## 11.0.1 — 2026-11-12
 
 A patch that brings the 10.1.5 fixes forward onto 11.0. If you saw the dock's hover

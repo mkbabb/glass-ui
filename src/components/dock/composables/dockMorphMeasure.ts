@@ -189,8 +189,9 @@ function constraintOf(root: HTMLElement, axis: Axis): string {
  * box laid out in the other posture (the W7 MORPH guard, BK #47).
  *
  * The capture runs when the morph arms (`measure`), on a ResizeObserver hit on the root,
- * its parent (the host constraint), the layers, both panes or any pane's direct child,
- * on a MutationObserver record in either pane, on a window resize (in the resize step,
+ * its parent (the host constraint), the layers, both panes or any pane's direct child
+ * (through a morph, a hit on the root, the layers or the panes alone is the morph's own
+ * frame and captures nothing), on a MutationObserver record in either pane, on a window resize (in the resize step,
  * before the frame's layout), and once fonts are ready.
  */
 export function useDockExpandedSize(
@@ -420,7 +421,22 @@ export function useDockExpandedSize(
         const root = rootEl.value;
         if (!root) return;
         if (typeof ResizeObserver !== "undefined") {
-            observer = new ResizeObserver(() => capture());
+            // Through a morph the root, the layers and the panes resize on every frame
+            // because the morph sizes them, and none of those boxes moves an endpoint: a
+            // host change arrives as the parent's entry (or the resize step, or `hostStyle`),
+            // and a pane's content as its children's entries or a `mutations` record. A
+            // delivery of the morph's own boxes alone therefore captures nothing, and
+            // skipping it keeps the capture's measuring layouts out of every morph frame.
+            observer = new ResizeObserver((entries) => {
+                const own = [rootEl.value, contentEl.value, expandedEl.value, collapsedEl.value];
+                if (
+                    rootEl.value?.hasAttribute("data-morphing") &&
+                    entries.every((entry) => own.includes(entry.target as HTMLElement))
+                ) {
+                    return;
+                }
+                capture();
+            });
             observe();
         }
         observeCross(root);
@@ -581,6 +597,10 @@ export function useDockExpandedSize(
                 run.scrollTo({ left: held.left, top: held.top, behavior: "instant" });
             }
         }
+        // The constraint the morph starts under, which `hostStyle` and every capture through
+        // the morph compare against. A reversal keeps the one its first morph noted.
+        const root = rootEl.value;
+        if (root && !restConstraint) restConstraint = constraintOf(root, axis.value);
     }
 
     function anchorPanes(): void {

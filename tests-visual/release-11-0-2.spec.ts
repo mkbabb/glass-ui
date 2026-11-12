@@ -12,6 +12,8 @@
 //          plate edge computes 11.0.0's colour at t = 0, 0.5 and 1
 //   static every control inside a `backdrop-mode="static"` dock, and everything it
 //          draws, computes no backdrop-filter at rest, hover, press and active
+//   fold   the idle fold of an untouched `collapse="open"` dock on a scrolling page lays
+//          out once per frame of its morph (Chromium, which counts layouts)
 //   blob   from 100 ms after a sweep and release over the hero blob the body stays a
 //          bead: in every sampled frame its centre is painted and the canvas box's four
 //          corners show the page ground
@@ -286,6 +288,49 @@ for (const theme of ["light", "dark"]) {
         expect(hits).toEqual([]);
     });
 }
+
+// The layouts the page runs from 3 s to 5.5 s after mount, across the idle fold of an
+// untouched `collapse="open"` dock (it folds 3.6 s after mount) while the page scrolls
+// every frame, and the frames in which the fold's morph scalar moved. Chromium counts
+// layouts (CDP `LayoutCount`); WebKit has no counter.
+test("fold · an idle fold lays out once per morph frame on a scrolling page", async ({ page }, info) => {
+    test.skip(info.project.name.startsWith("webkit"), "layouts are counted over CDP");
+    await page.setViewportSize({ width: 1440, height: 900 });
+    const cdp = await page.context().newCDPSession(page);
+    await cdp.send("Performance.enable");
+    const layouts = async () =>
+        (await cdp.send("Performance.getMetrics")).metrics.find((m) => m.name === "LayoutCount")!.value;
+    await page.goto("/tests-visual/release-11-0-2/fold-harness.html");
+    await page.locator("body[data-ready='1'] .fold-dock").waitFor();
+    await page.waitForTimeout(3000);
+    const before = await layouts();
+    const r = await page.evaluate(async () => {
+        const root = document.querySelector<HTMLElement>(".glass-dock")!;
+        let frames = 0;
+        let morphFrames = 0;
+        let last = root.style.getPropertyValue("--dock-morph-t");
+        const end = performance.now() + 2500;
+        await new Promise<void>((done) => {
+            const tick = () => {
+                frames++;
+                scrollBy(0, 3);
+                const t = root.style.getPropertyValue("--dock-morph-t");
+                if (t !== last) morphFrames++;
+                last = t;
+                if (performance.now() < end) requestAnimationFrame(tick);
+                else done();
+            };
+            requestAnimationFrame(tick);
+        });
+        return { frames, morphFrames, collapsed: root.classList.contains("collapsed") };
+    });
+    const count = (await layouts()) - before;
+    info.annotations.push({ type: "fold", description: JSON.stringify({ ...r, layouts: count }) });
+    expect(r.collapsed).toBe(true);
+    expect(r.morphFrames).toBeGreaterThan(10);
+    // One layout per morph frame, and a few for the fold's arm and settle.
+    expect(count).toBeLessThanOrEqual(r.morphFrames + 12);
+});
 
 test("static · a live dock's active control keeps its capsule lens", async ({ page }) => {
     await page.goto("/tests-visual/release-11-0-2/static-harness.html?mode=live");
