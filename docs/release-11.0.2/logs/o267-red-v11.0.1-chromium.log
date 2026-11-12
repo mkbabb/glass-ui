@@ -1,0 +1,126 @@
+
+Running 6 tests using 1 worker
+
+  ✘  1 [chromium-headless-new] › tests-visual/slider-forced-colors.spec.ts:25:9 › slider forced colors · a focused Slider keeps a focus mark › slider forced colors · scrubber · the focused mark is an outline that paints (648ms)
+  ✘  2 [chromium-headless-new] › tests-visual/slider-forced-colors.spec.ts:25:9 › slider forced colors · a focused Slider keeps a focus mark › slider forced colors · invalid · the focused mark is an outline that paints (627ms)
+  ✘  3 [chromium-headless-new] › tests-visual/slider-forced-colors.spec.ts:25:9 › slider forced colors · a focused Slider keeps a focus mark › slider forced colors · spectrum · the focused mark is an outline that paints (631ms)
+  ✘  4 [coarse-touch] › tests-visual/slider-forced-colors.spec.ts:25:9 › slider forced colors · a focused Slider keeps a focus mark › slider forced colors · scrubber · the focused mark is an outline that paints (645ms)
+  ✘  5 [coarse-touch] › tests-visual/slider-forced-colors.spec.ts:25:9 › slider forced colors · a focused Slider keeps a focus mark › slider forced colors · invalid · the focused mark is an outline that paints (642ms)
+  ✘  6 [coarse-touch] › tests-visual/slider-forced-colors.spec.ts:25:9 › slider forced colors · a focused Slider keeps a focus mark › slider forced colors · spectrum · the focused mark is an outline that paints (648ms)
+
+
+  1) [chromium-headless-new] › tests-visual/slider-forced-colors.spec.ts:25:9 › slider forced colors · a focused Slider keeps a focus mark › slider forced colors · scrubber · the focused mark is an outline that paints 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: "solid"
+    Received: "none"
+
+      54 |             expect(r.forced).toBe(true);
+      55 |             expect(r.focusVisible).toBe(true);
+    > 56 |             expect(r.style).toBe("solid");
+         |                             ^
+      57 |             expect(r.width).toBeGreaterThanOrEqual(2);
+      58 |             expect(r.offset).toBeGreaterThanOrEqual(1);
+      59 |             // The focused frame differs from the unfocused one around the marked box.
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/slider-forced-colors.spec.ts:56:29
+
+    Error Context: tests-visual/test-results/slider-forced-colors-slide-7ce15-k-is-an-outline-that-paints-chromium-headless-new/error-context.md
+
+  2) [chromium-headless-new] › tests-visual/slider-forced-colors.spec.ts:25:9 › slider forced colors · a focused Slider keeps a focus mark › slider forced colors · invalid · the focused mark is an outline that paints 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: "solid"
+    Received: "none"
+
+      54 |             expect(r.forced).toBe(true);
+      55 |             expect(r.focusVisible).toBe(true);
+    > 56 |             expect(r.style).toBe("solid");
+         |                             ^
+      57 |             expect(r.width).toBeGreaterThanOrEqual(2);
+      58 |             expect(r.offset).toBeGreaterThanOrEqual(1);
+      59 |             // The focused frame differs from the unfocused one around the marked box.
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/slider-forced-colors.spec.ts:56:29
+
+    Error Context: tests-visual/test-results/slider-forced-colors-slide-96335-k-is-an-outline-that-paints-chromium-headless-new/error-context.md
+
+  3) [chromium-headless-new] › tests-visual/slider-forced-colors.spec.ts:25:9 › slider forced colors · a focused Slider keeps a focus mark › slider forced colors · spectrum · the focused mark is an outline that paints 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: "solid"
+    Received: "none"
+
+      54 |             expect(r.forced).toBe(true);
+      55 |             expect(r.focusVisible).toBe(true);
+    > 56 |             expect(r.style).toBe("solid");
+         |                             ^
+      57 |             expect(r.width).toBeGreaterThanOrEqual(2);
+      58 |             expect(r.offset).toBeGreaterThanOrEqual(1);
+      59 |             // The focused frame differs from the unfocused one around the marked box.
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/slider-forced-colors.spec.ts:56:29
+
+    Error Context: tests-visual/test-results/slider-forced-colors-slide-d3dc0-k-is-an-outline-that-paints-chromium-headless-new/error-context.md
+
+  4) [coarse-touch] › tests-visual/slider-forced-colors.spec.ts:25:9 › slider forced colors · a focused Slider keeps a focus mark › slider forced colors · scrubber · the focused mark is an outline that paints 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: "solid"
+    Received: "none"
+
+      54 |             expect(r.forced).toBe(true);
+      55 |             expect(r.focusVisible).toBe(true);
+    > 56 |             expect(r.style).toBe("solid");
+         |                             ^
+      57 |             expect(r.width).toBeGreaterThanOrEqual(2);
+      58 |             expect(r.offset).toBeGreaterThanOrEqual(1);
+      59 |             // The focused frame differs from the unfocused one around the marked box.
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/slider-forced-colors.spec.ts:56:29
+
+    Error Context: tests-visual/test-results/slider-forced-colors-slide-7ce15-k-is-an-outline-that-paints-coarse-touch/error-context.md
+
+  5) [coarse-touch] › tests-visual/slider-forced-colors.spec.ts:25:9 › slider forced colors · a focused Slider keeps a focus mark › slider forced colors · invalid · the focused mark is an outline that paints 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: "solid"
+    Received: "none"
+
+      54 |             expect(r.forced).toBe(true);
+      55 |             expect(r.focusVisible).toBe(true);
+    > 56 |             expect(r.style).toBe("solid");
+         |                             ^
+      57 |             expect(r.width).toBeGreaterThanOrEqual(2);
+      58 |             expect(r.offset).toBeGreaterThanOrEqual(1);
+      59 |             // The focused frame differs from the unfocused one around the marked box.
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/slider-forced-colors.spec.ts:56:29
+
+    Error Context: tests-visual/test-results/slider-forced-colors-slide-96335-k-is-an-outline-that-paints-coarse-touch/error-context.md
+
+  6) [coarse-touch] › tests-visual/slider-forced-colors.spec.ts:25:9 › slider forced colors · a focused Slider keeps a focus mark › slider forced colors · spectrum · the focused mark is an outline that paints 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: "solid"
+    Received: "none"
+
+      54 |             expect(r.forced).toBe(true);
+      55 |             expect(r.focusVisible).toBe(true);
+    > 56 |             expect(r.style).toBe("solid");
+         |                             ^
+      57 |             expect(r.width).toBeGreaterThanOrEqual(2);
+      58 |             expect(r.offset).toBeGreaterThanOrEqual(1);
+      59 |             // The focused frame differs from the unfocused one around the marked box.
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/slider-forced-colors.spec.ts:56:29
+
+    Error Context: tests-visual/test-results/slider-forced-colors-slide-d3dc0-k-is-an-outline-that-paints-coarse-touch/error-context.md
+
+  6 failed
+    [chromium-headless-new] › tests-visual/slider-forced-colors.spec.ts:25:9 › slider forced colors · a focused Slider keeps a focus mark › slider forced colors · scrubber · the focused mark is an outline that paints 
+    [chromium-headless-new] › tests-visual/slider-forced-colors.spec.ts:25:9 › slider forced colors · a focused Slider keeps a focus mark › slider forced colors · invalid · the focused mark is an outline that paints 
+    [chromium-headless-new] › tests-visual/slider-forced-colors.spec.ts:25:9 › slider forced colors · a focused Slider keeps a focus mark › slider forced colors · spectrum · the focused mark is an outline that paints 
+    [coarse-touch] › tests-visual/slider-forced-colors.spec.ts:25:9 › slider forced colors · a focused Slider keeps a focus mark › slider forced colors · scrubber · the focused mark is an outline that paints 
+    [coarse-touch] › tests-visual/slider-forced-colors.spec.ts:25:9 › slider forced colors · a focused Slider keeps a focus mark › slider forced colors · invalid · the focused mark is an outline that paints 
+    [coarse-touch] › tests-visual/slider-forced-colors.spec.ts:25:9 › slider forced colors · a focused Slider keeps a focus mark › slider forced colors · spectrum · the focused mark is an outline that paints 

@@ -1,0 +1,435 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "tests-visual/playwright.config.ts",
+      "release-11-0-2.spec.ts",
+      "--project=chromium-headless-new",
+      "--project=coarse-touch",
+      "--workers=1",
+      "-g",
+      "cutcap ·"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual/playwright.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-headless-new",
+        "name": "chromium-headless-new",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "coarse-touch",
+        "name": "coarse-touch",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "safari-webgl.spec.ts",
+          "aurora-swraster.spec.ts",
+          "release-10-1-1.spec.ts",
+          "release-10-1-2.spec.ts",
+          "release-10-1-3.spec.ts",
+          "release-10-1-4.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/docs/release-11.0.2/logs/o241-v1100-chromium.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5343",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/",
+      "url": "http://localhost:5343",
+      "reuseExistingServer": true,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "release-11-0-2.spec.ts",
+      "file": "release-11-0-2.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "cutcap · the open narrow face with an end seat has four equal plate corners at 1440",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "cutcap",
+                  "description": "{\"collapsed\":false,\"corners\":[30,4,4,30],\"clip\":\"inset(0px)\",\"box\":[150,56],\"runOverflow\":144}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 2311,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.5\u001b[39m\nReceived:    \u001b[31m26\u001b[39m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.5\u001b[39m\nReceived:    \u001b[31m26\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual/release-11-0-2.spec.ts:382:65",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual/release-11-0-2.spec.ts",
+                      "column": 65,
+                      "line": 382
+                    },
+                    "snippet": "  380 |         expect(r.collapsed).toBe(false);\n  381 |         expect(Math.min(...r.corners)).toBeGreaterThan(0);\n> 382 |         expect(Math.max(...r.corners) - Math.min(...r.corners)).toBeLessThanOrEqual(0.5);\n      |                                                                 ^\n  383 |         // A cut cap is drawn by the clip: its rounded inset, if any, is equal on all four.\n  384 |         const round = /round\\s+([^)]*)/.exec(r.clip)?.[1]?.split(/\\s+/).map(parseFloat) ?? [];\n  385 |         if (round.length) expect(Math.max(...round) - Math.min(...round)).toBeLessThanOrEqual(0.5);"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual/release-11-0-2.spec.ts",
+                        "column": 65,
+                        "line": 382
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.5\u001b[39m\nReceived:    \u001b[31m26\u001b[39m\n\n  380 |         expect(r.collapsed).toBe(false);\n  381 |         expect(Math.min(...r.corners)).toBeGreaterThan(0);\n> 382 |         expect(Math.max(...r.corners) - Math.min(...r.corners)).toBeLessThanOrEqual(0.5);\n      |                                                                 ^\n  383 |         // A cut cap is drawn by the clip: its rounded inset, if any, is equal on all four.\n  384 |         const round = /round\\s+([^)]*)/.exec(r.clip)?.[1]?.split(/\\s+/).map(parseFloat) ?? [];\n  385 |         if (round.length) expect(Math.max(...round) - Math.min(...round)).toBeLessThanOrEqual(0.5);\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual/release-11-0-2.spec.ts:382:65"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T14:43:45.070Z",
+                  "annotations": [
+                    {
+                      "type": "cutcap",
+                      "description": "{\"collapsed\":false,\"corners\":[30,4,4,30],\"clip\":\"inset(0px)\",\"box\":[150,56],\"runOverflow\":144}"
+                    }
+                  ],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual/test-results/release-11-0-2-cutcap-·-th-d8b7a-equal-plate-corners-at-1440-chromium-headless-new/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual/release-11-0-2.spec.ts",
+                    "column": 65,
+                    "line": 382
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-5fea7b47bf2e9b52aa93",
+          "file": "release-11-0-2.spec.ts",
+          "line": 355,
+          "column": 5
+        },
+        {
+          "title": "cutcap · the open narrow face with an end seat has four equal plate corners at 390",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "cutcap",
+                  "description": "{\"collapsed\":false,\"corners\":[30,4,4,30],\"clip\":\"inset(0px)\",\"box\":[150,56],\"runOverflow\":132}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 2341,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.5\u001b[39m\nReceived:    \u001b[31m26\u001b[39m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.5\u001b[39m\nReceived:    \u001b[31m26\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual/release-11-0-2.spec.ts:382:65",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual/release-11-0-2.spec.ts",
+                      "column": 65,
+                      "line": 382
+                    },
+                    "snippet": "  380 |         expect(r.collapsed).toBe(false);\n  381 |         expect(Math.min(...r.corners)).toBeGreaterThan(0);\n> 382 |         expect(Math.max(...r.corners) - Math.min(...r.corners)).toBeLessThanOrEqual(0.5);\n      |                                                                 ^\n  383 |         // A cut cap is drawn by the clip: its rounded inset, if any, is equal on all four.\n  384 |         const round = /round\\s+([^)]*)/.exec(r.clip)?.[1]?.split(/\\s+/).map(parseFloat) ?? [];\n  385 |         if (round.length) expect(Math.max(...round) - Math.min(...round)).toBeLessThanOrEqual(0.5);"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual/release-11-0-2.spec.ts",
+                        "column": 65,
+                        "line": 382
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.5\u001b[39m\nReceived:    \u001b[31m26\u001b[39m\n\n  380 |         expect(r.collapsed).toBe(false);\n  381 |         expect(Math.min(...r.corners)).toBeGreaterThan(0);\n> 382 |         expect(Math.max(...r.corners) - Math.min(...r.corners)).toBeLessThanOrEqual(0.5);\n      |                                                                 ^\n  383 |         // A cut cap is drawn by the clip: its rounded inset, if any, is equal on all four.\n  384 |         const round = /round\\s+([^)]*)/.exec(r.clip)?.[1]?.split(/\\s+/).map(parseFloat) ?? [];\n  385 |         if (round.length) expect(Math.max(...round) - Math.min(...round)).toBeLessThanOrEqual(0.5);\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual/release-11-0-2.spec.ts:382:65"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T14:43:47.914Z",
+                  "annotations": [
+                    {
+                      "type": "cutcap",
+                      "description": "{\"collapsed\":false,\"corners\":[30,4,4,30],\"clip\":\"inset(0px)\",\"box\":[150,56],\"runOverflow\":132}"
+                    }
+                  ],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual/test-results/release-11-0-2-cutcap-·-th-f41fd--equal-plate-corners-at-390-chromium-headless-new/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual/release-11-0-2.spec.ts",
+                    "column": 65,
+                    "line": 382
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-3ce22652092d97af4126",
+          "file": "release-11-0-2.spec.ts",
+          "line": 355,
+          "column": 5
+        },
+        {
+          "title": "cutcap · the open narrow face with an end seat has four equal plate corners at 1440",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "cutcap",
+                  "description": "{\"collapsed\":false,\"corners\":[30,4,4,30],\"clip\":\"inset(0px)\",\"box\":[162,60],\"runOverflow\":149}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 2291,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.5\u001b[39m\nReceived:    \u001b[31m26\u001b[39m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.5\u001b[39m\nReceived:    \u001b[31m26\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual/release-11-0-2.spec.ts:382:65",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual/release-11-0-2.spec.ts",
+                      "column": 65,
+                      "line": 382
+                    },
+                    "snippet": "  380 |         expect(r.collapsed).toBe(false);\n  381 |         expect(Math.min(...r.corners)).toBeGreaterThan(0);\n> 382 |         expect(Math.max(...r.corners) - Math.min(...r.corners)).toBeLessThanOrEqual(0.5);\n      |                                                                 ^\n  383 |         // A cut cap is drawn by the clip: its rounded inset, if any, is equal on all four.\n  384 |         const round = /round\\s+([^)]*)/.exec(r.clip)?.[1]?.split(/\\s+/).map(parseFloat) ?? [];\n  385 |         if (round.length) expect(Math.max(...round) - Math.min(...round)).toBeLessThanOrEqual(0.5);"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual/release-11-0-2.spec.ts",
+                        "column": 65,
+                        "line": 382
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.5\u001b[39m\nReceived:    \u001b[31m26\u001b[39m\n\n  380 |         expect(r.collapsed).toBe(false);\n  381 |         expect(Math.min(...r.corners)).toBeGreaterThan(0);\n> 382 |         expect(Math.max(...r.corners) - Math.min(...r.corners)).toBeLessThanOrEqual(0.5);\n      |                                                                 ^\n  383 |         // A cut cap is drawn by the clip: its rounded inset, if any, is equal on all four.\n  384 |         const round = /round\\s+([^)]*)/.exec(r.clip)?.[1]?.split(/\\s+/).map(parseFloat) ?? [];\n  385 |         if (round.length) expect(Math.max(...round) - Math.min(...round)).toBeLessThanOrEqual(0.5);\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual/release-11-0-2.spec.ts:382:65"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T14:43:52.778Z",
+                  "annotations": [
+                    {
+                      "type": "cutcap",
+                      "description": "{\"collapsed\":false,\"corners\":[30,4,4,30],\"clip\":\"inset(0px)\",\"box\":[162,60],\"runOverflow\":149}"
+                    }
+                  ],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual/test-results/release-11-0-2-cutcap-·-th-d8b7a-equal-plate-corners-at-1440-coarse-touch/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual/release-11-0-2.spec.ts",
+                    "column": 65,
+                    "line": 382
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-4139b320552494e0490c",
+          "file": "release-11-0-2.spec.ts",
+          "line": 355,
+          "column": 5
+        },
+        {
+          "title": "cutcap · the open narrow face with an end seat has four equal plate corners at 390",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "cutcap",
+                  "description": "{\"collapsed\":false,\"corners\":[30,4,4,30],\"clip\":\"inset(0px)\",\"box\":[162,60],\"runOverflow\":137}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 2229,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.5\u001b[39m\nReceived:    \u001b[31m26\u001b[39m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.5\u001b[39m\nReceived:    \u001b[31m26\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual/release-11-0-2.spec.ts:382:65",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual/release-11-0-2.spec.ts",
+                      "column": 65,
+                      "line": 382
+                    },
+                    "snippet": "  380 |         expect(r.collapsed).toBe(false);\n  381 |         expect(Math.min(...r.corners)).toBeGreaterThan(0);\n> 382 |         expect(Math.max(...r.corners) - Math.min(...r.corners)).toBeLessThanOrEqual(0.5);\n      |                                                                 ^\n  383 |         // A cut cap is drawn by the clip: its rounded inset, if any, is equal on all four.\n  384 |         const round = /round\\s+([^)]*)/.exec(r.clip)?.[1]?.split(/\\s+/).map(parseFloat) ?? [];\n  385 |         if (round.length) expect(Math.max(...round) - Math.min(...round)).toBeLessThanOrEqual(0.5);"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual/release-11-0-2.spec.ts",
+                        "column": 65,
+                        "line": 382
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.5\u001b[39m\nReceived:    \u001b[31m26\u001b[39m\n\n  380 |         expect(r.collapsed).toBe(false);\n  381 |         expect(Math.min(...r.corners)).toBeGreaterThan(0);\n> 382 |         expect(Math.max(...r.corners) - Math.min(...r.corners)).toBeLessThanOrEqual(0.5);\n      |                                                                 ^\n  383 |         // A cut cap is drawn by the clip: its rounded inset, if any, is equal on all four.\n  384 |         const round = /round\\s+([^)]*)/.exec(r.clip)?.[1]?.split(/\\s+/).map(parseFloat) ?? [];\n  385 |         if (round.length) expect(Math.max(...round) - Math.min(...round)).toBeLessThanOrEqual(0.5);\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual/release-11-0-2.spec.ts:382:65"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T14:43:55.510Z",
+                  "annotations": [
+                    {
+                      "type": "cutcap",
+                      "description": "{\"collapsed\":false,\"corners\":[30,4,4,30],\"clip\":\"inset(0px)\",\"box\":[162,60],\"runOverflow\":137}"
+                    }
+                  ],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual/test-results/release-11-0-2-cutcap-·-th-f41fd--equal-plate-corners-at-390-coarse-touch/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual/release-11-0-2.spec.ts",
+                    "column": 65,
+                    "line": 382
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-892fc965a85c5cb3e6cc",
+          "file": "release-11-0-2.spec.ts",
+          "line": 355,
+          "column": 5
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-12T14:43:44.649Z",
+    "duration": 13208.707,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 4,
+    "flaky": 0
+  }
+}

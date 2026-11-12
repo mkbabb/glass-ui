@@ -1,0 +1,126 @@
+
+Running 6 tests using 1 worker
+
+  ✘  1 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:154:5 › slider · a scrubber at its minimum draws its value (sm) (612ms)
+  ✘  2 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:154:5 › slider · a scrubber at its minimum draws its value (md) (496ms)
+  ✘  3 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:154:5 › slider · a scrubber at its minimum draws its value (lg) (495ms)
+  ✘  4 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:154:5 › slider · a scrubber at its minimum draws its value (sm) (517ms)
+  ✘  5 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:154:5 › slider · a scrubber at its minimum draws its value (md) (502ms)
+  ✘  6 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:154:5 › slider · a scrubber at its minimum draws its value (lg) (513ms)
+
+
+  1) [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:154:5 › slider · a scrubber at its minimum draws its value (sm) 
+
+    Error: expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   0
+
+      176 |         info.annotations.push({ type: "slider", description: JSON.stringify({ ...r, diff }) });
+      177 |         expect(r.value).toBe("50");
+    > 178 |         expect(r.thumb.w).toBeGreaterThan(0);
+          |                           ^
+      179 |         expect(r.thumb.opacity).toBeGreaterThan(0);
+      180 |         expect(r.range.w).toBeGreaterThanOrEqual(r.thumb.w - 0.5);
+      181 |         expect(diff).toBeGreaterThan(8);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual/release-11-0-2.spec.ts:178:27
+
+    Error Context: tests-visual/test-results/release-11-0-2-slider-·-a--77229-minimum-draws-its-value-sm--chromium-headless-new/error-context.md
+
+  2) [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:154:5 › slider · a scrubber at its minimum draws its value (md) 
+
+    Error: expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   0
+
+      176 |         info.annotations.push({ type: "slider", description: JSON.stringify({ ...r, diff }) });
+      177 |         expect(r.value).toBe("50");
+    > 178 |         expect(r.thumb.w).toBeGreaterThan(0);
+          |                           ^
+      179 |         expect(r.thumb.opacity).toBeGreaterThan(0);
+      180 |         expect(r.range.w).toBeGreaterThanOrEqual(r.thumb.w - 0.5);
+      181 |         expect(diff).toBeGreaterThan(8);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual/release-11-0-2.spec.ts:178:27
+
+    Error Context: tests-visual/test-results/release-11-0-2-slider-·-a--8e7cc-minimum-draws-its-value-md--chromium-headless-new/error-context.md
+
+  3) [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:154:5 › slider · a scrubber at its minimum draws its value (lg) 
+
+    Error: expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   0
+
+      176 |         info.annotations.push({ type: "slider", description: JSON.stringify({ ...r, diff }) });
+      177 |         expect(r.value).toBe("50");
+    > 178 |         expect(r.thumb.w).toBeGreaterThan(0);
+          |                           ^
+      179 |         expect(r.thumb.opacity).toBeGreaterThan(0);
+      180 |         expect(r.range.w).toBeGreaterThanOrEqual(r.thumb.w - 0.5);
+      181 |         expect(diff).toBeGreaterThan(8);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual/release-11-0-2.spec.ts:178:27
+
+    Error Context: tests-visual/test-results/release-11-0-2-slider-·-a--3c583-minimum-draws-its-value-lg--chromium-headless-new/error-context.md
+
+  4) [coarse-touch] › tests-visual/release-11-0-2.spec.ts:154:5 › slider · a scrubber at its minimum draws its value (sm) 
+
+    Error: expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   0
+
+      176 |         info.annotations.push({ type: "slider", description: JSON.stringify({ ...r, diff }) });
+      177 |         expect(r.value).toBe("50");
+    > 178 |         expect(r.thumb.w).toBeGreaterThan(0);
+          |                           ^
+      179 |         expect(r.thumb.opacity).toBeGreaterThan(0);
+      180 |         expect(r.range.w).toBeGreaterThanOrEqual(r.thumb.w - 0.5);
+      181 |         expect(diff).toBeGreaterThan(8);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual/release-11-0-2.spec.ts:178:27
+
+    Error Context: tests-visual/test-results/release-11-0-2-slider-·-a--77229-minimum-draws-its-value-sm--coarse-touch/error-context.md
+
+  5) [coarse-touch] › tests-visual/release-11-0-2.spec.ts:154:5 › slider · a scrubber at its minimum draws its value (md) 
+
+    Error: expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   0
+
+      176 |         info.annotations.push({ type: "slider", description: JSON.stringify({ ...r, diff }) });
+      177 |         expect(r.value).toBe("50");
+    > 178 |         expect(r.thumb.w).toBeGreaterThan(0);
+          |                           ^
+      179 |         expect(r.thumb.opacity).toBeGreaterThan(0);
+      180 |         expect(r.range.w).toBeGreaterThanOrEqual(r.thumb.w - 0.5);
+      181 |         expect(diff).toBeGreaterThan(8);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual/release-11-0-2.spec.ts:178:27
+
+    Error Context: tests-visual/test-results/release-11-0-2-slider-·-a--8e7cc-minimum-draws-its-value-md--coarse-touch/error-context.md
+
+  6) [coarse-touch] › tests-visual/release-11-0-2.spec.ts:154:5 › slider · a scrubber at its minimum draws its value (lg) 
+
+    Error: expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   0
+
+      176 |         info.annotations.push({ type: "slider", description: JSON.stringify({ ...r, diff }) });
+      177 |         expect(r.value).toBe("50");
+    > 178 |         expect(r.thumb.w).toBeGreaterThan(0);
+          |                           ^
+      179 |         expect(r.thumb.opacity).toBeGreaterThan(0);
+      180 |         expect(r.range.w).toBeGreaterThanOrEqual(r.thumb.w - 0.5);
+      181 |         expect(diff).toBeGreaterThan(8);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual/release-11-0-2.spec.ts:178:27
+
+    Error Context: tests-visual/test-results/release-11-0-2-slider-·-a--3c583-minimum-draws-its-value-lg--coarse-touch/error-context.md
+
+  6 failed
+    [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:154:5 › slider · a scrubber at its minimum draws its value (sm) 
+    [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:154:5 › slider · a scrubber at its minimum draws its value (md) 
+    [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:154:5 › slider · a scrubber at its minimum draws its value (lg) 
+    [coarse-touch] › tests-visual/release-11-0-2.spec.ts:154:5 › slider · a scrubber at its minimum draws its value (sm) 
+    [coarse-touch] › tests-visual/release-11-0-2.spec.ts:154:5 › slider · a scrubber at its minimum draws its value (md) 
+    [coarse-touch] › tests-visual/release-11-0-2.spec.ts:154:5 › slider · a scrubber at its minimum draws its value (lg) 
