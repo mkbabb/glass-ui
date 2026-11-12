@@ -1,5 +1,9 @@
 # Changelog
 
+## 11.0.2 — unreleased
+
+A patch on 11.0.1. Nothing is removed or renamed.
+
 ## 11.0.1 — 2026-11-12
 
 A patch that brings the 10.1.5 fixes forward onto 11.0. If you saw the dock's hover
