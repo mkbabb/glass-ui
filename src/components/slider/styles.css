@@ -445,6 +445,14 @@
         forced-color-adjust: none;
         background: Highlight;
     }
+    /* Forced colours drop every box-shadow, the focus ring with them, so the focused
+       track (the valid and invalid arms) and the focused spectrum thumb draw a
+       system-colour outline instead. */
+    .glass-slider:not([data-variant="spectrum"]):has(:focus-visible) .slider-track,
+    .glass-slider[data-variant="spectrum"] .slider-thumb:focus-visible {
+        outline: var(--focus-ring-width) solid Highlight;
+        outline-offset: 2px;
+    }
     .glass-loupe {
         background: Canvas;
         border: 1px solid CanvasText;
