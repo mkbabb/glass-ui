@@ -27,6 +27,7 @@
 //          the thumb wide and the thumb is painted, so the well's leading end differs
 //          from its empty trailing end; the thumb paints `--card` with
 //          `--slider-thumb-bg` unset, and the token when it is set
+//   pager  a PagerDots neighbour hop paints a neck no wider than the pitch plus one dot
 import { expect, test, type Page } from "@playwright/test";
 
 type DarkHandle = { stamped: boolean; isDark: () => boolean; toggle: () => void };
@@ -543,3 +544,43 @@ for (const width of [1440, 390]) {
         if (round.length) expect(Math.max(...round) - Math.min(...round)).toBeLessThanOrEqual(0.5);
     });
 }
+
+test("pager · a neighbour hop paints a neck no wider than the pitch plus a dot", async ({ page }, info) => {
+    await page.goto("/tests-visual/release-11-0-2/pager-harness.html");
+    await page.locator("body[data-ready='1'] [data-witness='pager'] .goo-body").first().waitFor();
+    await page.waitForTimeout(400);
+    const geo = await page.evaluate(() => {
+        const dots = [...document.querySelectorAll<HTMLElement>("[data-witness='pager'] .goo-dot")];
+        const body = document.querySelector<HTMLElement>("[data-witness='pager'] .goo-body")!;
+        const a = dots[0]!.getBoundingClientRect();
+        const b = dots[1]!.getBoundingClientRect();
+        return { pitch: b.left - a.left, dot: body.offsetWidth, token: getComputedStyle(body).getPropertyValue("--pager-dot-size").trim() };
+    });
+    expect(geo.dot).toBeGreaterThan(4);
+    const hops: { to: number; frames: number; widest: number }[] = [];
+    for (const to of [1, 2, 1, 0]) {
+        const widths = await page.evaluate(
+            (to) =>
+                new Promise<number[]>((resolve) => {
+                    const neck = document.querySelector<HTMLElement>("[data-witness='pager'] .goo-neck")!;
+                    const out: number[] = [];
+                    const t0 = performance.now();
+                    const tick = () => {
+                        if (getComputedStyle(neck).opacity !== "0") out.push(neck.getBoundingClientRect().width);
+                        if (performance.now() - t0 < 700) requestAnimationFrame(tick);
+                        else resolve(out);
+                    };
+                    (window as unknown as { __go: (i: number) => void }).__go(to);
+                    requestAnimationFrame(tick);
+                }),
+            to,
+        );
+        hops.push({ to, frames: widths.length, widest: widths.length ? Math.max(...widths) : 0 });
+    }
+    info.annotations.push({ type: "pager", description: JSON.stringify({ geo, hops }) });
+    for (const hop of hops) {
+        expect(hop.frames, `the neck bridged the hop to ${hop.to}`).toBeGreaterThan(0);
+        expect(hop.widest, `token ${geo.token}`).toBeLessThanOrEqual(geo.pitch + geo.dot + 0.5);
+    }
+});
+

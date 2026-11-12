@@ -78,6 +78,12 @@ A patch on 11.0.1. Nothing is removed or renamed.
   colours the fill. Unset, it paints `--card` as before, and under forced colours it
   still paints `Canvas`.
 
+- **PagerDots no longer stretches a bar across the rail on a one-dot step.** The worm
+  read its dot size from the `--pager-dot-size` token's text, so `.75rem` counted as
+  0.75 px and the bridge between two dots drew many cells long, reading as a jump. The
+  worm now measures the dot from its own box, so a step to a neighbour draws a bridge
+  no longer than the gap plus one dot, whatever unit the token is written in.
+
 ## 11.0.1 — 2026-11-12
 
 A patch that brings the 10.1.5 fixes forward onto 11.0. If you saw the dock's hover
