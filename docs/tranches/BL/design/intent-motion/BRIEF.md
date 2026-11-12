@@ -50,3 +50,4 @@ value.js has written a cross-site critique instrument (`inbound/VALUE-PRECEPTS-2
 3. **Every icon animates on hover.** motion-canon's proportion fence says "never everywhere-jitter". Today, via value.js: "each icon should have animated hover states". Reading taken: the fence bounds amplitude and count per hover, not coverage; nothing moves at rest.
 
 The spec seat writes the precept text for 2 and 3 in PRECEPTS-ADDENDUM.md, and for 1 only as a proposal marked for the owner.
+- Three findings from keyframes' round, 2026-11-12, for the "AI smell" list and the press question: Button squashes non-uniformly on press (about 1.03 × 0.92) where a uniform shrink is wanted; the ToggleGroup item's radial hover glow reads as an effect and a plain fill tween would do; the light-theme Chip stacks border, fill and shadow (O-285, O-286, O-287).
