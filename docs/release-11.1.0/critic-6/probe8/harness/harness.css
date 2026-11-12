@@ -1,0 +1,12 @@
+@import "tailwindcss" source("../../../../../src");
+@import "tw-animate-css";
+@import "../../../../../src/styles/index.css";
+@source "./harness.ts";
+body { margin: 0; background: var(--background); color: var(--foreground); }
+.scene { padding: 24px 16px; min-block-size: 300px; }
+/* The run mark (and a seat's own selected plate) painted in one flat colour the probe can find. */
+.mark-probe { --dock-control-active-bg: rgb(255, 0, 255); }
+/* A consumer who set the glyph hover fill to an image. */
+.hover-grad { --dock-icon-hover-bg: linear-gradient(rgb(0, 200, 0), rgb(0, 200, 0)); }
+/* The glyph hover fill in one flat colour the probe can find. */
+.hover-flat { --dock-icon-hover-bg: rgb(0, 200, 0); }

@@ -1,0 +1,45 @@
+ PASS size-1440-fine-light-keyboard rest 128x32 after 128x32
+ FAIL size-1440-fine-light-click-stay rest 128x32 after 136x40
+ FAIL size-1440-fine-light-click-leave rest 128x32 after 136x40
+ FAIL size-1440-fine-light-hover-then-script rest 128x32 after 136x40
+ PASS size-1440-fine-dark-keyboard rest 128x32 after 128x32
+ FAIL size-1440-fine-dark-click-stay rest 128x32 after 136x40
+ FAIL size-1440-fine-dark-click-leave rest 128x32 after 136x40
+ FAIL size-1440-fine-dark-hover-then-script rest 128x32 after 136x40
+ PASS size-390-coarse-light-keyboard rest 138x34 after 138x35
+ FAIL size-390-coarse-light-click-stay rest 138x34 after 148x44
+ FAIL size-390-coarse-light-click-leave rest 138x34 after 148x44
+ PASS size-390-coarse-light-hover-then-script rest 138x34 after 138x34
+ PASS size-390-coarse-dark-keyboard rest 138x34 after 138x34
+ FAIL size-390-coarse-dark-click-stay rest 138x34 after 148x44
+ FAIL size-390-coarse-dark-click-leave rest 138x34 after 148x44
+ PASS size-390-coarse-dark-hover-then-script rest 138x34 after 138x34
+ PASS size-390-fine-light-keyboard rest 128x32 after 128x32
+ FAIL size-390-fine-light-click-stay rest 128x32 after 136x40
+ FAIL size-390-fine-light-click-leave rest 128x32 after 136x40
+ FAIL size-390-fine-light-hover-then-script rest 128x32 after 136x40
+ PASS size-1440-coarse-light-keyboard rest 138x34 after 138x35
+ FAIL size-1440-coarse-light-click-stay rest 138x34 after 148x44
+ FAIL size-1440-coarse-light-click-leave rest 138x34 after 148x44
+ PASS size-1440-coarse-light-hover-then-script rest 138x34 after 138x34
+ PASS natural-390-light current 216,208,197 dock 253,245,236
+ FAIL hover-390-light edge rest 253,245,236 hovered 224,215,206; inner rest 51,49,47 hovered 30,27,25
+ PASS natural-390-dark current 46,36,27 dock 53,42,34
+ FAIL hover-390-dark edge rest 53,42,34 hovered 47,36,28; inner rest 215,212,211 hovered 235,232,228
+ PASS natural-1440-light current 216,208,197 dock 253,245,236
+ FAIL hover-1440-light edge rest 253,245,236 hovered 224,215,206; inner rest 51,49,47 hovered 30,27,25
+ PASS natural-1440-dark current 46,36,27 dock 53,42,34
+ FAIL hover-1440-dark edge rest 53,42,34 hovered 47,36,28; inner rest 215,212,211 hovered 235,232,228
+ FAIL mount-390-tab-marked task 14 ms, reads 5 {"motionTempo.ts":1,"useDockRunMark.ts":4}, first frame mark=true onSeat=true
+ FAIL mount-390-tab-marked task 13 ms, reads 5 {"motionTempo.ts":1,"useDockRunMark.ts":4}, first frame mark=true onSeat=true
+  ref mount-390-tab-unmarked task 21 ms, reads 1 {"motionTempo.ts":1}, first frame mark=false onSeat=false
+ FAIL mount-390-icon-marked task 15 ms, reads 5 {"motionTempo.ts":1,"useDockRunMark.ts":4}, first frame mark=true onSeat=true
+ FAIL mount-390-icon-marked task 15 ms, reads 5 {"motionTempo.ts":1,"useDockRunMark.ts":4}, first frame mark=true onSeat=true
+  ref mount-390-icon-unmarked task 13 ms, reads 1 {"motionTempo.ts":1}, first frame mark=false onSeat=false
+ FAIL mount-1440-tab-marked task 14 ms, reads 5 {"motionTempo.ts":1,"useDockRunMark.ts":4}, first frame mark=true onSeat=true
+ FAIL mount-1440-tab-marked task 12 ms, reads 5 {"motionTempo.ts":1,"useDockRunMark.ts":4}, first frame mark=true onSeat=true
+  ref mount-1440-tab-unmarked task 12 ms, reads 1 {"motionTempo.ts":1}, first frame mark=false onSeat=false
+ FAIL mount-1440-icon-marked task 16 ms, reads 5 {"motionTempo.ts":1,"useDockRunMark.ts":4}, first frame mark=true onSeat=true
+ FAIL mount-1440-icon-marked task 15 ms, reads 5 {"motionTempo.ts":1,"useDockRunMark.ts":4}, first frame mark=true onSeat=true
+  ref mount-1440-icon-unmarked task 13 ms, reads 1 {"motionTempo.ts":1}, first frame mark=false onSeat=false
+pre webkit 13/40
