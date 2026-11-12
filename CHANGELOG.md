@@ -4,6 +4,19 @@
 
 A patch on 11.0.1. Nothing is removed or renamed.
 
+- **`useGlobalDark` takes a `storageKey`.** `darkModeSyncScript({ storageKey })` could
+  read a key of your choosing in the page head, but the composable always read and
+  wrote `vueuse-color-scheme`, so the two halves disagreed as soon as you changed it.
+  `useGlobalDark({ storageKey })` now reads and writes the key you give it. Like
+  `initialValue`, it is honoured on the first call only, and a later call that passes a
+  different key throws.
+
+- **With an `initialValue`, a toggle remembers the mode you chose.** A toggle that
+  landed on the system's own scheme stored `auto`, so a reader who chose dark twice on a
+  dark Mac opened the site in light the next morning on a light one. When you pass an
+  `initialValue`, a toggle now stores `dark` or `light`. A stored `auto` still follows
+  the system, and without an `initialValue` the toggle behaves as before.
+
 ## 11.0.1 — 2026-11-12
 
 A patch that brings the 10.1.5 fixes forward onto 11.0. If you saw the dock's hover
