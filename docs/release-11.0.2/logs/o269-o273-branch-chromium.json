@@ -1,0 +1,502 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "tests-visual/playwright.config.ts",
+      "release-11-0-2.spec.ts",
+      "--project=chromium-headless-new",
+      "--project=coarse-touch",
+      "--workers=1",
+      "-g",
+      "fill ·|thumb paints"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/playwright.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-headless-new",
+        "name": "chromium-headless-new",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "coarse-touch",
+        "name": "coarse-touch",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "safari-webgl.spec.ts",
+          "aurora-swraster.spec.ts",
+          "release-10-1-1.spec.ts",
+          "release-10-1-2.spec.ts",
+          "release-10-1-3.spec.ts",
+          "release-10-1-4.spec.ts",
+          "release-10-1-5.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/docs/release-11.0.2/logs/o269-o273-branch-chromium.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5341",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/",
+      "url": "http://localhost:5341",
+      "reuseExistingServer": true,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "release-11-0-2.spec.ts",
+      "file": "release-11-0-2.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "slider · the thumb paints --card by default and --slider-thumb-bg when set",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "slider",
+                  "description": "{\"card\":\"rgb(253, 245, 236)\",\"unset\":\"rgb(253, 245, 236)\",\"set\":\"rgb(200, 30, 60)\"}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 480,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T16:36:41.882Z",
+                  "annotations": [
+                    {
+                      "type": "slider",
+                      "description": "{\"card\":\"rgb(253, 245, 236)\",\"unset\":\"rgb(253, 245, 236)\",\"set\":\"rgb(200, 30, 60)\"}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-9835b8cadbabb4e5f0bb",
+          "file": "release-11-0-2.spec.ts",
+          "line": 196,
+          "column": 1
+        },
+        {
+          "title": "fill · in dark a hovered, pressed or selected seat lifts the plate (static)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "fill",
+                  "description": "{\"plate\":0.021227585742099986,\"tabPlate\":0.046051443339086715,\"selected\":0.05561468795736405,\"selectedTab\":0.05562387733066142,\"hover\":0.03817843325041103,\"press\":0.04515841225446928}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2064,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T16:36:42.524Z",
+                  "annotations": [
+                    {
+                      "type": "fill",
+                      "description": "{\"plate\":0.021227585742099986,\"tabPlate\":0.046051443339086715,\"selected\":0.05561468795736405,\"selectedTab\":0.05562387733066142,\"hover\":0.03817843325041103,\"press\":0.04515841225446928}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-b53b3c5b1a173d50886c",
+          "file": "release-11-0-2.spec.ts",
+          "line": 332,
+          "column": 5
+        },
+        {
+          "title": "fill · in dark a hovered, pressed or selected seat lifts the plate (live)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "fill",
+                  "description": "{\"plate\":0.18872031986548415,\"tabPlate\":0.22081628873393655,\"selected\":0.2706107222895055,\"selectedTab\":0.24312840556200524,\"hover\":0.21817280740417755,\"press\":0.2299338320486099}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1998,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T16:36:44.594Z",
+                  "annotations": [
+                    {
+                      "type": "fill",
+                      "description": "{\"plate\":0.18872031986548415,\"tabPlate\":0.22081628873393655,\"selected\":0.2706107222895055,\"selectedTab\":0.24312840556200524,\"hover\":0.21817280740417755,\"press\":0.2299338320486099}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-749caf6ba9c37ecb7cc3",
+          "file": "release-11-0-2.spec.ts",
+          "line": 332,
+          "column": 5
+        },
+        {
+          "title": "fill · the light scheme's seat fills are the plate rungs",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "fill",
+                  "description": "{\"hover\":\"color(srgb 0.20397 0.148263 0.0829736 / 0.14)\",\"resting\":\"color(srgb 0.20397 0.148263 0.0829736 / 0.14)\",\"selectedTab\":\"color(srgb 0.20397 0.148263 0.0829736 / 0.18)\",\"floating\":\"color(srgb 0.20397 0.148263 0.0829736 / 0.18)\"}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1481,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T16:36:46.596Z",
+                  "annotations": [
+                    {
+                      "type": "fill",
+                      "description": "{\"hover\":\"color(srgb 0.20397 0.148263 0.0829736 / 0.14)\",\"resting\":\"color(srgb 0.20397 0.148263 0.0829736 / 0.14)\",\"selectedTab\":\"color(srgb 0.20397 0.148263 0.0829736 / 0.18)\",\"floating\":\"color(srgb 0.20397 0.148263 0.0829736 / 0.18)\"}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-a43cca987bf0a5d81020",
+          "file": "release-11-0-2.spec.ts",
+          "line": 367,
+          "column": 1
+        },
+        {
+          "title": "slider · the thumb paints --card by default and --slider-thumb-bg when set",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "slider",
+                  "description": "{\"card\":\"rgb(253, 245, 236)\",\"unset\":\"rgb(253, 245, 236)\",\"set\":\"rgb(200, 30, 60)\"}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 482,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T16:36:48.426Z",
+                  "annotations": [
+                    {
+                      "type": "slider",
+                      "description": "{\"card\":\"rgb(253, 245, 236)\",\"unset\":\"rgb(253, 245, 236)\",\"set\":\"rgb(200, 30, 60)\"}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-baa3985357500d23db5b",
+          "file": "release-11-0-2.spec.ts",
+          "line": 196,
+          "column": 1
+        },
+        {
+          "title": "fill · in dark a hovered, pressed or selected seat lifts the plate (static)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "fill",
+                  "description": "{\"plate\":0.02120834439733259,\"tabPlate\":0.021283486959918975,\"selected\":0.05558063322102689,\"selectedTab\":0.05570823058486738,\"press\":0.045128252722896035}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2059,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T16:36:49.026Z",
+                  "annotations": [
+                    {
+                      "type": "fill",
+                      "description": "{\"plate\":0.02120834439733259,\"tabPlate\":0.021283486959918975,\"selected\":0.05558063322102689,\"selectedTab\":0.05570823058486738,\"press\":0.045128252722896035}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-fc678a9527e011c44e41",
+          "file": "release-11-0-2.spec.ts",
+          "line": 332,
+          "column": 5
+        },
+        {
+          "title": "fill · in dark a hovered, pressed or selected seat lifts the plate (live)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "fill",
+                  "description": "{\"plate\":0.21557084962375145,\"tabPlate\":0.20990550999783938,\"selected\":0.27490964542774415,\"selectedTab\":0.24617849068355566,\"press\":0.2493051015199519}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2021,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T16:36:51.092Z",
+                  "annotations": [
+                    {
+                      "type": "fill",
+                      "description": "{\"plate\":0.21557084962375145,\"tabPlate\":0.20990550999783938,\"selected\":0.27490964542774415,\"selectedTab\":0.24617849068355566,\"press\":0.2493051015199519}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-e900eef0d2b77b5eb5c3",
+          "file": "release-11-0-2.spec.ts",
+          "line": 332,
+          "column": 5
+        },
+        {
+          "title": "fill · the light scheme's seat fills are the plate rungs",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "hover is a fine-pointer read",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts",
+                    "line": 368,
+                    "column": 10
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 49,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T16:36:53.122Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "hover is a fine-pointer read",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts",
+                        "line": 368,
+                        "column": 10
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-e888847873c2c5df695b",
+          "file": "release-11-0-2.spec.ts",
+          "line": 367,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-12T16:36:41.533Z",
+    "duration": 11677.256000000001,
+    "expected": 7,
+    "skipped": 1,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

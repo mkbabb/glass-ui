@@ -1,0 +1,1772 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "tests-visual/playwright.config.ts",
+      "release-10-1-2.spec.ts",
+      "--project=chromium-headless-new",
+      "--project=coarse-touch",
+      "--workers=1",
+      "-g",
+      "O-101"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/playwright.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-headless-new",
+        "name": "chromium-headless-new",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "coarse-touch",
+        "name": "coarse-touch",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "safari-webgl.spec.ts",
+          "aurora-swraster.spec.ts",
+          "release-10-1-1.spec.ts",
+          "release-10-1-2.spec.ts",
+          "release-10-1-3.spec.ts",
+          "release-10-1-4.spec.ts",
+          "release-10-1-5.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/docs/release-11.0.2/logs/o266-v1101-chromium.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5342",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/",
+      "url": "http://localhost:5342",
+      "reuseExistingServer": true,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "release-10-1-2.spec.ts",
+      "file": "release-10-1-2.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "O-101 · horizontal · pinned · the expanded endpoint follows the pane (1440->390)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2601,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T17:08:04.553Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "937780014813259fe606-f8c4a80e4505fca3d5e3",
+          "file": "release-10-1-2.spec.ts",
+          "line": 453,
+          "column": 13
+        },
+        {
+          "title": "O-101 · horizontal · collapsed · the expanded endpoint follows the pane (1440->390)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2655,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T17:08:07.443Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "937780014813259fe606-75d3ac83f5c52c6bc60c",
+          "file": "release-10-1-2.spec.ts",
+          "line": 453,
+          "column": 13
+        },
+        {
+          "title": "O-101 · horizontal · reversal · the expanded endpoint follows the pane (1440->390)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1745,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T17:08:10.104Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "937780014813259fe606-9daec1444a137e6e3cd6",
+          "file": "release-10-1-2.spec.ts",
+          "line": 453,
+          "column": 13
+        },
+        {
+          "title": "O-101 · horizontal · mid-expand · the expanded endpoint follows the pane (1440->390)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 986,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T17:08:11.856Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "937780014813259fe606-c6a5d0de9a8657284514",
+          "file": "release-10-1-2.spec.ts",
+          "line": 453,
+          "column": 13
+        },
+        {
+          "title": "O-101 · horizontal · pinned · the expanded endpoint follows the pane (390->1440)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2383,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T17:08:12.850Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "937780014813259fe606-2968c29e45ca7d9d7fc7",
+          "file": "release-10-1-2.spec.ts",
+          "line": 453,
+          "column": 13
+        },
+        {
+          "title": "O-101 · horizontal · collapsed · the expanded endpoint follows the pane (390->1440)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2658,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T17:08:15.242Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "937780014813259fe606-9354e9996cd246192e56",
+          "file": "release-10-1-2.spec.ts",
+          "line": 453,
+          "column": 13
+        },
+        {
+          "title": "O-101 · horizontal · reversal · the expanded endpoint follows the pane (390->1440)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1764,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T17:08:17.908Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "937780014813259fe606-1a3498e1f3f94a344c22",
+          "file": "release-10-1-2.spec.ts",
+          "line": 453,
+          "column": 13
+        },
+        {
+          "title": "O-101 · horizontal · mid-expand · the expanded endpoint follows the pane (390->1440)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 950,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T17:08:19.678Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "937780014813259fe606-55b2dec67125af7b994d",
+          "file": "release-10-1-2.spec.ts",
+          "line": 453,
+          "column": 13
+        },
+        {
+          "title": "O-101 · vertical · pinned · the expanded endpoint follows the pane (1440->390)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2330,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T17:08:20.633Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "937780014813259fe606-a6e2338fcf74b4c00fcc",
+          "file": "release-10-1-2.spec.ts",
+          "line": 453,
+          "column": 13
+        },
+        {
+          "title": "O-101 · vertical · collapsed · the expanded endpoint follows the pane (1440->390)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2618,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T17:08:22.968Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "937780014813259fe606-9b4108990a706dce6beb",
+          "file": "release-10-1-2.spec.ts",
+          "line": 453,
+          "column": 13
+        },
+        {
+          "title": "O-101 · vertical · reversal · the expanded endpoint follows the pane (1440->390)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1743,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T17:08:25.596Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "937780014813259fe606-cf2642fa0f8818fa9a2c",
+          "file": "release-10-1-2.spec.ts",
+          "line": 453,
+          "column": 13
+        },
+        {
+          "title": "O-101 · vertical · mid-expand · the expanded endpoint follows the pane (1440->390)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 958,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T17:08:27.345Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "937780014813259fe606-4ea6d7c92cb604a5e6c5",
+          "file": "release-10-1-2.spec.ts",
+          "line": 453,
+          "column": 13
+        },
+        {
+          "title": "O-101 · vertical · pinned · the expanded endpoint follows the pane (390->1440)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2447,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T17:08:28.308Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "937780014813259fe606-7f1b8f8b8bf012dba9fb",
+          "file": "release-10-1-2.spec.ts",
+          "line": 453,
+          "column": 13
+        },
+        {
+          "title": "O-101 · vertical · collapsed · the expanded endpoint follows the pane (390->1440)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2639,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T17:08:30.760Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "937780014813259fe606-4b8a396b8d24bd483441",
+          "file": "release-10-1-2.spec.ts",
+          "line": 453,
+          "column": 13
+        },
+        {
+          "title": "O-101 · vertical · reversal · the expanded endpoint follows the pane (390->1440)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1754,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T17:08:33.404Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "937780014813259fe606-9f86255b2942a0736246",
+          "file": "release-10-1-2.spec.ts",
+          "line": 453,
+          "column": 13
+        },
+        {
+          "title": "O-101 · vertical · mid-expand · the expanded endpoint follows the pane (390->1440)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 970,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T17:08:35.164Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "937780014813259fe606-03fe6d0a13c30b77e4f5",
+          "file": "release-10-1-2.spec.ts",
+          "line": 453,
+          "column": 13
+        },
+        {
+          "title": "O-101a · a host change during the morph · collapsed (1440->390)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2723,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T17:08:36.141Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "937780014813259fe606-5aa7fc25312e029f6943",
+          "file": "release-10-1-2.spec.ts",
+          "line": 502,
+          "column": 9
+        },
+        {
+          "title": "O-101a · a host change during the morph · reversal (1440->390)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1751,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T17:08:38.871Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "937780014813259fe606-5953a2dc21bf43e9b91f",
+          "file": "release-10-1-2.spec.ts",
+          "line": 502,
+          "column": 9
+        },
+        {
+          "title": "O-101a · a host change during the morph · mid-expand (1440->390)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 963,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T17:08:40.628Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "937780014813259fe606-97d7b77fb6880f13abd9",
+          "file": "release-10-1-2.spec.ts",
+          "line": 502,
+          "column": 9
+        },
+        {
+          "title": "O-101a · a host change during the morph · collapsed (390->1440)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2595,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T17:08:41.596Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "937780014813259fe606-42a19fd204b892064f23",
+          "file": "release-10-1-2.spec.ts",
+          "line": 502,
+          "column": 9
+        },
+        {
+          "title": "O-101a · a host change during the morph · reversal (390->1440)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1720,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T17:08:44.196Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "937780014813259fe606-ba7eb0c72523ce3df01a",
+          "file": "release-10-1-2.spec.ts",
+          "line": 502,
+          "column": 9
+        },
+        {
+          "title": "O-101a · a host change during the morph · mid-expand (390->1440)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 930,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T17:08:45.921Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "937780014813259fe606-537d214c66603549c27f",
+          "file": "release-10-1-2.spec.ts",
+          "line": 502,
+          "column": 9
+        },
+        {
+          "title": "O-101 · a capture keeps a scrolled run's scroll position (390)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1640,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T17:08:46.857Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "937780014813259fe606-aac879a4cdac2377e1c0",
+          "file": "release-10-1-2.spec.ts",
+          "line": 538,
+          "column": 5
+        },
+        {
+          "title": "O-101 · a capture keeps a scrolled run's scroll position (1440)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1643,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T17:08:48.502Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "937780014813259fe606-7e79c5ebd62f7bd967a1",
+          "file": "release-10-1-2.spec.ts",
+          "line": 538,
+          "column": 5
+        },
+        {
+          "title": "O-101 · horizontal · pinned · the expanded endpoint follows the pane (1440->390)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2355,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T17:08:50.513Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "937780014813259fe606-25f998cd7922081ed93b",
+          "file": "release-10-1-2.spec.ts",
+          "line": 453,
+          "column": 13
+        },
+        {
+          "title": "O-101 · horizontal · collapsed · the expanded endpoint follows the pane (1440->390)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2676,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T17:08:52.947Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "937780014813259fe606-ce7d914a7fd6d699f2e7",
+          "file": "release-10-1-2.spec.ts",
+          "line": 453,
+          "column": 13
+        },
+        {
+          "title": "O-101 · horizontal · reversal · the expanded endpoint follows the pane (1440->390)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1754,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T17:08:55.629Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "937780014813259fe606-28da69edd23deba8ab7a",
+          "file": "release-10-1-2.spec.ts",
+          "line": 453,
+          "column": 13
+        },
+        {
+          "title": "O-101 · horizontal · mid-expand · the expanded endpoint follows the pane (1440->390)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 962,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T17:08:57.389Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "937780014813259fe606-a0cab653a99cb344899f",
+          "file": "release-10-1-2.spec.ts",
+          "line": 453,
+          "column": 13
+        },
+        {
+          "title": "O-101 · horizontal · pinned · the expanded endpoint follows the pane (390->1440)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2346,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T17:08:58.356Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "937780014813259fe606-e108cf8ef5e635cfc1c3",
+          "file": "release-10-1-2.spec.ts",
+          "line": 453,
+          "column": 13
+        },
+        {
+          "title": "O-101 · horizontal · collapsed · the expanded endpoint follows the pane (390->1440)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2610,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T17:09:00.708Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "937780014813259fe606-6f5f8ce96011a5160e37",
+          "file": "release-10-1-2.spec.ts",
+          "line": 453,
+          "column": 13
+        },
+        {
+          "title": "O-101 · horizontal · reversal · the expanded endpoint follows the pane (390->1440)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1731,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T17:09:03.323Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "937780014813259fe606-779e5e32352c023311e6",
+          "file": "release-10-1-2.spec.ts",
+          "line": 453,
+          "column": 13
+        },
+        {
+          "title": "O-101 · horizontal · mid-expand · the expanded endpoint follows the pane (390->1440)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 949,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T17:09:05.061Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "937780014813259fe606-a4c9529de9affa548e2f",
+          "file": "release-10-1-2.spec.ts",
+          "line": 453,
+          "column": 13
+        },
+        {
+          "title": "O-101 · vertical · pinned · the expanded endpoint follows the pane (1440->390)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2334,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T17:09:06.016Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "937780014813259fe606-c12cee80b72e9efdc3ea",
+          "file": "release-10-1-2.spec.ts",
+          "line": 453,
+          "column": 13
+        },
+        {
+          "title": "O-101 · vertical · collapsed · the expanded endpoint follows the pane (1440->390)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2604,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T17:09:08.356Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "937780014813259fe606-3de8e300eed3f3dde619",
+          "file": "release-10-1-2.spec.ts",
+          "line": 453,
+          "column": 13
+        },
+        {
+          "title": "O-101 · vertical · reversal · the expanded endpoint follows the pane (1440->390)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1689,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T17:09:10.966Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "937780014813259fe606-9158602eb2008fed2b53",
+          "file": "release-10-1-2.spec.ts",
+          "line": 453,
+          "column": 13
+        },
+        {
+          "title": "O-101 · vertical · mid-expand · the expanded endpoint follows the pane (1440->390)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 929,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T17:09:12.660Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "937780014813259fe606-b819b8e025bd14f6c5c8",
+          "file": "release-10-1-2.spec.ts",
+          "line": 453,
+          "column": 13
+        },
+        {
+          "title": "O-101 · vertical · pinned · the expanded endpoint follows the pane (390->1440)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3281,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T17:09:13.594Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "937780014813259fe606-9f3a1ec90a075cf08bbc",
+          "file": "release-10-1-2.spec.ts",
+          "line": 453,
+          "column": 13
+        },
+        {
+          "title": "O-101 · vertical · collapsed · the expanded endpoint follows the pane (390->1440)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2605,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T17:09:16.880Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "937780014813259fe606-58b1b85c7e409dafa9e4",
+          "file": "release-10-1-2.spec.ts",
+          "line": 453,
+          "column": 13
+        },
+        {
+          "title": "O-101 · vertical · reversal · the expanded endpoint follows the pane (390->1440)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1719,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T17:09:19.491Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "937780014813259fe606-7b89fa7935c79e39a4e3",
+          "file": "release-10-1-2.spec.ts",
+          "line": 453,
+          "column": 13
+        },
+        {
+          "title": "O-101 · vertical · mid-expand · the expanded endpoint follows the pane (390->1440)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 954,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T17:09:21.215Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "937780014813259fe606-1943711010b9d1c9aa7b",
+          "file": "release-10-1-2.spec.ts",
+          "line": 453,
+          "column": 13
+        },
+        {
+          "title": "O-101a · a host change during the morph · collapsed (1440->390)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2629,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T17:09:22.174Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "937780014813259fe606-62935c57be8b57690e6b",
+          "file": "release-10-1-2.spec.ts",
+          "line": 502,
+          "column": 9
+        },
+        {
+          "title": "O-101a · a host change during the morph · reversal (1440->390)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1769,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T17:09:24.808Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "937780014813259fe606-8c91fb639f80b4b483bb",
+          "file": "release-10-1-2.spec.ts",
+          "line": 502,
+          "column": 9
+        },
+        {
+          "title": "O-101a · a host change during the morph · mid-expand (1440->390)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1252,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T17:09:26.583Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "937780014813259fe606-140aefd437831449a8a3",
+          "file": "release-10-1-2.spec.ts",
+          "line": 502,
+          "column": 9
+        },
+        {
+          "title": "O-101a · a host change during the morph · collapsed (390->1440)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2648,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T17:09:27.841Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "937780014813259fe606-8f190facf5fad3d9f98c",
+          "file": "release-10-1-2.spec.ts",
+          "line": 502,
+          "column": 9
+        },
+        {
+          "title": "O-101a · a host change during the morph · reversal (390->1440)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1768,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T17:09:30.494Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "937780014813259fe606-5b2ac9c07e256f09c014",
+          "file": "release-10-1-2.spec.ts",
+          "line": 502,
+          "column": 9
+        },
+        {
+          "title": "O-101a · a host change during the morph · mid-expand (390->1440)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 978,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T17:09:32.267Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "937780014813259fe606-1238934d539fae88ffcc",
+          "file": "release-10-1-2.spec.ts",
+          "line": 502,
+          "column": 9
+        },
+        {
+          "title": "O-101 · a capture keeps a scrolled run's scroll position (390)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1659,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T17:09:33.249Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "937780014813259fe606-7a5db2a0d712ed2822c6",
+          "file": "release-10-1-2.spec.ts",
+          "line": 538,
+          "column": 5
+        },
+        {
+          "title": "O-101 · a capture keeps a scrolled run's scroll position (1440)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1659,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T17:09:34.913Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "937780014813259fe606-167a4510b8bf4fce824c",
+          "file": "release-10-1-2.spec.ts",
+          "line": 538,
+          "column": 5
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-12T17:08:03.942Z",
+    "duration": 92675.243,
+    "expected": 48,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

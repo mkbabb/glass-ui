@@ -1,0 +1,73 @@
+[guarded] waiting for the 'webkit' lock
+
+Running 4 tests using 1 worker
+
+  ✘  1 [webkit] › tests-visual/release-11-0-2.spec.ts:196:1 › slider · the thumb paints --card by default and --slider-thumb-bg when set (815ms)
+  ✘  2 [webkit] › tests-visual/release-11-0-2.spec.ts:332:5 › fill · in dark a hovered, pressed or selected seat lifts the plate (static) (2.4s)
+  ✘  3 [webkit] › tests-visual/release-11-0-2.spec.ts:332:5 › fill · in dark a hovered, pressed or selected seat lifts the plate (live) (2.3s)
+  ✓  4 [webkit] › tests-visual/release-11-0-2.spec.ts:368:1 › fill · the light scheme's seat fills are the plate rungs (1.8s)
+
+
+  1) [webkit] › tests-visual/release-11-0-2.spec.ts:196:1 › slider · the thumb paints --card by default and --slider-thumb-bg when set 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: "rgb(200, 30, 60)"
+    Received: "rgb(253, 245, 236)"
+
+      214 |     info.annotations.push({ type: "slider", description: JSON.stringify(r) });
+      215 |     expect(r.unset).toBe(r.card);
+    > 216 |     expect(r.set).toBe("rgb(200, 30, 60)");
+          |                   ^
+      217 | });
+      218 |
+      219 | test("edge · a GlassDock page opens and stays alive", async ({ page }, info) => {
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts:216:19
+
+    Error Context: tests-visual/test-results/release-11-0-2-slider-·-th-3d5eb----slider-thumb-bg-when-set-webkit/error-context.md
+
+  2) [webkit] › tests-visual/release-11-0-2.spec.ts:332:5 › fill · in dark a hovered, pressed or selected seat lifts the plate (static) 
+
+    Error: hover
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0.006
+    Received:   -0.004360610805128319
+
+      359 |         const lift = 0.006;
+      360 |         expect(Math.abs(r.restingTab - r.plate), "a resting tab is the plate").toBeLessThan(0.002);
+    > 361 |         if (!touch) expect(r.hover - r.plate, "hover").toBeGreaterThan(lift);
+          |                                                        ^
+      362 |         expect(r.press - r.plate, "press").toBeGreaterThan(lift);
+      363 |         expect(r.selected - r.plate, "selected").toBeGreaterThan(lift);
+      364 |         expect(r.selectedTab - r.plate, "selected tab").toBeGreaterThan(lift);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts:361:56
+
+    Error Context: tests-visual/test-results/release-11-0-2-fill-·-in-d-b5af1-eat-lifts-the-plate-static--webkit/error-context.md
+
+  3) [webkit] › tests-visual/release-11-0-2.spec.ts:332:5 › fill · in dark a hovered, pressed or selected seat lifts the plate (live) 
+
+    Error: hover
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0.006
+    Received:   -0.005783753463293909
+
+      359 |         const lift = 0.006;
+      360 |         expect(Math.abs(r.restingTab - r.plate), "a resting tab is the plate").toBeLessThan(0.002);
+    > 361 |         if (!touch) expect(r.hover - r.plate, "hover").toBeGreaterThan(lift);
+          |                                                        ^
+      362 |         expect(r.press - r.plate, "press").toBeGreaterThan(lift);
+      363 |         expect(r.selected - r.plate, "selected").toBeGreaterThan(lift);
+      364 |         expect(r.selectedTab - r.plate, "selected tab").toBeGreaterThan(lift);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts:361:56
+
+    Error Context: tests-visual/test-results/release-11-0-2-fill-·-in-d-c0870--seat-lifts-the-plate-live--webkit/error-context.md
+
+  3 failed
+    [webkit] › tests-visual/release-11-0-2.spec.ts:196:1 › slider · the thumb paints --card by default and --slider-thumb-bg when set 
+    [webkit] › tests-visual/release-11-0-2.spec.ts:332:5 › fill · in dark a hovered, pressed or selected seat lifts the plate (static) 
+    [webkit] › tests-visual/release-11-0-2.spec.ts:332:5 › fill · in dark a hovered, pressed or selected seat lifts the plate (live) 
+  1 passed (9.7s)

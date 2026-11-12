@@ -243,3 +243,140 @@ After the last row (3f1b3cafb), under `guarded`:
 - O-268's layout count was seat A's to take with O-266; seat A moved O-266 and did not count it.
 - The forced-colors gap in the O-214 cherry-pick (above), on 11.0.2 and 11.1.0 alike.
 - O-227's override note: `--glass-border-dock` no longer reaches the dock edge.
+
+## Resumed after the reboot: O-266, O-268, O-269, O-273
+
+Seat: claude-opus-5-5. The rows above stand as committed (record 1f2986351, gates in
+_Final gates_); nothing of them was rebuilt. The second attempt had left
+`tests-visual/release-10-1-2.spec.ts` with the painted-frame restatement half done; it was
+kept and finished. Servers: none held. Every visual run brings its own vite through the
+Playwright `webServer` on the tree's port (5341 branch, 5342 v11.0.1, 5343 v11.0.0) inside its
+own guarded tree, after the three long-lived servers hit their 90-minute limit while runs sat
+in the machine-wide queue. `scripts/build-B-{chromium,webkit}.sh` now take `TIMEOUT`.
+
+| row | commit | disposition |
+|---|---|---|
+| O-266 | 6c4910229 | test only: the eight cells (and every O-101/O-101a title) read the painted frame |
+| O-268 | f4557c102 | landed, source, tests and CHANGELOG: the fold laid out 3 to 7 times a frame |
+| O-269 | 8124e3e53 | landed, source, tests and CHANGELOG |
+| O-273 | a427be012 | landed, source, tests, README and CHANGELOG |
+
+### O-266: the O-101 cells sample the frame that paints
+
+Per the 09:05 ruling. Each frame is read in a task posted from its rAF callback, and the frame
+is labelled with the width its rAF saw. WebKit 2287 can apply a viewport change between a
+frame's paint and that task, so the task read the new `innerWidth` (and laid out at it)
+against the endpoint the frame painted at the old width: six cells failed on that one
+unpainted sample (`logs/o266-branch-webkit.log` before the fix, overwritten; seat A's
+`logs/o266-probe-webkit.log` shows `raf iw=390` then `post iw=1440 r=160px`). A task that
+finds the width changed since its rAF is not a sample; the next frame reads that paint. The
+MutationObserver capture is not restored.
+
+| tree | chromium-headless-new + coarse-touch | webkit 2287 |
+|---|---|---|
+| branch | 48/48 | 24/24 |
+| v11.0.1 | 48/48 | 24/24 |
+| v11.0.0 | 48/48 | 24/24 |
+
+Logs `o266-{branch,v1101,v1100}-{chromium,webkit}.*`, `scripts/build-B-o266-chain.sh`. No
+CHANGELOG clause (test only).
+
+### O-268: the layouts one idle fold costs on a scrolling page
+
+- **Reading on v11.0.1** (`o268/_o268-probe.spec.ts`, harness
+  `tests-visual/release-11-0-2/fold-harness`: a long page, an untouched `collapse="open"` dock,
+  Chromium CDP `LayoutCount`, 1440, 120 Hz): before the fold 0 layouts in 241 frames, across
+  the fold 245 layouts in 301 frames of which 67 move `--dock-morph-t`, after it 0. Scrolling
+  changes nothing (`o268/_o268-series.spec.ts`: the same counts without scrolling, all inside
+  the 0.6 s morph, 6 to 8 a frame at its start). So it laid out several times per frame.
+- **Root** (`o268/_o268-reads.spec.ts`, `logs/o268-reads-branch.log`): every morph frame the
+  dock's ResizeObserver delivered the root, `.dock-layers` and the leaving pane (the morph
+  sizes them), and `capture()` re-measured both rest endpoints through `restSize` overrides,
+  each a forced layout, then rewrote `--dock-collapsed-px`/`--dock-expanded-px` to the same
+  values, which woke `hostStyle` and a second delivery.
+- **Cure** (`dockMorphMeasure.ts`): through a morph a delivery of only those boxes captures
+  nothing; a host change still arrives as the parent's entry, the resize step or `hostStyle`,
+  a pane's content as its children's entries or `mutations`. `anchor()` now notes the
+  constraint the morph starts under, which the first morph-frame capture used to note; without
+  it `hostStyle` stayed inert and release-10-1-5's p2 and s2 fit-edge cells failed
+  (`logs/sweep-B-branch-chromium.log` cells 139, 140, 152 of the stopped first sweep), GREEN
+  8/8 with it (`logs/o268-fitedge-branch-chromium.*`).
+- **Witness** `fold · an idle fold lays out once per morph frame on a scrolling page`
+  (Chromium projects; WebKit has no layout counter, so its claim there is the sweep below):
+  v11.0.1 RED 245 layouts over 67 and 68 morph frames, branch GREEN 76 and 77
+  (`logs/o268-{v1101,branch}-chromium.*`, probes `logs/o268-probe-*`, `o268-after-branch.log`).
+
+### O-269: the dark seat fills lift the plate
+
+The reported fill `color(srgb 0.093 0.050 0.009 / 0.08)` is the dark arm's own deeper veil ink
+(`oklch(0.17 0.03 70)`) at a plate rung, not a light ink: `--dock-control-{hover,press,active}-bg`
+read `--glass-plate-resting`/`-floating`, which dim in both modes. `tokens/dark-arm.css`
+re-points the three to `color-mix(in oklab, var(--foreground) 8% / 11% / 14%, transparent)`,
+plain `.dark` declarations. Cell: the static harness on a flat ground (`?ground=plain`, so the
+live plate is uniform), a 4 px band under each seat's top edge, Search at rest as the plate,
+asserting a lift above 0.006 in relative luminance.
+
+| tree | engine | plate | hover | press | selected | selected tab |
+|---|---|---|---|---|---|---|
+| v11.0.1 static | chromium | 0.0213 | 0.0169 | 0.0273 | 0.0170 | 0.0166 |
+| branch static | chromium | 0.0213 | 0.0382 | 0.0452 | 0.0557 | 0.0557 |
+| v11.0.1 live | chromium | 0.0327 | 0.0249 | 0.0373 | 0.0248 | 0.0236 |
+| branch live | chromium | 0.0327 | 0.0523 | 0.0602 | 0.0716 | 0.0711 |
+| v11.0.1 static | webkit | 0.0210 | 0.0167 | 0.0273 | 0.0164 | 0.0164 |
+| branch static | webkit | 0.0210 | 0.0379 | 0.0434 | 0.0553 | 0.0553 |
+| v11.0.1 live | webkit | 0.0253 | 0.0195 | 0.0307 | 0.0192 | 0.0192 |
+| branch live | webkit | 0.0253 | 0.0438 | 0.0483 | 0.0613 | 0.0613 |
+
+coarse-touch reads the same (no hover read). Light: hover computes `--glass-plate-resting`
+and the selected tab `--glass-plate-floating`, identical values on v11.0.1 and the branch in
+both engines. RED on v11.0.1 in all three projects. Logs `o269-*`, `o269-o273-*`.
+
+### O-273: `--slider-thumb-bg`
+
+`.slider-thumb { background: var(--slider-thumb-bg, var(--card)) }`; spectrum and forced
+colours keep their own. DESIGN.md already listed the token. Unit test
+`tests/styles/slider-thumb-bg.test.ts` (3; 2 RED on v11.0.1, `logs/o273-unit-*`). Cell: with
+the token unset the thumb computes `--card` (`rgb(253, 245, 236)` on both trees), set it
+computes `rgb(200, 30, 60)` on the branch and stays `--card` on v11.0.1: RED there, GREEN on
+the branch, Chromium, coarse-touch and WebKit.
+
+### The re-witness sweep after O-268, and where this seat stopped
+
+On the branch with the four rows (`scripts/build-B-sweep.sh`, then
+`scripts/build-B-coarse-rerun.sh`), the 11.0.2, release-10-1-2, release-10-1-5,
+release-11-0-1 and release-11-0-1-daraksha specs:
+
+- **Chromium** (`logs/sweep-B-branch-chromium.log`, 380 cells, killed at its 75-minute
+  limit, exit 124, after a queue wait and a 1-minute load of 240 from other sessions):
+  `chromium-headless-new` 190 of 190 GREEN (every O-101/O-101a, p1, p2, s2 and fit-edge title
+  included). coarse-touch: 135 GREEN, 4 failed after 14 to 16 minutes each during the load
+  spike (release-10-1-5 `m3 O-167` Slider, `n1` vertical fit edge, `p1` twice; the second `p1`
+  failed in 22 s, its error not read), and 38 cells did not run (listed in
+  `scripts/coarse-rerun-lines.txt`). The four are not read as regressions or as clean: the
+  rerun did not run.
+- **WebKit 2287**: not run. `guarded --exclusive webkit` REFUSED it at 15:45:29 (exit 75):
+  "zone cache 620s old (> 180s): is the dev.babb.zone-sample agent loaded?". The sampler
+  agent is loaded (`dev.babb.zone-sample`, exit 0) but ticked 12 minutes apart under the load
+  (`~/.claude/guard/log/zone.log`, 15:23:16 then 15:35:10). Per the machine law the seat
+  stopped there: the queued release-11-0-1 WebKit leg and the coarse-touch rerun were stopped
+  by PID before they ran.
+
+So O-268's re-witness of the release-10-1-2 reversal titles and the release-10-1-5 spec is
+GREEN in `chromium-headless-new` and open in coarse-touch (4 failures under load and 38 cells
+unrun) and in WebKit 2287 (unrun). O-266's 24 WebKit O-101 cells ran GREEN before O-268 only.
+Whoever resumes runs, on the branch: `TIMEOUT=45 scripts/build-B-webkit.sh branch
+sweep-B-branch-webkit "." "release-11-0-2.spec.ts release-10-1-2.spec.ts
+release-10-1-5.spec.ts"`, the release-11-0-1 WebKit leg (the last command in
+`scripts/build-B-sweep.sh`), and the coarse rerun. If WebKit reds a fit-edge or host-change
+title that is GREEN on v11.0.1, O-268 is reverted whole (f4557c102 touches only its own files).
+
+## Final gates (resumed seat)
+
+- `npm run typecheck`: exit 0 after the last source change (`logs/typecheck-final-B2.log`,
+  `guarded --light`).
+- Unit: the seven files touching the changed tokens and the new thumb test, 201 passed
+  (`logs/o269-o273-unit-touching.log`, `guarded --light`).
+- **The full `npx vitest run --maxWorkers=2` did not run** after these rows: it is a heavy run,
+  and the seat stopped at the guard refusal above. It is owed, with
+  `npm run demo:dist:build` first (the boot-graph arm reads a fresh `dist-demo/`).
+- No server or browser of this seat is left running.
