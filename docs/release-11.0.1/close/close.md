@@ -36,18 +36,18 @@ v11.0.0. It also turned up two WebKit harness hangs that pass alone (below).
 `logs/gates-archive` ran on a `git archive HEAD` tree at `a7f0a99c4`, which stands for CI's
 fresh checkout. It had its own one-commit repo and the main checkout's `node_modules`, and was
 deleted after. `logs/gates-worktree` ran in the worktree at `a7f0a99c4`. `logs/gates-final` ran
-at `556f3063a` and `logs/gates-closed` at the closing commit. Between `a7f0a99c4` and the close,
+at `556f3063a` and `logs/gates-closed` at `7b137f7ed`, the commit that carries this record. Between `a7f0a99c4` and the close,
 only `tests-visual` specs, CHANGELOG prose and records changed, so no package byte moved.
 
 | step | archive | worktree | final | closed |
 |---|---|---|---|---|
-| version = 11.0.1 | 0 | 0 | 0 | see `logs/gates-closed/gates.txt` |
-| `prepare` (npm ci's build) | 0 | 0 | 0 | |
-| `npm run typecheck` | 0 | 0 | 0 | |
-| `npm run build` + `dist/index.d.ts` | 0 | 0 | 0 | |
-| `npm run verify:package` | 0, CLEAN | 0, CLEAN | 0, CLEAN | |
-| `npm run demo:dist:build` | 0 | 0 | 0 | |
-| vitest `--maxWorkers=2` (`npm test`) | 0, 270 files, 2511 passed, 10 expected fail, 1 skipped | same | same | |
+| version = 11.0.1 | 0 | 0 | 0 | 0 |
+| `prepare` (npm ci's build) | 0 | 0 | 0 | 0 |
+| `npm run typecheck` | 0 | 0 | 0 | 0 |
+| `npm run build` + `dist/index.d.ts` | 0 | 0 | 0 | 0 |
+| `npm run verify:package` | 0, CLEAN | 0, CLEAN | 0, CLEAN | 0, CLEAN, ratchet equal at 2911472 |
+| `npm run demo:dist:build` | 0 | 0 | 0 | 0 |
+| vitest `--maxWorkers=2` (`npm test`) | 0, 270 files, 2511 passed, 10 expected fail, 1 skipped | same | same | same |
 
 - **Bundle ratchet.** It reads PRESENT on the archive build of the committed tree, datum 2911472
   equal to the unpacked content bytes 2911472, so no rebind is needed and none was made. The pack
