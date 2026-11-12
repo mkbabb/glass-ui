@@ -53,7 +53,7 @@ lost). Beside the banked RED trace (`fix-close-1/trace-ch.log.gz`):
 | stale-endpoint 1440->390 | collapsing at 1440 | 599 | 592 | |
 | | collapsing, after the change | 167 | 160 | 160 |
 | stale-endpoint 390->1440 | collapsing at 390 | 167 | 160 | |
-| | collapsing, after the change | (599) | 592 | 592 |
+| | collapsing, after the change | not sampled in that trace; 599 in the RED cells above | 592 | 592 |
 | overflow 390->1440 | collapsing, after the change | 983 | 976 | 976 |
 | overflow 1440->390 | collapsing at 1440 | 983 | 976 | |
 
