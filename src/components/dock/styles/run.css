@@ -390,20 +390,22 @@
        (reduced motion cuts it in one frame). The run's `::before` is the plate: its box
        is the run's scrolled content box, so the mark scrolls with the seats natively,
        and a pseudo-element is no seat, no snap target and no toolbar child. The script
-       writes the plate's box as five lengths; the stylesheet owns the paint.
+       writes the plate's box as five lengths, its inline offset from the run's
+       inline-start edge, so a live change of direction mirrors the mark with the seats;
+       the stylesheet owns the paint.
 
        z-index −1 seats it in the dock's stacking context after the glass plate (which
-       comes first in the tree) and under every seat's content. The seat it marks stops
-       painting its own selected fill, so the run never shows two. */
+       comes first in the tree) and under every seat's content. The seat it marks paints
+       no selected plate of its own (no fill, no rim or lift, no backdrop), so the run
+       shows one shape however the seat became current, `active` included. */
     .glass-dock .dock-run[data-run-mark]::before {
         content: "";
         position: absolute;
-        top: 0;
-        left: 0;
+        inset-block-start: var(--dock-run-mark-y);
+        inset-inline-start: var(--dock-run-mark-x);
         z-index: -1;
         width: var(--dock-run-mark-w);
         height: var(--dock-run-mark-h);
-        translate: var(--dock-run-mark-x) var(--dock-run-mark-y);
         border-radius: var(--dock-run-mark-r);
         background: var(--dock-control-active-bg);
         pointer-events: none;
@@ -411,6 +413,8 @@
 
     .glass-dock .dock-run[data-run-mark] [aria-current]:not([aria-current="false"]) {
         background-color: transparent;
+        box-shadow: none;
+        backdrop-filter: none;
     }
 
     /* THE LABEL BUDGET — and why it is a CLIP, not a token.

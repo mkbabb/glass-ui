@@ -17,6 +17,10 @@
 // and draws `start + (L(t) − start) · p(t)`, where p is the dock spring from 0 to 1. At
 // p = 1 it is exactly on the seat, whatever the seat's own transition did meanwhile.
 //
+// THE MARK'S INLINE OFFSET IS LOGICAL. It is written from the run's inline-start edge
+// and painted at `inset-inline-start`, so a run whose direction flips on a live page
+// mirrors its mark with its seats, with no measure: a direction change resizes nothing.
+//
 // THE FIRST MEASURE WAITS ONE FRAME. Reading a seat's box in the mount task would force
 // the new dock's layout there; the first animation frame runs before the first paint, so
 // the mark is still on its seat in the first frame anyone sees.
@@ -73,7 +77,7 @@ const px = (value: string): number => {
 /**
  * The seat's PAINTED plate in the run's scrolled content coordinates: the box its own
  * selected background would fill (its `background-clip` box), at the corner that box
- * takes from the seat's radius.
+ * takes from the seat's radius. `x` is the offset from the run's inline-start edge.
  */
 function plateOf(run: HTMLElement, seat: HTMLElement): Box {
     const port = run.getBoundingClientRect();
@@ -89,8 +93,14 @@ function plateOf(run: HTMLElement, seat: HTMLElement): Box {
     const radius = style.borderTopLeftRadius.endsWith("%")
         ? (px(style.borderTopLeftRadius) / 100) * rect.width
         : px(style.borderTopLeftRadius);
+    // Right to left, the inline-start edge is the padding box's right edge, and
+    // `scrollLeft` runs from 0 at that edge to negative values toward the end.
+    const x =
+        style.direction === "rtl"
+            ? port.left + run.clientLeft + run.clientWidth - rect.right - run.scrollLeft + right
+            : rect.left - port.left - run.clientLeft + run.scrollLeft + left;
     return {
-        x: rect.left - port.left - run.clientLeft + run.scrollLeft + left,
+        x,
         y: rect.top - port.top - run.clientTop + run.scrollTop + top,
         w: Math.max(0, rect.width - left - right),
         h: Math.max(0, rect.height - top - bottom),

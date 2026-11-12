@@ -78,14 +78,17 @@ describe("the run's active mark", () => {
         wrapper.unmount();
     });
 
-    it("is one plate on the run, under the seats, and the marked seat paints no fill of its own", () => {
+    it("is one plate on the run, under the seats, and the marked seat paints no plate of its own", () => {
         const mark = RUN_CSS.match(/\.glass-dock \.dock-run\[data-run-mark\]::before\s*\{([^}]*)\}/)?.[1] ?? "";
         expect(mark).toMatch(/position:\s*absolute/);
         expect(mark).toMatch(/z-index:\s*-1/);
-        expect(mark).toMatch(/translate:\s*var\(--dock-run-mark-x\) var\(--dock-run-mark-y\)/);
+        // Logical offsets: a live change of direction mirrors the mark with the seats.
+        expect(mark).toMatch(/inset-inline-start:\s*var\(--dock-run-mark-x\)/);
+        expect(mark).toMatch(/inset-block-start:\s*var\(--dock-run-mark-y\)/);
+        expect(mark).not.toMatch(/translate:|\bleft:/);
         expect(mark).toMatch(/background:\s*var\(--dock-control-active-bg\)/);
         expect(RUN_CSS).toMatch(
-            /\.glass-dock \.dock-run\[data-run-mark\] \[aria-current\]:not\(\[aria-current="false"\]\)\s*\{\s*background-color:\s*transparent;/,
+            /\.glass-dock \.dock-run\[data-run-mark\] \[aria-current\]:not\(\[aria-current="false"\]\)\s*\{\s*background-color:\s*transparent;\s*box-shadow:\s*none;\s*backdrop-filter:\s*none;/,
         );
     });
 
