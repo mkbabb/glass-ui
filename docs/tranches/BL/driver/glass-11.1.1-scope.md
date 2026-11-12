@@ -60,3 +60,12 @@ The full release battery, the tag `v11.1.1`, the push and the CI publish under t
 - O-257: dock control opacity on `--duration-fast`.
 - O-258: no dock-cap scroll-timeline animation in the running state at idle in WebKit (`document.getAnimations()` witness, both engines).
 - O-264: full-travel Sheet motion critically damped on the same response (no overshoot past rest; witness: sampled frames at 390 and 1440, both engines, max excursion past rest 0.5 px or less).
+
+## Added 2026-11-12 (afternoon)
+
+- O-284: a control nested in a select-style trigger takes the press state (read first whether it is glass's).
+- O-285: Button's press is a non-uniform squash (about 1.03 × 0.92); remove the leftover or make it uniform, per the owner's answer on the press shrink.
+- O-287: the light-theme Chip stacks border, fill and shadow; a token change only.
+- O-288: a touched Slider folds with its dock (if 11.0.2 did not take it).
+- O-293 (b), (c): the dock's backdrop sampler defers its first sample one frame; LabeledSwitch passes a plain-string label as aria-label. Each with a trace witness: no forced layout inside the mount task.
+- O-280 and O-283: the Slider geometry cure from W-B.18, if it changes no API.
