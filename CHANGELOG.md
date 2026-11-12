@@ -48,6 +48,11 @@ A patch on 11.0.1. Nothing is removed or renamed.
   it: set `--glass-edge-dock` to a strength instead. The edge's ink is the dock's
   `--foreground`.
 
+- **A static dock's controls sample no backdrop.** With `backdrop-mode="static"` the
+  dock's plate already drew no backdrop blur, but an active control kept the capsule's
+  own blur, which read as a lit disc in dark. The controls of a static dock now carry no
+  `backdrop-filter` at rest, on hover, on press or when active. A live dock is unchanged.
+
 ## 11.0.1 — 2026-11-12
 
 A patch that brings the 10.1.5 fixes forward onto 11.0. If you saw the dock's hover

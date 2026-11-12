@@ -101,4 +101,13 @@
         backdrop-filter: none;
         -webkit-backdrop-filter: none;
     }
+
+    /* The static dock's controls sample no backdrop either. The capsule register (an
+       active control's seat, a capsule track) carries its own `--glass-blur-*` lens,
+       composed at `:root`, so the root's `--glass-level: 0` never reaches it; over an
+       opaque plate that lens is a lit disc in dark. */
+    .glass-dock[data-backdrop-mode="static"] :is(.glass-capsule, .glass-capsule-track) {
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+    }
 }

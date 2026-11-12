@@ -10,6 +10,8 @@
 //   edge   a GlassDock page opens and stays alive in unshimmed Playwright WebKit (the
 //          `webkit-2311` project, the build Playwright resolves), and in Chromium the
 //          plate edge computes 11.0.0's colour at t = 0, 0.5 and 1
+//   static every control inside a `backdrop-mode="static"` dock, and everything it
+//          draws, computes no backdrop-filter at rest, hover, press and active
 //   slider a scrubber Slider at its minimum still draws its value: the fill is at least
 //          the thumb wide and the thumb is painted, so the well's leading end differs
 //          from its empty trailing end
@@ -229,4 +231,59 @@ test("edge · the plate edge computes 11.0.0's colour at t = 0, 0.5 and 1", asyn
     });
     info.annotations.push({ type: "edge", description: JSON.stringify(rows) });
     for (const r of rows) expect(r.delta, `t = ${r.t}: ${r.plate} against ${r.ref}`).toBeLessThan(0.002);
+});
+
+// Every box a static dock's control paints (the control, its descendants and their
+// pseudo-elements) with a backdrop-filter other than `none`.
+const filtered = (page: Page, label: string) =>
+    page.evaluate((label) => {
+        const control = document.querySelector(`.static-dock [aria-label="${label}"]`)!;
+        const hits: string[] = [];
+        for (const el of [control, ...control.querySelectorAll("*")]) {
+            for (const pseudo of [null, "::before", "::after"]) {
+                const cs = getComputedStyle(el, pseudo);
+                const f = cs.backdropFilter || (cs as unknown as { webkitBackdropFilter?: string }).webkitBackdropFilter || "none";
+                if (f !== "none") hits.push(`${el.className || el.tagName}${pseudo ?? ""}: ${f}`);
+            }
+        }
+        return hits;
+    }, label);
+
+for (const theme of ["light", "dark"]) {
+    test(`static · a static dock's controls draw no backdrop-filter (${theme})`, async ({ page }, info) => {
+        const touch = info.project.name === "coarse-touch";
+        await page.goto(`/tests-visual/release-11-0-2/static-harness.html?theme=${theme}`);
+        await page.locator("body[data-ready='1'] .static-dock").waitFor();
+        await page.waitForTimeout(900);
+        const read: Record<string, string[]> = {};
+        for (const label of ["Home", "Search", "Motion", "Day", "Week"]) {
+            const control = page.locator(`.static-dock [aria-label="${label}"]`);
+            read[`${label} rest`] = await filtered(page, label);
+            const b = (await control.boundingBox())!;
+            if (!touch) {
+                await page.mouse.move(b.x + b.width / 2, b.y + b.height / 2);
+                await page.waitForTimeout(250);
+                read[`${label} hover`] = await filtered(page, label);
+            }
+            await page.mouse.move(b.x + b.width / 2, b.y + b.height / 2);
+            await page.mouse.down();
+            await page.waitForTimeout(150);
+            read[`${label} press`] = await filtered(page, label);
+            await page.mouse.up();
+            await page.mouse.move(2, 2);
+            await page.waitForTimeout(250);
+        }
+        const mode = await page.evaluate(() => document.querySelector(".static-dock")!.getAttribute("data-backdrop-mode"));
+        const hits = Object.entries(read).filter(([, v]) => v.length);
+        info.annotations.push({ type: "static", description: JSON.stringify({ mode, hits }) });
+        expect(mode).toBe("static");
+        expect(hits).toEqual([]);
+    });
+}
+
+test("static · a live dock's active control keeps its capsule lens", async ({ page }) => {
+    await page.goto("/tests-visual/release-11-0-2/static-harness.html?mode=live");
+    await page.locator("body[data-ready='1'] .static-dock").waitFor();
+    await page.waitForTimeout(600);
+    expect(await filtered(page, "Home")).toHaveLength(1);
 });
