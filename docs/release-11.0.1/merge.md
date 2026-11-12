@@ -272,6 +272,30 @@ alternately on the merged tree and on v11.0.0, three rounds each, at loads 8 to 
 **31/31 in all six runs, both trees** (`runs/d1-ab/ab.txt`). WebKit 2287 passed D-1 in the
 final pass at load 9 to 12.
 
-## Gates
+## Gates (on the committed merge `81486dbd2`)
 
-Run on the committed merge, then the ratchet rebound; see the close commit.
+`scripts/gates.sh g2`, each step its own guarded call (none refused); logs `logs/g2-*`:
+
+| gate | exit |
+|---|---|
+| build | 0 |
+| typecheck | 0 |
+| demo:dist:build | 0 |
+| vitest | 0: 270 files, 2511 passed, 10 expected fail, 1 skipped |
+| verify:package | 1 at first: the bundle ratchet, 2910925 > 2897947 (+12978 B, 10.1.5's code over 11.0.0's) |
+| verify:package after the rebind | 0, `CLEAN` (`logs/g2-verify-rebound.log`) |
+
+`.bundle-ratchet` is rebound from 2897947 to **2910925**, measured on the committed tree.
+The first gate pass (`logs/g1-*`, before the post-merge cures) had the same order of
+results except vitest's `boot-graph` gate, which needs `dist-demo` and ran before
+`demo:dist:build` there; the driver now builds the demo first.
+
+## Not done here, recorded
+
+- The dev server logs a failed dependency scan (92 unresolved imports) on every start:
+  the 10.1.5 critic harnesses `tests-visual/release-10-1-5/critic-*-v1014.ts` import from
+  `./v1014/`, a v10.1.4 source copy that was never committed. Vite falls back to lazy
+  discovery; no witness depends on those files. They came across with the merge as
+  10.1.5 committed them.
+- The touch residual of the one click guard (above).
+- Real Safari: not measured; every WebKit cell is Playwright WebKit 2287.
