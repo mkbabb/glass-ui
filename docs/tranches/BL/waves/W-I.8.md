@@ -230,3 +230,8 @@ His words on atlas: "When you un-hover the dock, it should not instantly telepor
 - **The linger.** A dock opened by hover never closes on the leave frame. The linger is a function of dwell (a floor, a ceiling and one curve, as tokens; today's fixed 3600 ms idle window is the starting point to measure against), re-entry cancels it, and the close is the eased morph. First reproduce what vanished at once on atlas production.
 - **Three states owned by GlassDock:** resting collapsed to its essentials, expanded on hover, focus or tap, and pinned open as a declared member (today only `keepOpen()` / `release()`). A figure dock is this dock with a preset, not a consumer composition.
 - Gates for both are in the INBOUND rows; they join the finite list.
+
+## Owner law added 2026-11-12 (O-279, O-281)
+
+- The theme toggle is a separate seat to the RIGHT of the dock, on its own plate of the dock's surface (this reverses O-222's "not with the dock bg"). It has a hover animation. When the dock collapses, the seat fuses into the main plate and collapses away with it; when the dock expands, it parts again. Both directions are tweened from start to stop. The owner's words: "placed in fission, in a separated icon from the dock, though with a dock bg, on the RIGHT of the dock--in the collpase state, this fission item should fuse into the main dock and collapse away like in ios 27."
+- Every standard dock has a Home seat first. A free-standing control (daraksha's occasion medal) may take the dock plate; the wave says how, in one documented way.

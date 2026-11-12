@@ -37,3 +37,4 @@ Second message, minutes later:
 
 - atlas will adopt the animated icons, the morphing hover plate and the no-snap check from glass and build none of its own. It asks that the no-snap check be runnable by a consumer against its own pages. The spec should ship the check as an exported test helper, not a glass-only script. Its census will be at `sci-report/atlas/docs/tranches/U/design/stories-2026-11-12/SNAP-CENSUS.md`.
 - speedtest has reversed its "idle is still" gate: the idle pane breathes, without ornament. Its frames will carry strips of each phase change and of the Start hover at 1440 and 390.
+- The owner, via value.js, 2026-11-12: "INTUITIVE UI without overuse of markup, with clear nav, homebuttons, and each icon should have animated hover states, like our communicate from glass-ui." The icon piece must drop onto any icon in any consumer with one import and no wrapper. The theme toggle's hover animation (O-279) is its first named user.
