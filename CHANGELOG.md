@@ -6,8 +6,8 @@ A patch that brings the 10.1.5 fixes forward onto 11.0. If you saw the dock's ho
 plate turn into an oval around a labelled control, or one end of the dock go square
 while nothing was hidden, this is the release that fixes both. Nothing is removed or
 renamed. Several token values move, each because the token is the fix: on the stadium
-dock `--dock-cap-rest` goes from `--radius-dock` (16px) to half the dock's measured
-height, and `--dock-cap-cut` from `--radius-xs` (4px) to `--radius-card` (16px); a dock
+dock `--dock-cap-rest` goes from `--radius-dock` (16px) to half the dock's thickness
+(its height when horizontal, its width when vertical), and `--dock-cap-cut` from `--radius-xs` (4px) to `--radius-card` (16px); a dock
 control's default corner goes from `--radius-circle` (50%) to half the control size;
 under `(pointer: coarse)`, `--control-text` and `--control-text-sm` go from the 1.5x
 comfort scale to a 16px floor and to 6/7 of it; in dark, `--shadow-color` goes from the
@@ -24,10 +24,15 @@ when every control in its run fits.
   4px on whichever end still had controls past it. The cue ran even when nothing was
   hidden, so a dock with everything showing could still rest with one square end, and a
   collapsed dock with a control beside its summary often showed it. Now the corner is
-  half the dock's own height (read from the plate's box, so it is a true circle, never
-  a percentage), at rest, collapsed, open on a narrow layer and on every frame of the
-  open and close animation. The dock's own box takes the same corner, so its edge
-  highlight follows the curve. The cue now runs only when controls really are hidden,
+  half the dock's own thickness, its height when horizontal and its width when vertical
+  (read from the plate's box, so it is a true circle, never a percentage), at rest,
+  collapsed, open on a narrow layer and on every frame of the open and close animation.
+  Until the dock's script has measured itself, as on a server-rendered page before it
+  hydrates, the corner is worked out from the same density tokens the dock is laid out
+  by, so the first paint is already round. While the dock opens or closes, its box is
+  stretched along the dock's length, and the corner is now drawn to cancel that stretch,
+  so the end stays a circle instead of flattening for the length of the animation. The
+  dock's own box takes the same corner, so its edge highlight follows the curve. The cue now runs only when controls really are hidden,
   and when it does it cuts the corner to 16px. A one-control collapsed dock is still a
   circle; one with a control beside its summary is a capsule. On the stadium shape
   `--radius-dock` no longer sets the corner; the rounded and card shapes are unchanged.

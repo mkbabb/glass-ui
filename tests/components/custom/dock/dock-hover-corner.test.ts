@@ -67,6 +67,12 @@ describe("U/B8r I-3: the two-cell collapsed dock is not drawn as a circle", () =
 
     it("the stadium's corner is half its cross extent in every posture: a circle on one cell, a capsule on two", () => {
         expect(run).toMatch(/\.glass-dock\.shape-pill\s*\{\s*border-radius:\s*var\(--dock-cap-rest\);/);
-        expect(run).toMatch(/--dock-cap-rest:\s*calc\(var\(--dock-plate-cross-px\) \/ 2\)/);
+        expect(run).toMatch(/--dock-cap-rest:\s*calc\(var\(--dock-cross\) \/ 2\)/);
+        // The cross extent is the measure, and before the script runs the same extent
+        // from the density tokens: the first paint is already a stadium.
+        expect(run).toMatch(/--dock-cross:\s*var\(\s*--dock-plate-cross-px,\s*calc\(var\(--dock-layer-height\) \+ 2 \* var\(--dock-padding-block\)\)\s*\)/);
+        expect(run).toMatch(/\.glass-dock\.vertical\s*\{\s*--dock-cross:\s*var\(\s*--dock-plate-cross-px,\s*calc\(var\(--dock-control-size\) \+ 2 \* var\(--dock-padding-inline\)\)\s*\)/);
+        // Mid-morph the corner's morph-axis radius is divided by the box's scale.
+        expect(run).toMatch(/\.glass-dock\.shape-pill\[data-morphing\]:not\(\.vertical\)\s*\{\s*border-radius:\s*calc\(var\(--dock-cap-rest\) \/ max\(var\(--dock-size-scale, 1\), 0\.06\)\) \/\s*var\(--dock-cap-rest\);/);
     });
 });

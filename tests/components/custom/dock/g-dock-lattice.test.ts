@@ -357,7 +357,7 @@ describe("G-DOCK-RUN — the platform is the detent engine", () => {
             }
         }
         const decls = declarations(`${STYLES}/run.css`);
-        expect(decls).toMatch(/--dock-cap-rest:\s*calc\(var\(--dock-plate-cross-px\) \/ 2\)/);
+        expect(decls).toMatch(/--dock-cap-rest:\s*calc\(var\(--dock-cross\) \/ 2\)/);
         expect(decls).not.toMatch(/--dock-cap-rest:\s*[\d.]+%/);
         // Declarations only: `from: 9999px` is NAMED in the docblock as the rejected
         // alternative, and a detector that cannot tell a rejection from a declaration

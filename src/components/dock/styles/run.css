@@ -614,9 +614,9 @@
        `position: absolute` overlay SIBLING of the port and scroll timelines resolve
        DOWN, never up. `styles/scroll-driven.css` documents that trap already.
 
-       `from` IS A LENGTH: half the plate's cross extent, `--dock-plate-cross-px / 2`,
-       which `useDockExpandedSize` (dockMorphMeasure.ts) publishes from the plate's own
-       ResizeObserver border box. Never a percentage: a percentage radius resolves
+       `from` IS A LENGTH: half the plate's cross extent, `--dock-cross / 2`, which
+       `useDockExpandedSize` (dockMorphMeasure.ts) publishes as `--dock-plate-cross-px`
+       from the plate's own ResizeObserver border box. Never a percentage: a percentage radius resolves
        per axis, so on a 188x60 plate `50%` is a 94x30 px ellipse inside the ring. Never
        a length larger than the half extent either: `from: 9999px` is pinned by the
        half-box clamp until t≈0.999 (t=0.999 still reads 25.98px), an animation that
@@ -635,11 +635,29 @@
        against π·28²/2), never the ~700 an earlier draft claimed. */
     .glass-dock {
         timeline-scope: --dock-run;
+        /* THE CROSS EXTENT, `--dock-cross`: the plate's measured cross extent, and
+           before the script has measured it (a server-rendered dock before hydration)
+           the same extent from the density tokens it is laid out by: the layer height
+           and the block padding either side. So the first paint is already the stadium
+           and the measure, when it lands, changes nothing on a dock of plain seats. */
+        --dock-cross: var(
+            --dock-plate-cross-px,
+            calc(var(--dock-layer-height) + 2 * var(--dock-padding-block))
+        );
         /* The rest corner and its two-rung drop, per shape. The stadium's rest is half
-           the plate's measured cross extent (see above); the finite shapes name their
-           own rest so the keyframe never has to guess at a box height. */
-        --dock-cap-rest: calc(var(--dock-plate-cross-px) / 2);
+           the plate's cross extent (see above); the finite shapes name their own rest
+           so the keyframe never has to guess at a box height. */
+        --dock-cap-rest: calc(var(--dock-cross) / 2);
         --dock-cap-cut: var(--radius-card);
+    }
+
+    /* A vertical dock's cross extent is its width: a control and the inline padding
+       either side. */
+    .glass-dock.vertical {
+        --dock-cross: var(
+            --dock-plate-cross-px,
+            calc(var(--dock-control-size) + 2 * var(--dock-padding-inline))
+        );
     }
 
     .glass-dock.shape-rounded {
@@ -717,14 +735,14 @@
        percentage. */
     .glass-dock {
         --dock-run-cross-half: calc(
-            var(--dock-plate-cross-px) / 2 + var(--dock-run-reserve-block) -
+            var(--dock-cross) / 2 + var(--dock-run-reserve-block) -
                 var(--dock-padding-block, 0.375rem)
         );
     }
 
     .glass-dock.vertical {
         --dock-run-cross-half: calc(
-            var(--dock-plate-cross-px) / 2 + var(--dock-run-reserve-inline) -
+            var(--dock-cross) / 2 + var(--dock-run-reserve-inline) -
                 var(--dock-vertical-padding, var(--dock-padding-inline, 0.5rem))
         );
     }
@@ -756,6 +774,22 @@
        arc. The finite shapes keep the corner the shell gives them. */
     .glass-dock.shape-pill {
         border-radius: var(--dock-cap-rest);
+    }
+
+    /* MID-MORPH THE CORNER IS COUNTER-SCALED ON THE MORPH AXIS. The morph scales the
+       whole box on that axis by `--dock-size-scale` (shape.css), and a corner scales
+       with it: 28px under a scale of 0.47 paints 13x28, a flat-ended barrel. The
+       corner's morph-axis radius is the rest corner divided by the same factor (the
+       floor the layers' counter-scale uses), so the scale paints it back to a circle of
+       the rest corner on every frame, and the settle, which drops the scale and this
+       rule together, changes nothing in paint. */
+    .glass-dock.shape-pill[data-morphing]:not(.vertical) {
+        border-radius: calc(var(--dock-cap-rest) / max(var(--dock-size-scale, 1), 0.06)) /
+            var(--dock-cap-rest);
+    }
+    .glass-dock.shape-pill[data-morphing].vertical {
+        border-radius: var(--dock-cap-rest) /
+            calc(var(--dock-cap-rest) / max(var(--dock-size-scale, 1), 0.06));
     }
 
     /* Each edge's whole transition is confined to ONE PITCH of travel via

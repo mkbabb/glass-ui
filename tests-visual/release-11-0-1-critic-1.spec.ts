@@ -141,8 +141,11 @@ test.describe("critic 1 e", () => {
             const unpublished = await read();
             await snap(page, await clipOf(page, ".witness-dock", 14), `e-${eng}-${state}-unpublished`);
             console.log(`c1 ${JSON.stringify({ cell: `${eng} unpublished ${state}`, published, unpublished })}`);
-            expect.soft(unpublished.root, "the box's corner with no published cross extent").not.toBe("0px");
-            expect.soft(unpublished.plate, "the plate's corner with no published cross extent").not.toBe("0px");
+            // Tightened at fix 2: with no published cross extent the corner is the one the
+            // measure gives, not merely some corner.
+            expect.soft(unpublished.root, "the box's corner with no published cross extent").toBe(published.root);
+            expect.soft(unpublished.plate, "the plate's corner with no published cross extent").toBe(published.plate);
+            expect.soft(published.root, "the published corner is half the height").toBe(`${published.h / 2}px`);
         });
     }
 });

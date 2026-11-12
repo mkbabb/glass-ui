@@ -151,11 +151,20 @@ test("o3 every frame of the expand and of the collapse paints a round end", asyn
                     const tick = () => {
                         frames += 1;
                         if (root.hasAttribute("data-morphing")) morphing += 1;
+                        // In paint: each corner's computed radii times the box's painted
+                        // scale on that axis (the morph scales the box on its inline axis).
                         const cs = getComputedStyle(plate);
+                        const box = plate.getBoundingClientRect();
+                        const sx = box.width / plate.offsetWidth;
+                        const sy = box.height / plate.offsetHeight;
                         const r = [cs.borderTopLeftRadius, cs.borderTopRightRadius, cs.borderBottomRightRadius, cs.borderBottomLeftRadius];
-                        const half = plate.offsetHeight / 2;
-                        const ok = r.every((x) => /^[\d.]+px$/.test(x) && Math.abs(Number.parseFloat(x) - half) <= 0.5);
-                        if (!ok) bad.push(`${Math.round(performance.now() - t0)}ms ${r.join(" ")} half=${half}`);
+                        const half = box.height / 2;
+                        const painted = r.map((x) => {
+                            const [h, v = h] = x.split(" ");
+                            return /^[\d.]+px$/.test(h!) && /^[\d.]+px$/.test(v!) ? [Number.parseFloat(h!) * sx, Number.parseFloat(v!) * sy] : [Number.NaN, Number.NaN];
+                        });
+                        const ok = painted.every(([px, py]) => Math.abs(px! - half) <= 0.5 && Math.abs(py! - half) <= 0.5);
+                        if (!ok) bad.push(`${Math.round(performance.now() - t0)}ms ${r.join(" ")} painted ${painted.map(([px, py]) => `${px!.toFixed(1)}x${py!.toFixed(1)}`).join(" ")} half=${half}`);
                         if (performance.now() - t0 < ms) requestAnimationFrame(tick);
                         else resolve({ frames, morphing, bad });
                     };
