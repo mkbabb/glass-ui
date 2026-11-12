@@ -70,3 +70,4 @@ Gates, in both engines, light and dark, at 390 and 1440:
 - O-269: in dark, a dock control's hover and active fill lightens the plate (today it is a light-scheme ink and reads darker); witness by luminance against the plate, both engines.
 - O-271: dock rows overflow 4 to 8 px when a persistent region sits beside the layers (fourier; regression in 11.0.1).
 - O-270: every dock seat (control, trigger, tab) takes a corner of half its block size.
+- O-273: `--slider-thumb-bg` (default `var(--card)`) for the scrubber thumb; additive.
