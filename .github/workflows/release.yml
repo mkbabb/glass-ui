@@ -63,7 +63,7 @@ jobs:
             # A bare `npm publish` moves `latest` to whatever it publishes, so a patch on
             # an older major would take `latest` back. The version being published takes
             # `latest` only when it is greater than the registry's; an older line takes
-            # `v<major>`, and a prerelease takes `next`.
+            # `release-<major>`, and a prerelease takes `next`.
             - name: choose the dist-tag
               id: tag
               run: |
