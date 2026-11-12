@@ -69,3 +69,4 @@ The full release battery, the tag `v11.1.1`, the push and the CI publish under t
 - O-288: a touched Slider folds with its dock (if 11.0.2 did not take it).
 - O-293 (b), (c): the dock's backdrop sampler defers its first sample one frame; LabeledSwitch passes a plain-string label as aria-label. Each with a trace witness: no forced layout inside the mount task.
 - O-280 and O-283: the Slider geometry cure from W-B.18, if it changes no API.
+- O-299 (c): on a coarse pointer the dock folds when the window blurs (a tap into a cross-origin iframe), with a witness.

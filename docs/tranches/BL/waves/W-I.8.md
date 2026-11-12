@@ -242,3 +242,11 @@ His words on atlas: "When you un-hover the dock, it should not instantly telepor
 - Page icons in the dock are flat in colour and carry text labels: "a bit more flat in color, not shaded so much and AI-like, and have text labels."
 - When the dock folds, everything in it folds with it, tweened: "the slider doesn't too. All should animate."
 - Inputs: atlas's figure dock note and its state-by-state design are in `design/dock/inbound/` (O-291).
+
+## Measured on daraksha, 2026-11-12 evening (inputs for the fission seat, O-279, O-289)
+
+Frames: `~/.dev-logs/owner-1112/dock-gaps/branch-v2/`. Glass 11.0.1.
+
+- A pinned second GlassDock beside the main one cannot follow the collapse. The plate morphs by transform while its layout box changes at once, so through the collapse the sibling stands about 140 px from the collapsed pill, then jumps about 116 px in one frame at the end of the collapse and again at the start of the expand. **The fission seat must ride the morph (the same transform clock as the plate), never layout.** The two-dock recipe the orchestrator gave value.js on 2026-11-12 is withdrawn.
+- GlassDock's `margin: 0 auto` spreads two docks across a flex row unless each has a content-sized wrapper.
+- On a phone, a tap inside a cross-origin iframe does not count as an outside press, so the dock does not collapse (O-299).
