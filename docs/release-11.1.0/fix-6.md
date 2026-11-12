@@ -129,3 +129,58 @@ between the branch and v11.0.0 in Chromium and in WebKit (`e2e-compare.py`). The
 rewrote `docs/tranches/BA/audit/visual/dock-plate-clearance/readback.json` and dropped three
 `W-LIQUIDHOVER-*.png` under `docs/tranches/BB/`; this seat restored the first and deleted the
 three.
+
+## The merge of `master` (orchestrator-note-merge-master.md): started, read, aborted
+
+The note arrived (09:05) while this seat's runs were under way and binds the first fix seat
+that reads it after its cures are committed. This seat read it at 09:30, after `1927ac63f`,
+ran `git merge --no-ff --no-commit master` (master at `f7776975d`, 11.0.1 merged at
+`f7705c0df`), read the conflicts, and ran `git merge --abort`. The branch is unchanged
+from `1927ac63f`. No `merge-master.md` exists yet. The merge is the next fix seat's.
+
+**Conflicts** (eleven files): `.bundle-ratchet`, `CHANGELOG.md`, `GlassDock.vue` (2),
+the dock `README.md` (2), `controls/icon-button.css`, `morph.css`, `run.css` (3),
+`shell-regions.css`, `Slider.vue`, `dock-hover-corner.test.ts` (2), `g-dock-lattice.test.ts`
+(2). `release.yml` and `scripts/dist-tag.mjs` merge to master's bytes on their own.
+
+**Why it was not finished here: the run's `::before` is claimed twice.** 11.0.1's `run.css`
+makes a horizontal run's `::before` and `::after` in-flow reserve boxes
+(`.glass-dock:not(.vertical) :where(.dock-layers) > .dock-run:has(> *)::before`, with `flex:
+0 var(--dock-run-yield) auto`, `inline-size: var(--dock-run-reserve-inline)` and a negative
+inline margin), so the two ends' reserves shrink as one flex pair under `data-run-fits`.
+This branch's gliding mark is that same `::before`, positioned absolutely
+(`.glass-dock .dock-run[data-run-mark]::before`). Both selectors are (0,3,1). On the merged
+tree a marked horizontal run would lose its leading reserve box from the flow, and its mark
+would take the reserve's negative margins. That is a design choice, not a conflict to
+resolve by reading both sides: the mark needs another box. The choices this seat saw:
+a library element inside the run (it would then need to be excluded from every
+`.dock-run > *` seat rule, the snap targets and the toolbar's roving count), the current
+seat painting the plate itself and gliding by a FLIP translate (it collides with the
+vertical dock's `::before` accent and the material catch-light `::before`), or 11.0.1's
+leading reserve going back to padding (which its own comment rules out for the yield).
+Each needs its own witness, and then the note's battery: release-10-1-5 (107), the
+release-11-0-1 specs, release-10-1-2/3/4, and every lane and fix witness on the merged tree
+in both engines. That runs for hours of WebKit lock time, and this seat stopped short of it
+rather than leave a merged tree no witness had read.
+
+**Read on both sides, ready for that seat:**
+- `icon-button.css`: master gates the hover on `@media (hover: hover)` (sticky touch hover);
+  the branch sets `background-color` (the face's clip). Both hold: the branch's declaration
+  inside master's query.
+- `Slider.vue`: master adds `@pointerdown="onPointerDown"` (reka's grab offset taken at the
+  press); the branch binds `:model-value`, `@update:model-value`, `@value-commit`,
+  `@pointerdown.capture="onGrab"` and the three let-go events (the rAF-coalesced emit). They
+  are separate handlers (capture and bubble) and both belong.
+- `shell-regions.css`: master moves the leading region's gap into `run.css` (THE ROOM FOR
+  THE RESERVE, which also owns the layers' scroll-axis margins, and gives a trailing region
+  the reserve before it); the branch gives each persistent region its own gap on the side
+  facing the morph region. One owner is needed: master's rules cover the leading gap and
+  the reserve, so the branch's trailing-region gap has to be folded into master's
+  `.dock-layers:has(+ .dock-persistent-end)` rule, not stacked on it.
+- `run.css` corner: master's stadium corner is `--dock-cap-rest: calc(var(--dock-cross) / 2)`
+  from the measured `--dock-plate-cross-px`, with a token fallback, and cut `--radius-card`;
+  the branch's is `--dock-corner` (`shape.css`, half the token cross extent, bounded by
+  `--radius-dock`) with cut `--radius-xs`, plus a counter-scaled corner while
+  `[data-morphing]`. The note's rule is that master's mechanism is kept unless the branch's is
+  the only one covering a posture. Its counter-scaled morph corner covers the morph frames,
+  and its unbounded collapsed summary covers a glyph with a reading.
