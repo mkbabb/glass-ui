@@ -1,7 +1,10 @@
 // U/B7 G1 (4) — radius scales with size (PLAN §5.7, O-17: "this pill is too rounded to
 // be that large"). `--radius-pill` is 1rem: a box up to 32 px tall still renders a full
 // stadium (the engine clamps a radius to half the shorter side), a 44 px bar renders
-// 16 px corners, and every circle is `--radius-circle` (50%). Light and dark.
+// 16 px corners, and every circle is `--radius-circle` (50%), except the dock's own: a dock
+// control's corner is half the control size and a stadium dock's is half its thickness,
+// lengths, so a labelled control is a capsule rather than an oval. A dock circle is a
+// square box whose corner is a length of at least half its side. Light and dark.
 //
 // On the v10.1.1 tag the pill is 9999px and the circles ride it, so the 44 px bar and the
 // field are stadiums and no circle computes 50%: every cell below fails there.
@@ -37,6 +40,9 @@ const CIRCLES: Array<[string, string, string?]> = [
     ["radio dot", '[data-witness="radio"] .radio-group__dot'],
     ["dark-mode toggle", ".dark-mode-toggle-button"],
     ["pager dot", '[data-witness="pager"] .goo-dot', "::before"],
+];
+
+const DOCK_CIRCLES: Array<[string, string]> = [
     ["dock icon button", '[data-witness="dock-icon"]'],
     ["collapsed dock", ".glass-dock.collapsed"],
 ];
@@ -49,6 +55,17 @@ for (const theme of ["light", "dark"]) {
                 const c = await corner(page, sel, pseudo);
                 expect(c, `${sel} not found`).not.toBeNull();
                 expect(c!.radius).toBe("50%");
+            });
+        }
+
+        for (const [name, sel] of DOCK_CIRCLES) {
+            test(`${name} is a circle`, async ({ page }) => {
+                await open(page, theme);
+                const c = await corner(page, sel);
+                expect(c, `${sel} not found`).not.toBeNull();
+                expect(c!.radius).toMatch(/^[\d.]+px$/);
+                expect(Math.abs(c!.w - c!.h)).toBeLessThanOrEqual(0.5);
+                expect(parseFloat(c!.radius)).toBeGreaterThanOrEqual(Math.min(c!.w, c!.h) / 2 - 0.5);
             });
         }
 
