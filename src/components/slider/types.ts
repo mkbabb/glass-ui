@@ -33,4 +33,11 @@ export interface SliderProps extends FormFieldProps {
      * the raw number. Authored per thumb onto `aria-valuetext`; reka mints none.
      */
     valueText?: (value: number, index: number) => string;
+    /**
+     * The expanded view: a rounded shell grows out of the track and the thumb grows in
+     * it while the slider is pressed, keyboard-focused or hovered after a dwell, and
+     * both shrink back when none holds. With `valueText`, the readout rides above the
+     * thumb while the value is being changed.
+     */
+    expand?: boolean;
 }

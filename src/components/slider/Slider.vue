@@ -6,11 +6,11 @@ import {
     onMounted,
     ref,
     useAttrs,
+    useId,
     useTemplateRef,
     watch,
 } from "vue";
 import {
-    SliderRange,
     SliderRoot,
     SliderThumb,
     SliderTrack,
@@ -26,6 +26,7 @@ const props = withDefaults(defineProps<SliderProps>(), {
     variant: "scrubber",
     size: "md",
     invalid: false,
+    expand: false,
 });
 const emits = defineEmits<{
     "update:modelValue": [value: number[] | undefined];
@@ -47,6 +48,7 @@ const delegatedProps = computed(() => {
         invalid: _____,
         motion: ______,
         valueText: _______,
+        expand: ________,
         ...delegated
     } = props;
     // The containment law: reka's `contain` alignment clamps the thumb's value-follow
@@ -103,6 +105,173 @@ function onPointerDown(event: PointerEvent): void {
     );
 }
 
+// ── THE VALUE AS ONE NUMBER ──────────────────────────────────────────────────────
+// The template writes each value as a fraction `p` and the stylesheet moves the thumb,
+// the fill and the lane by transforms of it, so a value change never reaches layout.
+// reka still owns the pointer, the keys, the aria values and the hidden form input.
+// Controlled: the model value. Uncontrolled: reka's own value, mirrored from its emit.
+const uncontrolled = ref<number[]>([...(props.defaultValue ?? [props.min ?? 0])]);
+const live = computed<number[]>(() => props.modelValue ?? uncontrolled.value);
+function onModel(next: number[] | undefined): void {
+    if (next && props.modelValue == null) uncontrolled.value = [...next];
+}
+function fraction(value: number | undefined): number {
+    const min = props.min ?? 0;
+    const max = props.max ?? 100;
+    if (value === undefined || max === min) return 0;
+    return Math.min(1, Math.max(0, (value - min) / (max - min)));
+}
+// The thumb being changed: the readout and the shell's origin follow it.
+const activeIndex = ref(0);
+const valueStyle = computed<Record<string, string>>(() => {
+    const values = live.value;
+    const last = values.length - 1;
+    return {
+        "--slider-p": String(fraction(values[last])),
+        "--slider-p0": String(values.length > 1 ? fraction(values[0]) : 0),
+        "--slider-pa": String(fraction(values[Math.min(activeIndex.value, last)])),
+    };
+});
+
+// ── KEYBOARD FOCUS AND STEP TRAVEL ──────────────────────────────────────────────
+// reka focuses the thumb from script on a press, and both engines match that focus as
+// `:focus-visible`, so a mouse press painted the keyboard ring. The mark is set only for
+// focus that arrives outside a press, or once a key is used.
+// A value the slider changes in one step (a key, a press on the track away from the
+// thumb) travels; a dragged or external value lands on the frame it arrives. The travel
+// mark is written straight to the DOM so it is present in the same style pass as the
+// value it animates.
+const focusKey = ref(false);
+let pressing = false;
+const STEP_KEYS = new Set([
+    "ArrowLeft",
+    "ArrowRight",
+    "ArrowUp",
+    "ArrowDown",
+    "PageUp",
+    "PageDown",
+    "Home",
+    "End",
+]);
+
+function travelRunning(root: HTMLElement): boolean {
+    const thumb = root.querySelector(".slider-thumb");
+    return !!thumb
+        ?.getAnimations()
+        .some((a) => (a as CSSTransition).transitionProperty === "translate");
+}
+function markTravel(root: HTMLElement): void {
+    root.setAttribute("data-travel", "");
+    // A step that moves nothing (a key at an end) starts no travel; drop the mark.
+    requestAnimationFrame(() =>
+        requestAnimationFrame(() => {
+            if (!travelRunning(root)) root.removeAttribute("data-travel");
+        }),
+    );
+}
+function onRootPointerDownCapture(event: PointerEvent): void {
+    const root = getRootEl();
+    if (!root) return;
+    pressing = true;
+    focusKey.value = false;
+    if (!(event.target as Element | null)?.closest?.(".slider-thumb")) markTravel(root);
+}
+function onRootPointerMoveCapture(): void {
+    const root = getRootEl();
+    if (pressing && root?.hasAttribute("data-travel")) root.removeAttribute("data-travel");
+}
+function onWindowPointerUp(): void {
+    pressing = false;
+}
+function onRootKeyDownCapture(event: KeyboardEvent): void {
+    const root = getRootEl();
+    if (!root || !STEP_KEYS.has(event.key)) return;
+    focusKey.value = true;
+    markTravel(root);
+}
+function onRootFocusIn(event: FocusEvent): void {
+    const root = getRootEl();
+    const thumb = (event.target as Element | null)?.closest?.(".slider-thumb");
+    if (root && thumb) {
+        const index = [...root.querySelectorAll(".slider-thumb")].indexOf(thumb);
+        if (index >= 0) activeIndex.value = index;
+    }
+    if (!pressing) focusKey.value = true;
+}
+function onRootFocusOut(event: FocusEvent): void {
+    const root = getRootEl();
+    if (!root?.contains(event.relatedTarget as Node | null)) focusKey.value = false;
+}
+function onRootTransitionEnd(event: TransitionEvent): void {
+    const root = getRootEl();
+    if (
+        root &&
+        event.propertyName === "translate" &&
+        (event.target as Element).classList.contains("slider-thumb")
+    )
+        root.removeAttribute("data-travel");
+}
+
+onMounted(() => {
+    const root = getRootEl();
+    if (!root) return;
+    root.addEventListener("pointerdown", onRootPointerDownCapture, { capture: true });
+    root.addEventListener("pointermove", onRootPointerMoveCapture, {
+        capture: true,
+        passive: true,
+    });
+    root.addEventListener("keydown", onRootKeyDownCapture, { capture: true });
+    root.addEventListener("focusin", onRootFocusIn);
+    root.addEventListener("focusout", onRootFocusOut);
+    root.addEventListener("transitionend", onRootTransitionEnd);
+    window.addEventListener("pointerup", onWindowPointerUp, { capture: true });
+    window.addEventListener("pointercancel", onWindowPointerUp, { capture: true });
+});
+onBeforeUnmount(() => {
+    const root = getRootEl();
+    root?.removeEventListener("pointerdown", onRootPointerDownCapture, { capture: true });
+    root?.removeEventListener("pointermove", onRootPointerMoveCapture, { capture: true });
+    root?.removeEventListener("keydown", onRootKeyDownCapture, { capture: true });
+    root?.removeEventListener("focusin", onRootFocusIn);
+    root?.removeEventListener("focusout", onRootFocusOut);
+    root?.removeEventListener("transitionend", onRootTransitionEnd);
+    window.removeEventListener("pointerup", onWindowPointerUp, { capture: true });
+    window.removeEventListener("pointercancel", onWindowPointerUp, { capture: true });
+});
+
+// ── THE EXPANDED VIEW'S READOUT ─────────────────────────────────────────────────
+// The one thing that must be read above a finger. A glass plate clips its children,
+// so the readout alone is shown in the top layer, anchored to the root in CSS and moved
+// along by the same `--slider-pa`. Shown when a hold or a keyboard focus begins, hidden
+// on its own exit tween's `transitionend`.
+const anchorName = `--glass-slider-${useId().replace(/[^A-Za-z0-9_-]/g, "-")}`;
+const readoutRef = useTemplateRef<HTMLElement>("readoutRef");
+const reading = computed(
+    () => props.expand && !!props.valueText && (isHeld.value || focusKey.value),
+);
+const readoutText = computed(() => {
+    const index = Math.min(activeIndex.value, live.value.length - 1);
+    const value = live.value[index];
+    return value === undefined ? "" : (props.valueText?.(value, index) ?? "");
+});
+watch(
+    reading,
+    (on) => {
+        const el = readoutRef.value;
+        if (!el) return;
+        const open = el.matches(":popover-open");
+        if (on && !open) el.showPopover?.();
+        else if (!on && open && getComputedStyle(el).opacity === "0") el.hidePopover();
+    },
+    { flush: "post" },
+);
+function onReadoutEnd(event: TransitionEvent): void {
+    if (event.propertyName === "opacity" && !reading.value) {
+        const el = readoutRef.value;
+        if (el?.matches(":popover-open")) el.hidePopover();
+    }
+}
+
 const loupeRef = useTemplateRef<HTMLElement>("loupeRef");
 
 /* The weight-train velocity bridge. Writes the bounded `--atom-drag-v` and the ONE
@@ -111,7 +280,7 @@ const loupeRef = useTemplateRef<HTMLElement>("loupeRef");
    out of the host's inheritance. */
 const motionAxis = useMotionAxis(() => props.motion);
 useDragVelocity({
-    host: () => (motionAxis.armed.value ? getRootEl() : null),
+    host: () => (motionAxis.armed.value && !props.expand ? getRootEl() : null),
     mirror: () => loupeRef.value,
     axis: () => (props.orientation === "vertical" ? "y" : "x"),
 });
@@ -125,7 +294,7 @@ useDragVelocity({
 // NOT ON THE SPECTRUM VARIANT. That recipe de-glasses its range on purpose, so
 // mounting the carriers there would frost a surface deliberately made not-glass. The
 // spectrum's held read is its thumb halo, which it already carries.
-const graspable = computed(() => v.value !== "spectrum");
+const graspable = computed(() => v.value !== "spectrum" && !props.expand);
 const grasping = ref(false);
 watch(isHeld, (held) => {
     if (held && graspable.value) grasping.value = true;
@@ -257,10 +426,14 @@ onBeforeUnmount(() => trackViewport(false));
 // because a scoped attribute selector ties on specificity with any single-class
 // descendant rule a host writes over its own children, and source order then decides
 // the raise away silently. Inline has no tie to lose.
-const hostStyle = computed<Record<string, string> | undefined>(() => {
+const hostStyle = computed<Record<string, string>>(() => {
     const raised = grasping.value && graspable.value;
-    if (!raised) return motionAxis.hostStyle.value;
-    return { ...(motionAxis.hostStyle.value ?? {}), zIndex: "var(--z-overlay)" };
+    return {
+        ...(motionAxis.hostStyle.value ?? {}),
+        ...valueStyle.value,
+        ...(props.expand ? { anchorName } : {}),
+        ...(raised ? { zIndex: "var(--z-overlay)" } : {}),
+    };
 });
 
 /* The never-nameless floor's DX signal. reka's SliderThumbImpl names the thumb
@@ -298,11 +471,14 @@ onMounted(() => {
         :data-invalid="props.invalid || undefined"
         :data-held="isHeld || undefined"
         :data-inverted="props.inverted || undefined"
+        :data-expand="props.expand || undefined"
+        :data-focus-key="focusKey || undefined"
         :data-focus-veil="(grasping && graspable) || undefined"
         :data-motion="motionAxis.dataMotion.value"
         :style="hostStyle"
         v-bind="forwarded"
         @pointerdown="onPointerDown"
+        @update:model-value="onModel"
     >
         <!--
             The focus veil — the world's half of the grasp, TELEPORTED to `<body>`.
@@ -312,7 +488,7 @@ onMounted(() => {
             nested, the plate collapses to that ancestor's box and frosts the slider's
             own siblings instead of the world.
         -->
-        <Teleport to="body">
+        <Teleport v-if="!props.expand" to="body">
             <span
                 v-if="grasping && graspable"
                 ref="focusVeilRef"
@@ -330,7 +506,7 @@ onMounted(() => {
             `graspable` guard on the fill can discriminate anything here — both would be
             branches that never take. The one place that decides is `loupeShown`.
         -->
-        <Teleport to="body">
+        <Teleport v-if="!props.expand" to="body">
             <span
                 v-if="loupeShown"
                 ref="loupeRef"
@@ -344,6 +520,13 @@ onMounted(() => {
                 <span class="glass-loupe-mark"></span>
             </span>
         </Teleport>
+        <!--
+            The expanded view's shell: one capsule outset from the track by
+            `--slider-expand-outset` on every side, so its ends share the track's cap
+            centres. It is in the tree at rest, at the track's own thickness and
+            transparent, so its grow and its shrink both start from the true rest.
+        -->
+        <span v-if="props.expand" class="slider-shell" aria-hidden="true" />
         <SliderTrack class="slider-track track-well">
             <span
                 v-if="marks.length"
@@ -371,18 +554,17 @@ onMounted(() => {
                 handle. A class that is never applied cannot be un-applied wrongly.
             -->
             <!--
-                THE LANE. reka places the range by percentages of its
-                containing block and the thumb by `contain` alignment, whose leading edge
-                travels `p·(track − thumb)`. The lane is the track less one thumb
-                diameter, so the range's percentages land on the thumb's travel, and the
-                range reaches one diameter past it (styles.css): the fill is exactly
-                `thumb + p·(track − thumb)` wide, never narrower than the thumb at min,
-                and the thumb sits inside its leading end at every value.
+                THE LANE AND THE FILL. The fill is a capsule as long as the track, moved
+                by `(p − p0 − 1)·(W − H)` inside the lane and clipped by its round end,
+                so its end cap lands on the thumb's centre at every value. With two
+                thumbs the lane moves by `p0·(W − H)` and cuts the fill's start to a cap
+                on the lower thumb's centre. A plain span: reka's range only wrote two
+                layout offsets.
             -->
             <span class="slider-lane">
-                <SliderRange
+                <span
                     class="slider-range"
-                    :class="v !== 'spectrum' && 'glass-liquid-fill'"
+                    :class="!props.expand && v !== 'spectrum' && 'glass-liquid-fill'"
                     :data-held="isHeld || undefined"
                 >
                     <template v-if="grasping && graspable">
@@ -393,7 +575,7 @@ onMounted(() => {
                             @transitionend="onGraspReleaseEnd"
                         ></span>
                     </template>
-                </SliderRange>
+                </span>
             </span>
         </SliderTrack>
         <!--
@@ -415,6 +597,17 @@ onMounted(() => {
             :aria-invalid="props.invalid || undefined"
             :aria-valuetext="props.valueText?.(value as number, key) ?? undefined"
             class="slider-thumb glass-specular-track"
+            :style="{ '--slider-p': String(fraction(value as number)) }"
         />
+        <span
+            v-if="props.expand && props.valueText"
+            ref="readoutRef"
+            popover="manual"
+            class="slider-readout"
+            aria-hidden="true"
+            :style="{ positionAnchor: anchorName }"
+            @transitionend="onReadoutEnd"
+            >{{ readoutText }}</span
+        >
     </SliderRoot>
 </template>

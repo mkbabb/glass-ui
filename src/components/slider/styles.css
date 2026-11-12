@@ -144,11 +144,6 @@
    over-lit colour. A consumer's `--slider-range-bg` still wins in both themes. */
 .glass-slider,
 .glass-loupe {
-    --slider-fill-ink: var(--glass-capsule-warm);
-}
-
-.dark .glass-slider,
-.dark .glass-loupe {
     --slider-fill-ink: currentColor;
 }
 
@@ -164,62 +159,112 @@
     box-shadow: none;
 }
 
-/* THE LANE — the range's containing block (Slider.vue). On the scrubber it is the track
-   less one thumb diameter, anchored at the edge the fill grows from, and the range
-   reaches one diameter past its far end with a negative margin on its leading edge. reka
-   writes the range's two offsets as percentages of this box, so the fill is
-   `d + p·(track − d)`: one thumb diameter at min, the whole track at max, and its
-   leading end always the thumb's trailing edge (`contain` alignment puts the thumb at
-   `p·(track − d)`). A fill of `p·track` with no thumb would paint a bare track at the
-   minimum and an inert full bar at the maximum. The spectrum's range paints no fill,
-   so its lane is the whole track.
-   THE MARKS RIDE THE SAME LANE. A value mark is the thumb's CENTRE at that value,
-   `d/2 + p·(track − d)`, so the marks register (`glass/value-marks.css`, `inset: 0`)
-   is inset by half a diameter at both ends of the main axis: its `p·box` lands on that
-   centre, inverted and RTL included (the inset is symmetric). The inset is the
-   register's own `--value-mark-inset`, set here on the slider's own selector: a rule
-   naming `.glass-value-marks` in this sheet would enrol the whole stylesheet into the
-   component-only `./styles.css` entry (`scripts/gen-component-styles.mjs`). At
-   `inset: 0` a mark would sit at `p·track`, up to half a diameter off the thumb, and a
-   mark near min would already lie under the fill at min. */
+/* THE MECHANISM: two transforms and one number. The template writes each value as a
+   fraction, `--slider-p` (the upper thumb, and each thumb its own), `--slider-p0` (the
+   lower thumb, 0 with one) and `--slider-pa` (the thumb being changed). The root is a
+   size container on its travel axis, so `100cqi` (`100cqb` vertical) is the track's
+   length W, and `--slider-travel` is W − H, the distance between the two end-cap
+   centres. Every moving part rides `translate`, so a value change never reaches layout.
+   - The thumb sits at the start and moves by `p·(W − H)`: its centre travels
+     `H/2 … W − H/2`, the two end-cap centres. reka writes the thumb's position as an
+     inline offset; one rule holds it at the start, so the value never reaches layout,
+     and reka's own centring transform is set to `none` through its variable.
+   - The fill is a capsule as long as the track, moved by `(p − p0 − 1)·(W − H)` and
+     clipped by the lane's round end: its end cap lands on the thumb's centre.
+   - The lane is the fill's window; it moves by `p0·(W − H)`, so with two thumbs the
+     fill's start is a cap on the lower thumb's centre.
+   - `--slider-sign` mirrors the start (inverted, RTL, and vertical from the bottom);
+     `--slider-axis-x/-y` pick the axis. No orientation has a number of its own.
+   THE MARKS. A mark is the thumb's centre at that value, so the marks register
+   (`glass/value-marks.css`) is inset by H/2 at both ends; the inset is the register's
+   own `--value-mark-inset`, set on the slider's own selector. */
+.glass-slider {
+    container-type: inline-size;
+    --slider-sign: 1;
+    --slider-axis-x: 1;
+    --slider-axis-y: 0;
+    --slider-travel: calc(100cqi - var(--slider-track-height, 0.375rem));
+    --value-mark-inset: var(--slider-radius);
+    /* The step travel's clock; 0s unless a key or a track press marked the root. */
+    --slider-step-duration: 0s;
+}
+
+.glass-slider[data-inverted]:not(:dir(rtl)),
+.glass-slider:dir(rtl):not([data-inverted]) {
+    --slider-sign: -1;
+}
+
+.glass-slider[data-orientation="vertical"] {
+    container-type: size;
+    --slider-sign: -1;
+    --slider-axis-x: 0;
+    --slider-axis-y: 1;
+    --slider-travel: calc(100cqb - var(--slider-track-height, 0.375rem));
+}
+
+.glass-slider[data-orientation="vertical"][data-inverted] {
+    --slider-sign: 1;
+}
+
+.glass-slider[data-travel] {
+    --slider-step-duration: var(--spring-press-duration);
+}
+
+.slider-thumb {
+    --reka-slider-thumb-transform: none;
+    --slider-shift: calc(var(--slider-sign) * var(--slider-p, 0) * var(--slider-travel));
+    translate: calc(var(--slider-axis-x) * var(--slider-shift))
+        calc(var(--slider-axis-y) * var(--slider-shift));
+    transition: translate var(--slider-step-duration) var(--spring-press);
+}
+
+.glass-slider:not([data-orientation="vertical"]) .slider-thumb {
+    left: 0 !important;
+    right: auto !important;
+}
+.glass-slider:not([data-orientation="vertical"]):is([data-inverted]:not(:dir(rtl)), :dir(rtl):not([data-inverted])) .slider-thumb {
+    left: auto !important;
+    right: 0 !important;
+}
+.glass-slider[data-orientation="vertical"] .slider-thumb {
+    top: auto !important;
+    bottom: 0 !important;
+}
+.glass-slider[data-orientation="vertical"][data-inverted] .slider-thumb {
+    top: 0 !important;
+    bottom: auto !important;
+}
+
 .slider-lane {
     position: absolute;
     inset: 0;
+    overflow: hidden;
+    border-radius: var(--slider-radius);
+    --slider-shift: calc(var(--slider-sign) * var(--slider-p0, 0) * var(--slider-travel));
+    translate: calc(var(--slider-axis-x) * var(--slider-shift))
+        calc(var(--slider-axis-y) * var(--slider-shift));
+    transition: translate var(--slider-step-duration) var(--spring-press);
 }
 
-.glass-slider:not([data-variant="spectrum"]) {
-    --slider-lane-cut: var(--slider-track-height, 0.375rem);
-    --value-mark-inset: calc(var(--slider-lane-cut) / 2);
+.glass-slider:not([data-variant="spectrum"]) .slider-range {
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    --slider-shift: calc(
+        var(--slider-sign) * (var(--slider-p, 0) - var(--slider-p0, 0) - 1) *
+            var(--slider-travel)
+    );
+    translate: calc(var(--slider-axis-x) * var(--slider-shift))
+        calc(var(--slider-axis-y) * var(--slider-shift));
+    /* The grasp register's ink channel rides this element's transition list too, or
+       an unlayered `transition` here would strand it (glass/grasp.css). */
+    transition:
+        translate var(--slider-step-duration) var(--spring-press),
+        --glass-veil-rung var(--spring-dock-duration) var(--ease-standard);
 }
 
-.glass-slider:not([data-variant="spectrum"]):not([data-orientation="vertical"]) {
-    & .slider-lane {
-        inset-inline-end: var(--slider-lane-cut);
-    }
-    & .slider-range {
-        margin-inline-end: calc(-1 * var(--slider-lane-cut));
-    }
-    &[data-inverted] .slider-lane {
-        inset-inline: var(--slider-lane-cut) 0;
-    }
-    &[data-inverted] .slider-range {
-        margin-inline: calc(-1 * var(--slider-lane-cut)) 0;
-    }
-}
-
-.glass-slider[data-orientation="vertical"]:not([data-variant="spectrum"]) {
-    & .slider-lane {
-        inset-block-start: var(--slider-lane-cut);
-    }
-    & .slider-range {
-        margin-block-start: calc(-1 * var(--slider-lane-cut));
-    }
-    &[data-inverted] .slider-lane {
-        inset-block: 0 var(--slider-lane-cut);
-    }
-    &[data-inverted] .slider-range {
-        margin-block: 0 calc(-1 * var(--slider-lane-cut));
-    }
+.glass-slider[data-expand]:not([data-variant="spectrum"]) .slider-range {
+    background: var(--slider-range-bg, var(--slider-fill-ink));
 }
 
 /* THE THUMB IS THE FILL'S END. A disc of the band's own height, H, whose centre
@@ -248,7 +293,7 @@
 
 /* The track carries the keyboard ring (below), so the UA outline is suppressed in the
    same breath — the ring is beside it, on the track. */
-.glass-slider:not([data-variant="spectrum"]) .slider-thumb:focus-visible {
+.glass-slider .slider-thumb:focus-visible {
     outline: none;
 }
 
@@ -263,15 +308,14 @@
    authorities on one channel would multiply (100% × 0.6 = 60%) and the grab would
    read LIGHTER than rest. Touch has no approach, and needs none — the grasp optic is
    its answer. */
-.glass-slider:not([data-variant="spectrum"]):is(:hover, [data-held], :has(:focus-visible)) .slider-track {
+.glass-slider:not([data-variant="spectrum"]):is(:hover, [data-held], [data-focus-key]) .slider-track {
     --slider-track-ink: 24%;
 }
 
-/* Keyboard focus rings the TRACK, not the thumb. `:focus-visible` and not
-   `:focus-within`: the latter matches pointer focus too, so grabbing the track with a
-   mouse painted the keyboard ring. No `:focus-within` fallback pairs with it — that
-   would paint back the very ring this predicate removes. */
-.glass-slider:not([data-variant="spectrum"]):has(:focus-visible) .slider-track {
+/* Keyboard focus rings the TRACK, not the thumb. The predicate is the component's
+   `data-focus-key` mark (Slider.vue), not `:focus-visible`: reka focuses the thumb from
+   script on a press, and both engines match that as `:focus-visible`. */
+.glass-slider:not([data-variant="spectrum"])[data-focus-key] .slider-track {
     box-shadow: var(--focus-ring-shadow);
 }
 
@@ -289,7 +333,7 @@
 
 /* The invalid arm rides the SAME focus predicate as the valid one — two registers of
    one ring cannot disagree about when the ring is owed. */
-.glass-slider[data-invalid]:has(:focus-visible) .slider-track {
+.glass-slider[data-invalid][data-focus-key] .slider-track {
     box-shadow:
         var(--focus-ring-shadow),
         inset 0 0 0 1px var(--destructive);
@@ -302,37 +346,18 @@
 }
 
 /* ── The gradient-track colour slider (spectrum) ──
-   The track's background is a consumer-supplied ramp, the range is transparent — the
-   gradient itself IS the fill — and the thumb is a slim squircle spanning the full
-   track height. Its fallback is `--secondary`, not the scrubber's `--muted-medium`.
-   The range carries NO fill class at all (bound conditionally in the template): it has
-   no glass to reset, so there is no `backdrop-filter` to cancel and no prefixed-only
-   reset the build can drop while the unprefixed one is emitted away. */
+   The track's background is a consumer-supplied ramp, the range is transparent (the
+   gradient itself is the fill), and the handle is a ring of the track's own height,
+   centred as the scrubber's thumb is: a 2px edge and a clear centre that shows the
+   ramp under it. Its track fallback is `--secondary`. The range carries no fill class
+   (bound conditionally in the template). */
 .glass-slider[data-variant="spectrum"] .slider-track {
     background: var(--glass-slider-track-background, var(--secondary));
 }
 
 .glass-slider[data-variant="spectrum"] .slider-thumb {
-    /* The visible colour-picker handle: it re-establishes the geometry the scrubber
-       base collapses and spans the full track height, but THIN — a width of
-       `--slider-thumb-size * 0.75` over a `* 1.5` track is the 0.5×-track bar. */
-    width: calc(var(--slider-thumb-size, 1rem) * 0.75);
-    height: var(--slider-track-height, 0.375rem);
-    opacity: 1;
     background: transparent;
     border: 2px solid var(--background);
-    /* A GENEROUS radius proportional to the box reads squircle-adjacent on the engines
-       without `corner-shape`; the superellipse below REFINES this curve, never
-       replaces it. */
-    border-radius: calc(var(--slider-thumb-size, 1rem) * 0.4);
-    box-shadow: var(--shadow-sm);
-}
-
-/* `var()` is not @supports-evaluable, so the gate tests the LITERAL feature. */
-@supports (corner-shape: superellipse(2)) {
-    .glass-slider[data-variant="spectrum"] .slider-thumb {
-        corner-shape: var(--corner-shape-thumb);
-    }
 }
 
 .glass-slider[data-variant="spectrum"]:hover .slider-thumb {
@@ -344,8 +369,7 @@
 /* The house ring is the ONE focus mark, so the UA outline must be suppressed IN THE
    SAME RULE — Chromium otherwise paints its accent over the accent-aware ring. Never a
    bare `outline: none` without the ring beside it. */
-.glass-slider[data-variant="spectrum"] .slider-thumb:focus-visible {
-    outline: none;
+.glass-slider[data-variant="spectrum"][data-focus-key] .slider-thumb {
     box-shadow: var(--focus-ring-shadow), var(--shadow-sm);
 }
 
@@ -358,18 +382,6 @@
 .glass-slider[data-orientation="vertical"] .slider-track {
     width: var(--slider-track-height, 0.375rem);
     height: 100%;
-}
-
-.glass-slider[data-orientation="vertical"] .slider-range {
-    width: 100%;
-    height: auto;
-}
-
-/* The vertical spectrum thumb's cross axis is INLINE, and the same percentage trap
-   applies: `width: 100%` would resolve against the coarse-inflated root. */
-.glass-slider[data-orientation="vertical"][data-variant="spectrum"] .slider-thumb {
-    width: var(--slider-track-height, 0.375rem);
-    height: calc(var(--slider-thumb-size, 1rem) * 0.75);
 }
 
 /* Forced colours: the material band flattens, so the value must survive in system ink
@@ -393,9 +405,218 @@
         forced-color-adjust: none;
         background: Highlight;
     }
-    .glass-loupe {
+    .glass-loupe,
+    .slider-shell,
+    .slider-readout {
+        forced-color-adjust: none;
         background: Canvas;
+        color: CanvasText;
         border: 1px solid CanvasText;
+    }
+    .glass-slider[data-focus-key] {
+        outline: 2px solid CanvasText;
+        outline-offset: 2px;
+    }
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   THE EXPANDED VIEW (`expand`). The track and the fill do not change; a shell grows
+   out of the track and the thumb grows in it, both about the thumb's centre.
+   · THE SHELL is one capsule behind the track, outset from it by g
+     (`--slider-expand-outset`) on every side: height H + 2g, radius H/2 + g. An outset
+     capsule has the track's own cap centres, so its ends are concentric with the
+     track's. Its surface is `--card`, a hairline `--border` and one shadow; no blur, no
+     rim, no gradient.
+   · AT REST it is the same capsule scaled by H / (H + 2g) about the thumb's centre and
+     transparent: exactly as thick as the track and inside it at every value. It is in
+     the tree at rest, so the grow and the shrink both start from the true rest values.
+   · THE THUMB grows to H + g about its own centre, so it sits in the shell with g/2
+     clear on every side, at every value: shell, thumb and band on one centre line.
+   · It grows on press, on keyboard focus, and on hover after a dwell (fine pointers
+     only); it shrinks when none holds. Spatial legs ride `--spring-present` on its own
+     clock, opacity `--ease-standard` on the same clocks. Only scale, translate and
+     opacity animate, and the root's box never changes.
+   ════════════════════════════════════════════════════════════════════════ */
+.glass-slider[data-expand] {
+    --slider-g: var(--slider-expand-outset, 0.5rem);
+    --slider-shell-rest: calc(
+        var(--slider-track-height) / (var(--slider-track-height) + 2 * var(--slider-g))
+    );
+    --slider-thumb-grown: calc(
+        (var(--slider-track-height) + var(--slider-g)) / var(--slider-track-height)
+    );
+    --slider-grow-duration: var(--spring-present-exit-duration);
+    --slider-grow-delay: 0s;
+    /* Raised one step for exactly as long as the shell is off its rest: the drop waits
+       out the shrink, so the shell never passes under a neighbour. */
+    z-index: 0;
+    transition:
+        color var(--duration-fast) var(--ease-standard),
+        z-index 0s linear var(--spring-present-exit-duration);
+}
+
+.glass-slider[data-expand]:is([data-held], [data-focus-key]) {
+    --slider-grow-duration: var(--spring-present-duration);
+    --slider-grow-delay: 0s;
+    z-index: 1;
+    transition:
+        color var(--duration-fast) var(--ease-standard),
+        z-index 0s;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .glass-slider[data-expand]:hover:not([data-held], [data-focus-key]) {
+        --slider-grow-duration: var(--spring-present-duration);
+        --slider-grow-delay: var(--spring-press-duration);
+        z-index: 1;
+        transition:
+            color var(--duration-fast) var(--ease-standard),
+            z-index 0s linear var(--spring-press-duration);
+    }
+}
+
+.slider-shell {
+    position: absolute;
+    inset-inline: calc(-1 * var(--slider-g));
+    inset-block: calc(50% - var(--slider-radius) - var(--slider-g));
+    border: 1px solid var(--border);
+    border-radius: calc(var(--slider-radius) + var(--slider-g));
+    background: var(--card);
+    box-shadow: var(--shadow-md);
+    pointer-events: none;
+    /* The thumb's centre in the shell's own box. */
+    --slider-origin: calc(var(--slider-g) + var(--slider-radius) + var(--slider-pa, 0) * var(--slider-travel));
+    transform-origin: var(--slider-origin) 50%;
+    scale: var(--slider-shell-rest);
+    opacity: 0;
+    transition:
+        scale var(--slider-grow-duration) var(--spring-present) var(--slider-grow-delay),
+        opacity var(--slider-grow-duration) var(--ease-standard) var(--slider-grow-delay);
+}
+
+.glass-slider[data-expand][data-orientation="vertical"] .slider-shell {
+    inset-inline: calc(50% - var(--slider-radius) - var(--slider-g));
+    inset-block: calc(-1 * var(--slider-g));
+    transform-origin: 50% calc(100% - var(--slider-origin));
+}
+.glass-slider[data-expand][data-orientation="vertical"][data-inverted] .slider-shell {
+    transform-origin: 50% var(--slider-origin);
+}
+.glass-slider[data-expand]:not([data-orientation="vertical"]):is([data-inverted]:not(:dir(rtl)), :dir(rtl):not([data-inverted])) .slider-shell {
+    transform-origin: calc(100% - var(--slider-origin)) 50%;
+}
+
+.glass-slider[data-expand] .slider-thumb {
+    scale: 1;
+    transition:
+        translate var(--slider-step-duration) var(--spring-press),
+        scale var(--slider-grow-duration) var(--spring-present) var(--slider-grow-delay);
+}
+
+.glass-slider[data-expand]:is([data-held], [data-focus-key]) .slider-shell {
+    scale: 1;
+    opacity: 1;
+}
+.glass-slider[data-expand]:is([data-held], [data-focus-key]) .slider-thumb {
+    scale: var(--slider-thumb-grown);
+}
+@media (hover: hover) and (pointer: fine) {
+    .glass-slider[data-expand]:hover .slider-shell {
+        scale: 1;
+        opacity: 1;
+    }
+    .glass-slider[data-expand]:hover .slider-thumb {
+        scale: var(--slider-thumb-grown);
+    }
+}
+
+/* With `expand` the focus indicator is the shell's own edge. */
+.glass-slider[data-expand][data-focus-key] .slider-track {
+    box-shadow: none;
+}
+.glass-slider[data-expand][data-focus-key] .slider-shell {
+    border-color: var(--focus-ring-color, var(--ring));
+}
+
+/* THE READOUT: a small capsule above the thumb that rides it, shown in the top layer
+   (`popover="manual"`) so a plate's clip cannot cut it, anchored to the root by CSS
+   anchor positioning and moved by the same `--slider-pa`. Same surface as the shell, no
+   shadow, tabular figures, its radius half its own height. It shows while the value is
+   being changed (held, or keyboard-focused), not on hover. */
+.slider-readout {
+    position: fixed;
+    inset: auto;
+    margin: 0;
+    left: anchor(left);
+    top: anchor(center);
+    padding: 0.125rem 0.5rem;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: var(--card);
+    color: var(--foreground);
+    font: 500 0.75rem / 1.25rem var(--font-sans, system-ui);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+    pointer-events: none;
+    overflow: visible;
+    --slider-shift: calc(var(--slider-radius) + var(--slider-pa, 0) * var(--slider-travel));
+    --slider-lift: calc(var(--slider-radius) + var(--slider-g) + var(--slider-g) / 2);
+    translate: calc(var(--slider-shift) - 50%)
+        calc(-100% - var(--slider-lift));
+    transform-origin: 50% 100%;
+    scale: var(--slider-shell-rest);
+    opacity: 0;
+    transition:
+        scale var(--slider-grow-duration) var(--spring-present),
+        opacity var(--slider-grow-duration) var(--ease-standard),
+        translate var(--slider-step-duration) var(--spring-press);
+}
+.glass-slider:is([data-inverted]:not(:dir(rtl)), :dir(rtl):not([data-inverted])):not([data-orientation="vertical"]) .slider-readout {
+    left: auto;
+    right: anchor(right);
+    translate: calc(50% - var(--slider-shift)) calc(-100% - var(--slider-lift));
+}
+.glass-slider[data-orientation="vertical"] .slider-readout {
+    top: auto;
+    bottom: anchor(bottom);
+    left: anchor(center);
+    transform-origin: 0 50%;
+    translate: var(--slider-lift) calc(50% - var(--slider-shift));
+}
+.glass-slider:is([data-held], [data-focus-key]) .slider-readout:popover-open {
+    scale: 1;
+    opacity: 1;
+}
+@starting-style {
+    .glass-slider:is([data-held], [data-focus-key]) .slider-readout:popover-open {
+        scale: var(--slider-shell-rest);
+        opacity: 0;
+    }
+}
+
+/* Reduced motion: nothing scales. The shell and the readout fade in at full size and
+   fade out; the thumb keeps its rest size. A fade, never a cut. */
+@media (prefers-reduced-motion: reduce) {
+    .glass-slider[data-expand] .slider-shell,
+    .glass-slider[data-expand] .slider-readout {
+        scale: 1;
+    }
+    .glass-slider[data-expand] .slider-thumb {
+        scale: 1 !important;
+    }
+}
+.glass-slider[data-expand][data-motion="reduced"] .slider-shell,
+.glass-slider[data-expand][data-motion="reduced"] .slider-readout {
+    scale: 1;
+}
+.glass-slider[data-expand][data-motion="reduced"] .slider-thumb {
+    scale: 1 !important;
+}
+@starting-style {
+    @media (prefers-reduced-motion: reduce) {
+        .glass-slider:is([data-held], [data-focus-key]) .slider-readout:popover-open {
+            scale: 1;
+        }
     }
 }
 
