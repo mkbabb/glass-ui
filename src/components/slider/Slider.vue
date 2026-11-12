@@ -169,11 +169,23 @@ function markTravel(root: HTMLElement): void {
         }),
     );
 }
+// The hover dwell is a transition delay. A press or a keyboard focus that lands inside
+// it leaves the target unchanged, so the running transition would keep its delay; the
+// grow skips what is left of it instead.
+function skipDwell(root: HTMLElement): void {
+    if (!props.expand) return;
+    for (const el of root.querySelectorAll(".slider-shell, .slider-thumb"))
+        for (const a of el.getAnimations()) {
+            const delay = Number(a.effect?.getTiming().delay ?? 0);
+            if (typeof a.currentTime === "number" && a.currentTime < delay) a.currentTime = delay;
+        }
+}
 function onRootPointerDownCapture(event: PointerEvent): void {
     const root = getRootEl();
     if (!root) return;
     pressing = true;
     focusKey.value = false;
+    skipDwell(root);
     if (!(event.target as Element | null)?.closest?.(".slider-thumb")) markTravel(root);
 }
 function onRootPointerMoveCapture(): void {
@@ -197,6 +209,7 @@ function onRootFocusIn(event: FocusEvent): void {
         if (index >= 0) activeIndex.value = index;
     }
     if (!pressing) focusKey.value = true;
+    if (root) skipDwell(root);
 }
 function onRootFocusOut(event: FocusEvent): void {
     const root = getRootEl();
