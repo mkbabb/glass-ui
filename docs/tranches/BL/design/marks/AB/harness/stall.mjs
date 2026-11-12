@@ -1,4 +1,4 @@
-// The draw under load, one harness for every candidate.   stall.mjs <engine> <out> ctl=<url> a=<url> b=<url>
+// The draw under load, one harness for every candidate.   stall.mjs <engine> <out> ctl=<url> a=<url> b=<url> c=<url>
 // Lane L7's instrument, as both proposals used it: mount one mark, wait until its draw is 40 ms
 // in, block the main thread for 50 ms. Chromium runs at a 4x CPU throttle. Paint is read from
 // the page's screencast (compositor frames); frames are placed by a corner marker (A = before

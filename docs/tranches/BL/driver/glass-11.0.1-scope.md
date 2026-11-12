@@ -65,3 +65,5 @@ Gates, in both engines, light and dark, at 390 and 1440:
 - O-263: the run contains overscroll on its scroll axis only.
 - Order for 11.0.2: O-223 + O-244 (stored auto), O-240 (the quick press under Reduce Motion), then the rest.
 - O-266: a breakpoint change mid-open holds the old content's size and snaps at the settle (the eight `O-101 ·` cells of release-10-1-2, RED on v11.0.0 and v11.0.1); third in 11.0.2's order.
+- O-267 (FIRST in 11.0.2, before O-223): a focused Slider has no focus indicator under forced colors (regression in 10.1.5 and 11.0.1); the track takes a real outline there; audit every `outline: none` the 10.1.5 patch added. One source-and-tests commit so the 10.1.x line can cherry-pick it as 10.1.6.
+- O-268: while curing O-266, count the layouts a dock's idle fold costs on a scrolling page (color saw 37 where 5 are allowed) and cure it if the fold lays out per frame.

@@ -58,6 +58,8 @@ for eng in ("chromium", "webkit"):
         print(f"   lines={lines} ink={ink} swatch={sw}")
         print(f"   anim={kinds} props={props}")
         print(f"   reads mount={mount} byPhase={ {k: sum(v.values()) for k, v in lg.get('byPhase', {}).items()} } inDraw={indraw} drawn={lg.get('drawnEvents')} sheetH={c.get('sheetH')} errs={c.get('errors_light')}")
+        print(f"   pieces/shortest/clearance: " + "; ".join(f"{i}:" + ",".join(f"[{l.get('pieces')},{l.get('shortestPiecePx')},{l.get('clearancePx')}]" for l in mk['lines']) for i, mk in m.items()))
+        print(f"   drawDirection={c.get('drawDirection')}")
         print(f"   all lines: " + "; ".join(f"{i}:" + ",".join(f"[{l.get('pastLeft')},{l.get('pastRight')}]" for l in mk['lines']) for i, mk in m.items()))
     for s in rec.get("still", []):
         print(f"STILL {eng} {s['cand']} {s['shape']}: " + json.dumps({k: v for k, v in s.items() if k not in ("cand", "shape")})[:1500])
@@ -75,7 +77,7 @@ for eng in ("chromium", "webkit"):
     p = os.path.join(D, f"scroll-{eng}.json")
     if os.path.exists(p):
         print(f"\n######## scroll {eng}", open(p).read())
-for k in ("ctl", "a", "b"):
+for k in ("ctl", "a", "b", "c"):
     p = os.path.join(D, f"bytes-{k}.json")
     if os.path.exists(p):
         b = json.load(open(p))
