@@ -416,9 +416,14 @@ describe("useDockExpandedSize", () => {
         dock.posture("collapsed");
         dock.model.scroll = 312;
         dock.repane(500);
-        await mutationsSettle();
+        // The capture rides the observer's delivery after the pane's mutation record;
+        // under load happy-dom can deliver the record after a zero timeout, so settle
+        // until the restore itself is seen.
+        await vi.waitFor(async () => {
+            await mutationsSettle();
+            expect(dock.full.scrollTo).toHaveBeenCalled();
+        });
         expect(dock.px("expanded")).toBe("390px");
-        expect(dock.full.scrollTo).toHaveBeenCalled();
         expect(dock.model.scroll).toBe(312);
         unmount();
     });

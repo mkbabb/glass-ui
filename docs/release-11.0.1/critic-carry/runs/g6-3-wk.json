@@ -1,0 +1,2572 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "tests-visual/release-11-0-1-critic-2.config.ts",
+      "--project=webkit",
+      "release-10-1-3.spec.ts",
+      "--workers=1"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/release-11-0-1-critic-2.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-headless-new",
+        "name": "chromium-headless-new",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "coarse-touch",
+        "name": "coarse-touch",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-0-1.spec.ts",
+          "release-11-0-1-daraksha.spec.ts",
+          "release-10-1-5.spec.ts",
+          "release-10-1-4.spec.ts",
+          "release-10-1-3.spec.ts",
+          "release-11-0-1-critic-1.spec.ts",
+          "release-11-0-1-critic-1b.spec.ts",
+          "release-11-0-1-fix-2.spec.ts",
+          "release-11-0-1-critic-2.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/docs/release-11.0.1/critic-carry/runs/g6-3-wk.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5432",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/",
+      "url": "http://localhost:5432",
+      "reuseExistingServer": true,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "release-10-1-3.spec.ts",
+      "file": "release-10-1-3.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "10.1.3 · 360 · right-anchored (fourier f-w14v-au2 L2-15)",
+          "file": "release-10-1-3.spec.ts",
+          "line": 126,
+          "column": 14,
+          "specs": [
+            {
+              "title": "O-110 · a click on the anchored persistent seat of a collapsed dock reaches it",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1836,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T05:05:04.501Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-eafdb545347706c213db",
+              "file": "release-10-1-3.spec.ts",
+              "line": 135,
+              "column": 13
+            },
+            {
+              "title": "O-110 · the expand grows from the anchored edge from its first frame; the seat stays under the pointer",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1949,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T05:05:06.542Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-0cfda2dab57fbead5e3e",
+              "file": "release-10-1-3.spec.ts",
+              "line": 159,
+              "column": 13
+            },
+            {
+              "title": "O-110 · a press on the anchored persistent seat mid-expand is kept",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1663,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T05:05:08.499Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-9b978b7ece5d1a839d83",
+              "file": "release-10-1-3.spec.ts",
+              "line": 218,
+              "column": 13
+            }
+          ]
+        },
+        {
+          "title": "10.1.3 · 360 · left-anchored (fourier f-w14v-au2 L2-15)",
+          "file": "release-10-1-3.spec.ts",
+          "line": 126,
+          "column": 14,
+          "specs": [
+            {
+              "title": "O-110 · a click on the anchored persistent seat of a collapsed dock reaches it",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1647,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T05:05:10.168Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-d562eb91406d528c8b55",
+              "file": "release-10-1-3.spec.ts",
+              "line": 135,
+              "column": 13
+            },
+            {
+              "title": "O-110 · the expand grows from the anchored edge from its first frame; the seat stays under the pointer",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1946,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T05:05:11.820Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-f99eb872cdce4b022fde",
+              "file": "release-10-1-3.spec.ts",
+              "line": 159,
+              "column": 13
+            },
+            {
+              "title": "O-110 · a press on the anchored persistent seat mid-expand is kept",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1700,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T05:05:13.773Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-606a1aa80dadd343aaaa",
+              "file": "release-10-1-3.spec.ts",
+              "line": 218,
+              "column": 13
+            }
+          ]
+        },
+        {
+          "title": "10.1.3 · 390 · right-anchored (fourier f-w14v-au2 L2-15)",
+          "file": "release-10-1-3.spec.ts",
+          "line": 126,
+          "column": 14,
+          "specs": [
+            {
+              "title": "O-110 · a click on the anchored persistent seat of a collapsed dock reaches it",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1613,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T05:05:15.480Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-65bf22e34e05ad5eb6b6",
+              "file": "release-10-1-3.spec.ts",
+              "line": 135,
+              "column": 13
+            },
+            {
+              "title": "O-110 · the expand grows from the anchored edge from its first frame; the seat stays under the pointer",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1891,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T05:05:17.100Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-5abeb0c64a8f7a64f124",
+              "file": "release-10-1-3.spec.ts",
+              "line": 159,
+              "column": 13
+            },
+            {
+              "title": "O-110 · a press on the anchored persistent seat mid-expand is kept",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1657,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T05:05:18.996Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-9b4ca820ec0d3917723e",
+              "file": "release-10-1-3.spec.ts",
+              "line": 218,
+              "column": 13
+            }
+          ]
+        },
+        {
+          "title": "10.1.3 · 390 · left-anchored (fourier f-w14v-au2 L2-15)",
+          "file": "release-10-1-3.spec.ts",
+          "line": 126,
+          "column": 14,
+          "specs": [
+            {
+              "title": "O-110 · a click on the anchored persistent seat of a collapsed dock reaches it",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1579,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T05:05:20.660Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-ed8c8c326a1bd4e26464",
+              "file": "release-10-1-3.spec.ts",
+              "line": 135,
+              "column": 13
+            },
+            {
+              "title": "O-110 · the expand grows from the anchored edge from its first frame; the seat stays under the pointer",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1896,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T05:05:22.245Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-988ac0c43547822d4a9b",
+              "file": "release-10-1-3.spec.ts",
+              "line": 159,
+              "column": 13
+            },
+            {
+              "title": "O-110 · a press on the anchored persistent seat mid-expand is kept",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1721,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T05:05:24.146Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-4f6a82d9e170a3bc9159",
+              "file": "release-10-1-3.spec.ts",
+              "line": 218,
+              "column": 13
+            }
+          ]
+        },
+        {
+          "title": "10.1.3 · 430 · right-anchored (fourier f-w14v-au2 L2-15)",
+          "file": "release-10-1-3.spec.ts",
+          "line": 126,
+          "column": 14,
+          "specs": [
+            {
+              "title": "O-110 · a click on the anchored persistent seat of a collapsed dock reaches it",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1708,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T05:05:25.871Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-acac1b655f9bbc1ec2d8",
+              "file": "release-10-1-3.spec.ts",
+              "line": 135,
+              "column": 13
+            },
+            {
+              "title": "O-110 · the expand grows from the anchored edge from its first frame; the seat stays under the pointer",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1964,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T05:05:27.584Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-5c569acd97742af917f9",
+              "file": "release-10-1-3.spec.ts",
+              "line": 159,
+              "column": 13
+            },
+            {
+              "title": "O-110 · a press on the anchored persistent seat mid-expand is kept",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1729,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T05:05:29.553Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-c01a225e184fd978df85",
+              "file": "release-10-1-3.spec.ts",
+              "line": 218,
+              "column": 13
+            }
+          ]
+        },
+        {
+          "title": "10.1.3 · 430 · left-anchored (fourier f-w14v-au2 L2-15)",
+          "file": "release-10-1-3.spec.ts",
+          "line": 126,
+          "column": 14,
+          "specs": [
+            {
+              "title": "O-110 · a click on the anchored persistent seat of a collapsed dock reaches it",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1734,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T05:05:31.287Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-06e56063707887715c14",
+              "file": "release-10-1-3.spec.ts",
+              "line": 135,
+              "column": 13
+            },
+            {
+              "title": "O-110 · the expand grows from the anchored edge from its first frame; the seat stays under the pointer",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1938,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T05:05:33.026Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-0da9affaf7ef94fe9b16",
+              "file": "release-10-1-3.spec.ts",
+              "line": 159,
+              "column": 13
+            },
+            {
+              "title": "O-110 · a press on the anchored persistent seat mid-expand is kept",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1675,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T05:05:34.968Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-c537e2a236b497743a5a",
+              "file": "release-10-1-3.spec.ts",
+              "line": 218,
+              "column": 13
+            }
+          ]
+        },
+        {
+          "title": "10.1.3 · 1440 · right-anchored (fourier f-w14-control-row G-h)",
+          "file": "release-10-1-3.spec.ts",
+          "line": 126,
+          "column": 14,
+          "specs": [
+            {
+              "title": "O-110 · a click on the anchored persistent seat of a collapsed dock reaches it",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1649,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T05:05:36.648Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-be2a186dce415fd14ce1",
+              "file": "release-10-1-3.spec.ts",
+              "line": 135,
+              "column": 13
+            },
+            {
+              "title": "O-110 · the expand grows from the anchored edge from its first frame; the seat stays under the pointer",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1978,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T05:05:38.302Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-1673d4d8590befa5af58",
+              "file": "release-10-1-3.spec.ts",
+              "line": 159,
+              "column": 13
+            },
+            {
+              "title": "O-110 · a press on the anchored persistent seat mid-expand is kept",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1701,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T05:05:40.285Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-88cdba2f3876ec62d523",
+              "file": "release-10-1-3.spec.ts",
+              "line": 218,
+              "column": 13
+            }
+          ]
+        },
+        {
+          "title": "10.1.3 · 1440 · left-anchored (fourier f-w14-control-row G-h)",
+          "file": "release-10-1-3.spec.ts",
+          "line": 126,
+          "column": 14,
+          "specs": [
+            {
+              "title": "O-110 · a click on the anchored persistent seat of a collapsed dock reaches it",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1587,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T05:05:41.991Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-9395df27ce9f44457367",
+              "file": "release-10-1-3.spec.ts",
+              "line": 135,
+              "column": 13
+            },
+            {
+              "title": "O-110 · the expand grows from the anchored edge from its first frame; the seat stays under the pointer",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1895,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T05:05:43.582Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-6fdd4beac0c6e4dff3ca",
+              "file": "release-10-1-3.spec.ts",
+              "line": 159,
+              "column": 13
+            },
+            {
+              "title": "O-110 · a press on the anchored persistent seat mid-expand is kept",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1662,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T05:05:45.482Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-157d2530288d66ecebf2",
+              "file": "release-10-1-3.spec.ts",
+              "line": 218,
+              "column": 13
+            }
+          ]
+        },
+        {
+          "title": "10.1.3 · 390 · right-anchored, open-side seat",
+          "file": "release-10-1-3.spec.ts",
+          "line": 267,
+          "column": 10,
+          "specs": [
+            {
+              "title": "D-1 · a click on the open-side persistent seat of a collapsed dock reaches it",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1598,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T05:05:47.157Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-83efd4c7d8b87d770e42",
+              "file": "release-10-1-3.spec.ts",
+              "line": 269,
+              "column": 9
+            }
+          ]
+        },
+        {
+          "title": "10.1.3 · 1440 · right-anchored, open-side seat",
+          "file": "release-10-1-3.spec.ts",
+          "line": 267,
+          "column": 10,
+          "specs": [
+            {
+              "title": "D-1 · a click on the open-side persistent seat of a collapsed dock reaches it",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1580,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T05:05:48.760Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-6a4c9870c178c16f3a69",
+              "file": "release-10-1-3.spec.ts",
+              "line": 269,
+              "column": 9
+            }
+          ]
+        },
+        {
+          "title": "10.1.3 · 390 · left-anchored, open-side seat",
+          "file": "release-10-1-3.spec.ts",
+          "line": 267,
+          "column": 10,
+          "specs": [
+            {
+              "title": "D-1 · a click on the open-side persistent seat of a collapsed dock reaches it",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1576,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T05:05:50.344Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-c85d643d8c28a4ff876d",
+              "file": "release-10-1-3.spec.ts",
+              "line": 269,
+              "column": 9
+            }
+          ]
+        },
+        {
+          "title": "10.1.3 · 390 · bottom-anchored, open-side seat",
+          "file": "release-10-1-3.spec.ts",
+          "line": 267,
+          "column": 10,
+          "specs": [
+            {
+              "title": "D-1 · a click on the open-side persistent seat of a collapsed dock reaches it",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1577,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T05:05:51.925Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-63a48801545b2062979f",
+              "file": "release-10-1-3.spec.ts",
+              "line": 269,
+              "column": 9
+            }
+          ]
+        },
+        {
+          "title": "10.1.3 · 360 · touch · right-anchored, open-side seat",
+          "file": "release-10-1-3.spec.ts",
+          "line": 290,
+          "column": 10,
+          "specs": [
+            {
+              "title": "D-1 · a tap on the open-side persistent seat of a collapsed dock reaches it",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1558,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T05:05:53.505Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-c7bd3e07d97a77b16055",
+              "file": "release-10-1-3.spec.ts",
+              "line": 292,
+              "column": 9
+            }
+          ]
+        },
+        {
+          "title": "10.1.3 · 390 · touch · right-anchored, open-side seat",
+          "file": "release-10-1-3.spec.ts",
+          "line": 290,
+          "column": 10,
+          "specs": [
+            {
+              "title": "D-1 · a tap on the open-side persistent seat of a collapsed dock reaches it",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1550,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T05:05:55.067Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-ce72eee86461c1a8282d",
+              "file": "release-10-1-3.spec.ts",
+              "line": 292,
+              "column": 9
+            }
+          ]
+        },
+        {
+          "title": "10.1.3 · 430 · touch · right-anchored, open-side seat",
+          "file": "release-10-1-3.spec.ts",
+          "line": 290,
+          "column": 10,
+          "specs": [
+            {
+              "title": "D-1 · a tap on the open-side persistent seat of a collapsed dock reaches it",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1606,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T05:05:56.620Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-7ea6a2bb9ffedac5a69c",
+              "file": "release-10-1-3.spec.ts",
+              "line": 292,
+              "column": 9
+            }
+          ]
+        },
+        {
+          "title": "10.1.3 · 390 · right-anchored collapse",
+          "file": "release-10-1-3.spec.ts",
+          "line": 316,
+          "column": 10,
+          "specs": [
+            {
+              "title": "D-2 · the collapse shrinks toward the anchored edge and settles without a snap",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3713,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T05:05:58.231Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-d99ef9100e9a66aa503e",
+              "file": "release-10-1-3.spec.ts",
+              "line": 318,
+              "column": 9
+            }
+          ]
+        },
+        {
+          "title": "10.1.3 · 390 · left-anchored collapse",
+          "file": "release-10-1-3.spec.ts",
+          "line": 316,
+          "column": 10,
+          "specs": [
+            {
+              "title": "D-2 · the collapse shrinks toward the anchored edge and settles without a snap",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3748,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T05:06:01.948Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-ee2da35ad4e3291f605d",
+              "file": "release-10-1-3.spec.ts",
+              "line": 318,
+              "column": 9
+            }
+          ]
+        },
+        {
+          "title": "10.1.3 · 390 · bottom-anchored collapse",
+          "file": "release-10-1-3.spec.ts",
+          "line": 316,
+          "column": 10,
+          "specs": [
+            {
+              "title": "D-2 · the collapse shrinks toward the anchored edge and settles without a snap",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3731,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T05:06:05.701Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-25390817ecfbfac4eb09",
+              "file": "release-10-1-3.spec.ts",
+              "line": 318,
+              "column": 9
+            }
+          ]
+        },
+        {
+          "title": "10.1.3 · 390 · top-anchored collapse",
+          "file": "release-10-1-3.spec.ts",
+          "line": 316,
+          "column": 10,
+          "specs": [
+            {
+              "title": "D-2 · the collapse shrinks toward the anchored edge and settles without a snap",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3802,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T05:06:09.436Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-ca29e752a32db480031a",
+              "file": "release-10-1-3.spec.ts",
+              "line": 318,
+              "column": 9
+            }
+          ]
+        },
+        {
+          "title": "10.1.3 · 390 · right-anchored reversal",
+          "file": "release-10-1-3.spec.ts",
+          "line": 375,
+          "column": 10,
+          "specs": [
+            {
+              "title": "D-1 (critique-3) · a collapse() mid-expand keeps the summary glyph inside the plate",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3126,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T05:06:13.243Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-cf8fd93beff6bac6a270",
+              "file": "release-10-1-3.spec.ts",
+              "line": 377,
+              "column": 9
+            }
+          ]
+        },
+        {
+          "title": "10.1.3 · 390 · left-anchored reversal",
+          "file": "release-10-1-3.spec.ts",
+          "line": 375,
+          "column": 10,
+          "specs": [
+            {
+              "title": "D-1 (critique-3) · a collapse() mid-expand keeps the summary glyph inside the plate",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3139,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T05:06:16.373Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-0175d672752b2ae69481",
+              "file": "release-10-1-3.spec.ts",
+              "line": 377,
+              "column": 9
+            }
+          ]
+        },
+        {
+          "title": "10.1.3 · 390 · bottom-anchored reversal",
+          "file": "release-10-1-3.spec.ts",
+          "line": 375,
+          "column": 10,
+          "specs": [
+            {
+              "title": "D-1 (critique-3) · a collapse() mid-expand keeps the summary glyph inside the plate",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3215,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T05:06:19.516Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-c6c0aba1c6466920304d",
+              "file": "release-10-1-3.spec.ts",
+              "line": 377,
+              "column": 9
+            }
+          ]
+        },
+        {
+          "title": "10.1.3 · 390 · reduced motion",
+          "file": "release-10-1-3.spec.ts",
+          "line": 431,
+          "column": 6,
+          "specs": [
+            {
+              "title": "D-3 · under reduced motion the expand jumps to its rest",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1746,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T05:06:22.736Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-78e9e09de715600ecadb",
+              "file": "release-10-1-3.spec.ts",
+              "line": 433,
+              "column": 5
+            }
+          ]
+        },
+        {
+          "title": "10.1.3 · 390 · touch · run swipe, Escape, then focus",
+          "file": "release-10-1-3.spec.ts",
+          "line": 463,
+          "column": 10,
+          "specs": [
+            {
+              "title": "D-1 (critique-2) · after a clickless, cancel-less touch press, a focus expands the collapsed dock",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "a CDP touch swipe",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/release-10-1-3.spec.ts",
+                        "line": 469,
+                        "column": 18
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "skipped",
+                      "duration": 202,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T05:06:24.487Z",
+                      "annotations": [
+                        {
+                          "type": "skip",
+                          "description": "a CDP touch swipe",
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/release-10-1-3.spec.ts",
+                            "line": 469,
+                            "column": 18
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-42b8aa4dcffcdfe0e0d3",
+              "file": "release-10-1-3.spec.ts",
+              "line": 465,
+              "column": 9
+            }
+          ]
+        },
+        {
+          "title": "10.1.3 · 390 · touch · run swipe, Escape, then hover",
+          "file": "release-10-1-3.spec.ts",
+          "line": 463,
+          "column": 10,
+          "specs": [
+            {
+              "title": "D-1 (critique-2) · after a clickless, cancel-less touch press, a hover expands the collapsed dock",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "a CDP touch swipe",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/release-10-1-3.spec.ts",
+                        "line": 469,
+                        "column": 18
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "skipped",
+                      "duration": 213,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T05:06:24.694Z",
+                      "annotations": [
+                        {
+                          "type": "skip",
+                          "description": "a CDP touch swipe",
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/release-10-1-3.spec.ts",
+                            "line": 469,
+                            "column": 18
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-df0235894bcf44e123f6",
+              "file": "release-10-1-3.spec.ts",
+              "line": 465,
+              "column": 9
+            }
+          ]
+        },
+        {
+          "title": "10.1.3 · 390 · a touch press with no tap, then focus",
+          "file": "release-10-1-3.spec.ts",
+          "line": 510,
+          "column": 6,
+          "specs": [
+            {
+              "title": "D-1 (critique-2) · a focus after a clickless touch press expands the collapsed dock",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1929,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T05:06:24.911Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-62b5644ae73b084a93fc",
+              "file": "release-10-1-3.spec.ts",
+              "line": 512,
+              "column": 5
+            }
+          ]
+        },
+        {
+          "title": "10.1.3 · 390 · right-anchored, the plate holds what it paints",
+          "file": "release-10-1-3.spec.ts",
+          "line": 601,
+          "column": 10,
+          "specs": [
+            {
+              "title": "D-1 (critique-4) · no control paints outside the plate on the expand or the collapse",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3565,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T05:06:26.846Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-4d559c906e4117a73d3c",
+              "file": "release-10-1-3.spec.ts",
+              "line": 603,
+              "column": 9
+            }
+          ]
+        },
+        {
+          "title": "10.1.3 · 1440 · right-anchored, the plate holds what it paints",
+          "file": "release-10-1-3.spec.ts",
+          "line": 601,
+          "column": 10,
+          "specs": [
+            {
+              "title": "D-1 (critique-4) · no control paints outside the plate on the expand or the collapse",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3560,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T05:06:30.415Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-233bd7cdbb4e29b23862",
+              "file": "release-10-1-3.spec.ts",
+              "line": 603,
+              "column": 9
+            }
+          ]
+        },
+        {
+          "title": "10.1.3 · 390 · left-anchored, the plate holds what it paints",
+          "file": "release-10-1-3.spec.ts",
+          "line": 601,
+          "column": 10,
+          "specs": [
+            {
+              "title": "D-1 (critique-4) · no control paints outside the plate on the expand or the collapse",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3568,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T05:06:33.981Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-5e1be7655df82a377d85",
+              "file": "release-10-1-3.spec.ts",
+              "line": 603,
+              "column": 9
+            }
+          ]
+        },
+        {
+          "title": "10.1.3 · 390 · bottom-anchored, the plate holds what it paints",
+          "file": "release-10-1-3.spec.ts",
+          "line": 601,
+          "column": 10,
+          "specs": [
+            {
+              "title": "D-1 (critique-4) · no control paints outside the plate on the expand or the collapse",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3518,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T05:06:37.554Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-9e02744f82a108344391",
+              "file": "release-10-1-3.spec.ts",
+              "line": 603,
+              "column": 9
+            }
+          ]
+        },
+        {
+          "title": "10.1.3 · 390 · right-anchored double reversal, the plate holds what it paints",
+          "file": "release-10-1-3.spec.ts",
+          "line": 637,
+          "column": 10,
+          "specs": [
+            {
+              "title": "D-1 (critique-4) · no control paints outside the plate through a double reversal",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2877,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T05:06:41.076Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-3db7c73386bd65282824",
+              "file": "release-10-1-3.spec.ts",
+              "line": 639,
+              "column": 9
+            }
+          ]
+        },
+        {
+          "title": "10.1.3 · 390 · bottom-anchored double reversal, the plate holds what it paints",
+          "file": "release-10-1-3.spec.ts",
+          "line": 637,
+          "column": 10,
+          "specs": [
+            {
+              "title": "D-1 (critique-4) · no control paints outside the plate through a double reversal",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2836,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T05:06:43.958Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-046e1eb1348d6dc556dc",
+              "file": "release-10-1-3.spec.ts",
+              "line": 639,
+              "column": 9
+            }
+          ]
+        },
+        {
+          "title": "10.1.3 · 390 · right-anchored expand, frozen at 40 % of its travel",
+          "file": "release-10-1-3.spec.ts",
+          "line": 728,
+          "column": 10,
+          "specs": [
+            {
+              "title": "D-1 (critique-4) · the stage beside the plate paints no control mid-expand",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 988,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T05:06:46.798Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-b3687797e7bf62e047c8",
+              "file": "release-10-1-3.spec.ts",
+              "line": 730,
+              "column": 9
+            }
+          ]
+        },
+        {
+          "title": "10.1.3 · 390 · right-anchored collapse, frozen at 30 % of its travel",
+          "file": "release-10-1-3.spec.ts",
+          "line": 728,
+          "column": 10,
+          "specs": [
+            {
+              "title": "D-1 (critique-4) · the stage beside the plate paints no control mid-collapse",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2333,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T05:06:47.790Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-792e6f63a1bd75a22827",
+              "file": "release-10-1-3.spec.ts",
+              "line": 730,
+              "column": 9
+            }
+          ]
+        },
+        {
+          "title": "10.1.3 · 390 · right-anchored · drag a dock link out, then focus",
+          "file": "release-10-1-3.spec.ts",
+          "line": 818,
+          "column": 14,
+          "specs": [
+            {
+              "title": "D-1 (critique-6) · after a press that became a native drag, a focus expands the collapsed dock",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2594,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T05:06:50.128Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-a13b687446ae256f5afa",
+              "file": "release-10-1-3.spec.ts",
+              "line": 820,
+              "column": 13
+            }
+          ]
+        },
+        {
+          "title": "10.1.3 · 390 · right-anchored · drag a dock link out, then hover",
+          "file": "release-10-1-3.spec.ts",
+          "line": 818,
+          "column": 14,
+          "specs": [
+            {
+              "title": "D-1 (critique-6) · after a press that became a native drag, a hover expands the collapsed dock",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2610,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T05:06:52.727Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-530c202068c7aac25a31",
+              "file": "release-10-1-3.spec.ts",
+              "line": 820,
+              "column": 13
+            }
+          ]
+        },
+        {
+          "title": "10.1.3 · 390 · left-anchored · drag a dock link out, then focus",
+          "file": "release-10-1-3.spec.ts",
+          "line": 818,
+          "column": 14,
+          "specs": [
+            {
+              "title": "D-1 (critique-6) · after a press that became a native drag, a focus expands the collapsed dock",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2571,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T05:06:55.341Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-479ade02aa2f24fcb38b",
+              "file": "release-10-1-3.spec.ts",
+              "line": 820,
+              "column": 13
+            }
+          ]
+        },
+        {
+          "title": "10.1.3 · 390 · left-anchored · drag a dock link out, then hover",
+          "file": "release-10-1-3.spec.ts",
+          "line": 818,
+          "column": 14,
+          "specs": [
+            {
+              "title": "D-1 (critique-6) · after a press that became a native drag, a hover expands the collapsed dock",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2639,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T05:06:57.917Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-01656b6bcdbed31caa9b",
+              "file": "release-10-1-3.spec.ts",
+              "line": 820,
+              "column": 13
+            }
+          ]
+        },
+        {
+          "title": "10.1.3 · 390 · right-anchored · right-click a collapsed seat, then focus",
+          "file": "release-10-1-3.spec.ts",
+          "line": 843,
+          "column": 6,
+          "specs": [
+            {
+              "title": "D-1 (critique-6) · after a right-click, a focus expands the collapsed dock",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2814,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T05:07:00.561Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-5b425750acd80a8817f8",
+              "file": "release-10-1-3.spec.ts",
+              "line": 845,
+              "column": 5
+            }
+          ]
+        },
+        {
+          "title": "10.1.3 · 390 · right-anchored · hover-intent dwell across a right-click",
+          "file": "release-10-1-3.spec.ts",
+          "line": 868,
+          "column": 6,
+          "specs": [
+            {
+              "title": "D-1 (critique-6) · a hover dwell that completes after a right-click expands the collapsed dock",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1810,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T05:07:03.379Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-d3fad2676611d777490c",
+              "file": "release-10-1-3.spec.ts",
+              "line": 870,
+              "column": 5
+            }
+          ]
+        },
+        {
+          "title": "10.1.3 · 390 · a mouse press with no release, a press outside, then focus",
+          "file": "release-10-1-3.spec.ts",
+          "line": 899,
+          "column": 6,
+          "specs": [
+            {
+              "title": "D-1 (critique-6) · a press outside the dock supersedes an unreleased mouse press",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1904,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T05:07:05.194Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-6ae1344ae359f2a87e8b",
+              "file": "release-10-1-3.spec.ts",
+              "line": 901,
+              "column": 5
+            }
+          ]
+        },
+        {
+          "title": "10.1.3 · 390 · right-anchored · ancestor zoom 1.25",
+          "file": "release-10-1-3.spec.ts",
+          "line": 931,
+          "column": 10,
+          "specs": [
+            {
+              "title": "D-1 (critique-7) · the summary glyph holds its box through the expand and the collapse",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 4090,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T05:07:07.103Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-c6092757f6936508b928",
+              "file": "release-10-1-3.spec.ts",
+              "line": 933,
+              "column": 9
+            }
+          ]
+        },
+        {
+          "title": "10.1.3 · 390 · left-anchored · ancestor zoom 1.25",
+          "file": "release-10-1-3.spec.ts",
+          "line": 931,
+          "column": 10,
+          "specs": [
+            {
+              "title": "D-1 (critique-7) · the summary glyph holds its box through the expand and the collapse",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 4136,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T05:07:11.197Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-3e7bc8aa57084f4e552b",
+              "file": "release-10-1-3.spec.ts",
+              "line": 933,
+              "column": 9
+            }
+          ]
+        },
+        {
+          "title": "10.1.3 · 390 · bottom-anchored · ancestor zoom 1.25",
+          "file": "release-10-1-3.spec.ts",
+          "line": 931,
+          "column": 10,
+          "specs": [
+            {
+              "title": "D-1 (critique-7) · the summary glyph holds its box through the expand and the collapse",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 4104,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T05:07:15.338Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-bef704e9a7fc59ae4c23",
+              "file": "release-10-1-3.spec.ts",
+              "line": 933,
+              "column": 9
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-12T05:05:02.821Z",
+    "duration": 136684.61599999998,
+    "expected": 58,
+    "skipped": 2,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

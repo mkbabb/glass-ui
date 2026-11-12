@@ -1,0 +1,38 @@
+
+Running 23 tests using 1 worker
+
+  ✓   1 [chromium-headless-new] › tests-visual/release-10-1-4.spec.ts:104:5 › O-119 (g): DataTable learns its width on mount › a responsive DataTable in a 390 px box is a card list on the first observation, with no resize (700ms)
+  ✓   2 [chromium-headless-new] › tests-visual/release-10-1-4.spec.ts:116:5 › O-119 (g): DataTable learns its width on mount › the same DataTable in a 900 px box stays a table (429ms)
+  ✓   3 [chromium-headless-new] › tests-visual/release-10-1-4.spec.ts:136:9 › critique-3 F-4: a DataTable in a content-sized host settles › inline host: the projection settles from mount (2.2s)
+  ✓   4 [chromium-headless-new] › tests-visual/release-10-1-4.spec.ts:136:9 › critique-3 F-4: a DataTable in a content-sized host settles › grid host: the projection settles from mount (2.2s)
+  ✓   5 [chromium-headless-new] › tests-visual/release-10-1-4.spec.ts:136:9 › critique-3 F-4: a DataTable in a content-sized host settles › flex host: the projection settles from mount (2.2s)
+  ✓   6 [chromium-headless-new] › tests-visual/release-10-1-4.spec.ts:136:9 › critique-3 F-4: a DataTable in a content-sized host settles › fit host: the projection settles from mount (2.2s)
+  ✓   7 [chromium-headless-new] › tests-visual/release-10-1-4.spec.ts:146:5 › critique-3 F-4: a DataTable in a content-sized host settles › flex host, rows arriving after mount: the projection settles (2.5s)
+  ✓   8 [chromium-headless-new] › tests-visual/release-10-1-4.spec.ts:158:5 › O-119 (f), the @page half: only a deck prints at slide geometry › a page without a deck keeps the reader's print defaults (182ms)
+  ✓   9 [chromium-headless-new] › tests-visual/release-10-1-4.spec.ts:170:5 › O-119 (f), the @page half: only a deck prints at slide geometry › a deck page takes the deck's print resets and its named page (192ms)
+  ✓  10 [chromium-headless-new] › tests-visual/release-10-1-4.spec.ts:187:5 › O-119 (f), the @page half: only a deck prints at slide geometry › a deck in a modal dialog (top layer, out of flow) hands its named page to the document (217ms)
+  ✓  11 [chromium-headless-new] › tests-visual/release-10-1-4.spec.ts:199:5 › O-119 (f), the @page half: only a deck prints at slide geometry › a deck page in flow: the document takes the deck's page too (195ms)
+[WebServer] 12:23:29 AM [vite] (client) [console.warn] Warning: `DialogContent` requires a `DialogTitle` for the component to be accessible for screen reader users.
+[WebServer] 
+[WebServer] If you want to hide the `DialogTitle`, you can wrap it with our VisuallyHidden component.
+[WebServer] 
+[WebServer] For more information, see https://www.reka-ui.com/docs/components/dialog.html#title
+  ✓  12 [chromium-headless-new] › tests-visual/release-10-1-4.spec.ts:212:9 › O-119 (f), the @page half: only a deck prints at slide geometry › a deck in the library's own Dialog (a fixed plate) hands its named page to the document (228ms)
+[WebServer] 12:23:29 AM [vite] (client) [console.warn] Warning: `DialogContent` requires a `DialogTitle` for the component to be accessible for screen reader users.
+[WebServer] 
+[WebServer] If you want to hide the `DialogTitle`, you can wrap it with our VisuallyHidden component.
+[WebServer] 
+[WebServer] For more information, see https://www.reka-ui.com/docs/components/dialog.html#title
+  ✓  13 [chromium-headless-new] › tests-visual/release-10-1-4.spec.ts:224:9 › O-119 (f), the @page half: only a deck prints at slide geometry › page.pdf: a deck in the library's own Dialog (a fixed plate) prints at slide geometry (258ms)
+  ✓  14 [chromium-headless-new] › tests-visual/release-10-1-4.spec.ts:212:9 › O-119 (f), the @page half: only a deck prints at slide geometry › a deck in a fixed overlay hands its named page to the document (219ms)
+  ✓  15 [chromium-headless-new] › tests-visual/release-10-1-4.spec.ts:224:9 › O-119 (f), the @page half: only a deck prints at slide geometry › page.pdf: a deck in a fixed overlay prints at slide geometry (197ms)
+  ✓  16 [chromium-headless-new] › tests-visual/release-10-1-4.spec.ts:212:9 › O-119 (f), the @page half: only a deck prints at slide geometry › a deck in a non-modal <dialog open> (absolute) hands its named page to the document (201ms)
+  ✓  17 [chromium-headless-new] › tests-visual/release-10-1-4.spec.ts:224:9 › O-119 (f), the @page half: only a deck prints at slide geometry › page.pdf: a deck in a non-modal <dialog open> (absolute) prints at slide geometry (217ms)
+  ✓  18 [chromium-headless-new] › tests-visual/release-10-1-4.spec.ts:241:5 › O-119 (f), the @page half: only a deck prints at slide geometry › the deck's named page outranks a consumer's own @page (212ms)
+  ✓  19 [chromium-headless-new] › tests-visual/release-10-1-4.spec.ts:257:5 › O-119 (f), the @page half: only a deck prints at slide geometry › page.pdf: a consumer's own @page does not resize the deck's sheets (191ms)
+  ✓  20 [chromium-headless-new] › tests-visual/release-10-1-4.spec.ts:271:5 › O-119 (f), the @page half: only a deck prints at slide geometry › page.pdf: a consumer's own @page still sets the paper of a page with no deck (183ms)
+  ✓  21 [chromium-headless-new] › tests-visual/release-10-1-4.spec.ts:284:5 › O-119 (f), the @page half: only a deck prints at slide geometry › page.pdf: a page without a deck prints on the default paper (Letter) (184ms)
+  ✓  22 [chromium-headless-new] › tests-visual/release-10-1-4.spec.ts:296:5 › O-119 (f), the @page half: only a deck prints at slide geometry › page.pdf: a deck page prints one 1280x720 page per slide (198ms)
+  ✓  23 [chromium-headless-new] › tests-visual/release-10-1-4.spec.ts:311:5 › O-119 (f), the @page half: only a deck prints at slide geometry › page.pdf: a deck in a modal dialog prints at slide geometry (172ms)
+
+  23 passed (17.6s)

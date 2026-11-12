@@ -252,8 +252,8 @@ describe("G-DOCK-BUDGET — the run is the sole flexible member, and the surface
 describe("G-DOCK-RUN — the platform is the detent engine", () => {
     /**
      * The pitch pair is `@property`-REGISTERED, and registration is load-bearing rather
-     * than tidy: `useDockRun.anchorFor` reads both through `getComputedStyle`, and an
-     * unregistered custom property hands JS back the literal author text
+     * than tidy: a reader of either through `getComputedStyle` (a probe, a gate) gets an
+     * unregistered custom property's literal author text
      * (`calc(var(--dock-seat) + var(--dock-run-gap))`) which `parseFloat` reads as NaN.
      * Registered, the same read resolves to a used length. The `<number>` on
      * `--dock-open-pitches` is what keeps `m` an integer count rather than a string.
@@ -292,12 +292,18 @@ describe("G-DOCK-RUN — the platform is the detent engine", () => {
      * `auto` universally, which is the one universally-true RED in the audit.
      */
     it.each([
-        ["horizontal", "x", "scroll-padding-inline", "pan-x"],
-        ["vertical", "y", "scroll-padding-block", "pan-y"],
-    ] as const)("the %s run is a snapped, contained, single-owner scroller", (_o, axis, pad, pan) => {
+        ["horizontal", "x", "scroll-padding-inline", "pan-x", "inline"],
+        ["vertical", "y", "scroll-padding-block", "pan-y", "block"],
+    ] as const)("the %s run is a snapped, contained, single-owner scroller", (_o, axis, pad, pan, side) => {
         const run = declarations(`${STYLES}/run.css`);
         expect(run).toContain(`scroll-snap-type: ${axis} mandatory`);
-        expect(run).toMatch(new RegExp(`${pad}:\\s*calc\\(var\\(--dock-pitch\\) / 2\\)`));
+        // The half pitch, plus the run's reserve, which the padding box adds before the
+        // first seat (O-129 r1): every rest keeps its scroll offset.
+        expect(run).toMatch(
+            new RegExp(
+                `${pad}:\\s*calc\\(var\\(--dock-pitch\\) / 2 \\+ var\\(--dock-run-reserve-${side}\\)\\)`,
+            ),
+        );
         expect(run).toContain(`touch-action: ${pan}`);
         expect(run).toContain("overscroll-behavior: contain");
         expect(run).toMatch(/\.dock-run > \*\s*\{[^{}]*scroll-snap-align:\s*start/);
@@ -335,8 +341,11 @@ describe("G-DOCK-RUN — the platform is the detent engine", () => {
 
     /**
      * BOTH ENDPOINTS ARRIVE THROUGH THE TOKEN PAIR, so retargeting a shape is a token
-     * line and never a keyframe edit. U/B7: the pill shape rests on `--radius-dock`
-     * (the 1rem pill rung), a finite corner no clamp pins.
+     * line and never a keyframe edit — and `from: 9999px`, which the half-box clamp pins
+     * until t=0.9988 (measured: t=0.999 still reads 25.98px), appears nowhere.
+     * `--dock-cap-rest` is a LENGTH on the stadium, half the plate's measured cross
+     * extent (O-129 r1, O-123 OD-5): `50%` resolved per axis and painted an ellipse on
+     * any plate wider than tall.
      */
     it("the cap keyframes only through the rest/cut token pair", () => {
         const run = read(`${STYLES}/run.css`);
@@ -348,7 +357,8 @@ describe("G-DOCK-RUN — the platform is the detent engine", () => {
             }
         }
         const decls = declarations(`${STYLES}/run.css`);
-        expect(decls).toMatch(/--dock-cap-rest:\s*var\(--radius-dock\)/);
+        expect(decls).toMatch(/--dock-cap-rest:\s*calc\(var\(--dock-cross\) \/ 2\)/);
+        expect(decls).not.toMatch(/--dock-cap-rest:\s*[\d.]+%/);
         // Declarations only: `from: 9999px` is NAMED in the docblock as the rejected
         // alternative, and a detector that cannot tell a rejection from a declaration
         // would RED the file for explaining itself.
@@ -389,47 +399,33 @@ describe("G-DOCK-RUN — the platform is the detent engine", () => {
 // G-DOCK-REACH
 // ═════════════════════════════════════════════════════════════════════════════
 
-describe("G-DOCK-REACH — the anchor is closed-form, and its geometry ships with it", () => {
+describe("G-DOCK-REACH — the anchor is the seat's snap position, read from its layout box", () => {
     /**
-     * THE PAIRING LAW — the arm this seat exists for, and the one defect it was authored
-     * in response to.
-     *
-     * Between W3 and W4 the tree carried the `openExtra` term — `[openIdx < i]·(m−1)·P` —
-     * in `useDockRun.anchorFor` while `--dock-open-seat` had **zero consumers**:
-     * arithmetic for a geometry no rule produced. On any dock whose seats carry
-     * `aria-current` (which `RouterLink` sets natively) reach overshot by exactly
-     * `(m−1)·P` for every seat after the open one — a silent, correct-looking miss.
-     *
-     * So the invariant is stated as a BICONDITIONAL rather than as two independent
-     * assertions: the term and the rule ship together or neither ships. Delete the CSS
-     * and this REDs; delete the term and GF-DOCK's own stated mutation ("drop the
-     * `(m−1)·P` term → RED for every seat after the open one") REDs the arm below it.
+     * The open seat is `m·P − gap` wide by declaration, so every seat after it sits
+     * `(m−1)·P` further along the run.
      */
-    it("the openExtra term and the open-seat rule are the same act", () => {
-        const js = read(`${DOCK}/composables/useDockRun.ts`);
+    it("the open seat's width is authored from the pitch", () => {
         const css = declarations(`${STYLES}/run.css`);
-        const termShipped = /\(m - 1\)\s*\*\s*pitch/.test(js);
-        const geometryShipped = /inline-size:\s*var\(--dock-open-seat\)/.test(css);
-        expect(
-            geometryShipped,
-            "the anchor pushes every later seat by (m−1)·P; a rule must make the open seat that wide",
-        ).toBe(termShipped);
-        // …and the width is authored from the pitch, never measured back off the DOM.
+        expect(css).toMatch(/inline-size:\s*var\(--dock-open-seat\)/);
         expect(css).toMatch(
             /--dock-open-seat:\s*calc\(\s*var\(--dock-open-pitches\) \* var\(--dock-pitch\) - var\(--dock-run-gap\)\s*\)/,
         );
     });
 
     /**
-     * THE MODULAR CORRECTION, in the JS half. With `scroll-padding: P/2` an interior rest
-     * is ≡ P/2 (mod P), so an anchor computed without the −P/2 term is not a snap position
-     * and the engine drags the glide off it the instant it settles. Both prior arms of the
-     * adjudication shipped a gate asserting ≡ 0 — a gate that REDs the design it protects.
+     * The anchor is where the platform's snap puts the seat: its start from its layout
+     * box, less the run's `scroll-padding` start, clamped to the real terminals. A
+     * label-wide tab is wider than one pitch, so `i·P` lands a narrow run's end seat
+     * short of flush (critique-5 K1). Occlusion reads the same layout box, never the
+     * transformed rect: a seat's hover scale is not reach.
      */
-    it("the anchor carries the −P/2 term and clamps to the real terminals", () => {
+    it("the anchor and the occlusion read the seat's layout box, and the anchor clamps to the terminals", () => {
         const js = read(`${DOCK}/composables/useDockRun.ts`);
-        expect(js).toMatch(/i \* pitch \+ openExtra - pitch \/ 2/);
-        expect(js).toMatch(/Math\.min\(Math\.max\(raw, 0\), scrollMax\(run\)\)/);
+        expect(js).toMatch(/el\.offsetLeft/);
+        expect(js).toMatch(/seat\.offsetWidth/);
+        expect(js).toMatch(/style\.scrollPaddingInlineStart/);
+        expect(js).toMatch(/Math\.min\(Math\.max\(start - padding, 0\), scrollMax\(run\)\)/);
+        expect(js).not.toMatch(/getBoundingClientRect/);
     });
 
     /** `touch-action: auto` on the run gives the gesture back to the document. */
@@ -613,9 +609,11 @@ describe("G-DOCK-MORPH — a morph never starts against an unmeasured target", (
     it("the measure reads the posture from the DOM and chrome only at rest", () => {
         const src = read(`${DOCK}/composables/dockMorphMeasure.ts`);
         expect(src).toMatch(/const expanded = full\.classList\.contains\("is-active"\)/);
-        // U/B7d M1: the rest test is named once and gates the chrome latch.
-        expect(src).toMatch(/const resting = !root\.hasAttribute\("data-morphing"\);/);
-        expect(src).toMatch(/if \(resting\) \{\s*const chrome = /);
+        // The rest test is named once, gates the chrome latch, and at rest the root's
+        // own box is the posture's endpoint.
+        expect(src).toMatch(
+            /const morphing = root\.hasAttribute\("data-morphing"\);\s*const rootNow = morphing \? 0 : getSize\(root, a\);\s*if \(!morphing\) \{\s*const chrome = /,
+        );
         expect(src).not.toMatch(/watch\(expanded/);
     });
 
@@ -726,12 +724,27 @@ describe("G-DOCK-MATERIAL — the focus ring composes instead of competing", () 
         // 1. THE BOX MODEL RIDES THE SAME SUBJECT AS THE RESERVE. Not `run.css` somewhere
         //    — the one rule that declares the pair. A `box-sizing` that drifted onto a
         //    different selector would leave the reserve exactly as defeated as it was.
-        const reserveRules = [...run.matchAll(/\.glass-dock \.dock-run \{([^{}]*)\}/g)]
+        const reserveRules = [...run.matchAll(/\.glass-dock :where\(\.dock-layers\) > \.dock-run \{([^{}]*)\}/g)]
             .map((m) => m[1]!)
-            .filter((body) => /padding-block:\s*var\(--dock-ring-reserve\)/.test(body));
+            .filter((body) =>
+                /padding:\s*var\(--dock-run-reserve-block\) var\(--dock-run-reserve-inline\)/.test(body),
+            );
         expect(reserveRules.length).toBe(1);
         expect(reserveRules[0]).toMatch(/box-sizing:\s*content-box/);
-        expect(reserveRules[0]).toMatch(/margin-block:\s*calc\(-1 \* var\(--dock-ring-reserve\)\)/);
+        expect(reserveRules[0]).toMatch(
+            /margin:\s*calc\(-1 \* var\(--dock-run-reserve-block\)\) calc\(-1 \* var\(--dock-run-reserve-inline\)\)/,
+        );
+        // The reserve is the ring a focused seat paints past its layout box, rounded up
+        // to a whole pixel. No seat scales on hover, so nothing else is in it: no scroll
+        // step rides the reserve.
+        for (const side of ["inline", "block"]) {
+            expect(run).toMatch(
+                new RegExp(
+                    `--dock-run-reserve-${side}:\\s*round\\(\\s*up,\\s*var\\(--dock-ring-reserve\\),\\s*1px\\s*\\)`,
+                ),
+            );
+        }
+        expect(run).not.toMatch(/--dock-run-step-/);
 
         // 2. ONE OWNER. The vertical rotation swaps the AXIS, not the box model; a
         //    restatement there is the two-owners defect the R1 cure struck in
@@ -741,7 +754,7 @@ describe("G-DOCK-MATERIAL — the focus ring composes instead of competing", () 
             bandDeclSites(/^\s*box-sizing\s*:/).map(
                 ({ file, chain, decl }) => `${file}: ${chain} { ${decl} }`,
             ),
-        ).toEqual([`${STYLES}/run.css: .glass-dock .dock-run { box-sizing: content-box }`]);
+        ).toEqual([`${STYLES}/run.css: .glass-dock :where(.dock-layers) > .dock-run { box-sizing: content-box }`]);
 
         // 3. THE CENSUS THE BOX MODEL ANSWERS TO — every size declaration in the band
         //    whose subject is the run's own element (`dock-layer dock-layer--full
@@ -762,9 +775,9 @@ describe("G-DOCK-MATERIAL — the focus ring composes instead of competing", () 
             /* PIN   · the vertical run's cross (inline) axis */
             `${STYLES}/layers.css: .glass-dock.expanded:not(.fit-content) .dock-layer--full { width: 100% }`,
             /* FLOOR · releases the flex/grid min-content floor on the scroll axis */
-            `${STYLES}/run.css: .glass-dock .dock-run { min-inline-size: 0 }`,
+            `${STYLES}/run.css: .glass-dock :where(.dock-layers) > .dock-run { min-inline-size: 0 }`,
             /* FLOOR · the same release, rotated */
-            `${STYLES}/run.css: .glass-dock.vertical .dock-run { min-block-size: 0 }`,
+            `${STYLES}/run.css: .glass-dock.vertical :where(.dock-layers) > .dock-run { min-block-size: 0 }`,
             /* FLOOR · vertical layer stack */
             `${STYLES}/shell-regions.css: .glass-dock.vertical .dock-layer { min-width: 0 }`,
         ]);
@@ -817,7 +830,8 @@ describe("G-DOCK-MATERIAL — the focus ring composes instead of competing", () 
             /\.glass-dock \{\s*border-radius:\s*var\(--radius-dock\);\s*\}/,
         );
 
-        // 3. The band's ONLY keyframed radius is the cut cap's, on the plate.
+        // 3. The band's ONLY keyframed radii are the cut cap's: the plate's, and the
+        //    run's clip, which follows the plate's corner on the same timeline.
         const keyframed = bandCss()
             .flatMap(({ file, css }) =>
                 [...css.matchAll(/@keyframes\s+([\w-]+)\s*\{[\s\S]*?\n\}/g)].map((m) => ({
@@ -832,7 +846,18 @@ describe("G-DOCK-MATERIAL — the focus ring composes instead of competing", () 
             "gl-dock-cap-block-start",
             "gl-dock-cap-inline-end",
             "gl-dock-cap-inline-start",
+            "gl-dock-clip-block-end",
+            "gl-dock-clip-block-start",
+            "gl-dock-clip-inline-end",
+            "gl-dock-clip-inline-start",
         ]);
+        // The run's clip reads the cap's own endpoints and the cap's own timeline.
+        const run = declarations(`${STYLES}/run.css`);
+        expect(run).toMatch(/--dock-run-corner-rest:\s*max\(0px, var\(--dock-cap-rest\) - var\(--dock-run-inset\)\)/);
+        expect(run).toMatch(/--dock-run-corner-cut:\s*max\(0px, var\(--dock-cap-cut\) - var\(--dock-run-inset\)\)/);
+        expect(run).toMatch(
+            /\.glass-dock :where\(\.dock-layers\) > \.dock-run\.is-active \{[^{}]*animation-timeline:\s*--dock-run, --dock-run;/,
+        );
         expect(new Set(keyframed.map(({ file }) => file))).toEqual(
             new Set([`${STYLES}/run.css`]),
         );

@@ -1,0 +1,698 @@
+
+Running 5 tests using 1 worker
+
+  ✘  1 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:250:5 › coarse phone › g4 at 390 coarse the field type is at most 16px and at most 1.25x the pane subtitle (1.2s)
+  ✘  2 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1914:5 › critique 10, coarse phone › p2 a 1-2 px host change across the fit edge mid-expand holds every seat at the settle (49.9s)
+  ✘  3 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1914:5 › p2 a 1-2 px host change across the fit edge mid-expand holds every seat at the settle (51.9s)
+  ✘  4 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:2099:5 › r1 Q2 at 1440: a nested group holding the current seat paints every seat clear of the others, and the run's flag is its layout (2.4s)
+  ✘  5 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:2099:5 › fix 10, coarse phone › r1 Q2 at 390: a nested group holding the current seat paints every seat clear of the others, and the run's flag is its layout (2.4s)
+
+
+  1) [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:250:5 › coarse phone › g4 at 390 coarse the field type is at most 16px and at most 1.25x the pane subtitle 
+
+    Error: the Input keeps the no-zoom floor ({"subtitle":14.1864,"bar":16,"pill":14,"picker":16,"barH":54})
+
+    expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 16
+    Received:    14
+
+      278 |         // The library's own Input (`.field-control`, as Textarea and NumberField) holds the
+      279 |         // same floor (critique 10 Q3: it painted 14px, under iOS Safari's zoom line).
+    > 280 |         expect(read.pill, `the Input keeps the no-zoom floor (${JSON.stringify(read)})`).toBeGreaterThanOrEqual(16);
+          |                                                                                          ^
+      281 |         for (const field of ["bar", "pill", "picker"] as const) {
+      282 |             expect(read[field], `${field} type (${JSON.stringify(read)})`).toBeLessThanOrEqual(16);
+      283 |             expect(
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:280:90
+
+    Error Context: tests-visual/test-results/release-10-1-5-coarse-phon-073ae-ost-1-25x-the-pane-subtitle-chromium-headless-new/error-context.md
+
+  2) [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1914:5 › critique 10, coarse phone › p2 a 1-2 px host change across the fit edge mid-expand holds every seat at the settle 
+
+    Error: seat steps over 0.5 px at the settle, or a rest flag that is not the layout's truth
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -   1
+    + Received  + 254
+
+    - Array []
+    + Array [
+    +   Object {
+    +     "a": Object {
+    +       "fits": true,
+    +       "morphing": true,
+    +       "over": true,
+    +       "s1": 595.5,
+    +     },
+    +     "at": 110,
+    +     "b": Object {
+    +       "fits": false,
+    +       "morphing": false,
+    +       "over": true,
+    +       "s1": 605.5,
+    +     },
+    +     "cell": "h 254->253",
+    +     "edge": "settle",
+    +     "step": 10,
+    +   },
+    +   Object {
+    +     "a": Object {
+    +       "fits": true,
+    +       "morphing": true,
+    +       "over": true,
+    +       "s1": 595.5,
+    +     },
+    +     "at": 300,
+    +     "b": Object {
+    +       "fits": false,
+    +       "morphing": false,
+    +       "over": true,
+    +       "s1": 605.5,
+    +     },
+    +     "cell": "h 254->253",
+    +     "edge": "settle",
+    +     "step": 10,
+    +   },
+    +   Object {
+    +     "a": Object {
+    +       "fits": true,
+    +       "morphing": true,
+    +       "over": true,
+    +       "s1": 596,
+    +     },
+    +     "at": 110,
+    +     "b": Object {
+    +       "fits": false,
+    +       "morphing": false,
+    +       "over": true,
+    +       "s1": 606,
+    +     },
+    +     "cell": "h 254->252",
+    +     "edge": "settle",
+    +     "step": 10,
+    +   },
+    +   Object {
+    +     "a": Object {
+    +       "fits": true,
+    +       "morphing": true,
+    +       "over": true,
+    +       "s1": 596,
+    +     },
+    +     "at": 300,
+    +     "b": Object {
+    +       "fits": false,
+    +       "morphing": false,
+    +       "over": true,
+    +       "s1": 606,
+    +     },
+    +     "cell": "h 254->252",
+    +     "edge": "settle",
+    +     "step": 10,
+    +   },
+    +   Object {
+    +     "a": Object {
+    +       "fits": false,
+    +       "morphing": true,
+    +       "over": true,
+    +       "s1": 605.5,
+    +     },
+    +     "at": 110,
+    +     "b": Object {
+    +       "fits": true,
+    +       "morphing": false,
+    +       "over": false,
+    +       "s1": 595.046875,
+    +     },
+    +     "cell": "h 253->255",
+    +     "edge": "settle",
+    +     "step": 10.45,
+    +   },
+    +   Object {
+    +     "a": Object {
+    +       "fits": false,
+    +       "morphing": true,
+    +       "over": true,
+    +       "s1": 605.5,
+    +     },
+    +     "at": 300,
+    +     "b": Object {
+    +       "fits": true,
+    +       "morphing": false,
+    +       "over": false,
+    +       "s1": 595.046875,
+    +     },
+    +     "cell": "h 253->255",
+    +     "edge": "settle",
+    +     "step": 10.45,
+    +   },
+    +   Object {
+    +     "a": Object {
+    +       "fits": false,
+    +       "morphing": true,
+    +       "over": true,
+    +       "s1": 606,
+    +     },
+    +     "at": 110,
+    +     "b": Object {
+    +       "fits": true,
+    +       "morphing": false,
+    +       "over": false,
+    +       "s1": 595.046875,
+    +     },
+    +     "cell": "h 252->254",
+    +     "edge": "settle",
+    +     "step": 10.95,
+    +   },
+    +   Object {
+    +     "a": Object {
+    +       "fits": false,
+    +       "morphing": true,
+    +       "over": true,
+    +       "s1": 606,
+    +     },
+    +     "at": 300,
+    +     "b": Object {
+    +       "fits": true,
+    +       "morphing": false,
+    +       "over": false,
+    +       "s1": 595.046875,
+    +     },
+    +     "cell": "h 252->254",
+    +     "edge": "settle",
+    +     "step": 10.95,
+    +   },
+    +   Object {
+    +     "a": Object {
+    +       "fits": true,
+    +       "morphing": true,
+    +       "over": false,
+    +       "s1": 16.984375,
+    +     },
+    +     "at": 110,
+    +     "b": Object {
+    +       "fits": false,
+    +       "morphing": false,
+    +       "over": true,
+    +       "s1": 24,
+    +     },
+    +     "cell": "v 338->337",
+    +     "edge": "settle",
+    +     "step": 7.02,
+    +   },
+    +   Object {
+    +     "a": Object {
+    +       "fits": true,
+    +       "morphing": true,
+    +       "over": false,
+    +       "s1": 16.984375,
+    +     },
+    +     "at": 300,
+    +     "b": Object {
+    +       "fits": false,
+    +       "morphing": false,
+    +       "over": true,
+    +       "s1": 24,
+    +     },
+    +     "cell": "v 338->337",
+    +     "edge": "settle",
+    +     "step": 7.02,
+    +   },
+    +   Object {
+    +     "a": Object {
+    +       "fits": false,
+    +       "morphing": true,
+    +       "over": true,
+    +       "s1": 23.984375,
+    +     },
+    +     "at": 110,
+    +     "b": Object {
+    +       "fits": true,
+    +       "morphing": false,
+    +       "over": false,
+    +       "s1": 17.5,
+    +     },
+    +     "cell": "v 337->339",
+    +     "edge": "settle",
+    +     "step": 6.48,
+    +   },
+    +   Object {
+    +     "a": Object {
+    +       "fits": false,
+    +       "morphing": true,
+    +       "over": true,
+    +       "s1": 23.984375,
+    +     },
+    +     "at": 300,
+    +     "b": Object {
+    +       "fits": true,
+    +       "morphing": false,
+    +       "over": false,
+    +       "s1": 17.5,
+    +     },
+    +     "cell": "v 337->339",
+    +     "edge": "settle",
+    +     "step": 6.48,
+    +   },
+    +   Object {
+    +     "a": Object {
+    +       "fits": true,
+    +       "morphing": true,
+    +       "over": false,
+    +       "s1": 19.984375,
+    +     },
+    +     "at": 110,
+    +     "b": Object {
+    +       "fits": true,
+    +       "morphing": false,
+    +       "over": false,
+    +       "s1": 19,
+    +     },
+    +     "cell": "v 344->342",
+    +     "edge": "settle",
+    +     "step": 0.98,
+    +   },
+    +   Object {
+    +     "a": Object {
+    +       "fits": true,
+    +       "morphing": true,
+    +       "over": false,
+    +       "s1": 19.984375,
+    +     },
+    +     "at": 300,
+    +     "b": Object {
+    +       "fits": true,
+    +       "morphing": false,
+    +       "over": false,
+    +       "s1": 19,
+    +     },
+    +     "cell": "v 344->342",
+    +     "edge": "settle",
+    +     "step": 0.98,
+    +   },
+    + ]
+
+      1985 |             }
+      1986 |         }
+    > 1987 |         expect(bad, "seat steps over 0.5 px at the settle, or a rest flag that is not the layout's truth").toEqual([]);
+           |                                                                                                            ^
+      1988 |     });
+      1989 | }
+      1990 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:1987:108
+
+    Error Context: tests-visual/test-results/release-10-1-5-critique-10-44e23-ds-every-seat-at-the-settle-chromium-headless-new/error-context.md
+
+  3) [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1914:5 › p2 a 1-2 px host change across the fit edge mid-expand holds every seat at the settle 
+
+    Error: seat steps over 0.5 px at the settle, or a rest flag that is not the layout's truth
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -   1
+    + Received  + 254
+
+    - Array []
+    + Array [
+    +   Object {
+    +     "a": Object {
+    +       "fits": true,
+    +       "morphing": true,
+    +       "over": true,
+    +       "s1": 601.5,
+    +     },
+    +     "at": 110,
+    +     "b": Object {
+    +       "fits": false,
+    +       "morphing": false,
+    +       "over": true,
+    +       "s1": 611.5,
+    +     },
+    +     "cell": "h 242->241",
+    +     "edge": "settle",
+    +     "step": 10,
+    +   },
+    +   Object {
+    +     "a": Object {
+    +       "fits": true,
+    +       "morphing": true,
+    +       "over": true,
+    +       "s1": 601.5,
+    +     },
+    +     "at": 300,
+    +     "b": Object {
+    +       "fits": false,
+    +       "morphing": false,
+    +       "over": true,
+    +       "s1": 611.5,
+    +     },
+    +     "cell": "h 242->241",
+    +     "edge": "settle",
+    +     "step": 10,
+    +   },
+    +   Object {
+    +     "a": Object {
+    +       "fits": true,
+    +       "morphing": true,
+    +       "over": true,
+    +       "s1": 602,
+    +     },
+    +     "at": 110,
+    +     "b": Object {
+    +       "fits": false,
+    +       "morphing": false,
+    +       "over": true,
+    +       "s1": 612,
+    +     },
+    +     "cell": "h 242->240",
+    +     "edge": "settle",
+    +     "step": 10,
+    +   },
+    +   Object {
+    +     "a": Object {
+    +       "fits": true,
+    +       "morphing": true,
+    +       "over": true,
+    +       "s1": 602,
+    +     },
+    +     "at": 300,
+    +     "b": Object {
+    +       "fits": false,
+    +       "morphing": false,
+    +       "over": true,
+    +       "s1": 612,
+    +     },
+    +     "cell": "h 242->240",
+    +     "edge": "settle",
+    +     "step": 10,
+    +   },
+    +   Object {
+    +     "a": Object {
+    +       "fits": false,
+    +       "morphing": true,
+    +       "over": true,
+    +       "s1": 611.5,
+    +     },
+    +     "at": 110,
+    +     "b": Object {
+    +       "fits": true,
+    +       "morphing": false,
+    +       "over": false,
+    +       "s1": 601.046875,
+    +     },
+    +     "cell": "h 241->243",
+    +     "edge": "settle",
+    +     "step": 10.45,
+    +   },
+    +   Object {
+    +     "a": Object {
+    +       "fits": false,
+    +       "morphing": true,
+    +       "over": true,
+    +       "s1": 611.5,
+    +     },
+    +     "at": 300,
+    +     "b": Object {
+    +       "fits": true,
+    +       "morphing": false,
+    +       "over": false,
+    +       "s1": 601.046875,
+    +     },
+    +     "cell": "h 241->243",
+    +     "edge": "settle",
+    +     "step": 10.45,
+    +   },
+    +   Object {
+    +     "a": Object {
+    +       "fits": false,
+    +       "morphing": true,
+    +       "over": true,
+    +       "s1": 612,
+    +     },
+    +     "at": 110,
+    +     "b": Object {
+    +       "fits": true,
+    +       "morphing": false,
+    +       "over": false,
+    +       "s1": 601.046875,
+    +     },
+    +     "cell": "h 240->242",
+    +     "edge": "settle",
+    +     "step": 10.95,
+    +   },
+    +   Object {
+    +     "a": Object {
+    +       "fits": false,
+    +       "morphing": true,
+    +       "over": true,
+    +       "s1": 612,
+    +     },
+    +     "at": 300,
+    +     "b": Object {
+    +       "fits": true,
+    +       "morphing": false,
+    +       "over": false,
+    +       "s1": 601.046875,
+    +     },
+    +     "cell": "h 240->242",
+    +     "edge": "settle",
+    +     "step": 10.95,
+    +   },
+    +   Object {
+    +     "a": Object {
+    +       "fits": true,
+    +       "morphing": true,
+    +       "over": false,
+    +       "s1": 16.984375,
+    +     },
+    +     "at": 110,
+    +     "b": Object {
+    +       "fits": false,
+    +       "morphing": false,
+    +       "over": true,
+    +       "s1": 24,
+    +     },
+    +     "cell": "v 314->313",
+    +     "edge": "settle",
+    +     "step": 7.02,
+    +   },
+    +   Object {
+    +     "a": Object {
+    +       "fits": true,
+    +       "morphing": true,
+    +       "over": false,
+    +       "s1": 16.984375,
+    +     },
+    +     "at": 300,
+    +     "b": Object {
+    +       "fits": false,
+    +       "morphing": false,
+    +       "over": true,
+    +       "s1": 24,
+    +     },
+    +     "cell": "v 314->313",
+    +     "edge": "settle",
+    +     "step": 7.02,
+    +   },
+    +   Object {
+    +     "a": Object {
+    +       "fits": false,
+    +       "morphing": true,
+    +       "over": true,
+    +       "s1": 23.984375,
+    +     },
+    +     "at": 110,
+    +     "b": Object {
+    +       "fits": true,
+    +       "morphing": false,
+    +       "over": false,
+    +       "s1": 17.5,
+    +     },
+    +     "cell": "v 313->315",
+    +     "edge": "settle",
+    +     "step": 6.48,
+    +   },
+    +   Object {
+    +     "a": Object {
+    +       "fits": false,
+    +       "morphing": true,
+    +       "over": true,
+    +       "s1": 23.984375,
+    +     },
+    +     "at": 300,
+    +     "b": Object {
+    +       "fits": true,
+    +       "morphing": false,
+    +       "over": false,
+    +       "s1": 17.5,
+    +     },
+    +     "cell": "v 313->315",
+    +     "edge": "settle",
+    +     "step": 6.48,
+    +   },
+    +   Object {
+    +     "a": Object {
+    +       "fits": true,
+    +       "morphing": true,
+    +       "over": false,
+    +       "s1": 19.984375,
+    +     },
+    +     "at": 110,
+    +     "b": Object {
+    +       "fits": true,
+    +       "morphing": false,
+    +       "over": false,
+    +       "s1": 19,
+    +     },
+    +     "cell": "v 320->318",
+    +     "edge": "settle",
+    +     "step": 0.98,
+    +   },
+    +   Object {
+    +     "a": Object {
+    +       "fits": true,
+    +       "morphing": true,
+    +       "over": false,
+    +       "s1": 19.984375,
+    +     },
+    +     "at": 300,
+    +     "b": Object {
+    +       "fits": true,
+    +       "morphing": false,
+    +       "over": false,
+    +       "s1": 19,
+    +     },
+    +     "cell": "v 320->318",
+    +     "edge": "settle",
+    +     "step": 0.98,
+    +   },
+    + ]
+
+      1985 |             }
+      1986 |         }
+    > 1987 |         expect(bad, "seat steps over 0.5 px at the settle, or a rest flag that is not the layout's truth").toEqual([]);
+           |                                                                                                            ^
+      1988 |     });
+      1989 | }
+      1990 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:1987:108
+
+    Error Context: tests-visual/test-results/release-10-1-5-p2-a-1-2-px-60fdf-ds-every-seat-at-the-settle-chromium-headless-new/error-context.md
+
+  4) [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:2099:5 › r1 Q2 at 1440: a nested group holding the current seat paints every seat clear of the others, and the run's flag is its layout 
+
+    Error: seats that paint over each other or whose centre misses them, or a run that scrolls or whose flag is not its layout
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 50
+
+    - Array []
+    + Array [
+    +   Object {
+    +     "cell": "1440 current=1",
+    +     "misses": Array [
+    +       "S2 hits dock-icon-button glass-specular-track glass-capsule-hover",
+    +       "S3 hits ",
+    +     ],
+    +     "overlaps": Array [
+    +       "S2/S4 40.0",
+    +       "S2/S5 40.0",
+    +     ],
+    +   },
+    +   Object {
+    +     "cell": "1440 current=1",
+    +     "cw": 254,
+    +     "flag": true,
+    +     "sw": 350,
+    +   },
+    +   Object {
+    +     "cell": "1440 current=1",
+    +     "scrolls": Array [
+    +       350,
+    +       254,
+    +     ],
+    +   },
+    +   Object {
+    +     "cell": "1440 current=2",
+    +     "misses": Array [
+    +       "S2 hits dock-icon-button glass-specular-track glass-capsule-hover",
+    +       "S3 hits ",
+    +     ],
+    +     "overlaps": Array [
+    +       "S2/S4 40.0",
+    +       "S2/S5 40.0",
+    +     ],
+    +   },
+    +   Object {
+    +     "cell": "1440 current=2",
+    +     "cw": 254,
+    +     "flag": true,
+    +     "sw": 350,
+    +   },
+    +   Object {
+    +     "cell": "1440 current=2",
+    +     "scrolls": Array [
+    +       350,
+    +       254,
+    +     ],
+    +   },
+    + ]
+
+      2134 |             if (read.sw > read.cw) bad.push({ cell, scrolls: [read.sw, read.cw] });
+      2135 |         }
+    > 2136 |         expect(bad, "seats that paint over each other or whose centre misses them, or a run that scrolls or whose flag is not its layout").toEqual([]);
+           |                                                                                                                                            ^
+      2137 |     });
+      2138 | }
+      2139 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:2136:140
+
+    Error Context: tests-visual/test-results/release-10-1-5-r1-Q2-at-14-d07d8-he-run-s-flag-is-its-layout-chromium-headless-new/error-context.md
+
+  5) [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:2099:5 › fix 10, coarse phone › r1 Q2 at 390: a nested group holding the current seat paints every seat clear of the others, and the run's flag is its layout 
+
+    Error: seats that paint over each other or whose centre misses them, or a run that scrolls or whose flag is not its layout
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 16
+
+    - Array []
+    + Array [
+    +   Object {
+    +     "cell": "390 current=1",
+    +     "misses": Array [],
+    +     "overlaps": Array [
+    +       "S2/S3 9.4",
+    +     ],
+    +   },
+    +   Object {
+    +     "cell": "390 current=2",
+    +     "misses": Array [],
+    +     "overlaps": Array [
+    +       "S2/S3 9.4",
+    +     ],
+    +   },
+    + ]
+
+      2134 |             if (read.sw > read.cw) bad.push({ cell, scrolls: [read.sw, read.cw] });
+      2135 |         }
+    > 2136 |         expect(bad, "seats that paint over each other or whose centre misses them, or a run that scrolls or whose flag is not its layout").toEqual([]);
+           |                                                                                                                                            ^
+      2137 |     });
+      2138 | }
+      2139 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:2136:140
+
+    Error Context: tests-visual/test-results/release-10-1-5-fix-10-coar-544e7-he-run-s-flag-is-its-layout-chromium-headless-new/error-context.md
+
+  5 failed
+    [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:250:5 › coarse phone › g4 at 390 coarse the field type is at most 16px and at most 1.25x the pane subtitle 
+    [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1914:5 › critique 10, coarse phone › p2 a 1-2 px host change across the fit edge mid-expand holds every seat at the settle 
+    [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1914:5 › p2 a 1-2 px host change across the fit edge mid-expand holds every seat at the settle 
+    [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:2099:5 › r1 Q2 at 1440: a nested group holding the current seat paints every seat clear of the others, and the run's flag is its layout 
+    [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:2099:5 › fix 10, coarse phone › r1 Q2 at 390: a nested group holding the current seat paints every seat clear of the others, and the run's flag is its layout 

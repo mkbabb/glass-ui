@@ -1,0 +1,3 @@
+# Orchestrator note (2026-11-12 01:30 EST) — one prose correction for the close seat
+
+The 10.1.5 critic found that the CHANGELOG says the dock publishes "a `data-run-fits` attribute on the run". The attribute is on the dock ROOT (`dockMorphMeasure.ts` `root.toggleAttribute("data-run-fits", fits)`; `run.css` selects `.glass-dock[data-run-fits]`). This branch's CHANGELOG carries the same sentence in the 11.0.1 entry (near line 19) and in the merged 10.1.5 section (near line 278). Before you return ready_to_tag, correct both to say the attribute is on the dock root, in a prose-only commit. No gate needs re-running for it.

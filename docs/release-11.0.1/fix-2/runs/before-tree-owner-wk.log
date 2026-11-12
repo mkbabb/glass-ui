@@ -1,0 +1,68 @@
+
+Running 9 tests using 1 worker
+
+o1 focus hover {"radii":["20px","20px","20px","20px"],"w":81,"h":35}
+  ✓  1 [webkit] › tests-visual/release-11-0-1.spec.ts:70:5 › o1 the wide label seat › o1 the hover plate of a compact 'Focus' label seat is a capsule, never an ellipse (1.4s)
+o1 name rest {"radii":["20px","20px","20px","20px"],"w":88,"h":35} hover {"radii":["20px","20px","20px","20px"],"w":88,"h":35}
+  ✓  2 [webkit] › tests-visual/release-11-0-1.spec.ts:82:5 › o1 the wide label seat › o1 the active 'Name ›' seat's plate, at rest and under hover, is a capsule (1.2s)
+o2 open house tokens plate {"radii":["28px","28px","28px","28px"],"w":254,"h":56} root {"radii":["28px","28px","28px","28px"],"w":254,"h":56}
+  ✓  3 [webkit] › tests-visual/release-11-0-1.spec.ts:102:9 › o2 the dock's end, house tokens › o2 house tokens: open at rest, the plate and the box are round (869ms)
+o2 collapsed house tokens plate {"radii":["28px","28px","28px","28px"],"w":102,"h":56} root {"radii":["28px","28px","28px","28px"],"w":102,"h":56}
+  ✓  4 [webkit] › tests-visual/release-11-0-1.spec.ts:112:9 › o2 the dock's end, house tokens › o2 house tokens: collapsed with a persistent seat beside the summary, the plate and the box are round (840ms)
+o2 narrow house tokens plate {"radii":["28px","28px","28px","28px"],"w":158,"h":56} root {"radii":["28px","28px","28px","28px"],"w":158,"h":56} run {"scroll":0}
+  ✓  5 [webkit] › tests-visual/release-11-0-1.spec.ts:123:9 › o2 the dock's end, house tokens › o2 house tokens: open on the narrow face beside a wider one, with a #persistent-end seat, the plate is round (846ms)
+o2 open radius-dock 1.875rem plate {"radii":["28px","28px","28px","28px"],"w":254,"h":56} root {"radii":["28px","28px","28px","28px"],"w":254,"h":56}
+  ✓  6 [webkit] › tests-visual/release-11-0-1.spec.ts:102:9 › o2 the dock's end, radius-dock 1.875rem › o2 radius-dock 1.875rem: open at rest, the plate and the box are round (865ms)
+o2 collapsed radius-dock 1.875rem plate {"radii":["28px","28px","28px","28px"],"w":102,"h":56} root {"radii":["28px","28px","28px","28px"],"w":102,"h":56}
+  ✓  7 [webkit] › tests-visual/release-11-0-1.spec.ts:112:9 › o2 the dock's end, radius-dock 1.875rem › o2 radius-dock 1.875rem: collapsed with a persistent seat beside the summary, the plate and the box are round (879ms)
+o2 narrow radius-dock 1.875rem plate {"radii":["28px","28px","28px","28px"],"w":158,"h":56} root {"radii":["28px","28px","28px","28px"],"w":158,"h":56} run {"scroll":0}
+  ✓  8 [webkit] › tests-visual/release-11-0-1.spec.ts:123:9 › o2 the dock's end, radius-dock 1.875rem › o2 radius-dock 1.875rem: open on the narrow face beside a wider one, with a #persistent-end seat, the plate is round (861ms)
+o3 expand {"frames":139,"morphing":54,"bad":["35ms 28px 28px 28px 28px painted 13.3x28.0 13.3x28.0 13.3x28.0 13.3x28.0 half=28","50ms 28px 28px 28px 28px painted 14.1x28.0 14.1x28.0 14.1x28.0 14.1x28.0 half=28","61ms 28px 28px 28px 28px painted 15.5x28.0 15.5x28.0 15.5x28.0 15.5x28.0 half=28","72ms 28px 28px 28px 28px painted 16.8x28.0 16.8x28.0 16.8x28.0 16.8x28.0 half=28","82ms 28px 28px 28px 28px painted 18.2x28.0 18.2x28.0 18.2x28.0 18.2x28.0 half=28","93ms 28px 28px 28px 28px painted 19.4x28.0 19.4x28.0 19.4x28.0 19.4x28.0 half=28"]}
+o3 collapse {"frames":139,"morphing":56,"bad":["31ms 28px 28px 28px 28px painted 27.3x28.0 27.3x28.0 27.3x28.0 27.3x28.0 half=28","44ms 28px 28px 28px 28px painted 25.9x28.0 25.9x28.0 25.9x28.0 25.9x28.0 half=28","56ms 28px 28px 28px 28px painted 24.3x28.0 24.3x28.0 24.3x28.0 24.3x28.0 half=28","65ms 28px 28px 28px 28px painted 22.8x28.0 22.8x28.0 22.8x28.0 22.8x28.0 half=28","73ms 28px 28px 28px 28px painted 21.7x28.0 21.7x28.0 21.7x28.0 21.7x28.0 half=28","85ms 28px 28px 28px 28px painted 20.8x28.0 20.8x28.0 20.8x28.0 20.8x28.0 half=28"]}
+  ✘  9 [webkit] › tests-visual/release-11-0-1.spec.ts:139:1 › o3 every frame of the expand and of the collapse paints a round end (3.7s)
+
+
+  1) [webkit] › tests-visual/release-11-0-1.spec.ts:139:1 › o3 every frame of the expand and of the collapse paints a round end 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 21
+
+    - Array []
+    + Array [
+    +   "35ms 28px 28px 28px 28px painted 13.3x28.0 13.3x28.0 13.3x28.0 13.3x28.0 half=28",
+    +   "50ms 28px 28px 28px 28px painted 14.1x28.0 14.1x28.0 14.1x28.0 14.1x28.0 half=28",
+    +   "61ms 28px 28px 28px 28px painted 15.5x28.0 15.5x28.0 15.5x28.0 15.5x28.0 half=28",
+    +   "72ms 28px 28px 28px 28px painted 16.8x28.0 16.8x28.0 16.8x28.0 16.8x28.0 half=28",
+    +   "82ms 28px 28px 28px 28px painted 18.2x28.0 18.2x28.0 18.2x28.0 18.2x28.0 half=28",
+    +   "93ms 28px 28px 28px 28px painted 19.4x28.0 19.4x28.0 19.4x28.0 19.4x28.0 half=28",
+    +   "103ms 28px 28px 28px 28px painted 20.6x28.0 20.6x28.0 20.6x28.0 20.6x28.0 half=28",
+    +   "112ms 28px 28px 28px 28px painted 21.7x28.0 21.7x28.0 21.7x28.0 21.7x28.0 half=28",
+    +   "124ms 28px 28px 28px 28px painted 22.6x28.0 22.6x28.0 22.6x28.0 22.6x28.0 half=28",
+    +   "134ms 28px 28px 28px 28px painted 23.5x28.0 23.5x28.0 23.5x28.0 23.5x28.0 half=28",
+    +   "147ms 28px 28px 28px 28px painted 24.3x28.0 24.3x28.0 24.3x28.0 24.3x28.0 half=28",
+    +   "159ms 28px 28px 28px 28px painted 25.2x28.0 25.2x28.0 25.2x28.0 25.2x28.0 half=28",
+    +   "165ms 28px 28px 28px 28px painted 25.8x28.0 25.8x28.0 25.8x28.0 25.8x28.0 half=28",
+    +   "174ms 28px 28px 28px 28px painted 26.1x28.0 26.1x28.0 26.1x28.0 26.1x28.0 half=28",
+    +   "184ms 28px 28px 28px 28px painted 26.4x28.0 26.4x28.0 26.4x28.0 26.4x28.0 half=28",
+    +   "195ms 28px 28px 28px 28px painted 26.8x28.0 26.8x28.0 26.8x28.0 26.8x28.0 half=28",
+    +   "205ms 28px 28px 28px 28px painted 27.1x28.0 27.1x28.0 27.1x28.0 27.1x28.0 half=28",
+    +   "215ms 28px 28px 28px 28px painted 27.3x28.0 27.3x28.0 27.3x28.0 27.3x28.0 half=28",
+    +   "225ms 28px 28px 28px 28px painted 27.5x28.0 27.5x28.0 27.5x28.0 27.5x28.0 half=28",
+    + ]
+
+      185 |     expect(expand.morphing, "the expand morphed").toBeGreaterThan(2);
+      186 |     expect(collapse.morphing, "the collapse morphed").toBeGreaterThan(2);
+    > 187 |     expect(expand.bad).toEqual([]);
+          |                        ^
+      188 |     expect(collapse.bad).toEqual([]);
+      189 | });
+      190 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/fix2-before/tests-visual/release-11-0-1.spec.ts:187:24
+
+    Error Context: tests-visual/test-results/release-11-0-1-o3-every-fr-1c7bf-collapse-paints-a-round-end-webkit/error-context.md
+
+  1 failed
+    [webkit] › tests-visual/release-11-0-1.spec.ts:139:1 › o3 every frame of the expand and of the collapse paints a round end 
+  8 passed (13.4s)

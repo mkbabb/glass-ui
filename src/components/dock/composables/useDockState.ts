@@ -275,6 +275,10 @@ export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
     function onPressStart() {
         if (press) dropPress();
         press = "down";
+        // A press inside the dock is activity: an armed idle window starts again from it.
+        // A touch pointer never enters or leaves, so without this a dock mounted open
+        // folded under a finger panning its run.
+        if (collapseTimer) scheduleCollapse();
         for (const [type, listener] of pressListeners) {
             window.addEventListener(type, listener, true);
         }
@@ -577,6 +581,12 @@ export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
         state.value = "pinned";
         syncDerived();
     }
+
+    /* A dock that mounts open (`collapse="open"`) arms the one idle window at mount, as
+       any open dock arms it when the pointer or focus leaves: "both collapse after the
+       one idle window". An interaction before it lapses clears or re-arms it through the
+       same handlers. */
+    if (state.value === "hover") scheduleCollapse();
 
     // Cleanup
     onUnmounted(() => {

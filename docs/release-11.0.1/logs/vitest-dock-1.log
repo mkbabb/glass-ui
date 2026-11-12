@@ -1,0 +1,28 @@
+
+ RUN  v4.1.10 /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1
+
+(node:86640) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ❯ tests/components/custom/dock/dockMorphMeasure.test.ts (25 tests | 1 failed) 1075ms
+     × a capture keeps the run's scroll position 1010ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/components/custom/dock/dockMorphMeasure.test.ts > useDockExpandedSize > a capture keeps the run's scroll position
+AssertionError: expected "vi.fn()" to be called at least once
+ ❯ tests/components/custom/dock/dockMorphMeasure.test.ts:421:59
+    419|         // The capture runs on the pane's mutation record; under load …
+    420|         // deliver it after a zero timeout, so wait for the restore it…
+    421|         await vi.waitFor(() => expect(dock.full.scrollTo).toHaveBeenCa…
+       |                                                           ^
+    422|         expect(dock.px("expanded")).toBe("390px");
+    423|         expect(dock.model.scroll).toBe(312);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 57 passed (58)
+      Tests  1 failed | 705 passed | 6 expected fail | 1 skipped (713)
+   Start at  15:17:59
+   Duration  21.33s (transform 1.83s, setup 2.61s, import 8.35s, tests 10.70s, environment 11.78s)
+

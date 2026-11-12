@@ -1,0 +1,774 @@
+
+Running 6 tests using 1 worker
+
+  ✘  1 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:2214:5 › s1 O-205 at 1440: no collapsed dock has a scrolling run, and a hidden wider face adds nothing to a fitting run (5.8s)
+  ✘  2 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:2257:5 › s2 O-201 at 1440: across the fit edge the first and last seats keep their whole ring, and the flag is the layout (12.9s)
+  ✘  3 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:2214:5 › fix 11, coarse phone › s1 O-205 at 390: no collapsed dock has a scrolling run, and a hidden wider face adds nothing to a fitting run (4.9s)
+  ✘  4 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:2257:5 › fix 11, coarse phone › s2 O-201 at 390: across the fit edge the first and last seats keep their whole ring, and the flag is the layout (12.0s)
+  ✘  5 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:2299:1 › s3 O-207 G3 a disclosure trigger's keyboard ring is the house outline, whatever it composes (2.9s)
+  ✘  6 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:2317:1 › s4 a host padding change across the fit edge mid-expand holds every seat at the settle (vertical) (29.4s)
+
+
+  1) [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:2214:5 › s1 O-205 at 1440: no collapsed dock has a scrolling run, and a hidden wider face adds nothing to a fitting run 
+
+    Error: a collapsed dock whose plate is not round or whose run scrolls, or a fitting run that scrolls a hidden face
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -   1
+    + Received  + 110
+
+    - Array []
+    + Array [
+    +   Object {
+    +     "cell": "collapsed layers=1",
+    +     "collapsed": true,
+    +     "fits": false,
+    +     "half": 28,
+    +     "radii": Array [
+    +       "28px",
+    +       "28px",
+    +       "28px",
+    +       "28px",
+    +     ],
+    +     "range": Array [
+    +       Object {
+    +         "overflow": "auto hidden",
+    +         "sl": 60,
+    +         "st": 0,
+    +         "timeline": "none",
+    +       },
+    +     ],
+    +     "round": true,
+    +     "runs": Array [
+    +       Object {
+    +         "active": false,
+    +         "ch": 70,
+    +         "cw": 128,
+    +         "sh": 70,
+    +         "sl": 0,
+    +         "sw": 832,
+    +       },
+    +     ],
+    +   },
+    +   Object {
+    +     "cell": "collapsed layers=0",
+    +     "collapsed": true,
+    +     "fits": false,
+    +     "half": 28,
+    +     "radii": Array [
+    +       "28px",
+    +       "28px",
+    +       "28px",
+    +       "28px",
+    +     ],
+    +     "range": Array [
+    +       Object {
+    +         "overflow": "auto hidden",
+    +         "sl": 60,
+    +         "st": 0,
+    +         "timeline": "none",
+    +       },
+    +     ],
+    +     "round": true,
+    +     "runs": Array [
+    +       Object {
+    +         "active": false,
+    +         "ch": 70,
+    +         "cw": 126,
+    +         "sh": 70,
+    +         "sl": 0,
+    +         "sw": 304,
+    +       },
+    +     ],
+    +   },
+    +   Object {
+    +     "cell": "open, narrow face",
+    +     "collapsed": false,
+    +     "fits": true,
+    +     "half": 28,
+    +     "radii": Array [
+    +       "28px",
+    +       "28px",
+    +       "28px",
+    +       "28px",
+    +     ],
+    +     "round": true,
+    +     "runs": Array [
+    +       Object {
+    +         "active": true,
+    +         "ch": 54,
+    +         "cw": 263,
+    +         "sh": 54,
+    +         "sl": 0,
+    +         "sw": 832,
+    +       },
+    +     ],
+    +   },
+    +   Object {
+    +     "cell": "open, narrow face, after a wheel",
+    +     "collapsed": false,
+    +     "fits": true,
+    +     "half": 28,
+    +     "radii": Array [
+    +       "28px",
+    +       "28px",
+    +       "28px",
+    +       "28px",
+    +     ],
+    +     "round": true,
+    +     "runs": Array [
+    +       Object {
+    +         "active": true,
+    +         "ch": 54,
+    +         "cw": 263,
+    +         "sh": 54,
+    +         "sl": 173,
+    +         "sw": 832,
+    +       },
+    +     ],
+    +   },
+    + ]
+
+      2249 |         const wheeled = await runRead(page);
+      2250 |         if (wheeled.runs.find((r) => r.active)!.sl !== 0) bad.push({ cell: "open, narrow face, after a wheel", ...wheeled });
+    > 2251 |         expect(bad, "a collapsed dock whose plate is not round or whose run scrolls, or a fitting run that scrolls a hidden face").toEqual([]);
+           |                                                                                                                                    ^
+      2252 |     });
+      2253 | }
+      2254 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:2251:132
+
+    Error Context: tests-visual/test-results/release-10-1-5-s1-O-205-at-56316-ds-nothing-to-a-fitting-run-chromium-headless-new/error-context.md
+
+  2) [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:2257:5 › s2 O-201 at 1440: across the fit edge the first and last seats keep their whole ring, and the flag is the layout 
+
+    Error: a fitting cap that cuts a focused seat's ring, or a flag that is not the layout
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -   1
+    + Received  + 162
+
+    - Array []
+    + Array [
+    +   Object {
+    +     "cap": 267,
+    +     "cuts": Array [
+    +       "dock-layer 0.55",
+    +     ],
+    +     "focusVisible": true,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "worst": 0.55,
+    +   },
+    +   Object {
+    +     "cap": 267,
+    +     "cuts": Array [
+    +       "dock-layer 0.56",
+    +     ],
+    +     "focusVisible": true,
+    +     "outline": "solid",
+    +     "seat": "home",
+    +     "worst": 0.56,
+    +   },
+    +   Object {
+    +     "cap": 266,
+    +     "cuts": Array [
+    +       "dock-layer 1.05",
+    +     ],
+    +     "focusVisible": true,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "worst": 1.05,
+    +   },
+    +   Object {
+    +     "cap": 266,
+    +     "cuts": Array [
+    +       "dock-layer 1.06",
+    +     ],
+    +     "focusVisible": true,
+    +     "outline": "solid",
+    +     "seat": "home",
+    +     "worst": 1.06,
+    +   },
+    +   Object {
+    +     "cap": 265,
+    +     "cuts": Array [
+    +       "dock-layer 1.55",
+    +     ],
+    +     "focusVisible": true,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "worst": 1.55,
+    +   },
+    +   Object {
+    +     "cap": 265,
+    +     "cuts": Array [
+    +       "dock-layer 1.56",
+    +     ],
+    +     "focusVisible": true,
+    +     "outline": "solid",
+    +     "seat": "home",
+    +     "worst": 1.56,
+    +   },
+    +   Object {
+    +     "cap": 264,
+    +     "cuts": Array [
+    +       "dock-layer 2.05",
+    +     ],
+    +     "focusVisible": true,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "worst": 2.05,
+    +   },
+    +   Object {
+    +     "cap": 264,
+    +     "cuts": Array [
+    +       "dock-layer 2.06",
+    +     ],
+    +     "focusVisible": true,
+    +     "outline": "solid",
+    +     "seat": "home",
+    +     "worst": 2.06,
+    +   },
+    +   Object {
+    +     "cap": 263,
+    +     "cuts": Array [
+    +       "dock-layer 2.55",
+    +     ],
+    +     "focusVisible": true,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "worst": 2.55,
+    +   },
+    +   Object {
+    +     "cap": 263,
+    +     "cuts": Array [
+    +       "dock-layer 2.56",
+    +     ],
+    +     "focusVisible": true,
+    +     "outline": "solid",
+    +     "seat": "home",
+    +     "worst": 2.56,
+    +   },
+    +   Object {
+    +     "cap": 262,
+    +     "cuts": Array [
+    +       "dock-layer 3.05",
+    +     ],
+    +     "focusVisible": true,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "worst": 3.05,
+    +   },
+    +   Object {
+    +     "cap": 262,
+    +     "cuts": Array [
+    +       "dock-layer 3.06",
+    +     ],
+    +     "focusVisible": true,
+    +     "outline": "solid",
+    +     "seat": "home",
+    +     "worst": 3.06,
+    +   },
+    +   Object {
+    +     "cap": 261,
+    +     "cuts": Array [
+    +       "dock-layer 3.55",
+    +     ],
+    +     "focusVisible": true,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "worst": 3.55,
+    +   },
+    +   Object {
+    +     "cap": 261,
+    +     "cuts": Array [
+    +       "dock-layer 3.56",
+    +     ],
+    +     "focusVisible": true,
+    +     "outline": "solid",
+    +     "seat": "home",
+    +     "worst": 3.56,
+    +   },
+    +   Object {
+    +     "cap": 260,
+    +     "cuts": Array [
+    +       "dock-layer 4.00",
+    +     ],
+    +     "focusVisible": true,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "worst": 4,
+    +   },
+    +   Object {
+    +     "cap": 260,
+    +     "cuts": Array [
+    +       "dock-layer 4.11",
+    +     ],
+    +     "focusVisible": true,
+    +     "outline": "solid",
+    +     "seat": "home",
+    +     "worst": 4.11,
+    +   },
+    + ]
+
+      2284 |         }
+      2285 |         expect(Number.isFinite(edge), `the fit edge is found under ${natural}`).toBe(true);
+    > 2286 |         expect(bad, "a fitting cap that cuts a focused seat's ring, or a flag that is not the layout").toEqual([]);
+           |                                                                                                        ^
+      2287 |     });
+      2288 | }
+      2289 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:2286:104
+
+    Error Context: tests-visual/test-results/release-10-1-5-s2-O-201-at-3499e--and-the-flag-is-the-layout-chromium-headless-new/error-context.md
+
+  3) [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:2214:5 › fix 11, coarse phone › s1 O-205 at 390: no collapsed dock has a scrolling run, and a hidden wider face adds nothing to a fitting run 
+
+    Error: a collapsed dock whose plate is not round or whose run scrolls, or a fitting run that scrolls a hidden face
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -   1
+    + Received  + 110
+
+    - Array []
+    + Array [
+    +   Object {
+    +     "cell": "collapsed layers=1",
+    +     "collapsed": true,
+    +     "fits": false,
+    +     "half": 30,
+    +     "radii": Array [
+    +       "30px",
+    +       "30px",
+    +       "30px",
+    +       "30px",
+    +     ],
+    +     "range": Array [
+    +       Object {
+    +         "overflow": "auto hidden",
+    +         "sl": 57,
+    +         "st": 0,
+    +         "timeline": "none",
+    +       },
+    +     ],
+    +     "round": true,
+    +     "runs": Array [
+    +       Object {
+    +         "active": false,
+    +         "ch": 74,
+    +         "cw": 134,
+    +         "sh": 74,
+    +         "sl": 0,
+    +         "sw": 757,
+    +       },
+    +     ],
+    +   },
+    +   Object {
+    +     "cell": "collapsed layers=0",
+    +     "collapsed": true,
+    +     "fits": false,
+    +     "half": 30,
+    +     "radii": Array [
+    +       "30px",
+    +       "30px",
+    +       "30px",
+    +       "30px",
+    +     ],
+    +     "range": Array [
+    +       Object {
+    +         "overflow": "auto hidden",
+    +         "sl": 60,
+    +         "st": 0,
+    +         "timeline": "none",
+    +       },
+    +     ],
+    +     "round": true,
+    +     "runs": Array [
+    +       Object {
+    +         "active": false,
+    +         "ch": 74,
+    +         "cw": 134,
+    +         "sh": 74,
+    +         "sl": 0,
+    +         "sw": 328,
+    +       },
+    +     ],
+    +   },
+    +   Object {
+    +     "cell": "open, narrow face",
+    +     "collapsed": false,
+    +     "fits": true,
+    +     "half": 30,
+    +     "radii": Array [
+    +       "30px",
+    +       "30px",
+    +       "30px",
+    +       "30px",
+    +     ],
+    +     "round": true,
+    +     "runs": Array [
+    +       Object {
+    +         "active": true,
+    +         "ch": 58,
+    +         "cw": 265,
+    +         "sh": 58,
+    +         "sl": 0,
+    +         "sw": 757,
+    +       },
+    +     ],
+    +   },
+    +   Object {
+    +     "cell": "open, narrow face, after a wheel",
+    +     "collapsed": false,
+    +     "fits": true,
+    +     "half": 30,
+    +     "radii": Array [
+    +       "30px",
+    +       "30px",
+    +       "30px",
+    +       "30px",
+    +     ],
+    +     "round": true,
+    +     "runs": Array [
+    +       Object {
+    +         "active": true,
+    +         "ch": 58,
+    +         "cw": 265,
+    +         "sh": 58,
+    +         "sl": 171,
+    +         "sw": 757,
+    +       },
+    +     ],
+    +   },
+    + ]
+
+      2249 |         const wheeled = await runRead(page);
+      2250 |         if (wheeled.runs.find((r) => r.active)!.sl !== 0) bad.push({ cell: "open, narrow face, after a wheel", ...wheeled });
+    > 2251 |         expect(bad, "a collapsed dock whose plate is not round or whose run scrolls, or a fitting run that scrolls a hidden face").toEqual([]);
+           |                                                                                                                                    ^
+      2252 |     });
+      2253 | }
+      2254 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:2251:132
+
+    Error Context: tests-visual/test-results/release-10-1-5-fix-11-coar-cc038-ds-nothing-to-a-fitting-run-chromium-headless-new/error-context.md
+
+  4) [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:2257:5 › fix 11, coarse phone › s2 O-201 at 390: across the fit edge the first and last seats keep their whole ring, and the flag is the layout 
+
+    Error: a fitting cap that cuts a focused seat's ring, or a flag that is not the layout
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -   1
+    + Received  + 142
+
+    - Array []
+    + Array [
+    +   Object {
+    +     "cap": 271,
+    +     "cuts": Array [
+    +       "dock-layer 0.89",
+    +     ],
+    +     "focusVisible": true,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "worst": 0.89,
+    +   },
+    +   Object {
+    +     "cap": 271,
+    +     "cuts": Array [
+    +       "dock-layer 0.91",
+    +     ],
+    +     "focusVisible": true,
+    +     "outline": "solid",
+    +     "seat": "home",
+    +     "worst": 0.91,
+    +   },
+    +   Object {
+    +     "cap": 270,
+    +     "cuts": Array [
+    +       "dock-layer 1.39",
+    +     ],
+    +     "focusVisible": true,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "worst": 1.39,
+    +   },
+    +   Object {
+    +     "cap": 270,
+    +     "cuts": Array [
+    +       "dock-layer 1.41",
+    +     ],
+    +     "focusVisible": true,
+    +     "outline": "solid",
+    +     "seat": "home",
+    +     "worst": 1.41,
+    +   },
+    +   Object {
+    +     "cap": 269,
+    +     "cuts": Array [
+    +       "dock-layer 1.89",
+    +     ],
+    +     "focusVisible": true,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "worst": 1.89,
+    +   },
+    +   Object {
+    +     "cap": 269,
+    +     "cuts": Array [
+    +       "dock-layer 1.91",
+    +     ],
+    +     "focusVisible": true,
+    +     "outline": "solid",
+    +     "seat": "home",
+    +     "worst": 1.91,
+    +   },
+    +   Object {
+    +     "cap": 268,
+    +     "cuts": Array [
+    +       "dock-layer 2.39",
+    +     ],
+    +     "focusVisible": true,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "worst": 2.39,
+    +   },
+    +   Object {
+    +     "cap": 268,
+    +     "cuts": Array [
+    +       "dock-layer 2.41",
+    +     ],
+    +     "focusVisible": true,
+    +     "outline": "solid",
+    +     "seat": "home",
+    +     "worst": 2.41,
+    +   },
+    +   Object {
+    +     "cap": 267,
+    +     "cuts": Array [
+    +       "dock-layer 2.89",
+    +     ],
+    +     "focusVisible": true,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "worst": 2.89,
+    +   },
+    +   Object {
+    +     "cap": 267,
+    +     "cuts": Array [
+    +       "dock-layer 2.91",
+    +     ],
+    +     "focusVisible": true,
+    +     "outline": "solid",
+    +     "seat": "home",
+    +     "worst": 2.91,
+    +   },
+    +   Object {
+    +     "cap": 266,
+    +     "cuts": Array [
+    +       "dock-layer 3.39",
+    +     ],
+    +     "focusVisible": true,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "worst": 3.39,
+    +   },
+    +   Object {
+    +     "cap": 266,
+    +     "cuts": Array [
+    +       "dock-layer 3.41",
+    +     ],
+    +     "focusVisible": true,
+    +     "outline": "solid",
+    +     "seat": "home",
+    +     "worst": 3.41,
+    +   },
+    +   Object {
+    +     "cap": 265,
+    +     "cuts": Array [
+    +       "dock-layer 3.89",
+    +     ],
+    +     "focusVisible": true,
+    +     "outline": "solid",
+    +     "seat": "S1",
+    +     "worst": 3.89,
+    +   },
+    +   Object {
+    +     "cap": 265,
+    +     "cuts": Array [
+    +       "dock-layer 3.91",
+    +     ],
+    +     "focusVisible": true,
+    +     "outline": "solid",
+    +     "seat": "home",
+    +     "worst": 3.91,
+    +   },
+    + ]
+
+      2284 |         }
+      2285 |         expect(Number.isFinite(edge), `the fit edge is found under ${natural}`).toBe(true);
+    > 2286 |         expect(bad, "a fitting cap that cuts a focused seat's ring, or a flag that is not the layout").toEqual([]);
+           |                                                                                                        ^
+      2287 |     });
+      2288 | }
+      2289 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:2286:104
+
+    Error Context: tests-visual/test-results/release-10-1-5-fix-11-coar-26e2f--and-the-flag-is-the-layout-chromium-headless-new/error-context.md
+
+  5) [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:2299:1 › s3 O-207 G3 a disclosure trigger's keyboard ring is the house outline, whatever it composes 
+
+    Error: a disclosure trigger whose focus ring is not the house outline (2px, the perimeter ink)
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 50
+
+    - Array []
+    + Array [
+    +   Object {
+    +     "alpha": 1,
+    +     "dark": 0,
+    +     "fv": true,
+    +     "style": "none",
+    +     "width": "3px",
+    +     "witness": "card-trigger",
+    +   },
+    +   Object {
+    +     "alpha": 1,
+    +     "dark": 0,
+    +     "fv": true,
+    +     "style": "none",
+    +     "width": "3px",
+    +     "witness": "plain-trigger",
+    +   },
+    +   Object {
+    +     "alpha": 1,
+    +     "dark": 0,
+    +     "fv": true,
+    +     "style": "none",
+    +     "width": "3px",
+    +     "witness": "accordion",
+    +   },
+    +   Object {
+    +     "alpha": 1,
+    +     "dark": 1,
+    +     "fv": true,
+    +     "style": "none",
+    +     "width": "3px",
+    +     "witness": "card-trigger",
+    +   },
+    +   Object {
+    +     "alpha": 1,
+    +     "dark": 1,
+    +     "fv": true,
+    +     "style": "none",
+    +     "width": "3px",
+    +     "witness": "plain-trigger",
+    +   },
+    +   Object {
+    +     "alpha": 1,
+    +     "dark": 1,
+    +     "fv": true,
+    +     "style": "none",
+    +     "width": "3px",
+    +     "witness": "accordion",
+    +   },
+    + ]
+
+      2311 |         }
+      2312 |     }
+    > 2313 |     expect(bad, "a disclosure trigger whose focus ring is not the house outline (2px, the perimeter ink)").toEqual([]);
+           |                                                                                                            ^
+      2314 | });
+      2315 |
+      2316 | /** s4 (R4): a host that moves only its padding across the fit edge mid-expand moves the endpoint where the morph carries it. */
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:2313:108
+
+    Error Context: tests-visual/test-results/release-10-1-5-s3-O-207-G3-fce13-utline-whatever-it-composes-chromium-headless-new/error-context.md
+
+  6) [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:2317:1 › s4 a host padding change across the fit edge mid-expand holds every seat at the settle (vertical) 
+
+    Error: seat steps over 0.5 px at the settle, or a rest flag that is not the layout's truth
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 50
+
+    - Array []
+    + Array [
+    +   Object {
+    +     "at": 110,
+    +     "pad": 16.5,
+    +     "stageH": 314,
+    +     "step": 7.02,
+    +   },
+    +   Object {
+    +     "at": 300,
+    +     "pad": 16.5,
+    +     "stageH": 314,
+    +     "step": 7.02,
+    +   },
+    +   Object {
+    +     "at": 110,
+    +     "pad": 17,
+    +     "stageH": 314,
+    +     "step": 7.02,
+    +   },
+    +   Object {
+    +     "at": 300,
+    +     "pad": 17,
+    +     "stageH": 314,
+    +     "step": 7.02,
+    +   },
+    +   Object {
+    +     "at": 110,
+    +     "pad": 15,
+    +     "stageH": 313,
+    +     "step": 6.48,
+    +   },
+    +   Object {
+    +     "at": 300,
+    +     "pad": 15,
+    +     "stageH": 313,
+    +     "step": 6.48,
+    +   },
+    +   Object {
+    +     "at": 110,
+    +     "pad": 15,
+    +     "stageH": 312,
+    +     "step": 6.98,
+    +   },
+    +   Object {
+    +     "at": 300,
+    +     "pad": 15,
+    +     "stageH": 312,
+    +     "step": 6.98,
+    +   },
+    + ]
+
+      2352 |             if (end.fits === end.over) bad.push({ stageH, pad, at, flag: end.fits, overflows: end.over });
+      2353 |         }
+    > 2354 |     expect(bad, "seat steps over 0.5 px at the settle, or a rest flag that is not the layout's truth").toEqual([]);
+           |                                                                                                        ^
+      2355 | });
+      2356 |
+      2357 | /* M3 · O-159 and O-160, read from the source (no browser state). */
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:2354:104
+
+    Error Context: tests-visual/test-results/release-10-1-5-s4-a-host-p-92728-eat-at-the-settle-vertical--chromium-headless-new/error-context.md
+
+  6 failed
+    [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:2214:5 › s1 O-205 at 1440: no collapsed dock has a scrolling run, and a hidden wider face adds nothing to a fitting run 
+    [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:2257:5 › s2 O-201 at 1440: across the fit edge the first and last seats keep their whole ring, and the flag is the layout 
+    [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:2214:5 › fix 11, coarse phone › s1 O-205 at 390: no collapsed dock has a scrolling run, and a hidden wider face adds nothing to a fitting run 
+    [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:2257:5 › fix 11, coarse phone › s2 O-201 at 390: across the fit edge the first and last seats keep their whole ring, and the flag is the layout 
+    [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:2299:1 › s3 O-207 G3 a disclosure trigger's keyboard ring is the house outline, whatever it composes 
+    [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:2317:1 › s4 a host padding change across the fit edge mid-expand holds every seat at the settle (vertical) 

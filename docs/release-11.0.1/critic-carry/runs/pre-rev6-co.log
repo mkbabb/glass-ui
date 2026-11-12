@@ -1,0 +1,97 @@
+
+Running 6 tests using 1 worker
+
+  ✘  1 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:481:9 › O-101a · a host change during the morph · reversal (390->1440) (1.9s)
+  ✘  2 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:481:9 › O-101a · a host change during the morph · reversal (390->1440) (1.7s)
+  ✘  3 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:481:9 › O-101a · a host change during the morph · reversal (390->1440) (1.8s)
+  ✘  4 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:481:9 › O-101a · a host change during the morph · reversal (390->1440) (1.8s)
+  ✓  5 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:481:9 › O-101a · a host change during the morph · reversal (390->1440) (1.8s)
+  ✓  6 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:481:9 › O-101a · a host change during the morph · reversal (390->1440) (1.8s)
+
+
+  1) [coarse-touch] › tests-visual/release-10-1-2.spec.ts:481:9 › O-101a · a host change during the morph · reversal (390->1440) 
+
+    Error: morphing frames after the change reserving other than the settled 1056px (1060)
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 1
+
+      493 |                 stale.length,
+      494 |                 `morphing frames after the change reserving other than the settled ${rest.size}px (${[...new Set(stale.map((f) => f.reserved))].join(", ")})`,
+    > 495 |             ).toBe(0);
+          |               ^
+      496 |             const over = seq.filter((f) => f.scroll > f.client);
+      497 |             expect
+      498 |                 .soft(
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/.cache/carry-pre/tests-visual/release-10-1-2.spec.ts:495:15
+
+    Error Context: tests-visual/test-results/release-10-1-2-O-101a-·-a--5cea7-morph-·-reversal-390--1440--coarse-touch/error-context.md
+
+  2) [coarse-touch] › tests-visual/release-10-1-2.spec.ts:481:9 › O-101a · a host change during the morph · reversal (390->1440) 
+
+    Error: morphing frames after the change reserving other than the settled 1056px (1060)
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 1
+
+      493 |                 stale.length,
+      494 |                 `morphing frames after the change reserving other than the settled ${rest.size}px (${[...new Set(stale.map((f) => f.reserved))].join(", ")})`,
+    > 495 |             ).toBe(0);
+          |               ^
+      496 |             const over = seq.filter((f) => f.scroll > f.client);
+      497 |             expect
+      498 |                 .soft(
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/.cache/carry-pre/tests-visual/release-10-1-2.spec.ts:495:15
+
+    Error Context: tests-visual/test-results/release-10-1-2-O-101a-·-a--5cea7-morph-·-reversal-390--1440--coarse-touch-repeat1/error-context.md
+
+  3) [coarse-touch] › tests-visual/release-10-1-2.spec.ts:481:9 › O-101a · a host change during the morph · reversal (390->1440) 
+
+    Error: morphing frames after the change reserving other than the settled 1056px (1060)
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 1
+
+      493 |                 stale.length,
+      494 |                 `morphing frames after the change reserving other than the settled ${rest.size}px (${[...new Set(stale.map((f) => f.reserved))].join(", ")})`,
+    > 495 |             ).toBe(0);
+          |               ^
+      496 |             const over = seq.filter((f) => f.scroll > f.client);
+      497 |             expect
+      498 |                 .soft(
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/.cache/carry-pre/tests-visual/release-10-1-2.spec.ts:495:15
+
+    Error Context: tests-visual/test-results/release-10-1-2-O-101a-·-a--5cea7-morph-·-reversal-390--1440--coarse-touch-repeat2/error-context.md
+
+  4) [coarse-touch] › tests-visual/release-10-1-2.spec.ts:481:9 › O-101a · a host change during the morph · reversal (390->1440) 
+
+    Error: morphing frames after the change reserving other than the settled 1056px (1060)
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 1
+
+      493 |                 stale.length,
+      494 |                 `morphing frames after the change reserving other than the settled ${rest.size}px (${[...new Set(stale.map((f) => f.reserved))].join(", ")})`,
+    > 495 |             ).toBe(0);
+          |               ^
+      496 |             const over = seq.filter((f) => f.scroll > f.client);
+      497 |             expect
+      498 |                 .soft(
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/.cache/carry-pre/tests-visual/release-10-1-2.spec.ts:495:15
+
+    Error Context: tests-visual/test-results/release-10-1-2-O-101a-·-a--5cea7-morph-·-reversal-390--1440--coarse-touch-repeat3/error-context.md
+
+  4 failed
+    [coarse-touch] › tests-visual/release-10-1-2.spec.ts:481:9 › O-101a · a host change during the morph · reversal (390->1440) 
+    [coarse-touch] › tests-visual/release-10-1-2.spec.ts:481:9 › O-101a · a host change during the morph · reversal (390->1440) 
+    [coarse-touch] › tests-visual/release-10-1-2.spec.ts:481:9 › O-101a · a host change during the morph · reversal (390->1440) 
+    [coarse-touch] › tests-visual/release-10-1-2.spec.ts:481:9 › O-101a · a host change during the morph · reversal (390->1440) 
+  2 passed (14.6s)

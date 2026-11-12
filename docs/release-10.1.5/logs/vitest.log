@@ -1,0 +1,82 @@
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1793759449 slope=40.7/s inuse=30389 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. Finish what you are doing and report it; the owner decides on the reboot.
+
+ RUN  v4.1.10 /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5
+
+ ❯ tests/gates/boot-graph.test.ts (14 tests | 3 failed) 88ms
+     × the built demo has a dist-demo to measure 5ms
+     × the dist-demo it measures is NEWER than every source it is built from 1ms
+     × the eager graph stays under the modulepreload and byte ceilings 1ms
+(node:66663) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:67096) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:67532) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:67794) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 3 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/gates/boot-graph.test.ts > gate:boot-graph — build arm > the built demo has a dist-demo to measure
+AssertionError: dist-demo/index.html is absent — run `npm run demo:dist:build` (npm test runs it first): expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/gates/boot-graph.test.ts:566:34
+    564|
+    565|     it("the built demo has a dist-demo to measure", () => {
+    566|         expect(built, buildHint).toBe(true);
+       |                                  ^
+    567|     });
+    568|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/3]⎯
+
+ FAIL  tests/gates/boot-graph.test.ts > gate:boot-graph — build arm > the dist-demo it measures is NEWER than every source it is built from
+AssertionError: dist-demo/index.html is absent — run `npm run demo:dist:build` (npm test runs it first): expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/gates/boot-graph.test.ts:570:34
+    568|
+    569|     it("the dist-demo it measures is NEWER than every source it is bui…
+    570|         expect(built, buildHint).toBe(true);
+       |                                  ^
+    571|         const builtAt = statSync(indexHtml).mtimeMs;
+    572|         const newestSrc = newestSourceMtime();
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/3]⎯
+
+ FAIL  tests/gates/boot-graph.test.ts > gate:boot-graph — build arm > the eager graph stays under the modulepreload and byte ceilings
+AssertionError: dist-demo/index.html is absent — run `npm run demo:dist:build` (npm test runs it first): expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/gates/boot-graph.test.ts:580:34
+    578|
+    579|     it("the eager graph stays under the modulepreload and byte ceiling…
+    580|         expect(built, buildHint).toBe(true);
+       |                                  ^
+    581|         const html = readFileSync(indexHtml, "utf8");
+    582|         const graph = measureEagerGraph(
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/3]⎯
+
+
+ Test Files  1 failed | 246 passed (247)
+      Tests  3 failed | 2394 passed | 10 expected fail | 1 skipped (2408)
+   Start at  06:19:08
+   Duration  57.61s (transform 3.98s, setup 7.60s, import 25.06s, tests 22.44s, environment 32.55s)
+

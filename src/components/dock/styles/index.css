@@ -180,20 +180,18 @@
 }
 
 /* [2026-08-24 · BK #47 W3 LATTICE] The pitch pair, REGISTERED — and the registration
-   is load-bearing rather than idiomatic. `useDockRun` reads P and m through
-   `getComputedStyle`, and an UNREGISTERED custom property returns its substituted but
-   UNCOMPUTED token stream: `--dock-pitch` would hand back the literal string
+   is load-bearing rather than idiomatic. A reader of P and m through
+   `getComputedStyle` gets an UNREGISTERED custom property's substituted but UNCOMPUTED
+   token stream: `--dock-pitch` would hand back the literal string
    `"calc(var(--dock-seat) + var(--dock-run-gap))"` with nothing to parse a number out
    of. Declaring the syntax makes the engine resolve the chain to an absolute length at
-   computed-value time, so the reach anchor arithmetic reads `"48px"` and the modular
-   gate has a real number to be modular about. `<number>` for the pitch COUNT for the
-   same reason.
+   computed-value time, so a reader gets `"48px"` and the modular gate has a real number
+   to be modular about. `<number>` for the pitch COUNT for the same reason.
 
    Both inherit: the run reads them off the dock root that declares them (run.css), and
    the vertical dock's `--dock-open-pitches: 2` override must reach its own subtree. The
-   initial values are the safe degenerate case — a zero pitch makes the anchor
-   arithmetic a no-op rather than a NaN, which is the correct behaviour on an engine
-   or a test environment that never painted the dock. */
+   initial values are the safe degenerate case — a zero pitch rather than a NaN on an
+   engine or a test environment that never painted the dock. */
 @property --dock-pitch {
     syntax: "<length>";
     inherits: true;

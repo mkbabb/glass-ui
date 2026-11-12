@@ -108,8 +108,12 @@
        notch brighter at the grazing edge than the global whisper — so it is declared
        once here, for every capsule composer, rather than re-declared by each of them.
        The dark arm rides softer; both live at `tokens/property-regs-specular.css`. */
-    .glass-capsule-hover:hover {
-        --glass-specular-intensity-hover: var(--glass-specular-capsule-hover);
+    /* Hover paint needs a pointer that hovers: on touch, `:hover` sticks to the last
+       tapped element, so an ungated gleam would stay lit after the tap. */
+    @media (hover: hover) {
+        .glass-capsule-hover:hover {
+            --glass-specular-intensity-hover: var(--glass-specular-capsule-hover);
+        }
     }
 
     /* ── The folded dock-control safe-inset (the face token) ──

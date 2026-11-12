@@ -1,0 +1,1221 @@
+
+Running 100 tests using 1 worker
+
+  ✓    1 [coarse-touch] › tests-visual/on-glass-fg.spec.ts:282:13 › on-glass-fg (π lane — the surface-aware foreground register over a busy backdrop, fail-CLOSED) › on-glass muted/well/track clears AA over the composited plate @ mobile (light) (1.4s)
+  ✘    2 [coarse-touch] › tests-visual/on-glass-fg.spec.ts:282:13 › on-glass-fg (π lane — the surface-aware foreground register over a busy backdrop, fail-CLOSED) › on-glass muted/well/track clears AA over the composited plate @ mobile (dark) (1.1s)
+  ✓    3 [coarse-touch] › tests-visual/on-glass-fg.spec.ts:282:13 › on-glass-fg (π lane — the surface-aware foreground register over a busy backdrop, fail-CLOSED) › on-glass muted/well/track clears AA over the composited plate @ desktop (light) (1.1s)
+  ✘    4 [coarse-touch] › tests-visual/on-glass-fg.spec.ts:282:13 › on-glass-fg (π lane — the surface-aware foreground register over a busy backdrop, fail-CLOSED) › on-glass muted/well/track clears AA over the composited plate @ desktop (dark) (1.1s)
+  ✓    5 [coarse-touch] › tests-visual/on-glass-fg.spec.ts:372:5 › on-glass-fg (π lane — the surface-aware foreground register over a busy backdrop, fail-CLOSED) › the BA bright-bucket full-ink lift STILL wins on a declared-bright content tier (1.1s)
+  ✓    6 [coarse-touch] › tests-visual/overlay-sizing.spec.ts:44:5 › DropdownMenu at the right edge: 16px from the edge, at most 22rem wide, card radius (727ms)
+  ✓    7 [coarse-touch] › tests-visual/overlay-sizing.spec.ts:44:5 › Popover at the right edge: 16px from the edge, at most 22rem wide, card radius (621ms)
+  ✓    8 [coarse-touch] › tests-visual/overlay-sizing.spec.ts:53:1 › a forty-row menu opened low fits the room and scrolls inside (661ms)
+  ✓    9 [coarse-touch] › tests-visual/overlay-sizing.spec.ts:62:1 › the phone viewport: a long menu is the viewport less 1rem a side at most (632ms)
+  ✘   10 [coarse-touch] › tests-visual/page-chassis.spec.ts:66:5 › BC.W-PAGE-CHASSIS — the ONE standardized page idiom (π) › PC-1 — the hero <h1> is a display heading + the .fira-code subpath chip renders (778ms)
+[WebServer] 7:50:29 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button as-child="" > 
+[WebServer]   at <CardFooter class="justify-center" > 
+[WebServer]   at <Primitive data-slot="card" data-shadow=true data-size="md"  ... > 
+[WebServer]   at <Surface data-slot="card" tier="floating" surface=undefined  ... > 
+[WebServer]   at <Card tier="floating" class="w-full max-w-(--measure-cel) text-center" > 
+[WebServer]   at <NotFound onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/forms/label" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+[WebServer] 7:50:38 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button as-child="" > 
+[WebServer]   at <CardFooter class="justify-center" > 
+[WebServer]   at <Primitive data-slot="card" data-shadow=true data-size="md"  ... > 
+[WebServer]   at <Surface data-slot="card" tier="floating" surface=undefined  ... > 
+[WebServer]   at <Card tier="floating" class="w-full max-w-(--measure-cel) text-center" > 
+[WebServer]   at <NotFound onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/data/avatar" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  ✓   11 [coarse-touch] › tests-visual/page-chassis.spec.ts:99:5 › BC.W-PAGE-CHASSIS — the ONE standardized page idiom (π) › PC-2 — the hero SHRINKS on scroll (monotone then HOLD), CLS ≈ 0 (20.7s)
+[WebServer] 7:50:55 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button as-child="" > 
+[WebServer]   at <CardFooter class="justify-center" > 
+[WebServer]   at <Primitive data-slot="card" data-shadow=true data-size="md"  ... > 
+[WebServer]   at <Surface data-slot="card" tier="floating" surface=undefined  ... > 
+[WebServer]   at <Card tier="floating" class="w-full max-w-(--measure-cel) text-center" > 
+[WebServer]   at <NotFound onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/data/avatar" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  ✓   12 [coarse-touch] › tests-visual/page-chassis.spec.ts:147:5 › BC.W-PAGE-CHASSIS — the ONE standardized page idiom (π) › PC-STICKY — the pinned header PERSISTS past the header height + lifts painted (the G7-STICKY containing-block fix) (17.0s)
+[WebServer] 7:51:04 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button as-child="" > 
+[WebServer]   at <CardFooter class="justify-center" > 
+[WebServer]   at <Primitive data-slot="card" data-shadow=true data-size="md"  ... > 
+[WebServer]   at <Surface data-slot="card" tier="floating" surface=undefined  ... > 
+[WebServer]   at <Card tier="floating" class="w-full max-w-(--measure-cel) text-center" > 
+[WebServer]   at <NotFound onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/forms/label" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  ✓   13 [coarse-touch] › tests-visual/page-chassis.spec.ts:211:5 › BC.W-PAGE-CHASSIS — the ONE standardized page idiom (π) › PC-3 — the depth-keyed title size hierarchy (D1 > D2 > D3) (9.7s)
+  ✓   14 [coarse-touch] › tests-visual/page-chassis.spec.ts:238:5 › BC.W-PAGE-CHASSIS — the ONE standardized page idiom (π) › PC-4 — PRM: the hero does NOT shrink under reduced-motion (683ms)
+[WebServer] 7:51:14 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button as-child="" > 
+[WebServer]   at <CardFooter class="justify-center" > 
+[WebServer]   at <Primitive data-slot="card" data-shadow=true data-size="md"  ... > 
+[WebServer]   at <Surface data-slot="card" tier="floating" surface=undefined  ... > 
+[WebServer]   at <Card tier="floating" class="w-full max-w-(--measure-cel) text-center" > 
+[WebServer]   at <NotFound onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/forms/label" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+[WebServer] 7:51:23 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button as-child="" > 
+[WebServer]   at <CardFooter class="justify-center" > 
+[WebServer]   at <Primitive data-slot="card" data-shadow=true data-size="md"  ... > 
+[WebServer]   at <Surface data-slot="card" tier="floating" surface=undefined  ... > 
+[WebServer]   at <Card tier="floating" class="w-full max-w-(--measure-cel) text-center" > 
+[WebServer]   at <NotFound onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/data/avatar" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  ✓   15 [coarse-touch] › tests-visual/page-chassis.spec.ts:269:5 › BC.W-PAGE-CHASSIS — the ONE standardized page idiom (π) › PC-5 — exactly ONE chassis glass card per page (17.6s)
+  ✘   16 [coarse-touch] › tests-visual/page-chassis.spec.ts:295:5 › BC.W-PAGE-CHASSIS — the ONE standardized page idiom (π) › PC-6 — the section-landing bento + inline preview (no GL budget blown) (880ms)
+  ✘   17 [coarse-touch] › tests-visual/page-hierarchy.spec.ts:61:9 › BC.W-PAGE-HIERARCHY — the standardized section hierarchy + dark-adaptive delimiter (π) › PH-π-1+2+4 — section <h2> 20.4px + visible dark-adaptive delimiter (light) (953ms)
+  ✘   18 [coarse-touch] › tests-visual/page-hierarchy.spec.ts:61:9 › BC.W-PAGE-HIERARCHY — the standardized section hierarchy + dark-adaptive delimiter (π) › PH-π-1+2+4 — section <h2> 20.4px + visible dark-adaptive delimiter (dark) (961ms)
+  ✓   19 [coarse-touch] › tests-visual/pager-ring.spec.ts:121:13 › pager-ring (π — the unified pager-dots register in a glass ring, fail-CLOSED) › (a-c) dots ringed · counter off bg-card · one register @ mobile light (1.3s)
+  ✓   20 [coarse-touch] › tests-visual/pager-ring.spec.ts:151:13 › pager-ring (π — the unified pager-dots register in a glass ring, fail-CLOSED) › (d) counter text clears the legibility floor @ mobile light (1.1s)
+  ✓   21 [coarse-touch] › tests-visual/pager-ring.spec.ts:121:13 › pager-ring (π — the unified pager-dots register in a glass ring, fail-CLOSED) › (a-c) dots ringed · counter off bg-card · one register @ mobile dark (1.1s)
+  ✓   22 [coarse-touch] › tests-visual/pager-ring.spec.ts:151:13 › pager-ring (π — the unified pager-dots register in a glass ring, fail-CLOSED) › (d) counter text clears the legibility floor @ mobile dark (1.1s)
+  ✓   23 [coarse-touch] › tests-visual/pager-ring.spec.ts:121:13 › pager-ring (π — the unified pager-dots register in a glass ring, fail-CLOSED) › (a-c) dots ringed · counter off bg-card · one register @ desktop light (1.2s)
+  ✓   24 [coarse-touch] › tests-visual/pager-ring.spec.ts:151:13 › pager-ring (π — the unified pager-dots register in a glass ring, fail-CLOSED) › (d) counter text clears the legibility floor @ desktop light (1.2s)
+  ✓   25 [coarse-touch] › tests-visual/pager-ring.spec.ts:121:13 › pager-ring (π — the unified pager-dots register in a glass ring, fail-CLOSED) › (a-c) dots ringed · counter off bg-card · one register @ desktop dark (1.2s)
+  ✓   26 [coarse-touch] › tests-visual/pager-ring.spec.ts:151:13 › pager-ring (π — the unified pager-dots register in a glass ring, fail-CLOSED) › (d) counter text clears the legibility floor @ desktop dark (1.2s)
+  ✘   27 [coarse-touch] › tests-visual/pager-ring.spec.ts:175:5 › pager-ring (π — the unified pager-dots register in a glass ring, fail-CLOSED) › DELTA capture — the pager glass ring on /navigation/carousel (1.0m)
+  ✓   28 [coarse-touch] › tests-visual/pager-worm.spec.ts:110:13 › pager-worm (π — the liquid dot-MORPH worm, ruling 13, fail-CLOSED) › worm morphs + bed crisp + PRM seats — tablet light (3.1s)
+  ✓   29 [coarse-touch] › tests-visual/pager-worm.spec.ts:110:13 › pager-worm (π — the liquid dot-MORPH worm, ruling 13, fail-CLOSED) › worm morphs + bed crisp + PRM seats — tablet dark (2.9s)
+  ✓   30 [coarse-touch] › tests-visual/pager-worm.spec.ts:110:13 › pager-worm (π — the liquid dot-MORPH worm, ruling 13, fail-CLOSED) › worm morphs + bed crisp + PRM seats — desktop light (2.8s)
+  ✓   31 [coarse-touch] › tests-visual/pager-worm.spec.ts:110:13 › pager-worm (π — the liquid dot-MORPH worm, ruling 13, fail-CLOSED) › worm morphs + bed crisp + PRM seats — desktop dark (2.9s)
+  ✓   32 [coarse-touch] › tests-visual/pager-worm.spec.ts:234:9 › pager-a11y (π — the roving-tabindex keyboard contract, BI.W-PAGER-A11Y) › one tabstop + arrow/Home/End drive + wrap — light (2.4s)
+  ✓   33 [coarse-touch] › tests-visual/pager-worm.spec.ts:234:9 › pager-a11y (π — the roving-tabindex keyboard contract, BI.W-PAGER-A11Y) › one tabstop + arrow/Home/End drive + wrap — dark (2.4s)
+  ✓   34 [coarse-touch] › tests-visual/paper-grid.spec.ts:264:13 › BB.W-PAPER-GRID-TEXTURE — the card-interior blueprint grid π › grid reads THROUGH the card interior — mobile light (1.1s)
+  ✓   35 [coarse-touch] › tests-visual/paper-grid.spec.ts:264:13 › BB.W-PAPER-GRID-TEXTURE — the card-interior blueprint grid π › grid reads THROUGH the card interior — mobile dark (1.1s)
+  ✓   36 [coarse-touch] › tests-visual/paper-grid.spec.ts:264:13 › BB.W-PAPER-GRID-TEXTURE — the card-interior blueprint grid π › grid reads THROUGH the card interior — desktop light (1.1s)
+  ✓   37 [coarse-touch] › tests-visual/paper-grid.spec.ts:264:13 › BB.W-PAPER-GRID-TEXTURE — the card-interior blueprint grid π › grid reads THROUGH the card interior — desktop dark (1.1s)
+  ✓   38 [coarse-touch] › tests-visual/paper-grid.spec.ts:291:5 › BB.W-PAPER-GRID-TEXTURE — the card-interior blueprint grid π › the grid is a STATIC raster — no per-frame paint over a scroll (924ms)
+  ✓   39 [coarse-touch] › tests-visual/paper-grid.spec.ts:301:5 › BB.W-PAPER-GRID-TEXTURE — the card-interior blueprint grid π › capture the DELTA frames (bare → grid, both modes) (1.5s)
+  ✘   40 [coarse-touch] › tests-visual/perf-producer.spec.ts:60:1 › A′-4 — the dock morph renders at ≥ the fps floor + the morph root is contained (1.5s)
+  ✓   41 [coarse-touch] › tests-visual/perf-producer.spec.ts:133:1 › A′-1 — a Blob mount ships exactly ONE canvas + ONE live context, released on unmount (2.9s)
+  ✓   42 [coarse-touch] › tests-visual/perf-producer.spec.ts:204:1 › A′-5 — the aurora canvas backing-store dimension is at the SUB-2× wash cap (2.3s)
+  ✘   43 [coarse-touch] › tests-visual/perf-producer.spec.ts:267:1 › A′-6 — a spacious dock's icon glyph computes larger than a compact dock's (1.5s)
+  ✓   44 [coarse-touch] › tests-visual/press-scale.spec.ts:26:5 › hover leaves [data-witness="toggle-b"] at scale 1 (960ms)
+  ✓   45 [coarse-touch] › tests-visual/press-scale.spec.ts:26:5 › hover leaves [data-witness="chip"] at scale 1 (908ms)
+  ✓   46 [coarse-touch] › tests-visual/press-scale.spec.ts:35:1 › a held press leaves a ToggleGroupItem at scale 1 (921ms)
+[WebServer] 7:53:21 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button data-scenario="button-as-child" as-child="" > 
+[WebServer]   at <Primitive material="content" shadow=true grain=false  ... > 
+[WebServer]   at <Surface material="content" tier="resting" surface="opaque"  ... > 
+[WebServer]   at <ShowcaseFrame caption="As-child" pad="sm" > 
+[WebServer]   at <StorySection heading="Keyboard, touch, and the linked command" blurb="One native button accepts Enter, Space, click, and coarse taps. `as-child` hands the whole command contract to another element without giving up the material." > 
+[WebServer]   at <TooltipProvider delay-duration=250 skip-delay-duration=300 > 
+[WebServer]   at <TooltipProvider delay-duration=250 > 
+[WebServer]   at <StoryPage> 
+[WebServer]   at <Buttons onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/display/buttons" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+[WebServer] 7:53:21 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button data-scenario="button-as-child-disabled" as-child="" disabled="" > 
+[WebServer]   at <Primitive material="content" shadow=true grain=false  ... > 
+[WebServer]   at <Surface material="content" tier="resting" surface="opaque"  ... > 
+[WebServer]   at <ShowcaseFrame caption="As-child" pad="sm" > 
+[WebServer]   at <StorySection heading="Keyboard, touch, and the linked command" blurb="One native button accepts Enter, Space, click, and coarse taps. `as-child` hands the whole command contract to another element without giving up the material." > 
+[WebServer]   at <TooltipProvider delay-duration=250 skip-delay-duration=300 > 
+[WebServer]   at <TooltipProvider delay-duration=250 > 
+[WebServer]   at <StoryPage> 
+[WebServer]   at <Buttons onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/display/buttons" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  -   47 [coarse-touch] › tests-visual/press-unify.spec.ts:65:9 › press-unify — light › (a) COUPLED — press drives a reciprocal X≠Y scale + the --glass-btn-press-t drive together
+[WebServer] 7:53:22 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button data-scenario="button-as-child" as-child="" > 
+[WebServer]   at <Primitive material="content" shadow=true grain=false  ... > 
+[WebServer]   at <Surface material="content" tier="resting" surface="opaque"  ... > 
+[WebServer]   at <ShowcaseFrame caption="As-child" pad="sm" > 
+[WebServer]   at <StorySection heading="Keyboard, touch, and the linked command" blurb="One native button accepts Enter, Space, click, and coarse taps. `as-child` hands the whole command contract to another element without giving up the material." > 
+[WebServer]   at <TooltipProvider delay-duration=250 skip-delay-duration=300 > 
+[WebServer]   at <TooltipProvider delay-duration=250 > 
+[WebServer]   at <StoryPage> 
+[WebServer]   at <Buttons onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/display/buttons" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+[WebServer] 7:53:22 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button data-scenario="button-as-child-disabled" as-child="" disabled="" > 
+[WebServer]   at <Primitive material="content" shadow=true grain=false  ... > 
+[WebServer]   at <Surface material="content" tier="resting" surface="opaque"  ... > 
+[WebServer]   at <ShowcaseFrame caption="As-child" pad="sm" > 
+[WebServer]   at <StorySection heading="Keyboard, touch, and the linked command" blurb="One native button accepts Enter, Space, click, and coarse taps. `as-child` hands the whole command contract to another element without giving up the material." > 
+[WebServer]   at <TooltipProvider delay-duration=250 skip-delay-duration=300 > 
+[WebServer]   at <TooltipProvider delay-duration=250 > 
+[WebServer]   at <StoryPage> 
+[WebServer]   at <Buttons onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/display/buttons" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  -   48 [coarse-touch] › tests-visual/press-unify.spec.ts:111:9 › press-unify — light › (b) ABSORB — a rapid double-tap re-engages mid-flight, value re-seats velocity-continuously toward 1
+[WebServer] 7:53:23 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button data-scenario="button-as-child" as-child="" > 
+[WebServer]   at <Primitive material="content" shadow=true grain=false  ... > 
+[WebServer]   at <Surface material="content" tier="resting" surface="opaque"  ... > 
+[WebServer]   at <ShowcaseFrame caption="As-child" pad="sm" > 
+[WebServer]   at <StorySection heading="Keyboard, touch, and the linked command" blurb="One native button accepts Enter, Space, click, and coarse taps. `as-child` hands the whole command contract to another element without giving up the material." > 
+[WebServer]   at <TooltipProvider delay-duration=250 skip-delay-duration=300 > 
+[WebServer]   at <TooltipProvider delay-duration=250 > 
+[WebServer]   at <StoryPage> 
+[WebServer]   at <Buttons onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/display/buttons" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+[WebServer] 7:53:23 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button data-scenario="button-as-child-disabled" as-child="" disabled="" > 
+[WebServer]   at <Primitive material="content" shadow=true grain=false  ... > 
+[WebServer]   at <Surface material="content" tier="resting" surface="opaque"  ... > 
+[WebServer]   at <ShowcaseFrame caption="As-child" pad="sm" > 
+[WebServer]   at <StorySection heading="Keyboard, touch, and the linked command" blurb="One native button accepts Enter, Space, click, and coarse taps. `as-child` hands the whole command contract to another element without giving up the material." > 
+[WebServer]   at <TooltipProvider delay-duration=250 skip-delay-duration=300 > 
+[WebServer]   at <TooltipProvider delay-duration=250 > 
+[WebServer]   at <StoryPage> 
+[WebServer]   at <Buttons onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/display/buttons" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+[WebServer] 7:53:24 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button data-scenario="button-as-child" as-child="" > 
+[WebServer]   at <Primitive material="content" shadow=true grain=false  ... > 
+[WebServer]   at <Surface material="content" tier="resting" surface="opaque"  ... > 
+[WebServer]   at <ShowcaseFrame caption="As-child" pad="sm" > 
+[WebServer]   at <StorySection heading="Keyboard, touch, and the linked command" blurb="One native button accepts Enter, Space, click, and coarse taps. `as-child` hands the whole command contract to another element without giving up the material." > 
+[WebServer]   at <TooltipProvider delay-duration=250 skip-delay-duration=300 > 
+[WebServer]   at <TooltipProvider delay-duration=250 > 
+[WebServer]   at <StoryPage> 
+[WebServer]   at <Buttons onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/display/buttons" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+[WebServer] 7:53:24 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button data-scenario="button-as-child-disabled" as-child="" disabled="" > 
+[WebServer]   at <Primitive material="content" shadow=true grain=false  ... > 
+[WebServer]   at <Surface material="content" tier="resting" surface="opaque"  ... > 
+[WebServer]   at <ShowcaseFrame caption="As-child" pad="sm" > 
+[WebServer]   at <StorySection heading="Keyboard, touch, and the linked command" blurb="One native button accepts Enter, Space, click, and coarse taps. `as-child` hands the whole command contract to another element without giving up the material." > 
+[WebServer]   at <TooltipProvider delay-duration=250 skip-delay-duration=300 > 
+[WebServer]   at <TooltipProvider delay-duration=250 > 
+[WebServer]   at <StoryPage> 
+[WebServer]   at <Buttons onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/display/buttons" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  -   49 [coarse-touch] › tests-visual/press-unify.spec.ts:164:9 › press-unify — light › (c) PRM-INSTANT — under reduce the press drive snaps to endpoint, gesture confirms
+[WebServer] 7:53:25 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button data-scenario="button-as-child" as-child="" > 
+[WebServer]   at <Primitive material="content" shadow=true grain=false  ... > 
+[WebServer]   at <Surface material="content" tier="resting" surface="opaque"  ... > 
+[WebServer]   at <ShowcaseFrame caption="As-child" pad="sm" > 
+[WebServer]   at <StorySection heading="Keyboard, touch, and the linked command" blurb="One native button accepts Enter, Space, click, and coarse taps. `as-child` hands the whole command contract to another element without giving up the material." > 
+[WebServer]   at <TooltipProvider delay-duration=250 skip-delay-duration=300 > 
+[WebServer]   at <TooltipProvider delay-duration=250 > 
+[WebServer]   at <StoryPage> 
+[WebServer]   at <Buttons onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/display/buttons" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+[WebServer] 7:53:25 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button data-scenario="button-as-child-disabled" as-child="" disabled="" > 
+[WebServer]   at <Primitive material="content" shadow=true grain=false  ... > 
+[WebServer]   at <Surface material="content" tier="resting" surface="opaque"  ... > 
+[WebServer]   at <ShowcaseFrame caption="As-child" pad="sm" > 
+[WebServer]   at <StorySection heading="Keyboard, touch, and the linked command" blurb="One native button accepts Enter, Space, click, and coarse taps. `as-child` hands the whole command contract to another element without giving up the material." > 
+[WebServer]   at <TooltipProvider delay-duration=250 skip-delay-duration=300 > 
+[WebServer]   at <TooltipProvider delay-duration=250 > 
+[WebServer]   at <StoryPage> 
+[WebServer]   at <Buttons onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/display/buttons" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  -   50 [coarse-touch] › tests-visual/press-unify.spec.ts:204:9 › press-unify — light › (d) COMPOSITOR-ONLY — the press inline style carries no layout property
+[WebServer] 7:53:26 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button data-scenario="button-as-child" as-child="" > 
+[WebServer]   at <Primitive material="content" shadow=true grain=false  ... > 
+[WebServer]   at <Surface material="content" tier="resting" surface="opaque"  ... > 
+[WebServer]   at <ShowcaseFrame caption="As-child" pad="sm" > 
+[WebServer]   at <StorySection heading="Keyboard, touch, and the linked command" blurb="One native button accepts Enter, Space, click, and coarse taps. `as-child` hands the whole command contract to another element without giving up the material." > 
+[WebServer]   at <TooltipProvider delay-duration=250 skip-delay-duration=300 > 
+[WebServer]   at <TooltipProvider delay-duration=250 > 
+[WebServer]   at <StoryPage> 
+[WebServer]   at <Buttons onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/display/buttons" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+[WebServer] 7:53:26 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button data-scenario="button-as-child-disabled" as-child="" disabled="" > 
+[WebServer]   at <Primitive material="content" shadow=true grain=false  ... > 
+[WebServer]   at <Surface material="content" tier="resting" surface="opaque"  ... > 
+[WebServer]   at <ShowcaseFrame caption="As-child" pad="sm" > 
+[WebServer]   at <StorySection heading="Keyboard, touch, and the linked command" blurb="One native button accepts Enter, Space, click, and coarse taps. `as-child` hands the whole command contract to another element without giving up the material." > 
+[WebServer]   at <TooltipProvider delay-duration=250 skip-delay-duration=300 > 
+[WebServer]   at <TooltipProvider delay-duration=250 > 
+[WebServer]   at <StoryPage> 
+[WebServer]   at <Buttons onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/display/buttons" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  -   51 [coarse-touch] › tests-visual/press-unify.spec.ts:65:9 › press-unify — dark › (a) COUPLED — press drives a reciprocal X≠Y scale + the --glass-btn-press-t drive together
+[WebServer] 7:53:27 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button data-scenario="button-as-child" as-child="" > 
+[WebServer]   at <Primitive material="content" shadow=true grain=false  ... > 
+[WebServer]   at <Surface material="content" tier="resting" surface="opaque"  ... > 
+[WebServer]   at <ShowcaseFrame caption="As-child" pad="sm" > 
+[WebServer]   at <StorySection heading="Keyboard, touch, and the linked command" blurb="One native button accepts Enter, Space, click, and coarse taps. `as-child` hands the whole command contract to another element without giving up the material." > 
+[WebServer]   at <TooltipProvider delay-duration=250 skip-delay-duration=300 > 
+[WebServer]   at <TooltipProvider delay-duration=250 > 
+[WebServer]   at <StoryPage> 
+[WebServer]   at <Buttons onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/display/buttons" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+[WebServer] 7:53:27 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button data-scenario="button-as-child-disabled" as-child="" disabled="" > 
+[WebServer]   at <Primitive material="content" shadow=true grain=false  ... > 
+[WebServer]   at <Surface material="content" tier="resting" surface="opaque"  ... > 
+[WebServer]   at <ShowcaseFrame caption="As-child" pad="sm" > 
+[WebServer]   at <StorySection heading="Keyboard, touch, and the linked command" blurb="One native button accepts Enter, Space, click, and coarse taps. `as-child` hands the whole command contract to another element without giving up the material." > 
+[WebServer]   at <TooltipProvider delay-duration=250 skip-delay-duration=300 > 
+[WebServer]   at <TooltipProvider delay-duration=250 > 
+[WebServer]   at <StoryPage> 
+[WebServer]   at <Buttons onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/display/buttons" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  -   52 [coarse-touch] › tests-visual/press-unify.spec.ts:111:9 › press-unify — dark › (b) ABSORB — a rapid double-tap re-engages mid-flight, value re-seats velocity-continuously toward 1
+[WebServer] 7:53:28 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button data-scenario="button-as-child" as-child="" > 
+[WebServer]   at <Primitive material="content" shadow=true grain=false  ... > 
+[WebServer]   at <Surface material="content" tier="resting" surface="opaque"  ... > 
+[WebServer]   at <ShowcaseFrame caption="As-child" pad="sm" > 
+[WebServer]   at <StorySection heading="Keyboard, touch, and the linked command" blurb="One native button accepts Enter, Space, click, and coarse taps. `as-child` hands the whole command contract to another element without giving up the material." > 
+[WebServer]   at <TooltipProvider delay-duration=250 skip-delay-duration=300 > 
+[WebServer]   at <TooltipProvider delay-duration=250 > 
+[WebServer]   at <StoryPage> 
+[WebServer]   at <Buttons onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/display/buttons" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+[WebServer] 7:53:28 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button data-scenario="button-as-child-disabled" as-child="" disabled="" > 
+[WebServer]   at <Primitive material="content" shadow=true grain=false  ... > 
+[WebServer]   at <Surface material="content" tier="resting" surface="opaque"  ... > 
+[WebServer]   at <ShowcaseFrame caption="As-child" pad="sm" > 
+[WebServer]   at <StorySection heading="Keyboard, touch, and the linked command" blurb="One native button accepts Enter, Space, click, and coarse taps. `as-child` hands the whole command contract to another element without giving up the material." > 
+[WebServer]   at <TooltipProvider delay-duration=250 skip-delay-duration=300 > 
+[WebServer]   at <TooltipProvider delay-duration=250 > 
+[WebServer]   at <StoryPage> 
+[WebServer]   at <Buttons onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/display/buttons" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+[WebServer] 7:53:29 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button data-scenario="button-as-child" as-child="" > 
+[WebServer]   at <Primitive material="content" shadow=true grain=false  ... > 
+[WebServer]   at <Surface material="content" tier="resting" surface="opaque"  ... > 
+[WebServer]   at <ShowcaseFrame caption="As-child" pad="sm" > 
+[WebServer]   at <StorySection heading="Keyboard, touch, and the linked command" blurb="One native button accepts Enter, Space, click, and coarse taps. `as-child` hands the whole command contract to another element without giving up the material." > 
+[WebServer]   at <TooltipProvider delay-duration=250 skip-delay-duration=300 > 
+[WebServer]   at <TooltipProvider delay-duration=250 > 
+[WebServer]   at <StoryPage> 
+[WebServer]   at <Buttons onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/display/buttons" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+[WebServer] 7:53:29 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button data-scenario="button-as-child-disabled" as-child="" disabled="" > 
+[WebServer]   at <Primitive material="content" shadow=true grain=false  ... > 
+[WebServer]   at <Surface material="content" tier="resting" surface="opaque"  ... > 
+[WebServer]   at <ShowcaseFrame caption="As-child" pad="sm" > 
+[WebServer]   at <StorySection heading="Keyboard, touch, and the linked command" blurb="One native button accepts Enter, Space, click, and coarse taps. `as-child` hands the whole command contract to another element without giving up the material." > 
+[WebServer]   at <TooltipProvider delay-duration=250 skip-delay-duration=300 > 
+[WebServer]   at <TooltipProvider delay-duration=250 > 
+[WebServer]   at <StoryPage> 
+[WebServer]   at <Buttons onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/display/buttons" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  -   53 [coarse-touch] › tests-visual/press-unify.spec.ts:164:9 › press-unify — dark › (c) PRM-INSTANT — under reduce the press drive snaps to endpoint, gesture confirms
+[WebServer] 7:53:30 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button data-scenario="button-as-child" as-child="" > 
+[WebServer]   at <Primitive material="content" shadow=true grain=false  ... > 
+[WebServer]   at <Surface material="content" tier="resting" surface="opaque"  ... > 
+[WebServer]   at <ShowcaseFrame caption="As-child" pad="sm" > 
+[WebServer]   at <StorySection heading="Keyboard, touch, and the linked command" blurb="One native button accepts Enter, Space, click, and coarse taps. `as-child` hands the whole command contract to another element without giving up the material." > 
+[WebServer]   at <TooltipProvider delay-duration=250 skip-delay-duration=300 > 
+[WebServer]   at <TooltipProvider delay-duration=250 > 
+[WebServer]   at <StoryPage> 
+[WebServer]   at <Buttons onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/display/buttons" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+[WebServer] 7:53:30 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button data-scenario="button-as-child-disabled" as-child="" disabled="" > 
+[WebServer]   at <Primitive material="content" shadow=true grain=false  ... > 
+[WebServer]   at <Surface material="content" tier="resting" surface="opaque"  ... > 
+[WebServer]   at <ShowcaseFrame caption="As-child" pad="sm" > 
+[WebServer]   at <StorySection heading="Keyboard, touch, and the linked command" blurb="One native button accepts Enter, Space, click, and coarse taps. `as-child` hands the whole command contract to another element without giving up the material." > 
+[WebServer]   at <TooltipProvider delay-duration=250 skip-delay-duration=300 > 
+[WebServer]   at <TooltipProvider delay-duration=250 > 
+[WebServer]   at <StoryPage> 
+[WebServer]   at <Buttons onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/display/buttons" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  -   54 [coarse-touch] › tests-visual/press-unify.spec.ts:204:9 › press-unify — dark › (d) COMPOSITOR-ONLY — the press inline style carries no layout property
+[WebServer] 7:53:31 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button as-child="" > 
+[WebServer]   at <CardFooter class="justify-center" > 
+[WebServer]   at <Primitive data-slot="card" data-shadow=true data-size="md"  ... > 
+[WebServer]   at <Surface data-slot="card" tier="floating" surface=undefined  ... > 
+[WebServer]   at <Card tier="floating" class="w-full max-w-(--measure-cel) text-center" > 
+[WebServer]   at <NotFound onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/containers/card-pressable" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  -   55 [coarse-touch] › tests-visual/press-unify.spec.ts:233:1 › CARD :pressable — a pressable card drives a reciprocal scale + the --card-press-t drive
+  ✘   56 [coarse-touch] › tests-visual/progress-gradient.spec.ts:55:1 › one continuous fill — a SINGLE filled-extent element, not four cell rectangles (1.3s)
+  ✘   57 [coarse-touch] › tests-visual/progress-gradient.spec.ts:77:1 › frosted glass track — the rail resolves the --glass-bg-quiet glass register (1.4s)
+  ✘   58 [coarse-touch] › tests-visual/progress-gradient.spec.ts:97:9 › paint scan — no seam stripe, no dead notch, distinct hues [light] @ mobile (6.7s)
+  ✘   59 [coarse-touch] › tests-visual/progress-gradient.spec.ts:97:9 › paint scan — no seam stripe, no dead notch, distinct hues [dark] @ mobile (6.8s)
+  ✘   60 [coarse-touch] › tests-visual/progress-gradient.spec.ts:97:9 › paint scan — no seam stripe, no dead notch, distinct hues [light] @ desktop (6.7s)
+  ✘   61 [coarse-touch] › tests-visual/progress-gradient.spec.ts:97:9 › paint scan — no seam stripe, no dead notch, distinct hues [dark] @ desktop (6.8s)
+  ✓   62 [coarse-touch] › tests-visual/progress-gradient.spec.ts:213:9 › DELTA capture — /feedback/progress [light] @ mobile (2.0s)
+  ✓   63 [coarse-touch] › tests-visual/progress-gradient.spec.ts:213:9 › DELTA capture — /feedback/progress [dark] @ mobile (1.9s)
+  ✓   64 [coarse-touch] › tests-visual/progress-gradient.spec.ts:213:9 › DELTA capture — /feedback/progress [light] @ desktop (2.0s)
+  ✓   65 [coarse-touch] › tests-visual/progress-gradient.spec.ts:213:9 › DELTA capture — /feedback/progress [dark] @ desktop (2.1s)
+  ✓   66 [coarse-touch] › tests-visual/radius-scale.spec.ts:47:13 › light › avatar is a circle (838ms)
+  ✓   67 [coarse-touch] › tests-visual/radius-scale.spec.ts:47:13 › light › status dot is a circle (778ms)
+  ✓   68 [coarse-touch] › tests-visual/radius-scale.spec.ts:47:13 › light › switch thumb is a circle (742ms)
+  ✓   69 [coarse-touch] › tests-visual/radius-scale.spec.ts:47:13 › light › radio dot is a circle (731ms)
+  ✓   70 [coarse-touch] › tests-visual/radius-scale.spec.ts:47:13 › light › dark-mode toggle is a circle (753ms)
+  ✓   71 [coarse-touch] › tests-visual/radius-scale.spec.ts:47:13 › light › pager dot is a circle (770ms)
+  ✓   72 [coarse-touch] › tests-visual/radius-scale.spec.ts:47:13 › light › dock icon button is a circle (772ms)
+  ✓   73 [coarse-touch] › tests-visual/radius-scale.spec.ts:47:13 › light › collapsed dock is a circle (781ms)
+  ✓   74 [coarse-touch] › tests-visual/radius-scale.spec.ts:55:9 › light › a 24 px chip is a full stadium (790ms)
+  ✓   75 [coarse-touch] › tests-visual/radius-scale.spec.ts:63:9 › light › a 44 px bar on the pill rung shows 16 px corners (832ms)
+  ✓   76 [coarse-touch] › tests-visual/radius-scale.spec.ts:70:9 › light › a single-line field above 32 px takes the 16 px corner (802ms)
+  ✓   77 [coarse-touch] › tests-visual/radius-scale.spec.ts:47:13 › dark › avatar is a circle (808ms)
+  ✓   78 [coarse-touch] › tests-visual/radius-scale.spec.ts:47:13 › dark › status dot is a circle (789ms)
+  ✓   79 [coarse-touch] › tests-visual/radius-scale.spec.ts:47:13 › dark › switch thumb is a circle (786ms)
+  ✓   80 [coarse-touch] › tests-visual/radius-scale.spec.ts:47:13 › dark › radio dot is a circle (800ms)
+  ✓   81 [coarse-touch] › tests-visual/radius-scale.spec.ts:47:13 › dark › dark-mode toggle is a circle (781ms)
+  ✓   82 [coarse-touch] › tests-visual/radius-scale.spec.ts:47:13 › dark › pager dot is a circle (763ms)
+  ✓   83 [coarse-touch] › tests-visual/radius-scale.spec.ts:47:13 › dark › dock icon button is a circle (752ms)
+  ✓   84 [coarse-touch] › tests-visual/radius-scale.spec.ts:47:13 › dark › collapsed dock is a circle (743ms)
+  ✓   85 [coarse-touch] › tests-visual/radius-scale.spec.ts:55:9 › dark › a 24 px chip is a full stadium (816ms)
+  ✓   86 [coarse-touch] › tests-visual/radius-scale.spec.ts:63:9 › dark › a 44 px bar on the pill rung shows 16 px corners (805ms)
+  ✓   87 [coarse-touch] › tests-visual/radius-scale.spec.ts:70:9 › dark › a single-line field above 32 px takes the 16 px corner (813ms)
+  ✓   88 [coarse-touch] › tests-visual/radius-scale.spec.ts:106:9 › light bar › a single-line Button on its rung is a stadium (532ms)
+  ✓   89 [coarse-touch] › tests-visual/radius-scale.spec.ts:113:9 › light bar › a Button whose label wraps is a bar (529ms)
+  ✓   90 [coarse-touch] › tests-visual/radius-scale.spec.ts:120:9 › light bar › a Button wider than 20rem is a bar (519ms)
+  ✓   91 [coarse-touch] › tests-visual/radius-scale.spec.ts:127:9 › light bar › a ToggleGroupItem on its rung is a stadium, a wrapped one a bar (519ms)
+  ✓   92 [coarse-touch] › tests-visual/radius-scale.spec.ts:137:9 › light bar › a SegmentedTabs strip wider than 20rem is a bar; a short one a stadium (524ms)
+  ✓   93 [coarse-touch] › tests-visual/radius-scale.spec.ts:106:9 › dark bar › a single-line Button on its rung is a stadium (516ms)
+  ✓   94 [coarse-touch] › tests-visual/radius-scale.spec.ts:113:9 › dark bar › a Button whose label wraps is a bar (525ms)
+  ✓   95 [coarse-touch] › tests-visual/radius-scale.spec.ts:120:9 › dark bar › a Button wider than 20rem is a bar (518ms)
+  ✓   96 [coarse-touch] › tests-visual/radius-scale.spec.ts:127:9 › dark bar › a ToggleGroupItem on its rung is a stadium, a wrapped one a bar (522ms)
+  ✓   97 [coarse-touch] › tests-visual/radius-scale.spec.ts:137:9 › dark bar › a SegmentedTabs strip wider than 20rem is a bar; a short one a stadium (523ms)
+SELECT-PROBE {
+  "harmony": {
+    "found": true,
+    "before": "false",
+    "after": "true",
+    "optionCount": 6,
+    "listboxCount": 1
+  },
+  "medium": {
+    "found": false
+  },
+  "arrangement": {
+    "found": true,
+    "before": "false",
+    "after": "true",
+    "optionCount": 3,
+    "listboxCount": 1
+  },
+  "motion": {
+    "found": true,
+    "before": "false",
+    "after": "true",
+    "optionCount": 3,
+    "listboxCount": 1
+  }
+}
+  ✓   98 [coarse-touch] › tests-visual/reflect-aurora-selects.spec.ts:10:1 › REFLECT aurora — combobox selects open + options mount (5.1s)
+REFLECT::sky C=52.00 A=0.6841 hist=4.70 beta=-2.7221 | var=122.1 chroma=142.5 gap=0.000
+REFLECT::vangogh C=181.26 A=0.7454 hist=5.94 beta=-3.6621 | var=133.8 chroma=180.6 gap=0.000
+REFLECT::oil C=125.45 A=0.8242 hist=5.90 beta=-3.7402 | var=194.3 chroma=123.5 gap=0.000
+REFLECT::oilpastel C=95.33 A=0.7717 hist=5.63 beta=-2.7601 | var=83.1 chroma=174.5 gap=0.000
+REFLECT-AURORA-REPORT {
+  "media_dark": {
+    "sky": {
+      "C": 52.000903592758604,
+      "A": 0.6840513523425201,
+      "hist": 4.7029633565718,
+      "beta": -2.7221162918355835,
+      "floors": {
+        "variance": 122.08786196904839,
+        "meanChroma": 142.51626618389292,
+        "gapFraction": 0.000260588106210226,
+        "mean": [
+          93.53360215053763,
+          191.12889510642967,
+          236.04986833443056
+        ]
+      }
+    },
+    "vangogh": {
+      "C": 181.25793884044495,
+      "A": 0.7453542797663719,
+      "hist": 5.939337761411981,
+      "beta": -3.662143138464037,
+      "floors": {
+        "variance": 133.80522851294518,
+        "meanChroma": 180.64362519201228,
+        "gapFraction": 0.00034287908711871847,
+        "mean": [
+          119.26094470046083,
+          176.6409918806232,
+          155.81166337502742
+        ]
+      }
+    },
+    "oil": {
+      "C": 125.4529334782428,
+      "A": 0.8242419768209037,
+      "hist": 5.897271840946551,
+      "beta": -3.7402052292313686,
+      "floors": {
+        "variance": 194.30075310495886,
+        "meanChroma": 123.53325927145052,
+        "gapFraction": 0.0002880184331797235,
+        "mean": [
+          194.5145792187843,
+          113.3240070221637,
+          130.58870967741936
+        ]
+      }
+    },
+    "oilpastel": {
+      "C": 95.3281017810523,
+      "A": 0.771700923654445,
+      "hist": 5.630057866512901,
+      "beta": -2.7600890238332743,
+      "floors": {
+        "variance": 83.09851208196415,
+        "meanChroma": 174.47143131446126,
+        "gapFraction": 0.000260588106210226,
+        "mean": [
+          238.5366194865043,
+          139.1945221637042,
+          68.06158108404652
+        ]
+      }
+    }
+  },
+  "desktop_meta": {
+    "canvasRect": {
+      "w": 826,
+      "h": 242,
+      "x": 149,
+      "y": 411
+    },
+    "backingW": 826,
+    "backingH": 242,
+    "allCanvases": 1
+  },
+  "select_triggers": [
+    {
+      "tag": "button",
+      "role": null,
+      "ariaExpanded": "false",
+      "text": ""
+    },
+    {
+      "tag": "button",
+      "role": null,
+      "ariaExpanded": "false",
+      "text": ""
+    },
+    {
+      "tag": "button",
+      "role": null,
+      "ariaExpanded": "true",
+      "text": "Colorseed · harmony · palette"
+    },
+    {
+      "tag": "button",
+      "role": "combobox",
+      "ariaExpanded": "false",
+      "text": "Analogous"
+    },
+    {
+      "tag": "button",
+      "role": null,
+      "ariaExpanded": "true",
+      "text": "Compositionmedium · zones"
+    },
+    {
+      "tag": "button",
+      "role": "combobox",
+      "ariaExpanded": "false",
+      "text": "Van Gogh"
+    },
+    {
+      "tag": "button",
+      "role": "combobox",
+      "ariaExpanded": "false",
+      "text": "Composed"
+    },
+    {
+      "tag": "button",
+      "role": null,
+      "ariaExpanded": "true",
+      "text": "Motiondrift · breath"
+    },
+    {
+      "tag": "button",
+      "role": "combobox",
+      "ariaExpanded": "false",
+      "text": "Drifting"
+    },
+    {
+      "tag": "button",
+      "role": null,
+      "ariaExpanded": "false",
+      "text": "Warp & noiseorganic boundary"
+    },
+    {
+      "tag": "button",
+      "role": null,
+      "ariaExpanded": "false",
+      "text": "Flowpattern · focal"
+    },
+    {
+      "tag": "button",
+      "role": null,
+      "ariaExpanded": "false",
+      "text": "Texturestroke · grain"
+    },
+    {
+      "tag": "button",
+      "role": null,
+      "ariaExpanded": "false",
+      "text": "Nucleiper-zone editor"
+    },
+    {
+      "tag": "button",
+      "role": null,
+      "ariaExpanded": "false",
+      "text": ""
+    },
+    {
+      "tag": "button",
+      "role": null,
+      "ariaExpanded": "false",
+      "text": ""
+    }
+  ],
+  "harmony_open": {
+    "harmonyFound": true,
+    "harmonyBefore": "true",
+    "harmonyAfter": "false",
+    "optionsAfter": 0
+  },
+  "slider_tracks": [
+    {
+      "cls": "glass-slider",
+      "bg": "rgba(0, 0, 0, 0)",
+      "opacity": "1"
+    },
+    {
+      "cls": "slider-track track-well",
+      "bg": "color(srgb 0.1232 0.10912 0.0968 / 0.5)",
+      "opacity": "1"
+    },
+    {
+      "cls": "slider-range glass-liquid-fill",
+      "bg": "oklab(0.42 0.0155291 0.0579556 / 0.88)",
+      "opacity": "1"
+    },
+    {
+      "cls": "slider-thumb glass-specular-track",
+      "bg": "rgba(0, 0, 0, 0)",
+      "opacity": "0"
+    },
+    {
+      "cls": "glass-slider flex-1 py-1",
+      "bg": "rgba(0, 0, 0, 0)",
+      "opacity": "1"
+    },
+    {
+      "cls": "slider-track track-well",
+      "bg": "rgba(0, 0, 0, 0)",
+      "opacity": "1"
+    },
+    {
+      "cls": "slider-range",
+      "bg": "rgba(0, 0, 0, 0)",
+      "opacity": "1"
+    },
+    {
+      "cls": "slider-thumb glass-specular-track",
+      "bg": "rgba(0, 0, 0, 0)",
+      "opacity": "1"
+    },
+    {
+      "cls": "glass-slider flex-1 py-1",
+      "bg": "rgba(0, 0, 0, 0)",
+      "opacity": "1"
+    },
+    {
+      "cls": "slider-track track-well",
+      "bg": "rgba(0, 0, 0, 0)",
+      "opacity": "1"
+    },
+    {
+      "cls": "slider-range",
+      "bg": "rgba(0, 0, 0, 0)",
+      "opacity": "1"
+    },
+    {
+      "cls": "slider-thumb glass-specular-track",
+      "bg": "rgba(0, 0, 0, 0)",
+      "opacity": "1"
+    },
+    {
+      "cls": "glass-slider flex-1 py-1",
+      "bg": "rgba(0, 0, 0, 0)",
+      "opacity": "1"
+    },
+    {
+      "cls": "slider-track track-well",
+      "bg": "rgba(0, 0, 0, 0)",
+      "opacity": "1"
+    },
+    {
+      "cls": "slider-range",
+      "bg": "rgba(0, 0, 0, 0)",
+      "opacity": "1"
+    },
+    {
+      "cls": "slider-thumb glass-specular-track",
+      "bg": "rgba(0, 0, 0, 0)",
+      "opacity": "1"
+    },
+    {
+      "cls": "glass-slider flex-1 py-1",
+      "bg": "rgba(0, 0, 0, 0)",
+      "opacity": "1"
+    },
+    {
+      "cls": "slider-track track-well",
+      "bg": "rgba(0, 0, 0, 0)",
+      "opacity": "1"
+    },
+    {
+      "cls": "slider-range",
+      "bg": "rgba(0, 0, 0, 0)",
+      "opacity": "1"
+    },
+    {
+      "cls": "slider-thumb glass-specular-track",
+      "bg": "rgba(0, 0, 0, 0)",
+      "opacity": "1"
+    },
+    {
+      "cls": "glass-slider flex-1 py-1",
+      "bg": "rgba(0, 0, 0, 0)",
+      "opacity": "1"
+    },
+    {
+      "cls": "slider-track track-well",
+      "bg": "rgba(0, 0, 0, 0)",
+      "opacity": "1"
+    },
+    {
+      "cls": "slider-range",
+      "bg": "rgba(0, 0, 0, 0)",
+      "opacity": "1"
+    },
+    {
+      "cls": "slider-thumb glass-specular-track",
+      "bg": "rgba(0, 0, 0, 0)",
+      "opacity": "1"
+    },
+    {
+      "cls": "glass-slider flex-1 py-1",
+      "bg": "rgba(0, 0, 0, 0)",
+      "opacity": "1"
+    },
+    {
+      "cls": "slider-track track-well",
+      "bg": "rgba(0, 0, 0, 0)",
+      "opacity": "1"
+    },
+    {
+      "cls": "slider-range",
+      "bg": "rgba(0, 0, 0, 0)",
+      "opacity": "1"
+    },
+    {
+      "cls": "slider-thumb glass-specular-track",
+      "bg": "rgba(0, 0, 0, 0)",
+      "opacity": "1"
+    },
+    {
+      "cls": "glass-slider flex-1 py-1",
+      "bg": "rgba(0, 0, 0, 0)",
+      "opacity": "1"
+    },
+    {
+      "cls": "slider-track track-well",
+      "bg": "rgba(0, 0, 0, 0)",
+      "opacity": "1"
+    }
+  ],
+  "studio_legibility_light": {
+    "ok": true,
+    "fg": [
+      28,
+      25,
+      23
+    ],
+    "bg": [
+      0,
+      0,
+      0
+    ],
+    "ratio": 1.2
+  },
+  "mobile_dark": {
+    "canvasVisible": true,
+    "meta": {
+      "rect": {
+        "w": 308,
+        "h": 288,
+        "x": 41,
+        "y": 795
+      },
+      "backingW": 300,
+      "backingH": 150
+    }
+  },
+  "consoleErrors": []
+}
+  ✓   99 [coarse-touch] › tests-visual/reflect-aurora.spec.ts:59:1 › REFLECT aurora — captures + π readbacks (25.0s)
+COMBOS [{"text":"Analogous","expanded":"false"},{"text":"Smooth","expanded":"false"},{"text":"Composed","expanded":"false"},{"text":"Drifting","expanded":"false"}]
+MEDIUM-RESULT no Van Gogh combobox found
+  ✓  100 [coarse-touch] › tests-visual/reflect-medium.spec.ts:5:1 › medium select opens (2.5s)
+
+
+  1) [coarse-touch] › tests-visual/on-glass-fg.spec.ts:282:13 › on-glass-fg (π lane — the surface-aware foreground register over a busy backdrop, fail-CLOSED) › on-glass muted/well/track clears AA over the composited plate @ mobile (dark) 
+
+    Error: could not parse the fill "oklch(0.739 0.134 318.1)"
+
+    expect(received).not.toBeNull()
+
+    Received: null
+
+      352 |                 const fillBg = parseColor(r.fillBg);
+      353 |                 expect(trackBg, `could not parse the track "${r.trackBg}"`).not.toBeNull();
+    > 354 |                 expect(fillBg, `could not parse the fill "${r.fillBg}"`).not.toBeNull();
+          |                                                                              ^
+      355 |                 const trackEff = composite(trackBg!, plate!);
+      356 |                 const fillEff = composite(fillBg!, plate!);
+      357 |                 const silhouette = contrastRatio(trackEff, fillEff);
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/on-glass-fg.spec.ts:354:78
+
+    Error Context: tests-visual/test-results/on-glass-fg-on-glass-fg-π--cf351-mposited-plate-mobile-dark--coarse-touch/error-context.md
+
+  2) [coarse-touch] › tests-visual/on-glass-fg.spec.ts:282:13 › on-glass-fg (π lane — the surface-aware foreground register over a busy backdrop, fail-CLOSED) › on-glass muted/well/track clears AA over the composited plate @ desktop (dark) 
+
+    Error: could not parse the fill "oklch(0.739 0.134 318.1)"
+
+    expect(received).not.toBeNull()
+
+    Received: null
+
+      352 |                 const fillBg = parseColor(r.fillBg);
+      353 |                 expect(trackBg, `could not parse the track "${r.trackBg}"`).not.toBeNull();
+    > 354 |                 expect(fillBg, `could not parse the fill "${r.fillBg}"`).not.toBeNull();
+          |                                                                              ^
+      355 |                 const trackEff = composite(trackBg!, plate!);
+      356 |                 const fillEff = composite(fillBg!, plate!);
+      357 |                 const silhouette = contrastRatio(trackEff, fillEff);
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/on-glass-fg.spec.ts:354:78
+
+    Error Context: tests-visual/test-results/on-glass-fg-on-glass-fg-π--13f83-posited-plate-desktop-dark--coarse-touch/error-context.md
+
+  3) [coarse-touch] › tests-visual/page-chassis.spec.ts:66:5 › BC.W-PAGE-CHASSIS — the ONE standardized page idiom (π) › PC-1 — the hero <h1> is a display heading + the .fira-code subpath chip renders 
+
+    Error: /substrates subpath chip matches
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "@mkbabb/glass-ui/aurora"
+    Received: null
+
+      92 |             ).toBeGreaterThanOrEqual(DISPLAY4_FLOOR_PX);
+      93 |             // the fira-code subpath chip matches the manifest cell.
+    > 94 |             expect(readback.chipText, `${route} subpath chip matches`).toBe(subpath);
+         |                                                                        ^
+      95 |         }
+      96 |         paired["PC-1"] = perRoute;
+      97 |     });
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/page-chassis.spec.ts:94:72
+
+    Error Context: tests-visual/test-results/page-chassis-BC-W-PAGE-CHA-5d1d7-a-code-subpath-chip-renders-coarse-touch/error-context.md
+
+    Error Context: tests-visual/test-results/page-chassis-BC-W-PAGE-CHA-5d1d7-a-code-subpath-chip-renders-coarse-touch/error-context.md
+
+  4) [coarse-touch] › tests-visual/page-chassis.spec.ts:295:5 › BC.W-PAGE-CHASSIS — the ONE standardized page idiom (π) › PC-6 — the section-landing bento + inline preview (no GL budget blown) 
+
+    Error: /substrates every card has a static icon-shaped Chip
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 6
+    Received: 0
+
+      352 |             };
+      353 |             expect(r.cards, `${route} renders bento cards`).toBeGreaterThan(0);
+    > 354 |             expect(r.withIcon, `${route} every card has a static icon-shaped Chip`).toBe(r.cards);
+          |                                                                                     ^
+      355 |             expect(r.withChip, `${route} every card has a subpath chip`).toBe(r.cards);
+      356 |             expect(r.previews, `${route} every card has a preview`).toBe(r.cards);
+      357 |             expect(r.previewInert, `${route} previews pointer-events: none`).toBe(true);
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/page-chassis.spec.ts:354:85
+
+    Error Context: tests-visual/test-results/page-chassis-BC-W-PAGE-CHA-b6583-preview-no-GL-budget-blown--coarse-touch/error-context.md
+
+    Error Context: tests-visual/test-results/page-chassis-BC-W-PAGE-CHA-b6583-preview-no-GL-budget-blown--coarse-touch/error-context.md
+
+  5) [coarse-touch] › tests-visual/page-hierarchy.spec.ts:61:9 › BC.W-PAGE-HIERARCHY — the standardized section hierarchy + dark-adaptive delimiter (π) › PH-π-1+2+4 — section <h2> 20.4px + visible dark-adaptive delimiter (light) 
+
+    Error: /display/card (light) renders ≥1 visible section delimiter with a non-transparent border (got 0 candidates: [])
+
+    expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 1
+    Received:    0
+
+      158 |                         delimiters.slice(0, 4),
+      159 |                     )})`,
+    > 160 |                 ).toBeGreaterThanOrEqual(1);
+          |                   ^
+      161 |             }
+      162 |             paired[mode] = perRoute;
+      163 |         });
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/page-hierarchy.spec.ts:160:19
+
+    Error Context: tests-visual/test-results/page-hierarchy-BC-W-PAGE-H-33a32-k-adaptive-delimiter-light--coarse-touch/error-context.md
+
+    Error Context: tests-visual/test-results/page-hierarchy-BC-W-PAGE-H-33a32-k-adaptive-delimiter-light--coarse-touch/error-context.md
+
+  6) [coarse-touch] › tests-visual/page-hierarchy.spec.ts:61:9 › BC.W-PAGE-HIERARCHY — the standardized section hierarchy + dark-adaptive delimiter (π) › PH-π-1+2+4 — section <h2> 20.4px + visible dark-adaptive delimiter (dark) 
+
+    Error: /display/card (dark) renders ≥1 visible section delimiter with a non-transparent border (got 0 candidates: [])
+
+    expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 1
+    Received:    0
+
+      158 |                         delimiters.slice(0, 4),
+      159 |                     )})`,
+    > 160 |                 ).toBeGreaterThanOrEqual(1);
+          |                   ^
+      161 |             }
+      162 |             paired[mode] = perRoute;
+      163 |         });
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/page-hierarchy.spec.ts:160:19
+
+    Error Context: tests-visual/test-results/page-hierarchy-BC-W-PAGE-H-f9792-rk-adaptive-delimiter-dark--coarse-touch/error-context.md
+
+    Error Context: tests-visual/test-results/page-hierarchy-BC-W-PAGE-H-f9792-rk-adaptive-delimiter-dark--coarse-touch/error-context.md
+
+  7) [coarse-touch] › tests-visual/pager-ring.spec.ts:175:5 › pager-ring (π — the unified pager-dots register in a glass ring, fail-CLOSED) › DELTA capture — the pager glass ring on /navigation/carousel 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: locator.screenshot: Test timeout of 60000ms exceeded.
+    Call log:
+      - waiting for locator('.mt-4.flex.items-center.justify-between').first()
+
+
+      180 |             await page.waitForTimeout(200);
+      181 |             const pager = page.locator(".mt-4.flex.items-center.justify-between").first();
+    > 182 |             await pager.screenshot({
+          |                         ^
+      183 |                 path: `${VISUAL_DIR}W-PAGER-ring-${dark ? "dark" : "light"}.png`,
+      184 |             });
+      185 |         }
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/pager-ring.spec.ts:182:25
+
+    Error Context: tests-visual/test-results/pager-ring-pager-ring-π-—--68017-ring-on-navigation-carousel-coarse-touch/error-context.md
+
+  8) [coarse-touch] › tests-visual/perf-producer.spec.ts:60:1 › A′-4 — the dock morph renders at ≥ the fps floor + the morph root is contained 
+
+    Error: contain must include layout+style+paint (or 'content'); got "layout style"
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      81 |         (c.includes("layout") && c.includes("style") && c.includes("paint")) ||
+      82 |         c.includes("content");
+    > 83 |     expect(hasLayoutStyle, `contain must include layout+style+paint (or 'content'); got "${contain}"`).toBe(true);
+         |                                                                                                        ^
+      84 |
+      85 |     // Drive the morph (toggle a layer / collapse-expand) and sample per-frame fps.
+      86 |     const fps = await page.evaluate(async () => {
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/perf-producer.spec.ts:83:104
+
+    Error Context: tests-visual/test-results/perf-producer-A′-4-—-the-d-7cc13-the-morph-root-is-contained-coarse-touch/error-context.md
+
+    Error Context: tests-visual/test-results/perf-producer-A′-4-—-the-d-7cc13-the-morph-root-is-contained-coarse-touch/error-context.md
+
+  9) [coarse-touch] › tests-visual/perf-producer.spec.ts:267:1 › A′-6 — a spacious dock's icon glyph computes larger than a compact dock's 
+
+    Error: the spacious dock glyph token must resolve LARGER than the compact (the glyph tracks the shelf)
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 22
+    Received:   22
+
+      320 |         // densities). compact 2rem×0.5=16px (=floor), comfortable 2.5rem×0.5=20px,
+      321 |         // spacious 2.75rem×0.5≈22px, audacious 4rem×0.5=32px.
+    > 322 |         expect(glyph.spacious, "the spacious dock glyph token must resolve LARGER than the compact (the glyph tracks the shelf)").toBeGreaterThan(
+          |                                                                                                                                   ^
+      323 |             glyph.compact,
+      324 |         );
+      325 |         // And the ladder is monotone non-decreasing up the rungs.
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/perf-producer.spec.ts:322:131
+
+    Error Context: tests-visual/test-results/perf-producer-A′-6-—-a-spa-86a6b-arger-than-a-compact-dock-s-coarse-touch/error-context.md
+
+    Error Context: tests-visual/test-results/perf-producer-A′-6-—-a-spa-86a6b-arger-than-a-compact-dock-s-coarse-touch/error-context.md
+
+  10) [coarse-touch] › tests-visual/progress-gradient.spec.ts:55:1 › one continuous fill — a SINGLE filled-extent element, not four cell rectangles 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: -1
+
+      68 |     });
+      69 |     // EXACTLY ONE fill element; ZERO of the retired per-cell stack / seam band.
+    > 70 |     expect(counts.flow).toBe(1);
+         |                         ^
+      71 |     expect(counts.cells).toBe(0);
+      72 |     expect(counts.fills).toBe(0);
+      73 |     expect(counts.seams).toBe(0);
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/progress-gradient.spec.ts:70:25
+
+    Error Context: tests-visual/test-results/progress-gradient-one-cont-4e7e8-nt-not-four-cell-rectangles-coarse-touch/error-context.md
+
+  11) [coarse-touch] › tests-visual/progress-gradient.spec.ts:77:1 › frosted glass track — the rail resolves the --glass-bg-quiet glass register 
+
+    Error: expect(received).not.toBe(expected) // Object.is equality
+
+    Expected: not ""
+
+      88 |     });
+      89 |     // The glass register resolves a real backdrop-filter (blur present, not "none").
+    > 90 |     expect(reg.filter).not.toBe("");
+         |                            ^
+      91 |     expect(reg.filter.toLowerCase()).toContain("blur");
+      92 | });
+      93 |
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/progress-gradient.spec.ts:90:28
+
+    Error Context: tests-visual/test-results/progress-gradient-frosted--381e1-ass-bg-quiet-glass-register-coarse-touch/error-context.md
+
+  12) [coarse-touch] › tests-visual/progress-gradient.spec.ts:97:9 › paint scan — no seam stripe, no dead notch, distinct hues [light] @ mobile 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: locator('.progress-sectioned-rail').first()
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" with timeout 5000ms
+      - waiting for locator('.progress-sectioned-rail').first()
+
+
+      103 |
+      104 |             const rail = await railHandle(page);
+    > 105 |             await expect(rail).toBeVisible();
+          |                                ^
+      106 |             const box = await rail.boundingBox();
+      107 |             if (!box) throw new Error("sectioned rail has no box");
+      108 |
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/progress-gradient.spec.ts:105:32
+
+    Error Context: tests-visual/test-results/progress-gradient-paint-sc-55267--distinct-hues-light-mobile-coarse-touch/error-context.md
+
+  13) [coarse-touch] › tests-visual/progress-gradient.spec.ts:97:9 › paint scan — no seam stripe, no dead notch, distinct hues [dark] @ mobile 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: locator('.progress-sectioned-rail').first()
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" with timeout 5000ms
+      - waiting for locator('.progress-sectioned-rail').first()
+
+
+      103 |
+      104 |             const rail = await railHandle(page);
+    > 105 |             await expect(rail).toBeVisible();
+          |                                ^
+      106 |             const box = await rail.boundingBox();
+      107 |             if (!box) throw new Error("sectioned rail has no box");
+      108 |
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/progress-gradient.spec.ts:105:32
+
+    Error Context: tests-visual/test-results/progress-gradient-paint-sc-6ffe8-h-distinct-hues-dark-mobile-coarse-touch/error-context.md
+
+  14) [coarse-touch] › tests-visual/progress-gradient.spec.ts:97:9 › paint scan — no seam stripe, no dead notch, distinct hues [light] @ desktop 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: locator('.progress-sectioned-rail').first()
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" with timeout 5000ms
+      - waiting for locator('.progress-sectioned-rail').first()
+
+
+      103 |
+      104 |             const rail = await railHandle(page);
+    > 105 |             await expect(rail).toBeVisible();
+          |                                ^
+      106 |             const box = await rail.boundingBox();
+      107 |             if (!box) throw new Error("sectioned rail has no box");
+      108 |
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/progress-gradient.spec.ts:105:32
+
+    Error Context: tests-visual/test-results/progress-gradient-paint-sc-8bebe-distinct-hues-light-desktop-coarse-touch/error-context.md
+
+  15) [coarse-touch] › tests-visual/progress-gradient.spec.ts:97:9 › paint scan — no seam stripe, no dead notch, distinct hues [dark] @ desktop 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: locator('.progress-sectioned-rail').first()
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" with timeout 5000ms
+      - waiting for locator('.progress-sectioned-rail').first()
+
+
+      103 |
+      104 |             const rail = await railHandle(page);
+    > 105 |             await expect(rail).toBeVisible();
+          |                                ^
+      106 |             const box = await rail.boundingBox();
+      107 |             if (!box) throw new Error("sectioned rail has no box");
+      108 |
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/progress-gradient.spec.ts:105:32
+
+    Error Context: tests-visual/test-results/progress-gradient-paint-sc-ec9e6--distinct-hues-dark-desktop-coarse-touch/error-context.md
+
+  15 failed
+    [coarse-touch] › tests-visual/on-glass-fg.spec.ts:282:13 › on-glass-fg (π lane — the surface-aware foreground register over a busy backdrop, fail-CLOSED) › on-glass muted/well/track clears AA over the composited plate @ mobile (dark) 
+    [coarse-touch] › tests-visual/on-glass-fg.spec.ts:282:13 › on-glass-fg (π lane — the surface-aware foreground register over a busy backdrop, fail-CLOSED) › on-glass muted/well/track clears AA over the composited plate @ desktop (dark) 
+    [coarse-touch] › tests-visual/page-chassis.spec.ts:66:5 › BC.W-PAGE-CHASSIS — the ONE standardized page idiom (π) › PC-1 — the hero <h1> is a display heading + the .fira-code subpath chip renders 
+    [coarse-touch] › tests-visual/page-chassis.spec.ts:295:5 › BC.W-PAGE-CHASSIS — the ONE standardized page idiom (π) › PC-6 — the section-landing bento + inline preview (no GL budget blown) 
+    [coarse-touch] › tests-visual/page-hierarchy.spec.ts:61:9 › BC.W-PAGE-HIERARCHY — the standardized section hierarchy + dark-adaptive delimiter (π) › PH-π-1+2+4 — section <h2> 20.4px + visible dark-adaptive delimiter (light) 
+    [coarse-touch] › tests-visual/page-hierarchy.spec.ts:61:9 › BC.W-PAGE-HIERARCHY — the standardized section hierarchy + dark-adaptive delimiter (π) › PH-π-1+2+4 — section <h2> 20.4px + visible dark-adaptive delimiter (dark) 
+    [coarse-touch] › tests-visual/pager-ring.spec.ts:175:5 › pager-ring (π — the unified pager-dots register in a glass ring, fail-CLOSED) › DELTA capture — the pager glass ring on /navigation/carousel 
+    [coarse-touch] › tests-visual/perf-producer.spec.ts:60:1 › A′-4 — the dock morph renders at ≥ the fps floor + the morph root is contained 
+    [coarse-touch] › tests-visual/perf-producer.spec.ts:267:1 › A′-6 — a spacious dock's icon glyph computes larger than a compact dock's 
+    [coarse-touch] › tests-visual/progress-gradient.spec.ts:55:1 › one continuous fill — a SINGLE filled-extent element, not four cell rectangles 
+    [coarse-touch] › tests-visual/progress-gradient.spec.ts:77:1 › frosted glass track — the rail resolves the --glass-bg-quiet glass register 
+    [coarse-touch] › tests-visual/progress-gradient.spec.ts:97:9 › paint scan — no seam stripe, no dead notch, distinct hues [light] @ mobile 
+    [coarse-touch] › tests-visual/progress-gradient.spec.ts:97:9 › paint scan — no seam stripe, no dead notch, distinct hues [dark] @ mobile 
+    [coarse-touch] › tests-visual/progress-gradient.spec.ts:97:9 › paint scan — no seam stripe, no dead notch, distinct hues [light] @ desktop 
+    [coarse-touch] › tests-visual/progress-gradient.spec.ts:97:9 › paint scan — no seam stripe, no dead notch, distinct hues [dark] @ desktop 
+  9 skipped
+  76 passed (4.9m)

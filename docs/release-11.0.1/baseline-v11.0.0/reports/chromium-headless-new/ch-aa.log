@@ -1,0 +1,613 @@
+
+Running 60 tests using 1 worker
+
+[WebServer] 4:14:48 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button as-child="" > 
+[WebServer]   at <CardFooter class="justify-center" > 
+[WebServer]   at <Primitive data-slot="card" data-shadow=true data-size="md"  ... > 
+[WebServer]   at <Surface data-slot="card" tier="floating" surface=undefined  ... > 
+[WebServer]   at <Card tier="floating" class="w-full max-w-(--measure-cel) text-center" > 
+[WebServer]   at <NotFound onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/data/tags-input" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+CAPTURED 394485 bytes, 378 unique rules
+  ✓   1 [chromium-headless-new] › tests-visual/_capture_css.spec.ts:57:1 › capture union CSS (6.3s)
+CONFIG_DARK {"specBg":"oklab(0.259484 0.00975362 0.0163501)","bloomBlue":"oklch(0.633 0.162 252.1)","bloomViolet":"oklch(0.684 0.250 327.9)","rainbowBlue":"oklch(0.633 0.162 252.1)","gradient":"radial-gradient(49% 42.14% at 18% 37.2%, color(srgb 0.190229 0.549899 0.910072 / 0.88), rgba(0, 0, 0, 0) 57%) repeat scr"}
+  ✘   2 [chromium-headless-new] › tests-visual/_cfg-readback.spec.ts:3:1 › configurator dark bloom token + auth-shell ink readback (3.3s)
+  ✓   3 [chromium-headless-new] › tests-visual/_cohere-capture.spec.ts:47:9 › W-COHERE set capture — desktop1280 light (7.7s)
+  ✓   4 [chromium-headless-new] › tests-visual/_cohere-capture.spec.ts:47:9 › W-COHERE set capture — desktop1280 dark (7.6s)
+  ✓   5 [chromium-headless-new] › tests-visual/_cohere-capture.spec.ts:47:9 › W-COHERE set capture — mobile390 light (7.5s)
+  ✓   6 [chromium-headless-new] › tests-visual/_cohere-capture.spec.ts:47:9 › W-COHERE set capture — mobile390 dark (7.5s)
+BLOB canvas count: 2
+BUTTONS: ["","","","","","","","","","","","","","","","Reset clicks","Poke","Interaction\n--interaction-*","Mood + palette\n--color-*","Surface\n--surface-*","Geometry / Satellites\n--geometry-* · --membrane-*","","","Aurora","Blob","Constellation","Fourier Field","Glass Material","Glass Panel",""]
+blob default(calm): dims 768x769 bg=200,184,184 bodyN=65774 L=0.840 C=0.031 h=67.9
+excited tab count: 1
+blob excited: dims 768x769 bg=200,184,184 bodyN=93444 L=0.745 C=0.091 h=23.2
+shadow CONTRAST 480x481 bgL=0.796 castN=115680 peakContrast(top5%)=0.296
+con frame 0: SUM full=494809 dim=530759 ratio=1.073 | meanPainted full=15.6 dim=16.7 ratio=1.073 | paintedN full=31734 dim=31737
+con frame 1: SUM full=494694 dim=530607 ratio=1.073 | meanPainted full=15.6 dim=16.7 ratio=1.073 | paintedN full=31734 dim=31729
+con frame 2: SUM full=494524 dim=530391 ratio=1.073 | meanPainted full=15.6 dim=16.7 ratio=1.073 | paintedN full=31748 dim=31723
+con frame 3: SUM full=494558 dim=530395 ratio=1.072 | meanPainted full=15.6 dim=16.7 ratio=1.073 | paintedN full=31732 dim=31724
+  ✓   7 [chromium-headless-new] › tests-visual/_cohere-debug.spec.ts:33:1 › debug blob + constellation (4.9s)
+SHADOW light: 480x481 bg=200,184,184 bgL=0.796 castN=230880 peakContrast(top5%)=0.194
+  ✓   8 [chromium-headless-new] › tests-visual/_cohere-shadow-debug.spec.ts:20:5 › shadow light › measure light (1.2s)
+SHADOW dark: 480x481 bg=56,40,40 bgL=0.296 castN=220713 peakContrast(top5%)=0.612
+  ✓   9 [chromium-headless-new] › tests-visual/_cohere-shadow-debug.spec.ts:20:5 › shadow dark › measure dark (1.2s)
+  ✘  10 [chromium-headless-new] › tests-visual/_dock-context-capture.spec.ts:50:1 › AZ.W-DOCK-CONTEXT W3 — per-route DockLayer swap on the shell docks (2.4s)
+  ✘  11 [chromium-headless-new] › tests-visual/_egg-capture.spec.ts:25:5 › E3 cmd+K palette opens + navigates (light) (6.6s)
+  ✘  12 [chromium-headless-new] › tests-visual/_egg-capture.spec.ts:25:5 › E3 cmd+K palette opens + navigates (dark) (6.6s)
+  ✘  13 [chromium-headless-new] › tests-visual/_egg-capture.spec.ts:65:5 › E1 ℱ-redraw paints an epicycle overlay (light) (1.9s)
+  ✘  14 [chromium-headless-new] › tests-visual/_egg-capture.spec.ts:65:5 › E1 ℱ-redraw paints an epicycle overlay (dark) (1.9s)
+  ✘  15 [chromium-headless-new] › tests-visual/_egg-capture.spec.ts:102:1 › E2 konami reveals the full-bleed aurora (2.0s)
+[WebServer] 4:15:55 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button as-child="" > 
+[WebServer]   at <CardFooter class="justify-center" > 
+[WebServer]   at <Primitive data-slot="card" data-shadow=true data-size="md"  ... > 
+[WebServer]   at <Surface data-slot="card" tier="floating" surface=undefined  ... > 
+[WebServer]   at <Card tier="floating" class="w-full max-w-(--measure-cel) text-center" > 
+[WebServer]   at <NotFound onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/this/route/does/not/exist" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  ✘  16 [chromium-headless-new] › tests-visual/_egg-capture.spec.ts:145:5 › E4 404 paints the lattice (light) (1.5s)
+[WebServer] 4:15:57 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button as-child="" > 
+[WebServer]   at <CardFooter class="justify-center" > 
+[WebServer]   at <Primitive data-slot="card" data-shadow=true data-size="md"  ... > 
+[WebServer]   at <Surface data-slot="card" tier="floating" surface=undefined  ... > 
+[WebServer]   at <Card tier="floating" class="w-full max-w-(--measure-cel) text-center" > 
+[WebServer]   at <NotFound onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/this/route/does/not/exist" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  ✘  17 [chromium-headless-new] › tests-visual/_egg-capture.spec.ts:145:5 › E4 404 paints the lattice (dark) (1.5s)
+  ✓  18 [chromium-headless-new] › tests-visual/_egg-capture.spec.ts:165:1 › E4 empty-states mascot is mounted (light·mobile390) (1.5s)
+  ✘  19 [chromium-headless-new] › tests-visual/_egg-capture.spec.ts:185:5 › E5/E6 shell dark toggle present + eclipse register (light) (6.0s)
+  ✘  20 [chromium-headless-new] › tests-visual/_egg-capture.spec.ts:185:5 › E5/E6 shell dark toggle present + eclipse register (dark) (6.0s)
+  ✓  21 [chromium-headless-new] › tests-visual/_fix-glassui-dark-capture.spec.ts:32:9 › auth-shell light (2.4s)
+  ✓  22 [chromium-headless-new] › tests-visual/_fix-glassui-dark-capture.spec.ts:32:9 › configurator light (2.4s)
+  ✓  23 [chromium-headless-new] › tests-visual/_fix-glassui-dark-capture.spec.ts:32:9 › icons-pops light (10.5s)
+[WebServer] 4:16:28 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button as-child="" > 
+[WebServer]   at <CardFooter class="justify-center" > 
+[WebServer]   at <Primitive data-slot="card" data-shadow=true data-size="md"  ... > 
+[WebServer]   at <Surface data-slot="card" tier="floating" surface=undefined  ... > 
+[WebServer]   at <Card tier="floating" class="w-full max-w-(--measure-cel) text-center" > 
+[WebServer]   at <NotFound onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/this-route-does-not-exist" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  ✓  24 [chromium-headless-new] › tests-visual/_fix-glassui-dark-capture.spec.ts:32:9 › 404-egg light (10.4s)
+  ✓  25 [chromium-headless-new] › tests-visual/_fix-glassui-dark-capture.spec.ts:32:9 › auth-shell dark (2.3s)
+  ✓  26 [chromium-headless-new] › tests-visual/_fix-glassui-dark-capture.spec.ts:32:9 › configurator dark (2.4s)
+  ✓  27 [chromium-headless-new] › tests-visual/_fix-glassui-dark-capture.spec.ts:32:9 › icons-pops dark (10.4s)
+[WebServer] 4:16:54 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button as-child="" > 
+[WebServer]   at <CardFooter class="justify-center" > 
+[WebServer]   at <Primitive data-slot="card" data-shadow=true data-size="md"  ... > 
+[WebServer]   at <Surface data-slot="card" tier="floating" surface=undefined  ... > 
+[WebServer]   at <Card tier="floating" class="w-full max-w-(--measure-cel) text-center" > 
+[WebServer]   at <NotFound onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/this-route-does-not-exist" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  ✓  28 [chromium-headless-new] › tests-visual/_fix-glassui-dark-capture.spec.ts:32:9 › 404-egg dark (10.4s)
+[WebServer] 4:17:04 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button data-scenario="button-as-child" as-child="" > 
+[WebServer]   at <Primitive material="content" shadow=true grain=false  ... > 
+[WebServer]   at <Surface material="content" tier="resting" surface="opaque"  ... > 
+[WebServer]   at <ShowcaseFrame caption="As-child" pad="sm" > 
+[WebServer]   at <StorySection heading="Keyboard, touch, and the linked command" blurb="One native button accepts Enter, Space, click, and coarse taps. `as-child` hands the whole command contract to another element without giving up the material." > 
+[WebServer]   at <TooltipProvider delay-duration=250 skip-delay-duration=300 > 
+[WebServer]   at <TooltipProvider delay-duration=250 > 
+[WebServer]   at <StoryPage> 
+[WebServer]   at <Buttons onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/display/buttons" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+[WebServer] 4:17:04 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button data-scenario="button-as-child-disabled" as-child="" disabled="" > 
+[WebServer]   at <Primitive material="content" shadow=true grain=false  ... > 
+[WebServer]   at <Surface material="content" tier="resting" surface="opaque"  ... > 
+[WebServer]   at <ShowcaseFrame caption="As-child" pad="sm" > 
+[WebServer]   at <StorySection heading="Keyboard, touch, and the linked command" blurb="One native button accepts Enter, Space, click, and coarse taps. `as-child` hands the whole command contract to another element without giving up the material." > 
+[WebServer]   at <TooltipProvider delay-duration=250 skip-delay-duration=300 > 
+[WebServer]   at <TooltipProvider delay-duration=250 > 
+[WebServer]   at <StoryPage> 
+[WebServer]   at <Buttons onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/display/buttons" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  ✘  29 [chromium-headless-new] › tests-visual/_prim-polish-capture.spec.ts:28:13 › W-PRIM-POLISH capture (light · mobile390) › buttons — gold CTA hover + the corrected specimen (light·mobile390) (1.0m)
+  ✓  30 [chromium-headless-new] › tests-visual/_prim-polish-capture.spec.ts:71:13 › W-PRIM-POLISH capture (light · mobile390) › badge — dark destructive plate (light·mobile390) (1.3s)
+  ✓  31 [chromium-headless-new] › tests-visual/_prim-polish-capture.spec.ts:96:13 › W-PRIM-POLISH capture (light · mobile390) › checks — switch glass track (light·mobile390) (1.2s)
+[WebServer] 4:18:07 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button data-scenario="button-as-child" as-child="" > 
+[WebServer]   at <Primitive material="content" shadow=true grain=false  ... > 
+[WebServer]   at <Surface material="content" tier="resting" surface="opaque"  ... > 
+[WebServer]   at <ShowcaseFrame caption="As-child" pad="sm" > 
+[WebServer]   at <StorySection heading="Keyboard, touch, and the linked command" blurb="One native button accepts Enter, Space, click, and coarse taps. `as-child` hands the whole command contract to another element without giving up the material." > 
+[WebServer]   at <TooltipProvider delay-duration=250 skip-delay-duration=300 > 
+[WebServer]   at <TooltipProvider delay-duration=250 > 
+[WebServer]   at <StoryPage> 
+[WebServer]   at <Buttons onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/display/buttons" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+[WebServer] 4:18:07 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button data-scenario="button-as-child-disabled" as-child="" disabled="" > 
+[WebServer]   at <Primitive material="content" shadow=true grain=false  ... > 
+[WebServer]   at <Surface material="content" tier="resting" surface="opaque"  ... > 
+[WebServer]   at <ShowcaseFrame caption="As-child" pad="sm" > 
+[WebServer]   at <StorySection heading="Keyboard, touch, and the linked command" blurb="One native button accepts Enter, Space, click, and coarse taps. `as-child` hands the whole command contract to another element without giving up the material." > 
+[WebServer]   at <TooltipProvider delay-duration=250 skip-delay-duration=300 > 
+[WebServer]   at <TooltipProvider delay-duration=250 > 
+[WebServer]   at <StoryPage> 
+[WebServer]   at <Buttons onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/display/buttons" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  ✘  32 [chromium-headless-new] › tests-visual/_prim-polish-capture.spec.ts:28:13 › W-PRIM-POLISH capture (light · desktop1280) › buttons — gold CTA hover + the corrected specimen (light·desktop1280) (1.0m)
+  ✓  33 [chromium-headless-new] › tests-visual/_prim-polish-capture.spec.ts:71:13 › W-PRIM-POLISH capture (light · desktop1280) › badge — dark destructive plate (light·desktop1280) (1.3s)
+  ✓  34 [chromium-headless-new] › tests-visual/_prim-polish-capture.spec.ts:96:13 › W-PRIM-POLISH capture (light · desktop1280) › checks — switch glass track (light·desktop1280) (1.2s)
+[WebServer] 4:19:10 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button data-scenario="button-as-child" as-child="" > 
+[WebServer]   at <Primitive material="content" shadow=true grain=false  ... > 
+[WebServer]   at <Surface material="content" tier="resting" surface="opaque"  ... > 
+[WebServer]   at <ShowcaseFrame caption="As-child" pad="sm" > 
+[WebServer]   at <StorySection heading="Keyboard, touch, and the linked command" blurb="One native button accepts Enter, Space, click, and coarse taps. `as-child` hands the whole command contract to another element without giving up the material." > 
+[WebServer]   at <TooltipProvider delay-duration=250 skip-delay-duration=300 > 
+[WebServer]   at <TooltipProvider delay-duration=250 > 
+[WebServer]   at <StoryPage> 
+[WebServer]   at <Buttons onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/display/buttons" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+[WebServer] 4:19:10 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button data-scenario="button-as-child-disabled" as-child="" disabled="" > 
+[WebServer]   at <Primitive material="content" shadow=true grain=false  ... > 
+[WebServer]   at <Surface material="content" tier="resting" surface="opaque"  ... > 
+[WebServer]   at <ShowcaseFrame caption="As-child" pad="sm" > 
+[WebServer]   at <StorySection heading="Keyboard, touch, and the linked command" blurb="One native button accepts Enter, Space, click, and coarse taps. `as-child` hands the whole command contract to another element without giving up the material." > 
+[WebServer]   at <TooltipProvider delay-duration=250 skip-delay-duration=300 > 
+[WebServer]   at <TooltipProvider delay-duration=250 > 
+[WebServer]   at <StoryPage> 
+[WebServer]   at <Buttons onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/display/buttons" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  ✘  35 [chromium-headless-new] › tests-visual/_prim-polish-capture.spec.ts:28:13 › W-PRIM-POLISH capture (dark · mobile390) › buttons — gold CTA hover + the corrected specimen (dark·mobile390) (1.0m)
+  ✓  36 [chromium-headless-new] › tests-visual/_prim-polish-capture.spec.ts:71:13 › W-PRIM-POLISH capture (dark · mobile390) › badge — dark destructive plate (dark·mobile390) (1.2s)
+  ✓  37 [chromium-headless-new] › tests-visual/_prim-polish-capture.spec.ts:96:13 › W-PRIM-POLISH capture (dark · mobile390) › checks — switch glass track (dark·mobile390) (1.2s)
+[WebServer] 4:20:13 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button data-scenario="button-as-child" as-child="" > 
+[WebServer]   at <Primitive material="content" shadow=true grain=false  ... > 
+[WebServer]   at <Surface material="content" tier="resting" surface="opaque"  ... > 
+[WebServer]   at <ShowcaseFrame caption="As-child" pad="sm" > 
+[WebServer]   at <StorySection heading="Keyboard, touch, and the linked command" blurb="One native button accepts Enter, Space, click, and coarse taps. `as-child` hands the whole command contract to another element without giving up the material." > 
+[WebServer]   at <TooltipProvider delay-duration=250 skip-delay-duration=300 > 
+[WebServer]   at <TooltipProvider delay-duration=250 > 
+[WebServer]   at <StoryPage> 
+[WebServer]   at <Buttons onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/display/buttons" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+[WebServer] 4:20:13 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button data-scenario="button-as-child-disabled" as-child="" disabled="" > 
+[WebServer]   at <Primitive material="content" shadow=true grain=false  ... > 
+[WebServer]   at <Surface material="content" tier="resting" surface="opaque"  ... > 
+[WebServer]   at <ShowcaseFrame caption="As-child" pad="sm" > 
+[WebServer]   at <StorySection heading="Keyboard, touch, and the linked command" blurb="One native button accepts Enter, Space, click, and coarse taps. `as-child` hands the whole command contract to another element without giving up the material." > 
+[WebServer]   at <TooltipProvider delay-duration=250 skip-delay-duration=300 > 
+[WebServer]   at <TooltipProvider delay-duration=250 > 
+[WebServer]   at <StoryPage> 
+[WebServer]   at <Buttons onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/display/buttons" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  ✘  38 [chromium-headless-new] › tests-visual/_prim-polish-capture.spec.ts:28:13 › W-PRIM-POLISH capture (dark · desktop1280) › buttons — gold CTA hover + the corrected specimen (dark·desktop1280) (1.0m)
+  ✓  39 [chromium-headless-new] › tests-visual/_prim-polish-capture.spec.ts:71:13 › W-PRIM-POLISH capture (dark · desktop1280) › badge — dark destructive plate (dark·desktop1280) (1.2s)
+  ✓  40 [chromium-headless-new] › tests-visual/_prim-polish-capture.spec.ts:96:13 › W-PRIM-POLISH capture (dark · desktop1280) › checks — switch glass track (dark·desktop1280) (1.1s)
+  ✓  41 [chromium-headless-new] › tests-visual/_prim-polish-capture.spec.ts:125:5 › dialog scrim — dark recedes to ink (mobile390) (1.6s)
+  ✓  42 [chromium-headless-new] › tests-visual/_prim-polish-capture.spec.ts:125:5 › dialog scrim — dark recedes to ink (desktop1280) (1.7s)
+[WebServer] 4:21:21 PM [vite] (client) [console.warn] [Slider] no accessible name: a single-thumb <Slider> has no `aria-label` or `aria-labelledby`, so its role="slider" thumb is nameless to a screen reader (reka mints no fallback name for one thumb). Wrap it in <LabeledField>, or pass an explicit `aria-label`.
+[WebServer] 4:21:21 PM [vite] (client) [console.warn] [Slider] no accessible name: a single-thumb <Slider> has no `aria-label` or `aria-labelledby`, so its role="slider" thumb is nameless to a screen reader (reka mints no fallback name for one thumb). Wrap it in <LabeledField>, or pass an explicit `aria-label`.
+[WebServer] 4:21:21 PM [vite] (client) [console.warn] [Slider] no accessible name: a single-thumb <Slider> has no `aria-label` or `aria-labelledby`, so its role="slider" thumb is nameless to a screen reader (reka mints no fallback name for one thumb). Wrap it in <LabeledField>, or pass an explicit `aria-label`.
+[WebServer] 4:21:21 PM [vite] (client) [console.warn] [Slider] no accessible name: a single-thumb <Slider> has no `aria-label` or `aria-labelledby`, so its role="slider" thumb is nameless to a screen reader (reka mints no fallback name for one thumb). Wrap it in <LabeledField>, or pass an explicit `aria-label`.
+[WebServer] 4:21:21 PM [vite] (client) [console.warn] [Slider] no accessible name: a single-thumb <Slider> has no `aria-label` or `aria-labelledby`, so its role="slider" thumb is nameless to a screen reader (reka mints no fallback name for one thumb). Wrap it in <LabeledField>, or pass an explicit `aria-label`.
+[WebServer] 4:21:21 PM [vite] (client) [console.warn] [Slider] no accessible name: a single-thumb <Slider> has no `aria-label` or `aria-labelledby`, so its role="slider" thumb is nameless to a screen reader (reka mints no fallback name for one thumb). Wrap it in <LabeledField>, or pass an explicit `aria-label`.
+[WebServer] 4:21:23 PM [vite] (client) [console.warn] [Slider] no accessible name: a single-thumb <Slider> has no `aria-label` or `aria-labelledby`, so its role="slider" thumb is nameless to a screen reader (reka mints no fallback name for one thumb). Wrap it in <LabeledField>, or pass an explicit `aria-label`.
+[WebServer] 4:21:23 PM [vite] (client) [console.warn] [Slider] no accessible name: a single-thumb <Slider> has no `aria-label` or `aria-labelledby`, so its role="slider" thumb is nameless to a screen reader (reka mints no fallback name for one thumb). Wrap it in <LabeledField>, or pass an explicit `aria-label`.
+[WebServer] 4:21:23 PM [vite] (client) [console.warn] [Slider] no accessible name: a single-thumb <Slider> has no `aria-label` or `aria-labelledby`, so its role="slider" thumb is nameless to a screen reader (reka mints no fallback name for one thumb). Wrap it in <LabeledField>, or pass an explicit `aria-label`.
+[WebServer] 4:21:23 PM [vite] (client) [console.warn] [Slider] no accessible name: a single-thumb <Slider> has no `aria-label` or `aria-labelledby`, so its role="slider" thumb is nameless to a screen reader (reka mints no fallback name for one thumb). Wrap it in <LabeledField>, or pass an explicit `aria-label`.
+[WebServer] 4:21:23 PM [vite] (client) [console.warn] [Slider] no accessible name: a single-thumb <Slider> has no `aria-label` or `aria-labelledby`, so its role="slider" thumb is nameless to a screen reader (reka mints no fallback name for one thumb). Wrap it in <LabeledField>, or pass an explicit `aria-label`.
+[WebServer] 4:21:23 PM [vite] (client) [console.warn] [Slider] no accessible name: a single-thumb <Slider> has no `aria-label` or `aria-labelledby`, so its role="slider" thumb is nameless to a screen reader (reka mints no fallback name for one thumb). Wrap it in <LabeledField>, or pass an explicit `aria-label`.
+  ✘  43 [chromium-headless-new] › tests-visual/_r4-shell-config-capture.spec.ts:115:1 › AZ.R4-SHELL — gear→PresetEditor, glassy rows, panel padding (shell) (1.0m)
+  ✓  44 [chromium-headless-new] › tests-visual/CommandDialog.b7c.spec.ts:34:1 › C3-1: the modal finder holds the page through the root and lets go without a jump (1.8s)
+  ✓  45 [chromium-headless-new] › tests-visual/CommandDialog.b7c.spec.ts:66:1 › C3-2: the short first group keeps its rows in view under its own heading (681ms)
+  ✓  46 [chromium-headless-new] › tests-visual/DropdownMenu.scroll-lock.spec.ts:25:5 › DropdownMenu: opening it keeps body scroll and the sticky row in place (657ms)
+  ✓  47 [chromium-headless-new] › tests-visual/DropdownMenu.scroll-lock.spec.ts:25:5 › Select: opening it keeps body scroll and the sticky row in place (659ms)
+  ✓  48 [chromium-headless-new] › tests-visual/SegmentedTabs.glide.spec.ts:70:5 › adjacent hop: the indicator glides at its own size in one monotone leg (1.3s)
+  ✓  49 [chromium-headless-new] › tests-visual/SegmentedTabs.glide.spec.ts:70:5 › far hop: the indicator glides at its own size in one monotone leg (1.3s)
+  ✓  50 [chromium-headless-new] › tests-visual/SegmentedTabs.glide.spec.ts:115:1 › hover on an inactive tab changes its colour and nothing else (1.1s)
+  ✓  51 [chromium-headless-new] › tests-visual/SegmentedTabs.glide.spec.ts:164:5 › re-clicking the active tab on its centre moves nothing (1.5s)
+  ✓  52 [chromium-headless-new] › tests-visual/SegmentedTabs.glide.spec.ts:164:5 › re-clicking the active tab off its centre moves nothing (1.5s)
+  ✓  53 [chromium-headless-new] › tests-visual/SegmentedTabs.glide.spec.ts:179:1 › the indicator can be dragged to the next tab, and stays under the label it commits (1.6s)
+  ✓  54 [chromium-headless-new] › tests-visual/SegmentedTabs.glide.spec.ts:205:5 › a 8 px drag out and back, released on its start, leaves the next hop gliding (1.8s)
+  ✓  55 [chromium-headless-new] › tests-visual/SegmentedTabs.glide.spec.ts:205:5 › a 24 px drag out and back, released on its start, leaves the next hop gliding (1.8s)
+  ✓  56 [chromium-headless-new] › tests-visual/Select.bound.spec.ts:17:1 › a twelve-row list that fits the room shows whole (573ms)
+  ✓  57 [chromium-headless-new] › tests-visual/Select.bound.spec.ts:35:1 › a short viewport bounds the list 16px from the edge and it scrolls inside (589ms)
+  ✓  58 [chromium-headless-new] › tests-visual/Select.bound.spec.ts:53:1 › below 30rem the listbox is a bottom sheet at full width (571ms)
+  ✓  59 [chromium-headless-new] › tests-visual/Sheet.position.spec.ts:14:5 › sheet opened deep in the page is fixed and on screen (consumer layer) (894ms)
+  ✓  60 [chromium-headless-new] › tests-visual/Sheet.position.spec.ts:14:5 › sheet opened deep in the page is fixed and on screen (unlayered) (900ms)
+
+
+  1) [chromium-headless-new] › tests-visual/_cfg-readback.spec.ts:3:1 › configurator dark bloom token + auth-shell ink readback 
+
+    Error: page.evaluate: TypeError: Failed to execute 'getComputedStyle' on 'Window': parameter 1 is not of type 'Element'.
+        at eval (eval at evaluate (:303:30), <anonymous>:8:21)
+        at UtilityScript.evaluate (<anonymous>:305:16)
+        at UtilityScript.<anonymous> (<anonymous>:1:44)
+        at eval (eval at evaluate (:303:30), <anonymous>:8:21)
+        at UtilityScript.evaluate (<anonymous>:305:16)
+        at UtilityScript.<anonymous> (<anonymous>:1:44)
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/_cfg-readback.spec.ts:30:29
+
+    Error Context: tests-visual/test-results/_cfg-readback-configurator-8f397-ken-auth-shell-ink-readback-chromium-headless-new/error-context.md
+
+  2) [chromium-headless-new] › tests-visual/_dock-context-capture.spec.ts:50:1 › AZ.W-DOCK-CONTEXT W3 — per-route DockLayer swap on the shell docks 
+
+    Error: bottom context group present on route A
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      94 |     // The binding assertion: the SHELL dock renders a DIFFERENT facet layer set on
+      95 |     // the two routes (route→layer determinism). Both shell docks must swap.
+    > 96 |     expect(bottomA.present, "bottom context group present on route A").toBe(true);
+         |                                                                        ^
+      97 |     expect(bottomB.present, "bottom context group present on route B").toBe(true);
+      98 |     expect(bottomA.railTabs.length, "route A has facet layers").toBeGreaterThan(0);
+      99 |     expect(
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/_dock-context-capture.spec.ts:96:72
+
+    Error Context: tests-visual/test-results/_dock-context-capture-AZ-W-28b46-yer-swap-on-the-shell-docks-chromium-headless-new/error-context.md
+
+  3) [chromium-headless-new] › tests-visual/_egg-capture.spec.ts:25:5 › E3 cmd+K palette opens + navigates (light) 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: locator('[data-slot="command"]').first()
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" with timeout 5000ms
+      - waiting for locator('[data-slot="command"]').first()
+
+
+      42 |         }
+      43 |         const palette = page.locator('[data-slot="command"]').first();
+    > 44 |         await expect(palette).toBeVisible();
+         |                               ^
+      45 |
+      46 |         // Type a query → the list filters.
+      47 |         await page.keyboard.type("dialog");
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/_egg-capture.spec.ts:44:31
+
+    Error Context: tests-visual/test-results/_egg-capture-E3-cmd-K-palette-opens-navigates-light--chromium-headless-new/error-context.md
+
+  4) [chromium-headless-new] › tests-visual/_egg-capture.spec.ts:25:5 › E3 cmd+K palette opens + navigates (dark) 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: locator('[data-slot="command"]').first()
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" with timeout 5000ms
+      - waiting for locator('[data-slot="command"]').first()
+
+
+      42 |         }
+      43 |         const palette = page.locator('[data-slot="command"]').first();
+    > 44 |         await expect(palette).toBeVisible();
+         |                               ^
+      45 |
+      46 |         // Type a query → the list filters.
+      47 |         await page.keyboard.type("dialog");
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/_egg-capture.spec.ts:44:31
+
+    Error Context: tests-visual/test-results/_egg-capture-E3-cmd-K-palette-opens-navigates-dark--chromium-headless-new/error-context.md
+
+  5) [chromium-headless-new] › tests-visual/_egg-capture.spec.ts:65:5 › E1 ℱ-redraw paints an epicycle overlay (light) 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      89 |             return { present: true, painted };
+      90 |         });
+    > 91 |         expect(overlay.present).toBe(true);
+         |                                 ^
+      92 |         expect(overlay.painted).toBeGreaterThan(200);
+      93 |
+      94 |         await page.screenshot({
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/_egg-capture.spec.ts:91:33
+
+    Error Context: tests-visual/test-results/_egg-capture-E1-ℱ-redraw-paints-an-epicycle-overlay-light--chromium-headless-new/error-context.md
+
+  6) [chromium-headless-new] › tests-visual/_egg-capture.spec.ts:65:5 › E1 ℱ-redraw paints an epicycle overlay (dark) 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      89 |             return { present: true, painted };
+      90 |         });
+    > 91 |         expect(overlay.present).toBe(true);
+         |                                 ^
+      92 |         expect(overlay.painted).toBeGreaterThan(200);
+      93 |
+      94 |         await page.screenshot({
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/_egg-capture.spec.ts:91:33
+
+    Error Context: tests-visual/test-results/_egg-capture-E1-ℱ-redraw-paints-an-epicycle-overlay-dark--chromium-headless-new/error-context.md
+
+  7) [chromium-headless-new] › tests-visual/_egg-capture.spec.ts:102:1 › E2 konami reveals the full-bleed aurora 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      132 |         };
+      133 |     });
+    > 134 |     expect(reveal.present).toBe(true);
+          |                            ^
+      135 |     expect(reveal.shown).toBe(true);
+      136 |
+      137 |     await page.screenshot({
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/_egg-capture.spec.ts:134:28
+
+    Error Context: tests-visual/test-results/_egg-capture-E2-konami-reveals-the-full-bleed-aurora-chromium-headless-new/error-context.md
+
+  8) [chromium-headless-new] › tests-visual/_egg-capture.spec.ts:145:5 › E4 404 paints the lattice (light) 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      154 |             document.body.textContent?.includes("Lost in the lattice"),
+      155 |         );
+    > 156 |         expect(has404).toBe(true);
+          |                        ^
+      157 |
+      158 |         await page.screenshot({
+      159 |             path: `${OUT}/W-EGG-404-lattice-desktop1280-${scheme}.png`,
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/_egg-capture.spec.ts:156:24
+
+    Error Context: tests-visual/test-results/_egg-capture-E4-404-paints-the-lattice-light--chromium-headless-new/error-context.md
+
+  9) [chromium-headless-new] › tests-visual/_egg-capture.spec.ts:145:5 › E4 404 paints the lattice (dark) 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      154 |             document.body.textContent?.includes("Lost in the lattice"),
+      155 |         );
+    > 156 |         expect(has404).toBe(true);
+          |                        ^
+      157 |
+      158 |         await page.screenshot({
+      159 |             path: `${OUT}/W-EGG-404-lattice-desktop1280-${scheme}.png`,
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/_egg-capture.spec.ts:156:24
+
+    Error Context: tests-visual/test-results/_egg-capture-E4-404-paints-the-lattice-dark--chromium-headless-new/error-context.md
+
+  10) [chromium-headless-new] › tests-visual/_egg-capture.spec.ts:185:5 › E5/E6 shell dark toggle present + eclipse register (light) 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: locator('.demo-sidebar-dark-toggle').first()
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" with timeout 5000ms
+      - waiting for locator('.demo-sidebar-dark-toggle').first()
+
+
+      192 |         // E6 — the toggle is in the rail chrome.
+      193 |         const toggle = page.locator(".demo-sidebar-dark-toggle").first();
+    > 194 |         await expect(toggle).toBeVisible();
+          |                              ^
+      195 |
+      196 |         // E5 — a long-press fires the eclipse register (data-eclipsing flips).
+      197 |         const box = await toggle.boundingBox();
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/_egg-capture.spec.ts:194:30
+
+    Error Context: tests-visual/test-results/_egg-capture-E5-E6-shell-d-d6a67-ent-eclipse-register-light--chromium-headless-new/error-context.md
+
+  11) [chromium-headless-new] › tests-visual/_egg-capture.spec.ts:185:5 › E5/E6 shell dark toggle present + eclipse register (dark) 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: locator('.demo-sidebar-dark-toggle').first()
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" with timeout 5000ms
+      - waiting for locator('.demo-sidebar-dark-toggle').first()
+
+
+      192 |         // E6 — the toggle is in the rail chrome.
+      193 |         const toggle = page.locator(".demo-sidebar-dark-toggle").first();
+    > 194 |         await expect(toggle).toBeVisible();
+          |                              ^
+      195 |
+      196 |         // E5 — a long-press fires the eclipse register (data-eclipsing flips).
+      197 |         const box = await toggle.boundingBox();
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/_egg-capture.spec.ts:194:30
+
+    Error Context: tests-visual/test-results/_egg-capture-E5-E6-shell-d-393c7-sent-eclipse-register-dark--chromium-headless-new/error-context.md
+
+  12) [chromium-headless-new] › tests-visual/_prim-polish-capture.spec.ts:28:13 › W-PRIM-POLISH capture (light · mobile390) › buttons — gold CTA hover + the corrected specimen (light·mobile390) 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: locator.scrollIntoViewIfNeeded: Test timeout of 60000ms exceeded.
+    Call log:
+      - waiting for locator('button').filter({ hasText: 'Hover (sim.)' }).first()
+
+
+      39 |                     .locator("button", { hasText: "Hover (sim.)" })
+      40 |                     .first();
+    > 41 |                 await specimen.scrollIntoViewIfNeeded();
+         |                                ^
+      42 |                 await page.waitForTimeout(120);
+      43 |                 const sBox = (await specimen.boundingBox())!;
+      44 |                 await page.screenshot({
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/_prim-polish-capture.spec.ts:41:32
+
+    Error Context: tests-visual/test-results/_prim-polish-capture-W-PRI-cbdf2-d-specimen-light·mobile390--chromium-headless-new/error-context.md
+
+  13) [chromium-headless-new] › tests-visual/_prim-polish-capture.spec.ts:28:13 › W-PRIM-POLISH capture (light · desktop1280) › buttons — gold CTA hover + the corrected specimen (light·desktop1280) 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: locator.scrollIntoViewIfNeeded: Test timeout of 60000ms exceeded.
+    Call log:
+      - waiting for locator('button').filter({ hasText: 'Hover (sim.)' }).first()
+
+
+      39 |                     .locator("button", { hasText: "Hover (sim.)" })
+      40 |                     .first();
+    > 41 |                 await specimen.scrollIntoViewIfNeeded();
+         |                                ^
+      42 |                 await page.waitForTimeout(120);
+      43 |                 const sBox = (await specimen.boundingBox())!;
+      44 |                 await page.screenshot({
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/_prim-polish-capture.spec.ts:41:32
+
+    Error Context: tests-visual/test-results/_prim-polish-capture-W-PRI-a92fe-specimen-light·desktop1280--chromium-headless-new/error-context.md
+
+  14) [chromium-headless-new] › tests-visual/_prim-polish-capture.spec.ts:28:13 › W-PRIM-POLISH capture (dark · mobile390) › buttons — gold CTA hover + the corrected specimen (dark·mobile390) 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: locator.scrollIntoViewIfNeeded: Test timeout of 60000ms exceeded.
+    Call log:
+      - waiting for locator('button').filter({ hasText: 'Hover (sim.)' }).first()
+
+
+      39 |                     .locator("button", { hasText: "Hover (sim.)" })
+      40 |                     .first();
+    > 41 |                 await specimen.scrollIntoViewIfNeeded();
+         |                                ^
+      42 |                 await page.waitForTimeout(120);
+      43 |                 const sBox = (await specimen.boundingBox())!;
+      44 |                 await page.screenshot({
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/_prim-polish-capture.spec.ts:41:32
+
+    Error Context: tests-visual/test-results/_prim-polish-capture-W-PRI-ea2a4-ed-specimen-dark·mobile390--chromium-headless-new/error-context.md
+
+  15) [chromium-headless-new] › tests-visual/_prim-polish-capture.spec.ts:28:13 › W-PRIM-POLISH capture (dark · desktop1280) › buttons — gold CTA hover + the corrected specimen (dark·desktop1280) 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: locator.scrollIntoViewIfNeeded: Test timeout of 60000ms exceeded.
+    Call log:
+      - waiting for locator('button').filter({ hasText: 'Hover (sim.)' }).first()
+
+
+      39 |                     .locator("button", { hasText: "Hover (sim.)" })
+      40 |                     .first();
+    > 41 |                 await specimen.scrollIntoViewIfNeeded();
+         |                                ^
+      42 |                 await page.waitForTimeout(120);
+      43 |                 const sBox = (await specimen.boundingBox())!;
+      44 |                 await page.screenshot({
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/_prim-polish-capture.spec.ts:41:32
+
+    Error Context: tests-visual/test-results/_prim-polish-capture-W-PRI-217d0--specimen-dark·desktop1280--chromium-headless-new/error-context.md
+
+  16) [chromium-headless-new] › tests-visual/_r4-shell-config-capture.spec.ts:115:1 › AZ.R4-SHELL — gear→PresetEditor, glassy rows, panel padding (shell) 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: locator.waitFor: Test timeout of 60000ms exceeded.
+    Call log:
+      - waiting for locator('.dropdown-menu-content').first() to be visible
+
+
+      188 |         await trigger.click();
+      189 |         const content = page.locator(".dropdown-menu-content").first();
+    > 190 |         await content.waitFor({ state: "visible" });
+          |                       ^
+      191 |         await page.waitForTimeout(250);
+      192 |         const padding = await content.evaluate((el) => {
+      193 |             const cs = getComputedStyle(el as HTMLElement);
+        at measureDropdown (/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/_r4-shell-config-capture.spec.ts:190:23)
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/_r4-shell-config-capture.spec.ts:207:27
+
+    Error Context: tests-visual/test-results/_r4-shell-config-capture-A-3f756-y-rows-panel-padding-shell--chromium-headless-new/error-context.md
+
+  16 failed
+    [chromium-headless-new] › tests-visual/_cfg-readback.spec.ts:3:1 › configurator dark bloom token + auth-shell ink readback 
+    [chromium-headless-new] › tests-visual/_dock-context-capture.spec.ts:50:1 › AZ.W-DOCK-CONTEXT W3 — per-route DockLayer swap on the shell docks 
+    [chromium-headless-new] › tests-visual/_egg-capture.spec.ts:25:5 › E3 cmd+K palette opens + navigates (light) 
+    [chromium-headless-new] › tests-visual/_egg-capture.spec.ts:25:5 › E3 cmd+K palette opens + navigates (dark) 
+    [chromium-headless-new] › tests-visual/_egg-capture.spec.ts:65:5 › E1 ℱ-redraw paints an epicycle overlay (light) 
+    [chromium-headless-new] › tests-visual/_egg-capture.spec.ts:65:5 › E1 ℱ-redraw paints an epicycle overlay (dark) 
+    [chromium-headless-new] › tests-visual/_egg-capture.spec.ts:102:1 › E2 konami reveals the full-bleed aurora 
+    [chromium-headless-new] › tests-visual/_egg-capture.spec.ts:145:5 › E4 404 paints the lattice (light) 
+    [chromium-headless-new] › tests-visual/_egg-capture.spec.ts:145:5 › E4 404 paints the lattice (dark) 
+    [chromium-headless-new] › tests-visual/_egg-capture.spec.ts:185:5 › E5/E6 shell dark toggle present + eclipse register (light) 
+    [chromium-headless-new] › tests-visual/_egg-capture.spec.ts:185:5 › E5/E6 shell dark toggle present + eclipse register (dark) 
+    [chromium-headless-new] › tests-visual/_prim-polish-capture.spec.ts:28:13 › W-PRIM-POLISH capture (light · mobile390) › buttons — gold CTA hover + the corrected specimen (light·mobile390) 
+    [chromium-headless-new] › tests-visual/_prim-polish-capture.spec.ts:28:13 › W-PRIM-POLISH capture (light · desktop1280) › buttons — gold CTA hover + the corrected specimen (light·desktop1280) 
+    [chromium-headless-new] › tests-visual/_prim-polish-capture.spec.ts:28:13 › W-PRIM-POLISH capture (dark · mobile390) › buttons — gold CTA hover + the corrected specimen (dark·mobile390) 
+    [chromium-headless-new] › tests-visual/_prim-polish-capture.spec.ts:28:13 › W-PRIM-POLISH capture (dark · desktop1280) › buttons — gold CTA hover + the corrected specimen (dark·desktop1280) 
+    [chromium-headless-new] › tests-visual/_r4-shell-config-capture.spec.ts:115:1 › AZ.R4-SHELL — gear→PresetEditor, glassy rows, panel padding (shell) 
+  44 passed (7.9m)

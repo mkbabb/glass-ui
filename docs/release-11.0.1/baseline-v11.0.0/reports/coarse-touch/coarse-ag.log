@@ -1,0 +1,1254 @@
+
+Running 85 tests using 1 worker
+
+  ✓   1 [coarse-touch] › tests-visual/font-cascade-live.spec.ts:64:5 › font-cascade-live (π lane — DOM-cascade font readback, fail-CLOSED) › the library default register IS the rendered register (Plus Jakarta text + Fira Code mono) (908ms)
+  ✓   2 [coarse-touch] › tests-visual/forced-colors-skin.spec.ts:124:9 › forced-colors-skin (π lane — the WHC structure-survival readback, fail-CLOSED) › glass language survives WHC @ mobile (1.3s)
+  ✓   3 [coarse-touch] › tests-visual/forced-colors-skin.spec.ts:124:9 › forced-colors-skin (π lane — the WHC structure-survival readback, fail-CLOSED) › glass language survives WHC @ desktop (988ms)
+  ✓   4 [coarse-touch] › tests-visual/forced-colors-skin.spec.ts:124:9 › forced-colors-skin (π lane — the WHC structure-survival readback, fail-CLOSED) › glass language survives WHC @ wide (992ms)
+  ✓   5 [coarse-touch] › tests-visual/forced-colors-skin.spec.ts:189:5 › forced-colors-skin (π lane — the normal-mode non-regression guard) › the WHC skin is inert outside forced-colors (879ms)
+  ✘   6 [coarse-touch] › tests-visual/ghost-dashed.spec.ts:130:13 › ghost-dashed (π — the ONE dashed-ghost register + rounded-everywhere, fail-CLOSED) › (a)+(b) the ghost-slot resolves a warm dashed register at --radius-card [light] @ mobile (924ms)
+  ✓   7 [coarse-touch] › tests-visual/ghost-dashed.spec.ts:176:13 › ghost-dashed (π — the ONE dashed-ghost register + rounded-everywhere, fail-CLOSED) › (c) the rounded witnesses resolve a semantic radius [light] @ mobile (964ms)
+  ✘   8 [coarse-touch] › tests-visual/ghost-dashed.spec.ts:130:13 › ghost-dashed (π — the ONE dashed-ghost register + rounded-everywhere, fail-CLOSED) › (a)+(b) the ghost-slot resolves a warm dashed register at --radius-card [dark] @ mobile (943ms)
+  ✓   9 [coarse-touch] › tests-visual/ghost-dashed.spec.ts:176:13 › ghost-dashed (π — the ONE dashed-ghost register + rounded-everywhere, fail-CLOSED) › (c) the rounded witnesses resolve a semantic radius [dark] @ mobile (951ms)
+  ✘  10 [coarse-touch] › tests-visual/ghost-dashed.spec.ts:130:13 › ghost-dashed (π — the ONE dashed-ghost register + rounded-everywhere, fail-CLOSED) › (a)+(b) the ghost-slot resolves a warm dashed register at --radius-card [light] @ desktop (940ms)
+  ✓  11 [coarse-touch] › tests-visual/ghost-dashed.spec.ts:176:13 › ghost-dashed (π — the ONE dashed-ghost register + rounded-everywhere, fail-CLOSED) › (c) the rounded witnesses resolve a semantic radius [light] @ desktop (1.0s)
+  ✘  12 [coarse-touch] › tests-visual/ghost-dashed.spec.ts:130:13 › ghost-dashed (π — the ONE dashed-ghost register + rounded-everywhere, fail-CLOSED) › (a)+(b) the ghost-slot resolves a warm dashed register at --radius-card [dark] @ desktop (926ms)
+  ✓  13 [coarse-touch] › tests-visual/ghost-dashed.spec.ts:176:13 › ghost-dashed (π — the ONE dashed-ghost register + rounded-everywhere, fail-CLOSED) › (c) the rounded witnesses resolve a semantic radius [dark] @ desktop (945ms)
+  ✘  14 [coarse-touch] › tests-visual/glass-accent.spec.ts:164:13 › glass-accent (π lane — the per-instance chromatic rim+glint, fail-CLOSED) › accent ON reads the hue at rim + glint; OFF byte-matches baseline @ mobile (light) (55ms)
+  ✘  15 [coarse-touch] › tests-visual/glass-accent.spec.ts:164:13 › glass-accent (π lane — the per-instance chromatic rim+glint, fail-CLOSED) › accent ON reads the hue at rim + glint; OFF byte-matches baseline @ mobile (dark) (68ms)
+  ✘  16 [coarse-touch] › tests-visual/glass-accent.spec.ts:164:13 › glass-accent (π lane — the per-instance chromatic rim+glint, fail-CLOSED) › accent ON reads the hue at rim + glint; OFF byte-matches baseline @ desktop (light) (60ms)
+  ✘  17 [coarse-touch] › tests-visual/glass-accent.spec.ts:164:13 › glass-accent (π lane — the per-instance chromatic rim+glint, fail-CLOSED) › accent ON reads the hue at rim + glint; OFF byte-matches baseline @ desktop (dark) (68ms)
+  ✘  18 [coarse-touch] › tests-visual/glass-accent.spec.ts:206:9 › glass-accent (π lane — the per-instance chromatic rim+glint, fail-CLOSED) › per-instance: distinct accent hues resolve distinct rims (light) (66ms)
+  ✘  19 [coarse-touch] › tests-visual/glass-accent.spec.ts:206:9 › glass-accent (π lane — the per-instance chromatic rim+glint, fail-CLOSED) › per-instance: distinct accent hues resolve distinct rims (dark) (65ms)
+  ✘  20 [coarse-touch] › tests-visual/glass-accent.spec.ts:234:5 › glass-accent (π lane — the per-instance chromatic rim+glint, fail-CLOSED) › the demo glass-material story renders the per-instance accent swatches (69ms)
+[WebServer] 7:28:34 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button data-scenario="button-as-child" as-child="" > 
+[WebServer]   at <Primitive material="content" shadow=true grain=false  ... > 
+[WebServer]   at <Surface material="content" tier="resting" surface="opaque"  ... > 
+[WebServer]   at <ShowcaseFrame caption="As-child" pad="sm" > 
+[WebServer]   at <StorySection heading="Keyboard, touch, and the linked command" blurb="One native button accepts Enter, Space, click, and coarse taps. `as-child` hands the whole command contract to another element without giving up the material." > 
+[WebServer]   at <TooltipProvider delay-duration=250 skip-delay-duration=300 > 
+[WebServer]   at <TooltipProvider delay-duration=250 > 
+[WebServer]   at <StoryPage> 
+[WebServer]   at <Buttons onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/display/buttons" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+[WebServer] 7:28:34 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button data-scenario="button-as-child-disabled" as-child="" disabled="" > 
+[WebServer]   at <Primitive material="content" shadow=true grain=false  ... > 
+[WebServer]   at <Surface material="content" tier="resting" surface="opaque"  ... > 
+[WebServer]   at <ShowcaseFrame caption="As-child" pad="sm" > 
+[WebServer]   at <StorySection heading="Keyboard, touch, and the linked command" blurb="One native button accepts Enter, Space, click, and coarse taps. `as-child` hands the whole command contract to another element without giving up the material." > 
+[WebServer]   at <TooltipProvider delay-duration=250 skip-delay-duration=300 > 
+[WebServer]   at <TooltipProvider delay-duration=250 > 
+[WebServer]   at <StoryPage> 
+[WebServer]   at <Buttons onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/display/buttons" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  ✘  21 [coarse-touch] › tests-visual/glass-cal.spec.ts:68:5 › BA.W-GLASS-CAL — the blur dial-back + the disco retirement (π) › (a) BLUR — the resolved radii are dialed back + glass still reads as glass (978ms)
+[WebServer] 7:28:35 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button data-scenario="button-as-child" as-child="" > 
+[WebServer]   at <Primitive material="content" shadow=true grain=false  ... > 
+[WebServer]   at <Surface material="content" tier="resting" surface="opaque"  ... > 
+[WebServer]   at <ShowcaseFrame caption="As-child" pad="sm" > 
+[WebServer]   at <StorySection heading="Keyboard, touch, and the linked command" blurb="One native button accepts Enter, Space, click, and coarse taps. `as-child` hands the whole command contract to another element without giving up the material." > 
+[WebServer]   at <TooltipProvider delay-duration=250 skip-delay-duration=300 > 
+[WebServer]   at <TooltipProvider delay-duration=250 > 
+[WebServer]   at <StoryPage> 
+[WebServer]   at <Buttons onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/display/buttons" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+[WebServer] 7:28:35 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button data-scenario="button-as-child-disabled" as-child="" disabled="" > 
+[WebServer]   at <Primitive material="content" shadow=true grain=false  ... > 
+[WebServer]   at <Surface material="content" tier="resting" surface="opaque"  ... > 
+[WebServer]   at <ShowcaseFrame caption="As-child" pad="sm" > 
+[WebServer]   at <StorySection heading="Keyboard, touch, and the linked command" blurb="One native button accepts Enter, Space, click, and coarse taps. `as-child` hands the whole command contract to another element without giving up the material." > 
+[WebServer]   at <TooltipProvider delay-duration=250 skip-delay-duration=300 > 
+[WebServer]   at <TooltipProvider delay-duration=250 > 
+[WebServer]   at <StoryPage> 
+[WebServer]   at <Buttons onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/display/buttons" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  ✓  22 [coarse-touch] › tests-visual/glass-cal.spec.ts:105:5 › BA.W-GLASS-CAL — the blur dial-back + the disco retirement (π) › (b) DISCO — ZERO btn-audacious elements + ZERO sparkle glyphs at /display/buttons (1.2s)
+  ✓  23 [coarse-touch] › tests-visual/glass-cal.spec.ts:132:5 › BA.W-GLASS-CAL — the blur dial-back + the disco retirement (π) › (c) DOCK — the primary tier reads the glass register, not the grain (1.3s)
+  ✓  24 [coarse-touch] › tests-visual/glass-cal.spec.ts:159:5 › BA.W-GLASS-CAL — the blur dial-back + the disco retirement (π) › (d) CHIP — an interactive Chip hover lifts on §6, not a flat snap (1.2s)
+  ✘  25 [coarse-touch] › tests-visual/glass-cohesion.spec.ts:251:13 › glass-cohesion (π lane — the cohesion surfaces paint glass + flatten at level:0, fail-CLOSED) › Drawer + Slider + Notification paint glass and flatten @ mobile (light) (965ms)
+  ✘  26 [coarse-touch] › tests-visual/glass-cohesion.spec.ts:251:13 › glass-cohesion (π lane — the cohesion surfaces paint glass + flatten at level:0, fail-CLOSED) › Drawer + Slider + Notification paint glass and flatten @ mobile (dark) (995ms)
+  ✘  27 [coarse-touch] › tests-visual/glass-cohesion.spec.ts:251:13 › glass-cohesion (π lane — the cohesion surfaces paint glass + flatten at level:0, fail-CLOSED) › Drawer + Slider + Notification paint glass and flatten @ desktop (light) (1.1s)
+  ✘  28 [coarse-touch] › tests-visual/glass-cohesion.spec.ts:251:13 › glass-cohesion (π lane — the cohesion surfaces paint glass + flatten at level:0, fail-CLOSED) › Drawer + Slider + Notification paint glass and flatten @ desktop (dark) (1.0s)
+  ✓  29 [coarse-touch] › tests-visual/glass-cohesion.spec.ts:294:9 › glass-cohesion (π lane — the cohesion surfaces paint glass + flatten at level:0, fail-CLOSED) › feedback tone composites translucent — every Toast variant + Notification type (light) (1.0s)
+  ✓  30 [coarse-touch] › tests-visual/glass-cohesion.spec.ts:294:9 › glass-cohesion (π lane — the cohesion surfaces paint glass + flatten at level:0, fail-CLOSED) › feedback tone composites translucent — every Toast variant + Notification type (dark) (981ms)
+  ✘  31 [coarse-touch] › tests-visual/glass-depth.spec.ts:141:13 › glass-depth (π lane — the opt-in deep-glass tier, fail-CLOSED) › deep reads DEEPER than calm; calm byte-unchanged @ mobile (light) (66ms)
+  ✘  32 [coarse-touch] › tests-visual/glass-depth.spec.ts:141:13 › glass-depth (π lane — the opt-in deep-glass tier, fail-CLOSED) › deep reads DEEPER than calm; calm byte-unchanged @ mobile (dark) (76ms)
+  ✘  33 [coarse-touch] › tests-visual/glass-depth.spec.ts:141:13 › glass-depth (π lane — the opt-in deep-glass tier, fail-CLOSED) › deep reads DEEPER than calm; calm byte-unchanged @ desktop (light) (83ms)
+  ✘  34 [coarse-touch] › tests-visual/glass-depth.spec.ts:141:13 › glass-depth (π lane — the opt-in deep-glass tier, fail-CLOSED) › deep reads DEEPER than calm; calm byte-unchanged @ desktop (dark) (80ms)
+  ✘  35 [coarse-touch] › tests-visual/glass-identity.spec.ts:134:9 › glass-identity (the warm-cream partial-transparency base over a calm-light page) › light: glass surfaces read warm-cream translucent (NOT grey) — /display/card (1.2s)
+  ✘  36 [coarse-touch] › tests-visual/glass-identity.spec.ts:159:9 › glass-identity (the warm-cream partial-transparency base over a calm-light page) › dark: glass surfaces stay warm + translucent (NOT a flat neutral) — /display/card (1.1s)
+  ✘  37 [coarse-touch] › tests-visual/glass-identity.spec.ts:134:9 › glass-identity (the warm-cream partial-transparency base over a calm-light page) › light: glass surfaces read warm-cream translucent (NOT grey) — /dock/overview (1.0s)
+  ✘  38 [coarse-touch] › tests-visual/glass-identity.spec.ts:159:9 › glass-identity (the warm-cream partial-transparency base over a calm-light page) › dark: glass surfaces stay warm + translucent (NOT a flat neutral) — /dock/overview (1.1s)
+  ✘  39 [coarse-touch] › tests-visual/glass-identity.spec.ts:134:9 › glass-identity (the warm-cream partial-transparency base over a calm-light page) › light: glass surfaces read warm-cream translucent (NOT grey) — /containers/dialog (1.1s)
+  ✘  40 [coarse-touch] › tests-visual/glass-identity.spec.ts:159:9 › glass-identity (the warm-cream partial-transparency base over a calm-light page) › dark: glass surfaces stay warm + translucent (NOT a flat neutral) — /containers/dialog (974ms)
+  ✘  41 [coarse-touch] › tests-visual/glass-identity.spec.ts:186:5 › glass-identity (the warm-cream partial-transparency base over a calm-light page) › light: the dock over the busy aurora reads warm-cream at REST (the base is not pre-greyed) — /substrates/glass-material (1.0s)
+  ✘  42 [coarse-touch] › tests-visual/glass-legibility.spec.ts:189:17 › glass-legibility (the BIDIRECTIONAL legibility-AND-glassiness π — more glass AND more legible at once) › light: in-situ glass clears AA WHILE staying below the tier α ceiling (legible AND glassy) @ desktop — /display/card (1.0s)
+  ✘  43 [coarse-touch] › tests-visual/glass-legibility.spec.ts:189:17 › glass-legibility (the BIDIRECTIONAL legibility-AND-glassiness π — more glass AND more legible at once) › dark: in-situ glass clears AA WHILE staying below the tier α ceiling (legible AND glassy) @ desktop — /display/card (1.1s)
+  ✘  44 [coarse-touch] › tests-visual/glass-legibility.spec.ts:189:17 › glass-legibility (the BIDIRECTIONAL legibility-AND-glassiness π — more glass AND more legible at once) › light: in-situ glass clears AA WHILE staying below the tier α ceiling (legible AND glassy) @ desktop — /dock/overview (1.1s)
+  ✘  45 [coarse-touch] › tests-visual/glass-legibility.spec.ts:189:17 › glass-legibility (the BIDIRECTIONAL legibility-AND-glassiness π — more glass AND more legible at once) › dark: in-situ glass clears AA WHILE staying below the tier α ceiling (legible AND glassy) @ desktop — /dock/overview (1.1s)
+  ✘  46 [coarse-touch] › tests-visual/glass-legibility.spec.ts:189:17 › glass-legibility (the BIDIRECTIONAL legibility-AND-glassiness π — more glass AND more legible at once) › light: in-situ glass clears AA WHILE staying below the tier α ceiling (legible AND glassy) @ desktop — /containers/dialog (1.1s)
+  ✘  47 [coarse-touch] › tests-visual/glass-legibility.spec.ts:189:17 › glass-legibility (the BIDIRECTIONAL legibility-AND-glassiness π — more glass AND more legible at once) › dark: in-situ glass clears AA WHILE staying below the tier α ceiling (legible AND glassy) @ desktop — /containers/dialog (1.0s)
+  ✘  48 [coarse-touch] › tests-visual/glass-legibility.spec.ts:189:17 › glass-legibility (the BIDIRECTIONAL legibility-AND-glassiness π — more glass AND more legible at once) › light: in-situ glass clears AA WHILE staying below the tier α ceiling (legible AND glassy) @ desktop — /substrates/glass-material (1.1s)
+  ✘  49 [coarse-touch] › tests-visual/glass-legibility.spec.ts:189:17 › glass-legibility (the BIDIRECTIONAL legibility-AND-glassiness π — more glass AND more legible at once) › dark: in-situ glass clears AA WHILE staying below the tier α ceiling (legible AND glassy) @ desktop — /substrates/glass-material (1.1s)
+  ✘  50 [coarse-touch] › tests-visual/glass-legibility.spec.ts:189:17 › glass-legibility (the BIDIRECTIONAL legibility-AND-glassiness π — more glass AND more legible at once) › light: in-situ glass clears AA WHILE staying below the tier α ceiling (legible AND glassy) @ mobile — /display/card (1.1s)
+  ✘  51 [coarse-touch] › tests-visual/glass-legibility.spec.ts:189:17 › glass-legibility (the BIDIRECTIONAL legibility-AND-glassiness π — more glass AND more legible at once) › dark: in-situ glass clears AA WHILE staying below the tier α ceiling (legible AND glassy) @ mobile — /display/card (1.1s)
+  ✘  52 [coarse-touch] › tests-visual/glass-legibility.spec.ts:189:17 › glass-legibility (the BIDIRECTIONAL legibility-AND-glassiness π — more glass AND more legible at once) › light: in-situ glass clears AA WHILE staying below the tier α ceiling (legible AND glassy) @ mobile — /dock/overview (1.1s)
+  ✘  53 [coarse-touch] › tests-visual/glass-legibility.spec.ts:189:17 › glass-legibility (the BIDIRECTIONAL legibility-AND-glassiness π — more glass AND more legible at once) › dark: in-situ glass clears AA WHILE staying below the tier α ceiling (legible AND glassy) @ mobile — /dock/overview (1.1s)
+  ✘  54 [coarse-touch] › tests-visual/glass-legibility.spec.ts:189:17 › glass-legibility (the BIDIRECTIONAL legibility-AND-glassiness π — more glass AND more legible at once) › light: in-situ glass clears AA WHILE staying below the tier α ceiling (legible AND glassy) @ mobile — /containers/dialog (1.0s)
+  ✘  55 [coarse-touch] › tests-visual/glass-legibility.spec.ts:189:17 › glass-legibility (the BIDIRECTIONAL legibility-AND-glassiness π — more glass AND more legible at once) › dark: in-situ glass clears AA WHILE staying below the tier α ceiling (legible AND glassy) @ mobile — /containers/dialog (979ms)
+  ✘  56 [coarse-touch] › tests-visual/glass-legibility.spec.ts:189:17 › glass-legibility (the BIDIRECTIONAL legibility-AND-glassiness π — more glass AND more legible at once) › light: in-situ glass clears AA WHILE staying below the tier α ceiling (legible AND glassy) @ mobile — /substrates/glass-material (974ms)
+  ✘  57 [coarse-touch] › tests-visual/glass-legibility.spec.ts:189:17 › glass-legibility (the BIDIRECTIONAL legibility-AND-glassiness π — more glass AND more legible at once) › dark: in-situ glass clears AA WHILE staying below the tier α ceiling (legible AND glassy) @ mobile — /substrates/glass-material (1.0s)
+  ✓  58 [coarse-touch] › tests-visual/glass-legibility.spec.ts:270:5 › glass-legibility (the BIDIRECTIONAL legibility-AND-glassiness π — more glass AND more legible at once) › light: the overlay dropdown plate clears 4.5:1 WHILE staying glassy (the L6 roster addition) — /containers/dropdown-menu (1.3s)
+  ✘  59 [coarse-touch] › tests-visual/glass-legibility.spec.ts:296:5 › glass-legibility (the BIDIRECTIONAL legibility-AND-glassiness π — more glass AND more legible at once) › light: the dock over the busy aurora stays glassy WHILE legible (the dynamic-range shift) — /substrates/aurora (1.2s)
+  ✘  60 [coarse-touch] › tests-visual/glass-material-demo.spec.ts:63:5 › glass-material-demo (π lane — moving specular + biting tint, fail-CLOSED) › the named live canvas publishes live provenance and changing luminance (5.9s)
+  ✓  61 [coarse-touch] › tests-visual/glass-material-demo.spec.ts:95:5 › glass-material-demo (π lane — moving specular + biting tint, fail-CLOSED) › the headline catch-light tracks the pointer and the tint sample bites the surface (2.1s)
+[WebServer] 7:29:35 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button as-child="" > 
+[WebServer]   at <CardFooter class="justify-center" > 
+[WebServer]   at <Primitive data-slot="card" data-shadow=true data-size="md"  ... > 
+[WebServer]   at <Surface data-slot="card" tier="floating" surface=undefined  ... > 
+[WebServer]   at <Card tier="floating" class="w-full max-w-(--measure-cel) text-center" > 
+[WebServer]   at <NotFound onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/substrates/goo-dot" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  ✘  62 [coarse-touch] › tests-visual/goo-dot.spec.ts:126:5 › goo-dot — the field drives the dots (light) (8.2s)
+[WebServer] 7:29:44 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button as-child="" > 
+[WebServer]   at <CardFooter class="justify-center" > 
+[WebServer]   at <Primitive data-slot="card" data-shadow=true data-size="md"  ... > 
+[WebServer]   at <Surface data-slot="card" tier="floating" surface=undefined  ... > 
+[WebServer]   at <Card tier="floating" class="w-full max-w-(--measure-cel) text-center" > 
+[WebServer]   at <NotFound onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/substrates/goo-dot" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  ✘  63 [coarse-touch] › tests-visual/goo-dot.spec.ts:153:5 › goo-dot — the meatball merges in dots (light) (8.2s)
+[WebServer] 7:29:52 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button as-child="" > 
+[WebServer]   at <CardFooter class="justify-center" > 
+[WebServer]   at <Primitive data-slot="card" data-shadow=true data-size="md"  ... > 
+[WebServer]   at <Surface data-slot="card" tier="floating" surface=undefined  ... > 
+[WebServer]   at <Card tier="floating" class="w-full max-w-(--measure-cel) text-center" > 
+[WebServer]   at <NotFound onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/substrates/goo-dot" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  ✘  64 [coarse-touch] › tests-visual/goo-dot.spec.ts:169:5 › goo-dot PRM freezes to one static frame (light) (8.2s)
+[WebServer] 7:30:01 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button as-child="" > 
+[WebServer]   at <CardFooter class="justify-center" > 
+[WebServer]   at <Primitive data-slot="card" data-shadow=true data-size="md"  ... > 
+[WebServer]   at <Surface data-slot="card" tier="floating" surface=undefined  ... > 
+[WebServer]   at <Card tier="floating" class="w-full max-w-(--measure-cel) text-center" > 
+[WebServer]   at <NotFound onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/substrates/goo-dot" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  ✘  65 [coarse-touch] › tests-visual/goo-dot.spec.ts:126:5 › goo-dot — the field drives the dots (dark) (8.2s)
+[WebServer] 7:30:10 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button as-child="" > 
+[WebServer]   at <CardFooter class="justify-center" > 
+[WebServer]   at <Primitive data-slot="card" data-shadow=true data-size="md"  ... > 
+[WebServer]   at <Surface data-slot="card" tier="floating" surface=undefined  ... > 
+[WebServer]   at <Card tier="floating" class="w-full max-w-(--measure-cel) text-center" > 
+[WebServer]   at <NotFound onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/substrates/goo-dot" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  ✘  66 [coarse-touch] › tests-visual/goo-dot.spec.ts:153:5 › goo-dot — the meatball merges in dots (dark) (8.3s)
+[WebServer] 7:30:19 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button as-child="" > 
+[WebServer]   at <CardFooter class="justify-center" > 
+[WebServer]   at <Primitive data-slot="card" data-shadow=true data-size="md"  ... > 
+[WebServer]   at <Surface data-slot="card" tier="floating" surface=undefined  ... > 
+[WebServer]   at <Card tier="floating" class="w-full max-w-(--measure-cel) text-center" > 
+[WebServer]   at <NotFound onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/substrates/goo-dot" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  ✘  67 [coarse-touch] › tests-visual/goo-dot.spec.ts:169:5 › goo-dot PRM freezes to one static frame (dark) (8.2s)
+[W-GOO-REDRESS-π] light: worstComponents=3 detachFrames=36/36 minMass=5407 hoverDelta=155 restCx=437 totalTravel=0 maxStep=0 lurchRatio=0.00
+  ✘  68 [coarse-touch] › tests-visual/goo-redress.spec.ts:172:9 › W-GOO-REDRESS capture — light › bridge holds + hover wakes (light) (13.0s)
+[W-GOO-REDRESS-π] dark: worstComponents=1 detachFrames=0/36 minMass=2919 hoverDelta=68 restCx=399 totalTravel=9 maxStep=4 lurchRatio=0.37
+  ✓  69 [coarse-touch] › tests-visual/goo-redress.spec.ts:172:9 › W-GOO-REDRESS capture — dark › bridge holds + hover wakes (dark) (15.5s)
+  ✓  70 [coarse-touch] › tests-visual/gooblob-meatball.spec.ts:239:13 › W-GOOBLOB-MEATBALL capture — webgpu · light › stage-2 lit meatball paints + glints + shadows (webgpu · light) (4.1s)
+  ✓  71 [coarse-touch] › tests-visual/gooblob-meatball.spec.ts:239:13 › W-GOOBLOB-MEATBALL capture — webgpu · dark › stage-2 lit meatball paints + glints + shadows (webgpu · dark) (4.1s)
+  ✓  72 [coarse-touch] › tests-visual/gooblob-meatball.spec.ts:239:13 › W-GOOBLOB-MEATBALL capture — adapterless · light › stage-2 lit meatball paints + glints + shadows (adapterless · light) (4.3s)
+  ✓  73 [coarse-touch] › tests-visual/gooblob-meatball.spec.ts:239:13 › W-GOOBLOB-MEATBALL capture — adapterless · dark › stage-2 lit meatball paints + glints + shadows (adapterless · dark) (4.3s)
+  ✓  74 [coarse-touch] › tests-visual/gooblob-plain.spec.ts:180:9 › W-GOOBLOB-PLAIN capture — light › stage-1 plain blob paints + meatballs (light) (7.9s)
+  ✓  75 [coarse-touch] › tests-visual/gooblob-plain.spec.ts:180:9 › W-GOOBLOB-PLAIN capture — dark › stage-1 plain blob paints + meatballs (dark) (7.9s)
+  ✓  76 [coarse-touch] › tests-visual/handmark.spec.ts:40:13 › the hand voice paints › four gestures over real text (desktop light) (2.6s)
+  ✓  77 [coarse-touch] › tests-visual/handmark.spec.ts:87:13 › the hand voice paints › the band sits under the letterforms and inside its card (desktop light) (2.3s)
+  ✓  78 [coarse-touch] › tests-visual/handmark.spec.ts:40:13 › the hand voice paints › four gestures over real text (desktop dark) (2.6s)
+  ✓  79 [coarse-touch] › tests-visual/handmark.spec.ts:87:13 › the hand voice paints › the band sits under the letterforms and inside its card (desktop dark) (2.4s)
+  ✓  80 [coarse-touch] › tests-visual/handmark.spec.ts:40:13 › the hand voice paints › four gestures over real text (mobile light) (2.5s)
+  ✓  81 [coarse-touch] › tests-visual/handmark.spec.ts:87:13 › the hand voice paints › the band sits under the letterforms and inside its card (mobile light) (2.3s)
+  ✓  82 [coarse-touch] › tests-visual/handmark.spec.ts:40:13 › the hand voice paints › four gestures over real text (mobile dark) (2.4s)
+  ✓  83 [coarse-touch] › tests-visual/handmark.spec.ts:87:13 › the hand voice paints › the band sits under the letterforms and inside its card (mobile dark) (2.3s)
+  ✓  84 [coarse-touch] › tests-visual/handmark.spec.ts:138:5 › the hand voice paints › the ring reserves the room it spills into (2.2s)
+  ✓  85 [coarse-touch] › tests-visual/handmark.spec.ts:168:5 › the hand voice paints › the mark is whole and solid at rest, and one path per line rect (2.2s)
+
+
+  1) [coarse-touch] › tests-visual/ghost-dashed.spec.ts:130:13 › ghost-dashed (π — the ONE dashed-ghost register + rounded-everywhere, fail-CLOSED) › (a)+(b) the ghost-slot resolves a warm dashed register at --radius-card [light] @ mobile 
+
+    Error: could not parse border-color "color(srgb 0.11 0.098 0.09 / 0.22)"
+
+    expect(received).not.toBeNull()
+
+    Received: null
+
+      152 |                 // (a2) the dashed hairline is WARM (OKLab chroma > 0 — not a grey border).
+      153 |                 const bc = parseRgbA(ghost.borderColor);
+    > 154 |                 expect(bc, `could not parse border-color "${ghost.borderColor}"`).not.toBeNull();
+          |                                                                                       ^
+      155 |                 if (bc) {
+      156 |                     const chroma = rgbChroma(bc.r, bc.g, bc.b);
+      157 |                     expect(
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/ghost-dashed.spec.ts:154:87
+
+    Error Context: tests-visual/test-results/ghost-dashed-ghost-dashed--32afe----radius-card-light-mobile-coarse-touch/error-context.md
+
+  2) [coarse-touch] › tests-visual/ghost-dashed.spec.ts:130:13 › ghost-dashed (π — the ONE dashed-ghost register + rounded-everywhere, fail-CLOSED) › (a)+(b) the ghost-slot resolves a warm dashed register at --radius-card [dark] @ mobile 
+
+    Error: could not parse border-color "color(srgb 0.914 0.9 0.886 / 0.22)"
+
+    expect(received).not.toBeNull()
+
+    Received: null
+
+      152 |                 // (a2) the dashed hairline is WARM (OKLab chroma > 0 — not a grey border).
+      153 |                 const bc = parseRgbA(ghost.borderColor);
+    > 154 |                 expect(bc, `could not parse border-color "${ghost.borderColor}"`).not.toBeNull();
+          |                                                                                       ^
+      155 |                 if (bc) {
+      156 |                     const chroma = rgbChroma(bc.r, bc.g, bc.b);
+      157 |                     expect(
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/ghost-dashed.spec.ts:154:87
+
+    Error Context: tests-visual/test-results/ghost-dashed-ghost-dashed--94358-t---radius-card-dark-mobile-coarse-touch/error-context.md
+
+  3) [coarse-touch] › tests-visual/ghost-dashed.spec.ts:130:13 › ghost-dashed (π — the ONE dashed-ghost register + rounded-everywhere, fail-CLOSED) › (a)+(b) the ghost-slot resolves a warm dashed register at --radius-card [light] @ desktop 
+
+    Error: could not parse border-color "color(srgb 0.11 0.098 0.09 / 0.22)"
+
+    expect(received).not.toBeNull()
+
+    Received: null
+
+      152 |                 // (a2) the dashed hairline is WARM (OKLab chroma > 0 — not a grey border).
+      153 |                 const bc = parseRgbA(ghost.borderColor);
+    > 154 |                 expect(bc, `could not parse border-color "${ghost.borderColor}"`).not.toBeNull();
+          |                                                                                       ^
+      155 |                 if (bc) {
+      156 |                     const chroma = rgbChroma(bc.r, bc.g, bc.b);
+      157 |                     expect(
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/ghost-dashed.spec.ts:154:87
+
+    Error Context: tests-visual/test-results/ghost-dashed-ghost-dashed--ca458---radius-card-light-desktop-coarse-touch/error-context.md
+
+  4) [coarse-touch] › tests-visual/ghost-dashed.spec.ts:130:13 › ghost-dashed (π — the ONE dashed-ghost register + rounded-everywhere, fail-CLOSED) › (a)+(b) the ghost-slot resolves a warm dashed register at --radius-card [dark] @ desktop 
+
+    Error: could not parse border-color "color(srgb 0.914 0.9 0.886 / 0.22)"
+
+    expect(received).not.toBeNull()
+
+    Received: null
+
+      152 |                 // (a2) the dashed hairline is WARM (OKLab chroma > 0 — not a grey border).
+      153 |                 const bc = parseRgbA(ghost.borderColor);
+    > 154 |                 expect(bc, `could not parse border-color "${ghost.borderColor}"`).not.toBeNull();
+          |                                                                                       ^
+      155 |                 if (bc) {
+      156 |                     const chroma = rgbChroma(bc.r, bc.g, bc.b);
+      157 |                     expect(
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/ghost-dashed.spec.ts:154:87
+
+    Error Context: tests-visual/test-results/ghost-dashed-ghost-dashed--35cf6----radius-card-dark-desktop-coarse-touch/error-context.md
+
+  5) [coarse-touch] › tests-visual/glass-accent.spec.ts:164:13 › glass-accent (π lane — the per-instance chromatic rim+glint, fail-CLOSED) › accent ON reads the hue at rim + glint; OFF byte-matches baseline @ mobile (light) 
+
+    TypeError: Cannot read properties of undefined (reading 'path')
+
+      166 |             }) => {
+      167 |                 await page.setViewportSize({ width: vp.width, height: vp.height });
+    > 168 |                 await page.goto(PI_TARGETS.substrate.path, { waitUntil: "networkidle" });
+          |                                                      ^
+      169 |                 await setDark(page, mode === "dark");
+      170 |
+      171 |                 // (b) ACCENT OFF — the neutral-fallback baseline.
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/glass-accent.spec.ts:168:54
+
+    Error Context: tests-visual/test-results/glass-accent-glass-accent--383a3-ches-baseline-mobile-light--coarse-touch/error-context.md
+
+  6) [coarse-touch] › tests-visual/glass-accent.spec.ts:164:13 › glass-accent (π lane — the per-instance chromatic rim+glint, fail-CLOSED) › accent ON reads the hue at rim + glint; OFF byte-matches baseline @ mobile (dark) 
+
+    TypeError: Cannot read properties of undefined (reading 'path')
+
+      166 |             }) => {
+      167 |                 await page.setViewportSize({ width: vp.width, height: vp.height });
+    > 168 |                 await page.goto(PI_TARGETS.substrate.path, { waitUntil: "networkidle" });
+          |                                                      ^
+      169 |                 await setDark(page, mode === "dark");
+      170 |
+      171 |                 // (b) ACCENT OFF — the neutral-fallback baseline.
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/glass-accent.spec.ts:168:54
+
+    Error Context: tests-visual/test-results/glass-accent-glass-accent--ced81-tches-baseline-mobile-dark--coarse-touch/error-context.md
+
+  7) [coarse-touch] › tests-visual/glass-accent.spec.ts:164:13 › glass-accent (π lane — the per-instance chromatic rim+glint, fail-CLOSED) › accent ON reads the hue at rim + glint; OFF byte-matches baseline @ desktop (light) 
+
+    TypeError: Cannot read properties of undefined (reading 'path')
+
+      166 |             }) => {
+      167 |                 await page.setViewportSize({ width: vp.width, height: vp.height });
+    > 168 |                 await page.goto(PI_TARGETS.substrate.path, { waitUntil: "networkidle" });
+          |                                                      ^
+      169 |                 await setDark(page, mode === "dark");
+      170 |
+      171 |                 // (b) ACCENT OFF — the neutral-fallback baseline.
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/glass-accent.spec.ts:168:54
+
+    Error Context: tests-visual/test-results/glass-accent-glass-accent--b74ab-hes-baseline-desktop-light--coarse-touch/error-context.md
+
+  8) [coarse-touch] › tests-visual/glass-accent.spec.ts:164:13 › glass-accent (π lane — the per-instance chromatic rim+glint, fail-CLOSED) › accent ON reads the hue at rim + glint; OFF byte-matches baseline @ desktop (dark) 
+
+    TypeError: Cannot read properties of undefined (reading 'path')
+
+      166 |             }) => {
+      167 |                 await page.setViewportSize({ width: vp.width, height: vp.height });
+    > 168 |                 await page.goto(PI_TARGETS.substrate.path, { waitUntil: "networkidle" });
+          |                                                      ^
+      169 |                 await setDark(page, mode === "dark");
+      170 |
+      171 |                 // (b) ACCENT OFF — the neutral-fallback baseline.
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/glass-accent.spec.ts:168:54
+
+    Error Context: tests-visual/test-results/glass-accent-glass-accent--50adf-ches-baseline-desktop-dark--coarse-touch/error-context.md
+
+  9) [coarse-touch] › tests-visual/glass-accent.spec.ts:206:9 › glass-accent (π lane — the per-instance chromatic rim+glint, fail-CLOSED) › per-instance: distinct accent hues resolve distinct rims (light) 
+
+    TypeError: Cannot read properties of undefined (reading 'path')
+
+      208 |         }) => {
+      209 |             await page.setViewportSize({ width: 1280, height: 800 });
+    > 210 |             await page.goto(PI_TARGETS.substrate.path, { waitUntil: "networkidle" });
+          |                                                  ^
+      211 |             await setDark(page, mode === "dark");
+      212 |
+      213 |             const violet = await readPlate(page, {
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/glass-accent.spec.ts:210:50
+
+    Error Context: tests-visual/test-results/glass-accent-glass-accent--a9f8a-esolve-distinct-rims-light--coarse-touch/error-context.md
+
+  10) [coarse-touch] › tests-visual/glass-accent.spec.ts:206:9 › glass-accent (π lane — the per-instance chromatic rim+glint, fail-CLOSED) › per-instance: distinct accent hues resolve distinct rims (dark) 
+
+    TypeError: Cannot read properties of undefined (reading 'path')
+
+      208 |         }) => {
+      209 |             await page.setViewportSize({ width: 1280, height: 800 });
+    > 210 |             await page.goto(PI_TARGETS.substrate.path, { waitUntil: "networkidle" });
+          |                                                  ^
+      211 |             await setDark(page, mode === "dark");
+      212 |
+      213 |             const violet = await readPlate(page, {
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/glass-accent.spec.ts:210:50
+
+    Error Context: tests-visual/test-results/glass-accent-glass-accent--7f977-resolve-distinct-rims-dark--coarse-touch/error-context.md
+
+  11) [coarse-touch] › tests-visual/glass-accent.spec.ts:234:5 › glass-accent (π lane — the per-instance chromatic rim+glint, fail-CLOSED) › the demo glass-material story renders the per-instance accent swatches 
+
+    TypeError: Cannot read properties of undefined (reading 'path')
+
+      236 |     }) => {
+      237 |         await page.setViewportSize({ width: 1280, height: 800 });
+    > 238 |         await page.goto(PI_TARGETS.substrate.path, { waitUntil: "networkidle" });
+          |                                              ^
+      239 |         // navigate to the glass-material substrate story.
+      240 |         await page.goto("/substrates/glass-material", { waitUntil: "networkidle" }).catch(() => {});
+      241 |         const swatches = page.locator("[data-accent-swatch]");
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/glass-accent.spec.ts:238:46
+
+    Error Context: tests-visual/test-results/glass-accent-glass-accent--daf23-er-instance-accent-swatches-coarse-touch/error-context.md
+
+  12) [coarse-touch] › tests-visual/glass-cal.spec.ts:68:5 › BA.W-GLASS-CAL — the blur dial-back + the disco retirement (π) › (a) BLUR — the resolved radii are dialed back + glass still reads as glass 
+
+    Error: --glass-blur-wash-radius resolves 10px (expected 1px) in light
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 10
+
+      81 |             for (const [name, expected] of Object.entries(EXPECT_RADII)) {
+      82 |                 const got = pxNumber(radii[name]);
+    > 83 |                 expect(got, `${name} resolves ${radii[name]} (expected ${expected}px) in ${scheme}`).toBe(expected);
+         |                                                                                                      ^
+      84 |             }
+      85 |
+      86 |             // A glass surface still composes a real backdrop-filter blur (the glass
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/glass-cal.spec.ts:83:102
+
+    Error Context: tests-visual/test-results/glass-cal-BA-W-GLASS-CAL-—-3e0a5--glass-still-reads-as-glass-coarse-touch/error-context.md
+
+  13) [coarse-touch] › tests-visual/glass-cohesion.spec.ts:251:13 › glass-cohesion (π lane — the cohesion surfaces paint glass + flatten at level:0, fail-CLOSED) › Drawer + Slider + Notification paint glass and flatten @ mobile (light) 
+
+    Error: slider-range (light) painted NO real backdrop-filter blur: "none" — it is not glass (the D1/D2/D4 collapse)
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      264 |                         isRealBlur(glassed.backdropFilter),
+      265 |                         `${kind} (${mode}) painted NO real backdrop-filter blur: "${glassed.backdropFilter}" — it is not glass (the D1/D2/D4 collapse)`,
+    > 266 |                     ).toBe(true);
+          |                       ^
+      267 |                     expect(
+      268 |                         glassed.translucent,
+      269 |                         `${kind} (${mode}) background is OPAQUE ("${glassed.background}", alpha 1) — the busy backdrop cannot show through, it is a solid plate not translucent glass`,
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/glass-cohesion.spec.ts:266:23
+
+    Error Context: tests-visual/test-results/glass-cohesion-glass-cohes-d89cf-s-and-flatten-mobile-light--coarse-touch/error-context.md
+
+  14) [coarse-touch] › tests-visual/glass-cohesion.spec.ts:251:13 › glass-cohesion (π lane — the cohesion surfaces paint glass + flatten at level:0, fail-CLOSED) › Drawer + Slider + Notification paint glass and flatten @ mobile (dark) 
+
+    Error: slider-range (dark) painted NO real backdrop-filter blur: "none" — it is not glass (the D1/D2/D4 collapse)
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      264 |                         isRealBlur(glassed.backdropFilter),
+      265 |                         `${kind} (${mode}) painted NO real backdrop-filter blur: "${glassed.backdropFilter}" — it is not glass (the D1/D2/D4 collapse)`,
+    > 266 |                     ).toBe(true);
+          |                       ^
+      267 |                     expect(
+      268 |                         glassed.translucent,
+      269 |                         `${kind} (${mode}) background is OPAQUE ("${glassed.background}", alpha 1) — the busy backdrop cannot show through, it is a solid plate not translucent glass`,
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/glass-cohesion.spec.ts:266:23
+
+    Error Context: tests-visual/test-results/glass-cohesion-glass-cohes-970fe-ss-and-flatten-mobile-dark--coarse-touch/error-context.md
+
+  15) [coarse-touch] › tests-visual/glass-cohesion.spec.ts:251:13 › glass-cohesion (π lane — the cohesion surfaces paint glass + flatten at level:0, fail-CLOSED) › Drawer + Slider + Notification paint glass and flatten @ desktop (light) 
+
+    Error: slider-range (light) painted NO real backdrop-filter blur: "none" — it is not glass (the D1/D2/D4 collapse)
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      264 |                         isRealBlur(glassed.backdropFilter),
+      265 |                         `${kind} (${mode}) painted NO real backdrop-filter blur: "${glassed.backdropFilter}" — it is not glass (the D1/D2/D4 collapse)`,
+    > 266 |                     ).toBe(true);
+          |                       ^
+      267 |                     expect(
+      268 |                         glassed.translucent,
+      269 |                         `${kind} (${mode}) background is OPAQUE ("${glassed.background}", alpha 1) — the busy backdrop cannot show through, it is a solid plate not translucent glass`,
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/glass-cohesion.spec.ts:266:23
+
+    Error Context: tests-visual/test-results/glass-cohesion-glass-cohes-657f3--and-flatten-desktop-light--coarse-touch/error-context.md
+
+  16) [coarse-touch] › tests-visual/glass-cohesion.spec.ts:251:13 › glass-cohesion (π lane — the cohesion surfaces paint glass + flatten at level:0, fail-CLOSED) › Drawer + Slider + Notification paint glass and flatten @ desktop (dark) 
+
+    Error: slider-range (dark) painted NO real backdrop-filter blur: "none" — it is not glass (the D1/D2/D4 collapse)
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      264 |                         isRealBlur(glassed.backdropFilter),
+      265 |                         `${kind} (${mode}) painted NO real backdrop-filter blur: "${glassed.backdropFilter}" — it is not glass (the D1/D2/D4 collapse)`,
+    > 266 |                     ).toBe(true);
+          |                       ^
+      267 |                     expect(
+      268 |                         glassed.translucent,
+      269 |                         `${kind} (${mode}) background is OPAQUE ("${glassed.background}", alpha 1) — the busy backdrop cannot show through, it is a solid plate not translucent glass`,
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/glass-cohesion.spec.ts:266:23
+
+    Error Context: tests-visual/test-results/glass-cohesion-glass-cohes-66b8e-s-and-flatten-desktop-dark--coarse-touch/error-context.md
+
+  17) [coarse-touch] › tests-visual/glass-depth.spec.ts:141:13 › glass-depth (π lane — the opt-in deep-glass tier, fail-CLOSED) › deep reads DEEPER than calm; calm byte-unchanged @ mobile (light) 
+
+    TypeError: Cannot read properties of undefined (reading 'path')
+
+      143 |             }) => {
+      144 |                 await page.setViewportSize({ width: vp.width, height: vp.height });
+    > 145 |                 await page.goto(PI_TARGETS.substrate.path, { waitUntil: "networkidle" });
+          |                                                      ^
+      146 |                 await setDark(page, mode === "dark");
+      147 |
+      148 |                 const plates = await readPlates(page);
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/glass-depth.spec.ts:145:54
+
+    Error Context: tests-visual/test-results/glass-depth-glass-depth-π--de1c5-yte-unchanged-mobile-light--coarse-touch/error-context.md
+
+  18) [coarse-touch] › tests-visual/glass-depth.spec.ts:141:13 › glass-depth (π lane — the opt-in deep-glass tier, fail-CLOSED) › deep reads DEEPER than calm; calm byte-unchanged @ mobile (dark) 
+
+    TypeError: Cannot read properties of undefined (reading 'path')
+
+      143 |             }) => {
+      144 |                 await page.setViewportSize({ width: vp.width, height: vp.height });
+    > 145 |                 await page.goto(PI_TARGETS.substrate.path, { waitUntil: "networkidle" });
+          |                                                      ^
+      146 |                 await setDark(page, mode === "dark");
+      147 |
+      148 |                 const plates = await readPlates(page);
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/glass-depth.spec.ts:145:54
+
+    Error Context: tests-visual/test-results/glass-depth-glass-depth-π--8dd3d-byte-unchanged-mobile-dark--coarse-touch/error-context.md
+
+  19) [coarse-touch] › tests-visual/glass-depth.spec.ts:141:13 › glass-depth (π lane — the opt-in deep-glass tier, fail-CLOSED) › deep reads DEEPER than calm; calm byte-unchanged @ desktop (light) 
+
+    TypeError: Cannot read properties of undefined (reading 'path')
+
+      143 |             }) => {
+      144 |                 await page.setViewportSize({ width: vp.width, height: vp.height });
+    > 145 |                 await page.goto(PI_TARGETS.substrate.path, { waitUntil: "networkidle" });
+          |                                                      ^
+      146 |                 await setDark(page, mode === "dark");
+      147 |
+      148 |                 const plates = await readPlates(page);
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/glass-depth.spec.ts:145:54
+
+    Error Context: tests-visual/test-results/glass-depth-glass-depth-π--051d2-te-unchanged-desktop-light--coarse-touch/error-context.md
+
+  20) [coarse-touch] › tests-visual/glass-depth.spec.ts:141:13 › glass-depth (π lane — the opt-in deep-glass tier, fail-CLOSED) › deep reads DEEPER than calm; calm byte-unchanged @ desktop (dark) 
+
+    TypeError: Cannot read properties of undefined (reading 'path')
+
+      143 |             }) => {
+      144 |                 await page.setViewportSize({ width: vp.width, height: vp.height });
+    > 145 |                 await page.goto(PI_TARGETS.substrate.path, { waitUntil: "networkidle" });
+          |                                                      ^
+      146 |                 await setDark(page, mode === "dark");
+      147 |
+      148 |                 const plates = await readPlates(page);
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/glass-depth.spec.ts:145:54
+
+    Error Context: tests-visual/test-results/glass-depth-glass-depth-π--6621e-yte-unchanged-desktop-dark--coarse-touch/error-context.md
+
+  21) [coarse-touch] › tests-visual/glass-identity.spec.ts:134:9 › glass-identity (the warm-cream partial-transparency base over a calm-light page) › light: glass surfaces read warm-cream translucent (NOT grey) — /display/card 
+
+    Error: /display/card .glass-dock: surface bg "rgba(0, 0, 0, 0)" is NOT warm-cream translucent over the calm-light page — oklabL 0.000 not in [0.85, 0.99]; chroma 0.0000 < 0.004 (too grey/neutral). The grey slab can no longer score BETTER than warm cream (the bidirectional bound the monotonic gate lacked). Born-RED on HEAD's grey oklab(0.695 0.002 0.006 / 0.536); GREEN only on the warm-cream floor BC.W-GLASS-IDENTITY ratifies.
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      153 |                     verdict.pass,
+      154 |                     `${route} ${r.selector}: surface bg "${r.surfaceBg}" is NOT warm-cream translucent over the calm-light page — ${verdict.reasons.join("; ")}. The grey slab can no longer score BETTER than warm cream (the bidirectional bound the monotonic gate lacked). Born-RED on HEAD's grey oklab(0.695 0.002 0.006 / 0.536); GREEN only on the warm-cream floor BC.W-GLASS-IDENTITY ratifies.`,
+    > 155 |                 ).toBe(true);
+          |                   ^
+      156 |             }
+      157 |         });
+      158 |
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/glass-identity.spec.ts:155:19
+
+    Error Context: tests-visual/test-results/glass-identity-glass-ident-1cd42-ent-NOT-grey-—-display-card-coarse-touch/error-context.md
+
+  22) [coarse-touch] › tests-visual/glass-identity.spec.ts:159:9 › glass-identity (the warm-cream partial-transparency base over a calm-light page) › dark: glass surfaces stay warm + translucent (NOT a flat neutral) — /display/card 
+
+    Error: /display/card .glass-dock: dark surface bg "rgba(0, 0, 0, 0)" is NOT warm + translucent — oklabL 0.000 not in [0.1, 0.55]; chroma 0.0000 < 0.004 (too grey/neutral). The dark material is the lower-L twin of the warm-cream floor (warmth + translucency are mode-invariant).
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      174 |                     verdict.pass,
+      175 |                     `${route} ${r.selector}: dark surface bg "${r.surfaceBg}" is NOT warm + translucent — ${verdict.reasons.join("; ")}. The dark material is the lower-L twin of the warm-cream floor (warmth + translucency are mode-invariant).`,
+    > 176 |                 ).toBe(true);
+          |                   ^
+      177 |             }
+      178 |         });
+      179 |     }
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/glass-identity.spec.ts:176:19
+
+    Error Context: tests-visual/test-results/glass-identity-glass-ident-a6235-flat-neutral-—-display-card-coarse-touch/error-context.md
+
+  23) [coarse-touch] › tests-visual/glass-identity.spec.ts:134:9 › glass-identity (the warm-cream partial-transparency base over a calm-light page) › light: glass surfaces read warm-cream translucent (NOT grey) — /dock/overview 
+
+    Error: /dock/overview .glass-dock: surface bg "rgba(0, 0, 0, 0)" is NOT warm-cream translucent over the calm-light page — oklabL 0.000 not in [0.85, 0.99]; chroma 0.0000 < 0.004 (too grey/neutral). The grey slab can no longer score BETTER than warm cream (the bidirectional bound the monotonic gate lacked). Born-RED on HEAD's grey oklab(0.695 0.002 0.006 / 0.536); GREEN only on the warm-cream floor BC.W-GLASS-IDENTITY ratifies.
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      153 |                     verdict.pass,
+      154 |                     `${route} ${r.selector}: surface bg "${r.surfaceBg}" is NOT warm-cream translucent over the calm-light page — ${verdict.reasons.join("; ")}. The grey slab can no longer score BETTER than warm cream (the bidirectional bound the monotonic gate lacked). Born-RED on HEAD's grey oklab(0.695 0.002 0.006 / 0.536); GREEN only on the warm-cream floor BC.W-GLASS-IDENTITY ratifies.`,
+    > 155 |                 ).toBe(true);
+          |                   ^
+      156 |             }
+      157 |         });
+      158 |
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/glass-identity.spec.ts:155:19
+
+    Error Context: tests-visual/test-results/glass-identity-glass-ident-be513-nt-NOT-grey-—-dock-overview-coarse-touch/error-context.md
+
+  24) [coarse-touch] › tests-visual/glass-identity.spec.ts:159:9 › glass-identity (the warm-cream partial-transparency base over a calm-light page) › dark: glass surfaces stay warm + translucent (NOT a flat neutral) — /dock/overview 
+
+    Error: /dock/overview .glass-dock: dark surface bg "rgba(0, 0, 0, 0)" is NOT warm + translucent — oklabL 0.000 not in [0.1, 0.55]; chroma 0.0000 < 0.004 (too grey/neutral). The dark material is the lower-L twin of the warm-cream floor (warmth + translucency are mode-invariant).
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      174 |                     verdict.pass,
+      175 |                     `${route} ${r.selector}: dark surface bg "${r.surfaceBg}" is NOT warm + translucent — ${verdict.reasons.join("; ")}. The dark material is the lower-L twin of the warm-cream floor (warmth + translucency are mode-invariant).`,
+    > 176 |                 ).toBe(true);
+          |                   ^
+      177 |             }
+      178 |         });
+      179 |     }
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/glass-identity.spec.ts:176:19
+
+    Error Context: tests-visual/test-results/glass-identity-glass-ident-41035-lat-neutral-—-dock-overview-coarse-touch/error-context.md
+
+  25) [coarse-touch] › tests-visual/glass-identity.spec.ts:134:9 › glass-identity (the warm-cream partial-transparency base over a calm-light page) › light: glass surfaces read warm-cream translucent (NOT grey) — /containers/dialog 
+
+    Error: /containers/dialog .glass-dock: surface bg "rgba(0, 0, 0, 0)" is NOT warm-cream translucent over the calm-light page — oklabL 0.000 not in [0.85, 0.99]; chroma 0.0000 < 0.004 (too grey/neutral). The grey slab can no longer score BETTER than warm cream (the bidirectional bound the monotonic gate lacked). Born-RED on HEAD's grey oklab(0.695 0.002 0.006 / 0.536); GREEN only on the warm-cream floor BC.W-GLASS-IDENTITY ratifies.
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      153 |                     verdict.pass,
+      154 |                     `${route} ${r.selector}: surface bg "${r.surfaceBg}" is NOT warm-cream translucent over the calm-light page — ${verdict.reasons.join("; ")}. The grey slab can no longer score BETTER than warm cream (the bidirectional bound the monotonic gate lacked). Born-RED on HEAD's grey oklab(0.695 0.002 0.006 / 0.536); GREEN only on the warm-cream floor BC.W-GLASS-IDENTITY ratifies.`,
+    > 155 |                 ).toBe(true);
+          |                   ^
+      156 |             }
+      157 |         });
+      158 |
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/glass-identity.spec.ts:155:19
+
+    Error Context: tests-visual/test-results/glass-identity-glass-ident-5b929-OT-grey-—-containers-dialog-coarse-touch/error-context.md
+
+  26) [coarse-touch] › tests-visual/glass-identity.spec.ts:159:9 › glass-identity (the warm-cream partial-transparency base over a calm-light page) › dark: glass surfaces stay warm + translucent (NOT a flat neutral) — /containers/dialog 
+
+    Error: /containers/dialog .glass-dock: dark surface bg "rgba(0, 0, 0, 0)" is NOT warm + translucent — oklabL 0.000 not in [0.1, 0.55]; chroma 0.0000 < 0.004 (too grey/neutral). The dark material is the lower-L twin of the warm-cream floor (warmth + translucency are mode-invariant).
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      174 |                     verdict.pass,
+      175 |                     `${route} ${r.selector}: dark surface bg "${r.surfaceBg}" is NOT warm + translucent — ${verdict.reasons.join("; ")}. The dark material is the lower-L twin of the warm-cream floor (warmth + translucency are mode-invariant).`,
+    > 176 |                 ).toBe(true);
+          |                   ^
+      177 |             }
+      178 |         });
+      179 |     }
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/glass-identity.spec.ts:176:19
+
+    Error Context: tests-visual/test-results/glass-identity-glass-ident-e5428-neutral-—-containers-dialog-coarse-touch/error-context.md
+
+  27) [coarse-touch] › tests-visual/glass-identity.spec.ts:186:5 › glass-identity (the warm-cream partial-transparency base over a calm-light page) › light: the dock over the busy aurora reads warm-cream at REST (the base is not pre-greyed) — /substrates/glass-material 
+
+    Error: /substrates/glass-material .glass-dock: the dock plate over the aurora is "rgba(0, 0, 0, 0)" — NOT warm-cream at REST (oklabL 0.000 not in [0.85, 0.99]; chroma 0.0000 < 0.004 (too grey/neutral)). This wave asserts the BASE is not pre-greyed; the dynamic over-busy darken is BC.W-ADAPTIVE-RECONCILE's.
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      201 |             verdict.pass,
+      202 |             `${PAGE_AURORA_ROUTE} ${dock!.selector}: the dock plate over the aurora is "${dock!.surfaceBg}" — NOT warm-cream at REST (${verdict.reasons.join("; ")}). This wave asserts the BASE is not pre-greyed; the dynamic over-busy darken is BC.W-ADAPTIVE-RECONCILE's.`,
+    > 203 |         ).toBe(true);
+          |           ^
+      204 |     });
+      205 | });
+      206 |
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/glass-identity.spec.ts:203:11
+
+    Error Context: tests-visual/test-results/glass-identity-glass-ident-2927f-—-substrates-glass-material-coarse-touch/error-context.md
+
+  28) [coarse-touch] › tests-visual/glass-legibility.spec.ts:189:17 › glass-legibility (the BIDIRECTIONAL legibility-AND-glassiness π — more glass AND more legible at once) › light: in-situ glass clears AA WHILE staying below the tier α ceiling (legible AND glassy) @ desktop — /display/card 
+
+    Error: /display/card .glass-dock [light]: surface chroma is 0.0000 (bg rgba(0, 0, 0, 0)) — greyed to neutral (the AZ grey slab; the warm-cream identity must hold).
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   0
+
+      258 |                             stats!.chroma,
+      259 |                             `${route} ${r.selector} [${mode}]: surface chroma is ${stats!.chroma.toFixed(4)} (bg ${r.surfaceBg}) — greyed to neutral (the AZ grey slab; the warm-cream identity must hold).`,
+    > 260 |                         ).toBeGreaterThan(0);
+          |                           ^
+      261 |                     }
+      262 |                 });
+      263 |             }
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/glass-legibility.spec.ts:260:27
+
+    Error Context: tests-visual/test-results/glass-legibility-glass-leg-7edcd-assy-desktop-—-display-card-coarse-touch/error-context.md
+
+  29) [coarse-touch] › tests-visual/glass-legibility.spec.ts:189:17 › glass-legibility (the BIDIRECTIONAL legibility-AND-glassiness π — more glass AND more legible at once) › dark: in-situ glass clears AA WHILE staying below the tier α ceiling (legible AND glassy) @ desktop — /display/card 
+
+    Error: /display/card .glass-dock [dark]: surface chroma is 0.0000 (bg rgba(0, 0, 0, 0)) — greyed to neutral (the AZ grey slab; the warm-cream identity must hold).
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   0
+
+      258 |                             stats!.chroma,
+      259 |                             `${route} ${r.selector} [${mode}]: surface chroma is ${stats!.chroma.toFixed(4)} (bg ${r.surfaceBg}) — greyed to neutral (the AZ grey slab; the warm-cream identity must hold).`,
+    > 260 |                         ).toBeGreaterThan(0);
+          |                           ^
+      261 |                     }
+      262 |                 });
+      263 |             }
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/glass-legibility.spec.ts:260:27
+
+    Error Context: tests-visual/test-results/glass-legibility-glass-leg-beef4-assy-desktop-—-display-card-coarse-touch/error-context.md
+
+  30) [coarse-touch] › tests-visual/glass-legibility.spec.ts:189:17 › glass-legibility (the BIDIRECTIONAL legibility-AND-glassiness π — more glass AND more legible at once) › light: in-situ glass clears AA WHILE staying below the tier α ceiling (legible AND glassy) @ desktop — /dock/overview 
+
+    Error: /dock/overview .glass-dock [light]: surface chroma is 0.0000 (bg rgba(0, 0, 0, 0)) — greyed to neutral (the AZ grey slab; the warm-cream identity must hold).
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   0
+
+      258 |                             stats!.chroma,
+      259 |                             `${route} ${r.selector} [${mode}]: surface chroma is ${stats!.chroma.toFixed(4)} (bg ${r.surfaceBg}) — greyed to neutral (the AZ grey slab; the warm-cream identity must hold).`,
+    > 260 |                         ).toBeGreaterThan(0);
+          |                           ^
+      261 |                     }
+      262 |                 });
+      263 |             }
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/glass-legibility.spec.ts:260:27
+
+    Error Context: tests-visual/test-results/glass-legibility-glass-leg-06917-ssy-desktop-—-dock-overview-coarse-touch/error-context.md
+
+  31) [coarse-touch] › tests-visual/glass-legibility.spec.ts:189:17 › glass-legibility (the BIDIRECTIONAL legibility-AND-glassiness π — more glass AND more legible at once) › dark: in-situ glass clears AA WHILE staying below the tier α ceiling (legible AND glassy) @ desktop — /dock/overview 
+
+    Error: /dock/overview .glass-dock [dark]: surface chroma is 0.0000 (bg rgba(0, 0, 0, 0)) — greyed to neutral (the AZ grey slab; the warm-cream identity must hold).
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   0
+
+      258 |                             stats!.chroma,
+      259 |                             `${route} ${r.selector} [${mode}]: surface chroma is ${stats!.chroma.toFixed(4)} (bg ${r.surfaceBg}) — greyed to neutral (the AZ grey slab; the warm-cream identity must hold).`,
+    > 260 |                         ).toBeGreaterThan(0);
+          |                           ^
+      261 |                     }
+      262 |                 });
+      263 |             }
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/glass-legibility.spec.ts:260:27
+
+    Error Context: tests-visual/test-results/glass-legibility-glass-leg-4d802-ssy-desktop-—-dock-overview-coarse-touch/error-context.md
+
+  32) [coarse-touch] › tests-visual/glass-legibility.spec.ts:189:17 › glass-legibility (the BIDIRECTIONAL legibility-AND-glassiness π — more glass AND more legible at once) › light: in-situ glass clears AA WHILE staying below the tier α ceiling (legible AND glassy) @ desktop — /containers/dialog 
+
+    Error: /containers/dialog .glass-dock [light]: surface chroma is 0.0000 (bg rgba(0, 0, 0, 0)) — greyed to neutral (the AZ grey slab; the warm-cream identity must hold).
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   0
+
+      258 |                             stats!.chroma,
+      259 |                             `${route} ${r.selector} [${mode}]: surface chroma is ${stats!.chroma.toFixed(4)} (bg ${r.surfaceBg}) — greyed to neutral (the AZ grey slab; the warm-cream identity must hold).`,
+    > 260 |                         ).toBeGreaterThan(0);
+          |                           ^
+      261 |                     }
+      262 |                 });
+      263 |             }
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/glass-legibility.spec.ts:260:27
+
+    Error Context: tests-visual/test-results/glass-legibility-glass-leg-8501e-desktop-—-containers-dialog-coarse-touch/error-context.md
+
+  33) [coarse-touch] › tests-visual/glass-legibility.spec.ts:189:17 › glass-legibility (the BIDIRECTIONAL legibility-AND-glassiness π — more glass AND more legible at once) › dark: in-situ glass clears AA WHILE staying below the tier α ceiling (legible AND glassy) @ desktop — /containers/dialog 
+
+    Error: /containers/dialog .glass-dock [dark]: surface chroma is 0.0000 (bg rgba(0, 0, 0, 0)) — greyed to neutral (the AZ grey slab; the warm-cream identity must hold).
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   0
+
+      258 |                             stats!.chroma,
+      259 |                             `${route} ${r.selector} [${mode}]: surface chroma is ${stats!.chroma.toFixed(4)} (bg ${r.surfaceBg}) — greyed to neutral (the AZ grey slab; the warm-cream identity must hold).`,
+    > 260 |                         ).toBeGreaterThan(0);
+          |                           ^
+      261 |                     }
+      262 |                 });
+      263 |             }
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/glass-legibility.spec.ts:260:27
+
+    Error Context: tests-visual/test-results/glass-legibility-glass-leg-a901d-desktop-—-containers-dialog-coarse-touch/error-context.md
+
+  34) [coarse-touch] › tests-visual/glass-legibility.spec.ts:189:17 › glass-legibility (the BIDIRECTIONAL legibility-AND-glassiness π — more glass AND more legible at once) › light: in-situ glass clears AA WHILE staying below the tier α ceiling (legible AND glassy) @ desktop — /substrates/glass-material 
+
+    Error: /substrates/glass-material .glass-dock [light]: surface chroma is 0.0000 (bg rgba(0, 0, 0, 0)) — greyed to neutral (the AZ grey slab; the warm-cream identity must hold).
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   0
+
+      258 |                             stats!.chroma,
+      259 |                             `${route} ${r.selector} [${mode}]: surface chroma is ${stats!.chroma.toFixed(4)} (bg ${r.surfaceBg}) — greyed to neutral (the AZ grey slab; the warm-cream identity must hold).`,
+    > 260 |                         ).toBeGreaterThan(0);
+          |                           ^
+      261 |                     }
+      262 |                 });
+      263 |             }
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/glass-legibility.spec.ts:260:27
+
+    Error Context: tests-visual/test-results/glass-legibility-glass-leg-9ed0b-—-substrates-glass-material-coarse-touch/error-context.md
+
+  35) [coarse-touch] › tests-visual/glass-legibility.spec.ts:189:17 › glass-legibility (the BIDIRECTIONAL legibility-AND-glassiness π — more glass AND more legible at once) › dark: in-situ glass clears AA WHILE staying below the tier α ceiling (legible AND glassy) @ desktop — /substrates/glass-material 
+
+    Error: /substrates/glass-material .glass-dock [dark]: surface chroma is 0.0000 (bg rgba(0, 0, 0, 0)) — greyed to neutral (the AZ grey slab; the warm-cream identity must hold).
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   0
+
+      258 |                             stats!.chroma,
+      259 |                             `${route} ${r.selector} [${mode}]: surface chroma is ${stats!.chroma.toFixed(4)} (bg ${r.surfaceBg}) — greyed to neutral (the AZ grey slab; the warm-cream identity must hold).`,
+    > 260 |                         ).toBeGreaterThan(0);
+          |                           ^
+      261 |                     }
+      262 |                 });
+      263 |             }
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/glass-legibility.spec.ts:260:27
+
+    Error Context: tests-visual/test-results/glass-legibility-glass-leg-c5b7a-—-substrates-glass-material-coarse-touch/error-context.md
+
+  36) [coarse-touch] › tests-visual/glass-legibility.spec.ts:189:17 › glass-legibility (the BIDIRECTIONAL legibility-AND-glassiness π — more glass AND more legible at once) › light: in-situ glass clears AA WHILE staying below the tier α ceiling (legible AND glassy) @ mobile — /display/card 
+
+    Error: /display/card .glass-dock [light]: surface chroma is 0.0000 (bg rgba(0, 0, 0, 0)) — greyed to neutral (the AZ grey slab; the warm-cream identity must hold).
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   0
+
+      258 |                             stats!.chroma,
+      259 |                             `${route} ${r.selector} [${mode}]: surface chroma is ${stats!.chroma.toFixed(4)} (bg ${r.surfaceBg}) — greyed to neutral (the AZ grey slab; the warm-cream identity must hold).`,
+    > 260 |                         ).toBeGreaterThan(0);
+          |                           ^
+      261 |                     }
+      262 |                 });
+      263 |             }
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/glass-legibility.spec.ts:260:27
+
+    Error Context: tests-visual/test-results/glass-legibility-glass-leg-82d5f-lassy-mobile-—-display-card-coarse-touch/error-context.md
+
+  37) [coarse-touch] › tests-visual/glass-legibility.spec.ts:189:17 › glass-legibility (the BIDIRECTIONAL legibility-AND-glassiness π — more glass AND more legible at once) › dark: in-situ glass clears AA WHILE staying below the tier α ceiling (legible AND glassy) @ mobile — /display/card 
+
+    Error: /display/card .glass-dock [dark]: surface chroma is 0.0000 (bg rgba(0, 0, 0, 0)) — greyed to neutral (the AZ grey slab; the warm-cream identity must hold).
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   0
+
+      258 |                             stats!.chroma,
+      259 |                             `${route} ${r.selector} [${mode}]: surface chroma is ${stats!.chroma.toFixed(4)} (bg ${r.surfaceBg}) — greyed to neutral (the AZ grey slab; the warm-cream identity must hold).`,
+    > 260 |                         ).toBeGreaterThan(0);
+          |                           ^
+      261 |                     }
+      262 |                 });
+      263 |             }
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/glass-legibility.spec.ts:260:27
+
+    Error Context: tests-visual/test-results/glass-legibility-glass-leg-0798c-lassy-mobile-—-display-card-coarse-touch/error-context.md
+
+  38) [coarse-touch] › tests-visual/glass-legibility.spec.ts:189:17 › glass-legibility (the BIDIRECTIONAL legibility-AND-glassiness π — more glass AND more legible at once) › light: in-situ glass clears AA WHILE staying below the tier α ceiling (legible AND glassy) @ mobile — /dock/overview 
+
+    Error: /dock/overview .glass-dock [light]: surface chroma is 0.0000 (bg rgba(0, 0, 0, 0)) — greyed to neutral (the AZ grey slab; the warm-cream identity must hold).
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   0
+
+      258 |                             stats!.chroma,
+      259 |                             `${route} ${r.selector} [${mode}]: surface chroma is ${stats!.chroma.toFixed(4)} (bg ${r.surfaceBg}) — greyed to neutral (the AZ grey slab; the warm-cream identity must hold).`,
+    > 260 |                         ).toBeGreaterThan(0);
+          |                           ^
+      261 |                     }
+      262 |                 });
+      263 |             }
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/glass-legibility.spec.ts:260:27
+
+    Error Context: tests-visual/test-results/glass-legibility-glass-leg-06fe4-assy-mobile-—-dock-overview-coarse-touch/error-context.md
+
+  39) [coarse-touch] › tests-visual/glass-legibility.spec.ts:189:17 › glass-legibility (the BIDIRECTIONAL legibility-AND-glassiness π — more glass AND more legible at once) › dark: in-situ glass clears AA WHILE staying below the tier α ceiling (legible AND glassy) @ mobile — /dock/overview 
+
+    Error: /dock/overview .glass-dock [dark]: surface chroma is 0.0000 (bg rgba(0, 0, 0, 0)) — greyed to neutral (the AZ grey slab; the warm-cream identity must hold).
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   0
+
+      258 |                             stats!.chroma,
+      259 |                             `${route} ${r.selector} [${mode}]: surface chroma is ${stats!.chroma.toFixed(4)} (bg ${r.surfaceBg}) — greyed to neutral (the AZ grey slab; the warm-cream identity must hold).`,
+    > 260 |                         ).toBeGreaterThan(0);
+          |                           ^
+      261 |                     }
+      262 |                 });
+      263 |             }
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/glass-legibility.spec.ts:260:27
+
+    Error Context: tests-visual/test-results/glass-legibility-glass-leg-6d858-assy-mobile-—-dock-overview-coarse-touch/error-context.md
+
+  40) [coarse-touch] › tests-visual/glass-legibility.spec.ts:189:17 › glass-legibility (the BIDIRECTIONAL legibility-AND-glassiness π — more glass AND more legible at once) › light: in-situ glass clears AA WHILE staying below the tier α ceiling (legible AND glassy) @ mobile — /containers/dialog 
+
+    Error: /containers/dialog .glass-dock [light]: surface chroma is 0.0000 (bg rgba(0, 0, 0, 0)) — greyed to neutral (the AZ grey slab; the warm-cream identity must hold).
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   0
+
+      258 |                             stats!.chroma,
+      259 |                             `${route} ${r.selector} [${mode}]: surface chroma is ${stats!.chroma.toFixed(4)} (bg ${r.surfaceBg}) — greyed to neutral (the AZ grey slab; the warm-cream identity must hold).`,
+    > 260 |                         ).toBeGreaterThan(0);
+          |                           ^
+      261 |                     }
+      262 |                 });
+      263 |             }
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/glass-legibility.spec.ts:260:27
+
+    Error Context: tests-visual/test-results/glass-legibility-glass-leg-87f97--mobile-—-containers-dialog-coarse-touch/error-context.md
+
+  41) [coarse-touch] › tests-visual/glass-legibility.spec.ts:189:17 › glass-legibility (the BIDIRECTIONAL legibility-AND-glassiness π — more glass AND more legible at once) › dark: in-situ glass clears AA WHILE staying below the tier α ceiling (legible AND glassy) @ mobile — /containers/dialog 
+
+    Error: /containers/dialog .glass-dock [dark]: surface chroma is 0.0000 (bg rgba(0, 0, 0, 0)) — greyed to neutral (the AZ grey slab; the warm-cream identity must hold).
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   0
+
+      258 |                             stats!.chroma,
+      259 |                             `${route} ${r.selector} [${mode}]: surface chroma is ${stats!.chroma.toFixed(4)} (bg ${r.surfaceBg}) — greyed to neutral (the AZ grey slab; the warm-cream identity must hold).`,
+    > 260 |                         ).toBeGreaterThan(0);
+          |                           ^
+      261 |                     }
+      262 |                 });
+      263 |             }
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/glass-legibility.spec.ts:260:27
+
+    Error Context: tests-visual/test-results/glass-legibility-glass-leg-7621f--mobile-—-containers-dialog-coarse-touch/error-context.md
+
+  42) [coarse-touch] › tests-visual/glass-legibility.spec.ts:189:17 › glass-legibility (the BIDIRECTIONAL legibility-AND-glassiness π — more glass AND more legible at once) › light: in-situ glass clears AA WHILE staying below the tier α ceiling (legible AND glassy) @ mobile — /substrates/glass-material 
+
+    Error: /substrates/glass-material .glass-dock [light]: surface chroma is 0.0000 (bg rgba(0, 0, 0, 0)) — greyed to neutral (the AZ grey slab; the warm-cream identity must hold).
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   0
+
+      258 |                             stats!.chroma,
+      259 |                             `${route} ${r.selector} [${mode}]: surface chroma is ${stats!.chroma.toFixed(4)} (bg ${r.surfaceBg}) — greyed to neutral (the AZ grey slab; the warm-cream identity must hold).`,
+    > 260 |                         ).toBeGreaterThan(0);
+          |                           ^
+      261 |                     }
+      262 |                 });
+      263 |             }
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/glass-legibility.spec.ts:260:27
+
+    Error Context: tests-visual/test-results/glass-legibility-glass-leg-a0a3b-—-substrates-glass-material-coarse-touch/error-context.md
+
+  43) [coarse-touch] › tests-visual/glass-legibility.spec.ts:189:17 › glass-legibility (the BIDIRECTIONAL legibility-AND-glassiness π — more glass AND more legible at once) › dark: in-situ glass clears AA WHILE staying below the tier α ceiling (legible AND glassy) @ mobile — /substrates/glass-material 
+
+    Error: /substrates/glass-material .glass-dock [dark]: surface chroma is 0.0000 (bg rgba(0, 0, 0, 0)) — greyed to neutral (the AZ grey slab; the warm-cream identity must hold).
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   0
+
+      258 |                             stats!.chroma,
+      259 |                             `${route} ${r.selector} [${mode}]: surface chroma is ${stats!.chroma.toFixed(4)} (bg ${r.surfaceBg}) — greyed to neutral (the AZ grey slab; the warm-cream identity must hold).`,
+    > 260 |                         ).toBeGreaterThan(0);
+          |                           ^
+      261 |                     }
+      262 |                 });
+      263 |             }
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/glass-legibility.spec.ts:260:27
+
+    Error Context: tests-visual/test-results/glass-legibility-glass-leg-e2f3c-—-substrates-glass-material-coarse-touch/error-context.md
+
+  44) [coarse-touch] › tests-visual/glass-legibility.spec.ts:296:5 › glass-legibility (the BIDIRECTIONAL legibility-AND-glassiness π — more glass AND more legible at once) › light: the dock over the busy aurora stays glassy WHILE legible (the dynamic-range shift) — /substrates/aurora 
+
+    Error: /substrates/aurora .glass-dock: dock chroma 0.0000 ≤ 0 — greyed (the AZ slab; the warm material must hold even when darkened).
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   0
+
+      310 |             stats.chroma,
+      311 |             `${BUSY_ROUTE} ${dock!.selector}: dock chroma ${stats.chroma.toFixed(4)} ≤ 0 — greyed (the AZ slab; the warm material must hold even when darkened).`,
+    > 312 |         ).toBeGreaterThan(0);
+          |           ^
+      313 |     });
+      314 | });
+      315 |
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/glass-legibility.spec.ts:312:11
+
+    Error Context: tests-visual/test-results/glass-legibility-glass-leg-221a2-e-shift-—-substrates-aurora-coarse-touch/error-context.md
+
+  45) [coarse-touch] › tests-visual/glass-material-demo.spec.ts:63:5 › glass-material-demo (π lane — moving specular + biting tint, fail-CLOSED) › the named live canvas publishes live provenance and changing luminance 
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator:  locator('[data-glass-sample="live"]').first()
+    Expected: "functional-glass"
+    Received: ""
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveAttribute" with timeout 5000ms
+      - waiting for locator('[data-glass-sample="live"]').first()
+        14 × locator resolved to <div data-glass-sample="live" data-backdrop-sampled="" data-backdrop-sample-state="sampled" data-backdrop-sample-source="canvas" class="glass-card relative flex size-full flex-col items-center justify-center gap-1 rounded-card px-3 text-center text-small font-medium">…</div>
+           - unexpected value "null"
+
+
+      69 |         const sample = page.locator('[data-glass-sample="live"]').first();
+      70 |         await sample.scrollIntoViewIfNeeded();
+    > 71 |         await expect(sample).toHaveAttribute("data-material", "functional-glass");
+         |                              ^
+      72 |         await page.waitForFunction(
+      73 |             () => {
+      74 |                 const el = document.querySelector('[data-glass-sample="live"]');
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/glass-material-demo.spec.ts:71:30
+
+    Error Context: tests-visual/test-results/glass-material-demo-glass--b179d-ance-and-changing-luminance-coarse-touch/error-context.md
+
+  46) [coarse-touch] › tests-visual/goo-dot.spec.ts:126:5 › goo-dot — the field drives the dots (light) 
+
+    TimeoutError: page.waitForSelector: Timeout 8000ms exceeded.
+    Call log:
+      - waiting for locator('[data-testid="goo-dot-matrix-canvas"]') to be visible
+
+
+      126 |     test(`goo-dot — the field drives the dots (${scheme})`, async ({ page }) => {
+      127 |         await page.goto(ROUTE);
+    > 128 |         await page.waitForSelector(CANVAS, { timeout: 8000 });
+          |                    ^
+      129 |         await setScheme(page, scheme);
+      130 |         await page.waitForTimeout(700);
+      131 |
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/goo-dot.spec.ts:128:20
+
+    Error Context: tests-visual/test-results/goo-dot-goo-dot-—-the-field-drives-the-dots-light--coarse-touch/error-context.md
+
+  47) [coarse-touch] › tests-visual/goo-dot.spec.ts:153:5 › goo-dot — the meatball merges in dots (light) 
+
+    TimeoutError: page.waitForSelector: Timeout 8000ms exceeded.
+    Call log:
+      - waiting for locator('[data-testid="goo-dot-matrix-canvas"]') to be visible
+
+
+      153 |     test(`goo-dot — the meatball merges in dots (${scheme})`, async ({ page }) => {
+      154 |         await page.goto(ROUTE);
+    > 155 |         await page.waitForSelector(CANVAS, { timeout: 8000 });
+          |                    ^
+      156 |         await setScheme(page, scheme);
+      157 |         await page.waitForTimeout(500);
+      158 |
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/goo-dot.spec.ts:155:20
+
+    Error Context: tests-visual/test-results/goo-dot-goo-dot-—-the-meatball-merges-in-dots-light--coarse-touch/error-context.md
+
+  48) [coarse-touch] › tests-visual/goo-dot.spec.ts:169:5 › goo-dot PRM freezes to one static frame (light) 
+
+    TimeoutError: page.waitForSelector: Timeout 8000ms exceeded.
+    Call log:
+      - waiting for locator('[data-testid="goo-dot-matrix-canvas"]') to be visible
+
+
+      170 |         await page.emulateMedia({ reducedMotion: "reduce" });
+      171 |         await page.goto(ROUTE);
+    > 172 |         await page.waitForSelector(CANVAS, { timeout: 8000 });
+          |                    ^
+      173 |         await setScheme(page, scheme);
+      174 |         await page.waitForTimeout(500);
+      175 |
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/goo-dot.spec.ts:172:20
+
+    Error Context: tests-visual/test-results/goo-dot-goo-dot-PRM-freezes-to-one-static-frame-light--coarse-touch/error-context.md
+
+  49) [coarse-touch] › tests-visual/goo-dot.spec.ts:126:5 › goo-dot — the field drives the dots (dark) 
+
+    TimeoutError: page.waitForSelector: Timeout 8000ms exceeded.
+    Call log:
+      - waiting for locator('[data-testid="goo-dot-matrix-canvas"]') to be visible
+
+
+      126 |     test(`goo-dot — the field drives the dots (${scheme})`, async ({ page }) => {
+      127 |         await page.goto(ROUTE);
+    > 128 |         await page.waitForSelector(CANVAS, { timeout: 8000 });
+          |                    ^
+      129 |         await setScheme(page, scheme);
+      130 |         await page.waitForTimeout(700);
+      131 |
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/goo-dot.spec.ts:128:20
+
+    Error Context: tests-visual/test-results/goo-dot-goo-dot-—-the-field-drives-the-dots-dark--coarse-touch/error-context.md
+
+  50) [coarse-touch] › tests-visual/goo-dot.spec.ts:153:5 › goo-dot — the meatball merges in dots (dark) 
+
+    TimeoutError: page.waitForSelector: Timeout 8000ms exceeded.
+    Call log:
+      - waiting for locator('[data-testid="goo-dot-matrix-canvas"]') to be visible
+
+
+      153 |     test(`goo-dot — the meatball merges in dots (${scheme})`, async ({ page }) => {
+      154 |         await page.goto(ROUTE);
+    > 155 |         await page.waitForSelector(CANVAS, { timeout: 8000 });
+          |                    ^
+      156 |         await setScheme(page, scheme);
+      157 |         await page.waitForTimeout(500);
+      158 |
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/goo-dot.spec.ts:155:20
+
+    Error Context: tests-visual/test-results/goo-dot-goo-dot-—-the-meatball-merges-in-dots-dark--coarse-touch/error-context.md
+
+  51) [coarse-touch] › tests-visual/goo-dot.spec.ts:169:5 › goo-dot PRM freezes to one static frame (dark) 
+
+    TimeoutError: page.waitForSelector: Timeout 8000ms exceeded.
+    Call log:
+      - waiting for locator('[data-testid="goo-dot-matrix-canvas"]') to be visible
+
+
+      170 |         await page.emulateMedia({ reducedMotion: "reduce" });
+      171 |         await page.goto(ROUTE);
+    > 172 |         await page.waitForSelector(CANVAS, { timeout: 8000 });
+          |                    ^
+      173 |         await setScheme(page, scheme);
+      174 |         await page.waitForTimeout(500);
+      175 |
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/goo-dot.spec.ts:172:20
+
+    Error Context: tests-visual/test-results/goo-dot-goo-dot-PRM-freezes-to-one-static-frame-dark--coarse-touch/error-context.md
+
+  52) [coarse-touch] › tests-visual/goo-redress.spec.ts:172:9 › W-GOO-REDRESS capture — light › bridge holds + hover wakes (light) 
+
+    Error: the satellite bridge holds across the orbit envelope — the resting Calm bead stays ONE connected component every frame (no detached disc); worst over 36 frames = 3 components, 36 detach frames (the BA-goo-2 fail state is a 2nd satellite-sized component)
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 1
+    Received:    3
+
+      267 |                 worstComponents,
+      268 |                 `the satellite bridge holds across the orbit envelope — the resting Calm bead stays ONE connected component every frame (no detached disc); worst over ${BRIDGE_FRAMES} frames = ${worstComponents} components, ${detachFrames} detach frames (the BA-goo-2 fail state is a 2nd satellite-sized component)`,
+    > 269 |             ).toBeLessThanOrEqual(BRIDGE_MAX_COMPONENTS);
+          |               ^
+      270 |             expect(
+      271 |                 minSilhouetteMass,
+      272 |                 `the merged creature paints a substantial saturated body every frame (the satellites neck the body, the bridge is the DEFAULT visible state) — min mass over the sweep ${minSilhouetteMass} cells (an absent/flooded render reads ~0)`,
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/goo-redress.spec.ts:269:15
+
+    Error Context: tests-visual/test-results/goo-redress-W-GOO-REDRESS--abde7-ge-holds-hover-wakes-light--coarse-touch/error-context.md
+
+  52 failed
+    [coarse-touch] › tests-visual/ghost-dashed.spec.ts:130:13 › ghost-dashed (π — the ONE dashed-ghost register + rounded-everywhere, fail-CLOSED) › (a)+(b) the ghost-slot resolves a warm dashed register at --radius-card [light] @ mobile 
+    [coarse-touch] › tests-visual/ghost-dashed.spec.ts:130:13 › ghost-dashed (π — the ONE dashed-ghost register + rounded-everywhere, fail-CLOSED) › (a)+(b) the ghost-slot resolves a warm dashed register at --radius-card [dark] @ mobile 
+    [coarse-touch] › tests-visual/ghost-dashed.spec.ts:130:13 › ghost-dashed (π — the ONE dashed-ghost register + rounded-everywhere, fail-CLOSED) › (a)+(b) the ghost-slot resolves a warm dashed register at --radius-card [light] @ desktop 
+    [coarse-touch] › tests-visual/ghost-dashed.spec.ts:130:13 › ghost-dashed (π — the ONE dashed-ghost register + rounded-everywhere, fail-CLOSED) › (a)+(b) the ghost-slot resolves a warm dashed register at --radius-card [dark] @ desktop 
+    [coarse-touch] › tests-visual/glass-accent.spec.ts:164:13 › glass-accent (π lane — the per-instance chromatic rim+glint, fail-CLOSED) › accent ON reads the hue at rim + glint; OFF byte-matches baseline @ mobile (light) 
+    [coarse-touch] › tests-visual/glass-accent.spec.ts:164:13 › glass-accent (π lane — the per-instance chromatic rim+glint, fail-CLOSED) › accent ON reads the hue at rim + glint; OFF byte-matches baseline @ mobile (dark) 
+    [coarse-touch] › tests-visual/glass-accent.spec.ts:164:13 › glass-accent (π lane — the per-instance chromatic rim+glint, fail-CLOSED) › accent ON reads the hue at rim + glint; OFF byte-matches baseline @ desktop (light) 
+    [coarse-touch] › tests-visual/glass-accent.spec.ts:164:13 › glass-accent (π lane — the per-instance chromatic rim+glint, fail-CLOSED) › accent ON reads the hue at rim + glint; OFF byte-matches baseline @ desktop (dark) 
+    [coarse-touch] › tests-visual/glass-accent.spec.ts:206:9 › glass-accent (π lane — the per-instance chromatic rim+glint, fail-CLOSED) › per-instance: distinct accent hues resolve distinct rims (light) 
+    [coarse-touch] › tests-visual/glass-accent.spec.ts:206:9 › glass-accent (π lane — the per-instance chromatic rim+glint, fail-CLOSED) › per-instance: distinct accent hues resolve distinct rims (dark) 
+    [coarse-touch] › tests-visual/glass-accent.spec.ts:234:5 › glass-accent (π lane — the per-instance chromatic rim+glint, fail-CLOSED) › the demo glass-material story renders the per-instance accent swatches 
+    [coarse-touch] › tests-visual/glass-cal.spec.ts:68:5 › BA.W-GLASS-CAL — the blur dial-back + the disco retirement (π) › (a) BLUR — the resolved radii are dialed back + glass still reads as glass 
+    [coarse-touch] › tests-visual/glass-cohesion.spec.ts:251:13 › glass-cohesion (π lane — the cohesion surfaces paint glass + flatten at level:0, fail-CLOSED) › Drawer + Slider + Notification paint glass and flatten @ mobile (light) 
+    [coarse-touch] › tests-visual/glass-cohesion.spec.ts:251:13 › glass-cohesion (π lane — the cohesion surfaces paint glass + flatten at level:0, fail-CLOSED) › Drawer + Slider + Notification paint glass and flatten @ mobile (dark) 
+    [coarse-touch] › tests-visual/glass-cohesion.spec.ts:251:13 › glass-cohesion (π lane — the cohesion surfaces paint glass + flatten at level:0, fail-CLOSED) › Drawer + Slider + Notification paint glass and flatten @ desktop (light) 
+    [coarse-touch] › tests-visual/glass-cohesion.spec.ts:251:13 › glass-cohesion (π lane — the cohesion surfaces paint glass + flatten at level:0, fail-CLOSED) › Drawer + Slider + Notification paint glass and flatten @ desktop (dark) 
+    [coarse-touch] › tests-visual/glass-depth.spec.ts:141:13 › glass-depth (π lane — the opt-in deep-glass tier, fail-CLOSED) › deep reads DEEPER than calm; calm byte-unchanged @ mobile (light) 
+    [coarse-touch] › tests-visual/glass-depth.spec.ts:141:13 › glass-depth (π lane — the opt-in deep-glass tier, fail-CLOSED) › deep reads DEEPER than calm; calm byte-unchanged @ mobile (dark) 
+    [coarse-touch] › tests-visual/glass-depth.spec.ts:141:13 › glass-depth (π lane — the opt-in deep-glass tier, fail-CLOSED) › deep reads DEEPER than calm; calm byte-unchanged @ desktop (light) 
+    [coarse-touch] › tests-visual/glass-depth.spec.ts:141:13 › glass-depth (π lane — the opt-in deep-glass tier, fail-CLOSED) › deep reads DEEPER than calm; calm byte-unchanged @ desktop (dark) 
+    [coarse-touch] › tests-visual/glass-identity.spec.ts:134:9 › glass-identity (the warm-cream partial-transparency base over a calm-light page) › light: glass surfaces read warm-cream translucent (NOT grey) — /display/card 
+    [coarse-touch] › tests-visual/glass-identity.spec.ts:159:9 › glass-identity (the warm-cream partial-transparency base over a calm-light page) › dark: glass surfaces stay warm + translucent (NOT a flat neutral) — /display/card 
+    [coarse-touch] › tests-visual/glass-identity.spec.ts:134:9 › glass-identity (the warm-cream partial-transparency base over a calm-light page) › light: glass surfaces read warm-cream translucent (NOT grey) — /dock/overview 
+    [coarse-touch] › tests-visual/glass-identity.spec.ts:159:9 › glass-identity (the warm-cream partial-transparency base over a calm-light page) › dark: glass surfaces stay warm + translucent (NOT a flat neutral) — /dock/overview 
+    [coarse-touch] › tests-visual/glass-identity.spec.ts:134:9 › glass-identity (the warm-cream partial-transparency base over a calm-light page) › light: glass surfaces read warm-cream translucent (NOT grey) — /containers/dialog 
+    [coarse-touch] › tests-visual/glass-identity.spec.ts:159:9 › glass-identity (the warm-cream partial-transparency base over a calm-light page) › dark: glass surfaces stay warm + translucent (NOT a flat neutral) — /containers/dialog 
+    [coarse-touch] › tests-visual/glass-identity.spec.ts:186:5 › glass-identity (the warm-cream partial-transparency base over a calm-light page) › light: the dock over the busy aurora reads warm-cream at REST (the base is not pre-greyed) — /substrates/glass-material 
+    [coarse-touch] › tests-visual/glass-legibility.spec.ts:189:17 › glass-legibility (the BIDIRECTIONAL legibility-AND-glassiness π — more glass AND more legible at once) › light: in-situ glass clears AA WHILE staying below the tier α ceiling (legible AND glassy) @ desktop — /display/card 
+    [coarse-touch] › tests-visual/glass-legibility.spec.ts:189:17 › glass-legibility (the BIDIRECTIONAL legibility-AND-glassiness π — more glass AND more legible at once) › dark: in-situ glass clears AA WHILE staying below the tier α ceiling (legible AND glassy) @ desktop — /display/card 
+    [coarse-touch] › tests-visual/glass-legibility.spec.ts:189:17 › glass-legibility (the BIDIRECTIONAL legibility-AND-glassiness π — more glass AND more legible at once) › light: in-situ glass clears AA WHILE staying below the tier α ceiling (legible AND glassy) @ desktop — /dock/overview 
+    [coarse-touch] › tests-visual/glass-legibility.spec.ts:189:17 › glass-legibility (the BIDIRECTIONAL legibility-AND-glassiness π — more glass AND more legible at once) › dark: in-situ glass clears AA WHILE staying below the tier α ceiling (legible AND glassy) @ desktop — /dock/overview 
+    [coarse-touch] › tests-visual/glass-legibility.spec.ts:189:17 › glass-legibility (the BIDIRECTIONAL legibility-AND-glassiness π — more glass AND more legible at once) › light: in-situ glass clears AA WHILE staying below the tier α ceiling (legible AND glassy) @ desktop — /containers/dialog 
+    [coarse-touch] › tests-visual/glass-legibility.spec.ts:189:17 › glass-legibility (the BIDIRECTIONAL legibility-AND-glassiness π — more glass AND more legible at once) › dark: in-situ glass clears AA WHILE staying below the tier α ceiling (legible AND glassy) @ desktop — /containers/dialog 
+    [coarse-touch] › tests-visual/glass-legibility.spec.ts:189:17 › glass-legibility (the BIDIRECTIONAL legibility-AND-glassiness π — more glass AND more legible at once) › light: in-situ glass clears AA WHILE staying below the tier α ceiling (legible AND glassy) @ desktop — /substrates/glass-material 
+    [coarse-touch] › tests-visual/glass-legibility.spec.ts:189:17 › glass-legibility (the BIDIRECTIONAL legibility-AND-glassiness π — more glass AND more legible at once) › dark: in-situ glass clears AA WHILE staying below the tier α ceiling (legible AND glassy) @ desktop — /substrates/glass-material 
+    [coarse-touch] › tests-visual/glass-legibility.spec.ts:189:17 › glass-legibility (the BIDIRECTIONAL legibility-AND-glassiness π — more glass AND more legible at once) › light: in-situ glass clears AA WHILE staying below the tier α ceiling (legible AND glassy) @ mobile — /display/card 
+    [coarse-touch] › tests-visual/glass-legibility.spec.ts:189:17 › glass-legibility (the BIDIRECTIONAL legibility-AND-glassiness π — more glass AND more legible at once) › dark: in-situ glass clears AA WHILE staying below the tier α ceiling (legible AND glassy) @ mobile — /display/card 
+    [coarse-touch] › tests-visual/glass-legibility.spec.ts:189:17 › glass-legibility (the BIDIRECTIONAL legibility-AND-glassiness π — more glass AND more legible at once) › light: in-situ glass clears AA WHILE staying below the tier α ceiling (legible AND glassy) @ mobile — /dock/overview 
+    [coarse-touch] › tests-visual/glass-legibility.spec.ts:189:17 › glass-legibility (the BIDIRECTIONAL legibility-AND-glassiness π — more glass AND more legible at once) › dark: in-situ glass clears AA WHILE staying below the tier α ceiling (legible AND glassy) @ mobile — /dock/overview 
+    [coarse-touch] › tests-visual/glass-legibility.spec.ts:189:17 › glass-legibility (the BIDIRECTIONAL legibility-AND-glassiness π — more glass AND more legible at once) › light: in-situ glass clears AA WHILE staying below the tier α ceiling (legible AND glassy) @ mobile — /containers/dialog 
+    [coarse-touch] › tests-visual/glass-legibility.spec.ts:189:17 › glass-legibility (the BIDIRECTIONAL legibility-AND-glassiness π — more glass AND more legible at once) › dark: in-situ glass clears AA WHILE staying below the tier α ceiling (legible AND glassy) @ mobile — /containers/dialog 
+    [coarse-touch] › tests-visual/glass-legibility.spec.ts:189:17 › glass-legibility (the BIDIRECTIONAL legibility-AND-glassiness π — more glass AND more legible at once) › light: in-situ glass clears AA WHILE staying below the tier α ceiling (legible AND glassy) @ mobile — /substrates/glass-material 
+    [coarse-touch] › tests-visual/glass-legibility.spec.ts:189:17 › glass-legibility (the BIDIRECTIONAL legibility-AND-glassiness π — more glass AND more legible at once) › dark: in-situ glass clears AA WHILE staying below the tier α ceiling (legible AND glassy) @ mobile — /substrates/glass-material 
+    [coarse-touch] › tests-visual/glass-legibility.spec.ts:296:5 › glass-legibility (the BIDIRECTIONAL legibility-AND-glassiness π — more glass AND more legible at once) › light: the dock over the busy aurora stays glassy WHILE legible (the dynamic-range shift) — /substrates/aurora 
+    [coarse-touch] › tests-visual/glass-material-demo.spec.ts:63:5 › glass-material-demo (π lane — moving specular + biting tint, fail-CLOSED) › the named live canvas publishes live provenance and changing luminance 
+    [coarse-touch] › tests-visual/goo-dot.spec.ts:126:5 › goo-dot — the field drives the dots (light) 
+    [coarse-touch] › tests-visual/goo-dot.spec.ts:153:5 › goo-dot — the meatball merges in dots (light) 
+    [coarse-touch] › tests-visual/goo-dot.spec.ts:169:5 › goo-dot PRM freezes to one static frame (light) 
+    [coarse-touch] › tests-visual/goo-dot.spec.ts:126:5 › goo-dot — the field drives the dots (dark) 
+    [coarse-touch] › tests-visual/goo-dot.spec.ts:153:5 › goo-dot — the meatball merges in dots (dark) 
+    [coarse-touch] › tests-visual/goo-dot.spec.ts:169:5 › goo-dot PRM freezes to one static frame (dark) 
+    [coarse-touch] › tests-visual/goo-redress.spec.ts:172:9 › W-GOO-REDRESS capture — light › bridge holds + hover wakes (light) 
+  33 passed (3.7m)

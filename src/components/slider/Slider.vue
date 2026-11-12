@@ -80,6 +80,29 @@ function getRootEl(): HTMLElement | null {
 
 const { isHeld } = useDockHold(getRootEl);
 
+/* THE GRAB IS TAKEN AT THE PRESS. With `contain` alignment reka 2.10 records
+   the thumb's grab offset, `clientX − thumb.left`, on the FIRST `pointermove` of a
+   thumb drag rather than at the press, so the offset carries that first move's travel
+   and the thumb trails the pointer by it for the whole drag (4 px per 4 px step,
+   measured). This handler runs after reka's own `pointerdown` (the merged `onX` chain
+   lands last, above), once the thumb holds the pointer capture, and hands reka one
+   `pointermove` at the press point: the offset is then the true grab, the value does
+   not move, and every later move tracks the pointer 1:1 on the same frame. */
+function onPointerDown(event: PointerEvent): void {
+    const thumb = (event.target as Element | null)?.closest?.<HTMLElement>(".slider-thumb");
+    if (!thumb || !thumb.hasPointerCapture(event.pointerId)) return;
+    thumb.dispatchEvent(
+        new PointerEvent("pointermove", {
+            bubbles: true,
+            clientX: event.clientX,
+            clientY: event.clientY,
+            pointerId: event.pointerId,
+            pointerType: event.pointerType,
+            isPrimary: event.isPrimary,
+        }),
+    );
+}
+
 const loupeRef = useTemplateRef<HTMLElement>("loupeRef");
 
 /* The weight-train velocity bridge. Writes the bounded `--atom-drag-v` and the ONE
@@ -143,13 +166,17 @@ function writeVeilCentre(): void {
 // The lens organ over the scrub site. Its geometry is measured ONCE per grasp — the
 // track's own box and the viewport point it hangs from — and the per-value write is
 // two custom properties, no layout read. `--loupe-x` is the value point in TRACK
-// coordinates: the clone is laid out at 3× and transformed down by k/3, so
+// coordinates, the thumb's centre on the lane (`d/2 + p·(track − d)`, styles.css THE
+// LANE), and the lens fill ends at the thumb's trailing edge, as the real fill does
+// (at `p·track` both would sit off the thumb): the clone is laid out at 3× and
+// transformed down by k/3, so
 // `LENS/2 − k·x` puts that point dead centre at every k (the two scales cancel).
 // Horizontal only: a vertical scrubber's finger does not occlude its own value point.
 // THE ONE PREDICATE. Scrubber-only comes free — `grasping` opens only for a graspable
 // variant — so the spectrum is excluded here and nowhere else; horizontal-only is the
 // stated occlusion rule. Nothing downstream re-tests either.
 const loupeTrackW = ref(0);
+let loupeThumbD = 0;
 const loupeShown = computed(
     () => grasping.value && props.orientation !== "vertical",
 );
@@ -170,6 +197,8 @@ function writeLoupeGeometry(): void {
     const track = host.querySelector<HTMLElement>(".slider-track");
     if (!track) return;
     const rect = track.getBoundingClientRect();
+    // The thumb's layout diameter: `offsetWidth`, so the held press scale never reaches it.
+    loupeThumbD = host.querySelector<HTMLElement>(".slider-thumb")?.offsetWidth ?? 0;
     loupeTrackW.value = rect.width;
     lens.style.setProperty("--loupe-track-w", `${rect.width}px`);
     lens.style.setProperty("--loupe-left", `${rect.left + rect.width / 2}px`);
@@ -179,9 +208,10 @@ function writeLoupeGeometry(): void {
 function writeLoupeValue(): void {
     const lens = loupeRef.value;
     if (!lens || !loupeTrackW.value) return;
-    const x = valueFraction() * loupeTrackW.value;
+    const d = loupeThumbD;
+    const x = d / 2 + valueFraction() * (loupeTrackW.value - d);
     lens.style.setProperty("--loupe-x", `${x}px`);
-    lens.style.setProperty("--loupe-fill-w", `${x * 3}px`);
+    lens.style.setProperty("--loupe-fill-w", `${(x + d / 2) * 3}px`);
 }
 
 function trackViewport(on: boolean): void {
@@ -272,6 +302,7 @@ onMounted(() => {
         :data-motion="motionAxis.dataMotion.value"
         :style="hostStyle"
         v-bind="forwarded"
+        @pointerdown="onPointerDown"
     >
         <!--
             The focus veil — the world's half of the grasp, TELEPORTED to `<body>`.
@@ -339,20 +370,31 @@ onMounted(() => {
                 shipped `saturate(1.4)` over half its own colour and a hard seam at the
                 handle. A class that is never applied cannot be un-applied wrongly.
             -->
-            <SliderRange
-                class="slider-range"
-                :class="v !== 'spectrum' && 'glass-liquid-fill'"
-                :data-held="isHeld || undefined"
-            >
-                <template v-if="grasping && graspable">
-                    <span class="glass-grasp-carrier" data-grasp="rest"></span>
-                    <span
-                        class="glass-grasp-carrier"
-                        data-grasp="grasp"
-                        @transitionend="onGraspReleaseEnd"
-                    ></span>
-                </template>
-            </SliderRange>
+            <!--
+                THE LANE. reka places the range by percentages of its
+                containing block and the thumb by `contain` alignment, whose leading edge
+                travels `p·(track − thumb)`. The lane is the track less one thumb
+                diameter, so the range's percentages land on the thumb's travel, and the
+                range reaches one diameter past it (styles.css): the fill is exactly
+                `thumb + p·(track − thumb)` wide, never narrower than the thumb at min,
+                and the thumb sits inside its leading end at every value.
+            -->
+            <span class="slider-lane">
+                <SliderRange
+                    class="slider-range"
+                    :class="v !== 'spectrum' && 'glass-liquid-fill'"
+                    :data-held="isHeld || undefined"
+                >
+                    <template v-if="grasping && graspable">
+                        <span class="glass-grasp-carrier" data-grasp="rest"></span>
+                        <span
+                            class="glass-grasp-carrier"
+                            data-grasp="grasp"
+                            @transitionend="onGraspReleaseEnd"
+                        ></span>
+                    </template>
+                </SliderRange>
+            </span>
         </SliderTrack>
         <!--
             The thumb's specular anchor is FROZEN at 50%/50% and that is correct, not a

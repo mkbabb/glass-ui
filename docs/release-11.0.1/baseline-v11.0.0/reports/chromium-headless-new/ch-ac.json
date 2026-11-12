@@ -1,0 +1,2616 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "tests-visual/playwright.config.ts",
+      "--project=chromium-headless-new",
+      "--workers=1",
+      "tests-visual/aurora-mediums-substrate.spec.ts",
+      "tests-visual/aurora-painterly-statistics.spec.ts",
+      "tests-visual/aurora-studio.spec.ts",
+      "tests-visual/aurora-swraster.spec.ts",
+      "tests-visual/aurora-vibrancy.spec.ts",
+      "tests-visual/auth-shell-bg.spec.ts",
+      "tests-visual/ba-animate.spec.ts",
+      "tests-visual/blob-config-delta.spec.ts",
+      "tests-visual/blob-mood-live.spec.ts",
+      "tests-visual/blob-page.spec.ts",
+      "tests-visual/blob-painted-component.spec.ts",
+      "tests-visual/blob-pause-seam.spec.ts",
+      "tests-visual/blob-render.spec.ts",
+      "tests-visual/blob-studio.spec.ts",
+      "tests-visual/blob-warm-default.spec.ts"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/playwright.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-headless-new",
+        "name": "chromium-headless-new",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "coarse-touch",
+        "name": "coarse-touch",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "safari-webgl.spec.ts",
+          "aurora-swraster.spec.ts",
+          "release-10-1-1.spec.ts",
+          "release-10-1-2.spec.ts",
+          "release-10-1-3.spec.ts",
+          "release-10-1-4.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/reports/ch-ac.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5321",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/",
+      "url": "http://localhost:5321",
+      "reuseExistingServer": true,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "aurora-mediums-substrate.spec.ts",
+      "file": "aurora-mediums-substrate.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "aurora-mediums-substrate (π lane — oil-medium neutrality + organic grain)",
+          "file": "aurora-mediums-substrate.spec.ts",
+          "line": 115,
+          "column": 6,
+          "specs": [
+            {
+              "title": "the OIL medium bakes a structured organic field @ mobile (375×667)",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 240000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 11074,
+                      "error": {
+                        "message": "TimeoutError: locator.waitFor: Timeout 10000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-aurora-atoms-surface]') to be visible\u001b[22m\n\u001b[2m    24 × locator resolved to hidden <div tabindex=\"0\" data-fade-end=\"\" data-fade-axis=\"y\" data-fade-start=\"\" data-aurora-atoms-surface=\"\" class=\"fading-scroll fading-scroll--y flex-1 min-h-0 overflow-x-clip scrollbar-thin\">…</div>\u001b[22m\n",
+                        "stack": "TimeoutError: locator.waitFor: Timeout 10000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-aurora-atoms-surface]') to be visible\u001b[22m\n\u001b[2m    24 × locator resolved to hidden <div tabindex=\"0\" data-fade-end=\"\" data-fade-axis=\"y\" data-fade-start=\"\" data-aurora-atoms-surface=\"\" class=\"fading-scroll fading-scroll--y flex-1 min-h-0 overflow-x-clip scrollbar-thin\">…</div>\u001b[22m\n\n    at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/aurora-mediums-substrate.spec.ts:129:32",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/aurora-mediums-substrate.spec.ts",
+                          "column": 32,
+                          "line": 129
+                        },
+                        "snippet": "  127 |\n  128 |             const atomsSurface = page.locator(\"[data-aurora-atoms-surface]\");\n> 129 |             await atomsSurface.waitFor({ state: \"visible\", timeout: 10_000 });\n      |                                ^\n  130 |\n  131 |             // Select the OIL medium (the existing medium the substrate change must not\n  132 |             // regress) via the atoms `medium` control."
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/aurora-mediums-substrate.spec.ts",
+                            "column": 32,
+                            "line": 129
+                          },
+                          "message": "TimeoutError: locator.waitFor: Timeout 10000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-aurora-atoms-surface]') to be visible\u001b[22m\n\u001b[2m    24 × locator resolved to hidden <div tabindex=\"0\" data-fade-end=\"\" data-fade-axis=\"y\" data-fade-start=\"\" data-aurora-atoms-surface=\"\" class=\"fading-scroll fading-scroll--y flex-1 min-h-0 overflow-x-clip scrollbar-thin\">…</div>\u001b[22m\n\n\n  127 |\n  128 |             const atomsSurface = page.locator(\"[data-aurora-atoms-surface]\");\n> 129 |             await atomsSurface.waitFor({ state: \"visible\", timeout: 10_000 });\n      |                                ^\n  130 |\n  131 |             // Select the OIL medium (the existing medium the substrate change must not\n  132 |             // regress) via the atoms `medium` control.\n    at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/aurora-mediums-substrate.spec.ts:129:32"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T22:02:17.169Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/test-results/aurora-mediums-substrate-a-542a3-ganic-field-mobile-375×667--chromium-headless-new/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/aurora-mediums-substrate.spec.ts",
+                        "column": 32,
+                        "line": 129
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "f0b189948c8decca70bd-61894cc56d6b066a818c",
+              "file": "aurora-mediums-substrate.spec.ts",
+              "line": 117,
+              "column": 9
+            },
+            {
+              "title": "the OIL medium bakes a structured organic field @ tablet (1280×800)",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 240000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "timedOut",
+                      "duration": 240040,
+                      "error": {
+                        "message": "\u001b[31mTest timeout of 240000ms exceeded.\u001b[39m",
+                        "stack": "\u001b[31mTest timeout of 240000ms exceeded.\u001b[39m"
+                      },
+                      "errors": [
+                        {
+                          "message": "\u001b[31mTest timeout of 240000ms exceeded.\u001b[39m"
+                        },
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/aurora-mediums-substrate.spec.ts",
+                            "column": 32,
+                            "line": 134
+                          },
+                          "message": "Error: locator.selectOption: Test timeout of 240000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-atom=\"medium\"] select')\u001b[22m\n\n\n  132 |             // regress) via the atoms `medium` control.\n  133 |             const mediumSelect = page.locator(`[data-atom=\"medium\"] select`);\n> 134 |             await mediumSelect.selectOption(\"oil\");\n      |                                ^\n  135 |\n  136 |             await page.waitForTimeout(SETTLE_MS);\n  137 |             const frame = await grab(canvas);\n    at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/aurora-mediums-substrate.spec.ts:134:32"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T22:02:28.670Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/test-results/aurora-mediums-substrate-a-1ca66-anic-field-tablet-1280×800--chromium-headless-new/error-context.md"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "f0b189948c8decca70bd-b25bbcb79fed8c410df4",
+              "file": "aurora-mediums-substrate.spec.ts",
+              "line": 117,
+              "column": 9
+            },
+            {
+              "title": "the OIL medium bakes a structured organic field @ desktop (1440×900)",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 240000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "timedOut",
+                      "duration": 240049,
+                      "error": {
+                        "message": "\u001b[31mTest timeout of 240000ms exceeded.\u001b[39m",
+                        "stack": "\u001b[31mTest timeout of 240000ms exceeded.\u001b[39m"
+                      },
+                      "errors": [
+                        {
+                          "message": "\u001b[31mTest timeout of 240000ms exceeded.\u001b[39m"
+                        },
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/aurora-mediums-substrate.spec.ts",
+                            "column": 32,
+                            "line": 134
+                          },
+                          "message": "Error: locator.selectOption: Test timeout of 240000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-atom=\"medium\"] select')\u001b[22m\n\n\n  132 |             // regress) via the atoms `medium` control.\n  133 |             const mediumSelect = page.locator(`[data-atom=\"medium\"] select`);\n> 134 |             await mediumSelect.selectOption(\"oil\");\n      |                                ^\n  135 |\n  136 |             await page.waitForTimeout(SETTLE_MS);\n  137 |             const frame = await grab(canvas);\n    at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/aurora-mediums-substrate.spec.ts:134:32"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T22:06:29.201Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/test-results/aurora-mediums-substrate-a-a2011-nic-field-desktop-1440×900--chromium-headless-new/error-context.md"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "f0b189948c8decca70bd-3a4c39e65946d503edd7",
+              "file": "aurora-mediums-substrate.spec.ts",
+              "line": 117,
+              "column": 9
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "aurora-painterly-statistics.spec.ts",
+      "file": "aurora-painterly-statistics.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "aurora-painterly-statistics (π lane — the operationalized 'stunning' bar)",
+          "file": "aurora-painterly-statistics.spec.ts",
+          "line": 142,
+          "column": 6,
+          "specs": [
+            {
+              "title": "van-Gogh + oil-pastel + crayon + oil read pigment-true and distinct @ tablet",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 300000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 4414,
+                      "error": {
+                        "message": "Error: van-Gogh gap-fraction 0.006 below floor 0.04 — the render is a continuous coverage smear (the passthrough), not separable atomic dabs @ tablet\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0.04\u001b[39m\nReceived:   \u001b[31m0.006330137928244954\u001b[39m",
+                        "stack": "Error: van-Gogh gap-fraction 0.006 below floor 0.04 — the render is a continuous coverage smear (the passthrough), not separable atomic dabs @ tablet\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0.04\u001b[39m\nReceived:   \u001b[31m0.006330137928244954\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/aurora-painterly-statistics.spec.ts:178:15",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/aurora-painterly-statistics.spec.ts",
+                          "column": 15,
+                          "line": 178
+                        },
+                        "snippet": "  176 |                     3,\n  177 |                 )} below floor ${MIN_GAP_FRACTION} — the render is a continuous coverage smear (the passthrough), not separable atomic dabs @ ${vp.name}`,\n> 178 |             ).toBeGreaterThan(MIN_GAP_FRACTION);\n      |               ^\n  179 |\n  180 |             // (b) NO-FLAT-FILLS VARIANCE — each painterly medium carries pigment turbulence.\n  181 |             for (const [name, s] of ["
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/aurora-painterly-statistics.spec.ts",
+                            "column": 15,
+                            "line": 178
+                          },
+                          "message": "Error: van-Gogh gap-fraction 0.006 below floor 0.04 — the render is a continuous coverage smear (the passthrough), not separable atomic dabs @ tablet\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0.04\u001b[39m\nReceived:   \u001b[31m0.006330137928244954\u001b[39m\n\n  176 |                     3,\n  177 |                 )} below floor ${MIN_GAP_FRACTION} — the render is a continuous coverage smear (the passthrough), not separable atomic dabs @ ${vp.name}`,\n> 178 |             ).toBeGreaterThan(MIN_GAP_FRACTION);\n      |               ^\n  179 |\n  180 |             // (b) NO-FLAT-FILLS VARIANCE — each painterly medium carries pigment turbulence.\n  181 |             for (const [name, s] of [\n    at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/aurora-painterly-statistics.spec.ts:178:15"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T22:10:29.741Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/test-results/aurora-painterly-statistic-0b3cf-nt-true-and-distinct-tablet-chromium-headless-new/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/aurora-painterly-statistics.spec.ts",
+                        "column": 15,
+                        "line": 178
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "fb9ace25d9636b93a7c3-d23441fcf644d17262a0",
+              "file": "aurora-painterly-statistics.spec.ts",
+              "line": 144,
+              "column": 9
+            },
+            {
+              "title": "van-Gogh + oil-pastel + crayon + oil read pigment-true and distinct @ desktop",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 300000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 4,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 4445,
+                      "error": {
+                        "message": "Error: van-Gogh gap-fraction 0.004 below floor 0.04 — the render is a continuous coverage smear (the passthrough), not separable atomic dabs @ desktop\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0.04\u001b[39m\nReceived:   \u001b[31m0.0044395268147419615\u001b[39m",
+                        "stack": "Error: van-Gogh gap-fraction 0.004 below floor 0.04 — the render is a continuous coverage smear (the passthrough), not separable atomic dabs @ desktop\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0.04\u001b[39m\nReceived:   \u001b[31m0.0044395268147419615\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/aurora-painterly-statistics.spec.ts:178:15",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/aurora-painterly-statistics.spec.ts",
+                          "column": 15,
+                          "line": 178
+                        },
+                        "snippet": "  176 |                     3,\n  177 |                 )} below floor ${MIN_GAP_FRACTION} — the render is a continuous coverage smear (the passthrough), not separable atomic dabs @ ${vp.name}`,\n> 178 |             ).toBeGreaterThan(MIN_GAP_FRACTION);\n      |               ^\n  179 |\n  180 |             // (b) NO-FLAT-FILLS VARIANCE — each painterly medium carries pigment turbulence.\n  181 |             for (const [name, s] of ["
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/aurora-painterly-statistics.spec.ts",
+                            "column": 15,
+                            "line": 178
+                          },
+                          "message": "Error: van-Gogh gap-fraction 0.004 below floor 0.04 — the render is a continuous coverage smear (the passthrough), not separable atomic dabs @ desktop\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0.04\u001b[39m\nReceived:   \u001b[31m0.0044395268147419615\u001b[39m\n\n  176 |                     3,\n  177 |                 )} below floor ${MIN_GAP_FRACTION} — the render is a continuous coverage smear (the passthrough), not separable atomic dabs @ ${vp.name}`,\n> 178 |             ).toBeGreaterThan(MIN_GAP_FRACTION);\n      |               ^\n  179 |\n  180 |             // (b) NO-FLAT-FILLS VARIANCE — each painterly medium carries pigment turbulence.\n  181 |             for (const [name, s] of [\n    at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/aurora-painterly-statistics.spec.ts:178:15"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T22:10:34.674Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/test-results/aurora-painterly-statistic-b258a-t-true-and-distinct-desktop-chromium-headless-new/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/aurora-painterly-statistics.spec.ts",
+                        "column": 15,
+                        "line": 178
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "fb9ace25d9636b93a7c3-069a2eb0113e2442097c",
+              "file": "aurora-painterly-statistics.spec.ts",
+              "line": 144,
+              "column": 9
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "aurora-studio.spec.ts",
+      "file": "aurora-studio.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "aurora-studio (π lane — the studio-repair device gate, fail-CLOSED)",
+          "file": "aurora-studio.spec.ts",
+          "line": 80,
+          "column": 6,
+          "specs": [
+            {
+              "title": "the medium select opens, picking a textured medium changes the canvas + reveals Texture",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 240000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 5,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2461,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T22:10:39.560Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "f43ac18a093417685a34-9a043c1d7304b125a5e4",
+              "file": "aurora-studio.spec.ts",
+              "line": 82,
+              "column": 5
+            },
+            {
+              "title": "selecting Van Gogh seeds the medium atom + the look survives a one-atom touch",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 240000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 5,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 3671,
+                      "error": {
+                        "message": "Error: the first atom touch CLOBBERED the Van Gogh look (Δ 201.92 > 60) — the atoms surface discarded the per-preset config instead of refining it\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m60\u001b[39m\nReceived:    \u001b[31m201.91709695926562\u001b[39m",
+                        "stack": "Error: the first atom touch CLOBBERED the Van Gogh look (Δ 201.92 > 60) — the atoms surface discarded the per-preset config instead of refining it\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m60\u001b[39m\nReceived:    \u001b[31m201.91709695926562\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/aurora-studio.spec.ts:189:11",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/aurora-studio.spec.ts",
+                          "column": 11,
+                          "line": 189
+                        },
+                        "snippet": "  187 |             delta,\n  188 |             `the first atom touch CLOBBERED the Van Gogh look (Δ ${delta.toFixed(2)} > ${SURVIVE_DRIFT_MAX}) — the atoms surface discarded the per-preset config instead of refining it`,\n> 189 |         ).toBeLessThanOrEqual(SURVIVE_DRIFT_MAX);\n      |           ^\n  190 |     });\n  191 |\n  192 |     // ── Clause 5: the served-app sentinel CANARY — passes on the demo, throws on a wrong app. ──"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/aurora-studio.spec.ts",
+                            "column": 11,
+                            "line": 189
+                          },
+                          "message": "Error: the first atom touch CLOBBERED the Van Gogh look (Δ 201.92 > 60) — the atoms surface discarded the per-preset config instead of refining it\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m60\u001b[39m\nReceived:    \u001b[31m201.91709695926562\u001b[39m\n\n  187 |             delta,\n  188 |             `the first atom touch CLOBBERED the Van Gogh look (Δ ${delta.toFixed(2)} > ${SURVIVE_DRIFT_MAX}) — the atoms surface discarded the per-preset config instead of refining it`,\n> 189 |         ).toBeLessThanOrEqual(SURVIVE_DRIFT_MAX);\n      |           ^\n  190 |     });\n  191 |\n  192 |     // ── Clause 5: the served-app sentinel CANARY — passes on the demo, throws on a wrong app. ──\n    at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/aurora-studio.spec.ts:189:11"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T22:10:42.119Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/test-results/aurora-studio-aurora-studi-80ef4-k-survives-a-one-atom-touch-chromium-headless-new/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/aurora-studio.spec.ts",
+                        "column": 11,
+                        "line": 189
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "f43ac18a093417685a34-5d186844ab8499c39458",
+              "file": "aurora-studio.spec.ts",
+              "line": 132,
+              "column": 5
+            },
+            {
+              "title": "the served-app sentinel passes on the real demo and FAILS-CLOSED on a foreign app",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 240000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 6,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 15492,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T22:10:46.212Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "f43ac18a093417685a34-93dc7cb9eccd96b10e68",
+              "file": "aurora-studio.spec.ts",
+              "line": 193,
+              "column": 5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "aurora-swraster.spec.ts",
+      "file": "aurora-swraster.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "BB.W-AURORA-SWRASTER — headless luminance-faithful fallback",
+          "file": "aurora-swraster.spec.ts",
+          "line": 89,
+          "column": 6,
+          "specs": [
+            {
+              "title": "fallback ground matches the composite reference within the certify band (light)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [
+                    {
+                      "type": "swraster-luminance",
+                      "description": "{\"scheme\":\"light\",\"refMean\":\"0.3862\",\"gndMean\":\"0.3853\",\"meanDelta\":\"0.0009\",\"refQuad\":[\"0.221\",\"0.404\",\"0.372\",\"0.547\"],\"gndQuad\":[\"0.223\",\"0.403\",\"0.370\",\"0.545\"],\"quadDeltas\":[\"0.002\",\"0.002\",\"0.002\",\"0.002\"],\"groundForm\":\"2d-raster\"}"
+                    }
+                  ],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 6,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 796,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T22:11:01.808Z",
+                      "annotations": [
+                        {
+                          "type": "swraster-luminance",
+                          "description": "{\"scheme\":\"light\",\"refMean\":\"0.3862\",\"gndMean\":\"0.3853\",\"meanDelta\":\"0.0009\",\"refQuad\":[\"0.221\",\"0.404\",\"0.372\",\"0.547\"],\"gndQuad\":[\"0.223\",\"0.403\",\"0.370\",\"0.545\"],\"quadDeltas\":[\"0.002\",\"0.002\",\"0.002\",\"0.002\"],\"groundForm\":\"2d-raster\"}"
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "04948b8c155915ba40c8-4b65149c7f2d72464a65",
+              "file": "aurora-swraster.spec.ts",
+              "line": 91,
+              "column": 9
+            },
+            {
+              "title": "fallback ground matches the composite reference within the certify band (dark)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [
+                    {
+                      "type": "swraster-luminance",
+                      "description": "{\"scheme\":\"dark\",\"refMean\":\"0.3862\",\"gndMean\":\"0.3853\",\"meanDelta\":\"0.0009\",\"refQuad\":[\"0.221\",\"0.404\",\"0.372\",\"0.547\"],\"gndQuad\":[\"0.223\",\"0.403\",\"0.370\",\"0.545\"],\"quadDeltas\":[\"0.002\",\"0.002\",\"0.002\",\"0.002\"],\"groundForm\":\"2d-raster\"}"
+                    }
+                  ],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 6,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 812,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T22:11:02.609Z",
+                      "annotations": [
+                        {
+                          "type": "swraster-luminance",
+                          "description": "{\"scheme\":\"dark\",\"refMean\":\"0.3862\",\"gndMean\":\"0.3853\",\"meanDelta\":\"0.0009\",\"refQuad\":[\"0.221\",\"0.404\",\"0.372\",\"0.547\"],\"gndQuad\":[\"0.223\",\"0.403\",\"0.370\",\"0.545\"],\"quadDeltas\":[\"0.002\",\"0.002\",\"0.002\",\"0.002\"],\"groundForm\":\"2d-raster\"}"
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "04948b8c155915ba40c8-04429dd85a266c52d3ae",
+              "file": "aurora-swraster.spec.ts",
+              "line": 91,
+              "column": 9
+            },
+            {
+              "title": "a forced mode:capture mount under software raster does NOT hang the page",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 6,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 507,
+                      "error": {
+                        "message": "Error: the software-raster capture mount must not throw an onInitError-class violation\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mfalse\u001b[39m\nReceived: \u001b[31mtrue\u001b[39m",
+                        "stack": "Error: the software-raster capture mount must not throw an onInitError-class violation\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mfalse\u001b[39m\nReceived: \u001b[31mtrue\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/aurora-swraster.spec.ts:274:113",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/aurora-swraster.spec.ts",
+                          "column": 113,
+                          "line": 274
+                        },
+                        "snippet": "  272 |         // The createAurora call returns promptly (it never wedges) and never throws\n  273 |         // a contract violation for the software-raster fall (the guard's runtime truth).\n> 274 |         expect(result.threw, \"the software-raster capture mount must not throw an onInitError-class violation\").toBe(false);\n      |                                                                                                                 ^\n  275 |         expect(result.armMs, \"the capture mount returns promptly (no wedge/hang)\").toBeLessThan(5_000);\n  276 |\n  277 |         // The page stays responsive — a click resolves immediately."
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/aurora-swraster.spec.ts",
+                            "column": 113,
+                            "line": 274
+                          },
+                          "message": "Error: the software-raster capture mount must not throw an onInitError-class violation\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mfalse\u001b[39m\nReceived: \u001b[31mtrue\u001b[39m\n\n  272 |         // The createAurora call returns promptly (it never wedges) and never throws\n  273 |         // a contract violation for the software-raster fall (the guard's runtime truth).\n> 274 |         expect(result.threw, \"the software-raster capture mount must not throw an onInitError-class violation\").toBe(false);\n      |                                                                                                                 ^\n  275 |         expect(result.armMs, \"the capture mount returns promptly (no wedge/hang)\").toBeLessThan(5_000);\n  276 |\n  277 |         // The page stays responsive — a click resolves immediately.\n    at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/aurora-swraster.spec.ts:274:113"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T22:11:03.430Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/test-results/aurora-swraster-BB-W-AUROR-acf95-ster-does-NOT-hang-the-page-chromium-headless-new/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/aurora-swraster.spec.ts",
+                        "column": 113,
+                        "line": 274
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "04948b8c155915ba40c8-f557ea222d857f005330",
+              "file": "aurora-swraster.spec.ts",
+              "line": 231,
+              "column": 5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "aurora-vibrancy.spec.ts",
+      "file": "aurora-vibrancy.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "BI.W-AURORA-VIBRANCY — vibrant warm-sun field + the setting-sun pink note",
+          "file": "aurora-vibrancy.spec.ts",
+          "line": 68,
+          "column": 6,
+          "specs": [
+            {
+              "title": "each setting-sun candidate composites to a warm-sun-with-pink field (light)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [
+                    {
+                      "type": "vibrancy-field",
+                      "description": "{\"scheme\":\"light\",\"key\":\"SETTING_SUN\",\"meanC\":\"0.1174\",\"meanH\":\"45.0\"}"
+                    },
+                    {
+                      "type": "vibrancy-field",
+                      "description": "{\"scheme\":\"light\",\"key\":\"DUSK\",\"meanC\":\"0.1277\",\"meanH\":\"27.3\"}"
+                    },
+                    {
+                      "type": "vibrancy-field",
+                      "description": "{\"scheme\":\"light\",\"key\":\"VIVID_SETTING_SUN\",\"meanC\":\"0.1457\",\"meanH\":\"25.6\"}"
+                    }
+                  ],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 7,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 876,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T22:11:04.316Z",
+                      "annotations": [
+                        {
+                          "type": "vibrancy-field",
+                          "description": "{\"scheme\":\"light\",\"key\":\"SETTING_SUN\",\"meanC\":\"0.1174\",\"meanH\":\"45.0\"}"
+                        },
+                        {
+                          "type": "vibrancy-field",
+                          "description": "{\"scheme\":\"light\",\"key\":\"DUSK\",\"meanC\":\"0.1277\",\"meanH\":\"27.3\"}"
+                        },
+                        {
+                          "type": "vibrancy-field",
+                          "description": "{\"scheme\":\"light\",\"key\":\"VIVID_SETTING_SUN\",\"meanC\":\"0.1457\",\"meanH\":\"25.6\"}"
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "0081b58587671e00eda1-caff4308d8fd86b4ca08",
+              "file": "aurora-vibrancy.spec.ts",
+              "line": 70,
+              "column": 9
+            },
+            {
+              "title": "each setting-sun candidate composites to a warm-sun-with-pink field (dark)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [
+                    {
+                      "type": "vibrancy-field",
+                      "description": "{\"scheme\":\"dark\",\"key\":\"SETTING_SUN\",\"meanC\":\"0.1174\",\"meanH\":\"45.0\"}"
+                    },
+                    {
+                      "type": "vibrancy-field",
+                      "description": "{\"scheme\":\"dark\",\"key\":\"DUSK\",\"meanC\":\"0.1277\",\"meanH\":\"27.3\"}"
+                    },
+                    {
+                      "type": "vibrancy-field",
+                      "description": "{\"scheme\":\"dark\",\"key\":\"VIVID_SETTING_SUN\",\"meanC\":\"0.1457\",\"meanH\":\"25.6\"}"
+                    }
+                  ],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 7,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 799,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T22:11:05.316Z",
+                      "annotations": [
+                        {
+                          "type": "vibrancy-field",
+                          "description": "{\"scheme\":\"dark\",\"key\":\"SETTING_SUN\",\"meanC\":\"0.1174\",\"meanH\":\"45.0\"}"
+                        },
+                        {
+                          "type": "vibrancy-field",
+                          "description": "{\"scheme\":\"dark\",\"key\":\"DUSK\",\"meanC\":\"0.1277\",\"meanH\":\"27.3\"}"
+                        },
+                        {
+                          "type": "vibrancy-field",
+                          "description": "{\"scheme\":\"dark\",\"key\":\"VIVID_SETTING_SUN\",\"meanC\":\"0.1457\",\"meanH\":\"25.6\"}"
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "0081b58587671e00eda1-013d99f8107ced20030a",
+              "file": "aurora-vibrancy.spec.ts",
+              "line": 70,
+              "column": 9
+            },
+            {
+              "title": "the pink note reads on the sun-core (candidate A) without over-rotating the field",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [
+                    {
+                      "type": "vibrancy-sun-core",
+                      "description": "{\"core\":{\"h\":19.34173496233234,\"meanC\":0.0880523133788588},\"field\":{\"h\":38.917069441997285,\"meanC\":0.06866237116383006}}"
+                    }
+                  ],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 7,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 467,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T22:11:06.120Z",
+                      "annotations": [
+                        {
+                          "type": "vibrancy-sun-core",
+                          "description": "{\"core\":{\"h\":19.34173496233234,\"meanC\":0.0880523133788588},\"field\":{\"h\":38.917069441997285,\"meanC\":0.06866237116383006}}"
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "0081b58587671e00eda1-7fba7c8ae34da19b12f8",
+              "file": "aurora-vibrancy.spec.ts",
+              "line": 155,
+              "column": 5
+            },
+            {
+              "title": "a caption over the setting-sun field behind warm glass clears AA (light)",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [
+                    {
+                      "type": "vibrancy-aa",
+                      "description": "{\"scheme\":\"light\",\"ratio\":\"2.45\"}"
+                    }
+                  ],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 7,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 773,
+                      "error": {
+                        "message": "Error: caption over setting-sun glass clears AA (light)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m4.5\u001b[39m\nReceived:    \u001b[31m2.450663146179348\u001b[39m",
+                        "stack": "Error: caption over setting-sun glass clears AA (light)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m4.5\u001b[39m\nReceived:    \u001b[31m2.450663146179348\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/aurora-vibrancy.spec.ts:258:83",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/aurora-vibrancy.spec.ts",
+                          "column": 83,
+                          "line": 258
+                        },
+                        "snippet": "  256 |             const ratio = contrast(ink, plate);\n  257 |             test.info().annotations.push({ type: \"vibrancy-aa\", description: JSON.stringify({ scheme, ratio: ratio.toFixed(2) }) });\n> 258 |             expect(ratio, `caption over setting-sun glass clears AA (${scheme})`).toBeGreaterThanOrEqual(4.5);\n      |                                                                                   ^\n  259 |         });\n  260 |     }\n  261 | });"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/aurora-vibrancy.spec.ts",
+                            "column": 83,
+                            "line": 258
+                          },
+                          "message": "Error: caption over setting-sun glass clears AA (light)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m4.5\u001b[39m\nReceived:    \u001b[31m2.450663146179348\u001b[39m\n\n  256 |             const ratio = contrast(ink, plate);\n  257 |             test.info().annotations.push({ type: \"vibrancy-aa\", description: JSON.stringify({ scheme, ratio: ratio.toFixed(2) }) });\n> 258 |             expect(ratio, `caption over setting-sun glass clears AA (${scheme})`).toBeGreaterThanOrEqual(4.5);\n      |                                                                                   ^\n  259 |         });\n  260 |     }\n  261 | });\n    at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/aurora-vibrancy.spec.ts:258:83"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T22:11:06.593Z",
+                      "annotations": [
+                        {
+                          "type": "vibrancy-aa",
+                          "description": "{\"scheme\":\"light\",\"ratio\":\"2.45\"}"
+                        }
+                      ],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/test-results/aurora-vibrancy-BI-W-AUROR-f9aab-warm-glass-clears-AA-light--chromium-headless-new/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/aurora-vibrancy.spec.ts",
+                        "column": 83,
+                        "line": 258
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "0081b58587671e00eda1-a5013127bdfbb2021a4d",
+              "file": "aurora-vibrancy.spec.ts",
+              "line": 200,
+              "column": 9
+            },
+            {
+              "title": "a caption over the setting-sun field behind warm glass clears AA (dark)",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [
+                    {
+                      "type": "vibrancy-aa",
+                      "description": "{\"scheme\":\"dark\",\"ratio\":\"1.11\"}"
+                    }
+                  ],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 8,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 782,
+                      "error": {
+                        "message": "Error: caption over setting-sun glass clears AA (dark)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m4.5\u001b[39m\nReceived:    \u001b[31m1.1083884248190827\u001b[39m",
+                        "stack": "Error: caption over setting-sun glass clears AA (dark)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m4.5\u001b[39m\nReceived:    \u001b[31m1.1083884248190827\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/aurora-vibrancy.spec.ts:258:83",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/aurora-vibrancy.spec.ts",
+                          "column": 83,
+                          "line": 258
+                        },
+                        "snippet": "  256 |             const ratio = contrast(ink, plate);\n  257 |             test.info().annotations.push({ type: \"vibrancy-aa\", description: JSON.stringify({ scheme, ratio: ratio.toFixed(2) }) });\n> 258 |             expect(ratio, `caption over setting-sun glass clears AA (${scheme})`).toBeGreaterThanOrEqual(4.5);\n      |                                                                                   ^\n  259 |         });\n  260 |     }\n  261 | });"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/aurora-vibrancy.spec.ts",
+                            "column": 83,
+                            "line": 258
+                          },
+                          "message": "Error: caption over setting-sun glass clears AA (dark)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m4.5\u001b[39m\nReceived:    \u001b[31m1.1083884248190827\u001b[39m\n\n  256 |             const ratio = contrast(ink, plate);\n  257 |             test.info().annotations.push({ type: \"vibrancy-aa\", description: JSON.stringify({ scheme, ratio: ratio.toFixed(2) }) });\n> 258 |             expect(ratio, `caption over setting-sun glass clears AA (${scheme})`).toBeGreaterThanOrEqual(4.5);\n      |                                                                                   ^\n  259 |         });\n  260 |     }\n  261 | });\n    at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/aurora-vibrancy.spec.ts:258:83"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T22:11:07.688Z",
+                      "annotations": [
+                        {
+                          "type": "vibrancy-aa",
+                          "description": "{\"scheme\":\"dark\",\"ratio\":\"1.11\"}"
+                        }
+                      ],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/test-results/aurora-vibrancy-BI-W-AUROR-89f68--warm-glass-clears-AA-dark--chromium-headless-new/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/aurora-vibrancy.spec.ts",
+                        "column": 83,
+                        "line": 258
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "0081b58587671e00eda1-10ba8d97ac54b9a0c60d",
+              "file": "aurora-vibrancy.spec.ts",
+              "line": 200,
+              "column": 9
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "auth-shell-bg.spec.ts",
+      "file": "auth-shell-bg.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "auth-shell-bg (π lane — one-GL budget, light)",
+          "file": "auth-shell-bg.spec.ts",
+          "line": 111,
+          "column": 10,
+          "specs": [
+            {
+              "title": "ONE-GL + NO-FOURIER + FORM-CLEAN (light)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 9,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1545,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "[auth-shell-bg light] census {\"liveGl\":1,\"canvasCount\":1,\"fullBleedGl\":0,\"hasEmail\":true,\"hasPassword\":true,\"hasSignIn\":true}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T22:11:08.911Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "44c12cda4362b4bc728a-221e0f615d68f7413b79",
+              "file": "auth-shell-bg.spec.ts",
+              "line": 112,
+              "column": 9
+            }
+          ]
+        },
+        {
+          "title": "auth-shell-bg (π lane — one-GL budget, dark)",
+          "file": "auth-shell-bg.spec.ts",
+          "line": 111,
+          "column": 10,
+          "specs": [
+            {
+              "title": "ONE-GL + NO-FOURIER + FORM-CLEAN (dark)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 9,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1485,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "[auth-shell-bg dark] census {\"liveGl\":1,\"canvasCount\":1,\"fullBleedGl\":0,\"hasEmail\":true,\"hasPassword\":true,\"hasSignIn\":true}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T22:11:10.554Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "44c12cda4362b4bc728a-7be76405a446b49d788d",
+              "file": "auth-shell-bg.spec.ts",
+              "line": 112,
+              "column": 9
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "ba-animate.spec.ts",
+      "file": "ba-animate.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "(a) a route change fires exactly ONE page-enter transition",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 9,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 1864,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0\u001b[39m\nReceived:   \u001b[31m0\u001b[39m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0\u001b[39m\nReceived:   \u001b[31m0\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/ba-animate.spec.ts:99:18",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/ba-animate.spec.ts",
+                      "column": 18,
+                      "line": 99
+                    },
+                    "snippet": "   97 |     // (the peak simultaneous enter-active count is small — the single route root,\n   98 |     // not a per-element cascade lighting up dozens).\n>  99 |     expect(seen).toBeGreaterThan(0);\n      |                  ^\n  100 |     expect(peak).toBeLessThanOrEqual(3);\n  101 | });\n  102 |"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/ba-animate.spec.ts",
+                        "column": 18,
+                        "line": 99
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0\u001b[39m\nReceived:   \u001b[31m0\u001b[39m\n\n   97 |     // (the peak simultaneous enter-active count is small — the single route root,\n   98 |     // not a per-element cascade lighting up dozens).\n>  99 |     expect(seen).toBeGreaterThan(0);\n      |                  ^\n  100 |     expect(peak).toBeLessThanOrEqual(3);\n  101 | });\n  102 |\n    at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/ba-animate.spec.ts:99:18"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T22:11:12.052Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/test-results/ba-animate--a-a-route-chan-deb66-y-ONE-page-enter-transition-chromium-headless-new/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/ba-animate.spec.ts",
+                    "column": 18,
+                    "line": 99
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "a7d89e5d32df5669330d-c6b04f08af43dbfdbc97",
+          "file": "ba-animate.spec.ts",
+          "line": 56,
+          "column": 1
+        },
+        {
+          "title": "(b) the dock scroll-progress ring tracks the route scroller; the standalone bar is gone",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 10,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 1255,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoBeNull\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mnull\u001b[39m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoBeNull\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mnull\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/ba-animate.spec.ts:125:21",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/ba-animate.spec.ts",
+                      "column": 21,
+                      "line": 125
+                    },
+                    "snippet": "  123 |         };\n  124 |     });\n> 125 |     expect(reg).not.toBeNull();\n      |                     ^\n  126 |     // The standalone route-scroller bar is RETIRED (clean break, no alias).\n  127 |     expect(reg!.barSurvives).toBe(false);\n  128 |     // The vertical rail wears the inline-end-edge coverage (the scrollbar"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/ba-animate.spec.ts",
+                        "column": 21,
+                        "line": 125
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoBeNull\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mnull\u001b[39m\n\n  123 |         };\n  124 |     });\n> 125 |     expect(reg).not.toBeNull();\n      |                     ^\n  126 |     // The standalone route-scroller bar is RETIRED (clean break, no alias).\n  127 |     expect(reg!.barSurvives).toBe(false);\n  128 |     // The vertical rail wears the inline-end-edge coverage (the scrollbar\n    at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/ba-animate.spec.ts:125:21"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T22:11:14.524Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/test-results/ba-animate--b-the-dock-scr-c7dd9--the-standalone-bar-is-gone-chromium-headless-new/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/ba-animate.spec.ts",
+                    "column": 21,
+                    "line": 125
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "a7d89e5d32df5669330d-4fb53a84238f0859efd9",
+          "file": "ba-animate.spec.ts",
+          "line": 104,
+          "column": 1
+        },
+        {
+          "title": "(c) [mobile] the audacious figure counts up on reveal + snaps under PRM",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 11,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 2110,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m912\u001b[39m\nReceived: \u001b[31m-1\u001b[39m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m912\u001b[39m\nReceived: \u001b[31m-1\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/ba-animate.spec.ts:191:23",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/ba-animate.spec.ts",
+                      "column": 23,
+                      "line": 191
+                    },
+                    "snippet": "  189 |         const minSeen = Math.min(...samples.filter((v) => v >= 0));\n  190 |         // The figure REACHED its target (912) by the end of the tween window …\n> 191 |         expect(final).toBe(912);\n      |                       ^\n  192 |         // … having TWEENED (an early sample below the target — not a hard-jump) …\n  193 |         expect(minSeen).toBeLessThan(912);\n  194 |         // … and NEVER overshot past the target (the SETTLE no-overshoot register)."
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/ba-animate.spec.ts",
+                        "column": 23,
+                        "line": 191
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m912\u001b[39m\nReceived: \u001b[31m-1\u001b[39m\n\n  189 |         const minSeen = Math.min(...samples.filter((v) => v >= 0));\n  190 |         // The figure REACHED its target (912) by the end of the tween window …\n> 191 |         expect(final).toBe(912);\n      |                       ^\n  192 |         // … having TWEENED (an early sample below the target — not a hard-jump) …\n  193 |         expect(minSeen).toBeLessThan(912);\n  194 |         // … and NEVER overshot past the target (the SETTLE no-overshoot register).\n    at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/ba-animate.spec.ts:191:23"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T22:11:16.246Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/test-results/ba-animate--c-mobile-the-a-1c2bb-p-on-reveal-snaps-under-PRM-chromium-headless-new/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/ba-animate.spec.ts",
+                    "column": 23,
+                    "line": 191
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "a7d89e5d32df5669330d-e704fc7b7a5b300388a1",
+          "file": "ba-animate.spec.ts",
+          "line": 163,
+          "column": 5
+        },
+        {
+          "title": "(c) [desktop] the audacious figure counts up on reveal + snaps under PRM",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 12,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 2072,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m912\u001b[39m\nReceived: \u001b[31m-1\u001b[39m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m912\u001b[39m\nReceived: \u001b[31m-1\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/ba-animate.spec.ts:191:23",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/ba-animate.spec.ts",
+                      "column": 23,
+                      "line": 191
+                    },
+                    "snippet": "  189 |         const minSeen = Math.min(...samples.filter((v) => v >= 0));\n  190 |         // The figure REACHED its target (912) by the end of the tween window …\n> 191 |         expect(final).toBe(912);\n      |                       ^\n  192 |         // … having TWEENED (an early sample below the target — not a hard-jump) …\n  193 |         expect(minSeen).toBeLessThan(912);\n  194 |         // … and NEVER overshot past the target (the SETTLE no-overshoot register)."
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/ba-animate.spec.ts",
+                        "column": 23,
+                        "line": 191
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m912\u001b[39m\nReceived: \u001b[31m-1\u001b[39m\n\n  189 |         const minSeen = Math.min(...samples.filter((v) => v >= 0));\n  190 |         // The figure REACHED its target (912) by the end of the tween window …\n> 191 |         expect(final).toBe(912);\n      |                       ^\n  192 |         // … having TWEENED (an early sample below the target — not a hard-jump) …\n  193 |         expect(minSeen).toBeLessThan(912);\n  194 |         // … and NEVER overshot past the target (the SETTLE no-overshoot register).\n    at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/ba-animate.spec.ts:191:23"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T22:11:18.763Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/test-results/ba-animate--c-desktop-the--351fb-p-on-reveal-snaps-under-PRM-chromium-headless-new/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/ba-animate.spec.ts",
+                    "column": 23,
+                    "line": 191
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "a7d89e5d32df5669330d-3057c79f1598818ab701",
+          "file": "ba-animate.spec.ts",
+          "line": 163,
+          "column": 5
+        },
+        {
+          "title": "(d) the hero <h1> fade-rises on entrance with no overshoot past 0",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 13,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 848,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T22:11:21.282Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a7d89e5d32df5669330d-56bedce75b1d32f27f61",
+          "file": "ba-animate.spec.ts",
+          "line": 221,
+          "column": 1
+        },
+        {
+          "title": "captures — /data/metric-cell + / in both modes",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 13,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 7160,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T22:11:22.238Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a7d89e5d32df5669330d-cab051d37ebf49403a40",
+          "file": "ba-animate.spec.ts",
+          "line": 253,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "blob-config-delta.spec.ts",
+      "file": "blob-config-delta.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "blob-config DELTA (AY.W-BLOB-CONFIG — the four fixes, own-surface capture)",
+          "file": "blob-config-delta.spec.ts",
+          "line": 101,
+          "column": 6,
+          "specs": [
+            {
+              "title": "capture studio desktop/light",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 240000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 13,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1530,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T22:11:29.419Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "7c699e6bf756e53ed55c-794b40b6b9ddecb12d7e",
+              "file": "blob-config-delta.spec.ts",
+              "line": 105,
+              "column": 13
+            },
+            {
+              "title": "capture studio desktop/dark",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 240000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 13,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1584,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T22:11:30.955Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "7c699e6bf756e53ed55c-3efdbb39b02b20f2e1c3",
+              "file": "blob-config-delta.spec.ts",
+              "line": 105,
+              "column": 13
+            },
+            {
+              "title": "capture studio mobile/light",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 240000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 13,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1370,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T22:11:32.546Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "7c699e6bf756e53ed55c-13d1e16fa554d774905e",
+              "file": "blob-config-delta.spec.ts",
+              "line": 105,
+              "column": 13
+            },
+            {
+              "title": "capture studio mobile/dark",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 240000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 13,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1363,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T22:11:33.922Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "7c699e6bf756e53ed55c-85692585f7fe9e3b9de0",
+              "file": "blob-config-delta.spec.ts",
+              "line": 105,
+              "column": 13
+            },
+            {
+              "title": "D1 — a seed change RE-PAINTS the hero body (the dead-feed fix)",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 240000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 13,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 1511,
+                      "error": {
+                        "message": "Error: page.evaluate: TypeError: Illegal invocation\n    at eval (eval at evaluate (:303:30), <anonymous>:7:14)\n    at UtilityScript.evaluate (<anonymous>:305:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+                        "stack": "Error: page.evaluate: TypeError: Illegal invocation\n    at eval (eval at evaluate (:303:30), <anonymous>:7:14)\n    at UtilityScript.evaluate (<anonymous>:305:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)\n    at eval (eval at evaluate (:303:30), <anonymous>:7:14)\n    at UtilityScript.evaluate (<anonymous>:305:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)\n    at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/blob-config-delta.spec.ts:133:20",
+                        "location": {
+                          "file": "eval at evaluate (:303:30), <anonymous>",
+                          "column": 14,
+                          "line": 7
+                        }
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "eval at evaluate (:303:30), <anonymous>",
+                            "column": 14,
+                            "line": 7
+                          },
+                          "message": "Error: page.evaluate: TypeError: Illegal invocation\n    at eval (eval at evaluate (:303:30), <anonymous>:7:14)\n    at UtilityScript.evaluate (<anonymous>:305:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)\n    at eval (eval at evaluate (:303:30), <anonymous>:7:14)\n    at UtilityScript.evaluate (<anonymous>:305:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)\n    at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/blob-config-delta.spec.ts:133:20"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T22:11:35.292Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/test-results/blob-config-delta-blob-con-42281-ero-body-the-dead-feed-fix--chromium-headless-new/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "eval at evaluate (:303:30), <anonymous>",
+                        "column": 14,
+                        "line": 7
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "7c699e6bf756e53ed55c-840322747aec0d1137d7",
+              "file": "blob-config-delta.spec.ts",
+              "line": 126,
+              "column": 5
+            },
+            {
+              "title": "D2 — a negative attraction SHIES relative to a positive (the sign fix)",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 240000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 14,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 7621,
+                      "error": {
+                        "message": "Error: shy-away shift(-0.8)=0.0082 is NOT less than lean-in shift(+0.8)=0.0051 — the sign is still dropped (a negative attraction lunges toward)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m0.005060054684818738\u001b[39m\nReceived:   \u001b[31m0.008156350818715963\u001b[39m",
+                        "stack": "Error: shy-away shift(-0.8)=0.0082 is NOT less than lean-in shift(+0.8)=0.0051 — the sign is still dropped (a negative attraction lunges toward)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m0.005060054684818738\u001b[39m\nReceived:   \u001b[31m0.008156350818715963\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/blob-config-delta.spec.ts:183:199",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/blob-config-delta.spec.ts",
+                          "column": 199,
+                          "line": 183
+                        },
+                        "snippet": "  181 |         // (-0.8). At HEAD the order was INVERTED (a negative attraction lunged HARDER). The\n  182 |         // shader sign flip + the reach-gated pseudopod restore the correct ordering.\n> 183 |         expect(shiftNeg, `shy-away shift(-0.8)=${shiftNeg.toFixed(4)} is NOT less than lean-in shift(+0.8)=${shiftPos.toFixed(4)} — the sign is still dropped (a negative attraction lunges toward)`).toBeLessThan(shiftPos);\n      |                                                                                                                                                                                                       ^\n  184 |     });\n  185 |\n  186 |     // ── D4 — the paused-prop resume is CLEAN (no charcoal-slab wreck) ──"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/blob-config-delta.spec.ts",
+                            "column": 199,
+                            "line": 183
+                          },
+                          "message": "Error: shy-away shift(-0.8)=0.0082 is NOT less than lean-in shift(+0.8)=0.0051 — the sign is still dropped (a negative attraction lunges toward)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m0.005060054684818738\u001b[39m\nReceived:   \u001b[31m0.008156350818715963\u001b[39m\n\n  181 |         // (-0.8). At HEAD the order was INVERTED (a negative attraction lunged HARDER). The\n  182 |         // shader sign flip + the reach-gated pseudopod restore the correct ordering.\n> 183 |         expect(shiftNeg, `shy-away shift(-0.8)=${shiftNeg.toFixed(4)} is NOT less than lean-in shift(+0.8)=${shiftPos.toFixed(4)} — the sign is still dropped (a negative attraction lunges toward)`).toBeLessThan(shiftPos);\n      |                                                                                                                                                                                                       ^\n  184 |     });\n  185 |\n  186 |     // ── D4 — the paused-prop resume is CLEAN (no charcoal-slab wreck) ──\n    at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/blob-config-delta.spec.ts:183:199"
+                        }
+                      ],
+                      "stdout": [
+                        {
+                          "text": "[W-BLOB-CONFIG-π] D2 shift(+0.8 Excited)=0.0051 shift(-0.8 Shy)=0.0082 (lean-in must exceed shy-away)\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T22:11:37.185Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/test-results/blob-config-delta-blob-con-e4b86-to-a-positive-the-sign-fix--chromium-headless-new/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/blob-config-delta.spec.ts",
+                        "column": 199,
+                        "line": 183
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "7c699e6bf756e53ed55c-2687424fffe1ad175a1a",
+              "file": "blob-config-delta.spec.ts",
+              "line": 153,
+              "column": 5
+            },
+            {
+              "title": "D4 — the paused-prop resume produces a CLEAN canvas (the SEVERE fix)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 240000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 15,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 9293,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "[W-BLOB-CONFIG-π] D4 covRun=0.509 covResume=0.418 covAfter=0.411 (resume must be the resting band, not a flooded slab)\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T22:11:45.289Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "7c699e6bf756e53ed55c-92f2308efa4bb81b2bee",
+              "file": "blob-config-delta.spec.ts",
+              "line": 187,
+              "column": 5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "blob-mood-live.spec.ts",
+      "file": "blob-mood-live.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "blob-mood-live (π lane — the manual-mood DELTA + PERSISTENCE)",
+          "file": "blob-mood-live.spec.ts",
+          "line": 107,
+          "column": 6,
+          "specs": [
+            {
+              "title": "a manual setMood drives a VISIBLE mood-derived render delta that PERSISTS (D7 — the auto-mood clobber is fixed)",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 15,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 8480,
+                      "error": {
+                        "message": "Error: manual mood-delta ratio excited/sleepy = 0.28 (excited motion 3.746 vs sleepy 13.440) is below 3 — the two manual moods render IDENTICALLY (the auto-mood clobbers the manual setMood back to idle within a frame; the manual setMood is a documented LIE)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m3\u001b[39m\nReceived:    \u001b[31m0.27874658029496524\u001b[39m",
+                        "stack": "Error: manual mood-delta ratio excited/sleepy = 0.28 (excited motion 3.746 vs sleepy 13.440) is below 3 — the two manual moods render IDENTICALLY (the auto-mood clobbers the manual setMood back to idle within a frame; the manual setMood is a documented LIE)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m3\u001b[39m\nReceived:    \u001b[31m0.27874658029496524\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/blob-mood-live.spec.ts:138:11",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/blob-mood-live.spec.ts",
+                          "column": 11,
+                          "line": 138
+                        },
+                        "snippet": "  136 |             ratio,\n  137 |             `manual mood-delta ratio excited/sleepy = ${ratio.toFixed(2)} (excited motion ${excitedRate.toFixed(3)} vs sleepy ${sleepyRate.toFixed(3)}) is below ${EXCITED_VS_SLEEPY_MIN_RATIO} — the two manual moods render IDENTICALLY (the auto-mood clobbers the manual setMood back to idle within a frame; the manual setMood is a documented LIE)`,\n> 138 |         ).toBeGreaterThanOrEqual(EXCITED_VS_SLEEPY_MIN_RATIO);\n      |           ^\n  139 |\n  140 |         // 2. PERSISTENCE — the pinned excited mood HOLDS across an idle window (no\n  141 |         //    pointer/click on the canvas), NOT silently dragged back to idle. A clobber"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/blob-mood-live.spec.ts",
+                            "column": 11,
+                            "line": 138
+                          },
+                          "message": "Error: manual mood-delta ratio excited/sleepy = 0.28 (excited motion 3.746 vs sleepy 13.440) is below 3 — the two manual moods render IDENTICALLY (the auto-mood clobbers the manual setMood back to idle within a frame; the manual setMood is a documented LIE)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m3\u001b[39m\nReceived:    \u001b[31m0.27874658029496524\u001b[39m\n\n  136 |             ratio,\n  137 |             `manual mood-delta ratio excited/sleepy = ${ratio.toFixed(2)} (excited motion ${excitedRate.toFixed(3)} vs sleepy ${sleepyRate.toFixed(3)}) is below ${EXCITED_VS_SLEEPY_MIN_RATIO} — the two manual moods render IDENTICALLY (the auto-mood clobbers the manual setMood back to idle within a frame; the manual setMood is a documented LIE)`,\n> 138 |         ).toBeGreaterThanOrEqual(EXCITED_VS_SLEEPY_MIN_RATIO);\n      |           ^\n  139 |\n  140 |         // 2. PERSISTENCE — the pinned excited mood HOLDS across an idle window (no\n  141 |         //    pointer/click on the canvas), NOT silently dragged back to idle. A clobber\n    at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/blob-mood-live.spec.ts:138:11"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T22:11:54.701Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/test-results/blob-mood-live-blob-mood-l-bc0a4-auto-mood-clobber-is-fixed--chromium-headless-new/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/blob-mood-live.spec.ts",
+                        "column": 11,
+                        "line": 138
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "19a081c47eb79650a360-17dc8d6254d58743fe90",
+              "file": "blob-mood-live.spec.ts",
+              "line": 108,
+              "column": 5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "blob-page.spec.ts",
+      "file": "blob-page.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "blob-page (π lane — the TRUE blob-page defect, fail-CLOSED)",
+          "file": "blob-page.spec.ts",
+          "line": 180,
+          "column": 6,
+          "specs": [],
+          "suites": [
+            {
+              "title": "",
+              "file": "blob-page.spec.ts",
+              "line": 189,
+              "column": 10,
+              "specs": [
+                {
+                  "title": "SATELLITES-SEPARATE — the orbit show reads on the page-default bead (CV ≫ baseline OR a separated component), contained",
+                  "ok": false,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 180000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "chromium-headless-new",
+                      "projectName": "chromium-headless-new",
+                      "results": [
+                        {
+                          "workerIndex": 16,
+                          "parallelIndex": 0,
+                          "status": "failed",
+                          "duration": 46519,
+                          "error": {
+                            "message": "Error: blob worst footprint-edge paint fraction 0.964 exceeds the satellite-overflow ceil 0.6 — the raised orbit broke the four-side containment (the bead clips the canvas edge)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.6\u001b[39m\nReceived:    \u001b[31m0.9640625\u001b[39m",
+                            "stack": "Error: blob worst footprint-edge paint fraction 0.964 exceeds the satellite-overflow ceil 0.6 — the raised orbit broke the four-side containment (the bead clips the canvas edge)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.6\u001b[39m\nReceived:    \u001b[31m0.9640625\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/blob-page.spec.ts:219:15",
+                            "location": {
+                              "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/blob-page.spec.ts",
+                              "column": 15,
+                              "line": 219
+                            },
+                            "snippet": "  217 |                 maxEdge,\n  218 |                 `blob worst footprint-edge paint fraction ${maxEdge.toFixed(3)} exceeds the satellite-overflow ceil ${SIDE_MARGIN_MAX} — the raised orbit broke the four-side containment (the bead clips the canvas edge)`,\n> 219 |             ).toBeLessThanOrEqual(SIDE_MARGIN_MAX);\n      |               ^\n  220 |\n  221 |             // SOURCE-WITNESS — the page's effective orbitRadius > bodyRadius. The page's\n  222 |             // stageConfig spreads BLOB_CONFIG_DEFAULTS then overrides geometry.orbitRadius"
+                          },
+                          "errors": [
+                            {
+                              "location": {
+                                "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/blob-page.spec.ts",
+                                "column": 15,
+                                "line": 219
+                              },
+                              "message": "Error: blob worst footprint-edge paint fraction 0.964 exceeds the satellite-overflow ceil 0.6 — the raised orbit broke the four-side containment (the bead clips the canvas edge)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.6\u001b[39m\nReceived:    \u001b[31m0.9640625\u001b[39m\n\n  217 |                 maxEdge,\n  218 |                 `blob worst footprint-edge paint fraction ${maxEdge.toFixed(3)} exceeds the satellite-overflow ceil ${SIDE_MARGIN_MAX} — the raised orbit broke the four-side containment (the bead clips the canvas edge)`,\n> 219 |             ).toBeLessThanOrEqual(SIDE_MARGIN_MAX);\n      |               ^\n  220 |\n  221 |             // SOURCE-WITNESS — the page's effective orbitRadius > bodyRadius. The page's\n  222 |             // stageConfig spreads BLOB_CONFIG_DEFAULTS then overrides geometry.orbitRadius\n    at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/blob-page.spec.ts:219:15"
+                            }
+                          ],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-11-11T22:12:03.548Z",
+                          "annotations": [],
+                          "attachments": [
+                            {
+                              "name": "error-context",
+                              "contentType": "text/markdown",
+                              "path": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/test-results/blob-page-blob-page-π-lane-630c0-parated-component-contained-chromium-headless-new/error-context.md"
+                            }
+                          ],
+                          "errorLocation": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/blob-page.spec.ts",
+                            "column": 15,
+                            "line": 219
+                          }
+                        }
+                      ],
+                      "status": "unexpected"
+                    }
+                  ],
+                  "id": "f1de0e6e635e535bb259-ae818744deabcc1587bd",
+                  "file": "blob-page.spec.ts",
+                  "line": 191,
+                  "column": 9
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "blob-painted-component.spec.ts",
+      "file": "blob-painted-component.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "P047 reads the origin component from both renderer buffers at DPR 1 and 2",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 17,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 209,
+                  "error": {
+                    "message": "Error: page.evaluate: TypeError: renderer.resolveBlobSettledFrame is not a function\n    at eval (eval at evaluate (:303:30), <anonymous>:76:39)\n    at async <anonymous>:329:30",
+                    "stack": "Error: page.evaluate: TypeError: renderer.resolveBlobSettledFrame is not a function\n    at eval (eval at evaluate (:303:30), <anonymous>:76:39)\n    at async <anonymous>:329:30\n    at eval (eval at evaluate (:303:30), <anonymous>:76:39)\n    at async <anonymous>:329:30\n    at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/blob-painted-component.spec.ts:46:37",
+                    "location": {
+                      "file": "eval at evaluate (:303:30), <anonymous>",
+                      "column": 39,
+                      "line": 76
+                    }
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "eval at evaluate (:303:30), <anonymous>",
+                        "column": 39,
+                        "line": 76
+                      },
+                      "message": "Error: page.evaluate: TypeError: renderer.resolveBlobSettledFrame is not a function\n    at eval (eval at evaluate (:303:30), <anonymous>:76:39)\n    at async <anonymous>:329:30\n    at eval (eval at evaluate (:303:30), <anonymous>:76:39)\n    at async <anonymous>:329:30\n    at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/blob-painted-component.spec.ts:46:37"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T22:12:50.533Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/test-results/blob-painted-component-P04-e94f4-erer-buffers-at-DPR-1-and-2-chromium-headless-new/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "eval at evaluate (:303:30), <anonymous>",
+                    "column": 39,
+                    "line": 76
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "a6e2194cc2706b9644cc-62d5d3741552a6f9f953",
+          "file": "blob-painted-component.spec.ts",
+          "line": 30,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "blob-pause-seam.spec.ts",
+      "file": "blob-pause-seam.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "blob-integration (π lane — the WCAG-2.2.2 pause seam + context bound + README consistency)",
+          "file": "blob-pause-seam.spec.ts",
+          "line": 88,
+          "column": 6,
+          "specs": [
+            {
+              "title": "the DockBackgroundToggle pause seam PARKS the render loop (live rAF-park observation)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 18,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 6687,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T22:12:51.350Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "bc3e8071cbf21f46bb54-e7332b6ade59cbeda437",
+              "file": "blob-pause-seam.spec.ts",
+              "line": 89,
+              "column": 5
+            },
+            {
+              "title": "the re-cast blob stories hold a BOUNDED number of live WebGL2 contexts",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 18,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 352,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T22:12:58.157Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "bc3e8071cbf21f46bb54-821f7ac284f8008ff956",
+              "file": "blob-pause-seam.spec.ts",
+              "line": 135,
+              "column": 5
+            },
+            {
+              "title": "README-vs-code defineExpose CONSISTENCY — every README 'Exposed' method is on the Blob surface",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 18,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 4,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T22:12:58.517Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "bc3e8071cbf21f46bb54-961f96838e862aa57812",
+              "file": "blob-pause-seam.spec.ts",
+              "line": 167,
+              "column": 5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "blob-render.spec.ts",
+      "file": "blob-render.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "blob-render (π lane — fail-CLOSED, the blob's CLOSING gate)",
+          "file": "blob-render.spec.ts",
+          "line": 525,
+          "column": 6,
+          "specs": [
+            {
+              "title": "blob renders a CONTAINED LIT LIVING droplet on BLOB_CONFIG_DEFAULTS (four-side containment + dome variance + silhouette + field)",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 18,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 5631,
+                      "error": {
+                        "message": "Error: blob interior-corner empty fraction 0.453 is below the field floor 0.7 — the canvas reads as a FLAT slab (the body fills the corners), not a contained metaball field\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m0.7\u001b[39m\nReceived:    \u001b[31m0.4534203686200378\u001b[39m",
+                        "stack": "Error: blob interior-corner empty fraction 0.453 is below the field floor 0.7 — the canvas reads as a FLAT slab (the body fills the corners), not a contained metaball field\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m0.7\u001b[39m\nReceived:    \u001b[31m0.4534203686200378\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/blob-render.spec.ts:609:11",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/blob-render.spec.ts",
+                          "column": 11,
+                          "line": 609
+                        },
+                        "snippet": "  607 |             cornerEmpty,\n  608 |             `blob interior-corner empty fraction ${cornerEmpty.toFixed(3)} is below the field floor ${CORNER_EMPTY_MIN} — the canvas reads as a FLAT slab (the body fills the corners), not a contained metaball field`,\n> 609 |         ).toBeGreaterThanOrEqual(CORNER_EMPTY_MIN);\n      |           ^\n  610 |\n  611 |         // 3. FOUR-SIDE CONTAINMENT (AX.W15 F0 + AX.W16 reconciliation) — the BODY is\n  612 |         // contained on EVERY edge (W15 geometry); the orbiting SATELLITE intentionally"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/blob-render.spec.ts",
+                            "column": 11,
+                            "line": 609
+                          },
+                          "message": "Error: blob interior-corner empty fraction 0.453 is below the field floor 0.7 — the canvas reads as a FLAT slab (the body fills the corners), not a contained metaball field\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m0.7\u001b[39m\nReceived:    \u001b[31m0.4534203686200378\u001b[39m\n\n  607 |             cornerEmpty,\n  608 |             `blob interior-corner empty fraction ${cornerEmpty.toFixed(3)} is below the field floor ${CORNER_EMPTY_MIN} — the canvas reads as a FLAT slab (the body fills the corners), not a contained metaball field`,\n> 609 |         ).toBeGreaterThanOrEqual(CORNER_EMPTY_MIN);\n      |           ^\n  610 |\n  611 |         // 3. FOUR-SIDE CONTAINMENT (AX.W15 F0 + AX.W16 reconciliation) — the BODY is\n  612 |         // contained on EVERY edge (W15 geometry); the orbiting SATELLITE intentionally\n    at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/blob-render.spec.ts:609:11"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T22:12:58.536Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/test-results/blob-render-blob-render-π--62597--variance-silhouette-field--chromium-headless-new/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/blob-render.spec.ts",
+                        "column": 11,
+                        "line": 609
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "1238e1c6916d493c0e7e-b3db9497467a94a5f303",
+              "file": "blob-render.spec.ts",
+              "line": 526,
+              "column": 5
+            },
+            {
+              "title": "blob LEANS toward a synthetic hover-flick (the wired interaction is legible within the footprint)",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 19,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 3330,
+                      "error": {
+                        "message": "Error: blob centroid shift under a rightward hover-flick = -0.0023 (rest 0.482 → lean 0.480); it must move ≥ 0.012 toward the pointer — the wired lean/pseudopod is INVISIBLE (no contained silhouette to deform legibly)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m0.012\u001b[39m\nReceived:    \u001b[31m-0.002299890596801135\u001b[39m",
+                        "stack": "Error: blob centroid shift under a rightward hover-flick = -0.0023 (rest 0.482 → lean 0.480); it must move ≥ 0.012 toward the pointer — the wired lean/pseudopod is INVISIBLE (no contained silhouette to deform legibly)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m0.012\u001b[39m\nReceived:    \u001b[31m-0.002299890596801135\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/blob-render.spec.ts:700:11",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/blob-render.spec.ts",
+                          "column": 11,
+                          "line": 700
+                        },
+                        "snippet": "  698 |             shift,\n  699 |             `blob centroid shift under a rightward hover-flick = ${shift.toFixed(4)} (rest ${restCx.toFixed(3)} → lean ${leanCx.toFixed(3)}); it must move ≥ ${CENTROID_SHIFT_MIN} toward the pointer — the wired lean/pseudopod is INVISIBLE (no contained silhouette to deform legibly)`,\n> 700 |         ).toBeGreaterThanOrEqual(CENTROID_SHIFT_MIN);\n      |           ^\n  701 |         expect(\n  702 |             shift,\n  703 |             `blob centroid shift under a rightward hover-flick = ${shift.toFixed(4)} exceeds the calm-lean ceiling ${CENTROID_SHIFT_MAX} — the creature LURCHES toward the cursor (the \"far too dramatic\" lunge; the calm lean measures ≈ 0.042, a lunge toward ≈ 0.11 reds)`,"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/blob-render.spec.ts",
+                            "column": 11,
+                            "line": 700
+                          },
+                          "message": "Error: blob centroid shift under a rightward hover-flick = -0.0023 (rest 0.482 → lean 0.480); it must move ≥ 0.012 toward the pointer — the wired lean/pseudopod is INVISIBLE (no contained silhouette to deform legibly)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m0.012\u001b[39m\nReceived:    \u001b[31m-0.002299890596801135\u001b[39m\n\n  698 |             shift,\n  699 |             `blob centroid shift under a rightward hover-flick = ${shift.toFixed(4)} (rest ${restCx.toFixed(3)} → lean ${leanCx.toFixed(3)}); it must move ≥ ${CENTROID_SHIFT_MIN} toward the pointer — the wired lean/pseudopod is INVISIBLE (no contained silhouette to deform legibly)`,\n> 700 |         ).toBeGreaterThanOrEqual(CENTROID_SHIFT_MIN);\n      |           ^\n  701 |         expect(\n  702 |             shift,\n  703 |             `blob centroid shift under a rightward hover-flick = ${shift.toFixed(4)} exceeds the calm-lean ceiling ${CENTROID_SHIFT_MAX} — the creature LURCHES toward the cursor (the \"far too dramatic\" lunge; the calm lean measures ≈ 0.042, a lunge toward ≈ 0.11 reds)`,\n    at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/blob-render.spec.ts:700:11"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T22:13:04.525Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/test-results/blob-render-blob-render-π--770c2-gible-within-the-footprint--chromium-headless-new/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/blob-render.spec.ts",
+                        "column": 11,
+                        "line": 700
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "1238e1c6916d493c0e7e-edab4b8f82ed4b618980",
+              "file": "blob-render.spec.ts",
+              "line": 660,
+              "column": 5
+            },
+            {
+              "title": "EVERY grid blob paints visibly against the page background in BOTH light and dark (the var(--primary)-dark-wash guard)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 20,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 5713,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T22:13:08.288Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "1238e1c6916d493c0e7e-882e265d4690891bf29b",
+              "file": "blob-render.spec.ts",
+              "line": 707,
+              "column": 5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "blob-studio.spec.ts",
+      "file": "blob-studio.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "W-BLOB-STUDIO capture — light",
+          "file": "blob-studio.spec.ts",
+          "line": 187,
+          "column": 10,
+          "specs": [
+            {
+              "title": "studio refinement reads (light)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 20,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 15200,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "[W-BLOB-STUDIO-π] light: stageFill=1.553 centerOffset=0.001 peakComponents=7 dropShadowRungs=2 beadCssH=767 stageH=494\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T22:13:14.129Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "18896e36976b3d8fae5a-87ebef78b336d290d3f6",
+              "file": "blob-studio.spec.ts",
+              "line": 190,
+              "column": 9
+            }
+          ]
+        },
+        {
+          "title": "W-BLOB-STUDIO capture — dark",
+          "file": "blob-studio.spec.ts",
+          "line": 187,
+          "column": 10,
+          "specs": [
+            {
+              "title": "studio refinement reads (dark)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 20,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 16637,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "[W-BLOB-STUDIO-π] dark: stageFill=1.553 centerOffset=0.001 peakComponents=6 dropShadowRungs=2 beadCssH=767 stageH=494\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T22:13:29.336Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "18896e36976b3d8fae5a-774a12131dd2ba41349c",
+              "file": "blob-studio.spec.ts",
+              "line": 190,
+              "column": 9
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "blob-warm-default.spec.ts",
+      "file": "blob-warm-default.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "blob-warm-default (π lane — fail-CLOSED, light)",
+          "file": "blob-warm-default.spec.ts",
+          "line": 183,
+          "column": 10,
+          "specs": [
+            {
+              "title": "the DEFAULT <Blob> body reads as a WARM-CREAM bead in light mode (resting body mean OKLCh-L >= 0.62)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 20,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 5413,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T22:13:45.992Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "76c6ea1c1168a20b6e1a-18ef2754ad635ecac5a6",
+              "file": "blob-warm-default.spec.ts",
+              "line": 185,
+              "column": 9
+            }
+          ]
+        },
+        {
+          "title": "blob-warm-default (π lane — fail-CLOSED, dark)",
+          "file": "blob-warm-default.spec.ts",
+          "line": 183,
+          "column": 10,
+          "specs": [
+            {
+              "title": "the DEFAULT <Blob> body reads as a WARM-CREAM bead in dark mode (resting body mean OKLCh-L >= 0.62)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 20,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 5554,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T22:13:51.411Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "76c6ea1c1168a20b6e1a-38cd184b8e2ede0c0e83",
+              "file": "blob-warm-default.spec.ts",
+              "line": 185,
+              "column": 9
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-11T22:02:15.464Z",
+    "duration": 701566.796,
+    "expected": 24,
+    "skipped": 0,
+    "unexpected": 20,
+    "flaky": 0
+  }
+}

@@ -1,5 +1,109 @@
 # Changelog
 
+## 11.0.1 — 2026-11-12
+
+A patch that brings the 10.1.5 fixes forward onto 11.0. If you saw the dock's hover
+plate turn into an oval around a labelled control, or one end of the dock go square
+while nothing was hidden, this is the release that fixes both. Nothing is removed or
+renamed. Several token values move, each because the token is the fix: on the stadium
+dock `--dock-cap-rest` goes from `--radius-dock` (16px) to half the dock's thickness
+(its height when horizontal, its width when vertical), and `--dock-cap-cut` from `--radius-xs` (4px) to `--radius-card` (16px); a dock
+control's default corner goes from `--radius-circle` (50%) to half the control size;
+under `(pointer: coarse)`, `--control-text` and `--control-text-sm` go from the 1.5x
+comfort scale to a 16px floor and to 6/7 of it; in dark, `--shadow-color` goes from the
+foreground to the page ground, deepened; the Slider's default fill in dark goes from
+`--glass-capsule-warm` to the foreground at 22%; and a static-backdrop dock's plate
+sets `--glass-level` to 1 instead of inheriting the dock's 0. Three tokens are new:
+`--icon-label-gap` (0.25rem), `--field-text-floor` (0px, or 16px under a coarse pointer)
+and `--value-mark-inset` (0px). The dock now writes two measured properties on its root,
+`--dock-plate-cross-px` and `--dock-run-room-block`, and sets a `data-run-fits`
+attribute on the root when every control in its run fits.
+
+- **The stadium dock is round at both ends, in every posture.** In 11.0.0 the stadium
+  dock rested on `--radius-dock`, a 16px corner, and its scroll cue cut the corner to
+  4px on whichever end still had controls past it. The cue ran even when nothing was
+  hidden, so a dock with everything showing could still rest with one square end, and a
+  collapsed dock with a control beside its summary often showed it. Now the corner is
+  half the dock's own thickness, its height when horizontal and its width when vertical
+  (read from the plate's box, so it is a true circle, never a percentage), at rest,
+  collapsed, open on a narrow layer and on every frame of the open and close animation.
+  Until the dock's script has measured itself, as on a server-rendered page before it
+  hydrates, the corner is worked out from the same density tokens the dock is laid out
+  by, so the first paint is already round. While the dock opens or closes, its box is
+  stretched along the dock's length, and the corner is now drawn to cancel that stretch,
+  so the end stays a circle instead of flattening for the length of the animation. The
+  dock's own box takes the same corner, so its edge highlight follows the curve. The cue now runs only when controls really are hidden,
+  and when it does it cuts the corner to 16px. A one-control collapsed dock is still a
+  circle; one with a control beside its summary is a capsule. On the stadium shape
+  `--radius-dock` no longer sets the corner; the rounded and card shapes are unchanged.
+
+- **A labelled dock control's hover and pressed plate is a capsule.** The default
+  corner of `DockControl` was `--radius-circle` (50%), which is a circle on an icon
+  but an oval on anything wider, such as a compact control with a label. The default is
+  now half the control size, which the browser clamps to half the shorter side: still a
+  circle on an icon, and a capsule on a labelled control. `--dock-control-radius` still
+  overrides it.
+
+- **A collapsed dock hides nothing.** The folded dock keeps its full layer laid out
+  behind the summary, and that layer could still scroll, which drove the corner cue on
+  a dock you could not scroll. While collapsed, that layer is no longer a scroll
+  container and the cue is off. A hidden, wider layer inside a `DockLayerGroup` no
+  longer gives a fitting dock something to scroll either.
+
+- **Keyboard focus keeps its whole ring at the dock's edge.** The dock reserves room for
+  the focus ring at each end of its run, and when every control fits, that room shrinks
+  to fit, never below the ring itself, so a focused first or last control shows its full
+  ring and the dock does not scroll. A vertical dock within about 8px of fitting can
+  still cut a focused end control's ring by up to 4px. That room is measured the same
+  way whether the dock is open or folded, so a dock you reopen while it is still closing,
+  as the window changes width, takes its final width at once instead of holding a few
+  pixels too much for a frame. Focusing a control inside a `DockLayerGroup` now scrolls
+  that control into view rather than the group.
+
+- **A collapsing dock's controls hold still in WebKit.** About one collapse in five on
+  touch, every control jumped by the run's full scroll distance as the collapse began.
+  The dock now keeps the scroll position it was showing.
+
+- **A static dock's plate takes your veil colour.** With `backdropMode="static"` the
+  plate ignored `--glass-veil-ink`. It now paints the veil over an opaque card colour,
+  so your ink shows and nothing behind the dock shows through.
+
+- **A tap leaves no hover behind.** On touch screens, hover styles stuck to the last
+  control you tapped. Dock controls, dock triggers, the layer switcher, the
+  DarkModeToggle and the glass capsule's hover highlight now apply their hover look only
+  on devices that can hover.
+
+- **Keyboard and press fixes for the folded dock.** The folded summary shows the dock's
+  own round focus ring instead of the browser's square one. Tabbing onto it opens the
+  dock and moves focus to the first control, as Enter does. A dock mounted with
+  `collapse="open"` now folds after its idle time even if nobody touches it, and every
+  press inside an open dock starts that time again, so it never folds under a finger
+  that is scrolling it. A press
+  made while the dock is opening now activates its control when you clicked the folded
+  dock to open it, when something else opened it, or when you moved more than 6px to
+  aim. Only a press on the exact spot where a hover opened the dock still waits for the
+  dock to settle, since the control under the pointer changed without you aiming at it.
+
+- **The Slider shows its thumb at the minimum and maximum.** The thumb is now a disc of
+  `--slider-thumb-size` that stays inside the track, and the fill always reaches its
+  centre: one thumb wide at the minimum and the full track at the maximum, horizontal,
+  vertical and inverted. Value marks and the loupe line up on the thumb. A disabled
+  Slider dims the thumb with its fill. The fill now sits in a `.slider-lane` element
+  inside the track. In dark, the default fill is a calm foreground tint instead of a
+  warm brown; a `--slider-range-bg` you set still wins.
+
+- **Touch keeps control text at 16px.** On a coarse pointer, inputs and picker rows were
+  scaled to 21px. Control text is now at least 16px, small control text at least about
+  14px, and text fields (`Input`, `Textarea`, `NumberField` and the input bar) never go
+  below 16px, so iOS does not zoom.
+
+- **Smaller fixes.** Menu items and sub-menu triggers leave a 4px gap between icon and
+  label. Disclosure triggers (Collapsible, Accordion) show the standard 2px focus outline
+  instead of a faint shadow. In dark mode, shadows are never lighter than the ground they
+  fall on, so glass no longer glows at its edges. Table row and header borders use
+  `--border`. A `SegmentedTabs` is its own stacking context, so a fixed header with
+  `z-index: 1` paints over it.
+
 ## 11.0.0 — 2026-11-09
 
 A major release. It brings in everything from 10.1.3 and 10.1.4 below, and adds a
@@ -156,6 +260,149 @@ changes come first, each with what to do.
   the utility sheet now carries glass's own utilities (`shadow-cartoon`, `glass-plate`
   and the rest) so they no longer depend on a source scan.
 - Installed TypeScript consumers no longer see stylesheet imports in the declarations.
+
+## 10.1.5 — 2026-11-12
+
+A patch for five paint defects value.js reported from color.babb.dev, keyframes.babb.dev
+and fourier.babb.dev on 10.1.4 (records: `docs/tranches/BL/audit/INBOUND.md` O-129 rows
+1, 2, 5, 6 and 7; `docs/release-10.1.5/implement.md`). No public API is removed or
+renamed. Five token values move, each because the token is the cure: `--dock-cap-rest`
+on the pill (`50%` to half the plate's measured cross extent); under
+`(pointer: coarse)`, `--control-text`/`--control-text-sm` (the 1.5x comfort scale to the
+16 px floor and to 6/7 of it); the dark arm's `--shadow-color` (the foreground to
+the page ground deepened, O-182); the Slider's default `--liquid-fill-tint` in dark
+(`--glass-capsule-warm` to the foreground at 22%, O-167); and `--glass-level` on a
+static-backdrop dock's plate (the root's inherited 0 to 1, O-157). Two tokens are new, `--icon-label-gap` (0.25rem) and
+`--field-text-floor` (0 px, 16 px under a coarse pointer). The dock publishes on its root four new
+measured properties, `--dock-plate-cross-px`, `--dock-seat-max-inline-px`,
+`--dock-seat-max-block-px` and `--dock-run-room-block`, and a `data-run-fits` attribute
+(`.glass-dock[data-run-fits]`).
+
+- **The dock pill's corner is a circle at rest (O-129 r1).** The cut-cap keyframes
+  rested at `--dock-cap-rest: 50%`. A percentage radius resolves per axis, so whenever
+  the scroll timeline was active a 188x60 plate painted 94x30 px corners, an ellipse
+  inside the ring. The rest is now a length, half the plate's cross extent, which
+  `useDockExpandedSize` publishes as `--dock-plate-cross-px` from the plate's own
+  ResizeObserver border box (block size on a horizontal dock, inline size on a vertical
+  one). The stadium plate also rests at that length when nothing scrolls. The timeline
+  was armed by 2 px of reach that was not there: a hovered seat's `scale: 1.1` grows its
+  box 2.2 px past its layout box, and the run counted that as scrollable overflow. The
+  run's content-box reserve, already on the block axis, is now on both axes and covers
+  the hover ink plus the ring, which scales with the seat (6.6 px), so a keyboard-focused
+  seat under the pointer keeps its whole ring. Its scroll padding adds the reserve back, so
+  every snap rest and reach anchor keeps its offset. A run that hides nothing now has
+  nothing to scroll.
+
+- **A collapsed dock is a circle (O-129 r2).** The collapsed dock's full pane stays laid
+  out behind the summary and still scrolls, so the cap timeline cut the collapsed
+  plate's trailing corners to 16 px (`50% 16px 16px 50%`). A collapsed dock's run is
+  not the visible run and hides nothing, so under `.collapsed` the plate's and the run's
+  cut-cap animations are off (as they are on any run whose seats fit) and the plate
+  paints its rest corner. An inactive timeline alone did not do it: it holds what it
+  last resolved, so a collapse from a scrolled run sealed lopsided. The idle full pane
+  is also no longer a scroll container (`overflow: clip` while it is neither active nor
+  leaving), and a layer group's idle face (neither active nor leaving) clips its own
+  overflow, so a wider hidden face no longer gives a fitting run a scroll range
+  (O-205). The leaving face is not clipped, so its crossfade paints as before.
+
+- **A keyboard-focused seat keeps its ring at the fit edge (O-201).** The run's
+  reserves yield to the room its seats leave, so a dock a few pixels short of its
+  content has nothing to cut. They yielded down to zero, which cut a focused first or
+  last seat's ring by up to 4 px at the fit edge. On a horizontal run the two reserve
+  boxes now yield down to `--dock-ring-reserve`: `data-run-fits` means only that the
+  seats' span fits the port, so a run whose seats show rests round, and with less than
+  a ring's room at each end it scrolls at most the difference, which reach uses to
+  bring a focused end seat's whole ring into view. A vertical run keeps its padding
+  yield (each end's reserve is the smaller of the reserve and half the room the seats
+  leave, `--dock-run-room-block`), so in the 8 px above its fit edge a focused end
+  seat's ring is still cut by up to 4 px; 10.1.4 cut 4 px at every height under that
+  edge. Reach now measures a seat inside a `DockLayerGroup` by its own box, not the
+  group's, so a focused seat at a face's end is brought into view on a run that does
+  not fit; and a reach that needs no travel stops a glide still running toward an
+  earlier seat. No token value moves.
+
+- **A collapsing dock's seats hold still in WebKit.** Between the posture swap and the
+  morph's first frame the dock lays out once without its reserved box, so a run that
+  does not fit grew and shrank back, and WebKit re-snapped it to its scroll end on that
+  return: in about one collapse in five on a coarse pointer, every seat jumped by the
+  run's whole scroll range as the collapse began. The morph now reads the run's scroll
+  before the swap and gives it back to the leaving run once the first frame's layout
+  is set.
+
+- **A static dock's plate takes the consumer's veil (O-157).** Under
+  `backdrop-mode="static"` the plate inherited the dock root's `--glass-level: 0`, so
+  the veil recipe resolved to bare `--card` and the consumer's `--glass-veil-ink` never
+  reached it. The plate now declares `--glass-level: 1` and paints the live plate's veil
+  over an opaque `--card` ground, so the ink reaches it and nothing behind the dock
+  shows through. The root keeps `--glass-level: 0`, so every other glass surface in the
+  dock stays at its solid endpoint.
+
+- **A disclosure trigger's keyboard ring is the house outline (O-207).** The
+  CollapsibleTrigger and AccordionTrigger focus rule set `outline: none` and painted the
+  30% `--focus-ring-shadow`, about 2:1, and took the ring off a trigger that also
+  carries `.focus-ring`. It now paints the `.focus-ring` outline (2 px, the perimeter
+  ink, about 3:1).
+
+- **A tap leaves no hover behind (O-161).** On touch, `:hover` sticks to the tapped
+  element, so a dock seat kept its hover fill and lift after a tap, and the
+  DarkModeToggle its hover tint. The hover arms of the dock's icon, tab, trigger and
+  switcher seats and of the DarkModeToggle now sit under `@media (hover: hover)`.
+
+- **The folded dock's keyboard ring follows the pill (O-162).** The summary face painted
+  the browser's square focus ring inside the round plate. It now takes the dock seats'
+  ring on the plate's rest corner.
+
+- **Tab onto a folded dock opens it (O-177).** Keyboard focus reaching the summary
+  expands the dock, as focus anywhere in it does, and hands focus to the first seat, as
+  Enter does. The collapse's own focus hand-off and a pointer press on the summary do not
+  count as a reach.
+
+- **A press aimed at the opening dock activates (O-177).** The guard against a press
+  racing the expand swallowed every press while the morph ran. A press made by a click on
+  the folded face, or one the pointer travelled more than 6 px from its position at the
+  expand to make, was aimed at the new layout, and now activates its seat once.
+
+- **A dock that mounts open idles (O-176).** `collapse="open"` armed the idle window only
+  when the pointer or focus left, so an untouched dock never folded. It now arms the
+  window at mount.
+
+- **The Slider's thumb shows at min and max (O-129 r5).** The scrubber painted no thumb
+  and a fill of `value x track`, so at the minimum there was a bare track and at the
+  maximum an inert full bar. The thumb is now a disc of `--slider-thumb-size`, inscribed
+  in the track (the size rungs still take `min(thumb, track)`), painted like the switch
+  thumb. The fill rides a lane one thumb diameter shorter than the track and reaches one
+  diameter past it, so it is `thumb + value x (track - thumb)` wide: one thumb at min,
+  the whole track at max, and the thumb always sits in its leading end, inverted and
+  vertical included. Value marks and the loupe's value point sit on the thumb's centre
+  at their value, and a disabled scrubber dims its thumb with its fill. The spectrum
+  variant is unchanged. The fill is now wrapped in a `.slider-lane` element inside the
+  track.
+
+- **The dark Slider's fill is neutral (O-167).** In dark, every Slider and loupe filled
+  with `--glass-capsule-warm` (`oklch(0.42 0.06 75)`), a floor colour that read as a
+  brown stain on a dark dock plate. The default fill is now `--slider-fill-ink`, which
+  stays `--glass-capsule-warm` in light and is the foreground at 22% in dark, quieter
+  than the thumb. A consumer's `--slider-range-bg` still wins in both themes.
+
+- **Touch keeps control type at 16 px (O-129 r6).** The coarse-pointer arm set
+  `--ui-scale: 1.5`, and `--control-text` multiplied it into the type, so the
+  `.input-bar` field and the picker rows painted 21 px in a 54 px bar at 390 px. Under
+  `(pointer: coarse)` `--control-text` is now `max(fluid base, 1rem)`, with the comfort
+  scale left on the box, whose heights are unchanged, and `--control-text-sm` is
+  `max(fluid base, 1rem x 6/7)`, so menu labels, shortcuts and small buttons stay the
+  quieter rung on touch. The iOS no-zoom floor binds text fields: `.input-pill`,
+  `.input-bar-field` and `.field-control` (Input, Textarea, NumberField) read the new
+  `--field-text-floor`, 16 px under a coarse pointer, so a small field still paints 16 px.
+
+- **A menu item's icon stands off its label (O-129 r7).** `.menu__item` and
+  `.menu__sub-trigger` had no gap, so a bare icon component sat flush against its label.
+  Both now take `gap: var(--icon-label-gap)`, the 4 px the dock trigger family already
+  painted. The dock trigger reads the same token as its fallback.
+
+- **No light halo around glass in dark (O-182).** The root's `--shadow-color` is the
+  foreground, which under `.dark` is a light ink, so every elevation shadow cast light
+  on the night ground. The dark arm's `--shadow-color` is now the page ground deepened,
+  never lighter than the ground it falls on. Light mode is unchanged.
 
 ## 10.1.4 — 2026-11-04
 

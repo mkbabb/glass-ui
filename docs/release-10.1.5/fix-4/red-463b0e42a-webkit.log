@@ -1,0 +1,161 @@
+
+Running 7 tests using 1 worker
+
+  ✘  1 [webkit] › tests-visual/release-10-1-5.spec.ts:715:1 › f1 a SegmentedTabs under a fixed z:1 header paints beneath it; its labels paint over the indicator (3.4s)
+  ✘  2 [webkit] › tests-visual/release-10-1-5.spec.ts:757:1 › f2 Table row and header rules paint in --border, light and dark (1.2s)
+  ✘  3 [webkit] › tests-visual/release-10-1-5.spec.ts:792:9 › h1 at 2x › h1 house at 390: a seat cut by the trailing clip paints nothing past the plate's corner arc (2.5s)
+  ✘  4 [webkit] › tests-visual/release-10-1-5.spec.ts:792:9 › h1 at 2x › h1 cockpit at 390: a seat cut by the trailing clip paints nothing past the plate's corner arc (2.6s)
+  ✘  5 [webkit] › tests-visual/release-10-1-5.spec.ts:907:1 › h2 at 844: a labelled DockTrigger adds no reserve; the run's room is the icon dock's (2.6s)
+  ✘  6 [webkit] › tests-visual/release-10-1-5.spec.ts:923:1 › h3 a ticking seat label constructs no ResizeObserver (2.4s)
+  ✘  7 [webkit] › tests-visual/release-10-1-5.spec.ts:941:1 › h4 with no ResizeObserver the plate rests at half its block extent (1.5s)
+
+
+  1) [webkit] › tests-visual/release-10-1-5.spec.ts:715:1 › f1 a SegmentedTabs under a fixed z:1 header paints beneath it; its labels paint over the indicator 
+
+    Error: underline ({"rest":{"tab":["10","10","10"],"indicator":"0"},"glide":{"tab":["10","10","10"],"indicator":"0"},"underTop":"segmented-tab","tabTop":40}): the fixed header paints over the strip
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "header"
+    Received: "segmented-tab"
+
+      744 |         const cell = `${variant} (${JSON.stringify(read)})`;
+      745 |         expect(read.tabTop, `${cell}: the tab lies under the header`).toBeLessThan(80);
+    > 746 |         expect(read.underTop, `${cell}: the fixed header paints over the strip`).toBe("header");
+          |                                                                                  ^
+      747 |         for (const at of [read.rest, read.glide]) {
+      748 |             expect(at.indicator, `${cell}: an indicator`).not.toBeNull();
+      749 |             for (const z of at.tab) {
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:746:82
+
+    Error Context: tests-visual/test-results/release-10-1-5-f1-a-Segmen-567d7-ls-paint-over-the-indicator-webkit/error-context.md
+
+  2) [webkit] › tests-visual/release-10-1-5.spec.ts:757:1 › f2 Table row and header rules paint in --border, light and dark 
+
+    Error: light hrow ({"border":"rgb(198, 180, 159)","rules":[{"id":"hrow","width":"1px","colour":"rgb(28, 25, 23)","text":"rgb(28, 25, 23)"},{"id":"row1","width":"1px","colour":"rgb(28, 25, 23)","text":"rgb(28, 25, 23)"},{"id":"row2","width":"1px","colour":"rgb(28, 25, 23)","text":"rgb(28, 25, 23)"},{"id":"row3","width":"0px","colour":"rgb(28, 25, 23)","text":"rgb(28, 25, 23)"}]}): the rule is --border
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "rgb(198, 180, 159)"
+    Received: "rgb(28, 25, 23)"
+
+      773 |         for (const rule of read.rules) {
+      774 |             const cell = `${dark ? "dark" : "light"} ${rule.id} (${JSON.stringify(read)})`;
+    > 775 |             expect(rule.colour, `${cell}: the rule is --border`).toBe(read.border);
+          |                                                                  ^
+      776 |         }
+      777 |     }
+      778 | });
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:775:66
+
+    Error Context: tests-visual/test-results/release-10-1-5-f2-Table-ro-17a00--in---border-light-and-dark-webkit/error-context.md
+
+  3) [webkit] › tests-visual/release-10-1-5.spec.ts:792:9 › h1 at 2x › h1 house at 390: a seat cut by the trailing clip paints nothing past the plate's corner arc 
+
+    Error: house S8 ({"hovered":true,"scroll":89,"range":449,"plate":[15,16,375,72],"radii":[16,16,16,16],"run":"0px"}): no seat ink past the plate's arc ({"probed":648,"count":4,"ink":[[373.75,23.25,20],[373.75,23.75,31],[373.75,64.25,31],[373.75,64.75,20]]})
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 4
+
+      891 |                 );
+      892 |                 expect(read.probed, `${cell}: device pixels past the arcs were read`).toBeGreaterThan(0);
+    > 893 |                 expect(read.count, `${cell}: no seat ink past the plate's arc (${JSON.stringify(read)})`).toBe(0);
+          |                                                                                                           ^
+      894 |             }
+      895 |         });
+      896 |     }
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:893:107
+
+    Error Context: tests-visual/test-results/release-10-1-5-h1-at-2x-h1-33637-past-the-plate-s-corner-arc-webkit/error-context.md
+
+  4) [webkit] › tests-visual/release-10-1-5.spec.ts:792:9 › h1 at 2x › h1 cockpit at 390: a seat cut by the trailing clip paints nothing past the plate's corner arc 
+
+    Error: cockpit S8 ({"hovered":true,"scroll":105,"range":463,"plate":[15,16,375,68],"radii":[16,16,16,16],"run":"0px"}): no seat ink past the plate's arc ({"probed":648,"count":20,"ink":[[373.75,23.75,31],[374.25,23.75,31],[374.75,23.75,31],[374.25,24.25,31],[374.75,24.25,31],[374.25,24.75,31]]})
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 20
+
+      891 |                 );
+      892 |                 expect(read.probed, `${cell}: device pixels past the arcs were read`).toBeGreaterThan(0);
+    > 893 |                 expect(read.count, `${cell}: no seat ink past the plate's arc (${JSON.stringify(read)})`).toBe(0);
+          |                                                                                                           ^
+      894 |             }
+      895 |         });
+      896 |     }
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:893:107
+
+    Error Context: tests-visual/test-results/release-10-1-5-h1-at-2x-h1-dba56-past-the-plate-s-corner-arc-webkit/error-context.md
+
+  5) [webkit] › tests-visual/release-10-1-5.spec.ts:907:1 › h2 at 844: a labelled DockTrigger adds no reserve; the run's room is the icon dock's 
+
+    Error: the trigger's dock reserves 19, the icon dock 8
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 8
+    Received: 19
+
+      916 |     ).toBeGreaterThan(132);
+      917 |     const withTrigger = await runReserve(page);
+    > 918 |     expect(withTrigger, `the trigger's dock reserves ${withTrigger}, the icon dock ${icons}`).toBe(icons);
+          |                                                                                               ^
+      919 |     expect(icons, "the icon dock reserves the ring and the icon's overhang").toBeGreaterThan(0);
+      920 | });
+      921 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:918:95
+
+    Error Context: tests-visual/test-results/release-10-1-5-h2-at-844-a-6ba54-n-s-room-is-the-icon-dock-s-webkit/error-context.md
+
+  6) [webkit] › tests-visual/release-10-1-5.spec.ts:923:1 › h3 a ticking seat label constructs no ResizeObserver 
+
+    Error: 20 label ticks ({"before":4,"after":24})
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 4
+    Received: 24
+
+      934 |     });
+      935 |     expect(read.before, "the dock observes").toBeGreaterThan(0);
+    > 936 |     expect(read.after, `20 label ticks (${JSON.stringify(read)})`).toBe(read.before);
+          |                                                                    ^
+      937 |     expectNoReach(await readPlate(page), "after the ticks");
+      938 | });
+      939 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:936:68
+
+    Error Context: tests-visual/test-results/release-10-1-5-h3-a-tickin-d342c-onstructs-no-ResizeObserver-webkit/error-context.md
+
+  7) [webkit] › tests-visual/release-10-1-5.spec.ts:941:1 › h4 with no ResizeObserver the plate rests at half its block extent 
+
+    Error: no ResizeObserver: corner 0px = half the block extent 28 ({"cls":"glass-dock horizontal shape-pill expanded pinned fit-content always-expanded","w":160,"h":56,"radii":["0px","0px","0px","0px"],"runs":[{"sw":136,"cw":136,"sh":40,"ch":40,"active":true}]})
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.5
+    Received:    28
+
+      114 |             Math.abs(Number.parseFloat(r) - half),
+      115 |             `${cell}: corner ${r} = half the block extent ${half} (${JSON.stringify(read)})`,
+    > 116 |         ).toBeLessThanOrEqual(0.5);
+          |           ^
+      117 |     }
+      118 | }
+      119 |
+        at expectRestCorner (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:116:11)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:946:5
+
+    Error Context: tests-visual/test-results/release-10-1-5-h4-with-no--6cc04-ts-at-half-its-block-extent-webkit/error-context.md
+
+  7 failed
+    [webkit] › tests-visual/release-10-1-5.spec.ts:715:1 › f1 a SegmentedTabs under a fixed z:1 header paints beneath it; its labels paint over the indicator 
+    [webkit] › tests-visual/release-10-1-5.spec.ts:757:1 › f2 Table row and header rules paint in --border, light and dark 
+    [webkit] › tests-visual/release-10-1-5.spec.ts:792:9 › h1 at 2x › h1 house at 390: a seat cut by the trailing clip paints nothing past the plate's corner arc 
+    [webkit] › tests-visual/release-10-1-5.spec.ts:792:9 › h1 at 2x › h1 cockpit at 390: a seat cut by the trailing clip paints nothing past the plate's corner arc 
+    [webkit] › tests-visual/release-10-1-5.spec.ts:907:1 › h2 at 844: a labelled DockTrigger adds no reserve; the run's room is the icon dock's 
+    [webkit] › tests-visual/release-10-1-5.spec.ts:923:1 › h3 a ticking seat label constructs no ResizeObserver 
+    [webkit] › tests-visual/release-10-1-5.spec.ts:941:1 › h4 with no ResizeObserver the plate rests at half its block extent 

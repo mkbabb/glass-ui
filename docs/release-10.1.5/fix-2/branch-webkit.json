@@ -1,0 +1,975 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "tests-visual/webkit-2287.config.ts",
+      "--project=webkit",
+      "release-10-1-5.spec.ts",
+      "--workers=1"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/webkit-2287.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-headless-new",
+        "name": "chromium-headless-new",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "coarse-touch",
+        "name": "coarse-touch",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "safari-webgl.spec.ts",
+          "aurora-swraster.spec.ts",
+          "release-10-1-1.spec.ts",
+          "release-10-1-2.spec.ts",
+          "release-10-1-3.spec.ts",
+          "release-10-1-4.spec.ts",
+          "release-10-1-5.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/docs/release-10.1.5/fix-2/branch-webkit.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5247",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/",
+      "url": "http://localhost:5247",
+      "reuseExistingServer": true,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "release-10-1-5.spec.ts",
+      "file": "release-10-1-5.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "g1 rest dock at 1280: one corner = half its height, nothing to scroll, pointer off and on the trailing seat",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2024,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-05T00:13:29.644Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-808b628252789fdc1aeb",
+          "file": "release-10-1-5.spec.ts",
+          "line": 130,
+          "column": 5
+        },
+        {
+          "title": "g1 an overflowing run at scroll 0: the leading cap rests at half the block extent, a length; the trailing cap is cut",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1317,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-05T00:13:31.671Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-7eb0e24f62356e7a98c2",
+          "file": "release-10-1-5.spec.ts",
+          "line": 205,
+          "column": 1
+        },
+        {
+          "title": "g2 collapsed: the plate is a circle, half its extent on both axes",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1508,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-05T00:13:32.993Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-883492fef8fa06d875fa",
+          "file": "release-10-1-5.spec.ts",
+          "line": 227,
+          "column": 1
+        },
+        {
+          "title": "g2 expanded (collapsible), each layer and input mode hold g1",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3685,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-05T00:13:34.505Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-344e0bfd3f56461fd112",
+          "file": "release-10-1-5.spec.ts",
+          "line": 245,
+          "column": 1
+        },
+        {
+          "title": "g3 the Slider thumb is visible and one size at min, mid and max, inside the fill",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1070,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-05T00:13:38.195Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-07e2c8167209403ddc0d",
+          "file": "release-10-1-5.spec.ts",
+          "line": 271,
+          "column": 1
+        },
+        {
+          "title": "g5 the DropdownMenuItem icon-to-label gap is the icon-slot token, the dock trigger's own",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1868,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-05T00:13:39.269Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-2f7e84a0c699469259f9",
+          "file": "release-10-1-5.spec.ts",
+          "line": 318,
+          "column": 1
+        },
+        {
+          "title": "c1 a value mark is the thumb's centre at that value, on every axis; the loupe's value point is the thumb's centre",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1510,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-05T00:13:41.140Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-06c4a0749b2b31c6036b",
+          "file": "release-10-1-5.spec.ts",
+          "line": 348,
+          "column": 1
+        },
+        {
+          "title": "c3 the disabled scrubber dims its thumb with its fill",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1066,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-05T00:13:46.223Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-79f1476f55f7a8d57ca4",
+          "file": "release-10-1-5.spec.ts",
+          "line": 452,
+          "column": 1
+        },
+        {
+          "title": "c4 desktop: a keyboard-focused seat under the pointer keeps its whole ring",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2456,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-05T00:13:47.293Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-ff67222335e7e782d811",
+          "file": "release-10-1-5.spec.ts",
+          "line": 528,
+          "column": 1
+        },
+        {
+          "title": "e1 at 390: a label-wide tab under the pointer gives the run no reach and cuts no corner",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2264,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-05T00:14:05.220Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-51298042f26e977ae702",
+          "file": "release-10-1-5.spec.ts",
+          "line": 547,
+          "column": 5
+        },
+        {
+          "title": "e1 at 1440: a label-wide tab under the pointer gives the run no reach and cuts no corner",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2192,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-05T00:14:07.656Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-721bb960d135205b5425",
+          "file": "release-10-1-5.spec.ts",
+          "line": 547,
+          "column": 5
+        },
+        {
+          "title": "e2 at 390: focused, hovered tab seats keep their whole ring on every edge",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5367,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-05T00:14:09.856Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-938b5d7cae1606523602",
+          "file": "release-10-1-5.spec.ts",
+          "line": 574,
+          "column": 5
+        },
+        {
+          "title": "e2 at 1440: focused, hovered tab seats keep their whole ring on every edge",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5363,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-05T00:14:15.232Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-c145929157fd54ff619f",
+          "file": "release-10-1-5.spec.ts",
+          "line": 574,
+          "column": 5
+        },
+        {
+          "title": "e3 at 390: the run's clip and hit stop at the persistent seats, at rest and scrolled",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5554,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-05T00:14:20.600Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-a61ba8a3a58ca28732dd",
+          "file": "release-10-1-5.spec.ts",
+          "line": 586,
+          "column": 5
+        }
+      ],
+      "suites": [
+        {
+          "title": "coarse phone",
+          "file": "release-10-1-5.spec.ts",
+          "line": 157,
+          "column": 6,
+          "specs": [
+            {
+              "title": "g1 rest dock at 390: one corner = half its height, nothing to scroll, pointer off and on the trailing seat",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2276,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-05T00:13:23.740Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ba3de8f038291be5029b-76eee5367d5987376445",
+              "file": "release-10-1-5.spec.ts",
+              "line": 130,
+              "column": 5
+            },
+            {
+              "title": "g1 rest dock at 844: one corner = half its height, nothing to scroll, pointer off and on the trailing seat",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2017,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-05T00:13:26.492Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ba3de8f038291be5029b-7bf0597bf44bf87651a1",
+              "file": "release-10-1-5.spec.ts",
+              "line": 130,
+              "column": 5
+            },
+            {
+              "title": "g4 at 390 coarse the field type is at most 16px and at most 1.25x the pane subtitle",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1128,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-05T00:13:28.512Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ba3de8f038291be5029b-5313cefcae731d0cd06a",
+              "file": "release-10-1-5.spec.ts",
+              "line": 163,
+              "column": 5
+            }
+          ]
+        },
+        {
+          "title": "coarse phone, round 1",
+          "file": "release-10-1-5.spec.ts",
+          "line": 414,
+          "column": 6,
+          "specs": [
+            {
+              "title": "c2 coarse: the -sm rung stays the quieter rung for every non-field reader; an sm field floors at 16px",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1094,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-05T00:13:42.655Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ba3de8f038291be5029b-0c895e515a8c95489115",
+              "file": "release-10-1-5.spec.ts",
+              "line": 416,
+              "column": 5
+            },
+            {
+              "title": "c4 coarse 390: a keyboard-focused seat under the pointer keeps its whole ring",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2467,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-05T00:13:43.752Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ba3de8f038291be5029b-cb235968fa0b8c1304a9",
+              "file": "release-10-1-5.spec.ts",
+              "line": 445,
+              "column": 5
+            }
+          ]
+        },
+        {
+          "title": "critique 2, coarse phone",
+          "file": "release-10-1-5.spec.ts",
+          "line": 626,
+          "column": 6,
+          "specs": [
+            {
+              "title": "e1 at 390: a label-wide tab under the pointer gives the run no reach and cuts no corner",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2021,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-05T00:13:49.755Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ba3de8f038291be5029b-f3503e8ed2a7fe57aea7",
+              "file": "release-10-1-5.spec.ts",
+              "line": 547,
+              "column": 5
+            },
+            {
+              "title": "e1 at 844: a label-wide tab under the pointer gives the run no reach and cuts no corner",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2162,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-05T00:13:51.781Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ba3de8f038291be5029b-088f26e260d0f432da7e",
+              "file": "release-10-1-5.spec.ts",
+              "line": 547,
+              "column": 5
+            },
+            {
+              "title": "e2 at 390: focused, hovered tab seats keep their whole ring on every edge",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 5271,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-05T00:13:53.947Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ba3de8f038291be5029b-c8b1afa8ee30b7f0f3c8",
+              "file": "release-10-1-5.spec.ts",
+              "line": 574,
+              "column": 5
+            },
+            {
+              "title": "e3 at 390: the run's clip and hit stop at the persistent seats, at rest and scrolled",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 5664,
+                      "error": {
+                        "message": "Error: S3 ({\"focusVisible\":true,\"hover\":true,\"scale\":1.1,\"width\":114.55467224121094,\"outline\":\"solid\",\"ink\":4.4,\"ring\":{\"l\":211.1968780517578,\"r\":334.5515502929687,\"t\":20.700000381469728,\"b\":71.30000343322754},\"clips\":[{\"cls\":\"dock-layer dock-layer--full dock-run is-active\",\"l\":62,\"r\":334,\"t\":17,\"b\":75}]}): ring inside dock-layer dock-layer--full dock-run is-active (right)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m334.5\u001b[39m\nReceived:    \u001b[31m334.5515502929687\u001b[39m",
+                        "stack": "Error: S3 ({\"focusVisible\":true,\"hover\":true,\"scale\":1.1,\"width\":114.55467224121094,\"outline\":\"solid\",\"ink\":4.4,\"ring\":{\"l\":211.1968780517578,\"r\":334.5515502929687,\"t\":20.700000381469728,\"b\":71.30000343322754},\"clips\":[{\"cls\":\"dock-layer dock-layer--full dock-run is-active\",\"l\":62,\"r\":334,\"t\":17,\"b\":75}]}): ring inside dock-layer dock-layer--full dock-run is-active (right)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m334.5\u001b[39m\nReceived:    \u001b[31m334.5515502929687\u001b[39m\n    at expectFocusedRingWhole (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:514:70)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:621:42",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                          "column": 70,
+                          "line": 514
+                        },
+                        "snippet": "  512 |     for (const c of read.clips) {\n  513 |         expect(read.ring.l, `${cell}: ring inside ${c.cls} (left)`).toBeGreaterThanOrEqual(c.l - 0.5);\n> 514 |         expect(read.ring.r, `${cell}: ring inside ${c.cls} (right)`).toBeLessThanOrEqual(c.r + 0.5);\n      |                                                                      ^\n  515 |         expect(read.ring.t, `${cell}: ring inside ${c.cls} (top)`).toBeGreaterThanOrEqual(c.t - 0.5);\n  516 |         expect(read.ring.b, `${cell}: ring inside ${c.cls} (bottom)`).toBeLessThanOrEqual(c.b + 0.5);\n  517 |     }"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                            "column": 70,
+                            "line": 514
+                          },
+                          "message": "Error: S3 ({\"focusVisible\":true,\"hover\":true,\"scale\":1.1,\"width\":114.55467224121094,\"outline\":\"solid\",\"ink\":4.4,\"ring\":{\"l\":211.1968780517578,\"r\":334.5515502929687,\"t\":20.700000381469728,\"b\":71.30000343322754},\"clips\":[{\"cls\":\"dock-layer dock-layer--full dock-run is-active\",\"l\":62,\"r\":334,\"t\":17,\"b\":75}]}): ring inside dock-layer dock-layer--full dock-run is-active (right)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m334.5\u001b[39m\nReceived:    \u001b[31m334.5515502929687\u001b[39m\n\n  512 |     for (const c of read.clips) {\n  513 |         expect(read.ring.l, `${cell}: ring inside ${c.cls} (left)`).toBeGreaterThanOrEqual(c.l - 0.5);\n> 514 |         expect(read.ring.r, `${cell}: ring inside ${c.cls} (right)`).toBeLessThanOrEqual(c.r + 0.5);\n      |                                                                      ^\n  515 |         expect(read.ring.t, `${cell}: ring inside ${c.cls} (top)`).toBeGreaterThanOrEqual(c.t - 0.5);\n  516 |         expect(read.ring.b, `${cell}: ring inside ${c.cls} (bottom)`).toBeLessThanOrEqual(c.b + 0.5);\n  517 |     }\n    at expectFocusedRingWhole (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:514:70)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:621:42"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-05T00:13:59.224Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/test-results/release-10-1-5-critique-2--d0cb9--seats-at-rest-and-scrolled-webkit/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts",
+                        "column": 70,
+                        "line": 514
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "ba3de8f038291be5029b-ad4a3e425063732c8bbc",
+              "file": "release-10-1-5.spec.ts",
+              "line": 586,
+              "column": 5
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-05T00:13:22.184Z",
+    "duration": 64004.142,
+    "expected": 22,
+    "skipped": 0,
+    "unexpected": 1,
+    "flaky": 0
+  }
+}

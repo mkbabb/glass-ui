@@ -36,7 +36,7 @@ import { useDockMorphOrchestrator } from "./composables/useDockMorph";
 import { useDockExpandedSize } from "./composables/dockMorphMeasure";
 import { useDockShellProps, type DockProps } from "./composables/useDockShellProps";
 import { useDockClickIntegrity } from "./composables/useDockClickIntegrity";
-// [2026-08-24 · BK #47 W3 LATTICE + W6] The run: reach on the −P/2 lattice anchor via
+// [2026-08-24 · BK #47 W3 LATTICE + W6] The run: reach to the seat's snap position via
 // subtree capture, roving tabindex, and the live-region announcement.
 // ~~useDockOverflowFit — an RO measuring the full layer's inline overflow to toggle
 // `[data-dock-overflow]`, so overflow.css's scroll track + FadingScroll mask engaged
@@ -107,8 +107,8 @@ const statusEl = useTemplateRef<HTMLElement>("statusEl");
 
 /* THE RUN. The full face IS the run — the box whose children are the seats, the box
    the port scrolls, and the common ancestor the cut-cap timeline scopes to. Reach,
-   roving tabindex and the announcement all read the SAME lattice arithmetic, so they
-   live in one composable rather than three that must agree. */
+   roving tabindex and the announcement all read the SAME seat list, so they live in
+   one composable rather than three that must agree. */
 const { toolbar } = useDockRun({ runEl: fullEl, statusEl, orientation });
 
 /* Wire the sampled-luminance observer ON for
@@ -242,19 +242,42 @@ const {
 });
 
 const summaryIsDisclosure = computed(() => outerCurrentLayer.value === "summary");
-async function onSummaryKeydown(event: KeyboardEvent) {
-    if (!summaryIsDisclosure.value || !["Enter", " "].includes(event.key)) return;
-    event.preventDefault();
-    onClickCollapsed();
+/** Once the expand has patched the full face live, focus its first seat. The full face
+    is the fallback focus target (it carries `tabindex="-1"`): a dock whose expanded face
+    holds NO focusable descendant would otherwise no-op to <body>, and the summary goes
+    inert on expand — a keyboard trap. */
+async function focusFirstSeat(): Promise<void> {
     await nextTick();
-    // The full face is the fallback focus target (it carries `tabindex="-1"`): a dock
-    // whose expanded face holds NO focusable descendant would otherwise no-op to
-    // <body>, and the summary goes inert on expand — a keyboard trap.
     (
         fullEl.value?.querySelector<HTMLElement>(FOCUSABLE_SELECTOR) ?? fullEl.value
     )?.focus({
         preventScroll: true,
     });
+}
+
+async function onSummaryKeydown(event: KeyboardEvent) {
+    if (!summaryIsDisclosure.value || !["Enter", " "].includes(event.key)) return;
+    event.preventDefault();
+    onClickCollapsed();
+    await focusFirstSeat();
+}
+
+/* KEYBOARD FOCUS ON THE FOLDED FACE REOPENS THE DOCK ("reopen on pointer or focus").
+   Tab onto the summary expands the dock as focus anywhere in it does (`onFocusIn`,
+   called here so the expand is queued before the hand-off's tick), and hands focus to the first seat before the summary goes inert, as
+   Enter does. Two focuses are not the user's reach and do not expand: the collapse's
+   own hand-off (the watcher below puts focus here as the dock folds), and a pointer
+   press on the summary, whose click is the disclosure (`onClickCollapsed`). */
+let summaryFocusFromCollapse = false;
+function onSummaryFocusIn(event: FocusEvent): void {
+    const reach =
+        !summaryFocusFromCollapse &&
+        summaryIsDisclosure.value &&
+        !!summaryEl.value?.matches(":focus-visible");
+    event.stopPropagation();
+    if (!reach) return;
+    onFocusIn();
+    void focusFirstSeat();
 }
 
 // Escape belongs to the innermost owner. The gate is STRUCTURAL, not `defaultPrevented`:
@@ -305,7 +328,10 @@ watch(visualExpanded, async (isExpanded, was) => {
     if (!held) return;
     await nextTick();
     const summary = summaryEl.value;
-    if (summary && !summary.hasAttribute("inert")) summary.focus({ preventScroll: true });
+    if (!summary || summary.hasAttribute("inert")) return;
+    summaryFocusFromCollapse = true;
+    summary.focus({ preventScroll: true });
+    summaryFocusFromCollapse = false;
 });
 
 /* The CLICK-INTEGRITY guard. Scopes the collapsed-tap / hover-
@@ -322,8 +348,6 @@ const {
     onPointerCancelCapture,
     onClickCapture,
     markExpandFlip,
-    onPointerEnter,
-    onPointerLeave,
     pressKeepaliveLayer,
 } = useDockClickIntegrity({
     rootEl: dockEl,
@@ -388,8 +412,6 @@ defineExpose({
         @mouseleave="onMouseLeave($event)"
         @focusin="onFocusIn"
         @focusout="onFocusOut"
-        @pointerenter="onPointerEnter"
-        @pointerleave="onPointerLeave"
         @pointerdown.capture="onPointerDownCapture"
         @pointercancel.capture="onPointerCancelCapture"
         @click.capture="onClickCapture"
@@ -530,7 +552,7 @@ defineExpose({
                 :aria-label="summaryIsDisclosure ? props.collapsedLabel : undefined"
                 :aria-expanded="summaryIsDisclosure ? 'false' : undefined"
                 :aria-controls="summaryIsDisclosure ? `${dockId}-full` : undefined"
-                @focusin.stop
+                @focusin="onSummaryFocusIn"
                 @keydown="onSummaryKeydown"
                 @click="onClickCollapsed"
             >

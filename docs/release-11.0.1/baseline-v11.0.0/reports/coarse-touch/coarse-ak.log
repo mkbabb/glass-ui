@@ -1,0 +1,1193 @@
+
+Running 95 tests using 1 worker
+
+  ✓   1 [coarse-touch] › tests-visual/shell-hold.spec.ts:57:1 › BA.W-SHELL-HOLD — P1: the demo shell HOLDS the page (no echo self-nav) (13.4s)
+  ✘   2 [coarse-touch] › tests-visual/shell-hold.spec.ts:92:1 › BA.W-SHELL-HOLD — negative control: a scripted chip click DOES navigate (@advance path live) (1.4s)
+  ✘   3 [coarse-touch] › tests-visual/slider-spectrum-fallback.spec.ts:56:9 › slider design resolution (π lane — light) › standard knob is a TRUE CIRCLE + spectrum fallback reads squircle-adjacent (light) (5.9s)
+  ✘   4 [coarse-touch] › tests-visual/slider-spectrum-fallback.spec.ts:56:9 › slider design resolution (π lane — dark) › standard knob is a TRUE CIRCLE + spectrum fallback reads squircle-adjacent (dark) (5.9s)
+  ✘   5 [coarse-touch] › tests-visual/sortable-list.contract.spec.ts:66:5 › SortableList public transaction contract › native semantics, disabled exclusion, and coarse target floor (6.0s)
+  ✓   6 [coarse-touch] › tests-visual/sortable-list.contract.spec.ts:93:5 › SortableList public transaction contract › keyboard lift, travel, drop, cancel, and focus retention (1.1s)
+  ✓   7 [coarse-touch] › tests-visual/sortable-list.contract.spec.ts:123:5 › SortableList public transaction contract › pointer and touch commit through the same reorder transaction (924ms)
+  ✓   8 [coarse-touch] › tests-visual/sortable-list.contract.spec.ts:139:5 › SortableList public transaction contract › cross-list drop retains insertion and names source and destination (918ms)
+[W-A11Y-PERF G3] sweep=200 events | setup(matchMedia)=11 | during sweep: rectCalls=1 over ~5 frames, matchMedia=0
+  ✓   9 [coarse-touch] › tests-visual/specular-coalesce.spec.ts:28:5 › specular-coalesce (π lane — the rAF-coalesced specular write, fail-CLOSED) › a 200-event pointer sweep collapses to ≤ frames+slack rect reads + a cached matchMedia (882ms)
+[WebServer] 8:03:50 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button data-scenario="button-as-child" as-child="" > 
+[WebServer]   at <Primitive material="content" shadow=true grain=false  ... > 
+[WebServer]   at <Surface material="content" tier="resting" surface="opaque"  ... > 
+[WebServer]   at <ShowcaseFrame caption="As-child" pad="sm" > 
+[WebServer]   at <StorySection heading="Keyboard, touch, and the linked command" blurb="One native button accepts Enter, Space, click, and coarse taps. `as-child` hands the whole command contract to another element without giving up the material." > 
+[WebServer]   at <TooltipProvider delay-duration=250 skip-delay-duration=300 > 
+[WebServer]   at <TooltipProvider delay-duration=250 > 
+[WebServer]   at <StoryPage> 
+[WebServer]   at <Buttons onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/display/buttons" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+[WebServer] 8:03:50 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button data-scenario="button-as-child-disabled" as-child="" disabled="" > 
+[WebServer]   at <Primitive material="content" shadow=true grain=false  ... > 
+[WebServer]   at <Surface material="content" tier="resting" surface="opaque"  ... > 
+[WebServer]   at <ShowcaseFrame caption="As-child" pad="sm" > 
+[WebServer]   at <StorySection heading="Keyboard, touch, and the linked command" blurb="One native button accepts Enter, Space, click, and coarse taps. `as-child` hands the whole command contract to another element without giving up the material." > 
+[WebServer]   at <TooltipProvider delay-duration=250 skip-delay-duration=300 > 
+[WebServer]   at <TooltipProvider delay-duration=250 > 
+[WebServer]   at <StoryPage> 
+[WebServer]   at <Buttons onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/display/buttons" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  ✘  10 [coarse-touch] › tests-visual/spring-ease.spec.ts:108:9 › spring-ease — light › (0) the eased curves are on the wire (snappy fills its clock, press minted) (1.0s)
+  ✓  11 [coarse-touch] › tests-visual/spring-ease.spec.ts:129:9 › spring-ease — light › (1) TAB GLIDE — the indicator translate fills its clock + co-times the squish (1.6s)
+[WebServer] 8:03:53 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button data-scenario="button-as-child" as-child="" > 
+[WebServer]   at <Primitive material="content" shadow=true grain=false  ... > 
+[WebServer]   at <Surface material="content" tier="resting" surface="opaque"  ... > 
+[WebServer]   at <ShowcaseFrame caption="As-child" pad="sm" > 
+[WebServer]   at <StorySection heading="Keyboard, touch, and the linked command" blurb="One native button accepts Enter, Space, click, and coarse taps. `as-child` hands the whole command contract to another element without giving up the material." > 
+[WebServer]   at <TooltipProvider delay-duration=250 skip-delay-duration=300 > 
+[WebServer]   at <TooltipProvider delay-duration=250 > 
+[WebServer]   at <StoryPage> 
+[WebServer]   at <Buttons onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/display/buttons" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+[WebServer] 8:03:53 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button data-scenario="button-as-child-disabled" as-child="" disabled="" > 
+[WebServer]   at <Primitive material="content" shadow=true grain=false  ... > 
+[WebServer]   at <Surface material="content" tier="resting" surface="opaque"  ... > 
+[WebServer]   at <ShowcaseFrame caption="As-child" pad="sm" > 
+[WebServer]   at <StorySection heading="Keyboard, touch, and the linked command" blurb="One native button accepts Enter, Space, click, and coarse taps. `as-child` hands the whole command contract to another element without giving up the material." > 
+[WebServer]   at <TooltipProvider delay-duration=250 skip-delay-duration=300 > 
+[WebServer]   at <TooltipProvider delay-duration=250 > 
+[WebServer]   at <StoryPage> 
+[WebServer]   at <Buttons onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/display/buttons" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  -  12 [coarse-touch] › tests-visual/spring-ease.spec.ts:168:9 › spring-ease — light › (3) PRESS — the scale answers toward --scale-press within ~100ms, coupled with --glass-btn-press-t
+[WebServer] 8:03:54 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button data-scenario="button-as-child" as-child="" > 
+[WebServer]   at <Primitive material="content" shadow=true grain=false  ... > 
+[WebServer]   at <Surface material="content" tier="resting" surface="opaque"  ... > 
+[WebServer]   at <ShowcaseFrame caption="As-child" pad="sm" > 
+[WebServer]   at <StorySection heading="Keyboard, touch, and the linked command" blurb="One native button accepts Enter, Space, click, and coarse taps. `as-child` hands the whole command contract to another element without giving up the material." > 
+[WebServer]   at <TooltipProvider delay-duration=250 skip-delay-duration=300 > 
+[WebServer]   at <TooltipProvider delay-duration=250 > 
+[WebServer]   at <StoryPage> 
+[WebServer]   at <Buttons onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/display/buttons" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+[WebServer] 8:03:54 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button data-scenario="button-as-child-disabled" as-child="" disabled="" > 
+[WebServer]   at <Primitive material="content" shadow=true grain=false  ... > 
+[WebServer]   at <Surface material="content" tier="resting" surface="opaque"  ... > 
+[WebServer]   at <ShowcaseFrame caption="As-child" pad="sm" > 
+[WebServer]   at <StorySection heading="Keyboard, touch, and the linked command" blurb="One native button accepts Enter, Space, click, and coarse taps. `as-child` hands the whole command contract to another element without giving up the material." > 
+[WebServer]   at <TooltipProvider delay-duration=250 skip-delay-duration=300 > 
+[WebServer]   at <TooltipProvider delay-duration=250 > 
+[WebServer]   at <StoryPage> 
+[WebServer]   at <Buttons onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/display/buttons" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  -  13 [coarse-touch] › tests-visual/spring-ease.spec.ts:207:9 › spring-ease — light › (4) ABSORB — a rapid double-tap re-seats the press value continuously (no restart jump)
+[WebServer] 8:03:59 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button as-child="" > 
+[WebServer]   at <CardFooter class="justify-center" > 
+[WebServer]   at <Primitive data-slot="card" data-shadow=true data-size="md"  ... > 
+[WebServer]   at <Surface data-slot="card" tier="floating" surface=undefined  ... > 
+[WebServer]   at <Card tier="floating" class="w-full max-w-(--measure-cel) text-center" > 
+[WebServer]   at <NotFound onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/feedback/notification" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  ✓  14 [coarse-touch] › tests-visual/spring-ease.spec.ts:262:9 › spring-ease — light › (5) UNIVERSAL — other animating surfaces move smooth + coupled (menu-row, notification) (5.0s)
+[WebServer] 8:04:00 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button data-scenario="button-as-child" as-child="" > 
+[WebServer]   at <Primitive material="content" shadow=true grain=false  ... > 
+[WebServer]   at <Surface material="content" tier="resting" surface="opaque"  ... > 
+[WebServer]   at <ShowcaseFrame caption="As-child" pad="sm" > 
+[WebServer]   at <StorySection heading="Keyboard, touch, and the linked command" blurb="One native button accepts Enter, Space, click, and coarse taps. `as-child` hands the whole command contract to another element without giving up the material." > 
+[WebServer]   at <TooltipProvider delay-duration=250 skip-delay-duration=300 > 
+[WebServer]   at <TooltipProvider delay-duration=250 > 
+[WebServer]   at <StoryPage> 
+[WebServer]   at <Buttons onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/display/buttons" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+[WebServer] 8:04:00 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button data-scenario="button-as-child-disabled" as-child="" disabled="" > 
+[WebServer]   at <Primitive material="content" shadow=true grain=false  ... > 
+[WebServer]   at <Surface material="content" tier="resting" surface="opaque"  ... > 
+[WebServer]   at <ShowcaseFrame caption="As-child" pad="sm" > 
+[WebServer]   at <StorySection heading="Keyboard, touch, and the linked command" blurb="One native button accepts Enter, Space, click, and coarse taps. `as-child` hands the whole command contract to another element without giving up the material." > 
+[WebServer]   at <TooltipProvider delay-duration=250 skip-delay-duration=300 > 
+[WebServer]   at <TooltipProvider delay-duration=250 > 
+[WebServer]   at <StoryPage> 
+[WebServer]   at <Buttons onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/display/buttons" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  -  15 [coarse-touch] › tests-visual/spring-ease.spec.ts:300:9 › spring-ease — light › (6) PRM — under reduce the press snaps (zero in-between transform frames), the fade kept
+[WebServer] 8:04:01 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button data-scenario="button-as-child" as-child="" > 
+[WebServer]   at <Primitive material="content" shadow=true grain=false  ... > 
+[WebServer]   at <Surface material="content" tier="resting" surface="opaque"  ... > 
+[WebServer]   at <ShowcaseFrame caption="As-child" pad="sm" > 
+[WebServer]   at <StorySection heading="Keyboard, touch, and the linked command" blurb="One native button accepts Enter, Space, click, and coarse taps. `as-child` hands the whole command contract to another element without giving up the material." > 
+[WebServer]   at <TooltipProvider delay-duration=250 skip-delay-duration=300 > 
+[WebServer]   at <TooltipProvider delay-duration=250 > 
+[WebServer]   at <StoryPage> 
+[WebServer]   at <Buttons onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/display/buttons" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+[WebServer] 8:04:01 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button data-scenario="button-as-child-disabled" as-child="" disabled="" > 
+[WebServer]   at <Primitive material="content" shadow=true grain=false  ... > 
+[WebServer]   at <Surface material="content" tier="resting" surface="opaque"  ... > 
+[WebServer]   at <ShowcaseFrame caption="As-child" pad="sm" > 
+[WebServer]   at <StorySection heading="Keyboard, touch, and the linked command" blurb="One native button accepts Enter, Space, click, and coarse taps. `as-child` hands the whole command contract to another element without giving up the material." > 
+[WebServer]   at <TooltipProvider delay-duration=250 skip-delay-duration=300 > 
+[WebServer]   at <TooltipProvider delay-duration=250 > 
+[WebServer]   at <StoryPage> 
+[WebServer]   at <Buttons onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/display/buttons" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  ✘  16 [coarse-touch] › tests-visual/spring-ease.spec.ts:108:9 › spring-ease — dark › (0) the eased curves are on the wire (snappy fills its clock, press minted) (960ms)
+  ✓  17 [coarse-touch] › tests-visual/spring-ease.spec.ts:129:9 › spring-ease — dark › (1) TAB GLIDE — the indicator translate fills its clock + co-times the squish (1.7s)
+[WebServer] 8:04:04 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button data-scenario="button-as-child" as-child="" > 
+[WebServer]   at <Primitive material="content" shadow=true grain=false  ... > 
+[WebServer]   at <Surface material="content" tier="resting" surface="opaque"  ... > 
+[WebServer]   at <ShowcaseFrame caption="As-child" pad="sm" > 
+[WebServer]   at <StorySection heading="Keyboard, touch, and the linked command" blurb="One native button accepts Enter, Space, click, and coarse taps. `as-child` hands the whole command contract to another element without giving up the material." > 
+[WebServer]   at <TooltipProvider delay-duration=250 skip-delay-duration=300 > 
+[WebServer]   at <TooltipProvider delay-duration=250 > 
+[WebServer]   at <StoryPage> 
+[WebServer]   at <Buttons onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/display/buttons" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+[WebServer] 8:04:04 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button data-scenario="button-as-child-disabled" as-child="" disabled="" > 
+[WebServer]   at <Primitive material="content" shadow=true grain=false  ... > 
+[WebServer]   at <Surface material="content" tier="resting" surface="opaque"  ... > 
+[WebServer]   at <ShowcaseFrame caption="As-child" pad="sm" > 
+[WebServer]   at <StorySection heading="Keyboard, touch, and the linked command" blurb="One native button accepts Enter, Space, click, and coarse taps. `as-child` hands the whole command contract to another element without giving up the material." > 
+[WebServer]   at <TooltipProvider delay-duration=250 skip-delay-duration=300 > 
+[WebServer]   at <TooltipProvider delay-duration=250 > 
+[WebServer]   at <StoryPage> 
+[WebServer]   at <Buttons onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/display/buttons" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  -  18 [coarse-touch] › tests-visual/spring-ease.spec.ts:168:9 › spring-ease — dark › (3) PRESS — the scale answers toward --scale-press within ~100ms, coupled with --glass-btn-press-t
+[WebServer] 8:04:05 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button data-scenario="button-as-child" as-child="" > 
+[WebServer]   at <Primitive material="content" shadow=true grain=false  ... > 
+[WebServer]   at <Surface material="content" tier="resting" surface="opaque"  ... > 
+[WebServer]   at <ShowcaseFrame caption="As-child" pad="sm" > 
+[WebServer]   at <StorySection heading="Keyboard, touch, and the linked command" blurb="One native button accepts Enter, Space, click, and coarse taps. `as-child` hands the whole command contract to another element without giving up the material." > 
+[WebServer]   at <TooltipProvider delay-duration=250 skip-delay-duration=300 > 
+[WebServer]   at <TooltipProvider delay-duration=250 > 
+[WebServer]   at <StoryPage> 
+[WebServer]   at <Buttons onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/display/buttons" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+[WebServer] 8:04:05 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button data-scenario="button-as-child-disabled" as-child="" disabled="" > 
+[WebServer]   at <Primitive material="content" shadow=true grain=false  ... > 
+[WebServer]   at <Surface material="content" tier="resting" surface="opaque"  ... > 
+[WebServer]   at <ShowcaseFrame caption="As-child" pad="sm" > 
+[WebServer]   at <StorySection heading="Keyboard, touch, and the linked command" blurb="One native button accepts Enter, Space, click, and coarse taps. `as-child` hands the whole command contract to another element without giving up the material." > 
+[WebServer]   at <TooltipProvider delay-duration=250 skip-delay-duration=300 > 
+[WebServer]   at <TooltipProvider delay-duration=250 > 
+[WebServer]   at <StoryPage> 
+[WebServer]   at <Buttons onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/display/buttons" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  -  19 [coarse-touch] › tests-visual/spring-ease.spec.ts:207:9 › spring-ease — dark › (4) ABSORB — a rapid double-tap re-seats the press value continuously (no restart jump)
+[WebServer] 8:04:10 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button as-child="" > 
+[WebServer]   at <CardFooter class="justify-center" > 
+[WebServer]   at <Primitive data-slot="card" data-shadow=true data-size="md"  ... > 
+[WebServer]   at <Surface data-slot="card" tier="floating" surface=undefined  ... > 
+[WebServer]   at <Card tier="floating" class="w-full max-w-(--measure-cel) text-center" > 
+[WebServer]   at <NotFound onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/feedback/notification" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  ✓  20 [coarse-touch] › tests-visual/spring-ease.spec.ts:262:9 › spring-ease — dark › (5) UNIVERSAL — other animating surfaces move smooth + coupled (menu-row, notification) (5.1s)
+[WebServer] 8:04:11 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button data-scenario="button-as-child" as-child="" > 
+[WebServer]   at <Primitive material="content" shadow=true grain=false  ... > 
+[WebServer]   at <Surface material="content" tier="resting" surface="opaque"  ... > 
+[WebServer]   at <ShowcaseFrame caption="As-child" pad="sm" > 
+[WebServer]   at <StorySection heading="Keyboard, touch, and the linked command" blurb="One native button accepts Enter, Space, click, and coarse taps. `as-child` hands the whole command contract to another element without giving up the material." > 
+[WebServer]   at <TooltipProvider delay-duration=250 skip-delay-duration=300 > 
+[WebServer]   at <TooltipProvider delay-duration=250 > 
+[WebServer]   at <StoryPage> 
+[WebServer]   at <Buttons onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/display/buttons" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+[WebServer] 8:04:11 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button data-scenario="button-as-child-disabled" as-child="" disabled="" > 
+[WebServer]   at <Primitive material="content" shadow=true grain=false  ... > 
+[WebServer]   at <Surface material="content" tier="resting" surface="opaque"  ... > 
+[WebServer]   at <ShowcaseFrame caption="As-child" pad="sm" > 
+[WebServer]   at <StorySection heading="Keyboard, touch, and the linked command" blurb="One native button accepts Enter, Space, click, and coarse taps. `as-child` hands the whole command contract to another element without giving up the material." > 
+[WebServer]   at <TooltipProvider delay-duration=250 skip-delay-duration=300 > 
+[WebServer]   at <TooltipProvider delay-duration=250 > 
+[WebServer]   at <StoryPage> 
+[WebServer]   at <Buttons onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/display/buttons" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  -  21 [coarse-touch] › tests-visual/spring-ease.spec.ts:300:9 › spring-ease — dark › (6) PRM — under reduce the press snaps (zero in-between transform frames), the fade kept
+  ✓  22 [coarse-touch] › tests-visual/squircle-language.spec.ts:30:5 › squircle-language (π lane — cornerShape readback, fail-CLOSED) › the big-dock card shell reads a squircle (or the round fallback); a card stays round (1.3s)
+  ✓  23 [coarse-touch] › tests-visual/stage-field-clamp.spec.ts:80:9 › stage-field-clamp (BI.W-STAGE-FIELD-CLAMP — the DockStage field clamps to the viewport) › the DockStage aurora field is viewport-clamped, not scroll-column-sized @ light (1.1s)
+  ✓  24 [coarse-touch] › tests-visual/stage-field-clamp.spec.ts:154:9 › stage-field-clamp (BI.W-STAGE-FIELD-CLAMP — the DockStage field clamps to the viewport) › the field stays visible under scroll (the sticky pin) @ light (1.5s)
+  ✓  25 [coarse-touch] › tests-visual/stage-field-clamp.spec.ts:80:9 › stage-field-clamp (BI.W-STAGE-FIELD-CLAMP — the DockStage field clamps to the viewport) › the DockStage aurora field is viewport-clamped, not scroll-column-sized @ dark (964ms)
+  ✓  26 [coarse-touch] › tests-visual/stage-field-clamp.spec.ts:154:9 › stage-field-clamp (BI.W-STAGE-FIELD-CLAMP — the DockStage field clamps to the viewport) › the field stays visible under scroll (the sticky pin) @ dark (1.5s)
+  ✘  27 [coarse-touch] › tests-visual/stage.spec.ts:54:1 › (a) a formerly-keyless route paints its declared background (the void killed) (1.1s)
+[WebServer] 8:04:20 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button as-child="" > 
+[WebServer]   at <CardFooter class="justify-center" > 
+[WebServer]   at <Primitive data-slot="card" data-shadow=true data-size="md"  ... > 
+[WebServer]   at <Surface data-slot="card" tier="floating" surface=undefined  ... > 
+[WebServer]   at <Card tier="floating" class="w-full max-w-(--measure-cel) text-center" > 
+[WebServer]   at <NotFound onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/data/metric-cell" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  ✘  28 [coarse-touch] › tests-visual/stage.spec.ts:76:1 › (b) /data/metric-cell grid wash is VISIBLE through the card in DARK (1.1s)
+  ✘  29 [coarse-touch] › tests-visual/stage.spec.ts:104:1 › (c) /substrates/glass-material rungs float over the aurora, no opaque plate (1.4s)
+  ✓  30 [coarse-touch] › tests-visual/stage.spec.ts:137:5 › (d) /dock/overview dock demos sit over a live DockStage field (1.5s)
+  ✘  31 [coarse-touch] › tests-visual/stage.spec.ts:159:1 › (e) the aurora substrate renders on a staged route (breathing has a field) (1.5s)
+[WebServer] 8:04:28 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button as-child="" > 
+[WebServer]   at <CardFooter class="justify-center" > 
+[WebServer]   at <Primitive data-slot="card" data-shadow=true data-size="md"  ... > 
+[WebServer]   at <Surface data-slot="card" tier="floating" surface=undefined  ... > 
+[WebServer]   at <Card tier="floating" class="w-full max-w-(--measure-cel) text-center" > 
+[WebServer]   at <NotFound onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/data/metric-cell" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+[WebServer] 8:04:32 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button as-child="" > 
+[WebServer]   at <CardFooter class="justify-center" > 
+[WebServer]   at <Primitive data-slot="card" data-shadow=true data-size="md"  ... > 
+[WebServer]   at <Surface data-slot="card" tier="floating" surface=undefined  ... > 
+[WebServer]   at <Card tier="floating" class="w-full max-w-(--measure-cel) text-center" > 
+[WebServer]   at <NotFound onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/data/metric-cell" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+[WebServer] 8:04:37 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button as-child="" > 
+[WebServer]   at <CardFooter class="justify-center" > 
+[WebServer]   at <Primitive data-slot="card" data-shadow=true data-size="md"  ... > 
+[WebServer]   at <Surface data-slot="card" tier="floating" surface=undefined  ... > 
+[WebServer]   at <Card tier="floating" class="w-full max-w-(--measure-cel) text-center" > 
+[WebServer]   at <NotFound onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/data/metric-cell" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+[WebServer] 8:04:41 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button as-child="" > 
+[WebServer]   at <CardFooter class="justify-center" > 
+[WebServer]   at <Primitive data-slot="card" data-shadow=true data-size="md"  ... > 
+[WebServer]   at <Surface data-slot="card" tier="floating" surface=undefined  ... > 
+[WebServer]   at <Card tier="floating" class="w-full max-w-(--measure-cel) text-center" > 
+[WebServer]   at <NotFound onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/data/metric-cell" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  ✓  32 [coarse-touch] › tests-visual/stage.spec.ts:178:1 › whole-page gestalt captures — the staged demo in BOTH modes (17.8s)
+  ✓  33 [coarse-touch] › tests-visual/storybook-meta.spec.ts:82:9 › BC.W-STORYBOOK-META — the whole-storybook design-quality π › M6 — the body/caption copy clears the legible floor [light] (858ms)
+  ✓  34 [coarse-touch] › tests-visual/storybook-meta.spec.ts:117:9 › BC.W-STORYBOOK-META — the whole-storybook design-quality π › M7 — no stray off-palette blue artifact [light] (818ms)
+[WebServer] 8:04:46 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button data-scenario="button-as-child" as-child="" > 
+[WebServer]   at <Primitive material="content" shadow=true grain=false  ... > 
+[WebServer]   at <Surface material="content" tier="resting" surface="opaque"  ... > 
+[WebServer]   at <ShowcaseFrame caption="As-child" pad="sm" > 
+[WebServer]   at <StorySection heading="Keyboard, touch, and the linked command" blurb="One native button accepts Enter, Space, click, and coarse taps. `as-child` hands the whole command contract to another element without giving up the material." > 
+[WebServer]   at <TooltipProvider delay-duration=250 skip-delay-duration=300 > 
+[WebServer]   at <TooltipProvider delay-duration=250 > 
+[WebServer]   at <StoryPage> 
+[WebServer]   at <Buttons onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/display/buttons" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+[WebServer] 8:04:46 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button data-scenario="button-as-child-disabled" as-child="" disabled="" > 
+[WebServer]   at <Primitive material="content" shadow=true grain=false  ... > 
+[WebServer]   at <Surface material="content" tier="resting" surface="opaque"  ... > 
+[WebServer]   at <ShowcaseFrame caption="As-child" pad="sm" > 
+[WebServer]   at <StorySection heading="Keyboard, touch, and the linked command" blurb="One native button accepts Enter, Space, click, and coarse taps. `as-child` hands the whole command contract to another element without giving up the material." > 
+[WebServer]   at <TooltipProvider delay-duration=250 skip-delay-duration=300 > 
+[WebServer]   at <TooltipProvider delay-duration=250 > 
+[WebServer]   at <StoryPage> 
+[WebServer]   at <Buttons onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/display/buttons" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  ✘  35 [coarse-touch] › tests-visual/storybook-meta.spec.ts:143:9 › BC.W-STORYBOOK-META — the whole-storybook design-quality π › M5 — the last content element clears the fixed dock [light] (1.0s)
+  ✘  36 [coarse-touch] › tests-visual/storybook-meta.spec.ts:191:9 › BC.W-STORYBOOK-META — the whole-storybook design-quality π › M9 — the SHELL morph stage composes <Button>/<Switch>/<Card> markup [light] (5.0s)
+  ✘  37 [coarse-touch] › tests-visual/storybook-meta.spec.ts:249:9 › BC.W-STORYBOOK-META — the whole-storybook design-quality π › M9d — the SectionPreviewCard bento paints (static Chip + fira-code subpath) [light] (805ms)
+  ✓  38 [coarse-touch] › tests-visual/storybook-meta.spec.ts:82:9 › BC.W-STORYBOOK-META — the whole-storybook design-quality π › M6 — the body/caption copy clears the legible floor [dark] (979ms)
+  ✓  39 [coarse-touch] › tests-visual/storybook-meta.spec.ts:117:9 › BC.W-STORYBOOK-META — the whole-storybook design-quality π › M7 — no stray off-palette blue artifact [dark] (825ms)
+[WebServer] 8:04:56 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button data-scenario="button-as-child" as-child="" > 
+[WebServer]   at <Primitive material="content" shadow=true grain=false  ... > 
+[WebServer]   at <Surface material="content" tier="resting" surface="opaque"  ... > 
+[WebServer]   at <ShowcaseFrame caption="As-child" pad="sm" > 
+[WebServer]   at <StorySection heading="Keyboard, touch, and the linked command" blurb="One native button accepts Enter, Space, click, and coarse taps. `as-child` hands the whole command contract to another element without giving up the material." > 
+[WebServer]   at <TooltipProvider delay-duration=250 skip-delay-duration=300 > 
+[WebServer]   at <TooltipProvider delay-duration=250 > 
+[WebServer]   at <StoryPage> 
+[WebServer]   at <Buttons onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/display/buttons" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+[WebServer] 8:04:56 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button data-scenario="button-as-child-disabled" as-child="" disabled="" > 
+[WebServer]   at <Primitive material="content" shadow=true grain=false  ... > 
+[WebServer]   at <Surface material="content" tier="resting" surface="opaque"  ... > 
+[WebServer]   at <ShowcaseFrame caption="As-child" pad="sm" > 
+[WebServer]   at <StorySection heading="Keyboard, touch, and the linked command" blurb="One native button accepts Enter, Space, click, and coarse taps. `as-child` hands the whole command contract to another element without giving up the material." > 
+[WebServer]   at <TooltipProvider delay-duration=250 skip-delay-duration=300 > 
+[WebServer]   at <TooltipProvider delay-duration=250 > 
+[WebServer]   at <StoryPage> 
+[WebServer]   at <Buttons onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/display/buttons" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  ✘  40 [coarse-touch] › tests-visual/storybook-meta.spec.ts:143:9 › BC.W-STORYBOOK-META — the whole-storybook design-quality π › M5 — the last content element clears the fixed dock [dark] (1.0s)
+  ✘  41 [coarse-touch] › tests-visual/storybook-meta.spec.ts:191:9 › BC.W-STORYBOOK-META — the whole-storybook design-quality π › M9 — the SHELL morph stage composes <Button>/<Switch>/<Card> markup [dark] (5.0s)
+  ✘  42 [coarse-touch] › tests-visual/storybook-meta.spec.ts:249:9 › BC.W-STORYBOOK-META — the whole-storybook design-quality π › M9d — the SectionPreviewCard bento paints (static Chip + fira-code subpath) [dark] (860ms)
+  -  43 [coarse-touch] › tests-visual/substrate-cohesion.spec.ts:310:5 › substrate-cohesion: G-ACCENT (ONE accent family) › the blob MOOD bead chroma sits in the warm-register band the FourierField comet occupies
+  -  44 [coarse-touch] › tests-visual/substrate-cohesion.spec.ts:407:5 › substrate-cohesion: G-RECESSION (ONE recession contract) › a <Constellation :opacity-ceiling=0.4> paints ~0.4x the ink of the :opacity-ceiling=1 instance
+  -  45 [coarse-touch] › tests-visual/substrate-cohesion.spec.ts:476:5 › substrate-cohesion: G-SHADOW (ambient, not the cartoon stamp) › the blob cast shadow is SOFT + ambient-tinted (not 80%-near-black) — the gel bead, not the Memphis stamp
+PI aurora DEFAULT meanChannel=233.4 floor=8
+PI aurora SETTING_SUN meanChannel=234.4 floor=8
+PI aurora DUSK meanChannel=233.4 floor=8
+PI aurora VIVID_SETTING_SUN meanChannel=236.2 floor=8
+PI aurora OPENAI_SKY meanChannel=233.8 floor=8
+PI aurora OPENAI_DAWN meanChannel=232.5 floor=8
+PI aurora OPENAI_MEADOW meanChannel=207.9 floor=8
+PI aurora DELIBERATIVE meanChannel=237.2 floor=8
+PI aurora DAY9_YELLOW meanChannel=231.1 floor=8
+PI aurora OIL_IMPASTO meanChannel=194.4 floor=8
+PI aurora OIL_GESTURAL meanChannel=219.2 floor=8
+PI aurora VANGOGH meanChannel=101.4 floor=8
+PI aurora OILPASTEL_SUNSET meanChannel=202.0 floor=8
+PI aurora OILPASTEL_RAINBOW meanChannel=219.5 floor=8
+PI aurora OILPASTEL_OCEAN meanChannel=146.4 floor=8
+PI aurora CRAYON meanChannel=169.8 floor=8
+PI aurora METAL meanChannel=207.4 floor=8
+PI aurora SPEEDTEST meanChannel=187.9 floor=8
+  ✓  46 [coarse-touch] › tests-visual/substrate-paints-color.spec.ts:575:5 › substrate-paints-color (π lane — fail-CLOSED) › aurora paints a non-black interior on DEFAULT + every preset at t=1 (22.8s)
+PI blob paintable=[0.188,0.188]-[0.813,0.813] paintableShareOfInterior=0.676
+PI blob baseline groundMotion=0.000
+PI blob coverage=0.184 floor=0.1 · paintedShare=0.272 ceil=0.7
+  ✓  47 [coarse-touch] › tests-visual/substrate-paints-color.spec.ts:759:5 › substrate-paints-color (π lane — fail-CLOSED) › blob paints a non-blank droplet on BLOB_CONFIG_DEFAULTS (4.1s)
+PI blob paintable=[0.188,0.188]-[0.813,0.813] paintableShareOfInterior=0.676
+PI blob baseline groundMotion=0.000
+PI blob coverage=0.184 floor=0.1 · paintedShare=0.272 ceil=0.7
+  ✓  48 [coarse-touch] › tests-visual/substrate-paints-color.spec.ts:767:5 › substrate-paints-color (π lane — fail-CLOSED) › blob keeps a transparent margin (non-flood ceiling) on BLOB_CONFIG_DEFAULTS (4.1s)
+  ✓  49 [coarse-touch] › tests-visual/suffuse.spec.ts:113:5 › AZ.W-SUFFUSE — the suffusion pass (π) › S1 — a hero page's chassis title resolves to a display register (>> text-heading) (955ms)
+  ✘  50 [coarse-touch] › tests-visual/suffuse.spec.ts:148:9 › AZ.W-SUFFUSE — the suffusion pass (π) › S2 — the motion plot/dot resolves to the violet --motion-accent, not warm-red (light) (1.0m)
+  ✘  51 [coarse-touch] › tests-visual/suffuse.spec.ts:148:9 › AZ.W-SUFFUSE — the suffusion pass (π) › S2 — the motion plot/dot resolves to the violet --motion-accent, not warm-red (dark) (1.0m)
+[WebServer] 8:07:37 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button as-child="" > 
+[WebServer]   at <CardFooter class="justify-center" > 
+[WebServer]   at <Primitive data-slot="card" data-shadow=true data-size="md"  ... > 
+[WebServer]   at <Surface data-slot="card" tier="floating" surface=undefined  ... > 
+[WebServer]   at <Card tier="floating" class="w-full max-w-(--measure-cel) text-center" > 
+[WebServer]   at <NotFound onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/data/metric-cell" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  ✘  52 [coarse-touch] › tests-visual/suffuse.spec.ts:200:5 › AZ.W-SUFFUSE — the suffusion pass (π) › S3 — an activated metric number resolves to the mega/audacious tier (>> text-title) (1.2s)
+  ✘  53 [coarse-touch] › tests-visual/suffuse.spec.ts:244:5 › AZ.W-SUFFUSE — the suffusion pass (π) › S4 — the settings thin page's grid underlay paints + the card drops to a thin tier (1.4s)
+  ✓  54 [coarse-touch] › tests-visual/suffuse.spec.ts:336:9 › BB.W-SUFFUSE3 — the suffusion completion (π) › b — /motion/springs masthead is a display-register --motion-accent violet (light) (1.5s)
+  ✓  55 [coarse-touch] › tests-visual/suffuse.spec.ts:336:9 › BB.W-SUFFUSE3 — the suffusion completion (π) › b — /motion/springs masthead is a display-register --motion-accent violet (dark) (1.4s)
+  ✘  56 [coarse-touch] › tests-visual/suffuse2.spec.ts:170:13 › BA.W-SUFFUSE2 — the per-category color identity (π) › forms (/forms/checks) — eyebrow + rail resolve to the SAME --section-color-3 hue (light) (1.2s)
+  ✘  57 [coarse-touch] › tests-visual/suffuse2.spec.ts:170:13 › BA.W-SUFFUSE2 — the per-category color identity (π) › forms (/forms/checks) — eyebrow + rail resolve to the SAME --section-color-3 hue (dark) (1.3s)
+  ✘  58 [coarse-touch] › tests-visual/suffuse2.spec.ts:170:13 › BA.W-SUFFUSE2 — the per-category color identity (π) › containers (/containers/accordion) — eyebrow + rail resolve to the SAME --section-color-2 hue (light) (1.3s)
+  ✘  59 [coarse-touch] › tests-visual/suffuse2.spec.ts:170:13 › BA.W-SUFFUSE2 — the per-category color identity (π) › containers (/containers/accordion) — eyebrow + rail resolve to the SAME --section-color-2 hue (dark) (1.3s)
+  ✘  60 [coarse-touch] › tests-visual/suffuse2.spec.ts:170:13 › BA.W-SUFFUSE2 — the per-category color identity (π) › data (/data/table) — eyebrow + rail resolve to the SAME --section-color-9 hue (light) (1.2s)
+  ✘  61 [coarse-touch] › tests-visual/suffuse2.spec.ts:170:13 › BA.W-SUFFUSE2 — the per-category color identity (π) › data (/data/table) — eyebrow + rail resolve to the SAME --section-color-9 hue (dark) (1.2s)
+  ✓  62 [coarse-touch] › tests-visual/suffuse2.spec.ts:230:5 › BA.W-SUFFUSE2 — the per-category color identity (π) › S4 — the content chrome <h1> font-size resolves strictly ABOVE the section <h2> (1.1s)
+[WebServer] 8:07:54 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button as-child="" > 
+[WebServer]   at <CardFooter class="justify-center" > 
+[WebServer]   at <Primitive data-slot="card" data-shadow=true data-size="md"  ... > 
+[WebServer]   at <Surface data-slot="card" tier="floating" surface=undefined  ... > 
+[WebServer]   at <Card tier="floating" class="w-full max-w-(--measure-cel) text-center" > 
+[WebServer]   at <NotFound onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/motion/countup" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  ✘  63 [coarse-touch] › tests-visual/suffuse2.spec.ts:258:9 › BA.W-SUFFUSE2 — the per-category color identity (π) › S5 — the motion band reads --motion-accent violet, no warm-red (light) (1.0m)
+[WebServer] 8:08:55 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button as-child="" > 
+[WebServer]   at <CardFooter class="justify-center" > 
+[WebServer]   at <Primitive data-slot="card" data-shadow=true data-size="md"  ... > 
+[WebServer]   at <Surface data-slot="card" tier="floating" surface=undefined  ... > 
+[WebServer]   at <Card tier="floating" class="w-full max-w-(--measure-cel) text-center" > 
+[WebServer]   at <NotFound onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/motion/countup" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  ✘  64 [coarse-touch] › tests-visual/suffuse2.spec.ts:258:9 › BA.W-SUFFUSE2 — the per-category color identity (π) › S5 — the motion band reads --motion-accent violet, no warm-red (dark) (1.0m)
+  ✓  65 [coarse-touch] › tests-visual/surface-axis.spec.ts:240:13 › surface-axis (π — the shared {glass·veil·opaque} surface decoration, fail-CLOSED) › (a-c) glass/veil translucent · opaque solid · veil borderless @ mobile light (954ms)
+  ✓  66 [coarse-touch] › tests-visual/surface-axis.spec.ts:272:17 › surface-axis (π — the shared {glass·veil·opaque} surface decoration, fail-CLOSED) › (f-toast) toast glass/veil translucent · opaque solid · veil borderless @ mobile light (900ms)
+  ✓  67 [coarse-touch] › tests-visual/surface-axis.spec.ts:272:17 › surface-axis (π — the shared {glass·veil·opaque} surface decoration, fail-CLOSED) › (f-button) button glass/veil translucent · opaque solid · veil borderless @ mobile light (905ms)
+  ✓  68 [coarse-touch] › tests-visual/surface-axis.spec.ts:305:13 › surface-axis (π — the shared {glass·veil·opaque} surface decoration, fail-CLOSED) › (g) toned toast over glass reads as colored GLASS (tone⊥surface) @ mobile light (904ms)
+  ✓  69 [coarse-touch] › tests-visual/surface-axis.spec.ts:331:13 › surface-axis (π — the shared {glass·veil·opaque} surface decoration, fail-CLOSED) › (d) skeleton over-glass translucent, opaque default solid @ mobile light (913ms)
+  ✘  70 [coarse-touch] › tests-visual/surface-axis.spec.ts:343:13 › surface-axis (π — the shared {glass·veil·opaque} surface decoration, fail-CLOSED) › (e) control REST tier unified (input ≈ control register, no gray fork) @ mobile light (932ms)
+  ✓  71 [coarse-touch] › tests-visual/surface-axis.spec.ts:240:13 › surface-axis (π — the shared {glass·veil·opaque} surface decoration, fail-CLOSED) › (a-c) glass/veil translucent · opaque solid · veil borderless @ mobile dark (968ms)
+  ✓  72 [coarse-touch] › tests-visual/surface-axis.spec.ts:272:17 › surface-axis (π — the shared {glass·veil·opaque} surface decoration, fail-CLOSED) › (f-toast) toast glass/veil translucent · opaque solid · veil borderless @ mobile dark (926ms)
+  ✓  73 [coarse-touch] › tests-visual/surface-axis.spec.ts:272:17 › surface-axis (π — the shared {glass·veil·opaque} surface decoration, fail-CLOSED) › (f-button) button glass/veil translucent · opaque solid · veil borderless @ mobile dark (902ms)
+  ✓  74 [coarse-touch] › tests-visual/surface-axis.spec.ts:305:13 › surface-axis (π — the shared {glass·veil·opaque} surface decoration, fail-CLOSED) › (g) toned toast over glass reads as colored GLASS (tone⊥surface) @ mobile dark (914ms)
+  ✓  75 [coarse-touch] › tests-visual/surface-axis.spec.ts:331:13 › surface-axis (π — the shared {glass·veil·opaque} surface decoration, fail-CLOSED) › (d) skeleton over-glass translucent, opaque default solid @ mobile dark (913ms)
+  ✘  76 [coarse-touch] › tests-visual/surface-axis.spec.ts:343:13 › surface-axis (π — the shared {glass·veil·opaque} surface decoration, fail-CLOSED) › (e) control REST tier unified (input ≈ control register, no gray fork) @ mobile dark (932ms)
+  ✓  77 [coarse-touch] › tests-visual/surface-axis.spec.ts:240:13 › surface-axis (π — the shared {glass·veil·opaque} surface decoration, fail-CLOSED) › (a-c) glass/veil translucent · opaque solid · veil borderless @ desktop light (985ms)
+  ✓  78 [coarse-touch] › tests-visual/surface-axis.spec.ts:272:17 › surface-axis (π — the shared {glass·veil·opaque} surface decoration, fail-CLOSED) › (f-toast) toast glass/veil translucent · opaque solid · veil borderless @ desktop light (938ms)
+  ✓  79 [coarse-touch] › tests-visual/surface-axis.spec.ts:272:17 › surface-axis (π — the shared {glass·veil·opaque} surface decoration, fail-CLOSED) › (f-button) button glass/veil translucent · opaque solid · veil borderless @ desktop light (921ms)
+  ✓  80 [coarse-touch] › tests-visual/surface-axis.spec.ts:305:13 › surface-axis (π — the shared {glass·veil·opaque} surface decoration, fail-CLOSED) › (g) toned toast over glass reads as colored GLASS (tone⊥surface) @ desktop light (934ms)
+  ✓  81 [coarse-touch] › tests-visual/surface-axis.spec.ts:331:13 › surface-axis (π — the shared {glass·veil·opaque} surface decoration, fail-CLOSED) › (d) skeleton over-glass translucent, opaque default solid @ desktop light (927ms)
+  ✘  82 [coarse-touch] › tests-visual/surface-axis.spec.ts:343:13 › surface-axis (π — the shared {glass·veil·opaque} surface decoration, fail-CLOSED) › (e) control REST tier unified (input ≈ control register, no gray fork) @ desktop light (934ms)
+  ✓  83 [coarse-touch] › tests-visual/surface-axis.spec.ts:240:13 › surface-axis (π — the shared {glass·veil·opaque} surface decoration, fail-CLOSED) › (a-c) glass/veil translucent · opaque solid · veil borderless @ desktop dark (982ms)
+  ✓  84 [coarse-touch] › tests-visual/surface-axis.spec.ts:272:17 › surface-axis (π — the shared {glass·veil·opaque} surface decoration, fail-CLOSED) › (f-toast) toast glass/veil translucent · opaque solid · veil borderless @ desktop dark (943ms)
+  ✓  85 [coarse-touch] › tests-visual/surface-axis.spec.ts:272:17 › surface-axis (π — the shared {glass·veil·opaque} surface decoration, fail-CLOSED) › (f-button) button glass/veil translucent · opaque solid · veil borderless @ desktop dark (933ms)
+  ✓  86 [coarse-touch] › tests-visual/surface-axis.spec.ts:305:13 › surface-axis (π — the shared {glass·veil·opaque} surface decoration, fail-CLOSED) › (g) toned toast over glass reads as colored GLASS (tone⊥surface) @ desktop dark (937ms)
+  ✓  87 [coarse-touch] › tests-visual/surface-axis.spec.ts:331:13 › surface-axis (π — the shared {glass·veil·opaque} surface decoration, fail-CLOSED) › (d) skeleton over-glass translucent, opaque default solid @ desktop dark (913ms)
+  ✘  88 [coarse-touch] › tests-visual/surface-axis.spec.ts:343:13 › surface-axis (π — the shared {glass·veil·opaque} surface decoration, fail-CLOSED) › (e) control REST tier unified (input ≈ control register, no gray fork) @ desktop dark (962ms)
+  ✓  89 [coarse-touch] › tests-visual/surface-axis.spec.ts:356:5 › surface-axis (π — the shared {glass·veil·opaque} surface decoration, fail-CLOSED) › DELTA capture — the surface-axis rungs over a busy backdrop (1.8s)
+  ✓  90 [coarse-touch] › tests-visual/tabs-std.spec.ts:49:1 › W1 — underline paints NO plate (no filled pill behind the active tab) (1.2s)
+  ✓  91 [coarse-touch] › tests-visual/tabs-std.spec.ts:91:1 › W2 — vertical indicator tracks the block axis (y/height change dominates) (1.6s)
+  ✓  92 [coarse-touch] › tests-visual/tabs-std.spec.ts:121:1 › W3 — the indicator settles inside the calibrated clock with no dead tail (2.4s)
+  ✓  93 [coarse-touch] › tests-visual/tabs-std.spec.ts:189:5 › W5 — indicator center == label center (both axes) [pill] (1.7s)
+  ✓  94 [coarse-touch] › tests-visual/tabs-std.spec.ts:189:5 › W5 — indicator center == label center (both axes) [underline] (1.7s)
+  ✓  95 [coarse-touch] › tests-visual/tabs-std.spec.ts:245:1 › capture — the standardized tab materials over their substrates (2.8s)
+
+
+  1) [coarse-touch] › tests-visual/shell-hold.spec.ts:92:1 › BA.W-SHELL-HOLD — negative control: a scripted chip click DOES navigate (@advance path live) 
+
+    Error: a facet chip is present on the faceted route
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      113 |     });
+      114 |
+    > 115 |     expect(clicked.found, "a facet chip is present on the faceted route").toBe(true);
+          |                                                                           ^
+      116 |
+      117 |     // Give the router.push a tick to land.
+      118 |     await page.waitForTimeout(700);
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/shell-hold.spec.ts:115:75
+
+    Error Context: tests-visual/test-results/shell-hold-BA-W-SHELL-HOLD-eba69-navigate-advance-path-live--coarse-touch/error-context.md
+
+  2) [coarse-touch] › tests-visual/slider-spectrum-fallback.spec.ts:56:9 › slider design resolution (π lane — light) › standard knob is a TRUE CIRCLE + spectrum fallback reads squircle-adjacent (light) 
+
+    TimeoutError: page.waitForSelector: Timeout 5000ms exceeded.
+    Call log:
+      - waiting for locator('.glass-slider .slider-thumb') to be visible
+        14 × locator resolved to 20 elements. Proceeding with the first one: <span tabindex="0" role="slider" aria-valuemin="0" aria-valuenow="42" aria-label="Volume" aria-valuemax="100" data-reka-collection-item="" data-orientation="horizontal" aria-orientation="horizontal" class="slider-thumb glass-specular-track"></span>
+
+
+      65 |                 document.documentElement.classList.toggle("dark", s === "dark");
+      66 |             }, scheme);
+    > 67 |             await page.waitForSelector(".glass-slider .slider-thumb", { timeout: 5000 });
+         |                        ^
+      68 |             await page.waitForTimeout(300);
+      69 |
+      70 |             const probe = await page.evaluate(() => {
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/slider-spectrum-fallback.spec.ts:67:24
+
+    Error Context: tests-visual/test-results/slider-spectrum-fallback-s-528d0-ds-squircle-adjacent-light--coarse-touch/error-context.md
+
+  3) [coarse-touch] › tests-visual/slider-spectrum-fallback.spec.ts:56:9 › slider design resolution (π lane — dark) › standard knob is a TRUE CIRCLE + spectrum fallback reads squircle-adjacent (dark) 
+
+    TimeoutError: page.waitForSelector: Timeout 5000ms exceeded.
+    Call log:
+      - waiting for locator('.glass-slider .slider-thumb') to be visible
+        14 × locator resolved to 20 elements. Proceeding with the first one: <span tabindex="0" role="slider" aria-valuemin="0" aria-valuenow="42" aria-label="Volume" aria-valuemax="100" data-reka-collection-item="" data-orientation="horizontal" aria-orientation="horizontal" class="slider-thumb glass-specular-track"></span>
+
+
+      65 |                 document.documentElement.classList.toggle("dark", s === "dark");
+      66 |             }, scheme);
+    > 67 |             await page.waitForSelector(".glass-slider .slider-thumb", { timeout: 5000 });
+         |                        ^
+      68 |             await page.waitForTimeout(300);
+      69 |
+      70 |             const probe = await page.evaluate(() => {
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/slider-spectrum-fallback.spec.ts:67:24
+
+    Error Context: tests-visual/test-results/slider-spectrum-fallback-s-95af0-ads-squircle-adjacent-dark--coarse-touch/error-context.md
+
+  4) [coarse-touch] › tests-visual/sortable-list.contract.spec.ts:66:5 › SortableList public transaction contract › native semantics, disabled exclusion, and coarse target floor 
+
+    Error: expect(locator).toBeDisabled() failed
+
+    Locator: getByRole('button', { name: 'Drag Verify handle selector' })
+    Expected: disabled
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeDisabled" with timeout 5000ms
+      - waiting for getByRole('button', { name: 'Drag Verify handle selector' })
+
+
+      73 |         expect(await handles.count()).toBeGreaterThan(0);
+      74 |         await expect(page.getByRole("button", { name: "Drag Verify handle selector" }))
+    > 75 |             .toBeDisabled();
+         |              ^
+      76 |
+      77 |         if (testInfo.project.name === "coarse-touch") {
+      78 |             const boxes = await handles.evaluateAll((nodes) => nodes.map((node) => {
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/sortable-list.contract.spec.ts:75:14
+
+    Error Context: tests-visual/test-results/sortable-list.contract-Sor-88dc1-ion-and-coarse-target-floor-coarse-touch/error-context.md
+
+  5) [coarse-touch] › tests-visual/spring-ease.spec.ts:108:9 › spring-ease — light › (0) the eased curves are on the wire (snappy fills its clock, press minted) 
+
+    Error: --spring-snappy is emitted
+
+    expect(received).toMatch(expected)
+
+    Expected pattern: /^linear\(/
+    Received string:  ""
+
+      115 |             const snappy = await readSpringToken(page, "snappy");
+      116 |             const press = await readSpringToken(page, "press");
+    > 117 |             expect(snappy, "--spring-snappy is emitted").toMatch(/^linear\(/);
+          |                                                          ^
+      118 |             expect(press, "--spring-press (the minted iOS register) is emitted").toMatch(/^linear\(/);
+      119 |
+      120 |             // snappy fills its clock: the eased curve must NOT collapse to a dead-flat
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/spring-ease.spec.ts:117:58
+
+    Error Context: tests-visual/test-results/spring-ease-spring-ease-—--ceaef-lls-its-clock-press-minted--coarse-touch/error-context.md
+
+  6) [coarse-touch] › tests-visual/spring-ease.spec.ts:108:9 › spring-ease — dark › (0) the eased curves are on the wire (snappy fills its clock, press minted) 
+
+    Error: --spring-snappy is emitted
+
+    expect(received).toMatch(expected)
+
+    Expected pattern: /^linear\(/
+    Received string:  ""
+
+      115 |             const snappy = await readSpringToken(page, "snappy");
+      116 |             const press = await readSpringToken(page, "press");
+    > 117 |             expect(snappy, "--spring-snappy is emitted").toMatch(/^linear\(/);
+          |                                                          ^
+      118 |             expect(press, "--spring-press (the minted iOS register) is emitted").toMatch(/^linear\(/);
+      119 |
+      120 |             // snappy fills its clock: the eased curve must NOT collapse to a dead-flat
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/spring-ease.spec.ts:117:58
+
+    Error Context: tests-visual/test-results/spring-ease-spring-ease-—--4b5a6-lls-its-clock-press-minted--coarse-touch/error-context.md
+
+  7) [coarse-touch] › tests-visual/stage.spec.ts:54:1 › (a) a formerly-keyless route paints its declared background (the void killed) 
+
+    Error: /feedback/alert should render a declared background substrate
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      66 |             return document.querySelector(".story-hero-bg") !== null;
+      67 |         });
+    > 68 |         expect(hasField, `${route} should render a declared background substrate`).toBe(
+         |                                                                                    ^
+      69 |             true,
+      70 |         );
+      71 |     }
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/stage.spec.ts:68:84
+
+    Error Context: tests-visual/test-results/stage--a-a-formerly-keyles-ef1f8-background-the-void-killed--coarse-touch/error-context.md
+
+  8) [coarse-touch] › tests-visual/stage.spec.ts:76:1 › (b) /data/metric-cell grid wash is VISIBLE through the card in DARK 
+
+    Error: the grid substrate must render
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      92 |         return { present: true, strong, bg: cs.backgroundImage.slice(0, 40) };
+      93 |     });
+    > 94 |     expect(gridAlpha.present, "the grid substrate must render").toBe(true);
+         |                                                                 ^
+      95 |     // The dark arm is color-mix(... var(--foreground) 30% ...) — a concrete,
+      96 |     // non-empty resolved color. The 9%/16% HEAD vanish is the negative.
+      97 |     expect(gridAlpha.strong.length, "the dark grid-strong color must resolve").toBeGreaterThan(
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/stage.spec.ts:94:65
+
+    Error Context: tests-visual/test-results/stage--b-data-metric-cell--cad44-LE-through-the-card-in-DARK-coarse-touch/error-context.md
+
+  9) [coarse-touch] › tests-visual/stage.spec.ts:104:1 › (c) /substrates/glass-material rungs float over the aurora, no opaque plate 
+
+    Error: a glass-rung host frame must exist
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      119 |         return { found: true, bg: getComputedStyle(host).backgroundColor };
+      120 |     });
+    > 121 |     expect(frameBg.found, "a glass-rung host frame must exist").toBe(true);
+          |                                                                 ^
+      122 |     // A transparent / zero-alpha background — the field shows through. rgba(...,0)
+      123 |     // or "transparent". The BG-2 kill is a near-opaque --card plate.
+      124 |     const isTransparent =
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/stage.spec.ts:121:65
+
+    Error Context: tests-visual/test-results/stage--c-substrates-glass--4ea6f--the-aurora-no-opaque-plate-coarse-touch/error-context.md
+
+  10) [coarse-touch] › tests-visual/stage.spec.ts:159:1 › (e) the aurora substrate renders on a staged route (breathing has a field) 
+
+    Error: the navigation aurora substrate must render
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      171 |         return { hasBg: bg !== null, hasCanvas: canvas !== null };
+      172 |     });
+    > 173 |     expect(auroraRenders.hasBg, "the navigation aurora substrate must render").toBe(true);
+          |                                                                                ^
+      174 |     await shot(page, "e-aurora-breathing-field");
+      175 | });
+      176 |
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/stage.spec.ts:173:80
+
+    Error Context: tests-visual/test-results/stage--e-the-aurora-substr-77e81-oute-breathing-has-a-field--coarse-touch/error-context.md
+
+  11) [coarse-touch] › tests-visual/storybook-meta.spec.ts:143:9 › BC.W-STORYBOOK-META — the whole-storybook design-quality π › M5 — the last content element clears the fixed dock [light] 
+
+    Error: the --dock-content-safe-inset occlusion gutter is not reserved on the route scroller: {"ok":false,"insetPx":null,"articleBottom":813,"scrollerBottom":928}
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      185 |                 clearance.ok,
+      186 |                 `the --dock-content-safe-inset occlusion gutter is not reserved on the route scroller: ${JSON.stringify(clearance)}`,
+    > 187 |             ).toBe(true);
+          |               ^
+      188 |         });
+      189 |
+      190 |         // ── M9/π — the dogfood-render sweep (the SHELL composes shipped controls) ─
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/storybook-meta.spec.ts:187:15
+
+    Error Context: tests-visual/test-results/storybook-meta-BC-W-STORYB-ddbcd-lears-the-fixed-dock-light--coarse-touch/error-context.md
+
+    Error Context: tests-visual/test-results/storybook-meta-BC-W-STORYB-ddbcd-lears-the-fixed-dock-light--coarse-touch/error-context.md
+
+  12) [coarse-touch] › tests-visual/storybook-meta.spec.ts:191:9 › BC.W-STORYBOOK-META — the whole-storybook design-quality π › M9 — the SHELL morph stage composes <Button>/<Switch>/<Card> markup [light] 
+
+    Error: the SHELL morph toggle is not a composed <Button> (still a raw btn-pill chain): {"morphToggleTag":null,"morphToggleClass":"","morphIsButtonComponent":false,"liquidToggleTag":null,"liquidToggleRole":null,"liquidIsSwitch":false}
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      234 |                 shape.morphIsButtonComponent,
+      235 |                 `the SHELL morph toggle is not a composed <Button> (still a raw btn-pill chain): ${JSON.stringify(shape)}`,
+    > 236 |             ).toBe(true);
+          |               ^
+      237 |             expect(
+      238 |                 shape.liquidIsSwitch,
+      239 |                 `the SHELL liquid-preview toggle is not a composed <Switch> (still a raw <input type=checkbox>): ${JSON.stringify(shape)}`,
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/storybook-meta.spec.ts:236:15
+
+    Error Context: tests-visual/test-results/storybook-meta-BC-W-STORYB-24c0e-n-Switch-Card-markup-light--coarse-touch/error-context.md
+
+    Error Context: tests-visual/test-results/storybook-meta-BC-W-STORYB-24c0e-n-Switch-Card-markup-light--coarse-touch/error-context.md
+
+  13) [coarse-touch] › tests-visual/storybook-meta.spec.ts:249:9 › BC.W-STORYBOOK-META — the whole-storybook design-quality π › M9d — the SectionPreviewCard bento paints (static Chip + fira-code subpath) [light] 
+
+    Error: the SectionPreviewCard bento does not resolve its composed primitives: {"present":true,"hasIconPlate":false,"hasSubpathChip":false}
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      277 |                     bento.hasIconPlate && bento.hasSubpathChip,
+      278 |                     `the SectionPreviewCard bento does not resolve its composed primitives: ${JSON.stringify(bento)}`,
+    > 279 |                 ).toBe(true);
+          |                   ^
+      280 |             }
+      281 |         });
+      282 |     }
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/storybook-meta.spec.ts:279:19
+
+    Error Context: tests-visual/test-results/storybook-meta-BC-W-STORYB-2c312-ip-fira-code-subpath-light--coarse-touch/error-context.md
+
+    Error Context: tests-visual/test-results/storybook-meta-BC-W-STORYB-2c312-ip-fira-code-subpath-light--coarse-touch/error-context.md
+
+  14) [coarse-touch] › tests-visual/storybook-meta.spec.ts:143:9 › BC.W-STORYBOOK-META — the whole-storybook design-quality π › M5 — the last content element clears the fixed dock [dark] 
+
+    Error: the --dock-content-safe-inset occlusion gutter is not reserved on the route scroller: {"ok":false,"insetPx":null,"articleBottom":813,"scrollerBottom":928}
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      185 |                 clearance.ok,
+      186 |                 `the --dock-content-safe-inset occlusion gutter is not reserved on the route scroller: ${JSON.stringify(clearance)}`,
+    > 187 |             ).toBe(true);
+          |               ^
+      188 |         });
+      189 |
+      190 |         // ── M9/π — the dogfood-render sweep (the SHELL composes shipped controls) ─
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/storybook-meta.spec.ts:187:15
+
+    Error Context: tests-visual/test-results/storybook-meta-BC-W-STORYB-bb0ce-clears-the-fixed-dock-dark--coarse-touch/error-context.md
+
+    Error Context: tests-visual/test-results/storybook-meta-BC-W-STORYB-bb0ce-clears-the-fixed-dock-dark--coarse-touch/error-context.md
+
+  15) [coarse-touch] › tests-visual/storybook-meta.spec.ts:191:9 › BC.W-STORYBOOK-META — the whole-storybook design-quality π › M9 — the SHELL morph stage composes <Button>/<Switch>/<Card> markup [dark] 
+
+    Error: the SHELL morph toggle is not a composed <Button> (still a raw btn-pill chain): {"morphToggleTag":null,"morphToggleClass":"","morphIsButtonComponent":false,"liquidToggleTag":null,"liquidToggleRole":null,"liquidIsSwitch":false}
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      234 |                 shape.morphIsButtonComponent,
+      235 |                 `the SHELL morph toggle is not a composed <Button> (still a raw btn-pill chain): ${JSON.stringify(shape)}`,
+    > 236 |             ).toBe(true);
+          |               ^
+      237 |             expect(
+      238 |                 shape.liquidIsSwitch,
+      239 |                 `the SHELL liquid-preview toggle is not a composed <Switch> (still a raw <input type=checkbox>): ${JSON.stringify(shape)}`,
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/storybook-meta.spec.ts:236:15
+
+    Error Context: tests-visual/test-results/storybook-meta-BC-W-STORYB-27aa1-on-Switch-Card-markup-dark--coarse-touch/error-context.md
+
+    Error Context: tests-visual/test-results/storybook-meta-BC-W-STORYB-27aa1-on-Switch-Card-markup-dark--coarse-touch/error-context.md
+
+  16) [coarse-touch] › tests-visual/storybook-meta.spec.ts:249:9 › BC.W-STORYBOOK-META — the whole-storybook design-quality π › M9d — the SectionPreviewCard bento paints (static Chip + fira-code subpath) [dark] 
+
+    Error: the SectionPreviewCard bento does not resolve its composed primitives: {"present":true,"hasIconPlate":false,"hasSubpathChip":false}
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      277 |                     bento.hasIconPlate && bento.hasSubpathChip,
+      278 |                     `the SectionPreviewCard bento does not resolve its composed primitives: ${JSON.stringify(bento)}`,
+    > 279 |                 ).toBe(true);
+          |                   ^
+      280 |             }
+      281 |         });
+      282 |     }
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/storybook-meta.spec.ts:279:19
+
+    Error Context: tests-visual/test-results/storybook-meta-BC-W-STORYB-3b92b-hip-fira-code-subpath-dark--coarse-touch/error-context.md
+
+    Error Context: tests-visual/test-results/storybook-meta-BC-W-STORYB-3b92b-hip-fira-code-subpath-dark--coarse-touch/error-context.md
+
+  17) [coarse-touch] › tests-visual/suffuse.spec.ts:148:9 › AZ.W-SUFFUSE — the suffusion pass (π) › S2 — the motion plot/dot resolves to the violet --motion-accent, not warm-red (light) 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: page.screenshot: Target page, context or browser has been closed
+
+      191 |             };
+      192 |
+    > 193 |             await page.screenshot({
+          |                        ^
+      194 |                 path: `${VISUAL_DIR}/W-SUFFUSE-motion-purple-${mode}.png`,
+      195 |             });
+      196 |         });
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/suffuse.spec.ts:193:24
+
+    Error Context: tests-visual/test-results/suffuse-AZ-W-SUFFUSE-—-the-05ccf--accent-not-warm-red-light--coarse-touch/error-context.md
+
+  18) [coarse-touch] › tests-visual/suffuse.spec.ts:148:9 › AZ.W-SUFFUSE — the suffusion pass (π) › S2 — the motion plot/dot resolves to the violet --motion-accent, not warm-red (dark) 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: page.screenshot: Target page, context or browser has been closed
+
+      191 |             };
+      192 |
+    > 193 |             await page.screenshot({
+          |                        ^
+      194 |                 path: `${VISUAL_DIR}/W-SUFFUSE-motion-purple-${mode}.png`,
+      195 |             });
+      196 |         });
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/suffuse.spec.ts:193:24
+
+    Error Context: tests-visual/test-results/suffuse-AZ-W-SUFFUSE-—-the-4b7f3-n-accent-not-warm-red-dark--coarse-touch/error-context.md
+
+  19) [coarse-touch] › tests-visual/suffuse.spec.ts:200:5 › AZ.W-SUFFUSE — the suffusion pass (π) › S3 — an activated metric number resolves to the mega/audacious tier (>> text-title) 
+
+    Error: the text-display-mega metric number renders
+
+    expect(received).not.toBeNull()
+
+    Received: null
+
+      219 |             tiers.megaFs,
+      220 |             "the text-display-mega metric number renders",
+    > 221 |         ).not.toBeNull();
+          |               ^
+      222 |         expect(
+      223 |             tiers.audFs,
+      224 |             "the text-display-audacious metric number renders",
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/suffuse.spec.ts:221:15
+
+    Error Context: tests-visual/test-results/suffuse-AZ-W-SUFFUSE-—-the-22c83--audacious-tier-text-title--coarse-touch/error-context.md
+
+  20) [coarse-touch] › tests-visual/suffuse.spec.ts:244:5 › AZ.W-SUFFUSE — the suffusion pass (π) › S4 — the settings thin page's grid underlay paints + the card drops to a thin tier 
+
+    Error: the settings page renders the .story-bg-grid blueprint underlay (D4-1)
+
+    expect(received).toBeTruthy()
+
+    Received: false
+
+      273 |             grid.gridPresent,
+      274 |             "the settings page renders the .story-bg-grid blueprint underlay (D4-1)",
+    > 275 |         ).toBeTruthy();
+          |           ^
+      276 |         expect(
+      277 |             grid.gridHasImage,
+      278 |             "the grid underlay paints its ruled linear-gradients (the layer is VISIBLE, not display:none) (D4-3)",
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/suffuse.spec.ts:275:11
+
+    Error Context: tests-visual/test-results/suffuse-AZ-W-SUFFUSE-—-the-006a1-e-card-drops-to-a-thin-tier-coarse-touch/error-context.md
+
+  21) [coarse-touch] › tests-visual/suffuse2.spec.ts:170:13 › BA.W-SUFFUSE2 — the per-category color identity (π) › forms (/forms/checks) — eyebrow + rail resolve to the SAME --section-color-3 hue (light) 
+
+    Error: /forms/checks: the eyebrow + rail identity renders
+
+    expect(received).not.toBeNull()
+
+    Received: null
+
+      180 |                     sites,
+      181 |                     `${route}: the eyebrow + rail identity renders`,
+    > 182 |                 ).not.toBeNull();
+          |                       ^
+      183 |
+      184 |                 // The mapped stop's resolved hue (the page-root --section-color-N).
+      185 |                 const stopColor = await page.evaluate((n) => {
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/suffuse2.spec.ts:182:23
+
+    Error Context: tests-visual/test-results/suffuse2-BA-W-SUFFUSE2-—-t-6477a--section-color-3-hue-light--coarse-touch/error-context.md
+
+  22) [coarse-touch] › tests-visual/suffuse2.spec.ts:170:13 › BA.W-SUFFUSE2 — the per-category color identity (π) › forms (/forms/checks) — eyebrow + rail resolve to the SAME --section-color-3 hue (dark) 
+
+    Error: /forms/checks: the eyebrow + rail identity renders
+
+    expect(received).not.toBeNull()
+
+    Received: null
+
+      180 |                     sites,
+      181 |                     `${route}: the eyebrow + rail identity renders`,
+    > 182 |                 ).not.toBeNull();
+          |                       ^
+      183 |
+      184 |                 // The mapped stop's resolved hue (the page-root --section-color-N).
+      185 |                 const stopColor = await page.evaluate((n) => {
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/suffuse2.spec.ts:182:23
+
+    Error Context: tests-visual/test-results/suffuse2-BA-W-SUFFUSE2-—-t-28c4d---section-color-3-hue-dark--coarse-touch/error-context.md
+
+  23) [coarse-touch] › tests-visual/suffuse2.spec.ts:170:13 › BA.W-SUFFUSE2 — the per-category color identity (π) › containers (/containers/accordion) — eyebrow + rail resolve to the SAME --section-color-2 hue (light) 
+
+    Error: /containers/accordion: the eyebrow + rail identity renders
+
+    expect(received).not.toBeNull()
+
+    Received: null
+
+      180 |                     sites,
+      181 |                     `${route}: the eyebrow + rail identity renders`,
+    > 182 |                 ).not.toBeNull();
+          |                       ^
+      183 |
+      184 |                 // The mapped stop's resolved hue (the page-root --section-color-N).
+      185 |                 const stopColor = await page.evaluate((n) => {
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/suffuse2.spec.ts:182:23
+
+    Error Context: tests-visual/test-results/suffuse2-BA-W-SUFFUSE2-—-t-c30aa--section-color-2-hue-light--coarse-touch/error-context.md
+
+  24) [coarse-touch] › tests-visual/suffuse2.spec.ts:170:13 › BA.W-SUFFUSE2 — the per-category color identity (π) › containers (/containers/accordion) — eyebrow + rail resolve to the SAME --section-color-2 hue (dark) 
+
+    Error: /containers/accordion: the eyebrow + rail identity renders
+
+    expect(received).not.toBeNull()
+
+    Received: null
+
+      180 |                     sites,
+      181 |                     `${route}: the eyebrow + rail identity renders`,
+    > 182 |                 ).not.toBeNull();
+          |                       ^
+      183 |
+      184 |                 // The mapped stop's resolved hue (the page-root --section-color-N).
+      185 |                 const stopColor = await page.evaluate((n) => {
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/suffuse2.spec.ts:182:23
+
+    Error Context: tests-visual/test-results/suffuse2-BA-W-SUFFUSE2-—-t-5208e---section-color-2-hue-dark--coarse-touch/error-context.md
+
+  25) [coarse-touch] › tests-visual/suffuse2.spec.ts:170:13 › BA.W-SUFFUSE2 — the per-category color identity (π) › data (/data/table) — eyebrow + rail resolve to the SAME --section-color-9 hue (light) 
+
+    Error: /data/table: the eyebrow + rail identity renders
+
+    expect(received).not.toBeNull()
+
+    Received: null
+
+      180 |                     sites,
+      181 |                     `${route}: the eyebrow + rail identity renders`,
+    > 182 |                 ).not.toBeNull();
+          |                       ^
+      183 |
+      184 |                 // The mapped stop's resolved hue (the page-root --section-color-N).
+      185 |                 const stopColor = await page.evaluate((n) => {
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/suffuse2.spec.ts:182:23
+
+    Error Context: tests-visual/test-results/suffuse2-BA-W-SUFFUSE2-—-t-3f33a--section-color-9-hue-light--coarse-touch/error-context.md
+
+  26) [coarse-touch] › tests-visual/suffuse2.spec.ts:170:13 › BA.W-SUFFUSE2 — the per-category color identity (π) › data (/data/table) — eyebrow + rail resolve to the SAME --section-color-9 hue (dark) 
+
+    Error: /data/table: the eyebrow + rail identity renders
+
+    expect(received).not.toBeNull()
+
+    Received: null
+
+      180 |                     sites,
+      181 |                     `${route}: the eyebrow + rail identity renders`,
+    > 182 |                 ).not.toBeNull();
+          |                       ^
+      183 |
+      184 |                 // The mapped stop's resolved hue (the page-root --section-color-N).
+      185 |                 const stopColor = await page.evaluate((n) => {
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/suffuse2.spec.ts:182:23
+
+    Error Context: tests-visual/test-results/suffuse2-BA-W-SUFFUSE2-—-t-4f676---section-color-9-hue-dark--coarse-touch/error-context.md
+
+  27) [coarse-touch] › tests-visual/suffuse2.spec.ts:258:9 › BA.W-SUFFUSE2 — the per-category color identity (π) › S5 — the motion band reads --motion-accent violet, no warm-red (light) 
+
+    Test timeout of 60000ms exceeded.
+
+    Error Context: tests-visual/test-results/suffuse2-BA-W-SUFFUSE2-—-t-54ae2-t-violet-no-warm-red-light--coarse-touch/error-context.md
+
+  28) [coarse-touch] › tests-visual/suffuse2.spec.ts:258:9 › BA.W-SUFFUSE2 — the per-category color identity (π) › S5 — the motion band reads --motion-accent violet, no warm-red (dark) 
+
+    Test timeout of 60000ms exceeded.
+
+    Error Context: tests-visual/test-results/suffuse2-BA-W-SUFFUSE2-—-t-d19f3-nt-violet-no-warm-red-dark--coarse-touch/error-context.md
+
+  29) [coarse-touch] › tests-visual/surface-axis.spec.ts:343:13 › surface-axis (π — the shared {glass·veil·opaque} surface decoration, fail-CLOSED) › (e) control REST tier unified (input ≈ control register, no gray fork) @ mobile light 
+
+    Error: input-pill reads the shared register
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "color(srgb 0.20397 0.148263 0.0829736 / 0.1)"
+    Received: "rgba(0, 0, 0, 0)"
+
+      347 |                 // The input-pill and the .control-surface class both resolve the SAME
+      348 |                 // register background — ONE material at rest.
+    > 349 |                 expect(inputBg, "input-pill reads the shared register").toBe(registerBg);
+          |                                                                         ^
+      350 |                 expect(controlBg, ".control-surface reads the shared register").toBe(registerBg);
+      351 |             });
+      352 |         }
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/surface-axis.spec.ts:349:73
+
+    Error Context: tests-visual/test-results/surface-axis-surface-axis--29b92-r-no-gray-fork-mobile-light-coarse-touch/error-context.md
+
+  30) [coarse-touch] › tests-visual/surface-axis.spec.ts:343:13 › surface-axis (π — the shared {glass·veil·opaque} surface decoration, fail-CLOSED) › (e) control REST tier unified (input ≈ control register, no gray fork) @ mobile dark 
+
+    Error: input-pill reads the shared register
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "color(srgb 0.0927547 0.0503523 0.00879371 / 0.14)"
+    Received: "rgba(0, 0, 0, 0)"
+
+      347 |                 // The input-pill and the .control-surface class both resolve the SAME
+      348 |                 // register background — ONE material at rest.
+    > 349 |                 expect(inputBg, "input-pill reads the shared register").toBe(registerBg);
+          |                                                                         ^
+      350 |                 expect(controlBg, ".control-surface reads the shared register").toBe(registerBg);
+      351 |             });
+      352 |         }
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/surface-axis.spec.ts:349:73
+
+    Error Context: tests-visual/test-results/surface-axis-surface-axis--e03cd-er-no-gray-fork-mobile-dark-coarse-touch/error-context.md
+
+  31) [coarse-touch] › tests-visual/surface-axis.spec.ts:343:13 › surface-axis (π — the shared {glass·veil·opaque} surface decoration, fail-CLOSED) › (e) control REST tier unified (input ≈ control register, no gray fork) @ desktop light 
+
+    Error: input-pill reads the shared register
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "color(srgb 0.20397 0.148263 0.0829736 / 0.1)"
+    Received: "rgba(0, 0, 0, 0)"
+
+      347 |                 // The input-pill and the .control-surface class both resolve the SAME
+      348 |                 // register background — ONE material at rest.
+    > 349 |                 expect(inputBg, "input-pill reads the shared register").toBe(registerBg);
+          |                                                                         ^
+      350 |                 expect(controlBg, ".control-surface reads the shared register").toBe(registerBg);
+      351 |             });
+      352 |         }
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/surface-axis.spec.ts:349:73
+
+    Error Context: tests-visual/test-results/surface-axis-surface-axis--3d5c5--no-gray-fork-desktop-light-coarse-touch/error-context.md
+
+  32) [coarse-touch] › tests-visual/surface-axis.spec.ts:343:13 › surface-axis (π — the shared {glass·veil·opaque} surface decoration, fail-CLOSED) › (e) control REST tier unified (input ≈ control register, no gray fork) @ desktop dark 
+
+    Error: input-pill reads the shared register
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "color(srgb 0.0927547 0.0503523 0.00879371 / 0.14)"
+    Received: "rgba(0, 0, 0, 0)"
+
+      347 |                 // The input-pill and the .control-surface class both resolve the SAME
+      348 |                 // register background — ONE material at rest.
+    > 349 |                 expect(inputBg, "input-pill reads the shared register").toBe(registerBg);
+          |                                                                         ^
+      350 |                 expect(controlBg, ".control-surface reads the shared register").toBe(registerBg);
+      351 |             });
+      352 |         }
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/surface-axis.spec.ts:349:73
+
+    Error Context: tests-visual/test-results/surface-axis-surface-axis--76932-r-no-gray-fork-desktop-dark-coarse-touch/error-context.md
+
+  32 failed
+    [coarse-touch] › tests-visual/shell-hold.spec.ts:92:1 › BA.W-SHELL-HOLD — negative control: a scripted chip click DOES navigate (@advance path live) 
+    [coarse-touch] › tests-visual/slider-spectrum-fallback.spec.ts:56:9 › slider design resolution (π lane — light) › standard knob is a TRUE CIRCLE + spectrum fallback reads squircle-adjacent (light) 
+    [coarse-touch] › tests-visual/slider-spectrum-fallback.spec.ts:56:9 › slider design resolution (π lane — dark) › standard knob is a TRUE CIRCLE + spectrum fallback reads squircle-adjacent (dark) 
+    [coarse-touch] › tests-visual/sortable-list.contract.spec.ts:66:5 › SortableList public transaction contract › native semantics, disabled exclusion, and coarse target floor 
+    [coarse-touch] › tests-visual/spring-ease.spec.ts:108:9 › spring-ease — light › (0) the eased curves are on the wire (snappy fills its clock, press minted) 
+    [coarse-touch] › tests-visual/spring-ease.spec.ts:108:9 › spring-ease — dark › (0) the eased curves are on the wire (snappy fills its clock, press minted) 
+    [coarse-touch] › tests-visual/stage.spec.ts:54:1 › (a) a formerly-keyless route paints its declared background (the void killed) 
+    [coarse-touch] › tests-visual/stage.spec.ts:76:1 › (b) /data/metric-cell grid wash is VISIBLE through the card in DARK 
+    [coarse-touch] › tests-visual/stage.spec.ts:104:1 › (c) /substrates/glass-material rungs float over the aurora, no opaque plate 
+    [coarse-touch] › tests-visual/stage.spec.ts:159:1 › (e) the aurora substrate renders on a staged route (breathing has a field) 
+    [coarse-touch] › tests-visual/storybook-meta.spec.ts:143:9 › BC.W-STORYBOOK-META — the whole-storybook design-quality π › M5 — the last content element clears the fixed dock [light] 
+    [coarse-touch] › tests-visual/storybook-meta.spec.ts:191:9 › BC.W-STORYBOOK-META — the whole-storybook design-quality π › M9 — the SHELL morph stage composes <Button>/<Switch>/<Card> markup [light] 
+    [coarse-touch] › tests-visual/storybook-meta.spec.ts:249:9 › BC.W-STORYBOOK-META — the whole-storybook design-quality π › M9d — the SectionPreviewCard bento paints (static Chip + fira-code subpath) [light] 
+    [coarse-touch] › tests-visual/storybook-meta.spec.ts:143:9 › BC.W-STORYBOOK-META — the whole-storybook design-quality π › M5 — the last content element clears the fixed dock [dark] 
+    [coarse-touch] › tests-visual/storybook-meta.spec.ts:191:9 › BC.W-STORYBOOK-META — the whole-storybook design-quality π › M9 — the SHELL morph stage composes <Button>/<Switch>/<Card> markup [dark] 
+    [coarse-touch] › tests-visual/storybook-meta.spec.ts:249:9 › BC.W-STORYBOOK-META — the whole-storybook design-quality π › M9d — the SectionPreviewCard bento paints (static Chip + fira-code subpath) [dark] 
+    [coarse-touch] › tests-visual/suffuse.spec.ts:148:9 › AZ.W-SUFFUSE — the suffusion pass (π) › S2 — the motion plot/dot resolves to the violet --motion-accent, not warm-red (light) 
+    [coarse-touch] › tests-visual/suffuse.spec.ts:148:9 › AZ.W-SUFFUSE — the suffusion pass (π) › S2 — the motion plot/dot resolves to the violet --motion-accent, not warm-red (dark) 
+    [coarse-touch] › tests-visual/suffuse.spec.ts:200:5 › AZ.W-SUFFUSE — the suffusion pass (π) › S3 — an activated metric number resolves to the mega/audacious tier (>> text-title) 
+    [coarse-touch] › tests-visual/suffuse.spec.ts:244:5 › AZ.W-SUFFUSE — the suffusion pass (π) › S4 — the settings thin page's grid underlay paints + the card drops to a thin tier 
+    [coarse-touch] › tests-visual/suffuse2.spec.ts:170:13 › BA.W-SUFFUSE2 — the per-category color identity (π) › forms (/forms/checks) — eyebrow + rail resolve to the SAME --section-color-3 hue (light) 
+    [coarse-touch] › tests-visual/suffuse2.spec.ts:170:13 › BA.W-SUFFUSE2 — the per-category color identity (π) › forms (/forms/checks) — eyebrow + rail resolve to the SAME --section-color-3 hue (dark) 
+    [coarse-touch] › tests-visual/suffuse2.spec.ts:170:13 › BA.W-SUFFUSE2 — the per-category color identity (π) › containers (/containers/accordion) — eyebrow + rail resolve to the SAME --section-color-2 hue (light) 
+    [coarse-touch] › tests-visual/suffuse2.spec.ts:170:13 › BA.W-SUFFUSE2 — the per-category color identity (π) › containers (/containers/accordion) — eyebrow + rail resolve to the SAME --section-color-2 hue (dark) 
+    [coarse-touch] › tests-visual/suffuse2.spec.ts:170:13 › BA.W-SUFFUSE2 — the per-category color identity (π) › data (/data/table) — eyebrow + rail resolve to the SAME --section-color-9 hue (light) 
+    [coarse-touch] › tests-visual/suffuse2.spec.ts:170:13 › BA.W-SUFFUSE2 — the per-category color identity (π) › data (/data/table) — eyebrow + rail resolve to the SAME --section-color-9 hue (dark) 
+    [coarse-touch] › tests-visual/suffuse2.spec.ts:258:9 › BA.W-SUFFUSE2 — the per-category color identity (π) › S5 — the motion band reads --motion-accent violet, no warm-red (light) 
+    [coarse-touch] › tests-visual/suffuse2.spec.ts:258:9 › BA.W-SUFFUSE2 — the per-category color identity (π) › S5 — the motion band reads --motion-accent violet, no warm-red (dark) 
+    [coarse-touch] › tests-visual/surface-axis.spec.ts:343:13 › surface-axis (π — the shared {glass·veil·opaque} surface decoration, fail-CLOSED) › (e) control REST tier unified (input ≈ control register, no gray fork) @ mobile light 
+    [coarse-touch] › tests-visual/surface-axis.spec.ts:343:13 › surface-axis (π — the shared {glass·veil·opaque} surface decoration, fail-CLOSED) › (e) control REST tier unified (input ≈ control register, no gray fork) @ mobile dark 
+    [coarse-touch] › tests-visual/surface-axis.spec.ts:343:13 › surface-axis (π — the shared {glass·veil·opaque} surface decoration, fail-CLOSED) › (e) control REST tier unified (input ≈ control register, no gray fork) @ desktop light 
+    [coarse-touch] › tests-visual/surface-axis.spec.ts:343:13 › surface-axis (π — the shared {glass·veil·opaque} surface decoration, fail-CLOSED) › (e) control REST tier unified (input ≈ control register, no gray fork) @ desktop dark 
+  9 skipped
+  54 passed (7.4m)

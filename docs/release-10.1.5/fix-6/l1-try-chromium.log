@@ -1,0 +1,66 @@
+
+Running 12 tests using 1 worker
+
+  ✓   1 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1241:13 › critique 6, coarse phone › l1 a cap lifted under a run scrolled to its end rests round (tab:Home,icon,icon,icon,tab:Settings) (3.2s)
+  ✓   2 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1241:13 › critique 6, coarse phone › l1 a cap lifted under a run scrolled to its mid rests round (tab:Home,icon,icon,icon,tab:Settings) (3.1s)
+  ✓   3 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1241:13 › critique 6, coarse phone › l1 a cap lifted under a run scrolled to its end rests round (icon,icon,icon,icon,icon,icon) (3.1s)
+  ✓   4 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1241:13 › critique 6, coarse phone › l1 a cap lifted under a run scrolled to its mid rests round (icon,icon,icon,icon,icon,icon) (3.1s)
+  ✓   5 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1258:5 › critique 6, coarse phone › l1 a viewport resize 390 → 844 under a run scrolled to its end rests round (3.5s)
+  ✓   6 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1274:5 › critique 6, coarse phone › l1 a vertical run's stage grown under a run scrolled to its end rests round (3.0s)
+  ✓   7 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1241:13 › l1 a cap lifted under a run scrolled to its end rests round (tab:Home,icon,icon,icon,tab:Settings) (3.0s)
+  ✓   8 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1241:13 › l1 a cap lifted under a run scrolled to its mid rests round (tab:Home,icon,icon,icon,tab:Settings) (3.0s)
+  ✓   9 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1241:13 › l1 a cap lifted under a run scrolled to its end rests round (icon,icon,icon,icon,icon,icon) (3.0s)
+  ✓  10 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1241:13 › l1 a cap lifted under a run scrolled to its mid rests round (icon,icon,icon,icon,icon,icon) (3.0s)
+  ✓  11 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1258:5 › l1 a viewport resize 390 → 844 under a run scrolled to its end rests round (3.4s)
+  ✓  12 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1274:5 › l1 a vertical run's stage grown under a run scrolled to its end rests round (3.0s)
+
+  12 passed (39.5s)
+rests round (3.1s)
+
+
+  1) [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1232:13 › critique 6, coarse phone › l1 a cap lifted under a run scrolled to its end rests round (icon,icon,icon,icon,icon,icon,icon,icon) 
+
+    Error: end, 300 ms after the lift ({"cls":"glass-dock horizontal shape-pill expanded pinned fit-content always-expanded","w":390,"h":60,"radii":["18.6923px","30px","30px","18.6923px"],"runs":[{"sw":422,"cw":380,"sh":58,"ch":58,"active":true}]}): corner 18.6923px = half the cross extent 30
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.5
+    Received:    11.3077
+
+      1220 |     for (const r of read.radii) {
+      1221 |         expect(r, `${at}: corner ${r} is one length`).toMatch(/^-?[\d.]+px$/);
+    > 1222 |         expect(Math.abs(Number.parseFloat(r) - half), `${at}: corner ${r} = half the cross extent ${half}`).toBeLessThanOrEqual(0.5);
+           |                                                                                                             ^
+      1223 |     }
+      1224 |     const run = read.runs.find((r) => r.active)!;
+      1225 |     if (vertical) expect(run.sh, `${at}: the run's seats fit`).toBeLessThanOrEqual(run.ch + 2 * 6);
+        at expectRoundAtRest (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:1222:109)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:1242:17
+
+    Error Context: tests-visual/test-results/release-10-1-5-critique-6--999bb-n-icon-icon-icon-icon-icon--chromium-headless-new/error-context.md
+
+  2) [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1232:13 › critique 6, coarse phone › l1 a cap lifted under a run scrolled to its mid rests round (icon,icon,icon,icon,icon,icon,icon,icon) 
+
+    Error: mid, 300 ms after the lift ({"cls":"glass-dock horizontal shape-pill expanded pinned fit-content always-expanded","w":390,"h":60,"radii":["18.6923px","30px","30px","18.6923px"],"runs":[{"sw":422,"cw":380,"sh":58,"ch":58,"active":true}]}): corner 18.6923px = half the cross extent 30
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.5
+    Received:    11.3077
+
+      1220 |     for (const r of read.radii) {
+      1221 |         expect(r, `${at}: corner ${r} is one length`).toMatch(/^-?[\d.]+px$/);
+    > 1222 |         expect(Math.abs(Number.parseFloat(r) - half), `${at}: corner ${r} = half the cross extent ${half}`).toBeLessThanOrEqual(0.5);
+           |                                                                                                             ^
+      1223 |     }
+      1224 |     const run = read.runs.find((r) => r.active)!;
+      1225 |     if (vertical) expect(run.sh, `${at}: the run's seats fit`).toBeLessThanOrEqual(run.ch + 2 * 6);
+        at expectRoundAtRest (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:1222:109)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-5.spec.ts:1242:17
+
+    Error Context: tests-visual/test-results/release-10-1-5-critique-6--d3b07-n-icon-icon-icon-icon-icon--chromium-headless-new/error-context.md
+
+  2 failed
+    [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1232:13 › critique 6, coarse phone › l1 a cap lifted under a run scrolled to its end rests round (icon,icon,icon,icon,icon,icon,icon,icon) 
+    [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1232:13 › critique 6, coarse phone › l1 a cap lifted under a run scrolled to its mid rests round (icon,icon,icon,icon,icon,icon,icon,icon) 
+  10 passed (38.3s)

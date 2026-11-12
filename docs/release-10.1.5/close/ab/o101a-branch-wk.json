@@ -1,0 +1,1544 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "tests-visual/webkit-2287.config.ts",
+      "--project=webkit",
+      "--workers=1",
+      "tests-visual/release-10-1-2.spec.ts",
+      "--grep",
+      "O-101a",
+      "--repeat-each=6"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/webkit-2287.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-headless-new",
+        "name": "chromium-headless-new",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "coarse-touch",
+        "name": "coarse-touch",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/test-results",
+        "repeatEach": 6,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "safari-webgl.spec.ts",
+          "aurora-swraster.spec.ts",
+          "release-10-1-1.spec.ts",
+          "release-10-1-2.spec.ts",
+          "release-10-1-3.spec.ts",
+          "release-10-1-4.spec.ts",
+          "release-10-1-5.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/docs/release-10.1.5/close/ab/o101a-branch-wk.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5313",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/",
+      "url": "http://localhost:5313",
+      "reuseExistingServer": true,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "release-10-1-2.spec.ts",
+      "file": "release-10-1-2.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "O-101a · a host change during the morph · collapsed (1440->390)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4220,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T23:42:22.516Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "937780014813259fe606-66b9a27bd0e66cc0a191",
+          "file": "release-10-1-2.spec.ts",
+          "line": 481,
+          "column": 9
+        },
+        {
+          "title": "O-101a · a host change during the morph · reversal (1440->390)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2597,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T23:42:29.416Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "937780014813259fe606-410b9270470169fcbba8",
+          "file": "release-10-1-2.spec.ts",
+          "line": 481,
+          "column": 9
+        },
+        {
+          "title": "O-101a · a host change during the morph · mid-expand (1440->390)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1566,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T23:42:32.022Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "937780014813259fe606-31ba25937f9a0ea32926",
+          "file": "release-10-1-2.spec.ts",
+          "line": 481,
+          "column": 9
+        },
+        {
+          "title": "O-101a · a host change during the morph · collapsed (390->1440)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3291,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T23:42:33.596Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "937780014813259fe606-853b6fc902e0a3315dd1",
+          "file": "release-10-1-2.spec.ts",
+          "line": 481,
+          "column": 9
+        },
+        {
+          "title": "O-101a · a host change during the morph · reversal (390->1440)",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 2354,
+                  "error": {
+                    "message": "Error: morphing frames after the change reserving other than the settled 976px (983)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m1\u001b[39m",
+                    "stack": "Error: morphing frames after the change reserving other than the settled 976px (983)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m1\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-2.spec.ts:495:15",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-2.spec.ts",
+                      "column": 15,
+                      "line": 495
+                    },
+                    "snippet": "  493 |                 stale.length,\n  494 |                 `morphing frames after the change reserving other than the settled ${rest.size}px (${[...new Set(stale.map((f) => f.reserved))].join(\", \")})`,\n> 495 |             ).toBe(0);\n      |               ^\n  496 |             const over = seq.filter((f) => f.scroll > f.client);\n  497 |             expect\n  498 |                 .soft("
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-2.spec.ts",
+                        "column": 15,
+                        "line": 495
+                      },
+                      "message": "Error: morphing frames after the change reserving other than the settled 976px (983)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m1\u001b[39m\n\n  493 |                 stale.length,\n  494 |                 `morphing frames after the change reserving other than the settled ${rest.size}px (${[...new Set(stale.map((f) => f.reserved))].join(\", \")})`,\n> 495 |             ).toBe(0);\n      |               ^\n  496 |             const over = seq.filter((f) => f.scroll > f.client);\n  497 |             expect\n  498 |                 .soft(\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-2.spec.ts:495:15"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T23:42:36.895Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/test-results/release-10-1-2-O-101a-·-a--5cea7-morph-·-reversal-390--1440--webkit/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-2.spec.ts",
+                    "column": 15,
+                    "line": 495
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "937780014813259fe606-38ccf140525af4800678",
+          "file": "release-10-1-2.spec.ts",
+          "line": 481,
+          "column": 9
+        },
+        {
+          "title": "O-101a · a host change during the morph · mid-expand (390->1440)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1644,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T23:42:39.688Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "937780014813259fe606-4d30a0a2ab25a60b72dc",
+          "file": "release-10-1-2.spec.ts",
+          "line": 481,
+          "column": 9
+        },
+        {
+          "title": "O-101a · a host change during the morph · collapsed (1440->390)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3474,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T23:42:42.064Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "937780014813259fe606-a84791cb8146f3b4cad6",
+          "file": "release-10-1-2.spec.ts",
+          "line": 481,
+          "column": 9
+        },
+        {
+          "title": "O-101a · a host change during the morph · reversal (1440->390)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2278,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T23:42:45.790Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "937780014813259fe606-a9856be947b44251a36c",
+          "file": "release-10-1-2.spec.ts",
+          "line": 481,
+          "column": 9
+        },
+        {
+          "title": "O-101a · a host change during the morph · mid-expand (1440->390)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1427,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T23:42:48.079Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "937780014813259fe606-0a7bd60bfc3382779bbb",
+          "file": "release-10-1-2.spec.ts",
+          "line": 481,
+          "column": 9
+        },
+        {
+          "title": "O-101a · a host change during the morph · collapsed (390->1440)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3175,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T23:42:49.514Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "937780014813259fe606-2afc0befe0ef52b81500",
+          "file": "release-10-1-2.spec.ts",
+          "line": 481,
+          "column": 9
+        },
+        {
+          "title": "O-101a · a host change during the morph · reversal (390->1440)",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 2287,
+                  "error": {
+                    "message": "Error: morphing frames after the change reserving other than the settled 976px (983)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m1\u001b[39m",
+                    "stack": "Error: morphing frames after the change reserving other than the settled 976px (983)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m1\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-2.spec.ts:495:15",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-2.spec.ts",
+                      "column": 15,
+                      "line": 495
+                    },
+                    "snippet": "  493 |                 stale.length,\n  494 |                 `morphing frames after the change reserving other than the settled ${rest.size}px (${[...new Set(stale.map((f) => f.reserved))].join(\", \")})`,\n> 495 |             ).toBe(0);\n      |               ^\n  496 |             const over = seq.filter((f) => f.scroll > f.client);\n  497 |             expect\n  498 |                 .soft("
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-2.spec.ts",
+                        "column": 15,
+                        "line": 495
+                      },
+                      "message": "Error: morphing frames after the change reserving other than the settled 976px (983)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m1\u001b[39m\n\n  493 |                 stale.length,\n  494 |                 `morphing frames after the change reserving other than the settled ${rest.size}px (${[...new Set(stale.map((f) => f.reserved))].join(\", \")})`,\n> 495 |             ).toBe(0);\n      |               ^\n  496 |             const over = seq.filter((f) => f.scroll > f.client);\n  497 |             expect\n  498 |                 .soft(\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-2.spec.ts:495:15"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T23:42:52.696Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/test-results/release-10-1-2-O-101a-·-a--5cea7-morph-·-reversal-390--1440--webkit-repeat1/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-2.spec.ts",
+                    "column": 15,
+                    "line": 495
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "937780014813259fe606-4f70923c611a17c56c87",
+          "file": "release-10-1-2.spec.ts",
+          "line": 481,
+          "column": 9
+        },
+        {
+          "title": "O-101a · a host change during the morph · mid-expand (390->1440)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1683,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T23:42:55.373Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "937780014813259fe606-c69bd9143d60c757e1b3",
+          "file": "release-10-1-2.spec.ts",
+          "line": 481,
+          "column": 9
+        },
+        {
+          "title": "O-101a · a host change during the morph · collapsed (1440->390)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3436,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T23:42:57.671Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "937780014813259fe606-be52984c778d292d1e6d",
+          "file": "release-10-1-2.spec.ts",
+          "line": 481,
+          "column": 9
+        },
+        {
+          "title": "O-101a · a host change during the morph · reversal (1440->390)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2176,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T23:43:01.346Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "937780014813259fe606-40000175232895d9979f",
+          "file": "release-10-1-2.spec.ts",
+          "line": 481,
+          "column": 9
+        },
+        {
+          "title": "O-101a · a host change during the morph · mid-expand (1440->390)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1322,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T23:43:03.530Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "937780014813259fe606-59f7bd4b404f243e0811",
+          "file": "release-10-1-2.spec.ts",
+          "line": 481,
+          "column": 9
+        },
+        {
+          "title": "O-101a · a host change during the morph · collapsed (390->1440)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3099,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T23:43:04.861Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "937780014813259fe606-ed408618a7993d678c01",
+          "file": "release-10-1-2.spec.ts",
+          "line": 481,
+          "column": 9
+        },
+        {
+          "title": "O-101a · a host change during the morph · reversal (390->1440)",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 2225,
+                  "error": {
+                    "message": "Error: morphing frames after the change reserving other than the settled 976px (983)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m1\u001b[39m",
+                    "stack": "Error: morphing frames after the change reserving other than the settled 976px (983)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m1\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-2.spec.ts:495:15",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-2.spec.ts",
+                      "column": 15,
+                      "line": 495
+                    },
+                    "snippet": "  493 |                 stale.length,\n  494 |                 `morphing frames after the change reserving other than the settled ${rest.size}px (${[...new Set(stale.map((f) => f.reserved))].join(\", \")})`,\n> 495 |             ).toBe(0);\n      |               ^\n  496 |             const over = seq.filter((f) => f.scroll > f.client);\n  497 |             expect\n  498 |                 .soft("
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-2.spec.ts",
+                        "column": 15,
+                        "line": 495
+                      },
+                      "message": "Error: morphing frames after the change reserving other than the settled 976px (983)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m1\u001b[39m\n\n  493 |                 stale.length,\n  494 |                 `morphing frames after the change reserving other than the settled ${rest.size}px (${[...new Set(stale.map((f) => f.reserved))].join(\", \")})`,\n> 495 |             ).toBe(0);\n      |               ^\n  496 |             const over = seq.filter((f) => f.scroll > f.client);\n  497 |             expect\n  498 |                 .soft(\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-2.spec.ts:495:15"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T23:43:07.966Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/test-results/release-10-1-2-O-101a-·-a--5cea7-morph-·-reversal-390--1440--webkit-repeat2/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-2.spec.ts",
+                    "column": 15,
+                    "line": 495
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "937780014813259fe606-72edebc1c967749eab6e",
+          "file": "release-10-1-2.spec.ts",
+          "line": 481,
+          "column": 9
+        },
+        {
+          "title": "O-101a · a host change during the morph · mid-expand (390->1440)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1592,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T23:43:10.631Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "937780014813259fe606-2ae5a4b7789cd933a3eb",
+          "file": "release-10-1-2.spec.ts",
+          "line": 481,
+          "column": 9
+        },
+        {
+          "title": "O-101a · a host change during the morph · collapsed (1440->390)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 6,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3351,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T23:43:12.902Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "937780014813259fe606-604190b82d90d3bafdda",
+          "file": "release-10-1-2.spec.ts",
+          "line": 481,
+          "column": 9
+        },
+        {
+          "title": "O-101a · a host change during the morph · reversal (1440->390)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 6,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2331,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T23:43:16.478Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "937780014813259fe606-d6e4a63f46692153b2fc",
+          "file": "release-10-1-2.spec.ts",
+          "line": 481,
+          "column": 9
+        },
+        {
+          "title": "O-101a · a host change during the morph · mid-expand (1440->390)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 6,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1349,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T23:43:18.815Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "937780014813259fe606-ea0c9c72a1f68eecd5bc",
+          "file": "release-10-1-2.spec.ts",
+          "line": 481,
+          "column": 9
+        },
+        {
+          "title": "O-101a · a host change during the morph · collapsed (390->1440)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 6,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3113,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T23:43:20.170Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "937780014813259fe606-d25f7cf468772573e437",
+          "file": "release-10-1-2.spec.ts",
+          "line": 481,
+          "column": 9
+        },
+        {
+          "title": "O-101a · a host change during the morph · reversal (390->1440)",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 6,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 2056,
+                  "error": {
+                    "message": "Error: morphing frames after the change reserving other than the settled 976px (983)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m1\u001b[39m",
+                    "stack": "Error: morphing frames after the change reserving other than the settled 976px (983)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m1\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-2.spec.ts:495:15",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-2.spec.ts",
+                      "column": 15,
+                      "line": 495
+                    },
+                    "snippet": "  493 |                 stale.length,\n  494 |                 `morphing frames after the change reserving other than the settled ${rest.size}px (${[...new Set(stale.map((f) => f.reserved))].join(\", \")})`,\n> 495 |             ).toBe(0);\n      |               ^\n  496 |             const over = seq.filter((f) => f.scroll > f.client);\n  497 |             expect\n  498 |                 .soft("
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-2.spec.ts",
+                        "column": 15,
+                        "line": 495
+                      },
+                      "message": "Error: morphing frames after the change reserving other than the settled 976px (983)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m1\u001b[39m\n\n  493 |                 stale.length,\n  494 |                 `morphing frames after the change reserving other than the settled ${rest.size}px (${[...new Set(stale.map((f) => f.reserved))].join(\", \")})`,\n> 495 |             ).toBe(0);\n      |               ^\n  496 |             const over = seq.filter((f) => f.scroll > f.client);\n  497 |             expect\n  498 |                 .soft(\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-2.spec.ts:495:15"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T23:43:23.288Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/test-results/release-10-1-2-O-101a-·-a--5cea7-morph-·-reversal-390--1440--webkit-repeat3/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-2.spec.ts",
+                    "column": 15,
+                    "line": 495
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "937780014813259fe606-a5e700d8455bf2f95871",
+          "file": "release-10-1-2.spec.ts",
+          "line": 481,
+          "column": 9
+        },
+        {
+          "title": "O-101a · a host change during the morph · mid-expand (390->1440)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 7,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1547,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T23:43:25.728Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "937780014813259fe606-f574171b521d98ae10b4",
+          "file": "release-10-1-2.spec.ts",
+          "line": 481,
+          "column": 9
+        },
+        {
+          "title": "O-101a · a host change during the morph · collapsed (1440->390)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 8,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3443,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T23:43:27.889Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "937780014813259fe606-afb9174cde8d5dd7dfe3",
+          "file": "release-10-1-2.spec.ts",
+          "line": 481,
+          "column": 9
+        },
+        {
+          "title": "O-101a · a host change during the morph · reversal (1440->390)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 8,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2230,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T23:43:31.565Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "937780014813259fe606-c70eb97290acffbd4af7",
+          "file": "release-10-1-2.spec.ts",
+          "line": 481,
+          "column": 9
+        },
+        {
+          "title": "O-101a · a host change during the morph · mid-expand (1440->390)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 8,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1393,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T23:43:33.802Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "937780014813259fe606-3e9e14b5521b3c524127",
+          "file": "release-10-1-2.spec.ts",
+          "line": 481,
+          "column": 9
+        },
+        {
+          "title": "O-101a · a host change during the morph · collapsed (390->1440)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 8,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3131,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T23:43:35.203Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "937780014813259fe606-511825ad437ea796c8a4",
+          "file": "release-10-1-2.spec.ts",
+          "line": 481,
+          "column": 9
+        },
+        {
+          "title": "O-101a · a host change during the morph · reversal (390->1440)",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 8,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 2209,
+                  "error": {
+                    "message": "Error: morphing frames after the change reserving other than the settled 976px (983)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m1\u001b[39m",
+                    "stack": "Error: morphing frames after the change reserving other than the settled 976px (983)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m1\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-2.spec.ts:495:15",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-2.spec.ts",
+                      "column": 15,
+                      "line": 495
+                    },
+                    "snippet": "  493 |                 stale.length,\n  494 |                 `morphing frames after the change reserving other than the settled ${rest.size}px (${[...new Set(stale.map((f) => f.reserved))].join(\", \")})`,\n> 495 |             ).toBe(0);\n      |               ^\n  496 |             const over = seq.filter((f) => f.scroll > f.client);\n  497 |             expect\n  498 |                 .soft("
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-2.spec.ts",
+                        "column": 15,
+                        "line": 495
+                      },
+                      "message": "Error: morphing frames after the change reserving other than the settled 976px (983)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m1\u001b[39m\n\n  493 |                 stale.length,\n  494 |                 `morphing frames after the change reserving other than the settled ${rest.size}px (${[...new Set(stale.map((f) => f.reserved))].join(\", \")})`,\n> 495 |             ).toBe(0);\n      |               ^\n  496 |             const over = seq.filter((f) => f.scroll > f.client);\n  497 |             expect\n  498 |                 .soft(\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-2.spec.ts:495:15"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T23:43:38.341Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/test-results/release-10-1-2-O-101a-·-a--5cea7-morph-·-reversal-390--1440--webkit-repeat4/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-2.spec.ts",
+                    "column": 15,
+                    "line": 495
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "937780014813259fe606-1be2bf95543573b0acf1",
+          "file": "release-10-1-2.spec.ts",
+          "line": 481,
+          "column": 9
+        },
+        {
+          "title": "O-101a · a host change during the morph · mid-expand (390->1440)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 9,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1441,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T23:43:40.945Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "937780014813259fe606-a4085385af0ecb0bcc1d",
+          "file": "release-10-1-2.spec.ts",
+          "line": 481,
+          "column": 9
+        },
+        {
+          "title": "O-101a · a host change during the morph · collapsed (1440->390)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 10,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3522,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T23:43:42.982Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "937780014813259fe606-fd5407e6341ed8d17207",
+          "file": "release-10-1-2.spec.ts",
+          "line": 481,
+          "column": 9
+        },
+        {
+          "title": "O-101a · a host change during the morph · reversal (1440->390)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 10,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2317,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T23:43:46.730Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "937780014813259fe606-f1404c71ca5af60fbdca",
+          "file": "release-10-1-2.spec.ts",
+          "line": 481,
+          "column": 9
+        },
+        {
+          "title": "O-101a · a host change during the morph · mid-expand (1440->390)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 10,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1413,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T23:43:49.057Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "937780014813259fe606-cbf865946c451248ea78",
+          "file": "release-10-1-2.spec.ts",
+          "line": 481,
+          "column": 9
+        },
+        {
+          "title": "O-101a · a host change during the morph · collapsed (390->1440)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 10,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3201,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T23:43:50.478Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "937780014813259fe606-13cf465e9c1770ca1c78",
+          "file": "release-10-1-2.spec.ts",
+          "line": 481,
+          "column": 9
+        },
+        {
+          "title": "O-101a · a host change during the morph · reversal (390->1440)",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 10,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 2361,
+                  "error": {
+                    "message": "Error: morphing frames after the change reserving other than the settled 976px (983)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m1\u001b[39m",
+                    "stack": "Error: morphing frames after the change reserving other than the settled 976px (983)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m1\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-2.spec.ts:495:15",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-2.spec.ts",
+                      "column": 15,
+                      "line": 495
+                    },
+                    "snippet": "  493 |                 stale.length,\n  494 |                 `morphing frames after the change reserving other than the settled ${rest.size}px (${[...new Set(stale.map((f) => f.reserved))].join(\", \")})`,\n> 495 |             ).toBe(0);\n      |               ^\n  496 |             const over = seq.filter((f) => f.scroll > f.client);\n  497 |             expect\n  498 |                 .soft("
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-2.spec.ts",
+                        "column": 15,
+                        "line": 495
+                      },
+                      "message": "Error: morphing frames after the change reserving other than the settled 976px (983)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m1\u001b[39m\n\n  493 |                 stale.length,\n  494 |                 `morphing frames after the change reserving other than the settled ${rest.size}px (${[...new Set(stale.map((f) => f.reserved))].join(\", \")})`,\n> 495 |             ).toBe(0);\n      |               ^\n  496 |             const over = seq.filter((f) => f.scroll > f.client);\n  497 |             expect\n  498 |                 .soft(\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-2.spec.ts:495:15"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T23:43:53.687Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/test-results/release-10-1-2-O-101a-·-a--5cea7-morph-·-reversal-390--1440--webkit-repeat5/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-10.1.5/tests-visual/release-10-1-2.spec.ts",
+                    "column": 15,
+                    "line": 495
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "937780014813259fe606-0d928fc211402888ee05",
+          "file": "release-10-1-2.spec.ts",
+          "line": 481,
+          "column": 9
+        },
+        {
+          "title": "O-101a · a host change during the morph · mid-expand (390->1440)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 11,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1793,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T23:43:56.594Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "937780014813259fe606-1e565defdde2fb084030",
+          "file": "release-10-1-2.spec.ts",
+          "line": 481,
+          "column": 9
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-11T23:42:20.385Z",
+    "duration": 98368.429,
+    "expected": 30,
+    "skipped": 0,
+    "unexpected": 6,
+    "flaky": 0
+  }
+}

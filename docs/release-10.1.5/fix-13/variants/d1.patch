@@ -1,0 +1,33 @@
+diff --git a/src/components/dock/composables/dockMorphMeasure.ts b/src/components/dock/composables/dockMorphMeasure.ts
+index 9490720dc..40e0278bc 100644
+--- a/src/components/dock/composables/dockMorphMeasure.ts
++++ b/src/components/dock/composables/dockMorphMeasure.ts
+@@ -50,12 +50,16 @@ function withOverrides<T>(overrides: readonly Override[], read: () => T): T {
+ function keepScroll<T>(scroller: HTMLElement, measure: () => T): T {
+     const left = scroller.scrollLeft;
+     const top = scroller.scrollTop;
++    const log = (globalThis as unknown as { __t1log?: unknown[] }).__t1log;
++    log?.push({ k: "ks0", t: performance.now(), top, ch: scroller.clientHeight });
+     try {
+         return measure();
+     } finally {
++        log?.push({ k: "ks1", top: scroller.scrollTop, ch: scroller.clientHeight });
+         if (scroller.scrollLeft !== left || scroller.scrollTop !== top) {
+             scroller.scrollTo({ left, top, behavior: "instant" });
+         }
++        log?.push({ k: "ks2", top: scroller.scrollTop });
+     }
+ }
+ 
+diff --git a/src/components/dock/composables/useDockRun.ts b/src/components/dock/composables/useDockRun.ts
+index da7770a3d..0e1c6ee62 100644
+--- a/src/components/dock/composables/useDockRun.ts
++++ b/src/components/dock/composables/useDockRun.ts
+@@ -160,6 +160,7 @@ export function useDockRun(options: UseDockRunOptions): UseDockRunReturn {
+     }
+ 
+     function writeScroll(run: HTMLElement, value: number): void {
++        (globalThis as unknown as { __t1log?: unknown[] }).__t1log?.push({ k: "write", t: performance.now(), value, stack: new Error().stack });
+         if (vertical()) run.scrollTop = value;
+         else run.scrollLeft = value;
+     }

@@ -1,0 +1,691 @@
+[
+ {
+  "tag": "scene=dock&kinds=menu,sep,icon,icon&collapse=closed summary focus",
+  "cls": "glass-dock horizontal shape-pill collapsed fit-content",
+  "morphing": false,
+  "scale": "none",
+  "plate": {
+   "w": 56,
+   "h": 56,
+   "lw": 56,
+   "lh": 56
+  },
+  "radii": [
+   "28px",
+   "28px",
+   "28px",
+   "28px"
+  ],
+  "cross": "56px",
+  "run": {
+   "sw": 220,
+   "cw": 70,
+   "sh": 70,
+   "ch": 70,
+   "sl": 8,
+   "active": false
+  },
+  "seats": [
+   {
+    "id": "S1",
+    "w": 88.8,
+    "k": 0.998,
+    "focus": false,
+    "hover": false,
+    "ringW": 0
+   },
+   {
+    "id": "S3",
+    "w": 40,
+    "k": 1,
+    "focus": false,
+    "hover": false,
+    "ringW": 0
+   },
+   {
+    "id": "S4",
+    "w": 40,
+    "k": 1,
+    "focus": false,
+    "hover": false,
+    "ringW": 0
+   },
+   {
+    "id": "summary",
+    "w": 24,
+    "k": 1,
+    "focus": false,
+    "hover": false,
+    "ringW": 0
+   }
+  ],
+  "v": {
+   "uniform": true,
+   "reach": true,
+   "ringClip": []
+  },
+  "ring": {
+   "focused": "dock-layer dock-layer--summary is-active",
+   "fv": true,
+   "outline": "auto 1px 0px",
+   "boxShadow": "none",
+   "clips": []
+  }
+ },
+ {
+  "tag": "scene=dock&kinds=menu,sep,icon,icon&collapse=closed summary focus+hover",
+  "cls": "glass-dock horizontal shape-pill expanded fit-content",
+  "morphing": true,
+  "scale": "1",
+  "plate": {
+   "w": 230,
+   "h": 56,
+   "lw": 230,
+   "lh": 56
+  },
+  "radii": [
+   "28px",
+   "28px",
+   "28px",
+   "28px"
+  ],
+  "cross": "56px",
+  "run": {
+   "sw": 220,
+   "cw": 220,
+   "sh": 54,
+   "ch": 54,
+   "sl": 0,
+   "active": true
+  },
+  "seats": [
+   {
+    "id": "S1",
+    "w": 88.8,
+    "k": 0.998,
+    "focus": false,
+    "hover": false,
+    "ringW": 0
+   },
+   {
+    "id": "S3",
+    "w": 40,
+    "k": 1,
+    "focus": false,
+    "hover": false,
+    "ringW": 0
+   },
+   {
+    "id": "S4",
+    "w": 40,
+    "k": 1,
+    "focus": false,
+    "hover": false,
+    "ringW": 0
+   },
+   {
+    "id": "summary",
+    "w": 24,
+    "k": 1,
+    "focus": false,
+    "hover": false,
+    "ringW": 0
+   }
+  ],
+  "v": {
+   "uniform": true,
+   "reach": false,
+   "ringClip": []
+  }
+ },
+ {
+  "tag": "scene=dock&kinds=menu,sep,icon,icon&collapse=closed&summary=tab summary focus",
+  "cls": "glass-dock horizontal shape-pill expanded fit-content",
+  "morphing": false,
+  "scale": "none",
+  "plate": {
+   "w": 229.8,
+   "h": 56,
+   "lw": 230,
+   "lh": 56
+  },
+  "radii": [
+   "28px",
+   "28px",
+   "28px",
+   "28px"
+  ],
+  "cross": "56px",
+  "run": {
+   "sw": 220,
+   "cw": 220,
+   "sh": 54,
+   "ch": 54,
+   "sl": 0,
+   "active": true
+  },
+  "seats": [
+   {
+    "id": "S1",
+    "w": 88.8,
+    "k": 0.998,
+    "focus": true,
+    "hover": false,
+    "ringW": 4,
+    "clipped": false,
+    "clips": [
+     {
+      "cls": "dock-layer dock-layer--full dock-run is-active",
+      "ox": "auto",
+      "oy": "hidden",
+      "l": -3.01,
+      "t": -7.01,
+      "r": -120.21,
+      "b": -7.01
+     }
+    ]
+   },
+   {
+    "id": "S3",
+    "w": 40,
+    "k": 1,
+    "focus": false,
+    "hover": false,
+    "ringW": 0
+   },
+   {
+    "id": "S4",
+    "w": 40,
+    "k": 1,
+    "focus": false,
+    "hover": false,
+    "ringW": 0
+   },
+   {
+    "id": "summary",
+    "w": 87.19,
+    "k": 1.002,
+    "focus": false,
+    "hover": false,
+    "ringW": 0
+   }
+  ],
+  "v": {
+   "uniform": true,
+   "reach": false,
+   "ringClip": []
+  },
+  "ring": {
+   "focused": "menu__trigger dock-trigger dock-dropdown-trigger",
+   "fv": true,
+   "outline": "solid 2px 2px",
+   "boxShadow": "none",
+   "clips": [
+    {
+     "cls": "dock-layer dock-layer--full dock-run is-active",
+     "ox": "auto",
+     "oy": "hidden",
+     "clip": "none",
+     "l": -3,
+     "t": -7
+    }
+   ]
+  }
+ },
+ {
+  "tag": "scene=dock&kinds=menu,sep,icon,icon&collapse=closed&summary=tab summary focus+hover",
+  "cls": "glass-dock horizontal shape-pill expanded fit-content",
+  "morphing": false,
+  "scale": "none",
+  "plate": {
+   "w": 229.8,
+   "h": 56,
+   "lw": 230,
+   "lh": 56
+  },
+  "radii": [
+   "28px",
+   "28px",
+   "28px",
+   "28px"
+  ],
+  "cross": "56px",
+  "run": {
+   "sw": 220,
+   "cw": 220,
+   "sh": 54,
+   "ch": 54,
+   "sl": 0,
+   "active": true
+  },
+  "seats": [
+   {
+    "id": "S1",
+    "w": 88.8,
+    "k": 0.998,
+    "focus": true,
+    "hover": true,
+    "ringW": 4,
+    "clipped": false,
+    "clips": [
+     {
+      "cls": "dock-layer dock-layer--full dock-run is-active",
+      "ox": "auto",
+      "oy": "hidden",
+      "l": -3.01,
+      "t": -7.01,
+      "r": -120.21,
+      "b": -7.01
+     }
+    ]
+   },
+   {
+    "id": "S3",
+    "w": 40,
+    "k": 1,
+    "focus": false,
+    "hover": false,
+    "ringW": 0
+   },
+   {
+    "id": "S4",
+    "w": 40,
+    "k": 1,
+    "focus": false,
+    "hover": false,
+    "ringW": 0
+   },
+   {
+    "id": "summary",
+    "w": 87.19,
+    "k": 1.002,
+    "focus": false,
+    "hover": false,
+    "ringW": 0
+   }
+  ],
+  "v": {
+   "uniform": true,
+   "reach": false,
+   "ringClip": []
+  }
+ },
+ {
+  "tag": "layers actions focus first",
+  "cls": "glass-dock horizontal shape-pill expanded pinned fit-content always-expanded",
+  "morphing": false,
+  "scale": "none",
+  "plate": {
+   "w": 203.19,
+   "h": 56,
+   "lw": 203,
+   "lh": 56
+  },
+  "radii": [
+   "28px",
+   "28px",
+   "28px",
+   "28px"
+  ],
+  "cross": "56px",
+  "run": {
+   "sw": 197,
+   "cw": 197,
+   "sh": 54,
+   "ch": 54,
+   "sl": 0,
+   "active": true
+  },
+  "seats": [
+   {
+    "id": "L1",
+    "w": 87.19,
+    "k": 1.002,
+    "focus": true,
+    "hover": false,
+    "ringW": 4,
+    "clipped": false,
+    "clips": [
+     {
+      "cls": "dock-layer dock-layer--full dock-run is-active",
+      "ox": "auto",
+      "oy": "hidden",
+      "l": -4.99,
+      "t": -3.99,
+      "r": -96.8,
+      "b": -3.99
+     }
+    ]
+   },
+   {
+    "id": "L2",
+    "w": 40,
+    "k": 1,
+    "focus": false,
+    "hover": false,
+    "ringW": 0
+   },
+   {
+    "id": "L3",
+    "w": 40,
+    "k": 1,
+    "focus": false,
+    "hover": false,
+    "ringW": 0
+   },
+   {
+    "id": "I1",
+    "w": 40,
+    "k": 1,
+    "focus": false,
+    "hover": false,
+    "ringW": 0
+   },
+   {
+    "id": "I2",
+    "w": 107.19,
+    "k": 1.002,
+    "focus": false,
+    "hover": false,
+    "ringW": 0
+   },
+   {
+    "id": "summary",
+    "w": 24,
+    "k": 1,
+    "focus": false,
+    "hover": false,
+    "ringW": 0
+   }
+  ],
+  "v": {
+   "uniform": true,
+   "reach": false,
+   "ringClip": []
+  },
+  "active": "L1"
+ },
+ {
+  "tag": "layers actions focus+hover first",
+  "cls": "glass-dock horizontal shape-pill expanded pinned fit-content always-expanded",
+  "morphing": false,
+  "scale": "none",
+  "plate": {
+   "w": 203.19,
+   "h": 56,
+   "lw": 203,
+   "lh": 56
+  },
+  "radii": [
+   "28px",
+   "28px",
+   "28px",
+   "28px"
+  ],
+  "cross": "56px",
+  "run": {
+   "sw": 197,
+   "cw": 197,
+   "sh": 54,
+   "ch": 54,
+   "sl": 0,
+   "active": true
+  },
+  "seats": [
+   {
+    "id": "L1",
+    "w": 95.91,
+    "k": 1.102,
+    "focus": true,
+    "hover": true,
+    "ringW": 4,
+    "clipped": false,
+    "clips": [
+     {
+      "cls": "dock-layer dock-layer--full dock-run is-active",
+      "ox": "auto",
+      "oy": "hidden",
+      "l": -0.23,
+      "t": -1.69,
+      "r": -92.04,
+      "b": -1.69
+     }
+    ]
+   },
+   {
+    "id": "L2",
+    "w": 40,
+    "k": 1,
+    "focus": false,
+    "hover": false,
+    "ringW": 0
+   },
+   {
+    "id": "L3",
+    "w": 40,
+    "k": 1,
+    "focus": false,
+    "hover": false,
+    "ringW": 0
+   },
+   {
+    "id": "I1",
+    "w": 40,
+    "k": 1,
+    "focus": false,
+    "hover": false,
+    "ringW": 0
+   },
+   {
+    "id": "I2",
+    "w": 107.19,
+    "k": 1.002,
+    "focus": false,
+    "hover": false,
+    "ringW": 0
+   },
+   {
+    "id": "summary",
+    "w": 24,
+    "k": 1,
+    "focus": false,
+    "hover": false,
+    "ringW": 0
+   }
+  ],
+  "v": {
+   "uniform": true,
+   "reach": false,
+   "ringClip": []
+  }
+ },
+ {
+  "tag": "layers input focus first",
+  "cls": "glass-dock horizontal shape-pill expanded pinned fit-content always-expanded",
+  "morphing": false,
+  "scale": "none",
+  "plate": {
+   "w": 270,
+   "h": 56,
+   "lw": 270,
+   "lh": 56
+  },
+  "radii": [
+   "28px",
+   "28px",
+   "28px",
+   "28px"
+  ],
+  "cross": "56px",
+  "run": {
+   "sw": 264,
+   "cw": 264,
+   "sh": 54,
+   "ch": 54,
+   "sl": 0,
+   "active": true
+  },
+  "seats": [
+   {
+    "id": "L1",
+    "w": 87.19,
+    "k": 1.002,
+    "focus": false,
+    "hover": false,
+    "ringW": 0
+   },
+   {
+    "id": "L2",
+    "w": 40,
+    "k": 1,
+    "focus": false,
+    "hover": false,
+    "ringW": 0
+   },
+   {
+    "id": "L3",
+    "w": 40,
+    "k": 1,
+    "focus": false,
+    "hover": false,
+    "ringW": 0
+   },
+   {
+    "id": "I1",
+    "w": 40,
+    "k": 1,
+    "focus": true,
+    "hover": false,
+    "ringW": 4,
+    "clipped": false,
+    "clips": [
+     {
+      "cls": "dock-layer dock-layer--full dock-run is-active",
+      "ox": "auto",
+      "oy": "hidden",
+      "l": -5,
+      "t": -3,
+      "r": -211,
+      "b": -3
+     }
+    ]
+   },
+   {
+    "id": "I2",
+    "w": 174,
+    "k": 1,
+    "focus": false,
+    "hover": true,
+    "ringW": 0
+   },
+   {
+    "id": "summary",
+    "w": 24,
+    "k": 1,
+    "focus": false,
+    "hover": false,
+    "ringW": 0
+   }
+  ],
+  "v": {
+   "uniform": true,
+   "reach": false,
+   "ringClip": []
+  },
+  "active": "I1"
+ },
+ {
+  "tag": "layers input focus+hover first",
+  "cls": "glass-dock horizontal shape-pill expanded pinned fit-content always-expanded",
+  "morphing": false,
+  "scale": "none",
+  "plate": {
+   "w": 270,
+   "h": 56,
+   "lw": 270,
+   "lh": 56
+  },
+  "radii": [
+   "28px",
+   "28px",
+   "28px",
+   "28px"
+  ],
+  "cross": "56px",
+  "run": {
+   "sw": 264,
+   "cw": 264,
+   "sh": 54,
+   "ch": 54,
+   "sl": 0,
+   "active": true
+  },
+  "seats": [
+   {
+    "id": "L1",
+    "w": 87.19,
+    "k": 1.002,
+    "focus": false,
+    "hover": false,
+    "ringW": 0
+   },
+   {
+    "id": "L2",
+    "w": 40,
+    "k": 1,
+    "focus": false,
+    "hover": false,
+    "ringW": 0
+   },
+   {
+    "id": "L3",
+    "w": 40,
+    "k": 1,
+    "focus": false,
+    "hover": false,
+    "ringW": 0
+   },
+   {
+    "id": "I1",
+    "w": 44,
+    "k": 1.1,
+    "focus": true,
+    "hover": true,
+    "ringW": 4,
+    "clipped": false,
+    "clips": [
+     {
+      "cls": "dock-layer dock-layer--full dock-run is-active",
+      "ox": "auto",
+      "oy": "hidden",
+      "l": -2.6,
+      "t": -0.6,
+      "r": -208.6,
+      "b": -0.6
+     }
+    ]
+   },
+   {
+    "id": "I2",
+    "w": 174,
+    "k": 1,
+    "focus": false,
+    "hover": false,
+    "ringW": 0
+   },
+   {
+    "id": "summary",
+    "w": 24,
+    "k": 1,
+    "focus": false,
+    "hover": false,
+    "ringW": 0
+   }
+  ],
+  "v": {
+   "uniform": true,
+   "reach": false,
+   "ringClip": []
+  }
+ }
+]

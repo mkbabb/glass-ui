@@ -1,0 +1,49 @@
+
+Running 22 tests using 1 worker
+
+  ✓   1 [chromium-desk] › tests-visual/u-b7.spec.ts:36:5 › U/B7 › D-5 · a seat pressed mid-morph after an owner-opened expand is hit and activated (976ms)
+  ✓   2 [chromium-desk] › tests-visual/u-b7.spec.ts:68:5 › U/B7 › run · the wheel reaches every seat, returns to the top, and never scrolls the page (13.8s)
+  ✓   3 [chromium-desk] › tests-visual/u-b7.spec.ts:97:5 › U/B7 › run · the arrows walk every seat once, in order, each one in view (4.8s)
+  ✓   4 [chromium-desk] › tests-visual/u-b7.spec.ts:113:5 › U/B7 › run · every seat is clickable once reached (5.5s)
+  -   5 [chromium-desk] › tests-visual/u-b7.spec.ts:127:5 › U/B7 › run · a touch drag pans the run and not the page
+  ✓   6 [chromium-desk] › tests-visual/u-b7.spec.ts:160:5 › U/B7 › F6 · twelve scroll steps write nothing to the aurora ground (2.2s)
+  ✓   7 [chromium-desk] › tests-visual/u-b7.spec.ts:232:9 › anchor › anchor · an anchor="start" dock at its row's start (ltr) keeps that edge through expand and collapse (2.9s)
+  ✓   8 [chromium-desk] › tests-visual/u-b7.spec.ts:232:9 › anchor › anchor · an anchor="end" dock at its row's end (ltr) keeps that edge through expand and collapse (3.0s)
+  ✓   9 [chromium-desk] › tests-visual/u-b7.spec.ts:232:9 › anchor › anchor · an anchor="end" dock at its row's end (rtl) keeps that edge through expand and collapse (3.0s)
+  ✓  10 [chromium-desk] › tests-visual/u-b7.spec.ts:252:5 › anchor › anchor · the prop moves neither the dock nor its morph: start, end and center rest and open alike (8.7s)
+  ✓  11 [chromium-desk] › tests-visual/u-b7.spec.ts:279:5 › anchor › anchor · atlas's figure lane holds its end edge through expand and collapse (3.0s)
+  ✓  12 [chromium-coarse] › tests-visual/u-b7.spec.ts:36:5 › U/B7 › D-5 · a seat pressed mid-morph after an owner-opened expand is hit and activated (856ms)
+  ✓  13 [chromium-coarse] › tests-visual/u-b7.spec.ts:68:5 › U/B7 › run · the wheel reaches every seat, returns to the top, and never scrolls the page (13.7s)
+  ✓  14 [chromium-coarse] › tests-visual/u-b7.spec.ts:97:5 › U/B7 › run · the arrows walk every seat once, in order, each one in view (4.8s)
+  ✓  15 [chromium-coarse] › tests-visual/u-b7.spec.ts:113:5 › U/B7 › run · every seat is clickable once reached (5.5s)
+  ✘  16 [chromium-coarse] › tests-visual/u-b7.spec.ts:127:5 › U/B7 › run · a touch drag pans the run and not the page (8.5s)
+  ✓  17 [chromium-coarse] › tests-visual/u-b7.spec.ts:160:5 › U/B7 › F6 · twelve scroll steps write nothing to the aurora ground (2.2s)
+  ✓  18 [chromium-coarse] › tests-visual/u-b7.spec.ts:232:9 › anchor › anchor · an anchor="start" dock at its row's start (ltr) keeps that edge through expand and collapse (3.0s)
+  ✓  19 [chromium-coarse] › tests-visual/u-b7.spec.ts:232:9 › anchor › anchor · an anchor="end" dock at its row's end (ltr) keeps that edge through expand and collapse (3.0s)
+  ✓  20 [chromium-coarse] › tests-visual/u-b7.spec.ts:232:9 › anchor › anchor · an anchor="end" dock at its row's end (rtl) keeps that edge through expand and collapse (3.0s)
+  ✓  21 [chromium-coarse] › tests-visual/u-b7.spec.ts:252:5 › anchor › anchor · the prop moves neither the dock nor its morph: start, end and center rest and open alike (8.7s)
+  ✓  22 [chromium-coarse] › tests-visual/u-b7.spec.ts:279:5 › anchor › anchor · atlas's figure lane holds its end edge through expand and collapse (3.0s)
+
+
+  1) [chromium-coarse] › tests-visual/u-b7.spec.ts:127:5 › U/B7 › run · a touch drag pans the run and not the page 
+
+    Error: expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 662
+    Received:    272
+
+      152 |         }
+      153 |         const max = (await runState(page)).max;
+    > 154 |         expect(Math.max(...tops)).toBeGreaterThanOrEqual(max - 1);
+          |                                   ^
+      155 |         expect(tops.at(-1)).toBe(0);
+      156 |         expect(pageY).toBe(0);
+      157 |     });
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/u-b7.spec.ts:154:35
+
+    Error Context: tests-visual/test-results/u-b7-U-B7-run-·-a-touch-drag-pans-the-run-and-not-the-page-chromium-coarse/error-context.md
+
+  1 failed
+    [chromium-coarse] › tests-visual/u-b7.spec.ts:127:5 › U/B7 › run · a touch drag pans the run and not the page 
+  1 skipped
+  20 passed (1.8m)

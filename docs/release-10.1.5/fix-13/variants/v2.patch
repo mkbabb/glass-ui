@@ -1,0 +1,31 @@
+diff --git a/src/components/dock/styles/run.css b/src/components/dock/styles/run.css
+index 8d207181e..1242ea905 100644
+--- a/src/components/dock/styles/run.css
++++ b/src/components/dock/styles/run.css
+@@ -752,7 +752,7 @@
+         );
+     }
+ 
+-    .glass-dock :where(.dock-layers) > .dock-run.is-active {
++    .glass-dock :where(.dock-layers) > .dock-run:is(.is-active, .is-leaving) {
+         scroll-timeline: --dock-run inline;
+         --dock-run-corner-rest: max(0px, var(--dock-cap-rest) - var(--dock-run-inset));
+         --dock-run-corner-cut: max(0px, var(--dock-cap-cut) - var(--dock-run-inset));
+@@ -766,7 +766,7 @@
+         animation-direction: normal, reverse;
+     }
+ 
+-    .glass-dock.vertical :where(.dock-layers) > .dock-run.is-active {
++    .glass-dock.vertical :where(.dock-layers) > .dock-run:is(.is-active, .is-leaving) {
+         scroll-timeline: --dock-run block;
+         animation-name: gl-dock-clip-block-start, gl-dock-clip-block-end;
+     }
+@@ -826,7 +826,7 @@
+        to the timeline afresh. A collapsed dock's run is not the visible run, so it
+        hides nothing either, and its plate is the circle. */
+     .glass-dock:is([data-run-fits], .collapsed) .dock-plate,
+-    .glass-dock:is([data-run-fits], .collapsed) :where(.dock-layers) > .dock-run {
++    .glass-dock[data-run-fits] :where(.dock-layers) > .dock-run {
+         animation: none;
+     }
+ 

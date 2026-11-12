@@ -1,0 +1,19 @@
+probe-chromium exit=0  10 passed (15.8m) 
+v1014-r6-chromium rc=0  6 passed (5.7m)  
+battery-chromium rc=0  65 passed (22.5m)  
+probe-webkit rc=1  1 failed  74 passed (36.1m)  
+chain stopped while waiting for the webkit lock (v1014-r6-webkit never started)
+g6 release-10-1-5-chromium exit=0  37 passed (1.8m) 
+g6 release-10-1-4-chromium exit=0  23 passed (16.4s) 
+g6 release-10-1-3-chromium exit=0  60 passed (2.2m) 
+g6-chromium rc=0 
+g7 rc=0 
+extra-chromium rc=0  2 passed (9.9s) 
+v1014-extra-chromium rc=0  4 passed (1.1m) 
+wk-extra rc=0  3 passed (4.9m) 
+v1014-r6-webkit rc=0  10 passed (7.0m) 
+g6 release-10-1-5-webkit exit=0  37 passed (2.0m) 
+g6 release-10-1-4-webkit exit=0  8 skipped  15 passed (20.3s) 
+g6 release-10-1-3-webkit exit=0  2 skipped  58 passed (2.3m) 
+g6-webkit rc=0 
+chain2 done

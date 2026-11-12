@@ -1,0 +1,13 @@
+diff --git a/src/components/dock/composables/dockMorphMeasure.ts b/src/components/dock/composables/dockMorphMeasure.ts
+index 9490720dc..ec4225bc8 100644
+--- a/src/components/dock/composables/dockMorphMeasure.ts
++++ b/src/components/dock/composables/dockMorphMeasure.ts
+@@ -257,7 +257,7 @@ export function useDockExpandedSize(
+                 ? expandedPx - expandedChrome - runEdge
+                 : undefined,
+         );
+-        if (!expanded) {
++        if (!expanded && collapsedPx === null) {
+             collapsedPx = keepScroll(full, () =>
+                 restSize(root, summary, full, a, collapsedChrome),
+             );

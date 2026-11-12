@@ -272,12 +272,14 @@
         flex-shrink: 0;
     }
 
-    :where(.glass-dock, .dock-layer-group) .dock-layer-switcher .dock-layer-tab:hover {
-        background: var(
-            --dock-layer-switcher-hover,
-            color-mix(in srgb, var(--accent) 30%, transparent)
-        );
-        color: var(--dock-fg-on-aurora, var(--foreground));
+    @media (hover: hover) {
+        :where(.glass-dock, .dock-layer-group) .dock-layer-switcher .dock-layer-tab:hover {
+            background: var(
+                --dock-layer-switcher-hover,
+                color-mix(in srgb, var(--accent) 30%, transparent)
+            );
+            color: var(--dock-fg-on-aurora, var(--foreground));
+        }
     }
 
     /* KEEP the active glyph tint on the selected tab (reka emits

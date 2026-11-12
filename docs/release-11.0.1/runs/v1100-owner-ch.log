@@ -1,0 +1,495 @@
+[WebServer] (!) Failed to run dependency scan. Skipping dependency pre-bundling. Error:   Failed to scan for dependencies from entries:
+[WebServer]   /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/index.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/_aur-vangogh-harness.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/fixtures/dock-entering-child-lag.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/b7-shape/harness.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-10-1-1/harness.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-10-1-2/harness.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-10-1-3/harness.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-10-1-4/harness.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-10-1-5/critic-1.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-10-1-5/critic-10-v1014.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-10-1-5/critic-10.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-10-1-5/critic-11-v1014.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-10-1-5/critic-11.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-10-1-5/critic-12-v1014.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-10-1-5/critic-12.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-10-1-5/critic-2-v1014.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-10-1-5/critic-2.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-10-1-5/critic-4-v1014.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-10-1-5/critic-4.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-10-1-5/critic-7-v1014.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-10-1-5/critic-7.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-10-1-5/harness.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1/harness.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/u-b7/harness.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/docs/release-11.0.1/daraksha-repro/dock-cutcap.html
+[WebServer] /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/docs/release-11.0.1/daraksha-repro/dock-press-scroll.html
+[WebServer] 
+[WebServer]   Build failed with 46 errors:
+[WebServer] 
+[WebServer] [UNRESOLVED_IMPORT] Could not resolve './v1014/src/components/dock/GlassDock.vue' in tests-visual/release-10-1-5/critic-7-v1014.ts
+[WebServer]    ╭─[ tests-visual/release-10-1-5/critic-7-v1014.ts:9:23 ]
+[WebServer]    │
+[WebServer]  9 │ import GlassDock from "./v1014/src/components/dock/GlassDock.vue";
+[WebServer]    │                       ─────────────────────┬─────────────────────  
+[WebServer]    │                                            ╰─────────────────────── Module not found.
+[WebServer]    │ 
+[WebServer]    │ Help: 'tests-visual/release-10-1-5/critic-7-v1014.ts' is imported by the following path:
+[WebServer]    │         - tests-visual/release-10-1-5/critic-7-v1014.ts
+[WebServer]    │         - tests-visual/release-10-1-5/critic-7-v1014.html
+[WebServer] ───╯
+[WebServer] 
+[WebServer] [UNRESOLVED_IMPORT] Could not resolve './v1014/src/components/dock/DockControl.vue' in tests-visual/release-10-1-5/critic-7-v1014.ts
+[WebServer]     ╭─[ tests-visual/release-10-1-5/critic-7-v1014.ts:10:25 ]
+[WebServer]     │
+[WebServer]  10 │ import DockControl from "./v1014/src/components/dock/DockControl.vue";
+[WebServer]     │                         ──────────────────────┬──────────────────────  
+[WebServer]     │                                               ╰──────────────────────── Module not found.
+[WebServer]     │ 
+[WebServer]     │ Help: 'tests-visual/release-10-1-5/critic-7-v1014.ts' is imported by the following path:
+[WebServer]     │         - tests-visual/release-10-1-5/critic-7-v1014.ts
+[WebServer]     │         - tests-visual/release-10-1-5/critic-7-v1014.html
+[WebServer] ────╯
+[WebServer] 
+[WebServer] [UNRESOLVED_IMPORT] Could not resolve './v1014/src/components/dock/DockSeparator.vue' in tests-visual/release-10-1-5/critic-7-v1014.ts
+[WebServer]     ╭─[ tests-visual/release-10-1-5/critic-7-v1014.ts:11:27 ]
+[WebServer]     │
+[WebServer]  11 │ import DockSeparator from "./v1014/src/components/dock/DockSeparator.vue";
+[WebServer]     │                           ───────────────────────┬───────────────────────  
+[WebServer]     │                                                  ╰───────────────────────── Module not found.
+[WebServer]     │ 
+[WebServer]     │ Help: 'tests-visual/release-10-1-5/critic-7-v1014.ts' is imported by the following path:
+[WebServer]     │         - tests-visual/release-10-1-5/critic-7-v1014.ts
+[WebServer]     │         - tests-visual/release-10-1-5/critic-7-v1014.html
+[WebServer] ────╯
+[WebServer] 
+[WebServer] [UNRESOLVED_IMPORT] Could not resolve './v1014/src/components/dock/DockLayer.vue' in tests-visual/release-10-1-5/critic-7-v1014.ts
+[WebServer]     ╭─[ tests-visual/release-10-1-5/critic-7-v1014.ts:12:23 ]
+[WebServer]     │
+[WebServer]  12 │ import DockLayer from "./v1014/src/components/dock/DockLayer.vue";
+[WebServer]     │                       ─────────────────────┬─────────────────────  
+[WebServer]     │                                            ╰─────────────────────── Module not found.
+[WebServer]     │ 
+[WebServer]     │ Help: 'tests-visual/release-10-1-5/critic-7-v1014.ts' is imported by the following path:
+[WebServer]     │         - tests-visual/release-10-1-5/critic-7-v1014.ts
+[WebServer]     │         - tests-visual/release-10-1-5/critic-7-v1014.html
+[WebServer] ────╯
+[WebServer] 
+[WebServer] [UNRESOLVED_IMPORT] Could not resolve './v1014/src/components/dock/DockLayerGroup.vue' in tests-visual/release-10-1-5/critic-7-v1014.ts
+[WebServer]     ╭─[ tests-visual/release-10-1-5/critic-7-v1014.ts:13:28 ]
+[WebServer]     │
+[WebServer]  13 │ import DockLayerGroup from "./v1014/src/components/dock/DockLayerGroup.vue";
+[WebServer]     │                            ────────────────────────┬───────────────────────  
+[WebServer]     │                                                    ╰───────────────────────── Module not found.
+[WebServer]     │ 
+[WebServer]     │ Help: 'tests-visual/release-10-1-5/critic-7-v1014.ts' is imported by the following path:
+[WebServer]     │         - tests-visual/release-10-1-5/critic-7-v1014.ts
+[WebServer]     │         - tests-visual/release-10-1-5/critic-7-v1014.html
+[WebServer] ────╯
+[WebServer] 
+[WebServer] ...
+[WebServer]     at aggregateBindingErrorsIntoJsError (file:///Users/mkbabb/Programming/glass-ui/node_modules/rolldown/dist/shared/error-BHRSI0R7.mjs:48:18)
+[WebServer]     at unwrapBindingResult (file:///Users/mkbabb/Programming/glass-ui/node_modules/rolldown/dist/shared/error-BHRSI0R7.mjs:18:128)
+[WebServer]     at scan (file:///Users/mkbabb/Programming/glass-ui/node_modules/rolldown/dist/experimental-index.mjs:187:3)
+[WebServer]     at async Object.build (file:///Users/mkbabb/Programming/glass-ui/node_modules/vite/dist/node/chunks/node.js:30762:3)
+[WebServer]     at async scan (file:///Users/mkbabb/Programming/glass-ui/node_modules/vite/dist/node/chunks/node.js:30701:4)
+[WebServer]     at async file:///Users/mkbabb/Programming/glass-ui/node_modules/vite/dist/node/chunks/node.js:33703:15
+
+Running 9 tests using 1 worker
+
+o1 focus hover {"radii":["50%","50%","50%","50%"],"w":80,"h":35}
+  ✘  1 [chromium-headless-new] › tests-visual/release-11-0-1.spec.ts:70:5 › o1 the wide label seat › o1 the hover plate of a compact 'Focus' label seat is a capsule, never an ellipse (1.3s)
+o1 name rest {"radii":["50%","50%","50%","50%"],"w":91,"h":35} hover {"radii":["50%","50%","50%","50%"],"w":91,"h":35}
+  ✘  2 [chromium-headless-new] › tests-visual/release-11-0-1.spec.ts:82:5 › o1 the wide label seat › o1 the active 'Name ›' seat's plate, at rest and under hover, is a capsule (1.1s)
+o2 open house tokens plate {"radii":["16px","16px","16px","16px"],"w":253,"h":56} root {"radii":["16px","16px","16px","16px"],"w":253,"h":56}
+  ✘  3 [chromium-headless-new] › tests-visual/release-11-0-1.spec.ts:102:9 › o2 the dock's end, house tokens › o2 house tokens: open at rest, the plate and the box are round (694ms)
+o2 collapsed house tokens plate {"radii":["16px","4px","4px","16px"],"w":102,"h":56} root {"radii":["16px","16px","16px","16px"],"w":102,"h":56}
+  ✘  4 [chromium-headless-new] › tests-visual/release-11-0-1.spec.ts:112:9 › o2 the dock's end, house tokens › o2 house tokens: collapsed with a persistent seat beside the summary, the plate and the box are round (713ms)
+o2 narrow house tokens plate {"radii":["16px","4px","4px","16px"],"w":150,"h":56} root {"radii":["16px","16px","16px","16px"],"w":150,"h":56} run {"scroll":143}
+  ✘  5 [chromium-headless-new] › tests-visual/release-11-0-1.spec.ts:123:9 › o2 the dock's end, house tokens › o2 house tokens: open on the narrow face beside a wider one, with a #persistent-end seat, the plate is round (681ms)
+o2 open radius-dock 1.875rem plate {"radii":["30px","30px","30px","30px"],"w":253,"h":56} root {"radii":["30px","30px","30px","30px"],"w":253,"h":56}
+  ✘  6 [chromium-headless-new] › tests-visual/release-11-0-1.spec.ts:102:9 › o2 the dock's end, radius-dock 1.875rem › o2 radius-dock 1.875rem: open at rest, the plate and the box are round (634ms)
+o2 collapsed radius-dock 1.875rem plate {"radii":["30px","4px","4px","30px"],"w":102,"h":56} root {"radii":["30px","30px","30px","30px"],"w":102,"h":56}
+  ✘  7 [chromium-headless-new] › tests-visual/release-11-0-1.spec.ts:112:9 › o2 the dock's end, radius-dock 1.875rem › o2 radius-dock 1.875rem: collapsed with a persistent seat beside the summary, the plate and the box are round (656ms)
+o2 narrow radius-dock 1.875rem plate {"radii":["30px","4px","4px","30px"],"w":150,"h":56} root {"radii":["30px","30px","30px","30px"],"w":150,"h":56} run {"scroll":143}
+  ✘  8 [chromium-headless-new] › tests-visual/release-11-0-1.spec.ts:123:9 › o2 the dock's end, radius-dock 1.875rem › o2 radius-dock 1.875rem: open on the narrow face beside a wider one, with a #persistent-end seat, the plate is round (644ms)
+o3 expand {"frames":182,"morphing":71,"bad":["0ms 16px 5.75px 5.75px 16px half=28","13ms 16px 5.75px 5.75px 16px half=28","23ms 16px 5.75px 5.75px 16px half=28","49ms 16px 16px 16px 16px half=28","52ms 16px 16px 16px 16px half=28","58ms 16px 16px 16px 16px half=28"]}
+o3 collapse {"frames":188,"morphing":74,"bad":["9ms 16px 16px 16px 16px half=28","15ms 16px 16px 16px 16px half=28","21ms 16px 16px 16px 16px half=28","30ms 16px 16px 16px 16px half=28","38ms 16px 16px 16px 16px half=28","44ms 16px 16px 16px 16px half=28"]}
+  ✘  9 [chromium-headless-new] › tests-visual/release-11-0-1.spec.ts:139:1 › o3 every frame of the expand and of the collapse paints a round end (3.5s)
+
+
+  1) [chromium-headless-new] › tests-visual/release-11-0-1.spec.ts:70:5 › o1 the wide label seat › o1 the hover plate of a compact 'Focus' label seat is a capsule, never an ellipse 
+
+    Error: {"radii":["50%","50%","50%","50%"],"w":80,"h":35}
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      77 |         console.log(`o1 focus hover ${JSON.stringify(read)}`);
+      78 |         expect(read.w).toBeGreaterThan(read.h + 4);
+    > 79 |         expect(stadium(read), JSON.stringify(read)).toBe(true);
+         |                                                     ^
+      80 |     });
+      81 |
+      82 |     test("o1 the active 'Name ›' seat's plate, at rest and under hover, is a capsule", async ({ page }, info) => {
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1.spec.ts:79:53
+
+    Error Context: tests-visual/test-results/release-11-0-1-o1-the-wide-45049--a-capsule-never-an-ellipse-chromium-headless-new/error-context.md
+
+  2) [chromium-headless-new] › tests-visual/release-11-0-1.spec.ts:82:5 › o1 the wide label seat › o1 the active 'Name ›' seat's plate, at rest and under hover, is a capsule 
+
+    Error: {"radii":["50%","50%","50%","50%"],"w":91,"h":35}
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      91 |         console.log(`o1 name rest ${JSON.stringify(rest)} hover ${JSON.stringify(hover)}`);
+      92 |         expect(rest.w).toBeGreaterThan(rest.h + 4);
+    > 93 |         expect(stadium(rest), JSON.stringify(rest)).toBe(true);
+         |                                                     ^
+      94 |         expect(stadium(hover), JSON.stringify(hover)).toBe(true);
+      95 |     });
+      96 | });
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1.spec.ts:93:53
+
+    Error Context: tests-visual/test-results/release-11-0-1-o1-the-wide-93085-nd-under-hover-is-a-capsule-chromium-headless-new/error-context.md
+
+  3) [chromium-headless-new] › tests-visual/release-11-0-1.spec.ts:102:9 › o2 the dock's end, house tokens › o2 house tokens: open at rest, the plate and the box are round 
+
+    Error: {"radii":["16px","16px","16px","16px"],"w":253,"h":56}
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      106 |             await shoot(page, page.locator(ROOT), `o2-open-${radius ? "rd" : "house"}-${info.project.name}`);
+      107 |             console.log(`o2 open ${tag} plate ${JSON.stringify(plate)} root ${JSON.stringify(root)}`);
+    > 108 |             expect(round(plate), JSON.stringify(plate)).toBe(true);
+          |                                                         ^
+      109 |             expect(root.radii).toEqual(plate.radii);
+      110 |         });
+      111 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1.spec.ts:108:57
+
+    Error Context: tests-visual/test-results/release-11-0-1-o2-the-dock-5effe-plate-and-the-box-are-round-chromium-headless-new/error-context.md
+
+  4) [chromium-headless-new] › tests-visual/release-11-0-1.spec.ts:112:9 › o2 the dock's end, house tokens › o2 house tokens: collapsed with a persistent seat beside the summary, the plate and the box are round 
+
+    Error: {"radii":["16px","4px","4px","16px"],"w":102,"h":56}
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      117 |             await shoot(page, page.locator(ROOT), `o2-collapsed-${radius ? "rd" : "house"}-${info.project.name}`);
+      118 |             console.log(`o2 collapsed ${tag} plate ${JSON.stringify(plate)} root ${JSON.stringify(root)}`);
+    > 119 |             expect(round(plate), JSON.stringify(plate)).toBe(true);
+          |                                                         ^
+      120 |             expect(root.radii).toEqual(plate.radii);
+      121 |         });
+      122 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1.spec.ts:119:57
+
+    Error Context: tests-visual/test-results/release-11-0-1-o2-the-dock-b7623-plate-and-the-box-are-round-chromium-headless-new/error-context.md
+
+  5) [chromium-headless-new] › tests-visual/release-11-0-1.spec.ts:123:9 › o2 the dock's end, house tokens › o2 house tokens: open on the narrow face beside a wider one, with a #persistent-end seat, the plate is round 
+
+    Error: {"radii":["16px","4px","4px","16px"],"w":150,"h":56}
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      131 |             await shoot(page, page.locator(ROOT), `o2-narrow-${radius ? "rd" : "house"}-${info.project.name}`);
+      132 |             console.log(`o2 narrow ${tag} plate ${JSON.stringify(plate)} root ${JSON.stringify(root)} run ${JSON.stringify(run)}`);
+    > 133 |             expect(round(plate), JSON.stringify(plate)).toBe(true);
+          |                                                         ^
+      134 |             expect(root.radii).toEqual(plate.radii);
+      135 |         });
+      136 |     });
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1.spec.ts:133:57
+
+    Error Context: tests-visual/test-results/release-11-0-1-o2-the-dock-b862f-end-seat-the-plate-is-round-chromium-headless-new/error-context.md
+
+  6) [chromium-headless-new] › tests-visual/release-11-0-1.spec.ts:102:9 › o2 the dock's end, radius-dock 1.875rem › o2 radius-dock 1.875rem: open at rest, the plate and the box are round 
+
+    Error: {"radii":["30px","30px","30px","30px"],"w":253,"h":56}
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      106 |             await shoot(page, page.locator(ROOT), `o2-open-${radius ? "rd" : "house"}-${info.project.name}`);
+      107 |             console.log(`o2 open ${tag} plate ${JSON.stringify(plate)} root ${JSON.stringify(root)}`);
+    > 108 |             expect(round(plate), JSON.stringify(plate)).toBe(true);
+          |                                                         ^
+      109 |             expect(root.radii).toEqual(plate.radii);
+      110 |         });
+      111 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1.spec.ts:108:57
+
+    Error Context: tests-visual/test-results/release-11-0-1-o2-the-dock-ce341-plate-and-the-box-are-round-chromium-headless-new/error-context.md
+
+  7) [chromium-headless-new] › tests-visual/release-11-0-1.spec.ts:112:9 › o2 the dock's end, radius-dock 1.875rem › o2 radius-dock 1.875rem: collapsed with a persistent seat beside the summary, the plate and the box are round 
+
+    Error: {"radii":["30px","4px","4px","30px"],"w":102,"h":56}
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      117 |             await shoot(page, page.locator(ROOT), `o2-collapsed-${radius ? "rd" : "house"}-${info.project.name}`);
+      118 |             console.log(`o2 collapsed ${tag} plate ${JSON.stringify(plate)} root ${JSON.stringify(root)}`);
+    > 119 |             expect(round(plate), JSON.stringify(plate)).toBe(true);
+          |                                                         ^
+      120 |             expect(root.radii).toEqual(plate.radii);
+      121 |         });
+      122 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1.spec.ts:119:57
+
+    Error Context: tests-visual/test-results/release-11-0-1-o2-the-dock-fa514-plate-and-the-box-are-round-chromium-headless-new/error-context.md
+
+  8) [chromium-headless-new] › tests-visual/release-11-0-1.spec.ts:123:9 › o2 the dock's end, radius-dock 1.875rem › o2 radius-dock 1.875rem: open on the narrow face beside a wider one, with a #persistent-end seat, the plate is round 
+
+    Error: {"radii":["30px","4px","4px","30px"],"w":150,"h":56}
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      131 |             await shoot(page, page.locator(ROOT), `o2-narrow-${radius ? "rd" : "house"}-${info.project.name}`);
+      132 |             console.log(`o2 narrow ${tag} plate ${JSON.stringify(plate)} root ${JSON.stringify(root)} run ${JSON.stringify(run)}`);
+    > 133 |             expect(round(plate), JSON.stringify(plate)).toBe(true);
+          |                                                         ^
+      134 |             expect(root.radii).toEqual(plate.radii);
+      135 |         });
+      136 |     });
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1.spec.ts:133:57
+
+    Error Context: tests-visual/test-results/release-11-0-1-o2-the-dock-b74d4-end-seat-the-plate-is-round-chromium-headless-new/error-context.md
+
+  9) [chromium-headless-new] › tests-visual/release-11-0-1.spec.ts:139:1 › o3 every frame of the expand and of the collapse paints a round end 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  -   1
+    + Received  + 184
+
+    - Array []
+    + Array [
+    +   "0ms 16px 5.75px 5.75px 16px half=28",
+    +   "13ms 16px 5.75px 5.75px 16px half=28",
+    +   "23ms 16px 5.75px 5.75px 16px half=28",
+    +   "49ms 16px 16px 16px 16px half=28",
+    +   "52ms 16px 16px 16px 16px half=28",
+    +   "58ms 16px 16px 16px 16px half=28",
+    +   "61ms 16px 16px 16px 16px half=28",
+    +   "71ms 16px 16px 16px 16px half=28",
+    +   "77ms 16px 16px 16px 16px half=28",
+    +   "86ms 16px 16px 16px 16px half=28",
+    +   "89ms 16px 16px 16px 16px half=28",
+    +   "99ms 16px 16px 16px 16px half=28",
+    +   "107ms 16px 16px 16px 16px half=28",
+    +   "116ms 16px 16px 16px 16px half=28",
+    +   "121ms 16px 16px 16px 16px half=28",
+    +   "128ms 16px 16px 16px 16px half=28",
+    +   "135ms 16px 16px 16px 16px half=28",
+    +   "144ms 16px 16px 16px 16px half=28",
+    +   "151ms 16px 16px 16px 16px half=28",
+    +   "160ms 16px 16px 16px 16px half=28",
+    +   "169ms 16px 16px 16px 16px half=28",
+    +   "177ms 16px 16px 16px 16px half=28",
+    +   "187ms 16px 16px 16px 16px half=28",
+    +   "192ms 16px 16px 16px 16px half=28",
+    +   "199ms 16px 16px 16px 16px half=28",
+    +   "208ms 16px 16px 16px 16px half=28",
+    +   "214ms 16px 16px 16px 16px half=28",
+    +   "222ms 16px 16px 16px 16px half=28",
+    +   "231ms 16px 16px 16px 16px half=28",
+    +   "241ms 16px 16px 16px 16px half=28",
+    +   "248ms 16px 16px 16px 16px half=28",
+    +   "254ms 16px 16px 16px 16px half=28",
+    +   "262ms 16px 16px 16px 16px half=28",
+    +   "269ms 16px 16px 16px 16px half=28",
+    +   "278ms 16px 16px 16px 16px half=28",
+    +   "286ms 16px 16px 16px 16px half=28",
+    +   "291ms 16px 16px 16px 16px half=28",
+    +   "299ms 16px 16px 16px 16px half=28",
+    +   "307ms 16px 16px 16px 16px half=28",
+    +   "314ms 16px 16px 16px 16px half=28",
+    +   "320ms 16px 16px 16px 16px half=28",
+    +   "327ms 16px 16px 16px 16px half=28",
+    +   "336ms 16px 16px 16px 16px half=28",
+    +   "343ms 16px 16px 16px 16px half=28",
+    +   "352ms 16px 16px 16px 16px half=28",
+    +   "358ms 16px 16px 16px 16px half=28",
+    +   "365ms 16px 16px 16px 16px half=28",
+    +   "373ms 16px 16px 16px 16px half=28",
+    +   "382ms 16px 16px 16px 16px half=28",
+    +   "387ms 16px 16px 16px 16px half=28",
+    +   "395ms 16px 16px 16px 16px half=28",
+    +   "401ms 16px 16px 16px 16px half=28",
+    +   "411ms 16px 16px 16px 16px half=28",
+    +   "418ms 16px 16px 16px 16px half=28",
+    +   "426ms 16px 16px 16px 16px half=28",
+    +   "436ms 16px 16px 16px 16px half=28",
+    +   "444ms 16px 16px 16px 16px half=28",
+    +   "452ms 16px 16px 16px 16px half=28",
+    +   "458ms 16px 16px 16px 16px half=28",
+    +   "464ms 16px 16px 16px 16px half=28",
+    +   "474ms 16px 16px 16px 16px half=28",
+    +   "482ms 16px 16px 16px 16px half=28",
+    +   "487ms 16px 16px 16px 16px half=28",
+    +   "495ms 16px 16px 16px 16px half=28",
+    +   "503ms 16px 16px 16px 16px half=28",
+    +   "510ms 16px 16px 16px 16px half=28",
+    +   "519ms 16px 16px 16px 16px half=28",
+    +   "525ms 16px 16px 16px 16px half=28",
+    +   "531ms 16px 16px 16px 16px half=28",
+    +   "539ms 16px 16px 16px 16px half=28",
+    +   "548ms 16px 16px 16px 16px half=28",
+    +   "554ms 16px 16px 16px 16px half=28",
+    +   "562ms 16px 16px 16px 16px half=28",
+    +   "569ms 16px 16px 16px 16px half=28",
+    +   "577ms 16px 16px 16px 16px half=28",
+    +   "586ms 16px 16px 16px 16px half=28",
+    +   "594ms 16px 16px 16px 16px half=28",
+    +   "601ms 16px 16px 16px 16px half=28",
+    +   "607ms 16px 16px 16px 16px half=28",
+    +   "617ms 16px 16px 16px 16px half=28",
+    +   "623ms 16px 16px 16px 16px half=28",
+    +   "629ms 16px 16px 16px 16px half=28",
+    +   "637ms 16px 16px 16px 16px half=28",
+    +   "644ms 16px 16px 16px 16px half=28",
+    +   "653ms 16px 16px 16px 16px half=28",
+    +   "661ms 16px 16px 16px 16px half=28",
+    +   "666ms 16px 16px 16px 16px half=28",
+    +   "673ms 16px 16px 16px 16px half=28",
+    +   "682ms 16px 16px 16px 16px half=28",
+    +   "690ms 16px 16px 16px 16px half=28",
+    +   "695ms 16px 16px 16px 16px half=28",
+    +   "702ms 16px 16px 16px 16px half=28",
+    +   "711ms 16px 16px 16px 16px half=28",
+    +   "719ms 16px 16px 16px 16px half=28",
+    +   "729ms 16px 16px 16px 16px half=28",
+    +   "734ms 16px 16px 16px 16px half=28",
+    +   "741ms 16px 16px 16px 16px half=28",
+    +   "747ms 16px 16px 16px 16px half=28",
+    +   "757ms 16px 16px 16px 16px half=28",
+    +   "762ms 16px 16px 16px 16px half=28",
+    +   "771ms 16px 16px 16px 16px half=28",
+    +   "778ms 16px 16px 16px 16px half=28",
+    +   "788ms 16px 16px 16px 16px half=28",
+    +   "794ms 16px 16px 16px 16px half=28",
+    +   "802ms 16px 16px 16px 16px half=28",
+    +   "811ms 16px 16px 16px 16px half=28",
+    +   "819ms 16px 16px 16px 16px half=28",
+    +   "827ms 16px 16px 16px 16px half=28",
+    +   "834ms 16px 16px 16px 16px half=28",
+    +   "840ms 16px 16px 16px 16px half=28",
+    +   "848ms 16px 16px 16px 16px half=28",
+    +   "856ms 16px 16px 16px 16px half=28",
+    +   "865ms 16px 16px 16px 16px half=28",
+    +   "872ms 16px 16px 16px 16px half=28",
+    +   "880ms 16px 16px 16px 16px half=28",
+    +   "890ms 16px 16px 16px 16px half=28",
+    +   "895ms 16px 16px 16px 16px half=28",
+    +   "903ms 16px 16px 16px 16px half=28",
+    +   "913ms 16px 16px 16px 16px half=28",
+    +   "918ms 16px 16px 16px 16px half=28",
+    +   "927ms 16px 16px 16px 16px half=28",
+    +   "933ms 16px 16px 16px 16px half=28",
+    +   "940ms 16px 16px 16px 16px half=28",
+    +   "949ms 16px 16px 16px 16px half=28",
+    +   "955ms 16px 16px 16px 16px half=28",
+    +   "964ms 16px 16px 16px 16px half=28",
+    +   "969ms 16px 16px 16px 16px half=28",
+    +   "980ms 16px 16px 16px 16px half=28",
+    +   "986ms 16px 16px 16px 16px half=28",
+    +   "995ms 16px 16px 16px 16px half=28",
+    +   "999ms 16px 16px 16px 16px half=28",
+    +   "1009ms 16px 16px 16px 16px half=28",
+    +   "1015ms 16px 16px 16px 16px half=28",
+    +   "1025ms 16px 16px 16px 16px half=28",
+    +   "1032ms 16px 16px 16px 16px half=28",
+    +   "1038ms 16px 16px 16px 16px half=28",
+    +   "1044ms 16px 16px 16px 16px half=28",
+    +   "1054ms 16px 16px 16px 16px half=28",
+    +   "1060ms 16px 16px 16px 16px half=28",
+    +   "1069ms 16px 16px 16px 16px half=28",
+    +   "1076ms 16px 16px 16px 16px half=28",
+    +   "1085ms 16px 16px 16px 16px half=28",
+    +   "1094ms 16px 16px 16px 16px half=28",
+    +   "1100ms 16px 16px 16px 16px half=28",
+    +   "1108ms 16px 16px 16px 16px half=28",
+    +   "1114ms 16px 16px 16px 16px half=28",
+    +   "1123ms 16px 16px 16px 16px half=28",
+    +   "1131ms 16px 16px 16px 16px half=28",
+    +   "1140ms 16px 16px 16px 16px half=28",
+    +   "1148ms 16px 16px 16px 16px half=28",
+    +   "1158ms 16px 16px 16px 16px half=28",
+    +   "1165ms 16px 16px 16px 16px half=28",
+    +   "1173ms 16px 16px 16px 16px half=28",
+    +   "1183ms 16px 16px 16px 16px half=28",
+    +   "1190ms 16px 16px 16px 16px half=28",
+    +   "1198ms 16px 16px 16px 16px half=28",
+    +   "1204ms 16px 16px 16px 16px half=28",
+    +   "1211ms 16px 16px 16px 16px half=28",
+    +   "1221ms 16px 16px 16px 16px half=28",
+    +   "1229ms 16px 16px 16px 16px half=28",
+    +   "1235ms 16px 16px 16px 16px half=28",
+    +   "1245ms 16px 16px 16px 16px half=28",
+    +   "1253ms 16px 16px 16px 16px half=28",
+    +   "1260ms 16px 16px 16px 16px half=28",
+    +   "1270ms 16px 16px 16px 16px half=28",
+    +   "1277ms 16px 16px 16px 16px half=28",
+    +   "1286ms 16px 16px 16px 16px half=28",
+    +   "1294ms 16px 16px 16px 16px half=28",
+    +   "1302ms 16px 16px 16px 16px half=28",
+    +   "1311ms 16px 16px 16px 16px half=28",
+    +   "1318ms 16px 16px 16px 16px half=28",
+    +   "1326ms 16px 16px 16px 16px half=28",
+    +   "1336ms 16px 16px 16px 16px half=28",
+    +   "1345ms 16px 16px 16px 16px half=28",
+    +   "1352ms 16px 16px 16px 16px half=28",
+    +   "1362ms 16px 16px 16px 16px half=28",
+    +   "1366ms 16px 16px 16px 16px half=28",
+    +   "1375ms 16px 16px 16px 16px half=28",
+    +   "1382ms 16px 16px 16px 16px half=28",
+    +   "1390ms 16px 16px 16px 16px half=28",
+    +   "1398ms 16px 16px 16px 16px half=28",
+    +   "1405ms 16px 16px 16px 16px half=28",
+    + ]
+
+      176 |     expect(expand.morphing, "the expand morphed").toBeGreaterThan(2);
+      177 |     expect(collapse.morphing, "the collapse morphed").toBeGreaterThan(2);
+    > 178 |     expect(expand.bad).toEqual([]);
+          |                        ^
+      179 |     expect(collapse.bad).toEqual([]);
+      180 | });
+      181 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1.spec.ts:178:24
+
+    Error Context: tests-visual/test-results/release-11-0-1-o3-every-fr-1c7bf-collapse-paints-a-round-end-chromium-headless-new/error-context.md
+
+  9 failed
+    [chromium-headless-new] › tests-visual/release-11-0-1.spec.ts:70:5 › o1 the wide label seat › o1 the hover plate of a compact 'Focus' label seat is a capsule, never an ellipse 
+    [chromium-headless-new] › tests-visual/release-11-0-1.spec.ts:82:5 › o1 the wide label seat › o1 the active 'Name ›' seat's plate, at rest and under hover, is a capsule 
+    [chromium-headless-new] › tests-visual/release-11-0-1.spec.ts:102:9 › o2 the dock's end, house tokens › o2 house tokens: open at rest, the plate and the box are round 
+    [chromium-headless-new] › tests-visual/release-11-0-1.spec.ts:112:9 › o2 the dock's end, house tokens › o2 house tokens: collapsed with a persistent seat beside the summary, the plate and the box are round 
+    [chromium-headless-new] › tests-visual/release-11-0-1.spec.ts:123:9 › o2 the dock's end, house tokens › o2 house tokens: open on the narrow face beside a wider one, with a #persistent-end seat, the plate is round 
+    [chromium-headless-new] › tests-visual/release-11-0-1.spec.ts:102:9 › o2 the dock's end, radius-dock 1.875rem › o2 radius-dock 1.875rem: open at rest, the plate and the box are round 
+    [chromium-headless-new] › tests-visual/release-11-0-1.spec.ts:112:9 › o2 the dock's end, radius-dock 1.875rem › o2 radius-dock 1.875rem: collapsed with a persistent seat beside the summary, the plate and the box are round 
+    [chromium-headless-new] › tests-visual/release-11-0-1.spec.ts:123:9 › o2 the dock's end, radius-dock 1.875rem › o2 radius-dock 1.875rem: open on the narrow face beside a wider one, with a #persistent-end seat, the plate is round 
+    [chromium-headless-new] › tests-visual/release-11-0-1.spec.ts:139:1 › o3 every frame of the expand and of the collapse paints a round end 

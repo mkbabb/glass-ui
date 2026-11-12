@@ -1,0 +1,703 @@
+[
+ {
+  "tag": "scene=dock&kinds=menu,sep,icon,icon&collapse=closed summary focus",
+  "cls": "glass-dock horizontal shape-pill collapsed fit-content",
+  "morphing": false,
+  "scale": "none",
+  "plate": {
+   "w": 60,
+   "h": 60,
+   "lw": 60,
+   "lh": 60
+  },
+  "radii": [
+   "50%",
+   "calc(0% + 16px)",
+   "calc(0% + 16px)",
+   "50%"
+  ],
+  "cross": "",
+  "run": {
+   "sw": 214,
+   "cw": 60,
+   "sh": 68,
+   "ch": 68,
+   "sl": 0,
+   "active": false
+  },
+  "seats": [
+   {
+    "id": "S1",
+    "w": 88.8,
+    "k": 0.998,
+    "focus": false,
+    "hover": false,
+    "ringW": 0
+   },
+   {
+    "id": "S3",
+    "w": 44,
+    "k": 1,
+    "focus": false,
+    "hover": false,
+    "ringW": 0
+   },
+   {
+    "id": "S4",
+    "w": 44,
+    "k": 1,
+    "focus": false,
+    "hover": false,
+    "ringW": 0
+   },
+   {
+    "id": "summary",
+    "w": 24,
+    "k": 1,
+    "focus": false,
+    "hover": false,
+    "ringW": 0
+   }
+  ],
+  "v": {
+   "uniform": false,
+   "reach": true,
+   "ringClip": []
+  },
+  "ring": {
+   "focused": "dock-layer dock-layer--summary is-active",
+   "fv": true,
+   "outline": "auto 1px 0px",
+   "boxShadow": "none",
+   "clips": []
+  }
+ },
+ {
+  "tag": "scene=dock&kinds=menu,sep,icon,icon&collapse=closed summary focus+hover",
+  "cls": "glass-dock horizontal shape-pill expanded fit-content",
+  "morphing": true,
+  "scale": "1",
+  "plate": {
+   "w": 238,
+   "h": 60,
+   "lw": 238,
+   "lh": 60
+  },
+  "radii": [
+   "9999px",
+   "9999px",
+   "9999px",
+   "9999px"
+  ],
+  "cross": "",
+  "run": {
+   "sw": 214,
+   "cw": 214,
+   "sh": 52,
+   "ch": 52,
+   "sl": 0,
+   "active": true
+  },
+  "seats": [
+   {
+    "id": "S1",
+    "w": 88.8,
+    "k": 0.998,
+    "focus": false,
+    "hover": false,
+    "ringW": 0
+   },
+   {
+    "id": "S3",
+    "w": 44,
+    "k": 1,
+    "focus": false,
+    "hover": false,
+    "ringW": 0
+   },
+   {
+    "id": "S4",
+    "w": 44,
+    "k": 1,
+    "focus": false,
+    "hover": false,
+    "ringW": 0
+   },
+   {
+    "id": "summary",
+    "w": 24,
+    "k": 1,
+    "focus": false,
+    "hover": false,
+    "ringW": 0
+   }
+  ],
+  "v": {
+   "uniform": false,
+   "reach": false,
+   "ringClip": []
+  }
+ },
+ {
+  "tag": "scene=dock&kinds=menu,sep,icon,icon&collapse=closed&summary=tab summary focus",
+  "cls": "glass-dock horizontal shape-pill expanded fit-content",
+  "morphing": false,
+  "scale": "none",
+  "plate": {
+   "w": 237.8,
+   "h": 60,
+   "lw": 238,
+   "lh": 60
+  },
+  "radii": [
+   "9999px",
+   "9999px",
+   "9999px",
+   "9999px"
+  ],
+  "cross": "",
+  "run": {
+   "sw": 214,
+   "cw": 214,
+   "sh": 52,
+   "ch": 52,
+   "sl": 0,
+   "active": true
+  },
+  "seats": [
+   {
+    "id": "S1",
+    "w": 88.8,
+    "k": 0.998,
+    "focus": true,
+    "hover": false,
+    "ringW": 4,
+    "clipped": true,
+    "clips": [
+     {
+      "cls": "dock-layer dock-layer--full dock-run is-active",
+      "ox": "auto",
+      "oy": "hidden",
+      "l": 3.99,
+      "t": -6.01,
+      "r": -121.21,
+      "b": -6.01
+     }
+    ]
+   },
+   {
+    "id": "S3",
+    "w": 44,
+    "k": 1,
+    "focus": false,
+    "hover": false,
+    "ringW": 0
+   },
+   {
+    "id": "S4",
+    "w": 44,
+    "k": 1,
+    "focus": false,
+    "hover": false,
+    "ringW": 0
+   },
+   {
+    "id": "summary",
+    "w": 87.19,
+    "k": 1.002,
+    "focus": false,
+    "hover": false,
+    "ringW": 0
+   }
+  ],
+  "v": {
+   "uniform": false,
+   "reach": false,
+   "ringClip": [
+    "S1"
+   ]
+  },
+  "ring": {
+   "focused": "menu__trigger dock-trigger dock-dropdown-trigger",
+   "fv": true,
+   "outline": "solid 2px 2px",
+   "boxShadow": "none",
+   "clips": [
+    {
+     "cls": "dock-layer dock-layer--full dock-run is-active",
+     "ox": "auto",
+     "oy": "hidden",
+     "clip": "none",
+     "l": 4,
+     "t": -6
+    }
+   ]
+  }
+ },
+ {
+  "tag": "scene=dock&kinds=menu,sep,icon,icon&collapse=closed&summary=tab summary focus+hover",
+  "cls": "glass-dock horizontal shape-pill expanded fit-content",
+  "morphing": false,
+  "scale": "none",
+  "plate": {
+   "w": 237.8,
+   "h": 60,
+   "lw": 238,
+   "lh": 60
+  },
+  "radii": [
+   "9999px",
+   "9999px",
+   "9999px",
+   "9999px"
+  ],
+  "cross": "",
+  "run": {
+   "sw": 214,
+   "cw": 214,
+   "sh": 52,
+   "ch": 52,
+   "sl": 0,
+   "active": true
+  },
+  "seats": [
+   {
+    "id": "S1",
+    "w": 88.8,
+    "k": 0.998,
+    "focus": true,
+    "hover": true,
+    "ringW": 4,
+    "clipped": true,
+    "clips": [
+     {
+      "cls": "dock-layer dock-layer--full dock-run is-active",
+      "ox": "auto",
+      "oy": "hidden",
+      "l": 3.99,
+      "t": -6.01,
+      "r": -121.21,
+      "b": -6.01
+     }
+    ]
+   },
+   {
+    "id": "S3",
+    "w": 44,
+    "k": 1,
+    "focus": false,
+    "hover": false,
+    "ringW": 0
+   },
+   {
+    "id": "S4",
+    "w": 44,
+    "k": 1,
+    "focus": false,
+    "hover": false,
+    "ringW": 0
+   },
+   {
+    "id": "summary",
+    "w": 87.19,
+    "k": 1.002,
+    "focus": false,
+    "hover": false,
+    "ringW": 0
+   }
+  ],
+  "v": {
+   "uniform": false,
+   "reach": false,
+   "ringClip": [
+    "S1"
+   ]
+  }
+ },
+ {
+  "tag": "layers actions focus first",
+  "cls": "glass-dock horizontal shape-pill expanded pinned fit-content always-expanded",
+  "morphing": false,
+  "scale": "none",
+  "plate": {
+   "w": 211.19,
+   "h": 208,
+   "lw": 211,
+   "lh": 208
+  },
+  "radii": [
+   "9999px",
+   "9999px",
+   "9999px",
+   "9999px"
+  ],
+  "cross": "",
+  "run": {
+   "sw": 187,
+   "cw": 187,
+   "sh": 62,
+   "ch": 62,
+   "sl": 0,
+   "active": true
+  },
+  "seats": [
+   {
+    "id": "L1",
+    "w": 87.19,
+    "k": 1.002,
+    "focus": true,
+    "hover": false,
+    "ringW": 4,
+    "clipped": true,
+    "clips": [
+     {
+      "cls": "dock-layer dock-layer--full dock-run is-active",
+      "ox": "auto",
+      "oy": "hidden",
+      "l": 4.01,
+      "t": -7.99,
+      "r": -95.8,
+      "b": -7.99
+     }
+    ]
+   },
+   {
+    "id": "L2",
+    "w": 44,
+    "k": 1,
+    "focus": false,
+    "hover": false,
+    "ringW": 0
+   },
+   {
+    "id": "L3",
+    "w": 44,
+    "k": 1,
+    "focus": false,
+    "hover": false,
+    "ringW": 0
+   },
+   {
+    "id": "I1",
+    "w": 44,
+    "k": 1,
+    "focus": false,
+    "hover": false,
+    "ringW": 0
+   },
+   {
+    "id": "I2",
+    "w": 111.19,
+    "k": 1.002,
+    "focus": false,
+    "hover": false,
+    "ringW": 0
+   },
+   {
+    "id": "summary",
+    "w": 24,
+    "k": 1,
+    "focus": false,
+    "hover": false,
+    "ringW": 0
+   }
+  ],
+  "v": {
+   "uniform": false,
+   "reach": false,
+   "ringClip": [
+    "L1"
+   ]
+  },
+  "active": "L1"
+ },
+ {
+  "tag": "layers actions focus+hover first",
+  "cls": "glass-dock horizontal shape-pill expanded pinned fit-content always-expanded",
+  "morphing": false,
+  "scale": "none",
+  "plate": {
+   "w": 211.19,
+   "h": 208,
+   "lw": 211,
+   "lh": 208
+  },
+  "radii": [
+   "9999px",
+   "9999px",
+   "9999px",
+   "9999px"
+  ],
+  "cross": "",
+  "run": {
+   "sw": 187,
+   "cw": 187,
+   "sh": 62,
+   "ch": 62,
+   "sl": 0,
+   "active": true
+  },
+  "seats": [
+   {
+    "id": "L1",
+    "w": 95.91,
+    "k": 1.102,
+    "focus": true,
+    "hover": true,
+    "ringW": 4,
+    "clipped": true,
+    "clips": [
+     {
+      "cls": "dock-layer dock-layer--full dock-run is-active",
+      "ox": "auto",
+      "oy": "hidden",
+      "l": 8.77,
+      "t": -5.69,
+      "r": -91.04,
+      "b": -5.69
+     }
+    ]
+   },
+   {
+    "id": "L2",
+    "w": 44,
+    "k": 1,
+    "focus": false,
+    "hover": false,
+    "ringW": 0
+   },
+   {
+    "id": "L3",
+    "w": 44,
+    "k": 1,
+    "focus": false,
+    "hover": false,
+    "ringW": 0
+   },
+   {
+    "id": "I1",
+    "w": 44,
+    "k": 1,
+    "focus": false,
+    "hover": false,
+    "ringW": 0
+   },
+   {
+    "id": "I2",
+    "w": 111.19,
+    "k": 1.002,
+    "focus": false,
+    "hover": false,
+    "ringW": 0
+   },
+   {
+    "id": "summary",
+    "w": 24,
+    "k": 1,
+    "focus": false,
+    "hover": false,
+    "ringW": 0
+   }
+  ],
+  "v": {
+   "uniform": false,
+   "reach": false,
+   "ringClip": [
+    "L1"
+   ]
+  }
+ },
+ {
+  "tag": "layers input focus first",
+  "cls": "glass-dock horizontal shape-pill expanded pinned fit-content always-expanded",
+  "morphing": false,
+  "scale": "none",
+  "plate": {
+   "w": 368,
+   "h": 208,
+   "lw": 368,
+   "lh": 208
+  },
+  "radii": [
+   "9999px",
+   "9999px",
+   "9999px",
+   "9999px"
+  ],
+  "cross": "",
+  "run": {
+   "sw": 344,
+   "cw": 344,
+   "sh": 62,
+   "ch": 62,
+   "sl": 0,
+   "active": true
+  },
+  "seats": [
+   {
+    "id": "L1",
+    "w": 87.19,
+    "k": 1.002,
+    "focus": false,
+    "hover": false,
+    "ringW": 0
+   },
+   {
+    "id": "L2",
+    "w": 44,
+    "k": 1,
+    "focus": false,
+    "hover": false,
+    "ringW": 0
+   },
+   {
+    "id": "L3",
+    "w": 44,
+    "k": 1,
+    "focus": false,
+    "hover": false,
+    "ringW": 0
+   },
+   {
+    "id": "I1",
+    "w": 44,
+    "k": 1,
+    "focus": true,
+    "hover": false,
+    "ringW": 4,
+    "clipped": true,
+    "clips": [
+     {
+      "cls": "dock-layer dock-layer--full dock-run is-active",
+      "ox": "auto",
+      "oy": "hidden",
+      "l": 4,
+      "t": -5,
+      "r": -296,
+      "b": -5
+     }
+    ]
+   },
+   {
+    "id": "I2",
+    "w": 268,
+    "k": 1,
+    "focus": false,
+    "hover": true,
+    "ringW": 0
+   },
+   {
+    "id": "summary",
+    "w": 24,
+    "k": 1,
+    "focus": false,
+    "hover": false,
+    "ringW": 0
+   }
+  ],
+  "v": {
+   "uniform": false,
+   "reach": false,
+   "ringClip": [
+    "I1"
+   ]
+  },
+  "active": "I1"
+ },
+ {
+  "tag": "layers input focus+hover first",
+  "cls": "glass-dock horizontal shape-pill expanded pinned fit-content always-expanded",
+  "morphing": false,
+  "scale": "none",
+  "plate": {
+   "w": 368,
+   "h": 208,
+   "lw": 368,
+   "lh": 208
+  },
+  "radii": [
+   "9999px",
+   "9999px",
+   "9999px",
+   "9999px"
+  ],
+  "cross": "",
+  "run": {
+   "sw": 344,
+   "cw": 344,
+   "sh": 62,
+   "ch": 62,
+   "sl": 0,
+   "active": true
+  },
+  "seats": [
+   {
+    "id": "L1",
+    "w": 87.19,
+    "k": 1.002,
+    "focus": false,
+    "hover": false,
+    "ringW": 0
+   },
+   {
+    "id": "L2",
+    "w": 44,
+    "k": 1,
+    "focus": false,
+    "hover": false,
+    "ringW": 0
+   },
+   {
+    "id": "L3",
+    "w": 44,
+    "k": 1,
+    "focus": false,
+    "hover": false,
+    "ringW": 0
+   },
+   {
+    "id": "I1",
+    "w": 48.4,
+    "k": 1.1,
+    "focus": true,
+    "hover": true,
+    "ringW": 4,
+    "clipped": true,
+    "clips": [
+     {
+      "cls": "dock-layer dock-layer--full dock-run is-active",
+      "ox": "auto",
+      "oy": "hidden",
+      "l": 6.6,
+      "t": -2.4,
+      "r": -293.4,
+      "b": -2.4
+     }
+    ]
+   },
+   {
+    "id": "I2",
+    "w": 268,
+    "k": 1,
+    "focus": false,
+    "hover": false,
+    "ringW": 0
+   },
+   {
+    "id": "summary",
+    "w": 24,
+    "k": 1,
+    "focus": false,
+    "hover": false,
+    "ringW": 0
+   }
+  ],
+  "v": {
+   "uniform": false,
+   "reach": false,
+   "ringClip": [
+    "I1"
+   ]
+  }
+ }
+]

@@ -1,0 +1,2560 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "tests-visual/playwright.config.ts",
+      "--project=chromium-headless-new",
+      "release-10-1-3.spec.ts",
+      "--workers=1"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/playwright.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-headless-new",
+        "name": "chromium-headless-new",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "coarse-touch",
+        "name": "coarse-touch",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "safari-webgl.spec.ts",
+          "aurora-swraster.spec.ts",
+          "release-10-1-1.spec.ts",
+          "release-10-1-2.spec.ts",
+          "release-10-1-3.spec.ts",
+          "release-10-1-4.spec.ts",
+          "release-10-1-5.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/docs/release-11.0.1/runs/merged-g6-3-ch.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5391",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/",
+      "url": "http://localhost:5391",
+      "reuseExistingServer": true,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "release-10-1-3.spec.ts",
+      "file": "release-10-1-3.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "10.1.3 · 360 · right-anchored (fourier f-w14v-au2 L2-15)",
+          "file": "release-10-1-3.spec.ts",
+          "line": 126,
+          "column": 14,
+          "specs": [
+            {
+              "title": "O-110 · a click on the anchored persistent seat of a collapsed dock reaches it",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1703,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T22:57:10.492Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-1ef313675b5f167390de",
+              "file": "release-10-1-3.spec.ts",
+              "line": 135,
+              "column": 13
+            },
+            {
+              "title": "O-110 · the expand grows from the anchored edge from its first frame; the seat stays under the pointer",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1815,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T22:57:12.339Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-7b364a76c2bfddd59b29",
+              "file": "release-10-1-3.spec.ts",
+              "line": 159,
+              "column": 13
+            },
+            {
+              "title": "O-110 · a press on the anchored persistent seat mid-expand is kept",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1543,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T22:57:14.161Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-1fe69b0d33015e41eb1e",
+              "file": "release-10-1-3.spec.ts",
+              "line": 218,
+              "column": 13
+            }
+          ]
+        },
+        {
+          "title": "10.1.3 · 360 · left-anchored (fourier f-w14v-au2 L2-15)",
+          "file": "release-10-1-3.spec.ts",
+          "line": 126,
+          "column": 14,
+          "specs": [
+            {
+              "title": "O-110 · a click on the anchored persistent seat of a collapsed dock reaches it",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1505,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T22:57:15.709Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-9d37116c5975cf57f5ab",
+              "file": "release-10-1-3.spec.ts",
+              "line": 135,
+              "column": 13
+            },
+            {
+              "title": "O-110 · the expand grows from the anchored edge from its first frame; the seat stays under the pointer",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1808,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T22:57:17.222Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-fe6009387f0bacc587e1",
+              "file": "release-10-1-3.spec.ts",
+              "line": 159,
+              "column": 13
+            },
+            {
+              "title": "O-110 · a press on the anchored persistent seat mid-expand is kept",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1594,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T22:57:19.039Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-0d2bc87d7541e797290b",
+              "file": "release-10-1-3.spec.ts",
+              "line": 218,
+              "column": 13
+            }
+          ]
+        },
+        {
+          "title": "10.1.3 · 390 · right-anchored (fourier f-w14v-au2 L2-15)",
+          "file": "release-10-1-3.spec.ts",
+          "line": 126,
+          "column": 14,
+          "specs": [
+            {
+              "title": "O-110 · a click on the anchored persistent seat of a collapsed dock reaches it",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1531,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T22:57:20.641Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-649045a328657155fbbc",
+              "file": "release-10-1-3.spec.ts",
+              "line": 135,
+              "column": 13
+            },
+            {
+              "title": "O-110 · the expand grows from the anchored edge from its first frame; the seat stays under the pointer",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1773,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T22:57:22.179Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-6431c05f3453fa6933ab",
+              "file": "release-10-1-3.spec.ts",
+              "line": 159,
+              "column": 13
+            },
+            {
+              "title": "O-110 · a press on the anchored persistent seat mid-expand is kept",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1524,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T22:57:23.959Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-ec1f7f0e3fc82edd2b88",
+              "file": "release-10-1-3.spec.ts",
+              "line": 218,
+              "column": 13
+            }
+          ]
+        },
+        {
+          "title": "10.1.3 · 390 · left-anchored (fourier f-w14v-au2 L2-15)",
+          "file": "release-10-1-3.spec.ts",
+          "line": 126,
+          "column": 14,
+          "specs": [
+            {
+              "title": "O-110 · a click on the anchored persistent seat of a collapsed dock reaches it",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1467,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T22:57:25.489Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-bf2974306bbac1126e4c",
+              "file": "release-10-1-3.spec.ts",
+              "line": 135,
+              "column": 13
+            },
+            {
+              "title": "O-110 · the expand grows from the anchored edge from its first frame; the seat stays under the pointer",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1709,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T22:57:26.963Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-e4e7348aedeab98fa03c",
+              "file": "release-10-1-3.spec.ts",
+              "line": 159,
+              "column": 13
+            },
+            {
+              "title": "O-110 · a press on the anchored persistent seat mid-expand is kept",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1520,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T22:57:28.678Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-34a9963fa4b11b941e2c",
+              "file": "release-10-1-3.spec.ts",
+              "line": 218,
+              "column": 13
+            }
+          ]
+        },
+        {
+          "title": "10.1.3 · 430 · right-anchored (fourier f-w14v-au2 L2-15)",
+          "file": "release-10-1-3.spec.ts",
+          "line": 126,
+          "column": 14,
+          "specs": [
+            {
+              "title": "O-110 · a click on the anchored persistent seat of a collapsed dock reaches it",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1503,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T22:57:30.205Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-77291ad5a87cc4449e99",
+              "file": "release-10-1-3.spec.ts",
+              "line": 135,
+              "column": 13
+            },
+            {
+              "title": "O-110 · the expand grows from the anchored edge from its first frame; the seat stays under the pointer",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1744,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T22:57:31.714Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-39a3a863c04f66405b04",
+              "file": "release-10-1-3.spec.ts",
+              "line": 159,
+              "column": 13
+            },
+            {
+              "title": "O-110 · a press on the anchored persistent seat mid-expand is kept",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1488,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T22:57:33.462Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-7c35464b91510e7eaa8c",
+              "file": "release-10-1-3.spec.ts",
+              "line": 218,
+              "column": 13
+            }
+          ]
+        },
+        {
+          "title": "10.1.3 · 430 · left-anchored (fourier f-w14v-au2 L2-15)",
+          "file": "release-10-1-3.spec.ts",
+          "line": 126,
+          "column": 14,
+          "specs": [
+            {
+              "title": "O-110 · a click on the anchored persistent seat of a collapsed dock reaches it",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1460,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T22:57:34.955Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-004b4be779f5874ea029",
+              "file": "release-10-1-3.spec.ts",
+              "line": 135,
+              "column": 13
+            },
+            {
+              "title": "O-110 · the expand grows from the anchored edge from its first frame; the seat stays under the pointer",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1745,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T22:57:36.421Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-cda8ea1070c5df1b2f9a",
+              "file": "release-10-1-3.spec.ts",
+              "line": 159,
+              "column": 13
+            },
+            {
+              "title": "O-110 · a press on the anchored persistent seat mid-expand is kept",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1543,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T22:57:38.173Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-e670f8838cc9ab66452c",
+              "file": "release-10-1-3.spec.ts",
+              "line": 218,
+              "column": 13
+            }
+          ]
+        },
+        {
+          "title": "10.1.3 · 1440 · right-anchored (fourier f-w14-control-row G-h)",
+          "file": "release-10-1-3.spec.ts",
+          "line": 126,
+          "column": 14,
+          "specs": [
+            {
+              "title": "O-110 · a click on the anchored persistent seat of a collapsed dock reaches it",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1544,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T22:57:39.724Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-2b886d07cf8d4f6010c4",
+              "file": "release-10-1-3.spec.ts",
+              "line": 135,
+              "column": 13
+            },
+            {
+              "title": "O-110 · the expand grows from the anchored edge from its first frame; the seat stays under the pointer",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1836,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T22:57:41.273Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-cf25a73fc07026590e82",
+              "file": "release-10-1-3.spec.ts",
+              "line": 159,
+              "column": 13
+            },
+            {
+              "title": "O-110 · a press on the anchored persistent seat mid-expand is kept",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1557,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T22:57:43.118Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-21c1cb748e58fb5f232b",
+              "file": "release-10-1-3.spec.ts",
+              "line": 218,
+              "column": 13
+            }
+          ]
+        },
+        {
+          "title": "10.1.3 · 1440 · left-anchored (fourier f-w14-control-row G-h)",
+          "file": "release-10-1-3.spec.ts",
+          "line": 126,
+          "column": 14,
+          "specs": [
+            {
+              "title": "O-110 · a click on the anchored persistent seat of a collapsed dock reaches it",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1500,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T22:57:44.680Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-f5f56075524bc0e6bcbc",
+              "file": "release-10-1-3.spec.ts",
+              "line": 135,
+              "column": 13
+            },
+            {
+              "title": "O-110 · the expand grows from the anchored edge from its first frame; the seat stays under the pointer",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1763,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T22:57:46.186Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-7211a84d53f9ff62397e",
+              "file": "release-10-1-3.spec.ts",
+              "line": 159,
+              "column": 13
+            },
+            {
+              "title": "O-110 · a press on the anchored persistent seat mid-expand is kept",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1555,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T22:57:47.955Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-f80af5d58f6a15f72341",
+              "file": "release-10-1-3.spec.ts",
+              "line": 218,
+              "column": 13
+            }
+          ]
+        },
+        {
+          "title": "10.1.3 · 390 · right-anchored, open-side seat",
+          "file": "release-10-1-3.spec.ts",
+          "line": 267,
+          "column": 10,
+          "specs": [
+            {
+              "title": "D-1 · a click on the open-side persistent seat of a collapsed dock reaches it",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1499,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T22:57:49.515Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-b5002648081c4fadb4b5",
+              "file": "release-10-1-3.spec.ts",
+              "line": 269,
+              "column": 9
+            }
+          ]
+        },
+        {
+          "title": "10.1.3 · 1440 · right-anchored, open-side seat",
+          "file": "release-10-1-3.spec.ts",
+          "line": 267,
+          "column": 10,
+          "specs": [
+            {
+              "title": "D-1 · a click on the open-side persistent seat of a collapsed dock reaches it",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1479,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T22:57:51.020Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-8755cd682babea459a21",
+              "file": "release-10-1-3.spec.ts",
+              "line": 269,
+              "column": 9
+            }
+          ]
+        },
+        {
+          "title": "10.1.3 · 390 · left-anchored, open-side seat",
+          "file": "release-10-1-3.spec.ts",
+          "line": 267,
+          "column": 10,
+          "specs": [
+            {
+              "title": "D-1 · a click on the open-side persistent seat of a collapsed dock reaches it",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1492,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T22:57:52.506Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-8f6a662f6e84b19c3c69",
+              "file": "release-10-1-3.spec.ts",
+              "line": 269,
+              "column": 9
+            }
+          ]
+        },
+        {
+          "title": "10.1.3 · 390 · bottom-anchored, open-side seat",
+          "file": "release-10-1-3.spec.ts",
+          "line": 267,
+          "column": 10,
+          "specs": [
+            {
+              "title": "D-1 · a click on the open-side persistent seat of a collapsed dock reaches it",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1505,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T22:57:54.005Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-0bcdda16b250bfb54e2d",
+              "file": "release-10-1-3.spec.ts",
+              "line": 269,
+              "column": 9
+            }
+          ]
+        },
+        {
+          "title": "10.1.3 · 360 · touch · right-anchored, open-side seat",
+          "file": "release-10-1-3.spec.ts",
+          "line": 290,
+          "column": 10,
+          "specs": [
+            {
+              "title": "D-1 · a tap on the open-side persistent seat of a collapsed dock reaches it",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1408,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T22:57:55.518Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-b93133c112f87ba14641",
+              "file": "release-10-1-3.spec.ts",
+              "line": 292,
+              "column": 9
+            }
+          ]
+        },
+        {
+          "title": "10.1.3 · 390 · touch · right-anchored, open-side seat",
+          "file": "release-10-1-3.spec.ts",
+          "line": 290,
+          "column": 10,
+          "specs": [
+            {
+              "title": "D-1 · a tap on the open-side persistent seat of a collapsed dock reaches it",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1415,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T22:57:56.930Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-6b8214926bd75cbf67ce",
+              "file": "release-10-1-3.spec.ts",
+              "line": 292,
+              "column": 9
+            }
+          ]
+        },
+        {
+          "title": "10.1.3 · 430 · touch · right-anchored, open-side seat",
+          "file": "release-10-1-3.spec.ts",
+          "line": 290,
+          "column": 10,
+          "specs": [
+            {
+              "title": "D-1 · a tap on the open-side persistent seat of a collapsed dock reaches it",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1425,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T22:57:58.351Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-bab7052f7f8016f80179",
+              "file": "release-10-1-3.spec.ts",
+              "line": 292,
+              "column": 9
+            }
+          ]
+        },
+        {
+          "title": "10.1.3 · 390 · right-anchored collapse",
+          "file": "release-10-1-3.spec.ts",
+          "line": 316,
+          "column": 10,
+          "specs": [
+            {
+              "title": "D-2 · the collapse shrinks toward the anchored edge and settles without a snap",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3578,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T22:57:59.781Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-2551db6b34ff19ddaacd",
+              "file": "release-10-1-3.spec.ts",
+              "line": 318,
+              "column": 9
+            }
+          ]
+        },
+        {
+          "title": "10.1.3 · 390 · left-anchored collapse",
+          "file": "release-10-1-3.spec.ts",
+          "line": 316,
+          "column": 10,
+          "specs": [
+            {
+              "title": "D-2 · the collapse shrinks toward the anchored edge and settles without a snap",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3545,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T22:58:03.365Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-c72718643b6d608dbed5",
+              "file": "release-10-1-3.spec.ts",
+              "line": 318,
+              "column": 9
+            }
+          ]
+        },
+        {
+          "title": "10.1.3 · 390 · bottom-anchored collapse",
+          "file": "release-10-1-3.spec.ts",
+          "line": 316,
+          "column": 10,
+          "specs": [
+            {
+              "title": "D-2 · the collapse shrinks toward the anchored edge and settles without a snap",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3569,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T22:58:06.915Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-aeba39a31cc6c817751d",
+              "file": "release-10-1-3.spec.ts",
+              "line": 318,
+              "column": 9
+            }
+          ]
+        },
+        {
+          "title": "10.1.3 · 390 · top-anchored collapse",
+          "file": "release-10-1-3.spec.ts",
+          "line": 316,
+          "column": 10,
+          "specs": [
+            {
+              "title": "D-2 · the collapse shrinks toward the anchored edge and settles without a snap",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3601,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T22:58:10.488Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-becbd02d70365c52db34",
+              "file": "release-10-1-3.spec.ts",
+              "line": 318,
+              "column": 9
+            }
+          ]
+        },
+        {
+          "title": "10.1.3 · 390 · right-anchored reversal",
+          "file": "release-10-1-3.spec.ts",
+          "line": 375,
+          "column": 10,
+          "specs": [
+            {
+              "title": "D-1 (critique-3) · a collapse() mid-expand keeps the summary glyph inside the plate",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2995,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T22:58:14.094Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-75924b73583271530778",
+              "file": "release-10-1-3.spec.ts",
+              "line": 377,
+              "column": 9
+            }
+          ]
+        },
+        {
+          "title": "10.1.3 · 390 · left-anchored reversal",
+          "file": "release-10-1-3.spec.ts",
+          "line": 375,
+          "column": 10,
+          "specs": [
+            {
+              "title": "D-1 (critique-3) · a collapse() mid-expand keeps the summary glyph inside the plate",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3004,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T22:58:17.094Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-6e92dc6b313ba0b0b283",
+              "file": "release-10-1-3.spec.ts",
+              "line": 377,
+              "column": 9
+            }
+          ]
+        },
+        {
+          "title": "10.1.3 · 390 · bottom-anchored reversal",
+          "file": "release-10-1-3.spec.ts",
+          "line": 375,
+          "column": 10,
+          "specs": [
+            {
+              "title": "D-1 (critique-3) · a collapse() mid-expand keeps the summary glyph inside the plate",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2961,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T22:58:20.104Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-b8442f5c694a8dd8378e",
+              "file": "release-10-1-3.spec.ts",
+              "line": 377,
+              "column": 9
+            }
+          ]
+        },
+        {
+          "title": "10.1.3 · 390 · reduced motion",
+          "file": "release-10-1-3.spec.ts",
+          "line": 431,
+          "column": 6,
+          "specs": [
+            {
+              "title": "D-3 · under reduced motion the expand jumps to its rest",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1540,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T22:58:23.070Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-0fd29acb147f13b31143",
+              "file": "release-10-1-3.spec.ts",
+              "line": 433,
+              "column": 5
+            }
+          ]
+        },
+        {
+          "title": "10.1.3 · 390 · touch · run swipe, Escape, then focus",
+          "file": "release-10-1-3.spec.ts",
+          "line": 463,
+          "column": 10,
+          "specs": [
+            {
+              "title": "D-1 (critique-2) · after a clickless, cancel-less touch press, a focus expands the collapsed dock",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 4814,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T22:58:24.616Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-7cf09f867b7f2b45b7c6",
+              "file": "release-10-1-3.spec.ts",
+              "line": 465,
+              "column": 9
+            }
+          ]
+        },
+        {
+          "title": "10.1.3 · 390 · touch · run swipe, Escape, then hover",
+          "file": "release-10-1-3.spec.ts",
+          "line": 463,
+          "column": 10,
+          "specs": [
+            {
+              "title": "D-1 (critique-2) · after a clickless, cancel-less touch press, a hover expands the collapsed dock",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 4871,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T22:58:29.435Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-39a1c0924929914a1766",
+              "file": "release-10-1-3.spec.ts",
+              "line": 465,
+              "column": 9
+            }
+          ]
+        },
+        {
+          "title": "10.1.3 · 390 · a touch press with no tap, then focus",
+          "file": "release-10-1-3.spec.ts",
+          "line": 510,
+          "column": 6,
+          "specs": [
+            {
+              "title": "D-1 (critique-2) · a focus after a clickless touch press expands the collapsed dock",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1730,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T22:58:34.312Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-09aa5a4c13253a1b5272",
+              "file": "release-10-1-3.spec.ts",
+              "line": 512,
+              "column": 5
+            }
+          ]
+        },
+        {
+          "title": "10.1.3 · 390 · right-anchored, the plate holds what it paints",
+          "file": "release-10-1-3.spec.ts",
+          "line": 601,
+          "column": 10,
+          "specs": [
+            {
+              "title": "D-1 (critique-4) · no control paints outside the plate on the expand or the collapse",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3352,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T22:58:36.048Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-6aa2ffa7b2c3f2361685",
+              "file": "release-10-1-3.spec.ts",
+              "line": 603,
+              "column": 9
+            }
+          ]
+        },
+        {
+          "title": "10.1.3 · 1440 · right-anchored, the plate holds what it paints",
+          "file": "release-10-1-3.spec.ts",
+          "line": 601,
+          "column": 10,
+          "specs": [
+            {
+              "title": "D-1 (critique-4) · no control paints outside the plate on the expand or the collapse",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3345,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T22:58:39.406Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-5facf3d3d3bb3c61c5dc",
+              "file": "release-10-1-3.spec.ts",
+              "line": 603,
+              "column": 9
+            }
+          ]
+        },
+        {
+          "title": "10.1.3 · 390 · left-anchored, the plate holds what it paints",
+          "file": "release-10-1-3.spec.ts",
+          "line": 601,
+          "column": 10,
+          "specs": [
+            {
+              "title": "D-1 (critique-4) · no control paints outside the plate on the expand or the collapse",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3363,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T22:58:42.756Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-aae9de26d7ce6b7fc4ee",
+              "file": "release-10-1-3.spec.ts",
+              "line": 603,
+              "column": 9
+            }
+          ]
+        },
+        {
+          "title": "10.1.3 · 390 · bottom-anchored, the plate holds what it paints",
+          "file": "release-10-1-3.spec.ts",
+          "line": 601,
+          "column": 10,
+          "specs": [
+            {
+              "title": "D-1 (critique-4) · no control paints outside the plate on the expand or the collapse",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3395,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T22:58:46.124Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-9267cf88f337780a29c5",
+              "file": "release-10-1-3.spec.ts",
+              "line": 603,
+              "column": 9
+            }
+          ]
+        },
+        {
+          "title": "10.1.3 · 390 · right-anchored double reversal, the plate holds what it paints",
+          "file": "release-10-1-3.spec.ts",
+          "line": 637,
+          "column": 10,
+          "specs": [
+            {
+              "title": "D-1 (critique-4) · no control paints outside the plate through a double reversal",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2732,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T22:58:49.526Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-ff1991d64fc7a6d2bd02",
+              "file": "release-10-1-3.spec.ts",
+              "line": 639,
+              "column": 9
+            }
+          ]
+        },
+        {
+          "title": "10.1.3 · 390 · bottom-anchored double reversal, the plate holds what it paints",
+          "file": "release-10-1-3.spec.ts",
+          "line": 637,
+          "column": 10,
+          "specs": [
+            {
+              "title": "D-1 (critique-4) · no control paints outside the plate through a double reversal",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2768,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T22:58:52.264Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-61e0eba3e65a784f52ab",
+              "file": "release-10-1-3.spec.ts",
+              "line": 639,
+              "column": 9
+            }
+          ]
+        },
+        {
+          "title": "10.1.3 · 390 · right-anchored expand, frozen at 40 % of its travel",
+          "file": "release-10-1-3.spec.ts",
+          "line": 728,
+          "column": 10,
+          "specs": [
+            {
+              "title": "D-1 (critique-4) · the stage beside the plate paints no control mid-expand",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 884,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T22:58:55.038Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-4ae0c859e0f54ce5f39b",
+              "file": "release-10-1-3.spec.ts",
+              "line": 730,
+              "column": 9
+            }
+          ]
+        },
+        {
+          "title": "10.1.3 · 390 · right-anchored collapse, frozen at 30 % of its travel",
+          "file": "release-10-1-3.spec.ts",
+          "line": 728,
+          "column": 10,
+          "specs": [
+            {
+              "title": "D-1 (critique-4) · the stage beside the plate paints no control mid-collapse",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2216,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T22:58:55.928Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-5412594bb7b024bd5680",
+              "file": "release-10-1-3.spec.ts",
+              "line": 730,
+              "column": 9
+            }
+          ]
+        },
+        {
+          "title": "10.1.3 · 390 · right-anchored · drag a dock link out, then focus",
+          "file": "release-10-1-3.spec.ts",
+          "line": 818,
+          "column": 14,
+          "specs": [
+            {
+              "title": "D-1 (critique-6) · after a press that became a native drag, a focus expands the collapsed dock",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2538,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T22:58:58.149Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-75f5aec57d5be948a93e",
+              "file": "release-10-1-3.spec.ts",
+              "line": 820,
+              "column": 13
+            }
+          ]
+        },
+        {
+          "title": "10.1.3 · 390 · right-anchored · drag a dock link out, then hover",
+          "file": "release-10-1-3.spec.ts",
+          "line": 818,
+          "column": 14,
+          "specs": [
+            {
+              "title": "D-1 (critique-6) · after a press that became a native drag, a hover expands the collapsed dock",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2544,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T22:59:00.694Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-090799b5330303054b5c",
+              "file": "release-10-1-3.spec.ts",
+              "line": 820,
+              "column": 13
+            }
+          ]
+        },
+        {
+          "title": "10.1.3 · 390 · left-anchored · drag a dock link out, then focus",
+          "file": "release-10-1-3.spec.ts",
+          "line": 818,
+          "column": 14,
+          "specs": [
+            {
+              "title": "D-1 (critique-6) · after a press that became a native drag, a focus expands the collapsed dock",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2529,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T22:59:03.243Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-5ef2e3af051b2c431a80",
+              "file": "release-10-1-3.spec.ts",
+              "line": 820,
+              "column": 13
+            }
+          ]
+        },
+        {
+          "title": "10.1.3 · 390 · left-anchored · drag a dock link out, then hover",
+          "file": "release-10-1-3.spec.ts",
+          "line": 818,
+          "column": 14,
+          "specs": [
+            {
+              "title": "D-1 (critique-6) · after a press that became a native drag, a hover expands the collapsed dock",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2562,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T22:59:05.777Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-1eb84b66872992f73bed",
+              "file": "release-10-1-3.spec.ts",
+              "line": 820,
+              "column": 13
+            }
+          ]
+        },
+        {
+          "title": "10.1.3 · 390 · right-anchored · right-click a collapsed seat, then focus",
+          "file": "release-10-1-3.spec.ts",
+          "line": 843,
+          "column": 6,
+          "specs": [
+            {
+              "title": "D-1 (critique-6) · after a right-click, a focus expands the collapsed dock",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2467,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T22:59:08.345Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-bb15979b78ed79dfae4c",
+              "file": "release-10-1-3.spec.ts",
+              "line": 845,
+              "column": 5
+            }
+          ]
+        },
+        {
+          "title": "10.1.3 · 390 · right-anchored · hover-intent dwell across a right-click",
+          "file": "release-10-1-3.spec.ts",
+          "line": 868,
+          "column": 6,
+          "specs": [
+            {
+              "title": "D-1 (critique-6) · a hover dwell that completes after a right-click expands the collapsed dock",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1487,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T22:59:10.818Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-a50a673e8aea79610dc2",
+              "file": "release-10-1-3.spec.ts",
+              "line": 870,
+              "column": 5
+            }
+          ]
+        },
+        {
+          "title": "10.1.3 · 390 · a mouse press with no release, a press outside, then focus",
+          "file": "release-10-1-3.spec.ts",
+          "line": 899,
+          "column": 6,
+          "specs": [
+            {
+              "title": "D-1 (critique-6) · a press outside the dock supersedes an unreleased mouse press",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1733,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T22:59:12.311Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-59b2f3481fb9d57b110a",
+              "file": "release-10-1-3.spec.ts",
+              "line": 901,
+              "column": 5
+            }
+          ]
+        },
+        {
+          "title": "10.1.3 · 390 · right-anchored · ancestor zoom 1.25",
+          "file": "release-10-1-3.spec.ts",
+          "line": 931,
+          "column": 10,
+          "specs": [
+            {
+              "title": "D-1 (critique-7) · the summary glyph holds its box through the expand and the collapse",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 2276,
+                      "error": {
+                        "message": "Error: the leaving summary's largest visible frame step\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m2\u001b[39m\nReceived:   \u001b[31m2.04345703125\u001b[39m",
+                        "stack": "Error: the leaving summary's largest visible frame step\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m2\u001b[39m\nReceived:   \u001b[31m2.04345703125\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/release-10-1-3.spec.ts:989:86",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/release-10-1-3.spec.ts",
+                          "column": 86,
+                          "line": 989
+                        },
+                        "snippet": "  987 |                 \"the leaving summary paints its rest on the first morph frame\",\n  988 |             ).toBeLessThan(1);\n> 989 |             expect(jump(expand), \"the leaving summary's largest visible frame step\").toBeLessThan(2);\n      |                                                                                      ^\n  990 |\n  991 |             // The collapse: the public `collapse()`, with the pointer off the dock.\n  992 |             await glyph();"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/release-10-1-3.spec.ts",
+                            "column": 86,
+                            "line": 989
+                          },
+                          "message": "Error: the leaving summary's largest visible frame step\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m2\u001b[39m\nReceived:   \u001b[31m2.04345703125\u001b[39m\n\n  987 |                 \"the leaving summary paints its rest on the first morph frame\",\n  988 |             ).toBeLessThan(1);\n> 989 |             expect(jump(expand), \"the leaving summary's largest visible frame step\").toBeLessThan(2);\n      |                                                                                      ^\n  990 |\n  991 |             // The collapse: the public `collapse()`, with the pointer off the dock.\n  992 |             await glyph();\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/release-10-1-3.spec.ts:989:86"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T22:59:14.050Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/test-results/release-10-1-3-10-1-3-·-39-84eb3-the-expand-and-the-collapse-chromium-headless-new/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/release-10-1-3.spec.ts",
+                        "column": 86,
+                        "line": 989
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-dff0c0162f52134f38da",
+              "file": "release-10-1-3.spec.ts",
+              "line": 933,
+              "column": 9
+            }
+          ]
+        },
+        {
+          "title": "10.1.3 · 390 · left-anchored · ancestor zoom 1.25",
+          "file": "release-10-1-3.spec.ts",
+          "line": 931,
+          "column": 10,
+          "specs": [
+            {
+              "title": "D-1 (critique-7) · the summary glyph holds its box through the expand and the collapse",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 4105,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T22:59:16.932Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-95d484c43e698095585f",
+              "file": "release-10-1-3.spec.ts",
+              "line": 933,
+              "column": 9
+            }
+          ]
+        },
+        {
+          "title": "10.1.3 · 390 · bottom-anchored · ancestor zoom 1.25",
+          "file": "release-10-1-3.spec.ts",
+          "line": 931,
+          "column": 10,
+          "specs": [
+            {
+              "title": "D-1 (critique-7) · the summary glyph holds its box through the expand and the collapse",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 4061,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T22:59:21.192Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "008dffc60bd9662bae01-8badfc8f9bb606044da0",
+              "file": "release-10-1-3.spec.ts",
+              "line": 933,
+              "column": 9
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-11T22:57:08.670Z",
+    "duration": 136657.24000000002,
+    "expected": 59,
+    "skipped": 0,
+    "unexpected": 1,
+    "flaky": 0
+  }
+}
