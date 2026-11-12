@@ -690,9 +690,12 @@
             calc(var(--dock-layer-height) + 2 * var(--dock-padding-block))
         );
         /* The rest corner and its two-rung drop, per shape. The stadium's rest is half
-           the plate's cross extent (see above); the finite shapes name their own rest
-           so the keyframe never has to guess at a box height. */
-        --dock-cap-rest: calc(var(--dock-cross) / 2);
+           the plate's cross extent (see above), bounded by `--radius-dock`: the token is
+           the stadium (theme/radius.css), so the bound is inert by default, and a host
+           that sets `--radius-dock: 1rem` gets the bar corner in every posture and
+           through the morph, from this one length. The finite shapes name their own
+           rest so the keyframe never has to guess at a box height. */
+        --dock-cap-rest: min(var(--radius-dock), calc(var(--dock-cross) / 2));
         --dock-cap-cut: var(--radius-card);
     }
 

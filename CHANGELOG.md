@@ -83,6 +83,21 @@ on the left, the dock with reduced motion turned on, and the timing of HandMark'
   </GlassDock>
   ```
 
+- **`--radius-dock` sets the dock's corner again.** The dock keeps its round ends by
+  default, now through its radius token, which is the stadium: a new token,
+  `--radius-stadium` (also the `rounded-stadium` utility), is a radius the browser clamps
+  to half the box's shorter side, so it draws a circle on a square box and round ends on
+  a wider one, where `--radius-circle` would draw an oval. If you prefer the rounded bar,
+  set `--radius-dock: 1rem` on the dock or on any element around it, and the dock keeps
+  that corner open, collapsed, standing vertically and while it opens and closes. The
+  `rounded-dock` utility follows the same token.
+
+  ```css
+  .site-header {
+      --radius-dock: 1rem;
+  }
+  ```
+
 - **A collapsed dock can be just its always-visible controls.** Leave out the
   `#collapsed` slot and put a control in `#persistent` or `#persistent-end`, such as a
   theme toggle, and the collapsed dock is exactly that control, with its own icon, its

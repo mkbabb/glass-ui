@@ -376,7 +376,8 @@ this table must agree). Five classes: **primitive** (the numeric ladder), **sema
 | `--radius-2xl`  | 1rem     | 16 px             | Large-card rung               |
 | `--radius-3xl`  | 1.5rem   | 24 px             | Big-dock/sheet rung           |
 | `--radius-pill` | 1rem     | 16 px             | Pill rung: a stadium up to 32 px tall, a 16 px corner above (U/B7) |
-| `--radius-circle` | 50%    | circle            | Icons, dots, thumbs, avatars, the collapsed dock (U/B7) |
+| `--radius-circle` | 50%    | circle            | Icons, dots, thumbs, avatars (U/B7) |
+| `--radius-stadium` | unbounded | stadium        | Round ends at any width, a circle on a square box |
 
 ### Semantic roles — what the surface IS
 
@@ -392,7 +393,7 @@ this table must agree). Five classes: **primitive** (the numeric ladder), **sema
 | `--radius-strip`    | 0.75rem            | 12 px | Bounded column-stack segmented track (vertical)            |
 | `--radius-tab`      | var(--radius-pill) | 16 px | Segmented control (horizontal; a stadium up to 32 px tall) |
 | `--radius-badge`    | var(--radius-pill) | 16 px | Badge (a stadium at badge height)                          |
-| `--radius-dock`     | var(--radius-pill) | 16 px | Dock container (the collapsed dock is `--radius-circle`)   |
+| `--radius-dock`     | var(--radius-stadium) | half the cross extent | Dock container: a capsule in every posture (a host sets `1rem` for the bar) |
 | `--radius-dock-card`| var(--radius-3xl)  | 24 px | Big-dock card shell (density-scaled)                       |
 | `--radius-tooltip`  | var(--radius-lg)   | 10 px | Tooltip                                                    |
 

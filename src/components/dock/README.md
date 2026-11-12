@@ -84,8 +84,9 @@ backdrop by default).
 - `persistent-end`: trailing controls present in both states.
 - `search`: a search field inside the dock's morph; authoring the slot enables it.
 
-The stadium dock's corner is half its cross extent in every posture, open, collapsed and
-vertical, and through the morph; `shape="rounded"` gives the bar corner. Each persistent
+The dock rests as a capsule: its corner is half its cross extent in every posture, open,
+collapsed and vertical, and through the morph, bounded by `--radius-dock` (the stadium).
+A host sets `--radius-dock: 1rem` for the bar corner. Each persistent
 region keeps `--dock-layer-gap` toward the run, in both orientations.
 
 ## Interaction contracts
