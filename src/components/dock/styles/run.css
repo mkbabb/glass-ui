@@ -854,8 +854,8 @@
 
        Under reduced motion the plate's corner holds still: the library's scroll-driven
        register is motion, and the run's peek of its next seat still reports the
-       overflow. The run's clip keeps following the plate, which now rests, so it holds
-       the rest corner where it would cut. */
+       overflow. The run's clip follows the plate, which now rests: it holds the
+       plate's rest corner, still, with no scroll-driven animation either. */
     @media (prefers-reduced-motion: no-preference) {
         .glass-dock .dock-plate {
             animation:
@@ -881,8 +881,19 @@
     }
 
     @media (prefers-reduced-motion: reduce) {
-        .glass-dock :where(.dock-layers) > .dock-run.is-active {
-            --dock-run-corner-cut: var(--dock-run-corner-rest);
+        .glass-dock:not([data-run-fits]) :where(.dock-layers) > .dock-run.is-active {
+            animation: none;
+            border-start-start-radius: calc(var(--dock-run-edge-start) * var(--dock-run-corner-rest)) var(--dock-run-cross-half);
+            border-end-start-radius: calc(var(--dock-run-edge-start) * var(--dock-run-corner-rest)) var(--dock-run-cross-half);
+            border-start-end-radius: calc(var(--dock-run-edge-end) * var(--dock-run-corner-rest)) var(--dock-run-cross-half);
+            border-end-end-radius: calc(var(--dock-run-edge-end) * var(--dock-run-corner-rest)) var(--dock-run-cross-half);
+        }
+
+        .glass-dock.vertical:not([data-run-fits]) :where(.dock-layers) > .dock-run.is-active {
+            border-start-start-radius: var(--dock-run-cross-half) calc(var(--dock-run-edge-start) * var(--dock-run-corner-rest));
+            border-start-end-radius: var(--dock-run-cross-half) calc(var(--dock-run-edge-start) * var(--dock-run-corner-rest));
+            border-end-start-radius: var(--dock-run-cross-half) calc(var(--dock-run-edge-end) * var(--dock-run-corner-rest));
+            border-end-end-radius: var(--dock-run-cross-half) calc(var(--dock-run-edge-end) * var(--dock-run-corner-rest));
         }
     }
 

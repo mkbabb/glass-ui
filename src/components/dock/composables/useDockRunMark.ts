@@ -45,7 +45,7 @@ export interface UseDockRunMarkOptions {
 }
 
 /** The class of the run's mark element (run.css, THE ACTIVE MARK). */
-export const DOCK_RUN_MARK_CLASS = "dock-run-mark";
+const DOCK_RUN_MARK_CLASS = "dock-run-mark";
 
 /** False for the run's mark, the one child of the run that is not a seat. */
 export function isRunSeat(el: Element): boolean {
