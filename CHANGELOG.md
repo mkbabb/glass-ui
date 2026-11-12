@@ -1,5 +1,16 @@
 # Changelog
 
+## 10.1.6 — 2026-11-12
+
+A patch on 10.1.5 with one fix. Nothing is removed or renamed.
+
+- **A focused Slider shows its focus under forced colours.** Forced-colour modes, such
+  as Windows High Contrast, drop every shadow, and the Slider's keyboard focus ring was
+  a shadow on its track, while 10.1.5 had removed the thumb's own outline in favour of
+  that ring. So in 10.1.5 a focused Slider showed nothing there. Under
+  `(forced-colors: active)` the focused track, and the focused thumb of a spectrum
+  Slider, now draw a `Highlight` outline 2px out.
+
 ## 10.1.5 — 2026-11-12
 
 A patch for five paint defects value.js reported from color.babb.dev, keyframes.babb.dev
