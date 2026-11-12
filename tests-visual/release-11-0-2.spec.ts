@@ -15,6 +15,9 @@
 //   blob   from 100 ms after a sweep and release over the hero blob the body stays a
 //          bead: in every sampled frame its centre is painted and the canvas box's four
 //          corners show the page ground
+//   cutcap an open dock whose active layer is narrower than an inactive one, with a
+//          #persistent-end seat and `--radius-dock: 1.875rem`, paints four equal plate
+//          corners (daraksha's glass-only repro `dock-cutcap`, ported to `src/`)
 //   slider a scrubber Slider at its minimum still draws its value: the fill is at least
 //          the thumb wide and the thumb is painted, so the well's leading end differs
 //          from its empty trailing end
@@ -347,3 +350,38 @@ test("blob · from 100 ms after a sweep and release the body stays a bead, not a
         for (const c of f.corners) expect(c).toBeLessThan(0.05);
     }
 });
+
+for (const width of [1440, 390]) {
+    test(`cutcap · the open narrow face with an end seat has four equal plate corners at ${width}`, async ({ page }, info) => {
+        const touch = info.project.name === "coarse-touch";
+        await page.setViewportSize({ width, height: 900 });
+        await page.goto("/tests-visual/release-11-0-2/cutcap-harness.html?radius-dock=1.875rem&active=page&end=1");
+        await page.locator(".repro-dock .dock-plate").waitFor();
+        await page.evaluate(() => document.fonts.ready);
+        await page.waitForTimeout(800);
+        const summary = page.locator('[aria-label$="open the dock"]').first();
+        if (touch) await summary.tap();
+        else await summary.hover();
+        await page.waitForTimeout(1200);
+        const r = await page.evaluate(() => {
+            const dock = document.querySelector<HTMLElement>(".repro-dock")!;
+            const plate = dock.querySelector<HTMLElement>(".dock-plate")!;
+            const cs = getComputedStyle(plate);
+            const run = dock.querySelector<HTMLElement>(".dock-run");
+            return {
+                collapsed: dock.classList.contains("collapsed"),
+                corners: [cs.borderTopLeftRadius, cs.borderTopRightRadius, cs.borderBottomRightRadius, cs.borderBottomLeftRadius].map((v) => parseFloat(v)),
+                clip: cs.clipPath,
+                box: [plate.offsetWidth, plate.offsetHeight],
+                runOverflow: run ? run.scrollWidth - run.clientWidth : null,
+            };
+        });
+        info.annotations.push({ type: "cutcap", description: JSON.stringify(r) });
+        expect(r.collapsed).toBe(false);
+        expect(Math.min(...r.corners)).toBeGreaterThan(0);
+        expect(Math.max(...r.corners) - Math.min(...r.corners)).toBeLessThanOrEqual(0.5);
+        // A cut cap is drawn by the clip: its rounded inset, if any, is equal on all four.
+        const round = /round\s+([^)]*)/.exec(r.clip)?.[1]?.split(/\s+/).map(parseFloat) ?? [];
+        if (round.length) expect(Math.max(...round) - Math.min(...round)).toBeLessThanOrEqual(0.5);
+    });
+}
