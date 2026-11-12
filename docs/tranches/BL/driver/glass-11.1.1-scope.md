@@ -59,3 +59,4 @@ The full release battery, the tag `v11.1.1`, the push and the CI publish under t
 - O-256: the dock's muted ink stays a muted step of the legible ink, not `contrast-color()` at full strength.
 - O-257: dock control opacity on `--duration-fast`.
 - O-258: no dock-cap scroll-timeline animation in the running state at idle in WebKit (`document.getAnimations()` witness, both engines).
+- O-264: full-travel Sheet motion critically damped on the same response (no overshoot past rest; witness: sampled frames at 390 and 1440, both engines, max excursion past rest 0.5 px or less).

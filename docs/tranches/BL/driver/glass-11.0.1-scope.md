@@ -56,3 +56,11 @@ Gates, in both engines, light and dark, at 390 and 1440:
 - **O-241:** run daraksha's `dock-cutcap.html?radius-dock=1.875rem&active=page&end=1` on the tip as a second witness for the open narrow-active face, with the end seat: four equal plate corners.
 - **O-244:** with `initialValue` set, a toggle stores the concrete mode, never `auto` (built with O-223).
 - After the 10.1.5 merge, read daraksha's dark gloss frame against the dark plate cure (O-245): say whether the warm glow is the same halo.
+
+
+## Added 2026-11-12 for 11.0.2 (atlas U/OW-R2, branch u/ow-integ-glass f9c58b03f; review each commit before it lands)
+
+- O-261: PagerDots worm measures the dot from a worm body's offsetWidth (the 301 px neck; the owner's teleporting dots).
+- O-262: dock morph origins when a consumer hides collapsed content (three parts); reviewed against 11.0.1's dockMorphMeasure, reversal family and release spec re-witnessed in both engines.
+- O-263: the run contains overscroll on its scroll axis only.
+- Order for 11.0.2: O-223 + O-244 (stored auto), O-240 (the quick press under Reduce Motion), then the rest.
