@@ -64,3 +64,4 @@ Gates, in both engines, light and dark, at 390 and 1440:
 - O-262: dock morph origins when a consumer hides collapsed content (three parts); reviewed against 11.0.1's dockMorphMeasure, reversal family and release spec re-witnessed in both engines.
 - O-263: the run contains overscroll on its scroll axis only.
 - Order for 11.0.2: O-223 + O-244 (stored auto), O-240 (the quick press under Reduce Motion), then the rest.
+- O-266: a breakpoint change mid-open holds the old content's size and snaps at the settle (the eight `O-101 ·` cells of release-10-1-2, RED on v11.0.0 and v11.0.1); third in 11.0.2's order.
