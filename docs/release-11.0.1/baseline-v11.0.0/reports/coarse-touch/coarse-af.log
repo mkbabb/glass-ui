@@ -1,0 +1,1163 @@
+
+Running 68 tests using 1 worker
+
+  ✘   1 [coarse-touch] › tests-visual/dock-luma-share.spec.ts:66:5 › dock-luma-share (PERF-6 — 12 per-dock observers → ONE per route) › ONE backdrop-sampled witness per route (not per dock) — /dock/overview (6.2s)
+  ✘   2 [coarse-touch] › tests-visual/dock-luma-share.spec.ts:138:5 › dock-luma-share (PERF-6 — 12 per-dock observers → ONE per route) › every staged dock reads the ONE shared luma via the cascade — /dock/overview (5.6s)
+  ✓   3 [coarse-touch] › tests-visual/dock-luma-share.spec.ts:205:5 › dock-luma-share (PERF-6 — 12 per-dock observers → ONE per route) › dock plate stays translucent + legibility un-regressed — /dock/overview (5.6s)
+  ✘   4 [coarse-touch] › tests-visual/dock-morph-family.spec.ts:43:1 › (a)/(b) — the morph composites a transform over a reserved footprint (no per-frame relayout) (1.6s)
+  ✘   5 [coarse-touch] › tests-visual/dock-morph-family.spec.ts:83:1 › (c) — under PRM the dock seats synchronously (every control inside the box, no sliver) (2.2s)
+  ✘   6 [coarse-touch] › tests-visual/dock-morph-family.spec.ts:139:1 › (d) — a nested DockLayerGroup reserves its peak-layer block-size (consumer never guesses) (1.7s)
+  ✘   7 [coarse-touch] › tests-visual/dock-morph-family.spec.ts:170:1 › (e) — a --dock-local-scale override on a dock scope paints a larger box (the @property thread) (1.6s)
+[WebServer] 7:19:20 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button as-child="" > 
+[WebServer]   at <CardFooter class="justify-center" > 
+[WebServer]   at <Primitive data-slot="card" data-shadow=true data-size="md"  ... > 
+[WebServer]   at <Surface data-slot="card" tier="floating" surface=undefined  ... > 
+[WebServer]   at <Card tier="floating" class="w-full max-w-(--measure-cel) text-center" > 
+[WebServer]   at <NotFound onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/dock/rail" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  ✓   8 [coarse-touch] › tests-visual/dock-morph-family.spec.ts:207:1 › (f) — the vertical dock morphs plate chrome continuously with its block-size (no snap, inline invariant) (1.5s)
+  ✘   9 [coarse-touch] › tests-visual/dock-morph-insitu.spec.ts:29:1 › 6a — in-situ V↔H frame-series lands the ONE --dock-morph-t scalar both ways (1.0s)
+  ✘  10 [coarse-touch] › tests-visual/dock-morph-insitu.spec.ts:115:1 › 6b — in-situ layering switch changes the dock active facet/route live (1.2s)
+6c BA-VJS-1: {"cycles":[{"cycle":0,"from":0,"to":0,"deadHold":false,"snap":false},{"cycle":1,"from":0,"to":0,"deadHold":false,"snap":false},{"cycle":2,"from":0,"to":0,"deadHold":false,"snap":false},{"cycle":3,"from":0,"to":0,"deadHold":false,"snap":false}]}
+  ✘  11 [coarse-touch] › tests-visual/dock-morph-insitu.spec.ts:147:1 › 6c — BA-VJS-1 four-cycle nested dock expand arms from:40 → to:≈242 (never 0) (6.8s)
+  ✘  12 [coarse-touch] › tests-visual/dock-morph-insitu.spec.ts:235:1 › 6d — §7 perf re-run over the in-situ V↔H morph window (4× throttle) (1.0s)
+  ✘  13 [coarse-touch] › tests-visual/dock-plate-clearance.spec.ts:174:9 › plate clearance — sidebar-vertical (light) (1.0m)
+  ✘  14 [coarse-touch] › tests-visual/dock-plate-clearance.spec.ts:174:9 › plate clearance — sidebar-vertical (dark) (1.0m)
+  ✘  15 [coarse-touch] › tests-visual/dock-plate-clearance.spec.ts:174:9 › plate clearance — bottom-horizontal (light) (1.0m)
+  ✘  16 [coarse-touch] › tests-visual/dock-plate-clearance.spec.ts:174:9 › plate clearance — bottom-horizontal (dark) (1.0m)
+  ✘  17 [coarse-touch] › tests-visual/dock-rail-cohesion.spec.ts:18:5 › dock-rail-cohesion (π lane — single-indicator DOM truth) › the DockLayerGroup rail renders exactly ONE TabsIndicator (15.2s)
+  ✘  18 [coarse-touch] › tests-visual/dock-sections.spec.ts:88:1 › BA.W-DOCK-SECTIONS — the seam-anchored rail + dual overrun + flush fan-out on BOTH shell docks (2.1s)
+  ✘  19 [coarse-touch] › tests-visual/dock-sections.spec.ts:204:1 › BA.W-DOCK-SECTIONS — G5: the dock box is INVIOLATE (the rail feeds no size) (1.7s)
+[WebServer] 7:23:57 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button as-child="" > 
+[WebServer]   at <CardFooter class="justify-center" > 
+[WebServer]   at <Primitive data-slot="card" data-shadow=true data-size="md"  ... > 
+[WebServer]   at <Surface data-slot="card" tier="floating" surface=undefined  ... > 
+[WebServer]   at <Card tier="floating" class="w-full max-w-(--measure-cel) text-center" > 
+[WebServer]   at <NotFound onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/compositions/dock-with-slider" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  ✘  20 [coarse-touch] › tests-visual/dock-with-slider-live.spec.ts:76:13 › dock-with-slider keepDockOpen (π lane — LIVE drag DELTA, fail-CLOSED) › hold + clear + capture — desktop / light (8.8s)
+[WebServer] 7:24:06 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button as-child="" > 
+[WebServer]   at <CardFooter class="justify-center" > 
+[WebServer]   at <Primitive data-slot="card" data-shadow=true data-size="md"  ... > 
+[WebServer]   at <Surface data-slot="card" tier="floating" surface=undefined  ... > 
+[WebServer]   at <Card tier="floating" class="w-full max-w-(--measure-cel) text-center" > 
+[WebServer]   at <NotFound onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/compositions/dock-with-slider" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  ✘  21 [coarse-touch] › tests-visual/dock-with-slider-live.spec.ts:76:13 › dock-with-slider keepDockOpen (π lane — LIVE drag DELTA, fail-CLOSED) › hold + clear + capture — desktop / dark (8.8s)
+[WebServer] 7:24:15 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button as-child="" > 
+[WebServer]   at <CardFooter class="justify-center" > 
+[WebServer]   at <Primitive data-slot="card" data-shadow=true data-size="md"  ... > 
+[WebServer]   at <Surface data-slot="card" tier="floating" surface=undefined  ... > 
+[WebServer]   at <Card tier="floating" class="w-full max-w-(--measure-cel) text-center" > 
+[WebServer]   at <NotFound onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/compositions/dock-with-slider" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  ✘  22 [coarse-touch] › tests-visual/dock-with-slider-live.spec.ts:76:13 › dock-with-slider keepDockOpen (π lane — LIVE drag DELTA, fail-CLOSED) › hold + clear + capture — mobile / light (8.8s)
+[WebServer] 7:24:24 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button as-child="" > 
+[WebServer]   at <CardFooter class="justify-center" > 
+[WebServer]   at <Primitive data-slot="card" data-shadow=true data-size="md"  ... > 
+[WebServer]   at <Surface data-slot="card" tier="floating" surface=undefined  ... > 
+[WebServer]   at <Card tier="floating" class="w-full max-w-(--measure-cel) text-center" > 
+[WebServer]   at <NotFound onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/compositions/dock-with-slider" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  ✘  23 [coarse-touch] › tests-visual/dock-with-slider-live.spec.ts:76:13 › dock-with-slider keepDockOpen (π lane — LIVE drag DELTA, fail-CLOSED) › hold + clear + capture — mobile / dark (8.8s)
+  ✓  24 [coarse-touch] › tests-visual/dockmorph-cta.spec.ts:39:5 › dockmorph-cta — the CTA-receive landing SEAT (π lane, LOCAL) › the seat reserves its box (no jump) and reveals with an opacity FLIP (2.2s)
+  ✓  25 [coarse-touch] › tests-visual/dockmorph-cta.spec.ts:132:5 › dockmorph-cta — the CTA-receive landing SEAT (π lane, LOCAL) › PRM — the seat reveal is an INSTANT opacity swap (transition off) (326ms)
+  ✘  26 [coarse-touch] › tests-visual/drag-morph.spec.ts:70:1 › (a) drag frame-series — follow ~1:1, velocity-squish, fling to nearest (1.5s)
+  ✓  27 [coarse-touch] › tests-visual/drag-morph.spec.ts:146:1 › (b) flick past midpoint snaps forward; slow short-of-midpoint snaps back (2.5s)
+  ✘  28 [coarse-touch] › tests-visual/drag-morph.spec.ts:183:1 › (c) PRM — drag functions, snap commits, NO squish frames (6.3s)
+  ✓  29 [coarse-touch] › tests-visual/drag-morph.spec.ts:226:1 › (d) keyboard roving — one tabstop, arrow/Home/End move focus + activate (2.6s)
+  ✘  30 [coarse-touch] › tests-visual/drag-morph.spec.ts:286:1 › (e) liquid-tab reachability — grab lands on the indicator, drag starts, click un-regressed (7.7s)
+  ✘  31 [coarse-touch] › tests-visual/drag-morph.spec.ts:357:1 › consumer #2 — DockLayerGroup pull-to-switch flips the active layer (7.8s)
+  ✓  32 [coarse-touch] › tests-visual/easing-primitive.spec.ts:69:5 › BK #85 W-EASING — the published curve family (π) › P1 — the bezier stroke plots the real CubicBezier twin (1.2s)
+  ✓  33 [coarse-touch] › tests-visual/easing-primitive.spec.ts:102:5 › BK #85 W-EASING — the published curve family (π) › P2 — the steps stroke is constructed, not sampled (1.1s)
+  ✘  34 [coarse-touch] › tests-visual/easing-primitive.spec.ts:143:9 › BK #85 W-EASING — the published curve family (π) › P3 — the curve strokes the violet --motion-accent twin (light) (1.2s)
+  ✘  35 [coarse-touch] › tests-visual/easing-primitive.spec.ts:143:9 › BK #85 W-EASING — the published curve family (π) › P3 — the curve strokes the violet --motion-accent twin (dark) (1.3s)
+  ✓  36 [coarse-touch] › tests-visual/easing-primitive.spec.ts:172:5 › BK #85 W-EASING — the published curve family (π) › P4 — the readout is the re-parseable literal in both modes (1.2s)
+  ✓  37 [coarse-touch] › tests-visual/easing-primitive.spec.ts:190:5 › BK #85 W-EASING — the published curve family (π) › P5 — the frame is constant and the plot is square (letterbox zero) (1.1s)
+  ✓  38 [coarse-touch] › tests-visual/easing-primitive.spec.ts:238:5 › BK #85 W-EASING — the published curve family (π) › P11 — the draw-on sweeps over frames, and lands on one under reduce (3.2s)
+[WebServer] 7:25:19 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button as-child="" > 
+[WebServer]   at <CardFooter class="justify-center" > 
+[WebServer]   at <Primitive data-slot="card" data-shadow=true data-size="md"  ... > 
+[WebServer]   at <Surface data-slot="card" tier="floating" surface=undefined  ... > 
+[WebServer]   at <Card tier="floating" class="w-full max-w-(--measure-cel) text-center" > 
+[WebServer]   at <NotFound onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/forms/select" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  ✘  39 [coarse-touch] › tests-visual/emission.spec.ts:53:5 › BA.W-EMISSION — the Select collision-bound ships + bounds in-viewport › the opened Select content computes a real maxHeight, bottoms in-viewport, grows from the anchor (1.0m)
+  ✘  40 [coarse-touch] › tests-visual/emission.spec.ts:112:5 › BA.W-EMISSION — the Slider size axis ships as real geometry › a standard size=md slider measures a real ≈1.25rem track (not 6px); the spectrum thumb is slim (1.0m)
+[WebServer] 7:27:20 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button data-scenario="button-as-child" as-child="" > 
+[WebServer]   at <Primitive material="content" shadow=true grain=false  ... > 
+[WebServer]   at <Surface material="content" tier="resting" surface="opaque"  ... > 
+[WebServer]   at <ShowcaseFrame caption="As-child" pad="sm" > 
+[WebServer]   at <StorySection heading="Keyboard, touch, and the linked command" blurb="One native button accepts Enter, Space, click, and coarse taps. `as-child` hands the whole command contract to another element without giving up the material." > 
+[WebServer]   at <TooltipProvider delay-duration=250 skip-delay-duration=300 > 
+[WebServer]   at <TooltipProvider delay-duration=250 > 
+[WebServer]   at <StoryPage> 
+[WebServer]   at <Buttons onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/display/buttons" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+[WebServer] 7:27:20 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button data-scenario="button-as-child-disabled" as-child="" disabled="" > 
+[WebServer]   at <Primitive material="content" shadow=true grain=false  ... > 
+[WebServer]   at <Surface material="content" tier="resting" surface="opaque"  ... > 
+[WebServer]   at <ShowcaseFrame caption="As-child" pad="sm" > 
+[WebServer]   at <StorySection heading="Keyboard, touch, and the linked command" blurb="One native button accepts Enter, Space, click, and coarse taps. `as-child` hands the whole command contract to another element without giving up the material." > 
+[WebServer]   at <TooltipProvider delay-duration=250 skip-delay-duration=300 > 
+[WebServer]   at <TooltipProvider delay-duration=250 > 
+[WebServer]   at <StoryPage> 
+[WebServer]   at <Buttons onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/display/buttons" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+[emission] destructive contrast (light): null
+  ✘  41 [coarse-touch] › tests-visual/emission.spec.ts:217:9 › BI.W-DEMO-SOURCE-SCAN — the destructive Button label clears AA (the CVA-foreground emission fix) › light mode — the destructive label ink resolves over bg-destructive at ≥4.5:1 (1.2s)
+[WebServer] 7:27:22 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button data-scenario="button-as-child" as-child="" > 
+[WebServer]   at <Primitive material="content" shadow=true grain=false  ... > 
+[WebServer]   at <Surface material="content" tier="resting" surface="opaque"  ... > 
+[WebServer]   at <ShowcaseFrame caption="As-child" pad="sm" > 
+[WebServer]   at <StorySection heading="Keyboard, touch, and the linked command" blurb="One native button accepts Enter, Space, click, and coarse taps. `as-child` hands the whole command contract to another element without giving up the material." > 
+[WebServer]   at <TooltipProvider delay-duration=250 skip-delay-duration=300 > 
+[WebServer]   at <TooltipProvider delay-duration=250 > 
+[WebServer]   at <StoryPage> 
+[WebServer]   at <Buttons onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/display/buttons" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+[WebServer] 7:27:22 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button data-scenario="button-as-child-disabled" as-child="" disabled="" > 
+[WebServer]   at <Primitive material="content" shadow=true grain=false  ... > 
+[WebServer]   at <Surface material="content" tier="resting" surface="opaque"  ... > 
+[WebServer]   at <ShowcaseFrame caption="As-child" pad="sm" > 
+[WebServer]   at <StorySection heading="Keyboard, touch, and the linked command" blurb="One native button accepts Enter, Space, click, and coarse taps. `as-child` hands the whole command contract to another element without giving up the material." > 
+[WebServer]   at <TooltipProvider delay-duration=250 skip-delay-duration=300 > 
+[WebServer]   at <TooltipProvider delay-duration=250 > 
+[WebServer]   at <StoryPage> 
+[WebServer]   at <Buttons onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/display/buttons" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+[emission] destructive contrast (dark): null
+  ✘  42 [coarse-touch] › tests-visual/emission.spec.ts:217:9 › BI.W-DEMO-SOURCE-SCAN — the destructive Button label clears AA (the CVA-foreground emission fix) › dark mode — the destructive label ink resolves over bg-destructive at ≥4.5:1 (1.3s)
+  ✘  43 [coarse-touch] › tests-visual/esc-stack.spec.ts:72:5 › (a) Escape stack — inner pops first, then outer [light] (1.8s)
+  ✘  44 [coarse-touch] › tests-visual/esc-stack.spec.ts:113:5 › (b) focus model — move-in / trap / inert / restore [light] (1.8s)
+  ✘  45 [coarse-touch] › tests-visual/esc-stack.spec.ts:72:5 › (a) Escape stack — inner pops first, then outer [dark] (1.7s)
+  ✘  46 [coarse-touch] › tests-visual/esc-stack.spec.ts:113:5 › (b) focus model — move-in / trap / inert / restore [dark] (1.8s)
+  ✓  47 [coarse-touch] › tests-visual/expandable-container.spec.ts:82:13 › expandable-container (π — the always-teleport redress, fail-CLOSED) › (a) inline renders real canvas + NO body-teleport @ mobile light (1.2s)
+  ✘  48 [coarse-touch] › tests-visual/expandable-container.spec.ts:111:13 › expandable-container (π — the always-teleport redress, fail-CLOSED) › (b) fullscreen teleports + frosts over content (alpha < 1) @ mobile light (1.4s)
+  ✓  49 [coarse-touch] › tests-visual/expandable-container.spec.ts:82:13 › expandable-container (π — the always-teleport redress, fail-CLOSED) › (a) inline renders real canvas + NO body-teleport @ mobile dark (1.3s)
+  ✘  50 [coarse-touch] › tests-visual/expandable-container.spec.ts:111:13 › expandable-container (π — the always-teleport redress, fail-CLOSED) › (b) fullscreen teleports + frosts over content (alpha < 1) @ mobile dark (1.4s)
+  ✓  51 [coarse-touch] › tests-visual/expandable-container.spec.ts:82:13 › expandable-container (π — the always-teleport redress, fail-CLOSED) › (a) inline renders real canvas + NO body-teleport @ desktop light (1.5s)
+  ✘  52 [coarse-touch] › tests-visual/expandable-container.spec.ts:111:13 › expandable-container (π — the always-teleport redress, fail-CLOSED) › (b) fullscreen teleports + frosts over content (alpha < 1) @ desktop light (1.4s)
+  ✓  53 [coarse-touch] › tests-visual/expandable-container.spec.ts:82:13 › expandable-container (π — the always-teleport redress, fail-CLOSED) › (a) inline renders real canvas + NO body-teleport @ desktop dark (1.3s)
+  ✘  54 [coarse-touch] › tests-visual/expandable-container.spec.ts:111:13 › expandable-container (π — the always-teleport redress, fail-CLOSED) › (b) fullscreen teleports + frosts over content (alpha < 1) @ desktop dark (1.3s)
+[WebServer] 7:27:49 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button as-child="" > 
+[WebServer]   at <CardFooter class="justify-center" > 
+[WebServer]   at <Primitive data-slot="card" data-shadow=true data-size="md"  ... > 
+[WebServer]   at <Surface data-slot="card" tier="floating" surface=undefined  ... > 
+[WebServer]   at <Card tier="floating" class="w-full max-w-(--measure-cel) text-center" > 
+[WebServer]   at <NotFound onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/display/metric-badge" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  ✘  55 [coarse-touch] › tests-visual/eyebrow-union.spec.ts:81:9 › eyebrow-union (π — the ONE mono-caption eyebrow voice, fail-CLOSED) › one eyebrow voice — light (1.0s)
+[WebServer] 7:27:50 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button as-child="" > 
+[WebServer]   at <CardFooter class="justify-center" > 
+[WebServer]   at <Primitive data-slot="card" data-shadow=true data-size="md"  ... > 
+[WebServer]   at <Surface data-slot="card" tier="floating" surface=undefined  ... > 
+[WebServer]   at <Card tier="floating" class="w-full max-w-(--measure-cel) text-center" > 
+[WebServer]   at <NotFound onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/display/metric-badge" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  ✘  56 [coarse-touch] › tests-visual/eyebrow-union.spec.ts:81:9 › eyebrow-union (π — the ONE mono-caption eyebrow voice, fail-CLOSED) › one eyebrow voice — dark (1.0s)
+  ✓  57 [coarse-touch] › tests-visual/fading-scroll.spec.ts:54:5 › mechanism — .fading-scroll--x at-rest start SHARP, scrolled end SHARP, fits NEITHER (1.0s)
+  ✓  58 [coarse-touch] › tests-visual/fading-scroll.spec.ts:54:5 › mechanism — .fading-scroll--y at-rest start SHARP, scrolled end SHARP, fits NEITHER (915ms)
+  ✓  59 [coarse-touch] › tests-visual/fading-scroll.spec.ts:153:1 › live — aurora controls column + preset row read --fade-start: 0px at rest (1.6s)
+  ✓  60 [coarse-touch] › tests-visual/fading-scroll.spec.ts:184:1 › live — blob mood row start edge SHARP at rest (post W-GOO-REDRESS wrap) (1.4s)
+  ✓  61 [coarse-touch] › tests-visual/fading-scroll.spec.ts:216:9 › DELTA capture — blob mood row [light] @ mobile (1.5s)
+  ✓  62 [coarse-touch] › tests-visual/fading-scroll.spec.ts:228:9 › DELTA capture — aurora controls column [light] @ mobile (1.6s)
+  ✓  63 [coarse-touch] › tests-visual/fading-scroll.spec.ts:216:9 › DELTA capture — blob mood row [dark] @ mobile (1.5s)
+  ✓  64 [coarse-touch] › tests-visual/fading-scroll.spec.ts:228:9 › DELTA capture — aurora controls column [dark] @ mobile (1.5s)
+  ✓  65 [coarse-touch] › tests-visual/fading-scroll.spec.ts:216:9 › DELTA capture — blob mood row [light] @ desktop (1.5s)
+  ✓  66 [coarse-touch] › tests-visual/fading-scroll.spec.ts:228:9 › DELTA capture — aurora controls column [light] @ desktop (1.5s)
+  ✓  67 [coarse-touch] › tests-visual/fading-scroll.spec.ts:216:9 › DELTA capture — blob mood row [dark] @ desktop (1.6s)
+  ✓  68 [coarse-touch] › tests-visual/fading-scroll.spec.ts:228:9 › DELTA capture — aurora controls column [dark] @ desktop (1.5s)
+
+
+  1) [coarse-touch] › tests-visual/dock-luma-share.spec.ts:66:5 › dock-luma-share (PERF-6 — 12 per-dock observers → ONE per route) › ONE backdrop-sampled witness per route (not per dock) — /dock/overview 
+
+    Error: /dock/overview: the .dock-stage did not stamp the readback witness — the shared per-route observer must own the ONE sample.
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      129 |             readback.stageSelfSampled,
+      130 |             `${ROUTE}: the .dock-stage did not stamp the readback witness — the shared per-route observer must own the ONE sample.`,
+    > 131 |         ).toBe(true);
+          |           ^
+      132 |         expect(
+      133 |             readback.stagedWitnessCount,
+      134 |             `${ROUTE}: ${readback.stagedWitnessCount} readback witnesses inside .dock-stage — expected exactly 1 (the shared stage observer). The per-staged-dock fleet did NOT collapse.`,
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/dock-luma-share.spec.ts:131:11
+
+    Error Context: tests-visual/test-results/dock-luma-share-dock-luma--f05cd-ot-per-dock-—-dock-overview-coarse-touch/error-context.md
+
+  2) [coarse-touch] › tests-visual/dock-luma-share.spec.ts:138:5 › dock-luma-share (PERF-6 — 12 per-dock observers → ONE per route) › every staged dock reads the ONE shared luma via the cascade — /dock/overview 
+
+    Error: /dock/overview: the injected stage luma did not reach EVERY staged dock — the shared per-route signal must cascade to all N docks.
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      200 |             result!.docksInherit,
+      201 |             `${ROUTE}: the injected stage luma did not reach EVERY staged dock — the shared per-route signal must cascade to all N docks.`,
+    > 202 |         ).toBe(true);
+          |           ^
+      203 |     });
+      204 |
+      205 |     test(`dock plate stays translucent + legibility un-regressed — ${ROUTE}`, async ({
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/dock-luma-share.spec.ts:202:11
+
+    Error Context: tests-visual/test-results/dock-luma-share-dock-luma--fda6c-the-cascade-—-dock-overview-coarse-touch/error-context.md
+
+  3) [coarse-touch] › tests-visual/dock-morph-family.spec.ts:43:1 › (a)/(b) — the morph composites a transform over a reserved footprint (no per-frame relayout) 
+
+    Error: the morph-axis box composites a transform mid-morph (got none)
+
+    expect(received).toBeTruthy()
+
+    Received: false
+
+      73 |         read.transform && read.transform !== "none" && read.transform !== "matrix(1, 0, 0, 1, 0, 0)",
+      74 |         `the morph-axis box composites a transform mid-morph (got ${read.transform})`,
+    > 75 |     ).toBeTruthy();
+         |       ^
+      76 |     // The reserved footprint is the SETTLED `to` (~240px), not the live-scalar interp
+      77 |     // (~150px at t=0.5). A reserved 240px box with a 0.625 scale reads as ~150px.
+      78 |     const reserved = Number.parseFloat(read.reservedInline ?? "0");
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/dock-morph-family.spec.ts:75:7
+
+    Error Context: tests-visual/test-results/dock-morph-family--a-b-—-t-4df0f-rint-no-per-frame-relayout--coarse-touch/error-context.md
+
+  4) [coarse-touch] › tests-visual/dock-morph-family.spec.ts:83:1 › (c) — under PRM the dock seats synchronously (every control inside the box, no sliver) 
+
+    Error: the PRM dock is NOT a 10px sliver (got 0px wide)
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 40
+    Received:   0
+
+      128 |     expect(seat.found, "the dock is present under PRM").toBe(true);
+      129 |     // The 10×74 sliver ground: the box must NOT be a sliver (width far above 10px).
+    > 130 |     expect(seat.boxW, `the PRM dock is NOT a 10px sliver (got ${seat.boxW}px wide)`).toBeGreaterThan(40);
+          |                                                                                      ^
+      131 |     expect(
+      132 |         seat.allInside,
+      133 |         `every dock control seats INSIDE the box under PRM (${seat.outsideCount}/${seat.controlCount} outside)`,
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/dock-morph-family.spec.ts:130:86
+
+    Error Context: tests-visual/test-results/dock-morph-family--c-—-und-4dba9-l-inside-the-box-no-sliver--coarse-touch/error-context.md
+
+  5) [coarse-touch] › tests-visual/dock-morph-family.spec.ts:139:1 › (d) — a nested DockLayerGroup reserves its peak-layer block-size (consumer never guesses) 
+
+    Error: --dock-layer-peak-block-size is a measured non-zero peak (got )
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   0
+
+      160 |     expect(reserve.found, "the .dock-layer-group is present").toBe(true);
+      161 |     // The group exposes a non-zero measured peak + reserves it as min-block-size.
+    > 162 |     expect(reserve.peakPx, `--dock-layer-peak-block-size is a measured non-zero peak (got ${reserve.peakVar})`).toBeGreaterThan(0);
+          |                                                                                                                 ^
+      163 |     expect(
+      164 |         Math.abs(reserve.minPx - reserve.peakPx),
+      165 |         `the group min-block-size (${reserve.minPx}) == the measured peak (${reserve.peakPx})`,
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/dock-morph-family.spec.ts:162:113
+
+    Error Context: tests-visual/test-results/dock-morph-family--d-—-a-n-169aa-ize-consumer-never-guesses--coarse-touch/error-context.md
+
+  6) [coarse-touch] › tests-visual/dock-morph-family.spec.ts:170:1 › (e) — a --dock-local-scale override on a dock scope paints a larger box (the @property thread) 
+
+    Error: --dock-local-scale: 1.4 on the dock scope re-evaluates --dock-scale (base 1 → threaded 1)
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 1.3
+    Received:   1
+
+      197 |         thread.threadedScale,
+      198 |         `--dock-local-scale: 1.4 on the dock scope re-evaluates --dock-scale (base ${thread.baseScale} → threaded ${thread.threadedScale})`,
+    > 199 |     ).toBeGreaterThan(thread.baseScale * 1.3);
+          |       ^
+      200 | });
+      201 |
+      202 | // ── (f) — the VERTICAL collapse→expand morphs its chrome continuously ────────────
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/dock-morph-family.spec.ts:199:7
+
+    Error Context: tests-visual/test-results/dock-morph-family--e-—-a---1db31-er-box-the-property-thread--coarse-touch/error-context.md
+
+  7) [coarse-touch] › tests-visual/dock-morph-insitu.spec.ts:29:1 › 6a — in-situ V↔H frame-series lands the ONE --dock-morph-t scalar both ways 
+
+    Error: the shell morph handle is present
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      35 |         await page.evaluate(() => typeof (window as any).__shellDockMorph?.setMorphT === "function"),
+      36 |         "the shell morph handle is present",
+    > 37 |     ).toBe(true);
+         |       ^
+      38 |
+      39 |     const series = await page.evaluate(async () => {
+      40 |         const h = (window as any).__shellDockMorph;
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/dock-morph-insitu.spec.ts:37:7
+
+    Error Context: tests-visual/test-results/dock-morph-insitu-6a-—-in--b002e-ck-morph-t-scalar-both-ways-coarse-touch/error-context.md
+
+  8) [coarse-touch] › tests-visual/dock-morph-insitu.spec.ts:115:1 › 6b — in-situ layering switch changes the dock active facet/route live 
+
+    Error: page.evaluate: TypeError: Cannot read properties of null (reading 'querySelectorAll')
+        at eval (eval at evaluate (:303:30), <anonymous>:3:35)
+        at UtilityScript.evaluate (<anonymous>:305:16)
+        at UtilityScript.<anonymous> (<anonymous>:1:44)
+        at eval (eval at evaluate (:303:30), <anonymous>:3:35)
+        at UtilityScript.evaluate (<anonymous>:305:16)
+        at UtilityScript.<anonymous> (<anonymous>:1:44)
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/dock-morph-insitu.spec.ts:122:31
+
+    Error Context: tests-visual/test-results/dock-morph-insitu-6b-—-in--1bb52-ock-active-facet-route-live-coarse-touch/error-context.md
+
+  9) [coarse-touch] › tests-visual/dock-morph-insitu.spec.ts:147:1 › 6c — BA-VJS-1 four-cycle nested dock expand arms from:40 → to:≈242 (never 0) 
+
+    Error: cycle 0 from
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 20
+    Received:   0
+
+      223 |     for (const c of (result as any).cycles) {
+      224 |         // The acceptance: from:40 → to:≈242 (the content-intrinsic span, never 0/collapsed).
+    > 225 |         expect(c.from, `cycle ${c.cycle} from`).toBeGreaterThan(20);
+          |                                                 ^
+      226 |         expect(c.to, `cycle ${c.cycle} to is the real expanded span (never the collapsed ~43)`).toBeGreaterThan(
+      227 |             120,
+      228 |         );
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/dock-morph-insitu.spec.ts:225:49
+
+    Error Context: tests-visual/test-results/dock-morph-insitu-6c-—-BA--c82b9--from-40-→-to-≈242-never-0--coarse-touch/error-context.md
+
+  10) [coarse-touch] › tests-visual/dock-morph-insitu.spec.ts:235:1 › 6d — §7 perf re-run over the in-situ V↔H morph window (4× throttle) 
+
+    Error: page.evaluate: TypeError: Cannot read properties of undefined (reading 'open')
+        at eval (eval at evaluate (:303:30), <anonymous>:5:9)
+        at UtilityScript.evaluate (<anonymous>:305:16)
+        at UtilityScript.<anonymous> (<anonymous>:1:44)
+        at eval (eval at evaluate (:303:30), <anonymous>:5:9)
+        at UtilityScript.evaluate (<anonymous>:305:16)
+        at UtilityScript.<anonymous> (<anonymous>:1:44)
+        at measure (/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/dock-morph-insitu.spec.ts:243:20)
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/dock-morph-insitu.spec.ts:290:25
+
+    Error Context: tests-visual/test-results/dock-morph-insitu-6d-—-§7--5dd9e-H-morph-window-4×-throttle--coarse-touch/error-context.md
+
+  11) [coarse-touch] › tests-visual/dock-plate-clearance.spec.ts:174:9 › plate clearance — sidebar-vertical (light) 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: locator.hover: Test timeout of 60000ms exceeded.
+    Call log:
+      - waiting for locator('.demo-sidebar-dock').first().locator('.dock-icon-button').first()
+        - locator resolved to <button type="button" data-press-armed="" data-state="closed" data-glass-dock-seat="" aria-label="Foundations" data-grace-area-trigger="" class="dock-icon-button glass-specular-track glass-capsule-hover demo-sidebar-item tap-squish text-muted-foreground">…</button>
+      - attempting hover action
+        2 × waiting for element to be visible and stable
+          - element is visible and stable
+          - scrolling into view if needed
+          - done scrolling
+          - <nav class="demo-sidebar-rail" aria-label="Category navigation" data-shell-region="category-navigation">…</nav> intercepts pointer events
+        - retrying hover action
+        - waiting 20ms
+        2 × waiting for element to be visible and stable
+          - element is visible and stable
+          - scrolling into view if needed
+          - done scrolling
+          - <nav class="demo-sidebar-rail" aria-label="Category navigation" data-shell-region="category-navigation">…</nav> intercepts pointer events
+        - retrying hover action
+          - waiting 100ms
+        113 × waiting for element to be visible and stable
+            - element is visible and stable
+            - scrolling into view if needed
+            - done scrolling
+            - <nav class="demo-sidebar-rail" aria-label="Category navigation" data-shell-region="category-navigation">…</nav> intercepts pointer events
+          - retrying hover action
+            - waiting 500ms
+
+
+      186 |                 // HOVER state — drive the real pointer so CSS :hover engages (the
+      187 |                 // hover scale needs it; a synthetic event never sets :hover).
+    > 188 |                 await ctrl.hover();
+          |                            ^
+      189 |                 await page.waitForTimeout(220); // settle the scale spring
+      190 |                 const hoverRead = await readControl(page, shell.dock, ctrlSel);
+      191 |                 const key = `${shell.name}/${mode}/${ctrlSel}/hover`;
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/dock-plate-clearance.spec.ts:188:28
+
+    Error Context: tests-visual/test-results/dock-plate-clearance-plate-e898a-e-—-sidebar-vertical-light--coarse-touch/error-context.md
+
+    Error Context: tests-visual/test-results/dock-plate-clearance-plate-e898a-e-—-sidebar-vertical-light--coarse-touch/error-context.md
+
+  12) [coarse-touch] › tests-visual/dock-plate-clearance.spec.ts:174:9 › plate clearance — sidebar-vertical (dark) 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: locator.hover: Test timeout of 60000ms exceeded.
+    Call log:
+      - waiting for locator('.demo-sidebar-dock').first().locator('.dock-icon-button').first()
+        - locator resolved to <button type="button" data-press-armed="" data-state="closed" data-glass-dock-seat="" aria-label="Foundations" data-grace-area-trigger="" class="dock-icon-button glass-specular-track glass-capsule-hover demo-sidebar-item tap-squish text-muted-foreground">…</button>
+      - attempting hover action
+        2 × waiting for element to be visible and stable
+          - element is visible and stable
+          - scrolling into view if needed
+          - done scrolling
+          - <nav class="demo-sidebar-rail" aria-label="Category navigation" data-shell-region="category-navigation">…</nav> intercepts pointer events
+        - retrying hover action
+        - waiting 20ms
+        2 × waiting for element to be visible and stable
+          - element is visible and stable
+          - scrolling into view if needed
+          - done scrolling
+          - <nav class="demo-sidebar-rail" aria-label="Category navigation" data-shell-region="category-navigation">…</nav> intercepts pointer events
+        - retrying hover action
+          - waiting 100ms
+        113 × waiting for element to be visible and stable
+            - element is visible and stable
+            - scrolling into view if needed
+            - done scrolling
+            - <nav class="demo-sidebar-rail" aria-label="Category navigation" data-shell-region="category-navigation">…</nav> intercepts pointer events
+          - retrying hover action
+            - waiting 500ms
+
+
+      186 |                 // HOVER state — drive the real pointer so CSS :hover engages (the
+      187 |                 // hover scale needs it; a synthetic event never sets :hover).
+    > 188 |                 await ctrl.hover();
+          |                            ^
+      189 |                 await page.waitForTimeout(220); // settle the scale spring
+      190 |                 const hoverRead = await readControl(page, shell.dock, ctrlSel);
+      191 |                 const key = `${shell.name}/${mode}/${ctrlSel}/hover`;
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/dock-plate-clearance.spec.ts:188:28
+
+    Error Context: tests-visual/test-results/dock-plate-clearance-plate-a45e2-ce-—-sidebar-vertical-dark--coarse-touch/error-context.md
+
+    Error Context: tests-visual/test-results/dock-plate-clearance-plate-a45e2-ce-—-sidebar-vertical-dark--coarse-touch/error-context.md
+
+  13) [coarse-touch] › tests-visual/dock-plate-clearance.spec.ts:174:9 › plate clearance — bottom-horizontal (light) 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: locator.hover: Test timeout of 60000ms exceeded.
+    Call log:
+      - waiting for locator('.demo-bottom-dock__shell').first().locator('.dock-icon-button').first()
+        - locator resolved to <button type="button" data-v-2274dfab="" data-press-armed="" data-state="closed" aria-expanded="false" aria-haspopup="dialog" data-glass-dock-seat="" data-grace-area-trigger="" aria-label="Open category navigation" class="dock-icon-button glass-specular-track glass-capsule-hover demo-bottom-dock__menu tap-squish">…</button>
+      - attempting hover action
+        2 × waiting for element to be visible and stable
+          - element is not visible
+        - retrying hover action
+        - waiting 20ms
+        2 × waiting for element to be visible and stable
+          - element is not visible
+        - retrying hover action
+          - waiting 100ms
+        113 × waiting for element to be visible and stable
+            - element is not visible
+          - retrying hover action
+            - waiting 500ms
+
+
+      186 |                 // HOVER state — drive the real pointer so CSS :hover engages (the
+      187 |                 // hover scale needs it; a synthetic event never sets :hover).
+    > 188 |                 await ctrl.hover();
+          |                            ^
+      189 |                 await page.waitForTimeout(220); // settle the scale spring
+      190 |                 const hoverRead = await readControl(page, shell.dock, ctrlSel);
+      191 |                 const key = `${shell.name}/${mode}/${ctrlSel}/hover`;
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/dock-plate-clearance.spec.ts:188:28
+
+    Error Context: tests-visual/test-results/dock-plate-clearance-plate-0270e--—-bottom-horizontal-light--coarse-touch/error-context.md
+
+    Error Context: tests-visual/test-results/dock-plate-clearance-plate-0270e--—-bottom-horizontal-light--coarse-touch/error-context.md
+
+  14) [coarse-touch] › tests-visual/dock-plate-clearance.spec.ts:174:9 › plate clearance — bottom-horizontal (dark) 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: locator.hover: Test timeout of 60000ms exceeded.
+    Call log:
+      - waiting for locator('.demo-bottom-dock__shell').first().locator('.dock-icon-button').first()
+        - locator resolved to <button type="button" data-v-2274dfab="" data-press-armed="" data-state="closed" aria-expanded="false" aria-haspopup="dialog" data-glass-dock-seat="" data-grace-area-trigger="" aria-label="Open category navigation" class="dock-icon-button glass-specular-track glass-capsule-hover demo-bottom-dock__menu tap-squish">…</button>
+      - attempting hover action
+        2 × waiting for element to be visible and stable
+          - element is not visible
+        - retrying hover action
+        - waiting 20ms
+        2 × waiting for element to be visible and stable
+          - element is not visible
+        - retrying hover action
+          - waiting 100ms
+        113 × waiting for element to be visible and stable
+            - element is not visible
+          - retrying hover action
+            - waiting 500ms
+
+
+      186 |                 // HOVER state — drive the real pointer so CSS :hover engages (the
+      187 |                 // hover scale needs it; a synthetic event never sets :hover).
+    > 188 |                 await ctrl.hover();
+          |                            ^
+      189 |                 await page.waitForTimeout(220); // settle the scale spring
+      190 |                 const hoverRead = await readControl(page, shell.dock, ctrlSel);
+      191 |                 const key = `${shell.name}/${mode}/${ctrlSel}/hover`;
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/dock-plate-clearance.spec.ts:188:28
+
+    Error Context: tests-visual/test-results/dock-plate-clearance-plate-0ad3d-e-—-bottom-horizontal-dark--coarse-touch/error-context.md
+
+    Error Context: tests-visual/test-results/dock-plate-clearance-plate-0ad3d-e-—-bottom-horizontal-dark--coarse-touch/error-context.md
+
+  15) [coarse-touch] › tests-visual/dock-rail-cohesion.spec.ts:18:5 › dock-rail-cohesion (π lane — single-indicator DOM truth) › the DockLayerGroup rail renders exactly ONE TabsIndicator 
+
+    TimeoutError: page.waitForSelector: Timeout 15000ms exceeded.
+    Call log:
+      - waiting for locator('.dock-layer-rail') to be visible
+
+
+      29 |             a?.click();
+      30 |         });
+    > 31 |         await page.waitForSelector(".dock-layer-rail", { timeout: 15_000 });
+         |                    ^
+      32 |
+      33 |         // Count `[data-slot="tabs-indicator"]` descendants of EACH `.dock-layer-rail`.
+      34 |         // EXACTLY ONE per rail — the explicit `.dock-layer-tab-indicator`, with the
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/dock-rail-cohesion.spec.ts:31:20
+
+    Error Context: tests-visual/test-results/dock-rail-cohesion-dock-ra-2f847-s-exactly-ONE-TabsIndicator-coarse-touch/error-context.md
+
+  16) [coarse-touch] › tests-visual/dock-sections.spec.ts:88:1 › BA.W-DOCK-SECTIONS — the seam-anchored rail + dual overrun + flush fan-out on BOTH shell docks 
+
+    Error: a rail strip mounts on a faceted route (light)
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      129 |         // The faceted route must mount at least one rail (the per-orientation seat).
+      130 |         const anyRail = [sidebar, bottom].some((d) => d && d.slot && d.strip);
+    > 131 |         expect(anyRail, `a rail strip mounts on a faceted route (${mode})`).toBe(true);
+          |                                                                             ^
+      132 |
+      133 |         for (const [name, d] of [
+      134 |             ["sidebar", sidebar],
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/dock-sections.spec.ts:131:77
+
+    Error Context: tests-visual/test-results/dock-sections-BA-W-DOCK-SE-3b362-fan-out-on-BOTH-shell-docks-coarse-touch/error-context.md
+
+  17) [coarse-touch] › tests-visual/dock-sections.spec.ts:204:1 › BA.W-DOCK-SECTIONS — G5: the dock box is INVIOLATE (the rail feeds no size) 
+
+    Error: the bottom dock + rail present
+
+    expect(received).not.toBeNull()
+
+    Received: null
+
+      236 |     );
+      237 |
+    > 238 |     expect(delta, "the bottom dock + rail present").not.toBeNull();
+          |                                                         ^
+      239 |     if (delta) {
+      240 |         expect(delta.dw, `G5: the dock width is inviolate with the rail (Δw=${delta.dw})`).toBeLessThanOrEqual(2);
+      241 |         expect(delta.dh, `G5: the dock height is inviolate with the rail (Δh=${delta.dh})`).toBeLessThanOrEqual(2);
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/dock-sections.spec.ts:238:57
+
+    Error Context: tests-visual/test-results/dock-sections-BA-W-DOCK-SE-615ba-ATE-the-rail-feeds-no-size--coarse-touch/error-context.md
+
+  18) [coarse-touch] › tests-visual/dock-with-slider-live.spec.ts:76:13 › dock-with-slider keepDockOpen (π lane — LIVE drag DELTA, fail-CLOSED) › hold + clear + capture — desktop / light 
+
+    TimeoutError: page.waitForSelector: Timeout 8000ms exceeded.
+    Call log:
+      - waiting for locator('.glass-dock[data-testid="dock-slider-hold-root"]') to be visible
+
+
+      110 |
+      111 |                 // The CLAUDE.md-pointer + route resolution proof: the dock cell exists.
+    > 112 |                 await page.waitForSelector(DOCK_SEL, { timeout: 8000 });
+          |                            ^
+      113 |                 const dock = page.locator(DOCK_SEL).first();
+      114 |                 // Scroll the dock to viewport CENTRE — `scrollIntoViewIfNeeded` parks
+      115 |                 // it at the page bottom (the cell sits low in the two-cell story), so
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/dock-with-slider-live.spec.ts:112:28
+
+    Error Context: tests-visual/test-results/dock-with-slider-live-dock-f2567-ear-capture-—-desktop-light-coarse-touch/error-context.md
+
+  19) [coarse-touch] › tests-visual/dock-with-slider-live.spec.ts:76:13 › dock-with-slider keepDockOpen (π lane — LIVE drag DELTA, fail-CLOSED) › hold + clear + capture — desktop / dark 
+
+    TimeoutError: page.waitForSelector: Timeout 8000ms exceeded.
+    Call log:
+      - waiting for locator('.glass-dock[data-testid="dock-slider-hold-root"]') to be visible
+
+
+      110 |
+      111 |                 // The CLAUDE.md-pointer + route resolution proof: the dock cell exists.
+    > 112 |                 await page.waitForSelector(DOCK_SEL, { timeout: 8000 });
+          |                            ^
+      113 |                 const dock = page.locator(DOCK_SEL).first();
+      114 |                 // Scroll the dock to viewport CENTRE — `scrollIntoViewIfNeeded` parks
+      115 |                 // it at the page bottom (the cell sits low in the two-cell story), so
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/dock-with-slider-live.spec.ts:112:28
+
+    Error Context: tests-visual/test-results/dock-with-slider-live-dock-44aac-lear-capture-—-desktop-dark-coarse-touch/error-context.md
+
+  20) [coarse-touch] › tests-visual/dock-with-slider-live.spec.ts:76:13 › dock-with-slider keepDockOpen (π lane — LIVE drag DELTA, fail-CLOSED) › hold + clear + capture — mobile / light 
+
+    TimeoutError: page.waitForSelector: Timeout 8000ms exceeded.
+    Call log:
+      - waiting for locator('.glass-dock[data-testid="dock-slider-hold-root"]') to be visible
+
+
+      110 |
+      111 |                 // The CLAUDE.md-pointer + route resolution proof: the dock cell exists.
+    > 112 |                 await page.waitForSelector(DOCK_SEL, { timeout: 8000 });
+          |                            ^
+      113 |                 const dock = page.locator(DOCK_SEL).first();
+      114 |                 // Scroll the dock to viewport CENTRE — `scrollIntoViewIfNeeded` parks
+      115 |                 // it at the page bottom (the cell sits low in the two-cell story), so
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/dock-with-slider-live.spec.ts:112:28
+
+    Error Context: tests-visual/test-results/dock-with-slider-live-dock-ccf81-lear-capture-—-mobile-light-coarse-touch/error-context.md
+
+  21) [coarse-touch] › tests-visual/dock-with-slider-live.spec.ts:76:13 › dock-with-slider keepDockOpen (π lane — LIVE drag DELTA, fail-CLOSED) › hold + clear + capture — mobile / dark 
+
+    TimeoutError: page.waitForSelector: Timeout 8000ms exceeded.
+    Call log:
+      - waiting for locator('.glass-dock[data-testid="dock-slider-hold-root"]') to be visible
+
+
+      110 |
+      111 |                 // The CLAUDE.md-pointer + route resolution proof: the dock cell exists.
+    > 112 |                 await page.waitForSelector(DOCK_SEL, { timeout: 8000 });
+          |                            ^
+      113 |                 const dock = page.locator(DOCK_SEL).first();
+      114 |                 // Scroll the dock to viewport CENTRE — `scrollIntoViewIfNeeded` parks
+      115 |                 // it at the page bottom (the cell sits low in the two-cell story), so
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/dock-with-slider-live.spec.ts:112:28
+
+    Error Context: tests-visual/test-results/dock-with-slider-live-dock-da71e-clear-capture-—-mobile-dark-coarse-touch/error-context.md
+
+  22) [coarse-touch] › tests-visual/drag-morph.spec.ts:70:1 › (a) drag frame-series — follow ~1:1, velocity-squish, fling to nearest 
+
+    Error: expect(received).toBeGreaterThan(expected)
+
+    Expected: > 1
+    Received:   1
+
+      122 |     expect(followError).toBeLessThan(40);
+      123 |     // VELOCITY-SQUISH — a fast pull swells the plate above 1, capped ≤ 1.08.
+    > 124 |     expect(maxStretch).toBeGreaterThan(1);
+          |                        ^
+      125 |     expect(maxStretch).toBeLessThanOrEqual(1.085);
+      126 |
+      127 |     // Release — the fling snaps to the nearest tab + the model commits.
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/drag-morph.spec.ts:124:24
+
+    Error Context: tests-visual/test-results/drag-morph--a-drag-frame-s-04af1-ity-squish-fling-to-nearest-coarse-touch/error-context.md
+
+  23) [coarse-touch] › tests-visual/drag-morph.spec.ts:183:1 › (c) PRM — drag functions, snap commits, NO squish frames 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: locator('.segmented-tabs:not(.segmented-tabs--underline):not(.segmented-tabs--vertical)').first().locator('.segmented-indicator.glass-drag-grabbable')
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" with timeout 5000ms
+      - waiting for locator('.segmented-tabs:not(.segmented-tabs--underline):not(.segmented-tabs--vertical)').first().locator('.segmented-indicator.glass-drag-grabbable')
+
+
+      190 |     const indicator = strip.locator(".segmented-indicator.glass-drag-grabbable");
+      191 |     const tabs = strip.locator(".segmented-tab");
+    > 192 |     await expect(indicator).toBeVisible();
+          |                             ^
+      193 |
+      194 |     await selectTab(tabs, 0);
+      195 |     await page.waitForTimeout(300);
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/drag-morph.spec.ts:192:29
+
+    Error Context: tests-visual/test-results/drag-morph--c-PRM-—-drag-f-da388-ap-commits-NO-squish-frames-coarse-touch/error-context.md
+
+  24) [coarse-touch] › tests-visual/drag-morph.spec.ts:286:1 › (e) liquid-tab reachability — grab lands on the indicator, drag starts, click un-regressed 
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator:  locator('.segmented-tabs:not(.segmented-tabs--underline):not(.segmented-tabs--vertical)').first().locator('.segmented-tab').first()
+    Expected: "true"
+    Received: "false"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveAttribute" with timeout 5000ms
+      - waiting for locator('.segmented-tabs:not(.segmented-tabs--underline):not(.segmented-tabs--vertical)').first().locator('.segmented-tab').first()
+        14 × locator resolved to <button type="button" tabindex="-1" aria-pressed="false" class="segmented-tab">Grid</button>
+           - unexpected value "false"
+
+
+      346 |     await selectTab(tabs, 0);
+      347 |     await page.waitForTimeout(400);
+    > 348 |     await expect(tabs.nth(0)).toHaveAttribute("aria-pressed", "true");
+          |                               ^
+      349 |
+      350 |     mkdirSync(VISUAL_DIR, { recursive: true });
+      351 |     await page.screenshot({
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/drag-morph.spec.ts:348:31
+
+    Error Context: tests-visual/test-results/drag-morph--e-liquid-tab-r-96882-g-starts-click-un-regressed-coarse-touch/error-context.md
+
+  25) [coarse-touch] › tests-visual/drag-morph.spec.ts:357:1 › consumer #2 — DockLayerGroup pull-to-switch flips the active layer 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: locator('.dock-layer-rail.glass-drag-grabbable').first()
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" with timeout 5000ms
+      - waiting for locator('.dock-layer-rail.glass-drag-grabbable').first()
+
+
+      363 |
+      364 |     const rail = page.locator(".dock-layer-rail.glass-drag-grabbable").first();
+    > 365 |     await expect(rail).toBeVisible();
+          |                        ^
+      366 |
+      367 |     const tabs = rail.locator(".dock-layer-tab");
+      368 |     const count = await tabs.count();
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/drag-morph.spec.ts:365:24
+
+    Error Context: tests-visual/test-results/drag-morph-consumer-2-—-Do-31930-itch-flips-the-active-layer-coarse-touch/error-context.md
+
+  26) [coarse-touch] › tests-visual/easing-primitive.spec.ts:143:9 › BK #85 W-EASING — the published curve family (π) › P3 — the curve strokes the violet --motion-accent twin (light) 
+
+    Error: the curve stroke resolves to a color (oklch(0.532 0.18 317.5))
+
+    expect(received).not.toBeNull()
+
+    Received: null
+
+      158 |             }, INK);
+      159 |             const rgb = parseRgb(strokeRgb || "");
+    > 160 |             expect(rgb, `the curve stroke resolves to a color (${strokeRgb})`).not.toBeNull();
+          |                                                                                    ^
+      161 |             const hue = rgbHueDeg(rgb![0], rgb![1], rgb![2]);
+      162 |             // --viz-legendre is the violet identity (oklch hue ~317.5° light /
+      163 |             // ~318.1° dark) — NOT the warm-red --viz-fourier (~30°).
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/easing-primitive.spec.ts:160:84
+
+    Error Context: tests-visual/test-results/easing-primitive-BK-85-W-E-40a79---motion-accent-twin-light--coarse-touch/error-context.md
+
+  27) [coarse-touch] › tests-visual/easing-primitive.spec.ts:143:9 › BK #85 W-EASING — the published curve family (π) › P3 — the curve strokes the violet --motion-accent twin (dark) 
+
+    Error: the curve stroke resolves to a color (oklch(0.739 0.134 318.1))
+
+    expect(received).not.toBeNull()
+
+    Received: null
+
+      158 |             }, INK);
+      159 |             const rgb = parseRgb(strokeRgb || "");
+    > 160 |             expect(rgb, `the curve stroke resolves to a color (${strokeRgb})`).not.toBeNull();
+          |                                                                                    ^
+      161 |             const hue = rgbHueDeg(rgb![0], rgb![1], rgb![2]);
+      162 |             // --viz-legendre is the violet identity (oklch hue ~317.5° light /
+      163 |             // ~318.1° dark) — NOT the warm-red --viz-fourier (~30°).
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/easing-primitive.spec.ts:160:84
+
+    Error Context: tests-visual/test-results/easing-primitive-BK-85-W-E-db3e0----motion-accent-twin-dark--coarse-touch/error-context.md
+
+  28) [coarse-touch] › tests-visual/emission.spec.ts:53:5 › BA.W-EMISSION — the Select collision-bound ships + bounds in-viewport › the opened Select content computes a real maxHeight, bottoms in-viewport, grows from the anchor 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: locator.scrollIntoViewIfNeeded: Test timeout of 60000ms exceeded.
+    Call log:
+      - waiting for locator('[id="sel-font"]')
+
+
+      58 |         // Open the first Select (the font-family trigger).
+      59 |         const trigger = page.locator('[id="sel-font"]');
+    > 60 |         await trigger.scrollIntoViewIfNeeded();
+         |                       ^
+      61 |         await trigger.click();
+      62 |
+      63 |         const content = page.locator('[data-slot="select-content"]').first();
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/emission.spec.ts:60:23
+
+    Error Context: tests-visual/test-results/emission-BA-W-EMISSION-—-t-727e1-wport-grows-from-the-anchor-coarse-touch/error-context.md
+
+  29) [coarse-touch] › tests-visual/emission.spec.ts:112:5 › BA.W-EMISSION — the Slider size axis ships as real geometry › a standard size=md slider measures a real ≈1.25rem track (not 6px); the spectrum thumb is slim 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: locator.scrollIntoViewIfNeeded: Test timeout of 60000ms exceeded.
+    Call log:
+      - waiting for locator('[aria-label="standard md"]').first()
+
+
+      117 |         // The variant×size matrix renders aria-label="standard md" etc.
+      118 |         const stdMd = page.locator('[aria-label="standard md"]').first();
+    > 119 |         await stdMd.scrollIntoViewIfNeeded();
+          |                     ^
+      120 |         await stdMd.waitFor({ state: "visible" });
+      121 |
+      122 |         const trackH = await stdMd.evaluate((root) => {
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/emission.spec.ts:119:21
+
+    Error Context: tests-visual/test-results/emission-BA-W-EMISSION-—-t-b3233--the-spectrum-thumb-is-slim-coarse-touch/error-context.md
+
+  30) [coarse-touch] › tests-visual/emission.spec.ts:217:9 › BI.W-DEMO-SOURCE-SCAN — the destructive Button label clears AA (the CVA-foreground emission fix) › light mode — the destructive label ink resolves over bg-destructive at ≥4.5:1 
+
+    Error: the destructive Button must be present
+
+    expect(received).not.toBeNull()
+
+    Received: null
+
+      227 |             const readback = await labelContrast(page);
+      228 |             console.log(`[emission] destructive contrast (${mode}):`, JSON.stringify(readback));
+    > 229 |             expect(readback, "the destructive Button must be present").not.toBeNull();
+          |                                                                            ^
+      230 |             expect(
+      231 |                 readback!.ratio,
+      232 |                 "the destructive label/fill contrast must be measurable",
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/emission.spec.ts:229:76
+
+    Error Context: tests-visual/test-results/emission-BI-W-DEMO-SOURCE--01c6f-er-bg-destructive-at-≥4-5-1-coarse-touch/error-context.md
+
+  31) [coarse-touch] › tests-visual/emission.spec.ts:217:9 › BI.W-DEMO-SOURCE-SCAN — the destructive Button label clears AA (the CVA-foreground emission fix) › dark mode — the destructive label ink resolves over bg-destructive at ≥4.5:1 
+
+    Error: the destructive Button must be present
+
+    expect(received).not.toBeNull()
+
+    Received: null
+
+      227 |             const readback = await labelContrast(page);
+      228 |             console.log(`[emission] destructive contrast (${mode}):`, JSON.stringify(readback));
+    > 229 |             expect(readback, "the destructive Button must be present").not.toBeNull();
+          |                                                                            ^
+      230 |             expect(
+      231 |                 readback!.ratio,
+      232 |                 "the destructive label/fill contrast must be measurable",
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/emission.spec.ts:229:76
+
+    Error Context: tests-visual/test-results/emission-BI-W-DEMO-SOURCE--6feaf-er-bg-destructive-at-≥4-5-1-coarse-touch/error-context.md
+
+  32) [coarse-touch] › tests-visual/esc-stack.spec.ts:72:5 › (a) Escape stack — inner pops first, then outer [light] 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 0
+
+      79 |         await page.waitForTimeout(200);
+      80 |         let markers = await overlayMarkers(page);
+    > 81 |         expect(markers.length).toBe(1);
+         |                                ^
+      82 |         expect(markers[0]).toContain("outer");
+      83 |
+      84 |         // Open the INNER expandable (nested inside the outer overlay panel).
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/esc-stack.spec.ts:81:32
+
+    Error Context: tests-visual/test-results/esc-stack--a-Escape-stack--4f418-ops-first-then-outer-light--coarse-touch/error-context.md
+
+    Error Context: tests-visual/test-results/esc-stack--a-Escape-stack--4f418-ops-first-then-outer-light--coarse-touch/error-context.md
+
+  33) [coarse-touch] › tests-visual/esc-stack.spec.ts:113:5 › (b) focus model — move-in / trap / inert / restore [light] 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      122 |         await trigger.click();
+      123 |         await page.waitForTimeout(250);
+    > 124 |         expect(await activeInsideOverlay(page)).toBe(true);
+          |                                                 ^
+      125 |
+      126 |         // The inline host is `inert` while fullscreen (page-behind footprint).
+      127 |         const inert = await page
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/esc-stack.spec.ts:124:49
+
+    Error Context: tests-visual/test-results/esc-stack--b-focus-model-—-move-in-trap-inert-restore-light--coarse-touch/error-context.md
+
+    Error Context: tests-visual/test-results/esc-stack--b-focus-model-—-move-in-trap-inert-restore-light--coarse-touch/error-context.md
+
+  34) [coarse-touch] › tests-visual/esc-stack.spec.ts:72:5 › (a) Escape stack — inner pops first, then outer [dark] 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 0
+
+      79 |         await page.waitForTimeout(200);
+      80 |         let markers = await overlayMarkers(page);
+    > 81 |         expect(markers.length).toBe(1);
+         |                                ^
+      82 |         expect(markers[0]).toContain("outer");
+      83 |
+      84 |         // Open the INNER expandable (nested inside the outer overlay panel).
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/esc-stack.spec.ts:81:32
+
+    Error Context: tests-visual/test-results/esc-stack--a-Escape-stack--226c1-pops-first-then-outer-dark--coarse-touch/error-context.md
+
+    Error Context: tests-visual/test-results/esc-stack--a-Escape-stack--226c1-pops-first-then-outer-dark--coarse-touch/error-context.md
+
+  35) [coarse-touch] › tests-visual/esc-stack.spec.ts:113:5 › (b) focus model — move-in / trap / inert / restore [dark] 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      122 |         await trigger.click();
+      123 |         await page.waitForTimeout(250);
+    > 124 |         expect(await activeInsideOverlay(page)).toBe(true);
+          |                                                 ^
+      125 |
+      126 |         // The inline host is `inert` while fullscreen (page-behind footprint).
+      127 |         const inert = await page
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/esc-stack.spec.ts:124:49
+
+    Error Context: tests-visual/test-results/esc-stack--b-focus-model-—-move-in-trap-inert-restore-dark--coarse-touch/error-context.md
+
+    Error Context: tests-visual/test-results/esc-stack--b-focus-model-—-move-in-trap-inert-restore-dark--coarse-touch/error-context.md
+
+  36) [coarse-touch] › tests-visual/expandable-container.spec.ts:111:13 › expandable-container (π — the always-teleport redress, fail-CLOSED) › (b) fullscreen teleports + frosts over content (alpha < 1) @ mobile light 
+
+    Error: the fullscreen state teleports exactly ONE .glass-overlay onto document.body
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 0
+
+      127 |                     overlays,
+      128 |                     "the fullscreen state teleports exactly ONE .glass-overlay onto document.body",
+    > 129 |                 ).toBe(1);
+          |                   ^
+      130 |
+      131 |                 // It frosts over content — the glass-overlay tier resolves a TRANSLUCENT
+      132 |                 // background (alpha < 1, the un-walled frosted-over-content plate), NOT a
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/expandable-container.spec.ts:129:19
+
+    Error Context: tests-visual/test-results/expandable-container-expan-04fcf-ontent-alpha-1-mobile-light-coarse-touch/error-context.md
+
+  37) [coarse-touch] › tests-visual/expandable-container.spec.ts:111:13 › expandable-container (π — the always-teleport redress, fail-CLOSED) › (b) fullscreen teleports + frosts over content (alpha < 1) @ mobile dark 
+
+    Error: the fullscreen state teleports exactly ONE .glass-overlay onto document.body
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 0
+
+      127 |                     overlays,
+      128 |                     "the fullscreen state teleports exactly ONE .glass-overlay onto document.body",
+    > 129 |                 ).toBe(1);
+          |                   ^
+      130 |
+      131 |                 // It frosts over content — the glass-overlay tier resolves a TRANSLUCENT
+      132 |                 // background (alpha < 1, the un-walled frosted-over-content plate), NOT a
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/expandable-container.spec.ts:129:19
+
+    Error Context: tests-visual/test-results/expandable-container-expan-a6b78-content-alpha-1-mobile-dark-coarse-touch/error-context.md
+
+  38) [coarse-touch] › tests-visual/expandable-container.spec.ts:111:13 › expandable-container (π — the always-teleport redress, fail-CLOSED) › (b) fullscreen teleports + frosts over content (alpha < 1) @ desktop light 
+
+    Error: the fullscreen state teleports exactly ONE .glass-overlay onto document.body
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 0
+
+      127 |                     overlays,
+      128 |                     "the fullscreen state teleports exactly ONE .glass-overlay onto document.body",
+    > 129 |                 ).toBe(1);
+          |                   ^
+      130 |
+      131 |                 // It frosts over content — the glass-overlay tier resolves a TRANSLUCENT
+      132 |                 // background (alpha < 1, the un-walled frosted-over-content plate), NOT a
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/expandable-container.spec.ts:129:19
+
+    Error Context: tests-visual/test-results/expandable-container-expan-91b1c-ntent-alpha-1-desktop-light-coarse-touch/error-context.md
+
+  39) [coarse-touch] › tests-visual/expandable-container.spec.ts:111:13 › expandable-container (π — the always-teleport redress, fail-CLOSED) › (b) fullscreen teleports + frosts over content (alpha < 1) @ desktop dark 
+
+    Error: the fullscreen state teleports exactly ONE .glass-overlay onto document.body
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 0
+
+      127 |                     overlays,
+      128 |                     "the fullscreen state teleports exactly ONE .glass-overlay onto document.body",
+    > 129 |                 ).toBe(1);
+          |                   ^
+      130 |
+      131 |                 // It frosts over content — the glass-overlay tier resolves a TRANSLUCENT
+      132 |                 // background (alpha < 1, the un-walled frosted-over-content plate), NOT a
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/expandable-container.spec.ts:129:19
+
+    Error Context: tests-visual/test-results/expandable-container-expan-2fc39-ontent-alpha-1-desktop-dark-coarse-touch/error-context.md
+
+  40) [coarse-touch] › tests-visual/eyebrow-union.spec.ts:81:9 › eyebrow-union (π — the ONE mono-caption eyebrow voice, fail-CLOSED) › one eyebrow voice — light 
+
+    Error: no .section-label / .text-mono-caption eyebrow on the route
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   0
+
+      90 |                 eyebrows.length,
+      91 |                 "no .section-label / .text-mono-caption eyebrow on the route",
+    > 92 |             ).toBeGreaterThan(0);
+         |               ^
+      93 |
+      94 |             for (const e of eyebrows) {
+      95 |                 // (a) ONE FAMILY — mono.
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/eyebrow-union.spec.ts:92:15
+
+    Error Context: tests-visual/test-results/eyebrow-union-eyebrow-unio-0ee62-D-one-eyebrow-voice-—-light-coarse-touch/error-context.md
+
+  41) [coarse-touch] › tests-visual/eyebrow-union.spec.ts:81:9 › eyebrow-union (π — the ONE mono-caption eyebrow voice, fail-CLOSED) › one eyebrow voice — dark 
+
+    Error: no .section-label / .text-mono-caption eyebrow on the route
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   0
+
+      90 |                 eyebrows.length,
+      91 |                 "no .section-label / .text-mono-caption eyebrow on the route",
+    > 92 |             ).toBeGreaterThan(0);
+         |               ^
+      93 |
+      94 |             for (const e of eyebrows) {
+      95 |                 // (a) ONE FAMILY — mono.
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/eyebrow-union.spec.ts:92:15
+
+    Error Context: tests-visual/test-results/eyebrow-union-eyebrow-unio-9edd2-ED-one-eyebrow-voice-—-dark-coarse-touch/error-context.md
+
+  41 failed
+    [coarse-touch] › tests-visual/dock-luma-share.spec.ts:66:5 › dock-luma-share (PERF-6 — 12 per-dock observers → ONE per route) › ONE backdrop-sampled witness per route (not per dock) — /dock/overview 
+    [coarse-touch] › tests-visual/dock-luma-share.spec.ts:138:5 › dock-luma-share (PERF-6 — 12 per-dock observers → ONE per route) › every staged dock reads the ONE shared luma via the cascade — /dock/overview 
+    [coarse-touch] › tests-visual/dock-morph-family.spec.ts:43:1 › (a)/(b) — the morph composites a transform over a reserved footprint (no per-frame relayout) 
+    [coarse-touch] › tests-visual/dock-morph-family.spec.ts:83:1 › (c) — under PRM the dock seats synchronously (every control inside the box, no sliver) 
+    [coarse-touch] › tests-visual/dock-morph-family.spec.ts:139:1 › (d) — a nested DockLayerGroup reserves its peak-layer block-size (consumer never guesses) 
+    [coarse-touch] › tests-visual/dock-morph-family.spec.ts:170:1 › (e) — a --dock-local-scale override on a dock scope paints a larger box (the @property thread) 
+    [coarse-touch] › tests-visual/dock-morph-insitu.spec.ts:29:1 › 6a — in-situ V↔H frame-series lands the ONE --dock-morph-t scalar both ways 
+    [coarse-touch] › tests-visual/dock-morph-insitu.spec.ts:115:1 › 6b — in-situ layering switch changes the dock active facet/route live 
+    [coarse-touch] › tests-visual/dock-morph-insitu.spec.ts:147:1 › 6c — BA-VJS-1 four-cycle nested dock expand arms from:40 → to:≈242 (never 0) 
+    [coarse-touch] › tests-visual/dock-morph-insitu.spec.ts:235:1 › 6d — §7 perf re-run over the in-situ V↔H morph window (4× throttle) 
+    [coarse-touch] › tests-visual/dock-plate-clearance.spec.ts:174:9 › plate clearance — sidebar-vertical (light) 
+    [coarse-touch] › tests-visual/dock-plate-clearance.spec.ts:174:9 › plate clearance — sidebar-vertical (dark) 
+    [coarse-touch] › tests-visual/dock-plate-clearance.spec.ts:174:9 › plate clearance — bottom-horizontal (light) 
+    [coarse-touch] › tests-visual/dock-plate-clearance.spec.ts:174:9 › plate clearance — bottom-horizontal (dark) 
+    [coarse-touch] › tests-visual/dock-rail-cohesion.spec.ts:18:5 › dock-rail-cohesion (π lane — single-indicator DOM truth) › the DockLayerGroup rail renders exactly ONE TabsIndicator 
+    [coarse-touch] › tests-visual/dock-sections.spec.ts:88:1 › BA.W-DOCK-SECTIONS — the seam-anchored rail + dual overrun + flush fan-out on BOTH shell docks 
+    [coarse-touch] › tests-visual/dock-sections.spec.ts:204:1 › BA.W-DOCK-SECTIONS — G5: the dock box is INVIOLATE (the rail feeds no size) 
+    [coarse-touch] › tests-visual/dock-with-slider-live.spec.ts:76:13 › dock-with-slider keepDockOpen (π lane — LIVE drag DELTA, fail-CLOSED) › hold + clear + capture — desktop / light 
+    [coarse-touch] › tests-visual/dock-with-slider-live.spec.ts:76:13 › dock-with-slider keepDockOpen (π lane — LIVE drag DELTA, fail-CLOSED) › hold + clear + capture — desktop / dark 
+    [coarse-touch] › tests-visual/dock-with-slider-live.spec.ts:76:13 › dock-with-slider keepDockOpen (π lane — LIVE drag DELTA, fail-CLOSED) › hold + clear + capture — mobile / light 
+    [coarse-touch] › tests-visual/dock-with-slider-live.spec.ts:76:13 › dock-with-slider keepDockOpen (π lane — LIVE drag DELTA, fail-CLOSED) › hold + clear + capture — mobile / dark 
+    [coarse-touch] › tests-visual/drag-morph.spec.ts:70:1 › (a) drag frame-series — follow ~1:1, velocity-squish, fling to nearest 
+    [coarse-touch] › tests-visual/drag-morph.spec.ts:183:1 › (c) PRM — drag functions, snap commits, NO squish frames 
+    [coarse-touch] › tests-visual/drag-morph.spec.ts:286:1 › (e) liquid-tab reachability — grab lands on the indicator, drag starts, click un-regressed 
+    [coarse-touch] › tests-visual/drag-morph.spec.ts:357:1 › consumer #2 — DockLayerGroup pull-to-switch flips the active layer 
+    [coarse-touch] › tests-visual/easing-primitive.spec.ts:143:9 › BK #85 W-EASING — the published curve family (π) › P3 — the curve strokes the violet --motion-accent twin (light) 
+    [coarse-touch] › tests-visual/easing-primitive.spec.ts:143:9 › BK #85 W-EASING — the published curve family (π) › P3 — the curve strokes the violet --motion-accent twin (dark) 
+    [coarse-touch] › tests-visual/emission.spec.ts:53:5 › BA.W-EMISSION — the Select collision-bound ships + bounds in-viewport › the opened Select content computes a real maxHeight, bottoms in-viewport, grows from the anchor 
+    [coarse-touch] › tests-visual/emission.spec.ts:112:5 › BA.W-EMISSION — the Slider size axis ships as real geometry › a standard size=md slider measures a real ≈1.25rem track (not 6px); the spectrum thumb is slim 
+    [coarse-touch] › tests-visual/emission.spec.ts:217:9 › BI.W-DEMO-SOURCE-SCAN — the destructive Button label clears AA (the CVA-foreground emission fix) › light mode — the destructive label ink resolves over bg-destructive at ≥4.5:1 
+    [coarse-touch] › tests-visual/emission.spec.ts:217:9 › BI.W-DEMO-SOURCE-SCAN — the destructive Button label clears AA (the CVA-foreground emission fix) › dark mode — the destructive label ink resolves over bg-destructive at ≥4.5:1 
+    [coarse-touch] › tests-visual/esc-stack.spec.ts:72:5 › (a) Escape stack — inner pops first, then outer [light] 
+    [coarse-touch] › tests-visual/esc-stack.spec.ts:113:5 › (b) focus model — move-in / trap / inert / restore [light] 
+    [coarse-touch] › tests-visual/esc-stack.spec.ts:72:5 › (a) Escape stack — inner pops first, then outer [dark] 
+    [coarse-touch] › tests-visual/esc-stack.spec.ts:113:5 › (b) focus model — move-in / trap / inert / restore [dark] 
+    [coarse-touch] › tests-visual/expandable-container.spec.ts:111:13 › expandable-container (π — the always-teleport redress, fail-CLOSED) › (b) fullscreen teleports + frosts over content (alpha < 1) @ mobile light 
+    [coarse-touch] › tests-visual/expandable-container.spec.ts:111:13 › expandable-container (π — the always-teleport redress, fail-CLOSED) › (b) fullscreen teleports + frosts over content (alpha < 1) @ mobile dark 
+    [coarse-touch] › tests-visual/expandable-container.spec.ts:111:13 › expandable-container (π — the always-teleport redress, fail-CLOSED) › (b) fullscreen teleports + frosts over content (alpha < 1) @ desktop light 
+    [coarse-touch] › tests-visual/expandable-container.spec.ts:111:13 › expandable-container (π — the always-teleport redress, fail-CLOSED) › (b) fullscreen teleports + frosts over content (alpha < 1) @ desktop dark 
+    [coarse-touch] › tests-visual/eyebrow-union.spec.ts:81:9 › eyebrow-union (π — the ONE mono-caption eyebrow voice, fail-CLOSED) › one eyebrow voice — light 
+    [coarse-touch] › tests-visual/eyebrow-union.spec.ts:81:9 › eyebrow-union (π — the ONE mono-caption eyebrow voice, fail-CLOSED) › one eyebrow voice — dark 
+  27 passed (9.3m)

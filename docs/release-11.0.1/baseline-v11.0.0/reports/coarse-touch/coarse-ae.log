@@ -1,0 +1,1040 @@
+
+Running 83 tests using 1 worker
+
+  ✓   1 [coarse-touch] › tests-visual/css-critical.spec.ts:154:5 › FOUC-safe: above-the-fold chrome paints identically with/without the deferred tail — light (1.9s)
+  ✓   2 [coarse-touch] › tests-visual/css-critical.spec.ts:154:5 › FOUC-safe: above-the-fold chrome paints identically with/without the deferred tail — dark (1.4s)
+  ✓   3 [coarse-touch] › tests-visual/customizability.spec.ts:83:9 › customizability (the golden default + the prop/token retune cascade paints) › light: a bare <Input> resolves the golden --control-text font + a real box height — /forms/inputs (1.1s)
+[WebServer] 7:14:50 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button data-scenario="button-as-child" as-child="" > 
+[WebServer]   at <Primitive material="content" shadow=true grain=false  ... > 
+[WebServer]   at <Surface material="content" tier="resting" surface="opaque"  ... > 
+[WebServer]   at <ShowcaseFrame caption="As-child" pad="sm" > 
+[WebServer]   at <StorySection heading="Keyboard, touch, and the linked command" blurb="One native button accepts Enter, Space, click, and coarse taps. `as-child` hands the whole command contract to another element without giving up the material." > 
+[WebServer]   at <TooltipProvider delay-duration=250 skip-delay-duration=300 > 
+[WebServer]   at <TooltipProvider delay-duration=250 > 
+[WebServer]   at <StoryPage> 
+[WebServer]   at <Buttons onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/display/buttons" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+[WebServer] 7:14:50 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button data-scenario="button-as-child-disabled" as-child="" disabled="" > 
+[WebServer]   at <Primitive material="content" shadow=true grain=false  ... > 
+[WebServer]   at <Surface material="content" tier="resting" surface="opaque"  ... > 
+[WebServer]   at <ShowcaseFrame caption="As-child" pad="sm" > 
+[WebServer]   at <StorySection heading="Keyboard, touch, and the linked command" blurb="One native button accepts Enter, Space, click, and coarse taps. `as-child` hands the whole command contract to another element without giving up the material." > 
+[WebServer]   at <TooltipProvider delay-duration=250 skip-delay-duration=300 > 
+[WebServer]   at <TooltipProvider delay-duration=250 > 
+[WebServer]   at <StoryPage> 
+[WebServer]   at <Buttons onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/display/buttons" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  ✓   4 [coarse-touch] › tests-visual/customizability.spec.ts:106:9 › customizability (the golden default + the prop/token retune cascade paints) › light: size="lg" reads a taller box than size="sm" on the control cohort — /display/buttons (1.0s)
+  ✓   5 [coarse-touch] › tests-visual/customizability.spec.ts:139:9 › customizability (the golden default + the prop/token retune cascade paints) › light: a glass overlay resolves the translucent golden floating tier — /containers/dialog (1.1s)
+  ✘   6 [coarse-touch] › tests-visual/customizability.spec.ts:178:9 › customizability (the golden default + the prop/token retune cascade paints) › light: a :root { --control-text } override cascades into the control font — /forms/inputs (1.3s)
+  ✘   7 [coarse-touch] › tests-visual/customizability.spec.ts:207:9 › customizability (the golden default + the prop/token retune cascade paints) › light: the input size axis (sm < default < lg) retunes the box height + font on the cohort — /forms/inputs (1.5s)
+  ✘   8 [coarse-touch] › tests-visual/customizability.spec.ts:262:9 › customizability (the golden default + the prop/token retune cascade paints) › light: the Switch size axis scales the track off the --control-h-* rung — /forms/checks (1.4s)
+  ✓   9 [coarse-touch] › tests-visual/customizability.spec.ts:83:9 › customizability (the golden default + the prop/token retune cascade paints) › dark: a bare <Input> resolves the golden --control-text font + a real box height — /forms/inputs (1.2s)
+[WebServer] 7:15:00 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button data-scenario="button-as-child" as-child="" > 
+[WebServer]   at <Primitive material="content" shadow=true grain=false  ... > 
+[WebServer]   at <Surface material="content" tier="resting" surface="opaque"  ... > 
+[WebServer]   at <ShowcaseFrame caption="As-child" pad="sm" > 
+[WebServer]   at <StorySection heading="Keyboard, touch, and the linked command" blurb="One native button accepts Enter, Space, click, and coarse taps. `as-child` hands the whole command contract to another element without giving up the material." > 
+[WebServer]   at <TooltipProvider delay-duration=250 skip-delay-duration=300 > 
+[WebServer]   at <TooltipProvider delay-duration=250 > 
+[WebServer]   at <StoryPage> 
+[WebServer]   at <Buttons onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/display/buttons" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+[WebServer] 7:15:00 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button data-scenario="button-as-child-disabled" as-child="" disabled="" > 
+[WebServer]   at <Primitive material="content" shadow=true grain=false  ... > 
+[WebServer]   at <Surface material="content" tier="resting" surface="opaque"  ... > 
+[WebServer]   at <ShowcaseFrame caption="As-child" pad="sm" > 
+[WebServer]   at <StorySection heading="Keyboard, touch, and the linked command" blurb="One native button accepts Enter, Space, click, and coarse taps. `as-child` hands the whole command contract to another element without giving up the material." > 
+[WebServer]   at <TooltipProvider delay-duration=250 skip-delay-duration=300 > 
+[WebServer]   at <TooltipProvider delay-duration=250 > 
+[WebServer]   at <StoryPage> 
+[WebServer]   at <Buttons onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/display/buttons" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  ✓  10 [coarse-touch] › tests-visual/customizability.spec.ts:106:9 › customizability (the golden default + the prop/token retune cascade paints) › dark: size="lg" reads a taller box than size="sm" on the control cohort — /display/buttons (1.0s)
+  ✓  11 [coarse-touch] › tests-visual/customizability.spec.ts:139:9 › customizability (the golden default + the prop/token retune cascade paints) › dark: a glass overlay resolves the translucent golden floating tier — /containers/dialog (1.0s)
+  ✘  12 [coarse-touch] › tests-visual/customizability.spec.ts:178:9 › customizability (the golden default + the prop/token retune cascade paints) › dark: a :root { --control-text } override cascades into the control font — /forms/inputs (1.2s)
+  ✘  13 [coarse-touch] › tests-visual/customizability.spec.ts:207:9 › customizability (the golden default + the prop/token retune cascade paints) › dark: the input size axis (sm < default < lg) retunes the box height + font on the cohort — /forms/inputs (1.4s)
+  ✘  14 [coarse-touch] › tests-visual/customizability.spec.ts:262:9 › customizability (the golden default + the prop/token retune cascade paints) › dark: the Switch size axis scales the track off the --control-h-* rung — /forms/checks (1.3s)
+  ✓  15 [coarse-touch] › tests-visual/customizability.spec.ts:328:9 › overlay uniformity (the surface axis + the φ pad cascade across every overlay) › light: a bare floating overlay resolves the golden glass-floating tier + the φ pad cadence (1.4s)
+  ✓  16 [coarse-touch] › tests-visual/customizability.spec.ts:373:9 › overlay uniformity (the surface axis + the φ pad cascade across every overlay) › light: a :root --overlay-pad-inline override retunes ≥3 overlays' pad in lockstep (1.2s)
+  ✓  17 [coarse-touch] › tests-visual/customizability.spec.ts:328:9 › overlay uniformity (the surface axis + the φ pad cascade across every overlay) › dark: a bare floating overlay resolves the golden glass-floating tier + the φ pad cadence (1.3s)
+  ✓  18 [coarse-touch] › tests-visual/customizability.spec.ts:373:9 › overlay uniformity (the surface axis + the φ pad cascade across every overlay) › dark: a :root --overlay-pad-inline override retunes ≥3 overlays' pad in lockstep (1.2s)
+  ✘  19 [coarse-touch] › tests-visual/dark-material.spec.ts:160:9 › dark-material (π — the luminous-dark transmissive material, fail-CLOSED) › (a) the dark five-rung band spans a perceptible ΔL ladder @ mobile (1.2s)
+  ✘  20 [coarse-touch] › tests-visual/dark-material.spec.ts:160:9 › dark-material (π — the luminous-dark transmissive material, fail-CLOSED) › (a) the dark five-rung band spans a perceptible ΔL ladder @ desktop (1.3s)
+  ✓  21 [coarse-touch] › tests-visual/dark-material.spec.ts:215:9 › dark-material (π — the luminous-dark transmissive material, fail-CLOSED) › (b) a dark glass tier transmits a synthetic aurora backdrop @ mobile (1.1s)
+  ✓  22 [coarse-touch] › tests-visual/dark-material.spec.ts:215:9 › dark-material (π — the luminous-dark transmissive material, fail-CLOSED) › (b) a dark glass tier transmits a synthetic aurora backdrop @ desktop (1.2s)
+  ✓  23 [coarse-touch] › tests-visual/dark-material.spec.ts:258:9 › dark-material (π — the luminous-dark transmissive material, fail-CLOSED) › (c) a selection control inside a glass card reads selected ≥ unselected @ mobile (1.1s)
+  ✓  24 [coarse-touch] › tests-visual/dark-material.spec.ts:258:9 › dark-material (π — the luminous-dark transmissive material, fail-CLOSED) › (c) a selection control inside a glass card reads selected ≥ unselected @ desktop (1.2s)
+  ✓  25 [coarse-touch] › tests-visual/dark-material.spec.ts:318:9 › dark-material (π — the luminous-dark transmissive material, fail-CLOSED) › (d) W7-i: content tier clears 4.5:1 over white WITH the bright bucket @ mobile (1.2s)
+  ✓  26 [coarse-touch] › tests-visual/dark-material.spec.ts:318:9 › dark-material (π — the luminous-dark transmissive material, fail-CLOSED) › (d) W7-i: content tier clears 4.5:1 over white WITH the bright bucket @ desktop (1.3s)
+  ✘  27 [coarse-touch] › tests-visual/dark-material.spec.ts:358:9 › dark-material (π — the luminous-dark transmissive material, fail-CLOSED) › (e) W7-ii: a calm-light card composites translucent warm, NOT gray @ mobile (1.3s)
+  ✘  28 [coarse-touch] › tests-visual/dark-material.spec.ts:358:9 › dark-material (π — the luminous-dark transmissive material, fail-CLOSED) › (e) W7-ii: a calm-light card composites translucent warm, NOT gray @ desktop (1.2s)
+  ✓  29 [coarse-touch] › tests-visual/dark-material.spec.ts:415:9 › dark-material (π — the luminous-dark transmissive material, fail-CLOSED) › DELTA capture — the dark luminous-material fixture @ mobile (1.4s)
+  ✓  30 [coarse-touch] › tests-visual/dark-material.spec.ts:415:9 › dark-material (π — the luminous-dark transmissive material, fail-CLOSED) › DELTA capture — the dark luminous-material fixture @ desktop (1.4s)
+  ✓  31 [coarse-touch] › tests-visual/dark-semantic-contrast.spec.ts:197:9 › dark-semantic-contrast (π lane — the dark --destructive ink readback, fail-CLOSED) › destructive Alert title clears the 4.6:1 ink floor under .dark @ mobile (1.5s)
+  ✓  32 [coarse-touch] › tests-visual/dark-semantic-contrast.spec.ts:197:9 › dark-semantic-contrast (π lane — the dark --destructive ink readback, fail-CLOSED) › destructive Alert title clears the 4.6:1 ink floor under .dark @ desktop (1.5s)
+  ✘  33 [coarse-touch] › tests-visual/deck-slide.spec.ts:62:9 › deck-slide — light › (a/b/c) Next advances the active slide on the deck spring, wells the goo bridge, and announces (1.1s)
+  ✘  34 [coarse-touch] › tests-visual/deck-slide.spec.ts:119:9 › deck-slide — light › (d) PRM-COMMITS — under reduced-motion Next still commits the swap + announces (2.5s)
+  ✘  35 [coarse-touch] › tests-visual/deck-slide.spec.ts:62:9 › deck-slide — dark › (a/b/c) Next advances the active slide on the deck spring, wells the goo bridge, and announces (1.2s)
+  ✘  36 [coarse-touch] › tests-visual/deck-slide.spec.ts:119:9 › deck-slide — dark › (d) PRM-COMMITS — under reduced-motion Next still commits the swap + announces (2.4s)
+  -  37 [coarse-touch] › tests-visual/demo-affordances.spec.ts:171:13 › BA.W-DEMO-AFFORDANCES — the demo affordances π readback › curve-picker selected chip is a glass plate, selected>unselected — mobile light
+  ✘  38 [coarse-touch] › tests-visual/demo-affordances.spec.ts:225:13 › BA.W-DEMO-AFFORDANCES — the demo affordances π readback › play control renders content-width > the icon square — mobile light (1.2s)
+  -  39 [coarse-touch] › tests-visual/demo-affordances.spec.ts:171:13 › BA.W-DEMO-AFFORDANCES — the demo affordances π readback › curve-picker selected chip is a glass plate, selected>unselected — mobile dark
+  ✘  40 [coarse-touch] › tests-visual/demo-affordances.spec.ts:225:13 › BA.W-DEMO-AFFORDANCES — the demo affordances π readback › play control renders content-width > the icon square — mobile dark (1.2s)
+  ✘  41 [coarse-touch] › tests-visual/demo-affordances.spec.ts:171:13 › BA.W-DEMO-AFFORDANCES — the demo affordances π readback › curve-picker selected chip is a glass plate, selected>unselected — desktop light (9.2s)
+  ✘  42 [coarse-touch] › tests-visual/demo-affordances.spec.ts:225:13 › BA.W-DEMO-AFFORDANCES — the demo affordances π readback › play control renders content-width > the icon square — desktop light (1.3s)
+  ✘  43 [coarse-touch] › tests-visual/demo-affordances.spec.ts:171:13 › BA.W-DEMO-AFFORDANCES — the demo affordances π readback › curve-picker selected chip is a glass plate, selected>unselected — desktop dark (9.2s)
+  ✘  44 [coarse-touch] › tests-visual/demo-affordances.spec.ts:225:13 › BA.W-DEMO-AFFORDANCES — the demo affordances π readback › play control renders content-width > the icon square — desktop dark (1.3s)
+  ✘  45 [coarse-touch] › tests-visual/demo-affordances.spec.ts:264:5 › BA.W-DEMO-AFFORDANCES — the demo affordances π readback › curve-picker narrow floor renders a <Select> below the breakpoint — mobile (1.1s)
+[WebServer] 7:16:11 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button as-child="" > 
+[WebServer]   at <CardFooter class="justify-center" > 
+[WebServer]   at <Primitive data-slot="card" data-shadow=true data-size="md"  ... > 
+[WebServer]   at <Surface data-slot="card" tier="floating" surface=undefined  ... > 
+[WebServer]   at <Card tier="floating" class="w-full max-w-(--measure-cel) text-center" > 
+[WebServer]   at <NotFound onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/feedback/toaster" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  ✘  46 [coarse-touch] › tests-visual/demo-affordances.spec.ts:286:5 › BA.W-DEMO-AFFORDANCES — the demo affordances π readback › toaster lone trigger sits content-width < parent column (1.1s)
+  ✘  47 [coarse-touch] › tests-visual/demo-affordances.spec.ts:329:9 › BA.W-DEMO-AFFORDANCES — the demo affordances π readback › skeleton container composites as glass (translucent tier) — light (1.2s)
+[WebServer] 7:16:14 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button as-child="" > 
+[WebServer]   at <CardFooter class="justify-center" > 
+[WebServer]   at <Primitive data-slot="card" data-shadow=true data-size="md"  ... > 
+[WebServer]   at <Surface data-slot="card" tier="floating" surface=undefined  ... > 
+[WebServer]   at <Card tier="floating" class="w-full max-w-(--measure-cel) text-center" > 
+[WebServer]   at <NotFound onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/feedback/notification" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  ✓  48 [coarse-touch] › tests-visual/demo-affordances.spec.ts:360:9 › BA.W-DEMO-AFFORDANCES — the demo affordances π readback › notification tones container + curve full-page capture — light (1.3s)
+  ✘  49 [coarse-touch] › tests-visual/demo-affordances.spec.ts:329:9 › BA.W-DEMO-AFFORDANCES — the demo affordances π readback › skeleton container composites as glass (translucent tier) — dark (1.1s)
+[WebServer] 7:16:17 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button as-child="" > 
+[WebServer]   at <CardFooter class="justify-center" > 
+[WebServer]   at <Primitive data-slot="card" data-shadow=true data-size="md"  ... > 
+[WebServer]   at <Surface data-slot="card" tier="floating" surface=undefined  ... > 
+[WebServer]   at <Card tier="floating" class="w-full max-w-(--measure-cel) text-center" > 
+[WebServer]   at <NotFound onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/feedback/notification" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  ✓  50 [coarse-touch] › tests-visual/demo-affordances.spec.ts:360:9 › BA.W-DEMO-AFFORDANCES — the demo affordances π readback › notification tones container + curve full-page capture — dark (1.2s)
+  ✓  51 [coarse-touch] › tests-visual/demo-control-live.spec.ts:61:5 › (a) grain slider tracks --glass-grain-opacity [light] (1.9s)
+  ✓  52 [coarse-touch] › tests-visual/demo-control-live.spec.ts:90:5 › (b) paper-underpaint switch toggles .paper-grain-overlay [light] (1.9s)
+  ✓  53 [coarse-touch] › tests-visual/demo-control-live.spec.ts:61:5 › (a) grain slider tracks --glass-grain-opacity [dark] (1.9s)
+  ✓  54 [coarse-touch] › tests-visual/demo-control-live.spec.ts:90:5 › (b) paper-underpaint switch toggles .paper-grain-overlay [dark] (1.9s)
+  ✓  55 [coarse-touch] › tests-visual/demo-design.spec.ts:72:9 › BB.W-DEMO-DESIGN — the demo presentation designed to SOTA (π) › P1 — the type pane leads with a focal display specimen (>> text-title) [light] (1.2s)
+  ✘  56 [coarse-touch] › tests-visual/demo-design.spec.ts:105:9 › BB.W-DEMO-DESIGN — the demo presentation designed to SOTA (π) › P2 — the rainbow ramp reads as the focal moment (above the core grid) [light] (1.0s)
+  ✓  57 [coarse-touch] › tests-visual/demo-design.spec.ts:144:9 › BB.W-DEMO-DESIGN — the demo presentation designed to SOTA (π) › P3 — the Pops row leads the icons pane as static plates [light] (1.5s)
+[WebServer] 7:16:30 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button data-scenario="button-as-child" as-child="" > 
+[WebServer]   at <Primitive material="content" shadow=true grain=false  ... > 
+[WebServer]   at <Surface material="content" tier="resting" surface="opaque"  ... > 
+[WebServer]   at <ShowcaseFrame caption="As-child" pad="sm" > 
+[WebServer]   at <StorySection heading="Keyboard, touch, and the linked command" blurb="One native button accepts Enter, Space, click, and coarse taps. `as-child` hands the whole command contract to another element without giving up the material." > 
+[WebServer]   at <TooltipProvider delay-duration=250 skip-delay-duration=300 > 
+[WebServer]   at <TooltipProvider delay-duration=250 > 
+[WebServer]   at <StoryPage> 
+[WebServer]   at <Buttons onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/display/buttons" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+[WebServer] 7:16:30 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button data-scenario="button-as-child-disabled" as-child="" disabled="" > 
+[WebServer]   at <Primitive material="content" shadow=true grain=false  ... > 
+[WebServer]   at <Surface material="content" tier="resting" surface="opaque"  ... > 
+[WebServer]   at <ShowcaseFrame caption="As-child" pad="sm" > 
+[WebServer]   at <StorySection heading="Keyboard, touch, and the linked command" blurb="One native button accepts Enter, Space, click, and coarse taps. `as-child` hands the whole command contract to another element without giving up the material." > 
+[WebServer]   at <TooltipProvider delay-duration=250 skip-delay-duration=300 > 
+[WebServer]   at <TooltipProvider delay-duration=250 > 
+[WebServer]   at <StoryPage> 
+[WebServer]   at <Buttons onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/display/buttons" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  ✘  58 [coarse-touch] › tests-visual/demo-design.spec.ts:186:9 › BB.W-DEMO-DESIGN — the demo presentation designed to SOTA (π) › P4 — the primary-audacious CTA out-presents destructive + glass over field [light] (993ms)
+[WebServer] 7:16:32 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button as-child="" > 
+[WebServer]   at <CardFooter class="justify-center" > 
+[WebServer]   at <Primitive data-slot="card" data-shadow=true data-size="md"  ... > 
+[WebServer]   at <Surface data-slot="card" tier="floating" surface=undefined  ... > 
+[WebServer]   at <Card tier="floating" class="w-full max-w-(--measure-cel) text-center" > 
+[WebServer]   at <NotFound onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/feedback/notification" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  ✘  59 [coarse-touch] › tests-visual/demo-design.spec.ts:223:9 › BB.W-DEMO-DESIGN — the demo presentation designed to SOTA (π) › P5 — the notification tones render as translucent .feedback-tone rows [light] (8.8s)
+  ✓  60 [coarse-touch] › tests-visual/demo-design.spec.ts:72:9 › BB.W-DEMO-DESIGN — the demo presentation designed to SOTA (π) › P1 — the type pane leads with a focal display specimen (>> text-title) [dark] (1.4s)
+  ✘  61 [coarse-touch] › tests-visual/demo-design.spec.ts:105:9 › BB.W-DEMO-DESIGN — the demo presentation designed to SOTA (π) › P2 — the rainbow ramp reads as the focal moment (above the core grid) [dark] (1.3s)
+  ✓  62 [coarse-touch] › tests-visual/demo-design.spec.ts:144:9 › BB.W-DEMO-DESIGN — the demo presentation designed to SOTA (π) › P3 — the Pops row leads the icons pane as static plates [dark] (1.5s)
+[WebServer] 7:16:46 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button data-scenario="button-as-child" as-child="" > 
+[WebServer]   at <Primitive material="content" shadow=true grain=false  ... > 
+[WebServer]   at <Surface material="content" tier="resting" surface="opaque"  ... > 
+[WebServer]   at <ShowcaseFrame caption="As-child" pad="sm" > 
+[WebServer]   at <StorySection heading="Keyboard, touch, and the linked command" blurb="One native button accepts Enter, Space, click, and coarse taps. `as-child` hands the whole command contract to another element without giving up the material." > 
+[WebServer]   at <TooltipProvider delay-duration=250 skip-delay-duration=300 > 
+[WebServer]   at <TooltipProvider delay-duration=250 > 
+[WebServer]   at <StoryPage> 
+[WebServer]   at <Buttons onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/display/buttons" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+[WebServer] 7:16:46 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button data-scenario="button-as-child-disabled" as-child="" disabled="" > 
+[WebServer]   at <Primitive material="content" shadow=true grain=false  ... > 
+[WebServer]   at <Surface material="content" tier="resting" surface="opaque"  ... > 
+[WebServer]   at <ShowcaseFrame caption="As-child" pad="sm" > 
+[WebServer]   at <StorySection heading="Keyboard, touch, and the linked command" blurb="One native button accepts Enter, Space, click, and coarse taps. `as-child` hands the whole command contract to another element without giving up the material." > 
+[WebServer]   at <TooltipProvider delay-duration=250 skip-delay-duration=300 > 
+[WebServer]   at <TooltipProvider delay-duration=250 > 
+[WebServer]   at <StoryPage> 
+[WebServer]   at <Buttons onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/display/buttons" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  ✘  63 [coarse-touch] › tests-visual/demo-design.spec.ts:186:9 › BB.W-DEMO-DESIGN — the demo presentation designed to SOTA (π) › P4 — the primary-audacious CTA out-presents destructive + glass over field [dark] (987ms)
+[WebServer] 7:16:48 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button as-child="" > 
+[WebServer]   at <CardFooter class="justify-center" > 
+[WebServer]   at <Primitive data-slot="card" data-shadow=true data-size="md"  ... > 
+[WebServer]   at <Surface data-slot="card" tier="floating" surface=undefined  ... > 
+[WebServer]   at <Card tier="floating" class="w-full max-w-(--measure-cel) text-center" > 
+[WebServer]   at <NotFound onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/feedback/notification" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  ✘  64 [coarse-touch] › tests-visual/demo-design.spec.ts:223:9 › BB.W-DEMO-DESIGN — the demo presentation designed to SOTA (π) › P5 — the notification tones render as translucent .feedback-tone rows [dark] (8.8s)
+[W-SCALE1] narrow(375): --type-small=14px body=16px control=16px | wide(2560): --type-small=19.2px body=21.632px control=21.632px | grew Δ=5.20px (small), 5.63px (body) | fixed-rem-pin(2560)=14px (negative control bites)
+  ✓  65 [coarse-touch] › tests-visual/desktop-fluid-type.spec.ts:68:5 › desktop-fluid-type (π lane — the body/control ladder GROWS on a wide viewport) › the control/body font grows narrow→wide AND past the fixed-rem baseline (3.8s)
+  ✘  66 [coarse-touch] › tests-visual/dialog-glass.spec.ts:106:5 › BC.W-DIALOG-GLASS — the glass dialog is ACTUAL liquid glass (π) › (1) SEE-THROUGH — the open dialog plate reads through at the floating-tier ceiling, warm-cream, blur present (1.5s)
+  ✓  67 [coarse-touch] › tests-visual/dialog-glass.spec.ts:173:5 › BC.W-DIALOG-GLASS — the glass dialog is ACTUAL liquid glass (π) › (2) WARM INK — the calm-modal heading ink is warm, NOT pure-black; body AA ≥ 4.5:1 (1.6s)
+  ✓  68 [coarse-touch] › tests-visual/dialog-glass.spec.ts:219:5 › BC.W-DIALOG-GLASS — the glass dialog is ACTUAL liquid glass (π) › (3) CATCH-LIGHT RIM — the top edge reads bright, NOT a dark-ink bar (1.5s)
+[WebServer] 7:17:06 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button as-child="" > 
+[WebServer]   at <CardFooter class="justify-center" > 
+[WebServer]   at <Primitive data-slot="card" data-shadow=true data-size="md"  ... > 
+[WebServer]   at <Surface data-slot="card" tier="floating" surface=undefined  ... > 
+[WebServer]   at <Card tier="floating" class="w-full max-w-(--measure-cel) text-center" > 
+[WebServer]   at <NotFound onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/feedback/confirm-dialog" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  ✓  69 [coarse-touch] › tests-visual/dialog-glass.spec.ts:255:5 › BC.W-DIALOG-GLASS — the glass dialog is ACTUAL liquid glass (π) › (4) CONFIRM GLASS — the re-based ConfirmDialog composites a translucent glass material (1.5s)
+[WebServer] 7:17:09 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button as-child="" > 
+[WebServer]   at <CardFooter class="justify-center" > 
+[WebServer]   at <Primitive data-slot="card" data-shadow=true data-size="md"  ... > 
+[WebServer]   at <Surface data-slot="card" tier="floating" surface=undefined  ... > 
+[WebServer]   at <Card tier="floating" class="w-full max-w-(--measure-cel) text-center" > 
+[WebServer]   at <NotFound onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/forms/select" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  -  70 [coarse-touch] › tests-visual/disclosure-rotate.spec.ts:110:5 › disclosure-rotate — ONE register, none snap (light)
+[WebServer] 7:17:10 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button as-child="" > 
+[WebServer]   at <CardFooter class="justify-center" > 
+[WebServer]   at <Primitive data-slot="card" data-shadow=true data-size="md"  ... > 
+[WebServer]   at <Surface data-slot="card" tier="floating" surface=undefined  ... > 
+[WebServer]   at <Card tier="floating" class="w-full max-w-(--measure-cel) text-center" > 
+[WebServer]   at <NotFound onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/forms/select" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  -  71 [coarse-touch] › tests-visual/disclosure-rotate.spec.ts:110:5 › disclosure-rotate — ONE register, none snap (dark)
+  ✓  72 [coarse-touch] › tests-visual/display-tracking.spec.ts:103:9 › BB.W-DISPLAY-TRACKING — the Apple-calibrated display tracking + leading (π) › D1 — each display rung resolves negative ≈−1.5% tracking + ~1.05 leading (light) (1.0s)
+  ✓  73 [coarse-touch] › tests-visual/display-tracking.spec.ts:142:9 › BB.W-DISPLAY-TRACKING — the Apple-calibrated display tracking + leading (π) › D2+D3 — the body/caption + heading fences hold in the render (light) (961ms)
+  ✓  74 [coarse-touch] › tests-visual/display-tracking.spec.ts:103:9 › BB.W-DISPLAY-TRACKING — the Apple-calibrated display tracking + leading (π) › D1 — each display rung resolves negative ≈−1.5% tracking + ~1.05 leading (dark) (876ms)
+  ✓  75 [coarse-touch] › tests-visual/display-tracking.spec.ts:142:9 › BB.W-DISPLAY-TRACKING — the Apple-calibrated display tracking + leading (π) › D2+D3 — the body/caption + heading fences hold in the render (dark) (854ms)
+  ✘  76 [coarse-touch] › tests-visual/dock-animation-live.spec.ts:97:5 › dock-animation-live (π lane — single-scalar, fail-CLOSED) › the dock box and --dock-morph-t morph on ONE clock (lead/lag ≤ 1 frame) (393ms)
+  ✘  77 [coarse-touch] › tests-visual/dock-cockpit.spec.ts:114:5 › cockpit preset geometry + label ratio (light) (1.8s)
+  ✘  78 [coarse-touch] › tests-visual/dock-cockpit.spec.ts:114:5 › cockpit preset geometry + label ratio (dark) (1.7s)
+  ✘  79 [coarse-touch] › tests-visual/dock-cockpit.spec.ts:165:1 › cockpit control clears the 44px floor on coarse pointer (1.5s)
+  ✓  80 [coarse-touch] › tests-visual/dock-items-lag-capture.spec.ts:195:13 › dock-items-lag-capture (π lane — VERIFY-OR-FALSIFY, capture not budget) › capture the morph frame-series — desktop / light (21.3s)
+  ✓  81 [coarse-touch] › tests-visual/dock-items-lag-capture.spec.ts:195:13 › dock-items-lag-capture (π lane — VERIFY-OR-FALSIFY, capture not budget) › capture the morph frame-series — desktop / dark (21.2s)
+  ✓  82 [coarse-touch] › tests-visual/dock-items-lag-capture.spec.ts:195:13 › dock-items-lag-capture (π lane — VERIFY-OR-FALSIFY, capture not budget) › capture the morph frame-series — mobile / light (19.5s)
+  ✓  83 [coarse-touch] › tests-visual/dock-items-lag-capture.spec.ts:195:13 › dock-items-lag-capture (π lane — VERIFY-OR-FALSIFY, capture not budget) › capture the morph frame-series — mobile / dark (19.4s)
+
+
+  1) [coarse-touch] › tests-visual/customizability.spec.ts:178:9 › customizability (the golden default + the prop/token retune cascade paints) › light: a :root { --control-text } override cascades into the control font — /forms/inputs 
+
+    Error: light: a :root { --control-text: 28px } override did NOT cascade into the control font (before 14px → after 14px) — the type is pinned to a hardcoded literal, not the --control-text token
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 14
+    Received:   14
+
+      195 |                 after!,
+      196 |                 `${mode}: a :root { --control-text: 28px } override did NOT cascade into the control font (before ${before}px → after ${after}px) — the type is pinned to a hardcoded literal, not the --control-text token`,
+    > 197 |             ).toBeGreaterThan(before!);
+          |               ^
+      198 |         });
+      199 |
+      200 |         // ── (4) BC.W-CONTROL-CUSTOM — the input-register size axis retunes the cohort directly ──
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/customizability.spec.ts:197:15
+
+    Error Context: tests-visual/test-results/customizability-customizab-a6fdf-control-font-—-forms-inputs-coarse-touch/error-context.md
+
+  2) [coarse-touch] › tests-visual/customizability.spec.ts:207:9 › customizability (the golden default + the prop/token retune cascade paints) › light: the input size axis (sm < default < lg) retunes the box height + font on the cohort — /forms/inputs 
+
+    Error: light: size="lg" (60px) did NOT read taller than the default rung (60px) — the --control-h-lg rung is not selected
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 60
+    Received:   60
+
+      244 |                 lg.h!,
+      245 |                 `${mode}: size="lg" (${lg.h}px) did NOT read taller than the default rung (${def.h}px) — the --control-h-lg rung is not selected`,
+    > 246 |             ).toBeGreaterThan(def.h!);
+          |               ^
+      247 |             expect(
+      248 |                 sm.h!,
+      249 |                 `${mode}: size="sm" (${sm.h}px) did NOT read shorter than the default rung (${def.h}px) — the --control-h-sm rung is not selected`,
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/customizability.spec.ts:246:15
+
+    Error Context: tests-visual/test-results/customizability-customizab-9aa0c-n-the-cohort-—-forms-inputs-coarse-touch/error-context.md
+
+  3) [coarse-touch] › tests-visual/customizability.spec.ts:262:9 › customizability (the golden default + the prop/token retune cascade paints) › light: the Switch size axis scales the track off the --control-h-* rung — /forms/checks 
+
+    Error: light: size="lg" Switch track (44px) did NOT read taller than default (44px) — the --switch-track-h rung is not re-pointed off --control-h-lg
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 44
+    Received:   44
+
+      296 |                 lgH!,
+      297 |                 `${mode}: size="lg" Switch track (${lgH}px) did NOT read taller than default (${defH}px) — the --switch-track-h rung is not re-pointed off --control-h-lg`,
+    > 298 |             ).toBeGreaterThan(defH!);
+          |               ^
+      299 |             expect(
+      300 |                 lgW!,
+      301 |                 `${mode}: size="lg" Switch track width (${lgW}px) did NOT grow with the height (${defW}px) — the derived --switch-track-w did not scale off the anchor`,
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/customizability.spec.ts:298:15
+
+    Error Context: tests-visual/test-results/customizability-customizab-e5cf6-trol-h--rung-—-forms-checks-coarse-touch/error-context.md
+
+  4) [coarse-touch] › tests-visual/customizability.spec.ts:178:9 › customizability (the golden default + the prop/token retune cascade paints) › dark: a :root { --control-text } override cascades into the control font — /forms/inputs 
+
+    Error: dark: a :root { --control-text: 28px } override did NOT cascade into the control font (before 14px → after 14px) — the type is pinned to a hardcoded literal, not the --control-text token
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 14
+    Received:   14
+
+      195 |                 after!,
+      196 |                 `${mode}: a :root { --control-text: 28px } override did NOT cascade into the control font (before ${before}px → after ${after}px) — the type is pinned to a hardcoded literal, not the --control-text token`,
+    > 197 |             ).toBeGreaterThan(before!);
+          |               ^
+      198 |         });
+      199 |
+      200 |         // ── (4) BC.W-CONTROL-CUSTOM — the input-register size axis retunes the cohort directly ──
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/customizability.spec.ts:197:15
+
+    Error Context: tests-visual/test-results/customizability-customizab-fdc1d-control-font-—-forms-inputs-coarse-touch/error-context.md
+
+  5) [coarse-touch] › tests-visual/customizability.spec.ts:207:9 › customizability (the golden default + the prop/token retune cascade paints) › dark: the input size axis (sm < default < lg) retunes the box height + font on the cohort — /forms/inputs 
+
+    Error: dark: size="lg" (60px) did NOT read taller than the default rung (60px) — the --control-h-lg rung is not selected
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 60
+    Received:   60
+
+      244 |                 lg.h!,
+      245 |                 `${mode}: size="lg" (${lg.h}px) did NOT read taller than the default rung (${def.h}px) — the --control-h-lg rung is not selected`,
+    > 246 |             ).toBeGreaterThan(def.h!);
+          |               ^
+      247 |             expect(
+      248 |                 sm.h!,
+      249 |                 `${mode}: size="sm" (${sm.h}px) did NOT read shorter than the default rung (${def.h}px) — the --control-h-sm rung is not selected`,
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/customizability.spec.ts:246:15
+
+    Error Context: tests-visual/test-results/customizability-customizab-75489-n-the-cohort-—-forms-inputs-coarse-touch/error-context.md
+
+  6) [coarse-touch] › tests-visual/customizability.spec.ts:262:9 › customizability (the golden default + the prop/token retune cascade paints) › dark: the Switch size axis scales the track off the --control-h-* rung — /forms/checks 
+
+    Error: dark: size="lg" Switch track (44px) did NOT read taller than default (44px) — the --switch-track-h rung is not re-pointed off --control-h-lg
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 44
+    Received:   44
+
+      296 |                 lgH!,
+      297 |                 `${mode}: size="lg" Switch track (${lgH}px) did NOT read taller than default (${defH}px) — the --switch-track-h rung is not re-pointed off --control-h-lg`,
+    > 298 |             ).toBeGreaterThan(defH!);
+          |               ^
+      299 |             expect(
+      300 |                 lgW!,
+      301 |                 `${mode}: size="lg" Switch track width (${lgW}px) did NOT grow with the height (${defW}px) — the derived --switch-track-w did not scale off the anchor`,
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/customizability.spec.ts:298:15
+
+    Error Context: tests-visual/test-results/customizability-customizab-e4d08-trol-h--rung-—-forms-checks-coarse-touch/error-context.md
+
+  7) [coarse-touch] › tests-visual/dark-material.spec.ts:160:9 › dark-material (π — the luminous-dark transmissive material, fail-CLOSED) › (a) the dark five-rung band spans a perceptible ΔL ladder @ mobile 
+
+    Error: the dark rung band span (overlay 0.0035 / wash 0.0031) = 1.11× — under 1.6× (the rungs do not separate — the HEAD 0.003-luma collapse persists)
+
+    expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 1.6
+    Received:    1.1127634484618147
+
+      207 |                 overlayL / washL,
+      208 |                 `the dark rung band span (overlay ${overlayL.toFixed(4)} / wash ${washL.toFixed(4)}) = ${(overlayL / washL).toFixed(2)}× — under 1.6× (the rungs do not separate — the HEAD 0.003-luma collapse persists)`,
+    > 209 |             ).toBeGreaterThanOrEqual(1.6);
+          |               ^
+      210 |         });
+      211 |     }
+      212 |
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/dark-material.spec.ts:209:15
+
+    Error Context: tests-visual/test-results/dark-material-dark-materia-dd064-erceptible-ΔL-ladder-mobile-coarse-touch/error-context.md
+
+  8) [coarse-touch] › tests-visual/dark-material.spec.ts:160:9 › dark-material (π — the luminous-dark transmissive material, fail-CLOSED) › (a) the dark five-rung band spans a perceptible ΔL ladder @ desktop 
+
+    Error: the dark rung band span (overlay 0.0035 / wash 0.0031) = 1.11× — under 1.6× (the rungs do not separate — the HEAD 0.003-luma collapse persists)
+
+    expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 1.6
+    Received:    1.1127634484618147
+
+      207 |                 overlayL / washL,
+      208 |                 `the dark rung band span (overlay ${overlayL.toFixed(4)} / wash ${washL.toFixed(4)}) = ${(overlayL / washL).toFixed(2)}× — under 1.6× (the rungs do not separate — the HEAD 0.003-luma collapse persists)`,
+    > 209 |             ).toBeGreaterThanOrEqual(1.6);
+          |               ^
+      210 |         });
+      211 |     }
+      212 |
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/dark-material.spec.ts:209:15
+
+    Error Context: tests-visual/test-results/dark-material-dark-materia-33865-rceptible-ΔL-ladder-desktop-coarse-touch/error-context.md
+
+  9) [coarse-touch] › tests-visual/dark-material.spec.ts:358:9 › dark-material (π — the luminous-dark transmissive material, fail-CLOSED) › (e) W7-ii: a calm-light card composites translucent warm, NOT gray @ mobile 
+
+    Error: calm-light card plate oklab L 0.000 — under 0.90 (the card grayed toward the oklab(0.785) slab; the slides gray-slab defect persists). bg "color(srgb 0.20397 0.148263 0.0829736 / 0.14)"
+
+    expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 0.9
+    Received:    0
+
+      396 |                 oklabL,
+      397 |                 `calm-light card plate oklab L ${oklabL.toFixed(3)} — under 0.90 (the card grayed toward the oklab(0.785) slab; the slides gray-slab defect persists). bg "${readout.bg}"`,
+    > 398 |             ).toBeGreaterThanOrEqual(0.9);
+          |               ^
+      399 |             // The caption KEEPS the muted register (it is NOT force-lifted to --foreground).
+      400 |             const captionRgb = parseColor(readout.captionColor);
+      401 |             const fgRgb = parseColor(readout.fg);
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/dark-material.spec.ts:398:15
+
+    Error Context: tests-visual/test-results/dark-material-dark-materia-eb207-lucent-warm-NOT-gray-mobile-coarse-touch/error-context.md
+
+  10) [coarse-touch] › tests-visual/dark-material.spec.ts:358:9 › dark-material (π — the luminous-dark transmissive material, fail-CLOSED) › (e) W7-ii: a calm-light card composites translucent warm, NOT gray @ desktop 
+
+    Error: calm-light card plate oklab L 0.000 — under 0.90 (the card grayed toward the oklab(0.785) slab; the slides gray-slab defect persists). bg "color(srgb 0.20397 0.148263 0.0829736 / 0.14)"
+
+    expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 0.9
+    Received:    0
+
+      396 |                 oklabL,
+      397 |                 `calm-light card plate oklab L ${oklabL.toFixed(3)} — under 0.90 (the card grayed toward the oklab(0.785) slab; the slides gray-slab defect persists). bg "${readout.bg}"`,
+    > 398 |             ).toBeGreaterThanOrEqual(0.9);
+          |               ^
+      399 |             // The caption KEEPS the muted register (it is NOT force-lifted to --foreground).
+      400 |             const captionRgb = parseColor(readout.captionColor);
+      401 |             const fgRgb = parseColor(readout.fg);
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/dark-material.spec.ts:398:15
+
+    Error Context: tests-visual/test-results/dark-material-dark-materia-ae892-ucent-warm-NOT-gray-desktop-coarse-touch/error-context.md
+
+  11) [coarse-touch] › tests-visual/deck-slide.spec.ts:62:9 › deck-slide — light › (a/b/c) Next advances the active slide on the deck spring, wells the goo bridge, and announces 
+
+    Error: the deck resolves its own settle clock
+
+    expect(received).not.toBe(expected) // Object.is equality
+
+    Expected: not ""
+
+      80 |                 };
+      81 |             });
+    > 82 |             expect(clocks.deckGooDuration, "the deck resolves its own settle clock").not.toBe("");
+         |                                                                                          ^
+      83 |             // `--spring-deck: var(--spring-smooth)` — the deck rides the shared smooth
+      84 |             // curve (the one-spring-family alias, not a forked clock).
+      85 |             expect(clocks.springDeck, "--spring-deck === --spring-smooth (one spring family)").toBe(
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/deck-slide.spec.ts:82:90
+
+    Error Context: tests-visual/test-results/deck-slide-deck-slide-—-li-9c22d-he-goo-bridge-and-announces-coarse-touch/error-context.md
+
+  12) [coarse-touch] › tests-visual/deck-slide.spec.ts:119:9 › deck-slide — light › (d) PRM-COMMITS — under reduced-motion Next still commits the swap + announces 
+
+    Error: the announcer updated under PRM
+
+    expect(received).not.toBe(expected) // Object.is equality
+
+    Expected: not ""
+
+      141 |             const liveAfter =
+      142 |                 (await page.locator('[aria-live="polite"]').first().textContent()) ?? "";
+    > 143 |             expect(liveAfter.trim(), "the announcer updated under PRM").not.toBe(liveBefore.trim());
+          |                                                                             ^
+      144 |
+      145 |             await page.emulateMedia({ reducedMotion: null });
+      146 |         });
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/deck-slide.spec.ts:143:77
+
+    Error Context: tests-visual/test-results/deck-slide-deck-slide-—-li-4e95e--commits-the-swap-announces-coarse-touch/error-context.md
+
+  13) [coarse-touch] › tests-visual/deck-slide.spec.ts:62:9 › deck-slide — dark › (a/b/c) Next advances the active slide on the deck spring, wells the goo bridge, and announces 
+
+    Error: the deck resolves its own settle clock
+
+    expect(received).not.toBe(expected) // Object.is equality
+
+    Expected: not ""
+
+      80 |                 };
+      81 |             });
+    > 82 |             expect(clocks.deckGooDuration, "the deck resolves its own settle clock").not.toBe("");
+         |                                                                                          ^
+      83 |             // `--spring-deck: var(--spring-smooth)` — the deck rides the shared smooth
+      84 |             // curve (the one-spring-family alias, not a forked clock).
+      85 |             expect(clocks.springDeck, "--spring-deck === --spring-smooth (one spring family)").toBe(
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/deck-slide.spec.ts:82:90
+
+    Error Context: tests-visual/test-results/deck-slide-deck-slide-—-da-7187a-he-goo-bridge-and-announces-coarse-touch/error-context.md
+
+  14) [coarse-touch] › tests-visual/deck-slide.spec.ts:119:9 › deck-slide — dark › (d) PRM-COMMITS — under reduced-motion Next still commits the swap + announces 
+
+    Error: the announcer updated under PRM
+
+    expect(received).not.toBe(expected) // Object.is equality
+
+    Expected: not ""
+
+      141 |             const liveAfter =
+      142 |                 (await page.locator('[aria-live="polite"]').first().textContent()) ?? "";
+    > 143 |             expect(liveAfter.trim(), "the announcer updated under PRM").not.toBe(liveBefore.trim());
+          |                                                                             ^
+      144 |
+      145 |             await page.emulateMedia({ reducedMotion: null });
+      146 |         });
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/deck-slide.spec.ts:143:77
+
+    Error Context: tests-visual/test-results/deck-slide-deck-slide-—-da-edf54--commits-the-swap-announces-coarse-touch/error-context.md
+
+  15) [coarse-touch] › tests-visual/demo-affordances.spec.ts:225:13 › BA.W-DEMO-AFFORDANCES — the demo affordances π readback › play control renders content-width > the icon square — mobile light 
+
+    Error: the 'Play family' control must render
+
+    expect(received).not.toBeNull()
+
+    Received: null
+
+      251 |                     measured,
+      252 |                     "the 'Play family' control must render",
+    > 253 |                 ).not.toBeNull();
+          |                       ^
+      254 |                 if (!measured) return;
+      255 |                 expect(
+      256 |                     measured.width,
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/demo-affordances.spec.ts:253:23
+
+    Error Context: tests-visual/test-results/demo-affordances-BA-W-DEMO-3964c--icon-square-—-mobile-light-coarse-touch/error-context.md
+
+  16) [coarse-touch] › tests-visual/demo-affordances.spec.ts:225:13 › BA.W-DEMO-AFFORDANCES — the demo affordances π readback › play control renders content-width > the icon square — mobile dark 
+
+    Error: the 'Play family' control must render
+
+    expect(received).not.toBeNull()
+
+    Received: null
+
+      251 |                     measured,
+      252 |                     "the 'Play family' control must render",
+    > 253 |                 ).not.toBeNull();
+          |                       ^
+      254 |                 if (!measured) return;
+      255 |                 expect(
+      256 |                     measured.width,
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/demo-affordances.spec.ts:253:23
+
+    Error Context: tests-visual/test-results/demo-affordances-BA-W-DEMO-136a2-e-icon-square-—-mobile-dark-coarse-touch/error-context.md
+
+  17) [coarse-touch] › tests-visual/demo-affordances.spec.ts:171:13 › BA.W-DEMO-AFFORDANCES — the demo affordances π readback › curve-picker selected chip is a glass plate, selected>unselected — desktop light 
+
+    TimeoutError: locator.waitFor: Timeout 8000ms exceeded.
+    Call log:
+      - waiting for locator('.curve-chip-rack').first() to be visible
+
+
+      121 | } | null> {
+      122 |     const rack = page.locator(".curve-chip-rack").first();
+    > 123 |     await rack.waitFor({ state: "visible", timeout: 8000 });
+          |                ^
+      124 |     return rack.evaluate((el) => {
+      125 |         const chips = Array.from(
+      126 |             el.querySelectorAll<HTMLElement>(".curve-chip"),
+        at readChipRack (/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/demo-affordances.spec.ts:123:16)
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/demo-affordances.spec.ts:182:36
+
+    Error Context: tests-visual/test-results/demo-affordances-BA-W-DEMO-eb15c--unselected-—-desktop-light-coarse-touch/error-context.md
+
+  18) [coarse-touch] › tests-visual/demo-affordances.spec.ts:225:13 › BA.W-DEMO-AFFORDANCES — the demo affordances π readback › play control renders content-width > the icon square — desktop light 
+
+    Error: the 'Play family' control must render
+
+    expect(received).not.toBeNull()
+
+    Received: null
+
+      251 |                     measured,
+      252 |                     "the 'Play family' control must render",
+    > 253 |                 ).not.toBeNull();
+          |                       ^
+      254 |                 if (!measured) return;
+      255 |                 expect(
+      256 |                     measured.width,
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/demo-affordances.spec.ts:253:23
+
+    Error Context: tests-visual/test-results/demo-affordances-BA-W-DEMO-a5ca8-icon-square-—-desktop-light-coarse-touch/error-context.md
+
+  19) [coarse-touch] › tests-visual/demo-affordances.spec.ts:171:13 › BA.W-DEMO-AFFORDANCES — the demo affordances π readback › curve-picker selected chip is a glass plate, selected>unselected — desktop dark 
+
+    TimeoutError: locator.waitFor: Timeout 8000ms exceeded.
+    Call log:
+      - waiting for locator('.curve-chip-rack').first() to be visible
+
+
+      121 | } | null> {
+      122 |     const rack = page.locator(".curve-chip-rack").first();
+    > 123 |     await rack.waitFor({ state: "visible", timeout: 8000 });
+          |                ^
+      124 |     return rack.evaluate((el) => {
+      125 |         const chips = Array.from(
+      126 |             el.querySelectorAll<HTMLElement>(".curve-chip"),
+        at readChipRack (/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/demo-affordances.spec.ts:123:16)
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/demo-affordances.spec.ts:182:36
+
+    Error Context: tests-visual/test-results/demo-affordances-BA-W-DEMO-0db42-d-unselected-—-desktop-dark-coarse-touch/error-context.md
+
+  20) [coarse-touch] › tests-visual/demo-affordances.spec.ts:225:13 › BA.W-DEMO-AFFORDANCES — the demo affordances π readback › play control renders content-width > the icon square — desktop dark 
+
+    Error: the 'Play family' control must render
+
+    expect(received).not.toBeNull()
+
+    Received: null
+
+      251 |                     measured,
+      252 |                     "the 'Play family' control must render",
+    > 253 |                 ).not.toBeNull();
+          |                       ^
+      254 |                 if (!measured) return;
+      255 |                 expect(
+      256 |                     measured.width,
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/demo-affordances.spec.ts:253:23
+
+    Error Context: tests-visual/test-results/demo-affordances-BA-W-DEMO-1b27b--icon-square-—-desktop-dark-coarse-touch/error-context.md
+
+  21) [coarse-touch] › tests-visual/demo-affordances.spec.ts:264:5 › BA.W-DEMO-AFFORDANCES — the demo affordances π readback › curve-picker narrow floor renders a <Select> below the breakpoint — mobile 
+
+    Error: below the breakpoint the picker must render the <Select> floor (the chip rack is hidden at narrow widths)
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      280 |             hasSelect,
+      281 |             "below the breakpoint the picker must render the <Select> floor (the chip rack is hidden at narrow widths)",
+    > 282 |         ).toBe(true);
+          |           ^
+      283 |     });
+      284 |
+      285 |     // ── (c) the lone trigger is content-width < its parent column ──────────────
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/demo-affordances.spec.ts:282:11
+
+    Error Context: tests-visual/test-results/demo-affordances-BA-W-DEMO-cb290-low-the-breakpoint-—-mobile-coarse-touch/error-context.md
+
+  22) [coarse-touch] › tests-visual/demo-affordances.spec.ts:286:5 › BA.W-DEMO-AFFORDANCES — the demo affordances π readback › toaster lone trigger sits content-width < parent column 
+
+    Error: the 'Fire a toast' trigger must render
+
+    expect(received).not.toBeNull()
+
+    Received: null
+
+      311 |             };
+      312 |         });
+    > 313 |         expect(measured, "the 'Fire a toast' trigger must render").not.toBeNull();
+          |                                                                        ^
+      314 |         if (!measured) return;
+      315 |         expect(
+      316 |             measured.btnWidth,
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/demo-affordances.spec.ts:313:72
+
+    Error Context: tests-visual/test-results/demo-affordances-BA-W-DEMO-30ec7-content-width-parent-column-coarse-touch/error-context.md
+
+  23) [coarse-touch] › tests-visual/demo-affordances.spec.ts:329:9 › BA.W-DEMO-AFFORDANCES — the demo affordances π readback › skeleton container composites as glass (translucent tier) — light 
+
+    Error: expect(received).toBeLessThan(expected)
+
+    Expected: < 1
+    Received:   1
+
+      350 |             ).not.toBeNull();
+      351 |             // a glass-routed Card tier is translucent (< 1); an opaque slab is 1.
+    > 352 |             expect(a!).toBeLessThan(1);
+          |                        ^
+      353 |
+      354 |             await page.screenshot({
+      355 |                 path: `${VISUAL_DIR}/W-DEMO-AFFORDANCES-skeleton-desktop-${mode}.png`,
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/demo-affordances.spec.ts:352:24
+
+    Error Context: tests-visual/test-results/demo-affordances-BA-W-DEMO-9b99a-ss-translucent-tier-—-light-coarse-touch/error-context.md
+
+  24) [coarse-touch] › tests-visual/demo-affordances.spec.ts:329:9 › BA.W-DEMO-AFFORDANCES — the demo affordances π readback › skeleton container composites as glass (translucent tier) — dark 
+
+    Error: expect(received).toBeLessThan(expected)
+
+    Expected: < 1
+    Received:   1
+
+      350 |             ).not.toBeNull();
+      351 |             // a glass-routed Card tier is translucent (< 1); an opaque slab is 1.
+    > 352 |             expect(a!).toBeLessThan(1);
+          |                        ^
+      353 |
+      354 |             await page.screenshot({
+      355 |                 path: `${VISUAL_DIR}/W-DEMO-AFFORDANCES-skeleton-desktop-${mode}.png`,
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/demo-affordances.spec.ts:352:24
+
+    Error Context: tests-visual/test-results/demo-affordances-BA-W-DEMO-50f01-ass-translucent-tier-—-dark-coarse-touch/error-context.md
+
+  25) [coarse-touch] › tests-visual/demo-design.spec.ts:105:9 › BB.W-DEMO-DESIGN — the demo presentation designed to SOTA (π) › P2 — the rainbow ramp reads as the focal moment (above the core grid) [light] 
+
+    Error: the rainbow + core grid both render
+
+    expect(received).not.toBeNull()
+
+    Received: null
+
+      129 |             });
+      130 |             paired[`p2-${mode}`] = order;
+    > 131 |             expect(order, "the rainbow + core grid both render").not.toBeNull();
+          |                                                                      ^
+      132 |             expect(
+      133 |                 order!.rainbowY,
+      134 |                 `the rainbow ramp (Y=${order!.rainbowY}) must lead above the core grid (Y=${order!.coreY}) — the focal promotion`,
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/demo-design.spec.ts:131:70
+
+    Error Context: tests-visual/test-results/demo-design-BB-W-DEMO-DESI-8d562--above-the-core-grid-light--coarse-touch/error-context.md
+
+    Error Context: tests-visual/test-results/demo-design-BB-W-DEMO-DESI-8d562--above-the-core-grid-light--coarse-touch/error-context.md
+
+  26) [coarse-touch] › tests-visual/demo-design.spec.ts:186:9 › BB.W-DEMO-DESIGN — the demo presentation designed to SOTA (π) › P4 — the primary-audacious CTA out-presents destructive + glass over field [light] 
+
+    Error: the CTA + destructive buttons render
+
+    expect(received).not.toBeNull()
+
+    Received: null
+
+      208 |             });
+      209 |             paired[`p4-${mode}`] = cta;
+    > 210 |             expect(cta, "the CTA + destructive buttons render").not.toBeNull();
+          |                                                                     ^
+      211 |             expect(
+      212 |                 cta!.ctaY,
+      213 |                 `the CTA (Y=${cta!.ctaY}) must out-present destructive (Y=${cta!.destructiveY}) — the focal placement above`,
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/demo-design.spec.ts:210:69
+
+    Error Context: tests-visual/test-results/demo-design-BB-W-DEMO-DESI-4fab9-ive-glass-over-field-light--coarse-touch/error-context.md
+
+    Error Context: tests-visual/test-results/demo-design-BB-W-DEMO-DESI-4fab9-ive-glass-over-field-light--coarse-touch/error-context.md
+
+  27) [coarse-touch] › tests-visual/demo-design.spec.ts:223:9 › BB.W-DEMO-DESIGN — the demo presentation designed to SOTA (π) › P5 — the notification tones render as translucent .feedback-tone rows [light] 
+
+    Error: a .feedback-tone row renders
+
+    expect(received).not.toBeNull()
+
+    Received: null
+
+      237 |             });
+      238 |             paired[`p5-${mode}`] = tone;
+    > 239 |             expect(tone, "a .feedback-tone row renders").not.toBeNull();
+          |                                                              ^
+      240 |             const alpha = parseAlpha(tone!.bg);
+      241 |             expect(alpha, `the tone row background resolves (${tone!.bg})`).not.toBeNull();
+      242 |             // A tinted-glass row is translucent (α < ~0.95) — NOT an opaque solid dot/slab.
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/demo-design.spec.ts:239:62
+
+    Error Context: tests-visual/test-results/demo-design-BB-W-DEMO-DESI-4c30a-t-feedback-tone-rows-light--coarse-touch/error-context.md
+
+    Error Context: tests-visual/test-results/demo-design-BB-W-DEMO-DESI-4c30a-t-feedback-tone-rows-light--coarse-touch/error-context.md
+
+  28) [coarse-touch] › tests-visual/demo-design.spec.ts:105:9 › BB.W-DEMO-DESIGN — the demo presentation designed to SOTA (π) › P2 — the rainbow ramp reads as the focal moment (above the core grid) [dark] 
+
+    Error: the rainbow + core grid both render
+
+    expect(received).not.toBeNull()
+
+    Received: null
+
+      129 |             });
+      130 |             paired[`p2-${mode}`] = order;
+    > 131 |             expect(order, "the rainbow + core grid both render").not.toBeNull();
+          |                                                                      ^
+      132 |             expect(
+      133 |                 order!.rainbowY,
+      134 |                 `the rainbow ramp (Y=${order!.rainbowY}) must lead above the core grid (Y=${order!.coreY}) — the focal promotion`,
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/demo-design.spec.ts:131:70
+
+    Error Context: tests-visual/test-results/demo-design-BB-W-DEMO-DESI-67ee2-t-above-the-core-grid-dark--coarse-touch/error-context.md
+
+    Error Context: tests-visual/test-results/demo-design-BB-W-DEMO-DESI-67ee2-t-above-the-core-grid-dark--coarse-touch/error-context.md
+
+  29) [coarse-touch] › tests-visual/demo-design.spec.ts:186:9 › BB.W-DEMO-DESIGN — the demo presentation designed to SOTA (π) › P4 — the primary-audacious CTA out-presents destructive + glass over field [dark] 
+
+    Error: the CTA + destructive buttons render
+
+    expect(received).not.toBeNull()
+
+    Received: null
+
+      208 |             });
+      209 |             paired[`p4-${mode}`] = cta;
+    > 210 |             expect(cta, "the CTA + destructive buttons render").not.toBeNull();
+          |                                                                     ^
+      211 |             expect(
+      212 |                 cta!.ctaY,
+      213 |                 `the CTA (Y=${cta!.ctaY}) must out-present destructive (Y=${cta!.destructiveY}) — the focal placement above`,
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/demo-design.spec.ts:210:69
+
+    Error Context: tests-visual/test-results/demo-design-BB-W-DEMO-DESI-567ce-tive-glass-over-field-dark--coarse-touch/error-context.md
+
+    Error Context: tests-visual/test-results/demo-design-BB-W-DEMO-DESI-567ce-tive-glass-over-field-dark--coarse-touch/error-context.md
+
+  30) [coarse-touch] › tests-visual/demo-design.spec.ts:223:9 › BB.W-DEMO-DESIGN — the demo presentation designed to SOTA (π) › P5 — the notification tones render as translucent .feedback-tone rows [dark] 
+
+    Error: a .feedback-tone row renders
+
+    expect(received).not.toBeNull()
+
+    Received: null
+
+      237 |             });
+      238 |             paired[`p5-${mode}`] = tone;
+    > 239 |             expect(tone, "a .feedback-tone row renders").not.toBeNull();
+          |                                                              ^
+      240 |             const alpha = parseAlpha(tone!.bg);
+      241 |             expect(alpha, `the tone row background resolves (${tone!.bg})`).not.toBeNull();
+      242 |             // A tinted-glass row is translucent (α < ~0.95) — NOT an opaque solid dot/slab.
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/demo-design.spec.ts:239:62
+
+    Error Context: tests-visual/test-results/demo-design-BB-W-DEMO-DESI-512e3-nt-feedback-tone-rows-dark--coarse-touch/error-context.md
+
+    Error Context: tests-visual/test-results/demo-design-BB-W-DEMO-DESI-512e3-nt-feedback-tone-rows-dark--coarse-touch/error-context.md
+
+  31) [coarse-touch] › tests-visual/dialog-glass.spec.ts:106:5 › BC.W-DIALOG-GLASS — the glass dialog is ACTUAL liquid glass (π) › (1) SEE-THROUGH — the open dialog plate reads through at the floating-tier ceiling, warm-cream, blur present 
+
+    Error: dialog plate oklab-L (0.280) > 0.85 — warm cream, not grey in light
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0.85
+    Received:   0.2804295400871137
+
+      152 |                             stats.oklabL,
+      153 |                             `dialog plate oklab-L (${stats.oklabL.toFixed(3)}) > 0.85 — warm cream, not grey in ${mode}`,
+    > 154 |                         ).toBeGreaterThan(0.85);
+          |                           ^
+      155 |                     }
+      156 |                 }
+      157 |                 // (c) the blur diffusion paints (a real radius, the iOS materialize).
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/dialog-glass.spec.ts:154:27
+
+    Error Context: tests-visual/test-results/dialog-glass-BC-W-DIALOG-G-d100f-ing-warm-cream-blur-present-coarse-touch/error-context.md
+
+  32) [coarse-touch] › tests-visual/dock-animation-live.spec.ts:97:5 › dock-animation-live (π lane — single-scalar, fail-CLOSED) › the dock box and --dock-morph-t morph on ONE clock (lead/lag ≤ 1 frame) 
+
+    Error: --dock-morph-t ramped over only 0 rising frame(s) (< 5) — the single-scalar spring did NOT run (frozen at 0; the snap/desync regression)
+
+    expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 5
+    Received:    0
+
+      233 |             risingScalar,
+      234 |             `--dock-morph-t ramped over only ${risingScalar} rising frame(s) (< ${MIN_MORPH_FRAMES}) — the single-scalar spring did NOT run (frozen at 0; the snap/desync regression)`,
+    > 235 |         ).toBeGreaterThanOrEqual(MIN_MORPH_FRAMES);
+          |           ^
+      236 |
+      237 |         // The root box width must rise over ≥5 rising frames (a snap/freeze fails).
+      238 |         const risingWidth = countRising(tl.widths, 0.5);
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/dock-animation-live.spec.ts:235:11
+
+    Error Context: tests-visual/test-results/dock-animation-live-dock-a-bdb92-E-clock-lead-lag-≤-1-frame--coarse-touch/error-context.md
+
+  33) [coarse-touch] › tests-visual/dock-cockpit.spec.ts:114:5 › cockpit preset geometry + label ratio (light) 
+
+    Error: light: cockpit control-size must be ≈ 44px (got NaNpx)
+
+    expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 43
+    Received:    NaN
+
+      124 |             base.cockpit.controlSizePx,
+      125 |             `${mode}: cockpit control-size must be ≈ ${COCKPIT_PX}px (got ${base.cockpit.controlSizePx}px)`,
+    > 126 |         ).toBeGreaterThanOrEqual(COCKPIT_PX - 1);
+          |           ^
+      127 |         expect(base.cockpit.controlSizePx).toBeLessThanOrEqual(COCKPIT_PX + 1);
+      128 |
+      129 |         // C2 — the cockpit label tracks the control by ratio AND reads tighter
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/dock-cockpit.spec.ts:126:11
+
+    Error Context: tests-visual/test-results/dock-cockpit-cockpit-preset-geometry-label-ratio-light--coarse-touch/error-context.md
+
+    Error Context: tests-visual/test-results/dock-cockpit-cockpit-preset-geometry-label-ratio-light--coarse-touch/error-context.md
+
+  34) [coarse-touch] › tests-visual/dock-cockpit.spec.ts:114:5 › cockpit preset geometry + label ratio (dark) 
+
+    Error: dark: cockpit control-size must be ≈ 44px (got NaNpx)
+
+    expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 43
+    Received:    NaN
+
+      124 |             base.cockpit.controlSizePx,
+      125 |             `${mode}: cockpit control-size must be ≈ ${COCKPIT_PX}px (got ${base.cockpit.controlSizePx}px)`,
+    > 126 |         ).toBeGreaterThanOrEqual(COCKPIT_PX - 1);
+          |           ^
+      127 |         expect(base.cockpit.controlSizePx).toBeLessThanOrEqual(COCKPIT_PX + 1);
+      128 |
+      129 |         // C2 — the cockpit label tracks the control by ratio AND reads tighter
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/dock-cockpit.spec.ts:126:11
+
+    Error Context: tests-visual/test-results/dock-cockpit-cockpit-preset-geometry-label-ratio-dark--coarse-touch/error-context.md
+
+    Error Context: tests-visual/test-results/dock-cockpit-cockpit-preset-geometry-label-ratio-dark--coarse-touch/error-context.md
+
+  35) [coarse-touch] › tests-visual/dock-cockpit.spec.ts:165:1 › cockpit control clears the 44px floor on coarse pointer 
+
+    Error: coarse: the cockpit control must clear the 44px floor (got NaNpx)
+
+    expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 44
+    Received:    NaN
+
+      176 |         coarse.cockpit.controlSizePx,
+      177 |         `coarse: the cockpit control must clear the 44px floor (got ${coarse.cockpit.controlSizePx}px)`,
+    > 178 |     ).toBeGreaterThanOrEqual(FLOOR_PX);
+          |       ^
+      179 |     await ctx.close();
+      180 | });
+      181 |
+        at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/dock-cockpit.spec.ts:178:7
+
+    Error Context: tests-visual/test-results/dock-cockpit-cockpit-contr-3cb68-4px-floor-on-coarse-pointer-coarse-touch/error-context.md
+
+    Error Context: tests-visual/test-results/dock-cockpit-cockpit-contr-3cb68-4px-floor-on-coarse-pointer-coarse-touch/error-context.md
+
+  35 failed
+    [coarse-touch] › tests-visual/customizability.spec.ts:178:9 › customizability (the golden default + the prop/token retune cascade paints) › light: a :root { --control-text } override cascades into the control font — /forms/inputs 
+    [coarse-touch] › tests-visual/customizability.spec.ts:207:9 › customizability (the golden default + the prop/token retune cascade paints) › light: the input size axis (sm < default < lg) retunes the box height + font on the cohort — /forms/inputs 
+    [coarse-touch] › tests-visual/customizability.spec.ts:262:9 › customizability (the golden default + the prop/token retune cascade paints) › light: the Switch size axis scales the track off the --control-h-* rung — /forms/checks 
+    [coarse-touch] › tests-visual/customizability.spec.ts:178:9 › customizability (the golden default + the prop/token retune cascade paints) › dark: a :root { --control-text } override cascades into the control font — /forms/inputs 
+    [coarse-touch] › tests-visual/customizability.spec.ts:207:9 › customizability (the golden default + the prop/token retune cascade paints) › dark: the input size axis (sm < default < lg) retunes the box height + font on the cohort — /forms/inputs 
+    [coarse-touch] › tests-visual/customizability.spec.ts:262:9 › customizability (the golden default + the prop/token retune cascade paints) › dark: the Switch size axis scales the track off the --control-h-* rung — /forms/checks 
+    [coarse-touch] › tests-visual/dark-material.spec.ts:160:9 › dark-material (π — the luminous-dark transmissive material, fail-CLOSED) › (a) the dark five-rung band spans a perceptible ΔL ladder @ mobile 
+    [coarse-touch] › tests-visual/dark-material.spec.ts:160:9 › dark-material (π — the luminous-dark transmissive material, fail-CLOSED) › (a) the dark five-rung band spans a perceptible ΔL ladder @ desktop 
+    [coarse-touch] › tests-visual/dark-material.spec.ts:358:9 › dark-material (π — the luminous-dark transmissive material, fail-CLOSED) › (e) W7-ii: a calm-light card composites translucent warm, NOT gray @ mobile 
+    [coarse-touch] › tests-visual/dark-material.spec.ts:358:9 › dark-material (π — the luminous-dark transmissive material, fail-CLOSED) › (e) W7-ii: a calm-light card composites translucent warm, NOT gray @ desktop 
+    [coarse-touch] › tests-visual/deck-slide.spec.ts:62:9 › deck-slide — light › (a/b/c) Next advances the active slide on the deck spring, wells the goo bridge, and announces 
+    [coarse-touch] › tests-visual/deck-slide.spec.ts:119:9 › deck-slide — light › (d) PRM-COMMITS — under reduced-motion Next still commits the swap + announces 
+    [coarse-touch] › tests-visual/deck-slide.spec.ts:62:9 › deck-slide — dark › (a/b/c) Next advances the active slide on the deck spring, wells the goo bridge, and announces 
+    [coarse-touch] › tests-visual/deck-slide.spec.ts:119:9 › deck-slide — dark › (d) PRM-COMMITS — under reduced-motion Next still commits the swap + announces 
+    [coarse-touch] › tests-visual/demo-affordances.spec.ts:225:13 › BA.W-DEMO-AFFORDANCES — the demo affordances π readback › play control renders content-width > the icon square — mobile light 
+    [coarse-touch] › tests-visual/demo-affordances.spec.ts:225:13 › BA.W-DEMO-AFFORDANCES — the demo affordances π readback › play control renders content-width > the icon square — mobile dark 
+    [coarse-touch] › tests-visual/demo-affordances.spec.ts:171:13 › BA.W-DEMO-AFFORDANCES — the demo affordances π readback › curve-picker selected chip is a glass plate, selected>unselected — desktop light 
+    [coarse-touch] › tests-visual/demo-affordances.spec.ts:225:13 › BA.W-DEMO-AFFORDANCES — the demo affordances π readback › play control renders content-width > the icon square — desktop light 
+    [coarse-touch] › tests-visual/demo-affordances.spec.ts:171:13 › BA.W-DEMO-AFFORDANCES — the demo affordances π readback › curve-picker selected chip is a glass plate, selected>unselected — desktop dark 
+    [coarse-touch] › tests-visual/demo-affordances.spec.ts:225:13 › BA.W-DEMO-AFFORDANCES — the demo affordances π readback › play control renders content-width > the icon square — desktop dark 
+    [coarse-touch] › tests-visual/demo-affordances.spec.ts:264:5 › BA.W-DEMO-AFFORDANCES — the demo affordances π readback › curve-picker narrow floor renders a <Select> below the breakpoint — mobile 
+    [coarse-touch] › tests-visual/demo-affordances.spec.ts:286:5 › BA.W-DEMO-AFFORDANCES — the demo affordances π readback › toaster lone trigger sits content-width < parent column 
+    [coarse-touch] › tests-visual/demo-affordances.spec.ts:329:9 › BA.W-DEMO-AFFORDANCES — the demo affordances π readback › skeleton container composites as glass (translucent tier) — light 
+    [coarse-touch] › tests-visual/demo-affordances.spec.ts:329:9 › BA.W-DEMO-AFFORDANCES — the demo affordances π readback › skeleton container composites as glass (translucent tier) — dark 
+    [coarse-touch] › tests-visual/demo-design.spec.ts:105:9 › BB.W-DEMO-DESIGN — the demo presentation designed to SOTA (π) › P2 — the rainbow ramp reads as the focal moment (above the core grid) [light] 
+    [coarse-touch] › tests-visual/demo-design.spec.ts:186:9 › BB.W-DEMO-DESIGN — the demo presentation designed to SOTA (π) › P4 — the primary-audacious CTA out-presents destructive + glass over field [light] 
+    [coarse-touch] › tests-visual/demo-design.spec.ts:223:9 › BB.W-DEMO-DESIGN — the demo presentation designed to SOTA (π) › P5 — the notification tones render as translucent .feedback-tone rows [light] 
+    [coarse-touch] › tests-visual/demo-design.spec.ts:105:9 › BB.W-DEMO-DESIGN — the demo presentation designed to SOTA (π) › P2 — the rainbow ramp reads as the focal moment (above the core grid) [dark] 
+    [coarse-touch] › tests-visual/demo-design.spec.ts:186:9 › BB.W-DEMO-DESIGN — the demo presentation designed to SOTA (π) › P4 — the primary-audacious CTA out-presents destructive + glass over field [dark] 
+    [coarse-touch] › tests-visual/demo-design.spec.ts:223:9 › BB.W-DEMO-DESIGN — the demo presentation designed to SOTA (π) › P5 — the notification tones render as translucent .feedback-tone rows [dark] 
+    [coarse-touch] › tests-visual/dialog-glass.spec.ts:106:5 › BC.W-DIALOG-GLASS — the glass dialog is ACTUAL liquid glass (π) › (1) SEE-THROUGH — the open dialog plate reads through at the floating-tier ceiling, warm-cream, blur present 
+    [coarse-touch] › tests-visual/dock-animation-live.spec.ts:97:5 › dock-animation-live (π lane — single-scalar, fail-CLOSED) › the dock box and --dock-morph-t morph on ONE clock (lead/lag ≤ 1 frame) 
+    [coarse-touch] › tests-visual/dock-cockpit.spec.ts:114:5 › cockpit preset geometry + label ratio (light) 
+    [coarse-touch] › tests-visual/dock-cockpit.spec.ts:114:5 › cockpit preset geometry + label ratio (dark) 
+    [coarse-touch] › tests-visual/dock-cockpit.spec.ts:165:1 › cockpit control clears the 44px floor on coarse pointer 
+  4 skipped
+  44 passed (4.0m)

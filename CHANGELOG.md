@@ -1,6 +1,6 @@
 # Changelog
 
-## 11.0.1 — 2026-11-11
+## 11.0.1 — 2026-11-12
 
 A patch that brings the 10.1.5 fixes forward onto 11.0. If you saw the dock's hover
 plate turn into an oval around a labelled control, or one end of the dock go square

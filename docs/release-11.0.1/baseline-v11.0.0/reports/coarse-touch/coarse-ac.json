@@ -1,0 +1,2646 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "tests-visual/playwright.config.ts",
+      "--project=coarse-touch",
+      "--workers=1",
+      "tests-visual/aurora-mediums-substrate.spec.ts",
+      "tests-visual/aurora-painterly-statistics.spec.ts",
+      "tests-visual/aurora-studio.spec.ts",
+      "tests-visual/aurora-swraster.spec.ts",
+      "tests-visual/aurora-vibrancy.spec.ts",
+      "tests-visual/auth-shell-bg.spec.ts",
+      "tests-visual/ba-animate.spec.ts",
+      "tests-visual/blob-config-delta.spec.ts",
+      "tests-visual/blob-mood-live.spec.ts",
+      "tests-visual/blob-page.spec.ts",
+      "tests-visual/blob-painted-component.spec.ts",
+      "tests-visual/blob-pause-seam.spec.ts",
+      "tests-visual/blob-render.spec.ts",
+      "tests-visual/blob-studio.spec.ts",
+      "tests-visual/blob-warm-default.spec.ts"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/playwright.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-headless-new",
+        "name": "chromium-headless-new",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "coarse-touch",
+        "name": "coarse-touch",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "safari-webgl.spec.ts",
+          "aurora-swraster.spec.ts",
+          "release-10-1-1.spec.ts",
+          "release-10-1-2.spec.ts",
+          "release-10-1-3.spec.ts",
+          "release-10-1-4.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/reports/coarse-ac.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5321",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/",
+      "url": "http://localhost:5321",
+      "reuseExistingServer": true,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "aurora-mediums-substrate.spec.ts",
+      "file": "aurora-mediums-substrate.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "aurora-mediums-substrate (π lane — oil-medium neutrality + organic grain)",
+          "file": "aurora-mediums-substrate.spec.ts",
+          "line": 115,
+          "column": 6,
+          "specs": [
+            {
+              "title": "the OIL medium bakes a structured organic field @ mobile (375×667)",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 240000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "coarse-touch",
+                  "projectName": "coarse-touch",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 11218,
+                      "error": {
+                        "message": "TimeoutError: locator.waitFor: Timeout 10000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-aurora-atoms-surface]') to be visible\u001b[22m\n\u001b[2m    24 × locator resolved to hidden <div tabindex=\"0\" data-fade-end=\"\" data-fade-axis=\"y\" data-fade-start=\"\" data-aurora-atoms-surface=\"\" class=\"fading-scroll fading-scroll--y flex-1 min-h-0 overflow-x-clip scrollbar-thin\">…</div>\u001b[22m\n",
+                        "stack": "TimeoutError: locator.waitFor: Timeout 10000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-aurora-atoms-surface]') to be visible\u001b[22m\n\u001b[2m    24 × locator resolved to hidden <div tabindex=\"0\" data-fade-end=\"\" data-fade-axis=\"y\" data-fade-start=\"\" data-aurora-atoms-surface=\"\" class=\"fading-scroll fading-scroll--y flex-1 min-h-0 overflow-x-clip scrollbar-thin\">…</div>\u001b[22m\n\n    at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/aurora-mediums-substrate.spec.ts:129:32",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/aurora-mediums-substrate.spec.ts",
+                          "column": 32,
+                          "line": 129
+                        },
+                        "snippet": "  127 |\n  128 |             const atomsSurface = page.locator(\"[data-aurora-atoms-surface]\");\n> 129 |             await atomsSurface.waitFor({ state: \"visible\", timeout: 10_000 });\n      |                                ^\n  130 |\n  131 |             // Select the OIL medium (the existing medium the substrate change must not\n  132 |             // regress) via the atoms `medium` control."
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/aurora-mediums-substrate.spec.ts",
+                            "column": 32,
+                            "line": 129
+                          },
+                          "message": "TimeoutError: locator.waitFor: Timeout 10000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-aurora-atoms-surface]') to be visible\u001b[22m\n\u001b[2m    24 × locator resolved to hidden <div tabindex=\"0\" data-fade-end=\"\" data-fade-axis=\"y\" data-fade-start=\"\" data-aurora-atoms-surface=\"\" class=\"fading-scroll fading-scroll--y flex-1 min-h-0 overflow-x-clip scrollbar-thin\">…</div>\u001b[22m\n\n\n  127 |\n  128 |             const atomsSurface = page.locator(\"[data-aurora-atoms-surface]\");\n> 129 |             await atomsSurface.waitFor({ state: \"visible\", timeout: 10_000 });\n      |                                ^\n  130 |\n  131 |             // Select the OIL medium (the existing medium the substrate change must not\n  132 |             // regress) via the atoms `medium` control.\n    at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/aurora-mediums-substrate.spec.ts:129:32"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T23:55:06.793Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/test-results/aurora-mediums-substrate-a-542a3-ganic-field-mobile-375×667--coarse-touch/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/aurora-mediums-substrate.spec.ts",
+                        "column": 32,
+                        "line": 129
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "f0b189948c8decca70bd-3e2e7fc286b106441fb9",
+              "file": "aurora-mediums-substrate.spec.ts",
+              "line": 117,
+              "column": 9
+            },
+            {
+              "title": "the OIL medium bakes a structured organic field @ tablet (1280×800)",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 240000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "coarse-touch",
+                  "projectName": "coarse-touch",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "timedOut",
+                      "duration": 240214,
+                      "error": {
+                        "message": "\u001b[31mTest timeout of 240000ms exceeded.\u001b[39m",
+                        "stack": "\u001b[31mTest timeout of 240000ms exceeded.\u001b[39m"
+                      },
+                      "errors": [
+                        {
+                          "message": "\u001b[31mTest timeout of 240000ms exceeded.\u001b[39m"
+                        },
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/aurora-mediums-substrate.spec.ts",
+                            "column": 32,
+                            "line": 134
+                          },
+                          "message": "Error: locator.selectOption: Test timeout of 240000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-atom=\"medium\"] select')\u001b[22m\n\n\n  132 |             // regress) via the atoms `medium` control.\n  133 |             const mediumSelect = page.locator(`[data-atom=\"medium\"] select`);\n> 134 |             await mediumSelect.selectOption(\"oil\");\n      |                                ^\n  135 |\n  136 |             await page.waitForTimeout(SETTLE_MS);\n  137 |             const frame = await grab(canvas);\n    at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/aurora-mediums-substrate.spec.ts:134:32"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T23:55:18.623Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/test-results/aurora-mediums-substrate-a-1ca66-anic-field-tablet-1280×800--coarse-touch/error-context.md"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "f0b189948c8decca70bd-75bc8aefd3474ac699d5",
+              "file": "aurora-mediums-substrate.spec.ts",
+              "line": 117,
+              "column": 9
+            },
+            {
+              "title": "the OIL medium bakes a structured organic field @ desktop (1440×900)",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 240000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "coarse-touch",
+                  "projectName": "coarse-touch",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "timedOut",
+                      "duration": 240067,
+                      "error": {
+                        "message": "\u001b[31mTest timeout of 240000ms exceeded.\u001b[39m",
+                        "stack": "\u001b[31mTest timeout of 240000ms exceeded.\u001b[39m"
+                      },
+                      "errors": [
+                        {
+                          "message": "\u001b[31mTest timeout of 240000ms exceeded.\u001b[39m"
+                        },
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/aurora-mediums-substrate.spec.ts",
+                            "column": 32,
+                            "line": 134
+                          },
+                          "message": "Error: locator.selectOption: Test timeout of 240000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-atom=\"medium\"] select')\u001b[22m\n\n\n  132 |             // regress) via the atoms `medium` control.\n  133 |             const mediumSelect = page.locator(`[data-atom=\"medium\"] select`);\n> 134 |             await mediumSelect.selectOption(\"oil\");\n      |                                ^\n  135 |\n  136 |             await page.waitForTimeout(SETTLE_MS);\n  137 |             const frame = await grab(canvas);\n    at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/aurora-mediums-substrate.spec.ts:134:32"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T23:59:26.340Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/test-results/aurora-mediums-substrate-a-a2011-nic-field-desktop-1440×900--coarse-touch/error-context.md"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "f0b189948c8decca70bd-b64d5a1272d6642edaa2",
+              "file": "aurora-mediums-substrate.spec.ts",
+              "line": 117,
+              "column": 9
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "aurora-painterly-statistics.spec.ts",
+      "file": "aurora-painterly-statistics.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "aurora-painterly-statistics (π lane — the operationalized 'stunning' bar)",
+          "file": "aurora-painterly-statistics.spec.ts",
+          "line": 142,
+          "column": 6,
+          "specs": [
+            {
+              "title": "van-Gogh + oil-pastel + crayon + oil read pigment-true and distinct @ tablet",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 300000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "coarse-touch",
+                  "projectName": "coarse-touch",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 4877,
+                      "error": {
+                        "message": "Error: van-Gogh gap-fraction 0.006 below floor 0.04 — the render is a continuous coverage smear (the passthrough), not separable atomic dabs @ tablet\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0.04\u001b[39m\nReceived:   \u001b[31m0.006189516129032258\u001b[39m",
+                        "stack": "Error: van-Gogh gap-fraction 0.006 below floor 0.04 — the render is a continuous coverage smear (the passthrough), not separable atomic dabs @ tablet\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0.04\u001b[39m\nReceived:   \u001b[31m0.006189516129032258\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/aurora-painterly-statistics.spec.ts:178:15",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/aurora-painterly-statistics.spec.ts",
+                          "column": 15,
+                          "line": 178
+                        },
+                        "snippet": "  176 |                     3,\n  177 |                 )} below floor ${MIN_GAP_FRACTION} — the render is a continuous coverage smear (the passthrough), not separable atomic dabs @ ${vp.name}`,\n> 178 |             ).toBeGreaterThan(MIN_GAP_FRACTION);\n      |               ^\n  179 |\n  180 |             // (b) NO-FLAT-FILLS VARIANCE — each painterly medium carries pigment turbulence.\n  181 |             for (const [name, s] of ["
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/aurora-painterly-statistics.spec.ts",
+                            "column": 15,
+                            "line": 178
+                          },
+                          "message": "Error: van-Gogh gap-fraction 0.006 below floor 0.04 — the render is a continuous coverage smear (the passthrough), not separable atomic dabs @ tablet\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0.04\u001b[39m\nReceived:   \u001b[31m0.006189516129032258\u001b[39m\n\n  176 |                     3,\n  177 |                 )} below floor ${MIN_GAP_FRACTION} — the render is a continuous coverage smear (the passthrough), not separable atomic dabs @ ${vp.name}`,\n> 178 |             ).toBeGreaterThan(MIN_GAP_FRACTION);\n      |               ^\n  179 |\n  180 |             // (b) NO-FLAT-FILLS VARIANCE — each painterly medium carries pigment turbulence.\n  181 |             for (const [name, s] of [\n    at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/aurora-painterly-statistics.spec.ts:178:15"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T00:03:28.043Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/test-results/aurora-painterly-statistic-0b3cf-nt-true-and-distinct-tablet-coarse-touch/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/aurora-painterly-statistics.spec.ts",
+                        "column": 15,
+                        "line": 178
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "fb9ace25d9636b93a7c3-5b9b0691ce88907fd1f8",
+              "file": "aurora-painterly-statistics.spec.ts",
+              "line": 144,
+              "column": 9
+            },
+            {
+              "title": "van-Gogh + oil-pastel + crayon + oil read pigment-true and distinct @ desktop",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 300000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "coarse-touch",
+                  "projectName": "coarse-touch",
+                  "results": [
+                    {
+                      "workerIndex": 4,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 5032,
+                      "error": {
+                        "message": "Error: van-Gogh gap-fraction 0.004 below floor 0.04 — the render is a continuous coverage smear (the passthrough), not separable atomic dabs @ desktop\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0.04\u001b[39m\nReceived:   \u001b[31m0.004251700680272109\u001b[39m",
+                        "stack": "Error: van-Gogh gap-fraction 0.004 below floor 0.04 — the render is a continuous coverage smear (the passthrough), not separable atomic dabs @ desktop\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0.04\u001b[39m\nReceived:   \u001b[31m0.004251700680272109\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/aurora-painterly-statistics.spec.ts:178:15",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/aurora-painterly-statistics.spec.ts",
+                          "column": 15,
+                          "line": 178
+                        },
+                        "snippet": "  176 |                     3,\n  177 |                 )} below floor ${MIN_GAP_FRACTION} — the render is a continuous coverage smear (the passthrough), not separable atomic dabs @ ${vp.name}`,\n> 178 |             ).toBeGreaterThan(MIN_GAP_FRACTION);\n      |               ^\n  179 |\n  180 |             // (b) NO-FLAT-FILLS VARIANCE — each painterly medium carries pigment turbulence.\n  181 |             for (const [name, s] of ["
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/aurora-painterly-statistics.spec.ts",
+                            "column": 15,
+                            "line": 178
+                          },
+                          "message": "Error: van-Gogh gap-fraction 0.004 below floor 0.04 — the render is a continuous coverage smear (the passthrough), not separable atomic dabs @ desktop\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0.04\u001b[39m\nReceived:   \u001b[31m0.004251700680272109\u001b[39m\n\n  176 |                     3,\n  177 |                 )} below floor ${MIN_GAP_FRACTION} — the render is a continuous coverage smear (the passthrough), not separable atomic dabs @ ${vp.name}`,\n> 178 |             ).toBeGreaterThan(MIN_GAP_FRACTION);\n      |               ^\n  179 |\n  180 |             // (b) NO-FLAT-FILLS VARIANCE — each painterly medium carries pigment turbulence.\n  181 |             for (const [name, s] of [\n    at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/aurora-painterly-statistics.spec.ts:178:15"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T00:03:33.552Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/test-results/aurora-painterly-statistic-b258a-t-true-and-distinct-desktop-coarse-touch/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/aurora-painterly-statistics.spec.ts",
+                        "column": 15,
+                        "line": 178
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "fb9ace25d9636b93a7c3-82b2c42ae96d1990f819",
+              "file": "aurora-painterly-statistics.spec.ts",
+              "line": 144,
+              "column": 9
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "aurora-studio.spec.ts",
+      "file": "aurora-studio.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "aurora-studio (π lane — the studio-repair device gate, fail-CLOSED)",
+          "file": "aurora-studio.spec.ts",
+          "line": 80,
+          "column": 6,
+          "specs": [
+            {
+              "title": "the medium select opens, picking a textured medium changes the canvas + reveals Texture",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 240000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "coarse-touch",
+                  "projectName": "coarse-touch",
+                  "results": [
+                    {
+                      "workerIndex": 5,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3038,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T00:03:39.398Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "f43ac18a093417685a34-a549cc71216c61c6fe68",
+              "file": "aurora-studio.spec.ts",
+              "line": 82,
+              "column": 5
+            },
+            {
+              "title": "selecting Van Gogh seeds the medium atom + the look survives a one-atom touch",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 240000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "coarse-touch",
+                  "projectName": "coarse-touch",
+                  "results": [
+                    {
+                      "workerIndex": 5,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 4449,
+                      "error": {
+                        "message": "Error: the first atom touch CLOBBERED the Van Gogh look (Δ 213.87 > 60) — the atoms surface discarded the per-preset config instead of refining it\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m60\u001b[39m\nReceived:    \u001b[31m213.8735599078341\u001b[39m",
+                        "stack": "Error: the first atom touch CLOBBERED the Van Gogh look (Δ 213.87 > 60) — the atoms surface discarded the per-preset config instead of refining it\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m60\u001b[39m\nReceived:    \u001b[31m213.8735599078341\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/aurora-studio.spec.ts:189:11",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/aurora-studio.spec.ts",
+                          "column": 11,
+                          "line": 189
+                        },
+                        "snippet": "  187 |             delta,\n  188 |             `the first atom touch CLOBBERED the Van Gogh look (Δ ${delta.toFixed(2)} > ${SURVIVE_DRIFT_MAX}) — the atoms surface discarded the per-preset config instead of refining it`,\n> 189 |         ).toBeLessThanOrEqual(SURVIVE_DRIFT_MAX);\n      |           ^\n  190 |     });\n  191 |\n  192 |     // ── Clause 5: the served-app sentinel CANARY — passes on the demo, throws on a wrong app. ──"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/aurora-studio.spec.ts",
+                            "column": 11,
+                            "line": 189
+                          },
+                          "message": "Error: the first atom touch CLOBBERED the Van Gogh look (Δ 213.87 > 60) — the atoms surface discarded the per-preset config instead of refining it\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m60\u001b[39m\nReceived:    \u001b[31m213.8735599078341\u001b[39m\n\n  187 |             delta,\n  188 |             `the first atom touch CLOBBERED the Van Gogh look (Δ ${delta.toFixed(2)} > ${SURVIVE_DRIFT_MAX}) — the atoms surface discarded the per-preset config instead of refining it`,\n> 189 |         ).toBeLessThanOrEqual(SURVIVE_DRIFT_MAX);\n      |           ^\n  190 |     });\n  191 |\n  192 |     // ── Clause 5: the served-app sentinel CANARY — passes on the demo, throws on a wrong app. ──\n    at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/aurora-studio.spec.ts:189:11"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T00:03:42.644Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/test-results/aurora-studio-aurora-studi-80ef4-k-survives-a-one-atom-touch-coarse-touch/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/aurora-studio.spec.ts",
+                        "column": 11,
+                        "line": 189
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "f43ac18a093417685a34-b614284373f0db98ab53",
+              "file": "aurora-studio.spec.ts",
+              "line": 132,
+              "column": 5
+            },
+            {
+              "title": "the served-app sentinel passes on the real demo and FAILS-CLOSED on a foreign app",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 240000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "coarse-touch",
+                  "projectName": "coarse-touch",
+                  "results": [
+                    {
+                      "workerIndex": 6,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 15838,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T00:03:47.754Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "f43ac18a093417685a34-2a1c34365446ec81008f",
+              "file": "aurora-studio.spec.ts",
+              "line": 193,
+              "column": 5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "aurora-swraster.spec.ts",
+      "file": "aurora-swraster.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "BB.W-AURORA-SWRASTER — headless luminance-faithful fallback",
+          "file": "aurora-swraster.spec.ts",
+          "line": 89,
+          "column": 6,
+          "specs": [
+            {
+              "title": "fallback ground matches the composite reference within the certify band (light)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [
+                    {
+                      "type": "swraster-luminance",
+                      "description": "{\"scheme\":\"light\",\"refMean\":\"0.3862\",\"gndMean\":\"0.3853\",\"meanDelta\":\"0.0009\",\"refQuad\":[\"0.221\",\"0.404\",\"0.372\",\"0.547\"],\"gndQuad\":[\"0.223\",\"0.403\",\"0.370\",\"0.545\"],\"quadDeltas\":[\"0.002\",\"0.002\",\"0.002\",\"0.002\"],\"groundForm\":\"2d-raster\"}"
+                    }
+                  ],
+                  "expectedStatus": "passed",
+                  "projectId": "coarse-touch",
+                  "projectName": "coarse-touch",
+                  "results": [
+                    {
+                      "workerIndex": 6,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 911,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T00:04:03.786Z",
+                      "annotations": [
+                        {
+                          "type": "swraster-luminance",
+                          "description": "{\"scheme\":\"light\",\"refMean\":\"0.3862\",\"gndMean\":\"0.3853\",\"meanDelta\":\"0.0009\",\"refQuad\":[\"0.221\",\"0.404\",\"0.372\",\"0.547\"],\"gndQuad\":[\"0.223\",\"0.403\",\"0.370\",\"0.545\"],\"quadDeltas\":[\"0.002\",\"0.002\",\"0.002\",\"0.002\"],\"groundForm\":\"2d-raster\"}"
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "04948b8c155915ba40c8-dd9feb2cda30c34ddf24",
+              "file": "aurora-swraster.spec.ts",
+              "line": 91,
+              "column": 9
+            },
+            {
+              "title": "fallback ground matches the composite reference within the certify band (dark)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [
+                    {
+                      "type": "swraster-luminance",
+                      "description": "{\"scheme\":\"dark\",\"refMean\":\"0.3862\",\"gndMean\":\"0.3853\",\"meanDelta\":\"0.0009\",\"refQuad\":[\"0.221\",\"0.404\",\"0.372\",\"0.547\"],\"gndQuad\":[\"0.223\",\"0.403\",\"0.370\",\"0.545\"],\"quadDeltas\":[\"0.002\",\"0.002\",\"0.002\",\"0.002\"],\"groundForm\":\"2d-raster\"}"
+                    }
+                  ],
+                  "expectedStatus": "passed",
+                  "projectId": "coarse-touch",
+                  "projectName": "coarse-touch",
+                  "results": [
+                    {
+                      "workerIndex": 6,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 905,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T00:04:04.704Z",
+                      "annotations": [
+                        {
+                          "type": "swraster-luminance",
+                          "description": "{\"scheme\":\"dark\",\"refMean\":\"0.3862\",\"gndMean\":\"0.3853\",\"meanDelta\":\"0.0009\",\"refQuad\":[\"0.221\",\"0.404\",\"0.372\",\"0.547\"],\"gndQuad\":[\"0.223\",\"0.403\",\"0.370\",\"0.545\"],\"quadDeltas\":[\"0.002\",\"0.002\",\"0.002\",\"0.002\"],\"groundForm\":\"2d-raster\"}"
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "04948b8c155915ba40c8-be6b7b4bb94c17447657",
+              "file": "aurora-swraster.spec.ts",
+              "line": 91,
+              "column": 9
+            },
+            {
+              "title": "a forced mode:capture mount under software raster does NOT hang the page",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "coarse-touch",
+                  "projectName": "coarse-touch",
+                  "results": [
+                    {
+                      "workerIndex": 6,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 662,
+                      "error": {
+                        "message": "Error: the software-raster capture mount must not throw an onInitError-class violation\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mfalse\u001b[39m\nReceived: \u001b[31mtrue\u001b[39m",
+                        "stack": "Error: the software-raster capture mount must not throw an onInitError-class violation\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mfalse\u001b[39m\nReceived: \u001b[31mtrue\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/aurora-swraster.spec.ts:274:113",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/aurora-swraster.spec.ts",
+                          "column": 113,
+                          "line": 274
+                        },
+                        "snippet": "  272 |         // The createAurora call returns promptly (it never wedges) and never throws\n  273 |         // a contract violation for the software-raster fall (the guard's runtime truth).\n> 274 |         expect(result.threw, \"the software-raster capture mount must not throw an onInitError-class violation\").toBe(false);\n      |                                                                                                                 ^\n  275 |         expect(result.armMs, \"the capture mount returns promptly (no wedge/hang)\").toBeLessThan(5_000);\n  276 |\n  277 |         // The page stays responsive — a click resolves immediately."
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/aurora-swraster.spec.ts",
+                            "column": 113,
+                            "line": 274
+                          },
+                          "message": "Error: the software-raster capture mount must not throw an onInitError-class violation\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mfalse\u001b[39m\nReceived: \u001b[31mtrue\u001b[39m\n\n  272 |         // The createAurora call returns promptly (it never wedges) and never throws\n  273 |         // a contract violation for the software-raster fall (the guard's runtime truth).\n> 274 |         expect(result.threw, \"the software-raster capture mount must not throw an onInitError-class violation\").toBe(false);\n      |                                                                                                                 ^\n  275 |         expect(result.armMs, \"the capture mount returns promptly (no wedge/hang)\").toBeLessThan(5_000);\n  276 |\n  277 |         // The page stays responsive — a click resolves immediately.\n    at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/aurora-swraster.spec.ts:274:113"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T00:04:05.619Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/test-results/aurora-swraster-BB-W-AUROR-acf95-ster-does-NOT-hang-the-page-coarse-touch/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/aurora-swraster.spec.ts",
+                        "column": 113,
+                        "line": 274
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "04948b8c155915ba40c8-f48f983ccc0b3e18c3e4",
+              "file": "aurora-swraster.spec.ts",
+              "line": 231,
+              "column": 5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "aurora-vibrancy.spec.ts",
+      "file": "aurora-vibrancy.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "BI.W-AURORA-VIBRANCY — vibrant warm-sun field + the setting-sun pink note",
+          "file": "aurora-vibrancy.spec.ts",
+          "line": 68,
+          "column": 6,
+          "specs": [
+            {
+              "title": "each setting-sun candidate composites to a warm-sun-with-pink field (light)",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [
+                    {
+                      "type": "vibrancy-field",
+                      "description": "{\"scheme\":\"light\",\"key\":\"SETTING_SUN\",\"meanC\":\"0.1174\",\"meanH\":\"45.0\"}"
+                    },
+                    {
+                      "type": "vibrancy-field",
+                      "description": "{\"scheme\":\"light\",\"key\":\"DUSK\",\"meanC\":\"0.1209\",\"meanH\":\"26.8\"}"
+                    },
+                    {
+                      "type": "vibrancy-field",
+                      "description": "{\"scheme\":\"light\",\"key\":\"VIVID_SETTING_SUN\",\"meanC\":\"0.0029\",\"meanH\":\"84.6\"}"
+                    }
+                  ],
+                  "expectedStatus": "passed",
+                  "projectId": "coarse-touch",
+                  "projectName": "coarse-touch",
+                  "results": [
+                    {
+                      "workerIndex": 7,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 1163,
+                      "error": {
+                        "message": "Error: VIVID_SETTING_SUN field mean OKLab C (warm-sun floor)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m0.045\u001b[39m\nReceived:    \u001b[31m0.0028555898259554654\u001b[39m",
+                        "stack": "Error: VIVID_SETTING_SUN field mean OKLab C (warm-sun floor)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m0.045\u001b[39m\nReceived:    \u001b[31m0.0028555898259554654\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/aurora-vibrancy.spec.ts:147:77",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/aurora-vibrancy.spec.ts",
+                          "column": 77,
+                          "line": 147
+                        },
+                        "snippet": "  145 |                 });\n  146 |                 // 1. real chroma — no grey wash behind glass.\n> 147 |                 expect(meanC, `${key} field mean OKLab C (warm-sun floor)`).toBeGreaterThanOrEqual(FIELD_CHROMA_FLOOR);\n      |                                                                             ^\n  148 |                 // 2. a WARM field, not a pink field.\n  149 |                 expect(meanH, `${key} field mean hue is warm (not rotated to a pink field)`).toBeGreaterThanOrEqual(WARM_FIELD_BAND[0]);\n  150 |                 expect(meanH, `${key} field mean hue is warm`).toBeLessThanOrEqual(WARM_FIELD_BAND[1]);"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/aurora-vibrancy.spec.ts",
+                            "column": 77,
+                            "line": 147
+                          },
+                          "message": "Error: VIVID_SETTING_SUN field mean OKLab C (warm-sun floor)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m0.045\u001b[39m\nReceived:    \u001b[31m0.0028555898259554654\u001b[39m\n\n  145 |                 });\n  146 |                 // 1. real chroma — no grey wash behind glass.\n> 147 |                 expect(meanC, `${key} field mean OKLab C (warm-sun floor)`).toBeGreaterThanOrEqual(FIELD_CHROMA_FLOOR);\n      |                                                                             ^\n  148 |                 // 2. a WARM field, not a pink field.\n  149 |                 expect(meanH, `${key} field mean hue is warm (not rotated to a pink field)`).toBeGreaterThanOrEqual(WARM_FIELD_BAND[0]);\n  150 |                 expect(meanH, `${key} field mean hue is warm`).toBeLessThanOrEqual(WARM_FIELD_BAND[1]);\n    at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/aurora-vibrancy.spec.ts:147:77"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T00:04:06.755Z",
+                      "annotations": [
+                        {
+                          "type": "vibrancy-field",
+                          "description": "{\"scheme\":\"light\",\"key\":\"SETTING_SUN\",\"meanC\":\"0.1174\",\"meanH\":\"45.0\"}"
+                        },
+                        {
+                          "type": "vibrancy-field",
+                          "description": "{\"scheme\":\"light\",\"key\":\"DUSK\",\"meanC\":\"0.1209\",\"meanH\":\"26.8\"}"
+                        },
+                        {
+                          "type": "vibrancy-field",
+                          "description": "{\"scheme\":\"light\",\"key\":\"VIVID_SETTING_SUN\",\"meanC\":\"0.0029\",\"meanH\":\"84.6\"}"
+                        }
+                      ],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/test-results/aurora-vibrancy-BI-W-AUROR-dfe80--sun-with-pink-field-light--coarse-touch/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/aurora-vibrancy.spec.ts",
+                        "column": 77,
+                        "line": 147
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "0081b58587671e00eda1-64bdacb482aae50cd1e1",
+              "file": "aurora-vibrancy.spec.ts",
+              "line": 70,
+              "column": 9
+            },
+            {
+              "title": "each setting-sun candidate composites to a warm-sun-with-pink field (dark)",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [
+                    {
+                      "type": "vibrancy-field",
+                      "description": "{\"scheme\":\"dark\",\"key\":\"SETTING_SUN\",\"meanC\":\"0.1174\",\"meanH\":\"45.0\"}"
+                    },
+                    {
+                      "type": "vibrancy-field",
+                      "description": "{\"scheme\":\"dark\",\"key\":\"DUSK\",\"meanC\":\"0.1209\",\"meanH\":\"26.8\"}"
+                    },
+                    {
+                      "type": "vibrancy-field",
+                      "description": "{\"scheme\":\"dark\",\"key\":\"VIVID_SETTING_SUN\",\"meanC\":\"0.0028\",\"meanH\":\"68.6\"}"
+                    }
+                  ],
+                  "expectedStatus": "passed",
+                  "projectId": "coarse-touch",
+                  "projectName": "coarse-touch",
+                  "results": [
+                    {
+                      "workerIndex": 8,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 1149,
+                      "error": {
+                        "message": "Error: VIVID_SETTING_SUN field mean OKLab C (warm-sun floor)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m0.045\u001b[39m\nReceived:    \u001b[31m0.002797679523001457\u001b[39m",
+                        "stack": "Error: VIVID_SETTING_SUN field mean OKLab C (warm-sun floor)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m0.045\u001b[39m\nReceived:    \u001b[31m0.002797679523001457\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/aurora-vibrancy.spec.ts:147:77",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/aurora-vibrancy.spec.ts",
+                          "column": 77,
+                          "line": 147
+                        },
+                        "snippet": "  145 |                 });\n  146 |                 // 1. real chroma — no grey wash behind glass.\n> 147 |                 expect(meanC, `${key} field mean OKLab C (warm-sun floor)`).toBeGreaterThanOrEqual(FIELD_CHROMA_FLOOR);\n      |                                                                             ^\n  148 |                 // 2. a WARM field, not a pink field.\n  149 |                 expect(meanH, `${key} field mean hue is warm (not rotated to a pink field)`).toBeGreaterThanOrEqual(WARM_FIELD_BAND[0]);\n  150 |                 expect(meanH, `${key} field mean hue is warm`).toBeLessThanOrEqual(WARM_FIELD_BAND[1]);"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/aurora-vibrancy.spec.ts",
+                            "column": 77,
+                            "line": 147
+                          },
+                          "message": "Error: VIVID_SETTING_SUN field mean OKLab C (warm-sun floor)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m0.045\u001b[39m\nReceived:    \u001b[31m0.002797679523001457\u001b[39m\n\n  145 |                 });\n  146 |                 // 1. real chroma — no grey wash behind glass.\n> 147 |                 expect(meanC, `${key} field mean OKLab C (warm-sun floor)`).toBeGreaterThanOrEqual(FIELD_CHROMA_FLOOR);\n      |                                                                             ^\n  148 |                 // 2. a WARM field, not a pink field.\n  149 |                 expect(meanH, `${key} field mean hue is warm (not rotated to a pink field)`).toBeGreaterThanOrEqual(WARM_FIELD_BAND[0]);\n  150 |                 expect(meanH, `${key} field mean hue is warm`).toBeLessThanOrEqual(WARM_FIELD_BAND[1]);\n    at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/aurora-vibrancy.spec.ts:147:77"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T00:04:08.754Z",
+                      "annotations": [
+                        {
+                          "type": "vibrancy-field",
+                          "description": "{\"scheme\":\"dark\",\"key\":\"SETTING_SUN\",\"meanC\":\"0.1174\",\"meanH\":\"45.0\"}"
+                        },
+                        {
+                          "type": "vibrancy-field",
+                          "description": "{\"scheme\":\"dark\",\"key\":\"DUSK\",\"meanC\":\"0.1209\",\"meanH\":\"26.8\"}"
+                        },
+                        {
+                          "type": "vibrancy-field",
+                          "description": "{\"scheme\":\"dark\",\"key\":\"VIVID_SETTING_SUN\",\"meanC\":\"0.0028\",\"meanH\":\"68.6\"}"
+                        }
+                      ],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/test-results/aurora-vibrancy-BI-W-AUROR-a07d4-m-sun-with-pink-field-dark--coarse-touch/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/aurora-vibrancy.spec.ts",
+                        "column": 77,
+                        "line": 147
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "0081b58587671e00eda1-d19ba1d800d6c777b1a0",
+              "file": "aurora-vibrancy.spec.ts",
+              "line": 70,
+              "column": 9
+            },
+            {
+              "title": "the pink note reads on the sun-core (candidate A) without over-rotating the field",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [
+                    {
+                      "type": "vibrancy-sun-core",
+                      "description": "{\"core\":{\"h\":19.34173496233234,\"meanC\":0.0880523133788588},\"field\":{\"h\":38.917069441997285,\"meanC\":0.06866237116383006}}"
+                    }
+                  ],
+                  "expectedStatus": "passed",
+                  "projectId": "coarse-touch",
+                  "projectName": "coarse-touch",
+                  "results": [
+                    {
+                      "workerIndex": 9,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 644,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T00:04:10.501Z",
+                      "annotations": [
+                        {
+                          "type": "vibrancy-sun-core",
+                          "description": "{\"core\":{\"h\":19.34173496233234,\"meanC\":0.0880523133788588},\"field\":{\"h\":38.917069441997285,\"meanC\":0.06866237116383006}}"
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "0081b58587671e00eda1-c5e36a5e3fb5a7085997",
+              "file": "aurora-vibrancy.spec.ts",
+              "line": 155,
+              "column": 5
+            },
+            {
+              "title": "a caption over the setting-sun field behind warm glass clears AA (light)",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [
+                    {
+                      "type": "vibrancy-aa",
+                      "description": "{\"scheme\":\"light\",\"ratio\":\"2.34\"}"
+                    }
+                  ],
+                  "expectedStatus": "passed",
+                  "projectId": "coarse-touch",
+                  "projectName": "coarse-touch",
+                  "results": [
+                    {
+                      "workerIndex": 9,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 854,
+                      "error": {
+                        "message": "Error: caption over setting-sun glass clears AA (light)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m4.5\u001b[39m\nReceived:    \u001b[31m2.3400436635166475\u001b[39m",
+                        "stack": "Error: caption over setting-sun glass clears AA (light)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m4.5\u001b[39m\nReceived:    \u001b[31m2.3400436635166475\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/aurora-vibrancy.spec.ts:258:83",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/aurora-vibrancy.spec.ts",
+                          "column": 83,
+                          "line": 258
+                        },
+                        "snippet": "  256 |             const ratio = contrast(ink, plate);\n  257 |             test.info().annotations.push({ type: \"vibrancy-aa\", description: JSON.stringify({ scheme, ratio: ratio.toFixed(2) }) });\n> 258 |             expect(ratio, `caption over setting-sun glass clears AA (${scheme})`).toBeGreaterThanOrEqual(4.5);\n      |                                                                                   ^\n  259 |         });\n  260 |     }\n  261 | });"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/aurora-vibrancy.spec.ts",
+                            "column": 83,
+                            "line": 258
+                          },
+                          "message": "Error: caption over setting-sun glass clears AA (light)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m4.5\u001b[39m\nReceived:    \u001b[31m2.3400436635166475\u001b[39m\n\n  256 |             const ratio = contrast(ink, plate);\n  257 |             test.info().annotations.push({ type: \"vibrancy-aa\", description: JSON.stringify({ scheme, ratio: ratio.toFixed(2) }) });\n> 258 |             expect(ratio, `caption over setting-sun glass clears AA (${scheme})`).toBeGreaterThanOrEqual(4.5);\n      |                                                                                   ^\n  259 |         });\n  260 |     }\n  261 | });\n    at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/aurora-vibrancy.spec.ts:258:83"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T00:04:11.286Z",
+                      "annotations": [
+                        {
+                          "type": "vibrancy-aa",
+                          "description": "{\"scheme\":\"light\",\"ratio\":\"2.34\"}"
+                        }
+                      ],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/test-results/aurora-vibrancy-BI-W-AUROR-f9aab-warm-glass-clears-AA-light--coarse-touch/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/aurora-vibrancy.spec.ts",
+                        "column": 83,
+                        "line": 258
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "0081b58587671e00eda1-cab9489488363aabb929",
+              "file": "aurora-vibrancy.spec.ts",
+              "line": 200,
+              "column": 9
+            },
+            {
+              "title": "a caption over the setting-sun field behind warm glass clears AA (dark)",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [
+                    {
+                      "type": "vibrancy-aa",
+                      "description": "{\"scheme\":\"dark\",\"ratio\":\"1.28\"}"
+                    }
+                  ],
+                  "expectedStatus": "passed",
+                  "projectId": "coarse-touch",
+                  "projectName": "coarse-touch",
+                  "results": [
+                    {
+                      "workerIndex": 10,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 976,
+                      "error": {
+                        "message": "Error: caption over setting-sun glass clears AA (dark)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m4.5\u001b[39m\nReceived:    \u001b[31m1.2804505535473112\u001b[39m",
+                        "stack": "Error: caption over setting-sun glass clears AA (dark)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m4.5\u001b[39m\nReceived:    \u001b[31m1.2804505535473112\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/aurora-vibrancy.spec.ts:258:83",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/aurora-vibrancy.spec.ts",
+                          "column": 83,
+                          "line": 258
+                        },
+                        "snippet": "  256 |             const ratio = contrast(ink, plate);\n  257 |             test.info().annotations.push({ type: \"vibrancy-aa\", description: JSON.stringify({ scheme, ratio: ratio.toFixed(2) }) });\n> 258 |             expect(ratio, `caption over setting-sun glass clears AA (${scheme})`).toBeGreaterThanOrEqual(4.5);\n      |                                                                                   ^\n  259 |         });\n  260 |     }\n  261 | });"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/aurora-vibrancy.spec.ts",
+                            "column": 83,
+                            "line": 258
+                          },
+                          "message": "Error: caption over setting-sun glass clears AA (dark)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m4.5\u001b[39m\nReceived:    \u001b[31m1.2804505535473112\u001b[39m\n\n  256 |             const ratio = contrast(ink, plate);\n  257 |             test.info().annotations.push({ type: \"vibrancy-aa\", description: JSON.stringify({ scheme, ratio: ratio.toFixed(2) }) });\n> 258 |             expect(ratio, `caption over setting-sun glass clears AA (${scheme})`).toBeGreaterThanOrEqual(4.5);\n      |                                                                                   ^\n  259 |         });\n  260 |     }\n  261 | });\n    at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/aurora-vibrancy.spec.ts:258:83"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T00:04:12.572Z",
+                      "annotations": [
+                        {
+                          "type": "vibrancy-aa",
+                          "description": "{\"scheme\":\"dark\",\"ratio\":\"1.28\"}"
+                        }
+                      ],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/test-results/aurora-vibrancy-BI-W-AUROR-89f68--warm-glass-clears-AA-dark--coarse-touch/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/aurora-vibrancy.spec.ts",
+                        "column": 83,
+                        "line": 258
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "0081b58587671e00eda1-75792f610b94d3308a7a",
+              "file": "aurora-vibrancy.spec.ts",
+              "line": 200,
+              "column": 9
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "auth-shell-bg.spec.ts",
+      "file": "auth-shell-bg.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "auth-shell-bg (π lane — one-GL budget, light)",
+          "file": "auth-shell-bg.spec.ts",
+          "line": 111,
+          "column": 10,
+          "specs": [
+            {
+              "title": "ONE-GL + NO-FOURIER + FORM-CLEAN (light)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "coarse-touch",
+                  "projectName": "coarse-touch",
+                  "results": [
+                    {
+                      "workerIndex": 11,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1656,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "[auth-shell-bg light] census {\"liveGl\":1,\"canvasCount\":1,\"fullBleedGl\":0,\"hasEmail\":true,\"hasPassword\":true,\"hasSignIn\":true}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T00:04:14.112Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "44c12cda4362b4bc728a-3458b73bb86d8cd0cd21",
+              "file": "auth-shell-bg.spec.ts",
+              "line": 112,
+              "column": 9
+            }
+          ]
+        },
+        {
+          "title": "auth-shell-bg (π lane — one-GL budget, dark)",
+          "file": "auth-shell-bg.spec.ts",
+          "line": 111,
+          "column": 10,
+          "specs": [
+            {
+              "title": "ONE-GL + NO-FOURIER + FORM-CLEAN (dark)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "coarse-touch",
+                  "projectName": "coarse-touch",
+                  "results": [
+                    {
+                      "workerIndex": 11,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1725,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "[auth-shell-bg dark] census {\"liveGl\":1,\"canvasCount\":1,\"fullBleedGl\":0,\"hasEmail\":true,\"hasPassword\":true,\"hasSignIn\":true}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T00:04:15.903Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "44c12cda4362b4bc728a-3f882d7a2a398f2be6ef",
+              "file": "auth-shell-bg.spec.ts",
+              "line": 112,
+              "column": 9
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "ba-animate.spec.ts",
+      "file": "ba-animate.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "(a) a route change fires exactly ONE page-enter transition",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 11,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 2068,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0\u001b[39m\nReceived:   \u001b[31m0\u001b[39m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0\u001b[39m\nReceived:   \u001b[31m0\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/ba-animate.spec.ts:99:18",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/ba-animate.spec.ts",
+                      "column": 18,
+                      "line": 99
+                    },
+                    "snippet": "   97 |     // (the peak simultaneous enter-active count is small — the single route root,\n   98 |     // not a per-element cascade lighting up dozens).\n>  99 |     expect(seen).toBeGreaterThan(0);\n      |                  ^\n  100 |     expect(peak).toBeLessThanOrEqual(3);\n  101 | });\n  102 |"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/ba-animate.spec.ts",
+                        "column": 18,
+                        "line": 99
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0\u001b[39m\nReceived:   \u001b[31m0\u001b[39m\n\n   97 |     // (the peak simultaneous enter-active count is small — the single route root,\n   98 |     // not a per-element cascade lighting up dozens).\n>  99 |     expect(seen).toBeGreaterThan(0);\n      |                  ^\n  100 |     expect(peak).toBeLessThanOrEqual(3);\n  101 | });\n  102 |\n    at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/ba-animate.spec.ts:99:18"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T00:04:17.652Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/test-results/ba-animate--a-a-route-chan-deb66-y-ONE-page-enter-transition-coarse-touch/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/ba-animate.spec.ts",
+                    "column": 18,
+                    "line": 99
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "a7d89e5d32df5669330d-6b2f048784758c6965b5",
+          "file": "ba-animate.spec.ts",
+          "line": 56,
+          "column": 1
+        },
+        {
+          "title": "(b) the dock scroll-progress ring tracks the route scroller; the standalone bar is gone",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 12,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 1378,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoBeNull\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mnull\u001b[39m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoBeNull\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mnull\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/ba-animate.spec.ts:125:21",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/ba-animate.spec.ts",
+                      "column": 21,
+                      "line": 125
+                    },
+                    "snippet": "  123 |         };\n  124 |     });\n> 125 |     expect(reg).not.toBeNull();\n      |                     ^\n  126 |     // The standalone route-scroller bar is RETIRED (clean break, no alias).\n  127 |     expect(reg!.barSurvives).toBe(false);\n  128 |     // The vertical rail wears the inline-end-edge coverage (the scrollbar"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/ba-animate.spec.ts",
+                        "column": 21,
+                        "line": 125
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoBeNull\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mnull\u001b[39m\n\n  123 |         };\n  124 |     });\n> 125 |     expect(reg).not.toBeNull();\n      |                     ^\n  126 |     // The standalone route-scroller bar is RETIRED (clean break, no alias).\n  127 |     expect(reg!.barSurvives).toBe(false);\n  128 |     // The vertical rail wears the inline-end-edge coverage (the scrollbar\n    at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/ba-animate.spec.ts:125:21"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T00:04:20.154Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/test-results/ba-animate--b-the-dock-scr-c7dd9--the-standalone-bar-is-gone-coarse-touch/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/ba-animate.spec.ts",
+                    "column": 21,
+                    "line": 125
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "a7d89e5d32df5669330d-9aceeeb874257d8f39e4",
+          "file": "ba-animate.spec.ts",
+          "line": 104,
+          "column": 1
+        },
+        {
+          "title": "(c) [mobile] the audacious figure counts up on reveal + snaps under PRM",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 13,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 2122,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m912\u001b[39m\nReceived: \u001b[31m-1\u001b[39m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m912\u001b[39m\nReceived: \u001b[31m-1\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/ba-animate.spec.ts:191:23",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/ba-animate.spec.ts",
+                      "column": 23,
+                      "line": 191
+                    },
+                    "snippet": "  189 |         const minSeen = Math.min(...samples.filter((v) => v >= 0));\n  190 |         // The figure REACHED its target (912) by the end of the tween window …\n> 191 |         expect(final).toBe(912);\n      |                       ^\n  192 |         // … having TWEENED (an early sample below the target — not a hard-jump) …\n  193 |         expect(minSeen).toBeLessThan(912);\n  194 |         // … and NEVER overshot past the target (the SETTLE no-overshoot register)."
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/ba-animate.spec.ts",
+                        "column": 23,
+                        "line": 191
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m912\u001b[39m\nReceived: \u001b[31m-1\u001b[39m\n\n  189 |         const minSeen = Math.min(...samples.filter((v) => v >= 0));\n  190 |         // The figure REACHED its target (912) by the end of the tween window …\n> 191 |         expect(final).toBe(912);\n      |                       ^\n  192 |         // … having TWEENED (an early sample below the target — not a hard-jump) …\n  193 |         expect(minSeen).toBeLessThan(912);\n  194 |         // … and NEVER overshot past the target (the SETTLE no-overshoot register).\n    at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/ba-animate.spec.ts:191:23"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T00:04:22.063Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/test-results/ba-animate--c-mobile-the-a-1c2bb-p-on-reveal-snaps-under-PRM-coarse-touch/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/ba-animate.spec.ts",
+                    "column": 23,
+                    "line": 191
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "a7d89e5d32df5669330d-8a42fdd90e926116d59f",
+          "file": "ba-animate.spec.ts",
+          "line": 163,
+          "column": 5
+        },
+        {
+          "title": "(c) [desktop] the audacious figure counts up on reveal + snaps under PRM",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 14,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 2148,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m912\u001b[39m\nReceived: \u001b[31m-1\u001b[39m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m912\u001b[39m\nReceived: \u001b[31m-1\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/ba-animate.spec.ts:191:23",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/ba-animate.spec.ts",
+                      "column": 23,
+                      "line": 191
+                    },
+                    "snippet": "  189 |         const minSeen = Math.min(...samples.filter((v) => v >= 0));\n  190 |         // The figure REACHED its target (912) by the end of the tween window …\n> 191 |         expect(final).toBe(912);\n      |                       ^\n  192 |         // … having TWEENED (an early sample below the target — not a hard-jump) …\n  193 |         expect(minSeen).toBeLessThan(912);\n  194 |         // … and NEVER overshot past the target (the SETTLE no-overshoot register)."
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/ba-animate.spec.ts",
+                        "column": 23,
+                        "line": 191
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m912\u001b[39m\nReceived: \u001b[31m-1\u001b[39m\n\n  189 |         const minSeen = Math.min(...samples.filter((v) => v >= 0));\n  190 |         // The figure REACHED its target (912) by the end of the tween window …\n> 191 |         expect(final).toBe(912);\n      |                       ^\n  192 |         // … having TWEENED (an early sample below the target — not a hard-jump) …\n  193 |         expect(minSeen).toBeLessThan(912);\n  194 |         // … and NEVER overshot past the target (the SETTLE no-overshoot register).\n    at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/ba-animate.spec.ts:191:23"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T00:04:24.681Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/test-results/ba-animate--c-desktop-the--351fb-p-on-reveal-snaps-under-PRM-coarse-touch/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/ba-animate.spec.ts",
+                    "column": 23,
+                    "line": 191
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "a7d89e5d32df5669330d-03629ed523691cc3608f",
+          "file": "ba-animate.spec.ts",
+          "line": 163,
+          "column": 5
+        },
+        {
+          "title": "(d) the hero <h1> fade-rises on entrance with no overshoot past 0",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 15,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 936,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T00:04:27.370Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a7d89e5d32df5669330d-21d86fbde2733c6cc5a7",
+          "file": "ba-animate.spec.ts",
+          "line": 221,
+          "column": 1
+        },
+        {
+          "title": "captures — /data/metric-cell + / in both modes",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 15,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 7168,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T00:04:28.438Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a7d89e5d32df5669330d-d98236028c5a7143d9a3",
+          "file": "ba-animate.spec.ts",
+          "line": 253,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "blob-config-delta.spec.ts",
+      "file": "blob-config-delta.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "blob-config DELTA (AY.W-BLOB-CONFIG — the four fixes, own-surface capture)",
+          "file": "blob-config-delta.spec.ts",
+          "line": 101,
+          "column": 6,
+          "specs": [
+            {
+              "title": "capture studio desktop/light",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 240000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "coarse-touch",
+                  "projectName": "coarse-touch",
+                  "results": [
+                    {
+                      "workerIndex": 15,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1765,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T00:04:35.630Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "7c699e6bf756e53ed55c-0698486700d5a7873b9b",
+              "file": "blob-config-delta.spec.ts",
+              "line": 105,
+              "column": 13
+            },
+            {
+              "title": "capture studio desktop/dark",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 240000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "coarse-touch",
+                  "projectName": "coarse-touch",
+                  "results": [
+                    {
+                      "workerIndex": 15,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1927,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T00:04:37.403Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "7c699e6bf756e53ed55c-e02c46cc70b7669e1a38",
+              "file": "blob-config-delta.spec.ts",
+              "line": 105,
+              "column": 13
+            },
+            {
+              "title": "capture studio mobile/light",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 240000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "coarse-touch",
+                  "projectName": "coarse-touch",
+                  "results": [
+                    {
+                      "workerIndex": 15,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1523,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T00:04:39.341Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "7c699e6bf756e53ed55c-201dc28125e4dd137550",
+              "file": "blob-config-delta.spec.ts",
+              "line": 105,
+              "column": 13
+            },
+            {
+              "title": "capture studio mobile/dark",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 240000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "coarse-touch",
+                  "projectName": "coarse-touch",
+                  "results": [
+                    {
+                      "workerIndex": 15,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1588,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T00:04:40.872Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "7c699e6bf756e53ed55c-4233f0d8725068ede02c",
+              "file": "blob-config-delta.spec.ts",
+              "line": 105,
+              "column": 13
+            },
+            {
+              "title": "D1 — a seed change RE-PAINTS the hero body (the dead-feed fix)",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 240000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "coarse-touch",
+                  "projectName": "coarse-touch",
+                  "results": [
+                    {
+                      "workerIndex": 15,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 1520,
+                      "error": {
+                        "message": "Error: page.evaluate: TypeError: Illegal invocation\n    at eval (eval at evaluate (:303:30), <anonymous>:7:14)\n    at UtilityScript.evaluate (<anonymous>:305:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+                        "stack": "Error: page.evaluate: TypeError: Illegal invocation\n    at eval (eval at evaluate (:303:30), <anonymous>:7:14)\n    at UtilityScript.evaluate (<anonymous>:305:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)\n    at eval (eval at evaluate (:303:30), <anonymous>:7:14)\n    at UtilityScript.evaluate (<anonymous>:305:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)\n    at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/blob-config-delta.spec.ts:133:20",
+                        "location": {
+                          "file": "eval at evaluate (:303:30), <anonymous>",
+                          "column": 14,
+                          "line": 7
+                        }
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "eval at evaluate (:303:30), <anonymous>",
+                            "column": 14,
+                            "line": 7
+                          },
+                          "message": "Error: page.evaluate: TypeError: Illegal invocation\n    at eval (eval at evaluate (:303:30), <anonymous>:7:14)\n    at UtilityScript.evaluate (<anonymous>:305:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)\n    at eval (eval at evaluate (:303:30), <anonymous>:7:14)\n    at UtilityScript.evaluate (<anonymous>:305:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)\n    at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/blob-config-delta.spec.ts:133:20"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T00:04:42.467Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/test-results/blob-config-delta-blob-con-42281-ero-body-the-dead-feed-fix--coarse-touch/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "eval at evaluate (:303:30), <anonymous>",
+                        "column": 14,
+                        "line": 7
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "7c699e6bf756e53ed55c-b34f2397c78281df0fc5",
+              "file": "blob-config-delta.spec.ts",
+              "line": 126,
+              "column": 5
+            },
+            {
+              "title": "D2 — a negative attraction SHIES relative to a positive (the sign fix)",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 240000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "coarse-touch",
+                  "projectName": "coarse-touch",
+                  "results": [
+                    {
+                      "workerIndex": 16,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 6032,
+                      "error": {
+                        "message": "Error: shy-away shift(-0.8)=0.0151 is NOT less than lean-in shift(+0.8)=0.0067 — the sign is still dropped (a negative attraction lunges toward)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m0.006691243164305027\u001b[39m\nReceived:   \u001b[31m0.01512246320365035\u001b[39m",
+                        "stack": "Error: shy-away shift(-0.8)=0.0151 is NOT less than lean-in shift(+0.8)=0.0067 — the sign is still dropped (a negative attraction lunges toward)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m0.006691243164305027\u001b[39m\nReceived:   \u001b[31m0.01512246320365035\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/blob-config-delta.spec.ts:183:199",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/blob-config-delta.spec.ts",
+                          "column": 199,
+                          "line": 183
+                        },
+                        "snippet": "  181 |         // (-0.8). At HEAD the order was INVERTED (a negative attraction lunged HARDER). The\n  182 |         // shader sign flip + the reach-gated pseudopod restore the correct ordering.\n> 183 |         expect(shiftNeg, `shy-away shift(-0.8)=${shiftNeg.toFixed(4)} is NOT less than lean-in shift(+0.8)=${shiftPos.toFixed(4)} — the sign is still dropped (a negative attraction lunges toward)`).toBeLessThan(shiftPos);\n      |                                                                                                                                                                                                       ^\n  184 |     });\n  185 |\n  186 |     // ── D4 — the paused-prop resume is CLEAN (no charcoal-slab wreck) ──"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/blob-config-delta.spec.ts",
+                            "column": 199,
+                            "line": 183
+                          },
+                          "message": "Error: shy-away shift(-0.8)=0.0151 is NOT less than lean-in shift(+0.8)=0.0067 — the sign is still dropped (a negative attraction lunges toward)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m0.006691243164305027\u001b[39m\nReceived:   \u001b[31m0.01512246320365035\u001b[39m\n\n  181 |         // (-0.8). At HEAD the order was INVERTED (a negative attraction lunged HARDER). The\n  182 |         // shader sign flip + the reach-gated pseudopod restore the correct ordering.\n> 183 |         expect(shiftNeg, `shy-away shift(-0.8)=${shiftNeg.toFixed(4)} is NOT less than lean-in shift(+0.8)=${shiftPos.toFixed(4)} — the sign is still dropped (a negative attraction lunges toward)`).toBeLessThan(shiftPos);\n      |                                                                                                                                                                                                       ^\n  184 |     });\n  185 |\n  186 |     // ── D4 — the paused-prop resume is CLEAN (no charcoal-slab wreck) ──\n    at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/blob-config-delta.spec.ts:183:199"
+                        }
+                      ],
+                      "stdout": [
+                        {
+                          "text": "[W-BLOB-CONFIG-π] D2 shift(+0.8 Excited)=0.0067 shift(-0.8 Shy)=0.0151 (lean-in must exceed shy-away)\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T00:04:44.415Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/test-results/blob-config-delta-blob-con-e4b86-to-a-positive-the-sign-fix--coarse-touch/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/blob-config-delta.spec.ts",
+                        "column": 199,
+                        "line": 183
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "7c699e6bf756e53ed55c-fa94aeffa12c4c45e4b2",
+              "file": "blob-config-delta.spec.ts",
+              "line": 153,
+              "column": 5
+            },
+            {
+              "title": "D4 — the paused-prop resume produces a CLEAN canvas (the SEVERE fix)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 240000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "coarse-touch",
+                  "projectName": "coarse-touch",
+                  "results": [
+                    {
+                      "workerIndex": 17,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 9028,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "[W-BLOB-CONFIG-π] D4 covRun=0.340 covResume=0.336 covAfter=0.350 (resume must be the resting band, not a flooded slab)\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T00:04:51.020Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "7c699e6bf756e53ed55c-5cbc6868787fb6bc0fcd",
+              "file": "blob-config-delta.spec.ts",
+              "line": 187,
+              "column": 5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "blob-mood-live.spec.ts",
+      "file": "blob-mood-live.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "blob-mood-live (π lane — the manual-mood DELTA + PERSISTENCE)",
+          "file": "blob-mood-live.spec.ts",
+          "line": 107,
+          "column": 6,
+          "specs": [
+            {
+              "title": "a manual setMood drives a VISIBLE mood-derived render delta that PERSISTS (D7 — the auto-mood clobber is fixed)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "coarse-touch",
+                  "projectName": "coarse-touch",
+                  "results": [
+                    {
+                      "workerIndex": 17,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 11461,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T00:05:00.197Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "19a081c47eb79650a360-ea49bd3398165e7e57dd",
+              "file": "blob-mood-live.spec.ts",
+              "line": 108,
+              "column": 5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "blob-page.spec.ts",
+      "file": "blob-page.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "blob-page (π lane — the TRUE blob-page defect, fail-CLOSED)",
+          "file": "blob-page.spec.ts",
+          "line": 180,
+          "column": 6,
+          "specs": [],
+          "suites": [
+            {
+              "title": "",
+              "file": "blob-page.spec.ts",
+              "line": 189,
+              "column": 10,
+              "specs": [
+                {
+                  "title": "SATELLITES-SEPARATE — the orbit show reads on the page-default bead (CV ≫ baseline OR a separated component), contained",
+                  "ok": false,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 180000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "coarse-touch",
+                      "projectName": "coarse-touch",
+                      "results": [
+                        {
+                          "workerIndex": 17,
+                          "parallelIndex": 0,
+                          "status": "failed",
+                          "duration": 27627,
+                          "error": {
+                            "message": "Error: blob worst footprint-edge paint fraction 0.997 exceeds the satellite-overflow ceil 0.6 — the raised orbit broke the four-side containment (the bead clips the canvas edge)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.6\u001b[39m\nReceived:    \u001b[31m0.996900826446281\u001b[39m",
+                            "stack": "Error: blob worst footprint-edge paint fraction 0.997 exceeds the satellite-overflow ceil 0.6 — the raised orbit broke the four-side containment (the bead clips the canvas edge)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.6\u001b[39m\nReceived:    \u001b[31m0.996900826446281\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/blob-page.spec.ts:219:15",
+                            "location": {
+                              "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/blob-page.spec.ts",
+                              "column": 15,
+                              "line": 219
+                            },
+                            "snippet": "  217 |                 maxEdge,\n  218 |                 `blob worst footprint-edge paint fraction ${maxEdge.toFixed(3)} exceeds the satellite-overflow ceil ${SIDE_MARGIN_MAX} — the raised orbit broke the four-side containment (the bead clips the canvas edge)`,\n> 219 |             ).toBeLessThanOrEqual(SIDE_MARGIN_MAX);\n      |               ^\n  220 |\n  221 |             // SOURCE-WITNESS — the page's effective orbitRadius > bodyRadius. The page's\n  222 |             // stageConfig spreads BLOB_CONFIG_DEFAULTS then overrides geometry.orbitRadius"
+                          },
+                          "errors": [
+                            {
+                              "location": {
+                                "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/blob-page.spec.ts",
+                                "column": 15,
+                                "line": 219
+                              },
+                              "message": "Error: blob worst footprint-edge paint fraction 0.997 exceeds the satellite-overflow ceil 0.6 — the raised orbit broke the four-side containment (the bead clips the canvas edge)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.6\u001b[39m\nReceived:    \u001b[31m0.996900826446281\u001b[39m\n\n  217 |                 maxEdge,\n  218 |                 `blob worst footprint-edge paint fraction ${maxEdge.toFixed(3)} exceeds the satellite-overflow ceil ${SIDE_MARGIN_MAX} — the raised orbit broke the four-side containment (the bead clips the canvas edge)`,\n> 219 |             ).toBeLessThanOrEqual(SIDE_MARGIN_MAX);\n      |               ^\n  220 |\n  221 |             // SOURCE-WITNESS — the page's effective orbitRadius > bodyRadius. The page's\n  222 |             // stageConfig spreads BLOB_CONFIG_DEFAULTS then overrides geometry.orbitRadius\n    at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/blob-page.spec.ts:219:15"
+                            }
+                          ],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-11-12T00:05:11.671Z",
+                          "annotations": [],
+                          "attachments": [
+                            {
+                              "name": "error-context",
+                              "contentType": "text/markdown",
+                              "path": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/test-results/blob-page-blob-page-π-lane-630c0-parated-component-contained-coarse-touch/error-context.md"
+                            }
+                          ],
+                          "errorLocation": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/blob-page.spec.ts",
+                            "column": 15,
+                            "line": 219
+                          }
+                        }
+                      ],
+                      "status": "unexpected"
+                    }
+                  ],
+                  "id": "f1de0e6e635e535bb259-de519d3fd9af23863efb",
+                  "file": "blob-page.spec.ts",
+                  "line": 191,
+                  "column": 9
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "blob-painted-component.spec.ts",
+      "file": "blob-painted-component.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "P047 reads the origin component from both renderer buffers at DPR 1 and 2",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 18,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 233,
+                  "error": {
+                    "message": "Error: page.evaluate: TypeError: renderer.resolveBlobSettledFrame is not a function\n    at eval (eval at evaluate (:303:30), <anonymous>:76:39)\n    at async <anonymous>:329:30",
+                    "stack": "Error: page.evaluate: TypeError: renderer.resolveBlobSettledFrame is not a function\n    at eval (eval at evaluate (:303:30), <anonymous>:76:39)\n    at async <anonymous>:329:30\n    at eval (eval at evaluate (:303:30), <anonymous>:76:39)\n    at async <anonymous>:329:30\n    at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/blob-painted-component.spec.ts:46:37",
+                    "location": {
+                      "file": "eval at evaluate (:303:30), <anonymous>",
+                      "column": 39,
+                      "line": 76
+                    }
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "eval at evaluate (:303:30), <anonymous>",
+                        "column": 39,
+                        "line": 76
+                      },
+                      "message": "Error: page.evaluate: TypeError: renderer.resolveBlobSettledFrame is not a function\n    at eval (eval at evaluate (:303:30), <anonymous>:76:39)\n    at async <anonymous>:329:30\n    at eval (eval at evaluate (:303:30), <anonymous>:76:39)\n    at async <anonymous>:329:30\n    at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/blob-painted-component.spec.ts:46:37"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T00:05:39.721Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/test-results/blob-painted-component-P04-e94f4-erer-buffers-at-DPR-1-and-2-coarse-touch/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "eval at evaluate (:303:30), <anonymous>",
+                    "column": 39,
+                    "line": 76
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "a6e2194cc2706b9644cc-cef49251343b02929ae5",
+          "file": "blob-painted-component.spec.ts",
+          "line": 30,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "blob-pause-seam.spec.ts",
+      "file": "blob-pause-seam.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "blob-integration (π lane — the WCAG-2.2.2 pause seam + context bound + README consistency)",
+          "file": "blob-pause-seam.spec.ts",
+          "line": 88,
+          "column": 6,
+          "specs": [
+            {
+              "title": "the DockBackgroundToggle pause seam PARKS the render loop (live rAF-park observation)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "coarse-touch",
+                  "projectName": "coarse-touch",
+                  "results": [
+                    {
+                      "workerIndex": 19,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 5274,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T00:05:40.687Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "bc3e8071cbf21f46bb54-3f167b0d33cf9ab5bf2b",
+              "file": "blob-pause-seam.spec.ts",
+              "line": 89,
+              "column": 5
+            },
+            {
+              "title": "the re-cast blob stories hold a BOUNDED number of live WebGL2 contexts",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "coarse-touch",
+                  "projectName": "coarse-touch",
+                  "results": [
+                    {
+                      "workerIndex": 19,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 474,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T00:05:46.123Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "bc3e8071cbf21f46bb54-282d162b31799f398111",
+              "file": "blob-pause-seam.spec.ts",
+              "line": 135,
+              "column": 5
+            },
+            {
+              "title": "README-vs-code defineExpose CONSISTENCY — every README 'Exposed' method is on the Blob surface",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "coarse-touch",
+                  "projectName": "coarse-touch",
+                  "results": [
+                    {
+                      "workerIndex": 19,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 4,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T00:05:46.605Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "bc3e8071cbf21f46bb54-fb241196b018b43e1d6b",
+              "file": "blob-pause-seam.spec.ts",
+              "line": 167,
+              "column": 5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "blob-render.spec.ts",
+      "file": "blob-render.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "blob-render (π lane — fail-CLOSED, the blob's CLOSING gate)",
+          "file": "blob-render.spec.ts",
+          "line": 525,
+          "column": 6,
+          "specs": [
+            {
+              "title": "blob renders a CONTAINED LIT LIVING droplet on BLOB_CONFIG_DEFAULTS (four-side containment + dome variance + silhouette + field)",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "coarse-touch",
+                  "projectName": "coarse-touch",
+                  "results": [
+                    {
+                      "workerIndex": 19,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 3954,
+                      "error": {
+                        "message": "Error: blob interior-corner empty fraction 0.583 is below the field floor 0.7 — the canvas reads as a FLAT slab (the body fills the corners), not a contained metaball field\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m0.7\u001b[39m\nReceived:    \u001b[31m0.5825850661625709\u001b[39m",
+                        "stack": "Error: blob interior-corner empty fraction 0.583 is below the field floor 0.7 — the canvas reads as a FLAT slab (the body fills the corners), not a contained metaball field\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m0.7\u001b[39m\nReceived:    \u001b[31m0.5825850661625709\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/blob-render.spec.ts:609:11",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/blob-render.spec.ts",
+                          "column": 11,
+                          "line": 609
+                        },
+                        "snippet": "  607 |             cornerEmpty,\n  608 |             `blob interior-corner empty fraction ${cornerEmpty.toFixed(3)} is below the field floor ${CORNER_EMPTY_MIN} — the canvas reads as a FLAT slab (the body fills the corners), not a contained metaball field`,\n> 609 |         ).toBeGreaterThanOrEqual(CORNER_EMPTY_MIN);\n      |           ^\n  610 |\n  611 |         // 3. FOUR-SIDE CONTAINMENT (AX.W15 F0 + AX.W16 reconciliation) — the BODY is\n  612 |         // contained on EVERY edge (W15 geometry); the orbiting SATELLITE intentionally"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/blob-render.spec.ts",
+                            "column": 11,
+                            "line": 609
+                          },
+                          "message": "Error: blob interior-corner empty fraction 0.583 is below the field floor 0.7 — the canvas reads as a FLAT slab (the body fills the corners), not a contained metaball field\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m0.7\u001b[39m\nReceived:    \u001b[31m0.5825850661625709\u001b[39m\n\n  607 |             cornerEmpty,\n  608 |             `blob interior-corner empty fraction ${cornerEmpty.toFixed(3)} is below the field floor ${CORNER_EMPTY_MIN} — the canvas reads as a FLAT slab (the body fills the corners), not a contained metaball field`,\n> 609 |         ).toBeGreaterThanOrEqual(CORNER_EMPTY_MIN);\n      |           ^\n  610 |\n  611 |         // 3. FOUR-SIDE CONTAINMENT (AX.W15 F0 + AX.W16 reconciliation) — the BODY is\n  612 |         // contained on EVERY edge (W15 geometry); the orbiting SATELLITE intentionally\n    at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/blob-render.spec.ts:609:11"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T00:05:46.630Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/test-results/blob-render-blob-render-π--62597--variance-silhouette-field--coarse-touch/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/blob-render.spec.ts",
+                        "column": 11,
+                        "line": 609
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "1238e1c6916d493c0e7e-5e95dfc2dbf90d150518",
+              "file": "blob-render.spec.ts",
+              "line": 526,
+              "column": 5
+            },
+            {
+              "title": "blob LEANS toward a synthetic hover-flick (the wired interaction is legible within the footprint)",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "coarse-touch",
+                  "projectName": "coarse-touch",
+                  "results": [
+                    {
+                      "workerIndex": 20,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 2682,
+                      "error": {
+                        "message": "Error: blob centroid shift under a rightward hover-flick = -0.0028 (rest 0.468 → lean 0.466); it must move ≥ 0.012 toward the pointer — the wired lean/pseudopod is INVISIBLE (no contained silhouette to deform legibly)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m0.012\u001b[39m\nReceived:    \u001b[31m-0.002811648262630473\u001b[39m",
+                        "stack": "Error: blob centroid shift under a rightward hover-flick = -0.0028 (rest 0.468 → lean 0.466); it must move ≥ 0.012 toward the pointer — the wired lean/pseudopod is INVISIBLE (no contained silhouette to deform legibly)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m0.012\u001b[39m\nReceived:    \u001b[31m-0.002811648262630473\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/blob-render.spec.ts:700:11",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/blob-render.spec.ts",
+                          "column": 11,
+                          "line": 700
+                        },
+                        "snippet": "  698 |             shift,\n  699 |             `blob centroid shift under a rightward hover-flick = ${shift.toFixed(4)} (rest ${restCx.toFixed(3)} → lean ${leanCx.toFixed(3)}); it must move ≥ ${CENTROID_SHIFT_MIN} toward the pointer — the wired lean/pseudopod is INVISIBLE (no contained silhouette to deform legibly)`,\n> 700 |         ).toBeGreaterThanOrEqual(CENTROID_SHIFT_MIN);\n      |           ^\n  701 |         expect(\n  702 |             shift,\n  703 |             `blob centroid shift under a rightward hover-flick = ${shift.toFixed(4)} exceeds the calm-lean ceiling ${CENTROID_SHIFT_MAX} — the creature LURCHES toward the cursor (the \"far too dramatic\" lunge; the calm lean measures ≈ 0.042, a lunge toward ≈ 0.11 reds)`,"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/blob-render.spec.ts",
+                            "column": 11,
+                            "line": 700
+                          },
+                          "message": "Error: blob centroid shift under a rightward hover-flick = -0.0028 (rest 0.468 → lean 0.466); it must move ≥ 0.012 toward the pointer — the wired lean/pseudopod is INVISIBLE (no contained silhouette to deform legibly)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m0.012\u001b[39m\nReceived:    \u001b[31m-0.002811648262630473\u001b[39m\n\n  698 |             shift,\n  699 |             `blob centroid shift under a rightward hover-flick = ${shift.toFixed(4)} (rest ${restCx.toFixed(3)} → lean ${leanCx.toFixed(3)}); it must move ≥ ${CENTROID_SHIFT_MIN} toward the pointer — the wired lean/pseudopod is INVISIBLE (no contained silhouette to deform legibly)`,\n> 700 |         ).toBeGreaterThanOrEqual(CENTROID_SHIFT_MIN);\n      |           ^\n  701 |         expect(\n  702 |             shift,\n  703 |             `blob centroid shift under a rightward hover-flick = ${shift.toFixed(4)} exceeds the calm-lean ceiling ${CENTROID_SHIFT_MAX} — the creature LURCHES toward the cursor (the \"far too dramatic\" lunge; the calm lean measures ≈ 0.042, a lunge toward ≈ 0.11 reds)`,\n    at /Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/blob-render.spec.ts:700:11"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T00:05:51.028Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/test-results/blob-render-blob-render-π--770c2-gible-within-the-footprint--coarse-touch/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.cache/baseline-v11.0.0/tree/tests-visual/blob-render.spec.ts",
+                        "column": 11,
+                        "line": 700
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "1238e1c6916d493c0e7e-66be2061e8398b085d46",
+              "file": "blob-render.spec.ts",
+              "line": 660,
+              "column": 5
+            },
+            {
+              "title": "EVERY grid blob paints visibly against the page background in BOTH light and dark (the var(--primary)-dark-wash guard)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "coarse-touch",
+                  "projectName": "coarse-touch",
+                  "results": [
+                    {
+                      "workerIndex": 21,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 4957,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T00:05:54.316Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "1238e1c6916d493c0e7e-18a4d4304161116d42b8",
+              "file": "blob-render.spec.ts",
+              "line": 707,
+              "column": 5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "blob-studio.spec.ts",
+      "file": "blob-studio.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "W-BLOB-STUDIO capture — light",
+          "file": "blob-studio.spec.ts",
+          "line": 187,
+          "column": 10,
+          "specs": [
+            {
+              "title": "studio refinement reads (light)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "coarse-touch",
+                  "projectName": "coarse-touch",
+                  "results": [
+                    {
+                      "workerIndex": 21,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 18666,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "[W-BLOB-STUDIO-π] light: stageFill=1.553 centerOffset=0.001 peakComponents=6 dropShadowRungs=2 beadCssH=767 stageH=494\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T00:05:59.449Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "18896e36976b3d8fae5a-4cfeac4b49ffb62dee93",
+              "file": "blob-studio.spec.ts",
+              "line": 190,
+              "column": 9
+            }
+          ]
+        },
+        {
+          "title": "W-BLOB-STUDIO capture — dark",
+          "file": "blob-studio.spec.ts",
+          "line": 187,
+          "column": 10,
+          "specs": [
+            {
+              "title": "studio refinement reads (dark)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "coarse-touch",
+                  "projectName": "coarse-touch",
+                  "results": [
+                    {
+                      "workerIndex": 21,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 20880,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "[W-BLOB-STUDIO-π] dark: stageFill=1.553 centerOffset=0.001 peakComponents=4 dropShadowRungs=2 beadCssH=767 stageH=494\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T00:06:18.123Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "18896e36976b3d8fae5a-a0153cdcf30192aff90c",
+              "file": "blob-studio.spec.ts",
+              "line": 190,
+              "column": 9
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "blob-warm-default.spec.ts",
+      "file": "blob-warm-default.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "blob-warm-default (π lane — fail-CLOSED, light)",
+          "file": "blob-warm-default.spec.ts",
+          "line": 183,
+          "column": 10,
+          "specs": [
+            {
+              "title": "the DEFAULT <Blob> body reads as a WARM-CREAM bead in light mode (resting body mean OKLCh-L >= 0.62)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "coarse-touch",
+                  "projectName": "coarse-touch",
+                  "results": [
+                    {
+                      "workerIndex": 21,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 4447,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T00:06:39.032Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "76c6ea1c1168a20b6e1a-5350683ff3f32e45e720",
+              "file": "blob-warm-default.spec.ts",
+              "line": 185,
+              "column": 9
+            }
+          ]
+        },
+        {
+          "title": "blob-warm-default (π lane — fail-CLOSED, dark)",
+          "file": "blob-warm-default.spec.ts",
+          "line": 183,
+          "column": 10,
+          "specs": [
+            {
+              "title": "the DEFAULT <Blob> body reads as a WARM-CREAM bead in dark mode (resting body mean OKLCh-L >= 0.62)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "coarse-touch",
+                  "projectName": "coarse-touch",
+                  "results": [
+                    {
+                      "workerIndex": 21,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 4168,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T00:06:43.489Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "76c6ea1c1168a20b6e1a-60ca2ad866e5bd6470fc",
+              "file": "blob-warm-default.spec.ts",
+              "line": 185,
+              "column": 9
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-11T23:55:04.981Z",
+    "duration": 702760.238,
+    "expected": 23,
+    "skipped": 0,
+    "unexpected": 21,
+    "flaky": 0
+  }
+}
