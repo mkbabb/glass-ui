@@ -140,6 +140,13 @@ Another session drove the load to 30 to 38 during the WebKit chain.
 - **The leaving face's label paints over the persistent seat mid-collapse**
   (`critic-2/runs/c1-shots/c-dark-1440f-ch-collapse-4.png`: a ghost "Name ›" under the
   theme seat). The crossfade's own behaviour, not the corner.
+- **The reversal family of `release-10-1-2.spec.ts`** (`orchestrator-note-o101-reversal.md`,
+  written at 22:40 while this round's runs were in flight): a collapse reversed into an
+  expand across a viewport change reserves 7 px over its endpoint for one morph frame,
+  inherited from the 10.1.5 merge. That spec is not on this round's list and I did not run
+  it, so I neither confirm nor clear it here. The note rules the tag: this round's clean
+  verdict is on the finite list only, and the branch is not ready to tag until that cure is
+  cherry-picked or ruled a bound.
 - Carried from critique 1, unchanged: k3's early return in WebKit at 320 coarse; the
   re-aim guard keeps a pointer position after the pointer has left (an owner-opened dock
   defers a press within 6 px of it); the dark hover and active plate differ from the dock
