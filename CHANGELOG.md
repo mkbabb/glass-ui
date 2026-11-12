@@ -17,6 +17,26 @@ A patch on 11.0.1. Nothing is removed or renamed.
   `initialValue`, a toggle now stores `dark` or `light`. A stored `auto` still follows
   the system, and without an `initialValue` the toggle behaves as before.
 
+- **A focused Slider shows its focus under forced colours.** Forced-colour modes, such
+  as Windows High Contrast, drop every shadow, and the Slider's focus ring was a shadow
+  on its track, so in 11.0.1 a focused Slider showed nothing there. Under
+  `(forced-colors: active)` the focused track, and the focused thumb of a spectrum
+  Slider, now draw a `Highlight` outline 2px out.
+
+- **A Select keeps every row inside its plate.** With a trigger wider than 22rem, the
+  list was forced to the trigger's width while its plate stopped at 22rem, so each row
+  lost its right edge and the highlighted row ran square into the plate. Every anchored
+  plate (Select, DropdownMenu and Popover) now follows one width rule: at least as wide
+  as its trigger or anchor, up to 22rem for its own content, and never wider than the
+  room the page lays out in, less the 16px edge. A reserved scrollbar gutter is no
+  longer counted as room, and an anchored panel that fits is no longer narrower than
+  its anchor on a phone.
+
+- **Opening a Select with the mouse shows the highlight alone.** In 11.0 the selected
+  row also drew the keyboard focus ring after a pointer open. Now the ring appears after
+  a keyboard open, or as soon as a key is pressed in the list. The list's content
+  carries `data-open-input` (`pointer` or `keyboard`) while it is open.
+
 - **A page with a GlassDock no longer crashes Playwright's WebKit.** The dock's edge
   mixed two translucent colours that were each a mix themselves, a value the WebKit
   build Playwright ships cannot compute, so every page with a dock died in it (Safari
