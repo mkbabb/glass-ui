@@ -32,3 +32,8 @@ Second message, minutes later:
 - The colourful icons on keyframes.babb.dev ("like the colourful keyframes icons, but with her palettes") and keyframes' control buttons. The audit server at http://127.0.0.1:4411/ serves keyframes when value.js has it up; else read `~/Programming/keyframes.js` (read-only).
 - One layered dock that grows from the centre, fissions and fuses; the bare theme icon fissioning out beside it.
 - `docs/precepts/restraint.md`, "What he wants instead".
+
+## Consumer asks received after the brief (2026-11-12)
+
+- atlas will adopt the animated icons, the morphing hover plate and the no-snap check from glass and build none of its own. It asks that the no-snap check be runnable by a consumer against its own pages. The spec should ship the check as an exported test helper, not a glass-only script. Its census will be at `sci-report/atlas/docs/tranches/U/design/stories-2026-11-12/SNAP-CENSUS.md`.
+- speedtest has reversed its "idle is still" gate: the idle pane breathes, without ornament. Its frames will carry strips of each phase change and of the Start hover at 1440 and 390.
