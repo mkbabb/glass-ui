@@ -56,8 +56,8 @@ when every control in its run fits.
   ring and the dock does not scroll. A vertical dock within about 8px of fitting can
   still cut a focused end control's ring by up to 4px. That room is measured the same
   way whether the dock is open or folded, so a dock you reopen while it is still closing,
-  as the window changes width, takes its final width at once instead of holding about
-  7px too much for a frame. Focusing a control inside a `DockLayerGroup` now scrolls
+  as the window changes width, takes its final width at once instead of holding a few
+  pixels too much for a frame. Focusing a control inside a `DockLayerGroup` now scrolls
   that control into view rather than the group.
 
 - **A collapsing dock's controls hold still in WebKit.** About one collapse in five on

@@ -1,0 +1,239 @@
+
+Running 52 tests using 1 worker
+
+  ✓   1 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:51:9 › 10.1.2 · 1440 › G-4 · the atlas shapes seated in a run are all Tab-reachable (357ms)
+  ✓   2 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:68:9 › 10.1.2 · 1440 › G-4 · arrows rove only the declared seats; an undeclared control keeps its keys (221ms)
+  ✓   3 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:84:9 › 10.1.2 · 1440 › G-4 · a run with an undeclared child claims no toolbar role (196ms)
+  ✓   4 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:92:9 › 10.1.2 · 1440 › G-4 · a focusable splitter is undeclared: its own stop, no toolbar role (196ms)
+  ✓   5 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:102:9 › 10.1.2 · 1440 › G-4 · an all-declared run is one toolbar stop with arrows across it (204ms)
+  ✓   6 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:119:9 › 10.1.2 · 1440 › G-4 · a DockTrigger for=select in a form keeps an all-declared run's toolbar (221ms)
+  ✓   7 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:137:9 › 10.1.2 · 1440 › G-4 · the toolbar claim follows a child's aria-hidden and tabindex in place (212ms)
+  ✓   8 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:158:9 › 10.1.2 · 1440 › G-4 · an aria-hidden wrapper around a Tab stop voids the toolbar claim (200ms)
+  ✓   9 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:169:9 › 10.1.2 · 1440 › G-4 · a child that drops its declaration is Tab-reachable again (206ms)
+  ✓  10 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:187:9 › 10.1.2 · 1440 › G-4 · a disabled DockTrigger holding the stop keeps the run in the Tab order (219ms)
+  ✓  11 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:203:9 › 10.1.2 · 1440 › G-4 · the arrows pass a disabled DockTrigger mid-run (209ms)
+  ✓  12 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:216:9 › 10.1.2 · 1440 › G-4 · a RadioGroup and a ToggleGroup seated directly keep their arrows (214ms)
+  ✓  13 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:51:9 › 10.1.2 · 390 › G-4 · the atlas shapes seated in a run are all Tab-reachable (218ms)
+  ✓  14 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:68:9 › 10.1.2 · 390 › G-4 · arrows rove only the declared seats; an undeclared control keeps its keys (213ms)
+  ✓  15 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:84:9 › 10.1.2 · 390 › G-4 · a run with an undeclared child claims no toolbar role (195ms)
+  ✓  16 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:92:9 › 10.1.2 · 390 › G-4 · a focusable splitter is undeclared: its own stop, no toolbar role (182ms)
+  ✓  17 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:102:9 › 10.1.2 · 390 › G-4 · an all-declared run is one toolbar stop with arrows across it (189ms)
+  ✓  18 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:119:9 › 10.1.2 · 390 › G-4 · a DockTrigger for=select in a form keeps an all-declared run's toolbar (203ms)
+  ✓  19 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:137:9 › 10.1.2 · 390 › G-4 · the toolbar claim follows a child's aria-hidden and tabindex in place (199ms)
+  ✓  20 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:158:9 › 10.1.2 · 390 › G-4 · an aria-hidden wrapper around a Tab stop voids the toolbar claim (188ms)
+  ✓  21 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:169:9 › 10.1.2 · 390 › G-4 · a child that drops its declaration is Tab-reachable again (187ms)
+  ✓  22 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:187:9 › 10.1.2 · 390 › G-4 · a disabled DockTrigger holding the stop keeps the run in the Tab order (204ms)
+  ✓  23 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:203:9 › 10.1.2 · 390 › G-4 · the arrows pass a disabled DockTrigger mid-run (202ms)
+  ✓  24 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:216:9 › 10.1.2 · 390 › G-4 · a RadioGroup and a ToggleGroup seated directly keep their arrows (215ms)
+  ✓  25 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:267:13 › 10.1.2 · 1440 · light › D-1 · a disabled DockTrigger paints disabled and takes no hover or press fill (386ms)
+  ✓  26 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:267:13 › 10.1.2 · 1440 · dark › D-1 · a disabled DockTrigger paints disabled and takes no hover or press fill (364ms)
+  ✓  27 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:267:13 › 10.1.2 · 390 · light › D-1 · a disabled DockTrigger paints disabled and takes no hover or press fill (342ms)
+  ✓  28 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:267:13 › 10.1.2 · 390 · dark › D-1 · a disabled DockTrigger paints disabled and takes no hover or press fill (337ms)
+  ✓  29 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:441:13 › O-101 · horizontal · pinned · the expanded endpoint follows the pane (1440->390) (2.3s)
+  ✓  30 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:441:13 › O-101 · horizontal · collapsed · the expanded endpoint follows the pane (1440->390) (2.6s)
+  ✘  31 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:441:13 › O-101 · horizontal · reversal · the expanded endpoint follows the pane (1440->390) (1.7s)
+  ✘  32 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:441:13 › O-101 · horizontal · mid-expand · the expanded endpoint follows the pane (1440->390) (974ms)
+  ✓  33 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:441:13 › O-101 · horizontal · pinned · the expanded endpoint follows the pane (390->1440) (2.3s)
+  ✓  34 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:441:13 › O-101 · horizontal · collapsed · the expanded endpoint follows the pane (390->1440) (2.6s)
+  ✘  35 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:441:13 › O-101 · horizontal · reversal · the expanded endpoint follows the pane (390->1440) (1.7s)
+  ✘  36 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:441:13 › O-101 · horizontal · mid-expand · the expanded endpoint follows the pane (390->1440) (952ms)
+  ✓  37 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:441:13 › O-101 · vertical · pinned · the expanded endpoint follows the pane (1440->390) (2.4s)
+  ✓  38 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:441:13 › O-101 · vertical · collapsed · the expanded endpoint follows the pane (1440->390) (2.6s)
+[WebServer] 11:18:31 PM [vite] (client) [Unhandled error] Error: ResizeObserver loop completed with undelivered notifications.
+[WebServer]  > ../../../../../../../@vite/client:531:50
+[WebServer] 
+  ✘  39 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:441:13 › O-101 · vertical · reversal · the expanded endpoint follows the pane (1440->390) (1.7s)
+[WebServer] 11:18:32 PM [vite] (client) [Unhandled error] Error: ResizeObserver loop completed with undelivered notifications.
+[WebServer]  > ../../../../../../../@vite/client:531:50
+[WebServer] 
+  ✘  40 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:441:13 › O-101 · vertical · mid-expand · the expanded endpoint follows the pane (1440->390) (962ms)
+  ✓  41 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:441:13 › O-101 · vertical · pinned · the expanded endpoint follows the pane (390->1440) (2.4s)
+  ✓  42 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:441:13 › O-101 · vertical · collapsed · the expanded endpoint follows the pane (390->1440) (2.6s)
+[WebServer] 11:18:39 PM [vite] (client) [Unhandled error] Error: ResizeObserver loop completed with undelivered notifications.
+[WebServer]  > ../../../../../../../@vite/client:531:50
+[WebServer] 
+  ✘  43 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:441:13 › O-101 · vertical · reversal · the expanded endpoint follows the pane (390->1440) (1.7s)
+[WebServer] 11:18:40 PM [vite] (client) [Unhandled error] Error: ResizeObserver loop completed with undelivered notifications.
+[WebServer]  > ../../../../../../../@vite/client:531:50
+[WebServer] 
+  ✘  44 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:441:13 › O-101 · vertical · mid-expand · the expanded endpoint follows the pane (390->1440) (964ms)
+  ✓  45 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:490:9 › O-101a · a host change during the morph · collapsed (1440->390) (2.6s)
+  ✓  46 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:490:9 › O-101a · a host change during the morph · reversal (1440->390) (1.7s)
+  ✓  47 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:490:9 › O-101a · a host change during the morph · mid-expand (1440->390) (939ms)
+  ✓  48 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:490:9 › O-101a · a host change during the morph · collapsed (390->1440) (2.6s)
+  ✓  49 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:490:9 › O-101a · a host change during the morph · reversal (390->1440) (1.7s)
+  ✓  50 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:490:9 › O-101a · a host change during the morph · mid-expand (390->1440) (947ms)
+  ✓  51 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:526:5 › O-101 · a capture keeps a scrolled run's scroll position (390) (1.6s)
+  ✓  52 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:526:5 › O-101 · a capture keeps a scrolled run's scroll position (1440) (1.6s)
+
+
+  1) [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:441:13 › O-101 · horizontal · reversal · the expanded endpoint follows the pane (1440->390) 
+
+    Error: morphing frames after the change reserving other than the settled 160px (390)
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 1
+
+      462 |                         stale.length,
+      463 |                         `morphing frames after the change reserving other than the settled ${rest.size}px (${[...new Set(stale.map((f) => f.reserved))].join(", ")})`,
+    > 464 |                     ).toBe(0);
+          |                       ^
+      465 |                 }
+      466 |                 const over = seq.filter((f) => f.scroll > f.client);
+      467 |                 expect
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/release-10-1-2.spec.ts:464:23
+
+    Error Context: tests-visual/test-results/release-10-1-2-O-101-·-hor-45391-follows-the-pane-1440--390--chromium-headless-new/error-context.md
+
+  2) [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:441:13 › O-101 · horizontal · mid-expand · the expanded endpoint follows the pane (1440->390) 
+
+    Error: morphing frames after the change reserving other than the settled 160px (390)
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 1
+
+      462 |                         stale.length,
+      463 |                         `morphing frames after the change reserving other than the settled ${rest.size}px (${[...new Set(stale.map((f) => f.reserved))].join(", ")})`,
+    > 464 |                     ).toBe(0);
+          |                       ^
+      465 |                 }
+      466 |                 const over = seq.filter((f) => f.scroll > f.client);
+      467 |                 expect
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/release-10-1-2.spec.ts:464:23
+
+    Error Context: tests-visual/test-results/release-10-1-2-O-101-·-hor-5598b-follows-the-pane-1440--390--chromium-headless-new/error-context.md
+
+  3) [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:441:13 › O-101 · horizontal · reversal · the expanded endpoint follows the pane (390->1440) 
+
+    Error: morphing frames after the change reserving other than the settled 592px (160)
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 1
+
+      462 |                         stale.length,
+      463 |                         `morphing frames after the change reserving other than the settled ${rest.size}px (${[...new Set(stale.map((f) => f.reserved))].join(", ")})`,
+    > 464 |                     ).toBe(0);
+          |                       ^
+      465 |                 }
+      466 |                 const over = seq.filter((f) => f.scroll > f.client);
+      467 |                 expect
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/release-10-1-2.spec.ts:464:23
+
+    Error Context: tests-visual/test-results/release-10-1-2-O-101-·-hor-ea1b6-follows-the-pane-390--1440--chromium-headless-new/error-context.md
+
+  4) [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:441:13 › O-101 · horizontal · mid-expand · the expanded endpoint follows the pane (390->1440) 
+
+    Error: morphing frames after the change reserving other than the settled 592px (160)
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 1
+
+      462 |                         stale.length,
+      463 |                         `morphing frames after the change reserving other than the settled ${rest.size}px (${[...new Set(stale.map((f) => f.reserved))].join(", ")})`,
+    > 464 |                     ).toBe(0);
+          |                       ^
+      465 |                 }
+      466 |                 const over = seq.filter((f) => f.scroll > f.client);
+      467 |                 expect
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/release-10-1-2.spec.ts:464:23
+
+    Error Context: tests-visual/test-results/release-10-1-2-O-101-·-hor-c79bf-follows-the-pane-390--1440--chromium-headless-new/error-context.md
+
+  5) [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:441:13 › O-101 · vertical · reversal · the expanded endpoint follows the pane (1440->390) 
+
+    Error: morphing frames after the change reserving other than the settled 152px (584)
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 1
+
+      462 |                         stale.length,
+      463 |                         `morphing frames after the change reserving other than the settled ${rest.size}px (${[...new Set(stale.map((f) => f.reserved))].join(", ")})`,
+    > 464 |                     ).toBe(0);
+          |                       ^
+      465 |                 }
+      466 |                 const over = seq.filter((f) => f.scroll > f.client);
+      467 |                 expect
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/release-10-1-2.spec.ts:464:23
+
+    Error Context: tests-visual/test-results/release-10-1-2-O-101-·-ver-cc1e1-follows-the-pane-1440--390--chromium-headless-new/error-context.md
+
+  6) [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:441:13 › O-101 · vertical · mid-expand · the expanded endpoint follows the pane (1440->390) 
+
+    Error: morphing frames after the change reserving other than the settled 152px (584)
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 1
+
+      462 |                         stale.length,
+      463 |                         `morphing frames after the change reserving other than the settled ${rest.size}px (${[...new Set(stale.map((f) => f.reserved))].join(", ")})`,
+    > 464 |                     ).toBe(0);
+          |                       ^
+      465 |                 }
+      466 |                 const over = seq.filter((f) => f.scroll > f.client);
+      467 |                 expect
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/release-10-1-2.spec.ts:464:23
+
+    Error Context: tests-visual/test-results/release-10-1-2-O-101-·-ver-cedb8-follows-the-pane-1440--390--chromium-headless-new/error-context.md
+
+  7) [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:441:13 › O-101 · vertical · reversal · the expanded endpoint follows the pane (390->1440) 
+
+    Error: morphing frames after the change reserving other than the settled 584px (152)
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 1
+
+      462 |                         stale.length,
+      463 |                         `morphing frames after the change reserving other than the settled ${rest.size}px (${[...new Set(stale.map((f) => f.reserved))].join(", ")})`,
+    > 464 |                     ).toBe(0);
+          |                       ^
+      465 |                 }
+      466 |                 const over = seq.filter((f) => f.scroll > f.client);
+      467 |                 expect
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/release-10-1-2.spec.ts:464:23
+
+    Error Context: tests-visual/test-results/release-10-1-2-O-101-·-ver-8cda2-follows-the-pane-390--1440--chromium-headless-new/error-context.md
+
+  8) [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:441:13 › O-101 · vertical · mid-expand · the expanded endpoint follows the pane (390->1440) 
+
+    Error: morphing frames after the change reserving other than the settled 584px (152)
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 1
+
+      462 |                         stale.length,
+      463 |                         `morphing frames after the change reserving other than the settled ${rest.size}px (${[...new Set(stale.map((f) => f.reserved))].join(", ")})`,
+    > 464 |                     ).toBe(0);
+          |                       ^
+      465 |                 }
+      466 |                 const over = seq.filter((f) => f.scroll > f.client);
+      467 |                 expect
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/release-10-1-2.spec.ts:464:23
+
+    Error Context: tests-visual/test-results/release-10-1-2-O-101-·-ver-a49ab-follows-the-pane-390--1440--chromium-headless-new/error-context.md
+
+  8 failed
+    [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:441:13 › O-101 · horizontal · reversal · the expanded endpoint follows the pane (1440->390) 
+    [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:441:13 › O-101 · horizontal · mid-expand · the expanded endpoint follows the pane (1440->390) 
+    [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:441:13 › O-101 · horizontal · reversal · the expanded endpoint follows the pane (390->1440) 
+    [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:441:13 › O-101 · horizontal · mid-expand · the expanded endpoint follows the pane (390->1440) 
+    [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:441:13 › O-101 · vertical · reversal · the expanded endpoint follows the pane (1440->390) 
+    [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:441:13 › O-101 · vertical · mid-expand · the expanded endpoint follows the pane (1440->390) 
+    [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:441:13 › O-101 · vertical · reversal · the expanded endpoint follows the pane (390->1440) 
+    [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:441:13 › O-101 · vertical · mid-expand · the expanded endpoint follows the pane (390->1440) 
+  44 passed (56.2s)
