@@ -99,6 +99,16 @@ A patch on 11.0.1. Nothing is removed or renamed.
   holds the dock's own anchored edge rather than its centre, and a region that was
   hidden on the closed face appears where it rests. Centred docks move as before.
 
+- **A dock's row fits its box again beside a persistent region.** 11.0.1 gave the
+  run room for a focused seat's ring and, in doing so, widened the space after a
+  `#persistent` region by 4px and let the run's trailing ring box push past a child
+  that fills the row (`width: 100%`). A page that sized its row from the dock's tokens
+  (`--dock-padding-inline`, `--dock-layer-height`, `--dock-layer-gap`), and any
+  `fit-content` dock with a full-width row, then scrolled sideways by 4 to 8px. The
+  space after a persistent region is `--dock-layer-gap` again (the ring's room now
+  lies inside it), and the trailing ring box sits in the run's end padding, so the row
+  measures what it did in 11.0.0 and the ring still has its room.
+
 ## 11.0.1 — 2026-11-12
 
 A patch that brings the 10.1.5 fixes forward onto 11.0. If you saw the dock's hover
