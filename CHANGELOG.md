@@ -1,6 +1,6 @@
 # Changelog
 
-## 10.1.5 — 2026-11-11
+## 10.1.5 — 2026-11-12
 
 A patch for five paint defects value.js reported from color.babb.dev, keyframes.babb.dev
 and fourier.babb.dev on 10.1.4 (records: `docs/tranches/BL/audit/INBOUND.md` O-129 rows
