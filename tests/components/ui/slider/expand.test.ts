@@ -1,6 +1,6 @@
-// W-B.18 G-NODES and G-FORM: the expanded view adds one node at rest (the shell) and
-// one more with `valueText` (the readout), mounts nothing in <body>, and keeps reka's
-// hidden form input.
+// W-B.18 G-NODES and G-FORM: the Slider is five nodes at rest and held; the expanded
+// view adds one (the shell) and one more with `valueText` (the readout); nothing is
+// mounted in <body> in any state; reka's hidden form input is kept.
 import { mount } from "@vue/test-utils";
 import { afterEach, describe, expect, it } from "vitest";
 import { defineComponent, h, nextTick, ref } from "vue";
@@ -52,7 +52,7 @@ afterEach(() => {
 
 describe("Slider expand: node counts (G-NODES)", () => {
     it.each([
-        ["expand off", {}, 5, 12],
+        ["expand off", {}, 5, 5],
         ["expand on", { expand: true }, 6, 6],
         ["expand on with valueText", { expand: true, valueText: (n: number) => `${n} s` }, 7, 7],
     ])("%s: rest and held", async (_, extra, rest, held) => {
@@ -69,7 +69,7 @@ describe("Slider expand: node counts (G-NODES)", () => {
 
         await press(root);
         expect(root.hasAttribute("data-held")).toBe(true);
-        // Teleported organs (veil, loupe) are counted with the slider's own nodes.
+        // Anything placed in <body> would be counted with the slider's own nodes.
         expect(count(root) + bodyExtras(mountEl)).toBe(held);
         await release();
         wrapper.unmount();

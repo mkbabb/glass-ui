@@ -1,12 +1,29 @@
+<script lang="ts">
+// The last input on the page: a key or a pointer. One pair of listeners for every Slider.
+let lastInputWasKey = false;
+let watchers = 0;
+const onKey = (): void => void (lastInputWasKey = true);
+const onPointer = (): void => void (lastInputWasKey = false);
+function watchInput(on: boolean): void {
+    if (typeof document === "undefined") return;
+    watchers += on ? 1 : -1;
+    if (on && watchers === 1) {
+        document.addEventListener("keydown", onKey, true);
+        document.addEventListener("pointerdown", onPointer, true);
+    } else if (!on && watchers === 0) {
+        document.removeEventListener("keydown", onKey, true);
+        document.removeEventListener("pointerdown", onPointer, true);
+    }
+}
+</script>
+
 <script setup lang="ts">
 import {
     computed,
-    nextTick,
     onBeforeUnmount,
     onMounted,
     ref,
     useAttrs,
-    useId,
     useTemplateRef,
     watch,
 } from "vue";
@@ -16,7 +33,6 @@ import {
     SliderTrack,
     useForwardPropsEmits,
 } from "reka-ui";
-import { useDragVelocity } from "../../composables/dom/useDragVelocity";
 import { useDockHold } from "../dock/composables/useDockHold";
 import { resolveValueMarks } from "../_shared/field/valueDomain";
 import { useMotionAxis } from "../_shared/useMotionAxis";
@@ -133,15 +149,22 @@ const valueStyle = computed<Record<string, string>>(() => {
     };
 });
 
-// ── KEYBOARD FOCUS AND STEP TRAVEL ──────────────────────────────────────────────
+// ── KEYBOARD FOCUS, HOVER AND STEP TRAVEL ───────────────────────────────────────
 // reka focuses the thumb from script on a press, and both engines match that focus as
-// `:focus-visible`, so a mouse press painted the keyboard ring. The mark is set only for
-// focus that arrives outside a press, or once a key is used.
+// `:focus-visible`, so a mouse press painted the keyboard ring. The mark is set only
+// when the last input before the focus was a key, or once a step key is used: focus
+// that a script hands over after a pointer press (a dialog's first control, a window
+// coming forward) is not keyboard focus. One flag serves every Slider on the page.
+//
+// The hover mark is set by a mouse's `pointerenter`, not read from `:hover`: on a
+// device with a mouse and a touch screen a tap leaves `:hover` behind.
+//
 // A value the slider changes in one step (a key, a press on the track away from the
 // thumb) travels; a dragged or external value lands on the frame it arrives. The travel
-// mark is written straight to the DOM so it is present in the same style pass as the
-// value it animates.
+// belongs to the one value change the step produces: the mark is dropped before any
+// later value is written, so a playing scrubber never rides the travel's clock.
 const focusKey = ref(false);
+const hovered = ref(false);
 let pressing = false;
 const STEP_KEYS = new Set([
     "ArrowLeft",
@@ -160,25 +183,43 @@ function travelRunning(root: HTMLElement): boolean {
         ?.getAnimations()
         .some((a) => (a as CSSTransition).transitionProperty === "translate");
 }
+// How many value changes the marked step may still produce: one.
+let travelOwed = 0;
+function dropTravel(root: HTMLElement): void {
+    travelOwed = 0;
+    root.removeAttribute("data-travel");
+}
 function markTravel(root: HTMLElement): void {
+    travelOwed = 1;
     root.setAttribute("data-travel", "");
     // A step that moves nothing (a key at an end) starts no travel; drop the mark.
     requestAnimationFrame(() =>
         requestAnimationFrame(() => {
-            if (!travelRunning(root)) root.removeAttribute("data-travel");
+            if (!travelRunning(root)) dropTravel(root);
         }),
     );
 }
+// Runs before the new value reaches the DOM, so the mark and the value it must not
+// animate change in one style pass.
+watch(
+    live,
+    () => {
+        const root = getRootEl();
+        if (!root?.hasAttribute("data-travel")) return;
+        if (travelOwed > 0) travelOwed -= 1;
+        else dropTravel(root);
+    },
+    { flush: "sync", deep: true },
+);
 // The hover dwell is a transition delay. A press or a keyboard focus that lands inside
 // it leaves the target unchanged, so the running transition would keep its delay; the
 // grow skips what is left of it instead.
 function skipDwell(root: HTMLElement): void {
     if (!props.expand) return;
-    for (const el of root.querySelectorAll(".slider-shell, .slider-thumb"))
-        for (const a of el.getAnimations()) {
-            const delay = Number(a.effect?.getTiming().delay ?? 0);
-            if (typeof a.currentTime === "number" && a.currentTime < delay) a.currentTime = delay;
-        }
+    for (const a of root.getAnimations({ subtree: true })) {
+        const delay = Number(a.effect?.getTiming().delay ?? 0);
+        if (typeof a.currentTime === "number" && a.currentTime < delay) a.currentTime = delay;
+    }
 }
 function onRootPointerDownCapture(event: PointerEvent): void {
     const root = getRootEl();
@@ -190,10 +231,16 @@ function onRootPointerDownCapture(event: PointerEvent): void {
 }
 function onRootPointerMoveCapture(): void {
     const root = getRootEl();
-    if (pressing && root?.hasAttribute("data-travel")) root.removeAttribute("data-travel");
+    if (pressing && root?.hasAttribute("data-travel")) dropTravel(root);
 }
 function onWindowPointerUp(): void {
     pressing = false;
+}
+function onRootPointerEnter(event: PointerEvent): void {
+    if (event.pointerType === "mouse") hovered.value = true;
+}
+function onRootPointerLeave(): void {
+    hovered.value = false;
 }
 function onRootKeyDownCapture(event: KeyboardEvent): void {
     const root = getRootEl();
@@ -208,7 +255,7 @@ function onRootFocusIn(event: FocusEvent): void {
         const index = [...root.querySelectorAll(".slider-thumb")].indexOf(thumb);
         if (index >= 0) activeIndex.value = index;
     }
-    if (!pressing) focusKey.value = true;
+    if (!pressing && lastInputWasKey) focusKey.value = true;
     if (root) skipDwell(root);
 }
 function onRootFocusOut(event: FocusEvent): void {
@@ -222,42 +269,54 @@ function onRootTransitionEnd(event: TransitionEvent): void {
         event.propertyName === "translate" &&
         (event.target as Element).classList.contains("slider-thumb")
     )
-        root.removeAttribute("data-travel");
+        dropTravel(root);
 }
 
 onMounted(() => {
     const root = getRootEl();
     if (!root) return;
+    watchInput(true);
     root.addEventListener("pointerdown", onRootPointerDownCapture, { capture: true });
     root.addEventListener("pointermove", onRootPointerMoveCapture, {
         capture: true,
         passive: true,
     });
+    root.addEventListener("pointerenter", onRootPointerEnter);
+    root.addEventListener("pointerleave", onRootPointerLeave);
     root.addEventListener("keydown", onRootKeyDownCapture, { capture: true });
     root.addEventListener("focusin", onRootFocusIn);
     root.addEventListener("focusout", onRootFocusOut);
     root.addEventListener("transitionend", onRootTransitionEnd);
+    root.addEventListener("transitioncancel", onRootTransitionEnd);
     window.addEventListener("pointerup", onWindowPointerUp, { capture: true });
     window.addEventListener("pointercancel", onWindowPointerUp, { capture: true });
 });
 onBeforeUnmount(() => {
     const root = getRootEl();
+    watchInput(false);
     root?.removeEventListener("pointerdown", onRootPointerDownCapture, { capture: true });
     root?.removeEventListener("pointermove", onRootPointerMoveCapture, { capture: true });
+    root?.removeEventListener("pointerenter", onRootPointerEnter);
+    root?.removeEventListener("pointerleave", onRootPointerLeave);
     root?.removeEventListener("keydown", onRootKeyDownCapture, { capture: true });
     root?.removeEventListener("focusin", onRootFocusIn);
     root?.removeEventListener("focusout", onRootFocusOut);
     root?.removeEventListener("transitionend", onRootTransitionEnd);
+    root?.removeEventListener("transitioncancel", onRootTransitionEnd);
     window.removeEventListener("pointerup", onWindowPointerUp, { capture: true });
     window.removeEventListener("pointercancel", onWindowPointerUp, { capture: true });
+    placeOnMove(false);
 });
 
 // ── THE EXPANDED VIEW'S READOUT ─────────────────────────────────────────────────
-// The one thing that must be read above a finger. A glass plate clips its children,
-// so the readout alone is shown in the top layer, anchored to the root in CSS and moved
-// along by the same `--slider-pa`. Shown when a hold or a keyboard focus begins, hidden
-// on its own exit tween's `transitionend`.
-const anchorName = `--glass-slider-${useId().replace(/[^A-Za-z0-9_-]/g, "-")}`;
+// The one thing that must be read above a finger. A glass plate clips its children, so
+// the readout alone is shown in the top layer. It is placed from ONE rectangle of the
+// track, read when it is shown and again on a scroll or a resize while it is shown, and
+// moved along by `translate` in that rectangle's own pixels (so an ancestor's transform
+// is carried), by the same `--slider-pa`. No rectangle is read inside a drag. Its box is
+// a fixed size in `ch`, taken from the widest text it has had to show, and contained, so
+// a text change is laid out inside it and nowhere else. Shown when a hold or a keyboard
+// focus begins, hidden on its own exit tween's `transitionend`.
 const readoutRef = useTemplateRef<HTMLElement>("readoutRef");
 const reading = computed(
     () => props.expand && !!props.valueText && (isHeld.value || focusKey.value),
@@ -267,187 +326,77 @@ const readoutText = computed(() => {
     const value = live.value[index];
     return value === undefined ? "" : (props.valueText?.(value, index) ?? "");
 });
+const readoutCh = ref(0);
+watch(
+    [readoutText, () => props.min, () => props.max, () => props.valueText],
+    () => {
+        const texts = [
+            readoutText.value,
+            props.valueText?.(props.min ?? 0, 0) ?? "",
+            props.valueText?.(props.max ?? 100, 0) ?? "",
+        ];
+        const widest = Math.max(...texts.map((t) => [...t].length));
+        if (widest > readoutCh.value) readoutCh.value = widest;
+    },
+    { immediate: true },
+);
+function placeReadout(): void {
+    const root = getRootEl();
+    const el = readoutRef.value;
+    const track = root?.querySelector<HTMLElement>(".slider-track");
+    if (!root || !el || !track) return;
+    const rect = track.getBoundingClientRect();
+    const vertical = props.orientation === "vertical";
+    const sign = Number(getComputedStyle(root).getPropertyValue("--slider-sign")) || 1;
+    // The band's half thickness, its start cap's centre and its travel, as painted.
+    const half = (vertical ? rect.width : rect.height) / 2;
+    const length = vertical ? rect.height : rect.width;
+    const x = vertical ? rect.left + half : sign > 0 ? rect.left + half : rect.right - half;
+    const y = !vertical ? rect.top + half : sign > 0 ? rect.top + half : rect.bottom - half;
+    el.style.setProperty("--slider-rx", `${x}px`);
+    el.style.setProperty("--slider-ry", `${y}px`);
+    el.style.setProperty("--slider-rh", `${half}px`);
+    el.style.setProperty("--slider-rt", `${length - 2 * half}px`);
+}
+function placeOnMove(on: boolean): void {
+    if (typeof window === "undefined") return;
+    window.removeEventListener("scroll", placeReadout, true);
+    window.removeEventListener("resize", placeReadout);
+    if (on) {
+        window.addEventListener("scroll", placeReadout, { passive: true, capture: true });
+        window.addEventListener("resize", placeReadout, { passive: true });
+    }
+}
+function closeReadout(el: HTMLElement): void {
+    el.hidePopover();
+    placeOnMove(false);
+}
 watch(
     reading,
     (on) => {
         const el = readoutRef.value;
         if (!el) return;
         const open = el.matches(":popover-open");
-        if (on && !open) el.showPopover?.();
-        else if (!on && open && getComputedStyle(el).opacity === "0") el.hidePopover();
+        if (on && !open) {
+            placeReadout();
+            el.showPopover?.();
+            placeOnMove(true);
+        } else if (!on && open && getComputedStyle(el).opacity === "0") closeReadout(el);
     },
     { flush: "post" },
 );
 function onReadoutEnd(event: TransitionEvent): void {
     if (event.propertyName === "opacity" && !reading.value) {
         const el = readoutRef.value;
-        if (el?.matches(":popover-open")) el.hidePopover();
+        if (el?.matches(":popover-open")) closeReadout(el);
     }
 }
 
-const loupeRef = useTemplateRef<HTMLElement>("loupeRef");
-
-/* The weight-train velocity bridge. Writes the bounded `--atom-drag-v` and the ONE
-   registered velocity term `--flex-vel` on the resolved host during the drag window
-   only; the rAF tears down on release. The loupe is mirrored because it is teleported
-   out of the host's inheritance. */
 const motionAxis = useMotionAxis(() => props.motion);
-useDragVelocity({
-    host: () => (motionAxis.armed.value && !props.expand ? getRootEl() : null),
-    mirror: () => loupeRef.value,
-    axis: () => (props.orientation === "vertical" ? "y" : "x"),
-});
-
-// ── The GRASP mount (glass/grasp.css) ────────────────────────────────────────────
-// The carriers exist exactly as long as the gesture's optic does: mounted the frame
-// the hold begins, unmounted on the release fade's OWN `transitionend` — never a
-// timer, which drifts against the paint. The register reads their presence, so
-// "releasing" needs no flag.
-//
-// NOT ON THE SPECTRUM VARIANT. That recipe de-glasses its range on purpose, so
-// mounting the carriers there would frost a surface deliberately made not-glass. The
-// spectrum's held read is its thumb halo, which it already carries.
-const graspable = computed(() => v.value !== "spectrum" && !props.expand);
-const grasping = ref(false);
-watch(isHeld, (held) => {
-    if (held && graspable.value) grasping.value = true;
-});
-function onGraspReleaseEnd(event: TransitionEvent): void {
-    if (event.propertyName === "opacity" && !isHeld.value) grasping.value = false;
-}
-
-// ── The FOCUS VEIL mount (glass/focus-veil.css) ──────────────────────────────────
-// While this slider is held the world behind it frosts and the slider stays crisp. The
-// centre is VIEWPORT-space, so it is written whenever the control moves against the
-// viewport — never per frame. A slider does not move under its OWN drag, so the drag
-// loop stays layout-read-free; a PAGE SCROLL during a live hold does move it, and a
-// centre taken once would leave the pool burning a hole where the control no longer
-// is. The re-take rides a capture-phase `scroll` listener on `window` — `scroll` does
-// not bubble from a scroller, capture still reaches it, so one listener covers every
-// scroller.
-const focusVeilRef = useTemplateRef<HTMLElement>("focusVeilRef");
-
-function writeVeilCentre(): void {
-    const host = getRootEl();
-    const veil = focusVeilRef.value;
-    if (!host || !veil) return;
-    const rect = host.getBoundingClientRect();
-    veil.style.setProperty(
-        "--veil-x",
-        `${((rect.left + rect.width / 2) / window.innerWidth) * 100}%`,
-    );
-    veil.style.setProperty(
-        "--veil-y",
-        `${((rect.top + rect.height / 2) / window.innerHeight) * 100}%`,
-    );
-    veil.style.setProperty("--glass-focus-veil-core-x", `${rect.width / 2}px`);
-    veil.style.setProperty("--glass-focus-veil-core-y", `${rect.height / 2}px`);
-}
-
-// ── The LOUPE (slider/styles.css) ────────────────────────────────────────────────
-// The lens organ over the scrub site. Its geometry is measured ONCE per grasp — the
-// track's own box and the viewport point it hangs from — and the per-value write is
-// two custom properties, no layout read. `--loupe-x` is the value point in TRACK
-// coordinates, the thumb's centre on the lane (`d/2 + p·(track − d)`, styles.css THE
-// LANE), and the lens fill ends at the thumb's trailing edge, as the real fill does
-// (at `p·track` both would sit off the thumb): the clone is laid out at 3× and
-// transformed down by k/3, so
-// `LENS/2 − k·x` puts that point dead centre at every k (the two scales cancel).
-// Horizontal only: a vertical scrubber's finger does not occlude its own value point.
-// THE ONE PREDICATE. Scrubber-only comes free — `grasping` opens only for a graspable
-// variant — so the spectrum is excluded here and nowhere else; horizontal-only is the
-// stated occlusion rule. Nothing downstream re-tests either.
-const loupeTrackW = ref(0);
-let loupeThumbD = 0;
-const loupeShown = computed(
-    () => grasping.value && props.orientation !== "vertical",
-);
-
-function valueFraction(): number {
-    const min = props.min ?? 0;
-    const max = props.max ?? 100;
-    const values = props.modelValue ?? props.defaultValue ?? [min];
-    const head = values[values.length - 1] ?? min;
-    if (max === min) return 0;
-    return Math.min(1, Math.max(0, (head - min) / (max - min)));
-}
-
-function writeLoupeGeometry(): void {
-    const host = getRootEl();
-    const lens = loupeRef.value;
-    if (!host || !lens) return;
-    const track = host.querySelector<HTMLElement>(".slider-track");
-    if (!track) return;
-    const rect = track.getBoundingClientRect();
-    // The thumb's layout diameter: `offsetWidth`, so the held press scale never reaches it.
-    loupeThumbD = host.querySelector<HTMLElement>(".slider-thumb")?.offsetWidth ?? 0;
-    loupeTrackW.value = rect.width;
-    lens.style.setProperty("--loupe-track-w", `${rect.width}px`);
-    lens.style.setProperty("--loupe-left", `${rect.left + rect.width / 2}px`);
-    lens.style.setProperty("--loupe-top", `${rect.top}px`);
-}
-
-function writeLoupeValue(): void {
-    const lens = loupeRef.value;
-    if (!lens || !loupeTrackW.value) return;
-    const d = loupeThumbD;
-    const x = d / 2 + valueFraction() * (loupeTrackW.value - d);
-    lens.style.setProperty("--loupe-x", `${x}px`);
-    lens.style.setProperty("--loupe-fill-w", `${(x + d / 2) * 3}px`);
-}
-
-function trackViewport(on: boolean): void {
-    if (typeof window === "undefined") return;
-    // Remove-then-add is idempotent: a re-grab mid-release must not leave two.
-    window.removeEventListener("scroll", onViewportMove, true);
-    if (on)
-        window.addEventListener("scroll", onViewportMove, {
-            passive: true,
-            capture: true,
-        });
-}
-
-function onViewportMove(): void {
-    writeVeilCentre();
-    writeLoupeGeometry();
-}
-
-watch(grasping, async (open) => {
-    if (!open) {
-        trackViewport(false);
-        return;
-    }
-    await nextTick();
-    writeVeilCentre();
-    writeLoupeGeometry();
-    writeLoupeValue();
-    trackViewport(true);
-});
-watch(
-    () => props.modelValue,
-    () => {
-        if (grasping.value) writeLoupeValue();
-    },
-    { deep: true },
-);
-onBeforeUnmount(() => trackViewport(false));
-
-// The ENGAGED RAISE, inline. The veil is a `<body>` child, so the crisp control has to
-// clear it in the ROOT stacking context: the root takes `--z-overlay` for exactly as
-// long as the plate is mounted, one rung over the plate's own
-// `calc(var(--z-overlay) - 1)`. It is INLINE and not a `[data-focus-veil]` rule
-// because a scoped attribute selector ties on specificity with any single-class
-// descendant rule a host writes over its own children, and source order then decides
-// the raise away silently. Inline has no tie to lose.
-const hostStyle = computed<Record<string, string>>(() => {
-    const raised = grasping.value && graspable.value;
-    return {
-        ...(motionAxis.hostStyle.value ?? {}),
-        ...valueStyle.value,
-        ...(props.expand ? { anchorName } : {}),
-        ...(raised ? { zIndex: "var(--z-overlay)" } : {}),
-    };
-});
+const hostStyle = computed<Record<string, string>>(() => ({
+    ...(motionAxis.hostStyle.value ?? {}),
+    ...valueStyle.value,
+}));
 
 /* The never-nameless floor's DX signal. reka's SliderThumbImpl names the thumb
    `$attrs['aria-label'] || getLabel(index, count)`, and getLabel returns UNDEFINED for
@@ -486,7 +435,8 @@ onMounted(() => {
         :data-inverted="props.inverted || undefined"
         :data-expand="props.expand || undefined"
         :data-focus-key="focusKey || undefined"
-        :data-focus-veil="(grasping && graspable) || undefined"
+        :data-hover="hovered || undefined"
+        :data-range="live.length > 1 || undefined"
         :data-motion="motionAxis.dataMotion.value"
         :style="hostStyle"
         v-bind="forwarded"
@@ -494,50 +444,11 @@ onMounted(() => {
         @update:model-value="onModel"
     >
         <!--
-            The focus veil — the world's half of the grasp, TELEPORTED to `<body>`.
-            `position: fixed` resolves against the viewport only while no ancestor
-            carries `backdrop-filter`/`transform`/`filter`/`contain: paint`, and a
-            slider's ordinary home is a glass plate that carries exactly those — left
-            nested, the plate collapses to that ancestor's box and frosts the slider's
-            own siblings instead of the world.
-        -->
-        <Teleport v-if="!props.expand" to="body">
-            <span
-                v-if="grasping && graspable"
-                ref="focusVeilRef"
-                class="glass-focus-veil"
-                :data-engaged="isHeld || undefined"
-                aria-hidden="true"
-            />
-        </Teleport>
-        <!--
-            The loupe, teleported for the same reason and clipped by its own housing so
-            the lens sits outside every glass stack. The clone is a SECOND RENDER of the
-            track at `--s: 3`, laid out once; only its transform moves per value.
-            SCRUBBER-ONLY, and unconditionally so: `loupeShown` reads `grasping`, which
-            opens only for a graspable variant, so neither a variant hook nor a
-            `graspable` guard on the fill can discriminate anything here — both would be
-            branches that never take. The one place that decides is `loupeShown`.
-        -->
-        <Teleport v-if="!props.expand" to="body">
-            <span
-                v-if="loupeShown"
-                ref="loupeRef"
-                class="glass-loupe glass-plate"
-                :data-engaged="isHeld || undefined"
-                aria-hidden="true"
-            >
-                <span class="glass-loupe-clone">
-                    <span class="glass-loupe-fill"></span>
-                </span>
-                <span class="glass-loupe-mark"></span>
-            </span>
-        </Teleport>
-        <!--
-            The expanded view's shell: one capsule outset from the track by
-            `--slider-expand-outset` on every side, so its ends share the track's cap
-            centres. It is in the tree at rest, at the track's own thickness and
-            transparent, so its grow and its shrink both start from the true rest.
+            The expanded view's shell: one capsule outset from the track by g on every
+            side, so its ends share the track's cap centres. It is in the tree at rest,
+            clipped to the track's own capsule and transparent, so its grow and its
+            shrink both start from the true rest and every frame between is a capsule
+            concentric with the track. While it is grown it takes the pointer.
         -->
         <span v-if="props.expand" class="slider-shell" aria-hidden="true" />
         <SliderTrack class="slider-track track-well">
@@ -556,17 +467,6 @@ onMounted(() => {
                 />
             </span>
             <!--
-                The range is the GRASP register's host (glass/grasp.css): `data-held`
-                and the two filter-only carriers ride the FILL — the surface that
-                actually carries the glass — not the root.
-                THE FILL CLASS IS CONDITIONAL. The spectrum range carries no glass at
-                all rather than carrying it and cancelling it: the cancel was a
-                `backdrop-filter: none` pair whose unprefixed half the build dropped,
-                leaving the prefixed alias no target engine implements — so the ramp
-                shipped `saturate(1.4)` over half its own colour and a hard seam at the
-                handle. A class that is never applied cannot be un-applied wrongly.
-            -->
-            <!--
                 THE LANE AND THE FILL. The fill is a capsule as long as the track, moved
                 by `(p − p0 − 1)·(W − H)` inside the lane and clipped by its round end,
                 so its end cap lands on the thumb's centre at every value. With two
@@ -575,26 +475,13 @@ onMounted(() => {
                 layout offsets.
             -->
             <span class="slider-lane">
-                <span
-                    class="slider-range"
-                    :class="!props.expand && v !== 'spectrum' && 'glass-liquid-fill'"
-                    :data-held="isHeld || undefined"
-                >
-                    <template v-if="grasping && graspable">
-                        <span class="glass-grasp-carrier" data-grasp="rest"></span>
-                        <span
-                            class="glass-grasp-carrier"
-                            data-grasp="grasp"
-                            @transitionend="onGraspReleaseEnd"
-                        ></span>
-                    </template>
-                </span>
+                <span class="slider-range"></span>
             </span>
         </SliderTrack>
         <!--
-            The thumb's specular anchor is FROZEN at 50%/50% and that is correct, not a
-            bug: the house has one light source, and pointer-tracking a 12px box is
-            noise. Do not add `v-specular` here.
+            reka's thumb node is the grab box: an H square that is never scaled, because
+            reka takes the grab offset from its rectangle. The disc the eye sees is its
+            `::before`, which is what grows.
             `aria-valuetext` is the ONE humane readout — reka mints none, so a screen
             reader otherwise hears the raw number for a slider whose scale is a curve, a
             colour, or a duration. It is authored per thumb because each thumb carries
@@ -609,7 +496,7 @@ onMounted(() => {
             :aria-errormessage="($attrs['aria-errormessage'] as string) ?? undefined"
             :aria-invalid="props.invalid || undefined"
             :aria-valuetext="props.valueText?.(value as number, key) ?? undefined"
-            class="slider-thumb glass-specular-track"
+            class="slider-thumb"
             :style="{ '--slider-p': String(fraction(value as number)) }"
         />
         <span
@@ -618,7 +505,7 @@ onMounted(() => {
             popover="manual"
             class="slider-readout"
             aria-hidden="true"
-            :style="{ positionAnchor: anchorName }"
+            :style="{ '--slider-readout-ch': String(readoutCh) }"
             @transitionend="onReadoutEnd"
             >{{ readoutText }}</span
         >
