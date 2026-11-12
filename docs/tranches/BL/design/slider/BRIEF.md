@@ -13,3 +13,9 @@ The laws that bind (docs/precepts): every change is tweened from its beginning t
 Rows: O-254, O-280, O-273 (`--slider-thumb-bg`), O-267 (forced-colors focus, cured in 11.0.2), O-236 (keep reka's hidden form input), O-253 (haptic detents later). First felt on color.babb.dev's L / C / h / α console, the keyframes controls, daraksha's Name transport, fourier.
 
 What is wanted: one geometry law (track, fill and thumb in one height system, ends concentric at every value, 0 and 100 included, both orientations, every size), and an expanded view that is a designed, rounded, clearly bounded surface of its own, growing from the compact slider and shrinking back, start to stop. The geometry cure ships as a patch if it changes no API; the expanded view is additive in 11.2.0.
+
+## Added 2026-11-12 12:05 (owner, on keyframes.babb.dev, 11.0.1)
+
+Frame `owner/keyframes-scrubber-thumb-2026-11-12.png`: a dark thumb disc noticeably smaller than the fill's height, sitting inside the fill's round end. His words: "the glass-ui slider thumb should be more filled to the slider, taking up the full height".
+
+So the geometry law is fixed on this point: the thumb's diameter equals the track and fill height, and it is concentric with the fill's end cap. The measure, design, prototype and challenge seats all read this section.
