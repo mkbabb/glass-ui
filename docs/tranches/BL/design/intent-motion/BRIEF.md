@@ -51,3 +51,4 @@ value.js has written a cross-site critique instrument (`inbound/VALUE-PRECEPTS-2
 
 The spec seat writes the precept text for 2 and 3 in PRECEPTS-ADDENDUM.md, and for 1 only as a proposal marked for the owner.
 - Three findings from keyframes' round, 2026-11-12, for the "AI smell" list and the press question: Button squashes non-uniformly on press (about 1.03 × 0.92) where a uniform shrink is wanted; the ToggleGroup item's radial hover glow reads as an effect and a plain fill tween would do; the light-theme Chip stacks border, fill and shadow (O-285, O-286, O-287).
+- The owner, 2026-11-12 17:05, on dock page icons: "a bit more flat in color, not shaded so much and AI-like, and have text labels." The icon piece uses flat fills. He also asked that his words on hover stand marked: intent on hover for every icon and control, everything tweened in and out. And on usage: be sparing with Fable seats.

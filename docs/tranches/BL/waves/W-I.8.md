@@ -235,3 +235,10 @@ His words on atlas: "When you un-hover the dock, it should not instantly telepor
 
 - The theme toggle is a separate seat to the RIGHT of the dock, on its own plate of the dock's surface (this reverses O-222's "not with the dock bg"). It has a hover animation. When the dock collapses, the seat fuses into the main plate and collapses away with it; when the dock expands, it parts again. Both directions are tweened from start to stop. The owner's words: "placed in fission, in a separated icon from the dock, though with a dock bg, on the RIGHT of the dock--in the collpase state, this fission item should fuse into the main dock and collapse away like in ios 27."
 - Every standard dock has a Home seat first. A free-standing control (daraksha's occasion medal) may take the dock plate; the wave says how, in one documented way.
+
+## Owner law added 2026-11-12 17:05 (O-289, O-290, O-288)
+
+- The theme seat parts from the dock and fuses back in goo, and it must work in Safari: "fissioned from the dock on the RIGHT and animated that fission and separation in goo with safari compat."
+- Page icons in the dock are flat in colour and carry text labels: "a bit more flat in color, not shaded so much and AI-like, and have text labels."
+- When the dock folds, everything in it folds with it, tweened: "the slider doesn't too. All should animate."
+- Inputs: atlas's figure dock note and its state-by-state design are in `design/dock/inbound/` (O-291).
