@@ -109,6 +109,13 @@ A patch on 11.0.1. Nothing is removed or renamed.
   lies inside it), and the trailing ring box sits in the run's end padding, so the row
   measures what it did in 11.0.0 and the ring still has its room.
 
+- **Every dock seat is a capsule.** 11.0.1 gave the icon control a corner of half its
+  size; dropdown and select triggers and tab-shaped seats still rounded to
+  `--radius-pill` (1rem), so on a 36 to 40px seat their hover, open and selected plate
+  had flat sides. Their corner is now the icon control's,
+  `calc(var(--dock-control-size) / 2)`, which the browser clamps to half each seat's
+  own height. `--dock-control-radius` still sets the corner for all of them.
+
 ## 11.0.1 — 2026-11-12
 
 A patch that brings the 10.1.5 fixes forward onto 11.0. If you saw the dock's hover

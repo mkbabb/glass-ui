@@ -36,6 +36,9 @@
 //   rows   fourier's docks (a persistent region beside the layers; a definite face, a
 //          fit-content row, a stretched dock) at 360, 390 and 1440: the root's and the
 //          run's scrollWidth equal their clientWidth and nothing scrolls sideways
+//   radius every dock seat (dropdown trigger, tab, labelled and icon control) rounds its
+//          hover, open and active plate with a corner of half the seat's block size: in a
+//          screenshot each corner of the plate leaves the area that corner leaves
 import { expect, test, type Page } from "@playwright/test";
 
 type DarkHandle = { stamped: boolean; isDark: () => boolean; toggle: () => void };
@@ -770,4 +773,115 @@ for (const scene of ["transport", "editor", "stretched"]) {
             expect(r.page[0], "the page does not scroll sideways").toBe(r.page[1]);
         });
     }
+}
+
+/**
+ * The painted corner of a seat's plate, from a screenshot of the seat. The plate is the
+ * seat's content box (`background-clip: content-box`) or, with no padding, its border
+ * box. In each of its four corners, a square of half the plate's height, the unpainted
+ * area is summed from each pixel's coverage between the ground and the plate's fill (its
+ * centre row's middle). A corner of radius r on the seat leaves (r − pi)(r − pb)(1 − π/4)
+ * there, with pi and pb the inline and block padding; `expected` is that area for r half
+ * the seat's block size, and `flat` for the radius the seat computes, which the engine
+ * clamps to half the shorter side.
+ */
+async function plateCorners(page: Page, seat: ReturnType<Page["locator"]>, ground: number[]) {
+    const geo = await seat.evaluate((e) => {
+        const r = e.getBoundingClientRect();
+        const cs = getComputedStyle(e);
+        return {
+            x: r.left, y: r.top, w: r.width, h: r.height,
+            pi: parseFloat(cs.paddingLeft), pb: parseFloat(cs.paddingTop),
+            clip: cs.backgroundClip, radius: parseFloat(cs.borderTopLeftRadius),
+        };
+    });
+    const png = await page.screenshot({ clip: { x: geo.x, y: geo.y, width: geo.w, height: geo.h }, scale: "css" });
+    return page.evaluate(
+        async ({ b64, ground, geo }) => {
+            const img = new Image();
+            img.src = `data:image/png;base64,${b64}`;
+            await img.decode();
+            const c = document.createElement("canvas");
+            c.width = img.width;
+            c.height = img.height;
+            const g = c.getContext("2d")!;
+            g.drawImage(img, 0, 0);
+            const d = g.getImageData(0, 0, c.width, c.height).data;
+            const inset = geo.clip === "content-box";
+            const pi = inset ? Math.round(geo.pi) : 0;
+            const pb = inset ? Math.round(geo.pb) : 0;
+            const L = pi, T = pb, W = c.width - 2 * pi, H = c.height - 2 * pb;
+            const px = (x: number, y: number) => {
+                const i = (y * c.width + x) * 4;
+                return [d[i]!, d[i + 1]!, d[i + 2]!];
+            };
+            const fill = px(L + Math.floor(W / 2), T + Math.floor(H / 2));
+            const span = fill.reduce((a, v, k) => a + Math.abs(v - ground[k]!), 0);
+            const cover = (x: number, y: number) =>
+                Math.min(1, px(x, y).reduce((a, v, k) => a + Math.abs(v - ground[k]!), 0) / Math.max(span, 1));
+            const q = Math.floor(H / 2);
+            const corner = (x0: number, y0: number, dx: number, dy: number) => {
+                let open = 0;
+                for (let j = 0; j < q; j++) for (let i = 0; i < q; i++) open += 1 - cover(x0 + dx * i, y0 + dy * j);
+                return open;
+            };
+            const areas = [
+                corner(L, T, 1, 1),
+                corner(L + W - 1, T, -1, 1),
+                corner(L, T + H - 1, 1, -1),
+                corner(L + W - 1, T + H - 1, -1, -1),
+            ];
+            const k = 1 - Math.PI / 4;
+            const used = (r: number) => Math.max(0, Math.min(r, geo.h / 2, geo.w / 2) - pi) * Math.max(0, Math.min(r, geo.h / 2, geo.w / 2) - pb) * k;
+            return { geo, span, areas, measured: areas.reduce((a, b) => a + b, 0) / 4, expected: used(geo.h / 2), flat: used(geo.radius) };
+        },
+        { b64: png.toString("base64"), ground, geo },
+    );
+}
+
+for (const width of [1440, 390]) {
+    test(`radius · every dock seat's corner is half its block size, at ${width}`, async ({ page }, info) => {
+        const touch = info.project.name === "coarse-touch";
+        await page.setViewportSize({ width, height: 800 });
+        await page.goto("/tests-visual/release-11-0-2/radius-harness.html");
+        await page.locator("body[data-ready='1'] .radius-dock .dock-plate").waitFor();
+        await page.evaluate(() => document.fonts.ready);
+        await page.mouse.move(4, 4);
+        await page.waitForTimeout(900);
+        // The plate's own fill beside the seats, the ground a seat's plate is read against.
+        const p = (await page.locator(".radius-dock .dock-plate").boundingBox())!;
+        const groundPng = await page.screenshot({ clip: { x: Math.round(p.x + p.width / 2), y: Math.round(p.y + 2), width: 1, height: 1 }, scale: "css" });
+        const ground = await page.evaluate(async (b64) => {
+            const img = new Image();
+            img.src = `data:image/png;base64,${b64}`;
+            await img.decode();
+            const c = document.createElement("canvas");
+            c.width = c.height = 1;
+            const g = c.getContext("2d")!;
+            g.drawImage(img, 0, 0);
+            return [...g.getImageData(0, 0, 1, 1).data.slice(0, 3)];
+        }, groundPng.toString("base64"));
+        const cells: Record<string, Awaited<ReturnType<typeof plateCorners>> & { state: string }> = {};
+        const seats = touch
+            ? ["trigger-active", "tab-active", "label-active", "icon-active", "trigger"]
+            : ["trigger", "tab", "label", "trigger-active", "tab-active", "label-active", "icon-active"];
+        for (const kind of seats) {
+            const seat = page.locator(`.radius-dock [data-seat='${kind}']`);
+            const state = kind.endsWith("-active") ? "active" : touch ? "open" : "hover";
+            await seat.evaluate((e) => e.scrollIntoView({ block: "nearest", inline: "nearest", behavior: "instant" }));
+            await page.waitForTimeout(300);
+            if (state === "hover") await seat.hover();
+            if (state === "open") await seat.tap();
+            await page.waitForTimeout(400);
+            cells[kind] = { state, ...(await plateCorners(page, seat, ground)) };
+            if (state === "hover") await page.mouse.move(4, 4);
+            if (state === "open") await page.keyboard.press("Escape");
+            await page.waitForTimeout(300);
+        }
+        info.annotations.push({ type: "radius", description: JSON.stringify({ ground, cells }) });
+        for (const [kind, cell] of Object.entries(cells)) {
+            expect(cell.span, `${kind} paints a plate`).toBeGreaterThan(12);
+            expect(cell.measured, `${kind}: the unpainted corner area`).toBeGreaterThanOrEqual(cell.expected * 0.8);
+        }
+    });
 }
