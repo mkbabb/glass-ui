@@ -7,6 +7,9 @@
 //   press  under `prefers-reduced-motion: reduce`, a quick press on a seat of an open
 //          dock's active layer lands its click on that seat, by mouse and by touch
 //          (daraksha's glass-only repro `dock-press-scroll`, ported to `src/`)
+//   slider a scrubber Slider at its minimum still draws its value: the fill is at least
+//          the thumb wide and the thumb is painted, so the well's leading end differs
+//          from its empty trailing end
 import { expect, test, type Page } from "@playwright/test";
 
 type DarkHandle = { stamped: boolean; isDark: () => boolean; toggle: () => void };
@@ -124,5 +127,57 @@ for (const width of [1440, 390]) {
         expect(rest!.scrollWidth - rest!.clientWidth).toBeLessThanOrEqual(0);
         expect(rest!.scrollLeft).toBe(0);
         expect(after.scrolls).toEqual([0, 0, 0]);
+    });
+}
+
+// The mean per-channel difference of two same-size PNG crops, decoded in the page.
+async function meanDiff(page: Page, a: Buffer, b: Buffer): Promise<number> {
+    return page.evaluate(
+        async ([a64, b64]) => {
+            const read = async (b64: string) => {
+                const bmp = await createImageBitmap(await (await fetch(`data:image/png;base64,${b64}`)).blob());
+                const c = new OffscreenCanvas(bmp.width, bmp.height);
+                const g = c.getContext("2d")!;
+                g.drawImage(bmp, 0, 0);
+                return g.getImageData(0, 0, bmp.width, bmp.height).data;
+            };
+            const [x, y] = [await read(a64), await read(b64)];
+            let sum = 0;
+            for (let i = 0; i < x.length; i += 4) for (let k = 0; k < 3; k++) sum += Math.abs(x[i + k] - y[i + k]);
+            return sum / ((x.length / 4) * 3);
+        },
+        [a.toString("base64"), b.toString("base64")],
+    );
+}
+
+for (const size of ["sm", "md", "lg"]) {
+    test(`slider · a scrubber at its minimum draws its value (${size})`, async ({ page }, info) => {
+        await page.goto("/tests-visual/release-11-0-2/slider-harness.html");
+        await page.locator("body[data-ready='1']").waitFor({ state: "attached" });
+        await page.evaluate(() => document.fonts.ready);
+        await page.waitForTimeout(300);
+        const row = `[data-row="${size}"]`;
+        const r = await page.evaluate((row) => {
+            const box = (sel: string) => document.querySelector(`${row} ${sel}`)!.getBoundingClientRect();
+            const thumb = document.querySelector(`${row} .slider-thumb`)!;
+            const t = box(".slider-thumb");
+            const range = box(".slider-range");
+            const track = box(".slider-track");
+            return {
+                value: thumb.getAttribute("aria-valuenow"),
+                thumb: { w: t.width, h: t.height, opacity: +getComputedStyle(thumb).opacity },
+                range: { left: range.left - track.left, w: range.width },
+                track: { x: track.x, y: track.y, w: track.width, h: track.height },
+            };
+        }, row);
+        const side = r.track.h;
+        const crop = (x: number) => page.screenshot({ clip: { x, y: r.track.y, width: side, height: side }, animations: "disabled" });
+        const diff = await meanDiff(page, await crop(r.track.x), await crop(r.track.x + r.track.w - side));
+        info.annotations.push({ type: "slider", description: JSON.stringify({ ...r, diff }) });
+        expect(r.value).toBe("50");
+        expect(r.thumb.w).toBeGreaterThan(0);
+        expect(r.thumb.opacity).toBeGreaterThan(0);
+        expect(r.range.w).toBeGreaterThanOrEqual(r.thumb.w - 0.5);
+        expect(diff).toBeGreaterThan(8);
     });
 }
