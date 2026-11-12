@@ -1,0 +1,86 @@
+
+Running 4 tests using 1 worker
+
+  ✘  1 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:103:5 › press · a quick press on Again lands under reduced motion at 1440 (2.2s)
+  ✘  2 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:103:5 › press · a quick press on Again lands under reduced motion at 390 (2.2s)
+  ✘  3 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:103:5 › press · a quick press on Again lands under reduced motion at 1440 (2.3s)
+  ✘  4 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:103:5 › press · a quick press on Again lands under reduced motion at 390 (2.3s)
+
+
+  1) [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:103:5 › press · a quick press on Again lands under reduced motion at 1440 
+
+    Error: expect(received).toContain(expected) // indexOf
+
+    Expected value: "click:Again"
+    Received array: ["pointerdown:Again", "pointerup:dock-face-content", "click:dock-face-content"]
+
+      114 |         }));
+      115 |         info.annotations.push({ type: "press", description: JSON.stringify({ rest, ...after }) });
+    > 116 |         expect(after.events).toContain("click:Again");
+          |                              ^
+      117 |         expect(after.presses.Again ?? 0).toBe(1);
+      118 |         expect(rest?.scrollLeft ?? 0).toBe(0);
+      119 |     });
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual/release-11-0-2.spec.ts:116:30
+
+    Error Context: tests-visual/test-results/release-11-0-2-press-·-a-q-8b08d-nder-reduced-motion-at-1440-chromium-headless-new/error-context.md
+
+  2) [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:103:5 › press · a quick press on Again lands under reduced motion at 390 
+
+    Error: expect(received).toContain(expected) // indexOf
+
+    Expected value: "click:Again"
+    Received array: ["pointerdown:Again", "pointerup:dock-face-content", "click:dock-face-content"]
+
+      114 |         }));
+      115 |         info.annotations.push({ type: "press", description: JSON.stringify({ rest, ...after }) });
+    > 116 |         expect(after.events).toContain("click:Again");
+          |                              ^
+      117 |         expect(after.presses.Again ?? 0).toBe(1);
+      118 |         expect(rest?.scrollLeft ?? 0).toBe(0);
+      119 |     });
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual/release-11-0-2.spec.ts:116:30
+
+    Error Context: tests-visual/test-results/release-11-0-2-press-·-a-q-8caeb-under-reduced-motion-at-390-chromium-headless-new/error-context.md
+
+  3) [coarse-touch] › tests-visual/release-11-0-2.spec.ts:103:5 › press · a quick press on Again lands under reduced motion at 1440 
+
+    Error: expect(received).toContain(expected) // indexOf
+
+    Expected value: "click:Again"
+    Received array: ["pointerdown:Again", "pointerup:Again", "click:dock-face-content"]
+
+      114 |         }));
+      115 |         info.annotations.push({ type: "press", description: JSON.stringify({ rest, ...after }) });
+    > 116 |         expect(after.events).toContain("click:Again");
+          |                              ^
+      117 |         expect(after.presses.Again ?? 0).toBe(1);
+      118 |         expect(rest?.scrollLeft ?? 0).toBe(0);
+      119 |     });
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual/release-11-0-2.spec.ts:116:30
+
+    Error Context: tests-visual/test-results/release-11-0-2-press-·-a-q-8b08d-nder-reduced-motion-at-1440-coarse-touch/error-context.md
+
+  4) [coarse-touch] › tests-visual/release-11-0-2.spec.ts:103:5 › press · a quick press on Again lands under reduced motion at 390 
+
+    Error: expect(received).toContain(expected) // indexOf
+
+    Expected value: "click:Again"
+    Received array: ["pointerdown:Again", "pointerup:Again", "click:dock-face-content"]
+
+      114 |         }));
+      115 |         info.annotations.push({ type: "press", description: JSON.stringify({ rest, ...after }) });
+    > 116 |         expect(after.events).toContain("click:Again");
+          |                              ^
+      117 |         expect(after.presses.Again ?? 0).toBe(1);
+      118 |         expect(rest?.scrollLeft ?? 0).toBe(0);
+      119 |     });
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual/release-11-0-2.spec.ts:116:30
+
+    Error Context: tests-visual/test-results/release-11-0-2-press-·-a-q-8caeb-under-reduced-motion-at-390-coarse-touch/error-context.md
+
+  4 failed
+    [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:103:5 › press · a quick press on Again lands under reduced motion at 1440 
+    [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:103:5 › press · a quick press on Again lands under reduced motion at 390 
+    [coarse-touch] › tests-visual/release-11-0-2.spec.ts:103:5 › press · a quick press on Again lands under reduced motion at 1440 
+    [coarse-touch] › tests-visual/release-11-0-2.spec.ts:103:5 › press · a quick press on Again lands under reduced motion at 390 
