@@ -71,3 +71,4 @@ Gates, in both engines, light and dark, at 390 and 1440:
 - O-271: dock rows overflow 4 to 8 px when a persistent region sits beside the layers (fourier; regression in 11.0.1).
 - O-270: every dock seat (control, trigger, tab) takes a corner of half its block size.
 - O-273: `--slider-thumb-bg` (default `var(--card)`) for the scrubber thumb; additive.
+- O-282: the dock must not shift when a seat is hovered (owner, 2026-11-12). Cure the cause in glass and add the 0 px hover spec, as written in `docs/release-11.0.2/orchestrator-note-dock-hover-shift.md` (binding). A critic that finds no such spec on the tree files it as a blocking defect.
