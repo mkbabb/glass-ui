@@ -16,8 +16,8 @@ foreground to the page ground, deepened; the Slider's default fill in dark goes 
 sets `--glass-level` to 1 instead of inheriting the dock's 0. Three tokens are new:
 `--icon-label-gap` (0.25rem), `--field-text-floor` (0px, or 16px under a coarse pointer)
 and `--value-mark-inset` (0px). The dock now writes two measured properties on its root,
-`--dock-plate-cross-px` and `--dock-run-room-block`, and a `data-run-fits` attribute
-when every control in its run fits.
+`--dock-plate-cross-px` and `--dock-run-room-block`, and sets a `data-run-fits`
+attribute on the root when every control in its run fits.
 
 - **The stadium dock is round at both ends, in every posture.** In 11.0.0 the stadium
   dock rested on `--radius-dock`, a 16px corner, and its scroll cue cut the corner to
@@ -276,7 +276,7 @@ static-backdrop dock's plate (the root's inherited 0 to 1, O-157). Two tokens ar
 `--field-text-floor` (0 px, 16 px under a coarse pointer). The dock publishes four new
 measured properties on its root, `--dock-plate-cross-px`, `--dock-seat-max-inline-px`,
 `--dock-seat-max-block-px` and `--dock-run-room-block`, and a `data-run-fits` attribute on
-the run.
+the root.
 
 - **The dock pill's corner is a circle at rest (O-129 r1).** The cut-cap keyframes
   rested at `--dock-cap-rest: 50%`. A percentage radius resolves per axis, so whenever
