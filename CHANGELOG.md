@@ -12,8 +12,8 @@ without you doing anything, and each has its own entry below:
 - the dock rests as a capsule (`--radius-dock: 1rem` brings back the rounded bar);
 - a dock control marked with `aria-current` always shows the selected plate, glyph
   controls included, and the plate glides when the current control changes;
-- a dock glyph control's hover and press fills sit inside the same rounded plate as its
-  selected fill, rather than filling the whole control;
+- a dock glyph control's hover, press and `active` fills sit inside one rounded plate,
+  the same one the selected plate fills, rather than filling the whole control;
 - a `#persistent-end` control sits as far from the dock's other controls as a
   `#persistent` one, and in a vertical dock the space after a `#persistent` control is
   half what it was;
@@ -50,10 +50,18 @@ on the left, the dock with reduced motion turned on, and the timing of HandMark'
   turned on it moves in a single step. Controls that sit inside their own scrolling strip
   keep their own selected look. Glyph controls take part too: a glyph `DockControl` that
   carries `aria-current` now shows the selected plate, where before it showed one only
-  with `active`, so a row of glyph `RouterLink`s gains one after upgrading. The plate is
-  the same size however the control became current, by click, tap, keyboard or a route
-  change, because a glyph control's hover and press fills now sit inside that same plate
-  instead of filling the whole control.
+  with `active`, so a row of glyph `RouterLink`s gains one after upgrading. If you set
+  `active` on a glyph nav control to show where you are, you no longer need it, since
+  `aria-current` alone shows the plate; keeping both is fine, and the control shows the
+  same single plate either way. While the gliding plate sits on a control, that control
+  draws no selected fill, rim or shadow of its own (a `--dock-active-shadow` you set
+  included), so the dock always shows one shape. The plate is the same size however the
+  control became current, by click, tap, keyboard or a route change, and a glyph
+  control's hover, press and `active` fills now sit inside that same plate instead of
+  filling the whole control. If you retune the hover fill with `--dock-icon-hover-bg`,
+  give it a colour: it now sets the fill's colour, so an image or a gradient there no
+  longer paints. The plate also stays on its control when a page switches between
+  left-to-right and right-to-left without reloading.
 
 - **`ScrollProgressRim` can draw progress on the border itself.** Pass
   `edge="border"` and the progress becomes the host's own border: a stroke the width of
