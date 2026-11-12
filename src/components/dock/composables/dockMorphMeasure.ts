@@ -71,12 +71,20 @@ function keepScroll<T>(scroller: HTMLElement, measure: () => T): T {
  * Two things the current DOM may still carry are not that posture's: the root's padding,
  * which interpolates on `--dock-expand-t` mid-morph, and the rules gated on the posture
  * class (`.collapsed`) when the other posture is the one being read. Both sit in the
- * CHROME, the root less its pane. `chrome` is the posture's own, read at rest; the
+ * CHROME, the root less its layers box. `chrome` is the posture's own, read at rest; the
  * difference is added to the pane's end margin and the root laid out again, so a
  * content-sized root grows by it while a root the host constrains or stretches does not.
+ *
+ * The chrome is taken against the layers box, not the pane's border box, because the
+ * pane's border box is not the slot it fills. A horizontal run hands its reserve back by
+ * negative margins and its trailing reserve is a box in its content, so its border box
+ * exceeds its slot by a different length expanded (where the expanded posture's
+ * `width: 100%` sizes its content box) than read from the collapsed posture (where its
+ * content box is its max-content). The layers box is the slot in either posture.
  */
 function restSize(
     root: HTMLElement,
+    layers: HTMLElement,
     pane: HTMLElement,
     other: HTMLElement,
     axis: Axis,
@@ -93,7 +101,7 @@ function restSize(
         () => {
             const size = getSize(root, axis);
             if (chrome === null) return size;
-            const delta = chrome - (size - getSize(pane, axis));
+            const delta = chrome - (size - getSize(layers, axis));
             if (Math.abs(delta) < 0.5) return size;
             const base = Number.parseFloat(getComputedStyle(pane).getPropertyValue(margin)) || 0;
             return withOverrides([[pane, margin, `${base + delta}px`]], () => getSize(root, axis));
@@ -169,7 +177,7 @@ function constraintOf(root: HTMLElement, axis: Axis): string {
  *
  * An endpoint is the root's box at rest in its posture, laid out from the live DOM on
  * every capture (`restSize`). Nothing is latched but each posture's chrome, the root
- * less its pane, read only from a root at rest in that posture (no `[data-morphing]`).
+ * less its layers box, read only from a root at rest in that posture (no `[data-morphing]`).
  * The chrome holds padding, border, gaps and the persistent regions, none of which
  * depends on the host. So an endpoint follows the pane and the host in every posture and
  * through a morph (O-101, O-101a).
@@ -206,21 +214,22 @@ export function useDockExpandedSize(
 
     function capture(): void {
         const root = rootEl.value;
+        const layers = contentEl.value;
         const full = expandedEl.value;
         const summary = collapsedEl.value;
-        if (!root || !contentEl.value || !full || !summary) return;
+        if (!root || !layers || !full || !summary) return;
 
         const a = axis.value;
         const expanded = full.classList.contains("is-active");
         const morphing = root.hasAttribute("data-morphing");
         if (!morphing) {
-            const chrome = getSize(root, a) - getSize(expanded ? full : summary, a);
+            const chrome = getSize(root, a) - getSize(layers, a);
             if (expanded) expandedChrome = chrome;
             else collapsedChrome = chrome;
         }
 
         let expandedPx = keepScroll(full, () =>
-            restSize(root, full, summary, a, expandedChrome),
+            restSize(root, layers, full, summary, a, expandedChrome),
         );
         // THE ENDPOINT A MORPH STARTS FROM HOLDS until the host moves it, and the hold
         // is keyed on the cause, not the size. At rest the reading is the endpoint. The
@@ -259,7 +268,7 @@ export function useDockExpandedSize(
         );
         if (!expanded) {
             collapsedPx = keepScroll(full, () =>
-                restSize(root, summary, full, a, collapsedChrome),
+                restSize(root, layers, summary, full, a, collapsedChrome),
             );
         }
         if (expandedPx <= 0) return;
@@ -298,7 +307,7 @@ export function useDockExpandedSize(
      * WebKit). It moves mid-morph only when the host moves the endpoint itself (a clamp,
      * a stage resize, by any amount; `capture`): then the port is the rest port
      * (`restPort`), the new endpoint less the expanded chrome and the run's edge
-     * (`runEdge`, its border box less its port), both read at rest. So the flag and the
+     * (`runEdge`, the layers box less the port), both read at rest. So the flag and the
      * room move on the frame the host's change lands, where the morph carries it, not at the
      * settle. While collapsing the full pane is out of flow, and the reading it held
      * expanded stays until the next expand re-reads it.
@@ -320,7 +329,8 @@ export function useDockExpandedSize(
             end = Math.max(end, offset + (horizontal ? seat.offsetWidth : seat.offsetHeight));
         }
         const client = horizontal ? run.clientWidth : run.clientHeight;
-        if (!morphing) runEdge = getSize(run, axis.value) - client;
+        const layers = contentEl.value;
+        if (!morphing && layers) runEdge = getSize(layers, axis.value) - client;
         const port = restPort ?? client;
         const fits = end > start && end - start <= port;
         // The vertical reserve yields as padding (run.css THE VERTICAL RESERVE YIELDS AS
