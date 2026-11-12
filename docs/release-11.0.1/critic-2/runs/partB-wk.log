@@ -1,0 +1,73 @@
+
+Running 23 tests using 1 worker
+
+  ✓   1 [webkit] › tests-visual/release-10-1-5.spec.ts:1777:5 › critique 8, coarse phone › n1 a fitting vertical dock's seats do not step at the expand's settle or the collapse's start, across the fit edge (16.8s)
+  ✓   2 [webkit] › tests-visual/release-10-1-5.spec.ts:1777:5 › n1 a fitting vertical dock's seats do not step at the expand's settle or the collapse's start, across the fit edge (16.7s)
+  ✓   3 [webkit] › tests-visual/release-10-1-5.spec.ts:1878:5 › critique 9, coarse phone › p1 a dock its host resizes mid-expand holds every seat at the settle (horizontal clamp, vertical yield band) (16.8s)
+  ✓   4 [webkit] › tests-visual/release-10-1-5.spec.ts:1878:5 › p1 a dock its host resizes mid-expand holds every seat at the settle (horizontal clamp, vertical yield band) (17.1s)
+  ✘   5 [webkit] › tests-visual/release-10-1-5.spec.ts:1924:5 › critique 10, coarse phone › p2 a 1-2 px host change across the fit edge mid-expand holds every seat at the settle (52.8s)
+  ✓   6 [webkit] › tests-visual/release-10-1-5.spec.ts:1924:5 › p2 a 1-2 px host change across the fit edge mid-expand holds every seat at the settle (53.5s)
+  ✓   7 [webkit] › tests-visual/release-10-1-5.spec.ts:2028:5 › q1 O-186 at 1440: a fit-content static dock under hover on every control keeps one rest corner, half its cross extent, no percentage (13.4s)
+  ✓   8 [webkit] › tests-visual/release-10-1-5.spec.ts:2058:5 › q2 O-187 at 1440: a nested .dock-run group keeps each hovered control's whole ink (3.8s)
+  ✓   9 [webkit] › tests-visual/release-10-1-5.spec.ts:2090:5 › q3 O-187 at 1440: the plate has exactly one scroll timeline in scope, the visible run's (1.3s)
+  ✓  10 [webkit] › tests-visual/release-10-1-5.spec.ts:2028:5 › q1 O-186 at 390: a fit-content static dock under hover on every control keeps one rest corner, half its cross extent, no percentage (9.4s)
+  ✓  11 [webkit] › tests-visual/release-10-1-5.spec.ts:2058:5 › q2 O-187 at 390: a nested .dock-run group keeps each hovered control's whole ink (2.5s)
+  ✓  12 [webkit] › tests-visual/release-10-1-5.spec.ts:2090:5 › q3 O-187 at 390: the plate has exactly one scroll timeline in scope, the visible run's (1.3s)
+  ✓  13 [webkit] › tests-visual/release-10-1-5.spec.ts:2109:5 › r1 Q2 at 1440: a nested group holding the current seat paints every seat clear of the others, and the run's flag is its layout (3.0s)
+  ✓  14 [webkit] › tests-visual/release-10-1-5.spec.ts:2109:5 › fix 10, coarse phone › r1 Q2 at 390: a nested group holding the current seat paints every seat clear of the others, and the run's flag is its layout (3.4s)
+  ✓  15 [webkit] › tests-visual/release-10-1-5.spec.ts:2222:5 › s1 O-205 at 1440: no collapsed dock has a scrolling run, and a hidden wider face adds nothing to a fitting run (7.7s)
+  ✓  16 [webkit] › tests-visual/release-10-1-5.spec.ts:2331:5 › s2 O-201 at 1440: at every cap through the fit edge the first and end seats keep their whole ring, and a run that hides nothing rests round (48.6s)
+  ✓  17 [webkit] › tests-visual/release-10-1-5.spec.ts:2222:5 › fix 11, coarse phone › s1 O-205 at 390: no collapsed dock has a scrolling run, and a hidden wider face adds nothing to a fitting run (5.7s)
+  ✓  18 [webkit] › tests-visual/release-10-1-5.spec.ts:2331:5 › fix 11, coarse phone › s2 O-201 at 390: at every cap through the fit edge the first and end seats keep their whole ring, and a run that hides nothing rests round (48.1s)
+  ✓  19 [webkit] › tests-visual/release-10-1-5.spec.ts:2371:5 › fix 12, desktop › t1 O-201 vertical: through the fit edge the end seats keep their whole ring, bounded in the yield band (48.6s)
+  ✓  20 [webkit] › tests-visual/release-10-1-5.spec.ts:2371:5 › fix 12, coarse phone › t1 O-201 vertical: through the fit edge the end seats keep their whole ring, bounded in the yield band (49.0s)
+  ✓  21 [webkit] › tests-visual/release-10-1-5.spec.ts:2426:1 › s3 O-207 G3 a disclosure trigger's keyboard ring is the house outline, whatever it composes (4.0s)
+  ✓  22 [webkit] › tests-visual/release-10-1-5.spec.ts:2444:1 › s4 a host padding change across the fit edge mid-expand holds every seat at the settle (vertical) (31.6s)
+  ✓  23 [webkit] › tests-visual/release-10-1-5.spec.ts:2492:5 › fix 13, coarse phone › u1 a collapsing vertical run that does not fit keeps its scroll on the first morph frame (47.8s)
+
+
+  1) [webkit] › tests-visual/release-10-1-5.spec.ts:1924:5 › critique 10, coarse phone › p2 a 1-2 px host change across the fit edge mid-expand holds every seat at the settle 
+
+    Error: seat steps over 0.5 px at the settle, or a rest flag that is not the layout's truth
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 20
+
+    - Array []
+    + Array [
+    +   Object {
+    +     "a": Object {
+    +       "fits": true,
+    +       "morphing": true,
+    +       "over": false,
+    +       "s1": 22.984375,
+    +     },
+    +     "at": 110,
+    +     "b": Object {
+    +       "fits": true,
+    +       "morphing": false,
+    +       "over": false,
+    +       "s1": 22,
+    +     },
+    +     "cell": "v 350->348",
+    +     "edge": "settle",
+    +     "step": 0.98,
+    +   },
+    + ]
+
+      1995 |             }
+      1996 |         }
+    > 1997 |         expect(bad, "seat steps over 0.5 px at the settle, or a rest flag that is not the layout's truth").toEqual([]);
+           |                                                                                                            ^
+      1998 |     });
+      1999 | }
+      2000 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/release-10-1-5.spec.ts:1997:108
+
+    Error Context: tests-visual/test-results/release-10-1-5-critique-10-44e23-ds-every-seat-at-the-settle-webkit/error-context.md
+
+  1 failed
+    [webkit] › tests-visual/release-10-1-5.spec.ts:1924:5 › critique 10, coarse phone › p2 a 1-2 px host change across the fit edge mid-expand holds every seat at the settle 
+  22 passed (8.5m)

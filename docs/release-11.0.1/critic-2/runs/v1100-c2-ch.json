@@ -1,0 +1,840 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "tests-visual/playwright.config.ts",
+      "--project=chromium-headless-new",
+      "release-11-0-1-critic-2.spec.ts",
+      "--workers=1"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/playwright.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-headless-new",
+        "name": "chromium-headless-new",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "coarse-touch",
+        "name": "coarse-touch",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "safari-webgl.spec.ts",
+          "aurora-swraster.spec.ts",
+          "release-10-1-1.spec.ts",
+          "release-10-1-2.spec.ts",
+          "release-10-1-3.spec.ts",
+          "release-10-1-4.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/docs/release-11.0.1/critic-2/runs/v1100-c2-ch.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5415",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/",
+      "url": "http://localhost:5415",
+      "reuseExistingServer": true,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "release-11-0-1-critic-2.spec.ts",
+      "file": "release-11-0-1-critic-2.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "k a press-only dock stays folded when Tab reaches its summary, and Enter opens it",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 8,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3064,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "c2 {\"cell\":\"ch press-only\",\"reached\":{\"collapsed\":true,\"morphing\":false,\"active\":\"div.dock-layer dock-layer--summary is-active\",\"onSummary\":true,\"focusVisible\":true,\"label\":\"open the dock\"},\"afterTab\":{\"collapsed\":true,\"morphing\":false,\"active\":\"div.dock-layer dock-layer--summary is-active\",\"onSummary\":true,\"focusVisible\":true,\"label\":\"open the dock\"},\"afterEnter\":{\"collapsed\":false,\"morphing\":false,\"active\":\"button.dock-icon-button glass-specular-track glass-capsule-hover\",\"onSummary\":false,\"focusVisible\":true,\"label\":\"One\"}}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T03:52:37.647Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d6a71fc737357e66268e-80ca395ead4f58ad3c08",
+          "file": "release-11-0-1-critic-2.spec.ts",
+          "line": 154,
+          "column": 1
+        }
+      ],
+      "suites": [
+        {
+          "title": "critic 2 light-1440f",
+          "file": "release-11-0-1-critic-2.spec.ts",
+          "line": 106,
+          "column": 14,
+          "specs": [
+            {
+              "title": "m light-1440f: the figure dock's end in paint through the expand and the collapse",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 3583,
+                      "error": {
+                        "message": "Error: light-1440f ch expand: frames whose end is not a circle of half the cross extent\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 14\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"0@43ms morph scale 0.629415 1: -11.41 px (start-a@0.1 inset 4.7 want 16.1)\",\u001b[39m\n\u001b[31m+   \"1@130ms morph scale 0.923946 1: -9.41 px (start-a@0.1 inset 6.7 want 16.1)\",\u001b[39m\n\u001b[31m+   \"2@212ms morph scale 0.990496 1: -9.41 px (start-a@0.1 inset 6.7 want 16.1)\",\u001b[39m\n\u001b[31m+   \"3@292ms morph scale 1: -9.07 px (start-a@0.1 inset 7.0 want 16.1)\",\u001b[39m\n\u001b[31m+   \"4@367ms morph scale 1: -9.07 px (start-a@0.1 inset 7.0 want 16.1)\",\u001b[39m\n\u001b[31m+   \"5@445ms morph scale 1: -9.07 px (start-a@0.1 inset 7.0 want 16.1)\",\u001b[39m\n\u001b[31m+   \"6@512ms morph scale 1: -9.07 px (start-a@0.1 inset 7.0 want 16.1)\",\u001b[39m\n\u001b[31m+   \"7@574ms rest scale none: -9.07 px (start-a@0.1 inset 7.0 want 16.1)\",\u001b[39m\n\u001b[31m+   \"8@634ms rest scale none: -9.07 px (start-a@0.1 inset 7.0 want 16.1)\",\u001b[39m\n\u001b[31m+   \"9@691ms rest scale none: -9.07 px (start-a@0.1 inset 7.0 want 16.1)\",\u001b[39m\n\u001b[31m+   \"10@749ms rest scale none: -9.07 px (start-a@0.1 inset 7.0 want 16.1)\",\u001b[39m\n\u001b[31m+   \"11@817ms rest scale none: -9.07 px (start-a@0.1 inset 7.0 want 16.1)\",\u001b[39m\n\u001b[31m+ ]\u001b[39m",
+                        "stack": "Error: light-1440f ch expand: frames whose end is not a circle of half the cross extent\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 14\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"0@43ms morph scale 0.629415 1: -11.41 px (start-a@0.1 inset 4.7 want 16.1)\",\u001b[39m\n\u001b[31m+   \"1@130ms morph scale 0.923946 1: -9.41 px (start-a@0.1 inset 6.7 want 16.1)\",\u001b[39m\n\u001b[31m+   \"2@212ms morph scale 0.990496 1: -9.41 px (start-a@0.1 inset 6.7 want 16.1)\",\u001b[39m\n\u001b[31m+   \"3@292ms morph scale 1: -9.07 px (start-a@0.1 inset 7.0 want 16.1)\",\u001b[39m\n\u001b[31m+   \"4@367ms morph scale 1: -9.07 px (start-a@0.1 inset 7.0 want 16.1)\",\u001b[39m\n\u001b[31m+   \"5@445ms morph scale 1: -9.07 px (start-a@0.1 inset 7.0 want 16.1)\",\u001b[39m\n\u001b[31m+   \"6@512ms morph scale 1: -9.07 px (start-a@0.1 inset 7.0 want 16.1)\",\u001b[39m\n\u001b[31m+   \"7@574ms rest scale none: -9.07 px (start-a@0.1 inset 7.0 want 16.1)\",\u001b[39m\n\u001b[31m+   \"8@634ms rest scale none: -9.07 px (start-a@0.1 inset 7.0 want 16.1)\",\u001b[39m\n\u001b[31m+   \"9@691ms rest scale none: -9.07 px (start-a@0.1 inset 7.0 want 16.1)\",\u001b[39m\n\u001b[31m+   \"10@749ms rest scale none: -9.07 px (start-a@0.1 inset 7.0 want 16.1)\",\u001b[39m\n\u001b[31m+   \"11@817ms rest scale none: -9.07 px (start-a@0.1 inset 7.0 want 16.1)\",\u001b[39m\n\u001b[31m+ ]\u001b[39m\n    at judge (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1-critic-2.spec.ts:100:194)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1-critic-2.spec.ts:119:17",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1-critic-2.spec.ts",
+                          "column": 194,
+                          "line": 100
+                        },
+                        "snippet": "   98 |     // face's width on the first frame), so `s` reads every frame and asks for no morph.\n   99 |     if (morphs) expect.soft(morph.length, `${cell}: frames captured mid-morph`).toBeGreaterThan(0);\n> 100 |     expect.soft(off.map((r) => `${r.i}@${r.t}ms ${r.morph ? \"morph\" : \"rest\"} scale ${r.scale}: ${r.worst} px (${r.at})`), `${cell}: frames whose end is not a circle of half the cross extent`).toEqual([]);\n      |                                                                                                                                                                                                  ^\n  101 | }\n  102 |\n  103 | for (const dark of [false, true]) {"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1-critic-2.spec.ts",
+                            "column": 194,
+                            "line": 100
+                          },
+                          "message": "Error: light-1440f ch expand: frames whose end is not a circle of half the cross extent\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 14\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"0@43ms morph scale 0.629415 1: -11.41 px (start-a@0.1 inset 4.7 want 16.1)\",\u001b[39m\n\u001b[31m+   \"1@130ms morph scale 0.923946 1: -9.41 px (start-a@0.1 inset 6.7 want 16.1)\",\u001b[39m\n\u001b[31m+   \"2@212ms morph scale 0.990496 1: -9.41 px (start-a@0.1 inset 6.7 want 16.1)\",\u001b[39m\n\u001b[31m+   \"3@292ms morph scale 1: -9.07 px (start-a@0.1 inset 7.0 want 16.1)\",\u001b[39m\n\u001b[31m+   \"4@367ms morph scale 1: -9.07 px (start-a@0.1 inset 7.0 want 16.1)\",\u001b[39m\n\u001b[31m+   \"5@445ms morph scale 1: -9.07 px (start-a@0.1 inset 7.0 want 16.1)\",\u001b[39m\n\u001b[31m+   \"6@512ms morph scale 1: -9.07 px (start-a@0.1 inset 7.0 want 16.1)\",\u001b[39m\n\u001b[31m+   \"7@574ms rest scale none: -9.07 px (start-a@0.1 inset 7.0 want 16.1)\",\u001b[39m\n\u001b[31m+   \"8@634ms rest scale none: -9.07 px (start-a@0.1 inset 7.0 want 16.1)\",\u001b[39m\n\u001b[31m+   \"9@691ms rest scale none: -9.07 px (start-a@0.1 inset 7.0 want 16.1)\",\u001b[39m\n\u001b[31m+   \"10@749ms rest scale none: -9.07 px (start-a@0.1 inset 7.0 want 16.1)\",\u001b[39m\n\u001b[31m+   \"11@817ms rest scale none: -9.07 px (start-a@0.1 inset 7.0 want 16.1)\",\u001b[39m\n\u001b[31m+ ]\u001b[39m\n\n   98 |     // face's width on the first frame), so `s` reads every frame and asks for no morph.\n   99 |     if (morphs) expect.soft(morph.length, `${cell}: frames captured mid-morph`).toBeGreaterThan(0);\n> 100 |     expect.soft(off.map((r) => `${r.i}@${r.t}ms ${r.morph ? \"morph\" : \"rest\"} scale ${r.scale}: ${r.worst} px (${r.at})`), `${cell}: frames whose end is not a circle of half the cross extent`).toEqual([]);\n      |                                                                                                                                                                                                  ^\n  101 | }\n  102 |\n  103 | for (const dark of [false, true]) {\n    at judge (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1-critic-2.spec.ts:100:194)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1-critic-2.spec.ts:119:17"
+                        },
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1-critic-2.spec.ts",
+                            "column": 194,
+                            "line": 100
+                          },
+                          "message": "Error: light-1440f ch collapse: frames whose end is not a circle of half the cross extent\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 14\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"0@46ms morph scale 0.949352 1: -10.41 px (start-a@0.1 inset 5.7 want 16.1)\",\u001b[39m\n\u001b[31m+   \"1@111ms morph scale 0.652471 1: -12.07 px (end-a@0.1 inset 4.0 want 16.1)\",\u001b[39m\n\u001b[31m+   \"2@179ms morph scale 0.524398 1: -12.74 px (end-a@0.1 inset 3.3 want 16.1)\",\u001b[39m\n\u001b[31m+   \"3@244ms morph scale 0.487551 1: -13.07 px (start-a@0.1 inset 3.0 want 16.1)\",\u001b[39m\n\u001b[31m+   \"4@308ms morph scale 0.482993 1: -12.74 px (start-a@0.1 inset 3.3 want 16.1)\",\u001b[39m\n\u001b[31m+   \"5@365ms morph scale 0.482993 1: -12.74 px (start-a@0.1 inset 3.3 want 16.1)\",\u001b[39m\n\u001b[31m+   \"6@425ms morph scale 0.482993 1: -12.74 px (start-a@0.1 inset 3.3 want 16.1)\",\u001b[39m\n\u001b[31m+   \"7@491ms morph scale 0.482993 1: -12.74 px (start-a@0.1 inset 3.3 want 16.1)\",\u001b[39m\n\u001b[31m+   \"8@551ms morph scale 0.482993 1: -15.41 px (end-a@0.1 inset 0.7 want 16.1)\",\u001b[39m\n\u001b[31m+   \"9@613ms rest scale none: -15.41 px (end-a@0.1 inset 0.7 want 16.1)\",\u001b[39m\n\u001b[31m+   \"10@673ms rest scale none: -15.41 px (end-a@0.1 inset 0.7 want 16.1)\",\u001b[39m\n\u001b[31m+   \"11@729ms rest scale none: -15.41 px (end-a@0.1 inset 0.7 want 16.1)\",\u001b[39m\n\u001b[31m+ ]\u001b[39m\n\n   98 |     // face's width on the first frame), so `s` reads every frame and asks for no morph.\n   99 |     if (morphs) expect.soft(morph.length, `${cell}: frames captured mid-morph`).toBeGreaterThan(0);\n> 100 |     expect.soft(off.map((r) => `${r.i}@${r.t}ms ${r.morph ? \"morph\" : \"rest\"} scale ${r.scale}: ${r.worst} px (${r.at})`), `${cell}: frames whose end is not a circle of half the cross extent`).toEqual([]);\n      |                                                                                                                                                                                                  ^\n  101 | }\n  102 |\n  103 | for (const dark of [false, true]) {\n    at judge (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1-critic-2.spec.ts:100:194)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1-critic-2.spec.ts:123:17"
+                        }
+                      ],
+                      "stdout": [
+                        {
+                          "text": "c2 {\"cell\":\"light-1440f ch expand\",\"frames\":12,\"morphFrames\":7,\"off\":12,\"rows\":[{\"i\":0,\"t\":43,\"morph\":true,\"scale\":\"0.629415 1\",\"main\":206,\"cross\":56,\"worst\":-11.41,\"at\":\"start-a@0.1 inset 4.7 want 16.1\"},{\"i\":1,\"t\":130,\"morph\":true,\"scale\":\"0.923946 1\",\"main\":278.6666666666667,\"cross\":56,\"worst\":-9.41,\"at\":\"start-a@0.1 inset 6.7 want 16.1\"},{\"i\":2,\"t\":212,\"morph\":true,\"scale\":\"0.990496 1\",\"main\":292.6666666666667,\"cross\":56,\"worst\":-9.41,\"at\":\"start-a@0.1 inset 6.7 want 16.1\"},{\"i\":3,\"t\":292,\"morph\":true,\"scale\":\"1\",\"main\":294,\"cross\":56,\"worst\":-9.07,\"at\":\"start-a@0.1 inset 7.0 want 16.1\"},{\"i\":4,\"t\":367,\"morph\":true,\"scale\":\"1\",\"main\":294,\"cross\":56,\"worst\":-9.07,\"at\":\"start-a@0.1 inset 7.0 want 16.1\"},{\"i\":5,\"t\":445,\"morph\":true,\"scale\":\"1\",\"main\":294,\"cross\":56,\"worst\":-9.07,\"at\":\"start-a@0.1 inset 7.0 want 16.1\"},{\"i\":6,\"t\":512,\"morph\":true,\"scale\":\"1\",\"main\":294,\"cross\":56,\"worst\":-9.07,\"at\":\"start-a@0.1 inset 7.0 want 16.1\"},{\"i\":7,\"t\":574,\"morph\":false,\"scale\":\"none\",\"main\":294,\"cross\":56,\"worst\":-9.07,\"at\":\"start-a@0.1 inset 7.0 want 16.1\"},{\"i\":8,\"t\":634,\"morph\":false,\"scale\":\"none\",\"main\":294,\"cross\":56,\"worst\":-9.07,\"at\":\"start-a@0.1 inset 7.0 want 16.1\"},{\"i\":9,\"t\":691,\"morph\":false,\"scale\":\"none\",\"main\":294,\"cross\":56,\"worst\":-9.07,\"at\":\"start-a@0.1 inset 7.0 want 16.1\"},{\"i\":10,\"t\":749,\"morph\":false,\"scale\":\"none\",\"main\":294,\"cross\":56,\"worst\":-9.07,\"at\":\"start-a@0.1 inset 7.0 want 16.1\"},{\"i\":11,\"t\":817,\"morph\":false,\"scale\":\"none\",\"main\":294,\"cross\":56,\"worst\":-9.07,\"at\":\"start-a@0.1 inset 7.0 want 16.1\"}]}\n"
+                        },
+                        {
+                          "text": "c2 {\"cell\":\"light-1440f ch collapse\",\"frames\":12,\"morphFrames\":9,\"off\":12,\"rows\":[{\"i\":0,\"t\":46,\"morph\":true,\"scale\":\"0.949352 1\",\"main\":247.33333333333334,\"cross\":56,\"worst\":-10.41,\"at\":\"start-a@0.1 inset 5.7 want 16.1\"},{\"i\":1,\"t\":111,\"morph\":true,\"scale\":\"0.652471 1\",\"main\":178.33333333333334,\"cross\":56,\"worst\":-12.07,\"at\":\"end-a@0.1 inset 4.0 want 16.1\"},{\"i\":2,\"t\":179,\"morph\":true,\"scale\":\"0.524398 1\",\"main\":149.66666666666666,\"cross\":56,\"worst\":-12.74,\"at\":\"end-a@0.1 inset 3.3 want 16.1\"},{\"i\":3,\"t\":244,\"morph\":true,\"scale\":\"0.487551 1\",\"main\":142,\"cross\":56,\"worst\":-13.07,\"at\":\"start-a@0.1 inset 3.0 want 16.1\"},{\"i\":4,\"t\":308,\"morph\":true,\"scale\":\"0.482993 1\",\"main\":142,\"cross\":56,\"worst\":-12.74,\"at\":\"start-a@0.1 inset 3.3 want 16.1\"},{\"i\":5,\"t\":365,\"morph\":true,\"scale\":\"0.482993 1\",\"main\":142,\"cross\":56,\"worst\":-12.74,\"at\":\"start-a@0.1 inset 3.3 want 16.1\"},{\"i\":6,\"t\":425,\"morph\":true,\"scale\":\"0.482993 1\",\"main\":142,\"cross\":56,\"worst\":-12.74,\"at\":\"start-a@0.1 inset 3.3 want 16.1\"},{\"i\":7,\"t\":491,\"morph\":true,\"scale\":\"0.482993 1\",\"main\":142,\"cross\":56,\"worst\":-12.74,\"at\":\"start-a@0.1 inset 3.3 want 16.1\"},{\"i\":8,\"t\":551,\"morph\":true,\"scale\":\"0.482993 1\",\"main\":142,\"cross\":56,\"worst\":-15.41,\"at\":\"end-a@0.1 inset 0.7 want 16.1\"},{\"i\":9,\"t\":613,\"morph\":false,\"scale\":\"none\",\"main\":142,\"cross\":56,\"worst\":-15.41,\"at\":\"end-a@0.1 inset 0.7 want 16.1\"},{\"i\":10,\"t\":673,\"morph\":false,\"scale\":\"none\",\"main\":142,\"cross\":56,\"worst\":-15.41,\"at\":\"end-a@0.1 inset 0.7 want 16.1\"},{\"i\":11,\"t\":729,\"morph\":false,\"scale\":\"none\",\"main\":142,\"cross\":56,\"worst\":-15.41,\"at\":\"end-a@0.1 inset 0.7 want 16.1\"}]}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T03:52:08.285Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/test-results/release-11-0-1-critic-2-cr-b883e-the-expand-and-the-collapse-chromium-headless-new/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1-critic-2.spec.ts",
+                        "column": 194,
+                        "line": 100
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "d6a71fc737357e66268e-c64975e9f236e17b2901",
+              "file": "release-11-0-1-critic-2.spec.ts",
+              "line": 113,
+              "column": 13
+            },
+            {
+              "title": "s light-1440f: the open dock's end in paint through the morph to its narrow face and back",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 3163,
+                      "error": {
+                        "message": "Error: light-1440f ch to-narrow: frames whose end is not a circle of half the cross extent\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 14\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"0@41ms rest scale none: -15.74 px (end-a@0.1 inset 0.3 want 16.1)\",\u001b[39m\n\u001b[31m+   \"1@123ms rest scale none: -15.74 px (end-a@0.1 inset 0.3 want 16.1)\",\u001b[39m\n\u001b[31m+   \"2@213ms rest scale none: -15.74 px (end-a@0.1 inset 0.3 want 16.1)\",\u001b[39m\n\u001b[31m+   \"3@296ms rest scale none: -15.74 px (end-a@0.1 inset 0.3 want 16.1)\",\u001b[39m\n\u001b[31m+   \"4@364ms rest scale none: -15.74 px (end-a@0.1 inset 0.3 want 16.1)\",\u001b[39m\n\u001b[31m+   \"5@422ms rest scale none: -15.74 px (end-a@0.1 inset 0.3 want 16.1)\",\u001b[39m\n\u001b[31m+   \"6@480ms rest scale none: -15.74 px (end-a@0.1 inset 0.3 want 16.1)\",\u001b[39m\n\u001b[31m+   \"7@548ms rest scale none: -15.74 px (end-a@0.1 inset 0.3 want 16.1)\",\u001b[39m\n\u001b[31m+   \"8@614ms rest scale none: -15.74 px (end-a@0.1 inset 0.3 want 16.1)\",\u001b[39m\n\u001b[31m+   \"9@672ms rest scale none: -15.74 px (end-a@0.1 inset 0.3 want 16.1)\",\u001b[39m\n\u001b[31m+   \"10@747ms rest scale none: -15.74 px (end-a@0.1 inset 0.3 want 16.1)\",\u001b[39m\n\u001b[31m+   \"11@821ms rest scale none: -15.74 px (end-a@0.1 inset 0.3 want 16.1)\",\u001b[39m\n\u001b[31m+ ]\u001b[39m",
+                        "stack": "Error: light-1440f ch to-narrow: frames whose end is not a circle of half the cross extent\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 14\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"0@41ms rest scale none: -15.74 px (end-a@0.1 inset 0.3 want 16.1)\",\u001b[39m\n\u001b[31m+   \"1@123ms rest scale none: -15.74 px (end-a@0.1 inset 0.3 want 16.1)\",\u001b[39m\n\u001b[31m+   \"2@213ms rest scale none: -15.74 px (end-a@0.1 inset 0.3 want 16.1)\",\u001b[39m\n\u001b[31m+   \"3@296ms rest scale none: -15.74 px (end-a@0.1 inset 0.3 want 16.1)\",\u001b[39m\n\u001b[31m+   \"4@364ms rest scale none: -15.74 px (end-a@0.1 inset 0.3 want 16.1)\",\u001b[39m\n\u001b[31m+   \"5@422ms rest scale none: -15.74 px (end-a@0.1 inset 0.3 want 16.1)\",\u001b[39m\n\u001b[31m+   \"6@480ms rest scale none: -15.74 px (end-a@0.1 inset 0.3 want 16.1)\",\u001b[39m\n\u001b[31m+   \"7@548ms rest scale none: -15.74 px (end-a@0.1 inset 0.3 want 16.1)\",\u001b[39m\n\u001b[31m+   \"8@614ms rest scale none: -15.74 px (end-a@0.1 inset 0.3 want 16.1)\",\u001b[39m\n\u001b[31m+   \"9@672ms rest scale none: -15.74 px (end-a@0.1 inset 0.3 want 16.1)\",\u001b[39m\n\u001b[31m+   \"10@747ms rest scale none: -15.74 px (end-a@0.1 inset 0.3 want 16.1)\",\u001b[39m\n\u001b[31m+   \"11@821ms rest scale none: -15.74 px (end-a@0.1 inset 0.3 want 16.1)\",\u001b[39m\n\u001b[31m+ ]\u001b[39m\n    at judge (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1-critic-2.spec.ts:100:194)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1-critic-2.spec.ts:131:21",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1-critic-2.spec.ts",
+                          "column": 194,
+                          "line": 100
+                        },
+                        "snippet": "   98 |     // face's width on the first frame), so `s` reads every frame and asks for no morph.\n   99 |     if (morphs) expect.soft(morph.length, `${cell}: frames captured mid-morph`).toBeGreaterThan(0);\n> 100 |     expect.soft(off.map((r) => `${r.i}@${r.t}ms ${r.morph ? \"morph\" : \"rest\"} scale ${r.scale}: ${r.worst} px (${r.at})`), `${cell}: frames whose end is not a circle of half the cross extent`).toEqual([]);\n      |                                                                                                                                                                                                  ^\n  101 | }\n  102 |\n  103 | for (const dark of [false, true]) {"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1-critic-2.spec.ts",
+                            "column": 194,
+                            "line": 100
+                          },
+                          "message": "Error: light-1440f ch to-narrow: frames whose end is not a circle of half the cross extent\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 14\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"0@41ms rest scale none: -15.74 px (end-a@0.1 inset 0.3 want 16.1)\",\u001b[39m\n\u001b[31m+   \"1@123ms rest scale none: -15.74 px (end-a@0.1 inset 0.3 want 16.1)\",\u001b[39m\n\u001b[31m+   \"2@213ms rest scale none: -15.74 px (end-a@0.1 inset 0.3 want 16.1)\",\u001b[39m\n\u001b[31m+   \"3@296ms rest scale none: -15.74 px (end-a@0.1 inset 0.3 want 16.1)\",\u001b[39m\n\u001b[31m+   \"4@364ms rest scale none: -15.74 px (end-a@0.1 inset 0.3 want 16.1)\",\u001b[39m\n\u001b[31m+   \"5@422ms rest scale none: -15.74 px (end-a@0.1 inset 0.3 want 16.1)\",\u001b[39m\n\u001b[31m+   \"6@480ms rest scale none: -15.74 px (end-a@0.1 inset 0.3 want 16.1)\",\u001b[39m\n\u001b[31m+   \"7@548ms rest scale none: -15.74 px (end-a@0.1 inset 0.3 want 16.1)\",\u001b[39m\n\u001b[31m+   \"8@614ms rest scale none: -15.74 px (end-a@0.1 inset 0.3 want 16.1)\",\u001b[39m\n\u001b[31m+   \"9@672ms rest scale none: -15.74 px (end-a@0.1 inset 0.3 want 16.1)\",\u001b[39m\n\u001b[31m+   \"10@747ms rest scale none: -15.74 px (end-a@0.1 inset 0.3 want 16.1)\",\u001b[39m\n\u001b[31m+   \"11@821ms rest scale none: -15.74 px (end-a@0.1 inset 0.3 want 16.1)\",\u001b[39m\n\u001b[31m+ ]\u001b[39m\n\n   98 |     // face's width on the first frame), so `s` reads every frame and asks for no morph.\n   99 |     if (morphs) expect.soft(morph.length, `${cell}: frames captured mid-morph`).toBeGreaterThan(0);\n> 100 |     expect.soft(off.map((r) => `${r.i}@${r.t}ms ${r.morph ? \"morph\" : \"rest\"} scale ${r.scale}: ${r.worst} px (${r.at})`), `${cell}: frames whose end is not a circle of half the cross extent`).toEqual([]);\n      |                                                                                                                                                                                                  ^\n  101 | }\n  102 |\n  103 | for (const dark of [false, true]) {\n    at judge (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1-critic-2.spec.ts:100:194)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1-critic-2.spec.ts:131:21"
+                        },
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1-critic-2.spec.ts",
+                            "column": 194,
+                            "line": 100
+                          },
+                          "message": "Error: light-1440f ch to-wide: frames whose end is not a circle of half the cross extent\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 14\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"0@41ms rest scale none: -9.07 px (start-a@0.1 inset 7.0 want 16.1)\",\u001b[39m\n\u001b[31m+   \"1@103ms rest scale none: -9.07 px (start-a@0.1 inset 7.0 want 16.1)\",\u001b[39m\n\u001b[31m+   \"2@171ms rest scale none: -9.07 px (start-a@0.1 inset 7.0 want 16.1)\",\u001b[39m\n\u001b[31m+   \"3@238ms rest scale none: -9.07 px (start-a@0.1 inset 7.0 want 16.1)\",\u001b[39m\n\u001b[31m+   \"4@304ms rest scale none: -9.07 px (start-a@0.1 inset 7.0 want 16.1)\",\u001b[39m\n\u001b[31m+   \"5@371ms rest scale none: -9.07 px (start-a@0.1 inset 7.0 want 16.1)\",\u001b[39m\n\u001b[31m+   \"6@436ms rest scale none: -9.07 px (start-a@0.1 inset 7.0 want 16.1)\",\u001b[39m\n\u001b[31m+   \"7@496ms rest scale none: -9.07 px (start-a@0.1 inset 7.0 want 16.1)\",\u001b[39m\n\u001b[31m+   \"8@562ms rest scale none: -9.07 px (start-a@0.1 inset 7.0 want 16.1)\",\u001b[39m\n\u001b[31m+   \"9@620ms rest scale none: -9.07 px (start-a@0.1 inset 7.0 want 16.1)\",\u001b[39m\n\u001b[31m+   \"10@679ms rest scale none: -9.07 px (start-a@0.1 inset 7.0 want 16.1)\",\u001b[39m\n\u001b[31m+   \"11@737ms rest scale none: -9.07 px (start-a@0.1 inset 7.0 want 16.1)\",\u001b[39m\n\u001b[31m+ ]\u001b[39m\n\n   98 |     // face's width on the first frame), so `s` reads every frame and asks for no morph.\n   99 |     if (morphs) expect.soft(morph.length, `${cell}: frames captured mid-morph`).toBeGreaterThan(0);\n> 100 |     expect.soft(off.map((r) => `${r.i}@${r.t}ms ${r.morph ? \"morph\" : \"rest\"} scale ${r.scale}: ${r.worst} px (${r.at})`), `${cell}: frames whose end is not a circle of half the cross extent`).toEqual([]);\n      |                                                                                                                                                                                                  ^\n  101 | }\n  102 |\n  103 | for (const dark of [false, true]) {\n    at judge (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1-critic-2.spec.ts:100:194)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1-critic-2.spec.ts:134:21"
+                        }
+                      ],
+                      "stdout": [
+                        {
+                          "text": "c2 {\"cell\":\"light-1440f ch to-narrow\",\"frames\":12,\"morphFrames\":0,\"off\":12,\"rows\":[{\"i\":0,\"t\":41,\"morph\":false,\"scale\":\"none\",\"main\":150,\"cross\":56,\"worst\":-15.74,\"at\":\"end-a@0.1 inset 0.3 want 16.1\"},{\"i\":1,\"t\":123,\"morph\":false,\"scale\":\"none\",\"main\":150,\"cross\":56,\"worst\":-15.74,\"at\":\"end-a@0.1 inset 0.3 want 16.1\"},{\"i\":2,\"t\":213,\"morph\":false,\"scale\":\"none\",\"main\":150,\"cross\":56,\"worst\":-15.74,\"at\":\"end-a@0.1 inset 0.3 want 16.1\"},{\"i\":3,\"t\":296,\"morph\":false,\"scale\":\"none\",\"main\":150,\"cross\":56,\"worst\":-15.74,\"at\":\"end-a@0.1 inset 0.3 want 16.1\"},{\"i\":4,\"t\":364,\"morph\":false,\"scale\":\"none\",\"main\":150,\"cross\":56,\"worst\":-15.74,\"at\":\"end-a@0.1 inset 0.3 want 16.1\"},{\"i\":5,\"t\":422,\"morph\":false,\"scale\":\"none\",\"main\":150,\"cross\":56,\"worst\":-15.74,\"at\":\"end-a@0.1 inset 0.3 want 16.1\"},{\"i\":6,\"t\":480,\"morph\":false,\"scale\":\"none\",\"main\":150,\"cross\":56,\"worst\":-15.74,\"at\":\"end-a@0.1 inset 0.3 want 16.1\"},{\"i\":7,\"t\":548,\"morph\":false,\"scale\":\"none\",\"main\":150,\"cross\":56,\"worst\":-15.74,\"at\":\"end-a@0.1 inset 0.3 want 16.1\"},{\"i\":8,\"t\":614,\"morph\":false,\"scale\":\"none\",\"main\":150,\"cross\":56,\"worst\":-15.74,\"at\":\"end-a@0.1 inset 0.3 want 16.1\"},{\"i\":9,\"t\":672,\"morph\":false,\"scale\":\"none\",\"main\":150,\"cross\":56,\"worst\":-15.74,\"at\":\"end-a@0.1 inset 0.3 want 16.1\"},{\"i\":10,\"t\":747,\"morph\":false,\"scale\":\"none\",\"main\":150,\"cross\":56,\"worst\":-15.74,\"at\":\"end-a@0.1 inset 0.3 want 16.1\"},{\"i\":11,\"t\":821,\"morph\":false,\"scale\":\"none\",\"main\":150,\"cross\":56,\"worst\":-15.74,\"at\":\"end-a@0.1 inset 0.3 want 16.1\"}]}\n"
+                        },
+                        {
+                          "text": "c2 {\"cell\":\"light-1440f ch to-wide\",\"frames\":12,\"morphFrames\":0,\"off\":12,\"rows\":[{\"i\":0,\"t\":41,\"morph\":false,\"scale\":\"none\",\"main\":294,\"cross\":56,\"worst\":-9.07,\"at\":\"start-a@0.1 inset 7.0 want 16.1\"},{\"i\":1,\"t\":103,\"morph\":false,\"scale\":\"none\",\"main\":294,\"cross\":56,\"worst\":-9.07,\"at\":\"start-a@0.1 inset 7.0 want 16.1\"},{\"i\":2,\"t\":171,\"morph\":false,\"scale\":\"none\",\"main\":294,\"cross\":56,\"worst\":-9.07,\"at\":\"start-a@0.1 inset 7.0 want 16.1\"},{\"i\":3,\"t\":238,\"morph\":false,\"scale\":\"none\",\"main\":294,\"cross\":56,\"worst\":-9.07,\"at\":\"start-a@0.1 inset 7.0 want 16.1\"},{\"i\":4,\"t\":304,\"morph\":false,\"scale\":\"none\",\"main\":294,\"cross\":56,\"worst\":-9.07,\"at\":\"start-a@0.1 inset 7.0 want 16.1\"},{\"i\":5,\"t\":371,\"morph\":false,\"scale\":\"none\",\"main\":294,\"cross\":56,\"worst\":-9.07,\"at\":\"start-a@0.1 inset 7.0 want 16.1\"},{\"i\":6,\"t\":436,\"morph\":false,\"scale\":\"none\",\"main\":294,\"cross\":56,\"worst\":-9.07,\"at\":\"start-a@0.1 inset 7.0 want 16.1\"},{\"i\":7,\"t\":496,\"morph\":false,\"scale\":\"none\",\"main\":294,\"cross\":56,\"worst\":-9.07,\"at\":\"start-a@0.1 inset 7.0 want 16.1\"},{\"i\":8,\"t\":562,\"morph\":false,\"scale\":\"none\",\"main\":294,\"cross\":56,\"worst\":-9.07,\"at\":\"start-a@0.1 inset 7.0 want 16.1\"},{\"i\":9,\"t\":620,\"morph\":false,\"scale\":\"none\",\"main\":294,\"cross\":56,\"worst\":-9.07,\"at\":\"start-a@0.1 inset 7.0 want 16.1\"},{\"i\":10,\"t\":679,\"morph\":false,\"scale\":\"none\",\"main\":294,\"cross\":56,\"worst\":-9.07,\"at\":\"start-a@0.1 inset 7.0 want 16.1\"},{\"i\":11,\"t\":737,\"morph\":false,\"scale\":\"none\",\"main\":294,\"cross\":56,\"worst\":-9.07,\"at\":\"start-a@0.1 inset 7.0 want 16.1\"}]}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T03:52:12.381Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/test-results/release-11-0-1-critic-2-cr-b6fbf-to-its-narrow-face-and-back-chromium-headless-new/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1-critic-2.spec.ts",
+                        "column": 194,
+                        "line": 100
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "d6a71fc737357e66268e-1b043d4422cebb95cb4a",
+              "file": "release-11-0-1-critic-2.spec.ts",
+              "line": 127,
+              "column": 17
+            },
+            {
+              "title": "v light-1440f: a vertical dock's end in paint through the expand and the collapse",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 3181,
+                      "error": {
+                        "message": "Error: light-1440f ch v-expand: frames whose end is not a circle of half the cross extent\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 14\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"0@41ms morph scale 1 0.502966: -14.45 px (end-a@0.1 inset 3.3 want 17.8)\",\u001b[39m\n\u001b[31m+   \"1@135ms morph scale 1 0.896691: -12.45 px (start-a@0.1 inset 5.3 want 17.8)\",\u001b[39m\n\u001b[31m+   \"2@223ms morph scale 1 0.993559: -12.11 px (start-a@0.1 inset 5.7 want 17.8)\",\u001b[39m\n\u001b[31m+   \"3@306ms morph scale 1: -11.78 px (start-a@0.1 inset 6.0 want 17.8)\",\u001b[39m\n\u001b[31m+   \"4@388ms morph scale 1: -11.78 px (start-a@0.1 inset 6.0 want 17.8)\",\u001b[39m\n\u001b[31m+   \"5@463ms morph scale 1: -11.78 px (start-a@0.1 inset 6.0 want 17.8)\",\u001b[39m\n\u001b[31m+   \"6@535ms morph scale 1: -11.78 px (start-a@0.1 inset 6.0 want 17.8)\",\u001b[39m\n\u001b[31m+   \"7@586ms rest scale none: -11.78 px (start-a@0.1 inset 6.0 want 17.8)\",\u001b[39m\n\u001b[31m+   \"8@645ms rest scale none: -11.78 px (start-a@0.1 inset 6.0 want 17.8)\",\u001b[39m\n\u001b[31m+   \"9@695ms rest scale none: -11.78 px (start-a@0.1 inset 6.0 want 17.8)\",\u001b[39m\n\u001b[31m+   \"10@746ms rest scale none: -11.78 px (start-a@0.1 inset 6.0 want 17.8)\",\u001b[39m\n\u001b[31m+   \"11@805ms rest scale none: -11.78 px (start-a@0.1 inset 6.0 want 17.8)\",\u001b[39m\n\u001b[31m+ ]\u001b[39m",
+                        "stack": "Error: light-1440f ch v-expand: frames whose end is not a circle of half the cross extent\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 14\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"0@41ms morph scale 1 0.502966: -14.45 px (end-a@0.1 inset 3.3 want 17.8)\",\u001b[39m\n\u001b[31m+   \"1@135ms morph scale 1 0.896691: -12.45 px (start-a@0.1 inset 5.3 want 17.8)\",\u001b[39m\n\u001b[31m+   \"2@223ms morph scale 1 0.993559: -12.11 px (start-a@0.1 inset 5.7 want 17.8)\",\u001b[39m\n\u001b[31m+   \"3@306ms morph scale 1: -11.78 px (start-a@0.1 inset 6.0 want 17.8)\",\u001b[39m\n\u001b[31m+   \"4@388ms morph scale 1: -11.78 px (start-a@0.1 inset 6.0 want 17.8)\",\u001b[39m\n\u001b[31m+   \"5@463ms morph scale 1: -11.78 px (start-a@0.1 inset 6.0 want 17.8)\",\u001b[39m\n\u001b[31m+   \"6@535ms morph scale 1: -11.78 px (start-a@0.1 inset 6.0 want 17.8)\",\u001b[39m\n\u001b[31m+   \"7@586ms rest scale none: -11.78 px (start-a@0.1 inset 6.0 want 17.8)\",\u001b[39m\n\u001b[31m+   \"8@645ms rest scale none: -11.78 px (start-a@0.1 inset 6.0 want 17.8)\",\u001b[39m\n\u001b[31m+   \"9@695ms rest scale none: -11.78 px (start-a@0.1 inset 6.0 want 17.8)\",\u001b[39m\n\u001b[31m+   \"10@746ms rest scale none: -11.78 px (start-a@0.1 inset 6.0 want 17.8)\",\u001b[39m\n\u001b[31m+   \"11@805ms rest scale none: -11.78 px (start-a@0.1 inset 6.0 want 17.8)\",\u001b[39m\n\u001b[31m+ ]\u001b[39m\n    at judge (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1-critic-2.spec.ts:100:194)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1-critic-2.spec.ts:143:21",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1-critic-2.spec.ts",
+                          "column": 194,
+                          "line": 100
+                        },
+                        "snippet": "   98 |     // face's width on the first frame), so `s` reads every frame and asks for no morph.\n   99 |     if (morphs) expect.soft(morph.length, `${cell}: frames captured mid-morph`).toBeGreaterThan(0);\n> 100 |     expect.soft(off.map((r) => `${r.i}@${r.t}ms ${r.morph ? \"morph\" : \"rest\"} scale ${r.scale}: ${r.worst} px (${r.at})`), `${cell}: frames whose end is not a circle of half the cross extent`).toEqual([]);\n      |                                                                                                                                                                                                  ^\n  101 | }\n  102 |\n  103 | for (const dark of [false, true]) {"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1-critic-2.spec.ts",
+                            "column": 194,
+                            "line": 100
+                          },
+                          "message": "Error: light-1440f ch v-expand: frames whose end is not a circle of half the cross extent\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 14\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"0@41ms morph scale 1 0.502966: -14.45 px (end-a@0.1 inset 3.3 want 17.8)\",\u001b[39m\n\u001b[31m+   \"1@135ms morph scale 1 0.896691: -12.45 px (start-a@0.1 inset 5.3 want 17.8)\",\u001b[39m\n\u001b[31m+   \"2@223ms morph scale 1 0.993559: -12.11 px (start-a@0.1 inset 5.7 want 17.8)\",\u001b[39m\n\u001b[31m+   \"3@306ms morph scale 1: -11.78 px (start-a@0.1 inset 6.0 want 17.8)\",\u001b[39m\n\u001b[31m+   \"4@388ms morph scale 1: -11.78 px (start-a@0.1 inset 6.0 want 17.8)\",\u001b[39m\n\u001b[31m+   \"5@463ms morph scale 1: -11.78 px (start-a@0.1 inset 6.0 want 17.8)\",\u001b[39m\n\u001b[31m+   \"6@535ms morph scale 1: -11.78 px (start-a@0.1 inset 6.0 want 17.8)\",\u001b[39m\n\u001b[31m+   \"7@586ms rest scale none: -11.78 px (start-a@0.1 inset 6.0 want 17.8)\",\u001b[39m\n\u001b[31m+   \"8@645ms rest scale none: -11.78 px (start-a@0.1 inset 6.0 want 17.8)\",\u001b[39m\n\u001b[31m+   \"9@695ms rest scale none: -11.78 px (start-a@0.1 inset 6.0 want 17.8)\",\u001b[39m\n\u001b[31m+   \"10@746ms rest scale none: -11.78 px (start-a@0.1 inset 6.0 want 17.8)\",\u001b[39m\n\u001b[31m+   \"11@805ms rest scale none: -11.78 px (start-a@0.1 inset 6.0 want 17.8)\",\u001b[39m\n\u001b[31m+ ]\u001b[39m\n\n   98 |     // face's width on the first frame), so `s` reads every frame and asks for no morph.\n   99 |     if (morphs) expect.soft(morph.length, `${cell}: frames captured mid-morph`).toBeGreaterThan(0);\n> 100 |     expect.soft(off.map((r) => `${r.i}@${r.t}ms ${r.morph ? \"morph\" : \"rest\"} scale ${r.scale}: ${r.worst} px (${r.at})`), `${cell}: frames whose end is not a circle of half the cross extent`).toEqual([]);\n      |                                                                                                                                                                                                  ^\n  101 | }\n  102 |\n  103 | for (const dark of [false, true]) {\n    at judge (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1-critic-2.spec.ts:100:194)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1-critic-2.spec.ts:143:21"
+                        },
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1-critic-2.spec.ts",
+                            "column": 194,
+                            "line": 100
+                          },
+                          "message": "Error: light-1440f ch v-collapse: frames whose end is not a circle of half the cross extent\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 14\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"0@36ms morph scale 1 0.964737: -10.49 px (end-a@0.1 inset 5.7 want 16.2)\",\u001b[39m\n\u001b[31m+   \"1@101ms morph scale 1 0.64518: -13.15 px (end-a@0.1 inset 3.0 want 16.2)\",\u001b[39m\n\u001b[31m+   \"2@161ms morph scale 1 0.393771: -14.49 px (end-a@0.1 inset 1.7 want 16.2)\",\u001b[39m\n\u001b[31m+   \"3@227ms morph scale 1 0.312916: -14.49 px (end-a@0.1 inset 1.7 want 16.2)\",\u001b[39m\n\u001b[31m+   \"4@283ms morph scale 1 0.290089: -14.82 px (end-a@0.1 inset 1.3 want 16.2)\",\u001b[39m\n\u001b[31m+   \"5@342ms morph scale 1 0.29: -14.82 px (end-a@0.1 inset 1.3 want 16.2)\",\u001b[39m\n\u001b[31m+   \"6@399ms morph scale 1 0.29: -14.82 px (end-a@0.1 inset 1.3 want 16.2)\",\u001b[39m\n\u001b[31m+   \"7@458ms morph scale 1 0.29: -14.82 px (end-a@0.1 inset 1.3 want 16.2)\",\u001b[39m\n\u001b[31m+   \"8@525ms morph scale 1 0.29: -14.82 px (end-a@0.1 inset 1.3 want 16.2)\",\u001b[39m\n\u001b[31m+   \"9@590ms rest scale none: -16.15 px (end-a@0.1 inset 0.0 want 16.2)\",\u001b[39m\n\u001b[31m+   \"10@646ms rest scale none: -16.15 px (end-a@0.1 inset 0.0 want 16.2)\",\u001b[39m\n\u001b[31m+   \"11@696ms rest scale none: -16.15 px (end-a@0.1 inset 0.0 want 16.2)\",\u001b[39m\n\u001b[31m+ ]\u001b[39m\n\n   98 |     // face's width on the first frame), so `s` reads every frame and asks for no morph.\n   99 |     if (morphs) expect.soft(morph.length, `${cell}: frames captured mid-morph`).toBeGreaterThan(0);\n> 100 |     expect.soft(off.map((r) => `${r.i}@${r.t}ms ${r.morph ? \"morph\" : \"rest\"} scale ${r.scale}: ${r.worst} px (${r.at})`), `${cell}: frames whose end is not a circle of half the cross extent`).toEqual([]);\n      |                                                                                                                                                                                                  ^\n  101 | }\n  102 |\n  103 | for (const dark of [false, true]) {\n    at judge (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1-critic-2.spec.ts:100:194)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1-critic-2.spec.ts:147:21"
+                        }
+                      ],
+                      "stdout": [
+                        {
+                          "text": "c2 {\"cell\":\"light-1440f ch v-expand\",\"frames\":12,\"morphFrames\":7,\"off\":12,\"rows\":[{\"i\":0,\"t\":41,\"morph\":true,\"scale\":\"1 0.502966\",\"main\":129,\"cross\":64,\"worst\":-14.45,\"at\":\"end-a@0.1 inset 3.3 want 17.8\"},{\"i\":1,\"t\":135,\"morph\":true,\"scale\":\"1 0.896691\",\"main\":188,\"cross\":64,\"worst\":-12.45,\"at\":\"start-a@0.1 inset 5.3 want 17.8\"},{\"i\":2,\"t\":223,\"morph\":true,\"scale\":\"1 0.993559\",\"main\":199.33333333333334,\"cross\":64,\"worst\":-12.11,\"at\":\"start-a@0.1 inset 5.7 want 17.8\"},{\"i\":3,\"t\":306,\"morph\":true,\"scale\":\"1\",\"main\":200,\"cross\":64,\"worst\":-11.78,\"at\":\"start-a@0.1 inset 6.0 want 17.8\"},{\"i\":4,\"t\":388,\"morph\":true,\"scale\":\"1\",\"main\":200,\"cross\":64,\"worst\":-11.78,\"at\":\"start-a@0.1 inset 6.0 want 17.8\"},{\"i\":5,\"t\":463,\"morph\":true,\"scale\":\"1\",\"main\":200,\"cross\":64,\"worst\":-11.78,\"at\":\"start-a@0.1 inset 6.0 want 17.8\"},{\"i\":6,\"t\":535,\"morph\":true,\"scale\":\"1\",\"main\":200,\"cross\":64,\"worst\":-11.78,\"at\":\"start-a@0.1 inset 6.0 want 17.8\"},{\"i\":7,\"t\":586,\"morph\":false,\"scale\":\"none\",\"main\":200,\"cross\":64,\"worst\":-11.78,\"at\":\"start-a@0.1 inset 6.0 want 17.8\"},{\"i\":8,\"t\":645,\"morph\":false,\"scale\":\"none\",\"main\":200,\"cross\":64,\"worst\":-11.78,\"at\":\"start-a@0.1 inset 6.0 want 17.8\"},{\"i\":9,\"t\":695,\"morph\":false,\"scale\":\"none\",\"main\":200,\"cross\":64,\"worst\":-11.78,\"at\":\"start-a@0.1 inset 6.0 want 17.8\"},{\"i\":10,\"t\":746,\"morph\":false,\"scale\":\"none\",\"main\":200,\"cross\":64,\"worst\":-11.78,\"at\":\"start-a@0.1 inset 6.0 want 17.8\"},{\"i\":11,\"t\":805,\"morph\":false,\"scale\":\"none\",\"main\":200,\"cross\":64,\"worst\":-11.78,\"at\":\"start-a@0.1 inset 6.0 want 17.8\"}]}\n"
+                        },
+                        {
+                          "text": "c2 {\"cell\":\"light-1440f ch v-collapse\",\"frames\":12,\"morphFrames\":9,\"off\":12,\"rows\":[{\"i\":0,\"t\":36,\"morph\":true,\"scale\":\"1 0.964737\",\"main\":178,\"cross\":58,\"worst\":-10.49,\"at\":\"end-a@0.1 inset 5.7 want 16.2\"},{\"i\":1,\"t\":101,\"morph\":true,\"scale\":\"1 0.64518\",\"main\":105.33333333333333,\"cross\":58,\"worst\":-13.15,\"at\":\"end-a@0.1 inset 3.0 want 16.2\"},{\"i\":2,\"t\":161,\"morph\":true,\"scale\":\"1 0.393771\",\"main\":72,\"cross\":58,\"worst\":-14.49,\"at\":\"end-a@0.1 inset 1.7 want 16.2\"},{\"i\":3,\"t\":227,\"morph\":true,\"scale\":\"1 0.312916\",\"main\":60,\"cross\":58,\"worst\":-14.49,\"at\":\"end-a@0.1 inset 1.7 want 16.2\"},{\"i\":4,\"t\":283,\"morph\":true,\"scale\":\"1 0.290089\",\"main\":58,\"cross\":58,\"worst\":-14.82,\"at\":\"end-a@0.1 inset 1.3 want 16.2\"},{\"i\":5,\"t\":342,\"morph\":true,\"scale\":\"1 0.29\",\"main\":58,\"cross\":58,\"worst\":-14.82,\"at\":\"end-a@0.1 inset 1.3 want 16.2\"},{\"i\":6,\"t\":399,\"morph\":true,\"scale\":\"1 0.29\",\"main\":58,\"cross\":58,\"worst\":-14.82,\"at\":\"end-a@0.1 inset 1.3 want 16.2\"},{\"i\":7,\"t\":458,\"morph\":true,\"scale\":\"1 0.29\",\"main\":58,\"cross\":58,\"worst\":-14.82,\"at\":\"end-a@0.1 inset 1.3 want 16.2\"},{\"i\":8,\"t\":525,\"morph\":true,\"scale\":\"1 0.29\",\"main\":58,\"cross\":58,\"worst\":-14.82,\"at\":\"end-a@0.1 inset 1.3 want 16.2\"},{\"i\":9,\"t\":590,\"morph\":false,\"scale\":\"none\",\"main\":58,\"cross\":58,\"worst\":-16.15,\"at\":\"end-a@0.1 inset 0.0 want 16.2\"},{\"i\":10,\"t\":646,\"morph\":false,\"scale\":\"none\",\"main\":58,\"cross\":58,\"worst\":-16.15,\"at\":\"end-a@0.1 inset 0.0 want 16.2\"},{\"i\":11,\"t\":696,\"morph\":false,\"scale\":\"none\",\"main\":58,\"cross\":58,\"worst\":-16.15,\"at\":\"end-a@0.1 inset 0.0 want 16.2\"}]}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T03:52:16.088Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/test-results/release-11-0-1-critic-2-cr-34688-the-expand-and-the-collapse-chromium-headless-new/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1-critic-2.spec.ts",
+                        "column": 194,
+                        "line": 100
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "d6a71fc737357e66268e-6107a5e3122fc125e762",
+              "file": "release-11-0-1-critic-2.spec.ts",
+              "line": 137,
+              "column": 17
+            }
+          ]
+        },
+        {
+          "title": "critic 2 light-390c",
+          "file": "release-11-0-1-critic-2.spec.ts",
+          "line": 106,
+          "column": 14,
+          "specs": [
+            {
+              "title": "m light-390c: the figure dock's end in paint through the expand and the collapse",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 2659,
+                      "error": {
+                        "message": "Error: light-390c ch expand: frames whose end is not a circle of half the cross extent\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 14\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"0@47ms morph scale 0.531085 1: -12.59 px (start-a@0.1 inset 4.3 want 16.9)\",\u001b[39m\n\u001b[31m+   \"1@106ms morph scale 0.783272 1: -11.59 px (start-a@0.1 inset 5.3 want 16.9)\",\u001b[39m\n\u001b[31m+   \"2@151ms morph scale 0.927732 1: -10.92 px (start-a@0.1 inset 6.0 want 16.9)\",\u001b[39m\n\u001b[31m+   \"3@193ms morph scale 0.972825 1: -10.59 px (start-a@0.1 inset 6.3 want 16.9)\",\u001b[39m\n\u001b[31m+   \"4@238ms morph scale 0.99344 1: -10.59 px (start-a@0.1 inset 6.3 want 16.9)\",\u001b[39m\n\u001b[31m+   \"5@285ms morph scale 1: -10.59 px (start-a@0.1 inset 6.3 want 16.9)\",\u001b[39m\n\u001b[31m+   \"6@329ms morph scale 1: -10.59 px (start-a@0.1 inset 6.3 want 16.9)\",\u001b[39m\n\u001b[31m+   \"7@369ms morph scale 1: -10.59 px (start-a@0.1 inset 6.3 want 16.9)\",\u001b[39m\n\u001b[31m+   \"8@413ms morph scale 1: -10.59 px (start-a@0.1 inset 6.3 want 16.9)\",\u001b[39m\n\u001b[31m+   \"9@464ms morph scale 1: -10.59 px (start-a@0.1 inset 6.3 want 16.9)\",\u001b[39m\n\u001b[31m+   \"10@514ms morph scale 1: -10.59 px (start-a@0.1 inset 6.3 want 16.9)\",\u001b[39m\n\u001b[31m+   \"11@561ms morph scale 1: -10.92 px (end-a@0.1 inset 6.0 want 16.9)\",\u001b[39m\n\u001b[31m+ ]\u001b[39m",
+                        "stack": "Error: light-390c ch expand: frames whose end is not a circle of half the cross extent\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 14\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"0@47ms morph scale 0.531085 1: -12.59 px (start-a@0.1 inset 4.3 want 16.9)\",\u001b[39m\n\u001b[31m+   \"1@106ms morph scale 0.783272 1: -11.59 px (start-a@0.1 inset 5.3 want 16.9)\",\u001b[39m\n\u001b[31m+   \"2@151ms morph scale 0.927732 1: -10.92 px (start-a@0.1 inset 6.0 want 16.9)\",\u001b[39m\n\u001b[31m+   \"3@193ms morph scale 0.972825 1: -10.59 px (start-a@0.1 inset 6.3 want 16.9)\",\u001b[39m\n\u001b[31m+   \"4@238ms morph scale 0.99344 1: -10.59 px (start-a@0.1 inset 6.3 want 16.9)\",\u001b[39m\n\u001b[31m+   \"5@285ms morph scale 1: -10.59 px (start-a@0.1 inset 6.3 want 16.9)\",\u001b[39m\n\u001b[31m+   \"6@329ms morph scale 1: -10.59 px (start-a@0.1 inset 6.3 want 16.9)\",\u001b[39m\n\u001b[31m+   \"7@369ms morph scale 1: -10.59 px (start-a@0.1 inset 6.3 want 16.9)\",\u001b[39m\n\u001b[31m+   \"8@413ms morph scale 1: -10.59 px (start-a@0.1 inset 6.3 want 16.9)\",\u001b[39m\n\u001b[31m+   \"9@464ms morph scale 1: -10.59 px (start-a@0.1 inset 6.3 want 16.9)\",\u001b[39m\n\u001b[31m+   \"10@514ms morph scale 1: -10.59 px (start-a@0.1 inset 6.3 want 16.9)\",\u001b[39m\n\u001b[31m+   \"11@561ms morph scale 1: -10.92 px (end-a@0.1 inset 6.0 want 16.9)\",\u001b[39m\n\u001b[31m+ ]\u001b[39m\n    at judge (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1-critic-2.spec.ts:100:194)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1-critic-2.spec.ts:119:17",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1-critic-2.spec.ts",
+                          "column": 194,
+                          "line": 100
+                        },
+                        "snippet": "   98 |     // face's width on the first frame), so `s` reads every frame and asks for no morph.\n   99 |     if (morphs) expect.soft(morph.length, `${cell}: frames captured mid-morph`).toBeGreaterThan(0);\n> 100 |     expect.soft(off.map((r) => `${r.i}@${r.t}ms ${r.morph ? \"morph\" : \"rest\"} scale ${r.scale}: ${r.worst} px (${r.at})`), `${cell}: frames whose end is not a circle of half the cross extent`).toEqual([]);\n      |                                                                                                                                                                                                  ^\n  101 | }\n  102 |\n  103 | for (const dark of [false, true]) {"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1-critic-2.spec.ts",
+                            "column": 194,
+                            "line": 100
+                          },
+                          "message": "Error: light-390c ch expand: frames whose end is not a circle of half the cross extent\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 14\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"0@47ms morph scale 0.531085 1: -12.59 px (start-a@0.1 inset 4.3 want 16.9)\",\u001b[39m\n\u001b[31m+   \"1@106ms morph scale 0.783272 1: -11.59 px (start-a@0.1 inset 5.3 want 16.9)\",\u001b[39m\n\u001b[31m+   \"2@151ms morph scale 0.927732 1: -10.92 px (start-a@0.1 inset 6.0 want 16.9)\",\u001b[39m\n\u001b[31m+   \"3@193ms morph scale 0.972825 1: -10.59 px (start-a@0.1 inset 6.3 want 16.9)\",\u001b[39m\n\u001b[31m+   \"4@238ms morph scale 0.99344 1: -10.59 px (start-a@0.1 inset 6.3 want 16.9)\",\u001b[39m\n\u001b[31m+   \"5@285ms morph scale 1: -10.59 px (start-a@0.1 inset 6.3 want 16.9)\",\u001b[39m\n\u001b[31m+   \"6@329ms morph scale 1: -10.59 px (start-a@0.1 inset 6.3 want 16.9)\",\u001b[39m\n\u001b[31m+   \"7@369ms morph scale 1: -10.59 px (start-a@0.1 inset 6.3 want 16.9)\",\u001b[39m\n\u001b[31m+   \"8@413ms morph scale 1: -10.59 px (start-a@0.1 inset 6.3 want 16.9)\",\u001b[39m\n\u001b[31m+   \"9@464ms morph scale 1: -10.59 px (start-a@0.1 inset 6.3 want 16.9)\",\u001b[39m\n\u001b[31m+   \"10@514ms morph scale 1: -10.59 px (start-a@0.1 inset 6.3 want 16.9)\",\u001b[39m\n\u001b[31m+   \"11@561ms morph scale 1: -10.92 px (end-a@0.1 inset 6.0 want 16.9)\",\u001b[39m\n\u001b[31m+ ]\u001b[39m\n\n   98 |     // face's width on the first frame), so `s` reads every frame and asks for no morph.\n   99 |     if (morphs) expect.soft(morph.length, `${cell}: frames captured mid-morph`).toBeGreaterThan(0);\n> 100 |     expect.soft(off.map((r) => `${r.i}@${r.t}ms ${r.morph ? \"morph\" : \"rest\"} scale ${r.scale}: ${r.worst} px (${r.at})`), `${cell}: frames whose end is not a circle of half the cross extent`).toEqual([]);\n      |                                                                                                                                                                                                  ^\n  101 | }\n  102 |\n  103 | for (const dark of [false, true]) {\n    at judge (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1-critic-2.spec.ts:100:194)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1-critic-2.spec.ts:119:17"
+                        },
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1-critic-2.spec.ts",
+                            "column": 194,
+                            "line": 100
+                          },
+                          "message": "Error: light-390c ch collapse: frames whose end is not a circle of half the cross extent\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 14\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"0@37ms morph scale 0.975494 1: -11.26 px (start-a@0.1 inset 5.7 want 16.9)\",\u001b[39m\n\u001b[31m+   \"1@85ms morph scale 0.780014 1: -12.59 px (start-a@0.1 inset 4.3 want 16.9)\",\u001b[39m\n\u001b[31m+   \"2@128ms morph scale 0.627356 1: -13.26 px (start-a@0.1 inset 3.7 want 16.9)\",\u001b[39m\n\u001b[31m+   \"3@169ms morph scale 0.554425 1: -13.59 px (start-a@0.1 inset 3.3 want 16.9)\",\u001b[39m\n\u001b[31m+   \"4@212ms morph scale 0.526342 1: -13.92 px (end-a@0.1 inset 3.0 want 16.9)\",\u001b[39m\n\u001b[31m+   \"5@259ms morph scale 0.509265 1: -13.92 px (start-a@0.1 inset 3.0 want 16.9)\",\u001b[39m\n\u001b[31m+   \"6@298ms morph scale 0.506579 1: -13.92 px (start-a@0.1 inset 3.0 want 16.9)\",\u001b[39m\n\u001b[31m+   \"7@332ms morph scale 0.506579 1: -13.92 px (start-a@0.1 inset 3.0 want 16.9)\",\u001b[39m\n\u001b[31m+   \"8@366ms morph scale 0.506579 1: -13.92 px (start-a@0.1 inset 3.0 want 16.9)\",\u001b[39m\n\u001b[31m+   \"9@398ms morph scale 0.506579 1: -13.92 px (start-a@0.1 inset 3.0 want 16.9)\",\u001b[39m\n\u001b[31m+   \"10@432ms morph scale 0.506579 1: -13.92 px (start-a@0.1 inset 3.0 want 16.9)\",\u001b[39m\n\u001b[31m+   \"11@474ms morph scale 0.506579 1: -13.92 px (start-a@0.1 inset 3.0 want 16.9)\",\u001b[39m\n\u001b[31m+ ]\u001b[39m\n\n   98 |     // face's width on the first frame), so `s` reads every frame and asks for no morph.\n   99 |     if (morphs) expect.soft(morph.length, `${cell}: frames captured mid-morph`).toBeGreaterThan(0);\n> 100 |     expect.soft(off.map((r) => `${r.i}@${r.t}ms ${r.morph ? \"morph\" : \"rest\"} scale ${r.scale}: ${r.worst} px (${r.at})`), `${cell}: frames whose end is not a circle of half the cross extent`).toEqual([]);\n      |                                                                                                                                                                                                  ^\n  101 | }\n  102 |\n  103 | for (const dark of [false, true]) {\n    at judge (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1-critic-2.spec.ts:100:194)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1-critic-2.spec.ts:123:17"
+                        }
+                      ],
+                      "stdout": [
+                        {
+                          "text": "c2 {\"cell\":\"light-390c ch expand\",\"frames\":12,\"morphFrames\":12,\"off\":12,\"rows\":[{\"i\":0,\"t\":47,\"morph\":true,\"scale\":\"0.531085 1\",\"main\":198.66666666666666,\"cross\":60,\"worst\":-12.59,\"at\":\"start-a@0.1 inset 4.3 want 16.9\"},{\"i\":1,\"t\":106,\"morph\":true,\"scale\":\"0.783272 1\",\"main\":260.6666666666667,\"cross\":60,\"worst\":-11.59,\"at\":\"start-a@0.1 inset 5.3 want 16.9\"},{\"i\":2,\"t\":151,\"morph\":true,\"scale\":\"0.927732 1\",\"main\":288.6666666666667,\"cross\":60,\"worst\":-10.92,\"at\":\"start-a@0.1 inset 6.0 want 16.9\"},{\"i\":3,\"t\":193,\"morph\":true,\"scale\":\"0.972825 1\",\"main\":298.6666666666667,\"cross\":60,\"worst\":-10.59,\"at\":\"start-a@0.1 inset 6.3 want 16.9\"},{\"i\":4,\"t\":238,\"morph\":true,\"scale\":\"0.99344 1\",\"main\":302.6666666666667,\"cross\":60,\"worst\":-10.59,\"at\":\"start-a@0.1 inset 6.3 want 16.9\"},{\"i\":5,\"t\":285,\"morph\":true,\"scale\":\"1\",\"main\":304,\"cross\":60,\"worst\":-10.59,\"at\":\"start-a@0.1 inset 6.3 want 16.9\"},{\"i\":6,\"t\":329,\"morph\":true,\"scale\":\"1\",\"main\":304,\"cross\":60,\"worst\":-10.59,\"at\":\"start-a@0.1 inset 6.3 want 16.9\"},{\"i\":7,\"t\":369,\"morph\":true,\"scale\":\"1\",\"main\":304,\"cross\":60,\"worst\":-10.59,\"at\":\"start-a@0.1 inset 6.3 want 16.9\"},{\"i\":8,\"t\":413,\"morph\":true,\"scale\":\"1\",\"main\":304,\"cross\":60,\"worst\":-10.59,\"at\":\"start-a@0.1 inset 6.3 want 16.9\"},{\"i\":9,\"t\":464,\"morph\":true,\"scale\":\"1\",\"main\":304,\"cross\":60,\"worst\":-10.59,\"at\":\"start-a@0.1 inset 6.3 want 16.9\"},{\"i\":10,\"t\":514,\"morph\":true,\"scale\":\"1\",\"main\":304,\"cross\":60,\"worst\":-10.59,\"at\":\"start-a@0.1 inset 6.3 want 16.9\"},{\"i\":11,\"t\":561,\"morph\":true,\"scale\":\"1\",\"main\":303.6666666666667,\"cross\":60,\"worst\":-10.92,\"at\":\"end-a@0.1 inset 6.0 want 16.9\"}]}\n"
+                        },
+                        {
+                          "text": "c2 {\"cell\":\"light-390c ch collapse\",\"frames\":12,\"morphFrames\":12,\"off\":12,\"rows\":[{\"i\":0,\"t\":37,\"morph\":true,\"scale\":\"0.975494 1\",\"main\":268.6666666666667,\"cross\":60,\"worst\":-11.26,\"at\":\"start-a@0.1 inset 5.7 want 16.9\"},{\"i\":1,\"t\":85,\"morph\":true,\"scale\":\"0.780014 1\",\"main\":210,\"cross\":60,\"worst\":-12.59,\"at\":\"start-a@0.1 inset 4.3 want 16.9\"},{\"i\":2,\"t\":128,\"morph\":true,\"scale\":\"0.627356 1\",\"main\":179.33333333333334,\"cross\":60,\"worst\":-13.26,\"at\":\"start-a@0.1 inset 3.7 want 16.9\"},{\"i\":3,\"t\":169,\"morph\":true,\"scale\":\"0.554425 1\",\"main\":163.33333333333334,\"cross\":60,\"worst\":-13.59,\"at\":\"start-a@0.1 inset 3.3 want 16.9\"},{\"i\":4,\"t\":212,\"morph\":true,\"scale\":\"0.526342 1\",\"main\":156.33333333333334,\"cross\":60,\"worst\":-13.92,\"at\":\"end-a@0.1 inset 3.0 want 16.9\"},{\"i\":5,\"t\":259,\"morph\":true,\"scale\":\"0.509265 1\",\"main\":153.66666666666666,\"cross\":60,\"worst\":-13.92,\"at\":\"start-a@0.1 inset 3.0 want 16.9\"},{\"i\":6,\"t\":298,\"morph\":true,\"scale\":\"0.506579 1\",\"main\":153.66666666666666,\"cross\":60,\"worst\":-13.92,\"at\":\"start-a@0.1 inset 3.0 want 16.9\"},{\"i\":7,\"t\":332,\"morph\":true,\"scale\":\"0.506579 1\",\"main\":153.66666666666666,\"cross\":60,\"worst\":-13.92,\"at\":\"start-a@0.1 inset 3.0 want 16.9\"},{\"i\":8,\"t\":366,\"morph\":true,\"scale\":\"0.506579 1\",\"main\":153.66666666666666,\"cross\":60,\"worst\":-13.92,\"at\":\"start-a@0.1 inset 3.0 want 16.9\"},{\"i\":9,\"t\":398,\"morph\":true,\"scale\":\"0.506579 1\",\"main\":153.66666666666666,\"cross\":60,\"worst\":-13.92,\"at\":\"start-a@0.1 inset 3.0 want 16.9\"},{\"i\":10,\"t\":432,\"morph\":true,\"scale\":\"0.506579 1\",\"main\":153.66666666666666,\"cross\":60,\"worst\":-13.92,\"at\":\"start-a@0.1 inset 3.0 want 16.9\"},{\"i\":11,\"t\":474,\"morph\":true,\"scale\":\"0.506579 1\",\"main\":153.66666666666666,\"cross\":60,\"worst\":-13.92,\"at\":\"start-a@0.1 inset 3.0 want 16.9\"}]}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T03:52:19.818Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/test-results/release-11-0-1-critic-2-cr-bd4f8-the-expand-and-the-collapse-chromium-headless-new/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1-critic-2.spec.ts",
+                        "column": 194,
+                        "line": 100
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "d6a71fc737357e66268e-36e80d7a170fcfc769cc",
+              "file": "release-11-0-1-critic-2.spec.ts",
+              "line": 113,
+              "column": 13
+            }
+          ]
+        },
+        {
+          "title": "critic 2 dark-1440f",
+          "file": "release-11-0-1-critic-2.spec.ts",
+          "line": 106,
+          "column": 14,
+          "specs": [
+            {
+              "title": "m dark-1440f: the figure dock's end in paint through the expand and the collapse",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 4,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 3312,
+                      "error": {
+                        "message": "Error: dark-1440f ch expand: frames whose end is not a circle of half the cross extent\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 14\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"0@48ms morph scale 0.601887 1: -11.41 px (start-a@0.1 inset 4.7 want 16.1)\",\u001b[39m\n\u001b[31m+   \"1@135ms morph scale 0.924773 1: -9.41 px (start-a@0.1 inset 6.7 want 16.1)\",\u001b[39m\n\u001b[31m+   \"2@218ms morph scale 0.993183 1: -9.41 px (start-a@0.1 inset 6.7 want 16.1)\",\u001b[39m\n\u001b[31m+   \"3@300ms morph scale 1: -9.07 px (start-a@0.1 inset 7.0 want 16.1)\",\u001b[39m\n\u001b[31m+   \"4@390ms morph scale 1: -9.07 px (start-a@0.1 inset 7.0 want 16.1)\",\u001b[39m\n\u001b[31m+   \"5@457ms morph scale 1: -9.07 px (start-a@0.1 inset 7.0 want 16.1)\",\u001b[39m\n\u001b[31m+   \"6@524ms morph scale 1: -9.07 px (start-a@0.1 inset 7.0 want 16.1)\",\u001b[39m\n\u001b[31m+   \"7@587ms rest scale none: -9.07 px (start-a@0.1 inset 7.0 want 16.1)\",\u001b[39m\n\u001b[31m+   \"8@649ms rest scale none: -9.07 px (start-a@0.1 inset 7.0 want 16.1)\",\u001b[39m\n\u001b[31m+   \"9@714ms rest scale none: -9.07 px (start-a@0.1 inset 7.0 want 16.1)\",\u001b[39m\n\u001b[31m+   \"10@773ms rest scale none: -9.07 px (start-a@0.1 inset 7.0 want 16.1)\",\u001b[39m\n\u001b[31m+   \"11@840ms rest scale none: -9.07 px (start-a@0.1 inset 7.0 want 16.1)\",\u001b[39m\n\u001b[31m+ ]\u001b[39m",
+                        "stack": "Error: dark-1440f ch expand: frames whose end is not a circle of half the cross extent\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 14\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"0@48ms morph scale 0.601887 1: -11.41 px (start-a@0.1 inset 4.7 want 16.1)\",\u001b[39m\n\u001b[31m+   \"1@135ms morph scale 0.924773 1: -9.41 px (start-a@0.1 inset 6.7 want 16.1)\",\u001b[39m\n\u001b[31m+   \"2@218ms morph scale 0.993183 1: -9.41 px (start-a@0.1 inset 6.7 want 16.1)\",\u001b[39m\n\u001b[31m+   \"3@300ms morph scale 1: -9.07 px (start-a@0.1 inset 7.0 want 16.1)\",\u001b[39m\n\u001b[31m+   \"4@390ms morph scale 1: -9.07 px (start-a@0.1 inset 7.0 want 16.1)\",\u001b[39m\n\u001b[31m+   \"5@457ms morph scale 1: -9.07 px (start-a@0.1 inset 7.0 want 16.1)\",\u001b[39m\n\u001b[31m+   \"6@524ms morph scale 1: -9.07 px (start-a@0.1 inset 7.0 want 16.1)\",\u001b[39m\n\u001b[31m+   \"7@587ms rest scale none: -9.07 px (start-a@0.1 inset 7.0 want 16.1)\",\u001b[39m\n\u001b[31m+   \"8@649ms rest scale none: -9.07 px (start-a@0.1 inset 7.0 want 16.1)\",\u001b[39m\n\u001b[31m+   \"9@714ms rest scale none: -9.07 px (start-a@0.1 inset 7.0 want 16.1)\",\u001b[39m\n\u001b[31m+   \"10@773ms rest scale none: -9.07 px (start-a@0.1 inset 7.0 want 16.1)\",\u001b[39m\n\u001b[31m+   \"11@840ms rest scale none: -9.07 px (start-a@0.1 inset 7.0 want 16.1)\",\u001b[39m\n\u001b[31m+ ]\u001b[39m\n    at judge (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1-critic-2.spec.ts:100:194)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1-critic-2.spec.ts:119:17",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1-critic-2.spec.ts",
+                          "column": 194,
+                          "line": 100
+                        },
+                        "snippet": "   98 |     // face's width on the first frame), so `s` reads every frame and asks for no morph.\n   99 |     if (morphs) expect.soft(morph.length, `${cell}: frames captured mid-morph`).toBeGreaterThan(0);\n> 100 |     expect.soft(off.map((r) => `${r.i}@${r.t}ms ${r.morph ? \"morph\" : \"rest\"} scale ${r.scale}: ${r.worst} px (${r.at})`), `${cell}: frames whose end is not a circle of half the cross extent`).toEqual([]);\n      |                                                                                                                                                                                                  ^\n  101 | }\n  102 |\n  103 | for (const dark of [false, true]) {"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1-critic-2.spec.ts",
+                            "column": 194,
+                            "line": 100
+                          },
+                          "message": "Error: dark-1440f ch expand: frames whose end is not a circle of half the cross extent\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 14\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"0@48ms morph scale 0.601887 1: -11.41 px (start-a@0.1 inset 4.7 want 16.1)\",\u001b[39m\n\u001b[31m+   \"1@135ms morph scale 0.924773 1: -9.41 px (start-a@0.1 inset 6.7 want 16.1)\",\u001b[39m\n\u001b[31m+   \"2@218ms morph scale 0.993183 1: -9.41 px (start-a@0.1 inset 6.7 want 16.1)\",\u001b[39m\n\u001b[31m+   \"3@300ms morph scale 1: -9.07 px (start-a@0.1 inset 7.0 want 16.1)\",\u001b[39m\n\u001b[31m+   \"4@390ms morph scale 1: -9.07 px (start-a@0.1 inset 7.0 want 16.1)\",\u001b[39m\n\u001b[31m+   \"5@457ms morph scale 1: -9.07 px (start-a@0.1 inset 7.0 want 16.1)\",\u001b[39m\n\u001b[31m+   \"6@524ms morph scale 1: -9.07 px (start-a@0.1 inset 7.0 want 16.1)\",\u001b[39m\n\u001b[31m+   \"7@587ms rest scale none: -9.07 px (start-a@0.1 inset 7.0 want 16.1)\",\u001b[39m\n\u001b[31m+   \"8@649ms rest scale none: -9.07 px (start-a@0.1 inset 7.0 want 16.1)\",\u001b[39m\n\u001b[31m+   \"9@714ms rest scale none: -9.07 px (start-a@0.1 inset 7.0 want 16.1)\",\u001b[39m\n\u001b[31m+   \"10@773ms rest scale none: -9.07 px (start-a@0.1 inset 7.0 want 16.1)\",\u001b[39m\n\u001b[31m+   \"11@840ms rest scale none: -9.07 px (start-a@0.1 inset 7.0 want 16.1)\",\u001b[39m\n\u001b[31m+ ]\u001b[39m\n\n   98 |     // face's width on the first frame), so `s` reads every frame and asks for no morph.\n   99 |     if (morphs) expect.soft(morph.length, `${cell}: frames captured mid-morph`).toBeGreaterThan(0);\n> 100 |     expect.soft(off.map((r) => `${r.i}@${r.t}ms ${r.morph ? \"morph\" : \"rest\"} scale ${r.scale}: ${r.worst} px (${r.at})`), `${cell}: frames whose end is not a circle of half the cross extent`).toEqual([]);\n      |                                                                                                                                                                                                  ^\n  101 | }\n  102 |\n  103 | for (const dark of [false, true]) {\n    at judge (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1-critic-2.spec.ts:100:194)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1-critic-2.spec.ts:119:17"
+                        },
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1-critic-2.spec.ts",
+                            "column": 194,
+                            "line": 100
+                          },
+                          "message": "Error: dark-1440f ch collapse: frames whose end is not a circle of half the cross extent\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 14\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"0@54ms morph scale 0.915092 1: -10.41 px (start-a@0.1 inset 5.7 want 16.1)\",\u001b[39m\n\u001b[31m+   \"1@136ms morph scale 0.630353 1: -12.07 px (start-a@0.1 inset 4.0 want 16.1)\",\u001b[39m\n\u001b[31m+   \"2@209ms morph scale 0.509547 1: -12.74 px (start-a@0.1 inset 3.3 want 16.1)\",\u001b[39m\n\u001b[31m+   \"3@270ms morph scale 0.483885 1: -12.74 px (start-a@0.1 inset 3.3 want 16.1)\",\u001b[39m\n\u001b[31m+   \"4@331ms morph scale 0.482993 1: -12.74 px (start-a@0.1 inset 3.3 want 16.1)\",\u001b[39m\n\u001b[31m+   \"5@397ms morph scale 0.482993 1: -12.74 px (start-a@0.1 inset 3.3 want 16.1)\",\u001b[39m\n\u001b[31m+   \"6@465ms morph scale 0.482993 1: -12.74 px (start-a@0.1 inset 3.3 want 16.1)\",\u001b[39m\n\u001b[31m+   \"7@530ms morph scale 0.482993 1: -12.74 px (start-a@0.1 inset 3.3 want 16.1)\",\u001b[39m\n\u001b[31m+   \"8@588ms rest scale none: -15.41 px (end-a@0.1 inset 0.7 want 16.1)\",\u001b[39m\n\u001b[31m+   \"9@650ms rest scale none: -15.41 px (end-a@0.1 inset 0.7 want 16.1)\",\u001b[39m\n\u001b[31m+   \"10@699ms rest scale none: -15.41 px (end-a@0.1 inset 0.7 want 16.1)\",\u001b[39m\n\u001b[31m+   \"11@750ms rest scale none: -15.41 px (end-a@0.1 inset 0.7 want 16.1)\",\u001b[39m\n\u001b[31m+ ]\u001b[39m\n\n   98 |     // face's width on the first frame), so `s` reads every frame and asks for no morph.\n   99 |     if (morphs) expect.soft(morph.length, `${cell}: frames captured mid-morph`).toBeGreaterThan(0);\n> 100 |     expect.soft(off.map((r) => `${r.i}@${r.t}ms ${r.morph ? \"morph\" : \"rest\"} scale ${r.scale}: ${r.worst} px (${r.at})`), `${cell}: frames whose end is not a circle of half the cross extent`).toEqual([]);\n      |                                                                                                                                                                                                  ^\n  101 | }\n  102 |\n  103 | for (const dark of [false, true]) {\n    at judge (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1-critic-2.spec.ts:100:194)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1-critic-2.spec.ts:123:17"
+                        }
+                      ],
+                      "stdout": [
+                        {
+                          "text": "c2 {\"cell\":\"dark-1440f ch expand\",\"frames\":12,\"morphFrames\":7,\"off\":12,\"rows\":[{\"i\":0,\"t\":48,\"morph\":true,\"scale\":\"0.601887 1\",\"main\":208,\"cross\":56,\"worst\":-11.41,\"at\":\"start-a@0.1 inset 4.7 want 16.1\"},{\"i\":1,\"t\":135,\"morph\":true,\"scale\":\"0.924773 1\",\"main\":278.6666666666667,\"cross\":56,\"worst\":-9.41,\"at\":\"start-a@0.1 inset 6.7 want 16.1\"},{\"i\":2,\"t\":218,\"morph\":true,\"scale\":\"0.993183 1\",\"main\":292.6666666666667,\"cross\":56,\"worst\":-9.41,\"at\":\"start-a@0.1 inset 6.7 want 16.1\"},{\"i\":3,\"t\":300,\"morph\":true,\"scale\":\"1\",\"main\":294,\"cross\":56,\"worst\":-9.07,\"at\":\"start-a@0.1 inset 7.0 want 16.1\"},{\"i\":4,\"t\":390,\"morph\":true,\"scale\":\"1\",\"main\":294,\"cross\":56,\"worst\":-9.07,\"at\":\"start-a@0.1 inset 7.0 want 16.1\"},{\"i\":5,\"t\":457,\"morph\":true,\"scale\":\"1\",\"main\":294,\"cross\":56,\"worst\":-9.07,\"at\":\"start-a@0.1 inset 7.0 want 16.1\"},{\"i\":6,\"t\":524,\"morph\":true,\"scale\":\"1\",\"main\":294,\"cross\":56,\"worst\":-9.07,\"at\":\"start-a@0.1 inset 7.0 want 16.1\"},{\"i\":7,\"t\":587,\"morph\":false,\"scale\":\"none\",\"main\":294,\"cross\":56,\"worst\":-9.07,\"at\":\"start-a@0.1 inset 7.0 want 16.1\"},{\"i\":8,\"t\":649,\"morph\":false,\"scale\":\"none\",\"main\":294,\"cross\":56,\"worst\":-9.07,\"at\":\"start-a@0.1 inset 7.0 want 16.1\"},{\"i\":9,\"t\":714,\"morph\":false,\"scale\":\"none\",\"main\":294,\"cross\":56,\"worst\":-9.07,\"at\":\"start-a@0.1 inset 7.0 want 16.1\"},{\"i\":10,\"t\":773,\"morph\":false,\"scale\":\"none\",\"main\":294,\"cross\":56,\"worst\":-9.07,\"at\":\"start-a@0.1 inset 7.0 want 16.1\"},{\"i\":11,\"t\":840,\"morph\":false,\"scale\":\"none\",\"main\":294,\"cross\":56,\"worst\":-9.07,\"at\":\"start-a@0.1 inset 7.0 want 16.1\"}]}\n"
+                        },
+                        {
+                          "text": "c2 {\"cell\":\"dark-1440f ch collapse\",\"frames\":12,\"morphFrames\":8,\"off\":12,\"rows\":[{\"i\":0,\"t\":54,\"morph\":true,\"scale\":\"0.915092 1\",\"main\":238,\"cross\":56,\"worst\":-10.41,\"at\":\"start-a@0.1 inset 5.7 want 16.1\"},{\"i\":1,\"t\":136,\"morph\":true,\"scale\":\"0.630353 1\",\"main\":166.66666666666666,\"cross\":56,\"worst\":-12.07,\"at\":\"start-a@0.1 inset 4.0 want 16.1\"},{\"i\":2,\"t\":209,\"morph\":true,\"scale\":\"0.509547 1\",\"main\":144.66666666666666,\"cross\":56,\"worst\":-12.74,\"at\":\"start-a@0.1 inset 3.3 want 16.1\"},{\"i\":3,\"t\":270,\"morph\":true,\"scale\":\"0.483885 1\",\"main\":142,\"cross\":56,\"worst\":-12.74,\"at\":\"start-a@0.1 inset 3.3 want 16.1\"},{\"i\":4,\"t\":331,\"morph\":true,\"scale\":\"0.482993 1\",\"main\":142,\"cross\":56,\"worst\":-12.74,\"at\":\"start-a@0.1 inset 3.3 want 16.1\"},{\"i\":5,\"t\":397,\"morph\":true,\"scale\":\"0.482993 1\",\"main\":142,\"cross\":56,\"worst\":-12.74,\"at\":\"start-a@0.1 inset 3.3 want 16.1\"},{\"i\":6,\"t\":465,\"morph\":true,\"scale\":\"0.482993 1\",\"main\":142,\"cross\":56,\"worst\":-12.74,\"at\":\"start-a@0.1 inset 3.3 want 16.1\"},{\"i\":7,\"t\":530,\"morph\":true,\"scale\":\"0.482993 1\",\"main\":142,\"cross\":56,\"worst\":-12.74,\"at\":\"start-a@0.1 inset 3.3 want 16.1\"},{\"i\":8,\"t\":588,\"morph\":false,\"scale\":\"none\",\"main\":142,\"cross\":56,\"worst\":-15.41,\"at\":\"end-a@0.1 inset 0.7 want 16.1\"},{\"i\":9,\"t\":650,\"morph\":false,\"scale\":\"none\",\"main\":142,\"cross\":56,\"worst\":-15.41,\"at\":\"end-a@0.1 inset 0.7 want 16.1\"},{\"i\":10,\"t\":699,\"morph\":false,\"scale\":\"none\",\"main\":142,\"cross\":56,\"worst\":-15.41,\"at\":\"end-a@0.1 inset 0.7 want 16.1\"},{\"i\":11,\"t\":750,\"morph\":false,\"scale\":\"none\",\"main\":142,\"cross\":56,\"worst\":-15.41,\"at\":\"end-a@0.1 inset 0.7 want 16.1\"}]}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T03:52:22.994Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/test-results/release-11-0-1-critic-2-cr-42b52-the-expand-and-the-collapse-chromium-headless-new/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1-critic-2.spec.ts",
+                        "column": 194,
+                        "line": 100
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "d6a71fc737357e66268e-eef0bd20e203aaf932c1",
+              "file": "release-11-0-1-critic-2.spec.ts",
+              "line": 113,
+              "column": 13
+            }
+          ]
+        },
+        {
+          "title": "critic 2 dark-390c",
+          "file": "release-11-0-1-critic-2.spec.ts",
+          "line": 106,
+          "column": 14,
+          "specs": [
+            {
+              "title": "m dark-390c: the figure dock's end in paint through the expand and the collapse",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 5,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 2490,
+                      "error": {
+                        "message": "Error: dark-390c ch expand: frames whose end is not a circle of half the cross extent\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 14\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"0@35ms morph scale 0.531085 1: -12.92 px (start-a@0.1 inset 4.0 want 16.9)\",\u001b[39m\n\u001b[31m+   \"1@82ms morph scale 0.75392 1: -11.92 px (end-a@0.1 inset 5.0 want 16.9)\",\u001b[39m\n\u001b[31m+   \"2@124ms morph scale 0.879688 1: -10.92 px (start-a@0.1 inset 6.0 want 16.9)\",\u001b[39m\n\u001b[31m+   \"3@168ms morph scale 0.952269 1: -10.92 px (start-a@0.1 inset 6.0 want 16.9)\",\u001b[39m\n\u001b[31m+   \"4@207ms morph scale 0.983926 1: -10.92 px (end-a@0.1 inset 6.0 want 16.9)\",\u001b[39m\n\u001b[31m+   \"5@249ms morph scale 0.995777 1: -10.59 px (start-a@0.1 inset 6.3 want 16.9)\",\u001b[39m\n\u001b[31m+   \"6@289ms morph scale 1: -10.26 px (start-a@0.1 inset 6.7 want 16.9)\",\u001b[39m\n\u001b[31m+   \"7@322ms morph scale 1: -10.26 px (start-a@0.1 inset 6.7 want 16.9)\",\u001b[39m\n\u001b[31m+   \"8@356ms morph scale 1: -10.26 px (start-a@0.1 inset 6.7 want 16.9)\",\u001b[39m\n\u001b[31m+   \"9@390ms morph scale 1: -10.26 px (start-a@0.1 inset 6.7 want 16.9)\",\u001b[39m\n\u001b[31m+   \"10@431ms morph scale 1: -10.26 px (start-a@0.1 inset 6.7 want 16.9)\",\u001b[39m\n\u001b[31m+   \"11@465ms morph scale 1: -10.26 px (start-a@0.1 inset 6.7 want 16.9)\",\u001b[39m\n\u001b[31m+ ]\u001b[39m",
+                        "stack": "Error: dark-390c ch expand: frames whose end is not a circle of half the cross extent\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 14\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"0@35ms morph scale 0.531085 1: -12.92 px (start-a@0.1 inset 4.0 want 16.9)\",\u001b[39m\n\u001b[31m+   \"1@82ms morph scale 0.75392 1: -11.92 px (end-a@0.1 inset 5.0 want 16.9)\",\u001b[39m\n\u001b[31m+   \"2@124ms morph scale 0.879688 1: -10.92 px (start-a@0.1 inset 6.0 want 16.9)\",\u001b[39m\n\u001b[31m+   \"3@168ms morph scale 0.952269 1: -10.92 px (start-a@0.1 inset 6.0 want 16.9)\",\u001b[39m\n\u001b[31m+   \"4@207ms morph scale 0.983926 1: -10.92 px (end-a@0.1 inset 6.0 want 16.9)\",\u001b[39m\n\u001b[31m+   \"5@249ms morph scale 0.995777 1: -10.59 px (start-a@0.1 inset 6.3 want 16.9)\",\u001b[39m\n\u001b[31m+   \"6@289ms morph scale 1: -10.26 px (start-a@0.1 inset 6.7 want 16.9)\",\u001b[39m\n\u001b[31m+   \"7@322ms morph scale 1: -10.26 px (start-a@0.1 inset 6.7 want 16.9)\",\u001b[39m\n\u001b[31m+   \"8@356ms morph scale 1: -10.26 px (start-a@0.1 inset 6.7 want 16.9)\",\u001b[39m\n\u001b[31m+   \"9@390ms morph scale 1: -10.26 px (start-a@0.1 inset 6.7 want 16.9)\",\u001b[39m\n\u001b[31m+   \"10@431ms morph scale 1: -10.26 px (start-a@0.1 inset 6.7 want 16.9)\",\u001b[39m\n\u001b[31m+   \"11@465ms morph scale 1: -10.26 px (start-a@0.1 inset 6.7 want 16.9)\",\u001b[39m\n\u001b[31m+ ]\u001b[39m\n    at judge (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1-critic-2.spec.ts:100:194)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1-critic-2.spec.ts:119:17",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1-critic-2.spec.ts",
+                          "column": 194,
+                          "line": 100
+                        },
+                        "snippet": "   98 |     // face's width on the first frame), so `s` reads every frame and asks for no morph.\n   99 |     if (morphs) expect.soft(morph.length, `${cell}: frames captured mid-morph`).toBeGreaterThan(0);\n> 100 |     expect.soft(off.map((r) => `${r.i}@${r.t}ms ${r.morph ? \"morph\" : \"rest\"} scale ${r.scale}: ${r.worst} px (${r.at})`), `${cell}: frames whose end is not a circle of half the cross extent`).toEqual([]);\n      |                                                                                                                                                                                                  ^\n  101 | }\n  102 |\n  103 | for (const dark of [false, true]) {"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1-critic-2.spec.ts",
+                            "column": 194,
+                            "line": 100
+                          },
+                          "message": "Error: dark-390c ch expand: frames whose end is not a circle of half the cross extent\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 14\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"0@35ms morph scale 0.531085 1: -12.92 px (start-a@0.1 inset 4.0 want 16.9)\",\u001b[39m\n\u001b[31m+   \"1@82ms morph scale 0.75392 1: -11.92 px (end-a@0.1 inset 5.0 want 16.9)\",\u001b[39m\n\u001b[31m+   \"2@124ms morph scale 0.879688 1: -10.92 px (start-a@0.1 inset 6.0 want 16.9)\",\u001b[39m\n\u001b[31m+   \"3@168ms morph scale 0.952269 1: -10.92 px (start-a@0.1 inset 6.0 want 16.9)\",\u001b[39m\n\u001b[31m+   \"4@207ms morph scale 0.983926 1: -10.92 px (end-a@0.1 inset 6.0 want 16.9)\",\u001b[39m\n\u001b[31m+   \"5@249ms morph scale 0.995777 1: -10.59 px (start-a@0.1 inset 6.3 want 16.9)\",\u001b[39m\n\u001b[31m+   \"6@289ms morph scale 1: -10.26 px (start-a@0.1 inset 6.7 want 16.9)\",\u001b[39m\n\u001b[31m+   \"7@322ms morph scale 1: -10.26 px (start-a@0.1 inset 6.7 want 16.9)\",\u001b[39m\n\u001b[31m+   \"8@356ms morph scale 1: -10.26 px (start-a@0.1 inset 6.7 want 16.9)\",\u001b[39m\n\u001b[31m+   \"9@390ms morph scale 1: -10.26 px (start-a@0.1 inset 6.7 want 16.9)\",\u001b[39m\n\u001b[31m+   \"10@431ms morph scale 1: -10.26 px (start-a@0.1 inset 6.7 want 16.9)\",\u001b[39m\n\u001b[31m+   \"11@465ms morph scale 1: -10.26 px (start-a@0.1 inset 6.7 want 16.9)\",\u001b[39m\n\u001b[31m+ ]\u001b[39m\n\n   98 |     // face's width on the first frame), so `s` reads every frame and asks for no morph.\n   99 |     if (morphs) expect.soft(morph.length, `${cell}: frames captured mid-morph`).toBeGreaterThan(0);\n> 100 |     expect.soft(off.map((r) => `${r.i}@${r.t}ms ${r.morph ? \"morph\" : \"rest\"} scale ${r.scale}: ${r.worst} px (${r.at})`), `${cell}: frames whose end is not a circle of half the cross extent`).toEqual([]);\n      |                                                                                                                                                                                                  ^\n  101 | }\n  102 |\n  103 | for (const dark of [false, true]) {\n    at judge (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1-critic-2.spec.ts:100:194)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1-critic-2.spec.ts:119:17"
+                        },
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1-critic-2.spec.ts",
+                            "column": 194,
+                            "line": 100
+                          },
+                          "message": "Error: dark-390c ch collapse: frames whose end is not a circle of half the cross extent\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 14\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"0@29ms morph scale 0.975494 1: -10.92 px (start-a@0.1 inset 6.0 want 16.9)\",\u001b[39m\n\u001b[31m+   \"1@64ms morph scale 0.856401 1: -11.92 px (start-a@0.1 inset 5.0 want 16.9)\",\u001b[39m\n\u001b[31m+   \"2@105ms morph scale 0.728752 1: -12.92 px (start-a@0.1 inset 4.0 want 16.9)\",\u001b[39m\n\u001b[31m+   \"3@135ms morph scale 0.611788 1: -13.26 px (end-a@0.1 inset 3.7 want 16.9)\",\u001b[39m\n\u001b[31m+   \"4@171ms morph scale 0.555779 1: -13.59 px (start-a@0.1 inset 3.3 want 16.9)\",\u001b[39m\n\u001b[31m+   \"5@204ms morph scale 0.527948 1: -13.59 px (start-a@0.1 inset 3.3 want 16.9)\",\u001b[39m\n\u001b[31m+   \"6@239ms morph scale 0.512101 1: -13.59 px (start-a@0.1 inset 3.3 want 16.9)\",\u001b[39m\n\u001b[31m+   \"7@270ms morph scale 0.506861 1: -13.92 px (start-a@0.1 inset 3.0 want 16.9)\",\u001b[39m\n\u001b[31m+   \"8@305ms morph scale 0.506579 1: -13.92 px (start-a@0.1 inset 3.0 want 16.9)\",\u001b[39m\n\u001b[31m+   \"9@339ms morph scale 0.506579 1: -13.92 px (start-a@0.1 inset 3.0 want 16.9)\",\u001b[39m\n\u001b[31m+   \"10@372ms morph scale 0.506579 1: -13.92 px (start-a@0.1 inset 3.0 want 16.9)\",\u001b[39m\n\u001b[31m+   \"11@411ms morph scale 0.506579 1: -13.92 px (start-a@0.1 inset 3.0 want 16.9)\",\u001b[39m\n\u001b[31m+ ]\u001b[39m\n\n   98 |     // face's width on the first frame), so `s` reads every frame and asks for no morph.\n   99 |     if (morphs) expect.soft(morph.length, `${cell}: frames captured mid-morph`).toBeGreaterThan(0);\n> 100 |     expect.soft(off.map((r) => `${r.i}@${r.t}ms ${r.morph ? \"morph\" : \"rest\"} scale ${r.scale}: ${r.worst} px (${r.at})`), `${cell}: frames whose end is not a circle of half the cross extent`).toEqual([]);\n      |                                                                                                                                                                                                  ^\n  101 | }\n  102 |\n  103 | for (const dark of [false, true]) {\n    at judge (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1-critic-2.spec.ts:100:194)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1-critic-2.spec.ts:123:17"
+                        }
+                      ],
+                      "stdout": [
+                        {
+                          "text": "c2 {\"cell\":\"dark-390c ch expand\",\"frames\":12,\"morphFrames\":12,\"off\":12,\"rows\":[{\"i\":0,\"t\":35,\"morph\":true,\"scale\":\"0.531085 1\",\"main\":188.66666666666666,\"cross\":60,\"worst\":-12.92,\"at\":\"start-a@0.1 inset 4.0 want 16.9\"},{\"i\":1,\"t\":82,\"morph\":true,\"scale\":\"0.75392 1\",\"main\":246.33333333333334,\"cross\":60,\"worst\":-11.92,\"at\":\"end-a@0.1 inset 5.0 want 16.9\"},{\"i\":2,\"t\":124,\"morph\":true,\"scale\":\"0.879688 1\",\"main\":278,\"cross\":60,\"worst\":-10.92,\"at\":\"start-a@0.1 inset 6.0 want 16.9\"},{\"i\":3,\"t\":168,\"morph\":true,\"scale\":\"0.952269 1\",\"main\":294,\"cross\":60,\"worst\":-10.92,\"at\":\"start-a@0.1 inset 6.0 want 16.9\"},{\"i\":4,\"t\":207,\"morph\":true,\"scale\":\"0.983926 1\",\"main\":301,\"cross\":60,\"worst\":-10.92,\"at\":\"end-a@0.1 inset 6.0 want 16.9\"},{\"i\":5,\"t\":249,\"morph\":true,\"scale\":\"0.995777 1\",\"main\":303.3333333333333,\"cross\":60,\"worst\":-10.59,\"at\":\"start-a@0.1 inset 6.3 want 16.9\"},{\"i\":6,\"t\":289,\"morph\":true,\"scale\":\"1\",\"main\":304,\"cross\":60,\"worst\":-10.26,\"at\":\"start-a@0.1 inset 6.7 want 16.9\"},{\"i\":7,\"t\":322,\"morph\":true,\"scale\":\"1\",\"main\":304,\"cross\":60,\"worst\":-10.26,\"at\":\"start-a@0.1 inset 6.7 want 16.9\"},{\"i\":8,\"t\":356,\"morph\":true,\"scale\":\"1\",\"main\":304,\"cross\":60,\"worst\":-10.26,\"at\":\"start-a@0.1 inset 6.7 want 16.9\"},{\"i\":9,\"t\":390,\"morph\":true,\"scale\":\"1\",\"main\":304,\"cross\":60,\"worst\":-10.26,\"at\":\"start-a@0.1 inset 6.7 want 16.9\"},{\"i\":10,\"t\":431,\"morph\":true,\"scale\":\"1\",\"main\":304,\"cross\":60,\"worst\":-10.26,\"at\":\"start-a@0.1 inset 6.7 want 16.9\"},{\"i\":11,\"t\":465,\"morph\":true,\"scale\":\"1\",\"main\":304,\"cross\":60,\"worst\":-10.26,\"at\":\"start-a@0.1 inset 6.7 want 16.9\"}]}\n"
+                        },
+                        {
+                          "text": "c2 {\"cell\":\"dark-390c ch collapse\",\"frames\":12,\"morphFrames\":12,\"off\":12,\"rows\":[{\"i\":0,\"t\":29,\"morph\":true,\"scale\":\"0.975494 1\",\"main\":281.3333333333333,\"cross\":60,\"worst\":-10.92,\"at\":\"start-a@0.1 inset 6.0 want 16.9\"},{\"i\":1,\"t\":64,\"morph\":true,\"scale\":\"0.856401 1\",\"main\":240.33333333333334,\"cross\":60,\"worst\":-11.92,\"at\":\"start-a@0.1 inset 5.0 want 16.9\"},{\"i\":2,\"t\":105,\"morph\":true,\"scale\":\"0.728752 1\",\"main\":196.33333333333334,\"cross\":60,\"worst\":-12.92,\"at\":\"start-a@0.1 inset 4.0 want 16.9\"},{\"i\":3,\"t\":135,\"morph\":true,\"scale\":\"0.611788 1\",\"main\":176.66666666666666,\"cross\":60,\"worst\":-13.26,\"at\":\"end-a@0.1 inset 3.7 want 16.9\"},{\"i\":4,\"t\":171,\"morph\":true,\"scale\":\"0.555779 1\",\"main\":163.33333333333334,\"cross\":60,\"worst\":-13.59,\"at\":\"start-a@0.1 inset 3.3 want 16.9\"},{\"i\":5,\"t\":204,\"morph\":true,\"scale\":\"0.527948 1\",\"main\":157.33333333333334,\"cross\":60,\"worst\":-13.59,\"at\":\"start-a@0.1 inset 3.3 want 16.9\"},{\"i\":6,\"t\":239,\"morph\":true,\"scale\":\"0.512101 1\",\"main\":154.66666666666666,\"cross\":60,\"worst\":-13.59,\"at\":\"start-a@0.1 inset 3.3 want 16.9\"},{\"i\":7,\"t\":270,\"morph\":true,\"scale\":\"0.506861 1\",\"main\":153.66666666666666,\"cross\":60,\"worst\":-13.92,\"at\":\"start-a@0.1 inset 3.0 want 16.9\"},{\"i\":8,\"t\":305,\"morph\":true,\"scale\":\"0.506579 1\",\"main\":153.66666666666666,\"cross\":60,\"worst\":-13.92,\"at\":\"start-a@0.1 inset 3.0 want 16.9\"},{\"i\":9,\"t\":339,\"morph\":true,\"scale\":\"0.506579 1\",\"main\":153.66666666666666,\"cross\":60,\"worst\":-13.92,\"at\":\"start-a@0.1 inset 3.0 want 16.9\"},{\"i\":10,\"t\":372,\"morph\":true,\"scale\":\"0.506579 1\",\"main\":153.66666666666666,\"cross\":60,\"worst\":-13.92,\"at\":\"start-a@0.1 inset 3.0 want 16.9\"},{\"i\":11,\"t\":411,\"morph\":true,\"scale\":\"0.506579 1\",\"main\":153.66666666666666,\"cross\":60,\"worst\":-13.92,\"at\":\"start-a@0.1 inset 3.0 want 16.9\"}]}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T03:52:26.868Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/test-results/release-11-0-1-critic-2-cr-f53ef-the-expand-and-the-collapse-chromium-headless-new/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1-critic-2.spec.ts",
+                        "column": 194,
+                        "line": 100
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "d6a71fc737357e66268e-b7bfab062f2fb0fc0cb2",
+              "file": "release-11-0-1-critic-2.spec.ts",
+              "line": 113,
+              "column": 13
+            },
+            {
+              "title": "s dark-390c: the open dock's end in paint through the morph to its narrow face and back",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 6,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 2450,
+                      "error": {
+                        "message": "Error: dark-390c ch to-narrow: frames whose end is not a circle of half the cross extent\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 14\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"0@39ms rest scale none: -16.92 px (end-a@0.1 inset 0.0 want 16.9)\",\u001b[39m\n\u001b[31m+   \"1@87ms rest scale none: -16.92 px (end-a@0.1 inset 0.0 want 16.9)\",\u001b[39m\n\u001b[31m+   \"2@130ms rest scale none: -16.92 px (end-a@0.1 inset 0.0 want 16.9)\",\u001b[39m\n\u001b[31m+   \"3@165ms rest scale none: -16.92 px (end-a@0.1 inset 0.0 want 16.9)\",\u001b[39m\n\u001b[31m+   \"4@202ms rest scale none: -16.92 px (end-a@0.1 inset 0.0 want 16.9)\",\u001b[39m\n\u001b[31m+   \"5@235ms rest scale none: -16.92 px (end-a@0.1 inset 0.0 want 16.9)\",\u001b[39m\n\u001b[31m+   \"6@270ms rest scale none: -16.92 px (end-a@0.1 inset 0.0 want 16.9)\",\u001b[39m\n\u001b[31m+   \"7@304ms rest scale none: -16.92 px (end-a@0.1 inset 0.0 want 16.9)\",\u001b[39m\n\u001b[31m+   \"8@337ms rest scale none: -16.92 px (end-a@0.1 inset 0.0 want 16.9)\",\u001b[39m\n\u001b[31m+   \"9@371ms rest scale none: -16.92 px (end-a@0.1 inset 0.0 want 16.9)\",\u001b[39m\n\u001b[31m+   \"10@404ms rest scale none: -16.92 px (end-a@0.1 inset 0.0 want 16.9)\",\u001b[39m\n\u001b[31m+   \"11@442ms rest scale none: -16.92 px (end-a@0.1 inset 0.0 want 16.9)\",\u001b[39m\n\u001b[31m+ ]\u001b[39m",
+                        "stack": "Error: dark-390c ch to-narrow: frames whose end is not a circle of half the cross extent\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 14\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"0@39ms rest scale none: -16.92 px (end-a@0.1 inset 0.0 want 16.9)\",\u001b[39m\n\u001b[31m+   \"1@87ms rest scale none: -16.92 px (end-a@0.1 inset 0.0 want 16.9)\",\u001b[39m\n\u001b[31m+   \"2@130ms rest scale none: -16.92 px (end-a@0.1 inset 0.0 want 16.9)\",\u001b[39m\n\u001b[31m+   \"3@165ms rest scale none: -16.92 px (end-a@0.1 inset 0.0 want 16.9)\",\u001b[39m\n\u001b[31m+   \"4@202ms rest scale none: -16.92 px (end-a@0.1 inset 0.0 want 16.9)\",\u001b[39m\n\u001b[31m+   \"5@235ms rest scale none: -16.92 px (end-a@0.1 inset 0.0 want 16.9)\",\u001b[39m\n\u001b[31m+   \"6@270ms rest scale none: -16.92 px (end-a@0.1 inset 0.0 want 16.9)\",\u001b[39m\n\u001b[31m+   \"7@304ms rest scale none: -16.92 px (end-a@0.1 inset 0.0 want 16.9)\",\u001b[39m\n\u001b[31m+   \"8@337ms rest scale none: -16.92 px (end-a@0.1 inset 0.0 want 16.9)\",\u001b[39m\n\u001b[31m+   \"9@371ms rest scale none: -16.92 px (end-a@0.1 inset 0.0 want 16.9)\",\u001b[39m\n\u001b[31m+   \"10@404ms rest scale none: -16.92 px (end-a@0.1 inset 0.0 want 16.9)\",\u001b[39m\n\u001b[31m+   \"11@442ms rest scale none: -16.92 px (end-a@0.1 inset 0.0 want 16.9)\",\u001b[39m\n\u001b[31m+ ]\u001b[39m\n    at judge (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1-critic-2.spec.ts:100:194)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1-critic-2.spec.ts:131:21",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1-critic-2.spec.ts",
+                          "column": 194,
+                          "line": 100
+                        },
+                        "snippet": "   98 |     // face's width on the first frame), so `s` reads every frame and asks for no morph.\n   99 |     if (morphs) expect.soft(morph.length, `${cell}: frames captured mid-morph`).toBeGreaterThan(0);\n> 100 |     expect.soft(off.map((r) => `${r.i}@${r.t}ms ${r.morph ? \"morph\" : \"rest\"} scale ${r.scale}: ${r.worst} px (${r.at})`), `${cell}: frames whose end is not a circle of half the cross extent`).toEqual([]);\n      |                                                                                                                                                                                                  ^\n  101 | }\n  102 |\n  103 | for (const dark of [false, true]) {"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1-critic-2.spec.ts",
+                            "column": 194,
+                            "line": 100
+                          },
+                          "message": "Error: dark-390c ch to-narrow: frames whose end is not a circle of half the cross extent\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 14\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"0@39ms rest scale none: -16.92 px (end-a@0.1 inset 0.0 want 16.9)\",\u001b[39m\n\u001b[31m+   \"1@87ms rest scale none: -16.92 px (end-a@0.1 inset 0.0 want 16.9)\",\u001b[39m\n\u001b[31m+   \"2@130ms rest scale none: -16.92 px (end-a@0.1 inset 0.0 want 16.9)\",\u001b[39m\n\u001b[31m+   \"3@165ms rest scale none: -16.92 px (end-a@0.1 inset 0.0 want 16.9)\",\u001b[39m\n\u001b[31m+   \"4@202ms rest scale none: -16.92 px (end-a@0.1 inset 0.0 want 16.9)\",\u001b[39m\n\u001b[31m+   \"5@235ms rest scale none: -16.92 px (end-a@0.1 inset 0.0 want 16.9)\",\u001b[39m\n\u001b[31m+   \"6@270ms rest scale none: -16.92 px (end-a@0.1 inset 0.0 want 16.9)\",\u001b[39m\n\u001b[31m+   \"7@304ms rest scale none: -16.92 px (end-a@0.1 inset 0.0 want 16.9)\",\u001b[39m\n\u001b[31m+   \"8@337ms rest scale none: -16.92 px (end-a@0.1 inset 0.0 want 16.9)\",\u001b[39m\n\u001b[31m+   \"9@371ms rest scale none: -16.92 px (end-a@0.1 inset 0.0 want 16.9)\",\u001b[39m\n\u001b[31m+   \"10@404ms rest scale none: -16.92 px (end-a@0.1 inset 0.0 want 16.9)\",\u001b[39m\n\u001b[31m+   \"11@442ms rest scale none: -16.92 px (end-a@0.1 inset 0.0 want 16.9)\",\u001b[39m\n\u001b[31m+ ]\u001b[39m\n\n   98 |     // face's width on the first frame), so `s` reads every frame and asks for no morph.\n   99 |     if (morphs) expect.soft(morph.length, `${cell}: frames captured mid-morph`).toBeGreaterThan(0);\n> 100 |     expect.soft(off.map((r) => `${r.i}@${r.t}ms ${r.morph ? \"morph\" : \"rest\"} scale ${r.scale}: ${r.worst} px (${r.at})`), `${cell}: frames whose end is not a circle of half the cross extent`).toEqual([]);\n      |                                                                                                                                                                                                  ^\n  101 | }\n  102 |\n  103 | for (const dark of [false, true]) {\n    at judge (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1-critic-2.spec.ts:100:194)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1-critic-2.spec.ts:131:21"
+                        },
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1-critic-2.spec.ts",
+                            "column": 194,
+                            "line": 100
+                          },
+                          "message": "Error: dark-390c ch to-wide: frames whose end is not a circle of half the cross extent\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 14\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"0@32ms rest scale none: -10.59 px (end-a@0.1 inset 6.3 want 16.9)\",\u001b[39m\n\u001b[31m+   \"1@78ms rest scale none: -10.59 px (end-a@0.1 inset 6.3 want 16.9)\",\u001b[39m\n\u001b[31m+   \"2@111ms rest scale none: -10.59 px (end-a@0.1 inset 6.3 want 16.9)\",\u001b[39m\n\u001b[31m+   \"3@143ms rest scale none: -10.59 px (end-a@0.1 inset 6.3 want 16.9)\",\u001b[39m\n\u001b[31m+   \"4@182ms rest scale none: -10.59 px (end-a@0.1 inset 6.3 want 16.9)\",\u001b[39m\n\u001b[31m+   \"5@223ms rest scale none: -10.59 px (end-a@0.1 inset 6.3 want 16.9)\",\u001b[39m\n\u001b[31m+   \"6@257ms rest scale none: -10.59 px (end-a@0.1 inset 6.3 want 16.9)\",\u001b[39m\n\u001b[31m+   \"7@302ms rest scale none: -10.59 px (end-a@0.1 inset 6.3 want 16.9)\",\u001b[39m\n\u001b[31m+   \"8@341ms rest scale none: -10.59 px (end-a@0.1 inset 6.3 want 16.9)\",\u001b[39m\n\u001b[31m+   \"9@373ms rest scale none: -10.59 px (end-a@0.1 inset 6.3 want 16.9)\",\u001b[39m\n\u001b[31m+   \"10@410ms rest scale none: -10.59 px (end-a@0.1 inset 6.3 want 16.9)\",\u001b[39m\n\u001b[31m+   \"11@449ms rest scale none: -10.59 px (end-a@0.1 inset 6.3 want 16.9)\",\u001b[39m\n\u001b[31m+ ]\u001b[39m\n\n   98 |     // face's width on the first frame), so `s` reads every frame and asks for no morph.\n   99 |     if (morphs) expect.soft(morph.length, `${cell}: frames captured mid-morph`).toBeGreaterThan(0);\n> 100 |     expect.soft(off.map((r) => `${r.i}@${r.t}ms ${r.morph ? \"morph\" : \"rest\"} scale ${r.scale}: ${r.worst} px (${r.at})`), `${cell}: frames whose end is not a circle of half the cross extent`).toEqual([]);\n      |                                                                                                                                                                                                  ^\n  101 | }\n  102 |\n  103 | for (const dark of [false, true]) {\n    at judge (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1-critic-2.spec.ts:100:194)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1-critic-2.spec.ts:134:21"
+                        }
+                      ],
+                      "stdout": [
+                        {
+                          "text": "c2 {\"cell\":\"dark-390c ch to-narrow\",\"frames\":12,\"morphFrames\":0,\"off\":12,\"rows\":[{\"i\":0,\"t\":39,\"morph\":false,\"scale\":\"none\",\"main\":162,\"cross\":60,\"worst\":-16.92,\"at\":\"end-a@0.1 inset 0.0 want 16.9\"},{\"i\":1,\"t\":87,\"morph\":false,\"scale\":\"none\",\"main\":162,\"cross\":60,\"worst\":-16.92,\"at\":\"end-a@0.1 inset 0.0 want 16.9\"},{\"i\":2,\"t\":130,\"morph\":false,\"scale\":\"none\",\"main\":162,\"cross\":60,\"worst\":-16.92,\"at\":\"end-a@0.1 inset 0.0 want 16.9\"},{\"i\":3,\"t\":165,\"morph\":false,\"scale\":\"none\",\"main\":162,\"cross\":60,\"worst\":-16.92,\"at\":\"end-a@0.1 inset 0.0 want 16.9\"},{\"i\":4,\"t\":202,\"morph\":false,\"scale\":\"none\",\"main\":162,\"cross\":60,\"worst\":-16.92,\"at\":\"end-a@0.1 inset 0.0 want 16.9\"},{\"i\":5,\"t\":235,\"morph\":false,\"scale\":\"none\",\"main\":162,\"cross\":60,\"worst\":-16.92,\"at\":\"end-a@0.1 inset 0.0 want 16.9\"},{\"i\":6,\"t\":270,\"morph\":false,\"scale\":\"none\",\"main\":162,\"cross\":60,\"worst\":-16.92,\"at\":\"end-a@0.1 inset 0.0 want 16.9\"},{\"i\":7,\"t\":304,\"morph\":false,\"scale\":\"none\",\"main\":162,\"cross\":60,\"worst\":-16.92,\"at\":\"end-a@0.1 inset 0.0 want 16.9\"},{\"i\":8,\"t\":337,\"morph\":false,\"scale\":\"none\",\"main\":162,\"cross\":60,\"worst\":-16.92,\"at\":\"end-a@0.1 inset 0.0 want 16.9\"},{\"i\":9,\"t\":371,\"morph\":false,\"scale\":\"none\",\"main\":162,\"cross\":60,\"worst\":-16.92,\"at\":\"end-a@0.1 inset 0.0 want 16.9\"},{\"i\":10,\"t\":404,\"morph\":false,\"scale\":\"none\",\"main\":162,\"cross\":60,\"worst\":-16.92,\"at\":\"end-a@0.1 inset 0.0 want 16.9\"},{\"i\":11,\"t\":442,\"morph\":false,\"scale\":\"none\",\"main\":162,\"cross\":60,\"worst\":-16.92,\"at\":\"end-a@0.1 inset 0.0 want 16.9\"}]}\n"
+                        },
+                        {
+                          "text": "c2 {\"cell\":\"dark-390c ch to-wide\",\"frames\":12,\"morphFrames\":0,\"off\":12,\"rows\":[{\"i\":0,\"t\":32,\"morph\":false,\"scale\":\"none\",\"main\":303.6666666666667,\"cross\":60,\"worst\":-10.59,\"at\":\"end-a@0.1 inset 6.3 want 16.9\"},{\"i\":1,\"t\":78,\"morph\":false,\"scale\":\"none\",\"main\":303.6666666666667,\"cross\":60,\"worst\":-10.59,\"at\":\"end-a@0.1 inset 6.3 want 16.9\"},{\"i\":2,\"t\":111,\"morph\":false,\"scale\":\"none\",\"main\":303.6666666666667,\"cross\":60,\"worst\":-10.59,\"at\":\"end-a@0.1 inset 6.3 want 16.9\"},{\"i\":3,\"t\":143,\"morph\":false,\"scale\":\"none\",\"main\":303.6666666666667,\"cross\":60,\"worst\":-10.59,\"at\":\"end-a@0.1 inset 6.3 want 16.9\"},{\"i\":4,\"t\":182,\"morph\":false,\"scale\":\"none\",\"main\":303.6666666666667,\"cross\":60,\"worst\":-10.59,\"at\":\"end-a@0.1 inset 6.3 want 16.9\"},{\"i\":5,\"t\":223,\"morph\":false,\"scale\":\"none\",\"main\":303.6666666666667,\"cross\":60,\"worst\":-10.59,\"at\":\"end-a@0.1 inset 6.3 want 16.9\"},{\"i\":6,\"t\":257,\"morph\":false,\"scale\":\"none\",\"main\":303.6666666666667,\"cross\":60,\"worst\":-10.59,\"at\":\"end-a@0.1 inset 6.3 want 16.9\"},{\"i\":7,\"t\":302,\"morph\":false,\"scale\":\"none\",\"main\":303.6666666666667,\"cross\":60,\"worst\":-10.59,\"at\":\"end-a@0.1 inset 6.3 want 16.9\"},{\"i\":8,\"t\":341,\"morph\":false,\"scale\":\"none\",\"main\":303.6666666666667,\"cross\":60,\"worst\":-10.59,\"at\":\"end-a@0.1 inset 6.3 want 16.9\"},{\"i\":9,\"t\":373,\"morph\":false,\"scale\":\"none\",\"main\":303.6666666666667,\"cross\":60,\"worst\":-10.59,\"at\":\"end-a@0.1 inset 6.3 want 16.9\"},{\"i\":10,\"t\":410,\"morph\":false,\"scale\":\"none\",\"main\":303.6666666666667,\"cross\":60,\"worst\":-10.59,\"at\":\"end-a@0.1 inset 6.3 want 16.9\"},{\"i\":11,\"t\":449,\"morph\":false,\"scale\":\"none\",\"main\":303.6666666666667,\"cross\":60,\"worst\":-10.59,\"at\":\"end-a@0.1 inset 6.3 want 16.9\"}]}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T03:52:29.862Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/test-results/release-11-0-1-critic-2-cr-7f265-to-its-narrow-face-and-back-chromium-headless-new/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1-critic-2.spec.ts",
+                        "column": 194,
+                        "line": 100
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "d6a71fc737357e66268e-e3a779368e4d4f6a22a6",
+              "file": "release-11-0-1-critic-2.spec.ts",
+              "line": 127,
+              "column": 17
+            },
+            {
+              "title": "v dark-390c: a vertical dock's end in paint through the expand and the collapse",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 7,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 3866,
+                      "error": {
+                        "message": "Error: dark-390c ch v-expand: frames whose end is not a circle of half the cross extent\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 14\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"0@48ms morph scale 1 0.354681: -16.98 px (end-a@0.1 inset 2.3 want 19.3)\",\u001b[39m\n\u001b[31m+   \"1@163ms morph scale 1 0.910267: -13.98 px (end-a@0.1 inset 5.3 want 19.3)\",\u001b[39m\n\u001b[31m+   \"2@269ms morph scale 1 0.997597: -13.32 px (start-a@0.1 inset 6.0 want 19.3)\",\u001b[39m\n\u001b[31m+   \"3@453ms morph scale 1: -13.32 px (start-a@0.1 inset 6.0 want 19.3)\",\u001b[39m\n\u001b[31m+   \"4@594ms rest scale none: -13.32 px (start-a@0.1 inset 6.0 want 19.3)\",\u001b[39m\n\u001b[31m+   \"5@662ms rest scale none: -13.32 px (start-a@0.1 inset 6.0 want 19.3)\",\u001b[39m\n\u001b[31m+   \"6@717ms rest scale none: -13.32 px (start-a@0.1 inset 6.0 want 19.3)\",\u001b[39m\n\u001b[31m+   \"7@780ms rest scale none: -13.32 px (start-a@0.1 inset 6.0 want 19.3)\",\u001b[39m\n\u001b[31m+   \"8@871ms rest scale none: -13.32 px (start-a@0.1 inset 6.0 want 19.3)\",\u001b[39m\n\u001b[31m+   \"9@950ms rest scale none: -13.32 px (start-a@0.1 inset 6.0 want 19.3)\",\u001b[39m\n\u001b[31m+   \"10@1012ms rest scale none: -13.32 px (start-a@0.1 inset 6.0 want 19.3)\",\u001b[39m\n\u001b[31m+   \"11@1125ms rest scale none: -13.32 px (start-a@0.1 inset 6.0 want 19.3)\",\u001b[39m\n\u001b[31m+ ]\u001b[39m",
+                        "stack": "Error: dark-390c ch v-expand: frames whose end is not a circle of half the cross extent\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 14\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"0@48ms morph scale 1 0.354681: -16.98 px (end-a@0.1 inset 2.3 want 19.3)\",\u001b[39m\n\u001b[31m+   \"1@163ms morph scale 1 0.910267: -13.98 px (end-a@0.1 inset 5.3 want 19.3)\",\u001b[39m\n\u001b[31m+   \"2@269ms morph scale 1 0.997597: -13.32 px (start-a@0.1 inset 6.0 want 19.3)\",\u001b[39m\n\u001b[31m+   \"3@453ms morph scale 1: -13.32 px (start-a@0.1 inset 6.0 want 19.3)\",\u001b[39m\n\u001b[31m+   \"4@594ms rest scale none: -13.32 px (start-a@0.1 inset 6.0 want 19.3)\",\u001b[39m\n\u001b[31m+   \"5@662ms rest scale none: -13.32 px (start-a@0.1 inset 6.0 want 19.3)\",\u001b[39m\n\u001b[31m+   \"6@717ms rest scale none: -13.32 px (start-a@0.1 inset 6.0 want 19.3)\",\u001b[39m\n\u001b[31m+   \"7@780ms rest scale none: -13.32 px (start-a@0.1 inset 6.0 want 19.3)\",\u001b[39m\n\u001b[31m+   \"8@871ms rest scale none: -13.32 px (start-a@0.1 inset 6.0 want 19.3)\",\u001b[39m\n\u001b[31m+   \"9@950ms rest scale none: -13.32 px (start-a@0.1 inset 6.0 want 19.3)\",\u001b[39m\n\u001b[31m+   \"10@1012ms rest scale none: -13.32 px (start-a@0.1 inset 6.0 want 19.3)\",\u001b[39m\n\u001b[31m+   \"11@1125ms rest scale none: -13.32 px (start-a@0.1 inset 6.0 want 19.3)\",\u001b[39m\n\u001b[31m+ ]\u001b[39m\n    at judge (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1-critic-2.spec.ts:100:194)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1-critic-2.spec.ts:143:21",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1-critic-2.spec.ts",
+                          "column": 194,
+                          "line": 100
+                        },
+                        "snippet": "   98 |     // face's width on the first frame), so `s` reads every frame and asks for no morph.\n   99 |     if (morphs) expect.soft(morph.length, `${cell}: frames captured mid-morph`).toBeGreaterThan(0);\n> 100 |     expect.soft(off.map((r) => `${r.i}@${r.t}ms ${r.morph ? \"morph\" : \"rest\"} scale ${r.scale}: ${r.worst} px (${r.at})`), `${cell}: frames whose end is not a circle of half the cross extent`).toEqual([]);\n      |                                                                                                                                                                                                  ^\n  101 | }\n  102 |\n  103 | for (const dark of [false, true]) {"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1-critic-2.spec.ts",
+                            "column": 194,
+                            "line": 100
+                          },
+                          "message": "Error: dark-390c ch v-expand: frames whose end is not a circle of half the cross extent\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 14\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"0@48ms morph scale 1 0.354681: -16.98 px (end-a@0.1 inset 2.3 want 19.3)\",\u001b[39m\n\u001b[31m+   \"1@163ms morph scale 1 0.910267: -13.98 px (end-a@0.1 inset 5.3 want 19.3)\",\u001b[39m\n\u001b[31m+   \"2@269ms morph scale 1 0.997597: -13.32 px (start-a@0.1 inset 6.0 want 19.3)\",\u001b[39m\n\u001b[31m+   \"3@453ms morph scale 1: -13.32 px (start-a@0.1 inset 6.0 want 19.3)\",\u001b[39m\n\u001b[31m+   \"4@594ms rest scale none: -13.32 px (start-a@0.1 inset 6.0 want 19.3)\",\u001b[39m\n\u001b[31m+   \"5@662ms rest scale none: -13.32 px (start-a@0.1 inset 6.0 want 19.3)\",\u001b[39m\n\u001b[31m+   \"6@717ms rest scale none: -13.32 px (start-a@0.1 inset 6.0 want 19.3)\",\u001b[39m\n\u001b[31m+   \"7@780ms rest scale none: -13.32 px (start-a@0.1 inset 6.0 want 19.3)\",\u001b[39m\n\u001b[31m+   \"8@871ms rest scale none: -13.32 px (start-a@0.1 inset 6.0 want 19.3)\",\u001b[39m\n\u001b[31m+   \"9@950ms rest scale none: -13.32 px (start-a@0.1 inset 6.0 want 19.3)\",\u001b[39m\n\u001b[31m+   \"10@1012ms rest scale none: -13.32 px (start-a@0.1 inset 6.0 want 19.3)\",\u001b[39m\n\u001b[31m+   \"11@1125ms rest scale none: -13.32 px (start-a@0.1 inset 6.0 want 19.3)\",\u001b[39m\n\u001b[31m+ ]\u001b[39m\n\n   98 |     // face's width on the first frame), so `s` reads every frame and asks for no morph.\n   99 |     if (morphs) expect.soft(morph.length, `${cell}: frames captured mid-morph`).toBeGreaterThan(0);\n> 100 |     expect.soft(off.map((r) => `${r.i}@${r.t}ms ${r.morph ? \"morph\" : \"rest\"} scale ${r.scale}: ${r.worst} px (${r.at})`), `${cell}: frames whose end is not a circle of half the cross extent`).toEqual([]);\n      |                                                                                                                                                                                                  ^\n  101 | }\n  102 |\n  103 | for (const dark of [false, true]) {\n    at judge (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1-critic-2.spec.ts:100:194)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1-critic-2.spec.ts:143:21"
+                        },
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1-critic-2.spec.ts",
+                            "column": 194,
+                            "line": 100
+                          },
+                          "message": "Error: dark-390c ch v-collapse: frames whose end is not a circle of half the cross extent\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 14\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"0@44ms morph scale 1 0.96436: -12.31 px (start-a@0.1 inset 5.0 want 17.3)\",\u001b[39m\n\u001b[31m+   \"1@101ms morph scale 1 0.601459: -14.31 px (end-a@0.1 inset 3.0 want 17.3)\",\u001b[39m\n\u001b[31m+   \"2@195ms morph scale 1 0.340545: -15.64 px (end-a@0.1 inset 1.7 want 17.3)\",\u001b[39m\n\u001b[31m+   \"3@274ms morph scale 1 0.283538: -15.98 px (end-a@0.1 inset 1.3 want 17.3)\",\u001b[39m\n\u001b[31m+   \"4@419ms morph scale 1 0.282407: -15.98 px (end-a@0.1 inset 1.3 want 17.3)\",\u001b[39m\n\u001b[31m+   \"5@540ms morph scale 1 0.282407: -15.98 px (end-a@0.1 inset 1.3 want 17.3)\",\u001b[39m\n\u001b[31m+   \"6@611ms rest scale none: -17.31 px (end-a@0.1 inset 0.0 want 17.3)\",\u001b[39m\n\u001b[31m+   \"7@670ms rest scale none: -17.31 px (end-a@0.1 inset 0.0 want 17.3)\",\u001b[39m\n\u001b[31m+   \"8@719ms rest scale none: -17.31 px (end-a@0.1 inset 0.0 want 17.3)\",\u001b[39m\n\u001b[31m+   \"9@777ms rest scale none: -17.31 px (end-a@0.1 inset 0.0 want 17.3)\",\u001b[39m\n\u001b[31m+   \"10@890ms rest scale none: -17.31 px (end-a@0.1 inset 0.0 want 17.3)\",\u001b[39m\n\u001b[31m+   \"11@946ms rest scale none: -17.31 px (end-a@0.1 inset 0.0 want 17.3)\",\u001b[39m\n\u001b[31m+ ]\u001b[39m\n\n   98 |     // face's width on the first frame), so `s` reads every frame and asks for no morph.\n   99 |     if (morphs) expect.soft(morph.length, `${cell}: frames captured mid-morph`).toBeGreaterThan(0);\n> 100 |     expect.soft(off.map((r) => `${r.i}@${r.t}ms ${r.morph ? \"morph\" : \"rest\"} scale ${r.scale}: ${r.worst} px (${r.at})`), `${cell}: frames whose end is not a circle of half the cross extent`).toEqual([]);\n      |                                                                                                                                                                                                  ^\n  101 | }\n  102 |\n  103 | for (const dark of [false, true]) {\n    at judge (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1-critic-2.spec.ts:100:194)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1-critic-2.spec.ts:147:21"
+                        }
+                      ],
+                      "stdout": [
+                        {
+                          "text": "c2 {\"cell\":\"dark-390c ch v-expand\",\"frames\":12,\"morphFrames\":4,\"off\":12,\"rows\":[{\"i\":0,\"t\":48,\"morph\":true,\"scale\":\"1 0.354681\",\"main\":96.33333333333333,\"cross\":68,\"worst\":-16.98,\"at\":\"end-a@0.1 inset 2.3 want 19.3\"},{\"i\":1,\"t\":163,\"morph\":true,\"scale\":\"1 0.910267\",\"main\":203,\"cross\":68,\"worst\":-13.98,\"at\":\"end-a@0.1 inset 5.3 want 19.3\"},{\"i\":2,\"t\":269,\"morph\":true,\"scale\":\"1 0.997597\",\"main\":216,\"cross\":68,\"worst\":-13.32,\"at\":\"start-a@0.1 inset 6.0 want 19.3\"},{\"i\":3,\"t\":453,\"morph\":true,\"scale\":\"1\",\"main\":216,\"cross\":68,\"worst\":-13.32,\"at\":\"start-a@0.1 inset 6.0 want 19.3\"},{\"i\":4,\"t\":594,\"morph\":false,\"scale\":\"none\",\"main\":216,\"cross\":68,\"worst\":-13.32,\"at\":\"start-a@0.1 inset 6.0 want 19.3\"},{\"i\":5,\"t\":662,\"morph\":false,\"scale\":\"none\",\"main\":216,\"cross\":68,\"worst\":-13.32,\"at\":\"start-a@0.1 inset 6.0 want 19.3\"},{\"i\":6,\"t\":717,\"morph\":false,\"scale\":\"none\",\"main\":216,\"cross\":68,\"worst\":-13.32,\"at\":\"start-a@0.1 inset 6.0 want 19.3\"},{\"i\":7,\"t\":780,\"morph\":false,\"scale\":\"none\",\"main\":216,\"cross\":68,\"worst\":-13.32,\"at\":\"start-a@0.1 inset 6.0 want 19.3\"},{\"i\":8,\"t\":871,\"morph\":false,\"scale\":\"none\",\"main\":216,\"cross\":68,\"worst\":-13.32,\"at\":\"start-a@0.1 inset 6.0 want 19.3\"},{\"i\":9,\"t\":950,\"morph\":false,\"scale\":\"none\",\"main\":216,\"cross\":68,\"worst\":-13.32,\"at\":\"start-a@0.1 inset 6.0 want 19.3\"},{\"i\":10,\"t\":1012,\"morph\":false,\"scale\":\"none\",\"main\":216,\"cross\":68,\"worst\":-13.32,\"at\":\"start-a@0.1 inset 6.0 want 19.3\"},{\"i\":11,\"t\":1125,\"morph\":false,\"scale\":\"none\",\"main\":216,\"cross\":68,\"worst\":-13.32,\"at\":\"start-a@0.1 inset 6.0 want 19.3\"}]}\n"
+                        },
+                        {
+                          "text": "c2 {\"cell\":\"dark-390c ch v-collapse\",\"frames\":12,\"morphFrames\":6,\"off\":12,\"rows\":[{\"i\":0,\"t\":44,\"morph\":true,\"scale\":\"1 0.96436\",\"main\":180.33333333333334,\"cross\":61,\"worst\":-12.31,\"at\":\"start-a@0.1 inset 5.0 want 17.3\"},{\"i\":1,\"t\":101,\"morph\":true,\"scale\":\"1 0.601459\",\"main\":112,\"cross\":61,\"worst\":-14.31,\"at\":\"end-a@0.1 inset 3.0 want 17.3\"},{\"i\":2,\"t\":195,\"morph\":true,\"scale\":\"1 0.340545\",\"main\":67.33333333333333,\"cross\":61,\"worst\":-15.64,\"at\":\"end-a@0.1 inset 1.7 want 17.3\"},{\"i\":3,\"t\":274,\"morph\":true,\"scale\":\"1 0.283538\",\"main\":60.666666666666664,\"cross\":61,\"worst\":-15.98,\"at\":\"end-a@0.1 inset 1.3 want 17.3\"},{\"i\":4,\"t\":419,\"morph\":true,\"scale\":\"1 0.282407\",\"main\":60.666666666666664,\"cross\":61,\"worst\":-15.98,\"at\":\"end-a@0.1 inset 1.3 want 17.3\"},{\"i\":5,\"t\":540,\"morph\":true,\"scale\":\"1 0.282407\",\"main\":60.666666666666664,\"cross\":61,\"worst\":-15.98,\"at\":\"end-a@0.1 inset 1.3 want 17.3\"},{\"i\":6,\"t\":611,\"morph\":false,\"scale\":\"none\",\"main\":61,\"cross\":61,\"worst\":-17.31,\"at\":\"end-a@0.1 inset 0.0 want 17.3\"},{\"i\":7,\"t\":670,\"morph\":false,\"scale\":\"none\",\"main\":61,\"cross\":61,\"worst\":-17.31,\"at\":\"end-a@0.1 inset 0.0 want 17.3\"},{\"i\":8,\"t\":719,\"morph\":false,\"scale\":\"none\",\"main\":61,\"cross\":61,\"worst\":-17.31,\"at\":\"end-a@0.1 inset 0.0 want 17.3\"},{\"i\":9,\"t\":777,\"morph\":false,\"scale\":\"none\",\"main\":61,\"cross\":61,\"worst\":-17.31,\"at\":\"end-a@0.1 inset 0.0 want 17.3\"},{\"i\":10,\"t\":890,\"morph\":false,\"scale\":\"none\",\"main\":61,\"cross\":61,\"worst\":-17.31,\"at\":\"end-a@0.1 inset 0.0 want 17.3\"},{\"i\":11,\"t\":946,\"morph\":false,\"scale\":\"none\",\"main\":61,\"cross\":61,\"worst\":-17.31,\"at\":\"end-a@0.1 inset 0.0 want 17.3\"}]}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T03:52:32.906Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/test-results/release-11-0-1-critic-2-cr-6e39a-the-expand-and-the-collapse-chromium-headless-new/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/v1100/tests-visual/release-11-0-1-critic-2.spec.ts",
+                        "column": 194,
+                        "line": 100
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "d6a71fc737357e66268e-a3bfea9557450dd93a21",
+              "file": "release-11-0-1-critic-2.spec.ts",
+              "line": 137,
+              "column": 17
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-12T03:52:06.314Z",
+    "duration": 34608.553,
+    "expected": 1,
+    "skipped": 0,
+    "unexpected": 8,
+    "flaky": 0
+  }
+}

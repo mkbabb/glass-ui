@@ -1,0 +1,688 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "tests-visual/release-11-0-1-critic-2.config.ts",
+      "--project=webkit",
+      "release-11-0-1-fix-2.spec.ts",
+      "--workers=1"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/release-11-0-1-critic-2.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-headless-new",
+        "name": "chromium-headless-new",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "coarse-touch",
+        "name": "coarse-touch",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-0-1.spec.ts",
+          "release-11-0-1-daraksha.spec.ts",
+          "release-10-1-5.spec.ts",
+          "release-10-1-4.spec.ts",
+          "release-10-1-3.spec.ts",
+          "release-11-0-1-critic-1.spec.ts",
+          "release-11-0-1-critic-1b.spec.ts",
+          "release-11-0-1-fix-2.spec.ts",
+          "release-11-0-1-critic-2.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/docs/release-11.0.1/critic-2/runs/fix2-wk.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5412",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/",
+      "url": "http://localhost:5412",
+      "reuseExistingServer": true,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "release-11-0-1-fix-2.spec.ts",
+      "file": "release-11-0-1-fix-2.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "fix 2 1440f",
+          "file": "release-11-0-1-fix-2.spec.ts",
+          "line": 153,
+          "column": 10,
+          "specs": [
+            {
+              "title": "f1 1440f the figure dock open: the rest corner needs no script",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1995,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "f2 {\"cell\":\"1440f figure open\",\"published\":{\"inline\":\"56px\",\"root\":\"28px\",\"plate\":\"28px\",\"cross\":56},\"unpublished\":{\"inline\":\"\",\"root\":\"28px\",\"plate\":\"28px\",\"cross\":56}}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T03:21:42.428Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "c380e1d83c49878e06ce-39ac2fe0a98e10938058",
+              "file": "release-11-0-1-fix-2.spec.ts",
+              "line": 160,
+              "column": 13
+            },
+            {
+              "title": "f1 1440f the figure dock closed: the rest corner needs no script",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1519,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "f2 {\"cell\":\"1440f figure closed\",\"published\":{\"inline\":\"56px\",\"root\":\"28px\",\"plate\":\"28px\",\"cross\":56},\"unpublished\":{\"inline\":\"\",\"root\":\"28px\",\"plate\":\"28px\",\"cross\":56}}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T03:21:44.704Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "c380e1d83c49878e06ce-771fe1eebccdf8c0a5b8",
+              "file": "release-11-0-1-fix-2.spec.ts",
+              "line": 160,
+              "column": 13
+            },
+            {
+              "title": "f2 1440f a horizontal dock: the rest corner needs no script",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1325,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "f2 {\"cell\":\"1440f horizontal house\",\"published\":{\"inline\":\"56px\",\"root\":\"28px\",\"plate\":\"28px\",\"cross\":56},\"unpublished\":{\"inline\":\"\",\"root\":\"28px\",\"plate\":\"28px\",\"cross\":56}}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T03:21:46.234Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "c380e1d83c49878e06ce-f24d74c5421bdd809b98",
+              "file": "release-11-0-1-fix-2.spec.ts",
+              "line": 165,
+              "column": 13
+            },
+            {
+              "title": "f2 1440f a horizontal dock (cockpit): the rest corner needs no script",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1256,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "f2 {\"cell\":\"1440f horizontal cockpit\",\"published\":{\"inline\":\"52px\",\"root\":\"26px\",\"plate\":\"26px\",\"cross\":52},\"unpublished\":{\"inline\":\"\",\"root\":\"26px\",\"plate\":\"26px\",\"cross\":52}}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T03:21:47.566Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "c380e1d83c49878e06ce-a859245239b7ef1f4544",
+              "file": "release-11-0-1-fix-2.spec.ts",
+              "line": 165,
+              "column": 13
+            },
+            {
+              "title": "f4 1440f the prerendered figure dock open, no script: corners and paint",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1917,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "f2 {\"cell\":\"1440f prerendered open\",\"classes\":\"dock glass-dock horizontal shape-pill fit-content witness-dock\",\"scripts\":0,\"root\":\"28px\",\"plate\":\"28px\",\"box\":{\"x\":602.96875,\"y\":48,\"w\":234.046875,\"h\":56},\"paintRow\":4,\"stadium\":13.6,\"left\":13,\"right\":13}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T03:21:48.829Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "c380e1d83c49878e06ce-601ace5c449b4a43908d",
+              "file": "release-11-0-1-fix-2.spec.ts",
+              "line": 175,
+              "column": 13
+            },
+            {
+              "title": "f4 1440f the prerendered figure dock closed, no script: corners and paint",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1900,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "f2 {\"cell\":\"1440f prerendered closed\",\"classes\":\"dock glass-dock horizontal shape-pill collapsed fit-content witness-dock\",\"scripts\":0,\"root\":\"28px\",\"plate\":\"28px\",\"box\":{\"x\":669,\"y\":48,\"w\":102,\"h\":56},\"paintRow\":4,\"stadium\":13.6,\"left\":12.5,\"right\":12.5}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T03:21:50.754Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "c380e1d83c49878e06ce-cb0a1c5e0c4e3759b20f",
+              "file": "release-11-0-1-fix-2.spec.ts",
+              "line": 175,
+              "column": 13
+            },
+            {
+              "title": "f3 1440f a vertical dock: the rest corner needs no script",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1352,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "f2 {\"cell\":\"1440f vertical\",\"published\":{\"inline\":\"64px\",\"root\":\"32px\",\"plate\":\"32px\",\"cross\":64},\"unpublished\":{\"inline\":\"\",\"root\":\"32px\",\"plate\":\"32px\",\"cross\":64}}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T03:21:52.665Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "c380e1d83c49878e06ce-54dbdddfd5253659a389",
+              "file": "release-11-0-1-fix-2.spec.ts",
+              "line": 179,
+              "column": 9
+            }
+          ]
+        },
+        {
+          "title": "fix 2 390c",
+          "file": "release-11-0-1-fix-2.spec.ts",
+          "line": 153,
+          "column": 10,
+          "specs": [
+            {
+              "title": "f1 390c the figure dock open: the rest corner needs no script",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1460,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "f2 {\"cell\":\"390c figure open\",\"published\":{\"inline\":\"60px\",\"root\":\"30px\",\"plate\":\"30px\",\"cross\":60},\"unpublished\":{\"inline\":\"\",\"root\":\"30px\",\"plate\":\"30px\",\"cross\":60}}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T03:21:54.037Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "c380e1d83c49878e06ce-29c66aae30bcd720808c",
+              "file": "release-11-0-1-fix-2.spec.ts",
+              "line": 160,
+              "column": 13
+            },
+            {
+              "title": "f1 390c the figure dock closed: the rest corner needs no script",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1382,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "f2 {\"cell\":\"390c figure closed\",\"published\":{\"inline\":\"60px\",\"root\":\"30px\",\"plate\":\"30px\",\"cross\":60},\"unpublished\":{\"inline\":\"\",\"root\":\"30px\",\"plate\":\"30px\",\"cross\":60}}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T03:21:55.508Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "c380e1d83c49878e06ce-64581395de9c51a03a00",
+              "file": "release-11-0-1-fix-2.spec.ts",
+              "line": 160,
+              "column": 13
+            },
+            {
+              "title": "f2 390c a horizontal dock: the rest corner needs no script",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1422,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "f2 {\"cell\":\"390c horizontal house\",\"published\":{\"inline\":\"60px\",\"root\":\"30px\",\"plate\":\"30px\",\"cross\":60},\"unpublished\":{\"inline\":\"\",\"root\":\"30px\",\"plate\":\"30px\",\"cross\":60}}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T03:21:56.898Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "c380e1d83c49878e06ce-52b4a7b5c34b4d5bb34f",
+              "file": "release-11-0-1-fix-2.spec.ts",
+              "line": 165,
+              "column": 13
+            },
+            {
+              "title": "f2 390c a horizontal dock (cockpit): the rest corner needs no script",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1367,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "f2 {\"cell\":\"390c horizontal cockpit\",\"published\":{\"inline\":\"52px\",\"root\":\"26px\",\"plate\":\"26px\",\"cross\":52},\"unpublished\":{\"inline\":\"\",\"root\":\"26px\",\"plate\":\"26px\",\"cross\":52}}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T03:21:58.326Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "c380e1d83c49878e06ce-40e6b8245c3359889edb",
+              "file": "release-11-0-1-fix-2.spec.ts",
+              "line": 165,
+              "column": 13
+            },
+            {
+              "title": "f4 390c the prerendered figure dock open, no script: corners and paint",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1971,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "f2 {\"cell\":\"390c prerendered open\",\"classes\":\"dock glass-dock horizontal shape-pill fit-content witness-dock\",\"scripts\":0,\"root\":\"30px\",\"plate\":\"30px\",\"box\":{\"x\":75.0625,\"y\":48,\"w\":239.859375,\"h\":60},\"paintRow\":4,\"stadium\":15,\"left\":13.9,\"right\":13.9}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T03:21:59.701Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "c380e1d83c49878e06ce-fa8a3c515a49ca1c6202",
+              "file": "release-11-0-1-fix-2.spec.ts",
+              "line": 175,
+              "column": 13
+            },
+            {
+              "title": "f4 390c the prerendered figure dock closed, no script: corners and paint",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1924,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "f2 {\"cell\":\"390c prerendered closed\",\"classes\":\"dock glass-dock horizontal shape-pill collapsed fit-content witness-dock\",\"scripts\":0,\"root\":\"30px\",\"plate\":\"30px\",\"box\":{\"x\":140,\"y\":48,\"w\":110,\"h\":60},\"paintRow\":4,\"stadium\":15,\"left\":14,\"right\":14}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T03:22:01.681Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "c380e1d83c49878e06ce-bd42276a6b97bd835ed4",
+              "file": "release-11-0-1-fix-2.spec.ts",
+              "line": 175,
+              "column": 13
+            },
+            {
+              "title": "f3 390c a vertical dock: the rest corner needs no script",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1432,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "f2 {\"cell\":\"390c vertical\",\"published\":{\"inline\":\"68px\",\"root\":\"34px\",\"plate\":\"34px\",\"cross\":68},\"unpublished\":{\"inline\":\"\",\"root\":\"34px\",\"plate\":\"34px\",\"cross\":68}}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T03:22:03.611Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "c380e1d83c49878e06ce-41d03ba1952e0b80fdba",
+              "file": "release-11-0-1-fix-2.spec.ts",
+              "line": 179,
+              "column": 9
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-12T03:21:40.442Z",
+    "duration": 24686.064000000002,
+    "expected": 14,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

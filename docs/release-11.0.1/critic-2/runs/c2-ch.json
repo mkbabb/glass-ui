@@ -1,0 +1,613 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "tests-visual/playwright.config.ts",
+      "--project=chromium-headless-new",
+      "release-11-0-1-critic-2.spec.ts",
+      "--workers=1"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/playwright.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-headless-new",
+        "name": "chromium-headless-new",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "coarse-touch",
+        "name": "coarse-touch",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "safari-webgl.spec.ts",
+          "aurora-swraster.spec.ts",
+          "release-10-1-1.spec.ts",
+          "release-10-1-2.spec.ts",
+          "release-10-1-3.spec.ts",
+          "release-10-1-4.spec.ts",
+          "release-10-1-5.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/docs/release-11.0.1/critic-2/runs/c2-ch.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5411",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/",
+      "url": "http://localhost:5411",
+      "reuseExistingServer": true,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "release-11-0-1-critic-2.spec.ts",
+      "file": "release-11-0-1-critic-2.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "k a press-only dock stays folded when Tab reaches its summary, and Enter opens it",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2930,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "c2 {\"cell\":\"ch press-only\",\"reached\":{\"collapsed\":true,\"morphing\":false,\"active\":\"div.dock-layer dock-layer--summary is-active\",\"onSummary\":true,\"focusVisible\":true,\"label\":\"open the dock\"},\"afterTab\":{\"collapsed\":true,\"morphing\":false,\"active\":\"div.dock-layer dock-layer--summary is-active\",\"onSummary\":true,\"focusVisible\":true,\"label\":\"open the dock\"},\"afterEnter\":{\"collapsed\":false,\"morphing\":false,\"active\":\"button.dock-icon-button glass-specular-track glass-capsule-hover\",\"onSummary\":false,\"focusVisible\":true,\"label\":\"One\"}}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T03:41:54.623Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d6a71fc737357e66268e-80ca395ead4f58ad3c08",
+          "file": "release-11-0-1-critic-2.spec.ts",
+          "line": 152,
+          "column": 1
+        }
+      ],
+      "suites": [
+        {
+          "title": "critic 2 light-1440f",
+          "file": "release-11-0-1-critic-2.spec.ts",
+          "line": 104,
+          "column": 14,
+          "specs": [
+            {
+              "title": "m light-1440f: the figure dock's end in paint through the expand and the collapse",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 4103,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "c2 {\"cell\":\"light-1440f ch expand\",\"frames\":12,\"morphFrames\":8,\"off\":0,\"rows\":[{\"i\":0,\"t\":46,\"morph\":true,\"scale\":\"0.597287 1\",\"main\":213.33333333333334,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"},{\"i\":1,\"t\":119,\"morph\":true,\"scale\":\"0.889642 1\",\"main\":279.3333333333333,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"},{\"i\":2,\"t\":197,\"morph\":true,\"scale\":\"0.983692 1\",\"main\":299,\"cross\":56,\"worst\":-0.74,\"at\":\"end-a@0.1 inset 15.3 want 16.1\"},{\"i\":3,\"t\":267,\"morph\":true,\"scale\":\"1\",\"main\":302,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"},{\"i\":4,\"t\":334,\"morph\":true,\"scale\":\"1\",\"main\":302,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"},{\"i\":5,\"t\":402,\"morph\":true,\"scale\":\"1\",\"main\":302,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"},{\"i\":6,\"t\":469,\"morph\":true,\"scale\":\"1\",\"main\":302,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"},{\"i\":7,\"t\":543,\"morph\":true,\"scale\":\"1\",\"main\":302,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"},{\"i\":8,\"t\":600,\"morph\":false,\"scale\":\"none\",\"main\":302,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"},{\"i\":9,\"t\":675,\"morph\":false,\"scale\":\"none\",\"main\":302,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"},{\"i\":10,\"t\":742,\"morph\":false,\"scale\":\"none\",\"main\":302,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"},{\"i\":11,\"t\":808,\"morph\":false,\"scale\":\"none\",\"main\":302,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"}]}\n"
+                        },
+                        {
+                          "text": "c2 {\"cell\":\"light-1440f ch collapse\",\"frames\":12,\"morphFrames\":10,\"off\":0,\"rows\":[{\"i\":0,\"t\":42,\"morph\":true,\"scale\":\"0.918846 1\",\"main\":253.33333333333334,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"},{\"i\":1,\"t\":100,\"morph\":true,\"scale\":\"0.677135 1\",\"main\":188,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"},{\"i\":2,\"t\":160,\"morph\":true,\"scale\":\"0.533497 1\",\"main\":155.33333333333334,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"},{\"i\":3,\"t\":218,\"morph\":true,\"scale\":\"0.483166 1\",\"main\":144,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"},{\"i\":4,\"t\":279,\"morph\":true,\"scale\":\"0.470199 1\",\"main\":141.66666666666666,\"cross\":56,\"worst\":-0.74,\"at\":\"start-a@0.1 inset 15.3 want 16.1\"},{\"i\":5,\"t\":340,\"morph\":true,\"scale\":\"0.470199 1\",\"main\":141.66666666666666,\"cross\":56,\"worst\":-0.74,\"at\":\"start-a@0.1 inset 15.3 want 16.1\"},{\"i\":6,\"t\":388,\"morph\":true,\"scale\":\"0.470199 1\",\"main\":141.66666666666666,\"cross\":56,\"worst\":-0.74,\"at\":\"start-a@0.1 inset 15.3 want 16.1\"},{\"i\":7,\"t\":447,\"morph\":true,\"scale\":\"0.470199 1\",\"main\":141.66666666666666,\"cross\":56,\"worst\":-0.74,\"at\":\"start-a@0.1 inset 15.3 want 16.1\"},{\"i\":8,\"t\":506,\"morph\":true,\"scale\":\"0.470199 1\",\"main\":141.66666666666666,\"cross\":56,\"worst\":-0.74,\"at\":\"start-a@0.1 inset 15.3 want 16.1\"},{\"i\":9,\"t\":562,\"morph\":true,\"scale\":\"0.470199 1\",\"main\":142,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"},{\"i\":10,\"t\":610,\"morph\":false,\"scale\":\"none\",\"main\":142,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"},{\"i\":11,\"t\":660,\"morph\":false,\"scale\":\"none\",\"main\":142,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"}]}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T03:41:31.111Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "d6a71fc737357e66268e-c64975e9f236e17b2901",
+              "file": "release-11-0-1-critic-2.spec.ts",
+              "line": 111,
+              "column": 13
+            },
+            {
+              "title": "s light-1440f: the open dock's end in paint through the morph to its narrow face and back",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 2838,
+                      "error": {
+                        "message": "Error: light-1440f ch to-narrow: frames captured mid-morph\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0\u001b[39m\nReceived:   \u001b[31m0\u001b[39m",
+                        "stack": "Error: light-1440f ch to-narrow: frames captured mid-morph\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0\u001b[39m\nReceived:   \u001b[31m0\u001b[39m\n    at judge (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/release-11-0-1-critic-2.spec.ts:97:69)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/release-11-0-1-critic-2.spec.ts:129:21",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/release-11-0-1-critic-2.spec.ts",
+                          "column": 69,
+                          "line": 97
+                        },
+                        "snippet": "   95 |     const off = rows.filter((r) => typeof r.worst === \"number\" && Math.abs(r.worst as number) > 1.5);\n   96 |     console.log(`c2 ${JSON.stringify({ cell, frames: rows.length, morphFrames: morph.length, off: off.length, rows })}`);\n>  97 |     expect.soft(morph.length, `${cell}: frames captured mid-morph`).toBeGreaterThan(0);\n      |                                                                     ^\n   98 |     expect.soft(off.map((r) => `${r.i}@${r.t}ms ${r.morph ? \"morph\" : \"rest\"} scale ${r.scale}: ${r.worst} px (${r.at})`), `${cell}: frames whose end is not a circle of half the cross extent`).toEqual([]);\n   99 | }\n  100 |"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/release-11-0-1-critic-2.spec.ts",
+                            "column": 69,
+                            "line": 97
+                          },
+                          "message": "Error: light-1440f ch to-narrow: frames captured mid-morph\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0\u001b[39m\nReceived:   \u001b[31m0\u001b[39m\n\n   95 |     const off = rows.filter((r) => typeof r.worst === \"number\" && Math.abs(r.worst as number) > 1.5);\n   96 |     console.log(`c2 ${JSON.stringify({ cell, frames: rows.length, morphFrames: morph.length, off: off.length, rows })}`);\n>  97 |     expect.soft(morph.length, `${cell}: frames captured mid-morph`).toBeGreaterThan(0);\n      |                                                                     ^\n   98 |     expect.soft(off.map((r) => `${r.i}@${r.t}ms ${r.morph ? \"morph\" : \"rest\"} scale ${r.scale}: ${r.worst} px (${r.at})`), `${cell}: frames whose end is not a circle of half the cross extent`).toEqual([]);\n   99 | }\n  100 |\n    at judge (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/release-11-0-1-critic-2.spec.ts:97:69)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/release-11-0-1-critic-2.spec.ts:129:21"
+                        },
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/release-11-0-1-critic-2.spec.ts",
+                            "column": 69,
+                            "line": 97
+                          },
+                          "message": "Error: light-1440f ch to-wide: frames captured mid-morph\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0\u001b[39m\nReceived:   \u001b[31m0\u001b[39m\n\n   95 |     const off = rows.filter((r) => typeof r.worst === \"number\" && Math.abs(r.worst as number) > 1.5);\n   96 |     console.log(`c2 ${JSON.stringify({ cell, frames: rows.length, morphFrames: morph.length, off: off.length, rows })}`);\n>  97 |     expect.soft(morph.length, `${cell}: frames captured mid-morph`).toBeGreaterThan(0);\n      |                                                                     ^\n   98 |     expect.soft(off.map((r) => `${r.i}@${r.t}ms ${r.morph ? \"morph\" : \"rest\"} scale ${r.scale}: ${r.worst} px (${r.at})`), `${cell}: frames whose end is not a circle of half the cross extent`).toEqual([]);\n   99 | }\n  100 |\n    at judge (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/release-11-0-1-critic-2.spec.ts:97:69)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/release-11-0-1-critic-2.spec.ts:132:21"
+                        }
+                      ],
+                      "stdout": [
+                        {
+                          "text": "c2 {\"cell\":\"light-1440f ch to-narrow\",\"frames\":12,\"morphFrames\":0,\"off\":0,\"rows\":[{\"i\":0,\"t\":35,\"morph\":false,\"scale\":\"none\",\"main\":158,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"},{\"i\":1,\"t\":94,\"morph\":false,\"scale\":\"none\",\"main\":158,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"},{\"i\":2,\"t\":152,\"morph\":false,\"scale\":\"none\",\"main\":158,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"},{\"i\":3,\"t\":210,\"morph\":false,\"scale\":\"none\",\"main\":158,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"},{\"i\":4,\"t\":260,\"morph\":false,\"scale\":\"none\",\"main\":158,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"},{\"i\":5,\"t\":319,\"morph\":false,\"scale\":\"none\",\"main\":158,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"},{\"i\":6,\"t\":378,\"morph\":false,\"scale\":\"none\",\"main\":158,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"},{\"i\":7,\"t\":438,\"morph\":false,\"scale\":\"none\",\"main\":158,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"},{\"i\":8,\"t\":495,\"morph\":false,\"scale\":\"none\",\"main\":158,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"},{\"i\":9,\"t\":562,\"morph\":false,\"scale\":\"none\",\"main\":158,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"},{\"i\":10,\"t\":620,\"morph\":false,\"scale\":\"none\",\"main\":158,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"},{\"i\":11,\"t\":679,\"morph\":false,\"scale\":\"none\",\"main\":158,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"}]}\n"
+                        },
+                        {
+                          "text": "c2 {\"cell\":\"light-1440f ch to-wide\",\"frames\":12,\"morphFrames\":0,\"off\":0,\"rows\":[{\"i\":0,\"t\":32,\"morph\":false,\"scale\":\"none\",\"main\":302,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"},{\"i\":1,\"t\":87,\"morph\":false,\"scale\":\"none\",\"main\":302,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"},{\"i\":2,\"t\":140,\"morph\":false,\"scale\":\"none\",\"main\":302,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"},{\"i\":3,\"t\":188,\"morph\":false,\"scale\":\"none\",\"main\":302,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"},{\"i\":4,\"t\":246,\"morph\":false,\"scale\":\"none\",\"main\":302,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"},{\"i\":5,\"t\":304,\"morph\":false,\"scale\":\"none\",\"main\":302,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"},{\"i\":6,\"t\":363,\"morph\":false,\"scale\":\"none\",\"main\":302,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"},{\"i\":7,\"t\":413,\"morph\":false,\"scale\":\"none\",\"main\":302,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"},{\"i\":8,\"t\":464,\"morph\":false,\"scale\":\"none\",\"main\":302,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"},{\"i\":9,\"t\":522,\"morph\":false,\"scale\":\"none\",\"main\":302,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"},{\"i\":10,\"t\":572,\"morph\":false,\"scale\":\"none\",\"main\":302,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"},{\"i\":11,\"t\":613,\"morph\":false,\"scale\":\"none\",\"main\":302,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"}]}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T03:41:35.332Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/test-results/release-11-0-1-critic-2-cr-b6fbf-to-its-narrow-face-and-back-chromium-headless-new/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/release-11-0-1-critic-2.spec.ts",
+                        "column": 69,
+                        "line": 97
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "d6a71fc737357e66268e-1b043d4422cebb95cb4a",
+              "file": "release-11-0-1-critic-2.spec.ts",
+              "line": 125,
+              "column": 17
+            },
+            {
+              "title": "v light-1440f: a vertical dock's end in paint through the expand and the collapse",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2862,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "c2 {\"cell\":\"light-1440f ch v-expand\",\"frames\":12,\"morphFrames\":9,\"off\":0,\"rows\":[{\"i\":0,\"t\":39,\"morph\":true,\"scale\":\"1 0.405885\",\"main\":110,\"cross\":64,\"worst\":-0.45,\"at\":\"start-a@0.1 inset 17.3 want 17.8\"},{\"i\":1,\"t\":102,\"morph\":true,\"scale\":\"1 0.764379\",\"main\":170.33333333333334,\"cross\":64,\"worst\":-0.45,\"at\":\"start-a@0.1 inset 17.3 want 17.8\"},{\"i\":2,\"t\":172,\"morph\":true,\"scale\":\"1 0.942141\",\"main\":194,\"cross\":64,\"worst\":-0.45,\"at\":\"start-a@0.1 inset 17.3 want 17.8\"},{\"i\":3,\"t\":246,\"morph\":true,\"scale\":\"1 0.997468\",\"main\":200,\"cross\":64,\"worst\":-0.45,\"at\":\"start-a@0.1 inset 17.3 want 17.8\"},{\"i\":4,\"t\":318,\"morph\":true,\"scale\":\"1\",\"main\":200,\"cross\":64,\"worst\":-0.45,\"at\":\"start-a@0.1 inset 17.3 want 17.8\"},{\"i\":5,\"t\":368,\"morph\":true,\"scale\":\"1\",\"main\":200,\"cross\":64,\"worst\":-0.45,\"at\":\"start-a@0.1 inset 17.3 want 17.8\"},{\"i\":6,\"t\":418,\"morph\":true,\"scale\":\"1\",\"main\":200,\"cross\":64,\"worst\":-0.45,\"at\":\"start-a@0.1 inset 17.3 want 17.8\"},{\"i\":7,\"t\":476,\"morph\":true,\"scale\":\"1\",\"main\":200,\"cross\":64,\"worst\":-0.45,\"at\":\"start-a@0.1 inset 17.3 want 17.8\"},{\"i\":8,\"t\":535,\"morph\":true,\"scale\":\"1\",\"main\":200,\"cross\":64,\"worst\":-0.45,\"at\":\"start-a@0.1 inset 17.3 want 17.8\"},{\"i\":9,\"t\":583,\"morph\":false,\"scale\":\"none\",\"main\":200,\"cross\":64,\"worst\":-0.45,\"at\":\"start-a@0.1 inset 17.3 want 17.8\"},{\"i\":10,\"t\":625,\"morph\":false,\"scale\":\"none\",\"main\":200,\"cross\":64,\"worst\":-0.45,\"at\":\"start-a@0.1 inset 17.3 want 17.8\"},{\"i\":11,\"t\":667,\"morph\":false,\"scale\":\"none\",\"main\":200,\"cross\":64,\"worst\":-0.45,\"at\":\"start-a@0.1 inset 17.3 want 17.8\"}]}\n"
+                        },
+                        {
+                          "text": "c2 {\"cell\":\"light-1440f ch v-collapse\",\"frames\":12,\"morphFrames\":11,\"off\":0,\"rows\":[{\"i\":0,\"t\":33,\"morph\":true,\"scale\":\"1 0.932554\",\"main\":167.33333333333334,\"cross\":58,\"worst\":-0.49,\"at\":\"start-a@0.1 inset 15.7 want 16.2\"},{\"i\":1,\"t\":82,\"morph\":true,\"scale\":\"1 0.645393\",\"main\":112,\"cross\":58,\"worst\":-0.49,\"at\":\"start-a@0.1 inset 15.7 want 16.2\"},{\"i\":2,\"t\":133,\"morph\":true,\"scale\":\"1 0.437135\",\"main\":78.66666666666667,\"cross\":58,\"worst\":-0.49,\"at\":\"start-a@0.1 inset 15.7 want 16.2\"},{\"i\":3,\"t\":192,\"morph\":true,\"scale\":\"1 0.337211\",\"main\":62.666666666666664,\"cross\":58,\"worst\":-0.15,\"at\":\"start-a@0.1 inset 16.0 want 16.2\"},{\"i\":4,\"t\":248,\"morph\":true,\"scale\":\"1 0.296517\",\"main\":58,\"cross\":58,\"worst\":-0.49,\"at\":\"start-a@0.1 inset 15.7 want 16.2\"},{\"i\":5,\"t\":297,\"morph\":true,\"scale\":\"1 0.29\",\"main\":58,\"cross\":58,\"worst\":-0.15,\"at\":\"start-a@0.1 inset 16.0 want 16.2\"},{\"i\":6,\"t\":339,\"morph\":true,\"scale\":\"1 0.29\",\"main\":58,\"cross\":58,\"worst\":-0.15,\"at\":\"start-a@0.1 inset 16.0 want 16.2\"},{\"i\":7,\"t\":389,\"morph\":true,\"scale\":\"1 0.29\",\"main\":58,\"cross\":58,\"worst\":-0.15,\"at\":\"start-a@0.1 inset 16.0 want 16.2\"},{\"i\":8,\"t\":431,\"morph\":true,\"scale\":\"1 0.29\",\"main\":58,\"cross\":58,\"worst\":-0.15,\"at\":\"start-a@0.1 inset 16.0 want 16.2\"},{\"i\":9,\"t\":481,\"morph\":true,\"scale\":\"1 0.29\",\"main\":58,\"cross\":58,\"worst\":-0.15,\"at\":\"start-a@0.1 inset 16.0 want 16.2\"},{\"i\":10,\"t\":531,\"morph\":true,\"scale\":\"1 0.29\",\"main\":58,\"cross\":58,\"worst\":-0.15,\"at\":\"start-a@0.1 inset 16.0 want 16.2\"},{\"i\":11,\"t\":586,\"morph\":false,\"scale\":\"none\",\"main\":58,\"cross\":58,\"worst\":-0.15,\"at\":\"start-a@0.1 inset 16.0 want 16.2\"}]}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T03:41:38.536Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "d6a71fc737357e66268e-6107a5e3122fc125e762",
+              "file": "release-11-0-1-critic-2.spec.ts",
+              "line": 135,
+              "column": 17
+            }
+          ]
+        },
+        {
+          "title": "critic 2 light-390c",
+          "file": "release-11-0-1-critic-2.spec.ts",
+          "line": 104,
+          "column": 14,
+          "specs": [
+            {
+              "title": "m light-390c: the figure dock's end in paint through the expand and the collapse",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2399,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "c2 {\"cell\":\"light-390c ch expand\",\"frames\":12,\"morphFrames\":12,\"off\":0,\"rows\":[{\"i\":0,\"t\":33,\"morph\":true,\"scale\":\"0.518741 1\",\"main\":188.66666666666666,\"cross\":60,\"worst\":-0.59,\"at\":\"start-b@0.1 inset 16.3 want 16.9\"},{\"i\":1,\"t\":73,\"morph\":true,\"scale\":\"0.714157 1\",\"main\":242.33333333333334,\"cross\":60,\"worst\":-0.59,\"at\":\"end-a@0.1 inset 16.3 want 16.9\"},{\"i\":2,\"t\":115,\"morph\":true,\"scale\":\"0.82986 1\",\"main\":278,\"cross\":60,\"worst\":-0.26,\"at\":\"start-a@0.1 inset 16.7 want 16.9\"},{\"i\":3,\"t\":157,\"morph\":true,\"scale\":\"0.925667 1\",\"main\":299,\"cross\":60,\"worst\":-0.59,\"at\":\"start-a@0.1 inset 16.3 want 16.9\"},{\"i\":4,\"t\":190,\"morph\":true,\"scale\":\"0.973384 1\",\"main\":306.6666666666667,\"cross\":60,\"worst\":-0.59,\"at\":\"start-a@0.1 inset 16.3 want 16.9\"},{\"i\":5,\"t\":224,\"morph\":true,\"scale\":\"0.990726 1\",\"main\":310.3333333333333,\"cross\":60,\"worst\":-0.59,\"at\":\"start-a@0.1 inset 16.3 want 16.9\"},{\"i\":6,\"t\":263,\"morph\":true,\"scale\":\"0.999293 1\",\"main\":312,\"cross\":60,\"worst\":-0.26,\"at\":\"start-a@0.1 inset 16.7 want 16.9\"},{\"i\":7,\"t\":295,\"morph\":true,\"scale\":\"1\",\"main\":312,\"cross\":60,\"worst\":-0.26,\"at\":\"start-a@0.1 inset 16.7 want 16.9\"},{\"i\":8,\"t\":336,\"morph\":true,\"scale\":\"1\",\"main\":312,\"cross\":60,\"worst\":-0.26,\"at\":\"start-a@0.1 inset 16.7 want 16.9\"},{\"i\":9,\"t\":371,\"morph\":true,\"scale\":\"1\",\"main\":312,\"cross\":60,\"worst\":-0.26,\"at\":\"start-a@0.1 inset 16.7 want 16.9\"},{\"i\":10,\"t\":404,\"morph\":true,\"scale\":\"1\",\"main\":312,\"cross\":60,\"worst\":-0.26,\"at\":\"start-a@0.1 inset 16.7 want 16.9\"},{\"i\":11,\"t\":436,\"morph\":true,\"scale\":\"1\",\"main\":312,\"cross\":60,\"worst\":-0.26,\"at\":\"start-a@0.1 inset 16.7 want 16.9\"}]}\n"
+                        },
+                        {
+                          "text": "c2 {\"cell\":\"light-390c ch collapse\",\"frames\":12,\"morphFrames\":12,\"off\":0,\"rows\":[{\"i\":0,\"t\":36,\"morph\":true,\"scale\":\"0.974848 1\",\"main\":275.3333333333333,\"cross\":60,\"worst\":-0.59,\"at\":\"start-a@0.1 inset 16.3 want 16.9\"},{\"i\":1,\"t\":69,\"morph\":true,\"scale\":\"0.82022 1\",\"main\":233.33333333333334,\"cross\":60,\"worst\":-0.26,\"at\":\"start-a@0.1 inset 16.7 want 16.9\"},{\"i\":2,\"t\":101,\"morph\":true,\"scale\":\"0.691719 1\",\"main\":199,\"cross\":60,\"worst\":-0.59,\"at\":\"end-a@0.1 inset 16.3 want 16.9\"},{\"i\":3,\"t\":134,\"morph\":true,\"scale\":\"0.599926 1\",\"main\":177,\"cross\":60,\"worst\":-0.59,\"at\":\"start-a@0.1 inset 16.3 want 16.9\"},{\"i\":4,\"t\":167,\"morph\":true,\"scale\":\"0.544126 1\",\"main\":164.33333333333334,\"cross\":60,\"worst\":-0.59,\"at\":\"end-a@0.1 inset 16.3 want 16.9\"},{\"i\":5,\"t\":201,\"morph\":true,\"scale\":\"0.514665 1\",\"main\":157.66666666666666,\"cross\":60,\"worst\":-0.59,\"at\":\"start-a@0.1 inset 16.3 want 16.9\"},{\"i\":6,\"t\":234,\"morph\":true,\"scale\":\"0.500295 1\",\"main\":154.66666666666666,\"cross\":60,\"worst\":-0.59,\"at\":\"start-a@0.1 inset 16.3 want 16.9\"},{\"i\":7,\"t\":264,\"morph\":true,\"scale\":\"0.494456 1\",\"main\":153.66666666666666,\"cross\":60,\"worst\":-0.59,\"at\":\"end-a@0.1 inset 16.3 want 16.9\"},{\"i\":8,\"t\":298,\"morph\":true,\"scale\":\"0.49359 1\",\"main\":153.66666666666666,\"cross\":60,\"worst\":-0.59,\"at\":\"end-a@0.1 inset 16.3 want 16.9\"},{\"i\":9,\"t\":331,\"morph\":true,\"scale\":\"0.49359 1\",\"main\":153.66666666666666,\"cross\":60,\"worst\":-0.59,\"at\":\"end-a@0.1 inset 16.3 want 16.9\"},{\"i\":10,\"t\":363,\"morph\":true,\"scale\":\"0.49359 1\",\"main\":153.66666666666666,\"cross\":60,\"worst\":-0.59,\"at\":\"end-a@0.1 inset 16.3 want 16.9\"},{\"i\":11,\"t\":399,\"morph\":true,\"scale\":\"0.49359 1\",\"main\":153.66666666666666,\"cross\":60,\"worst\":-0.59,\"at\":\"end-a@0.1 inset 16.3 want 16.9\"}]}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T03:41:41.497Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "d6a71fc737357e66268e-36e80d7a170fcfc769cc",
+              "file": "release-11-0-1-critic-2.spec.ts",
+              "line": 111,
+              "column": 13
+            }
+          ]
+        },
+        {
+          "title": "critic 2 dark-1440f",
+          "file": "release-11-0-1-critic-2.spec.ts",
+          "line": 104,
+          "column": 14,
+          "specs": [
+            {
+              "title": "m dark-1440f: the figure dock's end in paint through the expand and the collapse",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2826,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "c2 {\"cell\":\"dark-1440f ch expand\",\"frames\":12,\"morphFrames\":10,\"off\":0,\"rows\":[{\"i\":0,\"t\":53,\"morph\":true,\"scale\":\"0.496512 1\",\"main\":188.66666666666666,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"},{\"i\":1,\"t\":111,\"morph\":true,\"scale\":\"0.796496 1\",\"main\":256,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"},{\"i\":2,\"t\":170,\"morph\":true,\"scale\":\"0.932995 1\",\"main\":288.6666666666667,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"},{\"i\":3,\"t\":227,\"morph\":true,\"scale\":\"0.986454 1\",\"main\":299.3333333333333,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"},{\"i\":4,\"t\":281,\"morph\":true,\"scale\":\"1\",\"main\":302,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"},{\"i\":5,\"t\":340,\"morph\":true,\"scale\":\"1\",\"main\":302,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"},{\"i\":6,\"t\":397,\"morph\":true,\"scale\":\"1\",\"main\":302,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"},{\"i\":7,\"t\":447,\"morph\":true,\"scale\":\"1\",\"main\":302,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"},{\"i\":8,\"t\":497,\"morph\":true,\"scale\":\"1\",\"main\":302,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"},{\"i\":9,\"t\":546,\"morph\":true,\"scale\":\"1\",\"main\":302,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"},{\"i\":10,\"t\":604,\"morph\":false,\"scale\":\"none\",\"main\":302,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"},{\"i\":11,\"t\":647,\"morph\":false,\"scale\":\"none\",\"main\":302,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"}]}\n"
+                        },
+                        {
+                          "text": "c2 {\"cell\":\"dark-1440f ch collapse\",\"frames\":12,\"morphFrames\":11,\"off\":0,\"rows\":[{\"i\":0,\"t\":36,\"morph\":true,\"scale\":\"0.973687 1\",\"main\":264,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"},{\"i\":1,\"t\":89,\"morph\":true,\"scale\":\"0.735799 1\",\"main\":201.33333333333334,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"},{\"i\":2,\"t\":149,\"morph\":true,\"scale\":\"0.562783 1\",\"main\":160.66666666666666,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"},{\"i\":3,\"t\":202,\"morph\":true,\"scale\":\"0.491385 1\",\"main\":145.33333333333334,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"},{\"i\":4,\"t\":252,\"morph\":true,\"scale\":\"0.473269 1\",\"main\":142,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"},{\"i\":5,\"t\":309,\"morph\":true,\"scale\":\"0.470199 1\",\"main\":141.33333333333334,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"},{\"i\":6,\"t\":360,\"morph\":true,\"scale\":\"0.470199 1\",\"main\":141.33333333333334,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"},{\"i\":7,\"t\":410,\"morph\":true,\"scale\":\"0.470199 1\",\"main\":141.33333333333334,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"},{\"i\":8,\"t\":459,\"morph\":true,\"scale\":\"0.470199 1\",\"main\":141.33333333333334,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"},{\"i\":9,\"t\":510,\"morph\":true,\"scale\":\"0.470199 1\",\"main\":141.33333333333334,\"cross\":56,\"worst\":-0.41,\"at\":\"start-a@0.1 inset 15.7 want 16.1\"},{\"i\":10,\"t\":558,\"morph\":true,\"scale\":\"0.470199 1\",\"main\":142,\"cross\":56,\"worst\":-0.07,\"at\":\"start-a@0.1 inset 16.0 want 16.1\"},{\"i\":11,\"t\":616,\"morph\":false,\"scale\":\"none\",\"main\":142,\"cross\":56,\"worst\":-0.07,\"at\":\"start-a@0.1 inset 16.0 want 16.1\"}]}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T03:41:43.903Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "d6a71fc737357e66268e-eef0bd20e203aaf932c1",
+              "file": "release-11-0-1-critic-2.spec.ts",
+              "line": 111,
+              "column": 13
+            }
+          ]
+        },
+        {
+          "title": "critic 2 dark-390c",
+          "file": "release-11-0-1-critic-2.spec.ts",
+          "line": 104,
+          "column": 14,
+          "specs": [
+            {
+              "title": "m dark-390c: the figure dock's end in paint through the expand and the collapse",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2339,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "c2 {\"cell\":\"dark-390c ch expand\",\"frames\":12,\"morphFrames\":12,\"off\":0,\"rows\":[{\"i\":0,\"t\":30,\"morph\":true,\"scale\":\"0.518741 1\",\"main\":179.33333333333334,\"cross\":60,\"worst\":-0.26,\"at\":\"start-a@0.1 inset 16.7 want 16.9\"},{\"i\":1,\"t\":61,\"morph\":true,\"scale\":\"0.645065 1\",\"main\":221.33333333333334,\"cross\":60,\"worst\":-0.59,\"at\":\"start-a@0.1 inset 16.3 want 16.9\"},{\"i\":2,\"t\":95,\"morph\":true,\"scale\":\"0.777566 1\",\"main\":258,\"cross\":60,\"worst\":-0.26,\"at\":\"start-a@0.1 inset 16.7 want 16.9\"},{\"i\":3,\"t\":128,\"morph\":true,\"scale\":\"0.876521 1\",\"main\":284.3333333333333,\"cross\":60,\"worst\":-0.59,\"at\":\"start-a@0.1 inset 16.3 want 16.9\"},{\"i\":4,\"t\":161,\"morph\":true,\"scale\":\"0.9388 1\",\"main\":298.6666666666667,\"cross\":60,\"worst\":-0.59,\"at\":\"start-a@0.1 inset 16.3 want 16.9\"},{\"i\":5,\"t\":195,\"morph\":true,\"scale\":\"0.973458 1\",\"main\":306.6666666666667,\"cross\":60,\"worst\":-0.26,\"at\":\"start-a@0.1 inset 16.7 want 16.9\"},{\"i\":6,\"t\":228,\"morph\":true,\"scale\":\"0.99076 1\",\"main\":310.3333333333333,\"cross\":60,\"worst\":-0.59,\"at\":\"start-a@0.1 inset 16.3 want 16.9\"},{\"i\":7,\"t\":261,\"morph\":true,\"scale\":\"0.998318 1\",\"main\":312,\"cross\":60,\"worst\":-0.26,\"at\":\"start-a@0.1 inset 16.7 want 16.9\"},{\"i\":8,\"t\":294,\"morph\":true,\"scale\":\"1\",\"main\":312,\"cross\":60,\"worst\":-0.26,\"at\":\"start-a@0.1 inset 16.7 want 16.9\"},{\"i\":9,\"t\":327,\"morph\":true,\"scale\":\"1\",\"main\":312,\"cross\":60,\"worst\":-0.26,\"at\":\"start-a@0.1 inset 16.7 want 16.9\"},{\"i\":10,\"t\":359,\"morph\":true,\"scale\":\"1\",\"main\":312,\"cross\":60,\"worst\":-0.26,\"at\":\"start-a@0.1 inset 16.7 want 16.9\"},{\"i\":11,\"t\":394,\"morph\":true,\"scale\":\"1\",\"main\":312,\"cross\":60,\"worst\":-0.26,\"at\":\"start-a@0.1 inset 16.7 want 16.9\"}]}\n"
+                        },
+                        {
+                          "text": "c2 {\"cell\":\"dark-390c ch collapse\",\"frames\":12,\"morphFrames\":12,\"off\":0,\"rows\":[{\"i\":0,\"t\":27,\"morph\":true,\"scale\":\"0.974848 1\",\"main\":286,\"cross\":60,\"worst\":-0.26,\"at\":\"start-a@0.1 inset 16.7 want 16.9\"},{\"i\":1,\"t\":60,\"morph\":true,\"scale\":\"0.845558 1\",\"main\":241.66666666666666,\"cross\":60,\"worst\":-0.59,\"at\":\"end-a@0.1 inset 16.3 want 16.9\"},{\"i\":2,\"t\":102,\"morph\":true,\"scale\":\"0.685187 1\",\"main\":198,\"cross\":60,\"worst\":-0.59,\"at\":\"start-a@0.1 inset 16.3 want 16.9\"},{\"i\":3,\"t\":143,\"morph\":true,\"scale\":\"0.596764 1\",\"main\":172.66666666666666,\"cross\":60,\"worst\":-0.26,\"at\":\"start-a@0.1 inset 16.7 want 16.9\"},{\"i\":4,\"t\":176,\"morph\":true,\"scale\":\"0.53404 1\",\"main\":162,\"cross\":60,\"worst\":-0.26,\"at\":\"start-a@0.1 inset 16.7 want 16.9\"},{\"i\":5,\"t\":210,\"morph\":true,\"scale\":\"0.509527 1\",\"main\":156.66666666666666,\"cross\":60,\"worst\":-0.26,\"at\":\"start-a@0.1 inset 16.7 want 16.9\"},{\"i\":6,\"t\":242,\"morph\":true,\"scale\":\"0.498031 1\",\"main\":154,\"cross\":60,\"worst\":-0.59,\"at\":\"start-a@0.1 inset 16.3 want 16.9\"},{\"i\":7,\"t\":271,\"morph\":true,\"scale\":\"0.494205 1\",\"main\":153.66666666666666,\"cross\":60,\"worst\":-0.59,\"at\":\"end-a@0.1 inset 16.3 want 16.9\"},{\"i\":8,\"t\":306,\"morph\":true,\"scale\":\"0.49359 1\",\"main\":153.66666666666666,\"cross\":60,\"worst\":-0.59,\"at\":\"end-a@0.1 inset 16.3 want 16.9\"},{\"i\":9,\"t\":341,\"morph\":true,\"scale\":\"0.49359 1\",\"main\":153.66666666666666,\"cross\":60,\"worst\":-0.59,\"at\":\"end-a@0.1 inset 16.3 want 16.9\"},{\"i\":10,\"t\":374,\"morph\":true,\"scale\":\"0.49359 1\",\"main\":153.66666666666666,\"cross\":60,\"worst\":-0.59,\"at\":\"end-a@0.1 inset 16.3 want 16.9\"},{\"i\":11,\"t\":408,\"morph\":true,\"scale\":\"0.49359 1\",\"main\":153.66666666666666,\"cross\":60,\"worst\":-0.59,\"at\":\"end-a@0.1 inset 16.3 want 16.9\"}]}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T03:41:46.736Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "d6a71fc737357e66268e-b7bfab062f2fb0fc0cb2",
+              "file": "release-11-0-1-critic-2.spec.ts",
+              "line": 111,
+              "column": 13
+            },
+            {
+              "title": "s dark-390c: the open dock's end in paint through the morph to its narrow face and back",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 2197,
+                      "error": {
+                        "message": "Error: dark-390c ch to-narrow: frames captured mid-morph\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0\u001b[39m\nReceived:   \u001b[31m0\u001b[39m",
+                        "stack": "Error: dark-390c ch to-narrow: frames captured mid-morph\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0\u001b[39m\nReceived:   \u001b[31m0\u001b[39m\n    at judge (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/release-11-0-1-critic-2.spec.ts:97:69)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/release-11-0-1-critic-2.spec.ts:129:21",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/release-11-0-1-critic-2.spec.ts",
+                          "column": 69,
+                          "line": 97
+                        },
+                        "snippet": "   95 |     const off = rows.filter((r) => typeof r.worst === \"number\" && Math.abs(r.worst as number) > 1.5);\n   96 |     console.log(`c2 ${JSON.stringify({ cell, frames: rows.length, morphFrames: morph.length, off: off.length, rows })}`);\n>  97 |     expect.soft(morph.length, `${cell}: frames captured mid-morph`).toBeGreaterThan(0);\n      |                                                                     ^\n   98 |     expect.soft(off.map((r) => `${r.i}@${r.t}ms ${r.morph ? \"morph\" : \"rest\"} scale ${r.scale}: ${r.worst} px (${r.at})`), `${cell}: frames whose end is not a circle of half the cross extent`).toEqual([]);\n   99 | }\n  100 |"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/release-11-0-1-critic-2.spec.ts",
+                            "column": 69,
+                            "line": 97
+                          },
+                          "message": "Error: dark-390c ch to-narrow: frames captured mid-morph\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0\u001b[39m\nReceived:   \u001b[31m0\u001b[39m\n\n   95 |     const off = rows.filter((r) => typeof r.worst === \"number\" && Math.abs(r.worst as number) > 1.5);\n   96 |     console.log(`c2 ${JSON.stringify({ cell, frames: rows.length, morphFrames: morph.length, off: off.length, rows })}`);\n>  97 |     expect.soft(morph.length, `${cell}: frames captured mid-morph`).toBeGreaterThan(0);\n      |                                                                     ^\n   98 |     expect.soft(off.map((r) => `${r.i}@${r.t}ms ${r.morph ? \"morph\" : \"rest\"} scale ${r.scale}: ${r.worst} px (${r.at})`), `${cell}: frames whose end is not a circle of half the cross extent`).toEqual([]);\n   99 | }\n  100 |\n    at judge (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/release-11-0-1-critic-2.spec.ts:97:69)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/release-11-0-1-critic-2.spec.ts:129:21"
+                        },
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/release-11-0-1-critic-2.spec.ts",
+                            "column": 69,
+                            "line": 97
+                          },
+                          "message": "Error: dark-390c ch to-wide: frames captured mid-morph\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0\u001b[39m\nReceived:   \u001b[31m0\u001b[39m\n\n   95 |     const off = rows.filter((r) => typeof r.worst === \"number\" && Math.abs(r.worst as number) > 1.5);\n   96 |     console.log(`c2 ${JSON.stringify({ cell, frames: rows.length, morphFrames: morph.length, off: off.length, rows })}`);\n>  97 |     expect.soft(morph.length, `${cell}: frames captured mid-morph`).toBeGreaterThan(0);\n      |                                                                     ^\n   98 |     expect.soft(off.map((r) => `${r.i}@${r.t}ms ${r.morph ? \"morph\" : \"rest\"} scale ${r.scale}: ${r.worst} px (${r.at})`), `${cell}: frames whose end is not a circle of half the cross extent`).toEqual([]);\n   99 | }\n  100 |\n    at judge (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/release-11-0-1-critic-2.spec.ts:97:69)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/release-11-0-1-critic-2.spec.ts:132:21"
+                        }
+                      ],
+                      "stdout": [
+                        {
+                          "text": "c2 {\"cell\":\"dark-390c ch to-narrow\",\"frames\":12,\"morphFrames\":0,\"off\":0,\"rows\":[{\"i\":0,\"t\":28,\"morph\":false,\"scale\":\"none\",\"main\":170,\"cross\":60,\"worst\":-0.26,\"at\":\"start-a@0.1 inset 16.7 want 16.9\"},{\"i\":1,\"t\":51,\"morph\":false,\"scale\":\"none\",\"main\":170,\"cross\":60,\"worst\":-0.26,\"at\":\"start-a@0.1 inset 16.7 want 16.9\"},{\"i\":2,\"t\":77,\"morph\":false,\"scale\":\"none\",\"main\":170,\"cross\":60,\"worst\":-0.26,\"at\":\"start-a@0.1 inset 16.7 want 16.9\"},{\"i\":3,\"t\":103,\"morph\":false,\"scale\":\"none\",\"main\":170,\"cross\":60,\"worst\":-0.26,\"at\":\"start-a@0.1 inset 16.7 want 16.9\"},{\"i\":4,\"t\":128,\"morph\":false,\"scale\":\"none\",\"main\":170,\"cross\":60,\"worst\":-0.26,\"at\":\"start-a@0.1 inset 16.7 want 16.9\"},{\"i\":5,\"t\":152,\"morph\":false,\"scale\":\"none\",\"main\":170,\"cross\":60,\"worst\":-0.26,\"at\":\"start-a@0.1 inset 16.7 want 16.9\"},{\"i\":6,\"t\":177,\"morph\":false,\"scale\":\"none\",\"main\":170,\"cross\":60,\"worst\":-0.26,\"at\":\"start-a@0.1 inset 16.7 want 16.9\"},{\"i\":7,\"t\":202,\"morph\":false,\"scale\":\"none\",\"main\":170,\"cross\":60,\"worst\":-0.26,\"at\":\"start-a@0.1 inset 16.7 want 16.9\"},{\"i\":8,\"t\":227,\"morph\":false,\"scale\":\"none\",\"main\":170,\"cross\":60,\"worst\":-0.26,\"at\":\"start-a@0.1 inset 16.7 want 16.9\"},{\"i\":9,\"t\":252,\"morph\":false,\"scale\":\"none\",\"main\":170,\"cross\":60,\"worst\":-0.26,\"at\":\"start-a@0.1 inset 16.7 want 16.9\"},{\"i\":10,\"t\":285,\"morph\":false,\"scale\":\"none\",\"main\":170,\"cross\":60,\"worst\":-0.26,\"at\":\"start-a@0.1 inset 16.7 want 16.9\"},{\"i\":11,\"t\":318,\"morph\":false,\"scale\":\"none\",\"main\":170,\"cross\":60,\"worst\":-0.26,\"at\":\"start-a@0.1 inset 16.7 want 16.9\"}]}\n"
+                        },
+                        {
+                          "text": "c2 {\"cell\":\"dark-390c ch to-wide\",\"frames\":12,\"morphFrames\":0,\"off\":0,\"rows\":[{\"i\":0,\"t\":26,\"morph\":false,\"scale\":\"none\",\"main\":311.6666666666667,\"cross\":60,\"worst\":-0.59,\"at\":\"end-a@0.1 inset 16.3 want 16.9\"},{\"i\":1,\"t\":57,\"morph\":false,\"scale\":\"none\",\"main\":311.6666666666667,\"cross\":60,\"worst\":-0.59,\"at\":\"end-a@0.1 inset 16.3 want 16.9\"},{\"i\":2,\"t\":91,\"morph\":false,\"scale\":\"none\",\"main\":311.6666666666667,\"cross\":60,\"worst\":-0.59,\"at\":\"end-a@0.1 inset 16.3 want 16.9\"},{\"i\":3,\"t\":116,\"morph\":false,\"scale\":\"none\",\"main\":311.6666666666667,\"cross\":60,\"worst\":-0.59,\"at\":\"end-a@0.1 inset 16.3 want 16.9\"},{\"i\":4,\"t\":149,\"morph\":false,\"scale\":\"none\",\"main\":311.6666666666667,\"cross\":60,\"worst\":-0.59,\"at\":\"end-a@0.1 inset 16.3 want 16.9\"},{\"i\":5,\"t\":182,\"morph\":false,\"scale\":\"none\",\"main\":311.6666666666667,\"cross\":60,\"worst\":-0.59,\"at\":\"end-a@0.1 inset 16.3 want 16.9\"},{\"i\":6,\"t\":217,\"morph\":false,\"scale\":\"none\",\"main\":311.6666666666667,\"cross\":60,\"worst\":-0.59,\"at\":\"end-a@0.1 inset 16.3 want 16.9\"},{\"i\":7,\"t\":250,\"morph\":false,\"scale\":\"none\",\"main\":311.6666666666667,\"cross\":60,\"worst\":-0.59,\"at\":\"end-a@0.1 inset 16.3 want 16.9\"},{\"i\":8,\"t\":284,\"morph\":false,\"scale\":\"none\",\"main\":311.6666666666667,\"cross\":60,\"worst\":-0.59,\"at\":\"end-a@0.1 inset 16.3 want 16.9\"},{\"i\":9,\"t\":316,\"morph\":false,\"scale\":\"none\",\"main\":311.6666666666667,\"cross\":60,\"worst\":-0.59,\"at\":\"end-a@0.1 inset 16.3 want 16.9\"},{\"i\":10,\"t\":349,\"morph\":false,\"scale\":\"none\",\"main\":311.6666666666667,\"cross\":60,\"worst\":-0.59,\"at\":\"end-a@0.1 inset 16.3 want 16.9\"},{\"i\":11,\"t\":383,\"morph\":false,\"scale\":\"none\",\"main\":311.6666666666667,\"cross\":60,\"worst\":-0.59,\"at\":\"end-a@0.1 inset 16.3 want 16.9\"}]}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T03:41:49.082Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/test-results/release-11-0-1-critic-2-cr-7f265-to-its-narrow-face-and-back-chromium-headless-new/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.1/tests-visual/release-11-0-1-critic-2.spec.ts",
+                        "column": 69,
+                        "line": 97
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "d6a71fc737357e66268e-e3a779368e4d4f6a22a6",
+              "file": "release-11-0-1-critic-2.spec.ts",
+              "line": 125,
+              "column": 17
+            },
+            {
+              "title": "v dark-390c: a vertical dock's end in paint through the expand and the collapse",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2819,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "c2 {\"cell\":\"dark-390c ch v-expand\",\"frames\":12,\"morphFrames\":9,\"off\":0,\"rows\":[{\"i\":0,\"t\":40,\"morph\":true,\"scale\":\"1 0.318048\",\"main\":96,\"cross\":68,\"worst\":-0.65,\"at\":\"end-a@0.1 inset 18.7 want 19.3\"},{\"i\":1,\"t\":112,\"morph\":true,\"scale\":\"1 0.76144\",\"main\":177.66666666666666,\"cross\":68,\"worst\":-0.65,\"at\":\"end-a@0.1 inset 18.7 want 19.3\"},{\"i\":2,\"t\":181,\"morph\":true,\"scale\":\"1 0.941522\",\"main\":207.33333333333334,\"cross\":68,\"worst\":-0.65,\"at\":\"start-a@0.1 inset 18.7 want 19.3\"},{\"i\":3,\"t\":251,\"morph\":true,\"scale\":\"1 0.993427\",\"main\":215.33333333333334,\"cross\":68,\"worst\":-0.32,\"at\":\"start-a@0.1 inset 19.0 want 19.3\"},{\"i\":4,\"t\":327,\"morph\":true,\"scale\":\"1\",\"main\":216,\"cross\":68,\"worst\":-0.32,\"at\":\"start-a@0.1 inset 19.0 want 19.3\"},{\"i\":5,\"t\":385,\"morph\":true,\"scale\":\"1\",\"main\":216,\"cross\":68,\"worst\":-0.32,\"at\":\"start-a@0.1 inset 19.0 want 19.3\"},{\"i\":6,\"t\":437,\"morph\":true,\"scale\":\"1\",\"main\":216,\"cross\":68,\"worst\":-0.32,\"at\":\"start-a@0.1 inset 19.0 want 19.3\"},{\"i\":7,\"t\":503,\"morph\":true,\"scale\":\"1\",\"main\":216,\"cross\":68,\"worst\":-0.32,\"at\":\"start-a@0.1 inset 19.0 want 19.3\"},{\"i\":8,\"t\":553,\"morph\":true,\"scale\":\"1\",\"main\":216,\"cross\":68,\"worst\":-0.32,\"at\":\"start-a@0.1 inset 19.0 want 19.3\"},{\"i\":9,\"t\":599,\"morph\":false,\"scale\":\"none\",\"main\":216,\"cross\":68,\"worst\":-0.32,\"at\":\"start-a@0.1 inset 19.0 want 19.3\"},{\"i\":10,\"t\":666,\"morph\":false,\"scale\":\"none\",\"main\":216,\"cross\":68,\"worst\":-0.32,\"at\":\"start-a@0.1 inset 19.0 want 19.3\"},{\"i\":11,\"t\":717,\"morph\":false,\"scale\":\"none\",\"main\":216,\"cross\":68,\"worst\":-0.32,\"at\":\"start-a@0.1 inset 19.0 want 19.3\"}]}\n"
+                        },
+                        {
+                          "text": "c2 {\"cell\":\"dark-390c ch v-collapse\",\"frames\":12,\"morphFrames\":12,\"off\":0,\"rows\":[{\"i\":0,\"t\":27,\"morph\":true,\"scale\":\"1\",\"main\":200,\"cross\":61,\"worst\":-0.31,\"at\":\"start-a@0.1 inset 17.0 want 17.3\"},{\"i\":1,\"t\":69,\"morph\":true,\"scale\":\"1 0.791365\",\"main\":148.33333333333334,\"cross\":61,\"worst\":-0.64,\"at\":\"end-a@0.1 inset 16.7 want 17.3\"},{\"i\":2,\"t\":126,\"morph\":true,\"scale\":\"1 0.527757\",\"main\":93.33333333333333,\"cross\":61,\"worst\":-0.64,\"at\":\"start-a@0.1 inset 16.7 want 17.3\"},{\"i\":3,\"t\":166,\"morph\":true,\"scale\":\"1 0.371937\",\"main\":74,\"cross\":61,\"worst\":-0.31,\"at\":\"start-a@0.1 inset 17.0 want 17.3\"},{\"i\":4,\"t\":215,\"morph\":true,\"scale\":\"1 0.305784\",\"main\":64,\"cross\":61,\"worst\":-0.31,\"at\":\"start-a@0.1 inset 17.0 want 17.3\"},{\"i\":5,\"t\":267,\"morph\":true,\"scale\":\"1 0.284791\",\"main\":60.666666666666664,\"cross\":61,\"worst\":-0.31,\"at\":\"start-a@0.1 inset 17.0 want 17.3\"},{\"i\":6,\"t\":316,\"morph\":true,\"scale\":\"1 0.282407\",\"main\":60.666666666666664,\"cross\":61,\"worst\":-0.31,\"at\":\"start-a@0.1 inset 17.0 want 17.3\"},{\"i\":7,\"t\":357,\"morph\":true,\"scale\":\"1 0.282407\",\"main\":60.666666666666664,\"cross\":61,\"worst\":-0.31,\"at\":\"start-a@0.1 inset 17.0 want 17.3\"},{\"i\":8,\"t\":399,\"morph\":true,\"scale\":\"1 0.282407\",\"main\":60.666666666666664,\"cross\":61,\"worst\":-0.31,\"at\":\"start-a@0.1 inset 17.0 want 17.3\"},{\"i\":9,\"t\":440,\"morph\":true,\"scale\":\"1 0.282407\",\"main\":60.666666666666664,\"cross\":61,\"worst\":-0.31,\"at\":\"start-a@0.1 inset 17.0 want 17.3\"},{\"i\":10,\"t\":482,\"morph\":true,\"scale\":\"1 0.282407\",\"main\":60.666666666666664,\"cross\":61,\"worst\":-0.31,\"at\":\"start-a@0.1 inset 17.0 want 17.3\"},{\"i\":11,\"t\":523,\"morph\":true,\"scale\":\"1 0.282407\",\"main\":60.666666666666664,\"cross\":61,\"worst\":-0.31,\"at\":\"start-a@0.1 inset 17.0 want 17.3\"}]}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T03:41:51.682Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "d6a71fc737357e66268e-a3bfea9557450dd93a21",
+              "file": "release-11-0-1-critic-2.spec.ts",
+              "line": 135,
+              "column": 17
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-12T03:41:29.143Z",
+    "duration": 28591.056,
+    "expected": 7,
+    "skipped": 0,
+    "unexpected": 2,
+    "flaky": 0
+  }
+}
