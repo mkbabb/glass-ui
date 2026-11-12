@@ -39,6 +39,8 @@
 //   radius every dock seat (dropdown trigger, tab, labelled and icon control) rounds its
 //          hover, open and active plate with a corner of half the seat's block size: in a
 //          screenshot each corner of the plate leaves the area that corner leaves
+//   hover  every seat type, both orientations, every shape, expanded and collapsed: the
+//          dock's box is unchanged to 0 px in every frame of each seat's hover in and out
 import { expect, test, type Page } from "@playwright/test";
 
 type DarkHandle = { stamped: boolean; isDark: () => boolean; toggle: () => void };
@@ -774,6 +776,81 @@ for (const scene of ["transport", "editor", "stretched"]) {
         });
     }
 }
+
+/** Hovers every visible seat in turn and samples each dock root's box every frame. */
+async function hoverHolds(page: Page, info: { annotations: { type: string; description?: string }[] }, query: string): Promise<void> {
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await countRoLoops(page);
+    await page.goto(`/tests-visual/release-11-0-2/hover-harness.html?${query}`);
+    await page.locator("body[data-ready='1'] [data-witness='dock'] .dock-plate").first().waitFor();
+    await page.evaluate(() => document.fonts.ready);
+    await page.mouse.move(8, 8);
+    await page.waitForTimeout(1200);
+    const kinds = await page.evaluate(() =>
+        [...document.querySelectorAll<HTMLElement>("[data-witness^='dock'] [data-seat]")]
+            .filter((e) => {
+                const r = e.getBoundingClientRect();
+                return r.width > 0 && r.height > 0 && !e.closest("[inert]") && getComputedStyle(e).visibility !== "hidden";
+            })
+            .map((e) => e.dataset.seat!),
+    );
+    expect(kinds.length).toBeGreaterThan(0);
+    const shifts: { seat: string; frames: number; moved: string[] }[] = [];
+    for (const kind of kinds) {
+        await page.evaluate(() => {
+            const roots = [...document.querySelectorAll<HTMLElement>("[data-witness^='dock']")];
+            const read = () =>
+                roots
+                    .map((root) => {
+                        const r = root.getBoundingClientRect();
+                        return [r.left, r.top, r.width, r.height].map((v) => Math.round(v * 1000) / 1000).join(",");
+                    })
+                    .join(" ");
+            const w = window as unknown as { __frames: string[]; __stop: boolean; __gen: number };
+            const gen = (w.__gen = (w.__gen ?? 0) + 1);
+            const frames = (w.__frames = [read()]);
+            w.__stop = false;
+            const tick = () => {
+                if (gen !== w.__gen) return;
+                frames.push(read());
+                if (!w.__stop) requestAnimationFrame(tick);
+            };
+            requestAnimationFrame(tick);
+        });
+        const box = (await page.locator(`[data-witness^='dock'] [data-seat='${kind}']`).first().boundingBox())!;
+        await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2, { steps: 6 });
+        // Past the tooltip's 700 ms open delay, so an opening tooltip is sampled.
+        await page.waitForTimeout(1000);
+        await page.mouse.move(8, 8, { steps: 6 });
+        await page.waitForTimeout(600);
+        const frames = await page.evaluate(() => {
+            const w = window as unknown as { __frames: string[]; __stop: boolean };
+            w.__stop = true;
+            return w.__frames;
+        });
+        const moved = [...new Set(frames.filter((f) => f !== frames[0]))];
+        shifts.push({ seat: kind, frames: frames.length, moved: moved.length ? [frames[0]!, ...moved.slice(0, 4)] : [] });
+    }
+    info.annotations.push({ type: "hover", description: JSON.stringify({ shifts, roLoops: await roLoops(page) }) });
+    expect(shifts.filter((s) => s.moved.length), "no seat's hover moves the dock's box").toEqual([]);
+    for (const s of shifts) expect(s.frames).toBeGreaterThan(20);
+}
+
+for (const orientation of ["horizontal", "vertical"]) {
+    for (const shape of ["pill", "rounded", "card"]) {
+        for (const posture of ["expanded", "collapsed"]) {
+            test(`hover · a ${orientation} ${shape} dock, ${posture}, keeps its box to 0 px through every seat's hover`, async ({ page }, info) => {
+                test.skip(info.project.name === "coarse-touch", "hover is a fine-pointer state");
+                await hoverHolds(page, info, `orientation=${orientation}&shape=${shape}&posture=${posture}`);
+            });
+        }
+    }
+}
+
+test("hover · daraksha's pair of fit-content docks keep their boxes to 0 px through every seat's hover", async ({ page }, info) => {
+    test.skip(info.project.name === "coarse-touch", "hover is a fine-pointer state");
+    await hoverHolds(page, info, "site=daraksha");
+});
 
 /**
  * The painted corner of a seat's plate, from a screenshot of the seat. The plate is the
