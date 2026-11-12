@@ -137,6 +137,22 @@ describe("the run's active mark", () => {
         wrapper.unmount();
     });
 
+    it("mounts and marks without a ResizeObserver", async () => {
+        const saved = globalThis.ResizeObserver;
+        // @ts-expect-error: a host with no ResizeObserver
+        delete globalThis.ResizeObserver;
+        try {
+            const current = ref<number | null>(1);
+            const wrapper = navDock(current);
+            await settle();
+            await nextTick();
+            expect(markOf(wrapper.find(".dock-run").element)).not.toBeNull();
+            wrapper.unmount();
+        } finally {
+            globalThis.ResizeObserver = saved;
+        }
+    });
+
     it("glides on the dock spring preset, never a literal", () => {
         const src = readFileSync(
             resolve(process.cwd(), "src/components/dock/composables/useDockRunMark.ts"),

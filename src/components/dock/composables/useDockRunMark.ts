@@ -213,9 +213,14 @@ export function useDockRunMark({ runEl }: UseDockRunMarkOptions): UseDockRunMark
             attributes: true,
             attributeFilter: ["aria-current"],
         });
-        resizes = new ResizeObserver(() => {
-            if (!spring.live) sync();
-        });
+        // Without a ResizeObserver (an embedded or older host) the mark still lands on
+        // each destination change; only a seat's own resize goes unread, as the dock's
+        // endpoints do there (dockMorphMeasure.ts).
+        if (typeof ResizeObserver !== "undefined") {
+            resizes = new ResizeObserver(() => {
+                if (!spring.live) sync();
+            });
+        }
         firstFrame = requestAnimationFrame(() => {
             firstFrame = 0;
             sync();
