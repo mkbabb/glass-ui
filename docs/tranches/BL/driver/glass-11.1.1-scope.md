@@ -52,3 +52,10 @@ The full release battery, the tag `v11.1.1`, the push and the CI publish under t
 - **O-238:** the dock layer paints no outline when it holds programmatic focus (WebKit witness); DataTable's idle sort glyph adds no scroll width.
 - **O-246:** `useSelectionIndicator` and `useSelectionGroup` measure layout boxes, so a pressed control's scale never reaches the mark. Witness: after a click the settled indicator equals the control's `offsetWidth` within 0.5 px.
 - **O-247:** a `:collapse="false"` GlassDock does not run its pane measurer (no forced layout at mount, no dock script on a resize; Chromium trace at 4x). The selection indicator's first measure waits for the frame after paint.
+
+
+## Added 2026-11-11 (Gregg pass 26; small non-breaking fixes, each one commit and one RED-then-GREEN witness)
+
+- O-256: the dock's muted ink stays a muted step of the legible ink, not `contrast-color()` at full strength.
+- O-257: dock control opacity on `--duration-fast`.
+- O-258: no dock-cap scroll-timeline animation in the running state at idle in WebKit (`document.getAnimations()` witness, both engines).
