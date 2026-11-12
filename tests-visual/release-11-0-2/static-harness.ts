@@ -1,7 +1,8 @@
 // An open GlassDock with `backdrop-mode="static"` (or `live` with ?mode=live) over a
 // striped page, in the light or dark scheme (?theme=dark): icon controls (one active),
-// a compact control, tab controls (one active) and a separator. Imports are relative to
-// `src/`, so the file mounts unchanged on an older tree.
+// a compact control, tab controls (one active) and a separator. `?ground=plain` lays it on
+// one flat colour instead. Imports are relative to `src/`, so the file mounts unchanged on
+// an older tree.
 import "../../demo/demo.css";
 import { createApp, h } from "vue";
 
@@ -11,8 +12,9 @@ import DockSeparator from "../../src/components/dock/DockSeparator.vue";
 
 const q = new URLSearchParams(location.search);
 if (q.get("theme") === "dark") document.documentElement.classList.add("dark");
-document.body.style.cssText =
-    "margin:0;min-height:100vh;background:repeating-linear-gradient(45deg,#e2553a 0 24px,#3a7be2 24px 48px)";
+document.body.style.cssText = `margin:0;min-height:100vh;background:${
+    q.get("ground") === "plain" ? "#3a2f28" : "repeating-linear-gradient(45deg,#e2553a 0 24px,#3a7be2 24px 48px)"
+}`;
 
 createApp({
     setup: () => () =>

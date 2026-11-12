@@ -291,6 +291,15 @@
        read the same de-emphasis over an already-dark page: 40% against light's 50%. */
     --glass-focus-veil-dim: color-mix(in oklab, var(--glass-plate-overlay) 40%, transparent);
 
+    /* The dock control's state fills, DARK arm (the light arm is tokens/sizing.css). A
+       hover, press or selected seat moves away from the plate, so in dark it lifts
+       toward the foreground instead of reading the deeper veil ink, which would draw the
+       seat darker than the plate it sits on. Hover, press and selected climb in that
+       order, as the light ladder does. */
+    --dock-control-hover-bg: color-mix(in oklab, var(--foreground) 8%, transparent);
+    --dock-control-press-bg: color-mix(in oklab, var(--foreground) 11%, transparent);
+    --dock-control-active-bg: color-mix(in oklab, var(--foreground) 14%, transparent);
+
     /* The surface-aware FOREGROUND register, DARK arm (the N13
        whisper collapse where it bites hardest). The dark page-muted --neutral-5 (L62,
        AA 7.70:1 vs page [2026-08-05: re-derived from ~~7.64~~]) COLLAPSES over the

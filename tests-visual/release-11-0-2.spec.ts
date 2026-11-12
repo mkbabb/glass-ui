@@ -14,6 +14,9 @@
 //          draws, computes no backdrop-filter at rest, hover, press and active
 //   fold   the idle fold of an untouched `collapse="open"` dock on a scrolling page lays
 //          out once per frame of its morph (Chromium, which counts layouts)
+//   fill   in dark a hovered, pressed or selected dock seat paints lighter than the
+//          plate, on a static and a live dock; the light scheme's fills are the plate
+//          rungs
 //   blob   from 100 ms after a sweep and release over the hero blob the body stays a
 //          bead: in every sampled frame its centre is painted and the canvas box's four
 //          corners show the page ground
@@ -288,6 +291,92 @@ for (const theme of ["light", "dark"]) {
         expect(hits).toEqual([]);
     });
 }
+
+// The mean relative luminance of a PNG crop, decoded in the page.
+async function meanLum(page: Page, png: Buffer): Promise<number> {
+    return page.evaluate(async (b64) => {
+        const bmp = await createImageBitmap(await (await fetch(`data:image/png;base64,${b64}`)).blob());
+        const c = new OffscreenCanvas(bmp.width, bmp.height);
+        const g = c.getContext("2d")!;
+        g.drawImage(bmp, 0, 0);
+        const d = g.getImageData(0, 0, bmp.width, bmp.height).data;
+        const lin = (v: number) => ((v /= 255) <= 0.04045 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4);
+        let sum = 0;
+        for (let i = 0; i < d.length; i += 4) sum += 0.2126 * lin(d[i]) + 0.7152 * lin(d[i + 1]) + 0.0722 * lin(d[i + 2]);
+        return sum / (d.length / 4);
+    }, png.toString("base64"));
+}
+
+// A seat's state fill against the plate it sits on, over one flat ground so the live
+// plate is the same everywhere. Each read is a band across the middle of the seat just
+// under its top edge, clear of the glyph; the plate is the same band of Search at rest.
+for (const mode of ["static", "live"]) {
+    test(`fill · in dark a hovered, pressed or selected seat lifts the plate (${mode})`, async ({ page }, info) => {
+        const touch = info.project.name === "coarse-touch";
+        await page.goto(`/tests-visual/release-11-0-2/static-harness.html?theme=dark&mode=${mode}&ground=plain`);
+        await page.locator("body[data-ready='1'] .static-dock").waitFor();
+        await page.mouse.move(2, 2);
+        await page.waitForTimeout(900);
+        const band = async (label: string) => {
+            const b = (await page.locator(`.static-dock [aria-label="${label}"]`).boundingBox())!;
+            const clip = { x: b.x + b.width * 0.3, y: b.y + 4, width: b.width * 0.4, height: 4 };
+            return meanLum(page, await page.screenshot({ clip, animations: "disabled" }));
+        };
+        const r: Record<string, number> = {
+            plate: await band("Search"),
+            selected: await band("Home"),
+            selectedTab: await band("Day"),
+            restingTab: await band("Week"),
+        };
+        const b = (await page.locator('.static-dock [aria-label="Search"]').boundingBox())!;
+        await page.mouse.move(b.x + b.width / 2, b.y + b.height / 2);
+        await page.waitForTimeout(400);
+        if (!touch) r.hover = await band("Search");
+        await page.mouse.down();
+        await page.waitForTimeout(400);
+        r.press = await band("Search");
+        await page.mouse.up();
+        info.annotations.push({ type: "fill", description: JSON.stringify(r) });
+        // A lift of at least 0.006 in relative luminance, a quarter of the dark plate's own.
+        const lift = 0.006;
+        expect(Math.abs(r.restingTab - r.plate), "a resting tab is the plate").toBeLessThan(0.002);
+        if (!touch) expect(r.hover - r.plate, "hover").toBeGreaterThan(lift);
+        expect(r.press - r.plate, "press").toBeGreaterThan(lift);
+        expect(r.selected - r.plate, "selected").toBeGreaterThan(lift);
+        expect(r.selectedTab - r.plate, "selected tab").toBeGreaterThan(lift);
+    });
+}
+
+test("fill · the light scheme's seat fills are the plate rungs", async ({ page }, info) => {
+    test.skip(info.project.name === "coarse-touch", "hover is a fine-pointer read");
+    await page.goto("/tests-visual/release-11-0-2/static-harness.html?theme=light");
+    await page.locator("body[data-ready='1'] .static-dock").waitFor();
+    await page.waitForTimeout(900);
+    const b = (await page.locator('.static-dock [aria-label="Search"]').boundingBox())!;
+    await page.mouse.move(b.x + b.width / 2, b.y + b.height / 2);
+    await page.waitForTimeout(400);
+    const r = await page.evaluate(() => {
+        const dock = document.querySelector<HTMLElement>(".static-dock")!;
+        const ref = (value: string) => {
+            const span = document.createElement("span");
+            span.style.background = value;
+            dock.append(span);
+            const c = getComputedStyle(span).backgroundColor;
+            span.remove();
+            return c;
+        };
+        const bg = (label: string) => getComputedStyle(dock.querySelector(`[aria-label="${label}"]`)!).backgroundColor;
+        return {
+            hover: bg("Search"),
+            resting: ref("var(--glass-plate-resting)"),
+            selectedTab: bg("Day"),
+            floating: ref("var(--glass-plate-floating)"),
+        };
+    });
+    info.annotations.push({ type: "fill", description: JSON.stringify(r) });
+    expect(r.hover).toBe(r.resting);
+    expect(r.selectedTab).toBe(r.floating);
+});
 
 // The layouts the page runs from 3 s to 5.5 s after mount, across the idle fold of an
 // untouched `collapse="open"` dock (it folds 3.6 s after mount) while the page scrolls

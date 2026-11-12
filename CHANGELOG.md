@@ -66,6 +66,13 @@ A patch on 11.0.1. Nothing is removed or renamed.
   over 67 frames; it now costs one a frame. A host or content change during the motion
   is still measured on the frame it lands.
 
+- **In dark, a hovered, pressed or selected dock seat is lighter than the dock.** Its
+  fill was the dark scheme's veil ink, which is deeper than the plate, so a seat you
+  hovered or selected drew darker than the dock around it. In dark,
+  `--dock-control-hover-bg`, `--dock-control-press-bg` and `--dock-control-active-bg`
+  now lift toward `--foreground` (8%, 11% and 14%), on a live or a static dock. The light
+  scheme is unchanged.
+
 ## 11.0.1 — 2026-11-12
 
 A patch that brings the 10.1.5 fixes forward onto 11.0. If you saw the dock's hover
