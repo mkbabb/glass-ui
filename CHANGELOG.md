@@ -73,6 +73,11 @@ A patch on 11.0.1. Nothing is removed or renamed.
   now lift toward `--foreground` (8%, 11% and 14%), on a live or a static dock. The light
   scheme is unchanged.
 
+- **The Slider thumb takes a colour token.** The scrubber's thumb paints
+  `var(--slider-thumb-bg, var(--card))`, so you can colour it the way `--slider-range-bg`
+  colours the fill. Unset, it paints `--card` as before, and under forced colours it
+  still paints `Canvas`.
+
 ## 11.0.1 — 2026-11-12
 
 A patch that brings the 10.1.5 fixes forward onto 11.0. If you saw the dock's hover

@@ -25,7 +25,8 @@
 //          corners (daraksha's glass-only repro `dock-cutcap`, ported to `src/`)
 //   slider a scrubber Slider at its minimum still draws its value: the fill is at least
 //          the thumb wide and the thumb is painted, so the well's leading end differs
-//          from its empty trailing end
+//          from its empty trailing end; the thumb paints `--card` with
+//          `--slider-thumb-bg` unset, and the token when it is set
 import { expect, test, type Page } from "@playwright/test";
 
 type DarkHandle = { stamped: boolean; isDark: () => boolean; toggle: () => void };
@@ -197,6 +198,29 @@ for (const size of ["sm", "md", "lg"]) {
         expect(diff).toBeGreaterThan(8);
     });
 }
+
+test("slider · the thumb paints --card by default and --slider-thumb-bg when set", async ({ page }, info) => {
+    await page.goto("/tests-visual/release-11-0-2/slider-harness.html");
+    await page.locator("body[data-ready='1']").waitFor({ state: "attached" });
+    await page.waitForTimeout(300);
+    const r = await page.evaluate(() => {
+        const row = document.querySelector<HTMLElement>('[data-row="md"]')!;
+        const thumb = row.querySelector(".slider-thumb")!;
+        // `--card` as this row resolves it, the thumb's paint before the hook.
+        const ref = document.createElement("span");
+        ref.style.background = "var(--card)";
+        row.append(ref);
+        const card = getComputedStyle(ref).backgroundColor;
+        ref.remove();
+        const unset = getComputedStyle(thumb).backgroundColor;
+        row.style.setProperty("--slider-thumb-bg", "rgb(200, 30, 60)");
+        const set = getComputedStyle(thumb).backgroundColor;
+        return { card, unset, set };
+    });
+    info.annotations.push({ type: "slider", description: JSON.stringify(r) });
+    expect(r.unset).toBe(r.card);
+    expect(r.set).toBe("rgb(200, 30, 60)");
+});
 
 test("edge · a GlassDock page opens and stays alive", async ({ page }, info) => {
     let crashed = false;

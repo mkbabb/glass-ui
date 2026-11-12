@@ -61,6 +61,10 @@ import { DEFAULT_AURORA_CONFIG, MAX_NUCLEI } from "@mkbabb/glass-ui/aurora";
 }
 ```
 
+A Slider's colours have tokens of their own: `--slider-range-bg` paints the fill and
+`--slider-thumb-bg` the scrubber's thumb (`--card` when unset). Set either on the Slider
+or on any ancestor.
+
 The optional `styles/fonts` entry carries the packaged Plus Jakarta Sans and
 Fira Code faces as self-contained WOFF2 data URLs. Consumers that need raw font
 files can address the same built assets through `@mkbabb/glass-ui/fonts/*`.

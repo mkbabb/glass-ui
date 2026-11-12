@@ -220,16 +220,17 @@
    the size rungs above hold at or under the track height (the inscription law), centred
    on the cross axis by the root's own `align-items: center`. It is the same object at
    min, mid and max, so the value's end is visible at both extremes. Its paint is the
-   switch thumb's (`--card` over `--shadow-sm`), the house's one knob. Keyboard focus does
-   not ring it — it ribbons the TRACK, below. The thumb is always painted: without it,
-   both extremes lose the handle. */
+   switch thumb's (`--card` over `--shadow-sm`), the house's one knob; a site recolours it
+   with `--slider-thumb-bg`, as it recolours the fill with `--slider-range-bg`. Keyboard
+   focus does not ring it — it ribbons the TRACK, below. The thumb is always painted:
+   without it, both extremes lose the handle. */
 .slider-thumb {
     display: block;
     width: var(--slider-thumb-size, 1rem);
     height: var(--slider-thumb-size, 1rem);
     border: none;
     border-radius: var(--radius-pill);
-    background: var(--card);
+    background: var(--slider-thumb-bg, var(--card));
     box-shadow: var(--shadow-sm);
     transition: transform var(--spring-press-duration) var(--spring-press);
 }
