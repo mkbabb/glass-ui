@@ -250,3 +250,10 @@ Frames: `~/.dev-logs/owner-1112/dock-gaps/branch-v2/`. Glass 11.0.1.
 - A pinned second GlassDock beside the main one cannot follow the collapse. The plate morphs by transform while its layout box changes at once, so through the collapse the sibling stands about 140 px from the collapsed pill, then jumps about 116 px in one frame at the end of the collapse and again at the start of the expand. **The fission seat must ride the morph (the same transform clock as the plate), never layout.** The two-dock recipe the orchestrator gave value.js on 2026-11-12 is withdrawn.
 - GlassDock's `margin: 0 auto` spreads two docks across a flex row unless each has a content-sized wrapper.
 - On a phone, a tap inside a cross-origin iframe does not count as an outside press, so the dock does not collapse (O-299).
+
+## Measured on daraksha, 2026-11-12 18:40 (frames `~/.dev-logs/owner-1112/frames-4th/`)
+
+- **Goo in WebKit.** An SVG goo filter on the plates' container erased their backdrop completely. A real neck element between the two plates kept the backdrop and tweened from 17 px to 0 smoothly (`webkit-neck-vs-svg-goo.png`). The fission seat's goo is a neck, not a filter.
+- **The fold lets content stand outside the plate (O-288's real cause).** The dock's content holds full strength for about the first 45 % of the fold (`--child-reveal` stays at 1) and the plate clips only its own glass, so a wide control stands 13 px past the closing plate's edge at 1440 at full opacity, then drops from 1 to 0 in one frame. Content must be clipped by the plate, or fade with it, through the whole fold.
+- A seat placed directly in a dock's run gets `transition: inline-size`, which replaces the control's own hover tween (O-300).
+- There is no labelled icon-over-text seat variant (O-290).
