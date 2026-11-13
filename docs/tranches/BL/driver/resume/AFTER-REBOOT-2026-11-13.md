@@ -13,3 +13,7 @@ Resume each run from its journal with `Workflow({scriptPath, resumeFromRunId, ar
 Binding notes already in the worktrees: `release-11.0.2/docs/release-11.0.2/orchestrator-note-*.md` (after-build-C, after-critique-1, dock-fold-content, slider-geometry, ci-browser-free, dock-hover-shift), `release-11.1.0/docs/release-11.1.0/orchestrator-note-*.md` (after-fix-7, ci-browser-free, mark-box, merge-master).
 
 Done and committed: 10.1.6 published; the motion study (W-B.17), the Slider loop (W-B.18), the animation audit (AUDIT.md, O-311 to O-335); CI browser-free with sparse checkout on master (2 min 20 s). Owed next: 11.1.1's driver (scope in `glass-11.1.1-scope.md`) once 11.1.0 closes.
+
+## Update 04:30
+
+All three runs have stopped. 11.1.0: critic 7 (resume note in its args). 11.0.2: fix 3 (resume notes for `fix-1102-3` and `critic-1102-3` in its args). The dock design run FINISHED (ledger, design, prototype, challenge of 24 findings, fold on evidence only): it is not resumed; what it owes is a measuring pass on the prototype worktree `.claude/worktrees/bl/dock/wi8` (branch `bl/dock/wi8`): the WebKit half, the dock's unit and release specs, the overlay-close cell, the rows recorded mid-build, and the fold's amendments built and read. W-I.8.md's table "What the prototype read" lists each of the fourteen gates as open, failing or unread. Launch that as a new Opus seat after the reboot.
