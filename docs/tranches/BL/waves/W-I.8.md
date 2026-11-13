@@ -257,3 +257,11 @@ Frames: `~/.dev-logs/owner-1112/dock-gaps/branch-v2/`. Glass 11.0.1.
 - **The fold lets content stand outside the plate (O-288's real cause).** The dock's content holds full strength for about the first 45 % of the fold (`--child-reveal` stays at 1) and the plate clips only its own glass, so a wide control stands 13 px past the closing plate's edge at 1440 at full opacity, then drops from 1 to 0 in one frame. Content must be clipped by the plate, or fade with it, through the whole fold.
 - A seat placed directly in a dock's run gets `transition: inline-size`, which replaces the control's own hover tween (O-300).
 - There is no labelled icon-over-text seat variant (O-290).
+
+## Owner law added 2026-11-12 21:20 (O-301 to O-304)
+
+- "the dropdowns should disappear when the dock collapses and animate; the text edit options should be contained properly": an overlay opened from the dock never outlives the dock's open state; it closes with the fold, tweened.
+- "the dock dwell time needs to be tweaked dramatically, as do the dock layer transitions and animations thereof": today 60 ms intent, 3600 ms idle window, 840 ms settle, all constants. Direction to confirm with him; daraksha is trying 90 ms and 1.4 s.
+- The labelled seat: "potentially have the text not displayed, but on hover display larger and to the left, and shift the icons (keeping the dock the same size)".
+- "the dock transitions and goo thereof and fission could be smoother too".
+- "each app page ... should have a defined glass container, separate from the dock as a card".
