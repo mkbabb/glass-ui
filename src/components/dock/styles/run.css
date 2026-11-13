@@ -157,14 +157,10 @@
     /* THE ROOM FOR THE RESERVE, on the scroll axis. The run hands its reserve back by a
        negative margin (the run rule below), so its scroll clip reaches
        `--dock-run-reserve-*` past its slot. That reach lands in room the dock owns,
-       never on a neighbour. After a leading persistent region the room is the family
-       gap the dock already spaces it by (the larger of the gap and the reserve), so the
-       clip reaches into that gap and stops short of the region's seats, and the dock's
-       own box is the size its seats, gaps and padding add up to, which a consumer that
-       sizes a face to the dock's chrome reads from the same tokens. Before a trailing
-       persistent region a horizontal dock lays no gap, so the slot keeps the reserve
-       there; a vertical dock's flex gap already lies between them and takes it. Either
-       way no scrolled seat paints under a persistent seat or takes its hit. At the dock's edge the slot keeps whatever the reserve needs past the
+       never on a neighbour. Beside a persistent region the slot keeps the reserve, and
+       after a leading one the family gap as well, so the gap lies between the region
+       and the run's clip, and no scrolled seat paints under a persistent seat or takes
+       its hit. At the dock's edge the slot keeps whatever the reserve needs past the
        dock's own padding (none at the house geometry). The cross axis scrolls nothing
        and keeps the full hand-back. The room is the visible run's, so a collapsed dock
        (whose run is the inactive pane) keeps its own geometry, and the family gap
@@ -183,7 +179,7 @@
     }
 
     .glass-dock:not(.vertical):not(.collapsed) > .dock-controls > .dock-persistent + .dock-layers {
-        margin-inline-start: max(var(--dock-layer-gap, 0.375rem), var(--dock-run-reserve-inline));
+        margin-inline-start: calc(var(--dock-layer-gap, 0.375rem) + var(--dock-run-reserve-inline));
     }
 
     .glass-dock:not(.vertical):not(.collapsed)
@@ -204,13 +200,13 @@
     }
 
     .glass-dock.vertical:not(.collapsed) > .dock-controls > .dock-persistent + .dock-layers {
-        margin-block-start: max(var(--dock-layer-gap, 0.375rem), var(--dock-run-reserve-block));
+        margin-block-start: calc(var(--dock-layer-gap, 0.375rem) + var(--dock-run-reserve-block));
     }
 
     .glass-dock.vertical:not(.collapsed)
         > .dock-controls
         > .dock-layers:has(+ .dock-persistent-end) {
-        margin-block-end: max(0px, var(--dock-run-reserve-block) - var(--dock-layer-gap, 0.375rem));
+        margin-block-end: var(--dock-run-reserve-block);
     }
 
     /* Which of the run's scroll-axis edges is the plate's own edge (1) and which lies
@@ -373,10 +369,7 @@
        whole-pixel scroll offset reaches. The spacer is the reserve long, and its
        leading margin takes back the run gap the flex layout puts before it, so its end
        lies the reserve past the last seat: the padding's own place, with the run's
-       outer box and every seat unchanged. The end padding stays, and the spacer's
-       trailing margin takes its length back, so the spacer lies in that padding and the
-       content box is the run's slot: a seat that fills the content box (`width: 100%`)
-       ends where the spacer starts and the run reads `scrollWidth = clientWidth`. The
+       outer box and every seat unchanged. A run with no seat keeps its padding. The
        vertical run keeps its block-end padding: the same spacer, rotated, follows the
        port a morph moves, so a host that resizes a vertical dock mid-expand steps its
        seats at the settle, and a bottom-anchored dock's leaving summary misses its rest
@@ -418,6 +411,10 @@
         padding-block: min(var(--dock-run-reserve-block), var(--dock-run-room-block, 0px));
     }
 
+    .glass-dock:not(.vertical) :where(.dock-layers) > .dock-run:has(> *) {
+        padding-inline-end: 0;
+    }
+
     .glass-dock:not(.vertical) :where(.dock-layers) > .dock-run:has(> *)::before,
     .glass-dock:not(.vertical) :where(.dock-layers) > .dock-run:has(> *)::after {
         content: "";
@@ -431,7 +428,7 @@
     }
 
     .glass-dock:not(.vertical) :where(.dock-layers) > .dock-run:has(> *)::after {
-        margin-inline: calc(-1 * var(--dock-run-gap)) calc(-1 * var(--dock-run-reserve-inline));
+        margin-inline-start: calc(-1 * var(--dock-run-gap));
     }
 
     /* THE SEATS. Every direct child of the run is a snap target and none of them flex —
