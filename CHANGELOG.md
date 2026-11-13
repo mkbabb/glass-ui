@@ -2,7 +2,9 @@
 
 ## 11.0.2 — unreleased
 
-A patch on 11.0.1. Nothing is removed or renamed.
+A patch on 11.0.1. Nothing is removed or renamed. The dock's edge stops reading one
+token, `--glass-border-dock`, and the Slider's thumb takes a new default colour; both
+are described below.
 
 - **`useGlobalDark` takes a `storageKey`.** `darkModeSyncScript({ storageKey })` could
   read a key of your choosing in the page head, but the composable always read and
@@ -75,9 +77,8 @@ A patch on 11.0.1. Nothing is removed or renamed.
   scheme is unchanged.
 
 - **The Slider thumb takes a colour token.** The scrubber's thumb paints
-  `var(--slider-thumb-bg, var(--card))`, so you can colour it the way `--slider-range-bg`
-  colours the fill. Unset, it paints `--card` as before, and under forced colours it
-  still paints `Canvas`.
+  `var(--slider-thumb-bg, var(--foreground))`, so you can colour it the way
+  `--slider-range-bg` colours the fill. Under forced colours it still paints `Canvas`.
 
 - **PagerDots no longer stretches a bar across the rail on a one-dot step.** The worm
   read its dot size from the `--pager-dot-size` token's text, so `.75rem` counted as
@@ -117,6 +118,12 @@ A patch on 11.0.1. Nothing is removed or renamed.
   through. `--slider-thumb-size-sm`, `-md` and `-lg` no longer resize a scrubber's
   thumb: set `--slider-track-height-sm`, `-md` or `-lg` instead. The thumb size still
   sets the spectrum's taller track.
+
+  Because the thumb now fills the track, at the minimum it covers the fill entirely and
+  the fill no longer shows as a rim around it: the thumb itself marks the value there.
+  So that it reads against both the fill and the empty track, its default colour moves
+  from `--card` to `--foreground`: a dark thumb in the light scheme and a light one in
+  dark. Set `--slider-thumb-bg` to choose another.
 
 ## 11.0.1 — 2026-11-12
 

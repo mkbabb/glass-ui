@@ -25,9 +25,9 @@
 //   cutcap an open dock whose active layer is narrower than an inactive one, with a
 //          #persistent-end seat and `--radius-dock: 1.875rem`, paints four equal plate
 //          corners (daraksha's glass-only repro `dock-cutcap`, ported to `src/`)
-//   slider a scrubber Slider at its minimum still draws its value: the fill is at least
-//          the thumb wide and the thumb is painted, so the well's leading end differs
-//          from its empty trailing end; the thumb paints `--card` with
+//   slider a scrubber's thumb reads on the track it sits in and the fill it ends, at 0,
+//          50 and 100, light and dark, default and violet ink (luma at least 60 from the
+//          fill and 30 from the track); the thumb paints `--foreground` with
 //          `--slider-thumb-bg` unset, and the token when it is set
 //   pager  a PagerDots neighbour hop paints a neck no wider than the pitch plus one dot
 //   wheel  a vertical wheel over a horizontal dock's overflowing run scrolls the page; each
@@ -164,78 +164,96 @@ for (const width of [1440, 390]) {
     });
 }
 
-// The mean per-channel difference of two same-size PNG crops, decoded in the page.
-async function meanDiff(page: Page, a: Buffer, b: Buffer): Promise<number> {
+// The Rec. 709 luma (0 to 255) of the scrubber's thumb, and of the fill and the track
+// where each shows beside it, read from a screenshot of the track: a square of a fifth of
+// the band's height either side of the thumb's centre, of the middle of the fill before
+// it and of the middle of the track after it.
+async function thumbRead(page: Page, cell: string) {
+    const g = await page.locator(`[data-cell="${cell}"]`).evaluate((r) => {
+        const t = r.querySelector(".slider-track")!.getBoundingClientRect();
+        const b = r.querySelector(".slider-thumb")!.getBoundingClientRect();
+        return { t: { x: t.x, y: t.y, w: t.width, h: t.height }, b: { x: b.x, w: b.width } };
+    });
+    const png = await page.screenshot({ clip: { x: g.t.x, y: g.t.y, width: g.t.w, height: g.t.h }, animations: "disabled" });
     return page.evaluate(
-        async ([a64, b64]) => {
-            const read = async (b64: string) => {
-                const bmp = await createImageBitmap(await (await fetch(`data:image/png;base64,${b64}`)).blob());
-                const c = new OffscreenCanvas(bmp.width, bmp.height);
-                const g = c.getContext("2d")!;
-                g.drawImage(bmp, 0, 0);
-                return g.getImageData(0, 0, bmp.width, bmp.height).data;
+        async ([b64, g]) => {
+            const bmp = await createImageBitmap(await (await fetch(`data:image/png;base64,${b64}`)).blob());
+            const c = new OffscreenCanvas(bmp.width, bmp.height);
+            const x = c.getContext("2d")!;
+            x.drawImage(bmp, 0, 0);
+            const d = x.getImageData(0, 0, bmp.width, bmp.height).data;
+            const s = bmp.width / g.t.w;
+            const H = g.t.h;
+            const half = Math.max(1, H / 5);
+            const box = (cx: number) => {
+                let sum = 0;
+                let n = 0;
+                for (let yy = Math.round((H / 2 - half) * s); yy < Math.round((H / 2 + half) * s); yy++)
+                    for (let xx = Math.round((cx - half) * s); xx < Math.round((cx + half) * s); xx++) {
+                        const i = (yy * bmp.width + xx) * 4;
+                        sum += 0.2126 * d[i]! + 0.7152 * d[i + 1]! + 0.0722 * d[i + 2]!;
+                        n++;
+                    }
+                return sum / n;
             };
-            const [x, y] = [await read(a64), await read(b64)];
-            let sum = 0;
-            for (let i = 0; i < x.length; i += 4) for (let k = 0; k < 3; k++) sum += Math.abs(x[i + k] - y[i + k]);
-            return sum / ((x.length / 4) * 3);
+            const start = g.b.x - g.t.x;
+            const end = start + g.b.w;
+            return {
+                thumb: box(start + g.b.w / 2),
+                fill: start > H ? box(start / 2) : null,
+                track: g.t.w - end > H ? box((end + g.t.w) / 2) : null,
+            };
         },
-        [a.toString("base64"), b.toString("base64")],
+        [png.toString("base64"), g] as const,
     );
 }
 
+// The thumb fills the band, so at the minimum it covers the fill whole: the value's mark
+// at the minimum is the thumb itself. It must read on the track it sits in and on the
+// fill it ends, at the floor the Slider's design names: at least 60 of luma from the fill
+// and 30 from the track, in both schemes, with the default ink and a violet one.
 for (const size of ["sm", "md", "lg"]) {
-    test(`slider · a scrubber at its minimum draws its value (${size})`, async ({ page }, info) => {
-        await page.goto("/tests-visual/release-11-0-2/slider-harness.html");
-        await page.locator("body[data-ready='1']").waitFor({ state: "attached" });
-        await page.evaluate(() => document.fonts.ready);
-        await page.waitForTimeout(300);
-        const row = `[data-row="${size}"]`;
-        const r = await page.evaluate((row) => {
-            const box = (sel: string) => document.querySelector(`${row} ${sel}`)!.getBoundingClientRect();
-            const thumb = document.querySelector(`${row} .slider-thumb`)!;
-            const t = box(".slider-thumb");
-            const range = box(".slider-range");
-            const track = box(".slider-track");
-            return {
-                value: thumb.getAttribute("aria-valuenow"),
-                thumb: { w: t.width, h: t.height, opacity: +getComputedStyle(thumb).opacity },
-                range: { left: range.left - track.left, w: range.width },
-                track: { x: track.x, y: track.y, w: track.width, h: track.height },
-            };
-        }, row);
-        const side = r.track.h;
-        const crop = (x: number) => page.screenshot({ clip: { x, y: r.track.y, width: side, height: side }, animations: "disabled" });
-        const diff = await meanDiff(page, await crop(r.track.x), await crop(r.track.x + r.track.w - side));
-        info.annotations.push({ type: "slider", description: JSON.stringify({ ...r, diff }) });
-        expect(r.value).toBe("50");
-        expect(r.thumb.w).toBeGreaterThan(0);
-        expect(r.thumb.opacity).toBeGreaterThan(0);
-        expect(r.range.w).toBeGreaterThanOrEqual(r.thumb.w - 0.5);
-        expect(diff).toBeGreaterThan(8);
+    test(`slider · a scrubber's thumb reads on its track and its fill at 0, 50 and 100 (${size})`, async ({ page }, info) => {
+        const rows: Record<string, unknown>[] = [];
+        const fails: string[] = [];
+        for (const theme of ["light", "dark"])
+            for (const ink of ["default", "violet"])
+                for (const value of [0, 50, 100]) {
+                    await page.goto(`/tests-visual/release-11-0-2/geometry-harness.html?value=${value}&theme=${theme}`);
+                    await page.locator("body[data-ready='1'] [data-cell] .slider-thumb").first().waitFor();
+                    if (ink === "violet") await page.addStyleTag({ content: ".glass-slider{--slider-range-bg:oklch(0.55 0.22 300)}" });
+                    await page.waitForTimeout(250);
+                    const r = await thumbRead(page, `scrubber-${size}-horizontal`);
+                    const where = `${theme} ${ink} @${value}`;
+                    rows.push({ where, ...r });
+                    if (r.fill != null && Math.abs(r.thumb - r.fill) < 60) fails.push(`${where}: thumb ${r.thumb.toFixed(1)} on fill ${r.fill.toFixed(1)}`);
+                    if (r.track != null && Math.abs(r.thumb - r.track) < 30) fails.push(`${where}: thumb ${r.thumb.toFixed(1)} on track ${r.track.toFixed(1)}`);
+                }
+        info.annotations.push({ type: "slider", description: JSON.stringify(rows) });
+        expect(fails).toEqual([]);
     });
 }
 
-test("slider · the thumb paints --card by default and --slider-thumb-bg when set", async ({ page }, info) => {
+test("slider · the thumb paints --foreground by default and --slider-thumb-bg when set", async ({ page }, info) => {
     await page.goto("/tests-visual/release-11-0-2/slider-harness.html");
     await page.locator("body[data-ready='1']").waitFor({ state: "attached" });
     await page.waitForTimeout(300);
     const r = await page.evaluate(() => {
         const row = document.querySelector<HTMLElement>('[data-row="md"]')!;
         const thumb = row.querySelector(".slider-thumb")!;
-        // `--card` as this row resolves it, the thumb's paint before the hook.
+        // `--foreground` as this row resolves it, the thumb's paint without the hook.
         const ref = document.createElement("span");
-        ref.style.background = "var(--card)";
+        ref.style.background = "var(--foreground)";
         row.append(ref);
-        const card = getComputedStyle(ref).backgroundColor;
+        const ink = getComputedStyle(ref).backgroundColor;
         ref.remove();
         const unset = getComputedStyle(thumb).backgroundColor;
         row.style.setProperty("--slider-thumb-bg", "rgb(200, 30, 60)");
         const set = getComputedStyle(thumb).backgroundColor;
-        return { card, unset, set };
+        return { ink, unset, set };
     });
     info.annotations.push({ type: "slider", description: JSON.stringify(r) });
-    expect(r.unset).toBe(r.card);
+    expect(r.unset).toBe(r.ink);
     expect(r.set).toBe("rgb(200, 30, 60)");
 });
 

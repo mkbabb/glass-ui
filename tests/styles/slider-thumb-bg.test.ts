@@ -1,7 +1,7 @@
 // The scrubber thumb's colour hook. The base `.slider-thumb` rule paints
-// `var(--slider-thumb-bg, var(--card))`, so a site recolours the thumb by token as it
-// recolours the fill with `--slider-range-bg`, and with the token unset the paint is
-// `--card`. The forced-colors block keeps its own system colours.
+// `var(--slider-thumb-bg, var(--foreground))`, so a site recolours the thumb by token as
+// it recolours the fill with `--slider-range-bg`, and with the token unset the paint is
+// the page's ink. The forced-colors block keeps its own system colours.
 
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
@@ -19,8 +19,8 @@ const body = (selector: string): string => {
 };
 
 describe("slider thumb colour token", () => {
-    it("the base thumb reads --slider-thumb-bg over --card", () => {
-        expect(body(".slider-thumb")).toMatch(/background:\s*var\(--slider-thumb-bg,\s*var\(--card\)\);/);
+    it("the base thumb reads --slider-thumb-bg over --foreground", () => {
+        expect(body(".slider-thumb")).toMatch(/background:\s*var\(--slider-thumb-bg,\s*var\(--foreground\)\);/);
     });
 
     it("no other thumb rule paints a bare --card", () => {
