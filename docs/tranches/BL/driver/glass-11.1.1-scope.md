@@ -73,3 +73,7 @@ The full release battery, the tag `v11.1.1`, the push and the CI publish under t
 - O-298 (gaggle): a quiet Button paints a state for aria-pressed; DataTable sort headers get a hover statement and a 24 px minimum target; dock tab seats reach the coarse-pointer minimum. Read first: the `#search` slot drawing its Input under the pill at 1440 (gaggle's proofs.md), and cure if it is glass's.
 - O-308 (6): `gl-dock-cap` scroll animations do not run at idle; the dock tabs' 300 ms sheen takes a token or goes.
 - O-309: a pointer-opened Select's focused row paints under forced colors; `--corner-shape-thumb` is removed or read; the two test headers lose their row stamps.
+
+## Added 2026-11-13: the animation audit (O-305)
+
+Every row of `docs/tranches/BL/audit/animation/INBOUND-ROWS.md` whose release is 11.1.1 is in this patch (INBOUND O-311 to O-335; the evidence, cause and cure for each are in `audit/animation/AUDIT.md`). First, because one change cures many: the six spring curves are regenerated so they reach their end without a last-frame step (`src/styles/tokens/scheme-spring.css`, `src/composables/motion/spring/springProjection.ts`). Then the release hand-offs (the tabs drag, the sortable drop, the sheet's detents), the reveal reversed mid-open, the tooltip's entrance, the dock run's glide, the select's sheet on a phone. Each row's witness is its frame table from the audit's harness (`audit/animation/harness/`), RED on v11.1.0 and GREEN on the branch.
