@@ -53,7 +53,7 @@ import { PI_TARGETS, sourcePresetKeys } from "./pi-manifest.ts";
 
 // ── BJ.W-PIXEL-FLOOR-CI — the planted self-test bite ─────────────────────────
 // A floor that has never been SEEN to fail is theatre, so `PI_PLANT` mutates the
-// render and the CI job asserts the floors go RED
+// render and the planted leg asserts the floors go RED
 // (`pi-gate-verify.mjs --expect=planted-red`).
 //
 // Each floor gets the plant its own readback can SEE. That is not a detail: two
@@ -666,9 +666,8 @@ test.describe("substrate-paints-color (π lane — fail-CLOSED)", () => {
     // were one test, so a gate could take both or neither — and on the CI runner's
     // SwiftShader the ceiling reads 0.997 (run 35399022659) where Metal reads 0.288: a
     // renderer artefact, not a flood. The ceiling is GPU-gated exactly as the aurora
-    // floor is, by test selection: CI runs `-g 'blob paints'` (the floor alone),
-    // `scripts/release.sh` runs both on real hardware. Each test takes its own readback;
-    // neither bound moved.
+    // floor is: both run only in `scripts/release.sh`, on real hardware. Each test takes
+    // its own readback; neither bound moved.
     async function readBlobBounds(page: Page) {
         // Half the enforced surface must witness its own path too: without the force
         // the blob arms Dawn wherever `navigator.gpu` exists, i.e. WebGPU-on-
