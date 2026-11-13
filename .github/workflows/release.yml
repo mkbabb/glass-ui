@@ -30,9 +30,24 @@ jobs:
             contents: read
             id-token: write
         steps:
+            # Depth 1 and sparse, the same list as ci.yml: nothing in the publish path
+            # reads history or tags (the gates that once ran `git log` are gone), and the
+            # tarball is dist/ + MIGRATION.md. `npm test` reads the eight docs files.
             - uses: actions/checkout@v4
               with:
-                  fetch-depth: 0
+                  fetch-depth: 1
+                  sparse-checkout-cone-mode: false
+                  sparse-checkout: |
+                      /*
+                      !/docs/
+                      /docs/audits/overfitting-audit.md
+                      /docs/design/affordance-map.md
+                      /docs/design/tunable-anim.md
+                      /docs/tranches/BJ/addenda/2026-07-21-convergent-hardening/GATE-SEMANTIC-ROSTER-C20.json
+                      /docs/tranches/BJ/addenda/2026-07-24-refinement/TERMINAL-ROSTER.md
+                      /docs/tranches/BJ/coordination/glass-outbound-2026-08-08-easing-consumer-addenda.md
+                      /docs/tranches/BJ/waves/BAND-FEEDBACK-MOTION.md
+                      /docs/tranches/BK/execution/2026-08-03-row9-register/SEAT-BINDING.json
             - uses: actions/setup-node@v4
               with:
                   node-version: 24
