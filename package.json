@@ -495,6 +495,7 @@
         "profile:bundle": "node scripts/profile-bundle.mjs",
         "release": "bash scripts/release.sh",
         "test": "vitest run",
+        "test:browser": "vitest run --config vitest.browser.config.ts",
         "typecheck": "vue-tsc --noEmit && vue-tsc --noEmit -p tsconfig.test.json",
         "verify:package": "node scripts/verify-export-types.mjs"
     },
