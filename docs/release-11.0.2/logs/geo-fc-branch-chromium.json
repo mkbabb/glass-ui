@@ -1,0 +1,413 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "tests-visual/playwright.config.ts",
+      "slider-forced-colors.spec.ts",
+      "--project=chromium-headless-new",
+      "--project=coarse-touch",
+      "--workers=1",
+      "-g",
+      "."
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/playwright.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-headless-new",
+        "name": "chromium-headless-new",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "coarse-touch",
+        "name": "coarse-touch",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "safari-webgl.spec.ts",
+          "aurora-swraster.spec.ts",
+          "release-10-1-1.spec.ts",
+          "release-10-1-2.spec.ts",
+          "release-10-1-3.spec.ts",
+          "release-10-1-4.spec.ts",
+          "release-10-1-5.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/docs/release-11.0.2/logs/geo-fc-branch-chromium.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5341",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/",
+      "url": "http://localhost:5341",
+      "reuseExistingServer": true,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "slider-forced-colors.spec.ts",
+      "file": "slider-forced-colors.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "slider forced colors · a focused Slider keeps a focus mark",
+          "file": "slider-forced-colors.spec.ts",
+          "line": 23,
+          "column": 6,
+          "specs": [
+            {
+              "title": "slider forced colors · scrubber · the focused mark is an outline that paints",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [
+                    {
+                      "type": "outline",
+                      "description": "{\"forced\":true,\"focusVisible\":true,\"style\":\"solid\",\"width\":2,\"offset\":2,\"painted\":true}"
+                    }
+                  ],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 710,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T23:59:45.090Z",
+                      "annotations": [
+                        {
+                          "type": "outline",
+                          "description": "{\"forced\":true,\"focusVisible\":true,\"style\":\"solid\",\"width\":2,\"offset\":2,\"painted\":true}"
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "79dbbcf9c5b4a6bd8f36-b7b2068a6b0798dd9f96",
+              "file": "slider-forced-colors.spec.ts",
+              "line": 25,
+              "column": 9
+            },
+            {
+              "title": "slider forced colors · invalid · the focused mark is an outline that paints",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [
+                    {
+                      "type": "outline",
+                      "description": "{\"forced\":true,\"focusVisible\":true,\"style\":\"solid\",\"width\":2,\"offset\":2,\"painted\":true}"
+                    }
+                  ],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 600,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T23:59:45.930Z",
+                      "annotations": [
+                        {
+                          "type": "outline",
+                          "description": "{\"forced\":true,\"focusVisible\":true,\"style\":\"solid\",\"width\":2,\"offset\":2,\"painted\":true}"
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "79dbbcf9c5b4a6bd8f36-17f9db66b0f4b0b3d45b",
+              "file": "slider-forced-colors.spec.ts",
+              "line": 25,
+              "column": 9
+            },
+            {
+              "title": "slider forced colors · spectrum · the focused mark is an outline that paints",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [
+                    {
+                      "type": "outline",
+                      "description": "{\"forced\":true,\"focusVisible\":true,\"style\":\"solid\",\"width\":2,\"offset\":2,\"painted\":true}"
+                    }
+                  ],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 613,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T23:59:46.536Z",
+                      "annotations": [
+                        {
+                          "type": "outline",
+                          "description": "{\"forced\":true,\"focusVisible\":true,\"style\":\"solid\",\"width\":2,\"offset\":2,\"painted\":true}"
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "79dbbcf9c5b4a6bd8f36-1204f639afb0f4c3137d",
+              "file": "slider-forced-colors.spec.ts",
+              "line": 25,
+              "column": 9
+            },
+            {
+              "title": "slider forced colors · scrubber · the focused mark is an outline that paints",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [
+                    {
+                      "type": "outline",
+                      "description": "{\"forced\":true,\"focusVisible\":true,\"style\":\"solid\",\"width\":2,\"offset\":2,\"painted\":true}"
+                    }
+                  ],
+                  "expectedStatus": "passed",
+                  "projectId": "coarse-touch",
+                  "projectName": "coarse-touch",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 644,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T23:59:47.518Z",
+                      "annotations": [
+                        {
+                          "type": "outline",
+                          "description": "{\"forced\":true,\"focusVisible\":true,\"style\":\"solid\",\"width\":2,\"offset\":2,\"painted\":true}"
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "79dbbcf9c5b4a6bd8f36-c3291c74fccb4a073859",
+              "file": "slider-forced-colors.spec.ts",
+              "line": 25,
+              "column": 9
+            },
+            {
+              "title": "slider forced colors · invalid · the focused mark is an outline that paints",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [
+                    {
+                      "type": "outline",
+                      "description": "{\"forced\":true,\"focusVisible\":true,\"style\":\"solid\",\"width\":2,\"offset\":2,\"painted\":true}"
+                    }
+                  ],
+                  "expectedStatus": "passed",
+                  "projectId": "coarse-touch",
+                  "projectName": "coarse-touch",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 626,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T23:59:48.254Z",
+                      "annotations": [
+                        {
+                          "type": "outline",
+                          "description": "{\"forced\":true,\"focusVisible\":true,\"style\":\"solid\",\"width\":2,\"offset\":2,\"painted\":true}"
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "79dbbcf9c5b4a6bd8f36-68cd6ce5fbcc3f98ceb0",
+              "file": "slider-forced-colors.spec.ts",
+              "line": 25,
+              "column": 9
+            },
+            {
+              "title": "slider forced colors · spectrum · the focused mark is an outline that paints",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [
+                    {
+                      "type": "outline",
+                      "description": "{\"forced\":true,\"focusVisible\":true,\"style\":\"solid\",\"width\":2,\"offset\":2,\"painted\":true}"
+                    }
+                  ],
+                  "expectedStatus": "passed",
+                  "projectId": "coarse-touch",
+                  "projectName": "coarse-touch",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 619,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-12T23:59:48.887Z",
+                      "annotations": [
+                        {
+                          "type": "outline",
+                          "description": "{\"forced\":true,\"focusVisible\":true,\"style\":\"solid\",\"width\":2,\"offset\":2,\"painted\":true}"
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "79dbbcf9c5b4a6bd8f36-7ca05c7cb43d602b0d20",
+              "file": "slider-forced-colors.spec.ts",
+              "line": 25,
+              "column": 9
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-12T23:59:43.431Z",
+    "duration": 6133.094999999999,
+    "expected": 6,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

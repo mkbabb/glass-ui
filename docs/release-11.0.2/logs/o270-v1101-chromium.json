@@ -1,0 +1,436 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "tests-visual/playwright.config.ts",
+      "release-11-0-2.spec.ts",
+      "--project=chromium-headless-new",
+      "--project=coarse-touch",
+      "--workers=1",
+      "-g",
+      "radius ·"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/playwright.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-headless-new",
+        "name": "chromium-headless-new",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "coarse-touch",
+        "name": "coarse-touch",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "safari-webgl.spec.ts",
+          "aurora-swraster.spec.ts",
+          "release-10-1-1.spec.ts",
+          "release-10-1-2.spec.ts",
+          "release-10-1-3.spec.ts",
+          "release-10-1-4.spec.ts",
+          "release-10-1-5.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/docs/release-11.0.2/logs/o270-v1101-chromium.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5342",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/",
+      "url": "http://localhost:5342",
+      "reuseExistingServer": true,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "release-11-0-2.spec.ts",
+      "file": "release-11-0-2.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "radius · every dock seat's corner is half its block size, at 1440",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "radius",
+                  "description": "{\"ground\":[232,224,214],\"cells\":{\"trigger\":{\"state\":\"hover\",\"geo\":{\"x\":506.734375,\"y\":730.046875,\"w\":68.109375,\"h\":35.90625,\"pi\":8,\"pb\":4,\"clip\":\"border-box\",\"radius\":16},\"span\":80,\"areas\":[55.737500000000026,55.700000000000024,43.65000000000001,43.53750000000002],\"measured\":49.65625000000002,\"expected\":69.16932599719858,\"flat\":54.93807017025324},\"tab\":{\"state\":\"hover\",\"geo\":{\"x\":658.96875,\"y\":729,\"w\":67.6875,\"h\":38,\"pi\":12,\"pb\":7,\"clip\":\"border-box\",\"radius\":16},\"span\":80,\"areas\":[55.91250000000001,43.75000000000002,56.11250000000002,43.987500000000026],\"measured\":49.94062500000001,\"expected\":77.47126301352117,\"flat\":54.93807017025324},\"label\":{\"state\":\"hover\",\"geo\":{\"x\":797.265625,\"y\":728,\"w\":40,\"h\":40,\"pi\":4,\"pb\":4,\"clip\":\"border-box\",\"radius\":20},\"span\":79,\"areas\":[105.69620253164565,70.1392405063293,105.75949367088624,70.29113924050645],\"measured\":87.97151898734191,\"expected\":85.84073464102069,\"flat\":85.84073464102069},\"trigger-active\":{\"state\":\"active\",\"geo\":{\"x\":582.84375,\"y\":730.046875,\"w\":68.125,\"h\":35.90625,\"pi\":8,\"pb\":4,\"clip\":\"border-box\",\"radius\":16},\"span\":101,\"areas\":[55.23762376237625,55.1980198019802,43.15841584158417,43.118811881188115],\"measured\":49.17821782178219,\"expected\":69.16932599719858,\"flat\":54.93807017025324},\"tab-active\":{\"state\":\"active\",\"geo\":{\"x\":734.65625,\"y\":729,\"w\":54.609375,\"h\":38,\"pi\":12,\"pb\":7,\"clip\":\"border-box\",\"radius\":16},\"span\":101,\"areas\":[55.346534653465355,43.198019801980216,55.455445544554465,43.32673267326734],\"measured\":49.33168316831684,\"expected\":77.47126301352117,\"flat\":54.93807017025324},\"label-active\":{\"state\":\"active\",\"geo\":{\"x\":845.265625,\"y\":728,\"w\":40,\"h\":40,\"pi\":4,\"pb\":4,\"clip\":\"border-box\",\"radius\":20},\"span\":104,\"areas\":[105.45192307692302,69.74999999999997,105.46153846153838,69.83653846153844],\"measured\":87.62499999999996,\"expected\":85.84073464102069,\"flat\":85.84073464102069},\"icon-active\":{\"state\":\"active\",\"geo\":{\"x\":889.265625,\"y\":728,\"w\":40,\"h\":40,\"pi\":4,\"pb\":4,\"clip\":\"border-box\",\"radius\":20},\"span\":104,\"areas\":[105.4711538461538,69.7307692307692,105.52884615384608,69.83653846153844],\"measured\":87.64182692307688,\"expected\":85.84073464102069,\"flat\":85.84073464102069}}}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 8585,
+                  "error": {
+                    "message": "Error: trigger: the unpainted corner area\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m55.33546079775887\u001b[39m\nReceived:    \u001b[31m49.65625000000002\u001b[39m",
+                    "stack": "Error: trigger: the unpainted corner area\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m55.33546079775887\u001b[39m\nReceived:    \u001b[31m49.65625000000002\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts:947:73",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts",
+                      "column": 73,
+                      "line": 947
+                    },
+                    "snippet": "  945 |         for (const [kind, cell] of Object.entries(cells)) {\n  946 |             expect(cell.span, `${kind} paints a plate`).toBeGreaterThan(12);\n> 947 |             expect(cell.measured, `${kind}: the unpainted corner area`).toBeGreaterThanOrEqual(cell.expected * 0.8);\n      |                                                                         ^\n  948 |         }\n  949 |     });\n  950 | }"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts",
+                        "column": 73,
+                        "line": 947
+                      },
+                      "message": "Error: trigger: the unpainted corner area\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m55.33546079775887\u001b[39m\nReceived:    \u001b[31m49.65625000000002\u001b[39m\n\n  945 |         for (const [kind, cell] of Object.entries(cells)) {\n  946 |             expect(cell.span, `${kind} paints a plate`).toBeGreaterThan(12);\n> 947 |             expect(cell.measured, `${kind}: the unpainted corner area`).toBeGreaterThanOrEqual(cell.expected * 0.8);\n      |                                                                         ^\n  948 |         }\n  949 |     });\n  950 | }\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts:947:73"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T23:06:42.491Z",
+                  "annotations": [
+                    {
+                      "type": "radius",
+                      "description": "{\"ground\":[232,224,214],\"cells\":{\"trigger\":{\"state\":\"hover\",\"geo\":{\"x\":506.734375,\"y\":730.046875,\"w\":68.109375,\"h\":35.90625,\"pi\":8,\"pb\":4,\"clip\":\"border-box\",\"radius\":16},\"span\":80,\"areas\":[55.737500000000026,55.700000000000024,43.65000000000001,43.53750000000002],\"measured\":49.65625000000002,\"expected\":69.16932599719858,\"flat\":54.93807017025324},\"tab\":{\"state\":\"hover\",\"geo\":{\"x\":658.96875,\"y\":729,\"w\":67.6875,\"h\":38,\"pi\":12,\"pb\":7,\"clip\":\"border-box\",\"radius\":16},\"span\":80,\"areas\":[55.91250000000001,43.75000000000002,56.11250000000002,43.987500000000026],\"measured\":49.94062500000001,\"expected\":77.47126301352117,\"flat\":54.93807017025324},\"label\":{\"state\":\"hover\",\"geo\":{\"x\":797.265625,\"y\":728,\"w\":40,\"h\":40,\"pi\":4,\"pb\":4,\"clip\":\"border-box\",\"radius\":20},\"span\":79,\"areas\":[105.69620253164565,70.1392405063293,105.75949367088624,70.29113924050645],\"measured\":87.97151898734191,\"expected\":85.84073464102069,\"flat\":85.84073464102069},\"trigger-active\":{\"state\":\"active\",\"geo\":{\"x\":582.84375,\"y\":730.046875,\"w\":68.125,\"h\":35.90625,\"pi\":8,\"pb\":4,\"clip\":\"border-box\",\"radius\":16},\"span\":101,\"areas\":[55.23762376237625,55.1980198019802,43.15841584158417,43.118811881188115],\"measured\":49.17821782178219,\"expected\":69.16932599719858,\"flat\":54.93807017025324},\"tab-active\":{\"state\":\"active\",\"geo\":{\"x\":734.65625,\"y\":729,\"w\":54.609375,\"h\":38,\"pi\":12,\"pb\":7,\"clip\":\"border-box\",\"radius\":16},\"span\":101,\"areas\":[55.346534653465355,43.198019801980216,55.455445544554465,43.32673267326734],\"measured\":49.33168316831684,\"expected\":77.47126301352117,\"flat\":54.93807017025324},\"label-active\":{\"state\":\"active\",\"geo\":{\"x\":845.265625,\"y\":728,\"w\":40,\"h\":40,\"pi\":4,\"pb\":4,\"clip\":\"border-box\",\"radius\":20},\"span\":104,\"areas\":[105.45192307692302,69.74999999999997,105.46153846153838,69.83653846153844],\"measured\":87.62499999999996,\"expected\":85.84073464102069,\"flat\":85.84073464102069},\"icon-active\":{\"state\":\"active\",\"geo\":{\"x\":889.265625,\"y\":728,\"w\":40,\"h\":40,\"pi\":4,\"pb\":4,\"clip\":\"border-box\",\"radius\":20},\"span\":104,\"areas\":[105.4711538461538,69.7307692307692,105.52884615384608,69.83653846153844],\"measured\":87.64182692307688,\"expected\":85.84073464102069,\"flat\":85.84073464102069}}}"
+                    }
+                  ],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/test-results/release-11-0-2-radius-·-ev-2f393-half-its-block-size-at-1440-chromium-headless-new/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts",
+                    "column": 73,
+                    "line": 947
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-0549002e4a7e3db39a80",
+          "file": "release-11-0-2.spec.ts",
+          "line": 906,
+          "column": 5
+        },
+        {
+          "title": "radius · every dock seat's corner is half its block size, at 390",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "radius",
+                  "description": "{\"ground\":[232,224,214],\"cells\":{\"trigger\":{\"state\":\"hover\",\"geo\":{\"x\":12,\"y\":732,\"w\":60.796875,\"h\":32,\"pi\":8,\"pb\":4,\"clip\":\"border-box\",\"radius\":16},\"span\":79,\"areas\":[54.88607594936709,42.75949367088605,54.96202531645568,42.81012658227846],\"measured\":48.85443037974682,\"expected\":54.93807017025324,\"flat\":54.93807017025324},\"tab\":{\"state\":\"hover\",\"geo\":{\"x\":149.609375,\"y\":729,\"w\":61.296875,\"h\":38,\"pi\":12,\"pb\":7,\"clip\":\"border-box\",\"radius\":16},\"span\":78,\"areas\":[54.538461538461554,54.53846153846155,54.50000000000002,54.51282051282054],\"measured\":54.52243589743591,\"expected\":77.47126301352117,\"flat\":54.93807017025324},\"label\":{\"state\":\"hover\",\"geo\":{\"x\":277.03125,\"y\":728,\"w\":40,\"h\":40,\"pi\":4,\"pb\":4,\"clip\":\"border-box\",\"radius\":20},\"span\":80,\"areas\":[86.82500000000017,86.63750000000012,87.03750000000018,86.92500000000017],\"measured\":86.85625000000016,\"expected\":85.84073464102069,\"flat\":85.84073464102069},\"trigger-active\":{\"state\":\"active\",\"geo\":{\"x\":80.796875,\"y\":732,\"w\":60.8125,\"h\":32,\"pi\":8,\"pb\":4,\"clip\":\"border-box\",\"radius\":16},\"span\":101,\"areas\":[55.06930693069307,42.891089108910904,55.17821782178217,42.99009900990099],\"measured\":49.03217821782178,\"expected\":54.93807017025324,\"flat\":54.93807017025324},\"tab-active\":{\"state\":\"active\",\"geo\":{\"x\":218.90625,\"y\":729,\"w\":50.125,\"h\":38,\"pi\":12,\"pb\":7,\"clip\":\"border-box\",\"radius\":16},\"span\":99,\"areas\":[54.222222222222214,54.28282828282827,54.24242424242423,54.252525252525245],\"measured\":54.249999999999986,\"expected\":77.47126301352117,\"flat\":54.93807017025324},\"label-active\":{\"state\":\"active\",\"geo\":{\"x\":325.03125,\"y\":728,\"w\":40,\"h\":40,\"pi\":4,\"pb\":4,\"clip\":\"border-box\",\"radius\":20},\"span\":102,\"areas\":[85.60784313725492,85.54901960784315,85.64705882352943,85.67647058823532],\"measured\":85.6200980392157,\"expected\":85.84073464102069,\"flat\":85.84073464102069},\"icon-active\":{\"state\":\"active\",\"geo\":{\"x\":334.03125,\"y\":728,\"w\":40,\"h\":40,\"pi\":4,\"pb\":4,\"clip\":\"border-box\",\"radius\":20},\"span\":102,\"areas\":[85.56862745098042,85.61764705882355,85.68627450980397,85.6274509803922],\"measured\":85.62500000000004,\"expected\":85.84073464102069,\"flat\":85.84073464102069}}}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 8513,
+                  "error": {
+                    "message": "Error: tab: the unpainted corner area\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m61.97701041081694\u001b[39m\nReceived:    \u001b[31m54.52243589743591\u001b[39m",
+                    "stack": "Error: tab: the unpainted corner area\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m61.97701041081694\u001b[39m\nReceived:    \u001b[31m54.52243589743591\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts:947:73",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts",
+                      "column": 73,
+                      "line": 947
+                    },
+                    "snippet": "  945 |         for (const [kind, cell] of Object.entries(cells)) {\n  946 |             expect(cell.span, `${kind} paints a plate`).toBeGreaterThan(12);\n> 947 |             expect(cell.measured, `${kind}: the unpainted corner area`).toBeGreaterThanOrEqual(cell.expected * 0.8);\n      |                                                                         ^\n  948 |         }\n  949 |     });\n  950 | }"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts",
+                        "column": 73,
+                        "line": 947
+                      },
+                      "message": "Error: tab: the unpainted corner area\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m61.97701041081694\u001b[39m\nReceived:    \u001b[31m54.52243589743591\u001b[39m\n\n  945 |         for (const [kind, cell] of Object.entries(cells)) {\n  946 |             expect(cell.span, `${kind} paints a plate`).toBeGreaterThan(12);\n> 947 |             expect(cell.measured, `${kind}: the unpainted corner area`).toBeGreaterThanOrEqual(cell.expected * 0.8);\n      |                                                                         ^\n  948 |         }\n  949 |     });\n  950 | }\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts:947:73"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T23:06:51.560Z",
+                  "annotations": [
+                    {
+                      "type": "radius",
+                      "description": "{\"ground\":[232,224,214],\"cells\":{\"trigger\":{\"state\":\"hover\",\"geo\":{\"x\":12,\"y\":732,\"w\":60.796875,\"h\":32,\"pi\":8,\"pb\":4,\"clip\":\"border-box\",\"radius\":16},\"span\":79,\"areas\":[54.88607594936709,42.75949367088605,54.96202531645568,42.81012658227846],\"measured\":48.85443037974682,\"expected\":54.93807017025324,\"flat\":54.93807017025324},\"tab\":{\"state\":\"hover\",\"geo\":{\"x\":149.609375,\"y\":729,\"w\":61.296875,\"h\":38,\"pi\":12,\"pb\":7,\"clip\":\"border-box\",\"radius\":16},\"span\":78,\"areas\":[54.538461538461554,54.53846153846155,54.50000000000002,54.51282051282054],\"measured\":54.52243589743591,\"expected\":77.47126301352117,\"flat\":54.93807017025324},\"label\":{\"state\":\"hover\",\"geo\":{\"x\":277.03125,\"y\":728,\"w\":40,\"h\":40,\"pi\":4,\"pb\":4,\"clip\":\"border-box\",\"radius\":20},\"span\":80,\"areas\":[86.82500000000017,86.63750000000012,87.03750000000018,86.92500000000017],\"measured\":86.85625000000016,\"expected\":85.84073464102069,\"flat\":85.84073464102069},\"trigger-active\":{\"state\":\"active\",\"geo\":{\"x\":80.796875,\"y\":732,\"w\":60.8125,\"h\":32,\"pi\":8,\"pb\":4,\"clip\":\"border-box\",\"radius\":16},\"span\":101,\"areas\":[55.06930693069307,42.891089108910904,55.17821782178217,42.99009900990099],\"measured\":49.03217821782178,\"expected\":54.93807017025324,\"flat\":54.93807017025324},\"tab-active\":{\"state\":\"active\",\"geo\":{\"x\":218.90625,\"y\":729,\"w\":50.125,\"h\":38,\"pi\":12,\"pb\":7,\"clip\":\"border-box\",\"radius\":16},\"span\":99,\"areas\":[54.222222222222214,54.28282828282827,54.24242424242423,54.252525252525245],\"measured\":54.249999999999986,\"expected\":77.47126301352117,\"flat\":54.93807017025324},\"label-active\":{\"state\":\"active\",\"geo\":{\"x\":325.03125,\"y\":728,\"w\":40,\"h\":40,\"pi\":4,\"pb\":4,\"clip\":\"border-box\",\"radius\":20},\"span\":102,\"areas\":[85.60784313725492,85.54901960784315,85.64705882352943,85.67647058823532],\"measured\":85.6200980392157,\"expected\":85.84073464102069,\"flat\":85.84073464102069},\"icon-active\":{\"state\":\"active\",\"geo\":{\"x\":334.03125,\"y\":728,\"w\":40,\"h\":40,\"pi\":4,\"pb\":4,\"clip\":\"border-box\",\"radius\":20},\"span\":102,\"areas\":[85.56862745098042,85.61764705882355,85.68627450980397,85.6274509803922],\"measured\":85.62500000000004,\"expected\":85.84073464102069,\"flat\":85.84073464102069}}}"
+                    }
+                  ],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/test-results/release-11-0-2-radius-·-ev-ae7a4--half-its-block-size-at-390-chromium-headless-new/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts",
+                    "column": 73,
+                    "line": 947
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-a102a3ef4247f1057d63",
+          "file": "release-11-0-2.spec.ts",
+          "line": 906,
+          "column": 5
+        },
+        {
+          "title": "radius · every dock seat's corner is half its block size, at 1440",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "radius",
+                  "description": "{\"ground\":[232,224,214],\"cells\":{\"trigger-active\":{\"state\":\"active\",\"geo\":{\"x\":576.84375,\"y\":728.046875,\"w\":68.125,\"h\":35.90625,\"pi\":8,\"pb\":4,\"clip\":\"border-box\",\"radius\":16},\"span\":101,\"areas\":[55.26732673267327,55.22772277227722,43.14851485148515,43.0891089108911],\"measured\":49.18316831683168,\"expected\":69.16932599719858,\"flat\":54.93807017025324},\"tab-active\":{\"state\":\"active\",\"geo\":{\"x\":728.65625,\"y\":727,\"w\":54.609375,\"h\":38,\"pi\":12,\"pb\":7,\"clip\":\"border-box\",\"radius\":16},\"span\":101,\"areas\":[55.376237623762385,43.27722772277228,55.44554455445545,43.30693069306931],\"measured\":49.351485148514854,\"expected\":77.47126301352117,\"flat\":54.93807017025324},\"label-active\":{\"state\":\"active\",\"geo\":{\"x\":843.265625,\"y\":724,\"w\":44,\"h\":44,\"pi\":4.4,\"pb\":4.4,\"clip\":\"border-box\",\"radius\":22},\"span\":104,\"areas\":[125.22115384615381,85.85576923076921,125.29807692307689,85.89423076923076],\"measured\":105.56730769230768,\"expected\":103.86728891563503,\"flat\":103.86728891563503},\"icon-active\":{\"state\":\"active\",\"geo\":{\"x\":891.265625,\"y\":724,\"w\":44,\"h\":44,\"pi\":4.4,\"pb\":4.4,\"clip\":\"border-box\",\"radius\":22},\"span\":104,\"areas\":[125.22115384615381,85.85576923076921,125.29807692307689,85.89423076923076],\"measured\":105.56730769230768,\"expected\":103.86728891563503,\"flat\":103.86728891563503},\"trigger\":{\"state\":\"open\",\"geo\":{\"x\":500.734375,\"y\":728.046875,\"w\":68.109375,\"h\":35.90625,\"pi\":8,\"pb\":4,\"clip\":\"border-box\",\"radius\":16},\"span\":101,\"areas\":[55.26732673267327,55.2079207920792,43.12871287128714,43.049504950495056],\"measured\":49.163366336633665,\"expected\":69.16932599719858,\"flat\":54.93807017025324}}}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 6343,
+                  "error": {
+                    "message": "Error: trigger-active: the unpainted corner area\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m55.33546079775887\u001b[39m\nReceived:    \u001b[31m49.18316831683168\u001b[39m",
+                    "stack": "Error: trigger-active: the unpainted corner area\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m55.33546079775887\u001b[39m\nReceived:    \u001b[31m49.18316831683168\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts:947:73",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts",
+                      "column": 73,
+                      "line": 947
+                    },
+                    "snippet": "  945 |         for (const [kind, cell] of Object.entries(cells)) {\n  946 |             expect(cell.span, `${kind} paints a plate`).toBeGreaterThan(12);\n> 947 |             expect(cell.measured, `${kind}: the unpainted corner area`).toBeGreaterThanOrEqual(cell.expected * 0.8);\n      |                                                                         ^\n  948 |         }\n  949 |     });\n  950 | }"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts",
+                        "column": 73,
+                        "line": 947
+                      },
+                      "message": "Error: trigger-active: the unpainted corner area\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m55.33546079775887\u001b[39m\nReceived:    \u001b[31m49.18316831683168\u001b[39m\n\n  945 |         for (const [kind, cell] of Object.entries(cells)) {\n  946 |             expect(cell.span, `${kind} paints a plate`).toBeGreaterThan(12);\n> 947 |             expect(cell.measured, `${kind}: the unpainted corner area`).toBeGreaterThanOrEqual(cell.expected * 0.8);\n      |                                                                         ^\n  948 |         }\n  949 |     });\n  950 | }\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts:947:73"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T23:07:00.505Z",
+                  "annotations": [
+                    {
+                      "type": "radius",
+                      "description": "{\"ground\":[232,224,214],\"cells\":{\"trigger-active\":{\"state\":\"active\",\"geo\":{\"x\":576.84375,\"y\":728.046875,\"w\":68.125,\"h\":35.90625,\"pi\":8,\"pb\":4,\"clip\":\"border-box\",\"radius\":16},\"span\":101,\"areas\":[55.26732673267327,55.22772277227722,43.14851485148515,43.0891089108911],\"measured\":49.18316831683168,\"expected\":69.16932599719858,\"flat\":54.93807017025324},\"tab-active\":{\"state\":\"active\",\"geo\":{\"x\":728.65625,\"y\":727,\"w\":54.609375,\"h\":38,\"pi\":12,\"pb\":7,\"clip\":\"border-box\",\"radius\":16},\"span\":101,\"areas\":[55.376237623762385,43.27722772277228,55.44554455445545,43.30693069306931],\"measured\":49.351485148514854,\"expected\":77.47126301352117,\"flat\":54.93807017025324},\"label-active\":{\"state\":\"active\",\"geo\":{\"x\":843.265625,\"y\":724,\"w\":44,\"h\":44,\"pi\":4.4,\"pb\":4.4,\"clip\":\"border-box\",\"radius\":22},\"span\":104,\"areas\":[125.22115384615381,85.85576923076921,125.29807692307689,85.89423076923076],\"measured\":105.56730769230768,\"expected\":103.86728891563503,\"flat\":103.86728891563503},\"icon-active\":{\"state\":\"active\",\"geo\":{\"x\":891.265625,\"y\":724,\"w\":44,\"h\":44,\"pi\":4.4,\"pb\":4.4,\"clip\":\"border-box\",\"radius\":22},\"span\":104,\"areas\":[125.22115384615381,85.85576923076921,125.29807692307689,85.89423076923076],\"measured\":105.56730769230768,\"expected\":103.86728891563503,\"flat\":103.86728891563503},\"trigger\":{\"state\":\"open\",\"geo\":{\"x\":500.734375,\"y\":728.046875,\"w\":68.109375,\"h\":35.90625,\"pi\":8,\"pb\":4,\"clip\":\"border-box\",\"radius\":16},\"span\":101,\"areas\":[55.26732673267327,55.2079207920792,43.12871287128714,43.049504950495056],\"measured\":49.163366336633665,\"expected\":69.16932599719858,\"flat\":54.93807017025324}}}"
+                    }
+                  ],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/test-results/release-11-0-2-radius-·-ev-2f393-half-its-block-size-at-1440-coarse-touch/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts",
+                    "column": 73,
+                    "line": 947
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-418cf86e440901cda243",
+          "file": "release-11-0-2.spec.ts",
+          "line": 906,
+          "column": 5
+        },
+        {
+          "title": "radius · every dock seat's corner is half its block size, at 390",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "radius",
+                  "description": "{\"ground\":[232,224,214],\"cells\":{\"trigger-active\":{\"state\":\"active\",\"geo\":{\"x\":80.796875,\"y\":730,\"w\":60.8125,\"h\":32,\"pi\":8,\"pb\":4,\"clip\":\"border-box\",\"radius\":16},\"span\":101,\"areas\":[55.13861386138612,42.97029702970297,55.099009900990104,42.93069306930694],\"measured\":49.03465346534654,\"expected\":54.93807017025324,\"flat\":54.93807017025324},\"tab-active\":{\"state\":\"active\",\"geo\":{\"x\":218.90625,\"y\":727,\"w\":50.125,\"h\":38,\"pi\":12,\"pb\":7,\"clip\":\"border-box\",\"radius\":16},\"span\":100,\"areas\":[54.639999999999944,54.67999999999995,54.659999999999926,54.70999999999994],\"measured\":54.67249999999994,\"expected\":77.47126301352117,\"flat\":54.93807017025324},\"label-active\":{\"state\":\"active\",\"geo\":{\"x\":286.03125,\"y\":724,\"w\":44,\"h\":44,\"pi\":4.4,\"pb\":4.4,\"clip\":\"border-box\",\"radius\":22},\"span\":102,\"areas\":[103.38235294117644,103.32352941176467,103.45098039215682,103.38235294117642],\"measured\":103.38480392156858,\"expected\":103.86728891563503,\"flat\":103.86728891563503},\"icon-active\":{\"state\":\"active\",\"geo\":{\"x\":330.03125,\"y\":724,\"w\":44,\"h\":44,\"pi\":4.4,\"pb\":4.4,\"clip\":\"border-box\",\"radius\":22},\"span\":102,\"areas\":[103.39215686274507,103.3333333333333,103.45098039215682,103.4117647058823],\"measured\":103.39705882352938,\"expected\":103.86728891563503,\"flat\":103.86728891563503},\"trigger\":{\"state\":\"open\",\"geo\":{\"x\":12,\"y\":730,\"w\":60.796875,\"h\":32,\"pi\":8,\"pb\":4,\"clip\":\"border-box\",\"radius\":16},\"span\":101,\"areas\":[55.03960396039604,42.990099009901,55.01980198019802,43.000000000000014],\"measured\":49.01237623762377,\"expected\":54.93807017025324,\"flat\":54.93807017025324}}}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 6410,
+                  "error": {
+                    "message": "Error: tab-active: the unpainted corner area\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m61.97701041081694\u001b[39m\nReceived:    \u001b[31m54.67249999999994\u001b[39m",
+                    "stack": "Error: tab-active: the unpainted corner area\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m61.97701041081694\u001b[39m\nReceived:    \u001b[31m54.67249999999994\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts:947:73",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts",
+                      "column": 73,
+                      "line": 947
+                    },
+                    "snippet": "  945 |         for (const [kind, cell] of Object.entries(cells)) {\n  946 |             expect(cell.span, `${kind} paints a plate`).toBeGreaterThan(12);\n> 947 |             expect(cell.measured, `${kind}: the unpainted corner area`).toBeGreaterThanOrEqual(cell.expected * 0.8);\n      |                                                                         ^\n  948 |         }\n  949 |     });\n  950 | }"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts",
+                        "column": 73,
+                        "line": 947
+                      },
+                      "message": "Error: tab-active: the unpainted corner area\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m61.97701041081694\u001b[39m\nReceived:    \u001b[31m54.67249999999994\u001b[39m\n\n  945 |         for (const [kind, cell] of Object.entries(cells)) {\n  946 |             expect(cell.span, `${kind} paints a plate`).toBeGreaterThan(12);\n> 947 |             expect(cell.measured, `${kind}: the unpainted corner area`).toBeGreaterThanOrEqual(cell.expected * 0.8);\n      |                                                                         ^\n  948 |         }\n  949 |     });\n  950 | }\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts:947:73"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T23:07:07.371Z",
+                  "annotations": [
+                    {
+                      "type": "radius",
+                      "description": "{\"ground\":[232,224,214],\"cells\":{\"trigger-active\":{\"state\":\"active\",\"geo\":{\"x\":80.796875,\"y\":730,\"w\":60.8125,\"h\":32,\"pi\":8,\"pb\":4,\"clip\":\"border-box\",\"radius\":16},\"span\":101,\"areas\":[55.13861386138612,42.97029702970297,55.099009900990104,42.93069306930694],\"measured\":49.03465346534654,\"expected\":54.93807017025324,\"flat\":54.93807017025324},\"tab-active\":{\"state\":\"active\",\"geo\":{\"x\":218.90625,\"y\":727,\"w\":50.125,\"h\":38,\"pi\":12,\"pb\":7,\"clip\":\"border-box\",\"radius\":16},\"span\":100,\"areas\":[54.639999999999944,54.67999999999995,54.659999999999926,54.70999999999994],\"measured\":54.67249999999994,\"expected\":77.47126301352117,\"flat\":54.93807017025324},\"label-active\":{\"state\":\"active\",\"geo\":{\"x\":286.03125,\"y\":724,\"w\":44,\"h\":44,\"pi\":4.4,\"pb\":4.4,\"clip\":\"border-box\",\"radius\":22},\"span\":102,\"areas\":[103.38235294117644,103.32352941176467,103.45098039215682,103.38235294117642],\"measured\":103.38480392156858,\"expected\":103.86728891563503,\"flat\":103.86728891563503},\"icon-active\":{\"state\":\"active\",\"geo\":{\"x\":330.03125,\"y\":724,\"w\":44,\"h\":44,\"pi\":4.4,\"pb\":4.4,\"clip\":\"border-box\",\"radius\":22},\"span\":102,\"areas\":[103.39215686274507,103.3333333333333,103.45098039215682,103.4117647058823],\"measured\":103.39705882352938,\"expected\":103.86728891563503,\"flat\":103.86728891563503},\"trigger\":{\"state\":\"open\",\"geo\":{\"x\":12,\"y\":730,\"w\":60.796875,\"h\":32,\"pi\":8,\"pb\":4,\"clip\":\"border-box\",\"radius\":16},\"span\":101,\"areas\":[55.03960396039604,42.990099009901,55.01980198019802,43.000000000000014],\"measured\":49.01237623762377,\"expected\":54.93807017025324,\"flat\":54.93807017025324}}}"
+                    }
+                  ],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/test-results/release-11-0-2-radius-·-ev-ae7a4--half-its-block-size-at-390-coarse-touch/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts",
+                    "column": 73,
+                    "line": 947
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-8f3e4f3017414b54d226",
+          "file": "release-11-0-2.spec.ts",
+          "line": 906,
+          "column": 5
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-12T23:06:40.723Z",
+    "duration": 33225.657,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 4,
+    "flaky": 0
+  }
+}

@@ -1,0 +1,1414 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "tests-visual/playwright.config.ts",
+      "release-11-0-2.spec.ts",
+      "--project=chromium-headless-new",
+      "--project=coarse-touch",
+      "--workers=1",
+      "-g",
+      "hover ·"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/playwright.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-headless-new",
+        "name": "chromium-headless-new",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "coarse-touch",
+        "name": "coarse-touch",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "safari-webgl.spec.ts",
+          "aurora-swraster.spec.ts",
+          "release-10-1-1.spec.ts",
+          "release-10-1-2.spec.ts",
+          "release-10-1-3.spec.ts",
+          "release-10-1-4.spec.ts",
+          "release-10-1-5.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/docs/release-11.0.2/logs/o282b-v1101-chromium.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5342",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/",
+      "url": "http://localhost:5342",
+      "reuseExistingServer": true,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "release-11-0-2.spec.ts",
+      "file": "release-11-0-2.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "hover · a horizontal pill dock, expanded, keeps its box to 0 px through every seat's hover",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "hover",
+                  "description": "{\"shifts\":[{\"seat\":\"persistent\",\"frames\":207,\"moved\":[]},{\"seat\":\"icon\",\"frames\":206,\"moved\":[]},{\"seat\":\"label\",\"frames\":206,\"moved\":[]},{\"seat\":\"compact\",\"frames\":205,\"moved\":[]},{\"seat\":\"tab\",\"frames\":206,\"moved\":[]},{\"seat\":\"tooltip\",\"frames\":205,\"moved\":[]},{\"seat\":\"trigger\",\"frames\":206,\"moved\":[]},{\"seat\":\"background\",\"frames\":206,\"moved\":[]},{\"seat\":\"button\",\"frames\":205,\"moved\":[]},{\"seat\":\"link\",\"frames\":205,\"moved\":[]},{\"seat\":\"popover\",\"frames\":205,\"moved\":[]},{\"seat\":\"dark-mode\",\"frames\":205,\"moved\":[]},{\"seat\":\"persistent-end\",\"frames\":205,\"moved\":[]}],\"roLoops\":0}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 23619,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T23:33:27.364Z",
+                  "annotations": [
+                    {
+                      "type": "hover",
+                      "description": "{\"shifts\":[{\"seat\":\"persistent\",\"frames\":207,\"moved\":[]},{\"seat\":\"icon\",\"frames\":206,\"moved\":[]},{\"seat\":\"label\",\"frames\":206,\"moved\":[]},{\"seat\":\"compact\",\"frames\":205,\"moved\":[]},{\"seat\":\"tab\",\"frames\":206,\"moved\":[]},{\"seat\":\"tooltip\",\"frames\":205,\"moved\":[]},{\"seat\":\"trigger\",\"frames\":206,\"moved\":[]},{\"seat\":\"background\",\"frames\":206,\"moved\":[]},{\"seat\":\"button\",\"frames\":205,\"moved\":[]},{\"seat\":\"link\",\"frames\":205,\"moved\":[]},{\"seat\":\"popover\",\"frames\":205,\"moved\":[]},{\"seat\":\"dark-mode\",\"frames\":205,\"moved\":[]},{\"seat\":\"persistent-end\",\"frames\":205,\"moved\":[]}],\"roLoops\":0}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-0348081b755996f1ee3b",
+          "file": "release-11-0-2.spec.ts",
+          "line": 842,
+          "column": 13
+        },
+        {
+          "title": "hover · a horizontal pill dock, collapsed, keeps its box to 0 px through every seat's hover",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "hover",
+                  "description": "{\"shifts\":[{\"seat\":\"persistent\",\"frames\":206,\"moved\":[]},{\"seat\":\"persistent-end\",\"frames\":205,\"moved\":[]}],\"roLoops\":0}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4796,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T23:33:51.106Z",
+                  "annotations": [
+                    {
+                      "type": "hover",
+                      "description": "{\"shifts\":[{\"seat\":\"persistent\",\"frames\":206,\"moved\":[]},{\"seat\":\"persistent-end\",\"frames\":205,\"moved\":[]}],\"roLoops\":0}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-944dfc93d0367dc0f5fd",
+          "file": "release-11-0-2.spec.ts",
+          "line": 842,
+          "column": 13
+        },
+        {
+          "title": "hover · a horizontal rounded dock, expanded, keeps its box to 0 px through every seat's hover",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "hover",
+                  "description": "{\"shifts\":[{\"seat\":\"persistent\",\"frames\":206,\"moved\":[]},{\"seat\":\"icon\",\"frames\":206,\"moved\":[]},{\"seat\":\"label\",\"frames\":205,\"moved\":[]},{\"seat\":\"compact\",\"frames\":205,\"moved\":[]},{\"seat\":\"tab\",\"frames\":204,\"moved\":[]},{\"seat\":\"tooltip\",\"frames\":205,\"moved\":[]},{\"seat\":\"trigger\",\"frames\":205,\"moved\":[]},{\"seat\":\"background\",\"frames\":205,\"moved\":[]},{\"seat\":\"button\",\"frames\":205,\"moved\":[]},{\"seat\":\"link\",\"frames\":206,\"moved\":[]},{\"seat\":\"popover\",\"frames\":206,\"moved\":[]},{\"seat\":\"dark-mode\",\"frames\":205,\"moved\":[]},{\"seat\":\"persistent-end\",\"frames\":206,\"moved\":[]}],\"roLoops\":0}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 23524,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T23:33:55.908Z",
+                  "annotations": [
+                    {
+                      "type": "hover",
+                      "description": "{\"shifts\":[{\"seat\":\"persistent\",\"frames\":206,\"moved\":[]},{\"seat\":\"icon\",\"frames\":206,\"moved\":[]},{\"seat\":\"label\",\"frames\":205,\"moved\":[]},{\"seat\":\"compact\",\"frames\":205,\"moved\":[]},{\"seat\":\"tab\",\"frames\":204,\"moved\":[]},{\"seat\":\"tooltip\",\"frames\":205,\"moved\":[]},{\"seat\":\"trigger\",\"frames\":205,\"moved\":[]},{\"seat\":\"background\",\"frames\":205,\"moved\":[]},{\"seat\":\"button\",\"frames\":205,\"moved\":[]},{\"seat\":\"link\",\"frames\":206,\"moved\":[]},{\"seat\":\"popover\",\"frames\":206,\"moved\":[]},{\"seat\":\"dark-mode\",\"frames\":205,\"moved\":[]},{\"seat\":\"persistent-end\",\"frames\":206,\"moved\":[]}],\"roLoops\":0}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-d91885d60abc8f0107a3",
+          "file": "release-11-0-2.spec.ts",
+          "line": 842,
+          "column": 13
+        },
+        {
+          "title": "hover · a horizontal rounded dock, collapsed, keeps its box to 0 px through every seat's hover",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "hover",
+                  "description": "{\"shifts\":[{\"seat\":\"persistent\",\"frames\":206,\"moved\":[]},{\"seat\":\"persistent-end\",\"frames\":206,\"moved\":[]}],\"roLoops\":0}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4807,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T23:34:19.437Z",
+                  "annotations": [
+                    {
+                      "type": "hover",
+                      "description": "{\"shifts\":[{\"seat\":\"persistent\",\"frames\":206,\"moved\":[]},{\"seat\":\"persistent-end\",\"frames\":206,\"moved\":[]}],\"roLoops\":0}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-7b917bc513af312f2d14",
+          "file": "release-11-0-2.spec.ts",
+          "line": 842,
+          "column": 13
+        },
+        {
+          "title": "hover · a horizontal card dock, expanded, keeps its box to 0 px through every seat's hover",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "hover",
+                  "description": "{\"shifts\":[{\"seat\":\"persistent\",\"frames\":206,\"moved\":[]},{\"seat\":\"icon\",\"frames\":205,\"moved\":[]},{\"seat\":\"label\",\"frames\":206,\"moved\":[]},{\"seat\":\"compact\",\"frames\":206,\"moved\":[]},{\"seat\":\"tab\",\"frames\":205,\"moved\":[]},{\"seat\":\"tooltip\",\"frames\":206,\"moved\":[]},{\"seat\":\"trigger\",\"frames\":205,\"moved\":[]},{\"seat\":\"background\",\"frames\":205,\"moved\":[]},{\"seat\":\"button\",\"frames\":205,\"moved\":[]},{\"seat\":\"link\",\"frames\":205,\"moved\":[]},{\"seat\":\"popover\",\"frames\":206,\"moved\":[]},{\"seat\":\"dark-mode\",\"frames\":205,\"moved\":[]},{\"seat\":\"persistent-end\",\"frames\":206,\"moved\":[]}],\"roLoops\":0}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 23523,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T23:34:24.249Z",
+                  "annotations": [
+                    {
+                      "type": "hover",
+                      "description": "{\"shifts\":[{\"seat\":\"persistent\",\"frames\":206,\"moved\":[]},{\"seat\":\"icon\",\"frames\":205,\"moved\":[]},{\"seat\":\"label\",\"frames\":206,\"moved\":[]},{\"seat\":\"compact\",\"frames\":206,\"moved\":[]},{\"seat\":\"tab\",\"frames\":205,\"moved\":[]},{\"seat\":\"tooltip\",\"frames\":206,\"moved\":[]},{\"seat\":\"trigger\",\"frames\":205,\"moved\":[]},{\"seat\":\"background\",\"frames\":205,\"moved\":[]},{\"seat\":\"button\",\"frames\":205,\"moved\":[]},{\"seat\":\"link\",\"frames\":205,\"moved\":[]},{\"seat\":\"popover\",\"frames\":206,\"moved\":[]},{\"seat\":\"dark-mode\",\"frames\":205,\"moved\":[]},{\"seat\":\"persistent-end\",\"frames\":206,\"moved\":[]}],\"roLoops\":0}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-18a7264785af3514d5a2",
+          "file": "release-11-0-2.spec.ts",
+          "line": 842,
+          "column": 13
+        },
+        {
+          "title": "hover · a horizontal card dock, collapsed, keeps its box to 0 px through every seat's hover",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "hover",
+                  "description": "{\"shifts\":[{\"seat\":\"persistent\",\"frames\":206,\"moved\":[]},{\"seat\":\"persistent-end\",\"frames\":206,\"moved\":[]}],\"roLoops\":0}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4795,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T23:34:47.776Z",
+                  "annotations": [
+                    {
+                      "type": "hover",
+                      "description": "{\"shifts\":[{\"seat\":\"persistent\",\"frames\":206,\"moved\":[]},{\"seat\":\"persistent-end\",\"frames\":206,\"moved\":[]}],\"roLoops\":0}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-ea7dec7005c672570cdd",
+          "file": "release-11-0-2.spec.ts",
+          "line": 842,
+          "column": 13
+        },
+        {
+          "title": "hover · a vertical pill dock, expanded, keeps its box to 0 px through every seat's hover",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "hover",
+                  "description": "{\"shifts\":[{\"seat\":\"persistent\",\"frames\":206,\"moved\":[]},{\"seat\":\"icon\",\"frames\":205,\"moved\":[]},{\"seat\":\"label\",\"frames\":206,\"moved\":[]},{\"seat\":\"compact\",\"frames\":206,\"moved\":[]},{\"seat\":\"tab\",\"frames\":205,\"moved\":[]},{\"seat\":\"tooltip\",\"frames\":205,\"moved\":[]},{\"seat\":\"trigger\",\"frames\":205,\"moved\":[]},{\"seat\":\"background\",\"frames\":205,\"moved\":[]},{\"seat\":\"button\",\"frames\":205,\"moved\":[]},{\"seat\":\"link\",\"frames\":206,\"moved\":[]},{\"seat\":\"popover\",\"frames\":206,\"moved\":[]},{\"seat\":\"dark-mode\",\"frames\":205,\"moved\":[]},{\"seat\":\"persistent-end\",\"frames\":205,\"moved\":[]}],\"roLoops\":0}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 23531,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T23:34:52.576Z",
+                  "annotations": [
+                    {
+                      "type": "hover",
+                      "description": "{\"shifts\":[{\"seat\":\"persistent\",\"frames\":206,\"moved\":[]},{\"seat\":\"icon\",\"frames\":205,\"moved\":[]},{\"seat\":\"label\",\"frames\":206,\"moved\":[]},{\"seat\":\"compact\",\"frames\":206,\"moved\":[]},{\"seat\":\"tab\",\"frames\":205,\"moved\":[]},{\"seat\":\"tooltip\",\"frames\":205,\"moved\":[]},{\"seat\":\"trigger\",\"frames\":205,\"moved\":[]},{\"seat\":\"background\",\"frames\":205,\"moved\":[]},{\"seat\":\"button\",\"frames\":205,\"moved\":[]},{\"seat\":\"link\",\"frames\":206,\"moved\":[]},{\"seat\":\"popover\",\"frames\":206,\"moved\":[]},{\"seat\":\"dark-mode\",\"frames\":205,\"moved\":[]},{\"seat\":\"persistent-end\",\"frames\":205,\"moved\":[]}],\"roLoops\":0}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-8e1a8d8881f5ca4ec5c3",
+          "file": "release-11-0-2.spec.ts",
+          "line": 842,
+          "column": 13
+        },
+        {
+          "title": "hover · a vertical pill dock, collapsed, keeps its box to 0 px through every seat's hover",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "hover",
+                  "description": "{\"shifts\":[{\"seat\":\"persistent\",\"frames\":206,\"moved\":[]},{\"seat\":\"persistent-end\",\"frames\":205,\"moved\":[]}],\"roLoops\":0}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4792,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T23:35:16.113Z",
+                  "annotations": [
+                    {
+                      "type": "hover",
+                      "description": "{\"shifts\":[{\"seat\":\"persistent\",\"frames\":206,\"moved\":[]},{\"seat\":\"persistent-end\",\"frames\":205,\"moved\":[]}],\"roLoops\":0}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-aa04962e2a8fcd045cac",
+          "file": "release-11-0-2.spec.ts",
+          "line": 842,
+          "column": 13
+        },
+        {
+          "title": "hover · a vertical rounded dock, expanded, keeps its box to 0 px through every seat's hover",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "hover",
+                  "description": "{\"shifts\":[{\"seat\":\"persistent\",\"frames\":206,\"moved\":[]},{\"seat\":\"icon\",\"frames\":205,\"moved\":[]},{\"seat\":\"label\",\"frames\":205,\"moved\":[]},{\"seat\":\"compact\",\"frames\":205,\"moved\":[]},{\"seat\":\"tab\",\"frames\":206,\"moved\":[]},{\"seat\":\"tooltip\",\"frames\":205,\"moved\":[]},{\"seat\":\"trigger\",\"frames\":205,\"moved\":[]},{\"seat\":\"background\",\"frames\":205,\"moved\":[]},{\"seat\":\"button\",\"frames\":206,\"moved\":[]},{\"seat\":\"link\",\"frames\":205,\"moved\":[]},{\"seat\":\"popover\",\"frames\":205,\"moved\":[]},{\"seat\":\"dark-mode\",\"frames\":206,\"moved\":[]},{\"seat\":\"persistent-end\",\"frames\":206,\"moved\":[]}],\"roLoops\":0}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 23531,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T23:35:20.909Z",
+                  "annotations": [
+                    {
+                      "type": "hover",
+                      "description": "{\"shifts\":[{\"seat\":\"persistent\",\"frames\":206,\"moved\":[]},{\"seat\":\"icon\",\"frames\":205,\"moved\":[]},{\"seat\":\"label\",\"frames\":205,\"moved\":[]},{\"seat\":\"compact\",\"frames\":205,\"moved\":[]},{\"seat\":\"tab\",\"frames\":206,\"moved\":[]},{\"seat\":\"tooltip\",\"frames\":205,\"moved\":[]},{\"seat\":\"trigger\",\"frames\":205,\"moved\":[]},{\"seat\":\"background\",\"frames\":205,\"moved\":[]},{\"seat\":\"button\",\"frames\":206,\"moved\":[]},{\"seat\":\"link\",\"frames\":205,\"moved\":[]},{\"seat\":\"popover\",\"frames\":205,\"moved\":[]},{\"seat\":\"dark-mode\",\"frames\":206,\"moved\":[]},{\"seat\":\"persistent-end\",\"frames\":206,\"moved\":[]}],\"roLoops\":0}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-c005b1ee78107f1f4580",
+          "file": "release-11-0-2.spec.ts",
+          "line": 842,
+          "column": 13
+        },
+        {
+          "title": "hover · a vertical rounded dock, collapsed, keeps its box to 0 px through every seat's hover",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "hover",
+                  "description": "{\"shifts\":[{\"seat\":\"persistent\",\"frames\":207,\"moved\":[]},{\"seat\":\"persistent-end\",\"frames\":205,\"moved\":[]}],\"roLoops\":0}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4816,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T23:35:44.446Z",
+                  "annotations": [
+                    {
+                      "type": "hover",
+                      "description": "{\"shifts\":[{\"seat\":\"persistent\",\"frames\":207,\"moved\":[]},{\"seat\":\"persistent-end\",\"frames\":205,\"moved\":[]}],\"roLoops\":0}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-034238194e1fc7d91b16",
+          "file": "release-11-0-2.spec.ts",
+          "line": 842,
+          "column": 13
+        },
+        {
+          "title": "hover · a vertical card dock, expanded, keeps its box to 0 px through every seat's hover",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "hover",
+                  "description": "{\"shifts\":[{\"seat\":\"persistent\",\"frames\":207,\"moved\":[]},{\"seat\":\"icon\",\"frames\":206,\"moved\":[]},{\"seat\":\"label\",\"frames\":206,\"moved\":[]},{\"seat\":\"compact\",\"frames\":206,\"moved\":[]},{\"seat\":\"tab\",\"frames\":205,\"moved\":[]},{\"seat\":\"tooltip\",\"frames\":205,\"moved\":[]},{\"seat\":\"trigger\",\"frames\":205,\"moved\":[]},{\"seat\":\"background\",\"frames\":206,\"moved\":[]},{\"seat\":\"button\",\"frames\":206,\"moved\":[]},{\"seat\":\"link\",\"frames\":205,\"moved\":[]},{\"seat\":\"popover\",\"frames\":206,\"moved\":[]},{\"seat\":\"dark-mode\",\"frames\":206,\"moved\":[]},{\"seat\":\"persistent-end\",\"frames\":205,\"moved\":[]}],\"roLoops\":0}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 23578,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T23:35:49.268Z",
+                  "annotations": [
+                    {
+                      "type": "hover",
+                      "description": "{\"shifts\":[{\"seat\":\"persistent\",\"frames\":207,\"moved\":[]},{\"seat\":\"icon\",\"frames\":206,\"moved\":[]},{\"seat\":\"label\",\"frames\":206,\"moved\":[]},{\"seat\":\"compact\",\"frames\":206,\"moved\":[]},{\"seat\":\"tab\",\"frames\":205,\"moved\":[]},{\"seat\":\"tooltip\",\"frames\":205,\"moved\":[]},{\"seat\":\"trigger\",\"frames\":205,\"moved\":[]},{\"seat\":\"background\",\"frames\":206,\"moved\":[]},{\"seat\":\"button\",\"frames\":206,\"moved\":[]},{\"seat\":\"link\",\"frames\":205,\"moved\":[]},{\"seat\":\"popover\",\"frames\":206,\"moved\":[]},{\"seat\":\"dark-mode\",\"frames\":206,\"moved\":[]},{\"seat\":\"persistent-end\",\"frames\":205,\"moved\":[]}],\"roLoops\":0}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-7ce3b3c406186445c99c",
+          "file": "release-11-0-2.spec.ts",
+          "line": 842,
+          "column": 13
+        },
+        {
+          "title": "hover · a vertical card dock, collapsed, keeps its box to 0 px through every seat's hover",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "hover",
+                  "description": "{\"shifts\":[{\"seat\":\"persistent\",\"frames\":206,\"moved\":[]},{\"seat\":\"persistent-end\",\"frames\":206,\"moved\":[]}],\"roLoops\":0}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4807,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T23:36:12.853Z",
+                  "annotations": [
+                    {
+                      "type": "hover",
+                      "description": "{\"shifts\":[{\"seat\":\"persistent\",\"frames\":206,\"moved\":[]},{\"seat\":\"persistent-end\",\"frames\":206,\"moved\":[]}],\"roLoops\":0}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-b13dfe137a9fe3face5a",
+          "file": "release-11-0-2.spec.ts",
+          "line": 842,
+          "column": 13
+        },
+        {
+          "title": "hover · daraksha's pair of fit-content docks keep their boxes to 0 px through every seat's hover",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "hover",
+                  "description": "{\"shifts\":[{\"seat\":\"tab-0\",\"frames\":206,\"moved\":[]},{\"seat\":\"tab-1\",\"frames\":205,\"moved\":[]},{\"seat\":\"tab-2\",\"frames\":205,\"moved\":[]},{\"seat\":\"tab-3\",\"frames\":205,\"moved\":[]},{\"seat\":\"dark-mode\",\"frames\":206,\"moved\":[]}],\"roLoops\":0}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 9872,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T23:36:17.665Z",
+                  "annotations": [
+                    {
+                      "type": "hover",
+                      "description": "{\"shifts\":[{\"seat\":\"tab-0\",\"frames\":206,\"moved\":[]},{\"seat\":\"tab-1\",\"frames\":205,\"moved\":[]},{\"seat\":\"tab-2\",\"frames\":205,\"moved\":[]},{\"seat\":\"tab-3\",\"frames\":205,\"moved\":[]},{\"seat\":\"dark-mode\",\"frames\":206,\"moved\":[]}],\"roLoops\":0}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-e5b3046953755340d25c",
+          "file": "release-11-0-2.spec.ts",
+          "line": 850,
+          "column": 1
+        },
+        {
+          "title": "hover · a horizontal pill dock, expanded, keeps its box to 0 px through every seat's hover",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "hover is a fine-pointer state",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts",
+                    "line": 843,
+                    "column": 22
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 44,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T23:36:27.851Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "hover is a fine-pointer state",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts",
+                        "line": 843,
+                        "column": 22
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-a26949374becb8ca5954",
+          "file": "release-11-0-2.spec.ts",
+          "line": 842,
+          "column": 13
+        },
+        {
+          "title": "hover · a horizontal pill dock, collapsed, keeps its box to 0 px through every seat's hover",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "hover is a fine-pointer state",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts",
+                    "line": 843,
+                    "column": 22
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 37,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T23:36:28.010Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "hover is a fine-pointer state",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts",
+                        "line": 843,
+                        "column": 22
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-b2f95a9c9f169a9585cb",
+          "file": "release-11-0-2.spec.ts",
+          "line": 842,
+          "column": 13
+        },
+        {
+          "title": "hover · a horizontal rounded dock, expanded, keeps its box to 0 px through every seat's hover",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "hover is a fine-pointer state",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts",
+                    "line": 843,
+                    "column": 22
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 41,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T23:36:28.054Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "hover is a fine-pointer state",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts",
+                        "line": 843,
+                        "column": 22
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-1654a7e17d593a81fae7",
+          "file": "release-11-0-2.spec.ts",
+          "line": 842,
+          "column": 13
+        },
+        {
+          "title": "hover · a horizontal rounded dock, collapsed, keeps its box to 0 px through every seat's hover",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "hover is a fine-pointer state",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts",
+                    "line": 843,
+                    "column": 22
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 39,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T23:36:28.103Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "hover is a fine-pointer state",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts",
+                        "line": 843,
+                        "column": 22
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-e82521cc834fee99696d",
+          "file": "release-11-0-2.spec.ts",
+          "line": 842,
+          "column": 13
+        },
+        {
+          "title": "hover · a horizontal card dock, expanded, keeps its box to 0 px through every seat's hover",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "hover is a fine-pointer state",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts",
+                    "line": 843,
+                    "column": 22
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 41,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T23:36:28.149Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "hover is a fine-pointer state",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts",
+                        "line": 843,
+                        "column": 22
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-249bcd111ec52b4052d4",
+          "file": "release-11-0-2.spec.ts",
+          "line": 842,
+          "column": 13
+        },
+        {
+          "title": "hover · a horizontal card dock, collapsed, keeps its box to 0 px through every seat's hover",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "hover is a fine-pointer state",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts",
+                    "line": 843,
+                    "column": 22
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 37,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T23:36:28.199Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "hover is a fine-pointer state",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts",
+                        "line": 843,
+                        "column": 22
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-943b214e544a30646c00",
+          "file": "release-11-0-2.spec.ts",
+          "line": 842,
+          "column": 13
+        },
+        {
+          "title": "hover · a vertical pill dock, expanded, keeps its box to 0 px through every seat's hover",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "hover is a fine-pointer state",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts",
+                    "line": 843,
+                    "column": 22
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 42,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T23:36:28.242Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "hover is a fine-pointer state",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts",
+                        "line": 843,
+                        "column": 22
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-918fc6cbd0de40f1a036",
+          "file": "release-11-0-2.spec.ts",
+          "line": 842,
+          "column": 13
+        },
+        {
+          "title": "hover · a vertical pill dock, collapsed, keeps its box to 0 px through every seat's hover",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "hover is a fine-pointer state",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts",
+                    "line": 843,
+                    "column": 22
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 41,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T23:36:28.289Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "hover is a fine-pointer state",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts",
+                        "line": 843,
+                        "column": 22
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-b3f76d008ef1f965112b",
+          "file": "release-11-0-2.spec.ts",
+          "line": 842,
+          "column": 13
+        },
+        {
+          "title": "hover · a vertical rounded dock, expanded, keeps its box to 0 px through every seat's hover",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "hover is a fine-pointer state",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts",
+                    "line": 843,
+                    "column": 22
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 38,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T23:36:28.336Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "hover is a fine-pointer state",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts",
+                        "line": 843,
+                        "column": 22
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-ae8b8caf24034cb06f83",
+          "file": "release-11-0-2.spec.ts",
+          "line": 842,
+          "column": 13
+        },
+        {
+          "title": "hover · a vertical rounded dock, collapsed, keeps its box to 0 px through every seat's hover",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "hover is a fine-pointer state",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts",
+                    "line": 843,
+                    "column": 22
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 34,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T23:36:28.379Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "hover is a fine-pointer state",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts",
+                        "line": 843,
+                        "column": 22
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-35780f80d502f54ff2bc",
+          "file": "release-11-0-2.spec.ts",
+          "line": 842,
+          "column": 13
+        },
+        {
+          "title": "hover · a vertical card dock, expanded, keeps its box to 0 px through every seat's hover",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "hover is a fine-pointer state",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts",
+                    "line": 843,
+                    "column": 22
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 35,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T23:36:28.418Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "hover is a fine-pointer state",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts",
+                        "line": 843,
+                        "column": 22
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-a1801188553837f9d0a5",
+          "file": "release-11-0-2.spec.ts",
+          "line": 842,
+          "column": 13
+        },
+        {
+          "title": "hover · a vertical card dock, collapsed, keeps its box to 0 px through every seat's hover",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "hover is a fine-pointer state",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts",
+                    "line": 843,
+                    "column": 22
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 38,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T23:36:28.457Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "hover is a fine-pointer state",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts",
+                        "line": 843,
+                        "column": 22
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-ae254abed33aa2ab75d0",
+          "file": "release-11-0-2.spec.ts",
+          "line": 842,
+          "column": 13
+        },
+        {
+          "title": "hover · daraksha's pair of fit-content docks keep their boxes to 0 px through every seat's hover",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "hover is a fine-pointer state",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts",
+                    "line": 851,
+                    "column": 10
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 33,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T23:36:28.509Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "hover is a fine-pointer state",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts",
+                        "line": 851,
+                        "column": 10
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-55d50ae3f90ecc6ad59c",
+          "file": "release-11-0-2.spec.ts",
+          "line": 850,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-12T23:33:25.596Z",
+    "duration": 182987.51499999998,
+    "expected": 13,
+    "skipped": 13,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

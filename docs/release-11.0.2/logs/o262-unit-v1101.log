@@ -1,0 +1,60 @@
+
+ RUN  v4.1.10 /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree
+
+ ❯ tests/components/custom/dock/dockMorphMeasure.test.ts (28 tests | 3 failed) 79ms
+     × a collapse arm keeps the expanded box it is leaving 6ms
+     × a region that differs between postures holds its anchored edge 2ms
+     × a region that painted nothing in the first frame rests where it lays out 1ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 3 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/components/custom/dock/dockMorphMeasure.test.ts > the start-anchored rail > a collapse arm keeps the expanded box it is leaving
+AssertionError: expected '56px' to be '592px' // Object.is equality
+
+Expected: "592px"
+Received: "56px"
+
+ ❯ tests/components/custom/dock/dockMorphMeasure.test.ts:878:37
+    876|         dock.posture("collapsed");
+    877|         result.measure();
+    878|         expect(dock.px("expanded")).toBe("592px");
+       |                                     ^
+    879|         expect(dock.px("collapsed")).toBe("56px");
+    880|         unmount();
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/3]⎯
+
+ FAIL  tests/components/custom/dock/dockMorphMeasure.test.ts > the start-anchored rail > a region that differs between postures holds its anchored edge
+AssertionError: expected -64.5 to be close to +0, received difference is 64.5, but expected 5e-7
+ ❯ tests/components/custom/dock/dockMorphMeasure.test.ts:912:23
+    910|             local: 72,
+    911|         });
+    912|         expect(start).toBeCloseTo(0, 6);
+       |                       ^
+    913|         dock.unmount();
+    914|     });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/3]⎯
+
+ FAIL  tests/components/custom/dock/dockMorphMeasure.test.ts > the start-anchored rail > a region that painted nothing in the first frame rests where it lays out
+AssertionError: expected '277.5%' to be '-60%' // Object.is equality
+
+Expected: "-60%"
+Received: "277.5%"
+
+ ❯ tests/components/custom/dock/dockMorphMeasure.test.ts:937:40
+    935|         expect(dock.origin(dock.root)).toBe("0%");
+    936|         // The root's origin (0 root-local) in the seat's own box (sta…
+    937|         expect(dock.origin(dock.seat)).toBe(`${((0 - 24) / 40) * 100}%…
+       |                                        ^
+    938|         dock.unmount();
+    939|     });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/3]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  3 failed | 25 passed (28)
+   Start at  17:16:24
+   Duration  781ms (transform 94ms, setup 75ms, import 96ms, tests 79ms, environment 355ms)
+

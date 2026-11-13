@@ -1,0 +1,89 @@
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1794521931 slope=31.8/s inuse=25856 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+
+Running 18 tests using 1 worker
+
+  ✓   1 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:713:9 › rows · the transport dock's rows fit with a persistent region beside the layers at 360 (1.9s)
+  ✓   2 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:713:9 › rows · the transport dock's rows fit with a persistent region beside the layers at 390 (1.7s)
+  ✓   3 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:713:9 › rows · the transport dock's rows fit with a persistent region beside the layers at 1440 (1.7s)
+  ✓   4 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:713:9 › rows · the editor dock's rows fit with a persistent region beside the layers at 360 (1.7s)
+  ✓   5 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:713:9 › rows · the editor dock's rows fit with a persistent region beside the layers at 390 (1.7s)
+  ✓   6 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:713:9 › rows · the editor dock's rows fit with a persistent region beside the layers at 1440 (1.7s)
+  ✓   7 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:713:9 › rows · the stretched dock's rows fit with a persistent region beside the layers at 360 (1.7s)
+  ✓   8 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:713:9 › rows · the stretched dock's rows fit with a persistent region beside the layers at 390 (1.7s)
+  ✓   9 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:713:9 › rows · the stretched dock's rows fit with a persistent region beside the layers at 1440 (1.7s)
+  ✘  10 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:713:9 › rows · the transport dock's rows fit with a persistent region beside the layers at 360 (1.7s)
+  ✘  11 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:713:9 › rows · the transport dock's rows fit with a persistent region beside the layers at 390 (1.7s)
+  ✘  12 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:713:9 › rows · the transport dock's rows fit with a persistent region beside the layers at 1440 (1.7s)
+  ✓  13 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:713:9 › rows · the editor dock's rows fit with a persistent region beside the layers at 360 (1.7s)
+  ✓  14 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:713:9 › rows · the editor dock's rows fit with a persistent region beside the layers at 390 (1.7s)
+  ✓  15 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:713:9 › rows · the editor dock's rows fit with a persistent region beside the layers at 1440 (1.7s)
+  ✓  16 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:713:9 › rows · the stretched dock's rows fit with a persistent region beside the layers at 360 (1.7s)
+  ✓  17 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:713:9 › rows · the stretched dock's rows fit with a persistent region beside the layers at 390 (1.7s)
+  ✓  18 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:713:9 › rows · the stretched dock's rows fit with a persistent region beside the layers at 1440 (1.7s)
+
+
+  1) [coarse-touch] › tests-visual/release-11-0-2.spec.ts:713:9 › rows · the transport dock's rows fit with a persistent region beside the layers at 360 
+
+    Error: the run's scrollWidth is its clientWidth
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 274
+    Received: 283
+
+      747 |             expect(r.collapsed).toBe(false);
+      748 |             expect(r.root[0], "the root's scrollWidth is its clientWidth").toBe(r.root[1]);
+    > 749 |             expect(r.run[0], "the run's scrollWidth is its clientWidth").toBe(r.run[1]);
+          |                                                                          ^
+      750 |             expect(r.scrollers, "no element is a horizontal scroller at rest").toEqual([]);
+      751 |             expect(r.page[0], "the page does not scroll sideways").toBe(r.page[1]);
+      752 |         });
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual/release-11-0-2.spec.ts:749:74
+
+    Error Context: tests-visual/test-results/release-11-0-2-rows-·-the--4db32-on-beside-the-layers-at-360-coarse-touch/error-context.md
+
+  2) [coarse-touch] › tests-visual/release-11-0-2.spec.ts:713:9 › rows · the transport dock's rows fit with a persistent region beside the layers at 390 
+
+    Error: the run's scrollWidth is its clientWidth
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 304
+    Received: 313
+
+      747 |             expect(r.collapsed).toBe(false);
+      748 |             expect(r.root[0], "the root's scrollWidth is its clientWidth").toBe(r.root[1]);
+    > 749 |             expect(r.run[0], "the run's scrollWidth is its clientWidth").toBe(r.run[1]);
+          |                                                                          ^
+      750 |             expect(r.scrollers, "no element is a horizontal scroller at rest").toEqual([]);
+      751 |             expect(r.page[0], "the page does not scroll sideways").toBe(r.page[1]);
+      752 |         });
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual/release-11-0-2.spec.ts:749:74
+
+    Error Context: tests-visual/test-results/release-11-0-2-rows-·-the--be387-on-beside-the-layers-at-390-coarse-touch/error-context.md
+
+  3) [coarse-touch] › tests-visual/release-11-0-2.spec.ts:713:9 › rows · the transport dock's rows fit with a persistent region beside the layers at 1440 
+
+    Error: the run's scrollWidth is its clientWidth
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 886
+    Received: 895
+
+      747 |             expect(r.collapsed).toBe(false);
+      748 |             expect(r.root[0], "the root's scrollWidth is its clientWidth").toBe(r.root[1]);
+    > 749 |             expect(r.run[0], "the run's scrollWidth is its clientWidth").toBe(r.run[1]);
+          |                                                                          ^
+      750 |             expect(r.scrollers, "no element is a horizontal scroller at rest").toEqual([]);
+      751 |             expect(r.page[0], "the page does not scroll sideways").toBe(r.page[1]);
+      752 |         });
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual/release-11-0-2.spec.ts:749:74
+
+    Error Context: tests-visual/test-results/release-11-0-2-rows-·-the--7c554-n-beside-the-layers-at-1440-coarse-touch/error-context.md
+
+  3 failed
+    [coarse-touch] › tests-visual/release-11-0-2.spec.ts:713:9 › rows · the transport dock's rows fit with a persistent region beside the layers at 360 
+    [coarse-touch] › tests-visual/release-11-0-2.spec.ts:713:9 › rows · the transport dock's rows fit with a persistent region beside the layers at 390 
+    [coarse-touch] › tests-visual/release-11-0-2.spec.ts:713:9 › rows · the transport dock's rows fit with a persistent region beside the layers at 1440 
+  15 passed (35.1s)

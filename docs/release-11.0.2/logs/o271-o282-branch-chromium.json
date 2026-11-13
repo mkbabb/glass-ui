@@ -1,0 +1,2138 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "tests-visual/playwright.config.ts",
+      "release-11-0-2.spec.ts",
+      "--project=chromium-headless-new",
+      "--project=coarse-touch",
+      "--workers=1",
+      "-g",
+      "rows ·|hover ·"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/playwright.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-headless-new",
+        "name": "chromium-headless-new",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "coarse-touch",
+        "name": "coarse-touch",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "safari-webgl.spec.ts",
+          "aurora-swraster.spec.ts",
+          "release-10-1-1.spec.ts",
+          "release-10-1-2.spec.ts",
+          "release-10-1-3.spec.ts",
+          "release-10-1-4.spec.ts",
+          "release-10-1-5.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/docs/release-11.0.2/logs/o271-o282-branch-chromium.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5341",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/",
+      "url": "http://localhost:5341",
+      "reuseExistingServer": true,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "release-11-0-2.spec.ts",
+      "file": "release-11-0-2.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "rows · the transport dock's rows fit with a persistent region beside the layers at 360",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "rows",
+                  "description": "{\"collapsed\":false,\"morphing\":false,\"root\":[348,348,348,\"348px\"],\"run\":[286,286],\"layers\":[\"6px\",\"0px\",[64,278]],\"persistent\":[18,40],\"face\":[64,278],\"page\":[360,360],\"scrollers\":[],\"roLoops\":0}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1709,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T22:55:36.394Z",
+                  "annotations": [
+                    {
+                      "type": "rows",
+                      "description": "{\"collapsed\":false,\"morphing\":false,\"root\":[348,348,348,\"348px\"],\"run\":[286,286],\"layers\":[\"6px\",\"0px\",[64,278]],\"persistent\":[18,40],\"face\":[64,278],\"page\":[360,360],\"scrollers\":[],\"roLoops\":0}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-c98791b30f1458d55f07",
+          "file": "release-11-0-2.spec.ts",
+          "line": 733,
+          "column": 9
+        },
+        {
+          "title": "rows · the transport dock's rows fit with a persistent region beside the layers at 390",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "rows",
+                  "description": "{\"collapsed\":false,\"morphing\":false,\"root\":[378,378,378,\"378px\"],\"run\":[316,316],\"layers\":[\"6px\",\"0px\",[64,308]],\"persistent\":[18,40],\"face\":[64,308],\"page\":[390,390],\"scrollers\":[],\"roLoops\":0}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1686,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T22:55:38.221Z",
+                  "annotations": [
+                    {
+                      "type": "rows",
+                      "description": "{\"collapsed\":false,\"morphing\":false,\"root\":[378,378,378,\"378px\"],\"run\":[316,316],\"layers\":[\"6px\",\"0px\",[64,308]],\"persistent\":[18,40],\"face\":[64,308],\"page\":[390,390],\"scrollers\":[],\"roLoops\":0}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-638ea38cbcad3d297a07",
+          "file": "release-11-0-2.spec.ts",
+          "line": 733,
+          "column": 9
+        },
+        {
+          "title": "rows · the transport dock's rows fit with a persistent region beside the layers at 1440",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "rows",
+                  "description": "{\"collapsed\":false,\"morphing\":false,\"root\":[960,960,960,\"960px\"],\"run\":[898,898],\"layers\":[\"6px\",\"0px\",[298,890]],\"persistent\":[252,40],\"face\":[298,890],\"page\":[1440,1440],\"scrollers\":[],\"roLoops\":0}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1700,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T22:55:39.914Z",
+                  "annotations": [
+                    {
+                      "type": "rows",
+                      "description": "{\"collapsed\":false,\"morphing\":false,\"root\":[960,960,960,\"960px\"],\"run\":[898,898],\"layers\":[\"6px\",\"0px\",[298,890]],\"persistent\":[252,40],\"face\":[298,890],\"page\":[1440,1440],\"scrollers\":[],\"roLoops\":0}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-bd574ec30f427c317c45",
+          "file": "release-11-0-2.spec.ts",
+          "line": 733,
+          "column": 9
+        },
+        {
+          "title": "rows · the editor dock's rows fit with a persistent region beside the layers at 360",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "rows",
+                  "description": "{\"collapsed\":false,\"morphing\":false,\"root\":[288,288,288,\"288px\"],\"run\":[168,168],\"layers\":[\"6px\",\"0px\",[151.86,160]],\"persistent\":[48.14,97.72],\"face\":[151.86,160],\"page\":[360,360],\"scrollers\":[],\"roLoops\":0}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1665,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T22:55:41.620Z",
+                  "annotations": [
+                    {
+                      "type": "rows",
+                      "description": "{\"collapsed\":false,\"morphing\":false,\"root\":[288,288,288,\"288px\"],\"run\":[168,168],\"layers\":[\"6px\",\"0px\",[151.86,160]],\"persistent\":[48.14,97.72],\"face\":[151.86,160],\"page\":[360,360],\"scrollers\":[],\"roLoops\":0}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-4a88ae90eb3ebbeb22e7",
+          "file": "release-11-0-2.spec.ts",
+          "line": 733,
+          "column": 9
+        },
+        {
+          "title": "rows · the editor dock's rows fit with a persistent region beside the layers at 390",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "rows",
+                  "description": "{\"collapsed\":false,\"morphing\":false,\"root\":[288,288,288,\"288px\"],\"run\":[168,168],\"layers\":[\"6px\",\"0px\",[166.86,160]],\"persistent\":[63.14,97.72],\"face\":[166.86,160],\"page\":[390,390],\"scrollers\":[],\"roLoops\":0}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1668,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T22:55:43.291Z",
+                  "annotations": [
+                    {
+                      "type": "rows",
+                      "description": "{\"collapsed\":false,\"morphing\":false,\"root\":[288,288,288,\"288px\"],\"run\":[168,168],\"layers\":[\"6px\",\"0px\",[166.86,160]],\"persistent\":[63.14,97.72],\"face\":[166.86,160],\"page\":[390,390],\"scrollers\":[],\"roLoops\":0}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-1aba098490d12c1adfc8",
+          "file": "release-11-0-2.spec.ts",
+          "line": 733,
+          "column": 9
+        },
+        {
+          "title": "rows · the editor dock's rows fit with a persistent region beside the layers at 1440",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "rows",
+                  "description": "{\"collapsed\":false,\"morphing\":false,\"root\":[288,288,288,\"288px\"],\"run\":[168,168],\"layers\":[\"6px\",\"0px\",[691.86,160]],\"persistent\":[588.14,97.72],\"face\":[691.86,160],\"page\":[1440,1440],\"scrollers\":[],\"roLoops\":0}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1675,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T22:55:44.963Z",
+                  "annotations": [
+                    {
+                      "type": "rows",
+                      "description": "{\"collapsed\":false,\"morphing\":false,\"root\":[288,288,288,\"288px\"],\"run\":[168,168],\"layers\":[\"6px\",\"0px\",[691.86,160]],\"persistent\":[588.14,97.72],\"face\":[691.86,160],\"page\":[1440,1440],\"scrollers\":[],\"roLoops\":0}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-ef971ca04b6d80cede6c",
+          "file": "release-11-0-2.spec.ts",
+          "line": 733,
+          "column": 9
+        },
+        {
+          "title": "rows · the stretched dock's rows fit with a persistent region beside the layers at 360",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "rows",
+                  "description": "{\"collapsed\":false,\"morphing\":false,\"root\":[328,328,328,\"328px\"],\"run\":[266,266],\"layers\":[\"6px\",\"0px\",[74,258]],\"persistent\":[28,40],\"face\":[74,40],\"page\":[360,360],\"scrollers\":[],\"roLoops\":0}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1676,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T22:55:46.645Z",
+                  "annotations": [
+                    {
+                      "type": "rows",
+                      "description": "{\"collapsed\":false,\"morphing\":false,\"root\":[328,328,328,\"328px\"],\"run\":[266,266],\"layers\":[\"6px\",\"0px\",[74,258]],\"persistent\":[28,40],\"face\":[74,40],\"page\":[360,360],\"scrollers\":[],\"roLoops\":0}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-3095ca0a6f9db014eb26",
+          "file": "release-11-0-2.spec.ts",
+          "line": 733,
+          "column": 9
+        },
+        {
+          "title": "rows · the stretched dock's rows fit with a persistent region beside the layers at 390",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "rows",
+                  "description": "{\"collapsed\":false,\"morphing\":false,\"root\":[358,358,358,\"358px\"],\"run\":[296,296],\"layers\":[\"6px\",\"0px\",[74,288]],\"persistent\":[28,40],\"face\":[74,40],\"page\":[390,390],\"scrollers\":[],\"roLoops\":0}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1666,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T22:55:48.328Z",
+                  "annotations": [
+                    {
+                      "type": "rows",
+                      "description": "{\"collapsed\":false,\"morphing\":false,\"root\":[358,358,358,\"358px\"],\"run\":[296,296],\"layers\":[\"6px\",\"0px\",[74,288]],\"persistent\":[28,40],\"face\":[74,40],\"page\":[390,390],\"scrollers\":[],\"roLoops\":0}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-846417748a891983b9cc",
+          "file": "release-11-0-2.spec.ts",
+          "line": 733,
+          "column": 9
+        },
+        {
+          "title": "rows · the stretched dock's rows fit with a persistent region beside the layers at 1440",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "rows",
+                  "description": "{\"collapsed\":false,\"morphing\":false,\"root\":[1408,1408,1408,\"1408px\"],\"run\":[1346,1346],\"layers\":[\"6px\",\"0px\",[74,1338]],\"persistent\":[28,40],\"face\":[74,40],\"page\":[1440,1440],\"scrollers\":[],\"roLoops\":0}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1678,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T22:55:49.998Z",
+                  "annotations": [
+                    {
+                      "type": "rows",
+                      "description": "{\"collapsed\":false,\"morphing\":false,\"root\":[1408,1408,1408,\"1408px\"],\"run\":[1346,1346],\"layers\":[\"6px\",\"0px\",[74,1338]],\"persistent\":[28,40],\"face\":[74,40],\"page\":[1440,1440],\"scrollers\":[],\"roLoops\":0}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-b2fce06b22a991df6c7b",
+          "file": "release-11-0-2.spec.ts",
+          "line": 733,
+          "column": 9
+        },
+        {
+          "title": "hover · a horizontal pill dock, expanded, keeps its box to 0 px through every seat's hover",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "hover",
+                  "description": "{\"shifts\":[{\"seat\":\"persistent\",\"frames\":123,\"moved\":[]},{\"seat\":\"icon\",\"frames\":243,\"moved\":[]},{\"seat\":\"label\",\"frames\":361,\"moved\":[]},{\"seat\":\"compact\",\"frames\":481,\"moved\":[]},{\"seat\":\"tab\",\"frames\":606,\"moved\":[]},{\"seat\":\"tooltip\",\"frames\":721,\"moved\":[]},{\"seat\":\"trigger\",\"frames\":841,\"moved\":[]},{\"seat\":\"background\",\"frames\":969,\"moved\":[]},{\"seat\":\"button\",\"frames\":1081,\"moved\":[]},{\"seat\":\"link\",\"frames\":1211,\"moved\":[]},{\"seat\":\"persistent-end\",\"frames\":1332,\"moved\":[]}],\"roLoops\":0}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 12440,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T22:55:51.681Z",
+                  "annotations": [
+                    {
+                      "type": "hover",
+                      "description": "{\"shifts\":[{\"seat\":\"persistent\",\"frames\":123,\"moved\":[]},{\"seat\":\"icon\",\"frames\":243,\"moved\":[]},{\"seat\":\"label\",\"frames\":361,\"moved\":[]},{\"seat\":\"compact\",\"frames\":481,\"moved\":[]},{\"seat\":\"tab\",\"frames\":606,\"moved\":[]},{\"seat\":\"tooltip\",\"frames\":721,\"moved\":[]},{\"seat\":\"trigger\",\"frames\":841,\"moved\":[]},{\"seat\":\"background\",\"frames\":969,\"moved\":[]},{\"seat\":\"button\",\"frames\":1081,\"moved\":[]},{\"seat\":\"link\",\"frames\":1211,\"moved\":[]},{\"seat\":\"persistent-end\",\"frames\":1332,\"moved\":[]}],\"roLoops\":0}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-0348081b755996f1ee3b",
+          "file": "release-11-0-2.spec.ts",
+          "line": 783,
+          "column": 13
+        },
+        {
+          "title": "hover · a horizontal pill dock, collapsed, keeps its box to 0 px through every seat's hover",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "hover",
+                  "description": "{\"shifts\":[{\"seat\":\"persistent\",\"frames\":122,\"moved\":[]},{\"seat\":\"persistent-end\",\"frames\":241,\"moved\":[]}],\"roLoops\":0}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3396,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T22:56:04.127Z",
+                  "annotations": [
+                    {
+                      "type": "hover",
+                      "description": "{\"shifts\":[{\"seat\":\"persistent\",\"frames\":122,\"moved\":[]},{\"seat\":\"persistent-end\",\"frames\":241,\"moved\":[]}],\"roLoops\":0}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-944dfc93d0367dc0f5fd",
+          "file": "release-11-0-2.spec.ts",
+          "line": 783,
+          "column": 13
+        },
+        {
+          "title": "hover · a horizontal rounded dock, expanded, keeps its box to 0 px through every seat's hover",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "hover",
+                  "description": "{\"shifts\":[{\"seat\":\"persistent\",\"frames\":122,\"moved\":[]},{\"seat\":\"icon\",\"frames\":243,\"moved\":[]},{\"seat\":\"label\",\"frames\":364,\"moved\":[]},{\"seat\":\"compact\",\"frames\":485,\"moved\":[]},{\"seat\":\"tab\",\"frames\":606,\"moved\":[]},{\"seat\":\"tooltip\",\"frames\":727,\"moved\":[]},{\"seat\":\"trigger\",\"frames\":848,\"moved\":[]},{\"seat\":\"background\",\"frames\":961,\"moved\":[]},{\"seat\":\"button\",\"frames\":1081,\"moved\":[]},{\"seat\":\"link\",\"frames\":121,\"moved\":[]},{\"seat\":\"persistent-end\",\"frames\":243,\"moved\":[]}],\"roLoops\":0}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 12453,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T22:56:07.528Z",
+                  "annotations": [
+                    {
+                      "type": "hover",
+                      "description": "{\"shifts\":[{\"seat\":\"persistent\",\"frames\":122,\"moved\":[]},{\"seat\":\"icon\",\"frames\":243,\"moved\":[]},{\"seat\":\"label\",\"frames\":364,\"moved\":[]},{\"seat\":\"compact\",\"frames\":485,\"moved\":[]},{\"seat\":\"tab\",\"frames\":606,\"moved\":[]},{\"seat\":\"tooltip\",\"frames\":727,\"moved\":[]},{\"seat\":\"trigger\",\"frames\":848,\"moved\":[]},{\"seat\":\"background\",\"frames\":961,\"moved\":[]},{\"seat\":\"button\",\"frames\":1081,\"moved\":[]},{\"seat\":\"link\",\"frames\":121,\"moved\":[]},{\"seat\":\"persistent-end\",\"frames\":243,\"moved\":[]}],\"roLoops\":0}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-d91885d60abc8f0107a3",
+          "file": "release-11-0-2.spec.ts",
+          "line": 783,
+          "column": 13
+        },
+        {
+          "title": "hover · a horizontal rounded dock, collapsed, keeps its box to 0 px through every seat's hover",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "hover",
+                  "description": "{\"shifts\":[{\"seat\":\"persistent\",\"frames\":124,\"moved\":[]},{\"seat\":\"persistent-end\",\"frames\":241,\"moved\":[]}],\"roLoops\":0}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3424,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T22:56:19.986Z",
+                  "annotations": [
+                    {
+                      "type": "hover",
+                      "description": "{\"shifts\":[{\"seat\":\"persistent\",\"frames\":124,\"moved\":[]},{\"seat\":\"persistent-end\",\"frames\":241,\"moved\":[]}],\"roLoops\":0}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-7b917bc513af312f2d14",
+          "file": "release-11-0-2.spec.ts",
+          "line": 783,
+          "column": 13
+        },
+        {
+          "title": "hover · a horizontal card dock, expanded, keeps its box to 0 px through every seat's hover",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "hover",
+                  "description": "{\"shifts\":[{\"seat\":\"persistent\",\"frames\":123,\"moved\":[]},{\"seat\":\"icon\",\"frames\":241,\"moved\":[]},{\"seat\":\"label\",\"frames\":364,\"moved\":[]},{\"seat\":\"compact\",\"frames\":485,\"moved\":[]},{\"seat\":\"tab\",\"frames\":606,\"moved\":[]},{\"seat\":\"tooltip\",\"frames\":727,\"moved\":[]},{\"seat\":\"trigger\",\"frames\":121,\"moved\":[]},{\"seat\":\"background\",\"frames\":243,\"moved\":[]},{\"seat\":\"button\",\"frames\":361,\"moved\":[]},{\"seat\":\"link\",\"frames\":481,\"moved\":[]},{\"seat\":\"persistent-end\",\"frames\":606,\"moved\":[]}],\"roLoops\":0}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 12461,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T22:56:23.416Z",
+                  "annotations": [
+                    {
+                      "type": "hover",
+                      "description": "{\"shifts\":[{\"seat\":\"persistent\",\"frames\":123,\"moved\":[]},{\"seat\":\"icon\",\"frames\":241,\"moved\":[]},{\"seat\":\"label\",\"frames\":364,\"moved\":[]},{\"seat\":\"compact\",\"frames\":485,\"moved\":[]},{\"seat\":\"tab\",\"frames\":606,\"moved\":[]},{\"seat\":\"tooltip\",\"frames\":727,\"moved\":[]},{\"seat\":\"trigger\",\"frames\":121,\"moved\":[]},{\"seat\":\"background\",\"frames\":243,\"moved\":[]},{\"seat\":\"button\",\"frames\":361,\"moved\":[]},{\"seat\":\"link\",\"frames\":481,\"moved\":[]},{\"seat\":\"persistent-end\",\"frames\":606,\"moved\":[]}],\"roLoops\":0}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-18a7264785af3514d5a2",
+          "file": "release-11-0-2.spec.ts",
+          "line": 783,
+          "column": 13
+        },
+        {
+          "title": "hover · a horizontal card dock, collapsed, keeps its box to 0 px through every seat's hover",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "hover",
+                  "description": "{\"shifts\":[{\"seat\":\"persistent\",\"frames\":122,\"moved\":[]},{\"seat\":\"persistent-end\",\"frames\":243,\"moved\":[]}],\"roLoops\":0}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3394,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T22:56:35.883Z",
+                  "annotations": [
+                    {
+                      "type": "hover",
+                      "description": "{\"shifts\":[{\"seat\":\"persistent\",\"frames\":122,\"moved\":[]},{\"seat\":\"persistent-end\",\"frames\":243,\"moved\":[]}],\"roLoops\":0}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-ea7dec7005c672570cdd",
+          "file": "release-11-0-2.spec.ts",
+          "line": 783,
+          "column": 13
+        },
+        {
+          "title": "hover · a vertical pill dock, expanded, keeps its box to 0 px through every seat's hover",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "hover",
+                  "description": "{\"shifts\":[{\"seat\":\"persistent\",\"frames\":123,\"moved\":[]},{\"seat\":\"icon\",\"frames\":243,\"moved\":[]},{\"seat\":\"label\",\"frames\":361,\"moved\":[]},{\"seat\":\"compact\",\"frames\":485,\"moved\":[]},{\"seat\":\"tab\",\"frames\":601,\"moved\":[]},{\"seat\":\"tooltip\",\"frames\":727,\"moved\":[]},{\"seat\":\"trigger\",\"frames\":121,\"moved\":[]},{\"seat\":\"background\",\"frames\":243,\"moved\":[]},{\"seat\":\"button\",\"frames\":361,\"moved\":[]},{\"seat\":\"link\",\"frames\":485,\"moved\":[]},{\"seat\":\"persistent-end\",\"frames\":606,\"moved\":[]}],\"roLoops\":0}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 12464,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T22:56:39.282Z",
+                  "annotations": [
+                    {
+                      "type": "hover",
+                      "description": "{\"shifts\":[{\"seat\":\"persistent\",\"frames\":123,\"moved\":[]},{\"seat\":\"icon\",\"frames\":243,\"moved\":[]},{\"seat\":\"label\",\"frames\":361,\"moved\":[]},{\"seat\":\"compact\",\"frames\":485,\"moved\":[]},{\"seat\":\"tab\",\"frames\":601,\"moved\":[]},{\"seat\":\"tooltip\",\"frames\":727,\"moved\":[]},{\"seat\":\"trigger\",\"frames\":121,\"moved\":[]},{\"seat\":\"background\",\"frames\":243,\"moved\":[]},{\"seat\":\"button\",\"frames\":361,\"moved\":[]},{\"seat\":\"link\",\"frames\":485,\"moved\":[]},{\"seat\":\"persistent-end\",\"frames\":606,\"moved\":[]}],\"roLoops\":0}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-8e1a8d8881f5ca4ec5c3",
+          "file": "release-11-0-2.spec.ts",
+          "line": 783,
+          "column": 13
+        },
+        {
+          "title": "hover · a vertical pill dock, collapsed, keeps its box to 0 px through every seat's hover",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "hover",
+                  "description": "{\"shifts\":[{\"seat\":\"persistent\",\"frames\":122,\"moved\":[]},{\"seat\":\"persistent-end\",\"frames\":241,\"moved\":[]}],\"roLoops\":0}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3375,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T22:56:51.750Z",
+                  "annotations": [
+                    {
+                      "type": "hover",
+                      "description": "{\"shifts\":[{\"seat\":\"persistent\",\"frames\":122,\"moved\":[]},{\"seat\":\"persistent-end\",\"frames\":241,\"moved\":[]}],\"roLoops\":0}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-aa04962e2a8fcd045cac",
+          "file": "release-11-0-2.spec.ts",
+          "line": 783,
+          "column": 13
+        },
+        {
+          "title": "hover · a vertical rounded dock, expanded, keeps its box to 0 px through every seat's hover",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "hover",
+                  "description": "{\"shifts\":[{\"seat\":\"persistent\",\"frames\":123,\"moved\":[]},{\"seat\":\"icon\",\"frames\":241,\"moved\":[]},{\"seat\":\"label\",\"frames\":361,\"moved\":[]},{\"seat\":\"compact\",\"frames\":481,\"moved\":[]},{\"seat\":\"tab\",\"frames\":606,\"moved\":[]},{\"seat\":\"tooltip\",\"frames\":727,\"moved\":[]},{\"seat\":\"trigger\",\"frames\":848,\"moved\":[]},{\"seat\":\"background\",\"frames\":969,\"moved\":[]},{\"seat\":\"button\",\"frames\":1090,\"moved\":[]},{\"seat\":\"link\",\"frames\":1211,\"moved\":[]},{\"seat\":\"persistent-end\",\"frames\":1332,\"moved\":[]}],\"roLoops\":0}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 12506,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T22:56:55.130Z",
+                  "annotations": [
+                    {
+                      "type": "hover",
+                      "description": "{\"shifts\":[{\"seat\":\"persistent\",\"frames\":123,\"moved\":[]},{\"seat\":\"icon\",\"frames\":241,\"moved\":[]},{\"seat\":\"label\",\"frames\":361,\"moved\":[]},{\"seat\":\"compact\",\"frames\":481,\"moved\":[]},{\"seat\":\"tab\",\"frames\":606,\"moved\":[]},{\"seat\":\"tooltip\",\"frames\":727,\"moved\":[]},{\"seat\":\"trigger\",\"frames\":848,\"moved\":[]},{\"seat\":\"background\",\"frames\":969,\"moved\":[]},{\"seat\":\"button\",\"frames\":1090,\"moved\":[]},{\"seat\":\"link\",\"frames\":1211,\"moved\":[]},{\"seat\":\"persistent-end\",\"frames\":1332,\"moved\":[]}],\"roLoops\":0}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-c005b1ee78107f1f4580",
+          "file": "release-11-0-2.spec.ts",
+          "line": 783,
+          "column": 13
+        },
+        {
+          "title": "hover · a vertical rounded dock, collapsed, keeps its box to 0 px through every seat's hover",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "hover",
+                  "description": "{\"shifts\":[{\"seat\":\"persistent\",\"frames\":123,\"moved\":[]},{\"seat\":\"persistent-end\",\"frames\":241,\"moved\":[]}],\"roLoops\":0}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3370,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T22:57:07.639Z",
+                  "annotations": [
+                    {
+                      "type": "hover",
+                      "description": "{\"shifts\":[{\"seat\":\"persistent\",\"frames\":123,\"moved\":[]},{\"seat\":\"persistent-end\",\"frames\":241,\"moved\":[]}],\"roLoops\":0}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-034238194e1fc7d91b16",
+          "file": "release-11-0-2.spec.ts",
+          "line": 783,
+          "column": 13
+        },
+        {
+          "title": "hover · a vertical card dock, expanded, keeps its box to 0 px through every seat's hover",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "hover",
+                  "description": "{\"shifts\":[{\"seat\":\"persistent\",\"frames\":122,\"moved\":[]},{\"seat\":\"icon\",\"frames\":243,\"moved\":[]},{\"seat\":\"label\",\"frames\":361,\"moved\":[]},{\"seat\":\"compact\",\"frames\":485,\"moved\":[]},{\"seat\":\"tab\",\"frames\":601,\"moved\":[]},{\"seat\":\"tooltip\",\"frames\":727,\"moved\":[]},{\"seat\":\"trigger\",\"frames\":841,\"moved\":[]},{\"seat\":\"background\",\"frames\":969,\"moved\":[]},{\"seat\":\"button\",\"frames\":1081,\"moved\":[]},{\"seat\":\"link\",\"frames\":121,\"moved\":[]},{\"seat\":\"persistent-end\",\"frames\":243,\"moved\":[]}],\"roLoops\":0}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 12429,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T22:57:11.013Z",
+                  "annotations": [
+                    {
+                      "type": "hover",
+                      "description": "{\"shifts\":[{\"seat\":\"persistent\",\"frames\":122,\"moved\":[]},{\"seat\":\"icon\",\"frames\":243,\"moved\":[]},{\"seat\":\"label\",\"frames\":361,\"moved\":[]},{\"seat\":\"compact\",\"frames\":485,\"moved\":[]},{\"seat\":\"tab\",\"frames\":601,\"moved\":[]},{\"seat\":\"tooltip\",\"frames\":727,\"moved\":[]},{\"seat\":\"trigger\",\"frames\":841,\"moved\":[]},{\"seat\":\"background\",\"frames\":969,\"moved\":[]},{\"seat\":\"button\",\"frames\":1081,\"moved\":[]},{\"seat\":\"link\",\"frames\":121,\"moved\":[]},{\"seat\":\"persistent-end\",\"frames\":243,\"moved\":[]}],\"roLoops\":0}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-7ce3b3c406186445c99c",
+          "file": "release-11-0-2.spec.ts",
+          "line": 783,
+          "column": 13
+        },
+        {
+          "title": "hover · a vertical card dock, collapsed, keeps its box to 0 px through every seat's hover",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "hover",
+                  "description": "{\"shifts\":[{\"seat\":\"persistent\",\"frames\":122,\"moved\":[]},{\"seat\":\"persistent-end\",\"frames\":243,\"moved\":[]}],\"roLoops\":0}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3395,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T22:57:23.447Z",
+                  "annotations": [
+                    {
+                      "type": "hover",
+                      "description": "{\"shifts\":[{\"seat\":\"persistent\",\"frames\":122,\"moved\":[]},{\"seat\":\"persistent-end\",\"frames\":243,\"moved\":[]}],\"roLoops\":0}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-b13dfe137a9fe3face5a",
+          "file": "release-11-0-2.spec.ts",
+          "line": 783,
+          "column": 13
+        },
+        {
+          "title": "rows · the transport dock's rows fit with a persistent region beside the layers at 360",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "the face's formula counts a fine-pointer seat",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts",
+                    "line": 736,
+                    "column": 18
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 41,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T22:57:27.214Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "the face's formula counts a fine-pointer seat",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts",
+                        "line": 736,
+                        "column": 18
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-be18be41c899456b451d",
+          "file": "release-11-0-2.spec.ts",
+          "line": 733,
+          "column": 9
+        },
+        {
+          "title": "rows · the transport dock's rows fit with a persistent region beside the layers at 390",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "the face's formula counts a fine-pointer seat",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts",
+                    "line": 736,
+                    "column": 18
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 32,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T22:57:27.321Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "the face's formula counts a fine-pointer seat",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts",
+                        "line": 736,
+                        "column": 18
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-5d42798cfda97f54546e",
+          "file": "release-11-0-2.spec.ts",
+          "line": 733,
+          "column": 9
+        },
+        {
+          "title": "rows · the transport dock's rows fit with a persistent region beside the layers at 1440",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "the face's formula counts a fine-pointer seat",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts",
+                    "line": 736,
+                    "column": 18
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 31,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T22:57:27.358Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "the face's formula counts a fine-pointer seat",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts",
+                        "line": 736,
+                        "column": 18
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-43557f7e328849599397",
+          "file": "release-11-0-2.spec.ts",
+          "line": 733,
+          "column": 9
+        },
+        {
+          "title": "rows · the editor dock's rows fit with a persistent region beside the layers at 360",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "rows",
+                  "description": "{\"collapsed\":false,\"morphing\":false,\"root\":[308,308,308,\"308px\"],\"run\":[184,184],\"layers\":[\"6px\",\"0px\",[145.86,176]],\"persistent\":[38.14,101.72],\"face\":[145.86,176],\"page\":[360,360],\"scrollers\":[],\"roLoops\":0}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1665,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T22:57:27.393Z",
+                  "annotations": [
+                    {
+                      "type": "rows",
+                      "description": "{\"collapsed\":false,\"morphing\":false,\"root\":[308,308,308,\"308px\"],\"run\":[184,184],\"layers\":[\"6px\",\"0px\",[145.86,176]],\"persistent\":[38.14,101.72],\"face\":[145.86,176],\"page\":[360,360],\"scrollers\":[],\"roLoops\":0}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-4ed2b641daacfccbcd67",
+          "file": "release-11-0-2.spec.ts",
+          "line": 733,
+          "column": 9
+        },
+        {
+          "title": "rows · the editor dock's rows fit with a persistent region beside the layers at 390",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "rows",
+                  "description": "{\"collapsed\":false,\"morphing\":false,\"root\":[308,308,308,\"308px\"],\"run\":[184,184],\"layers\":[\"6px\",\"0px\",[160.86,176]],\"persistent\":[53.14,101.72],\"face\":[160.86,176],\"page\":[390,390],\"scrollers\":[],\"roLoops\":0}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1669,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T22:57:29.062Z",
+                  "annotations": [
+                    {
+                      "type": "rows",
+                      "description": "{\"collapsed\":false,\"morphing\":false,\"root\":[308,308,308,\"308px\"],\"run\":[184,184],\"layers\":[\"6px\",\"0px\",[160.86,176]],\"persistent\":[53.14,101.72],\"face\":[160.86,176],\"page\":[390,390],\"scrollers\":[],\"roLoops\":0}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-614aefee9f32bd9e538c",
+          "file": "release-11-0-2.spec.ts",
+          "line": 733,
+          "column": 9
+        },
+        {
+          "title": "rows · the editor dock's rows fit with a persistent region beside the layers at 1440",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "rows",
+                  "description": "{\"collapsed\":false,\"morphing\":false,\"root\":[308,308,308,\"308px\"],\"run\":[184,184],\"layers\":[\"6px\",\"0px\",[685.86,176]],\"persistent\":[578.14,101.72],\"face\":[685.86,176],\"page\":[1440,1440],\"scrollers\":[],\"roLoops\":0}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1647,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T22:57:30.736Z",
+                  "annotations": [
+                    {
+                      "type": "rows",
+                      "description": "{\"collapsed\":false,\"morphing\":false,\"root\":[308,308,308,\"308px\"],\"run\":[184,184],\"layers\":[\"6px\",\"0px\",[685.86,176]],\"persistent\":[578.14,101.72],\"face\":[685.86,176],\"page\":[1440,1440],\"scrollers\":[],\"roLoops\":0}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-a63719c2906b20301f43",
+          "file": "release-11-0-2.spec.ts",
+          "line": 733,
+          "column": 9
+        },
+        {
+          "title": "rows · the stretched dock's rows fit with a persistent region beside the layers at 360",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "rows",
+                  "description": "{\"collapsed\":false,\"morphing\":false,\"root\":[328,328,328,\"328px\"],\"run\":[262,262],\"layers\":[\"6px\",\"0px\",[78,254]],\"persistent\":[28,44],\"face\":[78,44],\"page\":[360,360],\"scrollers\":[],\"roLoops\":0}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1671,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T22:57:32.388Z",
+                  "annotations": [
+                    {
+                      "type": "rows",
+                      "description": "{\"collapsed\":false,\"morphing\":false,\"root\":[328,328,328,\"328px\"],\"run\":[262,262],\"layers\":[\"6px\",\"0px\",[78,254]],\"persistent\":[28,44],\"face\":[78,44],\"page\":[360,360],\"scrollers\":[],\"roLoops\":0}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-4a3d9681ea84ef4d7c39",
+          "file": "release-11-0-2.spec.ts",
+          "line": 733,
+          "column": 9
+        },
+        {
+          "title": "rows · the stretched dock's rows fit with a persistent region beside the layers at 390",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "rows",
+                  "description": "{\"collapsed\":false,\"morphing\":false,\"root\":[358,358,358,\"358px\"],\"run\":[292,292],\"layers\":[\"6px\",\"0px\",[78,284]],\"persistent\":[28,44],\"face\":[78,44],\"page\":[390,390],\"scrollers\":[],\"roLoops\":0}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1668,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T22:57:34.065Z",
+                  "annotations": [
+                    {
+                      "type": "rows",
+                      "description": "{\"collapsed\":false,\"morphing\":false,\"root\":[358,358,358,\"358px\"],\"run\":[292,292],\"layers\":[\"6px\",\"0px\",[78,284]],\"persistent\":[28,44],\"face\":[78,44],\"page\":[390,390],\"scrollers\":[],\"roLoops\":0}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-182f5c13875931e6715d",
+          "file": "release-11-0-2.spec.ts",
+          "line": 733,
+          "column": 9
+        },
+        {
+          "title": "rows · the stretched dock's rows fit with a persistent region beside the layers at 1440",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "rows",
+                  "description": "{\"collapsed\":false,\"morphing\":false,\"root\":[1408,1408,1408,\"1408px\"],\"run\":[1342,1342],\"layers\":[\"6px\",\"0px\",[78,1334]],\"persistent\":[28,44],\"face\":[78,44],\"page\":[1440,1440],\"scrollers\":[],\"roLoops\":0}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1670,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T22:57:35.741Z",
+                  "annotations": [
+                    {
+                      "type": "rows",
+                      "description": "{\"collapsed\":false,\"morphing\":false,\"root\":[1408,1408,1408,\"1408px\"],\"run\":[1342,1342],\"layers\":[\"6px\",\"0px\",[78,1334]],\"persistent\":[28,44],\"face\":[78,44],\"page\":[1440,1440],\"scrollers\":[],\"roLoops\":0}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-30fe011d329f73683e7e",
+          "file": "release-11-0-2.spec.ts",
+          "line": 733,
+          "column": 9
+        },
+        {
+          "title": "hover · a horizontal pill dock, expanded, keeps its box to 0 px through every seat's hover",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "hover is a fine-pointer state",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts",
+                    "line": 784,
+                    "column": 22
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 43,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T22:57:37.416Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "hover is a fine-pointer state",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts",
+                        "line": 784,
+                        "column": 22
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-a26949374becb8ca5954",
+          "file": "release-11-0-2.spec.ts",
+          "line": 783,
+          "column": 13
+        },
+        {
+          "title": "hover · a horizontal pill dock, collapsed, keeps its box to 0 px through every seat's hover",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "hover is a fine-pointer state",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts",
+                    "line": 784,
+                    "column": 22
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 43,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T22:57:37.465Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "hover is a fine-pointer state",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts",
+                        "line": 784,
+                        "column": 22
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-b2f95a9c9f169a9585cb",
+          "file": "release-11-0-2.spec.ts",
+          "line": 783,
+          "column": 13
+        },
+        {
+          "title": "hover · a horizontal rounded dock, expanded, keeps its box to 0 px through every seat's hover",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "hover is a fine-pointer state",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts",
+                    "line": 784,
+                    "column": 22
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 39,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T22:57:37.516Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "hover is a fine-pointer state",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts",
+                        "line": 784,
+                        "column": 22
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-1654a7e17d593a81fae7",
+          "file": "release-11-0-2.spec.ts",
+          "line": 783,
+          "column": 13
+        },
+        {
+          "title": "hover · a horizontal rounded dock, collapsed, keeps its box to 0 px through every seat's hover",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "hover is a fine-pointer state",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts",
+                    "line": 784,
+                    "column": 22
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 38,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T22:57:37.561Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "hover is a fine-pointer state",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts",
+                        "line": 784,
+                        "column": 22
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-e82521cc834fee99696d",
+          "file": "release-11-0-2.spec.ts",
+          "line": 783,
+          "column": 13
+        },
+        {
+          "title": "hover · a horizontal card dock, expanded, keeps its box to 0 px through every seat's hover",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "hover is a fine-pointer state",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts",
+                    "line": 784,
+                    "column": 22
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 41,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T22:57:37.605Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "hover is a fine-pointer state",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts",
+                        "line": 784,
+                        "column": 22
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-249bcd111ec52b4052d4",
+          "file": "release-11-0-2.spec.ts",
+          "line": 783,
+          "column": 13
+        },
+        {
+          "title": "hover · a horizontal card dock, collapsed, keeps its box to 0 px through every seat's hover",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "hover is a fine-pointer state",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts",
+                    "line": 784,
+                    "column": 22
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 39,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T22:57:37.651Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "hover is a fine-pointer state",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts",
+                        "line": 784,
+                        "column": 22
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-943b214e544a30646c00",
+          "file": "release-11-0-2.spec.ts",
+          "line": 783,
+          "column": 13
+        },
+        {
+          "title": "hover · a vertical pill dock, expanded, keeps its box to 0 px through every seat's hover",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "hover is a fine-pointer state",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts",
+                    "line": 784,
+                    "column": 22
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 39,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T22:57:37.695Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "hover is a fine-pointer state",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts",
+                        "line": 784,
+                        "column": 22
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-918fc6cbd0de40f1a036",
+          "file": "release-11-0-2.spec.ts",
+          "line": 783,
+          "column": 13
+        },
+        {
+          "title": "hover · a vertical pill dock, collapsed, keeps its box to 0 px through every seat's hover",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "hover is a fine-pointer state",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts",
+                    "line": 784,
+                    "column": 22
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 38,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T22:57:37.740Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "hover is a fine-pointer state",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts",
+                        "line": 784,
+                        "column": 22
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-b3f76d008ef1f965112b",
+          "file": "release-11-0-2.spec.ts",
+          "line": 783,
+          "column": 13
+        },
+        {
+          "title": "hover · a vertical rounded dock, expanded, keeps its box to 0 px through every seat's hover",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "hover is a fine-pointer state",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts",
+                    "line": 784,
+                    "column": 22
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 39,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T22:57:37.784Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "hover is a fine-pointer state",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts",
+                        "line": 784,
+                        "column": 22
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-ae8b8caf24034cb06f83",
+          "file": "release-11-0-2.spec.ts",
+          "line": 783,
+          "column": 13
+        },
+        {
+          "title": "hover · a vertical rounded dock, collapsed, keeps its box to 0 px through every seat's hover",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "hover is a fine-pointer state",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts",
+                    "line": 784,
+                    "column": 22
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 37,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T22:57:37.827Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "hover is a fine-pointer state",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts",
+                        "line": 784,
+                        "column": 22
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-35780f80d502f54ff2bc",
+          "file": "release-11-0-2.spec.ts",
+          "line": 783,
+          "column": 13
+        },
+        {
+          "title": "hover · a vertical card dock, expanded, keeps its box to 0 px through every seat's hover",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "hover is a fine-pointer state",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts",
+                    "line": 784,
+                    "column": 22
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 35,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T22:57:37.869Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "hover is a fine-pointer state",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts",
+                        "line": 784,
+                        "column": 22
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-a1801188553837f9d0a5",
+          "file": "release-11-0-2.spec.ts",
+          "line": 783,
+          "column": 13
+        },
+        {
+          "title": "hover · a vertical card dock, collapsed, keeps its box to 0 px through every seat's hover",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "hover is a fine-pointer state",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts",
+                    "line": 784,
+                    "column": 22
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 37,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T22:57:37.910Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "hover is a fine-pointer state",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts",
+                        "line": 784,
+                        "column": 22
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-ae254abed33aa2ab75d0",
+          "file": "release-11-0-2.spec.ts",
+          "line": 783,
+          "column": 13
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-12T22:55:34.609Z",
+    "duration": 123398.412,
+    "expected": 27,
+    "skipped": 15,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}
