@@ -3,9 +3,10 @@
 # workflow has published a plain vX.Y.Z tag that npm now serves as `latest`. A
 # prerelease tag or a `--tag v10` maintenance publish skips, loud and green.
 # Manual dispatch names a tag; `rollback` redeploys an older tag (it skips the
-# `latest` check). Only a tag that carries this workflow, demo/_headers and the two
-# check scripts can deploy: an older tag fails red at the _headers test.
-# Record: docs/release-infra/deploy-demo.md.
+# `latest` check). Only a tag that carries this workflow, demo/_headers and
+# scripts/check-served.mjs can deploy: an older tag fails red at the _headers test.
+# No browser runs here: the live assert (`scripts/check-live.mjs`) is a local command run
+# through the guard after a deploy. Record: docs/release-infra/deploy-demo.md.
 name: deploy-demo
 
 on:
@@ -222,23 +223,3 @@ jobs:
               env:
                   ORIGIN: ${{ steps.domain.outputs.origin || format('https://{0}/', steps.host.outputs.sub) }}
               run: node scripts/check-served.mjs "$ORIGIN" --headers
-            - name: Playwright version
-              if: steps.creds.outputs.present == 'true'
-              id: pw
-              run: echo "version=$(node -p 'require("playwright/package.json").version')" >> "$GITHUB_OUTPUT"
-            - name: Playwright headless shell (cache)
-              if: steps.creds.outputs.present == 'true'
-              id: pw-cache
-              uses: actions/cache@v4
-              with:
-                  path: ~/.cache/ms-playwright
-                  key: ms-playwright-${{ runner.os }}-${{ steps.pw.outputs.version }}-chromium-headless-shell
-            - name: Playwright headless shell (install)
-              if: steps.creds.outputs.present == 'true' && steps.pw-cache.outputs.cache-hit != 'true'
-              timeout-minutes: 3
-              run: npx playwright install --only-shell chromium
-            - name: Live — no console error, no CSP violation, no third-party request
-              if: steps.creds.outputs.present == 'true'
-              env:
-                  ORIGIN: ${{ steps.domain.outputs.origin || format('https://{0}/', steps.host.outputs.sub) }}
-              run: node scripts/check-live.mjs "$ORIGIN"
