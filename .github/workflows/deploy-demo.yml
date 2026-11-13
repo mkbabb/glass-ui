@@ -52,8 +52,13 @@ jobs:
             TAG: ${{ github.event.workflow_run.head_branch || inputs.tag }}
             ROLLBACK: ${{ inputs.rollback || false }}
         steps:
+            # Sparse: the demo build reads nothing under docs/ (about 6 GB of records).
             - uses: actions/checkout@v5
               with:
+                  sparse-checkout-cone-mode: false
+                  sparse-checkout: |
+                      /*
+                      !/docs/
                   ref: ${{ github.event.workflow_run.head_sha || inputs.ref || inputs.tag }}
             - name: Built commit
               run: echo "BUILT_SHA=$(git rev-parse HEAD)" >> "$GITHUB_ENV"

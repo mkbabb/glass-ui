@@ -4,33 +4,39 @@ name: ci
 # on Node alone. The browser gates (the pixel floor, `npm run test:browser`) run on real
 # hardware in `scripts/release.sh` before a tag is cut.
 #
-# `paths`: a push that touches only docs no gate reads skips CI. Gates DO read some docs
-# (docs/canon, docs/design, docs/audits, the AP/BJ/BK tranche records, and every *.md
-# outside docs/), so those paths stay triggering. A new gate that reads another docs path
-# must add it here.
+# The docs list: docs/ is about 6 GB of tranche records, everything else about 13 MB. The
+# checkout is sparse (everything but docs/, plus the eight docs files a gate reads) and
+# `paths` triggers on the same files, so a push that touches only docs no gate reads skips
+# CI. A gate that reads a new docs path adds it in all three places: both `paths` lists and
+# `sparse-checkout` here, and `sparse-checkout` in release.yml.
+# tests/gates/ci-sparse-checkout.test.ts holds the lists equal.
 on:
     pull_request:
         branches: [master]
         paths:
             - "**"
             - "!docs/**"
-            - "docs/canon/**"
-            - "docs/design/**"
-            - "docs/audits/**"
-            - "docs/tranches/AP/**"
-            - "docs/tranches/BJ/**"
-            - "docs/tranches/BK/**"
+            - "docs/audits/overfitting-audit.md"
+            - "docs/design/affordance-map.md"
+            - "docs/design/tunable-anim.md"
+            - "docs/tranches/BJ/addenda/2026-07-21-convergent-hardening/GATE-SEMANTIC-ROSTER-C20.json"
+            - "docs/tranches/BJ/addenda/2026-07-24-refinement/TERMINAL-ROSTER.md"
+            - "docs/tranches/BJ/coordination/glass-outbound-2026-08-08-easing-consumer-addenda.md"
+            - "docs/tranches/BJ/waves/BAND-FEEDBACK-MOTION.md"
+            - "docs/tranches/BK/execution/2026-08-03-row9-register/SEAT-BINDING.json"
     push:
         branches: [master]
         paths:
             - "**"
             - "!docs/**"
-            - "docs/canon/**"
-            - "docs/design/**"
-            - "docs/audits/**"
-            - "docs/tranches/AP/**"
-            - "docs/tranches/BJ/**"
-            - "docs/tranches/BK/**"
+            - "docs/audits/overfitting-audit.md"
+            - "docs/design/affordance-map.md"
+            - "docs/design/tunable-anim.md"
+            - "docs/tranches/BJ/addenda/2026-07-21-convergent-hardening/GATE-SEMANTIC-ROSTER-C20.json"
+            - "docs/tranches/BJ/addenda/2026-07-24-refinement/TERMINAL-ROSTER.md"
+            - "docs/tranches/BJ/coordination/glass-outbound-2026-08-08-easing-consumer-addenda.md"
+            - "docs/tranches/BJ/waves/BAND-FEEDBACK-MOTION.md"
+            - "docs/tranches/BK/execution/2026-08-03-row9-register/SEAT-BINDING.json"
 
 concurrency:
     group: ci-${{ github.ref }}
@@ -40,10 +46,23 @@ jobs:
     verify:
         runs-on: ubuntu-latest
         steps:
-            # Depth 1: no gate reads history. comment-census reads HEAD's tree only.
+            # Depth 1: no gate reads history. comment-census reads HEAD's tree only, and
+            # only src/, whose blobs the sparse checkout fetches.
             - uses: actions/checkout@v4
               with:
                   fetch-depth: 1
+                  sparse-checkout-cone-mode: false
+                  sparse-checkout: |
+                      /*
+                      !/docs/
+                      /docs/audits/overfitting-audit.md
+                      /docs/design/affordance-map.md
+                      /docs/design/tunable-anim.md
+                      /docs/tranches/BJ/addenda/2026-07-21-convergent-hardening/GATE-SEMANTIC-ROSTER-C20.json
+                      /docs/tranches/BJ/addenda/2026-07-24-refinement/TERMINAL-ROSTER.md
+                      /docs/tranches/BJ/coordination/glass-outbound-2026-08-08-easing-consumer-addenda.md
+                      /docs/tranches/BJ/waves/BAND-FEEDBACK-MOTION.md
+                      /docs/tranches/BK/execution/2026-08-03-row9-register/SEAT-BINDING.json
                   ref: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.sha }}
             - uses: actions/setup-node@v4
               with:
