@@ -48,8 +48,9 @@
 //   transition  a control slotted into a dock's run keeps the transition it declares
 //          and its hover tween runs; the dock's icon control keeps its hover legs
 //   fold   (fold-content) through every frame of an unfold and a fold, a dock's content
-//          stays inside the plate's painted box and no item's opacity moves by half
-//          its range in one frame, both orientations, 390 and 1440, light and dark
+//          stays inside the plate's painted box and no item's opacity moves faster
+//          than the morph's own progress allows, both orientations, 390 and 1440,
+//          light and dark
 import { expect, test, type Page } from "@playwright/test";
 
 type DarkHandle = { stamped: boolean; isDark: () => boolean; toggle: () => void };
@@ -1169,10 +1170,13 @@ test("transition · a control slotted into a dock's run keeps its own transition
 // seats: each content item's box, cut by the dock's own clip and the run's scroll port
 // where those clip, against the plate's painted box; and each item's effective opacity
 // (the product of its own and its ancestors'). No visible item stands outside the plate,
-// and no item's opacity moves by half its range or more between two frames.
+// and between two frames no item's opacity moves faster than the morph itself: by more
+// than the reveal ramp's slope (one over the dock's `--dock-stagger-window-size`) times
+// the change in `--dock-expand-t`, plus 0.05. A frame the engine drops moves t further and allows a larger step; a drop from
+// 1 to 0 while t barely moves does not pass.
 async function foldFrames(page: Page, dir: "expand" | "collapse") {
     await page.evaluate(() => {
-        type F = { morphing: boolean; items: { id: string; o: number; out: number }[] };
+        type F = { morphing: boolean; t: number; window: number; items: { id: string; o: number; out: number }[] };
         const w = window as unknown as { __frames: F[] };
         w.__frames = [];
         const items = [...document.querySelectorAll<HTMLElement>(
@@ -1184,7 +1188,10 @@ async function foldFrames(page: Page, dir: "expand" | "collapse") {
             const p = plate.getBoundingClientRect();
             const cs = getComputedStyle(dock);
             const d = dock.getBoundingClientRect();
-            const f: F = { morphing: dock.hasAttribute("data-morphing"), items: [] };
+            const raw = cs.getPropertyValue("--dock-expand-t").trim();
+            const n = parseFloat(raw.replace(/^calc\(1 - /, ""));
+            const ramp = parseFloat(cs.getPropertyValue("--dock-stagger-window-size")) || 0.55;
+            const f: F = { morphing: dock.hasAttribute("data-morphing"), t: raw.startsWith("calc(1 - ") ? 1 - n : n, window: ramp, items: [] };
             for (const el of items) {
                 let o = getComputedStyle(el).visibility === "hidden" ? 0 : 1;
                 for (let e: HTMLElement | null = el; e && e !== document.body; e = e.parentElement) o *= +getComputedStyle(e).opacity;
@@ -1210,7 +1217,9 @@ async function foldFrames(page: Page, dir: "expand" | "collapse") {
     await page.evaluate((dir) => (window as unknown as Record<string, () => void>)[`__${dir}`]!(), dir);
     await page.waitForTimeout(2400);
     return page.evaluate(
-        () => (window as unknown as { __frames: { morphing: boolean; items: { id: string; o: number; out: number }[] }[] }).__frames,
+        () =>
+            (window as unknown as { __frames: { morphing: boolean; t: number; window: number; items: { id: string; o: number; out: number }[] }[] })
+                .__frames,
     );
 }
 
@@ -1219,7 +1228,7 @@ for (const orientation of ["horizontal", "vertical"])
         test(`fold · a ${orientation} dock's content stays inside the plate and fades by steps through the fold and unfold at ${width}`, async ({ page }, info) => {
             await page.setViewportSize({ width, height: 900 });
             const fails: string[] = [];
-            const worst = { out: 0, step: 0 };
+            const worst = { out: 0, step: -1 };
             for (const theme of ["light", "dark"]) {
                 await page.goto(`/tests-visual/release-11-0-2/fold-content-harness.html?orientation=${orientation}&theme=${theme}`);
                 await page.locator(".fc-dock .dock-plate").waitFor();
@@ -1230,10 +1239,12 @@ for (const orientation of ["horizontal", "vertical"])
                     frames.forEach((f, i) =>
                         f.items.forEach((it, k) => {
                             const step = i > 0 ? Math.abs(it.o - frames[i - 1]!.items[k]!.o) : 0;
+                            const dt = i > 0 ? Math.abs(f.t - frames[i - 1]!.t) : 0;
+                            const allowed = i > 0 ? dt / Math.min(1, f.window) + 0.05 : 1;
                             worst.out = Math.max(worst.out, it.o > 0.02 ? it.out : 0);
-                            worst.step = Math.max(worst.step, step);
+                            worst.step = Math.max(worst.step, step - allowed);
                             if (it.o > 0.02 && it.out > 0.5) fails.push(`${theme} ${dir} frame ${i}: ${it.id} ${it.out.toFixed(1)} px outside at opacity ${it.o.toFixed(2)}`);
-                            if (step >= 0.5) fails.push(`${theme} ${dir} frame ${i}: ${it.id} opacity moved ${step.toFixed(2)}`);
+                            if (step > allowed) fails.push(`${theme} ${dir} frame ${i}: ${it.id} opacity moved ${step.toFixed(2)} while t moved ${dt.toFixed(2)}`);
                         }),
                     );
                 }
