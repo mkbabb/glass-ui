@@ -1,0 +1,2158 @@
+diff --git a/src/components/dock/DockControl.vue b/src/components/dock/DockControl.vue
+index 6f8658c3d..91b6ea4b9 100644
+--- a/src/components/dock/DockControl.vue
++++ b/src/components/dock/DockControl.vue
+@@ -68,6 +68,8 @@ const props = withDefaults(
+         /** Merge props onto a slotted child instead of rendering a host tag. */
+         asChild?: boolean;
+         class?: HTMLAttributes["class"];
++        /** W-I.8 R-7: the seat's name, shown on hover or keyboard focus at its inline start. */
++        label?: string;
+     }>(),
+     {
+         shape: "icon",
+@@ -93,7 +95,7 @@ const classes = computed(() =>
+     isTab.value
+         ? cn("dock-tab-button glass-specular-track", props.class)
+         : cn(
+-              "dock-icon-button glass-specular-track glass-capsule-hover",
++              props.label ? "dock-icon-button" : "dock-icon-button glass-specular-track glass-capsule-hover",
+               { "glass-capsule": props.active },
+               { "dock-icon-button--compact": props.compact },
+               props.class,
+@@ -112,6 +114,7 @@ const classes = computed(() =>
+ //     suppresses activation since `aria-disabled` does not block events.
+ const stateAttrs = computed(() => ({
+     [DOCK_SEAT_ATTR]: "",
++    ...(props.label ? { "data-dock-label": "", "aria-label": props.label } : {}),
+     ...(props.active !== undefined
+         ? {
+               "aria-pressed": String(props.active),
+@@ -181,5 +184,6 @@ function blockDisabledActivation(event: MouseEvent): void {
+         @click.capture="blockDisabledActivation"
+     >
+         <slot />
++        <span v-if="label" class="dock-seat-label" aria-hidden="true">{{ label }}</span>
+     </Primitive>
+ </template>
+diff --git a/src/components/dock/DockCrossfade.vue b/src/components/dock/DockCrossfade.vue
+index 7552894e0..0c41391fd 100644
+--- a/src/components/dock/DockCrossfade.vue
++++ b/src/components/dock/DockCrossfade.vue
+@@ -4,6 +4,7 @@ import { computed, nextTick, onBeforeUnmount, ref, watch } from "vue";
+ import { useResizeObserver } from "../../composables/dom/useResizeObserver";
+ import { useDockSpring } from "./composables/useDockSpring";
+ import { DOCK_SPRING } from "./constants";
++import { useOptionalDockBody } from "./composables/useDockBody";
+ import {
+     provideDockCrossfadeContext,
+     type DockFaceDescriptor,
+@@ -97,7 +98,7 @@ function measurePeak(): void {
+ }
+ 
+ const reserveStyle = computed<Record<string, string> | undefined>(() =>
+-    peak.value > 0
++    !dockBody && peak.value > 0
+         ? {
+               [reserveProp.value]: `${peak.value}px`,
+               "--dock-crossfade-peak": `${peak.value}px`,
+@@ -134,6 +135,23 @@ function clamp01(v: number): number {
+ }
+ 
+ const prefersReducedMotion = useMediaQuery("(prefers-reduced-motion: reduce)");
++/* W-I.8 R-5: inside a dock, the faces fade on the carrier's travel; the reserve goes. */
++const dockBody = useOptionalDockBody();
++if (dockBody) {
++    watch(
++        activeId,
++        (next, prev) => {
++            if (next === prev) return;
++            const enterHost = faceEl(next);
++            const leaveHost = faceEl(prev);
++            if (!enterHost || !leaveHost) return;
++            for (const p of ["inset", "left", "top", "width", "height"]) enterHost.style.removeProperty(p);
++            dockBody.exchange(leaveHost, enterHost, "layers");
++        },
++        { flush: "pre" },
++    );
++    watch(activeId, () => dockBody.sync("exchange"), { flush: "post" });
++}
+ let settleCrossfade: (() => void) | null = null;
+ let activeSlope = 1;
+ 
+@@ -165,6 +183,14 @@ watch(
+     activeId,
+     (next, prev) => {
+         if (next === prev) return;
++        if (dockBody) {
++            void transferFocusOnDissolve(prev, next);
++            leavingId.value = prev;
++            dockBody.onSettle(() => {
++                if (leavingId.value === prev) leavingId.value = null;
++            });
++            return;
++        }
+         measurePeak();
+ 
+         const enterHost = faceEl(next);
+diff --git a/src/components/dock/DockOutlet.vue b/src/components/dock/DockOutlet.vue
+new file mode 100644
+index 000000000..9ca669a13
+--- /dev/null
++++ b/src/components/dock/DockOutlet.vue
+@@ -0,0 +1,43 @@
++<script setup lang="ts">
++// W-I.8 R-8: renders its slot into a named dock's region, as direct children, and
++// provides that dock's context (and the face mark, for the run) to it.
++import { computed, defineComponent, onBeforeUnmount, provide, watch, type PropType } from "vue";
++import { DOCK_CONTEXT_KEY, DockFace, type DockContext } from "./composables/dockContext";
++import { dockRegistry, wantRegion, type DockOutletRegion } from "./composables/dockRegistry";
++
++const props = withDefaults(
++    defineProps<{ to: string; region?: DockOutletRegion }>(),
++    { region: "run" },
++);
++
++const entry = computed(() => dockRegistry.get(props.to));
++const target = computed(() => entry.value?.regions[props.region] ?? null);
++
++watch(
++    () => [props.to, props.region] as const,
++    ([to, region], prev) => {
++        if (prev) wantRegion(prev[0], prev[1], -1);
++        wantRegion(to, region, 1);
++    },
++    { immediate: true },
++);
++onBeforeUnmount(() => wantRegion(props.to, props.region, -1));
++
++const Scope = defineComponent({
++    name: "DockOutletScope",
++    props: { context: { type: Object as PropType<DockContext>, required: true } },
++    setup(p, { slots }) {
++        provide(DOCK_CONTEXT_KEY, p.context);
++        return () => slots.default?.();
++    },
++});
++</script>
++
++<template>
++    <Teleport v-if="target && entry" :to="target">
++        <Scope :key="entry.id" :context="entry.context">
++            <DockFace v-if="region === 'run'"><slot /></DockFace>
++            <slot v-else />
++        </Scope>
++    </Teleport>
++</template>
+diff --git a/src/components/dock/GlassDock.vue b/src/components/dock/GlassDock.vue
+index 0a4c0f689..056ce54c5 100644
+--- a/src/components/dock/GlassDock.vue
++++ b/src/components/dock/GlassDock.vue
+@@ -18,7 +18,8 @@
+ // axis-aware expand/collapse transition, and the pointer/focus hold machinery.
+ // The fission split facility is DEFINITION-ABSENT (decided-terminal;
+ // clean break, no alias — demo-only spectacle + the prime Safari suspect).
+-import { computed, nextTick, ref, useId, useTemplateRef, watch } from "vue";
++import { computed, nextTick, onBeforeUnmount, ref, useAttrs, useId, useTemplateRef, watch, watchEffect } from "vue";
++import { useMediaQuery } from "@vueuse/core";
+ // The sampled-luminance observer is wired ON for every
+ // `backdropMode: "live"` dock (the surface the user reported unreadable over light, and the
+ // one most often over a live/bright backdrop). It REFINES the declarative bucket +
+@@ -32,8 +33,9 @@ import { useGlassBackdropLuminance } from "../../composables/glass/useGlassBackd
+ import { OPEN_DISMISSABLE_LAYER_SELECTOR } from "./constants";
+ import { DockFace, provideDockContext } from "./composables/dockContext";
+ import { useDockState } from "./composables/useDockState";
+-import { useDockMorphOrchestrator } from "./composables/useDockMorph";
+-import { useDockExpandedSize } from "./composables/dockMorphMeasure";
++import { useDockBody, type NeckDesign } from "./composables/useDockBody";
++import { dockRegistry, regionWanted } from "./composables/dockRegistry";
++import { useDockLabels } from "./composables/useDockLabels";
+ import { useDockShellProps, type DockProps } from "./composables/useDockShellProps";
+ import { useDockClickIntegrity } from "./composables/useDockClickIntegrity";
+ // [2026-08-24 · BK #47 W3 LATTICE + W6] The run: reach to the seat's snap position via
+@@ -80,13 +82,17 @@ defineOptions({ inheritAttrs: false });
+    stayed green) but NEVER the rendered component. Declaring the default here is what
+    defeats the cast: `hasDefault` short-circuits the absent-branch, and `"closed"` is
+    neither `""` nor `"collapse"`, so the cast-true branch cannot fire either. */
+-const props = withDefaults(defineProps<DockProps>(), {
++const props = withDefaults(defineProps<DockProps & { pinned?: boolean }>(), {
+     backdropMode: "live",
+     collapse: "closed",
+     expandOn: "hover",
+     anchor: "center",
+     collapsedLabel: "Expand dock",
++    pinned: undefined,
+ });
++const emit = defineEmits<{ "update:pinned": [value: boolean] }>();
++const attrs = useAttrs();
++const siteId = computed(() => (typeof attrs.id === "string" ? attrs.id : undefined));
+ 
+ /* The resolved shell-prop computeds — shape/orientation, the collapse surface
+    (`alwaysExpanded`/`startCollapsed`, both derived from the one `collapse` member),
+@@ -104,6 +110,13 @@ const layersEl = useTemplateRef<HTMLElement>("layersEl");
+ const fullEl = useTemplateRef<HTMLElement>("fullEl");
+ const summaryEl = useTemplateRef<HTMLElement>("summaryEl");
+ const statusEl = useTemplateRef<HTMLElement>("statusEl");
++const plateEl = useTemplateRef<HTMLElement>("plateEl");
++const persistentEl = useTemplateRef<HTMLElement>("persistentEl");
++const persistentEndEl = useTemplateRef<HTMLElement>("persistentEndEl");
++const besideEl = useTemplateRef<HTMLElement>("besideEl");
++const besidePlateEl = useTemplateRef<HTMLElement>("besidePlateEl");
++const neckEl = useTemplateRef<HTMLElement>("neckEl");
++const shadowEl = useTemplateRef<HTMLElement>("shadowEl");
+ 
+ /* THE RUN. The full face IS the run — the box whose children are the seats, the box
+    the port scrolls, and the common ancestor the cut-cap timeline scopes to. Reach,
+@@ -155,6 +168,7 @@ const {
+     release,
+     expand,
+     collapse,
++    setPinned,
+ } = useDockState({
+     rootEl: dockEl,
+     alwaysExpanded,
+@@ -162,7 +176,17 @@ const {
+     initialExpanded: !startCollapsed.value,
+     isTransitioning,
+     dockId,
++    onStateChange: (next, prev) => {
++        if ((next === "pinned") !== (prev === "pinned")) emit("update:pinned", next === "pinned");
++    },
+ });
++watch(
++    () => props.pinned,
++    (v) => {
++        if (v !== undefined) setPinned(v);
++    },
++    { immediate: true },
++);
+ 
+ /* Canonical typed-key dock context. The 6 prior
+    string-keyed dock provides (`glassDockContext`, `glassDockId`,
+@@ -176,13 +200,32 @@ const {
+    published as a flag — nothing should paint off "a popover is open". */
+ const visualExpanded = computed(() => alwaysExpanded.value || expanded.value);
+ 
+-provideDockContext({
++const dockContext = {
+     id: dockId,
+     orientation,
+     keepOpen,
+     release,
+     held: graspHeld,
+     expanded: visualExpanded,
++};
++provideDockContext(dockContext);
++
++/* W-I.8 R-8: a dock whose root has an id registers under it. */
++watchEffect(() => {
++    const id = siteId.value;
++    if (!id || !dockEl.value) return;
++    dockRegistry.set(id, {
++        id: dockId,
++        context: dockContext,
++        regions: {
++            run: fullEl.value,
++            persistent: persistentEl.value,
++            "persistent-end": persistentEndEl.value,
++        },
++    });
++}, { flush: "post" });
++onBeforeUnmount(() => {
++    if (siteId.value && dockRegistry.get(siteId.value)?.id === dockId) dockRegistry.delete(siteId.value);
+ });
+ 
+ /* The SPINE plate owns clipping. Portaled menu and search surfaces remain outside the
+@@ -205,41 +248,60 @@ provideDockContext({
+    [2026-10-28 · 10.1.3 · O-110] The orchestrator also has it read the boxes painted
+    before the posture patch and pin the morph's origins to them when it arms, so an
+    edge-anchored dock grows from its anchored edge from the first frame. */
+-const geometry = useDockExpandedSize({
+-    rootEl: dockEl,
+-    contentEl: layersEl,
+-    expandedEl: fullEl,
+-    collapsedEl: summaryEl,
+-    axis: orientation,
++/* W-I.8 R-1: one carrier moves every size the dock has. */
++const reducedMotion = useMediaQuery("(prefers-reduced-motion: reduce)");
++const moving = ref(false);
++const body = useDockBody({
++    root: dockEl,
++    plate: plateEl,
++    regions: () => [
++        { key: "persistent", el: persistentEl.value },
++        { key: "layers", el: layersEl.value },
++        { key: "persistent-end", el: persistentEndEl.value },
++    ],
++    beside: besideEl,
++    besidePlate: besidePlateEl,
++    neck: neckEl,
++    shadow: shadowEl,
++    neckDesign: (): NeckDesign => (dockEl.value?.getAttribute("data-neck") === "b" ? "b" : "a"),
++    expanded: () => visualExpanded.value,
++    vertical: () => orientation.value === "vertical",
++    reducedMotion: () => reducedMotion.value,
++    moving,
+ });
+-
+-/* The dock morph orchestrator owns the built-in collapsed↔expanded pair and writes
+-   one root scalar. Nested face swaps are independently owned by DockCrossfade. */
+-const outerActiveLayer = computed<string>(() =>
+-    visualExpanded.value ? "full" : "summary",
+-);
+-/* [2026-08-24 · BK #47 W3 LATTICE] ~~`const outerLayerAxis = computed(() =>
+-   orientation.value)`~~ — DELETED. `useDockExpandedSize` above now takes `axis:
+-   orientation` directly, and this alias' only remaining reader was a comment. It was
+-   never a derivation: an identity `computed` over one ref is a second name for that
+-   ref, and a second name is exactly how "which axis does the morph run on" acquires
+-   two answers that can drift. The orchestrator reads `orientation`. */
+-const {
+-    outerCurrentLayer,
+-    outerLeavingLayer,
+-} = useDockMorphOrchestrator({
+-    rootEl: dockEl,
+-    outerActiveLayer,
+-    // `isTransitioning` resolves from the morph's OWN
+-    // spring settle: the orchestrator notifies arm→true / settle→false (alongside the
+-    // single `[data-morphing]` busy signal). The CSS-transition-era wrong-clock settle
+-    // timer + dead `@transitionend` resolver (useDockMorphWindow) are excised — no
+-    // legacy timer, no plausibly-settled fallback.
+-    onMorphActiveChange: (active) => {
+-        isTransitioning.value = active;
+-    },
+-    geometry,
++watch(moving, (m) => {
++    isTransitioning.value = m;
+ });
++const outerCurrentLayer = ref<string>(visualExpanded.value ? "full" : "summary");
++const outerLeavingLayer = ref<string | null>(null);
++/* `[data-morphing]` is set before the posture class changes; the faces swap pre-flush so
++   the carrier reads where the leaving face painted. */
++watch(
++    visualExpanded,
++    (open) => {
++        dockEl.value?.setAttribute("data-morphing", "");
++        const leave = open ? summaryEl.value : fullEl.value;
++        const enter = open ? fullEl.value : summaryEl.value;
++        body.exchange(leave, enter, "layers");
++        // The fission seat is face content too: it fades on the same windows (R-3, R-6).
++        if (besideEl.value) body.exchange(open ? null : besideEl.value, open ? besideEl.value : null, "beside", false);
++        outerLeavingLayer.value = outerCurrentLayer.value;
++        outerCurrentLayer.value = open ? "full" : "summary";
++        body.onSettle(() => {
++            outerLeavingLayer.value = null;
++        });
++    },
++    { flush: "pre" },
++);
++watch(visualExpanded, () => body.sync("posture"), { flush: "post" });
++if (typeof window !== "undefined") {
++    // Test-only hook: hold every travel of this dock at a given f.
++    (window as unknown as { __dockHold?: Record<string, (f: number | null) => void> }).__dockHold ??= {};
++    (window as unknown as { __dockHold: Record<string, (f: number | null) => void> }).__dockHold[dockId] = body.hold;
++}
++
++/* W-I.8 R-7: the labelled seat. */
++useDockLabels(fullEl, () => orientation.value === "vertical");
+ 
+ const summaryIsDisclosure = computed(() => outerCurrentLayer.value === "summary");
+ /** Once the expand has patched the full face live, focus its first seat. The full face
+@@ -403,7 +465,7 @@ defineExpose({
+         :class="[
+             orientation,
+             `shape-${shape}`,
+-            { expanded: visualExpanded, collapsed: !visualExpanded, pinned: isPinned, 'fit-content': fitContent, 'always-expanded': alwaysExpanded },
++            { expanded: visualExpanded, collapsed: !visualExpanded, pinned: isPinned, 'fit-content': fitContent, 'always-expanded': alwaysExpanded, 'has-beside': !!$slots.beside },
+         ]"
+         :data-backdrop-mode="props.backdropMode"
+         :data-anchor="props.anchor === 'center' ? undefined : props.anchor"
+@@ -439,7 +501,8 @@ defineExpose({
+             reads their presence, so nothing here needs a releasing flag. The edge is
+             `graspHeld` (a pointer down on a descendant), never the posture count.
+         -->
+-        <div class="dock-plate" aria-hidden="true" :data-held="graspHeld || undefined">
++        <div v-if="$slots.beside" ref="shadowEl" class="dock-shadow" aria-hidden="true"></div>
++        <div ref="plateEl" class="dock-plate" aria-hidden="true" :data-held="graspHeld || undefined">
+             <template v-if="grasping">
+                 <span class="glass-grasp-carrier" data-grasp="rest"></span>
+                 <span
+@@ -480,7 +543,11 @@ defineExpose({
+             No cartoon box-punch; the morph carries ONE
+             deformation-free `--dock-size-scale` box morph on the `scale:` channel.
+         -->
+-        <div v-if="$slots.persistent" class="dock-persistent">
++        <template v-if="$slots.beside">
++            <div ref="neckEl" class="dock-plate dock-neck" aria-hidden="true" style="display: none"></div>
++            <div ref="besidePlateEl" class="dock-plate dock-plate--beside" aria-hidden="true" style="display: none"></div>
++        </template>
++        <div v-if="$slots.persistent || regionWanted(siteId, 'persistent')" ref="persistentEl" class="dock-persistent">
+             <slot name="persistent" />
+         </div>
+ 
+@@ -589,11 +656,21 @@ defineExpose({
+             to before. The greenfield dock ships BOTH persistent slots natively.
+         -->
+         <div
+-            v-if="$slots['persistent-end']"
++            v-if="$slots['persistent-end'] || regionWanted(siteId, 'persistent-end')"
++            ref="persistentEndEl"
+             class="dock-persistent dock-persistent-end"
+         >
+             <slot name="persistent-end" />
+         </div>
++        <!-- W-I.8 R-6: the fission seat. In flow open; out of flow, hidden and inert folded. -->
++        <div
++            v-if="$slots.beside"
++            ref="besideEl"
++            class="dock-beside"
++            :inert="!visualExpanded || undefined"
++        >
++            <DockFace><slot name="beside" /></DockFace>
++        </div>
+         </div>
+         <!-- /L1 .dock-controls -->
+         <!--
+@@ -606,7 +683,5 @@ defineExpose({
+             the accessibility tree and silence the announcement it exists to carry.
+         -->
+         <div ref="statusEl" class="dock-run-status" role="status" aria-live="polite"></div>
+-        <!-- The fission BRIDGE + `#split` slot are DEFINITION-ABSENT
+-             (the whole fission facility retired decided-terminal; clean break, no alias). -->
+     </div>
+ </template>
+diff --git a/src/components/dock/composables/dockRegistry.ts b/src/components/dock/composables/dockRegistry.ts
+new file mode 100644
+index 000000000..36beed84f
+--- /dev/null
++++ b/src/components/dock/composables/dockRegistry.ts
+@@ -0,0 +1,29 @@
++/**
++ * W-I.8 R-8: docks found by id. GlassDock writes its entry at mount and removes it at
++ * unmount; DockOutlet reads the map. No DOM lookup.
++ */
++import { reactive, shallowReactive } from "vue";
++import type { DockContext } from "./dockContext";
++
++export type DockOutletRegion = "run" | "persistent" | "persistent-end";
++
++export interface DockRegistryEntry {
++    id: string;
++    context: DockContext;
++    regions: Record<DockOutletRegion, HTMLElement | null>;
++}
++
++export const dockRegistry = shallowReactive(new Map<string, DockRegistryEntry>());
++
++/** How many outlets ask for each region of each dock (so a region renders unauthored). */
++export const dockOutletWants = reactive(new Map<string, Record<DockOutletRegion, number>>());
++
++export function wantRegion(id: string, region: DockOutletRegion, delta: 1 | -1): void {
++    const row = dockOutletWants.get(id) ?? { run: 0, persistent: 0, "persistent-end": 0 };
++    row[region] = Math.max(0, row[region] + delta);
++    dockOutletWants.set(id, row);
++}
++
++export function regionWanted(id: string | undefined, region: DockOutletRegion): boolean {
++    return !!id && (dockOutletWants.get(id)?.[region] ?? 0) > 0;
++}
+diff --git a/src/components/dock/composables/useDockBody.ts b/src/components/dock/composables/useDockBody.ts
+new file mode 100644
+index 000000000..ef363c3e0
+--- /dev/null
++++ b/src/components/dock/composables/useDockBody.ts
+@@ -0,0 +1,689 @@
++/**
++ * W-I.8 prototype: the dock's one carrier (R-1), its content windows (R-3) and the
++ * fission seat's quantities (R-6). One requestAnimationFrame loop per dock steps every
++ * moving quantity on `springPreset("dock")` and writes; it parks on the frame its last
++ * quantity lands and leaves nothing scheduled or written at rest.
++ *
++ * The model, in document px:
++ *   - the row's painted box (the plate, or the plate plus the fission seat): four edges,
++ *     each a delta from its layout edge, carried to 0 with its velocity;
++ *   - each region (persistent, layers, persistent-end, beside): a centre delta;
++ *   - the content windows: one unit spring `f` per travel, from the painted opacities.
++ *
++ * The spec splits this into useDockBody / useDockScene / useDockContent; the prototype
++ * keeps it in one file.
++ */
++import { inject, onBeforeUnmount, onMounted, provide, type InjectionKey, type Ref } from "vue";
++import { DOCK_SPRING } from "../constants";
++
++const OMEGA = (2 * Math.PI) / DOCK_SPRING.response;
++const ZETA = DOCK_SPRING.dampingFraction;
++const WD = OMEGA * Math.sqrt(Math.max(1e-6, 1 - ZETA * ZETA));
++const MAX_DT = 0.033;
++const OUT_END = 0.35;
++const IN_END = 0.7;
++
++/** Closed-form step of the dock spring toward 0 (mass 1). */
++function step(x: number, v: number, dt: number): [number, number] {
++    if (dt <= 0) return [x, v];
++    const e = Math.exp(-ZETA * OMEGA * dt);
++    const c = Math.cos(WD * dt);
++    const s = Math.sin(WD * dt);
++    const B = (v + ZETA * OMEGA * x) / WD;
++    const nx = e * (x * c + B * s);
++    const nv = e * (-ZETA * OMEGA * (x * c + B * s) + (-x * WD * s + B * WD * c));
++    return [nx, nv];
++}
++
++const clamp01 = (n: number) => (n < 0 ? 0 : n > 1 ? 1 : n);
++
++interface Box {
++    l: number;
++    t: number;
++    r: number;
++    b: number;
++}
++interface Q {
++    d: number;
++    v: number;
++}
++interface RegionTrack {
++    el: HTMLElement;
++    key: string;
++    cx: number;
++    cy: number;
++    w: number;
++    h: number;
++    x: Q;
++    y: Q;
++    tx: number;
++    ty: number;
++    clipped: boolean;
++}
++interface FaceTrack {
++    el: HTMLElement;
++    from: number;
++    role: "enter" | "leave";
++    placed: boolean;
++}
++interface PendingLeave {
++    el: HTMLElement;
++    region: string;
++    rect: Box;
++    regionCx: number;
++    regionCy: number;
++}
++
++export type NeckDesign = "a" | "b";
++
++export interface DockBody {
++    /** Called pre-flush, before the DOM changes which faces show. */
++    exchange(leave: HTMLElement | null | undefined, enter: HTMLElement | null | undefined, region?: string, place?: boolean): void;
++    /** Reads layout and retargets every quantity. */
++    sync(reason: string): void;
++    /** Subscribes to the end of the current travel (or now, at rest). */
++    onSettle(cb: () => void): void;
++    /** Test-only: pose the open dock at a posture coordinate e (null releases). */
++    hold(e: number | null): void;
++    readonly moving: Ref<boolean>;
++}
++
++export const DOCK_BODY_KEY: InjectionKey<DockBody> = Symbol("glass-dock-body");
++export function useOptionalDockBody(): DockBody | undefined {
++    return inject(DOCK_BODY_KEY, undefined);
++}
++
++export interface UseDockBodyOptions {
++    root: Ref<HTMLElement | null>;
++    plate: Ref<HTMLElement | null>;
++    regions: () => Array<{ key: string; el: HTMLElement | null }>;
++    beside?: Ref<HTMLElement | null>;
++    besidePlate?: Ref<HTMLElement | null>;
++    neck?: Ref<HTMLElement | null>;
++    shadow?: Ref<HTMLElement | null>;
++    neckDesign: () => NeckDesign;
++    expanded: () => boolean;
++    vertical: () => boolean;
++    reducedMotion: () => boolean;
++    moving: Ref<boolean>;
++}
++
++function rectOf(el: Element): Box {
++    const r = el.getBoundingClientRect();
++    return { l: r.left + scrollX, t: r.top + scrollY, r: r.right + scrollX, b: r.bottom + scrollY };
++}
++function pxOf(v: string, basis: number): number {
++    if (v.endsWith("%")) return (Number.parseFloat(v) / 100) * basis;
++    return Number.parseFloat(v) || 0;
++}
++
++export function useDockBody(o: UseDockBodyOptions): DockBody {
++    // Layout of the row (the root's border box) and its painted deltas.
++    let layout: Box | null = null;
++    const edge: Record<"l" | "t" | "r" | "b", Q> = {
++        l: { d: 0, v: 0 },
++        t: { d: 0, v: 0 },
++        r: { d: 0, v: 0 },
++        b: { d: 0, v: 0 },
++    };
++    let rFrom = 0;
++    let rTo = 0;
++    let capsule = true;
++    const regions = new Map<string, RegionTrack>();
++    let faces: FaceTrack[] = [];
++    const pendingLeaves: PendingLeave[] = [];
++    // Content windows and the posture coordinate.
++    let u = 0; // 1 - f
++    let uv = 0;
++    let travelling = false;
++    let postureTravel = false;
++    let lastPosture = o.expanded();
++    const extents: { collapsed: number | null; open: number | null } = { collapsed: null, open: null };
++    let e = lastPosture ? 1 : 0;
++    let held: number | null = null;
++    // Fission geometry (measured at sync).
++    let besideW = 0;
++    let besideGap = 0;
++    let besideLayoutR = 0;
++    let besideLayoutCy = 0;
++    let besideTrack: RegionTrack | null = null;
++    // Loop state.
++    let raf: number | null = null;
++    let last: number | null = null;
++    let inFlow = false;
++    let wroteMargin = false;
++    const settleCbs: Array<() => void> = [];
++    let ro: ResizeObserver | null = null;
++
++    const root = () => o.root.value;
++
++    function mainAxisExtent(b: Box): number {
++        return o.vertical() ? b.b - b.t : b.r - b.l;
++    }
++    function painted(): Box | null {
++        if (!layout) return null;
++        return {
++            l: layout.l + edge.l.d,
++            t: layout.t + edge.t.d,
++            r: layout.r + edge.r.d,
++            b: layout.b + edge.b.d,
++        };
++    }
++
++    function restRadius(el: HTMLElement, w: number, h: number): number {
++        const cs = getComputedStyle(el);
++        return pxOf(cs.borderTopLeftRadius, Math.min(w, h));
++    }
++
++    /** Pre-flush: remember where the leaving content paints. */
++    function exchange(
++        leave: HTMLElement | null | undefined,
++        enter: HTMLElement | null | undefined,
++        region = "layers",
++        place = true,
++    ): void {
++        const g = regions.get(region);
++        if (leave && place) {
++            const r = rectOf(leave);
++            const gr = g ? { cx: g.cx + g.tx, cy: g.cy + g.ty } : { cx: (r.l + r.r) / 2, cy: (r.t + r.b) / 2 };
++            pendingLeaves.push({ el: leave, region, rect: r, regionCx: gr.cx, regionCy: gr.cy });
++        }
++        const opOf = (el: HTMLElement) => {
++            const inline = el.style.opacity;
++            if (inline !== "") return Number.parseFloat(inline);
++            return Number.parseFloat(getComputedStyle(el).opacity);
++        };
++        const next: FaceTrack[] = [];
++        // Every face still showing leaves from its painted opacity (R-5).
++        const group = (enter ?? leave)?.parentElement ?? null;
++        for (const f of faces) {
++            if (f.el === enter) continue;
++            const op = opOf(f.el);
++            if (f.el.parentElement !== group) {
++                // Another group's faces keep their direction from where they paint.
++                next.push({ el: f.el, from: op, role: f.role, placed: f.placed });
++                continue;
++            }
++            if (op > 0.001) next.push({ el: f.el, from: op, role: "leave", placed: f.placed });
++            else f.el.style.removeProperty("opacity");
++        }
++        if (leave && !next.some((f) => f.el === leave)) next.push({ el: leave, from: opOf(leave), role: "leave", placed: false });
++        if (enter) {
++            if (place) for (const p of ["inset", "inset-inline-start", "left", "top", "width", "height"]) enter.style.removeProperty(p);
++            const known = faces.find((f) => f.el === enter);
++            const from = known ? opOf(enter) : 0;
++            next.push({ el: enter, from, role: "enter", placed: true });
++            enter.style.opacity = String(from);
++        }
++        for (const f of next) if (f.role === "leave") f.el.style.opacity = String(f.from);
++        faces = next;
++        u = 1;
++        uv = 0;
++        travelling = true;
++    }
++
++    function readRegions(): void {
++        const seen = new Set<string>();
++        for (const { key, el } of o.regions()) {
++            if (!el || !el.isConnected) continue;
++            seen.add(key);
++            ro?.observe(el);
++            const r = rectOf(el);
++            let t = regions.get(key);
++            if (!t || t.el !== el) {
++                t = { el, key, cx: 0, cy: 0, w: 0, h: 0, x: { d: 0, v: 0 }, y: { d: 0, v: 0 }, tx: 0, ty: 0, clipped: false };
++                const lcx = (r.l + r.r) / 2;
++                const lcy = (r.t + r.b) / 2;
++                t.cx = lcx;
++                t.cy = lcy;
++                regions.set(key, t);
++            }
++            // Layout = what the box would be without our translate.
++            const lcx = (r.l + r.r) / 2 - t.tx;
++            const lcy = (r.t + r.b) / 2 - t.ty;
++            const paintedCx = t.cx + t.x.d;
++            const paintedCy = t.cy + t.y.d;
++            t.x.d = paintedCx - lcx;
++            t.y.d = paintedCy - lcy;
++            t.cx = lcx;
++            t.cy = lcy;
++            t.w = r.r - r.l;
++            t.h = r.b - r.t;
++        }
++        for (const k of [...regions.keys()]) if (!seen.has(k)) regions.delete(k);
++    }
++
++    function sync(reason: string): void {
++        const el = root();
++        if (!el || !el.isConnected) return;
++        const reduce = o.reducedMotion();
++        const prevPainted = painted();
++        const next = rectOf(el);
++        const posture = o.expanded();
++        const postureChanged = posture !== lastPosture;
++        lastPosture = posture;
++
++        // The rest corners, read from the root (the plate inherits it).
++        const w = next.r - next.l;
++        const h = next.b - next.t;
++        const rNext = restRadius(el, w, h);
++        const changed =
++            !layout ||
++            Math.abs(next.l - layout.l) > 0.01 ||
++            Math.abs(next.r - layout.r) > 0.01 ||
++            Math.abs(next.t - layout.t) > 0.01 ||
++            Math.abs(next.b - layout.b) > 0.01;
++
++        if (!layout) {
++            layout = next;
++            rFrom = rTo = rNext;
++            extents[posture ? "open" : "collapsed"] = mainAxisExtent(next);
++            readRegions();
++            readBeside();
++            e = posture ? 1 : 0;
++            writeExpandT();
++            return;
++        }
++
++        if (changed || postureChanged || pendingLeaves.length) {
++            if (prevPainted && changed) {
++                // Each edge holds painted minus layout, with the velocity it had.
++                edge.l.d = prevPainted.l - next.l;
++                edge.t.d = prevPainted.t - next.t;
++                edge.r.d = prevPainted.r - next.r;
++                edge.b.d = prevPainted.b - next.b;
++                const pw = prevPainted.r - prevPainted.l;
++                const ph = prevPainted.b - prevPainted.t;
++                rFrom = currentRadius(pw, ph);
++                rTo = rNext;
++                capsule =
++                    rFrom >= Math.min(pw, ph) / 2 - 0.75 && rNext >= Math.min(w, h) / 2 - 0.75;
++                layout = next;
++            }
++            if (postureChanged) {
++                extents[posture ? "open" : "collapsed"] = mainAxisExtent(next);
++                postureTravel = true;
++            }
++            readRegions();
++            readBeside();
++            placeLeaves();
++            if (reduce) {
++                for (const q of Object.values(edge)) (q.d = 0), (q.v = 0);
++                for (const t of regions.values()) (t.x.d = t.y.d = t.x.v = t.y.v = 0);
++            }
++            if (postureChanged || changed) {
++                if (!travelling) {
++                    u = 1;
++                    uv = 0;
++                }
++                travelling = true;
++            }
++            el.setAttribute("data-morphing", "");
++            o.moving.value = true;
++            start(reason === "ro");
++        }
++    }
++
++    function readBeside(): void {
++        const b = o.beside?.value;
++        if (!b || !b.isConnected) {
++            besideTrack = null;
++            return;
++        }
++        const cs = getComputedStyle(b);
++        const padS = Number.parseFloat(cs.paddingInlineStart) || 0;
++        const padE = Number.parseFloat(cs.paddingInlineEnd) || 0;
++        besideGap = Math.max(0, padS - padE);
++        const r = rectOf(b);
++        const tx = besideTrack?.tx ?? 0;
++        besideW = r.r - r.l - besideGap;
++        besideLayoutR = r.r - tx;
++        besideLayoutCy = (r.t + r.b) / 2 - (besideTrack?.ty ?? 0);
++        besideTrack ??= { el: b, key: "beside", cx: 0, cy: 0, w: 0, h: 0, x: { d: 0, v: 0 }, y: { d: 0, v: 0 }, tx: 0, ty: 0, clipped: false };
++        besideTrack.el = b;
++        besideTrack.w = r.r - r.l;
++        besideTrack.h = r.b - r.t;
++        besideTrack.cx = besideLayoutR - besideTrack.w / 2;
++        besideTrack.cy = besideLayoutCy;
++        ro?.observe(b);
++    }
++
++    function placeLeaves(): void {
++        while (pendingLeaves.length) {
++            const p = pendingLeaves.shift()!;
++            const g = regions.get(p.region);
++            const el = p.el;
++            const cb = (el.offsetParent as HTMLElement | null) ?? el.parentElement;
++            if (!cb || !g) continue;
++            const cbr = rectOf(cb);
++            // The containing block's layout position (it rides the region's translate).
++            const cbl = cbr.l - g.tx;
++            const cbt = cbr.t - g.ty;
++            const x = p.rect.l - p.regionCx + g.cx - cbl;
++            const y = p.rect.t - p.regionCy + g.cy - cbt;
++            el.style.inset = "auto";
++            el.style.insetInlineStart = "auto";
++            el.style.left = `${x}px`;
++            el.style.top = `${y}px`;
++            el.style.width = `${p.rect.r - p.rect.l}px`;
++            el.style.height = `${p.rect.b - p.rect.t}px`;
++            const ft = faces.find((f) => f.el === el);
++            if (ft) ft.placed = true;
++        }
++    }
++
++    function currentRadius(pw: number, ph: number): number {
++        if (capsule) return Math.min(pw, ph) / 2;
++        const f = 1 - u;
++        return rFrom + (rTo - rFrom) * clamp01(f);
++    }
++
++    function start(inFrame: boolean): void {
++        const el = root();
++        if (el) {
++            // Only a dock in normal block flow writes the margin: in a flex or grid
++            // parent a margin moves the dock itself (centring) and the model goes stale.
++            const pos = getComputedStyle(el).position;
++            const parent = el.parentElement ? getComputedStyle(el.parentElement).display : "";
++            inFlow = (pos === "static" || pos === "relative") && /^(block|flow-root|list-item)$/.test(parent);
++        }
++        if (raf === null) {
++            last = inFrame ? (document.timeline.currentTime as number | null) : null;
++            write();
++            raf = requestAnimationFrame(frame);
++        }
++    }
++
++    function frame(now: number): void {
++        raf = null;
++        const dt = last === null ? 0 : Math.min(now - last, MAX_DT * 1000) / 1000;
++        last = now;
++        const reduce = o.reducedMotion();
++        let live = false;
++        if (dt > 0) {
++            for (const q of Object.values(edge)) {
++                [q.d, q.v] = step(q.d, q.v, dt);
++                if (Math.abs(q.d) < 0.1 && Math.abs(q.v) < 6) (q.d = 0), (q.v = 0);
++            }
++            for (const t of regions.values()) {
++                [t.x.d, t.x.v] = step(t.x.d, t.x.v, dt);
++                [t.y.d, t.y.v] = step(t.y.d, t.y.v, dt);
++                if (Math.abs(t.x.d) < 0.1 && Math.abs(t.x.v) < 6) (t.x.d = 0), (t.x.v = 0);
++                if (Math.abs(t.y.d) < 0.1 && Math.abs(t.y.v) < 6) (t.y.d = 0), (t.y.v = 0);
++            }
++            if (reduce) {
++                u = Math.max(0, u - dt / 0.1);
++                uv = 0;
++            } else {
++                [u, uv] = step(u, uv, dt);
++                if (u < 0) u = 0;
++                if (Math.abs(u) < 0.002 && Math.abs(uv) < 0.05) (u = 0), (uv = 0);
++            }
++        }
++        for (const q of Object.values(edge)) if (q.d !== 0) live = true;
++        for (const t of regions.values()) if (t.x.d !== 0 || t.y.d !== 0) live = true;
++        if (u !== 0) live = true;
++        if (live) {
++            write();
++            raf = requestAnimationFrame(frame);
++        } else {
++            rest();
++        }
++    }
++
++    function writeExpandT(): void {
++        const el = root();
++        if (!el) return;
++        const v = e.toFixed(4);
++        el.style.setProperty("--dock-expand-t", v);
++        const scope = el.parentElement?.closest<HTMLElement>("[data-dock-scope]");
++        scope?.style.setProperty("--dock-expand-t", v);
++    }
++
++    function fission(P: Box): { p: number; main: Box; seat: Box | null; neck: Box | null } {
++        const H = P.b - P.t;
++        const p = besideTrack ? clamp01((e - 0.5) / 0.5) : 0;
++        if (!besideTrack || p <= 0) return { p: 0, main: P, seat: null, neck: null };
++        const seat = { l: P.r - besideW, t: P.t, r: P.r, b: P.b };
++        const mainR = seat.l - besideGap * p;
++        const main = { l: P.l, t: P.t, r: mainR, b: P.b };
++        const cy = (P.t + P.b) / 2;
++        const half = (H * (1 - p)) / 2;
++        const neck = { l: mainR, t: cy - half, r: seat.l, b: cy + half };
++        return { p, main, seat, neck };
++    }
++
++    function write(): void {
++        const el = root();
++        const plate = o.plate.value;
++        const P = painted();
++        if (!el || !plate || !layout || !P) return;
++        const f = clamp01(1 - u);
++        // The posture coordinate, from the plate's painted extent.
++        const ext = mainAxisExtent(P);
++        if (extents.collapsed !== null && extents.open !== null && Math.abs(extents.open - extents.collapsed) > 1) {
++            e = clamp01((ext - extents.collapsed) / (extents.open - extents.collapsed));
++        } else if (postureTravel) {
++            e = lastPosture ? f : 1 - f;
++        } else {
++            e = lastPosture ? 1 : 0;
++        }
++        if (held !== null) e = held;
++        writeExpandT();
++        if (postureTravel) el.style.setProperty("--dock-morph-t", f.toFixed(4));
++
++        const W = P.r - P.l;
++        const H = P.b - P.t;
++        const R = currentRadius(W, H);
++        const fis = fission(P);
++        const design = o.neckDesign();
++        const neckEl = o.neck?.value;
++        const seatPlate = o.besidePlate?.value;
++        const shadow = o.shadow?.value;
++        const inset = (b: Box) =>
++            `${b.t - layout!.t}px ${layout!.r - b.r}px ${layout!.b - b.b}px ${b.l - layout!.l}px`;
++
++        if (besideTrack && shadow) {
++            shadow.style.inset = inset(P);
++            shadow.style.borderRadius = `${R}px`;
++        }
++        if (!besideTrack || fis.p <= 0) {
++            plate.style.inset = inset(P);
++            plate.style.borderRadius = `${R}px`;
++            plate.style.removeProperty("clip-path");
++            if (seatPlate) seatPlate.style.display = "none";
++            if (neckEl) neckEl.style.display = "none";
++        } else if (design === "a") {
++            const rp = R * fis.p;
++            plate.style.inset = inset(fis.main);
++            plate.style.borderRadius = `${R}px ${rp}px ${rp}px ${R}px`;
++            plate.style.removeProperty("clip-path");
++            if (seatPlate && fis.seat) {
++                seatPlate.style.display = "";
++                seatPlate.style.inset = inset(fis.seat);
++                seatPlate.style.borderRadius = `${rp}px ${R}px ${R}px ${rp}px`;
++            }
++            if (neckEl && fis.neck) {
++                const nw = fis.neck.r - fis.neck.l;
++                if (nw > 0.05 && fis.neck.b - fis.neck.t > 0.05) {
++                    neckEl.style.display = "";
++                    neckEl.style.inset = inset(fis.neck);
++                } else neckEl.style.display = "none";
++            }
++        } else {
++            // B: one leaf over the row, cut to two capsules and a waist.
++            plate.style.inset = inset(P);
++            plate.style.borderRadius = `${R}px`;
++            if (seatPlate) seatPlate.style.display = "none";
++            if (neckEl) neckEl.style.display = "none";
++            plate.style.clipPath = waistPath(P, fis);
++        }
++
++        // Regions ride the plate, clipped to its painted box while travel runs.
++        const clipTo = (t: RegionTrack, box: Box, r: number) => {
++            const left = t.cx - t.w / 2 + t.tx;
++            const top = t.cy - t.h / 2 + t.ty;
++            const ci = {
++                t: Math.max(0, box.t - top),
++                l: Math.max(0, box.l - left),
++                r: Math.max(0, left + t.w - box.r),
++                b: Math.max(0, top + t.h - box.b),
++            };
++            t.el.style.clipPath = `inset(${ci.t}px ${ci.r}px ${ci.b}px ${ci.l}px round ${r}px)`;
++            t.clipped = true;
++        };
++        for (const t of regions.values()) {
++            t.tx = t.x.d;
++            t.ty = t.y.d;
++            t.el.style.translate = `${t.tx}px ${t.ty}px`;
++            clipTo(t, fis.main, Math.min(R, H / 2));
++        }
++        if (besideTrack) {
++            const b = besideTrack;
++            b.tx = P.r - besideLayoutR;
++            b.ty = (P.t + P.b) / 2 - besideLayoutCy;
++            b.el.style.translate = `${b.tx}px ${b.ty}px`;
++            clipTo(b, fis.p > 0 && fis.seat ? { ...fis.seat, l: fis.seat.l - besideGap } : P, Math.min(R, H / 2));
++        }
++
++        // Content windows (R-3).
++        for (const face of faces) {
++            const op =
++                face.role === "leave"
++                    ? face.from * clamp01(1 - f / OUT_END)
++                    : face.from + (1 - face.from) * clamp01((f - OUT_END) / (IN_END - OUT_END));
++            face.el.style.opacity = op.toFixed(4);
++        }
++
++        // An in-flow dock: its following neighbours track the painted bottom edge.
++        if (inFlow && !o.vertical()) {
++            const mb = edge.b.d;
++            if (Math.abs(mb) > 0.01) {
++                el.style.marginBlockEnd = `${mb}px`;
++                wroteMargin = true;
++            } else if (wroteMargin) {
++                el.style.removeProperty("margin-block-end");
++                wroteMargin = false;
++            }
++        }
++    }
++
++    function waistPath(P: Box, fis: ReturnType<typeof fission>): string {
++        const W = P.r - P.l;
++        const H = P.b - P.t;
++        const r = H / 2;
++        if (!fis.seat) return "none";
++        const mW = fis.main.r - P.l;
++        const sL = fis.seat.l - P.l;
++        const p = fis.p;
++        const cap = (x0: number, x1: number) =>
++            `M ${x0 + r} 0 H ${x1 - r} A ${r} ${r} 0 0 1 ${x1 - r} ${H} H ${x0 + r} A ${r} ${r} 0 0 1 ${x0 + r} 0 Z`;
++        if (p >= 0.999) return `path('${cap(0, mW)} ${cap(sL, W)}')`;
++        const rp = r * p;
++        const half = (H * (1 - p)) / 2;
++        const mid = (mW + sL) / 2;
++        const top = H / 2 - half;
++        const bot = H / 2 + half;
++        // Top: left cap, along the top, into the waist by a curve tangent to the top edge
++        // and to the waist's centre line, out the same way, then the seat's right cap.
++        const d = [
++            `M ${r} 0`,
++            `H ${mW - rp}`,
++            `C ${mW} 0 ${mW} ${top} ${mid} ${top}`,
++            `C ${sL} ${top} ${sL} 0 ${sL + rp} 0`,
++            `H ${W - r}`,
++            `A ${r} ${r} 0 0 1 ${W - r} ${H}`,
++            `H ${sL + rp}`,
++            `C ${sL} ${H} ${sL} ${bot} ${mid} ${bot}`,
++            `C ${mW} ${bot} ${mW} ${H} ${mW - rp} ${H}`,
++            `H ${r}`,
++            `A ${r} ${r} 0 0 1 ${r} 0`,
++            "Z",
++        ].join(" ");
++        return `path('${d}')`;
++    }
++
++    function rest(): void {
++        const el = root();
++        const plate = o.plate.value;
++        travelling = false;
++        if (postureTravel) {
++            postureTravel = false;
++            el?.style.removeProperty("--dock-morph-t");
++        }
++        e = lastPosture ? 1 : 0;
++        writeExpandT();
++        if (plate) {
++            const keepFission = !!besideTrack && lastPosture;
++            if (keepFission) {
++                // The open fission rest: the landed geometry stays written once.
++                write();
++            } else {
++                plate.style.removeProperty("inset");
++                plate.style.removeProperty("border-radius");
++                plate.style.removeProperty("clip-path");
++                o.besidePlate?.value?.style.setProperty("display", "none");
++                o.neck?.value?.style.setProperty("display", "none");
++                o.shadow?.value?.style.removeProperty("inset");
++                o.shadow?.value?.style.removeProperty("border-radius");
++            }
++        }
++        for (const t of regions.values()) {
++            t.el.style.removeProperty("translate");
++            t.el.style.removeProperty("clip-path");
++            t.tx = t.ty = 0;
++            t.clipped = false;
++        }
++        if (besideTrack) {
++            besideTrack.el.style.removeProperty("translate");
++            besideTrack.el.style.removeProperty("clip-path");
++            besideTrack.tx = besideTrack.ty = 0;
++        }
++        for (const face of faces) {
++            face.el.style.removeProperty("opacity");
++            if (face.placed || face.role === "leave") for (const p of ["inset", "inset-inline-start", "left", "top", "width", "height"]) face.el.style.removeProperty(p);
++        }
++        faces = [];
++        if (wroteMargin) {
++            el?.style.removeProperty("margin-block-end");
++            wroteMargin = false;
++        }
++        el?.removeAttribute("data-morphing");
++        o.moving.value = false;
++        const cbs = settleCbs.splice(0);
++        for (const cb of cbs) cb();
++    }
++
++    function onSettle(cb: () => void): void {
++        if (raf === null && !travelling) cb();
++        else settleCbs.push(cb);
++    }
++
++    function hold(pose: number | null): void {
++        held = pose;
++        if (pose !== null) {
++            root()?.setAttribute("data-morphing", "");
++            write();
++        } else {
++            rest();
++        }
++    }
++
++    onMounted(() => {
++        sync("mount");
++        if (typeof ResizeObserver === "undefined") return;
++        ro = new ResizeObserver(() => sync("ro"));
++        const el = root();
++        if (el) ro.observe(el);
++        for (const { el: r } of o.regions()) if (r) ro.observe(r);
++        if (o.beside?.value) ro.observe(o.beside.value);
++    });
++    onBeforeUnmount(() => {
++        ro?.disconnect();
++        if (raf !== null) cancelAnimationFrame(raf);
++    });
++
++    const body: DockBody = { exchange, sync, onSettle, hold, moving: o.moving };
++    provide(DOCK_BODY_KEY, body);
++    return body;
++}
+diff --git a/src/components/dock/composables/useDockLabels.ts b/src/components/dock/composables/useDockLabels.ts
+new file mode 100644
+index 000000000..a28452376
+--- /dev/null
++++ b/src/components/dock/composables/useDockLabels.ts
+@@ -0,0 +1,133 @@
++/**
++ * W-I.8 R-7: the labelled seat. The name is an out-of-flow span inside the seat; on
++ * hover or keyboard focus the seats before it give up their slack by `translate` (CSS
++ * tweens it on the dock spring), so the plate's size never changes. A name that does
++ * not fit in the slack is not shown.
++ */
++import { onBeforeUnmount, watch, type Ref } from "vue";
++
++const ICON_FLOOR = 4; // px of slot kept around an icon
++const GAP_FLOOR = 2; // px kept of each gap
++const LABEL_GAP = 6; // px between the name and its icon
++
++export interface DockLabelReading {
++    seat: number;
++    need: number;
++    room: number;
++    fits: boolean;
++}
++
++export function useDockLabels(run: Ref<HTMLElement | null>, vertical: () => boolean) {
++    let shown: HTMLElement | null = null;
++    const readings: DockLabelReading[] = [];
++
++    function seats(): HTMLElement[] {
++        const el = run.value;
++        return el ? (Array.from(el.children) as HTMLElement[]).filter((c) => c.offsetParent !== null) : [];
++    }
++    function seatOf(target: EventTarget | null): HTMLElement | null {
++        const el = run.value;
++        if (!el || !(target instanceof Element)) return null;
++        let n: Element | null = target;
++        while (n && n.parentElement !== el) n = n.parentElement;
++        if (!n) return null;
++        const host = n as HTMLElement;
++        return host.matches("[data-dock-label]") || host.querySelector(":scope > [data-dock-label]")
++            ? host
++            : null;
++    }
++    function iconBox(seat: HTMLElement): { l: number; r: number } {
++        const icon = seat.querySelector("svg, img, .dock-icon");
++        const sr = seat.getBoundingClientRect();
++        const tx = Number.parseFloat(seat.style.translate) || 0;
++        if (!icon) return { l: sr.left - tx + sr.width / 2 - 10, r: sr.left - tx + sr.width / 2 + 10 };
++        const ir = icon.getBoundingClientRect();
++        return { l: ir.left - tx, r: ir.right - tx };
++    }
++
++    function show(seat: HTMLElement): void {
++        if (vertical() || shown === seat) return;
++        hide();
++        const list = seats();
++        const k = list.indexOf(seat);
++        const label = seat.querySelector<HTMLElement>(".dock-seat-label");
++        if (k < 0 || !label) return;
++        // The name hangs off the seat's inline start, so the room it needs is measured
++        // from the icon: its width, its gap, and the seat's own inset before the icon.
++        const seatLeft = seat.getBoundingClientRect().left - (Number.parseFloat(seat.style.translate) || 0);
++        const need = label.offsetWidth + LABEL_GAP + Math.max(0, iconBox(seat).l - seatLeft);
++        // c[i]: how far icon i may close on icon i-1 (or on the plate's edge for i = 0).
++        const icons = list.map(iconBox);
++        const slots = list.map((s) => {
++            const r = s.getBoundingClientRect();
++            const tx = Number.parseFloat(s.style.translate) || 0;
++            return { l: r.left - tx, r: r.right - tx };
++        });
++        const runBox = run.value!.getBoundingClientRect();
++        const c: number[] = [];
++        for (let i = 0; i <= k; i++) {
++            const leftLimit = i === 0 ? runBox.left : icons[i - 1].r;
++            c[i] = Math.max(0, icons[i].l - leftLimit - (i === 0 ? ICON_FLOOR : ICON_FLOOR * 2 + GAP_FLOOR));
++        }
++        // The space left of icon k must reach `need`.
++        const m: number[] = new Array(k).fill(0);
++        let want = Math.max(0, need - (icons[k].l - (k > 0 ? icons[k - 1].r : runBox.left)));
++        for (let i = k - 1; i >= 0; i--) {
++            m[i] = want;
++            want = Math.max(0, want - c[i]);
++        }
++        const room = c.slice(0, k + 1).reduce((a, b) => a + b, 0);
++        const fits = k === 0 ? need <= c[0] : want <= 0;
++        readings.push({ seat: k, need, room, fits });
++        (window as unknown as { __dockLabelReadings?: DockLabelReading[] }).__dockLabelReadings = readings;
++        void slots;
++        if (!fits) return;
++        shown = seat;
++        for (let i = 0; i < k; i++) if (m[i] > 0) list[i].style.translate = `${-m[i]}px 0`;
++        seat.setAttribute("data-label-shown", "");
++    }
++    function hide(): void {
++        if (!shown) return;
++        shown.removeAttribute("data-label-shown");
++        for (const s of seats()) s.style.removeProperty("translate");
++        shown = null;
++    }
++
++    function onOver(e: PointerEvent): void {
++        if (e.pointerType === "touch") return;
++        const seat = seatOf(e.target);
++        if (seat) show(seat);
++        else if (shown && !shown.contains(e.target as Node)) hide();
++    }
++    function onLeave(): void {
++        hide();
++    }
++    function onFocusIn(e: FocusEvent): void {
++        const seat = seatOf(e.target);
++        if (seat && (e.target as Element).matches(":focus-visible")) show(seat);
++        else hide();
++    }
++    function onFocusOut(e: FocusEvent): void {
++        if (shown && !shown.contains(e.relatedTarget as Node)) hide();
++    }
++
++    watch(
++        run,
++        (el, _o, onCleanup) => {
++            if (!el) return;
++            el.addEventListener("pointerover", onOver);
++            el.addEventListener("pointerleave", onLeave);
++            el.addEventListener("focusin", onFocusIn);
++            el.addEventListener("focusout", onFocusOut);
++            onCleanup(() => {
++                el.removeEventListener("pointerover", onOver);
++                el.removeEventListener("pointerleave", onLeave);
++                el.removeEventListener("focusin", onFocusIn);
++                el.removeEventListener("focusout", onFocusOut);
++            });
++        },
++        { immediate: true },
++    );
++    onBeforeUnmount(hide);
++    return { hide };
++}
+diff --git a/src/components/dock/composables/useDockState.ts b/src/components/dock/composables/useDockState.ts
+index f1aa3163d..2677930a3 100644
+--- a/src/components/dock/composables/useDockState.ts
++++ b/src/components/dock/composables/useDockState.ts
+@@ -79,6 +79,8 @@ export interface UseDockStateReturn {
+     expand: () => void;
+     /** Imperative close — forces `state = "collapsed"` (no-op when `alwaysExpanded`). */
+     collapse: () => void;
++    /** W-I.8: the declared pinned state. */
++    setPinned: (v: boolean) => void;
+ }
+ 
+ /**
+@@ -325,14 +327,54 @@ export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
+         removeClickAway?.();
+     }
+ 
++    /* W-I.8 R-2: the clock's tokens are read from the root, so a site sets them in CSS. */
++    function tokenMs(name: string, fallback: number): number {
++        const root = rootEl.value;
++        if (!root || typeof getComputedStyle === "undefined") return fallback;
++        const raw = getComputedStyle(root).getPropertyValue(name).trim();
++        if (!raw) return fallback;
++        const n = Number.parseFloat(raw);
++        if (!Number.isFinite(n)) return fallback;
++        return raw.endsWith("ms") ? n : raw.endsWith("s") ? n * 1000 : n;
++    }
++    /* Dwell: time the pointer or focus has spent inside since the dock opened. */
++    let dwellMs = 0;
++    let insideSince: number | null = null;
++    let pointerInside = false;
++    function enterInside(): void {
++        insideSince ??= performance.now();
++    }
++    function leaveInside(): void {
++        if (insideSince !== null) dwellMs += performance.now() - insideSince;
++        insideSince = null;
++    }
++    function lingerMs(): number {
++        const base = tokenMs("--dock-linger", collapseDelay);
++        const max = Math.max(base, tokenMs("--dock-linger-max", base));
++        return Math.min(max, base + dwellMs / 2);
++    }
++    /* What holds the dock open when the linger runs out: an overlay (the keep-open
++       count), keyboard focus inside, a pointer down inside. */
++    function holdsOpen(): boolean {
++        if (keepOpenCount.value > 0) return true;
++        if (rootEl.value?.querySelector(":focus-visible")) return true;
++        return pressHolds();
++    }
+     function scheduleCollapse() {
+         if (isQuiet()) return;
+         if (keepOpenCount.value > 0) return;
+         clearTimer();
+-        collapseTimer = setTimeout(() => {
++        collapseTimer = setTimeout(function lapse() {
++            collapseTimer = null;
++            if (state.value !== "hover") return;
++            if (holdsOpen()) {
++                // The linger starts again when the hold ends (release, focusout, the press end).
++                if (pressHolds()) collapseTimer = setTimeout(lapse, 120);
++                return;
++            }
+             state.value = "collapsed";
+             syncDerived();
+-        }, collapseDelay);
++        }, lingerMs());
+     }
+ 
+     /* `scheduleCollapse`/`collapse` must NOT fire a synthetic
+@@ -382,9 +424,39 @@ export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
+ 
+     // --- Mouse handlers ---
+ 
++    let intentArmed = false;
++    function onPointerMoveInside(e: PointerEvent): void {
++        if (e.pointerType === "touch" || !intentArmed) return;
++        intentArmed = false;
++        startIntent();
++    }
++    watch(
++        rootEl,
++        (root, _, onCleanup) => {
++            if (!root) return;
++            root.addEventListener("pointermove", onPointerMoveInside);
++            onCleanup(() => root.removeEventListener("pointermove", onPointerMoveInside));
++        },
++        { immediate: true, flush: "sync" },
++    );
+     function onMouseEnter() {
+         if (isQuiet() || pressOnly()) return;
+         clearTimer();
++        pointerInside = true;
++        enterInside();
++        if (state.value === "collapsed") {
++            clearHoverIntent();
++            // A return while the fold is travelling reverses it at once (R-2).
++            if (isTransitioning?.value) {
++                state.value = "hover";
++                syncDerived();
++                return;
++            }
++            // Intent counts from the pointer's first movement inside (R-2).
++            intentArmed = true;
++        }
++    }
++    function startIntent() {
+         if (state.value === "collapsed") {
+             // Defer collapsed→hover expansion by the intent
+             // dwell. A spurious enter from the morphing edge sweeping back over a
+@@ -403,15 +475,19 @@ export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
+                         return;
+                     }
+                     state.value = "hover";
++                    dwellMs = 0;
+                     syncDerived();
+                 }
+-            }, HOVER_INTENT_MS);
++            }, tokenMs("--dock-intent", HOVER_INTENT_MS));
+         }
+         // If pinned, no-op (stays pinned)
+     }
+ 
+     function onMouseLeave(e?: MouseEvent) {
+         if (isQuiet() || pressOnly()) return;
++        intentArmed = false;
++        pointerInside = false;
++        leaveInside();
+         // A leave cancels any pending hover-intent dwell: a
+         // sweeping-edge enter immediately chased by a leave never commits the expand.
+         clearHoverIntent();
+@@ -440,6 +516,7 @@ export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
+     function onFocusIn() {
+         if (isQuiet() || pressOnly()) return;
+         clearTimer();
++        enterInside();
+         if (state.value === "collapsed") {
+             if (pressHolds()) {
+                 expandOnPressEnd = "focus";
+@@ -469,21 +546,58 @@ export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
+         if (state.value !== "hover") return;
+         if (keepOpenCount.value > 0) return;
+         if (stays) return;
++        if (!pointerInside) leaveInside();
+         scheduleCollapse();
+     }
+ 
+     // --- Click on collapsed layer → PINNED ---
+ 
++    let lastPointerType = "mouse";
+     function onClickCollapsed() {
+-        // Environmental collapsed-tap → PINNED. Suppressed when quiet: an
+-        // always-expanded dock is already pinned, and a manual dock reserves
+-        // posture for the consumer's imperative `expand()`/`collapse()`.
+         if (isQuiet()) return;
+         clearTimer();
+         clearHoverIntent();
++        if (lastPointerType === "touch") {
++            // A tap opens by the clock and lingers from the lift (R-2, touch).
++            state.value = "hover";
++            dwellMs = 0;
++            syncDerived();
++            scheduleCollapse();
++            return;
++        }
+         state.value = "pinned";
+         syncDerived();
+     }
++    function setPinned(v: boolean) {
++        if (isQuiet()) return;
++        if (v && state.value !== "pinned") {
++            clearTimer();
++            clearHoverIntent();
++            state.value = "pinned";
++            syncDerived();
++        } else if (!v && state.value === "pinned") {
++            state.value = pointerInside ? "hover" : "collapsed";
++            syncDerived();
++        }
++    }
++    function onTouchLift(e: PointerEvent) {
++        lastPointerType = e.pointerType;
++        if (e.type === "pointerup" && e.pointerType === "touch" && state.value === "hover") scheduleCollapse();
++    }
++    watch(
++        rootEl,
++        (root, _, onCleanup) => {
++            if (!root) return;
++            root.addEventListener("pointerdown", onTouchLift, true);
++            root.addEventListener("pointerup", onTouchLift, true);
++            onCleanup(() => {
++                root.removeEventListener("pointerdown", onTouchLift, true);
++                root.removeEventListener("pointerup", onTouchLift, true);
++            });
++        },
++        { immediate: true, flush: "sync" },
++    );
++
+ 
+     // --- keepOpen / release (ref-counted child holds) ---
+ 
+@@ -496,18 +610,9 @@ export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
+     function release(kind: DockHoldKind = "morph") {
+         if (kind === "grasp") graspCount.value = Math.max(0, graspCount.value - 1);
+         keepOpenCount.value = Math.max(0, keepOpenCount.value - 1);
+-        if (keepOpenCount.value === 0 && state.value === "hover") {
+-            // Grace period: don't collapse immediately after a child releases
+-            // (e.g., dialog dismissed via Escape). Give the user time to re-engage.
+-            clearTimer();
+-            collapseTimer = setTimeout(
+-                () => {
+-                    if (keepOpenCount.value === 0 && state.value === "hover") {
+-                        scheduleCollapse();
+-                    }
+-                },
+-                Math.min(collapseDelay, 800),
+-            );
++        // W-I.8 R-2: with the pointer outside, one linger; the 800 ms wait is deleted.
++        if (keepOpenCount.value === 0 && state.value === "hover" && !pointerInside) {
++            scheduleCollapse();
+         }
+     }
+ 
+@@ -611,5 +716,6 @@ export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
+         release,
+         expand,
+         collapse,
++        setPinned,
+     };
+ }
+diff --git a/src/components/dock/index.ts b/src/components/dock/index.ts
+index 29a95047e..dbcd20b6f 100644
+--- a/src/components/dock/index.ts
++++ b/src/components/dock/index.ts
+@@ -17,6 +17,7 @@ export { default as DockLayer } from "./DockLayer.vue";
+ // The crossfade context helpers stay INTERNAL (the composables barrel) — only the
+ // component + its discovery types publish on `/dock` (the dockLayerContext precedent).
+ export { default as DockCrossfade } from "./DockCrossfade.vue";
++export { default as DockOutlet } from "./DockOutlet.vue";
+ export type {
+     DockFaceDescriptor,
+     DockFaceRegistration,
+diff --git a/src/components/dock/styles/beside.css b/src/components/dock/styles/beside.css
+new file mode 100644
+index 000000000..525c380de
+--- /dev/null
++++ b/src/components/dock/styles/beside.css
+@@ -0,0 +1,61 @@
++/* W-I.8 R-6: the fission seat. One slot (`#beside`), a region after the trailing
++   persistent region. Open, it is in flow one `--dock-layer-gap` past the main plate, on
++   a plate of its own; folded, it is out of flow, hidden and inert, and the pill is one
++   plate. The carrier writes the plates' and the neck's boxes; nothing here animates. */
++@layer components {
++    .glass-dock.has-beside:not(.vertical) {
++        padding-inline-end: 0;
++    }
++    .glass-dock:not(.vertical) > .dock-controls > .dock-beside {
++        display: flex;
++        align-items: center;
++        align-self: stretch;
++        /* The main plate's end padding, then the gap (the region's own padding, so the
++           pointer resting in it is inside the dock), then the seat's plate. */
++        margin-inline-start: var(--dock-padding-inline, 0.5rem);
++        margin-block: calc(-1 * var(--dock-padding-block, 0.375rem));
++        padding-inline: calc(var(--dock-layer-gap, 0.375rem) + var(--dock-padding-block, 0.375rem))
++            var(--dock-padding-block, 0.375rem);
++        padding-block: var(--dock-padding-block, 0.375rem);
++        position: relative;
++    }
++    .glass-dock.collapsed:not(.vertical) > .dock-controls > .dock-beside {
++        position: absolute;
++        inset-block: 0;
++        inset-inline-start: 100%;
++        margin: 0;
++    }
++    .glass-dock.collapsed:not([data-morphing]) > .dock-controls > .dock-beside {
++        visibility: hidden;
++    }
++    /* The second plate and the neck paint the dock's surface (`.dock-plate`); the neck
++       draws its two long edges only. The carrier shows them while they part. */
++    .glass-dock > .dock-neck {
++        border-inline-width: 0;
++        box-shadow: none;
++    }
++    .glass-dock.has-beside > .dock-plate {
++        box-shadow: var(--glass-rim-top), var(--glass-rim-bottom);
++    }
++    /* One shadow for the surface: one leaf under the plates whose box is the row's
++       painted extent. An outer shadow does not paint inside its own box. */
++    .glass-dock > .dock-shadow {
++        position: absolute;
++        inset: 0;
++        z-index: -2;
++        border-radius: inherit;
++        pointer-events: none;
++        box-shadow: var(
++            --shadow-dock-override,
++            0 0 calc(12px + 8px * var(--dock-expand-t))
++                color-mix(in srgb, var(--shadow-color) calc(12% + 2% * var(--dock-expand-t)), transparent)
++        );
++    }
++    /* The seat's glyph turns on hover (W-B.17's `data-glyph="turn"`); the dock adds no lift. */
++    .dock-beside [data-glyph="turn"] svg {
++        transition: rotate var(--spring-dock-duration) var(--spring-dock);
++    }
++    .dock-beside [data-glyph="turn"]:hover svg {
++        rotate: 45deg;
++    }
++}
+diff --git a/src/components/dock/styles/controls/icon-button.css b/src/components/dock/styles/controls/icon-button.css
+index 752b43e1a..97fe66a6e 100644
+--- a/src/components/dock/styles/controls/icon-button.css
++++ b/src/components/dock/styles/controls/icon-button.css
+@@ -75,7 +75,10 @@
+                `:focus-visible` group in dock.css) + the active-state
+                `--dock-active-shadow` — the hover highlight leg
+                specular no longer rides it. */
+-                box-shadow var(--dock-motion-fast);
++                box-shadow var(--dock-motion-fast),
++            /* W-I.8: the run's open seat and the labelled seat's room, in the seat's own list. */
++                inline-size var(--spring-dock-duration) var(--spring-dock),
++            translate var(--spring-dock-duration) var(--spring-dock);
+ 
+         /* The dock control press couples to
+            the ONE interruptible press spring. DockIconButton composes `useLiquidPress`
+diff --git a/src/components/dock/styles/controls/label.css b/src/components/dock/styles/controls/label.css
+new file mode 100644
+index 000000000..79a3e1f50
+--- /dev/null
++++ b/src/components/dock/styles/controls/label.css
+@@ -0,0 +1,54 @@
++/* W-I.8 R-7: the labelled seat. The name is one aria-hidden span against the seat's
++   inline start, out of flow, so showing it lays nothing out. The neighbours' room is a
++   `translate` the run writes; the seat's own list tweens it. Flat: one colour, no gleam,
++   no gradient, no shadow, no backdrop-filter. */
++@layer components {
++    .glass-dock [data-dock-label] {
++        position: relative;
++        background-image: none;
++        backdrop-filter: none;
++        box-shadow: none;
++        background-color: var(--plate-tone, transparent);
++    }
++    .glass-dock [data-dock-label]::before {
++        content: none;
++    }
++    .glass-dock [data-dock-label]:hover,
++    .glass-dock [data-dock-label][data-label-shown] {
++        background-color: color-mix(in srgb, var(--dock-fg-on-aurora, var(--foreground)) 8%, var(--plate-tone, transparent));
++    }
++    .dock-seat-label {
++        position: absolute;
++        inset-inline-end: calc(100% + 6px);
++        inset-block-start: 50%;
++        white-space: nowrap;
++        pointer-events: none;
++        font-size: var(--dock-label-size, 0.9375rem);
++        font-weight: 550;
++        line-height: 1;
++        color: var(--dock-fg-on-aurora, var(--foreground));
++        opacity: 0;
++        translate: 4px -50%;
++        transition:
++            opacity var(--spring-present-exit-duration, 160ms) var(--ease-out, ease-out),
++            translate var(--spring-present-exit-duration, 160ms) var(--ease-out, ease-out),
++            scale var(--spring-present-exit-duration, 160ms) var(--ease-out, ease-out);
++    }
++    [data-label-shown] > .dock-seat-label {
++        opacity: 1;
++        translate: 0 -50%;
++        transition:
++            opacity var(--duration-control, 140ms) var(--ease-out, ease-out),
++            translate var(--spring-present-duration, 220ms) var(--spring-present, ease-out),
++            scale var(--spring-present-duration, 220ms) var(--spring-present, ease-out);
++    }
++    /* Design B: it grows from the icon. */
++    .glass-dock[data-label-enter="b"] .dock-seat-label {
++        translate: 0 -50%;
++        scale: 0.8;
++        transform-origin: right center;
++    }
++    .glass-dock[data-label-enter="b"] [data-label-shown] > .dock-seat-label {
++        scale: 1;
++    }
++}
+diff --git a/src/components/dock/styles/crossfade.css b/src/components/dock/styles/crossfade.css
+index 60f697935..870a5107d 100644
+--- a/src/components/dock/styles/crossfade.css
++++ b/src/components/dock/styles/crossfade.css
+@@ -127,20 +127,7 @@
+        `proof:no-layout-animation` floor. PRM snaps the collapse, so the clip is a single
+        frame. This is the COMPOUND the synthetic prototypes never composed: a face-swap
+        crossfade coexisting with a collapse-morph clip on the same face. */
+-    .glass-dock[data-morphing]
+-        .dock-crossfade
+-        > .dock-face.is-active
+-        > .dock-face-content {
+-        clip-path: inset(0 calc((1 - var(--dock-morph-t)) * 100%) 0 0);
+-        will-change: clip-path;
+-    }
+-
+-    .glass-dock.vertical[data-morphing]
+-        .dock-crossfade
+-        > .dock-face.is-active
+-        > .dock-face-content {
+-        clip-path: inset(0 0 calc((1 - var(--dock-morph-t)) * 100%) 0);
+-    }
++    /* W-I.8: the face's own posture clip is deleted; the region is clipped to the plate. */
+ 
+     /* PRM — the opacity crossfade snaps (the spring's `respectReducedMotion` jumps
+        `--dock-t` 0→1 in one frame). The reserved box + the discrete active/leaving
+diff --git a/src/components/dock/styles/density.css b/src/components/dock/styles/density.css
+index 9c00f8e17..649fbdbc5 100644
+--- a/src/components/dock/styles/density.css
++++ b/src/components/dock/styles/density.css
+@@ -396,3 +396,16 @@
+         }
+     }
+ }
++
++/* W-I.8 R-12: the figure dock is this dock with a preset. */
++@layer components {
++    .glass-dock[data-preset="figure"] {
++        --dock-intent: 120ms;
++        --dock-layer-height: 2.75rem;
++    }
++    .glass-dock[data-preset="figure"] .dock-run {
++        overflow: clip;
++        scroll-snap-type: none;
++    }
++}
++
+diff --git a/src/components/dock/styles/dock.css b/src/components/dock/styles/dock.css
+index 85b2fd101..51728d221 100644
+--- a/src/components/dock/styles/dock.css
++++ b/src/components/dock/styles/dock.css
+@@ -90,7 +90,20 @@
+         --dock-plate-inset-block: calc(
+             (1 - var(--dock-t)) * var(--dock-plate-collapse-inset-block, 0px)
+         );
+-        clip-path: inset(var(--dock-plate-inset-block) var(--dock-plate-inset-inline));
++        /* W-I.8 R-1: the plate's clip-path is deleted. One shadow, on the plate, whose
++           blur and alpha are lerps on the published progress (collapsed 12 px at 12 %,
++           open 20 px at 14 %), so it has no swap frame. */
++        box-shadow:
++            var(--glass-rim-top), var(--glass-rim-bottom),
++            var(
++                --shadow-dock-override,
++                0 0 calc(12px + 8px * var(--dock-expand-t))
++                    color-mix(
++                        in srgb,
++                        var(--shadow-color) calc(12% + 2% * var(--dock-expand-t)),
++                        transparent
++                    )
++            );
+ 
+         /* ── THE ONE-LAYER SURFACE INTERPOLATION, COMPOSED AT THE ELEMENT ──────────
+            The collapsed↔expanded surface is ONE painted layer, and what LERPS on
+diff --git a/src/components/dock/styles/index.css b/src/components/dock/styles/index.css
+index 807564046..db95924e6 100644
+--- a/src/components/dock/styles/index.css
++++ b/src/components/dock/styles/index.css
+@@ -84,6 +84,8 @@
+    SURFACE] ~~`[data-search]`~~); the pill→field morph is the dock's OWN `--dock-morph-t`
+    glide (box-inviolate); CONSUMES the tint seam + the menu-row recipe, re-authors neither. */
+ @import "./search.css";
++@import "./beside.css";
++@import "./controls/label.css";
+ 
+ /* The SINGLE morph scalar. The dock morph orchestrator writes it once per frame
+    to the `.glass-dock` root; EVERY morph axis (box size, padding, radius, scale,
+diff --git a/src/components/dock/styles/layers.css b/src/components/dock/styles/layers.css
+index 06140e904..4f0eb74d6 100644
+--- a/src/components/dock/styles/layers.css
++++ b/src/components/dock/styles/layers.css
+@@ -89,46 +89,11 @@
+        byte-identical (`.expanded[data-morphing]` derives `--dock-expand-t: --dock-morph-t`);
+        only `.collapsed[data-morphing]` (`1−t`) is corrected, so the box now shrinks
+        monotonically expanded→collapsed with NO snap. */
+-    .glass-dock[data-morphing] {
+-        --dock-live: calc(
+-            var(--dock-collapsed-px, var(--dock-expanded-px, 0px)) +
+-                (
+-                    var(--dock-expanded-px, 0px) -
+-                        var(--dock-collapsed-px, var(--dock-expanded-px, 0px))
+-                ) *
+-                clamp(0, var(--dock-expand-t), 1)
+-        );
+-        --dock-size-scale: clamp(
+-            0.06,
+-            calc(var(--dock-live) / max(var(--dock-expanded-px, 1px), 1px)),
+-            1
+-        );
+-        will-change: transform;
+-    }
+-
+-    /* [2026-10-28 · 10.1.3 · O-110] ~~`transform-origin: center center`~~ — the scale
+-       grows from the morph's measured origin (`--dock-morph-origin`, the fixed point of
+-       the painted box and the reserved one, `useDockExpandedSize`'s `anchor`): the
+-       anchored edge of an edge-anchored dock, the centre of a centred one. A fixed
+-       centre painted an edge-anchored dock's first frame centred in its reserved box. */
+-    .glass-dock[data-morphing]:not(.vertical) {
+-        transform-origin: var(--dock-morph-origin) center;
+-    }
+-    .glass-dock[data-morphing].vertical {
+-        transform-origin: center var(--dock-morph-origin);
+-    }
+-
+-    /* The box RESERVES its expanded footprint (ONE layout solve — the page reflows
+-       ONCE to the final size, CDP-Layout stays FLAT) while the visible size scales
+-       toward it. Horizontal reserves `inline-size`, vertical reserves `block-size`,
+-       matching the morph axis. The `.dock-layers` content lays out at its natural
+-       size behind the clip (shell.css) — that natural span is the `--dock-expanded-px`
+-       the ResizeObserver reads. */
+-    .glass-dock[data-morphing]:not(.vertical) {
+-        inline-size: var(--dock-expanded-px);
+-    }
+-    .glass-dock[data-morphing].vertical {
+-        block-size: var(--dock-expanded-px);
++    /* W-I.8: the reserved box, the size blend and the morph origin are deleted. The
++       layers region is the containing block of a leaving face, which the carrier places
++       where it painted. */
++    :where(.glass-dock) .dock-layers {
++        position: relative;
+     }
+ 
+     /* Horizontal dock content grows visibly when the active layer's natural
+@@ -181,19 +146,7 @@
+         pointer-events: none;
+     }
+ 
+-    .glass-dock[data-morphing] .dock-layer.is-leaving {
+-        opacity: calc(1 - var(--dock-morph-t));
+-    }
+-
+-    /* Each pane paints the box it holds (O-110): `anchor` writes the shift from where
+-       the reserved layout puts it to that box. The leaving pane holds the box it painted
+-       and fades there; a collapse's entering pane holds its rest. */
+-    .glass-dock[data-morphing]:not(.vertical) > .dock-controls > .dock-layers > .dock-layer {
+-        translate: var(--dock-pane-shift) 0;
+-    }
+-    .glass-dock[data-morphing].vertical > .dock-controls > .dock-layers > .dock-layer {
+-        translate: 0 var(--dock-pane-shift);
+-    }
++    /* W-I.8 R-3: the faces' opacity is written by the carrier on the travel's f. */
+ 
+     /* GU-4 — retain only the witnessed press control through a collapse-triggered
+        layer swap. The pane stays a non-target; the marked origin alone remains above
+@@ -274,80 +227,7 @@
+        `respectReducedMotion` jumps `--dock-morph-t` 0→1 in one frame → `--dock-expand-t`
+        lands at the endpoint → the cascade collapses to 0 stagger frames; the
+        global PRM gate strips `translate` so the rise snaps too. */
+-    .glass-dock[data-morphing] .dock-layer.is-active > * {
+-        --dock-stagger-window: var(--dock-stagger-window-size, 0.55);
+-        --dock-stagger-onset: 0;
+-        /* Factor the reveal ramp into ONE named var so opacity AND
+-           the center-coupled scale read the SAME clamp (fade coupled to
+-           transform). */
+-        --child-reveal: clamp(
+-            0,
+-            calc(
+-                (var(--dock-expand-t) - var(--dock-stagger-onset)) /
+-                    var(--dock-stagger-window)
+-            ),
+-            1
+-        );
+-        opacity: var(--child-reveal);
+-        /* The rise is a center-coupled SCALE pop (0.82 → 1 on the
+-           reveal ramp, transform-origin center), NOT an independent `translate: 0
+-           4px` vertical hop. The children inherit the SAME center-anchored read as the box
+-           — a small inertial pop FROM the center, coupled to opacity. The global PRM gate
+-           strips `scale` → snap. */
+-        scale: calc(0.82 + 0.18 * var(--child-reveal));
+-        transform-origin: center;
+-    }
+-
+-    /* Per-child onsets off the ONE `--dock-stagger-step` token. The hand-typed
+-       0.08/0.16/0.24/0.32/0.4 ladder is RETIRED — the onsets derive from the single
+-       token, so retuning the cascade beat is a one-token override.
+-       ~~Each successive control starts `step` later than the one before it (`onset =
+-       step × (childIndex − 1)`) … capped at the 6th child (`nth-child(n + 6)` holds
+-       at `step × 5`).~~ — [2026-09-22 · O-32 §4.3 L-23] no rule on disk has matched
+-       that description; the ladder below is what paints.
+-       ~~The SYMMETRIC center-out stagger … center pair = onset 0 via the base rule,
+-       then ±1, ±2 … the reveal radiates center-out~~ — [2026-09-22 · O-32 §4.3 L-23]
+-       the paint was always edge-in, and edge-in is the intent: the controls reveal
+-       OUTER→IN (the edge pair at onset 0, the middle last), as the reveal note above
+-       says; collapse rewinds the same ramp, so the middle fades first and the edges last.
+-
+-       THE LADDER. A control's onset is `step × min(distance from the nearer edge, 3)`,
+-       counted over CONTROLS ONLY: `nth-child(… of :not(.dock-separator))`. A
+-       DockSeparator is a sibling child of the layer, so counting `of *` gave each
+-       hairline a rung and shifted every control past it (O-32 L-23, fourier's
+-       CanvasControlsDock). Each rung is bounded from BOTH ends — ±1 is 2nd from one
+-       edge and at least 2nd from the other, ±2 likewise at 3rd, the deep middle at
+-       least 4th from both — so the rungs are disjoint and the ladder is symmetric at
+-       every length (3 controls → 0 1 0, 5 → 0 1 2 1 0, 10 → 0 1 2 3 3 3 3 2 1 0).
+-       Separators take no rung: they hold the base onset 0. A long row finishes
+-       within the morph window because the deep middle holds at `step × 3`.
+-       (`sibling-index()` would collapse this to one declaration, but it is not yet
+-       Baseline across Safari/Firefox; `nth-child(… of S)` is Safari 16.4+ /
+-       Chrome 111+ / Firefox 113+.) */
+-    /* ring ±1 — 2nd control from the nearer edge */
+-    .glass-dock[data-morphing]
+-        .dock-layer.is-active
+-        > *:nth-child(2 of :not(.dock-separator)):nth-last-child(n + 2 of :not(.dock-separator)),
+-    .glass-dock[data-morphing]
+-        .dock-layer.is-active
+-        > *:nth-last-child(2 of :not(.dock-separator)):nth-child(n + 2 of :not(.dock-separator)) {
+-        --dock-stagger-onset: calc(var(--dock-stagger-step) * 1);
+-    }
+-    /* ring ±2 — 3rd control from the nearer edge */
+-    .glass-dock[data-morphing]
+-        .dock-layer.is-active
+-        > *:nth-child(3 of :not(.dock-separator)):nth-last-child(n + 3 of :not(.dock-separator)),
+-    .glass-dock[data-morphing]
+-        .dock-layer.is-active
+-        > *:nth-last-child(3 of :not(.dock-separator)):nth-child(n + 3 of :not(.dock-separator)) {
+-        --dock-stagger-onset: calc(var(--dock-stagger-step) * 2);
+-    }
+-    /* ring ±3 — the deep middle, 4th or further from BOTH edges (a long row finishes in-window) */
+-    .glass-dock[data-morphing]
+-        .dock-layer.is-active
+-        > *:nth-child(n + 4 of :not(.dock-separator)):nth-last-child(n + 4 of :not(.dock-separator)) {
+-        --dock-stagger-onset: calc(var(--dock-stagger-step) * 3);
+-    }
++    /* W-I.8 R-3: the per-control stagger and its 0.82 pop are deleted. */
+ 
+     /* The at-rest clip-lift moved to `.expanded:not([data-morphing])` /
+        `.always-expanded:not([data-morphing])` (the clip-shell block at the top).
+@@ -362,7 +242,7 @@
+        reserved footprint. The gate hands the box to the transform for the morph and
+        back to 100% on settle (the transform/reserve vanish when `[data-morphing]`
+        clears). */
+-    .glass-dock.expanded:not(.fit-content):not([data-morphing]) .dock-layers {
++    .glass-dock.expanded:not(.fit-content) .dock-layers {
+         width: 100%;
+     }
+ 
+diff --git a/src/components/dock/styles/morph.css b/src/components/dock/styles/morph.css
+index 650a6b411..96e6fbf29 100644
+--- a/src/components/dock/styles/morph.css
++++ b/src/components/dock/styles/morph.css
+@@ -47,22 +47,17 @@
+     .glass-dock.expanded,
+     .glass-dock.always-expanded {
+         --dock-expand-t: 1;
++        --dock-rest-t: 1;
+     }
+ 
+     .glass-dock.collapsed {
+         --dock-expand-t: 0;
++        --dock-rest-t: 0;
+     }
+ 
+     /* Only the outer collapsed/expanded pair arms `[data-morphing]`. Controlled
+        face changes run inside DockCrossfade and leave the shell endpoint alone. */
+-    .glass-dock.expanded[data-morphing],
+-    .glass-dock.always-expanded[data-morphing] {
+-        --dock-expand-t: var(--dock-morph-t);
+-    }
+-
+-    .glass-dock.collapsed[data-morphing] {
+-        --dock-expand-t: calc(1 - var(--dock-morph-t));
+-    }
++    /* W-I.8 R-10: the carrier writes --dock-expand-t inline every frame; it rests at 0 or 1. */
+ 
+     /* NO FILTER ON AN ANCESTOR OF A LENS — the #47 (GF-DOCK) fence. A `filter` on
+        `.glass-dock` — or on ANY ancestor of a backdrop-filtered box (`.dock-plate`, the
+@@ -119,7 +114,7 @@
+         padding-inline: calc(
+             var(--dock-pad-collapsed) +
+                 (var(--dock-padding-inline, 0.5rem) - var(--dock-pad-collapsed)) *
+-                var(--dock-expand-t)
++                var(--dock-rest-t)
+         );
+     }
+ 
+@@ -150,7 +145,7 @@
+         padding-block: calc(
+             var(--dock-pad-collapsed) +
+                 (var(--dock-padding-block, 0.375rem) - var(--dock-pad-collapsed)) *
+-                var(--dock-expand-t)
++                var(--dock-rest-t)
+         );
+     }
+ 
+@@ -164,7 +159,6 @@
+     .glass-dock.collapsed {
+         cursor: pointer;
+         justify-content: center;
+-        box-shadow: var(--shadow-dock-override, var(--shadow-dock-collapsed));
+     }
+ 
+     /* The collapsed horizontal dock at rest is a square box, and it is drawn as a
+@@ -173,7 +167,7 @@
+        only: mid-morph the box carries the expanded footprint under a scale. The
+        stadium shape is not named here: its corner is half its cross extent in every
+        posture (run.css), which is this circle on a square box. */
+-    .glass-dock.collapsed:not([data-morphing]):not(.vertical):not(.shape-pill) {
++    .glass-dock.collapsed:not(.vertical):not(.shape-pill) {
+         border-radius: var(--radius-circle);
+     }
+ 
+@@ -185,7 +179,7 @@
+        collapse and the open dock share one corner, and the morph swaps no silhouette.
+        The circle stays for the square cases: the summary alone, or a persistent
+        control alone (the empty-summary case above). Two flat `:has()`, never nested. */
+-    .glass-dock.collapsed:not([data-morphing]):not(.vertical):not(.shape-pill):has(.dock-persistent):has(
++    .glass-dock.collapsed:not(.vertical):not(.shape-pill):has(.dock-persistent):has(
+             .dock-layer--summary:not(:empty)
+         ) {
+         border-radius: var(--radius-dock);
+@@ -244,9 +238,6 @@
+        the right driver for the box CHROME (bg/border/padding/radius interpolate
+        between the collapsed↔expanded endpoints); only the summary pane's CONTENT
+        reveal is decoupled onto the incoming scalar. */
+-    .glass-dock[data-morphing] .dock-layer--summary {
+-        --dock-expand-t: var(--dock-morph-t);
+-    }
+ 
+     /* The EMPTY-collapsed-summary trap. A dock with a
+        `#persistent` control but NO `#collapsed` slot (the overview first-section
+@@ -262,7 +253,7 @@
+        exactly — and a flat `:empty` avoids the nested-`:has()` form Lightning CSS
+        drops. An authored `#collapsed` slot (non-empty summary) keeps its circle
+        pill. */
+-    .glass-dock .dock-layer--summary:empty {
++    .glass-dock:has(.dock-persistent) .dock-layer--summary:empty {
+         min-width: 0;
+         inline-size: 0;
+         padding: 0;
+@@ -324,9 +315,7 @@
+        `[data-morphing]` precedent above (morph.css:46-53). The surface arms
+        (background/border/shadow) stay on the bare `:hover` (they don't multiply
+        geometry, so a hovered collapse keeps its hover read without the pop). */
+-    .glass-dock.collapsed:hover {
+-        box-shadow: var(--shadow-dock-override, var(--shadow-dock));
+-    }
++
+     /* NO collapsed-hover surface lift. The rule that sat here declared the plate's
+        COLLAPSED endpoints byte-for-byte as `shell.css` already declares them, and its
+        EXPANDED endpoints are unread while `--dock-expand-t` is pinned at 0 — which it
+diff --git a/src/components/dock/styles/run.css b/src/components/dock/styles/run.css
+index d1de6eb8e..eeff6937e 100644
+--- a/src/components/dock/styles/run.css
++++ b/src/components/dock/styles/run.css
+@@ -523,7 +523,6 @@
+     .glass-dock :where(.dock-layers) > .dock-run > [data-glass-dock-seat]:has([aria-current]:not([aria-current="false"])) {
+         inline-size: var(--dock-open-seat);
+         /* The cross axis is untouched: the open seat is WIDER, never taller. */
+-        transition: inline-size var(--spring-dock-duration) var(--spring-dock);
+     }
+ 
+     /* Every OTHER seat is exactly one pitch minus the gap. Stating it is what makes the
+@@ -532,7 +531,8 @@
+     .glass-dock :where(.dock-layers) > .dock-run > :not([aria-current]:not([aria-current="false"])):not(
+             [data-glass-dock-seat]:has([aria-current]:not([aria-current="false"]))
+         ) {
+-        transition: inline-size var(--spring-dock-duration) var(--spring-dock);
++        /* W-I.8: the shorthand that erased the seat's own list is gone (AUDIT rule C);
++           the seat carries inline-size and translate in its own list. */
+     }
+ 
+     /* Rotated for a vertical dock: m=2 there, so the open seat is 2·P − gap of BLOCK
+@@ -542,7 +542,6 @@
+     .glass-dock.vertical :where(.dock-layers) > .dock-run > [data-glass-dock-seat]:has([aria-current]:not([aria-current="false"])) {
+         inline-size: auto;
+         block-size: var(--dock-open-seat);
+-        transition: block-size var(--spring-dock-duration) var(--spring-dock);
+     }
+ 
+     .glass-dock.vertical
+@@ -550,7 +549,6 @@
+         > :not([aria-current]:not([aria-current="false"])):not(
+             [data-glass-dock-seat]:has([aria-current]:not([aria-current="false"]))
+         ) {
+-        transition: block-size var(--spring-dock-duration) var(--spring-dock);
+     }
+ 
+     /* THE LABEL BUDGET — and why it is a CLIP, not a token.
+@@ -783,14 +781,6 @@
+        floor the layers' counter-scale uses), so the scale paints it back to a circle of
+        the rest corner on every frame, and the settle, which drops the scale and this
+        rule together, changes nothing in paint. */
+-    .glass-dock.shape-pill[data-morphing]:not(.vertical) {
+-        border-radius: calc(var(--dock-cap-rest) / max(var(--dock-size-scale, 1), 0.06)) /
+-            var(--dock-cap-rest);
+-    }
+-    .glass-dock.shape-pill[data-morphing].vertical {
+-        border-radius: var(--dock-cap-rest) /
+-            calc(var(--dock-cap-rest) / max(var(--dock-size-scale, 1), 0.06));
+-    }
+ 
+     /* Each edge's whole transition is confined to ONE PITCH of travel via
+        `animation-range`, so the cap reports "there is more that way" at the granularity
+diff --git a/src/components/dock/styles/shape.css b/src/components/dock/styles/shape.css
+index db2a71a5d..fb642ee6d 100644
+--- a/src/components/dock/styles/shape.css
++++ b/src/components/dock/styles/shape.css
+@@ -101,12 +101,7 @@
+        axis (the cross axis stays 1 — the size morph moves the footprint, it does not
+        pinch). The liquid weight lives in the DOCK spring's own overshoot tail
+        (DOCK-LADDER §8), not a second parallel punch clock. */
+-    .glass-dock[data-morphing]:not(.vertical) {
+-        scale: var(--dock-size-scale, 1) 1;
+-    }
+-    .glass-dock[data-morphing].vertical {
+-        scale: 1 var(--dock-size-scale, 1);
+-    }
++    /* W-I.8: the root scale is deleted; the carrier writes the plate's insets. */
+ 
+     /* ── RIGID CONTENT over the morphing box ───────────────
+        The box-scale rule above scales the WHOLE `.glass-dock` subtree — including the
+@@ -130,18 +125,7 @@
+        `[data-morphing]` (the residual transform lives ONLY mid-morph); at settle the
+        attr clears → both rules drop to `scale: none` over the TRUE box, content
+        byte-rigid, ZERO compositing cost at rest (`proof:no-layout-animation` holds). */
+-    .glass-dock[data-morphing]:not(.vertical) > .dock-controls > .dock-persistent,
+-    .glass-dock[data-morphing]:not(.vertical) > .dock-controls > .dock-layers {
+-        scale: calc(1 / max(var(--dock-size-scale, 1), 0.06)) 1;
+-        transform-origin: var(--dock-morph-origin) center;
+-        will-change: transform;
+-    }
+-    .glass-dock[data-morphing].vertical > .dock-controls > .dock-persistent,
+-    .glass-dock[data-morphing].vertical > .dock-controls > .dock-layers {
+-        scale: 1 calc(1 / max(var(--dock-size-scale, 1), 0.06));
+-        transform-origin: center var(--dock-morph-origin);
+-        will-change: transform;
+-    }
++    /* W-I.8: the regions' counter-scales are deleted; they move by translate. */
+ 
+     /* ── The dock is a LOUD MOTION DRIVER (design §L4) ──────────────────────────
+        The dock pins `--motion-weight: 1` on its own scope so the descendant control
+diff --git a/src/components/dock/styles/shell.css b/src/components/dock/styles/shell.css
+index 961b7779c..2cc9ca5df 100644
+--- a/src/components/dock/styles/shell.css
++++ b/src/components/dock/styles/shell.css
+@@ -242,9 +242,11 @@
+            `--glass-edge-light` ring that fought the (now ≤4% α) `--glass-border-dock`
+            perimeter; the navigation band reads its rim from the SAME corrected token
+            source as cards/dialogs (no dock-local dark rim re-paste). */
+-        box-shadow:
+-            var(--glass-rim-top), var(--glass-rim-bottom),
+-            var(--shadow-dock-override, var(--shadow-dock));
++        /* W-I.8 R-1: the rim pair and the elevation moved to the plate. */
++        --dock-intent: 60ms;
++        --dock-linger: 6s;
++        --dock-linger-max: 6s;
++        --dock-label-size: 0.9375rem;
+     }
+ 
+     /* PRESERVE the dark-dock read-weight. The light dock
+@@ -315,12 +317,7 @@
+        (`.is-press-keepalive`, layers.css GU-4): its pressed control must stay painted and
+        hit-testable where the pointer is until the click resolves, so the box does not
+        clip while it is held. */
+-    .glass-dock[data-morphing]:not(.vertical):not(:has(.is-press-keepalive)) {
+-        overflow-x: clip;
+-    }
+-    .glass-dock[data-morphing].vertical:not(:has(.is-press-keepalive)) {
+-        overflow-y: clip;
+-    }
++    /* W-I.8: the morph clip is deleted; each region is clipped to the plate while travel runs. */
+ 
+     /* The vertical-dock max-block-size + internal-scroll CONTRACT.
+        A vertical dock caps at `--dock-max-block-size` (the `.vertical` rule), but
