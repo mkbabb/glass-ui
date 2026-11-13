@@ -39,6 +39,10 @@
 //   radius every dock seat (dropdown trigger, tab, labelled and icon control) rounds its
 //          hover, open and active plate with a corner of half the seat's block size: in a
 //          screenshot each corner of the plate leaves the area that corner leaves
+//   geometry  a Slider's thumb is a circle of the band's height, on the line between the
+//          end caps' centres, concentric with the fill's end cap; the fill is the band's
+//          height (every size, both orientations, inverted, RTL, the spectrum's ring, at
+//          0, 1, 5, 25, 50, 95, 99 and 100)
 //   hover  every seat type, both orientations, every shape, expanded and collapsed: the
 //          dock's box is unchanged to 0 px in every frame of each seat's hover in and out
 import { expect, test, type Page } from "@playwright/test";
@@ -960,5 +964,63 @@ for (const width of [1440, 390]) {
             expect(cell.span, `${kind} paints a plate`).toBeGreaterThan(12);
             expect(cell.measured, `${kind}: the unpainted corner area`).toBeGreaterThanOrEqual(cell.expected * 0.8);
         }
+    });
+}
+
+for (const theme of ["light", "dark"]) {
+    test(`geometry · the Slider's thumb fills the band and its ends are concentric (${theme})`, async ({ page }, info) => {
+        const fails: string[] = [];
+        const worst: Record<string, number> = {};
+        for (const value of [0, 1, 5, 25, 50, 95, 99, 100]) {
+            await page.goto(`/tests-visual/release-11-0-2/geometry-harness.html?value=${value}&theme=${theme}`);
+            await page.locator("body[data-ready='1'] [data-cell] .slider-thumb").first().waitFor();
+            await page.waitForTimeout(300);
+            const cells = await page.evaluate((value) => {
+                const p = value / 100;
+                return [...document.querySelectorAll<HTMLElement>("[data-cell]")].map((root) => {
+                    const cell = root.dataset.cell!;
+                    const vertical = cell.includes("-vertical");
+                    const spectrum = cell.startsWith("spectrum");
+                    const forward = !(cell.endsWith("-inverted") !== cell.endsWith("-rtl"));
+                    const t = root.querySelector(".slider-track")!.getBoundingClientRect();
+                    const f = root.querySelector(".slider-range")!.getBoundingClientRect();
+                    const b = root.querySelector(".slider-thumb")!.getBoundingClientRect();
+                    // Main-axis position from the edge the fill grows from.
+                    const m = (v: number) =>
+                        vertical ? (forward ? t.bottom - v : v - t.top) : forward ? v - t.left : t.right - v;
+                    const H = vertical ? t.width : t.height;
+                    const W = vertical ? t.height : t.width;
+                    const centre = m(vertical ? b.top + b.height / 2 : b.left + b.width / 2);
+                    const cross = vertical ? b.left + b.width / 2 - (t.left + t.width / 2) : b.top + b.height / 2 - (t.top + t.height / 2);
+                    const fillFar = Math.max(m(vertical ? f.top : f.left), m(vertical ? f.bottom : f.right));
+                    const r = {
+                        cell,
+                        H,
+                        thumb: [b.width, b.height].map((v) => Math.round(v * 100) / 100),
+                        line: centre - (H / 2 + p * (W - H)),
+                        cross,
+                        cap: spectrum ? 0 : centre - (fillFar - H / 2),
+                        fillCross: spectrum ? H : vertical ? f.width : f.height,
+                    };
+                    return r;
+                });
+            }, value);
+            for (const c of cells) {
+                const checks: [string, number][] = [
+                    ["diameter-inline", c.thumb[0]! - c.H],
+                    ["diameter-block", c.thumb[1]! - c.H],
+                    ["on the line between the end centres", c.line],
+                    ["cross centre", c.cross],
+                    ["concentric with the fill's cap", c.cap],
+                    ["fill height", c.fillCross - c.H],
+                ];
+                for (const [what, d] of checks) {
+                    worst[what] = Math.max(worst[what] ?? 0, Math.abs(d));
+                    if (Math.abs(d) > 0.5) fails.push(`${c.cell} @${value}: ${what} off by ${d.toFixed(2)}`);
+                }
+            }
+        }
+        info.annotations.push({ type: "geometry", description: JSON.stringify({ worst, fails: fails.slice(0, 40), count: fails.length }) });
+        expect(fails).toEqual([]);
     });
 }

@@ -116,6 +116,17 @@ A patch on 11.0.1. Nothing is removed or renamed.
   `calc(var(--dock-control-size) / 2)`, which the browser clamps to half each seat's
   own height. `--dock-control-radius` still sets the corner for all of them.
 
+- **The Slider's thumb fills the track.** The thumb was a smaller disc inside the fill's
+  round end, off its centre, and the spectrum's handle was a thin bar whose corners
+  stood outside the track's round ends. Now the track, the fill and the thumb share one
+  height and one radius, half that height: the thumb is a circle as tall as the track,
+  centred on the fill's round end at every value and on the track's round end at the
+  minimum and maximum, in both orientations, inverted and right to left, at every
+  size. The spectrum's handle is a ring of the same height with the gradient showing
+  through. `--slider-thumb-size-sm`, `-md` and `-lg` no longer resize a scrubber's
+  thumb: set `--slider-track-height-sm`, `-md` or `-lg` instead. The thumb size still
+  sets the spectrum's taller track.
+
 ## 11.0.1 — 2026-11-12
 
 A patch that brings the 10.1.5 fixes forward onto 11.0. If you saw the dock's hover
