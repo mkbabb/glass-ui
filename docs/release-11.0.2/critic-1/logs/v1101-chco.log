@@ -1,0 +1,2448 @@
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1794521931 slope=31.8/s inuse=25856 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+
+Running 90 tests using 1 worker
+
+  ✘   1 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:67:5 › dark · useGlobalDark › dark · a fresh key opens on initialValue while the default key holds auto (231ms)
+  ✘   2 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:84:5 › dark · useGlobalDark › dark · night chosen twice on a dark system stays night when the system turns light (273ms)
+  ✓   3 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:140:5 › press · a quick press on Again lands under reduced motion at 1440 (2.4s)
+  ✓   4 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:140:5 › press · a quick press on Again lands under reduced motion at 390 (2.3s)
+  ✓   5 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:186:5 › slider · a scrubber at its minimum draws its value (sm) (578ms)
+  ✓   6 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:186:5 › slider · a scrubber at its minimum draws its value (md) (618ms)
+  ✓   7 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:186:5 › slider · a scrubber at its minimum draws its value (lg) (560ms)
+  ✘   8 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:217:1 › slider · the thumb paints --card by default and --slider-thumb-bg when set (550ms)
+  ✓   9 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:240:1 › edge · a GlassDock page opens and stays alive (2.1s)
+  ✓  10 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:259:1 › edge · the plate edge computes 11.0.0's colour at t = 0, 0.5 and 1 (610ms)
+  ✘  11 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:303:5 › static · a static dock's controls draw no backdrop-filter (light) (4.6s)
+  ✘  12 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:303:5 › static · a static dock's controls draw no backdrop-filter (dark) (4.6s)
+  ✘  13 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:353:5 › fill · in dark a hovered, pressed or selected seat lifts the plate (static) (2.2s)
+  ✘  14 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:353:5 › fill · in dark a hovered, pressed or selected seat lifts the plate (live) (2.1s)
+  ✓  15 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:389:1 › fill · the light scheme's seat fills are the plate rungs (1.6s)
+  ✘  16 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:424:1 › fold · an idle fold lays out once per morph frame on a scrolling page (5.7s)
+  ✓  17 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:463:1 › static · a live dock's active control keeps its capsule lens (821ms)
+  ✓  18 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:470:1 › blob · from 100 ms after a sweep and release the body stays a bead, not a filled box (3.4s)
+  ✓  19 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:528:5 › cutcap · the open narrow face with an end seat has four equal plate corners at 1440 (2.3s)
+  ✓  20 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:528:5 › cutcap · the open narrow face with an end seat has four equal plate corners at 390 (2.2s)
+  ✘  21 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:562:1 › pager · a neighbour hop paints a neck no wider than the pitch plus a dot (3.4s)
+  ✘  22 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:601:1 › wheel · a vertical wheel over a horizontal dock's run scrolls the page (1.2s)
+  ✘  23 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:627:1 › wheel · a vertical dock's run contains its own axis and passes the other (229ms)
+[WebServer] 9:10:04 PM [vite] (client) [Unhandled error] Error: ResizeObserver loop completed with undelivered notifications.
+[WebServer]  > ../../../../../../../../../../@vite/client:531:50
+[WebServer] 
+  ✘  24 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:674:1 › rail · a start-anchored rail's close holds its top edge and crest, and ends on the disc (2.6s)
+  ✘  25 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:700:1 › rail · a start-anchored rail's open holds the crest from its first frame, the foot inside the plate (1.5s)
+  ✓  26 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:794:13 › hover · a horizontal pill dock, expanded, keeps its box to 0 px through every seat's hover (23.6s)
+  ✓  27 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:794:13 › hover · a horizontal pill dock, collapsed, keeps its box to 0 px through every seat's hover (4.9s)
+  ✓  28 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:794:13 › hover · a horizontal rounded dock, expanded, keeps its box to 0 px through every seat's hover (23.7s)
+  ✓  29 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:794:13 › hover · a horizontal rounded dock, collapsed, keeps its box to 0 px through every seat's hover (4.8s)
+  ✓  30 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:794:13 › hover · a horizontal card dock, expanded, keeps its box to 0 px through every seat's hover (23.6s)
+  ✓  31 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:794:13 › hover · a horizontal card dock, collapsed, keeps its box to 0 px through every seat's hover (4.8s)
+  ✓  32 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:794:13 › hover · a vertical pill dock, expanded, keeps its box to 0 px through every seat's hover (23.6s)
+  ✓  33 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:794:13 › hover · a vertical pill dock, collapsed, keeps its box to 0 px through every seat's hover (4.8s)
+  ✓  34 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:794:13 › hover · a vertical rounded dock, expanded, keeps its box to 0 px through every seat's hover (23.6s)
+  ✓  35 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:794:13 › hover · a vertical rounded dock, collapsed, keeps its box to 0 px through every seat's hover (4.8s)
+  ✓  36 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:794:13 › hover · a vertical card dock, expanded, keeps its box to 0 px through every seat's hover (23.6s)
+  ✓  37 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:794:13 › hover · a vertical card dock, collapsed, keeps its box to 0 px through every seat's hover (4.8s)
+  ✓  38 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:802:1 › hover · daraksha's pair of fit-content docks keep their boxes to 0 px through every seat's hover (9.9s)
+  ✘  39 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:872:5 › radius · every dock seat's corner is half its block size, at 1440 (8.4s)
+  ✘  40 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:872:5 › radius · every dock seat's corner is half its block size, at 390 (8.5s)
+  ✘  41 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:919:5 › geometry · the Slider's thumb fills the band and its ends are concentric (light) (3.1s)
+  ✘  42 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:919:5 › geometry · the Slider's thumb fills the band and its ends are concentric (dark) (3.1s)
+  ✘  43 [chromium-headless-new] › tests-visual/slider-forced-colors.spec.ts:25:9 › slider forced colors · a focused Slider keeps a focus mark › slider forced colors · scrubber · the focused mark is an outline that paints (726ms)
+  ✘  44 [chromium-headless-new] › tests-visual/slider-forced-colors.spec.ts:25:9 › slider forced colors · a focused Slider keeps a focus mark › slider forced colors · invalid · the focused mark is an outline that paints (714ms)
+  ✘  45 [chromium-headless-new] › tests-visual/slider-forced-colors.spec.ts:25:9 › slider forced colors · a focused Slider keeps a focus mark › slider forced colors · spectrum · the focused mark is an outline that paints (731ms)
+  ✘  46 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:67:5 › dark · useGlobalDark › dark · a fresh key opens on initialValue while the default key holds auto (218ms)
+  ✘  47 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:84:5 › dark · useGlobalDark › dark · night chosen twice on a dark system stays night when the system turns light (266ms)
+  ✓  48 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:140:5 › press · a quick press on Again lands under reduced motion at 1440 (2.3s)
+  ✓  49 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:140:5 › press · a quick press on Again lands under reduced motion at 390 (2.3s)
+  ✓  50 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:186:5 › slider · a scrubber at its minimum draws its value (sm) (502ms)
+  ✓  51 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:186:5 › slider · a scrubber at its minimum draws its value (md) (522ms)
+  ✓  52 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:186:5 › slider · a scrubber at its minimum draws its value (lg) (509ms)
+  ✘  53 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:217:1 › slider · the thumb paints --card by default and --slider-thumb-bg when set (462ms)
+  ✓  54 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:240:1 › edge · a GlassDock page opens and stays alive (2.1s)
+  ✓  55 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:259:1 › edge · the plate edge computes 11.0.0's colour at t = 0, 0.5 and 1 (590ms)
+  ✘  56 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:303:5 › static · a static dock's controls draw no backdrop-filter (light) (3.3s)
+  ✘  57 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:303:5 › static · a static dock's controls draw no backdrop-filter (dark) (3.3s)
+  ✘  58 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:353:5 › fill · in dark a hovered, pressed or selected seat lifts the plate (static) (2.1s)
+  ✘  59 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:353:5 › fill · in dark a hovered, pressed or selected seat lifts the plate (live) (2.2s)
+  -  60 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:389:1 › fill · the light scheme's seat fills are the plate rungs
+  ✘  61 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:424:1 › fold · an idle fold lays out once per morph frame on a scrolling page (5.7s)
+  ✓  62 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:463:1 › static · a live dock's active control keeps its capsule lens (844ms)
+  -  63 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:470:1 › blob · from 100 ms after a sweep and release the body stays a bead, not a filled box
+  ✓  64 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:528:5 › cutcap · the open narrow face with an end seat has four equal plate corners at 1440 (2.3s)
+  ✓  65 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:528:5 › cutcap · the open narrow face with an end seat has four equal plate corners at 390 (2.3s)
+  ✘  66 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:562:1 › pager · a neighbour hop paints a neck no wider than the pitch plus a dot (3.4s)
+  -  67 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:601:1 › wheel · a vertical wheel over a horizontal dock's run scrolls the page
+  ✘  68 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:627:1 › wheel · a vertical dock's run contains its own axis and passes the other (240ms)
+[WebServer] 9:14:20 PM [vite] (client) [Unhandled error] Error: ResizeObserver loop completed with undelivered notifications.
+[WebServer]  > ../../../../../../../../../../@vite/client:531:50
+[WebServer] 
+  ✘  69 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:674:1 › rail · a start-anchored rail's close holds its top edge and crest, and ends on the disc (2.5s)
+  ✘  70 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:700:1 › rail · a start-anchored rail's open holds the crest from its first frame, the foot inside the plate (1.5s)
+  -  71 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:794:13 › hover · a horizontal pill dock, expanded, keeps its box to 0 px through every seat's hover
+  -  72 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:794:13 › hover · a horizontal pill dock, collapsed, keeps its box to 0 px through every seat's hover
+  -  73 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:794:13 › hover · a horizontal rounded dock, expanded, keeps its box to 0 px through every seat's hover
+  -  74 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:794:13 › hover · a horizontal rounded dock, collapsed, keeps its box to 0 px through every seat's hover
+  -  75 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:794:13 › hover · a horizontal card dock, expanded, keeps its box to 0 px through every seat's hover
+  -  76 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:794:13 › hover · a horizontal card dock, collapsed, keeps its box to 0 px through every seat's hover
+  -  77 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:794:13 › hover · a vertical pill dock, expanded, keeps its box to 0 px through every seat's hover
+  -  78 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:794:13 › hover · a vertical pill dock, collapsed, keeps its box to 0 px through every seat's hover
+  -  79 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:794:13 › hover · a vertical rounded dock, expanded, keeps its box to 0 px through every seat's hover
+  -  80 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:794:13 › hover · a vertical rounded dock, collapsed, keeps its box to 0 px through every seat's hover
+  -  81 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:794:13 › hover · a vertical card dock, expanded, keeps its box to 0 px through every seat's hover
+  -  82 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:794:13 › hover · a vertical card dock, collapsed, keeps its box to 0 px through every seat's hover
+  -  83 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:802:1 › hover · daraksha's pair of fit-content docks keep their boxes to 0 px through every seat's hover
+  ✘  84 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:872:5 › radius · every dock seat's corner is half its block size, at 1440 (6.4s)
+  ✘  85 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:872:5 › radius · every dock seat's corner is half its block size, at 390 (6.4s)
+  ✘  86 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:919:5 › geometry · the Slider's thumb fills the band and its ends are concentric (light) (3.1s)
+  ✘  87 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:919:5 › geometry · the Slider's thumb fills the band and its ends are concentric (dark) (3.1s)
+  ✘  88 [coarse-touch] › tests-visual/slider-forced-colors.spec.ts:25:9 › slider forced colors · a focused Slider keeps a focus mark › slider forced colors · scrubber · the focused mark is an outline that paints (750ms)
+  ✘  89 [coarse-touch] › tests-visual/slider-forced-colors.spec.ts:25:9 › slider forced colors · a focused Slider keeps a focus mark › slider forced colors · invalid · the focused mark is an outline that paints (725ms)
+  ✘  90 [coarse-touch] › tests-visual/slider-forced-colors.spec.ts:25:9 › slider forced colors · a focused Slider keeps a focus mark › slider forced colors · spectrum · the focused mark is an outline that paints (710ms)
+
+
+  1) [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:67:5 › dark · useGlobalDark › dark · a fresh key opens on initialValue while the default key holds auto 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      76 |         const r = await dark(page);
+      77 |         expect(r.stamped).toBe(true);
+    > 78 |         expect(r.isDark).toBe(true);
+         |                          ^
+      79 |         expect(r.htmlDark).toBe(true);
+      80 |         expect(r.site).toBe("dark");
+      81 |         expect(r.fallback).toBe("auto");
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts:78:26
+
+    Error Context: tests-visual/test-results/release-11-0-2-dark-·-useG-014cd--the-default-key-holds-auto-chromium-headless-new/error-context.md
+
+  2) [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:84:5 › dark · useGlobalDark › dark · night chosen twice on a dark system stays night when the system turns light 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: "dark"
+    Received: "auto"
+
+      92 |         await page.evaluate(() => (window as unknown as { __dark: DarkHandle }).__dark.toggle());
+      93 |         await page.waitForTimeout(50);
+    > 94 |         expect((await dark(page)).fallback).toBe("dark");
+         |                                             ^
+      95 |         await page.emulateMedia({ colorScheme: "light" });
+      96 |         await openDark(page, "initial=dark");
+      97 |         await page.waitForTimeout(50);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts:94:45
+
+    Error Context: tests-visual/test-results/release-11-0-2-dark-·-useG-69686-when-the-system-turns-light-chromium-headless-new/error-context.md
+
+  3) [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:217:1 › slider · the thumb paints --card by default and --slider-thumb-bg when set 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: "rgb(200, 30, 60)"
+    Received: "rgb(253, 245, 236)"
+
+      235 |     info.annotations.push({ type: "slider", description: JSON.stringify(r) });
+      236 |     expect(r.unset).toBe(r.card);
+    > 237 |     expect(r.set).toBe("rgb(200, 30, 60)");
+          |                   ^
+      238 | });
+      239 |
+      240 | test("edge · a GlassDock page opens and stays alive", async ({ page }, info) => {
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts:237:19
+
+    Error Context: tests-visual/test-results/release-11-0-2-slider-·-th-3d5eb----slider-thumb-bg-when-set-chromium-headless-new/error-context.md
+
+  4) [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:303:5 › static · a static dock's controls draw no backdrop-filter (light) 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 20
+
+    - Array []
+    + Array [
+    +   Array [
+    +     "Home rest",
+    +     Array [
+    +       "dock-icon-button glass-specular-track glass-capsule-hover glass-capsule: blur(20px) saturate(1.5)",
+    +     ],
+    +   ],
+    +   Array [
+    +     "Home hover",
+    +     Array [
+    +       "dock-icon-button glass-specular-track glass-capsule-hover glass-capsule: blur(20px) saturate(1.5)",
+    +     ],
+    +   ],
+    +   Array [
+    +     "Home press",
+    +     Array [
+    +       "dock-icon-button glass-specular-track glass-capsule-hover glass-capsule: blur(20px) saturate(1.5)",
+    +     ],
+    +   ],
+    + ]
+
+      328 |         info.annotations.push({ type: "static", description: JSON.stringify({ mode, hits }) });
+      329 |         expect(mode).toBe("static");
+    > 330 |         expect(hits).toEqual([]);
+          |                      ^
+      331 |     });
+      332 | }
+      333 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts:330:22
+
+    Error Context: tests-visual/test-results/release-11-0-2-static-·-a--9ec38-w-no-backdrop-filter-light--chromium-headless-new/error-context.md
+
+  5) [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:303:5 › static · a static dock's controls draw no backdrop-filter (dark) 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 20
+
+    - Array []
+    + Array [
+    +   Array [
+    +     "Home rest",
+    +     Array [
+    +       "dock-icon-button glass-specular-track glass-capsule-hover glass-capsule: blur(20px) saturate(1.5)",
+    +     ],
+    +   ],
+    +   Array [
+    +     "Home hover",
+    +     Array [
+    +       "dock-icon-button glass-specular-track glass-capsule-hover glass-capsule: blur(20px) saturate(1.5)",
+    +     ],
+    +   ],
+    +   Array [
+    +     "Home press",
+    +     Array [
+    +       "dock-icon-button glass-specular-track glass-capsule-hover glass-capsule: blur(20px) saturate(1.5)",
+    +     ],
+    +   ],
+    + ]
+
+      328 |         info.annotations.push({ type: "static", description: JSON.stringify({ mode, hits }) });
+      329 |         expect(mode).toBe("static");
+    > 330 |         expect(hits).toEqual([]);
+          |                      ^
+      331 |     });
+      332 | }
+      333 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts:330:22
+
+    Error Context: tests-visual/test-results/release-11-0-2-static-·-a--21ec7-aw-no-backdrop-filter-dark--chromium-headless-new/error-context.md
+
+  6) [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:353:5 › fill · in dark a hovered, pressed or selected seat lifts the plate (static) 
+
+    Error: hover
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0.006
+    Received:   -0.004382926609306392
+
+      380 |         const lift = 0.006;
+      381 |         expect(Math.abs(r.restingTab - r.plate), "a resting tab is the plate").toBeLessThan(0.002);
+    > 382 |         if (!touch) expect(r.hover - r.plate, "hover").toBeGreaterThan(lift);
+          |                                                        ^
+      383 |         expect(r.press - r.plate, "press").toBeGreaterThan(lift);
+      384 |         expect(r.selected - r.plate, "selected").toBeGreaterThan(lift);
+      385 |         expect(r.selectedTab - r.plate, "selected tab").toBeGreaterThan(lift);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts:382:56
+
+    Error Context: tests-visual/test-results/release-11-0-2-fill-·-in-d-b5af1-eat-lifts-the-plate-static--chromium-headless-new/error-context.md
+
+  7) [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:353:5 › fill · in dark a hovered, pressed or selected seat lifts the plate (live) 
+
+    Error: hover
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0.006
+    Received:   -0.007797706973320384
+
+      380 |         const lift = 0.006;
+      381 |         expect(Math.abs(r.restingTab - r.plate), "a resting tab is the plate").toBeLessThan(0.002);
+    > 382 |         if (!touch) expect(r.hover - r.plate, "hover").toBeGreaterThan(lift);
+          |                                                        ^
+      383 |         expect(r.press - r.plate, "press").toBeGreaterThan(lift);
+      384 |         expect(r.selected - r.plate, "selected").toBeGreaterThan(lift);
+      385 |         expect(r.selectedTab - r.plate, "selected tab").toBeGreaterThan(lift);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts:382:56
+
+    Error Context: tests-visual/test-results/release-11-0-2-fill-·-in-d-c0870--seat-lifts-the-plate-live--chromium-headless-new/error-context.md
+
+  8) [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:424:1 › fold · an idle fold lays out once per morph frame on a scrolling page 
+
+    Error: expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 79
+    Received:    245
+
+      458 |     expect(r.morphFrames).toBeGreaterThan(10);
+      459 |     // One layout per morph frame, and a few for the fold's arm and settle.
+    > 460 |     expect(count).toBeLessThanOrEqual(r.morphFrames + 12);
+          |                   ^
+      461 | });
+      462 |
+      463 | test("static · a live dock's active control keeps its capsule lens", async ({ page }) => {
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts:460:19
+
+    Error Context: tests-visual/test-results/release-11-0-2-fold-·-an-i-ccd3a-h-frame-on-a-scrolling-page-chromium-headless-new/error-context.md
+
+  9) [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:562:1 › pager · a neighbour hop paints a neck no wider than the pitch plus a dot 
+
+    Error: token 0.75rem
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 40.5
+    Received:    300.5472106933594
+
+      595 |     for (const hop of hops) {
+      596 |         expect(hop.frames, `the neck bridged the hop to ${hop.to}`).toBeGreaterThan(0);
+    > 597 |         expect(hop.widest, `token ${geo.token}`).toBeLessThanOrEqual(geo.pitch + geo.dot + 0.5);
+          |                                                  ^
+      598 |     }
+      599 | });
+      600 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts:597:50
+
+    Error Context: tests-visual/test-results/release-11-0-2-pager-·-a-n-ef66e-r-than-the-pitch-plus-a-dot-chromium-headless-new/error-context.md
+
+  10) [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:601:1 › wheel · a vertical wheel over a horizontal dock's run scrolls the page 
+
+    Error: the page moved under the dock
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 150
+    Received:   0
+
+      621 |     info.annotations.push({ type: "wheel", description: JSON.stringify({ css, moved }) });
+      622 |     expect(css.overflow, "the run is a real scroller").toBeGreaterThan(0);
+    > 623 |     expect(moved, "the page moved under the dock").toBeGreaterThan(150);
+          |                                                    ^
+      624 |     expect(css).toMatchObject({ x: "contain", y: "auto" });
+      625 | });
+      626 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts:623:52
+
+    Error Context: tests-visual/test-results/release-11-0-2-wheel-·-a-v-aad4b-dock-s-run-scrolls-the-page-chromium-headless-new/error-context.md
+
+  11) [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:627:1 › wheel · a vertical dock's run contains its own axis and passes the other 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 1
+
+      Object {
+    -   "x": "auto",
+    +   "x": "contain",
+        "y": "contain",
+      }
+
+      634 |     });
+      635 |     info.annotations.push({ type: "wheel", description: JSON.stringify(css) });
+    > 636 |     expect(css).toEqual({ x: "auto", y: "contain" });
+          |                 ^
+      637 | });
+      638 |
+      639 | type Box = [number, number, number, number];
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts:636:17
+
+    Error Context: tests-visual/test-results/release-11-0-2-wheel-·-a-v-18436-n-axis-and-passes-the-other-chromium-headless-new/error-context.md
+
+  12) [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:674:1 › rail · a start-anchored rail's close holds its top edge and crest, and ends on the disc 
+
+    Error: expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 89
+    Received:    454.61676025390625
+
+      690 |     }
+      691 |     const bottoms = moving.map((f) => f.root[1] + f.root[3]);
+    > 692 |     for (let i = 1; i < bottoms.length; i++) expect(bottoms[i]!).toBeLessThanOrEqual(bottoms[i - 1]! + 1);
+          |                                                                  ^
+      693 |     const last = moving.at(-1)!;
+      694 |     const settled = frames.at(-1)!;
+      695 |     expect(settled.morphing).toBe(false);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts:692:66
+
+    Error Context: tests-visual/test-results/release-11-0-2-rail-·-a-st-c6ee6--crest-and-ends-on-the-disc-chromium-headless-new/error-context.md
+
+  13) [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:700:1 › rail · a start-anchored rail's open holds the crest from its first frame, the foot inside the plate 
+
+    Error: expect(received).toBeLessThan(expected)
+
+    Expected: < 2
+    Received:   46.99998092651367
+
+      708 |     info.annotations.push({ type: "rail", description: JSON.stringify({ disc, frames: moving.map((f) => [...f.root.map(Math.round), Math.round(f.crest[1]), f.foot ? f.foot.map(Math.round) : null]) }) });
+      709 |     expect(moving.length, "the open is a morph").toBeGreaterThan(6);
+    > 710 |     expect(Math.abs(moving[0]!.crest[1] - disc[1]!)).toBeLessThan(2);
+          |                                                      ^
+      711 |     for (const f of moving) {
+      712 |         expect(f.crest[1], "crest never above the plate").toBeGreaterThanOrEqual(f.root[1] - 1.5);
+      713 |         if (f.foot) {
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts:710:54
+
+    Error Context: tests-visual/test-results/release-11-0-2-rail-·-a-st-96ce3-e-the-foot-inside-the-plate-chromium-headless-new/error-context.md
+
+  14) [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:872:5 › radius · every dock seat's corner is half its block size, at 1440 
+
+    Error: trigger: the unpainted corner area
+
+    expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 55.33546079775887
+    Received:    49.65625000000002
+
+      911 |         for (const [kind, cell] of Object.entries(cells)) {
+      912 |             expect(cell.span, `${kind} paints a plate`).toBeGreaterThan(12);
+    > 913 |             expect(cell.measured, `${kind}: the unpainted corner area`).toBeGreaterThanOrEqual(cell.expected * 0.8);
+          |                                                                         ^
+      914 |         }
+      915 |     });
+      916 | }
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts:913:73
+
+    Error Context: tests-visual/test-results/release-11-0-2-radius-·-ev-2f393-half-its-block-size-at-1440-chromium-headless-new/error-context.md
+
+  15) [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:872:5 › radius · every dock seat's corner is half its block size, at 390 
+
+    Error: tab: the unpainted corner area
+
+    expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 61.97701041081694
+    Received:    54.52243589743591
+
+      911 |         for (const [kind, cell] of Object.entries(cells)) {
+      912 |             expect(cell.span, `${kind} paints a plate`).toBeGreaterThan(12);
+    > 913 |             expect(cell.measured, `${kind}: the unpainted corner area`).toBeGreaterThanOrEqual(cell.expected * 0.8);
+          |                                                                         ^
+      914 |         }
+      915 |     });
+      916 | }
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts:913:73
+
+    Error Context: tests-visual/test-results/release-11-0-2-radius-·-ev-ae7a4--half-its-block-size-at-390-chromium-headless-new/error-context.md
+
+  16) [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:919:5 › geometry · the Slider's thumb fills the band and its ends are concentric (light) 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  -   1
+    + Received  + 371
+
+    - Array []
+    + Array [
+    +   "scrubber-sm-horizontal @0: diameter-inline off by -4.00",
+    +   "scrubber-sm-horizontal @0: diameter-block off by -4.00",
+    +   "scrubber-sm-horizontal @0: on the line between the end centres off by -2.00",
+    +   "scrubber-sm-horizontal @0: concentric with the fill's cap off by 2.00",
+    +   "scrubber-sm-vertical @0: diameter-inline off by -4.00",
+    +   "scrubber-sm-vertical @0: diameter-block off by -4.00",
+    +   "scrubber-sm-vertical @0: on the line between the end centres off by -2.00",
+    +   "scrubber-sm-vertical @0: concentric with the fill's cap off by 2.00",
+    +   "scrubber-md-horizontal @0: diameter-inline off by -4.00",
+    +   "scrubber-md-horizontal @0: diameter-block off by -4.00",
+    +   "scrubber-md-horizontal @0: on the line between the end centres off by -2.00",
+    +   "scrubber-md-horizontal @0: concentric with the fill's cap off by 2.00",
+    +   "scrubber-md-vertical @0: diameter-inline off by -4.00",
+    +   "scrubber-md-vertical @0: diameter-block off by -4.00",
+    +   "scrubber-md-vertical @0: on the line between the end centres off by -2.00",
+    +   "scrubber-md-vertical @0: concentric with the fill's cap off by 2.00",
+    +   "scrubber-lg-horizontal @0: diameter-inline off by -4.00",
+    +   "scrubber-lg-horizontal @0: diameter-block off by -4.00",
+    +   "scrubber-lg-horizontal @0: on the line between the end centres off by -2.00",
+    +   "scrubber-lg-horizontal @0: concentric with the fill's cap off by 2.00",
+    +   "scrubber-lg-vertical @0: diameter-inline off by -4.00",
+    +   "scrubber-lg-vertical @0: diameter-block off by -4.00",
+    +   "scrubber-lg-vertical @0: on the line between the end centres off by -2.00",
+    +   "scrubber-lg-vertical @0: concentric with the fill's cap off by 2.00",
+    +   "spectrum-sm-horizontal @0: diameter-inline off by -6.00",
+    +   "spectrum-sm-horizontal @0: on the line between the end centres off by -3.00",
+    +   "spectrum-sm-vertical @0: diameter-block off by -6.00",
+    +   "spectrum-sm-vertical @0: on the line between the end centres off by -3.00",
+    +   "spectrum-md-horizontal @0: diameter-inline off by -12.00",
+    +   "spectrum-md-horizontal @0: on the line between the end centres off by -6.00",
+    +   "spectrum-md-vertical @0: diameter-block off by -12.00",
+    +   "spectrum-md-vertical @0: on the line between the end centres off by -6.00",
+    +   "spectrum-lg-horizontal @0: diameter-inline off by -18.00",
+    +   "spectrum-lg-horizontal @0: on the line between the end centres off by -9.00",
+    +   "spectrum-lg-vertical @0: diameter-block off by -18.00",
+    +   "spectrum-lg-vertical @0: on the line between the end centres off by -9.00",
+    +   "scrubber-md-horizontal-inverted @0: diameter-inline off by -4.00",
+    +   "scrubber-md-horizontal-inverted @0: diameter-block off by -4.00",
+    +   "scrubber-md-horizontal-inverted @0: on the line between the end centres off by -2.00",
+    +   "scrubber-md-horizontal-inverted @0: concentric with the fill's cap off by 2.00",
+    +   "scrubber-md-horizontal-rtl @0: diameter-inline off by -4.00",
+    +   "scrubber-md-horizontal-rtl @0: diameter-block off by -4.00",
+    +   "scrubber-md-horizontal-rtl @0: on the line between the end centres off by -2.00",
+    +   "scrubber-md-horizontal-rtl @0: concentric with the fill's cap off by 2.00",
+    +   "scrubber-md-vertical-inverted @0: diameter-inline off by -4.00",
+    +   "scrubber-md-vertical-inverted @0: diameter-block off by -4.00",
+    +   "scrubber-md-vertical-inverted @0: on the line between the end centres off by -2.00",
+    +   "scrubber-md-vertical-inverted @0: concentric with the fill's cap off by 2.00",
+    +   "scrubber-sm-horizontal @1: diameter-inline off by -4.00",
+    +   "scrubber-sm-horizontal @1: diameter-block off by -4.00",
+    +   "scrubber-sm-horizontal @1: on the line between the end centres off by -1.97",
+    +   "scrubber-sm-horizontal @1: concentric with the fill's cap off by 1.98",
+    +   "scrubber-sm-vertical @1: diameter-inline off by -4.00",
+    +   "scrubber-sm-vertical @1: diameter-block off by -4.00",
+    +   "scrubber-sm-vertical @1: on the line between the end centres off by -1.97",
+    +   "scrubber-sm-vertical @1: concentric with the fill's cap off by 1.98",
+    +   "scrubber-md-horizontal @1: diameter-inline off by -4.00",
+    +   "scrubber-md-horizontal @1: diameter-block off by -4.00",
+    +   "scrubber-md-horizontal @1: on the line between the end centres off by -1.97",
+    +   "scrubber-md-horizontal @1: concentric with the fill's cap off by 1.98",
+    +   "scrubber-md-vertical @1: diameter-inline off by -4.00",
+    +   "scrubber-md-vertical @1: diameter-block off by -4.00",
+    +   "scrubber-md-vertical @1: on the line between the end centres off by -1.97",
+    +   "scrubber-md-vertical @1: concentric with the fill's cap off by 1.98",
+    +   "scrubber-lg-horizontal @1: diameter-inline off by -4.00",
+    +   "scrubber-lg-horizontal @1: diameter-block off by -4.00",
+    +   "scrubber-lg-horizontal @1: on the line between the end centres off by -1.97",
+    +   "scrubber-lg-horizontal @1: concentric with the fill's cap off by 1.98",
+    +   "scrubber-lg-vertical @1: diameter-inline off by -4.00",
+    +   "scrubber-lg-vertical @1: diameter-block off by -4.00",
+    +   "scrubber-lg-vertical @1: on the line between the end centres off by -1.97",
+    +   "scrubber-lg-vertical @1: concentric with the fill's cap off by 1.98",
+    +   "spectrum-sm-horizontal @1: diameter-inline off by -6.00",
+    +   "spectrum-sm-horizontal @1: on the line between the end centres off by -2.96",
+    +   "spectrum-sm-vertical @1: diameter-block off by -6.00",
+    +   "spectrum-sm-vertical @1: on the line between the end centres off by -2.94",
+    +   "spectrum-md-horizontal @1: diameter-inline off by -12.00",
+    +   "spectrum-md-horizontal @1: on the line between the end centres off by -5.88",
+    +   "spectrum-md-vertical @1: diameter-block off by -12.00",
+    +   "spectrum-md-vertical @1: on the line between the end centres off by -5.88",
+    +   "spectrum-lg-horizontal @1: diameter-inline off by -18.00",
+    +   "spectrum-lg-horizontal @1: on the line between the end centres off by -8.82",
+    +   "spectrum-lg-vertical @1: diameter-block off by -18.00",
+    +   "spectrum-lg-vertical @1: on the line between the end centres off by -8.83",
+    +   "scrubber-md-horizontal-inverted @1: diameter-inline off by -4.00",
+    +   "scrubber-md-horizontal-inverted @1: diameter-block off by -4.00",
+    +   "scrubber-md-horizontal-inverted @1: on the line between the end centres off by -1.95",
+    +   "scrubber-md-horizontal-inverted @1: concentric with the fill's cap off by 2.00",
+    +   "scrubber-md-horizontal-rtl @1: diameter-inline off by -4.00",
+    +   "scrubber-md-horizontal-rtl @1: diameter-block off by -4.00",
+    +   "scrubber-md-horizontal-rtl @1: on the line between the end centres off by -1.95",
+    +   "scrubber-md-horizontal-rtl @1: concentric with the fill's cap off by 2.00",
+    +   "scrubber-md-vertical-inverted @1: diameter-inline off by -4.00",
+    +   "scrubber-md-vertical-inverted @1: diameter-block off by -4.00",
+    +   "scrubber-md-vertical-inverted @1: on the line between the end centres off by -1.95",
+    +   "scrubber-md-vertical-inverted @1: concentric with the fill's cap off by 2.00",
+    +   "scrubber-sm-horizontal @5: diameter-inline off by -4.00",
+    +   "scrubber-sm-horizontal @5: diameter-block off by -4.00",
+    +   "scrubber-sm-horizontal @5: on the line between the end centres off by -1.81",
+    +   "scrubber-sm-horizontal @5: concentric with the fill's cap off by 1.98",
+    +   "scrubber-sm-vertical @5: diameter-inline off by -4.00",
+    +   "scrubber-sm-vertical @5: diameter-block off by -4.00",
+    +   "scrubber-sm-vertical @5: on the line between the end centres off by -1.81",
+    +   "scrubber-sm-vertical @5: concentric with the fill's cap off by 1.98",
+    +   "scrubber-md-horizontal @5: diameter-inline off by -4.00",
+    +   "scrubber-md-horizontal @5: diameter-block off by -4.00",
+    +   "scrubber-md-horizontal @5: on the line between the end centres off by -1.81",
+    +   "scrubber-md-horizontal @5: concentric with the fill's cap off by 1.98",
+    +   "scrubber-md-vertical @5: diameter-inline off by -4.00",
+    +   "scrubber-md-vertical @5: diameter-block off by -4.00",
+    +   "scrubber-md-vertical @5: on the line between the end centres off by -1.80",
+    +   "scrubber-md-vertical @5: concentric with the fill's cap off by 1.98",
+    +   "scrubber-lg-horizontal @5: diameter-inline off by -4.00",
+    +   "scrubber-lg-horizontal @5: diameter-block off by -4.00",
+    +   "scrubber-lg-horizontal @5: on the line between the end centres off by -1.80",
+    +   "scrubber-lg-horizontal @5: concentric with the fill's cap off by 1.98",
+    +   "scrubber-lg-vertical @5: diameter-inline off by -4.00",
+    +   "scrubber-lg-vertical @5: diameter-block off by -4.00",
+    +   "scrubber-lg-vertical @5: on the line between the end centres off by -1.81",
+    +   "scrubber-lg-vertical @5: concentric with the fill's cap off by 1.98",
+    +   "spectrum-sm-horizontal @5: diameter-inline off by -6.00",
+    +   "spectrum-sm-horizontal @5: on the line between the end centres off by -2.71",
+    +   "spectrum-sm-vertical @5: diameter-block off by -6.00",
+    +   "spectrum-sm-vertical @5: on the line between the end centres off by -2.70",
+    +   "spectrum-md-horizontal @5: diameter-inline off by -12.00",
+    +   "spectrum-md-horizontal @5: on the line between the end centres off by -5.41",
+    +   "spectrum-md-vertical @5: diameter-block off by -12.00",
+    +   "spectrum-md-vertical @5: on the line between the end centres off by -5.40",
+    +   "spectrum-lg-horizontal @5: diameter-inline off by -18.00",
+    +   "spectrum-lg-horizontal @5: on the line between the end centres off by -8.11",
+    +   "spectrum-lg-vertical @5: diameter-block off by -18.00",
+    +   "spectrum-lg-vertical @5: on the line between the end centres off by -8.11",
+    +   "scrubber-md-horizontal-inverted @5: diameter-inline off by -4.00",
+    +   "scrubber-md-horizontal-inverted @5: diameter-block off by -4.00",
+    +   "scrubber-md-horizontal-inverted @5: on the line between the end centres off by -1.81",
+    +   "scrubber-md-horizontal-inverted @5: concentric with the fill's cap off by 1.98",
+    +   "scrubber-md-horizontal-rtl @5: diameter-inline off by -4.00",
+    +   "scrubber-md-horizontal-rtl @5: diameter-block off by -4.00",
+    +   "scrubber-md-horizontal-rtl @5: on the line between the end centres off by -1.81",
+    +   "scrubber-md-horizontal-rtl @5: concentric with the fill's cap off by 1.98",
+    +   "scrubber-md-vertical-inverted @5: diameter-inline off by -4.00",
+    +   "scrubber-md-vertical-inverted @5: diameter-block off by -4.00",
+    +   "scrubber-md-vertical-inverted @5: on the line between the end centres off by -1.80",
+    +   "scrubber-md-vertical-inverted @5: concentric with the fill's cap off by 1.98",
+    +   "scrubber-sm-horizontal @25: diameter-inline off by -4.00",
+    +   "scrubber-sm-horizontal @25: diameter-block off by -4.00",
+    +   "scrubber-sm-horizontal @25: on the line between the end centres off by -1.00",
+    +   "scrubber-sm-horizontal @25: concentric with the fill's cap off by 2.00",
+    +   "scrubber-sm-vertical @25: diameter-inline off by -4.00",
+    +   "scrubber-sm-vertical @25: diameter-block off by -4.00",
+    +   "scrubber-sm-vertical @25: on the line between the end centres off by -1.00",
+    +   "scrubber-sm-vertical @25: concentric with the fill's cap off by 2.00",
+    +   "scrubber-md-horizontal @25: diameter-inline off by -4.00",
+    +   "scrubber-md-horizontal @25: diameter-block off by -4.00",
+    +   "scrubber-md-horizontal @25: on the line between the end centres off by -1.00",
+    +   "scrubber-md-horizontal @25: concentric with the fill's cap off by 2.00",
+    +   "scrubber-md-vertical @25: diameter-inline off by -4.00",
+    +   "scrubber-md-vertical @25: diameter-block off by -4.00",
+    +   "scrubber-md-vertical @25: on the line between the end centres off by -1.00",
+    +   "scrubber-md-vertical @25: concentric with the fill's cap off by 2.00",
+    +   "scrubber-lg-horizontal @25: diameter-inline off by -4.00",
+    +   "scrubber-lg-horizontal @25: diameter-block off by -4.00",
+    +   "scrubber-lg-horizontal @25: on the line between the end centres off by -1.00",
+    +   "scrubber-lg-horizontal @25: concentric with the fill's cap off by 2.00",
+    +   "scrubber-lg-vertical @25: diameter-inline off by -4.00",
+    +   "scrubber-lg-vertical @25: diameter-block off by -4.00",
+    +   "scrubber-lg-vertical @25: on the line between the end centres off by -1.00",
+    +   "scrubber-lg-vertical @25: concentric with the fill's cap off by 2.00",
+    +   "spectrum-sm-horizontal @25: diameter-inline off by -6.00",
+    +   "spectrum-sm-horizontal @25: on the line between the end centres off by -1.50",
+    +   "spectrum-sm-vertical @25: diameter-block off by -6.00",
+    +   "spectrum-sm-vertical @25: on the line between the end centres off by -1.50",
+    +   "spectrum-md-horizontal @25: diameter-inline off by -12.00",
+    +   "spectrum-md-horizontal @25: on the line between the end centres off by -3.00",
+    +   "spectrum-md-vertical @25: diameter-block off by -12.00",
+    +   "spectrum-md-vertical @25: on the line between the end centres off by -3.00",
+    +   "spectrum-lg-horizontal @25: diameter-inline off by -18.00",
+    +   "spectrum-lg-horizontal @25: on the line between the end centres off by -4.50",
+    +   "spectrum-lg-vertical @25: diameter-block off by -18.00",
+    +   "spectrum-lg-vertical @25: on the line between the end centres off by -4.50",
+    +   "scrubber-md-horizontal-inverted @25: diameter-inline off by -4.00",
+    +   "scrubber-md-horizontal-inverted @25: diameter-block off by -4.00",
+    +   "scrubber-md-horizontal-inverted @25: on the line between the end centres off by -1.00",
+    +   "scrubber-md-horizontal-inverted @25: concentric with the fill's cap off by 2.00",
+    +   "scrubber-md-horizontal-rtl @25: diameter-inline off by -4.00",
+    +   "scrubber-md-horizontal-rtl @25: diameter-block off by -4.00",
+    +   "scrubber-md-horizontal-rtl @25: on the line between the end centres off by -1.00",
+    +   "scrubber-md-horizontal-rtl @25: concentric with the fill's cap off by 2.00",
+    +   "scrubber-md-vertical-inverted @25: diameter-inline off by -4.00",
+    +   "scrubber-md-vertical-inverted @25: diameter-block off by -4.00",
+    +   "scrubber-md-vertical-inverted @25: on the line between the end centres off by -1.00",
+    +   "scrubber-md-vertical-inverted @25: concentric with the fill's cap off by 2.00",
+    +   "scrubber-sm-horizontal @50: diameter-inline off by -4.00",
+    +   "scrubber-sm-horizontal @50: diameter-block off by -4.00",
+    +   "scrubber-sm-horizontal @50: concentric with the fill's cap off by 2.00",
+    +   "scrubber-sm-vertical @50: diameter-inline off by -4.00",
+    +   "scrubber-sm-vertical @50: diameter-block off by -4.00",
+    +   "scrubber-sm-vertical @50: concentric with the fill's cap off by 2.00",
+    +   "scrubber-md-horizontal @50: diameter-inline off by -4.00",
+    +   "scrubber-md-horizontal @50: diameter-block off by -4.00",
+    +   "scrubber-md-horizontal @50: concentric with the fill's cap off by 2.00",
+    +   "scrubber-md-vertical @50: diameter-inline off by -4.00",
+    +   "scrubber-md-vertical @50: diameter-block off by -4.00",
+    +   "scrubber-md-vertical @50: concentric with the fill's cap off by 2.00",
+    +   "scrubber-lg-horizontal @50: diameter-inline off by -4.00",
+    +   "scrubber-lg-horizontal @50: diameter-block off by -4.00",
+    +   "scrubber-lg-horizontal @50: concentric with the fill's cap off by 2.00",
+    +   "scrubber-lg-vertical @50: diameter-inline off by -4.00",
+    +   "scrubber-lg-vertical @50: diameter-block off by -4.00",
+    +   "scrubber-lg-vertical @50: concentric with the fill's cap off by 2.00",
+    +   "spectrum-sm-horizontal @50: diameter-inline off by -6.00",
+    +   "spectrum-sm-vertical @50: diameter-block off by -6.00",
+    +   "spectrum-md-horizontal @50: diameter-inline off by -12.00",
+    +   "spectrum-md-vertical @50: diameter-block off by -12.00",
+    +   "spectrum-lg-horizontal @50: diameter-inline off by -18.00",
+    +   "spectrum-lg-vertical @50: diameter-block off by -18.00",
+    +   "scrubber-md-horizontal-inverted @50: diameter-inline off by -4.00",
+    +   "scrubber-md-horizontal-inverted @50: diameter-block off by -4.00",
+    +   "scrubber-md-horizontal-inverted @50: concentric with the fill's cap off by 2.00",
+    +   "scrubber-md-horizontal-rtl @50: diameter-inline off by -4.00",
+    +   "scrubber-md-horizontal-rtl @50: diameter-block off by -4.00",
+    +   "scrubber-md-horizontal-rtl @50: concentric with the fill's cap off by 2.00",
+    +   "scrubber-md-vertical-inverted @50: diameter-inline off by -4.00",
+    +   "scrubber-md-vertical-inverted @50: diameter-block off by -4.00",
+    +   "scrubber-md-vertical-inverted @50: concentric with the fill's cap off by 2.00",
+    +   "scrubber-sm-horizontal @95: diameter-inline off by -4.00",
+    +   "scrubber-sm-horizontal @95: diameter-block off by -4.00",
+    +   "scrubber-sm-horizontal @95: on the line between the end centres off by 1.79",
+    +   "scrubber-sm-horizontal @95: concentric with the fill's cap off by 1.98",
+    +   "scrubber-sm-vertical @95: diameter-inline off by -4.00",
+    +   "scrubber-sm-vertical @95: diameter-block off by -4.00",
+    +   "scrubber-sm-vertical @95: on the line between the end centres off by 1.80",
+    +   "scrubber-sm-vertical @95: concentric with the fill's cap off by 1.98",
+    +   "scrubber-md-horizontal @95: diameter-inline off by -4.00",
+    +   "scrubber-md-horizontal @95: diameter-block off by -4.00",
+    +   "scrubber-md-horizontal @95: on the line between the end centres off by 1.80",
+    +   "scrubber-md-horizontal @95: concentric with the fill's cap off by 1.98",
+    +   "scrubber-md-vertical @95: diameter-inline off by -4.00",
+    +   "scrubber-md-vertical @95: diameter-block off by -4.00",
+    +   "scrubber-md-vertical @95: on the line between the end centres off by 1.79",
+    +   "scrubber-md-vertical @95: concentric with the fill's cap off by 1.98",
+    +   "scrubber-lg-horizontal @95: diameter-inline off by -4.00",
+    +   "scrubber-lg-horizontal @95: diameter-block off by -4.00",
+    +   "scrubber-lg-horizontal @95: on the line between the end centres off by 1.79",
+    +   "scrubber-lg-horizontal @95: concentric with the fill's cap off by 1.98",
+    +   "scrubber-lg-vertical @95: diameter-inline off by -4.00",
+    +   "scrubber-lg-vertical @95: diameter-block off by -4.00",
+    +   "scrubber-lg-vertical @95: on the line between the end centres off by 1.79",
+    +   "scrubber-lg-vertical @95: concentric with the fill's cap off by 1.98",
+    +   "spectrum-sm-horizontal @95: diameter-inline off by -6.00",
+    +   "spectrum-sm-horizontal @95: on the line between the end centres off by 2.70",
+    +   "spectrum-sm-vertical @95: diameter-block off by -6.00",
+    +   "spectrum-sm-vertical @95: on the line between the end centres off by 2.69",
+    +   "spectrum-md-horizontal @95: diameter-inline off by -12.00",
+    +   "spectrum-md-horizontal @95: on the line between the end centres off by 5.39",
+    +   "spectrum-md-vertical @95: diameter-block off by -12.00",
+    +   "spectrum-md-vertical @95: on the line between the end centres off by 5.40",
+    +   "spectrum-lg-horizontal @95: diameter-inline off by -18.00",
+    +   "spectrum-lg-horizontal @95: on the line between the end centres off by 8.09",
+    +   "spectrum-lg-vertical @95: diameter-block off by -18.00",
+    +   "spectrum-lg-vertical @95: on the line between the end centres off by 8.10",
+    +   "scrubber-md-horizontal-inverted @95: diameter-inline off by -4.00",
+    +   "scrubber-md-horizontal-inverted @95: diameter-block off by -4.00",
+    +   "scrubber-md-horizontal-inverted @95: on the line between the end centres off by 1.80",
+    +   "scrubber-md-horizontal-inverted @95: concentric with the fill's cap off by 1.98",
+    +   "scrubber-md-horizontal-rtl @95: diameter-inline off by -4.00",
+    +   "scrubber-md-horizontal-rtl @95: diameter-block off by -4.00",
+    +   "scrubber-md-horizontal-rtl @95: on the line between the end centres off by 1.80",
+    +   "scrubber-md-horizontal-rtl @95: concentric with the fill's cap off by 1.98",
+    +   "scrubber-md-vertical-inverted @95: diameter-inline off by -4.00",
+    +   "scrubber-md-vertical-inverted @95: diameter-block off by -4.00",
+    +   "scrubber-md-vertical-inverted @95: on the line between the end centres off by 1.79",
+    +   "scrubber-md-vertical-inverted @95: concentric with the fill's cap off by 1.98",
+    +   "scrubber-sm-horizontal @99: diameter-inline off by -4.00",
+    +   "scrubber-sm-horizontal @99: diameter-block off by -4.00",
+    +   "scrubber-sm-horizontal @99: on the line between the end centres off by 1.95",
+    +   "scrubber-sm-horizontal @99: concentric with the fill's cap off by 1.98",
+    +   "scrubber-sm-vertical @99: diameter-inline off by -4.00",
+    +   "scrubber-sm-vertical @99: diameter-block off by -4.00",
+    +   "scrubber-sm-vertical @99: on the line between the end centres off by 1.96",
+    +   "scrubber-sm-vertical @99: concentric with the fill's cap off by 1.98",
+    +   "scrubber-md-horizontal @99: diameter-inline off by -4.00",
+    +   "scrubber-md-horizontal @99: diameter-block off by -4.00",
+    +   "scrubber-md-horizontal @99: on the line between the end centres off by 1.95",
+    +   "scrubber-md-horizontal @99: concentric with the fill's cap off by 1.98",
+    +   "scrubber-md-vertical @99: diameter-inline off by -4.00",
+    +   "scrubber-md-vertical @99: diameter-block off by -4.00",
+    +   "scrubber-md-vertical @99: on the line between the end centres off by 1.95",
+    +   "scrubber-md-vertical @99: concentric with the fill's cap off by 1.98",
+    +   "scrubber-lg-horizontal @99: diameter-inline off by -4.00",
+    +   "scrubber-lg-horizontal @99: diameter-block off by -4.00",
+    +   "scrubber-lg-horizontal @99: on the line between the end centres off by 1.95",
+    +   "scrubber-lg-horizontal @99: concentric with the fill's cap off by 1.98",
+    +   "scrubber-lg-vertical @99: diameter-inline off by -4.00",
+    +   "scrubber-lg-vertical @99: diameter-block off by -4.00",
+    +   "scrubber-lg-vertical @99: on the line between the end centres off by 1.95",
+    +   "scrubber-lg-vertical @99: concentric with the fill's cap off by 1.98",
+    +   "spectrum-sm-horizontal @99: diameter-inline off by -6.00",
+    +   "spectrum-sm-horizontal @99: on the line between the end centres off by 2.94",
+    +   "spectrum-sm-vertical @99: diameter-block off by -6.00",
+    +   "spectrum-sm-vertical @99: on the line between the end centres off by 2.93",
+    +   "spectrum-md-horizontal @99: diameter-inline off by -12.00",
+    +   "spectrum-md-horizontal @99: on the line between the end centres off by 5.87",
+    +   "spectrum-md-vertical @99: diameter-block off by -12.00",
+    +   "spectrum-md-vertical @99: on the line between the end centres off by 5.87",
+    +   "spectrum-lg-horizontal @99: diameter-inline off by -18.00",
+    +   "spectrum-lg-horizontal @99: on the line between the end centres off by 8.81",
+    +   "spectrum-lg-vertical @99: diameter-block off by -18.00",
+    +   "spectrum-lg-vertical @99: on the line between the end centres off by 8.81",
+    +   "scrubber-md-horizontal-inverted @99: diameter-inline off by -4.00",
+    +   "scrubber-md-horizontal-inverted @99: diameter-block off by -4.00",
+    +   "scrubber-md-horizontal-inverted @99: on the line between the end centres off by 1.95",
+    +   "scrubber-md-horizontal-inverted @99: concentric with the fill's cap off by 1.98",
+    +   "scrubber-md-horizontal-rtl @99: diameter-inline off by -4.00",
+    +   "scrubber-md-horizontal-rtl @99: diameter-block off by -4.00",
+    +   "scrubber-md-horizontal-rtl @99: on the line between the end centres off by 1.95",
+    +   "scrubber-md-horizontal-rtl @99: concentric with the fill's cap off by 1.98",
+    +   "scrubber-md-vertical-inverted @99: diameter-inline off by -4.00",
+    +   "scrubber-md-vertical-inverted @99: diameter-block off by -4.00",
+    +   "scrubber-md-vertical-inverted @99: on the line between the end centres off by 1.95",
+    +   "scrubber-md-vertical-inverted @99: concentric with the fill's cap off by 1.98",
+    +   "scrubber-sm-horizontal @100: diameter-inline off by -4.00",
+    +   "scrubber-sm-horizontal @100: diameter-block off by -4.00",
+    +   "scrubber-sm-horizontal @100: on the line between the end centres off by 2.00",
+    +   "scrubber-sm-horizontal @100: concentric with the fill's cap off by 2.00",
+    +   "scrubber-sm-vertical @100: diameter-inline off by -4.00",
+    +   "scrubber-sm-vertical @100: diameter-block off by -4.00",
+    +   "scrubber-sm-vertical @100: on the line between the end centres off by 2.00",
+    +   "scrubber-sm-vertical @100: concentric with the fill's cap off by 2.00",
+    +   "scrubber-md-horizontal @100: diameter-inline off by -4.00",
+    +   "scrubber-md-horizontal @100: diameter-block off by -4.00",
+    +   "scrubber-md-horizontal @100: on the line between the end centres off by 2.00",
+    +   "scrubber-md-horizontal @100: concentric with the fill's cap off by 2.00",
+    +   "scrubber-md-vertical @100: diameter-inline off by -4.00",
+    +   "scrubber-md-vertical @100: diameter-block off by -4.00",
+    +   "scrubber-md-vertical @100: on the line between the end centres off by 2.00",
+    +   "scrubber-md-vertical @100: concentric with the fill's cap off by 2.00",
+    +   "scrubber-lg-horizontal @100: diameter-inline off by -4.00",
+    +   "scrubber-lg-horizontal @100: diameter-block off by -4.00",
+    +   "scrubber-lg-horizontal @100: on the line between the end centres off by 2.00",
+    +   "scrubber-lg-horizontal @100: concentric with the fill's cap off by 2.00",
+    +   "scrubber-lg-vertical @100: diameter-inline off by -4.00",
+    +   "scrubber-lg-vertical @100: diameter-block off by -4.00",
+    +   "scrubber-lg-vertical @100: on the line between the end centres off by 2.00",
+    +   "scrubber-lg-vertical @100: concentric with the fill's cap off by 2.00",
+    +   "spectrum-sm-horizontal @100: diameter-inline off by -6.00",
+    +   "spectrum-sm-horizontal @100: on the line between the end centres off by 3.00",
+    +   "spectrum-sm-vertical @100: diameter-block off by -6.00",
+    +   "spectrum-sm-vertical @100: on the line between the end centres off by 3.00",
+    +   "spectrum-md-horizontal @100: diameter-inline off by -12.00",
+    +   "spectrum-md-horizontal @100: on the line between the end centres off by 6.00",
+    +   "spectrum-md-vertical @100: diameter-block off by -12.00",
+    +   "spectrum-md-vertical @100: on the line between the end centres off by 6.00",
+    +   "spectrum-lg-horizontal @100: diameter-inline off by -18.00",
+    +   "spectrum-lg-horizontal @100: on the line between the end centres off by 9.00",
+    +   "spectrum-lg-vertical @100: diameter-block off by -18.00",
+    +   "spectrum-lg-vertical @100: on the line between the end centres off by 9.00",
+    +   "scrubber-md-horizontal-inverted @100: diameter-inline off by -4.00",
+    +   "scrubber-md-horizontal-inverted @100: diameter-block off by -4.00",
+    +   "scrubber-md-horizontal-inverted @100: on the line between the end centres off by 2.00",
+    +   "scrubber-md-horizontal-inverted @100: concentric with the fill's cap off by 2.00",
+    +   "scrubber-md-horizontal-rtl @100: diameter-inline off by -4.00",
+    +   "scrubber-md-horizontal-rtl @100: diameter-block off by -4.00",
+    +   "scrubber-md-horizontal-rtl @100: on the line between the end centres off by 2.00",
+    +   "scrubber-md-horizontal-rtl @100: concentric with the fill's cap off by 2.00",
+    +   "scrubber-md-vertical-inverted @100: diameter-inline off by -4.00",
+    +   "scrubber-md-vertical-inverted @100: diameter-block off by -4.00",
+    +   "scrubber-md-vertical-inverted @100: on the line between the end centres off by 2.00",
+    +   "scrubber-md-vertical-inverted @100: concentric with the fill's cap off by 2.00",
+    + ]
+
+      970 |         }
+      971 |         info.annotations.push({ type: "geometry", description: JSON.stringify({ worst, fails: fails.slice(0, 40), count: fails.length }) });
+    > 972 |         expect(fails).toEqual([]);
+          |                       ^
+      973 |     });
+      974 | }
+      975 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts:972:23
+
+    Error Context: tests-visual/test-results/release-11-0-2-geometry-·--b1e41--ends-are-concentric-light--chromium-headless-new/error-context.md
+
+  17) [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:919:5 › geometry · the Slider's thumb fills the band and its ends are concentric (dark) 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  -   1
+    + Received  + 371
+
+    - Array []
+    + Array [
+    +   "scrubber-sm-horizontal @0: diameter-inline off by -4.00",
+    +   "scrubber-sm-horizontal @0: diameter-block off by -4.00",
+    +   "scrubber-sm-horizontal @0: on the line between the end centres off by -2.00",
+    +   "scrubber-sm-horizontal @0: concentric with the fill's cap off by 2.00",
+    +   "scrubber-sm-vertical @0: diameter-inline off by -4.00",
+    +   "scrubber-sm-vertical @0: diameter-block off by -4.00",
+    +   "scrubber-sm-vertical @0: on the line between the end centres off by -2.00",
+    +   "scrubber-sm-vertical @0: concentric with the fill's cap off by 2.00",
+    +   "scrubber-md-horizontal @0: diameter-inline off by -4.00",
+    +   "scrubber-md-horizontal @0: diameter-block off by -4.00",
+    +   "scrubber-md-horizontal @0: on the line between the end centres off by -2.00",
+    +   "scrubber-md-horizontal @0: concentric with the fill's cap off by 2.00",
+    +   "scrubber-md-vertical @0: diameter-inline off by -4.00",
+    +   "scrubber-md-vertical @0: diameter-block off by -4.00",
+    +   "scrubber-md-vertical @0: on the line between the end centres off by -2.00",
+    +   "scrubber-md-vertical @0: concentric with the fill's cap off by 2.00",
+    +   "scrubber-lg-horizontal @0: diameter-inline off by -4.00",
+    +   "scrubber-lg-horizontal @0: diameter-block off by -4.00",
+    +   "scrubber-lg-horizontal @0: on the line between the end centres off by -2.00",
+    +   "scrubber-lg-horizontal @0: concentric with the fill's cap off by 2.00",
+    +   "scrubber-lg-vertical @0: diameter-inline off by -4.00",
+    +   "scrubber-lg-vertical @0: diameter-block off by -4.00",
+    +   "scrubber-lg-vertical @0: on the line between the end centres off by -2.00",
+    +   "scrubber-lg-vertical @0: concentric with the fill's cap off by 2.00",
+    +   "spectrum-sm-horizontal @0: diameter-inline off by -6.00",
+    +   "spectrum-sm-horizontal @0: on the line between the end centres off by -3.00",
+    +   "spectrum-sm-vertical @0: diameter-block off by -6.00",
+    +   "spectrum-sm-vertical @0: on the line between the end centres off by -3.00",
+    +   "spectrum-md-horizontal @0: diameter-inline off by -12.00",
+    +   "spectrum-md-horizontal @0: on the line between the end centres off by -6.00",
+    +   "spectrum-md-vertical @0: diameter-block off by -12.00",
+    +   "spectrum-md-vertical @0: on the line between the end centres off by -6.00",
+    +   "spectrum-lg-horizontal @0: diameter-inline off by -18.00",
+    +   "spectrum-lg-horizontal @0: on the line between the end centres off by -9.00",
+    +   "spectrum-lg-vertical @0: diameter-block off by -18.00",
+    +   "spectrum-lg-vertical @0: on the line between the end centres off by -9.00",
+    +   "scrubber-md-horizontal-inverted @0: diameter-inline off by -4.00",
+    +   "scrubber-md-horizontal-inverted @0: diameter-block off by -4.00",
+    +   "scrubber-md-horizontal-inverted @0: on the line between the end centres off by -2.00",
+    +   "scrubber-md-horizontal-inverted @0: concentric with the fill's cap off by 2.00",
+    +   "scrubber-md-horizontal-rtl @0: diameter-inline off by -4.00",
+    +   "scrubber-md-horizontal-rtl @0: diameter-block off by -4.00",
+    +   "scrubber-md-horizontal-rtl @0: on the line between the end centres off by -2.00",
+    +   "scrubber-md-horizontal-rtl @0: concentric with the fill's cap off by 2.00",
+    +   "scrubber-md-vertical-inverted @0: diameter-inline off by -4.00",
+    +   "scrubber-md-vertical-inverted @0: diameter-block off by -4.00",
+    +   "scrubber-md-vertical-inverted @0: on the line between the end centres off by -2.00",
+    +   "scrubber-md-vertical-inverted @0: concentric with the fill's cap off by 2.00",
+    +   "scrubber-sm-horizontal @1: diameter-inline off by -4.00",
+    +   "scrubber-sm-horizontal @1: diameter-block off by -4.00",
+    +   "scrubber-sm-horizontal @1: on the line between the end centres off by -1.97",
+    +   "scrubber-sm-horizontal @1: concentric with the fill's cap off by 1.98",
+    +   "scrubber-sm-vertical @1: diameter-inline off by -4.00",
+    +   "scrubber-sm-vertical @1: diameter-block off by -4.00",
+    +   "scrubber-sm-vertical @1: on the line between the end centres off by -1.97",
+    +   "scrubber-sm-vertical @1: concentric with the fill's cap off by 1.98",
+    +   "scrubber-md-horizontal @1: diameter-inline off by -4.00",
+    +   "scrubber-md-horizontal @1: diameter-block off by -4.00",
+    +   "scrubber-md-horizontal @1: on the line between the end centres off by -1.97",
+    +   "scrubber-md-horizontal @1: concentric with the fill's cap off by 1.98",
+    +   "scrubber-md-vertical @1: diameter-inline off by -4.00",
+    +   "scrubber-md-vertical @1: diameter-block off by -4.00",
+    +   "scrubber-md-vertical @1: on the line between the end centres off by -1.97",
+    +   "scrubber-md-vertical @1: concentric with the fill's cap off by 1.98",
+    +   "scrubber-lg-horizontal @1: diameter-inline off by -4.00",
+    +   "scrubber-lg-horizontal @1: diameter-block off by -4.00",
+    +   "scrubber-lg-horizontal @1: on the line between the end centres off by -1.97",
+    +   "scrubber-lg-horizontal @1: concentric with the fill's cap off by 1.98",
+    +   "scrubber-lg-vertical @1: diameter-inline off by -4.00",
+    +   "scrubber-lg-vertical @1: diameter-block off by -4.00",
+    +   "scrubber-lg-vertical @1: on the line between the end centres off by -1.97",
+    +   "scrubber-lg-vertical @1: concentric with the fill's cap off by 1.98",
+    +   "spectrum-sm-horizontal @1: diameter-inline off by -6.00",
+    +   "spectrum-sm-horizontal @1: on the line between the end centres off by -2.96",
+    +   "spectrum-sm-vertical @1: diameter-block off by -6.00",
+    +   "spectrum-sm-vertical @1: on the line between the end centres off by -2.94",
+    +   "spectrum-md-horizontal @1: diameter-inline off by -12.00",
+    +   "spectrum-md-horizontal @1: on the line between the end centres off by -5.88",
+    +   "spectrum-md-vertical @1: diameter-block off by -12.00",
+    +   "spectrum-md-vertical @1: on the line between the end centres off by -5.88",
+    +   "spectrum-lg-horizontal @1: diameter-inline off by -18.00",
+    +   "spectrum-lg-horizontal @1: on the line between the end centres off by -8.82",
+    +   "spectrum-lg-vertical @1: diameter-block off by -18.00",
+    +   "spectrum-lg-vertical @1: on the line between the end centres off by -8.83",
+    +   "scrubber-md-horizontal-inverted @1: diameter-inline off by -4.00",
+    +   "scrubber-md-horizontal-inverted @1: diameter-block off by -4.00",
+    +   "scrubber-md-horizontal-inverted @1: on the line between the end centres off by -1.95",
+    +   "scrubber-md-horizontal-inverted @1: concentric with the fill's cap off by 2.00",
+    +   "scrubber-md-horizontal-rtl @1: diameter-inline off by -4.00",
+    +   "scrubber-md-horizontal-rtl @1: diameter-block off by -4.00",
+    +   "scrubber-md-horizontal-rtl @1: on the line between the end centres off by -1.95",
+    +   "scrubber-md-horizontal-rtl @1: concentric with the fill's cap off by 2.00",
+    +   "scrubber-md-vertical-inverted @1: diameter-inline off by -4.00",
+    +   "scrubber-md-vertical-inverted @1: diameter-block off by -4.00",
+    +   "scrubber-md-vertical-inverted @1: on the line between the end centres off by -1.95",
+    +   "scrubber-md-vertical-inverted @1: concentric with the fill's cap off by 2.00",
+    +   "scrubber-sm-horizontal @5: diameter-inline off by -4.00",
+    +   "scrubber-sm-horizontal @5: diameter-block off by -4.00",
+    +   "scrubber-sm-horizontal @5: on the line between the end centres off by -1.81",
+    +   "scrubber-sm-horizontal @5: concentric with the fill's cap off by 1.98",
+    +   "scrubber-sm-vertical @5: diameter-inline off by -4.00",
+    +   "scrubber-sm-vertical @5: diameter-block off by -4.00",
+    +   "scrubber-sm-vertical @5: on the line between the end centres off by -1.81",
+    +   "scrubber-sm-vertical @5: concentric with the fill's cap off by 1.98",
+    +   "scrubber-md-horizontal @5: diameter-inline off by -4.00",
+    +   "scrubber-md-horizontal @5: diameter-block off by -4.00",
+    +   "scrubber-md-horizontal @5: on the line between the end centres off by -1.81",
+    +   "scrubber-md-horizontal @5: concentric with the fill's cap off by 1.98",
+    +   "scrubber-md-vertical @5: diameter-inline off by -4.00",
+    +   "scrubber-md-vertical @5: diameter-block off by -4.00",
+    +   "scrubber-md-vertical @5: on the line between the end centres off by -1.80",
+    +   "scrubber-md-vertical @5: concentric with the fill's cap off by 1.98",
+    +   "scrubber-lg-horizontal @5: diameter-inline off by -4.00",
+    +   "scrubber-lg-horizontal @5: diameter-block off by -4.00",
+    +   "scrubber-lg-horizontal @5: on the line between the end centres off by -1.80",
+    +   "scrubber-lg-horizontal @5: concentric with the fill's cap off by 1.98",
+    +   "scrubber-lg-vertical @5: diameter-inline off by -4.00",
+    +   "scrubber-lg-vertical @5: diameter-block off by -4.00",
+    +   "scrubber-lg-vertical @5: on the line between the end centres off by -1.81",
+    +   "scrubber-lg-vertical @5: concentric with the fill's cap off by 1.98",
+    +   "spectrum-sm-horizontal @5: diameter-inline off by -6.00",
+    +   "spectrum-sm-horizontal @5: on the line between the end centres off by -2.71",
+    +   "spectrum-sm-vertical @5: diameter-block off by -6.00",
+    +   "spectrum-sm-vertical @5: on the line between the end centres off by -2.70",
+    +   "spectrum-md-horizontal @5: diameter-inline off by -12.00",
+    +   "spectrum-md-horizontal @5: on the line between the end centres off by -5.41",
+    +   "spectrum-md-vertical @5: diameter-block off by -12.00",
+    +   "spectrum-md-vertical @5: on the line between the end centres off by -5.40",
+    +   "spectrum-lg-horizontal @5: diameter-inline off by -18.00",
+    +   "spectrum-lg-horizontal @5: on the line between the end centres off by -8.11",
+    +   "spectrum-lg-vertical @5: diameter-block off by -18.00",
+    +   "spectrum-lg-vertical @5: on the line between the end centres off by -8.11",
+    +   "scrubber-md-horizontal-inverted @5: diameter-inline off by -4.00",
+    +   "scrubber-md-horizontal-inverted @5: diameter-block off by -4.00",
+    +   "scrubber-md-horizontal-inverted @5: on the line between the end centres off by -1.81",
+    +   "scrubber-md-horizontal-inverted @5: concentric with the fill's cap off by 1.98",
+    +   "scrubber-md-horizontal-rtl @5: diameter-inline off by -4.00",
+    +   "scrubber-md-horizontal-rtl @5: diameter-block off by -4.00",
+    +   "scrubber-md-horizontal-rtl @5: on the line between the end centres off by -1.81",
+    +   "scrubber-md-horizontal-rtl @5: concentric with the fill's cap off by 1.98",
+    +   "scrubber-md-vertical-inverted @5: diameter-inline off by -4.00",
+    +   "scrubber-md-vertical-inverted @5: diameter-block off by -4.00",
+    +   "scrubber-md-vertical-inverted @5: on the line between the end centres off by -1.80",
+    +   "scrubber-md-vertical-inverted @5: concentric with the fill's cap off by 1.98",
+    +   "scrubber-sm-horizontal @25: diameter-inline off by -4.00",
+    +   "scrubber-sm-horizontal @25: diameter-block off by -4.00",
+    +   "scrubber-sm-horizontal @25: on the line between the end centres off by -1.00",
+    +   "scrubber-sm-horizontal @25: concentric with the fill's cap off by 2.00",
+    +   "scrubber-sm-vertical @25: diameter-inline off by -4.00",
+    +   "scrubber-sm-vertical @25: diameter-block off by -4.00",
+    +   "scrubber-sm-vertical @25: on the line between the end centres off by -1.00",
+    +   "scrubber-sm-vertical @25: concentric with the fill's cap off by 2.00",
+    +   "scrubber-md-horizontal @25: diameter-inline off by -4.00",
+    +   "scrubber-md-horizontal @25: diameter-block off by -4.00",
+    +   "scrubber-md-horizontal @25: on the line between the end centres off by -1.00",
+    +   "scrubber-md-horizontal @25: concentric with the fill's cap off by 2.00",
+    +   "scrubber-md-vertical @25: diameter-inline off by -4.00",
+    +   "scrubber-md-vertical @25: diameter-block off by -4.00",
+    +   "scrubber-md-vertical @25: on the line between the end centres off by -1.00",
+    +   "scrubber-md-vertical @25: concentric with the fill's cap off by 2.00",
+    +   "scrubber-lg-horizontal @25: diameter-inline off by -4.00",
+    +   "scrubber-lg-horizontal @25: diameter-block off by -4.00",
+    +   "scrubber-lg-horizontal @25: on the line between the end centres off by -1.00",
+    +   "scrubber-lg-horizontal @25: concentric with the fill's cap off by 2.00",
+    +   "scrubber-lg-vertical @25: diameter-inline off by -4.00",
+    +   "scrubber-lg-vertical @25: diameter-block off by -4.00",
+    +   "scrubber-lg-vertical @25: on the line between the end centres off by -1.00",
+    +   "scrubber-lg-vertical @25: concentric with the fill's cap off by 2.00",
+    +   "spectrum-sm-horizontal @25: diameter-inline off by -6.00",
+    +   "spectrum-sm-horizontal @25: on the line between the end centres off by -1.50",
+    +   "spectrum-sm-vertical @25: diameter-block off by -6.00",
+    +   "spectrum-sm-vertical @25: on the line between the end centres off by -1.50",
+    +   "spectrum-md-horizontal @25: diameter-inline off by -12.00",
+    +   "spectrum-md-horizontal @25: on the line between the end centres off by -3.00",
+    +   "spectrum-md-vertical @25: diameter-block off by -12.00",
+    +   "spectrum-md-vertical @25: on the line between the end centres off by -3.00",
+    +   "spectrum-lg-horizontal @25: diameter-inline off by -18.00",
+    +   "spectrum-lg-horizontal @25: on the line between the end centres off by -4.50",
+    +   "spectrum-lg-vertical @25: diameter-block off by -18.00",
+    +   "spectrum-lg-vertical @25: on the line between the end centres off by -4.50",
+    +   "scrubber-md-horizontal-inverted @25: diameter-inline off by -4.00",
+    +   "scrubber-md-horizontal-inverted @25: diameter-block off by -4.00",
+    +   "scrubber-md-horizontal-inverted @25: on the line between the end centres off by -1.00",
+    +   "scrubber-md-horizontal-inverted @25: concentric with the fill's cap off by 2.00",
+    +   "scrubber-md-horizontal-rtl @25: diameter-inline off by -4.00",
+    +   "scrubber-md-horizontal-rtl @25: diameter-block off by -4.00",
+    +   "scrubber-md-horizontal-rtl @25: on the line between the end centres off by -1.00",
+    +   "scrubber-md-horizontal-rtl @25: concentric with the fill's cap off by 2.00",
+    +   "scrubber-md-vertical-inverted @25: diameter-inline off by -4.00",
+    +   "scrubber-md-vertical-inverted @25: diameter-block off by -4.00",
+    +   "scrubber-md-vertical-inverted @25: on the line between the end centres off by -1.00",
+    +   "scrubber-md-vertical-inverted @25: concentric with the fill's cap off by 2.00",
+    +   "scrubber-sm-horizontal @50: diameter-inline off by -4.00",
+    +   "scrubber-sm-horizontal @50: diameter-block off by -4.00",
+    +   "scrubber-sm-horizontal @50: concentric with the fill's cap off by 2.00",
+    +   "scrubber-sm-vertical @50: diameter-inline off by -4.00",
+    +   "scrubber-sm-vertical @50: diameter-block off by -4.00",
+    +   "scrubber-sm-vertical @50: concentric with the fill's cap off by 2.00",
+    +   "scrubber-md-horizontal @50: diameter-inline off by -4.00",
+    +   "scrubber-md-horizontal @50: diameter-block off by -4.00",
+    +   "scrubber-md-horizontal @50: concentric with the fill's cap off by 2.00",
+    +   "scrubber-md-vertical @50: diameter-inline off by -4.00",
+    +   "scrubber-md-vertical @50: diameter-block off by -4.00",
+    +   "scrubber-md-vertical @50: concentric with the fill's cap off by 2.00",
+    +   "scrubber-lg-horizontal @50: diameter-inline off by -4.00",
+    +   "scrubber-lg-horizontal @50: diameter-block off by -4.00",
+    +   "scrubber-lg-horizontal @50: concentric with the fill's cap off by 2.00",
+    +   "scrubber-lg-vertical @50: diameter-inline off by -4.00",
+    +   "scrubber-lg-vertical @50: diameter-block off by -4.00",
+    +   "scrubber-lg-vertical @50: concentric with the fill's cap off by 2.00",
+    +   "spectrum-sm-horizontal @50: diameter-inline off by -6.00",
+    +   "spectrum-sm-vertical @50: diameter-block off by -6.00",
+    +   "spectrum-md-horizontal @50: diameter-inline off by -12.00",
+    +   "spectrum-md-vertical @50: diameter-block off by -12.00",
+    +   "spectrum-lg-horizontal @50: diameter-inline off by -18.00",
+    +   "spectrum-lg-vertical @50: diameter-block off by -18.00",
+    +   "scrubber-md-horizontal-inverted @50: diameter-inline off by -4.00",
+    +   "scrubber-md-horizontal-inverted @50: diameter-block off by -4.00",
+    +   "scrubber-md-horizontal-inverted @50: concentric with the fill's cap off by 2.00",
+    +   "scrubber-md-horizontal-rtl @50: diameter-inline off by -4.00",
+    +   "scrubber-md-horizontal-rtl @50: diameter-block off by -4.00",
+    +   "scrubber-md-horizontal-rtl @50: concentric with the fill's cap off by 2.00",
+    +   "scrubber-md-vertical-inverted @50: diameter-inline off by -4.00",
+    +   "scrubber-md-vertical-inverted @50: diameter-block off by -4.00",
+    +   "scrubber-md-vertical-inverted @50: concentric with the fill's cap off by 2.00",
+    +   "scrubber-sm-horizontal @95: diameter-inline off by -4.00",
+    +   "scrubber-sm-horizontal @95: diameter-block off by -4.00",
+    +   "scrubber-sm-horizontal @95: on the line between the end centres off by 1.79",
+    +   "scrubber-sm-horizontal @95: concentric with the fill's cap off by 1.98",
+    +   "scrubber-sm-vertical @95: diameter-inline off by -4.00",
+    +   "scrubber-sm-vertical @95: diameter-block off by -4.00",
+    +   "scrubber-sm-vertical @95: on the line between the end centres off by 1.80",
+    +   "scrubber-sm-vertical @95: concentric with the fill's cap off by 1.98",
+    +   "scrubber-md-horizontal @95: diameter-inline off by -4.00",
+    +   "scrubber-md-horizontal @95: diameter-block off by -4.00",
+    +   "scrubber-md-horizontal @95: on the line between the end centres off by 1.80",
+    +   "scrubber-md-horizontal @95: concentric with the fill's cap off by 1.98",
+    +   "scrubber-md-vertical @95: diameter-inline off by -4.00",
+    +   "scrubber-md-vertical @95: diameter-block off by -4.00",
+    +   "scrubber-md-vertical @95: on the line between the end centres off by 1.79",
+    +   "scrubber-md-vertical @95: concentric with the fill's cap off by 1.98",
+    +   "scrubber-lg-horizontal @95: diameter-inline off by -4.00",
+    +   "scrubber-lg-horizontal @95: diameter-block off by -4.00",
+    +   "scrubber-lg-horizontal @95: on the line between the end centres off by 1.79",
+    +   "scrubber-lg-horizontal @95: concentric with the fill's cap off by 1.98",
+    +   "scrubber-lg-vertical @95: diameter-inline off by -4.00",
+    +   "scrubber-lg-vertical @95: diameter-block off by -4.00",
+    +   "scrubber-lg-vertical @95: on the line between the end centres off by 1.79",
+    +   "scrubber-lg-vertical @95: concentric with the fill's cap off by 1.98",
+    +   "spectrum-sm-horizontal @95: diameter-inline off by -6.00",
+    +   "spectrum-sm-horizontal @95: on the line between the end centres off by 2.70",
+    +   "spectrum-sm-vertical @95: diameter-block off by -6.00",
+    +   "spectrum-sm-vertical @95: on the line between the end centres off by 2.69",
+    +   "spectrum-md-horizontal @95: diameter-inline off by -12.00",
+    +   "spectrum-md-horizontal @95: on the line between the end centres off by 5.39",
+    +   "spectrum-md-vertical @95: diameter-block off by -12.00",
+    +   "spectrum-md-vertical @95: on the line between the end centres off by 5.40",
+    +   "spectrum-lg-horizontal @95: diameter-inline off by -18.00",
+    +   "spectrum-lg-horizontal @95: on the line between the end centres off by 8.09",
+    +   "spectrum-lg-vertical @95: diameter-block off by -18.00",
+    +   "spectrum-lg-vertical @95: on the line between the end centres off by 8.10",
+    +   "scrubber-md-horizontal-inverted @95: diameter-inline off by -4.00",
+    +   "scrubber-md-horizontal-inverted @95: diameter-block off by -4.00",
+    +   "scrubber-md-horizontal-inverted @95: on the line between the end centres off by 1.80",
+    +   "scrubber-md-horizontal-inverted @95: concentric with the fill's cap off by 1.98",
+    +   "scrubber-md-horizontal-rtl @95: diameter-inline off by -4.00",
+    +   "scrubber-md-horizontal-rtl @95: diameter-block off by -4.00",
+    +   "scrubber-md-horizontal-rtl @95: on the line between the end centres off by 1.80",
+    +   "scrubber-md-horizontal-rtl @95: concentric with the fill's cap off by 1.98",
+    +   "scrubber-md-vertical-inverted @95: diameter-inline off by -4.00",
+    +   "scrubber-md-vertical-inverted @95: diameter-block off by -4.00",
+    +   "scrubber-md-vertical-inverted @95: on the line between the end centres off by 1.79",
+    +   "scrubber-md-vertical-inverted @95: concentric with the fill's cap off by 1.98",
+    +   "scrubber-sm-horizontal @99: diameter-inline off by -4.00",
+    +   "scrubber-sm-horizontal @99: diameter-block off by -4.00",
+    +   "scrubber-sm-horizontal @99: on the line between the end centres off by 1.95",
+    +   "scrubber-sm-horizontal @99: concentric with the fill's cap off by 1.98",
+    +   "scrubber-sm-vertical @99: diameter-inline off by -4.00",
+    +   "scrubber-sm-vertical @99: diameter-block off by -4.00",
+    +   "scrubber-sm-vertical @99: on the line between the end centres off by 1.96",
+    +   "scrubber-sm-vertical @99: concentric with the fill's cap off by 1.98",
+    +   "scrubber-md-horizontal @99: diameter-inline off by -4.00",
+    +   "scrubber-md-horizontal @99: diameter-block off by -4.00",
+    +   "scrubber-md-horizontal @99: on the line between the end centres off by 1.95",
+    +   "scrubber-md-horizontal @99: concentric with the fill's cap off by 1.98",
+    +   "scrubber-md-vertical @99: diameter-inline off by -4.00",
+    +   "scrubber-md-vertical @99: diameter-block off by -4.00",
+    +   "scrubber-md-vertical @99: on the line between the end centres off by 1.95",
+    +   "scrubber-md-vertical @99: concentric with the fill's cap off by 1.98",
+    +   "scrubber-lg-horizontal @99: diameter-inline off by -4.00",
+    +   "scrubber-lg-horizontal @99: diameter-block off by -4.00",
+    +   "scrubber-lg-horizontal @99: on the line between the end centres off by 1.95",
+    +   "scrubber-lg-horizontal @99: concentric with the fill's cap off by 1.98",
+    +   "scrubber-lg-vertical @99: diameter-inline off by -4.00",
+    +   "scrubber-lg-vertical @99: diameter-block off by -4.00",
+    +   "scrubber-lg-vertical @99: on the line between the end centres off by 1.95",
+    +   "scrubber-lg-vertical @99: concentric with the fill's cap off by 1.98",
+    +   "spectrum-sm-horizontal @99: diameter-inline off by -6.00",
+    +   "spectrum-sm-horizontal @99: on the line between the end centres off by 2.94",
+    +   "spectrum-sm-vertical @99: diameter-block off by -6.00",
+    +   "spectrum-sm-vertical @99: on the line between the end centres off by 2.93",
+    +   "spectrum-md-horizontal @99: diameter-inline off by -12.00",
+    +   "spectrum-md-horizontal @99: on the line between the end centres off by 5.87",
+    +   "spectrum-md-vertical @99: diameter-block off by -12.00",
+    +   "spectrum-md-vertical @99: on the line between the end centres off by 5.87",
+    +   "spectrum-lg-horizontal @99: diameter-inline off by -18.00",
+    +   "spectrum-lg-horizontal @99: on the line between the end centres off by 8.81",
+    +   "spectrum-lg-vertical @99: diameter-block off by -18.00",
+    +   "spectrum-lg-vertical @99: on the line between the end centres off by 8.81",
+    +   "scrubber-md-horizontal-inverted @99: diameter-inline off by -4.00",
+    +   "scrubber-md-horizontal-inverted @99: diameter-block off by -4.00",
+    +   "scrubber-md-horizontal-inverted @99: on the line between the end centres off by 1.95",
+    +   "scrubber-md-horizontal-inverted @99: concentric with the fill's cap off by 1.98",
+    +   "scrubber-md-horizontal-rtl @99: diameter-inline off by -4.00",
+    +   "scrubber-md-horizontal-rtl @99: diameter-block off by -4.00",
+    +   "scrubber-md-horizontal-rtl @99: on the line between the end centres off by 1.95",
+    +   "scrubber-md-horizontal-rtl @99: concentric with the fill's cap off by 1.98",
+    +   "scrubber-md-vertical-inverted @99: diameter-inline off by -4.00",
+    +   "scrubber-md-vertical-inverted @99: diameter-block off by -4.00",
+    +   "scrubber-md-vertical-inverted @99: on the line between the end centres off by 1.95",
+    +   "scrubber-md-vertical-inverted @99: concentric with the fill's cap off by 1.98",
+    +   "scrubber-sm-horizontal @100: diameter-inline off by -4.00",
+    +   "scrubber-sm-horizontal @100: diameter-block off by -4.00",
+    +   "scrubber-sm-horizontal @100: on the line between the end centres off by 2.00",
+    +   "scrubber-sm-horizontal @100: concentric with the fill's cap off by 2.00",
+    +   "scrubber-sm-vertical @100: diameter-inline off by -4.00",
+    +   "scrubber-sm-vertical @100: diameter-block off by -4.00",
+    +   "scrubber-sm-vertical @100: on the line between the end centres off by 2.00",
+    +   "scrubber-sm-vertical @100: concentric with the fill's cap off by 2.00",
+    +   "scrubber-md-horizontal @100: diameter-inline off by -4.00",
+    +   "scrubber-md-horizontal @100: diameter-block off by -4.00",
+    +   "scrubber-md-horizontal @100: on the line between the end centres off by 2.00",
+    +   "scrubber-md-horizontal @100: concentric with the fill's cap off by 2.00",
+    +   "scrubber-md-vertical @100: diameter-inline off by -4.00",
+    +   "scrubber-md-vertical @100: diameter-block off by -4.00",
+    +   "scrubber-md-vertical @100: on the line between the end centres off by 2.00",
+    +   "scrubber-md-vertical @100: concentric with the fill's cap off by 2.00",
+    +   "scrubber-lg-horizontal @100: diameter-inline off by -4.00",
+    +   "scrubber-lg-horizontal @100: diameter-block off by -4.00",
+    +   "scrubber-lg-horizontal @100: on the line between the end centres off by 2.00",
+    +   "scrubber-lg-horizontal @100: concentric with the fill's cap off by 2.00",
+    +   "scrubber-lg-vertical @100: diameter-inline off by -4.00",
+    +   "scrubber-lg-vertical @100: diameter-block off by -4.00",
+    +   "scrubber-lg-vertical @100: on the line between the end centres off by 2.00",
+    +   "scrubber-lg-vertical @100: concentric with the fill's cap off by 2.00",
+    +   "spectrum-sm-horizontal @100: diameter-inline off by -6.00",
+    +   "spectrum-sm-horizontal @100: on the line between the end centres off by 3.00",
+    +   "spectrum-sm-vertical @100: diameter-block off by -6.00",
+    +   "spectrum-sm-vertical @100: on the line between the end centres off by 3.00",
+    +   "spectrum-md-horizontal @100: diameter-inline off by -12.00",
+    +   "spectrum-md-horizontal @100: on the line between the end centres off by 6.00",
+    +   "spectrum-md-vertical @100: diameter-block off by -12.00",
+    +   "spectrum-md-vertical @100: on the line between the end centres off by 6.00",
+    +   "spectrum-lg-horizontal @100: diameter-inline off by -18.00",
+    +   "spectrum-lg-horizontal @100: on the line between the end centres off by 9.00",
+    +   "spectrum-lg-vertical @100: diameter-block off by -18.00",
+    +   "spectrum-lg-vertical @100: on the line between the end centres off by 9.00",
+    +   "scrubber-md-horizontal-inverted @100: diameter-inline off by -4.00",
+    +   "scrubber-md-horizontal-inverted @100: diameter-block off by -4.00",
+    +   "scrubber-md-horizontal-inverted @100: on the line between the end centres off by 2.00",
+    +   "scrubber-md-horizontal-inverted @100: concentric with the fill's cap off by 2.00",
+    +   "scrubber-md-horizontal-rtl @100: diameter-inline off by -4.00",
+    +   "scrubber-md-horizontal-rtl @100: diameter-block off by -4.00",
+    +   "scrubber-md-horizontal-rtl @100: on the line between the end centres off by 2.00",
+    +   "scrubber-md-horizontal-rtl @100: concentric with the fill's cap off by 2.00",
+    +   "scrubber-md-vertical-inverted @100: diameter-inline off by -4.00",
+    +   "scrubber-md-vertical-inverted @100: diameter-block off by -4.00",
+    +   "scrubber-md-vertical-inverted @100: on the line between the end centres off by 2.00",
+    +   "scrubber-md-vertical-inverted @100: concentric with the fill's cap off by 2.00",
+    + ]
+
+      970 |         }
+      971 |         info.annotations.push({ type: "geometry", description: JSON.stringify({ worst, fails: fails.slice(0, 40), count: fails.length }) });
+    > 972 |         expect(fails).toEqual([]);
+          |                       ^
+      973 |     });
+      974 | }
+      975 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts:972:23
+
+    Error Context: tests-visual/test-results/release-11-0-2-geometry-·--a1fba-s-ends-are-concentric-dark--chromium-headless-new/error-context.md
+
+  18) [chromium-headless-new] › tests-visual/slider-forced-colors.spec.ts:25:9 › slider forced colors · a focused Slider keeps a focus mark › slider forced colors · scrubber · the focused mark is an outline that paints 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: "solid"
+    Received: "none"
+
+      54 |             expect(r.forced).toBe(true);
+      55 |             expect(r.focusVisible).toBe(true);
+    > 56 |             expect(r.style).toBe("solid");
+         |                             ^
+      57 |             expect(r.width).toBeGreaterThanOrEqual(2);
+      58 |             expect(r.offset).toBeGreaterThanOrEqual(1);
+      59 |             // The focused frame differs from the unfocused one around the marked box.
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/slider-forced-colors.spec.ts:56:29
+
+    Error Context: tests-visual/test-results/slider-forced-colors-slide-7ce15-k-is-an-outline-that-paints-chromium-headless-new/error-context.md
+
+  19) [chromium-headless-new] › tests-visual/slider-forced-colors.spec.ts:25:9 › slider forced colors · a focused Slider keeps a focus mark › slider forced colors · invalid · the focused mark is an outline that paints 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: "solid"
+    Received: "none"
+
+      54 |             expect(r.forced).toBe(true);
+      55 |             expect(r.focusVisible).toBe(true);
+    > 56 |             expect(r.style).toBe("solid");
+         |                             ^
+      57 |             expect(r.width).toBeGreaterThanOrEqual(2);
+      58 |             expect(r.offset).toBeGreaterThanOrEqual(1);
+      59 |             // The focused frame differs from the unfocused one around the marked box.
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/slider-forced-colors.spec.ts:56:29
+
+    Error Context: tests-visual/test-results/slider-forced-colors-slide-96335-k-is-an-outline-that-paints-chromium-headless-new/error-context.md
+
+  20) [chromium-headless-new] › tests-visual/slider-forced-colors.spec.ts:25:9 › slider forced colors · a focused Slider keeps a focus mark › slider forced colors · spectrum · the focused mark is an outline that paints 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: "solid"
+    Received: "none"
+
+      54 |             expect(r.forced).toBe(true);
+      55 |             expect(r.focusVisible).toBe(true);
+    > 56 |             expect(r.style).toBe("solid");
+         |                             ^
+      57 |             expect(r.width).toBeGreaterThanOrEqual(2);
+      58 |             expect(r.offset).toBeGreaterThanOrEqual(1);
+      59 |             // The focused frame differs from the unfocused one around the marked box.
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/slider-forced-colors.spec.ts:56:29
+
+    Error Context: tests-visual/test-results/slider-forced-colors-slide-d3dc0-k-is-an-outline-that-paints-chromium-headless-new/error-context.md
+
+  21) [coarse-touch] › tests-visual/release-11-0-2.spec.ts:67:5 › dark · useGlobalDark › dark · a fresh key opens on initialValue while the default key holds auto 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      76 |         const r = await dark(page);
+      77 |         expect(r.stamped).toBe(true);
+    > 78 |         expect(r.isDark).toBe(true);
+         |                          ^
+      79 |         expect(r.htmlDark).toBe(true);
+      80 |         expect(r.site).toBe("dark");
+      81 |         expect(r.fallback).toBe("auto");
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts:78:26
+
+    Error Context: tests-visual/test-results/release-11-0-2-dark-·-useG-014cd--the-default-key-holds-auto-coarse-touch/error-context.md
+
+  22) [coarse-touch] › tests-visual/release-11-0-2.spec.ts:84:5 › dark · useGlobalDark › dark · night chosen twice on a dark system stays night when the system turns light 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: "dark"
+    Received: "auto"
+
+      92 |         await page.evaluate(() => (window as unknown as { __dark: DarkHandle }).__dark.toggle());
+      93 |         await page.waitForTimeout(50);
+    > 94 |         expect((await dark(page)).fallback).toBe("dark");
+         |                                             ^
+      95 |         await page.emulateMedia({ colorScheme: "light" });
+      96 |         await openDark(page, "initial=dark");
+      97 |         await page.waitForTimeout(50);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts:94:45
+
+    Error Context: tests-visual/test-results/release-11-0-2-dark-·-useG-69686-when-the-system-turns-light-coarse-touch/error-context.md
+
+  23) [coarse-touch] › tests-visual/release-11-0-2.spec.ts:217:1 › slider · the thumb paints --card by default and --slider-thumb-bg when set 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: "rgb(200, 30, 60)"
+    Received: "rgb(253, 245, 236)"
+
+      235 |     info.annotations.push({ type: "slider", description: JSON.stringify(r) });
+      236 |     expect(r.unset).toBe(r.card);
+    > 237 |     expect(r.set).toBe("rgb(200, 30, 60)");
+          |                   ^
+      238 | });
+      239 |
+      240 | test("edge · a GlassDock page opens and stays alive", async ({ page }, info) => {
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts:237:19
+
+    Error Context: tests-visual/test-results/release-11-0-2-slider-·-th-3d5eb----slider-thumb-bg-when-set-coarse-touch/error-context.md
+
+  24) [coarse-touch] › tests-visual/release-11-0-2.spec.ts:303:5 › static · a static dock's controls draw no backdrop-filter (light) 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 14
+
+    - Array []
+    + Array [
+    +   Array [
+    +     "Home rest",
+    +     Array [
+    +       "dock-icon-button glass-specular-track glass-capsule-hover glass-capsule: blur(20px) saturate(1.5)",
+    +     ],
+    +   ],
+    +   Array [
+    +     "Home press",
+    +     Array [
+    +       "dock-icon-button glass-specular-track glass-capsule-hover glass-capsule: blur(20px) saturate(1.5)",
+    +     ],
+    +   ],
+    + ]
+
+      328 |         info.annotations.push({ type: "static", description: JSON.stringify({ mode, hits }) });
+      329 |         expect(mode).toBe("static");
+    > 330 |         expect(hits).toEqual([]);
+          |                      ^
+      331 |     });
+      332 | }
+      333 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts:330:22
+
+    Error Context: tests-visual/test-results/release-11-0-2-static-·-a--9ec38-w-no-backdrop-filter-light--coarse-touch/error-context.md
+
+  25) [coarse-touch] › tests-visual/release-11-0-2.spec.ts:303:5 › static · a static dock's controls draw no backdrop-filter (dark) 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 14
+
+    - Array []
+    + Array [
+    +   Array [
+    +     "Home rest",
+    +     Array [
+    +       "dock-icon-button glass-specular-track glass-capsule-hover glass-capsule: blur(20px) saturate(1.5)",
+    +     ],
+    +   ],
+    +   Array [
+    +     "Home press",
+    +     Array [
+    +       "dock-icon-button glass-specular-track glass-capsule-hover glass-capsule: blur(20px) saturate(1.5)",
+    +     ],
+    +   ],
+    + ]
+
+      328 |         info.annotations.push({ type: "static", description: JSON.stringify({ mode, hits }) });
+      329 |         expect(mode).toBe("static");
+    > 330 |         expect(hits).toEqual([]);
+          |                      ^
+      331 |     });
+      332 | }
+      333 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts:330:22
+
+    Error Context: tests-visual/test-results/release-11-0-2-static-·-a--21ec7-aw-no-backdrop-filter-dark--coarse-touch/error-context.md
+
+  26) [coarse-touch] › tests-visual/release-11-0-2.spec.ts:353:5 › fill · in dark a hovered, pressed or selected seat lifts the plate (static) 
+
+    Error: selected
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0.006
+    Received:   -0.004118783886190417
+
+      382 |         if (!touch) expect(r.hover - r.plate, "hover").toBeGreaterThan(lift);
+      383 |         expect(r.press - r.plate, "press").toBeGreaterThan(lift);
+    > 384 |         expect(r.selected - r.plate, "selected").toBeGreaterThan(lift);
+          |                                                  ^
+      385 |         expect(r.selectedTab - r.plate, "selected tab").toBeGreaterThan(lift);
+      386 |     });
+      387 | }
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts:384:50
+
+    Error Context: tests-visual/test-results/release-11-0-2-fill-·-in-d-b5af1-eat-lifts-the-plate-static--coarse-touch/error-context.md
+
+  27) [coarse-touch] › tests-visual/release-11-0-2.spec.ts:353:5 › fill · in dark a hovered, pressed or selected seat lifts the plate (live) 
+
+    Error: press
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0.006
+    Received:   0.004613922222018389
+
+      381 |         expect(Math.abs(r.restingTab - r.plate), "a resting tab is the plate").toBeLessThan(0.002);
+      382 |         if (!touch) expect(r.hover - r.plate, "hover").toBeGreaterThan(lift);
+    > 383 |         expect(r.press - r.plate, "press").toBeGreaterThan(lift);
+          |                                            ^
+      384 |         expect(r.selected - r.plate, "selected").toBeGreaterThan(lift);
+      385 |         expect(r.selectedTab - r.plate, "selected tab").toBeGreaterThan(lift);
+      386 |     });
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts:383:44
+
+    Error Context: tests-visual/test-results/release-11-0-2-fill-·-in-d-c0870--seat-lifts-the-plate-live--coarse-touch/error-context.md
+
+  28) [coarse-touch] › tests-visual/release-11-0-2.spec.ts:424:1 › fold · an idle fold lays out once per morph frame on a scrolling page 
+
+    Error: expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 79
+    Received:    245
+
+      458 |     expect(r.morphFrames).toBeGreaterThan(10);
+      459 |     // One layout per morph frame, and a few for the fold's arm and settle.
+    > 460 |     expect(count).toBeLessThanOrEqual(r.morphFrames + 12);
+          |                   ^
+      461 | });
+      462 |
+      463 | test("static · a live dock's active control keeps its capsule lens", async ({ page }) => {
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts:460:19
+
+    Error Context: tests-visual/test-results/release-11-0-2-fold-·-an-i-ccd3a-h-frame-on-a-scrolling-page-coarse-touch/error-context.md
+
+  29) [coarse-touch] › tests-visual/release-11-0-2.spec.ts:562:1 › pager · a neighbour hop paints a neck no wider than the pitch plus a dot 
+
+    Error: token 0.5rem
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 56.5
+    Received:    516.1024169921875
+
+      595 |     for (const hop of hops) {
+      596 |         expect(hop.frames, `the neck bridged the hop to ${hop.to}`).toBeGreaterThan(0);
+    > 597 |         expect(hop.widest, `token ${geo.token}`).toBeLessThanOrEqual(geo.pitch + geo.dot + 0.5);
+          |                                                  ^
+      598 |     }
+      599 | });
+      600 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts:597:50
+
+    Error Context: tests-visual/test-results/release-11-0-2-pager-·-a-n-ef66e-r-than-the-pitch-plus-a-dot-coarse-touch/error-context.md
+
+  30) [coarse-touch] › tests-visual/release-11-0-2.spec.ts:627:1 › wheel · a vertical dock's run contains its own axis and passes the other 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 1
+
+      Object {
+    -   "x": "auto",
+    +   "x": "contain",
+        "y": "contain",
+      }
+
+      634 |     });
+      635 |     info.annotations.push({ type: "wheel", description: JSON.stringify(css) });
+    > 636 |     expect(css).toEqual({ x: "auto", y: "contain" });
+          |                 ^
+      637 | });
+      638 |
+      639 | type Box = [number, number, number, number];
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts:636:17
+
+    Error Context: tests-visual/test-results/release-11-0-2-wheel-·-a-v-18436-n-axis-and-passes-the-other-coarse-touch/error-context.md
+
+  31) [coarse-touch] › tests-visual/release-11-0-2.spec.ts:674:1 › rail · a start-anchored rail's close holds its top edge and crest, and ends on the disc 
+
+    Error: expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 89
+    Received:    485.1764221191406
+
+      690 |     }
+      691 |     const bottoms = moving.map((f) => f.root[1] + f.root[3]);
+    > 692 |     for (let i = 1; i < bottoms.length; i++) expect(bottoms[i]!).toBeLessThanOrEqual(bottoms[i - 1]! + 1);
+          |                                                                  ^
+      693 |     const last = moving.at(-1)!;
+      694 |     const settled = frames.at(-1)!;
+      695 |     expect(settled.morphing).toBe(false);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts:692:66
+
+    Error Context: tests-visual/test-results/release-11-0-2-rail-·-a-st-c6ee6--crest-and-ends-on-the-disc-coarse-touch/error-context.md
+
+  32) [coarse-touch] › tests-visual/release-11-0-2.spec.ts:700:1 › rail · a start-anchored rail's open holds the crest from its first frame, the foot inside the plate 
+
+    Error: expect(received).toBeLessThan(expected)
+
+    Expected: < 2
+    Received:   51.00001907348633
+
+      708 |     info.annotations.push({ type: "rail", description: JSON.stringify({ disc, frames: moving.map((f) => [...f.root.map(Math.round), Math.round(f.crest[1]), f.foot ? f.foot.map(Math.round) : null]) }) });
+      709 |     expect(moving.length, "the open is a morph").toBeGreaterThan(6);
+    > 710 |     expect(Math.abs(moving[0]!.crest[1] - disc[1]!)).toBeLessThan(2);
+          |                                                      ^
+      711 |     for (const f of moving) {
+      712 |         expect(f.crest[1], "crest never above the plate").toBeGreaterThanOrEqual(f.root[1] - 1.5);
+      713 |         if (f.foot) {
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts:710:54
+
+    Error Context: tests-visual/test-results/release-11-0-2-rail-·-a-st-96ce3-e-the-foot-inside-the-plate-coarse-touch/error-context.md
+
+  33) [coarse-touch] › tests-visual/release-11-0-2.spec.ts:872:5 › radius · every dock seat's corner is half its block size, at 1440 
+
+    Error: trigger-active: the unpainted corner area
+
+    expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 55.33546079775887
+    Received:    49.18316831683168
+
+      911 |         for (const [kind, cell] of Object.entries(cells)) {
+      912 |             expect(cell.span, `${kind} paints a plate`).toBeGreaterThan(12);
+    > 913 |             expect(cell.measured, `${kind}: the unpainted corner area`).toBeGreaterThanOrEqual(cell.expected * 0.8);
+          |                                                                         ^
+      914 |         }
+      915 |     });
+      916 | }
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts:913:73
+
+    Error Context: tests-visual/test-results/release-11-0-2-radius-·-ev-2f393-half-its-block-size-at-1440-coarse-touch/error-context.md
+
+  34) [coarse-touch] › tests-visual/release-11-0-2.spec.ts:872:5 › radius · every dock seat's corner is half its block size, at 390 
+
+    Error: tab-active: the unpainted corner area
+
+    expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 61.97701041081694
+    Received:    54.67249999999994
+
+      911 |         for (const [kind, cell] of Object.entries(cells)) {
+      912 |             expect(cell.span, `${kind} paints a plate`).toBeGreaterThan(12);
+    > 913 |             expect(cell.measured, `${kind}: the unpainted corner area`).toBeGreaterThanOrEqual(cell.expected * 0.8);
+          |                                                                         ^
+      914 |         }
+      915 |     });
+      916 | }
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts:913:73
+
+    Error Context: tests-visual/test-results/release-11-0-2-radius-·-ev-ae7a4--half-its-block-size-at-390-coarse-touch/error-context.md
+
+  35) [coarse-touch] › tests-visual/release-11-0-2.spec.ts:919:5 › geometry · the Slider's thumb fills the band and its ends are concentric (light) 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  -   1
+    + Received  + 371
+
+    - Array []
+    + Array [
+    +   "scrubber-sm-horizontal @0: diameter-inline off by -4.00",
+    +   "scrubber-sm-horizontal @0: diameter-block off by -4.00",
+    +   "scrubber-sm-horizontal @0: on the line between the end centres off by -2.00",
+    +   "scrubber-sm-horizontal @0: concentric with the fill's cap off by 2.00",
+    +   "scrubber-sm-vertical @0: diameter-inline off by -4.00",
+    +   "scrubber-sm-vertical @0: diameter-block off by -4.00",
+    +   "scrubber-sm-vertical @0: on the line between the end centres off by -2.00",
+    +   "scrubber-sm-vertical @0: concentric with the fill's cap off by 2.00",
+    +   "scrubber-md-horizontal @0: diameter-inline off by -4.00",
+    +   "scrubber-md-horizontal @0: diameter-block off by -4.00",
+    +   "scrubber-md-horizontal @0: on the line between the end centres off by -2.00",
+    +   "scrubber-md-horizontal @0: concentric with the fill's cap off by 2.00",
+    +   "scrubber-md-vertical @0: diameter-inline off by -4.00",
+    +   "scrubber-md-vertical @0: diameter-block off by -4.00",
+    +   "scrubber-md-vertical @0: on the line between the end centres off by -2.00",
+    +   "scrubber-md-vertical @0: concentric with the fill's cap off by 2.00",
+    +   "scrubber-lg-horizontal @0: diameter-inline off by -4.00",
+    +   "scrubber-lg-horizontal @0: diameter-block off by -4.00",
+    +   "scrubber-lg-horizontal @0: on the line between the end centres off by -2.00",
+    +   "scrubber-lg-horizontal @0: concentric with the fill's cap off by 2.00",
+    +   "scrubber-lg-vertical @0: diameter-inline off by -4.00",
+    +   "scrubber-lg-vertical @0: diameter-block off by -4.00",
+    +   "scrubber-lg-vertical @0: on the line between the end centres off by -2.00",
+    +   "scrubber-lg-vertical @0: concentric with the fill's cap off by 2.00",
+    +   "spectrum-sm-horizontal @0: diameter-inline off by -6.00",
+    +   "spectrum-sm-horizontal @0: on the line between the end centres off by -3.00",
+    +   "spectrum-sm-vertical @0: diameter-block off by -6.00",
+    +   "spectrum-sm-vertical @0: on the line between the end centres off by -3.00",
+    +   "spectrum-md-horizontal @0: diameter-inline off by -12.00",
+    +   "spectrum-md-horizontal @0: on the line between the end centres off by -6.00",
+    +   "spectrum-md-vertical @0: diameter-block off by -12.00",
+    +   "spectrum-md-vertical @0: on the line between the end centres off by -6.00",
+    +   "spectrum-lg-horizontal @0: diameter-inline off by -18.00",
+    +   "spectrum-lg-horizontal @0: on the line between the end centres off by -9.00",
+    +   "spectrum-lg-vertical @0: diameter-block off by -18.00",
+    +   "spectrum-lg-vertical @0: on the line between the end centres off by -9.00",
+    +   "scrubber-md-horizontal-inverted @0: diameter-inline off by -4.00",
+    +   "scrubber-md-horizontal-inverted @0: diameter-block off by -4.00",
+    +   "scrubber-md-horizontal-inverted @0: on the line between the end centres off by -2.00",
+    +   "scrubber-md-horizontal-inverted @0: concentric with the fill's cap off by 2.00",
+    +   "scrubber-md-horizontal-rtl @0: diameter-inline off by -4.00",
+    +   "scrubber-md-horizontal-rtl @0: diameter-block off by -4.00",
+    +   "scrubber-md-horizontal-rtl @0: on the line between the end centres off by -2.00",
+    +   "scrubber-md-horizontal-rtl @0: concentric with the fill's cap off by 2.00",
+    +   "scrubber-md-vertical-inverted @0: diameter-inline off by -4.00",
+    +   "scrubber-md-vertical-inverted @0: diameter-block off by -4.00",
+    +   "scrubber-md-vertical-inverted @0: on the line between the end centres off by -2.00",
+    +   "scrubber-md-vertical-inverted @0: concentric with the fill's cap off by 2.00",
+    +   "scrubber-sm-horizontal @1: diameter-inline off by -4.00",
+    +   "scrubber-sm-horizontal @1: diameter-block off by -4.00",
+    +   "scrubber-sm-horizontal @1: on the line between the end centres off by -1.97",
+    +   "scrubber-sm-horizontal @1: concentric with the fill's cap off by 1.98",
+    +   "scrubber-sm-vertical @1: diameter-inline off by -4.00",
+    +   "scrubber-sm-vertical @1: diameter-block off by -4.00",
+    +   "scrubber-sm-vertical @1: on the line between the end centres off by -1.97",
+    +   "scrubber-sm-vertical @1: concentric with the fill's cap off by 1.98",
+    +   "scrubber-md-horizontal @1: diameter-inline off by -4.00",
+    +   "scrubber-md-horizontal @1: diameter-block off by -4.00",
+    +   "scrubber-md-horizontal @1: on the line between the end centres off by -1.97",
+    +   "scrubber-md-horizontal @1: concentric with the fill's cap off by 1.98",
+    +   "scrubber-md-vertical @1: diameter-inline off by -4.00",
+    +   "scrubber-md-vertical @1: diameter-block off by -4.00",
+    +   "scrubber-md-vertical @1: on the line between the end centres off by -1.97",
+    +   "scrubber-md-vertical @1: concentric with the fill's cap off by 1.98",
+    +   "scrubber-lg-horizontal @1: diameter-inline off by -4.00",
+    +   "scrubber-lg-horizontal @1: diameter-block off by -4.00",
+    +   "scrubber-lg-horizontal @1: on the line between the end centres off by -1.97",
+    +   "scrubber-lg-horizontal @1: concentric with the fill's cap off by 1.98",
+    +   "scrubber-lg-vertical @1: diameter-inline off by -4.00",
+    +   "scrubber-lg-vertical @1: diameter-block off by -4.00",
+    +   "scrubber-lg-vertical @1: on the line between the end centres off by -1.97",
+    +   "scrubber-lg-vertical @1: concentric with the fill's cap off by 1.98",
+    +   "spectrum-sm-horizontal @1: diameter-inline off by -6.00",
+    +   "spectrum-sm-horizontal @1: on the line between the end centres off by -2.96",
+    +   "spectrum-sm-vertical @1: diameter-block off by -6.00",
+    +   "spectrum-sm-vertical @1: on the line between the end centres off by -2.94",
+    +   "spectrum-md-horizontal @1: diameter-inline off by -12.00",
+    +   "spectrum-md-horizontal @1: on the line between the end centres off by -5.88",
+    +   "spectrum-md-vertical @1: diameter-block off by -12.00",
+    +   "spectrum-md-vertical @1: on the line between the end centres off by -5.88",
+    +   "spectrum-lg-horizontal @1: diameter-inline off by -18.00",
+    +   "spectrum-lg-horizontal @1: on the line between the end centres off by -8.82",
+    +   "spectrum-lg-vertical @1: diameter-block off by -18.00",
+    +   "spectrum-lg-vertical @1: on the line between the end centres off by -8.83",
+    +   "scrubber-md-horizontal-inverted @1: diameter-inline off by -4.00",
+    +   "scrubber-md-horizontal-inverted @1: diameter-block off by -4.00",
+    +   "scrubber-md-horizontal-inverted @1: on the line between the end centres off by -1.95",
+    +   "scrubber-md-horizontal-inverted @1: concentric with the fill's cap off by 2.00",
+    +   "scrubber-md-horizontal-rtl @1: diameter-inline off by -4.00",
+    +   "scrubber-md-horizontal-rtl @1: diameter-block off by -4.00",
+    +   "scrubber-md-horizontal-rtl @1: on the line between the end centres off by -1.95",
+    +   "scrubber-md-horizontal-rtl @1: concentric with the fill's cap off by 2.00",
+    +   "scrubber-md-vertical-inverted @1: diameter-inline off by -4.00",
+    +   "scrubber-md-vertical-inverted @1: diameter-block off by -4.00",
+    +   "scrubber-md-vertical-inverted @1: on the line between the end centres off by -1.95",
+    +   "scrubber-md-vertical-inverted @1: concentric with the fill's cap off by 2.00",
+    +   "scrubber-sm-horizontal @5: diameter-inline off by -4.00",
+    +   "scrubber-sm-horizontal @5: diameter-block off by -4.00",
+    +   "scrubber-sm-horizontal @5: on the line between the end centres off by -1.81",
+    +   "scrubber-sm-horizontal @5: concentric with the fill's cap off by 1.98",
+    +   "scrubber-sm-vertical @5: diameter-inline off by -4.00",
+    +   "scrubber-sm-vertical @5: diameter-block off by -4.00",
+    +   "scrubber-sm-vertical @5: on the line between the end centres off by -1.81",
+    +   "scrubber-sm-vertical @5: concentric with the fill's cap off by 1.98",
+    +   "scrubber-md-horizontal @5: diameter-inline off by -4.00",
+    +   "scrubber-md-horizontal @5: diameter-block off by -4.00",
+    +   "scrubber-md-horizontal @5: on the line between the end centres off by -1.81",
+    +   "scrubber-md-horizontal @5: concentric with the fill's cap off by 1.98",
+    +   "scrubber-md-vertical @5: diameter-inline off by -4.00",
+    +   "scrubber-md-vertical @5: diameter-block off by -4.00",
+    +   "scrubber-md-vertical @5: on the line between the end centres off by -1.80",
+    +   "scrubber-md-vertical @5: concentric with the fill's cap off by 1.98",
+    +   "scrubber-lg-horizontal @5: diameter-inline off by -4.00",
+    +   "scrubber-lg-horizontal @5: diameter-block off by -4.00",
+    +   "scrubber-lg-horizontal @5: on the line between the end centres off by -1.80",
+    +   "scrubber-lg-horizontal @5: concentric with the fill's cap off by 1.98",
+    +   "scrubber-lg-vertical @5: diameter-inline off by -4.00",
+    +   "scrubber-lg-vertical @5: diameter-block off by -4.00",
+    +   "scrubber-lg-vertical @5: on the line between the end centres off by -1.81",
+    +   "scrubber-lg-vertical @5: concentric with the fill's cap off by 1.98",
+    +   "spectrum-sm-horizontal @5: diameter-inline off by -6.00",
+    +   "spectrum-sm-horizontal @5: on the line between the end centres off by -2.71",
+    +   "spectrum-sm-vertical @5: diameter-block off by -6.00",
+    +   "spectrum-sm-vertical @5: on the line between the end centres off by -2.70",
+    +   "spectrum-md-horizontal @5: diameter-inline off by -12.00",
+    +   "spectrum-md-horizontal @5: on the line between the end centres off by -5.41",
+    +   "spectrum-md-vertical @5: diameter-block off by -12.00",
+    +   "spectrum-md-vertical @5: on the line between the end centres off by -5.40",
+    +   "spectrum-lg-horizontal @5: diameter-inline off by -18.00",
+    +   "spectrum-lg-horizontal @5: on the line between the end centres off by -8.11",
+    +   "spectrum-lg-vertical @5: diameter-block off by -18.00",
+    +   "spectrum-lg-vertical @5: on the line between the end centres off by -8.11",
+    +   "scrubber-md-horizontal-inverted @5: diameter-inline off by -4.00",
+    +   "scrubber-md-horizontal-inverted @5: diameter-block off by -4.00",
+    +   "scrubber-md-horizontal-inverted @5: on the line between the end centres off by -1.81",
+    +   "scrubber-md-horizontal-inverted @5: concentric with the fill's cap off by 1.98",
+    +   "scrubber-md-horizontal-rtl @5: diameter-inline off by -4.00",
+    +   "scrubber-md-horizontal-rtl @5: diameter-block off by -4.00",
+    +   "scrubber-md-horizontal-rtl @5: on the line between the end centres off by -1.81",
+    +   "scrubber-md-horizontal-rtl @5: concentric with the fill's cap off by 1.98",
+    +   "scrubber-md-vertical-inverted @5: diameter-inline off by -4.00",
+    +   "scrubber-md-vertical-inverted @5: diameter-block off by -4.00",
+    +   "scrubber-md-vertical-inverted @5: on the line between the end centres off by -1.80",
+    +   "scrubber-md-vertical-inverted @5: concentric with the fill's cap off by 1.98",
+    +   "scrubber-sm-horizontal @25: diameter-inline off by -4.00",
+    +   "scrubber-sm-horizontal @25: diameter-block off by -4.00",
+    +   "scrubber-sm-horizontal @25: on the line between the end centres off by -1.00",
+    +   "scrubber-sm-horizontal @25: concentric with the fill's cap off by 2.00",
+    +   "scrubber-sm-vertical @25: diameter-inline off by -4.00",
+    +   "scrubber-sm-vertical @25: diameter-block off by -4.00",
+    +   "scrubber-sm-vertical @25: on the line between the end centres off by -1.00",
+    +   "scrubber-sm-vertical @25: concentric with the fill's cap off by 2.00",
+    +   "scrubber-md-horizontal @25: diameter-inline off by -4.00",
+    +   "scrubber-md-horizontal @25: diameter-block off by -4.00",
+    +   "scrubber-md-horizontal @25: on the line between the end centres off by -1.00",
+    +   "scrubber-md-horizontal @25: concentric with the fill's cap off by 2.00",
+    +   "scrubber-md-vertical @25: diameter-inline off by -4.00",
+    +   "scrubber-md-vertical @25: diameter-block off by -4.00",
+    +   "scrubber-md-vertical @25: on the line between the end centres off by -1.00",
+    +   "scrubber-md-vertical @25: concentric with the fill's cap off by 2.00",
+    +   "scrubber-lg-horizontal @25: diameter-inline off by -4.00",
+    +   "scrubber-lg-horizontal @25: diameter-block off by -4.00",
+    +   "scrubber-lg-horizontal @25: on the line between the end centres off by -1.00",
+    +   "scrubber-lg-horizontal @25: concentric with the fill's cap off by 2.00",
+    +   "scrubber-lg-vertical @25: diameter-inline off by -4.00",
+    +   "scrubber-lg-vertical @25: diameter-block off by -4.00",
+    +   "scrubber-lg-vertical @25: on the line between the end centres off by -1.00",
+    +   "scrubber-lg-vertical @25: concentric with the fill's cap off by 2.00",
+    +   "spectrum-sm-horizontal @25: diameter-inline off by -6.00",
+    +   "spectrum-sm-horizontal @25: on the line between the end centres off by -1.50",
+    +   "spectrum-sm-vertical @25: diameter-block off by -6.00",
+    +   "spectrum-sm-vertical @25: on the line between the end centres off by -1.50",
+    +   "spectrum-md-horizontal @25: diameter-inline off by -12.00",
+    +   "spectrum-md-horizontal @25: on the line between the end centres off by -3.00",
+    +   "spectrum-md-vertical @25: diameter-block off by -12.00",
+    +   "spectrum-md-vertical @25: on the line between the end centres off by -3.00",
+    +   "spectrum-lg-horizontal @25: diameter-inline off by -18.00",
+    +   "spectrum-lg-horizontal @25: on the line between the end centres off by -4.50",
+    +   "spectrum-lg-vertical @25: diameter-block off by -18.00",
+    +   "spectrum-lg-vertical @25: on the line between the end centres off by -4.50",
+    +   "scrubber-md-horizontal-inverted @25: diameter-inline off by -4.00",
+    +   "scrubber-md-horizontal-inverted @25: diameter-block off by -4.00",
+    +   "scrubber-md-horizontal-inverted @25: on the line between the end centres off by -1.00",
+    +   "scrubber-md-horizontal-inverted @25: concentric with the fill's cap off by 2.00",
+    +   "scrubber-md-horizontal-rtl @25: diameter-inline off by -4.00",
+    +   "scrubber-md-horizontal-rtl @25: diameter-block off by -4.00",
+    +   "scrubber-md-horizontal-rtl @25: on the line between the end centres off by -1.00",
+    +   "scrubber-md-horizontal-rtl @25: concentric with the fill's cap off by 2.00",
+    +   "scrubber-md-vertical-inverted @25: diameter-inline off by -4.00",
+    +   "scrubber-md-vertical-inverted @25: diameter-block off by -4.00",
+    +   "scrubber-md-vertical-inverted @25: on the line between the end centres off by -1.00",
+    +   "scrubber-md-vertical-inverted @25: concentric with the fill's cap off by 2.00",
+    +   "scrubber-sm-horizontal @50: diameter-inline off by -4.00",
+    +   "scrubber-sm-horizontal @50: diameter-block off by -4.00",
+    +   "scrubber-sm-horizontal @50: concentric with the fill's cap off by 2.00",
+    +   "scrubber-sm-vertical @50: diameter-inline off by -4.00",
+    +   "scrubber-sm-vertical @50: diameter-block off by -4.00",
+    +   "scrubber-sm-vertical @50: concentric with the fill's cap off by 2.00",
+    +   "scrubber-md-horizontal @50: diameter-inline off by -4.00",
+    +   "scrubber-md-horizontal @50: diameter-block off by -4.00",
+    +   "scrubber-md-horizontal @50: concentric with the fill's cap off by 2.00",
+    +   "scrubber-md-vertical @50: diameter-inline off by -4.00",
+    +   "scrubber-md-vertical @50: diameter-block off by -4.00",
+    +   "scrubber-md-vertical @50: concentric with the fill's cap off by 2.00",
+    +   "scrubber-lg-horizontal @50: diameter-inline off by -4.00",
+    +   "scrubber-lg-horizontal @50: diameter-block off by -4.00",
+    +   "scrubber-lg-horizontal @50: concentric with the fill's cap off by 2.00",
+    +   "scrubber-lg-vertical @50: diameter-inline off by -4.00",
+    +   "scrubber-lg-vertical @50: diameter-block off by -4.00",
+    +   "scrubber-lg-vertical @50: concentric with the fill's cap off by 2.00",
+    +   "spectrum-sm-horizontal @50: diameter-inline off by -6.00",
+    +   "spectrum-sm-vertical @50: diameter-block off by -6.00",
+    +   "spectrum-md-horizontal @50: diameter-inline off by -12.00",
+    +   "spectrum-md-vertical @50: diameter-block off by -12.00",
+    +   "spectrum-lg-horizontal @50: diameter-inline off by -18.00",
+    +   "spectrum-lg-vertical @50: diameter-block off by -18.00",
+    +   "scrubber-md-horizontal-inverted @50: diameter-inline off by -4.00",
+    +   "scrubber-md-horizontal-inverted @50: diameter-block off by -4.00",
+    +   "scrubber-md-horizontal-inverted @50: concentric with the fill's cap off by 2.00",
+    +   "scrubber-md-horizontal-rtl @50: diameter-inline off by -4.00",
+    +   "scrubber-md-horizontal-rtl @50: diameter-block off by -4.00",
+    +   "scrubber-md-horizontal-rtl @50: concentric with the fill's cap off by 2.00",
+    +   "scrubber-md-vertical-inverted @50: diameter-inline off by -4.00",
+    +   "scrubber-md-vertical-inverted @50: diameter-block off by -4.00",
+    +   "scrubber-md-vertical-inverted @50: concentric with the fill's cap off by 2.00",
+    +   "scrubber-sm-horizontal @95: diameter-inline off by -4.00",
+    +   "scrubber-sm-horizontal @95: diameter-block off by -4.00",
+    +   "scrubber-sm-horizontal @95: on the line between the end centres off by 1.79",
+    +   "scrubber-sm-horizontal @95: concentric with the fill's cap off by 1.98",
+    +   "scrubber-sm-vertical @95: diameter-inline off by -4.00",
+    +   "scrubber-sm-vertical @95: diameter-block off by -4.00",
+    +   "scrubber-sm-vertical @95: on the line between the end centres off by 1.80",
+    +   "scrubber-sm-vertical @95: concentric with the fill's cap off by 1.98",
+    +   "scrubber-md-horizontal @95: diameter-inline off by -4.00",
+    +   "scrubber-md-horizontal @95: diameter-block off by -4.00",
+    +   "scrubber-md-horizontal @95: on the line between the end centres off by 1.80",
+    +   "scrubber-md-horizontal @95: concentric with the fill's cap off by 1.98",
+    +   "scrubber-md-vertical @95: diameter-inline off by -4.00",
+    +   "scrubber-md-vertical @95: diameter-block off by -4.00",
+    +   "scrubber-md-vertical @95: on the line between the end centres off by 1.79",
+    +   "scrubber-md-vertical @95: concentric with the fill's cap off by 1.98",
+    +   "scrubber-lg-horizontal @95: diameter-inline off by -4.00",
+    +   "scrubber-lg-horizontal @95: diameter-block off by -4.00",
+    +   "scrubber-lg-horizontal @95: on the line between the end centres off by 1.79",
+    +   "scrubber-lg-horizontal @95: concentric with the fill's cap off by 1.98",
+    +   "scrubber-lg-vertical @95: diameter-inline off by -4.00",
+    +   "scrubber-lg-vertical @95: diameter-block off by -4.00",
+    +   "scrubber-lg-vertical @95: on the line between the end centres off by 1.79",
+    +   "scrubber-lg-vertical @95: concentric with the fill's cap off by 1.98",
+    +   "spectrum-sm-horizontal @95: diameter-inline off by -6.00",
+    +   "spectrum-sm-horizontal @95: on the line between the end centres off by 2.70",
+    +   "spectrum-sm-vertical @95: diameter-block off by -6.00",
+    +   "spectrum-sm-vertical @95: on the line between the end centres off by 2.69",
+    +   "spectrum-md-horizontal @95: diameter-inline off by -12.00",
+    +   "spectrum-md-horizontal @95: on the line between the end centres off by 5.39",
+    +   "spectrum-md-vertical @95: diameter-block off by -12.00",
+    +   "spectrum-md-vertical @95: on the line between the end centres off by 5.40",
+    +   "spectrum-lg-horizontal @95: diameter-inline off by -18.00",
+    +   "spectrum-lg-horizontal @95: on the line between the end centres off by 8.09",
+    +   "spectrum-lg-vertical @95: diameter-block off by -18.00",
+    +   "spectrum-lg-vertical @95: on the line between the end centres off by 8.10",
+    +   "scrubber-md-horizontal-inverted @95: diameter-inline off by -4.00",
+    +   "scrubber-md-horizontal-inverted @95: diameter-block off by -4.00",
+    +   "scrubber-md-horizontal-inverted @95: on the line between the end centres off by 1.80",
+    +   "scrubber-md-horizontal-inverted @95: concentric with the fill's cap off by 1.98",
+    +   "scrubber-md-horizontal-rtl @95: diameter-inline off by -4.00",
+    +   "scrubber-md-horizontal-rtl @95: diameter-block off by -4.00",
+    +   "scrubber-md-horizontal-rtl @95: on the line between the end centres off by 1.80",
+    +   "scrubber-md-horizontal-rtl @95: concentric with the fill's cap off by 1.98",
+    +   "scrubber-md-vertical-inverted @95: diameter-inline off by -4.00",
+    +   "scrubber-md-vertical-inverted @95: diameter-block off by -4.00",
+    +   "scrubber-md-vertical-inverted @95: on the line between the end centres off by 1.79",
+    +   "scrubber-md-vertical-inverted @95: concentric with the fill's cap off by 1.98",
+    +   "scrubber-sm-horizontal @99: diameter-inline off by -4.00",
+    +   "scrubber-sm-horizontal @99: diameter-block off by -4.00",
+    +   "scrubber-sm-horizontal @99: on the line between the end centres off by 1.95",
+    +   "scrubber-sm-horizontal @99: concentric with the fill's cap off by 1.98",
+    +   "scrubber-sm-vertical @99: diameter-inline off by -4.00",
+    +   "scrubber-sm-vertical @99: diameter-block off by -4.00",
+    +   "scrubber-sm-vertical @99: on the line between the end centres off by 1.96",
+    +   "scrubber-sm-vertical @99: concentric with the fill's cap off by 1.98",
+    +   "scrubber-md-horizontal @99: diameter-inline off by -4.00",
+    +   "scrubber-md-horizontal @99: diameter-block off by -4.00",
+    +   "scrubber-md-horizontal @99: on the line between the end centres off by 1.95",
+    +   "scrubber-md-horizontal @99: concentric with the fill's cap off by 1.98",
+    +   "scrubber-md-vertical @99: diameter-inline off by -4.00",
+    +   "scrubber-md-vertical @99: diameter-block off by -4.00",
+    +   "scrubber-md-vertical @99: on the line between the end centres off by 1.95",
+    +   "scrubber-md-vertical @99: concentric with the fill's cap off by 1.98",
+    +   "scrubber-lg-horizontal @99: diameter-inline off by -4.00",
+    +   "scrubber-lg-horizontal @99: diameter-block off by -4.00",
+    +   "scrubber-lg-horizontal @99: on the line between the end centres off by 1.95",
+    +   "scrubber-lg-horizontal @99: concentric with the fill's cap off by 1.98",
+    +   "scrubber-lg-vertical @99: diameter-inline off by -4.00",
+    +   "scrubber-lg-vertical @99: diameter-block off by -4.00",
+    +   "scrubber-lg-vertical @99: on the line between the end centres off by 1.95",
+    +   "scrubber-lg-vertical @99: concentric with the fill's cap off by 1.98",
+    +   "spectrum-sm-horizontal @99: diameter-inline off by -6.00",
+    +   "spectrum-sm-horizontal @99: on the line between the end centres off by 2.94",
+    +   "spectrum-sm-vertical @99: diameter-block off by -6.00",
+    +   "spectrum-sm-vertical @99: on the line between the end centres off by 2.93",
+    +   "spectrum-md-horizontal @99: diameter-inline off by -12.00",
+    +   "spectrum-md-horizontal @99: on the line between the end centres off by 5.87",
+    +   "spectrum-md-vertical @99: diameter-block off by -12.00",
+    +   "spectrum-md-vertical @99: on the line between the end centres off by 5.87",
+    +   "spectrum-lg-horizontal @99: diameter-inline off by -18.00",
+    +   "spectrum-lg-horizontal @99: on the line between the end centres off by 8.81",
+    +   "spectrum-lg-vertical @99: diameter-block off by -18.00",
+    +   "spectrum-lg-vertical @99: on the line between the end centres off by 8.81",
+    +   "scrubber-md-horizontal-inverted @99: diameter-inline off by -4.00",
+    +   "scrubber-md-horizontal-inverted @99: diameter-block off by -4.00",
+    +   "scrubber-md-horizontal-inverted @99: on the line between the end centres off by 1.95",
+    +   "scrubber-md-horizontal-inverted @99: concentric with the fill's cap off by 1.98",
+    +   "scrubber-md-horizontal-rtl @99: diameter-inline off by -4.00",
+    +   "scrubber-md-horizontal-rtl @99: diameter-block off by -4.00",
+    +   "scrubber-md-horizontal-rtl @99: on the line between the end centres off by 1.95",
+    +   "scrubber-md-horizontal-rtl @99: concentric with the fill's cap off by 1.98",
+    +   "scrubber-md-vertical-inverted @99: diameter-inline off by -4.00",
+    +   "scrubber-md-vertical-inverted @99: diameter-block off by -4.00",
+    +   "scrubber-md-vertical-inverted @99: on the line between the end centres off by 1.95",
+    +   "scrubber-md-vertical-inverted @99: concentric with the fill's cap off by 1.98",
+    +   "scrubber-sm-horizontal @100: diameter-inline off by -4.00",
+    +   "scrubber-sm-horizontal @100: diameter-block off by -4.00",
+    +   "scrubber-sm-horizontal @100: on the line between the end centres off by 2.00",
+    +   "scrubber-sm-horizontal @100: concentric with the fill's cap off by 2.00",
+    +   "scrubber-sm-vertical @100: diameter-inline off by -4.00",
+    +   "scrubber-sm-vertical @100: diameter-block off by -4.00",
+    +   "scrubber-sm-vertical @100: on the line between the end centres off by 2.00",
+    +   "scrubber-sm-vertical @100: concentric with the fill's cap off by 2.00",
+    +   "scrubber-md-horizontal @100: diameter-inline off by -4.00",
+    +   "scrubber-md-horizontal @100: diameter-block off by -4.00",
+    +   "scrubber-md-horizontal @100: on the line between the end centres off by 2.00",
+    +   "scrubber-md-horizontal @100: concentric with the fill's cap off by 2.00",
+    +   "scrubber-md-vertical @100: diameter-inline off by -4.00",
+    +   "scrubber-md-vertical @100: diameter-block off by -4.00",
+    +   "scrubber-md-vertical @100: on the line between the end centres off by 2.00",
+    +   "scrubber-md-vertical @100: concentric with the fill's cap off by 2.00",
+    +   "scrubber-lg-horizontal @100: diameter-inline off by -4.00",
+    +   "scrubber-lg-horizontal @100: diameter-block off by -4.00",
+    +   "scrubber-lg-horizontal @100: on the line between the end centres off by 2.00",
+    +   "scrubber-lg-horizontal @100: concentric with the fill's cap off by 2.00",
+    +   "scrubber-lg-vertical @100: diameter-inline off by -4.00",
+    +   "scrubber-lg-vertical @100: diameter-block off by -4.00",
+    +   "scrubber-lg-vertical @100: on the line between the end centres off by 2.00",
+    +   "scrubber-lg-vertical @100: concentric with the fill's cap off by 2.00",
+    +   "spectrum-sm-horizontal @100: diameter-inline off by -6.00",
+    +   "spectrum-sm-horizontal @100: on the line between the end centres off by 3.00",
+    +   "spectrum-sm-vertical @100: diameter-block off by -6.00",
+    +   "spectrum-sm-vertical @100: on the line between the end centres off by 3.00",
+    +   "spectrum-md-horizontal @100: diameter-inline off by -12.00",
+    +   "spectrum-md-horizontal @100: on the line between the end centres off by 6.00",
+    +   "spectrum-md-vertical @100: diameter-block off by -12.00",
+    +   "spectrum-md-vertical @100: on the line between the end centres off by 6.00",
+    +   "spectrum-lg-horizontal @100: diameter-inline off by -18.00",
+    +   "spectrum-lg-horizontal @100: on the line between the end centres off by 9.00",
+    +   "spectrum-lg-vertical @100: diameter-block off by -18.00",
+    +   "spectrum-lg-vertical @100: on the line between the end centres off by 9.00",
+    +   "scrubber-md-horizontal-inverted @100: diameter-inline off by -4.00",
+    +   "scrubber-md-horizontal-inverted @100: diameter-block off by -4.00",
+    +   "scrubber-md-horizontal-inverted @100: on the line between the end centres off by 2.00",
+    +   "scrubber-md-horizontal-inverted @100: concentric with the fill's cap off by 2.00",
+    +   "scrubber-md-horizontal-rtl @100: diameter-inline off by -4.00",
+    +   "scrubber-md-horizontal-rtl @100: diameter-block off by -4.00",
+    +   "scrubber-md-horizontal-rtl @100: on the line between the end centres off by 2.00",
+    +   "scrubber-md-horizontal-rtl @100: concentric with the fill's cap off by 2.00",
+    +   "scrubber-md-vertical-inverted @100: diameter-inline off by -4.00",
+    +   "scrubber-md-vertical-inverted @100: diameter-block off by -4.00",
+    +   "scrubber-md-vertical-inverted @100: on the line between the end centres off by 2.00",
+    +   "scrubber-md-vertical-inverted @100: concentric with the fill's cap off by 2.00",
+    + ]
+
+      970 |         }
+      971 |         info.annotations.push({ type: "geometry", description: JSON.stringify({ worst, fails: fails.slice(0, 40), count: fails.length }) });
+    > 972 |         expect(fails).toEqual([]);
+          |                       ^
+      973 |     });
+      974 | }
+      975 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts:972:23
+
+    Error Context: tests-visual/test-results/release-11-0-2-geometry-·--b1e41--ends-are-concentric-light--coarse-touch/error-context.md
+
+  36) [coarse-touch] › tests-visual/release-11-0-2.spec.ts:919:5 › geometry · the Slider's thumb fills the band and its ends are concentric (dark) 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  -   1
+    + Received  + 371
+
+    - Array []
+    + Array [
+    +   "scrubber-sm-horizontal @0: diameter-inline off by -4.00",
+    +   "scrubber-sm-horizontal @0: diameter-block off by -4.00",
+    +   "scrubber-sm-horizontal @0: on the line between the end centres off by -2.00",
+    +   "scrubber-sm-horizontal @0: concentric with the fill's cap off by 2.00",
+    +   "scrubber-sm-vertical @0: diameter-inline off by -4.00",
+    +   "scrubber-sm-vertical @0: diameter-block off by -4.00",
+    +   "scrubber-sm-vertical @0: on the line between the end centres off by -2.00",
+    +   "scrubber-sm-vertical @0: concentric with the fill's cap off by 2.00",
+    +   "scrubber-md-horizontal @0: diameter-inline off by -4.00",
+    +   "scrubber-md-horizontal @0: diameter-block off by -4.00",
+    +   "scrubber-md-horizontal @0: on the line between the end centres off by -2.00",
+    +   "scrubber-md-horizontal @0: concentric with the fill's cap off by 2.00",
+    +   "scrubber-md-vertical @0: diameter-inline off by -4.00",
+    +   "scrubber-md-vertical @0: diameter-block off by -4.00",
+    +   "scrubber-md-vertical @0: on the line between the end centres off by -2.00",
+    +   "scrubber-md-vertical @0: concentric with the fill's cap off by 2.00",
+    +   "scrubber-lg-horizontal @0: diameter-inline off by -4.00",
+    +   "scrubber-lg-horizontal @0: diameter-block off by -4.00",
+    +   "scrubber-lg-horizontal @0: on the line between the end centres off by -2.00",
+    +   "scrubber-lg-horizontal @0: concentric with the fill's cap off by 2.00",
+    +   "scrubber-lg-vertical @0: diameter-inline off by -4.00",
+    +   "scrubber-lg-vertical @0: diameter-block off by -4.00",
+    +   "scrubber-lg-vertical @0: on the line between the end centres off by -2.00",
+    +   "scrubber-lg-vertical @0: concentric with the fill's cap off by 2.00",
+    +   "spectrum-sm-horizontal @0: diameter-inline off by -6.00",
+    +   "spectrum-sm-horizontal @0: on the line between the end centres off by -3.00",
+    +   "spectrum-sm-vertical @0: diameter-block off by -6.00",
+    +   "spectrum-sm-vertical @0: on the line between the end centres off by -3.00",
+    +   "spectrum-md-horizontal @0: diameter-inline off by -12.00",
+    +   "spectrum-md-horizontal @0: on the line between the end centres off by -6.00",
+    +   "spectrum-md-vertical @0: diameter-block off by -12.00",
+    +   "spectrum-md-vertical @0: on the line between the end centres off by -6.00",
+    +   "spectrum-lg-horizontal @0: diameter-inline off by -18.00",
+    +   "spectrum-lg-horizontal @0: on the line between the end centres off by -9.00",
+    +   "spectrum-lg-vertical @0: diameter-block off by -18.00",
+    +   "spectrum-lg-vertical @0: on the line between the end centres off by -9.00",
+    +   "scrubber-md-horizontal-inverted @0: diameter-inline off by -4.00",
+    +   "scrubber-md-horizontal-inverted @0: diameter-block off by -4.00",
+    +   "scrubber-md-horizontal-inverted @0: on the line between the end centres off by -2.00",
+    +   "scrubber-md-horizontal-inverted @0: concentric with the fill's cap off by 2.00",
+    +   "scrubber-md-horizontal-rtl @0: diameter-inline off by -4.00",
+    +   "scrubber-md-horizontal-rtl @0: diameter-block off by -4.00",
+    +   "scrubber-md-horizontal-rtl @0: on the line between the end centres off by -2.00",
+    +   "scrubber-md-horizontal-rtl @0: concentric with the fill's cap off by 2.00",
+    +   "scrubber-md-vertical-inverted @0: diameter-inline off by -4.00",
+    +   "scrubber-md-vertical-inverted @0: diameter-block off by -4.00",
+    +   "scrubber-md-vertical-inverted @0: on the line between the end centres off by -2.00",
+    +   "scrubber-md-vertical-inverted @0: concentric with the fill's cap off by 2.00",
+    +   "scrubber-sm-horizontal @1: diameter-inline off by -4.00",
+    +   "scrubber-sm-horizontal @1: diameter-block off by -4.00",
+    +   "scrubber-sm-horizontal @1: on the line between the end centres off by -1.97",
+    +   "scrubber-sm-horizontal @1: concentric with the fill's cap off by 1.98",
+    +   "scrubber-sm-vertical @1: diameter-inline off by -4.00",
+    +   "scrubber-sm-vertical @1: diameter-block off by -4.00",
+    +   "scrubber-sm-vertical @1: on the line between the end centres off by -1.97",
+    +   "scrubber-sm-vertical @1: concentric with the fill's cap off by 1.98",
+    +   "scrubber-md-horizontal @1: diameter-inline off by -4.00",
+    +   "scrubber-md-horizontal @1: diameter-block off by -4.00",
+    +   "scrubber-md-horizontal @1: on the line between the end centres off by -1.97",
+    +   "scrubber-md-horizontal @1: concentric with the fill's cap off by 1.98",
+    +   "scrubber-md-vertical @1: diameter-inline off by -4.00",
+    +   "scrubber-md-vertical @1: diameter-block off by -4.00",
+    +   "scrubber-md-vertical @1: on the line between the end centres off by -1.97",
+    +   "scrubber-md-vertical @1: concentric with the fill's cap off by 1.98",
+    +   "scrubber-lg-horizontal @1: diameter-inline off by -4.00",
+    +   "scrubber-lg-horizontal @1: diameter-block off by -4.00",
+    +   "scrubber-lg-horizontal @1: on the line between the end centres off by -1.97",
+    +   "scrubber-lg-horizontal @1: concentric with the fill's cap off by 1.98",
+    +   "scrubber-lg-vertical @1: diameter-inline off by -4.00",
+    +   "scrubber-lg-vertical @1: diameter-block off by -4.00",
+    +   "scrubber-lg-vertical @1: on the line between the end centres off by -1.97",
+    +   "scrubber-lg-vertical @1: concentric with the fill's cap off by 1.98",
+    +   "spectrum-sm-horizontal @1: diameter-inline off by -6.00",
+    +   "spectrum-sm-horizontal @1: on the line between the end centres off by -2.96",
+    +   "spectrum-sm-vertical @1: diameter-block off by -6.00",
+    +   "spectrum-sm-vertical @1: on the line between the end centres off by -2.94",
+    +   "spectrum-md-horizontal @1: diameter-inline off by -12.00",
+    +   "spectrum-md-horizontal @1: on the line between the end centres off by -5.88",
+    +   "spectrum-md-vertical @1: diameter-block off by -12.00",
+    +   "spectrum-md-vertical @1: on the line between the end centres off by -5.88",
+    +   "spectrum-lg-horizontal @1: diameter-inline off by -18.00",
+    +   "spectrum-lg-horizontal @1: on the line between the end centres off by -8.82",
+    +   "spectrum-lg-vertical @1: diameter-block off by -18.00",
+    +   "spectrum-lg-vertical @1: on the line between the end centres off by -8.83",
+    +   "scrubber-md-horizontal-inverted @1: diameter-inline off by -4.00",
+    +   "scrubber-md-horizontal-inverted @1: diameter-block off by -4.00",
+    +   "scrubber-md-horizontal-inverted @1: on the line between the end centres off by -1.95",
+    +   "scrubber-md-horizontal-inverted @1: concentric with the fill's cap off by 2.00",
+    +   "scrubber-md-horizontal-rtl @1: diameter-inline off by -4.00",
+    +   "scrubber-md-horizontal-rtl @1: diameter-block off by -4.00",
+    +   "scrubber-md-horizontal-rtl @1: on the line between the end centres off by -1.95",
+    +   "scrubber-md-horizontal-rtl @1: concentric with the fill's cap off by 2.00",
+    +   "scrubber-md-vertical-inverted @1: diameter-inline off by -4.00",
+    +   "scrubber-md-vertical-inverted @1: diameter-block off by -4.00",
+    +   "scrubber-md-vertical-inverted @1: on the line between the end centres off by -1.95",
+    +   "scrubber-md-vertical-inverted @1: concentric with the fill's cap off by 2.00",
+    +   "scrubber-sm-horizontal @5: diameter-inline off by -4.00",
+    +   "scrubber-sm-horizontal @5: diameter-block off by -4.00",
+    +   "scrubber-sm-horizontal @5: on the line between the end centres off by -1.81",
+    +   "scrubber-sm-horizontal @5: concentric with the fill's cap off by 1.98",
+    +   "scrubber-sm-vertical @5: diameter-inline off by -4.00",
+    +   "scrubber-sm-vertical @5: diameter-block off by -4.00",
+    +   "scrubber-sm-vertical @5: on the line between the end centres off by -1.81",
+    +   "scrubber-sm-vertical @5: concentric with the fill's cap off by 1.98",
+    +   "scrubber-md-horizontal @5: diameter-inline off by -4.00",
+    +   "scrubber-md-horizontal @5: diameter-block off by -4.00",
+    +   "scrubber-md-horizontal @5: on the line between the end centres off by -1.81",
+    +   "scrubber-md-horizontal @5: concentric with the fill's cap off by 1.98",
+    +   "scrubber-md-vertical @5: diameter-inline off by -4.00",
+    +   "scrubber-md-vertical @5: diameter-block off by -4.00",
+    +   "scrubber-md-vertical @5: on the line between the end centres off by -1.80",
+    +   "scrubber-md-vertical @5: concentric with the fill's cap off by 1.98",
+    +   "scrubber-lg-horizontal @5: diameter-inline off by -4.00",
+    +   "scrubber-lg-horizontal @5: diameter-block off by -4.00",
+    +   "scrubber-lg-horizontal @5: on the line between the end centres off by -1.80",
+    +   "scrubber-lg-horizontal @5: concentric with the fill's cap off by 1.98",
+    +   "scrubber-lg-vertical @5: diameter-inline off by -4.00",
+    +   "scrubber-lg-vertical @5: diameter-block off by -4.00",
+    +   "scrubber-lg-vertical @5: on the line between the end centres off by -1.81",
+    +   "scrubber-lg-vertical @5: concentric with the fill's cap off by 1.98",
+    +   "spectrum-sm-horizontal @5: diameter-inline off by -6.00",
+    +   "spectrum-sm-horizontal @5: on the line between the end centres off by -2.71",
+    +   "spectrum-sm-vertical @5: diameter-block off by -6.00",
+    +   "spectrum-sm-vertical @5: on the line between the end centres off by -2.70",
+    +   "spectrum-md-horizontal @5: diameter-inline off by -12.00",
+    +   "spectrum-md-horizontal @5: on the line between the end centres off by -5.41",
+    +   "spectrum-md-vertical @5: diameter-block off by -12.00",
+    +   "spectrum-md-vertical @5: on the line between the end centres off by -5.40",
+    +   "spectrum-lg-horizontal @5: diameter-inline off by -18.00",
+    +   "spectrum-lg-horizontal @5: on the line between the end centres off by -8.11",
+    +   "spectrum-lg-vertical @5: diameter-block off by -18.00",
+    +   "spectrum-lg-vertical @5: on the line between the end centres off by -8.11",
+    +   "scrubber-md-horizontal-inverted @5: diameter-inline off by -4.00",
+    +   "scrubber-md-horizontal-inverted @5: diameter-block off by -4.00",
+    +   "scrubber-md-horizontal-inverted @5: on the line between the end centres off by -1.81",
+    +   "scrubber-md-horizontal-inverted @5: concentric with the fill's cap off by 1.98",
+    +   "scrubber-md-horizontal-rtl @5: diameter-inline off by -4.00",
+    +   "scrubber-md-horizontal-rtl @5: diameter-block off by -4.00",
+    +   "scrubber-md-horizontal-rtl @5: on the line between the end centres off by -1.81",
+    +   "scrubber-md-horizontal-rtl @5: concentric with the fill's cap off by 1.98",
+    +   "scrubber-md-vertical-inverted @5: diameter-inline off by -4.00",
+    +   "scrubber-md-vertical-inverted @5: diameter-block off by -4.00",
+    +   "scrubber-md-vertical-inverted @5: on the line between the end centres off by -1.80",
+    +   "scrubber-md-vertical-inverted @5: concentric with the fill's cap off by 1.98",
+    +   "scrubber-sm-horizontal @25: diameter-inline off by -4.00",
+    +   "scrubber-sm-horizontal @25: diameter-block off by -4.00",
+    +   "scrubber-sm-horizontal @25: on the line between the end centres off by -1.00",
+    +   "scrubber-sm-horizontal @25: concentric with the fill's cap off by 2.00",
+    +   "scrubber-sm-vertical @25: diameter-inline off by -4.00",
+    +   "scrubber-sm-vertical @25: diameter-block off by -4.00",
+    +   "scrubber-sm-vertical @25: on the line between the end centres off by -1.00",
+    +   "scrubber-sm-vertical @25: concentric with the fill's cap off by 2.00",
+    +   "scrubber-md-horizontal @25: diameter-inline off by -4.00",
+    +   "scrubber-md-horizontal @25: diameter-block off by -4.00",
+    +   "scrubber-md-horizontal @25: on the line between the end centres off by -1.00",
+    +   "scrubber-md-horizontal @25: concentric with the fill's cap off by 2.00",
+    +   "scrubber-md-vertical @25: diameter-inline off by -4.00",
+    +   "scrubber-md-vertical @25: diameter-block off by -4.00",
+    +   "scrubber-md-vertical @25: on the line between the end centres off by -1.00",
+    +   "scrubber-md-vertical @25: concentric with the fill's cap off by 2.00",
+    +   "scrubber-lg-horizontal @25: diameter-inline off by -4.00",
+    +   "scrubber-lg-horizontal @25: diameter-block off by -4.00",
+    +   "scrubber-lg-horizontal @25: on the line between the end centres off by -1.00",
+    +   "scrubber-lg-horizontal @25: concentric with the fill's cap off by 2.00",
+    +   "scrubber-lg-vertical @25: diameter-inline off by -4.00",
+    +   "scrubber-lg-vertical @25: diameter-block off by -4.00",
+    +   "scrubber-lg-vertical @25: on the line between the end centres off by -1.00",
+    +   "scrubber-lg-vertical @25: concentric with the fill's cap off by 2.00",
+    +   "spectrum-sm-horizontal @25: diameter-inline off by -6.00",
+    +   "spectrum-sm-horizontal @25: on the line between the end centres off by -1.50",
+    +   "spectrum-sm-vertical @25: diameter-block off by -6.00",
+    +   "spectrum-sm-vertical @25: on the line between the end centres off by -1.50",
+    +   "spectrum-md-horizontal @25: diameter-inline off by -12.00",
+    +   "spectrum-md-horizontal @25: on the line between the end centres off by -3.00",
+    +   "spectrum-md-vertical @25: diameter-block off by -12.00",
+    +   "spectrum-md-vertical @25: on the line between the end centres off by -3.00",
+    +   "spectrum-lg-horizontal @25: diameter-inline off by -18.00",
+    +   "spectrum-lg-horizontal @25: on the line between the end centres off by -4.50",
+    +   "spectrum-lg-vertical @25: diameter-block off by -18.00",
+    +   "spectrum-lg-vertical @25: on the line between the end centres off by -4.50",
+    +   "scrubber-md-horizontal-inverted @25: diameter-inline off by -4.00",
+    +   "scrubber-md-horizontal-inverted @25: diameter-block off by -4.00",
+    +   "scrubber-md-horizontal-inverted @25: on the line between the end centres off by -1.00",
+    +   "scrubber-md-horizontal-inverted @25: concentric with the fill's cap off by 2.00",
+    +   "scrubber-md-horizontal-rtl @25: diameter-inline off by -4.00",
+    +   "scrubber-md-horizontal-rtl @25: diameter-block off by -4.00",
+    +   "scrubber-md-horizontal-rtl @25: on the line between the end centres off by -1.00",
+    +   "scrubber-md-horizontal-rtl @25: concentric with the fill's cap off by 2.00",
+    +   "scrubber-md-vertical-inverted @25: diameter-inline off by -4.00",
+    +   "scrubber-md-vertical-inverted @25: diameter-block off by -4.00",
+    +   "scrubber-md-vertical-inverted @25: on the line between the end centres off by -1.00",
+    +   "scrubber-md-vertical-inverted @25: concentric with the fill's cap off by 2.00",
+    +   "scrubber-sm-horizontal @50: diameter-inline off by -4.00",
+    +   "scrubber-sm-horizontal @50: diameter-block off by -4.00",
+    +   "scrubber-sm-horizontal @50: concentric with the fill's cap off by 2.00",
+    +   "scrubber-sm-vertical @50: diameter-inline off by -4.00",
+    +   "scrubber-sm-vertical @50: diameter-block off by -4.00",
+    +   "scrubber-sm-vertical @50: concentric with the fill's cap off by 2.00",
+    +   "scrubber-md-horizontal @50: diameter-inline off by -4.00",
+    +   "scrubber-md-horizontal @50: diameter-block off by -4.00",
+    +   "scrubber-md-horizontal @50: concentric with the fill's cap off by 2.00",
+    +   "scrubber-md-vertical @50: diameter-inline off by -4.00",
+    +   "scrubber-md-vertical @50: diameter-block off by -4.00",
+    +   "scrubber-md-vertical @50: concentric with the fill's cap off by 2.00",
+    +   "scrubber-lg-horizontal @50: diameter-inline off by -4.00",
+    +   "scrubber-lg-horizontal @50: diameter-block off by -4.00",
+    +   "scrubber-lg-horizontal @50: concentric with the fill's cap off by 2.00",
+    +   "scrubber-lg-vertical @50: diameter-inline off by -4.00",
+    +   "scrubber-lg-vertical @50: diameter-block off by -4.00",
+    +   "scrubber-lg-vertical @50: concentric with the fill's cap off by 2.00",
+    +   "spectrum-sm-horizontal @50: diameter-inline off by -6.00",
+    +   "spectrum-sm-vertical @50: diameter-block off by -6.00",
+    +   "spectrum-md-horizontal @50: diameter-inline off by -12.00",
+    +   "spectrum-md-vertical @50: diameter-block off by -12.00",
+    +   "spectrum-lg-horizontal @50: diameter-inline off by -18.00",
+    +   "spectrum-lg-vertical @50: diameter-block off by -18.00",
+    +   "scrubber-md-horizontal-inverted @50: diameter-inline off by -4.00",
+    +   "scrubber-md-horizontal-inverted @50: diameter-block off by -4.00",
+    +   "scrubber-md-horizontal-inverted @50: concentric with the fill's cap off by 2.00",
+    +   "scrubber-md-horizontal-rtl @50: diameter-inline off by -4.00",
+    +   "scrubber-md-horizontal-rtl @50: diameter-block off by -4.00",
+    +   "scrubber-md-horizontal-rtl @50: concentric with the fill's cap off by 2.00",
+    +   "scrubber-md-vertical-inverted @50: diameter-inline off by -4.00",
+    +   "scrubber-md-vertical-inverted @50: diameter-block off by -4.00",
+    +   "scrubber-md-vertical-inverted @50: concentric with the fill's cap off by 2.00",
+    +   "scrubber-sm-horizontal @95: diameter-inline off by -4.00",
+    +   "scrubber-sm-horizontal @95: diameter-block off by -4.00",
+    +   "scrubber-sm-horizontal @95: on the line between the end centres off by 1.79",
+    +   "scrubber-sm-horizontal @95: concentric with the fill's cap off by 1.98",
+    +   "scrubber-sm-vertical @95: diameter-inline off by -4.00",
+    +   "scrubber-sm-vertical @95: diameter-block off by -4.00",
+    +   "scrubber-sm-vertical @95: on the line between the end centres off by 1.80",
+    +   "scrubber-sm-vertical @95: concentric with the fill's cap off by 1.98",
+    +   "scrubber-md-horizontal @95: diameter-inline off by -4.00",
+    +   "scrubber-md-horizontal @95: diameter-block off by -4.00",
+    +   "scrubber-md-horizontal @95: on the line between the end centres off by 1.80",
+    +   "scrubber-md-horizontal @95: concentric with the fill's cap off by 1.98",
+    +   "scrubber-md-vertical @95: diameter-inline off by -4.00",
+    +   "scrubber-md-vertical @95: diameter-block off by -4.00",
+    +   "scrubber-md-vertical @95: on the line between the end centres off by 1.79",
+    +   "scrubber-md-vertical @95: concentric with the fill's cap off by 1.98",
+    +   "scrubber-lg-horizontal @95: diameter-inline off by -4.00",
+    +   "scrubber-lg-horizontal @95: diameter-block off by -4.00",
+    +   "scrubber-lg-horizontal @95: on the line between the end centres off by 1.79",
+    +   "scrubber-lg-horizontal @95: concentric with the fill's cap off by 1.98",
+    +   "scrubber-lg-vertical @95: diameter-inline off by -4.00",
+    +   "scrubber-lg-vertical @95: diameter-block off by -4.00",
+    +   "scrubber-lg-vertical @95: on the line between the end centres off by 1.79",
+    +   "scrubber-lg-vertical @95: concentric with the fill's cap off by 1.98",
+    +   "spectrum-sm-horizontal @95: diameter-inline off by -6.00",
+    +   "spectrum-sm-horizontal @95: on the line between the end centres off by 2.70",
+    +   "spectrum-sm-vertical @95: diameter-block off by -6.00",
+    +   "spectrum-sm-vertical @95: on the line between the end centres off by 2.69",
+    +   "spectrum-md-horizontal @95: diameter-inline off by -12.00",
+    +   "spectrum-md-horizontal @95: on the line between the end centres off by 5.39",
+    +   "spectrum-md-vertical @95: diameter-block off by -12.00",
+    +   "spectrum-md-vertical @95: on the line between the end centres off by 5.40",
+    +   "spectrum-lg-horizontal @95: diameter-inline off by -18.00",
+    +   "spectrum-lg-horizontal @95: on the line between the end centres off by 8.09",
+    +   "spectrum-lg-vertical @95: diameter-block off by -18.00",
+    +   "spectrum-lg-vertical @95: on the line between the end centres off by 8.10",
+    +   "scrubber-md-horizontal-inverted @95: diameter-inline off by -4.00",
+    +   "scrubber-md-horizontal-inverted @95: diameter-block off by -4.00",
+    +   "scrubber-md-horizontal-inverted @95: on the line between the end centres off by 1.80",
+    +   "scrubber-md-horizontal-inverted @95: concentric with the fill's cap off by 1.98",
+    +   "scrubber-md-horizontal-rtl @95: diameter-inline off by -4.00",
+    +   "scrubber-md-horizontal-rtl @95: diameter-block off by -4.00",
+    +   "scrubber-md-horizontal-rtl @95: on the line between the end centres off by 1.80",
+    +   "scrubber-md-horizontal-rtl @95: concentric with the fill's cap off by 1.98",
+    +   "scrubber-md-vertical-inverted @95: diameter-inline off by -4.00",
+    +   "scrubber-md-vertical-inverted @95: diameter-block off by -4.00",
+    +   "scrubber-md-vertical-inverted @95: on the line between the end centres off by 1.79",
+    +   "scrubber-md-vertical-inverted @95: concentric with the fill's cap off by 1.98",
+    +   "scrubber-sm-horizontal @99: diameter-inline off by -4.00",
+    +   "scrubber-sm-horizontal @99: diameter-block off by -4.00",
+    +   "scrubber-sm-horizontal @99: on the line between the end centres off by 1.95",
+    +   "scrubber-sm-horizontal @99: concentric with the fill's cap off by 1.98",
+    +   "scrubber-sm-vertical @99: diameter-inline off by -4.00",
+    +   "scrubber-sm-vertical @99: diameter-block off by -4.00",
+    +   "scrubber-sm-vertical @99: on the line between the end centres off by 1.96",
+    +   "scrubber-sm-vertical @99: concentric with the fill's cap off by 1.98",
+    +   "scrubber-md-horizontal @99: diameter-inline off by -4.00",
+    +   "scrubber-md-horizontal @99: diameter-block off by -4.00",
+    +   "scrubber-md-horizontal @99: on the line between the end centres off by 1.95",
+    +   "scrubber-md-horizontal @99: concentric with the fill's cap off by 1.98",
+    +   "scrubber-md-vertical @99: diameter-inline off by -4.00",
+    +   "scrubber-md-vertical @99: diameter-block off by -4.00",
+    +   "scrubber-md-vertical @99: on the line between the end centres off by 1.95",
+    +   "scrubber-md-vertical @99: concentric with the fill's cap off by 1.98",
+    +   "scrubber-lg-horizontal @99: diameter-inline off by -4.00",
+    +   "scrubber-lg-horizontal @99: diameter-block off by -4.00",
+    +   "scrubber-lg-horizontal @99: on the line between the end centres off by 1.95",
+    +   "scrubber-lg-horizontal @99: concentric with the fill's cap off by 1.98",
+    +   "scrubber-lg-vertical @99: diameter-inline off by -4.00",
+    +   "scrubber-lg-vertical @99: diameter-block off by -4.00",
+    +   "scrubber-lg-vertical @99: on the line between the end centres off by 1.95",
+    +   "scrubber-lg-vertical @99: concentric with the fill's cap off by 1.98",
+    +   "spectrum-sm-horizontal @99: diameter-inline off by -6.00",
+    +   "spectrum-sm-horizontal @99: on the line between the end centres off by 2.94",
+    +   "spectrum-sm-vertical @99: diameter-block off by -6.00",
+    +   "spectrum-sm-vertical @99: on the line between the end centres off by 2.93",
+    +   "spectrum-md-horizontal @99: diameter-inline off by -12.00",
+    +   "spectrum-md-horizontal @99: on the line between the end centres off by 5.87",
+    +   "spectrum-md-vertical @99: diameter-block off by -12.00",
+    +   "spectrum-md-vertical @99: on the line between the end centres off by 5.87",
+    +   "spectrum-lg-horizontal @99: diameter-inline off by -18.00",
+    +   "spectrum-lg-horizontal @99: on the line between the end centres off by 8.81",
+    +   "spectrum-lg-vertical @99: diameter-block off by -18.00",
+    +   "spectrum-lg-vertical @99: on the line between the end centres off by 8.81",
+    +   "scrubber-md-horizontal-inverted @99: diameter-inline off by -4.00",
+    +   "scrubber-md-horizontal-inverted @99: diameter-block off by -4.00",
+    +   "scrubber-md-horizontal-inverted @99: on the line between the end centres off by 1.95",
+    +   "scrubber-md-horizontal-inverted @99: concentric with the fill's cap off by 1.98",
+    +   "scrubber-md-horizontal-rtl @99: diameter-inline off by -4.00",
+    +   "scrubber-md-horizontal-rtl @99: diameter-block off by -4.00",
+    +   "scrubber-md-horizontal-rtl @99: on the line between the end centres off by 1.95",
+    +   "scrubber-md-horizontal-rtl @99: concentric with the fill's cap off by 1.98",
+    +   "scrubber-md-vertical-inverted @99: diameter-inline off by -4.00",
+    +   "scrubber-md-vertical-inverted @99: diameter-block off by -4.00",
+    +   "scrubber-md-vertical-inverted @99: on the line between the end centres off by 1.95",
+    +   "scrubber-md-vertical-inverted @99: concentric with the fill's cap off by 1.98",
+    +   "scrubber-sm-horizontal @100: diameter-inline off by -4.00",
+    +   "scrubber-sm-horizontal @100: diameter-block off by -4.00",
+    +   "scrubber-sm-horizontal @100: on the line between the end centres off by 2.00",
+    +   "scrubber-sm-horizontal @100: concentric with the fill's cap off by 2.00",
+    +   "scrubber-sm-vertical @100: diameter-inline off by -4.00",
+    +   "scrubber-sm-vertical @100: diameter-block off by -4.00",
+    +   "scrubber-sm-vertical @100: on the line between the end centres off by 2.00",
+    +   "scrubber-sm-vertical @100: concentric with the fill's cap off by 2.00",
+    +   "scrubber-md-horizontal @100: diameter-inline off by -4.00",
+    +   "scrubber-md-horizontal @100: diameter-block off by -4.00",
+    +   "scrubber-md-horizontal @100: on the line between the end centres off by 2.00",
+    +   "scrubber-md-horizontal @100: concentric with the fill's cap off by 2.00",
+    +   "scrubber-md-vertical @100: diameter-inline off by -4.00",
+    +   "scrubber-md-vertical @100: diameter-block off by -4.00",
+    +   "scrubber-md-vertical @100: on the line between the end centres off by 2.00",
+    +   "scrubber-md-vertical @100: concentric with the fill's cap off by 2.00",
+    +   "scrubber-lg-horizontal @100: diameter-inline off by -4.00",
+    +   "scrubber-lg-horizontal @100: diameter-block off by -4.00",
+    +   "scrubber-lg-horizontal @100: on the line between the end centres off by 2.00",
+    +   "scrubber-lg-horizontal @100: concentric with the fill's cap off by 2.00",
+    +   "scrubber-lg-vertical @100: diameter-inline off by -4.00",
+    +   "scrubber-lg-vertical @100: diameter-block off by -4.00",
+    +   "scrubber-lg-vertical @100: on the line between the end centres off by 2.00",
+    +   "scrubber-lg-vertical @100: concentric with the fill's cap off by 2.00",
+    +   "spectrum-sm-horizontal @100: diameter-inline off by -6.00",
+    +   "spectrum-sm-horizontal @100: on the line between the end centres off by 3.00",
+    +   "spectrum-sm-vertical @100: diameter-block off by -6.00",
+    +   "spectrum-sm-vertical @100: on the line between the end centres off by 3.00",
+    +   "spectrum-md-horizontal @100: diameter-inline off by -12.00",
+    +   "spectrum-md-horizontal @100: on the line between the end centres off by 6.00",
+    +   "spectrum-md-vertical @100: diameter-block off by -12.00",
+    +   "spectrum-md-vertical @100: on the line between the end centres off by 6.00",
+    +   "spectrum-lg-horizontal @100: diameter-inline off by -18.00",
+    +   "spectrum-lg-horizontal @100: on the line between the end centres off by 9.00",
+    +   "spectrum-lg-vertical @100: diameter-block off by -18.00",
+    +   "spectrum-lg-vertical @100: on the line between the end centres off by 9.00",
+    +   "scrubber-md-horizontal-inverted @100: diameter-inline off by -4.00",
+    +   "scrubber-md-horizontal-inverted @100: diameter-block off by -4.00",
+    +   "scrubber-md-horizontal-inverted @100: on the line between the end centres off by 2.00",
+    +   "scrubber-md-horizontal-inverted @100: concentric with the fill's cap off by 2.00",
+    +   "scrubber-md-horizontal-rtl @100: diameter-inline off by -4.00",
+    +   "scrubber-md-horizontal-rtl @100: diameter-block off by -4.00",
+    +   "scrubber-md-horizontal-rtl @100: on the line between the end centres off by 2.00",
+    +   "scrubber-md-horizontal-rtl @100: concentric with the fill's cap off by 2.00",
+    +   "scrubber-md-vertical-inverted @100: diameter-inline off by -4.00",
+    +   "scrubber-md-vertical-inverted @100: diameter-block off by -4.00",
+    +   "scrubber-md-vertical-inverted @100: on the line between the end centres off by 2.00",
+    +   "scrubber-md-vertical-inverted @100: concentric with the fill's cap off by 2.00",
+    + ]
+
+      970 |         }
+      971 |         info.annotations.push({ type: "geometry", description: JSON.stringify({ worst, fails: fails.slice(0, 40), count: fails.length }) });
+    > 972 |         expect(fails).toEqual([]);
+          |                       ^
+      973 |     });
+      974 | }
+      975 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts:972:23
+
+    Error Context: tests-visual/test-results/release-11-0-2-geometry-·--a1fba-s-ends-are-concentric-dark--coarse-touch/error-context.md
+
+  37) [coarse-touch] › tests-visual/slider-forced-colors.spec.ts:25:9 › slider forced colors · a focused Slider keeps a focus mark › slider forced colors · scrubber · the focused mark is an outline that paints 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: "solid"
+    Received: "none"
+
+      54 |             expect(r.forced).toBe(true);
+      55 |             expect(r.focusVisible).toBe(true);
+    > 56 |             expect(r.style).toBe("solid");
+         |                             ^
+      57 |             expect(r.width).toBeGreaterThanOrEqual(2);
+      58 |             expect(r.offset).toBeGreaterThanOrEqual(1);
+      59 |             // The focused frame differs from the unfocused one around the marked box.
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/slider-forced-colors.spec.ts:56:29
+
+    Error Context: tests-visual/test-results/slider-forced-colors-slide-7ce15-k-is-an-outline-that-paints-coarse-touch/error-context.md
+
+  38) [coarse-touch] › tests-visual/slider-forced-colors.spec.ts:25:9 › slider forced colors · a focused Slider keeps a focus mark › slider forced colors · invalid · the focused mark is an outline that paints 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: "solid"
+    Received: "none"
+
+      54 |             expect(r.forced).toBe(true);
+      55 |             expect(r.focusVisible).toBe(true);
+    > 56 |             expect(r.style).toBe("solid");
+         |                             ^
+      57 |             expect(r.width).toBeGreaterThanOrEqual(2);
+      58 |             expect(r.offset).toBeGreaterThanOrEqual(1);
+      59 |             // The focused frame differs from the unfocused one around the marked box.
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/slider-forced-colors.spec.ts:56:29
+
+    Error Context: tests-visual/test-results/slider-forced-colors-slide-96335-k-is-an-outline-that-paints-coarse-touch/error-context.md
+
+  39) [coarse-touch] › tests-visual/slider-forced-colors.spec.ts:25:9 › slider forced colors · a focused Slider keeps a focus mark › slider forced colors · spectrum · the focused mark is an outline that paints 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: "solid"
+    Received: "none"
+
+      54 |             expect(r.forced).toBe(true);
+      55 |             expect(r.focusVisible).toBe(true);
+    > 56 |             expect(r.style).toBe("solid");
+         |                             ^
+      57 |             expect(r.width).toBeGreaterThanOrEqual(2);
+      58 |             expect(r.offset).toBeGreaterThanOrEqual(1);
+      59 |             // The focused frame differs from the unfocused one around the marked box.
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/slider-forced-colors.spec.ts:56:29
+
+    Error Context: tests-visual/test-results/slider-forced-colors-slide-d3dc0-k-is-an-outline-that-paints-coarse-touch/error-context.md
+
+  39 failed
+    [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:67:5 › dark · useGlobalDark › dark · a fresh key opens on initialValue while the default key holds auto 
+    [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:84:5 › dark · useGlobalDark › dark · night chosen twice on a dark system stays night when the system turns light 
+    [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:217:1 › slider · the thumb paints --card by default and --slider-thumb-bg when set 
+    [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:303:5 › static · a static dock's controls draw no backdrop-filter (light) 
+    [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:303:5 › static · a static dock's controls draw no backdrop-filter (dark) 
+    [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:353:5 › fill · in dark a hovered, pressed or selected seat lifts the plate (static) 
+    [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:353:5 › fill · in dark a hovered, pressed or selected seat lifts the plate (live) 
+    [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:424:1 › fold · an idle fold lays out once per morph frame on a scrolling page 
+    [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:562:1 › pager · a neighbour hop paints a neck no wider than the pitch plus a dot 
+    [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:601:1 › wheel · a vertical wheel over a horizontal dock's run scrolls the page 
+    [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:627:1 › wheel · a vertical dock's run contains its own axis and passes the other 
+    [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:674:1 › rail · a start-anchored rail's close holds its top edge and crest, and ends on the disc 
+    [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:700:1 › rail · a start-anchored rail's open holds the crest from its first frame, the foot inside the plate 
+    [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:872:5 › radius · every dock seat's corner is half its block size, at 1440 
+    [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:872:5 › radius · every dock seat's corner is half its block size, at 390 
+    [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:919:5 › geometry · the Slider's thumb fills the band and its ends are concentric (light) 
+    [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:919:5 › geometry · the Slider's thumb fills the band and its ends are concentric (dark) 
+    [chromium-headless-new] › tests-visual/slider-forced-colors.spec.ts:25:9 › slider forced colors · a focused Slider keeps a focus mark › slider forced colors · scrubber · the focused mark is an outline that paints 
+    [chromium-headless-new] › tests-visual/slider-forced-colors.spec.ts:25:9 › slider forced colors · a focused Slider keeps a focus mark › slider forced colors · invalid · the focused mark is an outline that paints 
+    [chromium-headless-new] › tests-visual/slider-forced-colors.spec.ts:25:9 › slider forced colors · a focused Slider keeps a focus mark › slider forced colors · spectrum · the focused mark is an outline that paints 
+    [coarse-touch] › tests-visual/release-11-0-2.spec.ts:67:5 › dark · useGlobalDark › dark · a fresh key opens on initialValue while the default key holds auto 
+    [coarse-touch] › tests-visual/release-11-0-2.spec.ts:84:5 › dark · useGlobalDark › dark · night chosen twice on a dark system stays night when the system turns light 
+    [coarse-touch] › tests-visual/release-11-0-2.spec.ts:217:1 › slider · the thumb paints --card by default and --slider-thumb-bg when set 
+    [coarse-touch] › tests-visual/release-11-0-2.spec.ts:303:5 › static · a static dock's controls draw no backdrop-filter (light) 
+    [coarse-touch] › tests-visual/release-11-0-2.spec.ts:303:5 › static · a static dock's controls draw no backdrop-filter (dark) 
+    [coarse-touch] › tests-visual/release-11-0-2.spec.ts:353:5 › fill · in dark a hovered, pressed or selected seat lifts the plate (static) 
+    [coarse-touch] › tests-visual/release-11-0-2.spec.ts:353:5 › fill · in dark a hovered, pressed or selected seat lifts the plate (live) 
+    [coarse-touch] › tests-visual/release-11-0-2.spec.ts:424:1 › fold · an idle fold lays out once per morph frame on a scrolling page 
+    [coarse-touch] › tests-visual/release-11-0-2.spec.ts:562:1 › pager · a neighbour hop paints a neck no wider than the pitch plus a dot 
+    [coarse-touch] › tests-visual/release-11-0-2.spec.ts:627:1 › wheel · a vertical dock's run contains its own axis and passes the other 
+    [coarse-touch] › tests-visual/release-11-0-2.spec.ts:674:1 › rail · a start-anchored rail's close holds its top edge and crest, and ends on the disc 
+    [coarse-touch] › tests-visual/release-11-0-2.spec.ts:700:1 › rail · a start-anchored rail's open holds the crest from its first frame, the foot inside the plate 
+    [coarse-touch] › tests-visual/release-11-0-2.spec.ts:872:5 › radius · every dock seat's corner is half its block size, at 1440 
+    [coarse-touch] › tests-visual/release-11-0-2.spec.ts:872:5 › radius · every dock seat's corner is half its block size, at 390 
+    [coarse-touch] › tests-visual/release-11-0-2.spec.ts:919:5 › geometry · the Slider's thumb fills the band and its ends are concentric (light) 
+    [coarse-touch] › tests-visual/release-11-0-2.spec.ts:919:5 › geometry · the Slider's thumb fills the band and its ends are concentric (dark) 
+    [coarse-touch] › tests-visual/slider-forced-colors.spec.ts:25:9 › slider forced colors · a focused Slider keeps a focus mark › slider forced colors · scrubber · the focused mark is an outline that paints 
+    [coarse-touch] › tests-visual/slider-forced-colors.spec.ts:25:9 › slider forced colors · a focused Slider keeps a focus mark › slider forced colors · invalid · the focused mark is an outline that paints 
+    [coarse-touch] › tests-visual/slider-forced-colors.spec.ts:25:9 › slider forced colors · a focused Slider keeps a focus mark › slider forced colors · spectrum · the focused mark is an outline that paints 
+  16 skipped
+  35 passed (5.7m)
