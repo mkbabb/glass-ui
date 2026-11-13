@@ -76,3 +76,4 @@ Gates, in both engines, light and dark, at 390 and 1440:
 - O-295: reproduce the pager dots "giant rectangle" on v11.0.1 and on the branch after the dot-measure fix; if the component can show its neck outside its bodies, cure it here with a witness; say what you found either way.
 - O-288 and O-300 (a): the fold keeps content inside the plate and tweened, and a slotted control keeps its own transitions, as written in `docs/release-11.0.2/orchestrator-note-dock-fold-content.md` (binding).
 - After build C: the rulings in `docs/release-11.0.2/orchestrator-note-after-build-C.md` are binding (O-219 restated with the least paint; O-271 owed; O-288 and O-300 owed; the ResizeObserver trace; the O-295 cell). A critic reads that note first.
+- Before the tag: the branch carries master's browser-free workflows, as written in `docs/release-11.0.2/orchestrator-note-ci-browser-free.md` (binding).
