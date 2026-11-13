@@ -1,10 +1,10 @@
 # Precepts addendum: the text the study adds (O-278)
 
-Written 2026-11-12 by the spec seat (claude-fable-5-2) with W-B.17. Three texts, each ready to paste into `docs/precepts`. This seat edited nothing there. Every figure is from the three records under `record/` (G is Google, A is Apple, R is the design references); shipping Safari is unmeasured, and no frame time was taken.
+Written 2026-11-12 by the spec seat (claude-fable-5-2) with W-B.17, and brought into line with that wave by the fold seat the same day after the prototype and the challenge (`fold.md`). Three texts, each ready to paste into `docs/precepts`. Neither seat edited anything there. The ranges are from the three records under `record/` (G is Google, A is Apple, R is the design references); what glass's own pieces do is from the prototype's and the fold's readings. Shipping Safari is unmeasured.
 
 Where each goes:
 
-1. `motion-canon.md`: a new section after P0, a replacement for P6's two bullets, and one sentence for the proportion fence.
+1. `motion-canon.md`: a new section after P0, one sentence for P1, a replacement for P6's two bullets, and one sentence for the proportion fence.
 2. `affordance-map.md`: a new section after "Intent first", and a press paragraph that is a proposal for the owner and is not pasted until he answers.
 3. `restraint.md`: a new section after "Restraint never means an instant change", and two amended lines.
 
@@ -28,7 +28,7 @@ and Apple's sites and the design references on 2026-11-12 (the study of INBOUND 
 | a control on hover | its edge moves 4 px or less. A plate behind a 40 px control grows from four fifths; a card grows 1 to 2 % |
 | a hover fill | 5 to 8 % of the ink, or a few levels of the fill's own colour |
 | a thing that appears | from 0.8 to 0.96 of its size, or 4 to 8 px of travel. Never from nothing |
-| a glyph | one property of its own strokes; 2 px, 15 degrees, or a twentieth of its size |
+| a glyph | one motion of its own strokes; 2 px, 15 degrees, or a twelfth of its size. Less than that is not seen |
 | a press | 2 % of colour, or a scale no deeper than 0.96 |
 | overshoot | none on a control. The one spring that overshoots in the records is a morph: 3.5 % growing, 8.5 % shrinking |
 
@@ -40,7 +40,7 @@ and Apple's sites and the design references on 2026-11-12 (the study of INBOUND 
 | a surface or mark that appears | 100 to 200 ms | 75 to 120 ms: about six tenths of the in |
 | a box that resizes | 120 ms for a correction between two open states; 250 to 450 ms for a whole panel | the same, or shorter |
 | a press | about 100 ms | about 100 ms |
-| a breath (idle, working) | 1 to 2 s each way, opacity only | |
+| a breath, where one is allowed | 1 to 2 s each way, opacity only | it finishes; it is never removed mid-way |
 
 Glass's ceiling for frequent feedback stays 200 ms. Apple's own hovers run 300 to 320 ms;
 ours are tighter on purpose.
@@ -50,11 +50,29 @@ ours are tighter on purpose.
 1. A hover leaves the way it came: one declaration serves both ways.
 2. A thing that appeared leaves in less time, about six tenths of its entrance.
 3. The out carries less motion: it fades and does not slide back.
-4. A replacement is out, then in. Two copies of one mark are never on screen together.
+4. A replacement never shows two marks at full strength. Two marks of one size trade
+   places in one seat, neither above half strength while the other shows; content of two
+   sizes goes out, then in.
 5. Between two open states only the size corrects; the entrance is not replayed.
+6. Anything that can come back inside a tenth of a second is a node that stays and
+   changes by a CSS transition, which turns round from the value on screen. A node the
+   framework removes cannot turn round.
 
 **Weight.** The surface moves before its content. Colour waits for shape. The fade lands
-before the stretch. A larger thing moves later and longer.
+before the stretch. A larger thing moves later and longer: a box that resizes takes
+0.2 s for 40 px and up to 0.45 s for 320 px, on a curve that leaves rest at no speed and
+reaches its end exactly.
+
+**What a start and a stop are, for a check.** No leg lands more than two fifths of its
+travel in one 60 Hz frame, and a leg is at least five frames long. A cut given two
+frames is still a cut.
+```
+
+### In P1, after "EFFECTS"
+
+```markdown
+- A hover plate that grows 3 px and a glyph that moves 2 px are effects, not travel:
+  they ride `--ease-out`. The spring is for a distance (an arrival, a resize, a morph).
 ```
 
 ### In place of P6's two bullets ("The universal carve", "The recipe-local carve")
@@ -109,33 +127,37 @@ colour. `class="plate"`.
 | The plate shows | It means |
 |---|---|
 | grown in at the light strength | pressable: a pointer or the keyboard is on it |
-| the full strength for as long as a press lasts | received |
-| the full strength, held | on, open, or you are here |
-| breathing down from the full strength | working |
-| breathing up from nothing | idle: this is where you act. Declared, one per view |
+| the full strength for a press, never shorter than the press clock | received |
+| the full strength, held | on, or you are here: only where nothing else marks it |
+| the light strength at rest | idle: this is where you act. Declared, one per view |
 
 It grows from four fifths only on a control about as wide as it is tall; on a row, a tab
 or a card it is the fill alone. It leaves the way it came. It has no shadow, gradient,
-rim or gleam, and its shape is the control's and never a shape of its own.
+rim or gleam. It does not pulse. A tab under its travelling indicator and a row beside
+its turned chevron are already marked, and take no held plate. Working is not the
+plate's to say: a busy control shows the dot ring in its glyph's seat.
 
 **The glyph** answers with one motion of its own strokes while its control is pointed
-at, and returns the same way. `data-glyph` on the `svg`.
+at, and returns the same way. `data-glyph` on the `svg`, with one of four verbs. A glyph
+with no verb is still, and its control's plate does the answering.
 
 | Verb | The glyph | Use it for |
 |---|---|---|
-| grow (the default) | grows a twentieth | any icon in a control |
+| grow | grows a twelfth | an icon whose control has no room for a growing plate |
 | nudge | moves 2 px the way it points | arrows, chevrons, send, next |
 | turn | turns 15 degrees | settings, refresh, the theme |
-| draw | a gap passes along its stroke once | a curve that is the control's subject |
+| draw | a gap passes along its stroke once, and once more when the control opens | a curve that is the control's subject |
 | flip (a state, on any verb) | turns to its other pose while the control is on or open | chevrons |
 
 - One verb per glyph, and the verb means what the control does.
-- The plate grows, or the glyph speaks; never both. A control whose glyph has a named
-  verb takes the plate as a fill alone.
+- One hover, one motion: the plate grows, or the glyph speaks; never both. A control
+  whose glyph has a verb takes the plate as a fill alone.
 - A glyph answers a pointer, not the keyboard; focus is the plate's fade and the ring.
-- A control nested in another answers only for itself.
-- A glyph that becomes another glyph (play and pause, copy and done) leaves, then
-  arrives, in the same seat. Never a cross-fade of two.
+- A control nested in another answers alone, on hover and on press: the outer one
+  stands down while the pointer is on the inner.
+- A glyph that becomes another glyph (play and pause, copy and done) trades places
+  with it in one seat: both stay mounted, and neither is above half strength while the
+  other shows. Never two at full strength, and never an empty seat.
 - Nothing moves at rest.
 ```
 
@@ -146,9 +168,11 @@ This would replace the PRESS-SQUISH sentences of the restraint ruling at the top
 ```markdown
 > **Press (proposed 2026-11-12, awaiting the owner).** A button or an icon button
 > shrinks slightly and evenly under a press and returns: one uniform scale to 0.97, about
-> a tenth of a second each way, with the plate at its full strength. No bounce, no inset
-> shadow, no dimming, no gleam, and never a squash that is wider than it is tall. Cards,
-> rows and large surfaces answer a press by tone alone. What he retired in July was the
+> a tenth of a second each way, with the plate at its full strength. Once begun, the
+> down stroke completes: a tap shows the whole press. No bounce, no inset shadow, no
+> dimming, no gleam, and never a squash that is wider than it is tall. A control inside
+> another is pressed alone. Cards, rows and large surfaces answer a press by tone alone,
+> and so does every control under reduced motion. What he retired in July was the
 > indent; this is a shrink.
 ```
 
@@ -178,13 +202,16 @@ against that. Past any line below is too many.
 | pseudo-elements that carry state | 1 |
 | nodes or wrappers added for a motion | 0 |
 | properties animating on one node in one change | 2 |
-| animations running on a hover | 3, and one kind of movement |
+| animations running on a hover | 2: one fade and one movement |
 | animations running on a press | 2 |
-| animations running at rest | 0, or 1 on a declared idle element |
+| animations running at rest | 0 |
+| marks for one state | 1 |
 | transition legs declared | 4 |
+| listeners per control | 0 |
 
 A seat that adds a piece states what it removes, and the removal outweighs the addition.
-A tween is never the thing to cut: cut the second motion, the layer, the wrapper.
+A tween is never the thing to cut: cut the second motion, the layer, the wrapper. A
+motion nobody can see is a cost with no intent: cut it too.
 ```
 
 ### Two amended lines in "The rules", Motion
@@ -193,11 +220,14 @@ Replace "Nothing moves while idle except ambient identity (aurora, the breathing
 
 ```markdown
 - Nothing moves while idle except ambient identity (aurora, the breathing gamut, the
-  blob) and one declared idle state on a view's large or focused element: a breath of
-  opacity, nothing else (owner, 2026-11-12: "Large elements and focused items should
-  have ... idle states"). Small controls are still at rest. Check: zero infinite
-  animations on a control that has not declared idle; at most one declared per view;
-  each stops under reduced motion.
+  blob), and that stops under reduced motion. A view's one large or focused element may declare an idle state (owner,
+  2026-11-12: "Large elements and focused items should have ... idle states"): a
+  resting fill at the hover strength, which is a state and not a loop. A breath on a
+  control is allowed only where each of its four edges (on, off, pointer on, pointer
+  off) is a tween in every engine; the two forms built on 2026-11-12 each cut on one.
+  Small controls are still at rest. Check: zero infinite animations on controls; a
+  `prefers-reduced-motion` branch for every ambient one; at most one idle element
+  declared per view.
 ```
 
 Replace "Frequent actions are fast or still." with:

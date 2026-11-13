@@ -1,8 +1,8 @@
 # Intent-first motion: one page for the owner
 
-2026-11-12. The full study is `STUDY.md` beside this file. Three recorders measured Google, Apple and the design references (emilkowal.ski, rauno.me, family.co, benji.org), plus keyframes.babb.dev. Shipping Safari was not measured; the WebKit build agreed with Chromium on every technique.
+2026-11-12. The full study is `STUDY.md` beside this file; the spec is `../../waves/W-B.17.md`. Three recorders measured Google, Apple and the design references (emilkowal.ski, rauno.me, family.co, benji.org), plus keyframes.babb.dev. The pieces were then built in a scratch worktree, measured, challenged and measured again. Shipping Safari was not measured; every Safari reading here is Playwright's WebKit build.
 
-## Three strips
+## Three strips from the study
 
 **1. The Google Chat pin you liked** (0 to 500 ms, every 50 ms)
 
@@ -22,25 +22,44 @@ The card grows 1 % and its one shadow deepens over 300 ms, the same both ways; y
 
 The capsule's width and corner arrive in one frame under a 250 ms scale, so the third frame already shows the full row clipped mid-word; this is the kind of jump the study lists twenty of.
 
-## What the study found
+## What was found
 
 - Google's hover is a flat plate that was always there, starting most of the way in. Apple's is one or two properties on one node, with no shadow, rim, gradient or gleam on any glass. Neither animates an icon's shape on hover.
 - Both cut where your law forbids it: Google on every leave, Apple on its button's hover and press.
 - glass carries more than either on a single control: a pointer gleam on every glass surface, five shadow layers on a capsule, a blur while a menu opens, three gradients behind a Select, a scripted press spring.
-- Seven small pieces would cure most of the twenty snaps, and each deletes more than it adds: a hover plate, an icon that answers, presence for anything that comes or goes, a box that follows its content, one press, a reduced-motion fade, and a no-snap check consumers can run.
+- A few small pieces cure most of the twenty snaps, and each deletes more than it adds: a hover plate, an icon that answers, presence for anything that comes or goes, one press, a reduced-motion fade, and a no-snap check consumers can run. A seventh, a box that follows its content, works and is held back until its cost is read on the real components.
+- Building them cut the design down. A hover is now two animations, not three. The icon's default grow could not be seen and is gone. The pulsing "idle" and "busy" plate cut in four places and is gone.
 
-## Four questions
+## Five questions
 
-Each has a default. Silence takes the default.
+Questions 1, 3, 4 and 5 have a default, and silence takes it. **Question 2 has none: the plate waits for your pick.**
 
-1. **Press.** In July you retired the press indent; today you asked that the edit icon "shrink like a click". The proposal is one press for every button and icon: a uniform shrink to 0.97 with the colour a step deeper, about 100 ms down and 150 ms back, no bounce, no inset shadow. A strip will come with the spec.
+1. **Press.** In July you retired the press indent; today you asked that the edit icon "shrink like a click". Built: every button and icon shrinks evenly to 0.97 with its plate at full strength, about a tenth of a second down and back, no bounce, no inset shadow. A quick tap on a trackpad completes the whole shrink (with CSS alone it showed nothing), and an icon inside a trigger shrinks by itself.
    Default: yes on buttons and icons; cards, rows and large surfaces answer by colour alone.
 
-2. **The plate's shape.** Google gives each destination its own shape (pentagon, clover, slanted pill), and the turn you see only reads on a shape that is not round.
-   Default: the plate takes the control's own rounded shape and grows without a turn; the icon carries the small motion. Say so if you want shaped plates on the dock's page icons.
+2. **The plate.** You named three things in the Chat bar: a coloured plate, a shape, and an icon that takes the colour. Our first plate kept none of them and can barely be seen.
 
-3. **The focus ring.** Today it appears in one frame. Your law says nothing appears in one frame; restraint says no motion on keyboard actions. Google swells its ring over 600 ms; Apple does nothing.
+   ![your frame, then a, b and c](fold/strips/plate-vs-owner-chromium.png)
+
+   Left to right: your frame; **a**, the plate as first built (a 5 % grey fill); **b**, the plate at full strength in the seat's own colour, the icon taking that colour; **c**, b with a soft shape. All three grow and fade the same way, in and out. A shape costs no markup, but each destination would need one drawn.
+   Pick a, b or c, or say what is still missing.
+
+3. **The focus ring.** Today it appears in one frame. Google swells its ring over 600 ms; Apple does nothing.
    Default: a 100 ms fade in and out, no swell.
 
-4. **How things leave.** In the sources a hover fill leaves the way it came, and a thing that appeared (a menu, a tooltip, a mark) leaves in about half the time with less travel.
-   Default: adopt both. Hover: up to 200 ms in and out. Appearing things: up to 200 ms in, about 120 ms out.
+4. **How things leave.** A hover fill leaves the way it came. A thing that appeared (a menu, a tooltip, a mark) leaves in about half the time with less travel. Two icons that trade places (play and pause) cross over, neither ever more than a third visible while the other shows:
+
+   ![play to pause](fold/strips/pair-chromium.png)
+
+   Default: adopt all three.
+
+5. **Idle.** You asked that large and focused elements have idle states. A slow pulse of the plate was built twice; both times it jumped when the pointer arrived or the state ended, in one browser or the other. What holds is a resting fill: the one element a view asks you to act on sits at the hover strength, like Apple's default button.
+   Default: the resting fill, no pulse. Say so if you want the pulse; it would cost a second layer and a script.
+
+## Two more strips, for a glance
+
+- **A curve that draws on hover.** A gap passes along the easing curve once, and once more on the click that opens its menu. Top two rows are the build (a small gap, in and back); the bottom row is the first try, which read as a broken icon.
+
+  ![the draw's gap](fold/strips/draw-gap-chromium.png)
+
+- **A busy button** will show the dot ring in its icon's seat, so it does not change width and still reads as working when nothing moves. That strip comes with the build.
