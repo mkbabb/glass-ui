@@ -108,6 +108,15 @@ are described below.
   `calc(var(--dock-control-size) / 2)`, which the browser clamps to half each seat's
   own height. `--dock-control-radius` still sets the corner for all of them.
 
+- **A control you place in a dock keeps its own transitions.** The dock gave every
+  control placed directly in its run a transition for the seat's width, and that
+  replaced the control's own list, so its hover and press tweens snapped. The seat's
+  transition is now a default under the control's: a control that declares a
+  `transition` keeps it. To have such a control tween its width when it becomes the
+  open seat, add `inline-size` (`block-size` in a vertical dock) to its list, as the
+  dock's own controls now do. While the dock folds or unfolds it sets its controls'
+  opacity and scale on every frame, and their own transitions resume once it settles.
+
 - **The Slider's thumb fills the track.** The thumb was a smaller disc inside the fill's
   round end, off its centre, and the spectrum's handle was a thin bar whose corners
   stood outside the track's round ends. Now the track, the fill and the thumb share one

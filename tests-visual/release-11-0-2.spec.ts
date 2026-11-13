@@ -45,6 +45,11 @@
 //          0, 1, 5, 25, 50, 95, 99 and 100)
 //   hover  every seat type, both orientations, every shape, expanded and collapsed: the
 //          dock's box is unchanged to 0 px in every frame of each seat's hover in and out
+//   transition  a control slotted into a dock's run keeps the transition it declares
+//          and its hover tween runs; the dock's icon control keeps its hover legs
+//   fold   (fold-content) through every frame of an unfold and a fold, a dock's content
+//          stays inside the plate's painted box and no item's opacity moves by half
+//          its range in one frame, both orientations, 390 and 1440, light and dark
 import { expect, test, type Page } from "@playwright/test";
 
 type DarkHandle = { stamped: boolean; isDark: () => boolean; toggle: () => void };
@@ -1119,3 +1124,121 @@ for (const theme of ["light", "dark"]) {
         expect(fails).toEqual([]);
     });
 }
+
+// A control slotted directly into a dock's run keeps the transition it declares: the run's
+// seat rule is a default under it, not an override. The same button inside the open dock
+// and outside it computes the same transition, and a hover tween is part-way through
+// 120 ms into its 400 ms. The dock's own icon control keeps its hover legs too, beside
+// the extent the seat exchange runs on.
+test("transition · a control slotted into a dock's run keeps its own transition", async ({ page }, info) => {
+    test.skip(info.project.name === "coarse-touch", "hover is a fine-pointer state");
+    await page.goto("/tests-visual/release-11-0-2/fold-content-harness.html");
+    await page.locator(".fc-dock .dock-plate").waitFor();
+    await page.evaluate(() => (window as unknown as { __expand: () => void }).__expand());
+    await page.waitForTimeout(1500);
+    const read = () =>
+        page.evaluate(() => {
+            const t = (sel: string) => {
+                const cs = getComputedStyle(document.querySelector(sel)!);
+                return { property: cs.transitionProperty, duration: cs.transitionDuration };
+            };
+            return { inside: t(".fc-inside"), outside: t(".fc-outside"), icon: t('.fc-dock [aria-label="Search"]') };
+        });
+    const r = await read();
+    const mid = async (sel: string) => {
+        await page.mouse.move(4, 400);
+        await page.waitForTimeout(600);
+        const box = (await page.locator(sel).boundingBox())!;
+        await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
+        await page.waitForTimeout(120);
+        return page.evaluate((sel) => getComputedStyle(document.querySelector(sel)!).backgroundColor, sel);
+    };
+    const tween = { inside: await mid(".fc-inside"), outside: await mid(".fc-outside") };
+    info.annotations.push({ type: "transition", description: JSON.stringify({ ...r, tween }) });
+    expect(r.inside).toEqual(r.outside);
+    expect(r.icon.property).toContain("background-color");
+    expect(r.icon.property).toMatch(/inline-size|width/);
+    // Part-way between rest rgb(40, 120, 220) and hover rgb(220, 60, 40).
+    for (const c of [tween.inside, tween.outside]) {
+        expect(c).not.toBe("rgb(40, 120, 220)");
+        expect(c).not.toBe("rgb(220, 60, 40)");
+    }
+});
+
+// Every frame of an unfold and a fold of a dock that holds a 240 px Slider and a row of
+// seats: each content item's box, cut by the dock's own clip and the run's scroll port
+// where those clip, against the plate's painted box; and each item's effective opacity
+// (the product of its own and its ancestors'). No visible item stands outside the plate,
+// and no item's opacity moves by half its range or more between two frames.
+async function foldFrames(page: Page, dir: "expand" | "collapse") {
+    await page.evaluate(() => {
+        type F = { morphing: boolean; items: { id: string; o: number; out: number }[] };
+        const w = window as unknown as { __frames: F[] };
+        w.__frames = [];
+        const items = [...document.querySelectorAll<HTMLElement>(
+            ".fc-dock .dock-layer--full :is([aria-label='Home'],[aria-label='Search'],[aria-label='Settings'],.fc-slider,.fc-inside)",
+        )];
+        const dock = document.querySelector<HTMLElement>(".fc-dock")!;
+        const plate = dock.querySelector(".dock-plate")!;
+        const tick = () => {
+            const p = plate.getBoundingClientRect();
+            const cs = getComputedStyle(dock);
+            const d = dock.getBoundingClientRect();
+            const f: F = { morphing: dock.hasAttribute("data-morphing"), items: [] };
+            for (const el of items) {
+                let o = getComputedStyle(el).visibility === "hidden" ? 0 : 1;
+                for (let e: HTMLElement | null = el; e && e !== document.body; e = e.parentElement) o *= +getComputedStyle(e).opacity;
+                const r = el.getBoundingClientRect();
+                let [l, t, rr, b] = [r.left, r.top, r.right, r.bottom];
+                if (cs.overflowX !== "visible") [l, rr] = [Math.max(l, d.left), Math.min(rr, d.right)];
+                if (cs.overflowY !== "visible") [t, b] = [Math.max(t, d.top), Math.min(b, d.bottom)];
+                const run = el.closest(".dock-run");
+                if (run) {
+                    const rs = getComputedStyle(run);
+                    const rb = run.getBoundingClientRect();
+                    if (rs.overflowX !== "visible") [l, rr] = [Math.max(l, rb.left), Math.min(rr, rb.right)];
+                    if (rs.overflowY !== "visible") [t, b] = [Math.max(t, rb.top), Math.min(b, rb.bottom)];
+                }
+                const out = rr > l && b > t ? Math.max(p.left - l, rr - p.right, p.top - t, b - p.bottom, 0) : 0;
+                f.items.push({ id: el.getAttribute("aria-label") ?? el.className, o, out });
+            }
+            w.__frames.push(f);
+            if (w.__frames.length < 120) requestAnimationFrame(tick);
+        };
+        requestAnimationFrame(tick);
+    });
+    await page.evaluate((dir) => (window as unknown as Record<string, () => void>)[`__${dir}`]!(), dir);
+    await page.waitForTimeout(2400);
+    return page.evaluate(
+        () => (window as unknown as { __frames: { morphing: boolean; items: { id: string; o: number; out: number }[] }[] }).__frames,
+    );
+}
+
+for (const orientation of ["horizontal", "vertical"])
+    for (const width of [1440, 390]) {
+        test(`fold · a ${orientation} dock's content stays inside the plate and fades by steps through the fold and unfold at ${width}`, async ({ page }, info) => {
+            await page.setViewportSize({ width, height: 900 });
+            const fails: string[] = [];
+            const worst = { out: 0, step: 0 };
+            for (const theme of ["light", "dark"]) {
+                await page.goto(`/tests-visual/release-11-0-2/fold-content-harness.html?orientation=${orientation}&theme=${theme}`);
+                await page.locator(".fc-dock .dock-plate").waitFor();
+                await page.waitForTimeout(600);
+                for (const dir of ["expand", "collapse"] as const) {
+                    const frames = await foldFrames(page, dir);
+                    expect(frames.some((f) => f.morphing), `${theme} ${dir} morphs`).toBe(true);
+                    frames.forEach((f, i) =>
+                        f.items.forEach((it, k) => {
+                            const step = i > 0 ? Math.abs(it.o - frames[i - 1]!.items[k]!.o) : 0;
+                            worst.out = Math.max(worst.out, it.o > 0.02 ? it.out : 0);
+                            worst.step = Math.max(worst.step, step);
+                            if (it.o > 0.02 && it.out > 0.5) fails.push(`${theme} ${dir} frame ${i}: ${it.id} ${it.out.toFixed(1)} px outside at opacity ${it.o.toFixed(2)}`);
+                            if (step >= 0.5) fails.push(`${theme} ${dir} frame ${i}: ${it.id} opacity moved ${step.toFixed(2)}`);
+                        }),
+                    );
+                }
+            }
+            info.annotations.push({ type: "fold", description: JSON.stringify({ worst, fails: fails.slice(0, 20) }) });
+            expect(fails).toEqual([]);
+        });
+    }

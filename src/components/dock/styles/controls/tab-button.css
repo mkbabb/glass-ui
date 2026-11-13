@@ -63,7 +63,11 @@
             background-color var(--dock-motion-fast),
             color var(--dock-motion-fast),
             /* Press micro-feedback spring (transform-scoped). */ scale
-                var(--dock-press-spring);
+                var(--dock-press-spring),
+            /* The extent legs take part in a dock run's seat exchange (run.css), whose
+               own transition is a default this list replaces. */
+                inline-size var(--spring-dock-duration) var(--spring-dock),
+            block-size var(--spring-dock-duration) var(--spring-dock);
 
         /* Uses the FAMILY hover/active token pair (glass-translucent
            foreground-over-transparent — the same intent as a surface-tint-8/10 ladder).

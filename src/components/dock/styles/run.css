@@ -530,16 +530,6 @@
     .glass-dock :where(.dock-layers) > .dock-run > [data-glass-dock-seat]:has([aria-current]:not([aria-current="false"])) {
         inline-size: var(--dock-open-seat);
         /* The cross axis is untouched: the open seat is WIDER, never taller. */
-        transition: inline-size var(--spring-dock-duration) var(--spring-dock);
-    }
-
-    /* Every OTHER seat is exactly one pitch minus the gap. Stating it is what makes the
-       transfer complementary — the departing seat has a rule to run BACK to, so the two
-       animations are one exchange rather than one growth and one snap. */
-    .glass-dock :where(.dock-layers) > .dock-run > :not([aria-current]:not([aria-current="false"])):not(
-            [data-glass-dock-seat]:has([aria-current]:not([aria-current="false"]))
-        ) {
-        transition: inline-size var(--spring-dock-duration) var(--spring-dock);
     }
 
     /* Rotated for a vertical dock: m=2 there, so the open seat is 2·P − gap of BLOCK
@@ -549,14 +539,19 @@
     .glass-dock.vertical :where(.dock-layers) > .dock-run > [data-glass-dock-seat]:has([aria-current]:not([aria-current="false"])) {
         inline-size: auto;
         block-size: var(--dock-open-seat);
-        transition: block-size var(--spring-dock-duration) var(--spring-dock);
     }
 
-    .glass-dock.vertical
-        :where(.dock-layers) > .dock-run
-        > :not([aria-current]:not([aria-current="false"])):not(
-            [data-glass-dock-seat]:has([aria-current]:not([aria-current="false"]))
-        ) {
+    /* THE EXCHANGE'S CLOCK IS EVERY SEAT'S DEFAULT, NOT AN OVERRIDE. Every seat, open or
+       not, tweens its extent on the dock spring, so the departing and the arriving seat
+       run one exchange. The rule has no specificity (`:where()`), so a control that
+       declares its own `transition` keeps it: a slotted button's hover tween runs inside
+       the run as it does outside. Such a control adds the extent to its own list to take
+       part in the exchange, as the dock's icon and tab controls do
+       (controls/icon-button.css, controls/tab-button.css). */
+    :where(.glass-dock:not(.vertical) .dock-layers > .dock-run > *) {
+        transition: inline-size var(--spring-dock-duration) var(--spring-dock);
+    }
+    :where(.glass-dock.vertical .dock-layers > .dock-run > *) {
         transition: block-size var(--spring-dock-duration) var(--spring-dock);
     }
 

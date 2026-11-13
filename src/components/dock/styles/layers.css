@@ -296,6 +296,12 @@
            strips `scale` → snap. */
         scale: calc(0.82 + 0.18 * var(--child-reveal));
         transform-origin: center;
+        /* The morph writes this opacity and scale every frame. A seat keeps its own
+           transition list at rest (run.css), and a list that tweens `opacity` or
+           `scale` would trail each frame's value by its own duration, so the seat
+           would hold full strength into the first frames of an unfold. While the
+           dock morphs, its seats run on the morph's clock alone. */
+        transition: none;
     }
 
     /* Per-child onsets off the ONE `--dock-stagger-step` token. The hand-typed
