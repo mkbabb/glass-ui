@@ -21,7 +21,8 @@
 //          rungs
 //   blob   from 100 ms after a sweep and release over the hero blob the body stays a
 //          bead: in every sampled frame its centre is painted and the canvas box's four
-//          corners show the page ground
+//          corners show the page ground; through a sweep, a drag and a release, every
+//          WebGL2 draw keeps the body's reach inside the wrapper's half-width
 //   cutcap an open dock whose active layer is narrower than an inactive one, with a
 //          #persistent-end seat and `--radius-dock: 1.875rem`, paints four equal plate
 //          corners (daraksha's glass-only repro `dock-cutcap`, ported to `src/`)
@@ -544,6 +545,73 @@ test("static · a live dock's active control keeps its capsule lens", async ({ p
     await page.locator("body[data-ready='1'] .static-dock").waitFor();
     await page.waitForTimeout(600);
     expect(await filtered(page, "Home")).toHaveLength(1);
+});
+
+// The body's reach as the GPU draws it: every WebGL2 draw's `uBodyRadius + |uPulseAmp| +
+// uNoiseAmp` (canvas UV), read from the uniforms the page uploads, through a 600 ms
+// sweep paced one move a frame, a three-stroke drag and its release. The body must stay
+// inside the wrapper's half-width, 0.3125 UV; past it the body is cut square by the
+// canvas box. WebGPU is hidden so every engine draws on the WebGL2 leg, which reads the
+// same breath as the WebGPU one.
+test("blob · through a sweep, a drag and a release the body's drawn reach stays inside its box", async ({ page }, info) => {
+    await page.addInitScript(() => {
+        Object.defineProperty(Navigator.prototype, "gpu", { get: () => undefined, configurable: true });
+        const names = new WeakMap<WebGLUniformLocation, string>();
+        const live: Record<string, number> = {};
+        const w = window as unknown as { __reach: { peak: number; draws: number } };
+        w.__reach = { peak: 0, draws: 0 };
+        const P = WebGL2RenderingContext.prototype;
+        const getLoc = P.getUniformLocation;
+        P.getUniformLocation = function (this: WebGL2RenderingContext, prog: WebGLProgram, name: string) {
+            const loc = getLoc.call(this, prog, name);
+            if (loc) names.set(loc, name);
+            return loc;
+        };
+        const u1f = P.uniform1f;
+        P.uniform1f = function (this: WebGL2RenderingContext, loc: WebGLUniformLocation | null, v: number) {
+            const n = loc && names.get(loc);
+            if (n) live[n] = v;
+            return u1f.call(this, loc, v);
+        };
+        const draw = P.drawArrays;
+        P.drawArrays = function (this: WebGL2RenderingContext, ...a: Parameters<WebGL2RenderingContext["drawArrays"]>) {
+            if ("uBodyRadius" in live && "uPulseAmp" in live && "uNoiseAmp" in live) {
+                w.__reach.peak = Math.max(w.__reach.peak, live.uBodyRadius! + Math.abs(live.uPulseAmp!) + live.uNoiseAmp!);
+                w.__reach.draws++;
+            }
+            return draw.apply(this, a);
+        };
+    });
+    await page.setViewportSize({ width: 800, height: 700 });
+    await page.goto("/tests-visual/release-11-0-2/blob-harness.html");
+    await page.locator("body[data-ready='1'] .goo-blob-hit").waitFor();
+    await page.waitForTimeout(1200);
+    const box = (await page.locator(".goo-blob-canvas").boundingBox())!;
+    const host = (await page.locator(".blob-host").boundingBox())!;
+    const at = (x: number, y: number) => page.mouse.move(host.x + ((x + 1) / 2) * host.width, host.y + ((y + 1) / 2) * host.height);
+    const frame = () => page.evaluate(() => new Promise((r) => requestAnimationFrame(() => r(null))));
+    const ease = (u: number) => (1 - Math.cos(Math.PI * u)) / 2;
+    const rest = await page.evaluate(() => (window as unknown as { __reach: { peak: number; draws: number } }).__reach);
+    await at(-0.9, 0.1);
+    for (let i = 0; i <= 36; i++) {
+        await at(-0.9 + 1.8 * ease(i / 36), 0.1);
+        await frame();
+    }
+    await page.waitForTimeout(400);
+    await at(-0.6, -0.2);
+    await page.mouse.down();
+    for (const [a, b] of [[-0.6, 0.6], [0.6, -0.6], [-0.6, 0.6]] as const) {
+        for (let i = 0; i <= 12; i++) {
+            await at(a + (b - a) * ease(i / 12), -0.2);
+            await frame();
+        }
+    }
+    await page.mouse.up();
+    await page.waitForTimeout(600);
+    const r = await page.evaluate(() => (window as unknown as { __reach: { peak: number; draws: number } }).__reach);
+    info.annotations.push({ type: "blob", description: JSON.stringify({ box, rest, ...r }) });
+    expect(r.draws).toBeGreaterThan(rest.draws + 30);
+    expect(r.peak).toBeLessThanOrEqual(0.3125 + 1e-4);
 });
 
 test("blob · from 100 ms after a sweep and release the body stays a bead, not a filled box", async ({ page }, info) => {
