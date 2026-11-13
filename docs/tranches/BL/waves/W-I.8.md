@@ -271,3 +271,7 @@ Frames: `~/.dev-logs/owner-1112/dock-gaps/branch-v2/`. Glass 11.0.1.
 "the dock dwell time to auto collapse after leaving hover should be increased."
 
 Fact to hold beside it: on a hover dock, glass 11.0.1 already folds 3600 ms after the pointer leaves (`DOCK_COLLAPSE_DELAY_MS`, `scheduleCollapse`). If a site's dock folds sooner than that, the cause is the site's mode (`expandOn="press"` closes at once when focus leaves; an outside press folds at once) or its own code. So the wave must first find what he is seeing fold early (daraksha's and atlas's measured totals), then set the linger: at least today's 3.6 s on hover docks, longer by dwell (O-275), and a linger where press docks close at once today.
+
+## A named piece added 2026-11-12 22:55 (O-307): controls contributed from outside the dock's tree
+
+daraksha's pages teleport their controls into a slot element inside the dock (`<Teleport defer to="#dock-page">`), so those controls sit in the dock in the DOM and outside it in the component tree; the dock's provided context never reaches them (Popover's hold and close, a Slider's hold, a menu's hold, a seat's face). atlas's figure docks and any app with per-page tools have the same need. The wave designs ONE supported way: an outlet component that teleports into a named dock and carries that dock's context to its slot content, with docks registered by id. No DOM lookup inside the primitives.
