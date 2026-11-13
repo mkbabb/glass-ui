@@ -1,0 +1,95 @@
+23:54:46 fix6-witness green chromium exit 0: green chromium 16/16 pass
+23:56:22 fix6-witness red chromium exit 0: red chromium 4/16 pass
+disk /dev/disk3s5   1.8Ti   1.7Ti   110Gi    94%     22M  1.2G    2%   /System/Volumes/Data
+00:01:24 fix5-witness chromium exit 1: 23:58:52 green chromium exit 0 :: green chromium 40/40;00:01:19 red chromium exit 1 :: red chromium 0/40;
+00:03:12 fix4-witness chromium exit 1: 00:02:15 green chromium exit 0 :: VERDICT green chromium 17/17;00:03:07 red chromium exit 1 :: VERDICT red chromium 11/17;
+00:04:01 fix3-witness green chromium exit 0
+00:04:47 fix3-witness red chromium exit 0
+00:04:48 fix3 judge chromium: green chromium Collapsible layout: 5/5;green chromium Collapsible gap: 7/7;green chromium Collapsible frames: 2/2;green chromium Slider controlled: 3/3;green chromium Root tempo: 1/1;green chromium Tabs radius: 8/8;red chromium Collapsible layout: 5/5;red chromium Collapsible gap: 0/7;red chromium Collapsible frames: 2/2;red chromium Slider controlled: 3/3;red chromium Root tempo: 1/1;red chromium Tabs radius: 4/8;
+00:06:13 fix2-witness green chromium exit 0
+00:07:36 fix2-witness red chromium exit 1
+00:09:56 lane L1 chromium: 00:08:46 green chromium tree=/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0 exit 0;00:09:56 red chromium tree=/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/c1-v1100 exit 1;
+00:11:48 lane L2 chromium: 00:10:53 green chromium tree=/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0 exit 0;00:11:48 red chromium tree=/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/c1-v1100 exit 1;
+00:13:03 lane L3 chromium: 00:12:26 green chromium tree=/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0 exit 0;00:13:03 red chromium tree=/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/c1-v1100 exit 1;
+00:14:49 lane L4 chromium: 00:13:56 green chromium tree=/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0 pkg=/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0 exit 0;00:14:49 red chromium tree=/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/c1-v1100 pkg=/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l4-pack/package exit 1;
+00:16:10 lane L5 chromium: 00:15:28 green chromium tree=/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0 exit 0;00:16:10 red chromium tree=/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/c1-v1100 exit 1;
+00:29:51 lane L6 chromium: 00:19:45 green chromium tree=/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0 items=all exit 0;00:29:51 red chromium tree=/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/c1-v1100 items=all exit 1;
+00:34:05 lane L7 chromium: 00:31:59 green chromium tree=/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0 exit 0;00:34:05 red chromium tree=/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/c1-v1100 exit 1;
+00:34:05 RUN-DONE stages=[fix5 fix4 fix3 fix2 lanes] engines=[chromium]
+00:34:05 PHASE-wc-DONE
+00:38:18 probe9 green chromium exit 0: VERDICT green chromium 24/24
+00:42:30 probe9 pre chromium exit 0: VERDICT pre chromium 4/24
+00:46:46 probe9 red chromium exit 0: VERDICT red chromium 12/24
+00:46:46 PHASE-p9c-DONE
+00:47:11 chain 1 stopped by this critic after p9c (its probe9 WebKit run was waiting on the webkit lock and had not been admitted; killed by PID); chain 2 follows
+00:57:33 probe10 green chromium exit 0: VERDICT green chromium 36/40 on, 0 errors
+01:14:15 probe10 red chromium exit 0: VERDICT red chromium 24/40 on, 0 errors
+01:26:34 probe10 v1101 chromium exit 0: VERDICT v1101 chromium 24/40 on, 0 errors
+01:26:34 PHASE-p10c-DONE
+01:48:22 release ch exit 0: 01:48 chain ch done: partA partB g6-4 g6-3 r2 owner fix2 c2
+01:48:22 PHASE-relc-DONE
+01:48:22 CHAIN-DONE relc
+01:53:02 gates: HEAD a6b92fbc3 dirty-src 0;01:49:38 build exit 0;01:50:09 typecheck exit 0;01:50:12 demo-dist-build exit 0;01:52:25 vitest exit 0;01:52:56 verify-package exit 0;guarded exit 0;
+01:53:02 PHASE-gates-DONE
+01:53:02 CHAIN-DONE gates
+disk /dev/disk3s5   1.8Ti   1.7Ti    80Gi    96%     23M  842M    3%   /System/Volumes/Data
+02:01:38 e2e chromium branch exit 1
+02:06:56 e2e chromium v1100 exit 1
+02:06:56 RUN-DONE stages=[e2e] engines=[chromium]
+02:06:56 PHASE-e2ec-DONE
+02:06:56 CHAIN-DONE e2ec
+02:11:37 probe9 green webkit exit 0: VERDICT green webkit 24/24
+02:19:15 probe9 red webkit exit 0: VERDICT red webkit 12/24
+02:19:15 PHASE-p9w-DONE
+02:19:15 CHAIN-DONE p9w
+02:30:56 probe10 green webkit exit 0: VERDICT green webkit 36/40 on, 0 errors
+02:42:39 probe10 red webkit exit 0: VERDICT red webkit 24/40 on, 0 errors
+02:42:39 PHASE-p10w-DONE
+02:45:35 fix6-witness green webkit exit 0: green webkit 16/16 pass
+02:49:38 fix6-witness red webkit exit 0: red webkit 4/16 pass
+disk /dev/disk3s5   1.8Ti   1.7Ti    75Gi    96%     23M  790M    3%   /System/Volumes/Data
+02:52:54 fix5-witness webkit exit 0: 23:58:52 green chromium exit 0 :: green chromium 40/40;00:01:19 red chromium exit 1 :: red chromium 0/40;02:52:48 green webkit exit 0 :: green webkit 40/40;
+02:55:49 fix4-witness webkit exit 0: 00:02:15 green chromium exit 0 :: VERDICT green chromium 17/17;00:03:07 red chromium exit 1 :: VERDICT red chromium 11/17;02:55:44 green webkit exit 0 :: VERDICT green webkit 17/17;
+02:59:04 fix2-witness green webkit exit 0
+03:04:06 lane L1 webkit: 03:04:06 green webkit tree=/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0 exit 0;
+03:06:19 lane L2 webkit: 03:06:19 green webkit tree=/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0 exit 0;
+03:19:49 lane L3 webkit: 03:19:49 green webkit tree=/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0 exit 0;
+03:21:33 lane L4 webkit: 03:21:33 green webkit tree=/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0 pkg=/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0 exit 0;
+03:22:48 lane L5 webkit: 03:22:48 green webkit tree=/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0 exit 0;
+03:35:42 lane L6 webkit: 03:26:09 green webkit tree=/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0 items=all exit 0;03:35:42 red webkit tree=/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/c1-v1100 items=all exit 1;
+04:09:05 lane L7 webkit: 04:00:45 green webkit tree=/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0 exit 1;04:09:04 red webkit tree=/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/c1-v1100 exit 1;
+04:09:05 RUN-DONE stages=[lanes fix5 fix4 fix2] engines=[webkit]
+disk /dev/disk3s5   1.8Ti   1.7Ti    45Gi    98%     23M  471M    5%   /System/Volumes/Data
+04:09:05 fix3-witness green webkit exit 75
+04:09:05 fix3-witness red webkit exit 75
+04:09:05 fix3 judge webkit: node:fs:436;    return binding.readFileUtf8(path, stringToFlags(options.flag));;                   ^;;Error: ENOENT: no such file or directory, open '/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/docs/release-11.1.0/critic-7/fix3-witness/out/green-webkit.json';    at readFileSync (node:fs:436:20);    at load (file:///Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/docs/release-11.1.0/critic-7/fix3-witness/judge.mjs:8:32);    at file:///Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/docs/release-11.1.0/critic-7/fix3-witness/judge.mjs:9:15;    at ModuleJob.run (node:internal/modules/esm/module_job:437:25);    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:642:26);    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {;  errno: -2,;  code: 'ENOENT',;  syscall: 'open',;  path: '/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/docs/release-11.1.0/critic-7/fix3-witness/out/green-webkit.json';};;Node.js v26.0.0;node:fs:436;    return binding.readFileUtf8(path, stringToFlags(options.flag));;                   ^;;Error: ENOENT: no such file or directory, open '/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/docs/release-11.1.0/critic-7/fix3-witness/out/red-webkit.json';    at readFileSync (node:fs:436:20);    at load (file:///Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/docs/release-11.1.0/critic-7/fix3-witness/judge.mjs:8:32);    at file:///Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/docs/release-11.1.0/critic-7/fix3-witness/judge.mjs:9:15;    at ModuleJob.run (node:internal/modules/esm/module_job:437:25);    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:642:26);    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {;  errno: -2,;  code: 'ENOENT',;  syscall: 'open',;  path: '/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/docs/release-11.1.0/critic-7/fix3-witness/out/red-webkit.json';};;Node.js v26.0.0;
+04:09:05 RUN-DONE stages=[fix3] engines=[webkit]
+04:09:05 PHASE-ww-DONE
+04:09:05 CHAIN-DONE ww
+04:09:05 release wk exit 75: 01:48 chain ch done: partA partB g6-4 g6-3 r2 owner fix2 c2
+04:09:05 PHASE-relw-DONE
+04:09:05 CHAIN-DONE relw
+disk /dev/disk3s5   1.8Ti   1.7Ti    45Gi    98%     23M  471M    5%   /System/Volumes/Data
+04:09:05 e2e webkit branch exit 75
+04:09:05 e2e webkit v1100 exit 75
+04:09:05 RUN-DONE stages=[e2e] engines=[webkit]
+04:09:05 PHASE-e2ew-DONE
+04:09:05 CHAIN-DONE e2ew
+disk /dev/disk3s5   1.8Ti   1.7Ti    45Gi    98%     23M  471M    5%   /System/Volumes/Data
+04:09:05 fix5-witness webkit exit 75: 23:58:52 green chromium exit 0 :: green chromium 40/40;00:01:19 red chromium exit 1 :: red chromium 0/40;02:52:48 green webkit exit 0 :: green webkit 40/40;
+04:09:05 fix4-witness webkit exit 75: 00:02:15 green chromium exit 0 :: VERDICT green chromium 17/17;00:03:07 red chromium exit 1 :: VERDICT red chromium 11/17;02:55:44 green webkit exit 0 :: VERDICT green webkit 17/17;
+04:09:05 fix2-witness green webkit exit 75
+04:09:05 fix2-witness red webkit exit 75
+04:09:06 lane L1 webkit: 04:09:06 green webkit tree=/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0 exit 75;04:09:06 red webkit tree=/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/c1-v1100 exit 75;
+04:09:06 lane L2 webkit: 04:09:06 green webkit tree=/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0 exit 75;04:09:06 red webkit tree=/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/c1-v1100 exit 75;
+04:09:06 lane L3 webkit: 04:09:06 green webkit tree=/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0 exit 75;04:09:06 red webkit tree=/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/c1-v1100 exit 75;
+04:09:06 lane L4 webkit: 04:09:06 green webkit tree=/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0 pkg=/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0 exit 75;04:09:06 red webkit tree=/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/c1-v1100 pkg=/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l4-pack/package exit 75;
+04:09:06 lane L5 webkit: 04:09:06 green webkit tree=/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0 exit 75;04:09:06 red webkit tree=/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/c1-v1100 exit 75;
+04:09:06 RUN-DONE stages=[lanes fix5 fix4 fix2] engines=[webkit]
+04:09:06 PHASE-redw-DONE
+04:09:06 CHAIN-DONE redw
+04:09:06 CHAIN-B-DONE p10c relc gates e2ec p9w p10w ww relw e2ew redw
+04:09:14 release-rerun partB ch exit 75: 
+04:09:14 lane L7 webkit rerun: [guarded] REFUSED: kernel zone data.kalloc.1024 at 8.05M (panics near 20.8M; heavy and browser runs stop at 8M): reboot the Mac
+04:09:14 CHAIN-C-DONE
+04:09:18 STOP: guarded REFUSED (kernel zone data.kalloc.1024 at 8.05M) from 04:09:05; chain C stopped by PID; nothing further runs this round
