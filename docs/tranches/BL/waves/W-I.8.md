@@ -265,3 +265,9 @@ Frames: `~/.dev-logs/owner-1112/dock-gaps/branch-v2/`. Glass 11.0.1.
 - The labelled seat: "potentially have the text not displayed, but on hover display larger and to the left, and shift the icons (keeping the dock the same size)".
 - "the dock transitions and goo thereof and fission could be smoother too".
 - "each app page ... should have a defined glass container, separate from the dock as a card".
+
+## Owner direction on the linger, 2026-11-12 21:48 (answers O-302's question)
+
+"the dock dwell time to auto collapse after leaving hover should be increased."
+
+Fact to hold beside it: on a hover dock, glass 11.0.1 already folds 3600 ms after the pointer leaves (`DOCK_COLLAPSE_DELAY_MS`, `scheduleCollapse`). If a site's dock folds sooner than that, the cause is the site's mode (`expandOn="press"` closes at once when focus leaves; an outside press folds at once) or its own code. So the wave must first find what he is seeing fold early (daraksha's and atlas's measured totals), then set the linger: at least today's 3.6 s on hover docks, longer by dwell (O-275), and a linger where press docks close at once today.
