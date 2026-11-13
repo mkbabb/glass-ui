@@ -232,3 +232,39 @@ Every release spec on 14dd41fea (`fix-2/scripts/chain4.sh`; reports
   the untested shape.
 - Not measured: real Safari; Playwright WebKit 2311 for the new cells (only the
   `webkit` 2287 project ran).
+
+## The rulings on critique 1 (orchestrator note, 01:00), read against this seat's work
+
+The note landed while this seat ran; this is where the work stands against it.
+
+- **D-1.** As ruled: the cell judges paint at G-READ's floor, the least paint is the
+  thumb's tone alone, and the CHANGELOG says the fill no longer shows round the thumb at
+  the minimum and what shows instead.
+- **D-2, the two `-border` names.** As ruled: a host's colour, if set, wins at its end of
+  the edge, with 11.0.1's meaning. The witness is the `edge · a host's ...` browser cell,
+  which sets each name (both, one, the other) and reads the plate's computed edge colour;
+  no vitest witness was added, since the cascade it depends on (an unset reference making
+  a custom property invalid at computed-value time) is the browser's.
+- **D-2, `--glass-border-dock`: not done, needs a ruling.** The library declares it at
+  `:root`, so no CSS can tell a host's value from the library's, and reading it on the
+  default path puts a translucent mix back as one arm of the edge's lerp beside the
+  other, the form `o227/forms-probe.mjs` shows crashing every dock page in Playwright's
+  WebKit (two translucent `color-mix()` arms, through `var()`, registered `<color>` or
+  relative colour alike). The two ways to read it are each against a rule: stop declaring
+  it at `:root` (a removal), or read it only at rest expanded (a jump at settle for a host
+  that set it). The CHANGELOG's edge clause names it, and the opening paragraph says the
+  edge stops reading it, so the first sentence is not contradicted; if the ruling is that
+  the first sentence must stand alone, this is the open item.
+- **D-3.** The simulation test carries the row, as ruled, and the record says so. The old
+  screenshot cell stays as a hold. The new cell (`blob · through a sweep, a drag and a
+  release ...`) is not a hold: it reads the uniforms every draw uploads and is RED on
+  v11.0.1 in all three projects (peak 1.530 and 1.135 against 0.3125), so it is offered
+  as the row's browser witness beside the simulation test.
+- **D-4.** Rebound on 14dd41fea, the last source commit of this seat. The close owes a
+  second rebind: master's browser-free and sparse-checkout merges
+  (`orchestrator-note-ci-browser-free.md`) add 72 B to the package.
+- **D-5.** Done, above.
+- **O-271, O-295 and the O-282 `will-change` trace.** Not taken: this seat's task named
+  D-1 to D-5 only and said to add nothing else. They stay owed to the next seat.
+- **The next patch's three** (forced-colors Select row, test-header stamps,
+  `--corner-shape-thumb`): not touched.
