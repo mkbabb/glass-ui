@@ -42,15 +42,12 @@ const FLOORS = {
     "blob-ceiling": "blob keeps a transparent margin (non-flood ceiling) on BLOB_CONFIG_DEFAULTS",
 };
 
-// --floors=a,b selects a subset. The CI lane runs `--floors=blob`: on the software
-// rasterizer the aurora never ARMS (badge never reaches data-state=ready; measured
-// 180s timeout vs 22.8s green on Metal), so wiring it there gates on the runner's
-// GPU rather than on our paint. Naming the subset explicitly keeps a dropped floor
-// loud — an unnamed floor missing from the report is still RED below.
-// [2026-09-22 · BK register wave N-1] The blob CEILING is GPU-gated the same way and
-// for the same kind of reason: SwiftShader reads it 0.997 where Metal reads 0.288
-// (run 35399022659), so it is its own floor, `blob-ceiling`, which the CI lane does
-// not name and `scripts/release.sh` runs on real hardware.
+// --floors=a,b selects a subset; with none, every floor is required. Naming the subset
+// explicitly keeps a dropped floor loud — an unnamed floor missing from the report is
+// still RED below. The floors are GPU-gated: on a software rasterizer the aurora never
+// ARMS (180s timeout vs 22.8s green on Metal) and the blob ceiling reads 0.997 where
+// Metal reads 0.288 (run 35399022659). They run only in `scripts/release.sh`, on real
+// hardware; CI installs no browser.
 const REQUIRED = ((process.argv.find((a) => a.startsWith("--floors=")) ?? "")
     .split("=")[1] ?? "")
     .split(",")

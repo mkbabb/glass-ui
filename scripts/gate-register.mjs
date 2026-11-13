@@ -129,8 +129,15 @@ export const ROSTER_MD_PATH =
 //                 duplicated derived data by the convergence law, and not load-bearing —
 //                 `remainingSeats` is computed from `SEAT_BUDGET` below (:544-545,
 //                 measured at CURE-66-1), never from the roster.
+//
+// [2026-11-13 · ci/no-playwright] Moved `282d05cf…` → `851a4d71…` by one row:
+// `external.browser.blob-floor`. CI no longer installs a browser, so its
+// `.github/workflows/ci.yml#pixel-floor` anchor and the two `gate:pixel-floor:ci*`
+// scripts are gone; the row now enrolls at the pre-tag run in `scripts/release.sh`, where
+// the green leg already required every floor and the planted legs bite blob and its
+// ceiling. `activeVitest` is untouched, so both semantic-class digests stand.
 export const PINNED_ROSTER_SHA256 =
-    "282d05cf8f931876f6001e42f864100fcc3ab6a19ec1f5e0d75b3ec8d9c72939";
+    "851a4d71e2036b07353ce113c2846879ed2887c1e54ab15691d937c8a371fe66";
 
 // The declared budget, now itself CHECKED against §B.5's heading, family table and sum
 // line rather than standing as the only independent record of the ceiling.
@@ -400,7 +407,7 @@ export const nameIsLive = (source, name) => {
 //
 // The probe that adjudicated this row deleted ALL FOUR pixel-floor step lines from
 // `ci.yml` and the anchor still resolved, because the word survived in the prose comment
-// at `:57`. A substring resolver cannot detect unenrollment — C-13's own class ("an
+// at `:57`. (CI no longer runs the floor; the same cure now holds its release.sh anchors.) A substring resolver cannot detect unenrollment — C-13's own class ("an
 // unwired gate cannot fail") reproduced inside the detector that scopes C-13. An anchor
 // now resolves only against text a RUNNER would execute.
 
@@ -411,6 +418,7 @@ export const nameIsLive = (source, name) => {
 // gate:pixel-floor:ci` body line left the anchor resolving, `badAnchors:[] violations:0`.
 // C-13's own class ("an unwired gate cannot fail") had simply moved into the standard
 // multi-line Actions idiom. The rule matches `liveCommandText`'s shell branch verbatim.
+// The YAML anchors still in force are `ci.yml#typecheck` and `release.yml#…`.
 const stripShellComment = (line) => line.replace(/(^|\s)#.*$/, "$1").trim();
 
 export const yamlRunValues = (text) => {

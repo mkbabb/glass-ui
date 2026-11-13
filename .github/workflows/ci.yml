@@ -1,24 +1,55 @@
 name: ci
 
+# Browser-free by design: no Playwright install, no pixel-floor job. Every gate here runs
+# on Node alone. The browser gates (the pixel floor, `npm run test:browser`) run on real
+# hardware in `scripts/release.sh` before a tag is cut.
+#
+# `paths`: a push that touches only docs no gate reads skips CI. Gates DO read some docs
+# (docs/canon, docs/design, docs/audits, the AP/BJ/BK tranche records, and every *.md
+# outside docs/), so those paths stay triggering. A new gate that reads another docs path
+# must add it here.
 on:
     pull_request:
         branches: [master]
+        paths:
+            - "**"
+            - "!docs/**"
+            - "docs/canon/**"
+            - "docs/design/**"
+            - "docs/audits/**"
+            - "docs/tranches/AP/**"
+            - "docs/tranches/BJ/**"
+            - "docs/tranches/BK/**"
     push:
         branches: [master]
+        paths:
+            - "**"
+            - "!docs/**"
+            - "docs/canon/**"
+            - "docs/design/**"
+            - "docs/audits/**"
+            - "docs/tranches/AP/**"
+            - "docs/tranches/BJ/**"
+            - "docs/tranches/BK/**"
+
+concurrency:
+    group: ci-${{ github.ref }}
+    cancel-in-progress: true
 
 jobs:
     verify:
         runs-on: ubuntu-latest
         steps:
+            # Depth 1: no gate reads history. comment-census reads HEAD's tree only.
             - uses: actions/checkout@v4
               with:
-                  fetch-depth: 0
+                  fetch-depth: 1
                   ref: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.sha }}
             - uses: actions/setup-node@v4
               with:
                   node-version: 24
+                  cache: npm
             - run: npm ci
-            - run: npx playwright install --with-deps chromium
             - run: npm run typecheck
             # gate:boot-graph's BUILD arm measures the demo's eager import graph off a
             # freshly built dist-demo/ and fails loud on a stale or absent one. The build
@@ -29,49 +60,3 @@ jobs:
             # are fail-loud and load-bearing — a test run without dist is not a pass.
             - run: npm run build
             - run: npm test
-
-    # The pixel floor. The device-free vitest oracles pass a BLACK aurora and a
-    # FLOODED blob; this job mounts the real components on a real device, reads back
-    # the composited pixels, and reads its verdict from the MACHINE REPORT (a piped
-    # runner's exit status is tail's). BOTH legs run: the green leg alone would re-
-    # create the hollow-gate class this job exists to cure, so the planted-defect leg
-    # must prove the floors CAN fail — and fail on their own assertion.
-    pixel-floor:
-        needs: [verify]
-        runs-on: ubuntu-latest
-        env:
-            CI: "true"
-            # The runner has no GPU; pin the deterministic software rasterizer rather
-            # than letting the backend resolve.
-            PI_ANGLE: swiftshader
-        steps:
-            - uses: actions/checkout@v4
-            - uses: actions/setup-node@v4
-              with:
-                  node-version: 24
-                  cache: npm
-            - run: npm ci
-            - run: npx playwright install --with-deps chromium
-            # BLOB floor only. The aurora floor is GPU-gated, not CI-gated: on the
-            # software rasterizer it never arms (180s timeout vs 22.8s green on Metal),
-            # so running it here would gate on the runner's GPU instead of our paint.
-            # It runs pre-tag on real hardware — see `scripts/release.sh` [2026-09-22 · was
-            # "release.yml `pixel-floor-gpu`", a job release.yml never carried].
-            # [2026-09-22 · BK register wave N-1] The blob CEILING is GPU-gated too: on
-            # the software rasterizer the droplet reads 0.997 of the paintable interior
-            # (run 35399022659) vs 0.288 on Metal, so running it here would gate on the
-            # runner's rasterizer instead of our paint. Its green arm and its planted
-            # FLOOD arm run pre-tag on real hardware — see `scripts/release.sh`.
-            - name: pixel floor (real render must be GREEN)
-              run: npm -w tests-visual run gate:pixel-floor:ci
-            - name: pixel floor self-test (planted defect must be RED)
-              run: npm -w tests-visual run gate:pixel-floor:ci:planted
-            - name: bank the machine reports (the captured DELTA is the PAIR)
-              if: always()
-              uses: actions/upload-artifact@v4
-              with:
-                  name: pixel-floor-pi-reports
-                  include-hidden-files: true
-                  path: |
-                      tests-visual/.cache/pi-report-*.json
-                      tests-visual/.cache/aurora-*.png
