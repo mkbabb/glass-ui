@@ -20,21 +20,21 @@ try {
   await page.mouse.move(...PARK);
   const b = await page.locator('button.ph3cEe[aria-label="Board"]').boundingBox();
   // Find the tooltip: watch for any element whose box appears within 80 px under the button.
-  const find = page.evaluate(([bx, by, bw, bh]) => new Promise(res => {
+  const near = ([bx, by, bw, bh]) => { window.__near = (r) => r.width > 10 && r.width < 300 && r.height > 10 && r.height < 80 && r.y > by - 90 && r.y < by + bh + 90 && r.x < bx + bw + 160 && r.right > bx - 160; window.__before = new Set([...document.querySelectorAll('body *')].filter(e => { const cs = getComputedStyle(e); return window.__near(e.getBoundingClientRect()) && cs.visibility !== 'hidden' && +cs.opacity > 0; })); };
+  await page.evaluate(near, [b.x, b.y, b.width, b.height]);
+  const find = page.evaluate(() => new Promise(res => {
     const t0 = performance.now(); const seen = [];
-    const near = (r) => r.width > 10 && r.width < 300 && r.height > 10 && r.height < 80 && r.y >= by + bh - 4 && r.y < by + bh + 80 && r.x < bx + bw + 150 && r.right > bx - 150;
     const tick = () => {
-      for (const el of document.querySelectorAll('[role=tooltip], [class*=tooltip], [id^=tt-], body > div:not([class=""]) *')) {
-        const r = el.getBoundingClientRect(); const cs = getComputedStyle(el);
-        if (near(r) && cs.visibility !== 'hidden' && +cs.opacity > 0 && !el.closest('.sYBKHd')) {
-          seen.push({ t: Math.round(performance.now() - t0), tag: el.tagName, id: el.id, role: el.getAttribute('role'), cls: String(el.className).slice(0, 80), rect: [r.x, r.y, r.width, r.height].map(Math.round), text: (el.textContent || '').trim().slice(0, 20), kids: el.querySelectorAll('*').length });
-          el.setAttribute('data-study-tip', '1'); res(seen); return;
-        }
+      for (const el of document.querySelectorAll('body *')) {
+        if (window.__before.has(el) || el.closest('.sYBKHd')) continue;
+        const r = el.getBoundingClientRect(); if (!window.__near(r)) continue; const cs = getComputedStyle(el);
+        if (cs.visibility !== 'hidden' && cs.display !== 'none') seen.push({ t: Math.round(performance.now() - t0), tag: el.tagName, id: el.id, role: el.getAttribute('role'), cls: String(el.className).slice(0, 80), rect: [r.x, r.y, r.width, r.height].map(Math.round), op: cs.opacity, text: (el.textContent || '').trim().slice(0, 20), kids: el.querySelectorAll('*').length });
       }
+      if (seen.length) { const top = seen.sort((a, b) => b.kids - a.kids)[0]; const el = [...document.querySelectorAll('body *')].find(e => !window.__before.has(e) && e.tagName === top.tag && String(e.className).slice(0, 80) === top.cls && window.__near(e.getBoundingClientRect())); el?.setAttribute('data-study-tip', '1'); res(seen.slice(0, 8)); return; }
       if (performance.now() - t0 < 2500) requestAnimationFrame(tick); else res(seen);
     };
     requestAnimationFrame(tick);
-  }), [b.x, b.y, b.width, b.height]);
+  }));
   await page.waitForTimeout(30);
   await page.mouse.move(b.x + b.width / 2, b.y + b.height / 2);
   M.found = await find;
