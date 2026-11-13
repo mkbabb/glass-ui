@@ -8,8 +8,10 @@
 //          dock's active layer lands its click on that seat, by mouse and by touch
 //          (daraksha's glass-only repro `dock-press-scroll`, ported to `src/`)
 //   edge   a GlassDock page opens and stays alive in unshimmed Playwright WebKit (the
-//          `webkit-2311` project, the build Playwright resolves), and in Chromium the
-//          plate edge computes 11.0.0's colour at t = 0, 0.5 and 1
+//          `webkit-2311` project, the build Playwright resolves), in Chromium the
+//          plate edge computes 11.0.0's colour at t = 0, 0.5 and 1, and a host's
+//          `--dock-plate-expanded-border` and `--dock-plate-collapsed-border` still
+//          colour the two ends of the edge
 //   static every control inside a `backdrop-mode="static"` dock, and everything it
 //          draws, computes no backdrop-filter at rest, hover, press and active
 //   fold   the idle fold of an untouched `collapse="open"` dock on a scrolling page lays
@@ -281,6 +283,65 @@ test("edge · the plate edge computes 11.0.0's colour at t = 0, 0.5 and 1", asyn
     });
     info.annotations.push({ type: "edge", description: JSON.stringify(rows) });
     for (const r of rows) expect(r.delta, `t = ${r.t}: ${r.plate} against ${r.ref}`).toBeLessThan(0.002);
+});
+
+// A host that set `--dock-plate-expanded-border` or `--dock-plate-collapsed-border` in
+// 11.0.1 still colours that end of the plate's edge: at t = 1 the edge is the expanded
+// colour, at t = 0 the collapsed one, and an endpoint the host leaves unset keeps the
+// library's edge. Literal colours, so the reading needs no nested mix in any engine.
+test("edge · a host's --dock-plate-expanded-border and --dock-plate-collapsed-border still colour the plate edge", async ({ page }, info) => {
+    await page.goto("/tests-visual/release-11-0-2/press-harness.html");
+    await page.locator(".press-dock .dock-plate").waitFor();
+    await page.waitForTimeout(400);
+    const r = await page.evaluate(() => {
+        const host = document.querySelector<HTMLElement>(".press-dock")!;
+        const plate = host.querySelector<HTMLElement>(".dock-plate")!;
+        const at = (t: number) => {
+            plate.style.setProperty("--dock-expand-t", String(t));
+            return getComputedStyle(plate).borderTopColor;
+        };
+        const reference = (c: string) => {
+            const ref = document.createElement("span");
+            ref.style.borderTopColor = c;
+            document.body.append(ref);
+            const v = getComputedStyle(ref).borderTopColor;
+            ref.remove();
+            return v;
+        };
+        const library = { collapsed: at(0), expanded: at(1) };
+        const red = "rgb(200 0 0 / 0.5)";
+        const blue = "rgb(0 0 200 / 0.5)";
+        host.style.setProperty("--dock-plate-expanded-border", red);
+        host.style.setProperty("--dock-plate-collapsed-border", blue);
+        const both = { collapsed: at(0), expanded: at(1) };
+        host.style.removeProperty("--dock-plate-collapsed-border");
+        const expandedOnly = { collapsed: at(0), expanded: at(1) };
+        host.style.removeProperty("--dock-plate-expanded-border");
+        host.style.setProperty("--dock-plate-collapsed-border", blue);
+        const collapsedOnly = { collapsed: at(0), expanded: at(1) };
+        host.style.removeProperty("--dock-plate-collapsed-border");
+        plate.style.removeProperty("--dock-expand-t");
+        return { library, both, expandedOnly, collapsedOnly, red: reference(red), blue: reference(blue) };
+    });
+    info.annotations.push({ type: "edge", description: JSON.stringify(r) });
+    // rgb() and color(srgb) to 0-255 channels and an alpha, so the two serialisations
+    // compare.
+    const rgba = (c: string) => {
+        const n = (c.match(/-?[\d.]+(e-?\d+)?/g) ?? []).map(Number);
+        const k = c.startsWith("color(") ? 255 : 1;
+        return [n[0]! * k, n[1]! * k, n[2]! * k, n[3] ?? 1];
+    };
+    const near = (a: string, b: string, what: string) => {
+        const [x, y] = [rgba(a), rgba(b)];
+        const d = Math.max(...x.slice(0, 3).map((v, i) => Math.abs(v - y[i]!)), Math.abs(x[3]! - y[3]!) * 255);
+        expect(d, `${what}: ${a} against ${b}`).toBeLessThan(1.5);
+    };
+    near(r.both.expanded, r.red, "both set, t = 1");
+    near(r.both.collapsed, r.blue, "both set, t = 0");
+    near(r.expandedOnly.expanded, r.red, "expanded set, t = 1");
+    near(r.expandedOnly.collapsed, r.library.collapsed, "expanded set, t = 0");
+    near(r.collapsedOnly.collapsed, r.blue, "collapsed set, t = 0");
+    near(r.collapsedOnly.expanded, r.library.expanded, "collapsed set, t = 1");
 });
 
 // Every box a static dock's control paints (the control, its descendants and their

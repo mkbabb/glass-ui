@@ -46,7 +46,8 @@ A patch on 11.0.1. Nothing is removed or renamed.
   `--glass-border-dock` are now made from those strengths and keep their values. If you
   recoloured the dock's edge by setting `--glass-border-dock`, the dock no longer reads
   it: set `--glass-edge-dock` to a strength instead. The edge's ink is the dock's
-  `--foreground`.
+  `--foreground`. If you coloured either end of the edge with
+  `--dock-plate-expanded-border` or `--dock-plate-collapsed-border`, those still apply.
 
 - **A static dock's controls sample no backdrop.** With `backdrop-mode="static"` the
   dock's plate already drew no backdrop blur, but an active control kept the capsule's

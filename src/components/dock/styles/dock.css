@@ -130,19 +130,52 @@
         --glass-grasp-radius: var(--glass-blur-resting-radius);
         /* The edge lerps its ink strength between the two endpoints inside one
            `color-mix()` with one translucent arm. Mixing the two endpoint colours,
-           each itself a translucent mix, kills the page in Playwright WebKit. */
+           each itself a translucent mix, kills the page in Playwright WebKit.
+
+           A host colours either end with `--dock-plate-expanded-border` or
+           `--dock-plate-collapsed-border`. The library declares neither, so with
+           neither set both `--_dock-edge-by-*` below hold an unset reference, are
+           invalid at computed-value time, and the edge is the strength lerp. With one
+           set, the edge mixes the host's colour toward the other end's strength
+           colour by t. */
+        --_dock-edge-expanded-colour: color-mix(
+            in srgb,
+            var(--foreground) var(--dock-plate-expanded-edge),
+            transparent
+        );
+        --_dock-edge-collapsed-colour: color-mix(
+            in srgb,
+            var(--foreground) var(--dock-plate-collapsed-edge),
+            transparent
+        );
+        --_dock-edge-by-expanded: color-mix(
+            in srgb,
+            var(--dock-plate-expanded-border) calc(var(--dock-expand-t) * 100%),
+            var(--dock-plate-collapsed-border, var(--_dock-edge-collapsed-colour))
+        );
+        --_dock-edge-by-collapsed: color-mix(
+            in srgb,
+            var(--_dock-edge-expanded-colour) calc(var(--dock-expand-t) * 100%),
+            var(--dock-plate-collapsed-border)
+        );
         border: 1.5px solid
-            color-mix(
-                in srgb,
-                var(--foreground)
-                    calc(
-                        var(--dock-plate-collapsed-edge) +
-                            (
-                                var(--dock-plate-expanded-edge) -
-                                    var(--dock-plate-collapsed-edge)
-                            ) * var(--dock-expand-t)
-                    ),
-                transparent
+            var(
+                --_dock-edge-by-expanded,
+                var(
+                    --_dock-edge-by-collapsed,
+                    color-mix(
+                        in srgb,
+                        var(--foreground)
+                            calc(
+                                var(--dock-plate-collapsed-edge) +
+                                    (
+                                        var(--dock-plate-expanded-edge) -
+                                            var(--dock-plate-collapsed-edge)
+                                    ) * var(--dock-expand-t)
+                            ),
+                        transparent
+                    )
+                )
             );
     }
 
