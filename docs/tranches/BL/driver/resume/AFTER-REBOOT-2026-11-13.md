@@ -17,3 +17,13 @@ Done and committed: 10.1.6 published; the motion study (W-B.17), the Slider loop
 ## Update 04:30
 
 All three runs have stopped. 11.1.0: critic 7 (resume note in its args). 11.0.2: fix 3 (resume notes for `fix-1102-3` and `critic-1102-3` in its args). The dock design run FINISHED (ledger, design, prototype, challenge of 24 findings, fold on evidence only): it is not resumed; what it owes is a measuring pass on the prototype worktree `.claude/worktrees/bl/dock/wi8` (branch `bl/dock/wi8`): the WebKit half, the dock's unit and release specs, the overlay-close cell, the rows recorded mid-build, and the fold's amendments built and read. W-I.8.md's table "What the prototype read" lists each of the fourteen gates as open, failing or unread. Launch that as a new Opus seat after the reboot.
+
+## Update before the owner's reboot (zone at 9.45M)
+
+Everything is committed and pushed (glass master; precepts main at 76bf0fb). No process of this session is running. On return, in this order:
+1. `curl -s localhost:9223/json/version` not needed; check `~/.claude/guard/guarded --timeout 1 -- true` admits.
+2. Resume 11.0.2 (`wf_fc090cc6-e88`, args `glass-11.0.2-after-netdrop.json`: fix 3 takes D-1 then everything owed) and 11.1.0 (`wf_4cf2d226-a00`, args `glass-11.1.0-after-reboot.json`: critic 7 finishes its cut cells).
+3. Launch one Opus measuring seat on the dock prototype (`.claude/worktrees/bl/dock/wi8`): W-I.8's "What the prototype read" table.
+4. Read value.js's sorted list of the owner's 13:12 review (O-339) and the frames in `audit/owner-review-2026-11-13/`.
+5. Still owed, reading only: the fourier and color critique files row by row; atlas's figure dock note; the six smaller speedtest asks.
+6. Open owner questions: press shrink; theme flip cross-fade; reduced motion letting fades through; Switch drag; Slider's dark thumb in light; page-sized Card static by default; Metric label voice before 12.0; the dock's four (W-I.8 OWNER-READ); delete the two CI proof clones under `.claude/worktrees/`.
