@@ -48,6 +48,9 @@
 //          dock's box is unchanged to 0 px in every frame of each seat's hover in and out
 //   transition  a control slotted into a dock's run keeps the transition it declares
 //          and its hover tween runs; the dock's icon control keeps its hover legs
+//   hold   a click Popover with `keep-dock-open` in the dock's own slot content holds the
+//          dock open past the idle window after the pointer leaves, and closes when the
+//          dock is collapsed
 //   fold   (fold-content) through every frame of an unfold and a fold, a dock's content
 //          stays inside the plate's painted box and no item's opacity moves faster
 //          than the morph's own progress allows, both orientations, 390 and 1440,
@@ -606,6 +609,42 @@ test("fold · an idle fold lays out once per morph frame on a scrolling page", a
     expect(r.morphFrames).toBeGreaterThan(10);
     // One layout per morph frame, and a few for the fold's arm and settle.
     expect(count).toBeLessThanOrEqual(r.morphFrames + 12);
+});
+
+// A click Popover with `keep-dock-open`, rendered in the dock's own slot content: opened
+// from its seat, it holds the dock open past the idle window after the pointer leaves
+// both, and it closes when the dock is collapsed.
+test("hold · a keep-dock-open Popover in the dock's slot holds it past the idle window and closes with it", async ({ page }, info) => {
+    test.setTimeout(60_000);
+    const touch = info.project.name === "coarse-touch";
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await page.goto("/tests-visual/release-11-0-2/popover-harness.html");
+    await page.locator("body[data-ready='1'] .pop-dock .dock-plate").waitFor();
+    await page.waitForTimeout(400);
+    const state = () =>
+        page.evaluate(() => ({
+            expanded: document.querySelector(".pop-dock")!.classList.contains("expanded"),
+            open: !!document.querySelector(".pop-content"),
+        }));
+    const summary = page.locator(".pop-dock .dock-layer--summary");
+    if (touch) await summary.tap();
+    else await summary.hover();
+    await page.waitForTimeout(900);
+    const share = page.locator('.pop-dock [aria-label="Share"]');
+    if (touch) await share.tap();
+    else await share.click();
+    await page.waitForTimeout(400);
+    const opened = await state();
+    if (!touch) await page.mouse.move(4, 4);
+    await page.waitForTimeout(7500);
+    const held = await state();
+    await page.evaluate(() => (window as unknown as { __dock: () => { collapse: () => void } }).__dock().collapse());
+    await page.waitForTimeout(900);
+    const folded = await state();
+    info.annotations.push({ type: "hold", description: JSON.stringify({ opened, held, folded }) });
+    expect(opened).toEqual({ expanded: true, open: true });
+    expect(held, "7.5 s after the pointer left").toEqual({ expanded: true, open: true });
+    expect(folded, "after collapse()").toEqual({ expanded: false, open: false });
 });
 
 test("static · a live dock's active control keeps its capsule lens", async ({ page }) => {
