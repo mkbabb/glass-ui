@@ -245,14 +245,18 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
             // Layout = what the box would be without our translate.
             const lcx = (r.l + r.r) / 2 - t.tx;
             const lcy = (r.t + r.b) / 2 - t.ty;
-            const paintedCx = t.cx + t.x.d;
-            const paintedCy = t.cy + t.y.d;
-            t.x.d = paintedCx - lcx;
-            t.y.d = paintedCy - lcy;
+            const nw = r.r - r.l;
+            const nh = r.b - r.t;
+            // C-2: a region is carried by the edge it shares with the plate or its
+            // neighbour, never by its centre: the trailing region by its end edge, the
+            // others by their start edge. -1 start, +1 end, on each axis.
+            const side = key === "persistent-end" ? 1 : -1;
+            t.x.d = t.cx + t.x.d + (side * t.w) / 2 - (lcx + (side * nw) / 2);
+            t.y.d = t.cy + t.y.d + (side * t.h) / 2 - (lcy + (side * nh) / 2);
             t.cx = lcx;
             t.cy = lcy;
-            t.w = r.r - r.l;
-            t.h = r.b - r.t;
+            t.w = nw;
+            t.h = nh;
         }
         for (const k of [...regions.keys()]) if (!seen.has(k)) regions.delete(k);
     }
@@ -367,8 +371,10 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
             const cbt = cbr.t - g.ty + cb.clientTop;
             // `left`/`top` place the margin box; the rect read is the border box.
             const ms = getComputedStyle(el);
-            const x = p.rect.l - p.regionCx + g.cx - cbl - (Number.parseFloat(ms.marginLeft) || 0);
-            const y = p.rect.t - p.regionCy + g.cy - cbt - (Number.parseFloat(ms.marginTop) || 0);
+            // The region's next written translate is its carried delta, so the face paints
+            // where it painted: cb's layout edge + this offset + that delta.
+            const x = p.rect.l - cbl - g.x.d - (Number.parseFloat(ms.marginLeft) || 0);
+            const y = p.rect.t - cbt - g.y.d - (Number.parseFloat(ms.marginTop) || 0);
             el.style.inset = "auto";
             el.style.insetInlineStart = "auto";
             el.style.left = `${x}px`;
@@ -538,12 +544,30 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
             t.el.style.clipPath = `inset(${ci.t}px ${ci.r}px ${ci.b}px ${ci.l}px round ${r}px)`;
             t.clipped = true;
         };
-        for (const t of regions.values()) {
+        // C-2: each region is clipped to its lane: the plate's painted box narrowed to
+        // the painted edges of its neighbours on the main axis.
+        const order = ["persistent", "layers", "persistent-end"]
+            .map((k) => regions.get(k))
+            .filter((t): t is RegionTrack => !!t && t.w > 0.5 && t.h > 0.5);
+        for (const t of order) {
             t.tx = t.x.d;
             t.ty = t.y.d;
             t.el.style.translate = `${t.tx}px ${t.ty}px`;
-            clipTo(t, fis.main, Math.min(R, H / 2));
         }
+        const vert = o.vertical();
+        order.forEach((t, i) => {
+            const lane = { ...fis.main };
+            const prev = order[i - 1];
+            const next = order[i + 1];
+            if (vert) {
+                if (prev) lane.t = Math.max(lane.t, prev.cy + prev.h / 2 + prev.ty);
+                if (next) lane.b = Math.min(lane.b, next.cy - next.h / 2 + next.ty);
+            } else {
+                if (prev) lane.l = Math.max(lane.l, prev.cx + prev.w / 2 + prev.tx);
+                if (next) lane.r = Math.min(lane.r, next.cx - next.w / 2 + next.tx);
+            }
+            clipTo(t, lane, Math.min(R, H / 2));
+        });
         if (besideTrack) {
             const b = besideTrack;
             b.tx = P.r - besideLayoutR;
