@@ -173,11 +173,9 @@ export function useDockRunMark({ runEl }: UseDockRunMarkOptions): UseDockRunMark
             if (!spring.live) paint(run, plate(run, next));
             return;
         }
-        resizes?.disconnect();
-        resizes?.observe(run);
-        resizes?.observe(next);
         const start = mark;
         seat = next;
+        observe(run);
         if (!start) {
             paint(run, plate(run, next));
             return;
@@ -198,14 +196,30 @@ export function useDockRunMark({ runEl }: UseDockRunMarkOptions): UseDockRunMark
     let resizes: ResizeObserver | null = null;
     let firstFrame = 0;
 
+    /**
+     * Watch every box whose size moves the plate: the run, each of its seats (a seat
+     * before the destination that widens or narrows shifts it along the run, though the
+     * destination's own size and the run's do not change) and the destination itself.
+     */
+    function observe(run: HTMLElement): void {
+        if (!resizes) return;
+        resizes.disconnect();
+        resizes.observe(run);
+        for (const child of run.children) if (isRunSeat(child)) resizes.observe(child);
+        if (seat) resizes.observe(seat);
+    }
+
     onMounted(() => {
         const run = runEl.value;
         if (!run) return;
         // The destination moves when a seat's `aria-current` changes or a seat is added
         // or removed. A change inside a seat (a label whose text ticks) is neither; its
-        // size, if it changes, reaches the mark through the seat's resize.
+        // size, if it changes, reaches the mark through that seat's resize, whichever
+        // seat it is.
         mutations = new MutationObserver((records) => {
-            if (records.some((r) => r.type === "attributes" || r.target === run)) sync();
+            const seats = records.some((r) => r.type === "childList" && r.target === run);
+            if (seats) observe(run);
+            if (seats || records.some((r) => r.type === "attributes")) sync();
         });
         mutations.observe(run, {
             childList: true,

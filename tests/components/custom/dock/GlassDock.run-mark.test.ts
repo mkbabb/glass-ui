@@ -153,6 +153,43 @@ describe("the run's active mark", () => {
         }
     });
 
+    it("re-measures when any seat resizes, not only the run and the destination", async () => {
+        // A seat BEFORE the destination that widens shifts the destination along a run
+        // whose own size holds (a phone-width or fixed-width dock): its resize must reach
+        // the mark. The stub records what the mark's own observer watches (other dock
+        // composables observe seats for their own reasons).
+        const saved = globalThis.ResizeObserver;
+        let observed = new Set<Element>();
+        globalThis.ResizeObserver = class {
+            own = new Set<Element>();
+            observe(el: Element) {
+                this.own.add(el);
+                if (new Error().stack?.includes("useDockRunMark")) observed = this.own;
+            }
+            unobserve(el: Element) {
+                this.own.delete(el);
+            }
+            disconnect() {
+                this.own.clear();
+            }
+        } as unknown as typeof ResizeObserver;
+        try {
+            const current = ref<number | null>(2);
+            const wrapper = navDock(current);
+            await settle();
+            await nextTick();
+            const run = wrapper.find(".dock-run").element as HTMLElement;
+            const seats = [...run.children].filter(isRunSeat);
+            expect(seats.length).toBe(3);
+            for (const seat of seats) expect(observed.has(seat)).toBe(true);
+            expect(observed.has(run)).toBe(true);
+            expect(observed.has(markOf(run) as Element)).toBe(false);
+            wrapper.unmount();
+        } finally {
+            globalThis.ResizeObserver = saved;
+        }
+    });
+
     it("glides on the dock spring preset, never a literal", () => {
         const src = readFileSync(
             resolve(process.cwd(), "src/components/dock/composables/useDockRunMark.ts"),
