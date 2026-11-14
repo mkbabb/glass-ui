@@ -280,6 +280,7 @@ watch(
         dockEl.value?.setAttribute("data-morphing", "");
         const leave = open ? summaryEl.value : fullEl.value;
         const enter = open ? fullEl.value : summaryEl.value;
+        body.postureFaces(fullEl.value, summaryEl.value, besideEl.value);
         body.exchange(leave, enter, "layers");
         // The fission seat is face content too: it fades on the same windows (R-3, R-6).
         if (besideEl.value) body.exchange(open ? null : besideEl.value, open ? besideEl.value : null, "beside", false);

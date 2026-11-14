@@ -77,6 +77,9 @@ interface PendingLeave {
 export type NeckDesign = "a" | "b";
 
 export interface DockBody {
+    /** Names the open face, the collapsed face and the fission seat for a posture travel:
+     * their opacities are functions of the posture coordinate, never of a second clock. */
+    postureFaces(open: HTMLElement | null | undefined, closed: HTMLElement | null | undefined, seat?: HTMLElement | null): void;
     /** Called pre-flush, before the DOM changes which faces show. */
     exchange(leave: HTMLElement | null | undefined, enter: HTMLElement | null | undefined, region?: string, place?: boolean): void;
     /** Reads layout and retargets every quantity. */
@@ -137,8 +140,13 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
     let travelling = false;
     let postureTravel = false;
     let lastPosture = o.expanded();
-    const extents: { collapsed: number | null; open: number | null } = { collapsed: null, open: null };
+    // The posture coordinate (R-1, C-3): a quantity of its own on the same spring, 0
+    // collapsed and 1 open, moved by a posture change and by nothing else.
     let e = lastPosture ? 1 : 0;
+    const eq: Q = { d: 0, v: 0 };
+    let openFace: HTMLElement | null = null;
+    let closedFace: HTMLElement | null = null;
+    let seatFace: HTMLElement | null = null;
     let held: number | null = null;
     // Fission geometry (measured at sync).
     let besideW = 0;
@@ -156,9 +164,6 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
 
     const root = () => o.root.value;
 
-    function mainAxisExtent(b: Box): number {
-        return o.vertical() ? b.b - b.t : b.r - b.l;
-    }
     function painted(): Box | null {
         if (!layout) return null;
         return {
@@ -276,7 +281,6 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
         if (!layout) {
             layout = next;
             rFrom = rTo = rNext;
-            extents[posture ? "open" : "collapsed"] = mainAxisExtent(next);
             readRegions();
             readBeside();
             e = posture ? 1 : 0;
@@ -300,13 +304,15 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
                 layout = next;
             }
             if (postureChanged) {
-                extents[posture ? "open" : "collapsed"] = mainAxisExtent(next);
+                // Painted minus target, with the velocity it had (a return turns it).
+                eq.d = e - (posture ? 1 : 0);
                 postureTravel = true;
             }
             readRegions();
             readBeside();
             placeLeaves();
             if (reduce) {
+                eq.v = 0;
                 for (const q of Object.values(edge)) (q.d = 0), (q.v = 0);
                 for (const t of regions.values()) (t.x.d = t.y.d = t.x.v = t.y.v = 0);
             }
@@ -411,9 +417,13 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
                 if (Math.abs(t.y.d) < 0.1 && Math.abs(t.y.v) < 6) (t.y.d = 0), (t.y.v = 0);
             }
             if (reduce) {
+                // R-11: the coordinate runs as a linear clock, whole at 100 ms.
+                eq.d = Math.sign(eq.d) * Math.max(0, Math.abs(eq.d) - dt / 0.1);
                 u = Math.max(0, u - dt / 0.1);
                 uv = 0;
             } else {
+                [eq.d, eq.v] = step(eq.d, eq.v, dt);
+                if (Math.abs(eq.d) < 0.0005 && Math.abs(eq.v) < 0.01) (eq.d = 0), (eq.v = 0);
                 [u, uv] = step(u, uv, dt);
                 if (u < 0) u = 0;
                 if (Math.abs(u) < 0.002 && Math.abs(uv) < 0.05) (u = 0), (uv = 0);
@@ -422,6 +432,7 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
         for (const q of Object.values(edge)) if (q.d !== 0) live = true;
         for (const t of regions.values()) if (t.x.d !== 0 || t.y.d !== 0) live = true;
         if (u !== 0) live = true;
+        if (eq.d !== 0) live = true;
         if (live) {
             write();
             raf = requestAnimationFrame(frame);
@@ -441,7 +452,10 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
 
     function fission(P: Box): { p: number; main: Box; seat: Box | null; neck: Box | null } {
         const H = P.b - P.t;
-        const p = besideTrack ? clamp01((e - 0.5) / 0.5) : 0;
+        // C-4: p = s(clamp((e − a) / (1 − a))), s(x) = 3x² − 2x³: no slope at either end.
+        const a = Number.parseFloat(root()?.getAttribute("data-fission-a") ?? "") || 0.25;
+        const x = clamp01((e - a) / (1 - a));
+        const p = besideTrack ? x * x * (3 - 2 * x) : 0;
         if (!besideTrack || p <= 0) return { p: 0, main: P, seat: null, neck: null };
         const seat = { l: P.r - besideW, t: P.t, r: P.r, b: P.b };
         const mainR = seat.l - besideGap * p;
@@ -458,15 +472,8 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
         const P = painted();
         if (!el || !plate || !layout || !P) return;
         const f = clamp01(1 - u);
-        // The posture coordinate, from the plate's painted extent.
-        const ext = mainAxisExtent(P);
-        if (extents.collapsed !== null && extents.open !== null && Math.abs(extents.open - extents.collapsed) > 1) {
-            e = clamp01((ext - extents.collapsed) / (extents.open - extents.collapsed));
-        } else if (postureTravel) {
-            e = lastPosture ? f : 1 - f;
-        } else {
-            e = lastPosture ? 1 : 0;
-        }
+        // The posture coordinate: its own quantity, never read from the plate's extent.
+        e = clamp01((lastPosture ? 1 : 0) + eq.d);
         if (held !== null) e = held;
         writeExpandT();
         if (postureTravel) el.style.setProperty("--dock-morph-t", f.toFixed(4));
@@ -543,7 +550,13 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
         // Content windows (R-3).
         for (const face of faces) {
             const op =
-                face.role === "leave"
+                face.el === openFace && (postureTravel || held !== null)
+                    ? clamp01((e - OUT_END) / (IN_END - OUT_END))
+                    : face.el === closedFace && (postureTravel || held !== null)
+                      ? clamp01(1 - e / OUT_END)
+                      : face.el === seatFace && (postureTravel || held !== null)
+                        ? fis.p
+                        : face.role === "leave"
                     ? face.from * clamp01(1 - f / OUT_END)
                     : face.from + (1 - face.from) * clamp01((f - OUT_END) / (IN_END - OUT_END));
             face.el.style.opacity = op.toFixed(4);
@@ -675,7 +688,13 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
         if (raf !== null) cancelAnimationFrame(raf);
     });
 
-    const body: DockBody = { exchange, sync, onSettle, hold, moving: o.moving };
+    function postureFaces(open: HTMLElement | null | undefined, closed: HTMLElement | null | undefined, seat?: HTMLElement | null): void {
+        openFace = open ?? null;
+        closedFace = closed ?? null;
+        seatFace = seat ?? null;
+    }
+
+    const body: DockBody = { postureFaces, exchange, sync, onSettle, hold, moving: o.moving };
     provide(DOCK_BODY_KEY, body);
     return body;
 }
