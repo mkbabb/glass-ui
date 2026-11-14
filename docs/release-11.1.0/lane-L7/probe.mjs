@@ -215,14 +215,19 @@ async function stallCell(browser, width, theme, shape) {
         const rise = inTask.length >= 1 ? last.p - first.p : 0;
         // The control square moved inside the task: the screencast sees compositor frames there.
         const controlMoved = first ? inTask.some((s) => diffCount(s.ctl, first.ctl) > 20) : false;
-        const pass = inTask.length >= 1 && controlMoved && rise >= 0.05;
+        // The cell asks for TWO compositor frames inside the task (orchestrator ruling after
+        // fix 7): one frame can land at the task's edge and read the stroke before it moved,
+        // so it cannot tell a stalled draw from a running one.
+        const measurable = inTask.length >= 2 && controlMoved;
+        const pass = measurable && rise >= 0.05;
         // The ring keeps the dashoffset draw (no straight edge follows a ring); its reading
-        // is recorded, not gated. A cell whose screencast saw no compositor frame inside the
-        // task cannot answer the question either way, and is recorded as unmeasurable.
+        // is recorded, not gated. A cell whose screencast saw fewer than two compositor
+        // frames inside the task cannot answer the question either way, and is recorded as
+        // unmeasurable.
         const item = shape === "circle"
             ? "stall (ring, dashoffset kept: recorded, not gated)"
-            : !controlMoved
-              ? "stall: unmeasurable, the screencast saw no compositor frame inside the task (recorded, not gated)"
+            : !measurable
+              ? "stall: unmeasurable, the screencast saw fewer than two compositor frames inside the task (recorded, not gated)"
               : `stall: paint advances through a ${TASK_MS} ms main-thread task`;
         verdict(item, cell, pass, {
             framesInTask: inTask.length,
