@@ -974,3 +974,5 @@ Disk episode, one line: on 2026-11-03 the volume went from 100% (15 GiB free) to
 - 2026-11-14 15:32 — 11.0.2 also stopped on DISK-LOW at fix 3 (13f5a1d4b): everything owed landed except the sweep's two WebKit legs and the ratchet; O-271 returned open after two attempts (fourier stays on 11.0.0 for it). Resume args written: `resume/glass-11.0.2-after-disklow.json`, `resume/glass-11.1.0-after-disklow.json`. Both runs wait on free space above 60 GB (43 now); the deletion is the owner's.
 
 - 2026-11-14 16:57 — O-342 booked (value.js adopting 11.0.1): the Slider lens made opt-in and the reka-ui peer floor join 11.0.2 by a binding note (color's bump is blocked on the lens); resume args amended.
+
+- 2026-11-14 16:59 — disk clear (80 GB; value.js freed its own trees): 11.0.2 and 11.1.0 resumed from their journals with the disk-low args (fix 3 takes the lens and reka rows then the WebKit sweep; fix 8 runs its cut browser half).
