@@ -198,6 +198,14 @@
         pointer-events: auto;
     }
 
+    /* W-I.8 R-1 (C-9): hit follows paint. The root's layout box is the new posture's
+       from the first row of a travel, so it takes no pointer events; the plate (above)
+       and the control run do, and the root's hover and focus listeners hear them as
+       descendants. A pointer that returns onto the painted plate is inside the dock. */
+    .glass-dock {
+        pointer-events: none;
+    }
+
     /* When a consumer needs the control run to be a real box (a scroll port lands here at
        ), it stays `overflow: visible` on the cross axis — never a clip. */
     .glass-dock > .dock-controls {
