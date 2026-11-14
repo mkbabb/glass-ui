@@ -3,7 +3,8 @@
 ## 11.0.2 — unreleased
 
 A patch on 11.0.1. Nothing is removed or renamed. The Slider's thumb takes a new
-default colour, described below.
+default colour, and its magnifying lens during a drag is now opt-in, both described
+below.
 
 - **`useGlobalDark` takes a `storageKey`.** `darkModeSyncScript({ storageKey })` could
   read a key of your choosing in the page head, but the composable always read and
@@ -23,6 +24,13 @@ default colour, described below.
   on its track, so in 11.0.1 a focused Slider showed nothing there. Under
   `(forced-colors: active)` the focused track, and the focused thumb of a spectrum
   Slider, now draw a `Highlight` outline 2px out.
+
+- **The Slider's magnifying lens during a drag is opt-in with `loupe`.** In 11.0.1
+  every horizontal Slider raised a lens above the thumb while it was held and frosted
+  the page around it. Inside a card that has its own backdrop blur, the frost covered
+  the Slider's own row and the lens floated away from the value. A Slider now raises
+  the lens, and frosts the page, only when you set `loupe`. Without it, holding a
+  Slider changes nothing outside the control.
 
 - **A Select keeps every row inside its plate.** With a trigger wider than 22rem, the
   list was forced to the trigger's width while its plate stopped at 22rem, so each row

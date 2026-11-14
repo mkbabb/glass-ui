@@ -31,6 +31,9 @@
 //          50 and 100, light and dark, default and violet ink (luma at least 60 from the
 //          fill and 30 from the track); the thumb paints `--foreground` with
 //          `--slider-thumb-bg` unset, and the token when it is set
+//   lens   a slow held drag on a default Slider, on a card with a backdrop-filter,
+//          mounts no lens and no frost, leaves the row's opacity at 1 and paints the
+//          track's unfilled end as it was at rest
 //   pager  a PagerDots neighbour hop paints a neck no wider than the pitch plus one dot;
 //          on eight dots and the library's rem token, a hop of 1, 3 or 7 paints a neck no
 //          wider than the hop plus one dot
@@ -268,6 +271,48 @@ test("slider · the thumb paints --foreground by default and --slider-thumb-bg w
     info.annotations.push({ type: "slider", description: JSON.stringify(r) });
     expect(r.unset).toBe(r.ink);
     expect(r.set).toBe("rgb(200, 30, 60)");
+});
+
+test("lens · a slow held drag on a default Slider mounts no lens, keeps the row at opacity 1 and the track painted", async ({ page }, info) => {
+    await page.goto("/tests-visual/release-11-0-2/slider-harness.html?plate");
+    await page.locator("body[data-ready='1']").waitFor({ state: "attached" });
+    await page.waitForTimeout(300);
+    const row = page.locator('[data-row="md"]');
+    const track = (await row.locator(".slider-track").boundingBox())!;
+    const thumb = (await row.locator(".slider-thumb").boundingBox())!;
+    // The track's unfilled end, clear of the thumb's travel below.
+    const end = { x: Math.round(track.x + track.width - 64), y: Math.round(track.y + 2), width: 48, height: Math.max(2, Math.round(track.height - 4)) };
+    const rest = await meanLum(page, await page.screenshot({ clip: end, animations: "disabled" }));
+    const x0 = thumb.x + thumb.width / 2;
+    const y0 = thumb.y + thumb.height / 2;
+    await page.mouse.move(x0, y0);
+    await page.mouse.down();
+    for (let i = 1; i <= 12; i++) {
+        await page.mouse.move(x0 + i * 5, y0);
+        await page.waitForTimeout(50);
+    }
+    await page.waitForTimeout(500);
+    const r = await page.evaluate(() => {
+        const host = document.querySelector<HTMLElement>('[data-row="md"]')!;
+        let opacity = 1;
+        for (let el: HTMLElement | null = host.querySelector(".slider-track"); el; el = el.parentElement)
+            opacity *= Number(getComputedStyle(el).opacity);
+        return {
+            held: host.querySelector("[data-held]") !== null,
+            lens: document.querySelectorAll(".glass-loupe").length,
+            veil: document.querySelectorAll(".glass-focus-veil").length,
+            opacity,
+        };
+    });
+    const grasped = await meanLum(page, await page.screenshot({ clip: end, animations: "disabled" }));
+    await page.mouse.up();
+    const read = { ...r, rest, grasped, change: Math.abs(grasped - rest) / rest };
+    info.annotations.push({ type: "lens", description: JSON.stringify(read) });
+    expect(r.held, `the drag holds the slider (${JSON.stringify(read)})`).toBe(true);
+    expect(r.lens, `no lens on a default Slider (${JSON.stringify(read)})`).toBe(0);
+    expect(r.veil, `no frost on a default Slider (${JSON.stringify(read)})`).toBe(0);
+    expect(r.opacity, `the row's opacity (${JSON.stringify(read)})`).toBe(1);
+    expect(read.change, `the track's unfilled end paints as at rest (${JSON.stringify(read)})`).toBeLessThanOrEqual(0.02);
 });
 
 test("edge · a GlassDock page opens and stays alive", async ({ page }, info) => {
