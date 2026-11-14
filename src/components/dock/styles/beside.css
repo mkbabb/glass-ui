@@ -37,11 +37,4 @@
     /* C-11: no leaf the size of the row. Each shape carries the dock's one shadow
        (the plate's own, dock.css). Under neck B the plate's clip cuts its own shadow
        while it parts; that is read, not cured here. */
-    /* The seat's glyph turns on hover (W-B.17's `data-glyph="turn"`); the dock adds no lift. */
-    .dock-beside [data-glyph="turn"] svg {
-        transition: rotate var(--spring-dock-duration) var(--spring-dock);
-    }
-    .dock-beside [data-glyph="turn"]:hover svg {
-        rotate: 45deg;
-    }
 }

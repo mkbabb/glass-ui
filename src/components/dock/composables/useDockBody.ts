@@ -160,6 +160,7 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
     let inFlow = false;
     let wroteMargin = false;
     const settleCbs: Array<() => void> = [];
+    let scopeEl: HTMLElement | null | undefined;
     let ro: ResizeObserver | null = null;
 
     const root = () => o.root.value;
@@ -402,6 +403,7 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
             inFlow = (pos === "static" || pos === "relative") && /^(block|flow-root|list-item)$/.test(parent);
         }
         if (raf === null) {
+            scopeEl = undefined;
             last = inFrame ? (document.timeline.currentTime as number | null) : null;
             write();
             raf = requestAnimationFrame(frame);
@@ -455,8 +457,9 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
         if (!el) return;
         const v = e.toFixed(4);
         el.style.setProperty("--dock-expand-t", v);
-        const scope = el.parentElement?.closest<HTMLElement>("[data-dock-scope]");
-        scope?.style.setProperty("--dock-expand-t", v);
+        // C-16: the scope element is found once per travel (start, rest), not each frame.
+        if (scopeEl === undefined) scopeEl = el.parentElement?.closest<HTMLElement>("[data-dock-scope]") ?? null;
+        scopeEl?.style.setProperty("--dock-expand-t", v);
     }
 
     function fission(P: Box): { p: number; main: Box; seat: Box | null; neck: Box | null } {
@@ -649,6 +652,7 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
         }
         e = lastPosture ? 1 : 0;
         writeExpandT();
+        scopeEl = undefined;
         if (plate) {
             const keepFission = !!besideTrack && lastPosture;
             if (keepFission) {
