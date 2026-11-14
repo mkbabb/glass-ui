@@ -48,6 +48,13 @@ export const Rows = defineComponent({
                         " after the branches stayed open into the evening through the whole of the winter",
                     ]),
                 ),
+                // atlas's known limit (proposal 3, Descenders): a phrase dense in descenders.
+                h("h2", { class: "title", "data-row": "byprog", style: "font-size:28px" }, [
+                    "Funding ",
+                    m("byprog", "by program", ROUTE_INK),
+                    bl(),
+                    " across the district",
+                ]),
                 h("p", { class: "rtl", "data-row": "rtl", dir: "rtl", lang: "ar" }, [
                     "أحصى المتحف ",
                     m("rtl", "أربعة آلاف زيارة في فصل الخريف"),

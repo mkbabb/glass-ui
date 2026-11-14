@@ -1,0 +1,23 @@
+# Run order and exit codes, the fold seat, 2026-11-12. Rounds: 08:33 first (the under seat's first candidates), 08:59 (selection ground Highlight), 09:02 (under at 0.08em; selection ground the band), 09:08 (0.26em; the late row polluted the comp cells), 09:13 the round the records quote.
+# An exit of 0 is guarded's; a probe that failed inside wrote its error into its JSON (the 08:53 WebKit run did: its late cell).
+08:33:27 chromium final modes=sel,fold,comp,clipped,late,far variant=none exit 0
+08:33:56 chromium bite modes=comp,clipped,late variant=half,noinline,nolh,nofontland,cloneall exit 0
+08:53:12 webkit final modes=sel,fold,comp,clipped,late,far variant=none exit 0
+killed queued webkit bite (still waiting on the lock; nothing had started)
+08:59:23 chromium final exit 0
+08:59:52 chromium bite (half,noinline,nolh,nofontland,cloneall) exit 0
+stopped the webkit run by PID to change the selection rule (the note written at the time said it was still waiting on the lock; it held the lock and was in its clipped cell, and its partial reading is trail/highlight-ground-webkit-partial.json)
+09:02:40 chromium final exit 0
+09:03:09 chromium bite (half,noinline,nolh,nofontland,cloneall) exit 0
+09:04:39 webkit final then bite exit 0 (final=0 bite=0)
+done
+09:08:18 chromium final exit 0
+09:08:52 chromium bite (half,noinline,nolh,nofontland,cloneall,noinert) exit 0
+09:09:06 chromium bite2 (nous) exit 0
+09:10:40 webkit final, bite, bite2 exit 0 (final=0 bite=0 bite2=0)
+done
+09:13:03 chromium final exit 0
+09:13:37 chromium bite (half,noinline,nolh,nofontland,cloneall,noinert) exit 0
+09:13:50 chromium bite2 (nous) exit 0
+09:19:09 webkit final, bite, bite2 exit 0 (final=0 bite=0 bite2=0)
+done

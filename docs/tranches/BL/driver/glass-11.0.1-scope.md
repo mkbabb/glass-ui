@@ -65,3 +65,15 @@ Gates, in both engines, light and dark, at 390 and 1440:
 - O-263: the run contains overscroll on its scroll axis only.
 - Order for 11.0.2: O-223 + O-244 (stored auto), O-240 (the quick press under Reduce Motion), then the rest.
 - O-266: a breakpoint change mid-open holds the old content's size and snaps at the settle (the eight `O-101 ·` cells of release-10-1-2, RED on v11.0.0 and v11.0.1); third in 11.0.2's order.
+- O-267 (FIRST in 11.0.2, before O-223): a focused Slider has no focus indicator under forced colors (regression in 10.1.5 and 11.0.1); the track takes a real outline there; audit every `outline: none` the 10.1.5 patch added. One source-and-tests commit so the 10.1.x line can cherry-pick it as 10.1.6.
+- O-268: while curing O-266, count the layouts a dock's idle fold costs on a scrolling page (color saw 37 where 5 are allowed) and cure it if the fold lays out per frame.
+- O-269: in dark, a dock control's hover and active fill lightens the plate (today it is a light-scheme ink and reads darker); witness by luminance against the plate, both engines.
+- O-271: dock rows overflow 4 to 8 px when a persistent region sits beside the layers (fourier; regression in 11.0.1).
+- O-270: every dock seat (control, trigger, tab) takes a corner of half its block size.
+- O-273: `--slider-thumb-bg` (default `var(--card)`) for the scrubber thumb; additive.
+- O-282: the dock must not shift when a seat is hovered (owner, 2026-11-12). Cure the cause in glass and add the 0 px hover spec, as written in `docs/release-11.0.2/orchestrator-note-dock-hover-shift.md` (binding). A critic that finds no such spec on the tree files it as a blocking defect.
+- O-294 (with O-280, O-283): the Slider geometry cure of W-B.18, as written in `docs/release-11.0.2/orchestrator-note-slider-geometry.md` (binding). A critic that finds it absent files a blocking defect.
+- O-295: reproduce the pager dots "giant rectangle" on v11.0.1 and on the branch after the dot-measure fix; if the component can show its neck outside its bodies, cure it here with a witness; say what you found either way.
+- O-288 and O-300 (a): the fold keeps content inside the plate and tweened, and a slotted control keeps its own transitions, as written in `docs/release-11.0.2/orchestrator-note-dock-fold-content.md` (binding).
+- After build C: the rulings in `docs/release-11.0.2/orchestrator-note-after-build-C.md` are binding (O-219 restated with the least paint; O-271 owed; O-288 and O-300 owed; the ResizeObserver trace; the O-295 cell). A critic reads that note first.
+- Before the tag: the branch carries master's browser-free workflows, as written in `docs/release-11.0.2/orchestrator-note-ci-browser-free.md` (binding).

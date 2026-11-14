@@ -13,8 +13,10 @@ npm run demo:serve                 # live product at http://127.0.0.1:5199
 ```
 
 Run focused Vitest files while developing a bounded change. After a coherent batch,
-run `npm run typecheck`, `npm test`, and `npm run build`. CI runs those same three
-commands in that order.
+run `npm run typecheck`, `npm test`, and `npm run build`. CI runs those three plus
+`npm run demo:dist:build`, building before testing, and installs no browser. The tests
+that need a real engine (`*.browser.test.ts`, `npm run test:browser`) and the pixel
+floor run locally, in `scripts/release.sh`, before a tag.
 
 ## Package boundary
 

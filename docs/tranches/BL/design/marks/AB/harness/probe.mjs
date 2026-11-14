@@ -10,13 +10,13 @@ import { PNG, decodePng, launch, oklch, open } from "./lib.mjs";
 
 const [engine, out, ...cands] = process.argv.slice(2);
 const C = Object.fromEntries(cands.map((s) => s.split("=")));
-const TREES = { ctl: process.env.TREE_CTL, a: process.env.TREE_A, b: process.env.TREE_B };
+const TREES = { ctl: process.env.TREE_CTL, a: process.env.TREE_A, b: process.env.TREE_B, c: process.env.TREE_C };
 const png = join(out, "png");
 mkdirSync(png, { recursive: true });
 const SMOKE = !!process.env.SMOKE;
 const VPS = SMOKE ? [{ w: 1440, h: 1500 }] : [{ w: 390, h: 2600 }, { w: 1440, h: 1500 }];
 const SHAPES = SMOKE ? ["underline"] : ["underline", "highlight"];
-const IDS = ["h16", "h48", "h85", "h112", "wake", "google", "wrap", "atlas21", "atlas42", "rtl"];
+const IDS = ["h16", "h48", "h85", "h112", "wake", "google", "wrap", "atlas21", "atlas42", "byprog", "rtl"];
 const rec = { engine, cells: [], still: [], inview: [], errors: [] };
 
 const url = (c, q) => `${C[c]}/ab/index.html?${q}`;
@@ -139,6 +139,28 @@ function analyze(geo, glyph, mark, normals, shape, S = 2) {
                 line.pastLeft = +((gL - mL) / S).toFixed(1);
                 line.pastRight = +((mR - gR) / S).toFixed(1);
                 line.intersectDevPx = inter;
+                // Pieces: runs of columns holding mark ink (a skip opens a gap). Shortest piece in px.
+                if (shape === "underline") {
+                    const colsOn = [];
+                    for (let x = X0; x <= X1; x++) { let on = false; for (let y = Y0; y <= Y1 && !on; y++) on = diffW(mark, x, y) > mTh; colsOn.push(on); }
+                    const runs = []; let st = -1;
+                    colsOn.forEach((on, i) => { if (on && st < 0) st = i; if ((!on || i === colsOn.length - 1) && st >= 0) { runs.push(((on ? i + 1 : i) - st) / S); st = -1; } });
+                    const real = runs.filter((r) => r >= 1);
+                    line.pieces = real.length;
+                    line.shortestPiecePx = real.length ? +Math.min(...real).toFixed(1) : null;
+                    // Clearance: the nearest glyph-ink pixel to any mark-ink pixel, within 8 device px (CSS px; 0 = touching).
+                    let best = Infinity;
+                    const R = 8;
+                    for (let y = Y0; y <= Y1; y++) for (let x = X0; x <= X1; x++) {
+                        if (!(diffW(mark, x, y) > mTh)) continue;
+                        for (let dy = -R; dy <= R; dy++) for (let dx = -R; dx <= R; dx++) {
+                            const yy = y + dy, xx = x + dx;
+                            if (yy < 0 || xx < 0 || yy >= glyph.h || xx >= glyph.w) continue;
+                            if (diffW(glyph, xx, yy) > 128) { const d = Math.hypot(dx, dy); if (d < best) best = d; }
+                        }
+                    }
+                    line.clearancePx = best === Infinity ? ">4" : +(Math.max(0, best - 1) / S).toFixed(1);
+                }
                 // Weight: median column coverage over the middle 40% of the mark.
                 const c0 = mL + 0.3 * (mR - mL), c1 = mL + 0.7 * (mR - mL);
                 const cols = [];
@@ -199,7 +221,9 @@ async function sheetCells(browser, vp, c, shape) {
             if (theme === "light" && vp.w === 1440) {
                 const css = await page.evaluate(() => {
                     window.__phase = "probe";
-                    return [...document.styleSheets].map((s) => { try { return [...s.cssRules].map((r) => r.cssText).join("\n"); } catch { return ""; } }).join("\n");
+                    // The raw text of every <style> (vite dev injects each module's CSS as one); not the
+                    // CSSOM's cssText, which serializes a shorthand holding var() as empty longhands.
+                    return [...document.querySelectorAll("style")].map((el) => el.textContent).join("\n");
                 });
                 writeFileSync(join(TREES[c], "ab/static", `css-${shape}.css`), css);
                 if (!existsSync(join(TREES[c], "ab/static", `ssr-${shape}.html`))) {
@@ -255,6 +279,41 @@ async function sheetCells(browser, vp, c, shape) {
             }, IDS);
             cell.midDrawAnimationsSought = r;
             await savePng(page, `${engine}-${vp.w}-${c}-${shape}-mid50`, cell.sheetH + 8);
+        } finally {
+            await context.close();
+        }
+    }
+    // Direction of the draw: the mark pass held at 30% of each mark's clock; per line, where the ink is.
+    {
+        const { context, page } = await open(browser, url(c, `${base}&theme=light&hold=1&pass=mark`), o);
+        try {
+            await page.evaluate(async (ids) => {
+                const raf = () => new Promise((r) => requestAnimationFrame(r));
+                for (let i = 0; i < 240; i++) {
+                    if (ids.every((id) => (document.querySelector(`[data-probe="${id}"]`)?.getAnimations({ subtree: true }).length ?? 0) > 0)) break;
+                    await raf();
+                }
+                await raf();
+                for (const id of ids) {
+                    const as = document.querySelector(`[data-probe="${id}"]`)?.getAnimations({ subtree: true }) ?? [];
+                    // the first line's own clock: 30% of its duration after its own delay
+                    for (const a of as) { const t = a.effect.getComputedTiming(); a.pause(); a.currentTime = 0.3 * (t.duration ?? 0); }
+                }
+                await raf(); await raf();
+            }, IDS);
+            const im = await shot(page);
+            const dir = {};
+            for (const id of ["h85", "wrap", "rtl"]) {
+                const g = geo.marks[id];
+                if (!g) continue;
+                const row = g.rows[0];
+                const X0 = Math.floor(row.l * 2), X1 = Math.ceil(row.r * 2), Y0 = Math.floor(row.t * 2), Y1 = Math.ceil((row.b + 0.15 * g.fs) * 2);
+                let l = Infinity, r = -Infinity;
+                for (let y = Y0; y <= Math.min(im.h - 1, Y1); y++) for (let x = X0; x <= X1; x++) if (diffW(im, x, y) > 40) { l = Math.min(l, x); r = Math.max(r, x); }
+                dir[id] = l === Infinity ? { visible: false } : { dir: g.dir, inkFromLeftPx: +((l - X0) / 2).toFixed(1), inkToRightPx: +((X1 - r) / 2).toFixed(1), lineW: +((X1 - X0) / 2).toFixed(1), startsAt: (l - X0) < (X1 - r) ? "left" : "right" };
+            }
+            cell.drawDirection = dir;
+            if (vp.w === 1440) writeFileSync(join(png, `${engine}-${vp.w}-${c}-${shape}-mid30-markpass.png`), await page.screenshot({ type: "png", clip: { x: 0, y: 0, width: vp.w, height: Math.min(vp.h, cell.sheetH + 8) } }));
         } finally {
             await context.close();
         }
@@ -354,7 +413,7 @@ async function stillCells(browser, c, shape, restGeo, restMark) {
     row.noscript = { markup: existsSync(ssrFile) ? "ssr" : "emulated (SSR threw)" };
     for (const pass of ["", "mark"]) {
         const f = `noscript-${shape}${pass ? "-" + pass : ""}.html`;
-        writeFileSync(join(tree, "ab/static", f), `<!doctype html><html lang="en"${pass ? ` data-pass="${pass}"` : ""}><head><meta charset="utf-8"><style>${css}</style></head><body><span id="scr"></span><div id="app">${body}</div></body></html>`);
+        writeFileSync(join(tree, "ab/static", f), `<!doctype html><html lang="en"${pass ? ` data-pass="${pass}"` : ""}><head><meta charset="utf-8"><style>${css}</style></head><body><span id="scr" style="position:fixed;left:0;top:0"></span><div id="app">${body}</div></body></html>`);
         for (const media of ["screen", "print"]) {
             const { context, page } = await open(browser, `${C[c]}/ab/static/${f}`, { ...o, js: false, media });
             try {
@@ -394,10 +453,46 @@ const browser = await launch(engine);
 try {
     for (const c of Object.keys(C)) { const { context } = await open(browser, url(c, "scene=sheet&shape=underline"), { width: 1440, height: 1500 }); await context.close(); }
     const rest = {};
-    for (const vp of VPS) for (const c of Object.keys(C)) for (const shape of SHAPES) {
+    // Partial reruns, merged into the engine's record (WebKit hangs after many navigations in one
+    // browser, so its lost cells rerun in small guarded runs, each with its own browser).
+    //   ONLY_CELLS=1440:c,...   rerun those sheet cells and replace them in the record
+    //   ONLY_STILL=1 [STILL_CANDS=ctl,a] [DO_INVIEW=1]   the still cells (and in-view) only
+    const ONLY_CELLS = process.env.ONLY_CELLS ? process.env.ONLY_CELLS.split(",") : null;
+    const STILL_CANDS = process.env.STILL_CANDS ? process.env.STILL_CANDS.split(",") : Object.keys(C);
+    if (ONLY_CELLS) {
+        const prev = JSON.parse(readFileSync(join(out, `sheet-${engine}.json`), "utf8"));
+        Object.assign(rec, { still: prev.still, inview: prev.inview, errors: prev.errors.filter((e) => !ONLY_CELLS.some((k) => e.startsWith(k.replace(":", " ") + " "))) });
+        for (const k of ONLY_CELLS) {
+            const [w, c] = k.split(":");
+            for (const shape of SHAPES) {
+                try { await sheetCells(browser, VPS.find((v) => v.w === +w), c, shape); } catch (e) { rec.errors.push(`${w} ${c} ${shape}: ${e}`); console.log("ERR", e); }
+            }
+        }
+        const fresh = rec.cells;
+        rec.cells = [...prev.cells.filter((x) => !fresh.some((f) => f.vp === x.vp && f.cand === x.cand && f.shape === x.shape)), ...fresh];
+    }
+    const ONLY_STILL = !!process.env.ONLY_STILL;
+    if (ONLY_STILL) {
+        // Rewrite each candidate's CSS capture only (the sheet cells already ran).
+        for (const c of STILL_CANDS) for (const shape of SHAPES) {
+            const { context, page } = await open(browser, url(c, `scene=sheet&shape=${shape}&theme=light`), { width: 1440, height: 1500 });
+            try {
+                await settle(page);
+                const css = await page.evaluate(() => { window.__phase = "probe"; return [...document.querySelectorAll("style")].map((el) => el.textContent).join("\n"); });
+                writeFileSync(join(TREES[c], "ab/static", `css-${shape}.css`), css);
+            } finally { await context.close(); }
+        }
+        const prev = JSON.parse(readFileSync(join(out, `sheet-${engine}.json`), "utf8"));
+        rec.cells = prev.cells;
+        rec.inview = prev.inview;
+        rec.still = prev.still.filter((x) => !STILL_CANDS.includes(x.cand));
+        rec.errors = prev.errors.filter((e) => !(e.startsWith("still ") && STILL_CANDS.includes(e.split(" ")[1])) && !(process.env.DO_INVIEW && e.startsWith("inview ")));
+        rec.stillRerun = "the still cells rerun with the raw <style> capture";
+    }
+    if (!ONLY_STILL && !ONLY_CELLS) for (const vp of VPS) for (const c of Object.keys(C)) for (const shape of SHAPES) {
         try { await sheetCells(browser, vp, c, shape); } catch (e) { rec.errors.push(`${vp.w} ${c} ${shape}: ${e}`); console.log("ERR", e); }
     }
-    if (!SMOKE) for (const c of Object.keys(C)) for (const shape of SHAPES) {
+    if (!SMOKE && !ONLY_CELLS) for (const c of STILL_CANDS) for (const shape of SHAPES) {
         try {
             // The rest geometry and mark-pass coverage the still states are read against.
             const { context, page } = await open(browser, url(c, `scene=sheet&shape=${shape}&theme=light&pass=mark`), { width: 1440, height: 1500 });
@@ -407,7 +502,8 @@ try {
             await stillCells(browser, c, shape, geo, cov);
         } catch (e) { rec.errors.push(`still ${c} ${shape}: ${e}`); console.log("ERR", e); }
     }
-    if (!SMOKE) for (const c of Object.keys(C)) await inview(browser, c).catch((e) => rec.errors.push(`inview ${c}: ${e}`));
+    if (process.env.DO_INVIEW) rec.inview = [];
+    if (!SMOKE && !ONLY_CELLS && (!ONLY_STILL || process.env.DO_INVIEW)) for (const c of Object.keys(C)) await inview(browser, c).catch((e) => rec.errors.push(`inview ${c}: ${e}`));
 } finally {
     await browser.close();
     writeFileSync(join(out, `sheet-${engine}.json`), JSON.stringify(rec, null, 1));

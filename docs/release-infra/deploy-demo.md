@@ -56,15 +56,18 @@ wins where the two differ. The shape copies daraksha's
    reads the babb.dev zone, and creates the proxied CNAME to the subdomain if no
    record exists. Each step logs what the token could or could not do. It outputs
    `origin`: `https://glass.babb.dev/` if it answers 200, else the pages.dev host
-   (with a warning). If the step dies before writing `origin`, both asserts
-   fall back to `format('https://{0}/', steps.host.outputs.sub)`, the project's
+   (with a warning). If the step dies before writing `origin`, the served-build
+   assert falls back to `format('https://{0}/', steps.host.outputs.sub)`, the project's
    own host, never a literal.
 8. **Lineage.** `wrangler pages deployment list --environment=production` must
    contain the short SHA (catches the Preview-that-exits-0 trap).
 9. **Served build.** `node scripts/check-served.mjs "$ORIGIN" --headers` (12 tries,
    10 s apart, rides out edge propagation).
-10. **Live.** Playwright headless shell (cached by version), then
-    `node scripts/check-live.mjs "$ORIGIN"`.
+
+**Live, after a deploy (local).** The workflow runs no browser. The live assert (no
+console error, no CSP violation, no third-party request) is a local command, run
+through the guard once the deploy is green:
+`~/.claude/guard/guarded -- node scripts/check-live.mjs https://glass.babb.dev/`.
 
 No step echoes a secret. They reach steps only as env, `curl` sends the token in
 a header, no `set -x` is used, and GitHub masks secret values in logs anyway.
@@ -226,11 +229,11 @@ Until both secrets exist, every release run of deploy-demo is green with
 - **WebKit.** The Playwright-WebKit engine build crashes the demo on every load,
   with or without the headers, so the gate's WebKit cells are red for a reason
   outside this wave. The real-Safari cell (`safaridriver`, a GUI-enabled act) is
-  owed before claiming WebKit coverage. CI's live assert runs Chromium only, as
-  daraksha's does.
+  owed before claiming WebKit coverage. The local live assert runs Chromium by
+  default.
 - **The WebKit route census** (92 routes) was not run; the Chromium census was.
   The CSP check is load-only. A violation that needs an interaction (as the
-  Select's did) is caught only by an interaction probe, and CI's live assert
+  Select's did) is caught only by an interaction probe, and the live assert
   does none.
 - **The precepts submodule** needs the two proposed files copied in, in the
   precepts repo.

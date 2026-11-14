@@ -1,222 +1,489 @@
-# W-I.8: the 11.2.0 dock (the bare seat, the width glide, the carrier)
+# W-I.8: the dock (one clock, one carrier, the fission seat, the outlet)
 
-Sources: INBOUND O-195, O-200, O-202, O-222 and O-224 (the fission dock, as the owner sharpened it), O-171 R-2 and O-129 rows 3 and 4 (the expanded dock morphs its width), O-180 (3), and the carrier half of O-88. It composes 11.1.0's O-194, O-198 and O-199 and adds no second path for any of them. Its release is **11.2.0**.
+The sources are the owner, by date, verbatim. Each is quoted once here and cited by its INBOUND row after.
 
-This text replaces the DockCluster spec that stood here through pass-2 fold 1, and the three pending patches under `design/dock-cluster/pass2-fold-{1,2,3}/`, which are not applied. Two second looks ruled the re-cut: `design/dock-cluster/orchestrator-note-fable-review.md` (do not build DockCluster) and `review/fable-2026-11-10/design-D2.md` (land D2's carrier, not its content exchange). The design history is in `design/dock-cluster/` and `design/dock/`; `design/dock/LANDING.md` closes the D2 loop. §4 says what each earlier ruling and gate became, so none is revived.
+- 2026-11-10 (O-200, O-202): "We should likely have ONE dock, not two, with layers of controls"; "ONE dock with many layers that are smoothly eased and grow, fission, fuse, and animate".
+- 2026-11-11 (O-248): "ALL dock animations should be well defined in animating, not just telporting and instantly changing, the heigth and width"; the collapse is "not smooth in the end or beginning".
+- 2026-11-12 (O-275, O-276): "When you un-hover the dock, it should not instantly teleport away. It should persist a bit, based on dwell time too."; "we must standardize our filter docks on each viz to have proper collapse states … these docks should have animations and expanding on interact/hover, too."
+- 2026-11-12 (O-279, O-289): "placed in fission, in a separated icon from the dock, though with a dock bg, on the RIGHT of the dock--in the collpase state, this fission item should fuse into the main dock and collapse away like in ios 27."; "animated that fission and separation in goo with safari compat."
+- 2026-11-12 (O-288, O-290): "the slider doesn't too. All should animate."; page icons "a bit more flat in color, not shaded so much and AI-like".
+- 2026-11-12 21:20 (O-301 to O-304): "the dropdowns should disappear when the dock collapses and animate; the text edit options should be contained properly"; "the dock dwell time needs to be tweaked dramatically, as do the dock layer transitions and animations thereof"; "potentially have the text not displayed, but on hover display larger and to the left, and shift the icons (keeping the dock the same size)"; "the dock transitions and goo thereof and fission could be smoother too"; "each app page ... should have a defined glass container, separate from the dock as a card".
+- 2026-11-12 21:48: "the dock dwell time to auto collapse after leaving hover should be increased."
 
-The dock that ships in 11.2.0 is one GlassDock with one plate. A control in a new `#beside` slot sits inside the plate while the dock is collapsed and leaves it, bare, when the dock expands. When the expanded dock's content changes width (a face swap, a label, a control added), the plate glides to the new width and the content fades inside it, the fade done before the stretch. Both ride one measured model of the dock in which the plate is moved by FLIP and nothing is scaled.
+Two bounds bind every line: nothing changes instantly (`docs/precepts/motion-canon.md` P0), and "NO overuse of shading, transition, or markup--this is an AI smell. Have touch like apple." (`W-B.17.md` line 7).
 
-## 1 · Rulings (spec seat, 2026-11-10)
+**How this text was made.** The ledger seat (claude-opus-5-5, 2026-11-13) read every record and wrote `../design/dock/wi8/LEDGER.md`: 64 rows, L-1 to L-64. The design seat (claude-fable-5-2) wrote the rulings from the ledger, the animation audit (`../audit/animation/AUDIT.md`, `record/dock/RECORD.md`), the dock source on master at `99a1389e6` and W-B.17, and measured nothing. The prototype seat built the pieces on `bl/dock/wi8` and read them in Chromium (`../design/dock/wi8/PROTOTYPE.md`). The challenger read the build's rows, crops and source and returned twenty-four findings, C-1 to C-24 (`../design/dock/wi8/challenge.md`). The fold seat (claude-fable-5-2, 2026-11-13) rewrote this text to what those readings support; each finding's disposition is in `../design/dock/wi8/fold.md`. In this file **C-n** is a challenge finding and PROTOTYPE is the prototype's record.
 
-### 1.1 · No DockCluster
+The earlier texts are `git show 99a1389e6:docs/tranches/BL/waves/W-I.8.md` (the 2026-11-10 spec with its nine appended sections) and `git show e62e3e2d4:docs/tranches/BL/waves/W-I.8.md` (the design seat's text before this fold).
 
-The cluster fused N glass plates into one silhouette. After O-200 ("ONE dock, not two") and O-222 (the theme "not with the dock bg") every composition the owner has named has one plate, and value's dock is one GlassDock (`value.js/demo/shell/dock/Dock.vue:279-286`). No `DockCluster`, `dockClusterShape`, `dockClusterContext` or `cluster.css` is built, and no export is added. The pass-2 records stay as the measured basis if two glass plates are ever asked for again.
+Four limits bind every number here.
 
-### 1.2 · The carrier lands with this wave, on master as it stands at the cut
+- No number in this file is a seat's own. Each cites the record that read it, or is marked a default with no reading.
+- **No WebKit reading exists for this wave.** The guard refused every browser run at 8.01M kernel-zone elements during the prototype, again for the challenger, and again for the fold at 8.13M (2026-11-13 04:23). Every reading below is headless Chromium. Shipping Safari is unmeasured as well.
+- The fold took no new measurement, for the same refusal, and amended no prototype source. Every cure below is text until the prototype is re-read. "What the prototype read" says which gates that leaves unread.
+- The prototype's own gate table uses numbers that are not this file's (C-18). No status was copied from it by number.
 
-Master's morph reserves the expanded box, scales the whole root on its axis (`styles/shape.css:104-109`), counter-scales its regions (`:133-144`) and clips the root on that axis while it runs (`styles/shell.css:318-323`). Three facts in that source rule it out as the ground for this wave:
+Release, for `INDEX.md`'s column: **it splits three ways.**
 
-- **The root's morph clip would cut the seat.** A descendant that paints past the plate during the morph is past the box the root clips to, and the root's scale would carry it. The morph is exactly when the seat travels.
-- **The shadow and the rim are drawn by the root's box** (`shell.css:245-247`), and the plate's own `clip-path` (`styles/dock.css:93`) would cut a shadow moved onto it. A plate that glides while the layout box steps would leave its shadow behind.
-- **Two mechanisms for one extent is the ground that kept minting.** Pass 2 glided widths by one mechanism and composed the scale by another, and each challenge round found a new cell where the two met (`orchestrator-note-fable-review.md` item 7; `pass2-fold-3.md` §6, the expand-then-page-change cell).
+- **11.2.0:** the carrier, the clock and its tokens with the linger growing by dwell, the declared pinned state, `DockOutlet`, the published progress property, the figure preset, the README. No prop, slot, export or token is removed.
+- **Held, 11.2.0 or later, each behind its readings:** the fission seat (the `beside` slot) and the labelled seat (the `label` prop). Neither passes its own readings today (C-11, C-12, C-13). Each is released by the readings named in its ruling, in both engines, and by nothing else. The labelled seat also never ships in a release where an unlabelled dock seat keeps the gleam (R-7).
+- **12.0.0**, in W-R.1's run, each with a MIGRATION row: a press-opened dock lingers when focus leaves; every DockControl is a `.plate`; `--dock-morph-t` and the two unread stagger tokens are deleted.
 
-So the plate's extent has one owner, D2's carrier, rebuilt on master's tree with `design/dock/pass-13/D2-Bp-p13.patch` as the reference. It is not applied as a patch: its base is the 10.1.0 dock, and master is 41 dock commits past it.
+## What a dock is
 
-**What lands.**
-- **One body.** One `requestAnimationFrame` loop per dock steps every moving quantity (a lane on `springPreset("dock")`), then paints. It parks when every lane has seated. No lane takes a damping of its own (D2 Q-5 (a): weight, no visible bounce).
-- **One measured model**, in the root's own px: the plate's four edges and corner, the regions (leading persistent, layers, trailing persistent, beside), the faces, and each face's units. On a trigger it reads the new layout; each lane holds painted minus layout and carries it to 0 with the velocity it had. A second change retargets the live lanes and never re-creates them.
-- **The plate is its own silhouette.** The scene writes its four insets and its radius, so its box is the painted shape in every frame. Its `clip-path` is deleted (it is `inset(0)` today: `--dock-plate-collapse-inset` has no setter in `src`). The radius is the lerp of the two rests' corners in px; under 11.1.0's capsule both are half the cross extent, so 11.1.0's counter-scaled corner (`R / max(k, 0.06)`) goes with the scale it corrected. The plate is an out-of-flow leaf nothing reads, which is D2's Q-6 (a) (`design/dock/REGISTRY.md:300`).
-- **The elevation rides the plate.** The rim pair and `--shadow-dock` move from the root to the plate. The root paints nothing.
-- **Regions and units move by `translate`.** A posture change moves the plate and the regions. A unit moves only when its place inside its face changes.
-- **The plate's edge is the only clip.** A unit is cut where the plate's moving edge crosses it and nowhere else. The root's morph clip, the reserved box, the root scale, the counter-scales and `--dock-morph-origin` are deleted.
-- **Hit follows paint.** The root and its structural boxes take no pointer events; the plate, the seats and the beside region do. With a seat outside the plate, the root's box covers bare page, which must not absorb a click.
-- **The flow.** While an episode runs, an in-flow neighbour follows the painted edge, as bp13 has it.
-- **One window.** `[data-morphing]` opens with an episode and closes on the frame its last lane lands, and every inline value the scene wrote is cleared in that frame. It now opens on a content episode as well as a posture one.
-- **One trigger per fact:** the dock's one content observer, one ResizeObserver, the posture watch, the size hand-off, and a viewport resize that seats at layout with no episode. Reads are batched before writes within a trigger, which is O-180 (3).
+A dock is one surface whose size follows its content. It has three resting states: collapsed to its essentials, open, and pinned open. Everything else is travel between them or between two sizes of the open state, and all of it is one kind of event: the layout changes once, and what is painted glides from where it was to where the layout now is, on one spring, with its content fading inside the plate's moving edge. A fold, an unfold, a layer swap, a control added, the theme seat parting from the plate: each is that event with different boxes.
 
-**Names kept.** `[data-morphing]` keeps its meaning (value reads it: `value.js/demo/shell/dock/Dock.vue:234-247`). `--dock-morph-t` is still written on the root through a posture episode, as `composables/useDockMorph.ts:92-97` writes it today, and `--dock-expand-t` still derives from it (atlas names the scalar: `atlas/src/platform/chrome/dock/Dock.css:72`). `--dock-stagger-window-size` and `--dock-stagger-step` stay declared and are no longer read; W-R.1 deletes them in 12.0.0. No export leaves: `useDockMorphOrchestrator`, `useDockExpandedSize` and `useDockSpring` are not exported from `./dock` (`dock/index.ts`), and the build re-reads `.published-roster` before deleting their files.
+So the dock has one clock that decides when the state changes (R-2) and one carrier that moves the paint when it does (R-1). The rulings after those two say what each named piece is in those terms.
 
-**What master already cures is carried as law, not rebuilt.** The 10.1.x and 11.x cures live in the two files the carrier replaces (`useDockMorph.ts`, `dockMorphMeasure.ts`). Each is a law on the landed scene, and its existing witness is its gate, with expected values unchanged: an expand measures the layout it opens onto (O-101); the first expand frame paints the collapsed box and an edge-anchored dock grows from its anchored edge (O-110); a reversing collapse; content inside the plate on its axis; a press that holds the posture until it resolves; 10.1.5's invariant list as 11.0.1 forwards it (rest corner, collapsed circle, true overflow, ring, the 0.5 px morph edge, consumer markup); 11.1.0's O-194, O-197, O-198, O-199, the gliding mark and `edge="border"`. A witness that reads a deleted mechanism (`--dock-size-scale`, the reserved box) is restated once to the law it guarded, and the wave's record names each one.
+## Rulings
 
-### 1.3 · Content fades on a timed window; bp13's content exchange is not built
+- **R-1: one carrier moves every size the dock has.** This is the carrier the 2026-11-10 text ruled (D2's, `../design/dock/LANDING.md`), kept whole and widened to both axes (O-248). As built its plate reads well: edges leave rest at 1.0 to 2.0 % of travel, never exceed the spring's step, land within 0.11 px, and the cross axis glides where v11.0.1 lands it in one frame (PROTOTYPE, the fold tables). What rides the plate did not, and the clauses marked with a finding are its cures.
+  - **One loop.** One `requestAnimationFrame` loop per dock steps every moving quantity on `springPreset("dock")`, then writes. It parks on the frame its last quantity lands. At rest the dock schedules no frame and writes no style (L-15; read: 0 callbacks, 0 mutations, 0 animations at rest).
+  - **One measured model**, in the root's own px: each plate's four edges and corner, the regions, the faces, and each face's units. On a trigger it reads the new layout once, and each quantity holds painted minus layout and carries it to 0 with the velocity it had. A second change retargets the live quantities and never re-creates them.
+  - **The posture coordinate is a quantity of its own**: 0 collapsed, 1 open, on the same spring, moved by a posture change and by nothing else. It is never derived from the plate's extent, so a layer swap in an open dock leaves it at 1 (C-4). R-3, R-6 and R-10 read it.
+  - **The plate's box is the painted shape.** The loop writes the plate's four insets and its radius in px, so width and height glide together and nothing is scaled. The radius is the lerp of the two rests' corners; for a capsule both are half the cross extent, so the plate is a capsule in every frame (L-3). The plate's `clip-path` is deleted.
+  - **Rest geometry is keyed on the posture class, never on the published property (C-8).** The carrier reads each rest's padding and corner from the layout after the class changes. A rule that sizes or shapes a box from `--dock-expand-t` is read at the old value and lays out on every frame, which is how glass's own card corner (`styles/shell.css`, the `.shape-card` rules) came to read the pill's corner as its target. Those rules, and the padding rules the prototype moved onto a second property, are rewritten on the class. `--dock-rest-t` is not added; R-10's "no name is added" stands.
+  - **One writer for the plate's corner (C-20).** The run's cut caps are scroll-timeline animations that own the plate's end corners in Chromium today and overrode the carrier's radius by 1 px through every travel (PROTOTYPE, "not a capsule"). The carrier is the only writer of the plate's `border-radius`. How the cut cap is drawn without it (on the run's port, or standing down while `[data-morphing]`) is owed to the prototype (P-10), and G-2's corner bound is its gate as written.
+  - **What this costs, stated (L-16, C-21).** An inset is a layout property, and P5 as written forbids animating one. The plate is an out-of-flow leaf that nothing reads, so each frame of travel lays out that one box. Read: a median of 1 layout per frame and a largest of 3, against G-11's one; the loop's script is 0.11 to 0.14 ms at the median at 1x and 0.5 to 0.7 ms at 4x, against 1.1 to 1.5 and 4.5 to 7.1 ms on v11.0.1 (PROTOTYPE, cost). The frames with 3 layouts are unexplained and fail G-11 until they are. The layouts a travel may cause are these and no other: the plate's insets, each frame; a dock in block flow, its parent, each frame; the leaving face's placement, once. The alternative to the insets, a scale with a counter-scaled corner, is what master does, and it is the source of the rounded dock's flat ends (dock F6), the seat's tick on the settle frame (F10) and the shadow swap (F13). P5's sentence for a leaf's insets is owed in the precepts repository.
+  - **Everything else moves by `translate` and `opacity`.** A unit moves only when its place inside its face changes.
+  - **A region is carried by an edge, never by its centre (C-2).** When a region's size changes it is carried by the edge it shares with the plate or with its neighbour. As built the regions were carried by their centres, so on every unfold of the standard dock the Home seat swept across the run's first seat with both at full opacity, overlapping by up to 35 px for about 100 ms.
+  - **The plate's edge and the region's lane are the only clips (C-1, C-2).** While travel runs each region is clipped by one `clip-path: inset()` to its lane: the plate's painted box, narrowed to the painted edges of its neighbours. The clip is written in the region's own coordinates and its insets may be negative. A region's own layout box is never a clip edge. As built each inset was floored at 0, so on a fold the leaving run was clipped to the 40 px summary box in the first row: four controls at opacity 1 cut in one frame, on the wave's headline cell (`../design/dock/wi8/fold/strip-fold.png`). At rest nothing clips, so a hover plate may overhang the edge as it does today.
+  - **The leaving face does not move when the travel starts (C-1).** It is taken out of flow where it painted. As built it was placed 4 px off.
+  - **One shadow, the same in both postures (C-14).** The rim pair and `--shadow-dock` move from the root to the plate. The collapsed and open shadows differ today (12 px at 0.12 against 20 px at 0.14) and swap in one frame (dock F13). They become one value, the collapsed one, for both. Nothing lerps, nothing repaints a blur each frame, and the fault is cured by deletion. `--shadow-dock-override` still replaces the whole list. If the owner wants the open dock to lift, it is asked with one crop of both.
+  - **Hit follows paint (C-9).** The root and its structural boxes take no pointer events; the plates and the seats do, and the root's hover and focus listeners hear them as descendants. As built no such rule existed: during a fold the plate painted 150 px either side of a 56 px root, and a pointer returning onto that glass was outside the dock.
+  - **A dock in flow (C-7).** In block flow an in-flow neighbour follows the painted edge: the root's margin on the moving axis is written each frame, which lays out the dock's parent, and G-11 gives it W-B.17's budget for a size tween. A margin does not do this in a flex or grid parent; there it moves the dock itself (PROTOTYPE). So the README rules it: a dock whose size changes is out of flow (fixed, absolute or sticky) or in block flow. In a flex or grid row its siblings move in one frame, and glass does not claim otherwise. Two docks in one row are the exception glass can carry: see the next clause.
+  - **One trigger per fact:** the content observer, one ResizeObserver, the posture watch, and a change of place. A dock's root can move without resizing (a window resize, or a sibling dock changing width in a centred row), and a ResizeObserver does not fire on a move. So when any dock's travel opens, and on a window resize, every other mounted dock reads its own root's place once in the same batch, through the registry's list of live docks (R-8) and with no DOM lookup. A dock moved by a sibling travels from where it painted. A window resize seats at layout with no travel. Reads are batched before writes (O-180 (3)).
+  - **One window.** `[data-morphing]` is set before the posture class changes (a `flush: "pre"` watcher) and removed on the frame the last quantity lands, with every inline value the loop wrote. It opens on a content change as well as a posture change (L-53).
+  - **The first and last frames.** The loop's clock starts on the first frame it paints, not on the trigger, so the first frame paints the old box exactly and the second moves by the spring's own step from rest. A frame longer than 33 ms advances the spring by 33 ms, so a hitch is a pause and never a jump. That is the cure for the 13 to 17 % first frame daraksha read (`../design/dock/inbound/daraksha-dock-measures-2026-11-12-night.md`), which the audit traced to frames at half rate (AUDIT §3).
+  - **The preset's own overshoot is stated.** `springPreset("dock")` is response 0.3, ζ 0.88, and it passes its rest once: the plate read 485.41 to 486.16 px against a rest of 485 (C-10), and every cell steps 0.09 to 0.11 px against its travel once at the end. It is under a pixel and is not a bounce. The earlier text said the preset has none.
+  - **What master already cures is carried as law.** Each 10.1.x and 11.x cure in the two files the carrier replaces is a law on the landed dock, with its existing witness as its gate and its expected values unchanged: O-101, O-110, the press that holds the posture, 10.1.5's invariant list as 11.0.1 forwards it, 11.0.2's cures as merged, 11.1.0's O-194, O-197, O-198, O-199, the gliding mark and `edge="border"`. A witness that reads a deleted mechanism is restated once to the law it guarded, and the build's record names each.
+- **R-2: one clock decides the state.** As built it reads right in Chromium on every case but the two below (PROTOTYPE, the clock table).
+  - **Three states**, as today's `DockState` with its names: `collapsed`, `hover` (open by hover, focus or a tap) and `pinned`. Folding and unfolding are travel, not states: the state changes at once and the carrier eases what it set.
+  - **Intent.** A pointer opens a collapsed dock after `--dock-intent` (60 ms), counted from its first movement inside the dock, so a page of docks scrolling under a still pointer opens none (L-21; read: v11.0.1 opened at 578 ms, the prototype did not). Keyboard focus opens at once.
+  - **The linger.** A dock opened by hover, focus or a tap never folds on the frame the pointer or focus leaves. It folds after `min(--dock-linger-max, --dock-linger + dwell / 2)`, where dwell is the time the pointer or focus has spent inside since the dock opened. `--dock-linger` is 6 s, the value placed in 11.0.2 (O-306). Re-entry cancels the linger. The slope is atlas's, the only curve any record proposes.
+  - **The growth ships on (C-17).** `--dock-linger-max` is 12 s in 11.2.0. O-275's "based on dwell time too" stands; the later words ask only for longer and overrule nothing. A consumer sets the two tokens equal to turn the growth off (OQ-2).
+  - **A brush is the open half of OQ-2.** Intent is 60 ms, so a pointer crossing the pill on its way elsewhere opens the dock for 6 s over the page. No record rules it. The text does not change the floor; the question goes to the owner with one strip.
+  - **What holds the dock open.** It does not fold while an overlay opened from it is open, while `:focus-visible` is inside it, or while a pointer is down inside it. Each is checked when the linger runs out, and the linger starts again when the hold ends.
+  - **A tap, by pointer (C-17).** A touch tap on the folded face opens the dock and never pins it: its linger starts when the finger lifts, and each later touch inside restarts it. Today it has no timer and never folds (L-23). A mouse press or Enter on the folded face pins, as today. The figure preset does not differ. A host that wants a tap to pin sets `v-model:pinned` from its own handler, and atlas is told so. A tap into a cross-origin iframe is 11.1.1's cure (O-299 (c)) and is not built twice.
+  - **Dismissal.** A press outside, Escape and `collapse()` skip the linger and fold by the same eased travel. `release()` with the pointer outside starts the linger; the 800 ms wait before a second full window is deleted (L-20). Read: `release()` still folded twice in the prototype, which fails G-1 (i).
+  - **A return mid-fold reverses it.** A pointer or focus that comes back while the fold is travelling opens the dock at once, with no intent wait, and the carrier turns from where it is with its velocity (L-8). The pointer returns onto the painted plate, by R-1's hit rule. Intent guards only an opening from rest.
+  - **Pinned is declared.** `v-model:pinned` on GlassDock. It ends by a press outside, Escape or the host, never by the pointer leaving, and an open overlay holds it (L-25).
+  - **The 11.1.0 exception goes.** After a press on a persistent control, 11.1.0 folds a hover-opened dock "as soon as the pointer leaves". O-275 is later: the linger applies there too.
+  - **A press-opened dock** (`expandOn="press"`) closes at once when focus leaves, today. In 12.0.0 it lingers there and closes at once only on a dismissal.
+  - **The 840 ms window is not a token.** It is the cap on the click guard after an expand (`composables/useDockClickIntegrity.ts:190-197`), not a clock anyone sees, and `[data-morphing]` is its real signal. It stays a constant.
+- **R-3: content has one formula, and it has no clock of its own (C-3).**
+  - **For a posture change the content reads the posture coordinate `e`** (R-1), each frame, in both directions:
+    - the summary's opacity is `1 − e / 0.35`, clamped, so it is gone when the dock is 35 % open;
+    - the run's is `(e − 0.35) / 0.35`, clamped, so it is whole at 70 %.
+  - A fold evaluates the same two windows backward, so a return mid-fold starts the run returning in the row the plate turns, and no opacity jumps (L-7; dock F5 read 1.00 to 0.51). As built the content ran a second spring that restarted from rest on every change: after a return at 30 % every face stayed under 0.06 for seven rows while the plate travelled, then the run went 0.03 to 1.00 in six.
+  - **For a change with no posture change** (R-5) the travel carries one unit quantity `f`, 0 to 1, on the same spring; the leaving face reads `1 − f / 0.35` and the entering face `(f − 0.35) / 0.35`. A return to the face still on screen inverts `f` where it is and never restarts it. A third, different face starts from what is painted (R-5).
+  - Opacity is written on the two faces, or on the two panes, never on a box that holds both.
+  - **A control or region that leaves is held and fades (C-5).** It is held for the first window and fades on it, and its neighbours glide over the same travel. Glass holds its own regions, which sit behind its own `v-if` (dock F4, 231 to 181 px in a frame). A consumer's `v-if` seat is held by W-B.17's presence (its R-7), and the README says so. A control that joins a face enters on the second window. The earlier text cut a leaving control in its frame, against P0: "An exit is an animation too, never a cut."
+  - This replaces the per-control stagger and its 0.82 scale pop (`styles/layers.css:278-297`), which is a fade-up on every element. "The fading happens FASTER than the stretching" (`restraint.md`, Motion).
+  - **The instant near 35 % is read and is small, and its form is still the owner's (C-6).** Old content is gone before new content arrives. Read: one row with every face under 0.1 and three under 0.3 on a plain unfold, at 36 to 38 % of the plate's travel. A dock with a persistent region is never empty there; a plain pill is. W-B.17 R-7 struck the same out-then-in form for a pair in one seat. The windows are a default with no strip behind them; P-4 shoots three forms and the owner picks (OQ-4). G-4 bounds the instant either way.
+- **R-4: the fold and the unfold are one gesture.** A posture change is R-1's travel with the two panes as R-3's content.
+  - Width and height travel together. A layer-group dock's 52 px of height no longer lands in the first frame (dock F3; read: the cross axis leaves at 1.2 to 2 % where v11.0.1 reads 100 %), and the open size is never measured while the root is collapsed (atlas's first ask), because the old box is what was painted and the new one is read after the class changes.
+  - **Content is seen until the plate's edge covers it (C-1).** The open dock's controls stay whole where they painted, fade on R-3's window, and are cut only by the plate's moving edge. That is the frame O-248 and O-288 are about.
+  - Every control in the dock folds with it. A control's opacity is its pane's; its own held or grown state is its own, and its release is its own transition. A slider held when the fold starts loses its hold on the collapse edge and returns on its own clock (L-6). No slider has been held through a fold in any reading.
+  - Edge content arrives with the plate: a unit near the far edge is whole in opacity by 70 % and is uncovered by the plate's edge as it passes, so nothing pops in after the plate has landed.
+  - A collapsed dock with nothing in its summary and no persistent region rests at the collapsed control size, not at a 16 px sliver (L-4). A dock with a persistent region and no summary rests at that region (keyframes's transport).
+  - A persistent seat is a region carried by its edge to its measured rest, so it lands there with no tick (L-14).
+- **R-5: a layer swap is the same gesture with no posture change.** When the open dock's content changes size, the layout changes once, the plate glides on both axes, the regions ride its edges, and the faces follow R-3 inside the plate's clip.
+  - The cause does not matter: a DockLayerGroup face, a label, a select's value, a control added or removed, a persistent region mounting or leaving, a route that changes the seat set (L-2).
+  - It never moves the posture coordinate, the fission seat's gap or `--dock-expand-t` (C-4).
+  - DockCrossfade keeps its registry, its inert swap and its focus transfer. Its opacity reads the travel's `f` in place of a spring of its own, and its running-maximum reserve is deleted, since the plate now follows the active face.
+  - A third change that arrives mid-swap starts from what is painted: every face still showing leaves from its painted opacity over the new travel's first window. No face is cut (dock F9).
+  - Read: the plate's main axis is inside the bounds on the layer cells, and the cross axis glides. The second and third changes of the crossfade exceed the first-frame bound on the cross axis by 0.1 to 0.5 %, and the swap's leaving face is cut at its lane as the fold's is (`../design/dock/wi8/fold/strip-swap.png`, the text's first letters). Both fail G-4 until cured.
+  - **The run's open seat is the same event.** Its `inline-size` transition (`styles/run.css:522-553`), which lays out every frame for 210 ms on every page change, is deleted, and the glide to a seat past the fold becomes one quantity of the loop. The prototype did not build the quantity and kept the transition, moved into the seat's own list. That leg does not ship as a stopgap: G-12 forbids it, and step 3 of the build is not done while it is there (C-10). Both are read on `release/11.1.0` first, which rebuilt the mark, and on 11.1.1's cure of O-316.
+- **R-6: the fission seat is a slot, a second plate, and a neck. It is held behind its readings.**
+  - **Why it is held (C-11, C-12).** No neck passes the readings this text set for it, the reading the choice exists for (the backdrop kept in WebKit) has no value, the gap between the two shapes is not the page, and the seat parts in about 25 ms (`../design/dock/wi8/fold/strip-fission.png`). The slot does not ship until P-1 passes in both engines.
+  - **API.** One slot on GlassDock, `beside`, for one control. No prop.
+  - **Where it is.** A region after the trailing persistent region, inside the root, in logical properties: the right in a left-to-right page. Open, it is in flow on the dock's axis, one `--dock-layer-gap` past the main plate, on a shape of its own that paints the dock's surface (O-279 reverses O-222 and the 2026-11-10 text's bare seat).
+  - **The gap is the page (C-11).** At open rest nothing of the dock paints between the two shapes: no surface, no backdrop and no shadow's inside. As built a pale band ran from the main plate to the seat (`../design/dock/wi8/prototype/look/std-open.png`), which is the row-sized shadow leaf: two parted shapes resting in the halo of one capsule. O-279 asked for "a separated icon".
+  - **One shadow per shape.** Each shape carries the dock's one shadow (R-1). The row-sized shadow leaf is struck. The dark slot two shadows might make in the gap is 8 % alpha at 12 px of blur; it is read on one crop, and the leaf returns only if that crop shows a slot. Under neck B a clip cuts a box's own `box-shadow`, so the rebuild states what carries each shape's shadow and G-11 counts it.
+  - **Collapsed, it is gone.** "Fuse into the main dock and collapse away": at collapsed rest the region is out of flow, hidden and inert, and the pill is one plate. A host that wants the control in the pill puts it in `#persistent-end` and gets no fission (OQ-1).
+  - **It rides the posture travel, never layout and never a content change.** The seat's place, its shape's edges and the neck are functions of the posture coordinate. daraksha's second dock stood about 140 px away through the collapse and jumped about 116 px in one frame because its layout box moved at once (O-299 (a)).
+  - **It parts with a start and a stop (C-4).** The gap is `g · p`, where `p` is a function of the posture coordinate with no slope at either end, over more of the travel than its second half. The earlier `p = clamp((e − 0.5) / 0.5, 0, 1)` is struck: it began where the spring is fastest and ran at twice its rate, so the gap went from still to full speed in one row and its steps read 8.6 to 11 % against a bound near 8 %. The form is `p = s(clamp((e − a) / (1 − a), 0, 1))` with `s(x) = 3x² − 2x³`; `a` is a default with no reading, and the prototype shoots `a = 0` and `a = 0.25` for the owner. The fold runs the same function back, so the seat fuses first.
+  - **The glyph follows `p`, not R-3's windows.** It is not painted while the seat is fused and is whole when it has parted. As built it was gone at 35 % of the fold, so an empty shape did the fusing, and on the unfold it appeared inside the fused pill on top of a run seat (C-2, C-4).
+  - **The neck is an element, never an SVG filter.** A filter on the plates' container erased their backdrop in WebKit; a real element between the plates kept it (`~/.dev-logs/owner-1112/frames-4th/webkit-neck-vs-svg-goo.png`). One design is left, below.
+  - **No overshoot of its own.** `restraint.md` allows it on fission. The seat does not take a spring of its own; it carries the preset's (R-1), and D2 Q-5 (a) asked for weight with no visible bounce.
+  - **Its hover is W-B.17's.** A DarkModeToggle in the slot carries `data-glyph="turn"` itself. The dock sets no glyph attribute and writes no glyph rule: the prototype's own `[data-glyph="turn"]` rule in `styles/beside.css` is deleted (C-16). A consumer's own control in the slot keeps its own motion and is not given a second (daraksha's `ThemeControl`). The sun reading as a cog at dock size (O-239) is the DarkModeToggle's glyph; in the standard dock it sits beside the Settings gear and reads as a second gear. Its redraw has no wave (see "Records the orchestrator amends").
+  - **The hold is containment.** The region is a descendant of the root, so hover, focus, the overlay stamp and click-away hold through R-2 with no copy of them. The gap toward the main plate is the region's own padding, so no strip between the two reads as a leave.
+  - **Centring.** The seat is in flow, so a centred dock centres the row (plate and seat) and the host's overflow reads the true extent. The main plate's centre moves by half the seat's room on an unfold. It is taken as a default and shown in the fission strip.
+  - **On a dock that never folds, it is two still shapes.** daraksha's and fourier's site docks are `:collapse="false"` (C-22, C-24). `#beside` there gives the separated seat and no fission. The fission the owner described plays only on a dock that folds.
+  - **Forced colours.** The root's forced border is removed (`src/styles/utilities/a11y-overrides.css:147-150`). Each shape's own border is its outline.
+- **R-7: the labelled seat is one prop, and the plate does not move. It is held behind its readings.**
+  - **Why it is held (C-13).** As built the name prints over its neighbour's glyph mid-tween and at rest; it fits only because the current page's seat happens to be wide and empty; the current seat's own name never shows; and it is not W-B.17's plate. The prop does not ship until every clause below is gated GREEN.
+  - **API.** `label` on DockControl. On hover or `:focus-visible` the name shows at the seat's inline start, at `--dock-label-size` (one step above the dock's control text), at normal weight: O-303 asked for "larger", and `restraint.md` has size carry hierarchy. The neighbours shift to give it room.
+  - **The 0 px guard holds, and it is the part that passed.** The name is one `aria-hidden` span that stays mounted, out of flow. Showing it changes no layout: the root, the plate and the seat's plate moved 0.00 px through every hover and the sweep (PROTOTYPE; O-282).
+  - **One way to name a seat (C-13).** The run already names one seat: the open seat, the current page's, which is wider and holds its name in flow. The hover name is that same room lent to another seat. At rest the open seat shows the current page's name, so the room is never a dead gap. On a hover the current name fades, the seats between shift by `translate`, and the hovered seat's name takes the room. The room is as wide as the dock's widest name, set once, so the fit does not depend on which seat is current. Whether the current page shows its name at rest is the owner's (OQ-6); with it hidden the room is 98 px of nothing in the standard dock.
+  - **The name never touches a glyph.** Its box with its gap intersects no other unit's glyph in any row, mid-tween or at rest. Its opacity is a function of the room's progress, so it cannot be read before the room exists; as built it was readable at 59 to 62 ms while the shift took 210 ms.
+  - **The shift is one `translate` per seat**, written when the labelled seat changes and tweened by CSS on `--spring-dock`. The leg is added to the seat's own transition list; a shared `transition` shorthand would erase that list (AUDIT rule C).
+  - **The seat under the pointer keeps the pointer.** Its hit box always covers its resting footprint.
+  - **A name that does not fit is not shown in place.** It is never truncated and the plate never grows. The strip that goes to the owner shows the seats that get no name as well as those that do.
+  - **Who gets no hover name, stated.** A coarse pointer has no hover: it sees the current page's name in the open seat and no other. A vertical dock has no room at a seat's side. A seat in a persistent region is outside the run, which includes the Home seat R-14 puts first. Each keeps its accessible name. O-276's "what do some of these dock buttons even do?" has no answer on a phone in this wave; the Tooltip that would give one (L-30) is not built here and still needs a home.
+  - **It is W-B.17's plate, as W-B.17 ships it.** The seat is a `.plate`: the fill is on its own `::before`, the hover is that plate's `opacity` and `scale`, and no colour transitions (W-B.17 R-1). The prototype removed the `::before` and tweened `background-color`; both are struck. Its sites wait on the owner's pick of the plate's strength, as every plate site does (W-B.17 R-4). It computes no gleam, no gradient, no shadow and no `backdrop-filter` (O-290). Its one colour is `--plate-tone` (L-29).
+  - **Never half a dock (C-15).** A dock whose labelled seats are flat and whose Home and theme seats keep the gleam answers the pointer two ways side by side. The labelled seat ships only in a release where every dock seat is a plate. By W-B.17's and W-R.1's schedule that is 12.0.0 (OQ-6).
+  - How the name enters is open between two designs, below.
+- **R-8: the outlet is one component, and docks are found by id.**
+  - **API.** `<DockOutlet to="site">`, exported from `./dock`, with one optional prop, `region` (`"run"`, the default, `"persistent"` or `"persistent-end"`). A GlassDock whose root has an `id` registers under it. No prop is added to GlassDock.
+  - **What it does.** It renders its slot into the named dock's region by Vue's Teleport, as direct children with no wrapper element, so the run's roving and its seat rules hold. It provides that dock's context, and the face mark when the region is the run, to its slot. So a Popover's hold and close, a Slider's hold, a menu's hold and a seat's face all reach controls a page contributes (O-307). Read: with a Popover open inside contributed content the dock held, where v11.0.1 folded at 3614 ms with the Popover open.
+  - **Where contributed content lands (C-22).** After the region's authored children, in the order the outlets mounted. A host that needs a contributed control before an authored one contributes both, or puts the authored one in a later region.
+  - **No DOM lookup.** The registry is a reactive map from id to the dock's region elements and context, written by GlassDock at mount and unmount, with the list of live docks R-1's place trigger reads. Content mounts when its dock registers and unmounts when it goes. Nothing registers on the server.
+  - A persistent region that an outlet targets is rendered even when the host authored no slot for it, and an authored or targeted region with nothing in it takes no room (`.dock-persistent:empty`). A layer's seat reaches the collapsed face through `region="persistent-end"` (O-224).
+- **R-9: an overlay opened from the open dock closes with it, by its own exit.**
+  - This has shipped since 10.1.1 for a seat in the dock's tree (`src/components/_shared/overlay/participation.ts:125-130`), and it reads right: the menu fades in 115 ms, two frames after the fold starts (dock record). It failed on daraksha because its controls were teleported in and had no context. R-8 is the cure; no second close path is built.
+  - The close with the fold is unread on the prototype: the recording ended inside the linger (L-48).
+  - The fission seat is part of the face: it is gone when the dock collapses, so what it opened closes too.
+  - An overlay opened from a persistent seat stays, as today: its trigger is still there.
+  - The options panel's "contained properly" is unread: daraksha measured 13 px of padding all round and suspects the chips' heights (P-6).
+- **R-10: the published progress is `--dock-expand-t`.** No name is added.
+  - It is the posture coordinate (R-1), written on the dock's root on every frame of a posture travel, and it rests there: 0 collapsed, 1 open. It is never removed, and a content change never moves it.
+  - **It drives paint only (C-8).** No rule of glass's sizes or shapes a box from it, and the README tells consumers the same: such a rule lays out every frame.
+  - Siblings follow it through one attribute: when an ancestor of the dock carries `data-dock-scope`, the same value is written on that element. One dock per scope. The scope element is found once per travel, not on each frame (C-16).
+  - The cost is stated and read: a custom property written on an element recalculates style for that element's subtree each frame. G-11 reads style recalculation and paint from the trace, which the prototype's cost table did not.
+  - `--dock-morph-t` keeps master's meaning through 11.2.0 and is deleted in 12.0.0.
+- **R-11: reduced motion seats the geometry and fades the content.** Under `prefers-reduced-motion: reduce` every quantity of R-1 lands in the frame of the change, the neck and the fission seat included. R-3's coordinate then runs as a linear clock on which the entering content is whole at `--duration-instant` (100 ms), inside O-198's 144 ms. The linger is kept. 11.1.0's leaving face that "disappears immediately" is overruled by P0: "it never makes a cut" (L-18). The dock's rows join W-B.17's authorized set; whether a consumer's own fades survive the fallback is W-B.17's open ruling (O-308). Read: geometry seats in one frame and content shows three or more values over about 100 ms on every cell but two, which fail G-10: the crossfade's third change moves geometry on two frames, and the rounded fold reads an opacity step of 0.48.
+- **R-12: the figure dock is this dock with a preset, and it does not unfold seat by seat.**
+  - The three states are R-2's. Rest is the `#collapsed` face with the persistent regions; open is the run; pinned is `v-model:pinned`.
+  - The preset is one block, `[data-preset="figure"]`, in `styles/density.css`, where the geometry presets already live: `--dock-intent: 120ms`, a 52 px rest height with 44 px seats, and a run that clips and does not scroll or snap (atlas G-02). No prop.
+  - atlas's design unfolds each seat into its control as the pointer reaches it, yields rest seats by priority, and grows the dock down a row for a wide group. The owner's "keeping the dock the same size" is later and is about a hover on a seat. Read with atlas's own rule, "nothing already on screen moves under the pointer", it rules the seat-by-seat unfold out, so glass builds none (OQ-3).
+  - A dock over a chart sets `backdropMode="static"`; atlas holds that rule already.
+- **R-13: the roving keys reach a layer group.** The seat rule applies to each row: the run's own children, and the children of the active face in a layer group that is a direct child of the run. Each row has one Tab stop, with Arrow, Home and End inside it and no wrap; arrows do not cross rows. `role="toolbar"` sits on the element whose children are the seats, and the stop is re-derived when the face changes (L-56). A run child that is neither a seat nor a layer group (a consumer's `role="group"` wrapper) is not roved; the README says seats are direct children (C-22).
+- **R-14: dividers, the Home seat, a free-standing control and the page plate are README text.** Nothing is built for them.
+  - A `DockSeparator` goes between groups of a different kind (navigation, the page's tools, utilities), never between every seat. In the face it fades with the face; in a persistent region it rides the region. It has no fade of its own.
+  - The first seat of a standard dock is Home, in `#persistent`, so it is there in both states.
+  - A free-standing control takes the dock's plate as a one-seat `<GlassDock :collapse="false">`. No dock-surface utility is exported.
+  - Two docks in one row: the root centres itself with auto inline margins, so the host sets `margin-inline: 0` on each and centres the row. Each glides when the other moves it (R-1).
+  - The page-level plate is `Card`.
 
-bp13's exchange (the seam, the fronts, the lead, the sweep, the handoff, the gift, the reveal gain, the sliver rule, the touch ramp, every mask, and the clone of a seat that left the DOM) is dropped. In the strip of record it paints "Tools" as "ols" beside a faded half-letter for three frames of the swap (`design/dock/pass-14/D2-Bp-crit-records/c/filmstrips/cl-1/main_strip-chromium-swap-long.png`, tiles 2 to 4), and it costs 1.74 to 2.06 ms of main thread per frame against the floor's 0.15 to 0.21 (`design-D2.md` item 3).
+### The neck: one design is left, and it has not passed
 
-In its place, every change of which content shows runs on the episode's one progress lane `f`, 0 to 1 on the dock rung:
+Two designs were built. Both share R-6 and differ in what paints the glass while the seat parts.
 
-- the leaving face is out by `f = 0.35`: opacity `1 − f / 0.35`, clamped;
-- the entering face comes in after it: opacity `(f − 0.35) / 0.35`, clamped, so it is whole at `f = 0.70` (OQ-2);
-- both are functions of the one lane, so a reversal runs the same curve back;
-- opacity is written on the two faces (and, on a posture change, on the two panes), never on a cell that holds both. That was pass 2's blank-glass bug (`design/dock/pass-2/D2-Bp-critique.md`, finding 1);
-- a control that joins a face enters on the second window. One that leaves the DOM is gone in that frame, and its neighbours and the plate glide.
+**A, three leaves, is out (C-12).** The main plate, a neck and the seat's plate as three boxes that meet edge to edge. Read: flat deviation 25 against a bound of 2; stripe junction 88.6 against 4; the hand-over moves the main plate's edge by the seat's width in one row (a largest step of 31 to 33 %), and a reversal at 50 % snaps 51.6 px. It fails readings 2 and 4. At `p = 0.5` its neck is a slab with square shoulders.
 
-This is the owner's own choreography, "the fading happens FASTER than the stretching" (`docs/precepts/restraint.md`, Motion), and O-88's "one continuous morph (size, radius, content cross-fade)". It replaces master's per-control stagger and its 0.82 scale pop (`styles/layers.css:277-298`), which is a scale on a control and a fade-up on every element. The owner sees the two strips before the build (OQ-1).
+**B, one leaf cut to shape, is the one left.** The dock's glass is one box over the whole row, so there is one backdrop, one tint and no junction. While `0 < p < 1` it carries a `clip-path: path()` that the loop writes each frame: two capsules joined by a waist whose sides are arcs tangent to both ends, the true shape of two drops parting. No box is laid out for the neck. Read: its geometry is inside the bounds (first step 1.0 to 1.4 %, largest 7.1 to 7.4 %), and it has no junction (0 to 0.5). It fails as built on three counts: its waist was drawn with cubic curves, not the tangent arcs, and pinches to two bright darts; its flat deviation is 20 to 22 at `p = 0.75` in light, against 2, with the corner exclusion changed and not rerun; and its edge reading is 14.8 to 34.9 against 2, because a clip cuts the leaf's own border and inset rim along every cut edge.
 
-### 1.4 · The bare seat: `#beside`
+**What decides (P-1).** Both engines, light and dark, 390 and 1440, on a flat ground and a striped one, held at `p` = 0, 0.25, 0.5, 0.75 and 1, and run live. The composition judged is a dock that folds with a theme toggle in `#beside`, as keyframes's chrome dock will be (C-24).
 
-API: one new slot on GlassDock, `beside`. No prop, no component, no export, and `#persistent-end` is unchanged for every consumer. A slot and not a prop on `#persistent-end`, so that a dock can hold a trailing persistent seat inside the plate and the bare seat beside it (§1.7).
+1. The backdrop is kept in WebKit at every held `p`, with the `clip-path: path()` rewritten each frame over a `backdrop-filter`. The SVG filter, planted, must fail this reading. This is read first: a failure here ends B as well.
+2. One surface: on the flat ground every glass pixel is within 2 of 255 of the main plate's centre, and on the stripes no column at a junction differs from the mean of its two neighbours by more than 4.
+3. The edge: at 4x, the facing ends at open rest match the outer ends within 2 of 255 along the rim.
+4. The motion: the gap and the neck's thickness stay inside the bounds in every frame, the first included.
+5. The cost per frame at 4x CPU.
+6. The gap: at open rest every gap pixel is within 2 of 255 of the page, flat and striped, light and dark (C-11).
 
-- **Where it is.** A region rendered after the trailing persistent region, inside the root (where `#persistent-end` renders, `GlassDock.vue:569-574`), in flow on the dock's axis in both postures, in logical properties. It carries the persistent region's class, so every persistent rule holds for it: never inert, never a face, a press on it is the seat's own act (11.1.0), and with no `#collapsed` slot it is part of the collapsed face (O-194). It is not in the run: its control is its own Tab stop, after the run.
-- **Collapsed (fused).** The plate's insets are 0 and the seat sits inside the plate, as a trailing persistent seat does today.
-- **Expanded (fissioned).** The plate rests where it would with no slot authored: one dock padding past the last region inside it. The seat rests past that edge.
-- **The motion.** The seat's `translate` and the plate's trailing edge are lanes of the dock's posture episode, the one whose progress the root publishes as `--dock-morph-t`. No spring, prop or trigger is added, and `fused` is not a prop: the only trigger is the dock's own expand and collapse. The plate's edge clip is waived for the seat, so the icon crosses the edge whole. A dock with `:collapse="false"` holds the seat outside at rest.
-- **It carries no plate.** The region, its control and their pseudo-elements paint no `backdrop-filter`, no background, no border and no shadow, in any state: rest, hover, press, `active` and `aria-pressed="true"`. The glass disc in the owner's frame (`~/.dev-logs/owner-1110/shots/2.png`) is the seat's own capsule, the face DockControl draws on hover, press and `active`; here it draws none. State is carried by the glyph's ink. The focus ring stays: it is an outline.
-- **Its ink** is the dock control ink, `--dock-fg-on-aurora`: the page's `--foreground`, refined to `contrast-color(var(--card))` where the engine has it (`styles/adaptive-legibility.css:47-48`, `:67-72`; `styles/controls/icon-button.css:53-55`). It is the same inside the plate and outside it. Nothing samples the page under it. A host whose page ground cannot carry text ink keeps its control in `#persistent-end` (OQ-5).
-- **The hold is containment.** The seat is a descendant of the root, so hover, focus, the overlay stamp and the click-away hold through the dock's own rules with no copy of them (`composables/useDockState.ts:409-431`, `:449-468`, `:518-529`). The gap toward the plate is the region's own padding, so its hit box starts at the plate's edge and no strip between them reads as a leave.
+B ships when it passes all six in both engines. Reading 3 is not loosened here. If a clipped leaf cannot carry a hairline on its facing ends by construction, that is put to the owner with the crop (OQ-5), and only his answer waives it. If B fails 1, 2, 4 or 6, the build stops and reports; it does not invent a third.
 
-### 1.5 · The width glide is GlassDock's own
+### Open between two designs: how the name enters
 
-On master a face is `inline-size: max-content` (`styles/crossfade.css:44-50`) and a swap "does not register with, or resize, the dock shell" (`useDockMorph.ts:9-11`), so the plate steps: 156 to 313 px in one frame at 1440, 78.4 px a side, and on the way back the leaving controls lie 40 px outside it at opacity 0.95 (`design/dock-cluster/pass2-build.md` §2).
+**A, it fades in at its size.** The name is laid out at its full size and only its `opacity` and 4 px of `translate` toward its rest change, with W-B.17's presence amounts and clocks. Text is never scaled, so its glyphs are sharp in every frame.
 
-Under §1.2 a change of the expanded dock's size on its axis with no posture change is a content episode: layout steps once, the plate's edges glide from where they were painted to the new box, the regions and the bare seat ride the edges, and the content fades by §1.3 inside the plate's edge clip. The cause does not matter: a DockLayerGroup face swap (O-202), a label change or an action swap (O-171 R-2), a control added or removed. A lone dock needs no wrapper. DockCrossfade keeps its registry, its block reserve, its inert swap and its focus transfer, and its opacity reads the episode's lane instead of a spring of its own.
+**B, it grows from the icon.** The name scales from 0.8 with its origin at the icon's edge, with `opacity`. It is the literal reading of "display larger". It is a second spatial movement on one hover, and text under a scale is drawn once and stretched.
 
-W-0.8's O-171 gate "no single-frame jump over 4 px" is restated in G-4. The dock spring's own largest 8.33 ms frame is 6.98 % of its travel (`design/dock-cluster/fold.md`, F7), which is 11 px of value's 157 px change, so no spring on this preset meets 4 px.
+**What decides (P-2).** In both engines: the edge contrast of the name's glyphs on its middle frame against its last; the count of spatial animations running on one hover (G-6 allows one per element); and the time at which the name is readable, which must be 150 ms or less and never before its room exists. Read in Chromium: A is readable at 59 to 62 ms and B at 76 to 79 ms, with end contrast 0.84 to 0.97 and 0.87 to 1.00. Both were read before the room rule, so both are read again. The default is A.
 
-### 1.6 · Reduced motion
+## What the prototype read
 
-One law for the dock, stated here: under `prefers-reduced-motion: reduce` every lane seats in the frame of the change, so the plate, the regions, the seat and the clip take at most two values across a change. The only property that may animate is opacity, for 144 ms or less (O-198). The wave adds no reduced-motion path and no token: the faces swap at once, as `DockCrossfade.vue:218-221` does today and as 11.1.0's `prm` witness reads (no running animation). The cluster's opacity dip is deleted with the cluster.
+By this file's gate numbers. "Unread" means no reading exists; "fails" names the reading. Nothing is GREEN in WebKit, so no gate is closed.
 
-### 1.7 · O-224: a DockLayer does not name a seat for the collapsed face
+| gate | Chromium, as built | state |
+|---|---|---|
+| G-1 | cases a to h, j, k inside their bounds; (i) folds twice; the default-token long visit unread | open on (i) |
+| G-2 | plate edges inside the bounds on pill, rounded, flow, layers, wide, outlet, figure; content cut in the first row of every fold (C-1); regions overlap on the unfold (C-2); the cut caps own the corner; card and vertical not run (C-8); the two-dock row not run (C-7) | fails |
+| G-3 | the plate turns 0 to 3 frames after a return; content blank for seven rows (C-3); the return was driven to the centre only (C-9) | fails |
+| G-4 | layers and crossfade edges mostly inside; cross axis over by 0.1 to 0.5 % on later changes; a seat or region leaving not run (C-5); a swap with `#beside` not run (C-4) | fails |
+| G-5 | neck A out; neck B fails readings 2, 3 and, by C-11, 6; the gap's steps over the bound | fails; held |
+| G-6 | the 0 px guard passes; the name over a glyph, the fit, the plate (C-13) | fails; held |
+| G-7 | the unit specs were refused by the guard | unread |
+| G-8 | the hold reads right; the close with the fold unread | unread |
+| G-9, G-13 | not built into the harness | unread |
+| G-10 | passes but for the crossfade's third change and the rounded fold's 0.48 step | fails on two cells |
+| G-11 | script and rest inside; layouts a frame 1 at the median and 3 at most; style recalculation and paint unread | fails on the layout count |
+| G-12 | not run; by reading it fails on the open seat's `inline-size` leg and the test hook | fails |
+| G-14 | the release specs were refused by the guard | unread |
 
-Ruled no, on source. A face is `inert` and `aria-hidden` when it is not active (`DockLayer.vue:85-86`), and the whole expanded pane is inert while the dock is collapsed (`GlassDock.vue:514`). A seat cannot be live in the collapsed face and stay inside its layer; a layer API would have to move the node into a persistent region or render it twice. The persistent regions are already that place: never inert, present in both postures, and under 11.1.0 a press there never expands the dock.
+Three batches of the prototype's rows ran on a mixed build, by its own note. Its defect 1 (the fission seat's content "cuts in one frame") is the hidden seat's `visibility` changing; the seat fades, and the fault there is C-4. Its defect 5 (the 12 s linger) is the expected value of case (d), which sets `--dock-linger-max: 12s` (C-17, C-18).
 
-So the host places the seat in `#persistent` or `#persistent-end`, as a route-conditional control or as a teleport target the page fills, which is how daraksha's pages already reach `#dock-page`. With `#beside` separate (§1.4), daraksha can hold Play in `#persistent-end`, and its collapsed face is the page icon, Play, then the khatam, in one plate.
+## Scope
 
-Glass adds one rule: an authored persistent region with nothing in it takes no room (`.dock-persistent:empty`), so a route-conditional seat leaves no gap on the other routes. G-10 is the cell. If it reads RED on the build, the fallback is a `persistent` slot on DockLayer whose content renders in the dock's trailing persistent region while that layer is active; it is not built otherwise (OQ-6).
+### API
 
-### 1.8 · The roving keys reach a layer group
+| surface | change | release |
+|---|---|---|
+| `GlassDock` props | `pinned` (with `update:pinned`) added | 11.2.0 |
+| `./dock` exports | `DockOutlet` added | 11.2.0 |
+| attributes | `data-dock-scope` on a host's element; `[data-preset="figure"]` | 11.2.0 |
+| tokens | `--dock-intent` (60 ms), `--dock-linger` (6 s), `--dock-linger-max` (12 s) | 11.2.0 |
+| published property | `--dock-expand-t` documented, written each frame of a posture travel and resting at 0 and 1 | 11.2.0 |
+| paint and behaviour every consumer sees | every size change glides on both axes; content fades on the two windows; the per-control stagger is gone; one shadow in both postures (the open dock's lightens to the collapsed one's); `[data-morphing]` also opens on a content change; the linger applies after a persistent press and grows with the visit up to 12 s; a touch-opened dock folds after its linger | 11.2.0 |
+| `GlassDock` slots | `beside` added | held: P-1 in both engines |
+| `DockControl` props, and `--dock-label-size` | `label` added; a labelled seat reads W-B.17's `--plate-tone` | held: G-6 in both engines, and every dock seat a plate |
+| defaults | a press-opened dock lingers when focus leaves; every DockControl is a `.plate`; `--dock-morph-t`, `--dock-stagger-window-size` and `--dock-stagger-step` deleted | 12.0.0 |
 
-On master the run roves only its direct children (`composables/useDockRun.ts:76-80`), and in a dock with a DockLayerGroup the run's one child is the group, so `onKeydown` returns (`:331-334`), every control in a face is a Tab stop, and no toolbar is claimed.
+### Files
 
-The seat rule (declared seats only, nothing inferred from focusability) applies to each row: the run's own children, and the children of the active face's content box in a layer group that is a direct child of the run. Each row is roved on its own, with one Tab stop, Arrow, Home and End inside it and no wrap. Arrows do not cross rows; Tab does. `role="toolbar"` and `aria-orientation` sit on the element whose children are the seats, under the same all-declared claim. The stop is re-derived when the active face changes. The switcher's tablist keeps its own keys. Reach is 10.1.5's (the declared seat that holds the focus target) and is not restated here.
+Under `src/components/dock/` unless a path says otherwise.
 
-### 1.9 · Forced colors
-
-The forced skin gives the root's box a border (`src/styles/utilities/a11y-overrides.css:147-150`), and the plate has a real border of its own. With the seat inside the root, the box's border would outline the seat with the dock. The `.glass-dock` selector leaves that rule; the plate's border is the dock's one outline and follows the silhouette. The seat draws its glyph and, when focused, its ring.
-
-## 2 · Scope
-
-| surface | change |
-|---|---|
-| `GlassDock` slots | `beside` added. `persistent`, `default`, `collapsed`, `search`, `persistent-end` unchanged |
-| `GlassDock` props, exposes, `./dock` exports | none added, none removed |
-| tokens | none added. `--dock-stagger-*` unread (§1.2) |
-| paint every consumer sees | the expanded dock's width glides; content fades on the timed window; the per-control stagger is gone; `[data-morphing]` also opens on a content change |
-
-**Files** (under `src/components/dock/` unless a path says otherwise).
-- Add: `composables/useDockBody.ts`, `composables/useDockScene.ts` (the model, the episodes and the triggers, without the exchange), `composables/useDockContent.ts`; the README's `beside` entry and its O-224 recipe.
-- Edit: `GlassDock.vue` (the slot, the scene in place of the orchestrator and the measure), `DockCrossfade.vue`, `composables/useDockRun.ts` (§1.8; the reach glide becomes a lane), `styles/dock.css`, `styles/shell.css`, `styles/shape.css`, `styles/layers.css`, `styles/crossfade.css`, `styles/shell-regions.css`, `src/styles/utilities/a11y-overrides.css`.
-- Delete: `composables/useDockMorph.ts`, `composables/dockMorphMeasure.ts`, and `composables/useDockSpring.ts` once the body is its last caller's replacement.
-- Tests: the gates of §3 under `tests-visual/dock/` and `tests/components/custom/dock/`. A test that reads a deleted mechanism is restated or deleted with it, each named in the record.
-
-**Not in this wave.** The rest of W-0.8's unit and W-I.1: the scroll-compact rung and its `scroll` prop, the rim as a plate child, the press direction, the summary's Q-10, the cut cap's strike. Two of them remove published names (`waves/W-0.8.md` §3.6), which is a major's. `waves/INDEX.md` places them. O-203's deletions in the dock (the control gleam, the active seat's nested blur) stay 12.0.0's; this wave re-homes neither.
-
-## 3 · Gates
-
-Eleven gates, and the list is closed. Each is RED before and GREEN after, by the witness named. The first seven are the second look's (`orchestrator-note-fable-review.md` item 7); G-8 is the D2 second look's one battery read; G-9 to G-11 gate what those notes ruled and did not gate. The second look asked every cell in both engines, both widths and both themes; under the bar a theme is read only where paint is the claim (G-2, G-7, G-8), and G-7, G-10 and G-11 have no WebKit cell because the engines cannot differ there or WebKit has no such mode.
-
-Beside the list, the shipped line's own witnesses (`tests-visual/release-10-1-{1,2,3,4}.spec.ts`, 10.1.5's and 11.1.0's as merged) read GREEN in both engines with their expected values unchanged, save the restatements §1.2 names.
-
-**Harness.** G-3 and G-4 run D2's scenes and hooks (`design/dock/harness/scenes.mjs`) on pass 2's virtual frame clock (`design/dock-cluster/pass2/tools/probe.mjs`), so a frame's length is not the machine's load. **The bound** in both is computed at run time from `springPreset("dock")` as the build exports it: no frame moves a tracked edge more than 1.15 times the largest frame step of that preset's own step response at the clock's frame length (8 % of travel for today's preset at 8.33 ms). No probe carries the preset as a literal. G-1 and G-7 take fold 3's tools (`design/dock-cluster/pass2-fold-3/tools/f3.mjs`, `forced.mjs`). Every browser run goes through `guarded`, WebKit under `--exclusive webkit`.
-
-| id | gate and cells | passes when | RED |
+| piece | add | edit | delete |
 |---|---|---|---|
-| G-1 · the reach holds | real clock, pointer and taps; both engines; 390 and 1440. (a) the pointer reaches the dock, then the seat, and rests 4.8 s; (b) it rests 4.8 s midway between the plate's edge and the seat's glyph; (c) a click on a run seat, then a leave to the page; (d) the pointer in the dock's own menu and in a seat tooltip, the bare seat's included, 8 s; (e) touch: tap the dock, tap the seat, tap away; (f) Tab from a run seat to the seat, rest 4.8 s | (a), (b), (f): the dock stays expanded, the seat stays within 0.5 px and is the `elementFromPoint` target in every 400 ms sample of (a); (d): expanded and the overlay open throughout; (c), (e): the same reading as the same build with the control in `#persistent-end` (on 11.0.0: collapse at 3.5 to 4.0 s, and within 500 ms) | a plant that mounts the region outside the root: (a) and (f) collapse about 3.2 s after the reach (`pass2-challenge-1.md`, C1) |
-| G-2 · the seat is bare | both engines; 390 and 1440; light and dark; collapsed, expanded, three frames of the fission; `active` and `aria-pressed`, each true and false; hover and press | the region, its control and their pseudo-elements compute `backdrop-filter: none`, no background image, a transparent background colour and `box-shadow: none`; once the seat is past the plate's edge, the field of its box outside the glyph reads the page at that height within 1 (Rec.709, 8-bit) | 11.0.0 with the control in `#persistent-end`: expanded, the field of its box reads the plate and not the page; hovered or `active`, its capsule computes a background and a `backdrop-filter` |
-| G-3 · the fission is continuous | virtual clock; both engines; 390 and 1440. Expand, collapse, and a reversal at 40, 80 and 120 ms | the seat and the plate's trailing edge each stay within the bound in every frame, the first included; both land in the frame the window closes; the glyph is never clipped; in a centring host the root's box is centred within 0.5 px at rest in both postures | a plant that leaves the seat out of the model: its whole travel in the first frame |
-| G-4 · the width glide | virtual clock; both engines; 390 and 1440. D2's `swap` scene (long, short, a reversal, retargets at 40, 80, 120 ms), value's Tools → tool geometry, a label change, a control added. A vitest arm reads §1.3's two windows as a function of `f` | each plate edge within the bound in every frame; through a reversal each edge's frame-to-frame velocity change stays within the spring's own (`design/dock-cluster/pass2-fold-2/tools/continuity.py`'s law, the preset read from the build); no unit lies outside the plate above 0.25 ink; a trailing seat stays within the bound | 11.0.0: 78.4 px a side in one frame at 1440, and 40 px of the leaving face outside the plate at 0.95 |
-| G-5 · reduced motion (O-198) | 11.1.0's `prm` scene with three steps added: the fission, a swap that changes width, a control added. Both engines; 390 and 1440 | every running animation and every non-zero computed transition is opacity alone, 144 ms or less; the plate's insets and radius, each region's `translate` and each unit's clip take at most two values across a change, in one frame | 11.1.0's own plant (`transition: border-radius 300ms`), and a planted WAAPI `translate` on the seat |
-| G-6 · census, focus, hit | both engines; 390 and 1440 | `ariaSnapshot` and the seat's census (role, name, pressed, tabIndex, inert, aria-hidden, disabled) are identical collapsed, at 80 ms, expanded and back; the Tab walk from a sentinel reaches the seat after the run in both postures; focus held on the seat stays there through both directions; on a coarse pointer the seat's hit box is at least 44 by 44 px | `inert` on the region while it moves; a 24 px seat |
-| G-7 · forced colors | Chromium, `forcedColors: "active"`; flat field; collapsed and expanded; 390 and 1440; light and dark | one element paints a border, the plate; its outline is closed in both postures; no edge runs round the seat | the root's forced border left in (§1.9): the outline wraps the seat |
-| G-8 · the carrier, one battery | D2's H8 on the landed tree, read once, four columns, each slot started at a load of 20 or less with the gate read inside the admitted slot. The rows are the 38 less what §1.3 retires: R6, B2's stub half, rules (a), (b) and (d), and the `splice`, `stub`, `hole` and `vanish` checks. R1's blank check is re-cut to the fade: both faces may read under half ink only while `f` is between 0.175 and 0.525. `c2·prm` reads O-198 and W6 reads O-194 | 0 FAIL on the ruled digest | the same harness on master through `adapter-head.mjs` (OQ-3 names the rows) |
-| G-9 · roving in a layer group | vitest: a GlassDock holding a DockLayerGroup with two faces of declared seats | in the active face one seat has `tabindex="0"` and the rest −1; Arrow, Home and End move focus inside the face with no wrap; the face's content box carries `role="toolbar"` only when every child is declared; a swap re-derives the stop | master: every seat is a stop and the arrows do nothing |
-| G-10 · a layer's seat in the collapsed face (O-224) | Chromium, 1440: daraksha's composition with Play in `#persistent-end` on one route of two | on that route the collapsed face holds Play, live, and a press plays without expanding; on the other the summary sits where it does with no slot authored, within 0.5 px | master: the empty region keeps its gap (OQ-6) |
-| G-11 · static | node, over the built CSS and `src` | no `scale` on `.glass-dock` or its regions; no `clip-path` on `.dock-plate`; no `box-shadow` on `.glass-dock`; `[data-morphing]` and `--dock-morph-t` present; the fold's source arm (`design/dock-cluster/fold/tools/g8-source.sh`) is empty: no `filter: url(`, no SVG `<filter>`, no `useDockFission` | master: `shape.css:104-109`, `dock.css:93`, `shell.css:245`. The source arm bites on its four recorded plants (`design/dock-cluster/fold.md`, F2) |
+| the carrier (R-1, R-3, R-4, R-5) | `composables/useDockBody.ts` (the loop), `composables/useDockScene.ts` (the model, the travel, the triggers), `composables/useDockContent.ts` (the two windows) | `GlassDock.vue`, `DockCrossfade.vue`, `composables/useDockRun.ts`, `styles/dock.css`, `shell.css` (the card's corner and the paddings on the class), `shape.css`, `layers.css`, `crossfade.css`, `run.css`, `morph.css`, `shell-regions.css` | `composables/useDockMorph.ts`, `dockMorphMeasure.ts`, `useDockSpring.ts`; the root's scale and the regions' counter-scales (`shape.css:104-141`); the pill's counter-scaled corner (`run.css:786-792`); the morph clip (`shell.css:318-323`); `--dock-morph-origin`, `--dock-pane-shift`, `--dock-size-scale`; the plate's `clip-path` (`dock.css:93`); the two shadows and their swap (`morph.css:161-167`); the stagger and the 0.82 pop (`layers.css:278-297`); the crossfade's reserve and its own spring (`DockCrossfade.vue:86-115`); the stale-face snap; the seat's `inline-size` transition (`run.css:522-553`), wherever it has been moved; the prototype's `--dock-rest-t` |
+| the clock (R-2) | | `composables/useDockState.ts`, `constants.ts`, `composables/useDockShellProps.ts`, `styles/shell.css` (the tokens) | `HOVER_INTENT_MS` and `DOCK_COLLAPSE_DELAY_MS` as literals; `release()`'s 800 ms wait (`useDockState.ts:496-511`); 11.1.0's close on the leave after a persistent press |
+| the fission seat (R-6), held | `composables/useDockBeside.ts` (the seat's quantities and the neck's path), `styles/beside.css` | `GlassDock.vue`, `src/styles/utilities/a11y-overrides.css` | the comment that calls fission retired (`GlassDock.vue:609-610`); the shadow leaf, neck A's leaf and its seat plate; the dock's own `[data-glyph="turn"]` rule |
+| the labelled seat (R-7), held | `styles/controls/label.css` | `DockControl.vue`, `composables/useDockRun.ts`, `styles/controls/icon-button.css` | the prototype's `::before { content: none }` and its `background-color` hover; with W-R.1 §2.6, the dock's per-control hover fills |
+| the outlet (R-8) | `DockOutlet.vue`, `composables/dockRegistry.ts` | `GlassDock.vue`, `composables/dockContext.ts`, `index.ts`, `scripts/lib/subpath-policy.mjs` if the boot graph needs it | nothing |
+| the progress (R-10) | | `styles/morph.css` | in 12.0.0, `--dock-morph-t` |
+| reduced motion (R-11) | | `src/styles/utilities/a11y-overrides.css` (the dock's authorized rows) | the spring's jump under reduced motion; `DockCrossfade.vue:218-221` |
+| the figure preset (R-12) | | `styles/density.css` | nothing |
+| the roving (R-13) | | `composables/useDockRun.ts` | nothing |
+| the README (R-14, and every piece above) | | `README.md` | the idle window's paragraph as written |
 
-One challenge pass and one fold on the build. A second challenge runs only if the first lands a finding outside this list. No two-consecutive-clean rule gates the wave.
+`useDockMorphOrchestrator`, `useDockExpandedSize` and `useDockSpring` are not exported from `./dock`; the build re-reads `.published-roster` before deleting their files.
 
-## 4 · What the earlier spec's rulings and gates become
+The loop's hold, which the gates use to stop a travel at a given progress, is test-only. The prototype wrote it to `window.__dockHold` from every dock at setup. It is compiled out of the published bundle, and G-12 scans the built files for the name (C-16).
 
-| earlier id | becomes |
+Tests: the gates below under `tests-visual/dock/wi8/` and `tests/components/custom/dock/`. A test that reads a deleted mechanism is restated or deleted with it, each named in the build's record.
+
+### Not in this wave
+
+- The rest of W-0.8's unit and W-I.1: scroll compact, the rim as a plate child, the press direction, the cut cap's strike, the state attribute. `INDEX.md` places them.
+- The dock seats' gleam and the active seat's nested blur (O-203): W-R.1, 12.0.0. Until then a DockControl is as 11.0.2 left it. **A P0 fault ships with that deferral and is stated:** the active seat's lens (`backdrop-filter`) lands in one frame on a live dock through 11.2.0 (L-34).
+- The Play and Pause pair and every chevron: W-B.17's pieces, on its release.
+- The switcher's swallowed tap (O-312), the spring tokens' last step (O-311), the run's glide (O-316), the iframe fold (O-299 (c)), WebKit's idle scroll-timeline animations (O-258): 11.1.1. The build reads each as merged.
+- A Tooltip on every dock control (L-30). It would put Tooltip in the dock's boot graph, and the registry placed it with W-I.1. The orchestrator places it; this wave builds none, and R-7 says who goes without a name until it lands.
+- The dock menu's text on a coarse pointer (O-233): W-R.1's rule.
+- A persistent region present only while open (atlas's third ask). What atlas takes out of flow by hand during a fold is content of the face, and R-4 clips and fades it there.
+- A dock that grows down by wrapping, seats that yield by priority, and the seat-by-seat unfold (R-12). daraksha's two rows under 38.2 rem therefore stay two docks (C-22).
+- A second glass dock in one composition, and DockCluster, as the earlier text ruled.
+- The two reverts that left 11.1.0 (O-211's switcher import, which needs a public shape change, and K12) ride 11.2.0 as their own commits, not as part of this build (L-62).
+- Haptics (O-253): 11.3.0.
+
+## Gates
+
+Fourteen gates, and the list is closed. The fold added cells and bounds to them and no gate. Each is read once RED and once GREEN, with its bite read once. RED is master at the cut unless a record is named. A gate is GREEN only when it is GREEN in both engines.
+
+**How they are read.** With the animation audit's harness (`../audit/animation/harness/README.md`): the build's tree is built by `build-tree.sh` and served on a port from 5401 to 5404; one hand page, `?c=dock-wi8`, holds the cells; scenario files drive them; `probe.mjs` writes one row per rendered frame and `faults.mjs` flags them. A small judge beside the scenarios applies the bounds below to the rows. **The probe reads each unit's visible box through every ancestor's `clip-path` and `overflow`** (C-1): the prototype's judge read a unit's own box and opacity and passed controls that were clipped to nothing. Chromium is the headless shell with GPU compositing, about 8.3 ms a row; WebKit is Playwright's, rows only. Pixel readings are crops of a travel held at a given progress by the test-only hook on the loop, in both engines. One browser per run, a new context per cell, every run through `guarded`, every WebKit run through `guarded --exclusive webkit --timeout 10`.
+
+**The bounds, used by G-2 to G-6.** They are computed at run time from `springPreset("dock")` as the build exports it, at each row's own frame length; no probe carries the preset as a number.
+
+- **First frame:** the first moving row moves a tracked edge by no more than 1.15 times the preset's own first step from rest at that frame length (about 1.5 % of travel at 8.3 ms, derived), and never more than 4 %. In that row the leaving face and every unit in it move 0 px.
+- **Any frame:** no row moves an edge by more than 1.15 times the preset's largest step at that frame length (6.98 % at 8.33 ms, `../design/dock-cluster/fold.md` F7).
+- **Last frame:** the last moving row moves an edge by no more than 1 px and no more than 2 % of travel, and the row after it equals the rest within 0.5 px.
+- **No reversal:** no edge steps against its net direction, except after a `reverse-*` mark, and except the preset's own pass of its rest: at most 1.15 times the preset's computed overshoot for that travel, never more than 0.5 px, once. As first written no dock on this preset could pass it, a correct one included (C-10); the last-frame bound already allows 0.5 px at rest.
+- **Inside the plate:** no unit has any part of its clipped box outside the plate's painted box while its effective opacity is above 0.1.
+- **Visible until covered:** a unit whose effective opacity is above 0.1 and whose box lies inside the plate's painted box has a non-empty visible box (C-1).
+- **No overlap:** no two units of different regions intersect while both are above 0.1 (C-2).
+- **Opacity:** no content opacity moves more than 0.4 between two 60 Hz samples, and each fade has at least five samples (W-B.17's clause 4).
+- **No dropped frame of glass's own:** no gap over 25 ms between rows overlaps a long task or long animation frame whose script is in glass's bundle, on a machine at a load of 20 or less.
+
+| id | gate and cells | passes when | RED, and the bite |
+|---|---|---|---|
+| G-1 · the clock | real clock, pointer and taps; both engines; 390 coarse and 1440 fine. (a) the pointer enters and rests; (b) a dock scrolled under a still pointer, 2 s; (c) leave after a 1 s visit; (d) leave after a 12 s visit, once with the tokens untouched and once with `--dock-linger-max: 6s`; (e) leave and return at half the linger; (f) leave with a menu open, with `:focus-visible` inside, and with a finger held down; (g) a tap opens, the finger lifts; (h) a press outside, Escape, `collapse()`; (i) `release()` with the pointer outside; (j) `pinned`, then the pointer leaves for 15 s; (k) a press on a persistent seat of a hover-opened dock, then leave; (l) a mouse press on the folded face, then leave for 15 s | (a) opens `--dock-intent` after the first move, within 30 ms; (b) stays collapsed; (c) the fold's first row is 6.5 s after the leave, within 100 ms; (d) 12 s, then 6 s, each within 150 ms; (e) no fold, and a full linger after the next leave; (f) no fold while each hold lasts, and one linger after it ends; (g) folds one linger after the lift, and `pinned` stays false; (h) the fold's first row within two frames, and its travel inside the bounds; (i) one linger and one fold, never the same frame; (j) no fold; (k) one linger; (l) `pinned` is true and no fold | master: 3.6 s; (g) never folds; (i) 800 ms and then a second window; (k) on 11.1.0, the leave frame. Bite: the linger token ignored |
+| G-2 · the fold and the unfold | both engines; pill, rounded and card; horizontal and vertical, atlas's vertical card rail and its phone sheet among them; a layer-group dock (56 and 108 px tall); a two-slider dock, one slider held through the fold; daraksha's composition through the outlet with its widest control; fourier's canvas dock (a run with `#persistent-end`); keyframes's transport (a persistent region and no summary); an empty summary; two docks in a centred row, one changing width; a window resize, then an unfold; a live dock with an active persistent seat, one held crop each side of the first row; each with and without `#beside` once that is released; opened by hover, focus and tap, folded by the linger, Escape and a press outside | every plate edge on both axes is inside the bounds; every outer corner is the px lerp of its two rests within 0.5 px in every row, and the two corners of an end are equal within 0.25 px; content is inside the plate, visible until covered, and no regions overlap; the last unit is whole and unclipped no later than the row the plate lands; a persistent seat's last row equals its rest; `box-shadow` is one value in every row of both postures; an empty summary rests at the control size; in the two-dock row both plates stay inside the bounds; after the resize the unfold's first row equals the rest; the active seat's lens does not change between the two crops | dock F3 (+52 px of height in the first frame), F6 (a 2 by 16 px corner, a bar that turns oval on the settle frame, a 16 px sliver), F10 (+1.0 and −2.1 px on the settle frame), F13; daraksha's 13 to 17 % on v11.0.1; the prototype's fold (four controls cut in row 164) and unfold (Home over seat 0, rows 41 to 48). Bites: the loop's clock started at the trigger; a region's clip floored at 0; a region carried by its centre |
+| G-3 · a reversal | Chromium at 30, 50 and 80 % of an unfold and of a fold, by Escape and by the pointer returning to a point inside the painted plate and outside the collapsed box; WebKit at 50 % | no INTERRUPTION flag on any channel, opacity included; each edge's velocity change across the turn is no more than the spring's own; after the pointer returns the plate turns within two frames; after a turn at most two rows have every face under 0.1 | dock F5: opacity 1.00 to 0.51 and 0.14 to 0.36 in one frame; a hover return lands at 83 % after the 60 ms wait; the prototype's seven blank rows. Bites: a second clock for the content; pointer events left on the root |
+| G-4 · a layer swap | both engines, 390 and 1440: drill in and back; a crossfade through faces of 2, 4, 1 and 3 rows; the switcher by key; a third change 90 ms after the second; a return to the face still on screen at 30 and 60 %; a fold during a swap; a select's value; a persistent region mounting and unmounting, open and folded; a seat added and removed, by glass and by a consumer's `v-if`; a route that changes the seat set; the run's open seat moving; a layer swap in a dock with `#beside`, once that is released | every plate edge on both axes is inside the bounds; the leaving face is at 0.02 or less before the entering face passes 0.02; rows where every face is under 0.1 number at most two in a run, and in them the plate is between 20 and 50 % of its travel; no face shows a CUT; content is inside the plate and visible until covered; a seat or region that leaves fades over at least five samples; after the swap with `#beside` the gap equals its rest within 0.5 px and `--dock-expand-t` reads 1 | dock F4 (72 px in one frame, faces fading 190 ms after), F9 (0.28 to 0 in one frame), F3; color C-03 and C-04. Bite: opacity written on a box that holds both faces |
+| G-5 · the fission seat | both engines; 390 and 1440; light and dark; unfold, fold, reversal at 30, 50 and 80 %; the pointer resting 8 s in the gap; Tab from the run to the seat | the seat's place, both shapes' edges, the gap and the neck are inside the bounds, the first-frame bound included, and the seat never moves more than the any-frame bound in one row; the seat's glyph is under 0.1 while `p` is 0 and no unit of the run intersects it; at collapsed rest one plate paints and the region is hidden and inert; P-1's six readings hold; the dock stays open while the pointer rests in the gap, and the seat is the `elementFromPoint` target over its glyph in every 400 ms sample; the seat is the Tab stop after the run | daraksha's second dock: about 116 px in one frame at each end of the collapse; the prototype's 25 ms parting. Bites: an SVG filter on the container (the backdrop is gone in WebKit); the region mounted outside the root (the dock folds under the pointer); a leaf the size of the row under the shapes (the gap is not the page) |
+| G-6 · the labelled seat, and the hover guard | both engines, 1440 fine and 390 fine, with each seat current in turn: hover each seat of each kind (plain, labelled, trigger, active), then leave; a sweep across every seat boundary at 20 px a second; keyboard focus through the run | **the 0 px hover guard:** the root's and every plate's box change by 0 px in every row of every hover of every kind; the hovered seat is the hover target in every row from enter to leave; in the sweep the hovered seat changes once per boundary; each neighbour's `translate` is inside the bounds; the name's box with its gap intersects no other unit's glyph in any row; the name is under 0.1 until its room is within 2 px of open, readable by 150 ms, and gone by its exit clock with at least five samples each way; the set of seats that show a name is the same whichever seat is current; a labelled seat is a `.plate` with its `::before`, at `font-weight` normal, and computes no `box-shadow`, no gradient, no `backdrop-filter`, no `filter` and no `background-color` transition; one spatial animation runs per element; no dock seat in the release computes a gleam | O-282's reported shift (no cause is on record; the gate is the guard); the prototype's "Bookmarks" over the Library glyph. Bites: the name put in flow; a `transition` shorthand on the run's children; the last seat made current |
+| G-7 · the outlet | vitest, and Chromium at 1440: content declared in a sibling tree; the outlet mounted before its dock; the dock unmounted and remounted; `region="persistent-end"` on one route of two; two outlets into one region | the content's rendered elements are direct children of the named region, after its authored children and in mount order, and the outlet renders no element of its own; `useOptionalDockContext()` inside it returns that dock's id; the run roves the contributed seat; the content mounts when the dock registers and leaves when it goes; on the route with nothing contributed the region takes no room, within 0.5 px of a dock with no region; `git grep -nE 'querySelector|getElementById|closest\(' -- src/components/dock/DockOutlet.vue src/components/dock/composables/dockRegistry.ts` prints nothing | daraksha's `<Teleport defer to="#dock-page">`: no context reaches the controls. Bite: the provide removed |
+| G-8 · overlays | both engines, 1440; a menu, a select, a click popover, a hover popover with `keep-dock-open`; each opened from a run seat, a layer-face seat, a seat contributed through the outlet, and the fission seat once released; folded by a press outside, by Escape twice, and by the linger, with the recording held past the linger | while open, the dock does not fold by the linger; on a dismissal each overlay's exit starts no later than two frames after the fold's first row, has at least five samples with no step over 0.4, and ends before the plate lands; an overlay opened from a persistent seat stays open through the fold | daraksha: the popover neither held the dock nor closed, and floated after the fold. Bite: the face mark not provided by the outlet |
+| G-9 · the published progress | both engines; an unfold, a fold, a reversal, a layer swap; one follower under `data-dock-scope` that moves by `calc(var(--dock-expand-t) * 100px)` | on the root the property reads 0 at collapsed rest and 1 at open rest and is present at rest, after a layer swap as well; it is within 0.02 of the plate's travel in every row of a posture travel; the follower is within one row of the plate; no row shows the new posture class without `[data-morphing]`; the attribute also covers a content change | master: the scalar is removed at rest. Bite: the scope write removed |
+| G-10 · reduced motion | every cell of G-2, G-4, G-5 and G-6 once, both engines, under `prefers-reduced-motion: reduce`; G-1 (c) once | every box, corner, `translate` and clip takes at most two values, in one frame; every change that paints differently at its two ends shows opacity at three or more values over 50 to 144 ms; nothing runs past 144 ms; the fold still comes one linger after the leave | dock F11: every motion lands in one frame, content included. Bites: the dock's authorized rows removed; a planted `transition: border-radius 300ms` |
+| G-11 · cost, and rest | Chromium by trace at 1x and at 4x CPU; WebKit by frame pacing. An out-of-flow dock, a dock in block flow, a dock with `#beside` once released, a dock with six labelled seats once released | per frame of travel, out of flow: one `Layout` event at most, with no more dirty objects than the dock has leaves the loop sizes; the loop's script is 0.5 ms or less at the median at 1x and 2 ms or less at 4x (the prototype reads 0.11 to 0.14 and 0.5 to 0.7, inside it); inline style writes land on 12 elements or fewer; style recalculation touches no element outside the dock's root and its scope element, and no frame repaints a `box-shadow` at a new radius. In block flow: the longest layout is 0.94 ms or less at 4x (W-B.17's figure for a size tween). A labelled seat's hover: 0 layouts. At rest, over 2 s: no frame callback scheduled by glass, no style mutation in the dock, and `getAnimations()` empty for its subtree. Nodes glass adds: 1 plate; for the fission seat, the nodes neck B's rebuild states, each counted and none the size of the row; 1 span per labelled seat; 0 rendered elements for the outlet. WebKit: no more than one frame in ten of a travel over 20 ms. `./dock`'s boot graph is no larger than master's at the cut and does not hold the test hook | the dock record's trace: 486 layouts in 67 frames of a fold. Bites: the plate's size written on the root; a loop left running at rest; a rule that sizes a box from `--dock-expand-t` |
+| G-12 · static | node, over `src` and the built CSS and script | no `scale` on `.glass-dock` or its regions; no `clip-path` on a plate at rest; no `box-shadow` on `.glass-dock`, and one `box-shadow` value for the plate across both posture classes; no `filter: url(`, `<filter` or `feGaussianBlur` under `src/components/dock/`; no size, margin or padding property in a dock `transition`, `@keyframes` or `.animate(` call, the seat's own list included; no `transition` shorthand on a selector that matches the run's children; no `var(--dock-expand-t)` in a size, padding, inset, radius or margin declaration; `--dock-morph-origin`, `--dock-size-scale`, `--dock-pane-shift` and `--dock-rest-t` absent; no `[data-glyph` selector under `src/components/dock/`; `__dockHold` absent from the built bundle; no millisecond literal for the intent or the linger in `useDockState.ts`; `[data-morphing]`, `--dock-morph-t` and `--dock-expand-t` present | master: `shape.css:104-109`, `dock.css:93`, `shell.css:245`, `run.css:526-535`. Bites: each of the earlier text's four recorded plants (`../design/dock-cluster/fold.md` F2) |
+| G-13 · census, focus, hit, forced colours | both engines, 390 and 1440; Chromium alone for `forcedColors: "active"`, light and dark | `ariaSnapshot` and each persistent seat's census are identical collapsed, mid-travel, open and back; the fission seat is inert and hidden collapsed, and focus held on it when a fold starts moves to the summary; on a coarse pointer every seat's hit box is 44 by 44 px or more; in a layer group one seat of the active face has `tabindex="0"`, Arrow, Home and End move inside the face with no wrap, and a swap re-derives the stop; under forced colours each shape has one closed outline, parted or fused, and no edge runs round the root | `inert` on a region while it moves; a 24 px seat; master's roving (every seat a stop); the root's forced border left in |
+| G-14 · the shipped line | the witnesses of 10.1.1 to 10.1.5, 11.0.1, 11.0.2 and 11.1.0 as merged (`tests-visual/release-*.spec.ts`) | GREEN in both engines with their expected values unchanged, save the restatements R-1 names | a restated witness that no longer bites on its own plant |
+
+D2's H8 battery is not a gate. Its rows read the same edges on a virtual clock that G-2 to G-5 read on rendered frames, and two instruments for one dock is how the earlier loop kept finding new cells. Its `swap` scenes and its retargets at 40, 80 and 120 ms are ported as scenario files for G-4.
+
+One challenge pass and one fold on the build. A second challenge runs only if the first lands a finding outside this list. A critic gates on the list and adds no row.
+
+## Order of build
+
+**Owed to the prototype, before the build.** The worktree `.claude/worktrees/bl/dock/wi8`, glass's own page and the consumers' compositions. P-0 is read, with the exchange built and not the carrier alone (the trace in R-1). Nothing below has a WebKit reading, and WebKit is read first once the guard admits a run.
+
+- **P-1.** Neck B, rebuilt with tangent arcs, R-6's `p`, the gap as the page and one shadow per shape, by the six readings, reading 1 first. Two strips of `p` for the owner.
+- **P-2.** How the name enters, A and B, read again under the room rule.
+- **P-3.** The labelled seat's room under R-7's one way to name a seat: with daraksha's seat set and glass's standard set at 1440 and at 390 fine, with each seat current in turn.
+- **P-4.** The swap's strip on D2's `swap` scene, long and short, for OQ-4, in three forms: the windows as written; windows that overlap so the two faces sum to at least 0.3 in every row; bp13's exchange (`../design/dock/LANDING.md`). Not built.
+- **P-5.** `release/11.1.0` and the head of `release/11.0.2`, neither read by the audit: the run's mark and glide (dock F1), the rounded corner (F6), the cross axis (F3). Not built.
+- **P-6.** daraksha's composition on the head of 11.0.2: content outside the closing plate, the return mid-fold, and whose the options panel's uneven chips are. Not built.
+- **P-7.** What the owner saw "teleport away" on atlas production. The ledger's reading is the rail's own 150 ms grace; it is not confirmed. Not built.
+- **P-8.** The carrier's cures, re-read on every fold, unfold and reversal cell with the probe that reads clips: the clip in the plate's coordinates (C-1), regions carried by their edges with lanes (C-2), content on the posture coordinate (C-3), hit on the plate (C-9), the place trigger (C-7). The prototype's rows for "content inside the plate" and for opacity on every fold cell are withdrawn until then.
+- **P-9.** The card and the vertical dock, atlas's rail and phone sheet among them, with rest geometry on the class (C-8).
+- **P-10.** The cut cap drawn without the plate's radius (C-20).
+- **P-11.** One held crop each side of a travel's first row on a live dock with an active persistent seat, both engines: a region that gains a clip and a `translate` becomes a backdrop root for that time, and whether the seat's lens changes is unread (C-20).
+- **P-12.** The three-layout frames, explained (C-10), and the trace's style recalculation and paint (C-16).
+
+**The build.**
+
+1. **The cut.** `release/11.2.0` from master after 11.0.2, 11.1.0 and 11.1.1 merge and after the u/dp intake merges by its reconciliation ruling (the root paints nothing; the corner and the cut cap are the plate's).
+2. **The carrier** (R-1, R-3, R-4), on P-8's to P-12's readings, with G-14 GREEN before anything is added. G-2, G-3, G-11, G-12. Nothing else about the dock is released until G-2 and G-3 are GREEN in both engines.
+3. **Content changes** (R-5) and the roving (R-13). G-4. The open seat's `inline-size` leg is gone before this step closes.
+4. **The clock** (R-2) and reduced motion (R-11). G-1, G-10.
+5. **The registry and the outlet** (R-8), then overlays (R-9). G-7, G-8.
+6. **The published progress, the figure preset, the README** (R-10, R-12, R-14). G-9, G-13.
+7. **The fission seat** (R-6), only on P-1 passing in both engines. G-5.
+8. **The labelled seat** (R-7), only on P-2 and P-3, and only in a release where every dock seat is a plate. G-6.
+9. The gates in full, one challenge, one fold.
+
+Steps 5, 7 and 8 do not depend on one another. 11.2.0 does not wait on 7 or 8.
+
+## Consumer half
+
+Each consumer changes at its own repin. glass tells atlas of every default here at booking and at publish. The files were read at each repo's main checkout (C-22 to C-24); two of the earlier text's citations did not resolve there and are corrected.
+
+- **daraksha** (`src/shell/SiteDock.vue`, `src/scripture/ReaderDock.vue`, `src/name/NameDock.vue`). As mounted it is two GlassDocks, both `:collapse="false"`, in a centred grid, with pages teleporting their controls into `<div id="dock-page" class="contents">` (`ReaderDock.vue:51`, `NameDock.vue:11`).
+  - It deletes the teleport and `#dock-page` for `<DockOutlet to="…">`, and the `Popover keep-dock-open` at `ReaderDock.vue:94` then holds and closes. It deletes `dir="ltr"` on the dock and whatever closes its Popover by hand.
+  - It deletes its 6.0 s hold and its 90 ms intent trial for the tokens, if it folds again.
+  - **Neither dock folds today, so the fission never plays there.** `#beside` gives it the separated theme seat and no parting. The owner's fission needs daraksha's dock to fold again; that is daraksha's choice and is named to it.
+  - Its pages are names with no icons, so `label` is not for them, and no hover-label seat of its own is on disk to delete.
+  - Under 38.2 rem it is two rows. One GlassDock cannot be, so the phone keeps two docks, and each glides when the other moves it (R-1).
+  - The reader's view tabs sit in `<div class="views" role="group">`, a run child that is not a seat. It flattens that for the roving (R-13).
+  - `ThemeControl` keeps its own turn; glass adds none.
+  - Play joins the collapsed face through `region="persistent-end"`. Its occasion medal is a one-seat GlassDock, as now.
+- **atlas** (`src/platform/chrome/dock/Dock.vue`, `Dock.css`, `composables/useDockCollapse.ts`). As mounted it is one vertical `shape="card"` rail driven by `expand()` and `collapse()`, and a 20 rem sheet on a phone restyled off `.collapsed`. `FigureDock` and `useLinger` are not in its main checkout.
+  - Its rail is the card on the vertical axis: P-9's cell, the one that read the wrong rest corner.
+  - **`Dock.css:72` sets `--dock-morph-t: 1`; lines 92 and 96 read it** for the plate's fill and the rim. The earlier text said line 72 reads `--dock-expand-t`. So 12.0.0's deletion of `--dock-morph-t` is what touches atlas, and it moves those three lines to `--dock-expand-t` then. Through 11.2.0 the property keeps master's meaning.
+  - Its phone sheet changes its whole layout on the class. The plate glides from a pill to a sheet while the content inside is laid out as a sheet from the first row, clipped to the plate. That is its own cell in G-2.
+  - The labelled seat and the fission seat are horizontal only; the rail gets neither.
+  - When its figure docks land it deletes `useLinger`, the rail's fixed 150 ms grace, FigureDock's own state logic (for the three states, `v-model:pinned` and `[data-preset="figure"]`), taking its site layer and foot out of flow during a fold, and any workaround for the open size being measured while the root is collapsed.
+  - It is told: the intent counts from movement; `--dock-linger` is 6 s and grows to 12 s, and its `clamp(0.5 × dwell, 400 ms, 2400 ms)` is not the dock's; a touch tap opens and lingers and never pins, and a host that wants a tap to pin sets `pinned` itself; `[data-morphing]` also opens on a content change; `--dock-expand-t` rests at 0 and 1 and drives paint only; the open dock's shadow is the collapsed one's; an outlet's content lands after the authored seats; the seat-by-seat unfold and the grow-down are not built (OQ-3); the dock rests as a capsule (O-199), and its open home rail's 30.75 px corner is its own to keep or drop.
+- **fourier** (`web/src/components/layout/AppDock.vue:172-253`, `components/visualization/CanvasControlsDock.vue`, `EditorControlsDock.vue`).
+  - Its site dock is `:collapse="false"`. Moving the theme toggle to `#beside` gives a still second shape and no fission, as with daraksha.
+  - Its two canvas docks fold, and the canvas dock keeps Edit in `#persistent-end`: the composition where a persistent region swept across the run (C-2). It is a G-2 cell.
+  - A label shown by `v-show` inside a trigger (`AppDock.vue:226`) changes the run's width with no fade of its own. The plate glides; the label still appears in one frame until fourier gives it presence.
+- **color, the value.js colour app** (`demo/shell/dock/Dock.vue:279-479`). One dock, a DockLayerGroup with no switcher, four layers with one behind `v-if`, a `#collapsed` face.
+  - Its Tools to tool swap glides with no change of its own, and its one-frame steps on a route change (C-03) and blank first seat (C-04) are R-5's; it deletes any guard it wrote for either.
+  - Its `vj-settle` beat waits on `[data-morphing]`, which now also opens on a select's value or a label's width changing. It is told, and narrows the beat if it does not want it there.
+  - Its layer behind `v-if` leaves by R-3's held fade.
+  - It has no theme seat today. If it adopts `#beside` it is the layer group with a seat that G-4 names. The two-dock recipe it was given on 2026-11-12 is withdrawn.
+- **keyframes** (`demo/app/dock/ChromeDock.vue`, `components/instrument/transport/TransportDock.vue`). Two docks in one app.
+  - The transport is `collapse="closed"` with Play in `#persistent` and no `#collapsed` face: a persistent region beside an empty summary. It is a G-2 cell.
+  - The theme toggle to `#beside` on the chrome dock is the one consumer where the fission plays as the owner described it. The neck is judged on that composition (P-1).
+  - It sets `--plate-tone` per seat in place of its own per-seat fills when its seats are plates, all at once in 12.0.0.
+  - The view transition round its Play and Pause is W-B.17's row.
+
+## Open questions
+
+Six, for the owner. Each has a default, and the build proceeds on it. `../design/dock/wi8/OWNER-READ.md` puts the four that are live.
+
+- **OQ-1.** When the dock is collapsed, is the theme seat gone, or does it sit in the pill? Default: gone, by "fuse into the main dock and collapse away". A site that wants it at rest uses `#persistent-end`.
+- **OQ-2.** The linger is 6 s and grows by half the time spent in the dock, up to 12 s. Does the growth ship on in 11.2.0, and should a pointer that only brushes the dock keep it open for less? Default: on, by "based on dwell time too"; and no shorter linger for a brush, since his latest word asks for longer.
+- **OQ-3.** Does "keeping the dock the same size" hold for a figure dock, so that no seat unfolds as the pointer reaches it? Default: yes.
+- **OQ-4.** The layer swap, by strip, from three forms (P-4). Default: the old content gone by 35 % of the glide and the new whole by 70 %.
+- **OQ-5.** If the one neck left cannot draw a hairline on the two facing ends, does the seat ship without it? Default: no; the fission seat stays held.
+- **OQ-6.** The labelled seat: does the current page show its name at rest, and does the seat wait for 12.0.0, when every dock seat goes flat together? Default: yes to both.
+
+## What became of the ledger's rows
+
+| rows | where |
 |---|---|
-| R-1 (shared silhouette, one ink, the painter) | deleted. One plate has one ink |
-| R-2 (kernel and tone lenses, two tokens, the 1 px overlap, the nested-blur stand-down) | deleted. `--dock-surface-blur` is not recomposed. The nested blur is 12.0.0's |
-| R-3 (the whole-px grid) | deleted |
-| R-4 (the capsule) | kept as 11.1.0's O-199. The share path that drew it is deleted |
-| R-5 (reduced motion) | restated as §1.6. The opacity dip is deleted |
-| R-6 (the shared tint) | deleted. One dock has one observer, as on master |
-| R-7, size | restated as §1.5, in GlassDock, with its rule that a live glide is retargeted and never re-created |
-| R-7, membership (arrivers, phantoms, survivor offsets, runs) | deleted |
-| R-8 (a member's collapse, the one-collapsible throw) | deleted. The dock's collapse is the dock's |
-| R-9 (no grasp in a cluster) | deleted. The grasp register runs on the dock as it ships; the plate clip it stood down for is gone (§1.2), and the grain stand-down stays |
-| R-10 (the LTR, row and wrap throws, the overflow report) | deleted. The seat is laid in logical properties on the dock's axis |
-| R-11 (a spring per join, the identity test) | deleted. Every lane is on `springPreset("dock")` through the one body |
-| R-12 (the chain, the `1/k` clip map, the overhang, the morph-frame hook) | deleted. Nothing is scaled |
-| R-13 (the cluster's hold) | deleted as a mechanism. Restated as containment (§1.4), with fold 3's cells as G-1 |
-| R-14 (the host clock on `useDockSpring`) | deleted as an option. Restated as the one body (§1.2) |
+| L-1, L-2, L-12 | R-1, R-4, R-5; G-2, G-4. Each change in L-2's list is a cell. L-1 is broken in the build as read (C-1) |
+| L-3, L-4 | R-1, R-4; G-2. Pill and rounded read; the card is P-9. atlas's 30.75 px corner is atlas's |
+| L-5, L-6, L-7, L-8 | R-1, R-3, R-4, R-2; G-2, G-3. L-5 is broken in the build (C-1); L-7 and L-8 are built the other way (C-3, C-9); L-6 has no reading and is a G-2 cell. daraksha's readings are gated on daraksha's composition (P-6) |
+| L-9, L-10, L-11 | R-3, R-5; G-4; OQ-4. The strip is not shot |
+| L-13, L-14 | R-1 (one constant shadow), R-4; G-2 |
+| L-15, L-16 | R-1; G-11. P5's sentence is owed; the layout count fails. O-258 is 11.1.1's |
+| L-17 | not here: O-311, 11.1.1. The run's mark leaves the token for the loop (R-5); the switcher's indicator stays on it |
+| L-18 | R-11; G-10 |
+| L-19 to L-23 | R-2; G-1. The dwell growth ships on. The 840 ms window is not a token |
+| L-24 | not here: O-299 (c), 11.1.1 |
+| L-25, L-26, L-27 | R-2 (the tap, by pointer), R-12; OQ-3 |
+| L-28, L-29, L-31, L-32, L-33 | R-7, held; G-6. The 0 px guard holds. O-290's flat seats reach the dock when every seat is a plate |
+| L-30 | not here; the orchestrator places it. Until then a coarse pointer has no name for a seat but the current one |
+| L-34 | not here: the pair is W-B.17's, the lens is O-203's in 12.0.0, and the one-frame lens ships until then, stated in "Not in this wave" |
+| L-35, L-36, L-44, L-51 | R-14 |
+| L-37 | shipped in 11.0.2; G-14 carries it |
+| L-38 | not here: W-R.1's rule |
+| L-39 | R-6 names the fault; the glyph's redraw has no wave |
+| L-40 to L-43, L-45, L-46, L-47 | R-6, held; G-5, G-13. No neck passes and the gap is not the page (C-11, C-12); the timing is C-4 |
+| L-48, L-49 | R-9; G-8; P-6. The close with the fold is unread |
+| L-50 | R-8; G-7 |
+| L-52, L-53 | R-10, R-1; G-9. Unread |
+| L-54 | not built, with the reason |
+| L-55 | R-1 |
+| L-56 | R-13; G-13 |
+| L-57, L-58 | 11.1.1 (O-316, O-312); the glide as a quantity of the loop is not built, and the layout leg remains (R-5) |
+| L-59 | R-8; G-7 |
+| L-60 | R-1 (reads before writes). O-215's first-mount row closes on 11.1.0's close trace; above 16 ms this build adds one trace cell at 390 and 4x |
+| L-61 | not here: no trace exists for the 61 ms raster (O-259). It is read first, in 11.1.1's scope |
+| L-62 | "Not in this wave": its own commits on 11.2.0 |
+| L-63 | G-11 |
+| L-64 | not a gate: one capture set in Safari before the tag if the owner's machine allows, otherwise recorded as unmeasured. Today there is no Safari and no WebKit reading |
 
-| earlier gate | becomes |
-|---|---|
-| I8-G1, G2, G3 (seams, the live backdrop) | deleted with the lenses |
-| I8-G4 (r1 and the corner) | deleted here. 10.1.5's rest-corner invariant and 11.1.0's O-199 witness carry it |
-| I8-G5 | identity and host-clock arms deleted; the trajectory arm is G-3 and G-4's bound |
-| I8-G6 | restated as G-5 |
-| I8-G7 | restated as G-6 |
-| I8-G8 | frame arms deleted; the source arm is kept in G-11 |
-| I8-G9, G10, G11, G12, G13, G15, G16, G21 | deleted |
-| I8-G14 (the Safari app, a release blocker) | withdrawn, not waived: the one plate keeps GlassDock's shipped backdrop-filter and the seat has none (OQ-9) |
-| I8-G17 | the two-collapsible arm deleted; the rest restated as G-3 |
-| I8-G18 | restated as G-4, without its membership cells and with the preset read from the build |
-| I8-G19 | restated as G-1 |
-| I8-G20 (the consumer's placement) | deleted with the root writes it policed; its centring arm is in G-3 |
-| I8-G22 | restated as G-7 |
+## Cut on the last pass
 
-`design/dock-cluster/SPEC-SUMMARY.md` described the cluster; the orchestrator deleted it on 2026-11-11.
+Read once as the owner would, for any transition, shade or wrapper that carries no intent. Each of these was in a draft, in the earlier text or in the prototype and is gone.
 
-## 5 · Order
+- A fade on the seat's shape as it parts. It appears by its shape, not by opacity.
+- The shadow leaf the size of the row, and the two shadows lerped on every frame. One shadow, one value.
+- A spring of its own for the fission, and for the content.
+- Neck A: three leaves, a hand-over, a fillet mask.
+- The dock's own glyph rule for the theme toggle.
+- A second progress property for rest geometry.
+- A test hook in every shipped dock.
+- Icons that shrink to make room for a name. Neighbours shift; nothing scales.
+- A bold name, and a second way to name a seat beside the open seat.
+- A delay before a name shows, and a Tooltip built into the dock as its fallback.
+- A fade of the divider's own.
+- A pin badge or any other mark for the pinned state. The dock is open; that is the mark.
+- A `folding` class or attribute. The state is collapsed and the travel is `[data-morphing]`.
+- An eased curve for the linger. It is linear in dwell and clamped.
+- The per-control stagger and the 0.82 pop on entering seats.
+- A `preset` prop, a `name` prop, a `progress` emit and a new property name.
+- A `DockLabel` or `DockSeat` component, and a wrapper element round the outlet's content.
+- A dock-surface utility for a free-standing control.
+- A token for the click guard's 840 ms.
+- The H8 battery as a second instrument.
+- The crossfade's standing reserve of its tallest face.
 
-1. **The cut.** `release/11.2.0` is cut from master after 11.1.0 (with 11.0.1) merges and after the u/dp intake merges by its reconciliation ruling (`review/fable-2026-11-10/plans.md` item 2). That ruling keeps this wave's ground: the root paints nothing, the corner and the cut cap are the plate's, and `borderProgress` and `perimeter` are not added.
-2. **Read master.** Re-cut the harness's expected values (G-8), then one H8 battery on the cut's master through `adapter-head.mjs`, and the boot-graph read. This gives G-8's RED list (OQ-3) and the ratchet's base (OQ-8).
-3. **Prove the seat and shoot the fade** on one scratch fixture: daraksha's one-dock composition with `#beside`, and value's Tools → tool geometry. It answers OQ-4 to OQ-6 and writes strip B for OQ-1.
-4. **Build**, then the gates, then the one challenge and fold.
+## Struck
 
-O-215: if 11.1.0's close trace reads the dock's forced layout at first mount above 16 ms, this wave takes the row (OQ-7).
+From the 2026-11-10 text and the sections appended to it, each by a later word or a reading.
 
-## 6 · Open questions
+- **The bare seat** (§1.4, "It carries no plate") and its gate G-2 ("the seat is bare"): O-279, later, asks for "a dock bg".
+- **The seat inside the collapsed plate** as part of the collapsed face: O-279's "collapse away" (OQ-1).
+- **"Goo-free"** in O-279's placement: O-289, later, asks for goo.
+- **Visible text labels on page seats** (O-290's placement): O-303, later.
+- **"A label change animates the plate"** for a hover on a seat: O-303. It stands for every other width change.
+- **The two-dock recipe** given to value.js: daraksha's 116 px reading.
+- **The fixed 3600 ms window** and `collapseDelay`'s single resolution point as a constant.
+- **11.1.0's fold on the leave frame** after a persistent press, and its leaving face that disappears at once under reduced motion.
+- **"No tokens added"**: three are, and a fourth with the labelled seat.
+- **The DockLayer `persistent` slot** held as a fallback for O-224: the outlet's `region` is the way.
+- **The first-frame figure of 13 to 17 %** as a property of the plain pill: the audit read 8 % at most there (AUDIT §3). It stands as daraksha's reading of a dock at half frame rate, and G-2 gates the cure.
+- The DockCluster rulings and gates the earlier text's §4 retired stay retired.
 
-Each has a default. The build proceeds on the default and records the answer when it comes.
+From the design seat's text, each by a reading in the challenge.
 
-- **OQ-1 (owner).** Which strip is the dock: bp13's content exchange or the timed fade? The pair is in `design/dock/LANDING.md`. Default: the timed fade. If he picks the exchange, it lands as bp13 built it and §1.3 is closed on his word.
-- **OQ-2 (measurement, with OQ-1).** The fade's windows. 0 to 0.35 out is pass 2's (`design/dock/pass-2/D2-Bp-spec.md:202`). 0.35 to 0.70 in is this seat's: no record fixes where the entering face is whole. Default as written; strip B is the read.
-- **OQ-3 (measurement).** Which re-cut H8 rows read RED on master today. Nobody has run the harness on the shipped dock (`design-D2.md` item 4). Default: every re-cut row gates the landed tree, and the rows master already holds are recorded as carried witnesses. Two near-bound classes outlive the exchange, [terminal] and [lanes]; their bounds are fixed before the read. Default: [terminal]'s last step at 1 px (it drew 0.95 against 0.88), [lanes] at its present bound with a draw re-run twice.
-- **OQ-4 (owner).** With the seat out, is the centre the row's (plate and seat together) or the plate's? Default: the row's. The seat is in flow, so a host's centring, its overflow and its height read the true extent, and the plate's own centre moves by half the seat's room on an expand.
-- **OQ-5 (measurement).** The seat's rest gap and its ink on the page. Default: the gap is `--dock-layer-gap` past the plate's edge with no new token, and the ink is the dock control ink, `--dock-fg-on-aurora` (§1.4). The fixture reads the glyph against the page at 3:1 or better in both themes and captures the gap for the owner's look.
-- **OQ-6 (measurement).** Does G-10 read RED on master and GREEN with the `:empty` rule alone? Default: yes, and no DockLayer API is built.
-- **OQ-7 (measurement).** O-215's dock row, by 11.1.0's close trace. Default: the row closes at 11.1.0; above 16 ms this wave adds one trace cell at 390 and 4x CPU.
-- **OQ-8 (owner).** The boot-graph ceiling. D2's base had 31 B of margin. Default: the landed dock's boot graph is no larger than master's at the cut; if it is larger, the owner rules the ceiling before the merge.
-- **OQ-9 (owner's machine).** The Safari app. No capture of bp13 or of this dock in Safari exists, and Playwright WebKit is not Safari. Default: not a release blocker; with the safaridriver checkbox on, one capture set (collapsed, mid-expand, expanded, mid-swap) is read before the tag; otherwise it is recorded as unmeasured.
+- **"One that leaves the DOM is gone in that frame"** (C-5).
+- **A region's clip floored at its own box**, and a region carried by its centre (C-1, C-2).
+- **`p = clamp((f − 0.5) / 0.5, 0, 1)`**, the parting on the second half of the travel in a straight line (C-4).
+- **The shadow as a `calc()` lerp on the published property** (C-14), and **the one shadow leaf under the row** (C-11).
+- **"The dock preset has none"** of overshoot (C-10).
+- **Neck A** (C-12), and "B ships if it passes 3, and A otherwise".
+- **`--dock-linger-max` equal to `--dock-linger` in 11.2.0** (C-17).
+- **"A press or Enter on the folded face sets it"** for a touch tap (C-17).
+- **The fission seat and the labelled seat as 11.2.0's promised pieces** (C-11 to C-13).
+- **"Until then an unlabelled DockControl is as 11.0.2 left it"** beside a flat labelled seat in the same dock (C-15).
+- **"atlas already reads it (`Dock.css:72`)"**, and daraksha's `ReaderDock.vue:105,154` and `ScripturePage.vue:981-984` (C-22, C-23).
 
-## 7 · Consumer half
+## Records the orchestrator amends
 
-**daraksha** (`o1109-dock`, `src/shell/SiteDock.vue`) changes one line: `<template #persistent><ThemeControl /></template>` becomes `<template #beside><ThemeControl /></template>`. No wrapper, no `fused` computed, no hover or focus code, and `dir="ltr"` is no longer asked of it. Play joins the collapsed face through a teleport target in `#persistent-end` (§1.7). The reader row's breakpoint is re-measured at its repin; the cluster's 41.25 rem is withdrawn with the cluster.
+The fold seat wrote this file, `../design/dock/wi8/fold.md`, `../design/dock/wi8/OWNER-READ.md` and three strips under `../design/dock/wi8/fold/`, and nothing else.
 
-**value** changes no markup: its one dock's Tools → tool swap glides. Its `vj-settle` beat waits on `[data-morphing]`, which now covers the glide; value reads that at its repin.
+- `INDEX.md`: W-I.8's row (11.2.0 for the carrier, the clock, the outlet and the progress; the fission seat and the labelled seat held; the 12.0.0 defaults named above), and its summary, which still says "the bare `#beside` seat".
+- INBOUND: O-279, O-289, O-290 and O-303 placed on R-6 and R-7, both held; O-275, O-302 and O-306 on R-2; O-301 on R-9; O-307 on R-8; O-248 and O-288 on R-1 and R-4; O-276 on R-12; O-281, O-296 and O-304 on R-14; O-222 marked overruled by O-279.
+- Two rows need a home: L-30's Tooltip, and the DarkModeToggle's sun that reads as a second gear (O-239, L-39).
+- `W-B.17.md` cites this file by its old section numbers. §1.2 is now R-1; §1.3 is R-3; §1.5 is R-5; §1.6 is R-11; G-4 and G-11 are G-4 and G-12. Its line "the theme seat's hover is `data-glyph=\"turn\"`" stands with the attribute set by the toggle, not the dock.
+- `W-R.1.md`: the 12.0.0 rows above; `--dock-morph-t` joins the two stagger tokens in its deletions; the labelled seat rides its plate on dock seats (OQ-6); the linger's ceiling is no longer a 12.0.0 default.
+- `docs/precepts/motion-canon.md`: P5's sentence for a leaf's insets (R-1) and P6's for the dock (R-11), still owed (`../review/fable-2026-11-10/owed-outside-BL.md`). `restraint.md` says "no motion on keyboard-triggered actions", and R-7 tweens the neighbours on keyboard focus, by P0; one of the two wants a sentence.
+- `../audit/animation/harness/README.md` says the demo's routes still serve in the built trees; the dock record found they mount nothing.
+- The ledger found that `constants.ts:61` reads 3600 on both release branches, though O-306 placed 6000 in 11.0.2. This text takes 6 s as the token's default either way; the branch wants a look.
+- `../design/dock/LANDING.md` names OQ-1 and step 3 of the earlier text; they are OQ-4 and P-4 here.
+- The machine: every WebKit reading this wave owes waits on a reboot. `../design/dock/wi8/prototype/lists/wk-proto.txt` and `wk-red.txt` are ready.
 
-**atlas** is told at booking and at publish: `[data-morphing]` also opens on a content change, `--dock-morph-t` is unchanged, and the dock-mounted progress props of the u/dp line are not in 11.2.0.
+## Inputs after the fold (2026-11-14)
 
-## 8 · Release, MIGRATION, ledger
-
-11.2.0, a minor: one slot added, nothing removed, no MIGRATION row. The CHANGELOG states the slot, the glide, the fade in place of the stagger, and the two unread tokens. `.published-roster` is unchanged and `.bundle-ratchet` is re-read (OQ-8).
-
-Also in 11.2.0, and not this wave's build: the three enter start radii default to `0px` (`--lq-enter-blur`, `--enter-overlay-blur`, `--enter-menu-blur`), the paint half of O-221. `waves/W-R.1.md`, "Moved out", is its record: one commit on `release/11.2.0`, the tokens left defined so a host restores a ramp by setting one back, and a CHANGELOG line among the defaults that change.
-
-Closes O-195, O-200, O-202, O-222, O-224, O-171 R-2, O-129 rows 3 and 4, and O-180 (3). Takes the carrier half of O-88 and of W-0.8.
-
-Records the orchestrator amends, since this seat writes only this file and `design/dock/LANDING.md`: an INDEX row for W-I.8 at 11.2.0; W-0.8 and W-I.1 pointed here for the carrier; the INBOUND placements of O-129 rows 3 and 4, O-171 R-2 and O-180 (3); `docs/precepts/motion-canon.md` P5 and P6, which state Q-6 (a) and §1.6 in one sentence each; and the deletion of `SPEC-SUMMARY.md`. All but the motion-canon sentences were made on 2026-11-11; those two are owed in the precepts repository (`review/fable-2026-11-10/owed-outside-BL.md`).
-
-
-## Owner law added 2026-11-11 (O-248)
-
-The owner's words on daraksha's dock (frames `~/.dev-logs/owner-1111/shots/1.png`, `8.png`): "ALL dock animations should be well defined in animating, not just telporting and instantly changing, the heigth and width", and the collapse is "not smooth in the end or beginning".
-
-This is the wave's subject stated as a law, and it widens §1.6 from width to both extents: **every dock state change animates the plate's width and height on the dock spring with an eased start and end, and the plate is round at every frame.** The changes: collapse, expand, a layer in or out, a page change that alters seat count or label width, a seat appearing or leaving (the bare seat included). The build's gate matrix is that list, one cell per change, each reading per-frame plate width and height: no step over the spring's own peak frame, no frame with unequal corners, first and last frames within 1 px of rest. daraksha is sending the list of changes that jump today; it is merged into the matrix when it arrives, and a change it names that this list lacks is added, not argued.
+- O-340 and O-341: the owner has asked for fully round docks five times and for more docks with a collapse state (Gregg's filters). The stadium is 11.1.0's; this wave owns what he names beyond it: the layer change as one clear movement (the leaving layer goes one way, the entering comes from the other, the width on the same clock), the reading-progress rim following a collapsed dock's outline through the morph, a halo colour token (one value, no added layer), and figure docks that unfold. Each is a gate to add at the build, not a new design pass.
