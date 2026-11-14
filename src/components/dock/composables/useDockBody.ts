@@ -362,10 +362,13 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
             if (!cb || !g) continue;
             const cbr = rectOf(cb);
             // The containing block's layout position (it rides the region's translate).
-            const cbl = cbr.l - g.tx;
-            const cbt = cbr.t - g.ty;
-            const x = p.rect.l - p.regionCx + g.cx - cbl;
-            const y = p.rect.t - p.regionCy + g.cy - cbt;
+            // `left`/`top` are from the padding edge, inside the containing block's border.
+            const cbl = cbr.l - g.tx + cb.clientLeft;
+            const cbt = cbr.t - g.ty + cb.clientTop;
+            // `left`/`top` place the margin box; the rect read is the border box.
+            const ms = getComputedStyle(el);
+            const x = p.rect.l - p.regionCx + g.cx - cbl - (Number.parseFloat(ms.marginLeft) || 0);
+            const y = p.rect.t - p.regionCy + g.cy - cbt - (Number.parseFloat(ms.marginTop) || 0);
             el.style.inset = "auto";
             el.style.insetInlineStart = "auto";
             el.style.left = `${x}px`;
@@ -524,11 +527,13 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
         const clipTo = (t: RegionTrack, box: Box, r: number) => {
             const left = t.cx - t.w / 2 + t.tx;
             const top = t.cy - t.h / 2 + t.ty;
+            // C-1: the plate's painted box in the region's own coordinates. Insets may be
+            // negative; the region's layout box is never a clip edge.
             const ci = {
-                t: Math.max(0, box.t - top),
-                l: Math.max(0, box.l - left),
-                r: Math.max(0, left + t.w - box.r),
-                b: Math.max(0, top + t.h - box.b),
+                t: box.t - top,
+                l: box.l - left,
+                r: left + t.w - box.r,
+                b: top + t.h - box.b,
             };
             t.el.style.clipPath = `inset(${ci.t}px ${ci.r}px ${ci.b}px ${ci.l}px round ${r}px)`;
             t.clipped = true;
