@@ -90,20 +90,12 @@
         --dock-plate-inset-block: calc(
             (1 - var(--dock-t)) * var(--dock-plate-collapse-inset-block, 0px)
         );
-        /* W-I.8 R-1: the plate's clip-path is deleted. One shadow, on the plate, whose
-           blur and alpha are lerps on the published progress (collapsed 12 px at 12 %,
-           open 20 px at 14 %), so it has no swap frame. */
+        /* W-I.8 R-1 (C-14): the plate's clip-path is deleted. One shadow, on the plate,
+           the same value in both postures (the collapsed one), so nothing lerps and
+           nothing swaps. */
         box-shadow:
             var(--glass-rim-top), var(--glass-rim-bottom),
-            var(
-                --shadow-dock-override,
-                0 0 calc(12px + 8px * var(--dock-expand-t))
-                    color-mix(
-                        in srgb,
-                        var(--shadow-color) calc(12% + 2% * var(--dock-expand-t)),
-                        transparent
-                    )
-            );
+            var(--shadow-dock-override, var(--shadow-dock-collapsed));
 
         /* ── THE ONE-LAYER SURFACE INTERPOLATION, COMPOSED AT THE ELEMENT ──────────
            The collapsed↔expanded surface is ONE painted layer, and what LERPS on

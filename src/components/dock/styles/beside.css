@@ -34,23 +34,9 @@
         border-inline-width: 0;
         box-shadow: none;
     }
-    .glass-dock.has-beside > .dock-plate {
-        box-shadow: var(--glass-rim-top), var(--glass-rim-bottom);
-    }
-    /* One shadow for the surface: one leaf under the plates whose box is the row's
-       painted extent. An outer shadow does not paint inside its own box. */
-    .glass-dock > .dock-shadow {
-        position: absolute;
-        inset: 0;
-        z-index: -2;
-        border-radius: inherit;
-        pointer-events: none;
-        box-shadow: var(
-            --shadow-dock-override,
-            0 0 calc(12px + 8px * var(--dock-expand-t))
-                color-mix(in srgb, var(--shadow-color) calc(12% + 2% * var(--dock-expand-t)), transparent)
-        );
-    }
+    /* C-11: no leaf the size of the row. Each shape carries the dock's one shadow
+       (the plate's own, dock.css). Under neck B the plate's clip cuts its own shadow
+       while it parts; that is read, not cured here. */
     /* The seat's glyph turns on hover (W-B.17's `data-glyph="turn"`); the dock adds no lift. */
     .dock-beside [data-glyph="turn"] svg {
         transition: rotate var(--spring-dock-duration) var(--spring-dock);

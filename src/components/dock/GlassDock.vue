@@ -116,7 +116,6 @@ const persistentEndEl = useTemplateRef<HTMLElement>("persistentEndEl");
 const besideEl = useTemplateRef<HTMLElement>("besideEl");
 const besidePlateEl = useTemplateRef<HTMLElement>("besidePlateEl");
 const neckEl = useTemplateRef<HTMLElement>("neckEl");
-const shadowEl = useTemplateRef<HTMLElement>("shadowEl");
 
 /* THE RUN. The full face IS the run — the box whose children are the seats, the box
    the port scrolls, and the common ancestor the cut-cap timeline scopes to. Reach,
@@ -262,7 +261,6 @@ const body = useDockBody({
     beside: besideEl,
     besidePlate: besidePlateEl,
     neck: neckEl,
-    shadow: shadowEl,
     neckDesign: (): NeckDesign => (dockEl.value?.getAttribute("data-neck") === "b" ? "b" : "a"),
     expanded: () => visualExpanded.value,
     vertical: () => orientation.value === "vertical",
@@ -501,7 +499,6 @@ defineExpose({
             reads their presence, so nothing here needs a releasing flag. The edge is
             `graspHeld` (a pointer down on a descendant), never the posture count.
         -->
-        <div v-if="$slots.beside" ref="shadowEl" class="dock-shadow" aria-hidden="true"></div>
         <div ref="plateEl" class="dock-plate" aria-hidden="true" :data-held="graspHeld || undefined">
             <template v-if="grasping">
                 <span class="glass-grasp-carrier" data-grasp="rest"></span>

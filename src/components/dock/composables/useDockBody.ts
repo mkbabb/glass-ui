@@ -100,7 +100,6 @@ export interface UseDockBodyOptions {
     beside?: Ref<HTMLElement | null>;
     besidePlate?: Ref<HTMLElement | null>;
     neck?: Ref<HTMLElement | null>;
-    shadow?: Ref<HTMLElement | null>;
     neckDesign: () => NeckDesign;
     expanded: () => boolean;
     vertical: () => boolean;
@@ -479,14 +478,9 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
         const design = o.neckDesign();
         const neckEl = o.neck?.value;
         const seatPlate = o.besidePlate?.value;
-        const shadow = o.shadow?.value;
         const inset = (b: Box) =>
             `${b.t - layout!.t}px ${layout!.r - b.r}px ${layout!.b - b.b}px ${b.l - layout!.l}px`;
 
-        if (besideTrack && shadow) {
-            shadow.style.inset = inset(P);
-            shadow.style.borderRadius = `${R}px`;
-        }
         if (!besideTrack || fis.p <= 0) {
             plate.style.inset = inset(P);
             plate.style.borderRadius = `${R}px`;
@@ -624,8 +618,6 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
                 plate.style.removeProperty("clip-path");
                 o.besidePlate?.value?.style.setProperty("display", "none");
                 o.neck?.value?.style.setProperty("display", "none");
-                o.shadow?.value?.style.removeProperty("inset");
-                o.shadow?.value?.style.removeProperty("border-radius");
             }
         }
         for (const t of regions.values()) {
