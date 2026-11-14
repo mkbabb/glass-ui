@@ -32,6 +32,11 @@ below.
   the lens, and frosts the page, only when you set `loupe`. Without it, holding a
   Slider changes nothing outside the control.
 
+- **reka-ui 2.10.1 or later is required.** The peer range was `^2.0`, but the Dialog's
+  overlay reads the dialog's `unmountOnHide`, which reka-ui added in 2.10.0, and a
+  Popover's dismissal and focus return need 2.10.1. On an older reka-ui a modal Dialog
+  threw as its overlay rendered. The peer range is now `^2.10.1`.
+
 - **A Select keeps every row inside its plate.** With a trigger wider than 22rem, the
   list was forced to the trigger's width while its plate stopped at 22rem, so each row
   lost its right edge and the highlighted row ran square into the plate. Every anchored
