@@ -968,3 +968,5 @@ Disk episode, one line: on 2026-11-03 the volume went from 100% (15 GiB free) to
 - 2026-11-14 13:42 — 11.1.1's driver written (`driver/glass-11.1.1.js`: six build seats A to F in order, Fable critics on a seven-item list, close); it launches when v11.1.0 is on master. Speedtest's smaller asks placed (O-337a).
 
 - 2026-11-14 13:46 — value.js's sorted list of the owner's review booked and answered (O-341); W-I.8 takes its dock items as post-fold inputs. Live: fix 3 (11.0.2), critic 7 (11.1.0), the dock measuring seat.
+
+- 2026-11-14 15:31 — 11.1.0 stopped at fix 8 on the guard's DISK-LOW refusal (37 GB free at 15:23; clears above 60): critic 7 returned two defects, fix 8 cured both (df8a65446, 186364da4, bbce22058, ratchet b4fb41041, record 35babc42e) but its browser half did not run (rerun: fix-8/chain.sh p10w g63c g63w l1c l1w l7c l7w, then fix-8/e2e.sh). Deleting the three old comparison trees (18 GB) was denied by the permission check; the owner is asked. Resume `wf_4cf2d226-a00` with a fix-1110-8 RESUME note once the flag clears.
