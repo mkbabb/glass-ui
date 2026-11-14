@@ -79,6 +79,8 @@ export interface UseDockStateReturn {
     expand: () => void;
     /** Imperative close — forces `state = "collapsed"` (no-op when `alwaysExpanded`). */
     collapse: () => void;
+    /** W-I.8: the declared pinned state. */
+    setPinned: (v: boolean) => void;
 }
 
 /**
@@ -325,14 +327,54 @@ export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
         removeClickAway?.();
     }
 
+    /* W-I.8 R-2: the clock's tokens are read from the root, so a site sets them in CSS. */
+    function tokenMs(name: string, fallback: number): number {
+        const root = rootEl.value;
+        if (!root || typeof getComputedStyle === "undefined") return fallback;
+        const raw = getComputedStyle(root).getPropertyValue(name).trim();
+        if (!raw) return fallback;
+        const n = Number.parseFloat(raw);
+        if (!Number.isFinite(n)) return fallback;
+        return raw.endsWith("ms") ? n : raw.endsWith("s") ? n * 1000 : n;
+    }
+    /* Dwell: time the pointer or focus has spent inside since the dock opened. */
+    let dwellMs = 0;
+    let insideSince: number | null = null;
+    let pointerInside = false;
+    function enterInside(): void {
+        insideSince ??= performance.now();
+    }
+    function leaveInside(): void {
+        if (insideSince !== null) dwellMs += performance.now() - insideSince;
+        insideSince = null;
+    }
+    function lingerMs(): number {
+        const base = tokenMs("--dock-linger", collapseDelay);
+        const max = Math.max(base, tokenMs("--dock-linger-max", base));
+        return Math.min(max, base + dwellMs / 2);
+    }
+    /* What holds the dock open when the linger runs out: an overlay (the keep-open
+       count), keyboard focus inside, a pointer down inside. */
+    function holdsOpen(): boolean {
+        if (keepOpenCount.value > 0) return true;
+        if (rootEl.value?.querySelector(":focus-visible")) return true;
+        return pressHolds();
+    }
     function scheduleCollapse() {
         if (isQuiet()) return;
         if (keepOpenCount.value > 0) return;
         clearTimer();
-        collapseTimer = setTimeout(() => {
+        collapseTimer = setTimeout(function lapse() {
+            collapseTimer = null;
+            if (state.value !== "hover") return;
+            if (holdsOpen()) {
+                // The linger starts again when the hold ends (release, focusout, the press end).
+                if (pressHolds()) collapseTimer = setTimeout(lapse, 120);
+                return;
+            }
             state.value = "collapsed";
             syncDerived();
-        }, collapseDelay);
+        }, lingerMs());
     }
 
     /* `scheduleCollapse`/`collapse` must NOT fire a synthetic
@@ -382,9 +424,39 @@ export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
 
     // --- Mouse handlers ---
 
+    let intentArmed = false;
+    function onPointerMoveInside(e: PointerEvent): void {
+        if (e.pointerType === "touch" || !intentArmed) return;
+        intentArmed = false;
+        startIntent();
+    }
+    watch(
+        rootEl,
+        (root, _, onCleanup) => {
+            if (!root) return;
+            root.addEventListener("pointermove", onPointerMoveInside);
+            onCleanup(() => root.removeEventListener("pointermove", onPointerMoveInside));
+        },
+        { immediate: true, flush: "sync" },
+    );
     function onMouseEnter() {
         if (isQuiet() || pressOnly()) return;
         clearTimer();
+        pointerInside = true;
+        enterInside();
+        if (state.value === "collapsed") {
+            clearHoverIntent();
+            // A return while the fold is travelling reverses it at once (R-2).
+            if (isTransitioning?.value) {
+                state.value = "hover";
+                syncDerived();
+                return;
+            }
+            // Intent counts from the pointer's first movement inside (R-2).
+            intentArmed = true;
+        }
+    }
+    function startIntent() {
         if (state.value === "collapsed") {
             // Defer collapsed→hover expansion by the intent
             // dwell. A spurious enter from the morphing edge sweeping back over a
@@ -403,15 +475,19 @@ export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
                         return;
                     }
                     state.value = "hover";
+                    dwellMs = 0;
                     syncDerived();
                 }
-            }, HOVER_INTENT_MS);
+            }, tokenMs("--dock-intent", HOVER_INTENT_MS));
         }
         // If pinned, no-op (stays pinned)
     }
 
     function onMouseLeave(e?: MouseEvent) {
         if (isQuiet() || pressOnly()) return;
+        intentArmed = false;
+        pointerInside = false;
+        leaveInside();
         // A leave cancels any pending hover-intent dwell: a
         // sweeping-edge enter immediately chased by a leave never commits the expand.
         clearHoverIntent();
@@ -440,6 +516,7 @@ export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
     function onFocusIn() {
         if (isQuiet() || pressOnly()) return;
         clearTimer();
+        enterInside();
         if (state.value === "collapsed") {
             if (pressHolds()) {
                 expandOnPressEnd = "focus";
@@ -469,21 +546,58 @@ export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
         if (state.value !== "hover") return;
         if (keepOpenCount.value > 0) return;
         if (stays) return;
+        if (!pointerInside) leaveInside();
         scheduleCollapse();
     }
 
     // --- Click on collapsed layer → PINNED ---
 
+    let lastPointerType = "mouse";
     function onClickCollapsed() {
-        // Environmental collapsed-tap → PINNED. Suppressed when quiet: an
-        // always-expanded dock is already pinned, and a manual dock reserves
-        // posture for the consumer's imperative `expand()`/`collapse()`.
         if (isQuiet()) return;
         clearTimer();
         clearHoverIntent();
+        if (lastPointerType === "touch") {
+            // A tap opens by the clock and lingers from the lift (R-2, touch).
+            state.value = "hover";
+            dwellMs = 0;
+            syncDerived();
+            scheduleCollapse();
+            return;
+        }
         state.value = "pinned";
         syncDerived();
     }
+    function setPinned(v: boolean) {
+        if (isQuiet()) return;
+        if (v && state.value !== "pinned") {
+            clearTimer();
+            clearHoverIntent();
+            state.value = "pinned";
+            syncDerived();
+        } else if (!v && state.value === "pinned") {
+            state.value = pointerInside ? "hover" : "collapsed";
+            syncDerived();
+        }
+    }
+    function onTouchLift(e: PointerEvent) {
+        lastPointerType = e.pointerType;
+        if (e.type === "pointerup" && e.pointerType === "touch" && state.value === "hover") scheduleCollapse();
+    }
+    watch(
+        rootEl,
+        (root, _, onCleanup) => {
+            if (!root) return;
+            root.addEventListener("pointerdown", onTouchLift, true);
+            root.addEventListener("pointerup", onTouchLift, true);
+            onCleanup(() => {
+                root.removeEventListener("pointerdown", onTouchLift, true);
+                root.removeEventListener("pointerup", onTouchLift, true);
+            });
+        },
+        { immediate: true, flush: "sync" },
+    );
+
 
     // --- keepOpen / release (ref-counted child holds) ---
 
@@ -496,18 +610,9 @@ export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
     function release(kind: DockHoldKind = "morph") {
         if (kind === "grasp") graspCount.value = Math.max(0, graspCount.value - 1);
         keepOpenCount.value = Math.max(0, keepOpenCount.value - 1);
-        if (keepOpenCount.value === 0 && state.value === "hover") {
-            // Grace period: don't collapse immediately after a child releases
-            // (e.g., dialog dismissed via Escape). Give the user time to re-engage.
-            clearTimer();
-            collapseTimer = setTimeout(
-                () => {
-                    if (keepOpenCount.value === 0 && state.value === "hover") {
-                        scheduleCollapse();
-                    }
-                },
-                Math.min(collapseDelay, 800),
-            );
+        // W-I.8 R-2: with the pointer outside, one linger; the 800 ms wait is deleted.
+        if (keepOpenCount.value === 0 && state.value === "hover" && !pointerInside) {
+            scheduleCollapse();
         }
     }
 
@@ -611,5 +716,6 @@ export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
         release,
         expand,
         collapse,
+        setPinned,
     };
 }

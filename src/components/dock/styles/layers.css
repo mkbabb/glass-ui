@@ -89,46 +89,11 @@
        byte-identical (`.expanded[data-morphing]` derives `--dock-expand-t: --dock-morph-t`);
        only `.collapsed[data-morphing]` (`1−t`) is corrected, so the box now shrinks
        monotonically expanded→collapsed with NO snap. */
-    .glass-dock[data-morphing] {
-        --dock-live: calc(
-            var(--dock-collapsed-px, var(--dock-expanded-px, 0px)) +
-                (
-                    var(--dock-expanded-px, 0px) -
-                        var(--dock-collapsed-px, var(--dock-expanded-px, 0px))
-                ) *
-                clamp(0, var(--dock-expand-t), 1)
-        );
-        --dock-size-scale: clamp(
-            0.06,
-            calc(var(--dock-live) / max(var(--dock-expanded-px, 1px), 1px)),
-            1
-        );
-        will-change: transform;
-    }
-
-    /* [2026-10-28 · 10.1.3 · O-110] ~~`transform-origin: center center`~~ — the scale
-       grows from the morph's measured origin (`--dock-morph-origin`, the fixed point of
-       the painted box and the reserved one, `useDockExpandedSize`'s `anchor`): the
-       anchored edge of an edge-anchored dock, the centre of a centred one. A fixed
-       centre painted an edge-anchored dock's first frame centred in its reserved box. */
-    .glass-dock[data-morphing]:not(.vertical) {
-        transform-origin: var(--dock-morph-origin) center;
-    }
-    .glass-dock[data-morphing].vertical {
-        transform-origin: center var(--dock-morph-origin);
-    }
-
-    /* The box RESERVES its expanded footprint (ONE layout solve — the page reflows
-       ONCE to the final size, CDP-Layout stays FLAT) while the visible size scales
-       toward it. Horizontal reserves `inline-size`, vertical reserves `block-size`,
-       matching the morph axis. The `.dock-layers` content lays out at its natural
-       size behind the clip (shell.css) — that natural span is the `--dock-expanded-px`
-       the ResizeObserver reads. */
-    .glass-dock[data-morphing]:not(.vertical) {
-        inline-size: var(--dock-expanded-px);
-    }
-    .glass-dock[data-morphing].vertical {
-        block-size: var(--dock-expanded-px);
+    /* W-I.8: the reserved box, the size blend and the morph origin are deleted. The
+       layers region is the containing block of a leaving face, which the carrier places
+       where it painted. */
+    :where(.glass-dock) .dock-layers {
+        position: relative;
     }
 
     /* Horizontal dock content grows visibly when the active layer's natural
@@ -181,19 +146,7 @@
         pointer-events: none;
     }
 
-    .glass-dock[data-morphing] .dock-layer.is-leaving {
-        opacity: calc(1 - var(--dock-morph-t));
-    }
-
-    /* Each pane paints the box it holds (O-110): `anchor` writes the shift from where
-       the reserved layout puts it to that box. The leaving pane holds the box it painted
-       and fades there; a collapse's entering pane holds its rest. */
-    .glass-dock[data-morphing]:not(.vertical) > .dock-controls > .dock-layers > .dock-layer {
-        translate: var(--dock-pane-shift) 0;
-    }
-    .glass-dock[data-morphing].vertical > .dock-controls > .dock-layers > .dock-layer {
-        translate: 0 var(--dock-pane-shift);
-    }
+    /* W-I.8 R-3: the faces' opacity is written by the carrier on the travel's f. */
 
     /* GU-4 — retain only the witnessed press control through a collapse-triggered
        layer swap. The pane stays a non-target; the marked origin alone remains above
@@ -274,80 +227,7 @@
        `respectReducedMotion` jumps `--dock-morph-t` 0→1 in one frame → `--dock-expand-t`
        lands at the endpoint → the cascade collapses to 0 stagger frames; the
        global PRM gate strips `translate` so the rise snaps too. */
-    .glass-dock[data-morphing] .dock-layer.is-active > * {
-        --dock-stagger-window: var(--dock-stagger-window-size, 0.55);
-        --dock-stagger-onset: 0;
-        /* Factor the reveal ramp into ONE named var so opacity AND
-           the center-coupled scale read the SAME clamp (fade coupled to
-           transform). */
-        --child-reveal: clamp(
-            0,
-            calc(
-                (var(--dock-expand-t) - var(--dock-stagger-onset)) /
-                    var(--dock-stagger-window)
-            ),
-            1
-        );
-        opacity: var(--child-reveal);
-        /* The rise is a center-coupled SCALE pop (0.82 → 1 on the
-           reveal ramp, transform-origin center), NOT an independent `translate: 0
-           4px` vertical hop. The children inherit the SAME center-anchored read as the box
-           — a small inertial pop FROM the center, coupled to opacity. The global PRM gate
-           strips `scale` → snap. */
-        scale: calc(0.82 + 0.18 * var(--child-reveal));
-        transform-origin: center;
-    }
-
-    /* Per-child onsets off the ONE `--dock-stagger-step` token. The hand-typed
-       0.08/0.16/0.24/0.32/0.4 ladder is RETIRED — the onsets derive from the single
-       token, so retuning the cascade beat is a one-token override.
-       ~~Each successive control starts `step` later than the one before it (`onset =
-       step × (childIndex − 1)`) … capped at the 6th child (`nth-child(n + 6)` holds
-       at `step × 5`).~~ — [2026-09-22 · O-32 §4.3 L-23] no rule on disk has matched
-       that description; the ladder below is what paints.
-       ~~The SYMMETRIC center-out stagger … center pair = onset 0 via the base rule,
-       then ±1, ±2 … the reveal radiates center-out~~ — [2026-09-22 · O-32 §4.3 L-23]
-       the paint was always edge-in, and edge-in is the intent: the controls reveal
-       OUTER→IN (the edge pair at onset 0, the middle last), as the reveal note above
-       says; collapse rewinds the same ramp, so the middle fades first and the edges last.
-
-       THE LADDER. A control's onset is `step × min(distance from the nearer edge, 3)`,
-       counted over CONTROLS ONLY: `nth-child(… of :not(.dock-separator))`. A
-       DockSeparator is a sibling child of the layer, so counting `of *` gave each
-       hairline a rung and shifted every control past it (O-32 L-23, fourier's
-       CanvasControlsDock). Each rung is bounded from BOTH ends — ±1 is 2nd from one
-       edge and at least 2nd from the other, ±2 likewise at 3rd, the deep middle at
-       least 4th from both — so the rungs are disjoint and the ladder is symmetric at
-       every length (3 controls → 0 1 0, 5 → 0 1 2 1 0, 10 → 0 1 2 3 3 3 3 2 1 0).
-       Separators take no rung: they hold the base onset 0. A long row finishes
-       within the morph window because the deep middle holds at `step × 3`.
-       (`sibling-index()` would collapse this to one declaration, but it is not yet
-       Baseline across Safari/Firefox; `nth-child(… of S)` is Safari 16.4+ /
-       Chrome 111+ / Firefox 113+.) */
-    /* ring ±1 — 2nd control from the nearer edge */
-    .glass-dock[data-morphing]
-        .dock-layer.is-active
-        > *:nth-child(2 of :not(.dock-separator)):nth-last-child(n + 2 of :not(.dock-separator)),
-    .glass-dock[data-morphing]
-        .dock-layer.is-active
-        > *:nth-last-child(2 of :not(.dock-separator)):nth-child(n + 2 of :not(.dock-separator)) {
-        --dock-stagger-onset: calc(var(--dock-stagger-step) * 1);
-    }
-    /* ring ±2 — 3rd control from the nearer edge */
-    .glass-dock[data-morphing]
-        .dock-layer.is-active
-        > *:nth-child(3 of :not(.dock-separator)):nth-last-child(n + 3 of :not(.dock-separator)),
-    .glass-dock[data-morphing]
-        .dock-layer.is-active
-        > *:nth-last-child(3 of :not(.dock-separator)):nth-child(n + 3 of :not(.dock-separator)) {
-        --dock-stagger-onset: calc(var(--dock-stagger-step) * 2);
-    }
-    /* ring ±3 — the deep middle, 4th or further from BOTH edges (a long row finishes in-window) */
-    .glass-dock[data-morphing]
-        .dock-layer.is-active
-        > *:nth-child(n + 4 of :not(.dock-separator)):nth-last-child(n + 4 of :not(.dock-separator)) {
-        --dock-stagger-onset: calc(var(--dock-stagger-step) * 3);
-    }
+    /* W-I.8 R-3: the per-control stagger and its 0.82 pop are deleted. */
 
     /* The at-rest clip-lift moved to `.expanded:not([data-morphing])` /
        `.always-expanded:not([data-morphing])` (the clip-shell block at the top).
@@ -362,7 +242,7 @@
        reserved footprint. The gate hands the box to the transform for the morph and
        back to 100% on settle (the transform/reserve vanish when `[data-morphing]`
        clears). */
-    .glass-dock.expanded:not(.fit-content):not([data-morphing]) .dock-layers {
+    .glass-dock.expanded:not(.fit-content) .dock-layers {
         width: 100%;
     }
 

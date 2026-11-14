@@ -17,6 +17,7 @@ export { default as DockLayer } from "./DockLayer.vue";
 // The crossfade context helpers stay INTERNAL (the composables barrel) — only the
 // component + its discovery types publish on `/dock` (the dockLayerContext precedent).
 export { default as DockCrossfade } from "./DockCrossfade.vue";
+export { default as DockOutlet } from "./DockOutlet.vue";
 export type {
     DockFaceDescriptor,
     DockFaceRegistration,

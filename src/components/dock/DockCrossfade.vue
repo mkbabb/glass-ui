@@ -4,6 +4,7 @@ import { computed, nextTick, onBeforeUnmount, ref, watch } from "vue";
 import { useResizeObserver } from "../../composables/dom/useResizeObserver";
 import { useDockSpring } from "./composables/useDockSpring";
 import { DOCK_SPRING } from "./constants";
+import { useOptionalDockBody } from "./composables/useDockBody";
 import {
     provideDockCrossfadeContext,
     type DockFaceDescriptor,
@@ -97,7 +98,7 @@ function measurePeak(): void {
 }
 
 const reserveStyle = computed<Record<string, string> | undefined>(() =>
-    peak.value > 0
+    !dockBody && peak.value > 0
         ? {
               [reserveProp.value]: `${peak.value}px`,
               "--dock-crossfade-peak": `${peak.value}px`,
@@ -134,6 +135,23 @@ function clamp01(v: number): number {
 }
 
 const prefersReducedMotion = useMediaQuery("(prefers-reduced-motion: reduce)");
+/* W-I.8 R-5: inside a dock, the faces fade on the carrier's travel; the reserve goes. */
+const dockBody = useOptionalDockBody();
+if (dockBody) {
+    watch(
+        activeId,
+        (next, prev) => {
+            if (next === prev) return;
+            const enterHost = faceEl(next);
+            const leaveHost = faceEl(prev);
+            if (!enterHost || !leaveHost) return;
+            for (const p of ["inset", "left", "top", "width", "height"]) enterHost.style.removeProperty(p);
+            dockBody.exchange(leaveHost, enterHost, "layers");
+        },
+        { flush: "pre" },
+    );
+    watch(activeId, () => dockBody.sync("exchange"), { flush: "post" });
+}
 let settleCrossfade: (() => void) | null = null;
 let activeSlope = 1;
 
@@ -165,6 +183,14 @@ watch(
     activeId,
     (next, prev) => {
         if (next === prev) return;
+        if (dockBody) {
+            void transferFocusOnDissolve(prev, next);
+            leavingId.value = prev;
+            dockBody.onSettle(() => {
+                if (leavingId.value === prev) leavingId.value = null;
+            });
+            return;
+        }
         measurePeak();
 
         const enterHost = faceEl(next);

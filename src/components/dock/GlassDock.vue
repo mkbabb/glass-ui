@@ -18,7 +18,8 @@
 // axis-aware expand/collapse transition, and the pointer/focus hold machinery.
 // The fission split facility is DEFINITION-ABSENT (decided-terminal;
 // clean break, no alias — demo-only spectacle + the prime Safari suspect).
-import { computed, nextTick, ref, useId, useTemplateRef, watch } from "vue";
+import { computed, nextTick, onBeforeUnmount, ref, useAttrs, useId, useTemplateRef, watch, watchEffect } from "vue";
+import { useMediaQuery } from "@vueuse/core";
 // The sampled-luminance observer is wired ON for every
 // `backdropMode: "live"` dock (the surface the user reported unreadable over light, and the
 // one most often over a live/bright backdrop). It REFINES the declarative bucket +
@@ -32,8 +33,9 @@ import { useGlassBackdropLuminance } from "../../composables/glass/useGlassBackd
 import { OPEN_DISMISSABLE_LAYER_SELECTOR } from "./constants";
 import { DockFace, provideDockContext } from "./composables/dockContext";
 import { useDockState } from "./composables/useDockState";
-import { useDockMorphOrchestrator } from "./composables/useDockMorph";
-import { useDockExpandedSize } from "./composables/dockMorphMeasure";
+import { useDockBody, type NeckDesign } from "./composables/useDockBody";
+import { dockRegistry, regionWanted } from "./composables/dockRegistry";
+import { useDockLabels } from "./composables/useDockLabels";
 import { useDockShellProps, type DockProps } from "./composables/useDockShellProps";
 import { useDockClickIntegrity } from "./composables/useDockClickIntegrity";
 // [2026-08-24 · BK #47 W3 LATTICE + W6] The run: reach to the seat's snap position via
@@ -80,13 +82,17 @@ defineOptions({ inheritAttrs: false });
    stayed green) but NEVER the rendered component. Declaring the default here is what
    defeats the cast: `hasDefault` short-circuits the absent-branch, and `"closed"` is
    neither `""` nor `"collapse"`, so the cast-true branch cannot fire either. */
-const props = withDefaults(defineProps<DockProps>(), {
+const props = withDefaults(defineProps<DockProps & { pinned?: boolean }>(), {
     backdropMode: "live",
     collapse: "closed",
     expandOn: "hover",
     anchor: "center",
     collapsedLabel: "Expand dock",
+    pinned: undefined,
 });
+const emit = defineEmits<{ "update:pinned": [value: boolean] }>();
+const attrs = useAttrs();
+const siteId = computed(() => (typeof attrs.id === "string" ? attrs.id : undefined));
 
 /* The resolved shell-prop computeds — shape/orientation, the collapse surface
    (`alwaysExpanded`/`startCollapsed`, both derived from the one `collapse` member),
@@ -104,6 +110,13 @@ const layersEl = useTemplateRef<HTMLElement>("layersEl");
 const fullEl = useTemplateRef<HTMLElement>("fullEl");
 const summaryEl = useTemplateRef<HTMLElement>("summaryEl");
 const statusEl = useTemplateRef<HTMLElement>("statusEl");
+const plateEl = useTemplateRef<HTMLElement>("plateEl");
+const persistentEl = useTemplateRef<HTMLElement>("persistentEl");
+const persistentEndEl = useTemplateRef<HTMLElement>("persistentEndEl");
+const besideEl = useTemplateRef<HTMLElement>("besideEl");
+const besidePlateEl = useTemplateRef<HTMLElement>("besidePlateEl");
+const neckEl = useTemplateRef<HTMLElement>("neckEl");
+const shadowEl = useTemplateRef<HTMLElement>("shadowEl");
 
 /* THE RUN. The full face IS the run — the box whose children are the seats, the box
    the port scrolls, and the common ancestor the cut-cap timeline scopes to. Reach,
@@ -155,6 +168,7 @@ const {
     release,
     expand,
     collapse,
+    setPinned,
 } = useDockState({
     rootEl: dockEl,
     alwaysExpanded,
@@ -162,7 +176,17 @@ const {
     initialExpanded: !startCollapsed.value,
     isTransitioning,
     dockId,
+    onStateChange: (next, prev) => {
+        if ((next === "pinned") !== (prev === "pinned")) emit("update:pinned", next === "pinned");
+    },
 });
+watch(
+    () => props.pinned,
+    (v) => {
+        if (v !== undefined) setPinned(v);
+    },
+    { immediate: true },
+);
 
 /* Canonical typed-key dock context. The 6 prior
    string-keyed dock provides (`glassDockContext`, `glassDockId`,
@@ -176,13 +200,32 @@ const {
    published as a flag — nothing should paint off "a popover is open". */
 const visualExpanded = computed(() => alwaysExpanded.value || expanded.value);
 
-provideDockContext({
+const dockContext = {
     id: dockId,
     orientation,
     keepOpen,
     release,
     held: graspHeld,
     expanded: visualExpanded,
+};
+provideDockContext(dockContext);
+
+/* W-I.8 R-8: a dock whose root has an id registers under it. */
+watchEffect(() => {
+    const id = siteId.value;
+    if (!id || !dockEl.value) return;
+    dockRegistry.set(id, {
+        id: dockId,
+        context: dockContext,
+        regions: {
+            run: fullEl.value,
+            persistent: persistentEl.value,
+            "persistent-end": persistentEndEl.value,
+        },
+    });
+}, { flush: "post" });
+onBeforeUnmount(() => {
+    if (siteId.value && dockRegistry.get(siteId.value)?.id === dockId) dockRegistry.delete(siteId.value);
 });
 
 /* The SPINE plate owns clipping. Portaled menu and search surfaces remain outside the
@@ -205,41 +248,60 @@ provideDockContext({
    [2026-10-28 · 10.1.3 · O-110] The orchestrator also has it read the boxes painted
    before the posture patch and pin the morph's origins to them when it arms, so an
    edge-anchored dock grows from its anchored edge from the first frame. */
-const geometry = useDockExpandedSize({
-    rootEl: dockEl,
-    contentEl: layersEl,
-    expandedEl: fullEl,
-    collapsedEl: summaryEl,
-    axis: orientation,
+/* W-I.8 R-1: one carrier moves every size the dock has. */
+const reducedMotion = useMediaQuery("(prefers-reduced-motion: reduce)");
+const moving = ref(false);
+const body = useDockBody({
+    root: dockEl,
+    plate: plateEl,
+    regions: () => [
+        { key: "persistent", el: persistentEl.value },
+        { key: "layers", el: layersEl.value },
+        { key: "persistent-end", el: persistentEndEl.value },
+    ],
+    beside: besideEl,
+    besidePlate: besidePlateEl,
+    neck: neckEl,
+    shadow: shadowEl,
+    neckDesign: (): NeckDesign => (dockEl.value?.getAttribute("data-neck") === "b" ? "b" : "a"),
+    expanded: () => visualExpanded.value,
+    vertical: () => orientation.value === "vertical",
+    reducedMotion: () => reducedMotion.value,
+    moving,
 });
-
-/* The dock morph orchestrator owns the built-in collapsed↔expanded pair and writes
-   one root scalar. Nested face swaps are independently owned by DockCrossfade. */
-const outerActiveLayer = computed<string>(() =>
-    visualExpanded.value ? "full" : "summary",
-);
-/* [2026-08-24 · BK #47 W3 LATTICE] ~~`const outerLayerAxis = computed(() =>
-   orientation.value)`~~ — DELETED. `useDockExpandedSize` above now takes `axis:
-   orientation` directly, and this alias' only remaining reader was a comment. It was
-   never a derivation: an identity `computed` over one ref is a second name for that
-   ref, and a second name is exactly how "which axis does the morph run on" acquires
-   two answers that can drift. The orchestrator reads `orientation`. */
-const {
-    outerCurrentLayer,
-    outerLeavingLayer,
-} = useDockMorphOrchestrator({
-    rootEl: dockEl,
-    outerActiveLayer,
-    // `isTransitioning` resolves from the morph's OWN
-    // spring settle: the orchestrator notifies arm→true / settle→false (alongside the
-    // single `[data-morphing]` busy signal). The CSS-transition-era wrong-clock settle
-    // timer + dead `@transitionend` resolver (useDockMorphWindow) are excised — no
-    // legacy timer, no plausibly-settled fallback.
-    onMorphActiveChange: (active) => {
-        isTransitioning.value = active;
+watch(moving, (m) => {
+    isTransitioning.value = m;
+});
+const outerCurrentLayer = ref<string>(visualExpanded.value ? "full" : "summary");
+const outerLeavingLayer = ref<string | null>(null);
+/* `[data-morphing]` is set before the posture class changes; the faces swap pre-flush so
+   the carrier reads where the leaving face painted. */
+watch(
+    visualExpanded,
+    (open) => {
+        dockEl.value?.setAttribute("data-morphing", "");
+        const leave = open ? summaryEl.value : fullEl.value;
+        const enter = open ? fullEl.value : summaryEl.value;
+        body.exchange(leave, enter, "layers");
+        // The fission seat is face content too: it fades on the same windows (R-3, R-6).
+        if (besideEl.value) body.exchange(open ? null : besideEl.value, open ? besideEl.value : null, "beside", false);
+        outerLeavingLayer.value = outerCurrentLayer.value;
+        outerCurrentLayer.value = open ? "full" : "summary";
+        body.onSettle(() => {
+            outerLeavingLayer.value = null;
+        });
     },
-    geometry,
-});
+    { flush: "pre" },
+);
+watch(visualExpanded, () => body.sync("posture"), { flush: "post" });
+if (typeof window !== "undefined") {
+    // Test-only hook: hold every travel of this dock at a given f.
+    (window as unknown as { __dockHold?: Record<string, (f: number | null) => void> }).__dockHold ??= {};
+    (window as unknown as { __dockHold: Record<string, (f: number | null) => void> }).__dockHold[dockId] = body.hold;
+}
+
+/* W-I.8 R-7: the labelled seat. */
+useDockLabels(fullEl, () => orientation.value === "vertical");
 
 const summaryIsDisclosure = computed(() => outerCurrentLayer.value === "summary");
 /** Once the expand has patched the full face live, focus its first seat. The full face
@@ -403,7 +465,7 @@ defineExpose({
         :class="[
             orientation,
             `shape-${shape}`,
-            { expanded: visualExpanded, collapsed: !visualExpanded, pinned: isPinned, 'fit-content': fitContent, 'always-expanded': alwaysExpanded },
+            { expanded: visualExpanded, collapsed: !visualExpanded, pinned: isPinned, 'fit-content': fitContent, 'always-expanded': alwaysExpanded, 'has-beside': !!$slots.beside },
         ]"
         :data-backdrop-mode="props.backdropMode"
         :data-anchor="props.anchor === 'center' ? undefined : props.anchor"
@@ -439,7 +501,8 @@ defineExpose({
             reads their presence, so nothing here needs a releasing flag. The edge is
             `graspHeld` (a pointer down on a descendant), never the posture count.
         -->
-        <div class="dock-plate" aria-hidden="true" :data-held="graspHeld || undefined">
+        <div v-if="$slots.beside" ref="shadowEl" class="dock-shadow" aria-hidden="true"></div>
+        <div ref="plateEl" class="dock-plate" aria-hidden="true" :data-held="graspHeld || undefined">
             <template v-if="grasping">
                 <span class="glass-grasp-carrier" data-grasp="rest"></span>
                 <span
@@ -480,7 +543,11 @@ defineExpose({
             No cartoon box-punch; the morph carries ONE
             deformation-free `--dock-size-scale` box morph on the `scale:` channel.
         -->
-        <div v-if="$slots.persistent" class="dock-persistent">
+        <template v-if="$slots.beside">
+            <div ref="neckEl" class="dock-plate dock-neck" aria-hidden="true" style="display: none"></div>
+            <div ref="besidePlateEl" class="dock-plate dock-plate--beside" aria-hidden="true" style="display: none"></div>
+        </template>
+        <div v-if="$slots.persistent || regionWanted(siteId, 'persistent')" ref="persistentEl" class="dock-persistent">
             <slot name="persistent" />
         </div>
 
@@ -589,10 +656,20 @@ defineExpose({
             to before. The greenfield dock ships BOTH persistent slots natively.
         -->
         <div
-            v-if="$slots['persistent-end']"
+            v-if="$slots['persistent-end'] || regionWanted(siteId, 'persistent-end')"
+            ref="persistentEndEl"
             class="dock-persistent dock-persistent-end"
         >
             <slot name="persistent-end" />
+        </div>
+        <!-- W-I.8 R-6: the fission seat. In flow open; out of flow, hidden and inert folded. -->
+        <div
+            v-if="$slots.beside"
+            ref="besideEl"
+            class="dock-beside"
+            :inert="!visualExpanded || undefined"
+        >
+            <DockFace><slot name="beside" /></DockFace>
         </div>
         </div>
         <!-- /L1 .dock-controls -->
@@ -606,7 +683,5 @@ defineExpose({
             the accessibility tree and silence the announcement it exists to carry.
         -->
         <div ref="statusEl" class="dock-run-status" role="status" aria-live="polite"></div>
-        <!-- The fission BRIDGE + `#split` slot are DEFINITION-ABSENT
-             (the whole fission facility retired decided-terminal; clean break, no alias). -->
     </div>
 </template>

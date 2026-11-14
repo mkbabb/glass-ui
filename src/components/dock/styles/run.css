@@ -523,7 +523,6 @@
     .glass-dock :where(.dock-layers) > .dock-run > [data-glass-dock-seat]:has([aria-current]:not([aria-current="false"])) {
         inline-size: var(--dock-open-seat);
         /* The cross axis is untouched: the open seat is WIDER, never taller. */
-        transition: inline-size var(--spring-dock-duration) var(--spring-dock);
     }
 
     /* Every OTHER seat is exactly one pitch minus the gap. Stating it is what makes the
@@ -532,7 +531,8 @@
     .glass-dock :where(.dock-layers) > .dock-run > :not([aria-current]:not([aria-current="false"])):not(
             [data-glass-dock-seat]:has([aria-current]:not([aria-current="false"]))
         ) {
-        transition: inline-size var(--spring-dock-duration) var(--spring-dock);
+        /* W-I.8: the shorthand that erased the seat's own list is gone (AUDIT rule C);
+           the seat carries inline-size and translate in its own list. */
     }
 
     /* Rotated for a vertical dock: m=2 there, so the open seat is 2·P − gap of BLOCK
@@ -542,7 +542,6 @@
     .glass-dock.vertical :where(.dock-layers) > .dock-run > [data-glass-dock-seat]:has([aria-current]:not([aria-current="false"])) {
         inline-size: auto;
         block-size: var(--dock-open-seat);
-        transition: block-size var(--spring-dock-duration) var(--spring-dock);
     }
 
     .glass-dock.vertical
@@ -550,7 +549,6 @@
         > :not([aria-current]:not([aria-current="false"])):not(
             [data-glass-dock-seat]:has([aria-current]:not([aria-current="false"]))
         ) {
-        transition: block-size var(--spring-dock-duration) var(--spring-dock);
     }
 
     /* THE LABEL BUDGET — and why it is a CLIP, not a token.
@@ -783,14 +781,6 @@
        floor the layers' counter-scale uses), so the scale paints it back to a circle of
        the rest corner on every frame, and the settle, which drops the scale and this
        rule together, changes nothing in paint. */
-    .glass-dock.shape-pill[data-morphing]:not(.vertical) {
-        border-radius: calc(var(--dock-cap-rest) / max(var(--dock-size-scale, 1), 0.06)) /
-            var(--dock-cap-rest);
-    }
-    .glass-dock.shape-pill[data-morphing].vertical {
-        border-radius: var(--dock-cap-rest) /
-            calc(var(--dock-cap-rest) / max(var(--dock-size-scale, 1), 0.06));
-    }
 
     /* Each edge's whole transition is confined to ONE PITCH of travel via
        `animation-range`, so the cap reports "there is more that way" at the granularity

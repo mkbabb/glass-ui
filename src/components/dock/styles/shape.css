@@ -101,12 +101,7 @@
        axis (the cross axis stays 1 — the size morph moves the footprint, it does not
        pinch). The liquid weight lives in the DOCK spring's own overshoot tail
        (DOCK-LADDER §8), not a second parallel punch clock. */
-    .glass-dock[data-morphing]:not(.vertical) {
-        scale: var(--dock-size-scale, 1) 1;
-    }
-    .glass-dock[data-morphing].vertical {
-        scale: 1 var(--dock-size-scale, 1);
-    }
+    /* W-I.8: the root scale is deleted; the carrier writes the plate's insets. */
 
     /* ── RIGID CONTENT over the morphing box ───────────────
        The box-scale rule above scales the WHOLE `.glass-dock` subtree — including the
@@ -130,18 +125,7 @@
        `[data-morphing]` (the residual transform lives ONLY mid-morph); at settle the
        attr clears → both rules drop to `scale: none` over the TRUE box, content
        byte-rigid, ZERO compositing cost at rest (`proof:no-layout-animation` holds). */
-    .glass-dock[data-morphing]:not(.vertical) > .dock-controls > .dock-persistent,
-    .glass-dock[data-morphing]:not(.vertical) > .dock-controls > .dock-layers {
-        scale: calc(1 / max(var(--dock-size-scale, 1), 0.06)) 1;
-        transform-origin: var(--dock-morph-origin) center;
-        will-change: transform;
-    }
-    .glass-dock[data-morphing].vertical > .dock-controls > .dock-persistent,
-    .glass-dock[data-morphing].vertical > .dock-controls > .dock-layers {
-        scale: 1 calc(1 / max(var(--dock-size-scale, 1), 0.06));
-        transform-origin: center var(--dock-morph-origin);
-        will-change: transform;
-    }
+    /* W-I.8: the regions' counter-scales are deleted; they move by translate. */
 
     /* ── The dock is a LOUD MOTION DRIVER (design §L4) ──────────────────────────
        The dock pins `--motion-weight: 1` on its own scope so the descendant control

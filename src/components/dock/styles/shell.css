@@ -242,9 +242,11 @@
            `--glass-edge-light` ring that fought the (now ≤4% α) `--glass-border-dock`
            perimeter; the navigation band reads its rim from the SAME corrected token
            source as cards/dialogs (no dock-local dark rim re-paste). */
-        box-shadow:
-            var(--glass-rim-top), var(--glass-rim-bottom),
-            var(--shadow-dock-override, var(--shadow-dock));
+        /* W-I.8 R-1: the rim pair and the elevation moved to the plate. */
+        --dock-intent: 60ms;
+        --dock-linger: 6s;
+        --dock-linger-max: 6s;
+        --dock-label-size: 0.9375rem;
     }
 
     /* PRESERVE the dark-dock read-weight. The light dock
@@ -315,12 +317,7 @@
        (`.is-press-keepalive`, layers.css GU-4): its pressed control must stay painted and
        hit-testable where the pointer is until the click resolves, so the box does not
        clip while it is held. */
-    .glass-dock[data-morphing]:not(.vertical):not(:has(.is-press-keepalive)) {
-        overflow-x: clip;
-    }
-    .glass-dock[data-morphing].vertical:not(:has(.is-press-keepalive)) {
-        overflow-y: clip;
-    }
+    /* W-I.8: the morph clip is deleted; each region is clipped to the plate while travel runs. */
 
     /* The vertical-dock max-block-size + internal-scroll CONTRACT.
        A vertical dock caps at `--dock-max-block-size` (the `.vertical` rule), but

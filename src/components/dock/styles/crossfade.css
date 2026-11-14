@@ -127,20 +127,7 @@
        `proof:no-layout-animation` floor. PRM snaps the collapse, so the clip is a single
        frame. This is the COMPOUND the synthetic prototypes never composed: a face-swap
        crossfade coexisting with a collapse-morph clip on the same face. */
-    .glass-dock[data-morphing]
-        .dock-crossfade
-        > .dock-face.is-active
-        > .dock-face-content {
-        clip-path: inset(0 calc((1 - var(--dock-morph-t)) * 100%) 0 0);
-        will-change: clip-path;
-    }
-
-    .glass-dock.vertical[data-morphing]
-        .dock-crossfade
-        > .dock-face.is-active
-        > .dock-face-content {
-        clip-path: inset(0 0 calc((1 - var(--dock-morph-t)) * 100%) 0);
-    }
+    /* W-I.8: the face's own posture clip is deleted; the region is clipped to the plate. */
 
     /* PRM — the opacity crossfade snaps (the spring's `respectReducedMotion` jumps
        `--dock-t` 0→1 in one frame). The reserved box + the discrete active/leaving
