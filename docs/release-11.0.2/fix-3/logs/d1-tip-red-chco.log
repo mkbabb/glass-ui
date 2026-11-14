@@ -1,0 +1,59 @@
+
+Running 8 tests using 1 worker
+
+  ✓  1 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:267:1 › edge · a GlassDock page opens and stays alive (2.1s)
+  ✓  2 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:286:1 › edge · the plate edge computes 11.0.0's colour at t = 0, 0.5 and 1 (592ms)
+  ✓  3 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:317:1 › edge · a host's --dock-plate-expanded-border and --dock-plate-collapsed-border still colour the plate edge (622ms)
+  ✘  4 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:377:1 › edge · a host's --glass-border-dock colours the expanded edge (912ms)
+  ✓  5 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:267:1 › edge · a GlassDock page opens and stays alive (2.1s)
+  ✓  6 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:286:1 › edge · the plate edge computes 11.0.0's colour at t = 0, 0.5 and 1 (590ms)
+  ✓  7 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:317:1 › edge · a host's --dock-plate-expanded-border and --dock-plate-collapsed-border still colour the plate edge (577ms)
+  ✘  8 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:377:1 › edge · a host's --glass-border-dock colours the expanded edge (881ms)
+
+
+  1) [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:377:1 › edge · a host's --glass-border-dock colours the expanded edge 
+
+    Error: literal, t = 1: 28.05,24.990000000000002,22.95,0.08 against 0,160,0,0.5
+
+    expect(received).toBeLessThan(expected)
+
+    Expected: < 1.5
+    Received:   135.01
+
+      417 |     const near = (a: number[], b: number[], what: string) => {
+      418 |         const d = Math.max(...a.slice(0, 3).map((v, i) => Math.abs(v - b[i]!)), Math.abs(a[3]! - b[3]!) * 255);
+    > 419 |         expect(d, `${what}: ${a} against ${b}`).toBeLessThan(1.5);
+          |                                                 ^
+      420 |     };
+      421 |     // The even mix of two colours in srgb, interpolated premultiplied.
+      422 |     const half = (x: number[], y: number[]) => {
+        at near (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts:419:49)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts:426:5
+
+    Error Context: tests-visual/test-results/release-11-0-2-edge-·-a-ho-95c2b-k-colours-the-expanded-edge-chromium-headless-new/error-context.md
+
+  2) [coarse-touch] › tests-visual/release-11-0-2.spec.ts:377:1 › edge · a host's --glass-border-dock colours the expanded edge 
+
+    Error: literal, t = 1: 28.05,24.990000000000002,22.95,0.08 against 0,160,0,0.5
+
+    expect(received).toBeLessThan(expected)
+
+    Expected: < 1.5
+    Received:   135.01
+
+      417 |     const near = (a: number[], b: number[], what: string) => {
+      418 |         const d = Math.max(...a.slice(0, 3).map((v, i) => Math.abs(v - b[i]!)), Math.abs(a[3]! - b[3]!) * 255);
+    > 419 |         expect(d, `${what}: ${a} against ${b}`).toBeLessThan(1.5);
+          |                                                 ^
+      420 |     };
+      421 |     // The even mix of two colours in srgb, interpolated premultiplied.
+      422 |     const half = (x: number[], y: number[]) => {
+        at near (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts:419:49)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts:426:5
+
+    Error Context: tests-visual/test-results/release-11-0-2-edge-·-a-ho-95c2b-k-colours-the-expanded-edge-coarse-touch/error-context.md
+
+  2 failed
+    [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:377:1 › edge · a host's --glass-border-dock colours the expanded edge 
+    [coarse-touch] › tests-visual/release-11-0-2.spec.ts:377:1 › edge · a host's --glass-border-dock colours the expanded edge 
+  6 passed (11.7s)

@@ -27,7 +27,7 @@ try {
             const page = await context.newPage();
             let crashed = false;
             page.on("crash", () => (crashed = true));
-            await page.setContent("<div id=d style='width:100px;height:40px;border:1.5px solid red'></div>");
+            await page.setContent("<style>#d{width:100px;height:40px;border:1.5px solid red}</style><div id=d></div>");
             try {
                 await page.addStyleTag({ content: css });
                 await page.waitForTimeout(300);

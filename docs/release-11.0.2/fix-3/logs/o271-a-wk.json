@@ -1,0 +1,891 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "tests-visual/release-11-0-2.config.ts",
+      "release-10-1-5.spec.ts",
+      "release-11-0-2.spec.ts",
+      "--grep",
+      "k3 at 320|s2 O-201|rows ·",
+      "--project=webkit",
+      "--workers=1"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-headless-new",
+        "name": "chromium-headless-new",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "coarse-touch",
+        "name": "coarse-touch",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-0-2.spec.ts",
+          "release-10-1-2.spec.ts",
+          "release-10-1-5.spec.ts",
+          "slider-forced-colors.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-2311",
+        "name": "webkit-2311",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-0-2.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/docs/release-11.0.2/fix-3/logs/o271-a-wk.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5341",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/",
+      "url": "http://localhost:5341",
+      "reuseExistingServer": true,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "release-10-1-5.spec.ts",
+      "file": "release-10-1-5.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "k3 at 320: a capped dock whose seats all show holds the fit law and rests round",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2235,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-14T18:52:32.820Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-5e392602c6680209ca67",
+          "file": "release-10-1-5.spec.ts",
+          "line": 1187,
+          "column": 5
+        },
+        {
+          "title": "s2 O-201 at 1440: at every cap through the fit edge the first and end seats keep their whole ring, and a run that hides nothing rests round",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 420000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 44701,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-14T18:52:35.060Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-1b85b51326fe8760fc07",
+          "file": "release-10-1-5.spec.ts",
+          "line": 2331,
+          "column": 5
+        }
+      ],
+      "suites": [
+        {
+          "title": "critique 5, coarse phone",
+          "file": "release-10-1-5.spec.ts",
+          "line": 1218,
+          "column": 6,
+          "specs": [
+            {
+              "title": "k3 at 320: a capped dock whose seats all show holds the fit law and rests round",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2031,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-14T18:52:30.576Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ba3de8f038291be5029b-bb7cc4ff746dbdfcb9e7",
+              "file": "release-10-1-5.spec.ts",
+              "line": 1187,
+              "column": 5
+            }
+          ]
+        },
+        {
+          "title": "fix 11, coarse phone",
+          "file": "release-10-1-5.spec.ts",
+          "line": 2410,
+          "column": 6,
+          "specs": [
+            {
+              "title": "s2 O-201 at 390: at every cap through the fit edge the first and end seats keep their whole ring, and a run that hides nothing rests round",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 420000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 44809,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-14T18:53:19.768Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ba3de8f038291be5029b-44f524f1c410752981c0",
+              "file": "release-10-1-5.spec.ts",
+              "line": 2331,
+              "column": 5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "release-11-0-2.spec.ts",
+      "file": "release-11-0-2.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "rows · the transport dock's rows fit with a persistent region beside the layers at 360",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "rows",
+                  "description": "{\"collapsed\":false,\"morphing\":false,\"root\":[348,348,348,\"348px\"],\"run\":[286,282],\"layers\":[\"6px\",\"0px\",[64,278]],\"persistent\":[18,40],\"face\":[64,278],\"page\":[360,360],\"scrollers\":[\"dock-layer dock-layer--full dock-run is-active 286/282\"],\"roLoops\":0}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 1984,
+                  "error": {
+                    "message": "Error: the run's scrollWidth is its clientWidth\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m282\u001b[39m\nReceived: \u001b[31m286\u001b[39m",
+                    "stack": "Error: the run's scrollWidth is its clientWidth\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m282\u001b[39m\nReceived: \u001b[31m286\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts:1403:74",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts",
+                      "column": 74,
+                      "line": 1403
+                    },
+                    "snippet": "  1401 |             expect(r.collapsed).toBe(false);\n  1402 |             expect(r.root[0], \"the root's scrollWidth is its clientWidth\").toBe(r.root[1]);\n> 1403 |             expect(r.run[0], \"the run's scrollWidth is its clientWidth\").toBe(r.run[1]);\n       |                                                                          ^\n  1404 |             expect(r.scrollers, \"no element is a horizontal scroller at rest\").toEqual([]);\n  1405 |             expect(r.page[0], \"the page does not scroll sideways\").toBe(r.page[1]);\n  1406 |         });"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts",
+                        "column": 74,
+                        "line": 1403
+                      },
+                      "message": "Error: the run's scrollWidth is its clientWidth\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m282\u001b[39m\nReceived: \u001b[31m286\u001b[39m\n\n  1401 |             expect(r.collapsed).toBe(false);\n  1402 |             expect(r.root[0], \"the root's scrollWidth is its clientWidth\").toBe(r.root[1]);\n> 1403 |             expect(r.run[0], \"the run's scrollWidth is its clientWidth\").toBe(r.run[1]);\n       |                                                                          ^\n  1404 |             expect(r.scrollers, \"no element is a horizontal scroller at rest\").toEqual([]);\n  1405 |             expect(r.page[0], \"the page does not scroll sideways\").toBe(r.page[1]);\n  1406 |         });\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts:1403:74"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-14T18:54:04.605Z",
+                  "annotations": [
+                    {
+                      "type": "rows",
+                      "description": "{\"collapsed\":false,\"morphing\":false,\"root\":[348,348,348,\"348px\"],\"run\":[286,282],\"layers\":[\"6px\",\"0px\",[64,278]],\"persistent\":[18,40],\"face\":[64,278],\"page\":[360,360],\"scrollers\":[\"dock-layer dock-layer--full dock-run is-active 286/282\"],\"roLoops\":0}"
+                    }
+                  ],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/test-results/release-11-0-2-rows-·-the--4db32-on-beside-the-layers-at-360-webkit/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts",
+                    "column": 74,
+                    "line": 1403
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-b440e00b564e53997c38",
+          "file": "release-11-0-2.spec.ts",
+          "line": 1363,
+          "column": 9
+        },
+        {
+          "title": "rows · the transport dock's rows fit with a persistent region beside the layers at 390",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "rows",
+                  "description": "{\"collapsed\":false,\"morphing\":false,\"root\":[378,378,378,\"378px\"],\"run\":[316,312],\"layers\":[\"6px\",\"0px\",[64,308]],\"persistent\":[18,40],\"face\":[64,308],\"page\":[390,390],\"scrollers\":[\"dock-layer dock-layer--full dock-run is-active 316/312\"],\"roLoops\":0}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 2101,
+                  "error": {
+                    "message": "Error: the run's scrollWidth is its clientWidth\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m312\u001b[39m\nReceived: \u001b[31m316\u001b[39m",
+                    "stack": "Error: the run's scrollWidth is its clientWidth\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m312\u001b[39m\nReceived: \u001b[31m316\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts:1403:74",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts",
+                      "column": 74,
+                      "line": 1403
+                    },
+                    "snippet": "  1401 |             expect(r.collapsed).toBe(false);\n  1402 |             expect(r.root[0], \"the root's scrollWidth is its clientWidth\").toBe(r.root[1]);\n> 1403 |             expect(r.run[0], \"the run's scrollWidth is its clientWidth\").toBe(r.run[1]);\n       |                                                                          ^\n  1404 |             expect(r.scrollers, \"no element is a horizontal scroller at rest\").toEqual([]);\n  1405 |             expect(r.page[0], \"the page does not scroll sideways\").toBe(r.page[1]);\n  1406 |         });"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts",
+                        "column": 74,
+                        "line": 1403
+                      },
+                      "message": "Error: the run's scrollWidth is its clientWidth\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m312\u001b[39m\nReceived: \u001b[31m316\u001b[39m\n\n  1401 |             expect(r.collapsed).toBe(false);\n  1402 |             expect(r.root[0], \"the root's scrollWidth is its clientWidth\").toBe(r.root[1]);\n> 1403 |             expect(r.run[0], \"the run's scrollWidth is its clientWidth\").toBe(r.run[1]);\n       |                                                                          ^\n  1404 |             expect(r.scrollers, \"no element is a horizontal scroller at rest\").toEqual([]);\n  1405 |             expect(r.page[0], \"the page does not scroll sideways\").toBe(r.page[1]);\n  1406 |         });\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts:1403:74"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-14T18:54:06.927Z",
+                  "annotations": [
+                    {
+                      "type": "rows",
+                      "description": "{\"collapsed\":false,\"morphing\":false,\"root\":[378,378,378,\"378px\"],\"run\":[316,312],\"layers\":[\"6px\",\"0px\",[64,308]],\"persistent\":[18,40],\"face\":[64,308],\"page\":[390,390],\"scrollers\":[\"dock-layer dock-layer--full dock-run is-active 316/312\"],\"roLoops\":0}"
+                    }
+                  ],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/test-results/release-11-0-2-rows-·-the--be387-on-beside-the-layers-at-390-webkit/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts",
+                    "column": 74,
+                    "line": 1403
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-0b94c291bd66df0d2d03",
+          "file": "release-11-0-2.spec.ts",
+          "line": 1363,
+          "column": 9
+        },
+        {
+          "title": "rows · the transport dock's rows fit with a persistent region beside the layers at 1440",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "rows",
+                  "description": "{\"collapsed\":false,\"morphing\":false,\"root\":[960,960,960,\"960px\"],\"run\":[898,894],\"layers\":[\"6px\",\"0px\",[298,890]],\"persistent\":[252,40],\"face\":[298,890],\"page\":[1440,1440],\"scrollers\":[\"dock-layer dock-layer--full dock-run is-active 898/894\"],\"roLoops\":0}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 2117,
+                  "error": {
+                    "message": "Error: the run's scrollWidth is its clientWidth\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m894\u001b[39m\nReceived: \u001b[31m898\u001b[39m",
+                    "stack": "Error: the run's scrollWidth is its clientWidth\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m894\u001b[39m\nReceived: \u001b[31m898\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts:1403:74",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts",
+                      "column": 74,
+                      "line": 1403
+                    },
+                    "snippet": "  1401 |             expect(r.collapsed).toBe(false);\n  1402 |             expect(r.root[0], \"the root's scrollWidth is its clientWidth\").toBe(r.root[1]);\n> 1403 |             expect(r.run[0], \"the run's scrollWidth is its clientWidth\").toBe(r.run[1]);\n       |                                                                          ^\n  1404 |             expect(r.scrollers, \"no element is a horizontal scroller at rest\").toEqual([]);\n  1405 |             expect(r.page[0], \"the page does not scroll sideways\").toBe(r.page[1]);\n  1406 |         });"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts",
+                        "column": 74,
+                        "line": 1403
+                      },
+                      "message": "Error: the run's scrollWidth is its clientWidth\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m894\u001b[39m\nReceived: \u001b[31m898\u001b[39m\n\n  1401 |             expect(r.collapsed).toBe(false);\n  1402 |             expect(r.root[0], \"the root's scrollWidth is its clientWidth\").toBe(r.root[1]);\n> 1403 |             expect(r.run[0], \"the run's scrollWidth is its clientWidth\").toBe(r.run[1]);\n       |                                                                          ^\n  1404 |             expect(r.scrollers, \"no element is a horizontal scroller at rest\").toEqual([]);\n  1405 |             expect(r.page[0], \"the page does not scroll sideways\").toBe(r.page[1]);\n  1406 |         });\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts:1403:74"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-14T18:54:09.564Z",
+                  "annotations": [
+                    {
+                      "type": "rows",
+                      "description": "{\"collapsed\":false,\"morphing\":false,\"root\":[960,960,960,\"960px\"],\"run\":[898,894],\"layers\":[\"6px\",\"0px\",[298,890]],\"persistent\":[252,40],\"face\":[298,890],\"page\":[1440,1440],\"scrollers\":[\"dock-layer dock-layer--full dock-run is-active 898/894\"],\"roLoops\":0}"
+                    }
+                  ],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/test-results/release-11-0-2-rows-·-the--7c554-n-beside-the-layers-at-1440-webkit/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts",
+                    "column": 74,
+                    "line": 1403
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-b3e6ca3aedd452579099",
+          "file": "release-11-0-2.spec.ts",
+          "line": 1363,
+          "column": 9
+        },
+        {
+          "title": "rows · the editor dock's rows fit with a persistent region beside the layers at 360",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "rows",
+                  "description": "{\"collapsed\":false,\"morphing\":false,\"root\":[288,288,288,\"288px\"],\"run\":[172,168],\"layers\":[\"6px\",\"0px\",[151.86,160]],\"persistent\":[48.14,97.72],\"face\":[151.86,164],\"page\":[360,360],\"scrollers\":[\"dock-layer dock-layer--full dock-run is-active 172/168\"],\"roLoops\":0}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 2116,
+                  "error": {
+                    "message": "Error: the run's scrollWidth is its clientWidth\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m168\u001b[39m\nReceived: \u001b[31m172\u001b[39m",
+                    "stack": "Error: the run's scrollWidth is its clientWidth\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m168\u001b[39m\nReceived: \u001b[31m172\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts:1403:74",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts",
+                      "column": 74,
+                      "line": 1403
+                    },
+                    "snippet": "  1401 |             expect(r.collapsed).toBe(false);\n  1402 |             expect(r.root[0], \"the root's scrollWidth is its clientWidth\").toBe(r.root[1]);\n> 1403 |             expect(r.run[0], \"the run's scrollWidth is its clientWidth\").toBe(r.run[1]);\n       |                                                                          ^\n  1404 |             expect(r.scrollers, \"no element is a horizontal scroller at rest\").toEqual([]);\n  1405 |             expect(r.page[0], \"the page does not scroll sideways\").toBe(r.page[1]);\n  1406 |         });"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts",
+                        "column": 74,
+                        "line": 1403
+                      },
+                      "message": "Error: the run's scrollWidth is its clientWidth\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m168\u001b[39m\nReceived: \u001b[31m172\u001b[39m\n\n  1401 |             expect(r.collapsed).toBe(false);\n  1402 |             expect(r.root[0], \"the root's scrollWidth is its clientWidth\").toBe(r.root[1]);\n> 1403 |             expect(r.run[0], \"the run's scrollWidth is its clientWidth\").toBe(r.run[1]);\n       |                                                                          ^\n  1404 |             expect(r.scrollers, \"no element is a horizontal scroller at rest\").toEqual([]);\n  1405 |             expect(r.page[0], \"the page does not scroll sideways\").toBe(r.page[1]);\n  1406 |         });\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts:1403:74"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-14T18:54:12.190Z",
+                  "annotations": [
+                    {
+                      "type": "rows",
+                      "description": "{\"collapsed\":false,\"morphing\":false,\"root\":[288,288,288,\"288px\"],\"run\":[172,168],\"layers\":[\"6px\",\"0px\",[151.86,160]],\"persistent\":[48.14,97.72],\"face\":[151.86,164],\"page\":[360,360],\"scrollers\":[\"dock-layer dock-layer--full dock-run is-active 172/168\"],\"roLoops\":0}"
+                    }
+                  ],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/test-results/release-11-0-2-rows-·-the--f00d1-on-beside-the-layers-at-360-webkit/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts",
+                    "column": 74,
+                    "line": 1403
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-569125c9cb5c24707861",
+          "file": "release-11-0-2.spec.ts",
+          "line": 1363,
+          "column": 9
+        },
+        {
+          "title": "rows · the editor dock's rows fit with a persistent region beside the layers at 390",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "rows",
+                  "description": "{\"collapsed\":false,\"morphing\":false,\"root\":[288,288,288,\"288px\"],\"run\":[172,168],\"layers\":[\"6px\",\"0px\",[166.86,160]],\"persistent\":[63.14,97.72],\"face\":[166.86,164],\"page\":[390,390],\"scrollers\":[\"dock-layer dock-layer--full dock-run is-active 172/168\"],\"roLoops\":0}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 2083,
+                  "error": {
+                    "message": "Error: the run's scrollWidth is its clientWidth\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m168\u001b[39m\nReceived: \u001b[31m172\u001b[39m",
+                    "stack": "Error: the run's scrollWidth is its clientWidth\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m168\u001b[39m\nReceived: \u001b[31m172\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts:1403:74",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts",
+                      "column": 74,
+                      "line": 1403
+                    },
+                    "snippet": "  1401 |             expect(r.collapsed).toBe(false);\n  1402 |             expect(r.root[0], \"the root's scrollWidth is its clientWidth\").toBe(r.root[1]);\n> 1403 |             expect(r.run[0], \"the run's scrollWidth is its clientWidth\").toBe(r.run[1]);\n       |                                                                          ^\n  1404 |             expect(r.scrollers, \"no element is a horizontal scroller at rest\").toEqual([]);\n  1405 |             expect(r.page[0], \"the page does not scroll sideways\").toBe(r.page[1]);\n  1406 |         });"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts",
+                        "column": 74,
+                        "line": 1403
+                      },
+                      "message": "Error: the run's scrollWidth is its clientWidth\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m168\u001b[39m\nReceived: \u001b[31m172\u001b[39m\n\n  1401 |             expect(r.collapsed).toBe(false);\n  1402 |             expect(r.root[0], \"the root's scrollWidth is its clientWidth\").toBe(r.root[1]);\n> 1403 |             expect(r.run[0], \"the run's scrollWidth is its clientWidth\").toBe(r.run[1]);\n       |                                                                          ^\n  1404 |             expect(r.scrollers, \"no element is a horizontal scroller at rest\").toEqual([]);\n  1405 |             expect(r.page[0], \"the page does not scroll sideways\").toBe(r.page[1]);\n  1406 |         });\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts:1403:74"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-14T18:54:14.729Z",
+                  "annotations": [
+                    {
+                      "type": "rows",
+                      "description": "{\"collapsed\":false,\"morphing\":false,\"root\":[288,288,288,\"288px\"],\"run\":[172,168],\"layers\":[\"6px\",\"0px\",[166.86,160]],\"persistent\":[63.14,97.72],\"face\":[166.86,164],\"page\":[390,390],\"scrollers\":[\"dock-layer dock-layer--full dock-run is-active 172/168\"],\"roLoops\":0}"
+                    }
+                  ],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/test-results/release-11-0-2-rows-·-the--4767f-on-beside-the-layers-at-390-webkit/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts",
+                    "column": 74,
+                    "line": 1403
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-680c32e4a2247ee179bd",
+          "file": "release-11-0-2.spec.ts",
+          "line": 1363,
+          "column": 9
+        },
+        {
+          "title": "rows · the editor dock's rows fit with a persistent region beside the layers at 1440",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "rows",
+                  "description": "{\"collapsed\":false,\"morphing\":false,\"root\":[288,288,288,\"288px\"],\"run\":[172,168],\"layers\":[\"6px\",\"0px\",[691.86,160]],\"persistent\":[588.14,97.72],\"face\":[691.86,164],\"page\":[1440,1440],\"scrollers\":[\"dock-layer dock-layer--full dock-run is-active 172/168\"],\"roLoops\":0}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 2058,
+                  "error": {
+                    "message": "Error: the run's scrollWidth is its clientWidth\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m168\u001b[39m\nReceived: \u001b[31m172\u001b[39m",
+                    "stack": "Error: the run's scrollWidth is its clientWidth\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m168\u001b[39m\nReceived: \u001b[31m172\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts:1403:74",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts",
+                      "column": 74,
+                      "line": 1403
+                    },
+                    "snippet": "  1401 |             expect(r.collapsed).toBe(false);\n  1402 |             expect(r.root[0], \"the root's scrollWidth is its clientWidth\").toBe(r.root[1]);\n> 1403 |             expect(r.run[0], \"the run's scrollWidth is its clientWidth\").toBe(r.run[1]);\n       |                                                                          ^\n  1404 |             expect(r.scrollers, \"no element is a horizontal scroller at rest\").toEqual([]);\n  1405 |             expect(r.page[0], \"the page does not scroll sideways\").toBe(r.page[1]);\n  1406 |         });"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts",
+                        "column": 74,
+                        "line": 1403
+                      },
+                      "message": "Error: the run's scrollWidth is its clientWidth\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m168\u001b[39m\nReceived: \u001b[31m172\u001b[39m\n\n  1401 |             expect(r.collapsed).toBe(false);\n  1402 |             expect(r.root[0], \"the root's scrollWidth is its clientWidth\").toBe(r.root[1]);\n> 1403 |             expect(r.run[0], \"the run's scrollWidth is its clientWidth\").toBe(r.run[1]);\n       |                                                                          ^\n  1404 |             expect(r.scrollers, \"no element is a horizontal scroller at rest\").toEqual([]);\n  1405 |             expect(r.page[0], \"the page does not scroll sideways\").toBe(r.page[1]);\n  1406 |         });\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts:1403:74"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-14T18:54:17.325Z",
+                  "annotations": [
+                    {
+                      "type": "rows",
+                      "description": "{\"collapsed\":false,\"morphing\":false,\"root\":[288,288,288,\"288px\"],\"run\":[172,168],\"layers\":[\"6px\",\"0px\",[691.86,160]],\"persistent\":[588.14,97.72],\"face\":[691.86,164],\"page\":[1440,1440],\"scrollers\":[\"dock-layer dock-layer--full dock-run is-active 172/168\"],\"roLoops\":0}"
+                    }
+                  ],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/test-results/release-11-0-2-rows-·-the--a7f21-n-beside-the-layers-at-1440-webkit/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts",
+                    "column": 74,
+                    "line": 1403
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-8247efd9d38fe018777f",
+          "file": "release-11-0-2.spec.ts",
+          "line": 1363,
+          "column": 9
+        },
+        {
+          "title": "rows · the stretched dock's rows fit with a persistent region beside the layers at 360",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "rows",
+                  "description": "{\"collapsed\":false,\"morphing\":false,\"root\":[328,328,328,\"328px\"],\"run\":[262,262],\"layers\":[\"6px\",\"0px\",[74,258]],\"persistent\":[28,40],\"face\":[74,40],\"page\":[360,360],\"scrollers\":[],\"roLoops\":0}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 6,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2049,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-14T18:54:19.892Z",
+                  "annotations": [
+                    {
+                      "type": "rows",
+                      "description": "{\"collapsed\":false,\"morphing\":false,\"root\":[328,328,328,\"328px\"],\"run\":[262,262],\"layers\":[\"6px\",\"0px\",[74,258]],\"persistent\":[28,40],\"face\":[74,40],\"page\":[360,360],\"scrollers\":[],\"roLoops\":0}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-cb313cce2078e85f5f4f",
+          "file": "release-11-0-2.spec.ts",
+          "line": 1363,
+          "column": 9
+        },
+        {
+          "title": "rows · the stretched dock's rows fit with a persistent region beside the layers at 390",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "rows",
+                  "description": "{\"collapsed\":false,\"morphing\":false,\"root\":[358,358,358,\"358px\"],\"run\":[292,292],\"layers\":[\"6px\",\"0px\",[74,288]],\"persistent\":[28,40],\"face\":[74,40],\"page\":[390,390],\"scrollers\":[],\"roLoops\":0}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 6,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1870,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-14T18:54:22.113Z",
+                  "annotations": [
+                    {
+                      "type": "rows",
+                      "description": "{\"collapsed\":false,\"morphing\":false,\"root\":[358,358,358,\"358px\"],\"run\":[292,292],\"layers\":[\"6px\",\"0px\",[74,288]],\"persistent\":[28,40],\"face\":[74,40],\"page\":[390,390],\"scrollers\":[],\"roLoops\":0}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-22b2760f062fffe6253f",
+          "file": "release-11-0-2.spec.ts",
+          "line": 1363,
+          "column": 9
+        },
+        {
+          "title": "rows · the stretched dock's rows fit with a persistent region beside the layers at 1440",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "rows",
+                  "description": "{\"collapsed\":false,\"morphing\":false,\"root\":[1408,1408,1408,\"1408px\"],\"run\":[1342,1342],\"layers\":[\"6px\",\"0px\",[74,1338]],\"persistent\":[28,40],\"face\":[74,40],\"page\":[1440,1440],\"scrollers\":[],\"roLoops\":0}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 6,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1877,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-14T18:54:23.989Z",
+                  "annotations": [
+                    {
+                      "type": "rows",
+                      "description": "{\"collapsed\":false,\"morphing\":false,\"root\":[1408,1408,1408,\"1408px\"],\"run\":[1342,1342],\"layers\":[\"6px\",\"0px\",[74,1338]],\"persistent\":[28,40],\"face\":[74,40],\"page\":[1440,1440],\"scrollers\":[],\"roLoops\":0}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-de3e2d5c47339819173e",
+          "file": "release-11-0-2.spec.ts",
+          "line": 1363,
+          "column": 9
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-14T18:52:28.865Z",
+    "duration": 117034.891,
+    "expected": 7,
+    "skipped": 0,
+    "unexpected": 6,
+    "flaky": 0
+  }
+}
