@@ -10,10 +10,16 @@ orchestrator notes `-fable-review`, `-mark-press`, `-table-nested`, `-mark-box` 
 Every browser and heavy run went through `~/.claude/guard/guarded`, every WebKit run under
 `--exclusive webkit`, one run at a time. WebKit is Playwright's build 2287.
 
-**The guard REFUSED at 04:09:05** (`kernel zone data.kalloc.1024 at 8.05M … reboot the
-Mac`). Everything queued after that moment returned exit 75 without running, and this
-critic stopped there. So this round is **not fully measured**: the cells that did not run are
-listed under "What ran". Every finding below was read before the refusal, in both engines.
+**The guard refused at 04:09:05 on 2026-11-13** (`kernel zone data.kalloc.1024 at 8.05M …
+reboot the Mac`), and the first sitting stopped there, committed as `6f3df31a7`. **This
+record is that one, amended in place on 2026-11-14 after the reboot.** The resumed sitting
+ran only what the refusal cut (`critic-7/chain7d.sh`, `chain.log` from the `RESUME` line):
+the two reruns, the fix-3 witness in WebKit on both trees, v11.0.0 in WebKit for the fix-2,
+fix-4 and fix-5 witnesses and lanes L1 to L5, the 11.0.1 release specs in WebKit, and the
+e2e specs in WebKit on both trees. The guard admitted every one (one-minute load 13 to 40;
+lock and headroom waits only). Every cell banked before the stop is kept with its log and
+was not run again. **The round is now fully measured.** The resumed runs changed no finding:
+they cleared the two unconfirmed readings and found nothing new.
 
 Records, all under `critic-7/`: `chain.log` (every run and its exit, in order, the refusal
 included), the drivers `chain7.sh`, `chain7b.sh`, `chain7c.sh`, `run.sh`, `gates.sh`,
@@ -35,7 +41,8 @@ Not ready to tag.
    11.0.1 ship 16 px (low).
 
 Fix 7's cures hold in both engines, the merge is in (`git merge-base --is-ancestor v11.0.1
-HEAD` exits 0), and every lane and fix witness this round reached reproduces on both trees.
+HEAD` exits 0), and every lane and fix witness reproduces on both trees in both engines:
+green on the branch, red on v11.0.0.
 
 ## What ran
 
@@ -46,51 +53,63 @@ HEAD` exits 0), and every lane and fix witness this round reached reproduces on 
 | this round's probe10 (plate on its control, 40 judged cells) | 36/40 | 36/40 | 24/40 | 24/40 |
 | probe10 on v11.0.1 | 24/40 (Chromium) | | | |
 | fix 6 witness | 16/16 | 16/16 | 4/16 | 4/16 |
-| fix 5 witness | 40/40 | 40/40 | 0/40 | REFUSED |
-| fix 4 witness | 17/17 | 17/17 | 11/17 | REFUSED |
-| fix 3 witness | 26/26 | REFUSED | layout 5/5, gap 0/7, frames 2/2, Slider 3/3, tempo 1/1, tabs 4/8 | REFUSED |
-| fix 2 witness | 60/60 | 60/60 | 36/60 | REFUSED |
-| lane L1 | 27/27 | 27/27 | exit 1 | REFUSED |
-| lane L2 | 33/33 | 29/29, O-173 paint unmeasurable (4) | 3/29 + 4 unmeasurable | REFUSED |
-| lane L3 | 18/18 | 18/18 | 6/18 | REFUSED |
-| lane L4 | exit 0 | exit 0 | exit 1 | REFUSED |
-| lane L5 | 60/60 | 60/60 | 26/60 | REFUSED |
+| fix 5 witness | 40/40 | 40/40 | 0/40 | 0/40 |
+| fix 4 witness | 17/17 | 17/17 | 11/17 | 11/17 |
+| fix 3 witness | 26/26 | 26/26 | layout 5/5, gap 0/7, frames 2/2, Slider 3/3, tempo 1/1, tabs 4/8 | the same six readings, 15/26 |
+| fix 2 witness | 60/60 | 60/60 | 36/60 | 36/60 |
+| lane L1 | 27/27 | 27/27 | exit 1 | 0/27 |
+| lane L2 | 33/33 | 29/29, O-173 paint unmeasurable (4) | 3/29 + 4 unmeasurable | 3/29 + 4 unmeasurable |
+| lane L3 | 18/18 | 18/18 | 6/18 | 6/18 |
+| lane L4 | exit 0 | exit 0 | exit 1 | exit 1 (fonts 0 of 8) |
+| lane L5 | 60/60 | 60/60 | 26/60 | 26/60 |
 | lane L6 | 161/161 | 155/155 | exit 1 | exit 1 |
-| lane L7 | 80/80 | 62/80 (below) | 4/64 | 16/64 |
+| lane L7 | 80/80 | 62/80, then 80/80 on the rerun (below) | 4/64 | 16/64 |
 
 probe10's four branch misses are finding 1. Its sixteen misses on v11.0.0 and v11.0.1 are the
 glyph cells: those trees draw no plate on a glyph control with `aria-current`, which is what
 this release adds.
 
-**Lane L7 in WebKit, 62/80: an instrument reading, not confirmed.** The 18 misses are the
-sixteen "drawn: once, after the last stroke frame" cells and two stall cells (1440 light,
-strike and highlight: one frame inside the task, the class `orchestrator-note-after-fix-7.md`
-restates to two frames). In all sixteen
-the page's own record is right (`count: 1, running: 0, finalAtDrawn: true`); the cell failed
-because the screencast held no frame after the event (`firstFrameAfterDrawn: -1`), where
-fix 7's run of the same source saw thirty. A rerun was queued and the guard refused it. The
-source has not changed since fix 7 read 79/80, so this is recorded as unmeasured this round,
-in open gaps, and not called a defect.
+The v11.0.0 column in WebKit is the resumed sitting's. Every item is red there as it is in
+Chromium: lane L1's 27 cells all fail (no unclipped collapsed seat, no run mark, the rim off
+the border, the rim writing on a tick), and the fix-2 witness reads the nested table 0/4,
+the Collapsible gap 0/4, G13 and G14 2/4 each.
 
-The 11.0.1 release specs on the branch (`critic-7/release/runs.txt`), Chromium only:
+**Lane L7 in WebKit: 62/80 on the first pass, 80/80 on the rerun. Cleared.** The first
+pass's 18 misses were the sixteen "drawn: once, after the last stroke frame" cells and two
+stall cells. In all sixteen the page's own record was right (`count: 1, running: 0,
+finalAtDrawn: true`); the cell failed because the screencast held no frame after the event
+(`firstFrameAfterDrawn: -1`). The rerun on a calm machine (`rerun/lane-L7/out/
+green-webkit.log`; the first pass kept in `out-first/`) reads the sixteen 16/16. Read twice:
+the same source, the same page record, and the cells pass when the screencast holds frames,
+so the first reading was the instrument. The rerun's stall cells read "unmeasurable" (no
+compositor frame inside the task; recorded, not gated), so the two stall misses are neither
+reproduced nor a pass: `orchestrator-note-after-fix-7.md` restates that cell to two frames.
+
+The 11.0.1 release specs on the branch (`critic-7/release/runs.txt`), both engines:
 
 | spec | Chromium | WebKit |
 | --- | --- | --- |
-| `release-10-1-5` part A | 84/84 | REFUSED |
-| `release-10-1-5` part B | 22 passed, **1 failed** (below) | REFUSED |
-| `release-10-1-4` | 23/23 | REFUSED |
-| `release-10-1-3` | 53 passed, 7 failed: fix 7's seven titles exactly (`release/g6-3-ch-failed.txt`) | REFUSED |
-| `release-10-1-2` | 44 passed, 8 failed: fix 7's eight titles exactly | REFUSED |
-| `release-11-0-1` (owner cells) | 9/9 | REFUSED |
-| `release-11-0-1-fix-2` | 14/14 | REFUSED |
-| `release-11-0-1-critic-2` | 9/9 | REFUSED |
+| `release-10-1-5` part A | 84/84 | 84/84 |
+| `release-10-1-5` part B | 22 passed, 1 failed; 23/23 on the rerun (below) | 23/23 |
+| `release-10-1-4` | 23/23 | 15 passed, 8 skipped (as fix 7) |
+| `release-10-1-3` | 53 passed, 7 failed: fix 7's seven titles exactly (`release/g6-3-ch-failed.txt`) | 53 passed, 5 failed, 2 skipped: fix 7's five (four open-side seat clicks, the dwell after a right-click) |
+| `release-10-1-2` | 44 passed, 8 failed: fix 7's eight titles exactly | 44 passed, 8 failed: the same eight |
+| `release-11-0-1` (owner cells) | 9/9 | 9/9 |
+| `release-11-0-1-fix-2` | 14/14 | 14/14 |
+| `release-11-0-1-critic-2` | 9/9 | 9/9 |
 
-**`release-10-1-5` part B, one failure: unresolved.** "critique 10, coarse phone › p2 a 1-2 px
-host change across the fit edge mid-expand holds every seat at the settle" failed once
-(`release/partB-ch.log`: a seat read 30.6 px mid-morph against 20.5 px at rest), in a run
-that started at a one-minute load of 246. Its fine-pointer twin passed in the same run and
-fix 7 read both green on this source. The rerun was refused. It is in open gaps: one reading
-under load is not a reproduction, and it is not cleared either.
+**`release-10-1-5` part B: one failure under load, 23/23 on the rerun. Cleared.** "critique
+10, coarse phone › p2 a 1-2 px host change across the fit edge mid-expand holds every seat
+at the settle" failed once (`release/partB-ch.log`: a seat read 30.6 px mid-morph against
+20.5 px at rest) in a run that started at a one-minute load of 246. The rerun of all of
+part B in Chromium at a load of 37 passes 23/23 (`release-rerun/runs.txt`), and WebKit reads
+23/23 too. Read twice: fix 7 green on this source, this rerun green, WebKit green, one miss
+at a load of 246. The cell samples a morph at fixed delays; the miss was the machine.
+
+The two failing sets that remain (`release-10-1-3`'s D-1 cells, `release-10-1-2`'s eight
+O-101 cells) are not new: the first is the owner's later rule and
+`orchestrator-note-after-fix-7.md` orders those cells restated; the second fails the same
+way on v11.0.0 and 11.0.1.
 
 **Gates, committed tree `a6b92fbc3`** (`gates/head/chain.log`, one guarded run): build 0,
 typecheck 0, demo:dist:build 0, vitest 0 (279 files; 2579 passed, 10 expected fail,
@@ -98,8 +117,11 @@ typecheck 0, demo:dist:build 0, vitest 0 (279 files; 2579 passed, 10 expected fa
 
 **e2e**, the seventeen specs, one worker, Chromium: the branch 65 passed, 37 failed,
 2 skipped; v11.0.0 the same; the failed title sets are identical to each other and to fix 7's
-(`e2e/chromium-*-fails.txt`). WebKit: REFUSED on both trees. The run rewrote five tracked
-captures under `docs/tranches/BA/audit/visual/`; this critic restored them.
+(`e2e/chromium-*-fails.txt`). WebKit 2287: the branch 65 passed, 37 failed, 2 skipped;
+v11.0.0 the same; the 37 titles are the same on both trees and the same as fix 7's WebKit
+set (`e2e/webkit-*-fails.txt`). So the e2e specs show no regression and no cure in either
+engine. Each run rewrote five tracked captures under `docs/tranches/BA/audit/visual/`; this
+critic restored them both times.
 
 ## Defects (reproduced)
 
@@ -254,27 +276,25 @@ and `package.json` reads 11.0.1; the close sets both.
   page's own record first and say "unmeasurable" when the screencast is empty, as its stall
   cells do.
 - **`release-10-1-5` p2 (coarse phone) failed once at a load of 246** and passed in fix 7's
-  run; a cell that samples a morph at fixed delays needs a calm machine or a frame-indexed
-  read.
+  run and in this round's rerun; a cell that samples a morph at fixed delays needs a calm
+  machine or a frame-indexed read.
 - **A second pass of a witness over the same output folder overwrites the first pass's
   log.** This round's refused pass replaced the green WebKit logs of lanes L1 to L5 and the
   fix-2 witness with the guard's refusal line; their verdicts stand in `chain.log` and in the
   `green-webkit.json` beside each. Drivers should write a refused run to its own file.
-- **The kernel zone reached 8.05M at 04:09** and the guard refuses every heavy and browser
-  run until the Mac is rebooted.
+- **The kernel zone reached 8.05M at 04:09 on 2026-11-13** and the guard refused until the
+  reboot; after it the zone reads under 0.1M.
 
 ## Open gaps
 
-- **Not measured this round (guard refusal):** in WebKit, the fix-3 witness on either tree,
-  the 11.0.1 release specs, the e2e specs, and v11.0.0 for the fix-2, fix-4 and fix-5
-  witnesses and lanes L1 to L5; the reruns of lane L7 in WebKit and of `release-10-1-5`
-  part B in Chromium. For the v11.0.0 WebKit cells, critique 6's readings of the same tree
-  stand.
-- **Lane L7 in WebKit read 62/80** on a screencast with no frame after `drawn`; unconfirmed.
-- **`release-10-1-5` p2 (coarse phone) failed once under load**; unconfirmed.
+- Nothing is left unmeasured: the cells the refusal cut ran on 2026-11-14 and are in the
+  tables above.
+- **Lane L7's stall cells in WebKit were unmeasurable on the rerun** (no compositor frame
+  inside the task), so the first pass's two one-frame readings stand as the only ones this
+  round; the cell is to ask for two frames (next item).
 - **`orchestrator-note-after-fix-7.md` is not yet acted on:** the seven D-1 cells of
   `release-10-1-3.spec.ts` still assert that a press on a persistent seat expands the dock
-  (7 failed, Chromium), and lane L7's WebKit stall cell still asks for one frame.
+  (7 failed in Chromium, 5 in WebKit), and lane L7's WebKit stall cell still asks for one frame.
 - **master has moved past the merge** (`git merge-base --is-ancestor master HEAD` exits 1:
   the browser-free Actions and the sparse checkout, `4db0b22dd` and `ee1dc2935`).
   `orchestrator-note-ci-browser-free.md` gives it to the close seat, with a ratchet rebind.
@@ -286,5 +306,5 @@ and `package.json` reads 11.0.1; the close sets both.
 2. One headline line for `--radius-dock`. Gate: finding 2's.
 3. The two instructions of `orchestrator-note-after-fix-7.md` (the seven D-1 cells restated
    to the owner's rule; lane L7's stall cell asking for two frames).
-4. After a reboot: the WebKit cells listed under open gaps, and the two unconfirmed readings
-   (lane L7 in WebKit, `release-10-1-5` p2) each run once on a calm machine.
+4. Nothing is owed from the stop: the WebKit cells and the two reruns ran after the reboot
+   and are green where the branch should be and red where v11.0.0 should be.

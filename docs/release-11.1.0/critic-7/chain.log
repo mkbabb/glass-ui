@@ -93,3 +93,34 @@ disk /dev/disk3s5   1.8Ti   1.7Ti    45Gi    98%     23M  471M    5%   /System/V
 04:09:14 lane L7 webkit rerun: [guarded] REFUSED: kernel zone data.kalloc.1024 at 8.05M (panics near 20.8M; heavy and browser runs stop at 8M): reboot the Mac
 04:09:14 CHAIN-C-DONE
 04:09:18 STOP: guarded REFUSED (kernel zone data.kalloc.1024 at 8.05M) from 04:09:05; chain C stopped by PID; nothing further runs this round
+13:36:33 RESUME (2026-11-14, after the reboot): partB l7 fix3 redw relw e2ew
+13:36:33 disk 74G free, load 17.59 8.71 5.69
+13:44:24 release-rerun partB ch exit 0: 13:44 partB-ch rc=0 head=6f3df31a7 load=36.93 28.20 17.00  23 passed (7.7m) 
+13:44:24 PHASE-D-partB-DONE
+13:44:24 disk 68G free, load 39.25 28.83 17.29
+13:47:46 lane L7 webkit rerun: 13:47:46 green webkit tree=/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0 exit 0 :: green webkit: 80/80
+13:47:46 PHASE-D-l7-DONE
+13:47:46 disk 66G free, load 21.91 27.19 19.14
+13:48:56 fix3-witness green webkit exit 0
+13:49:49 fix3-witness red webkit exit 0
+13:49:49 fix3 judge webkit: green webkit Collapsible layout: 5/5;green webkit Collapsible gap: 7/7;green webkit Collapsible frames: 2/2;green webkit Slider controlled: 3/3;green webkit Root tempo: 1/1;green webkit Tabs radius: 8/8;red webkit Collapsible layout: 5/5;red webkit Collapsible gap: 0/7;red webkit Collapsible frames: 2/2;red webkit Slider controlled: 3/3;red webkit Root tempo: 1/1;red webkit Tabs radius: 4/8;
+13:49:49 PHASE-D-fix3-DONE
+13:49:49 disk 68G free, load 15.62 22.44 18.31
+13:52:28 fix5-witness red webkit exit 1: 13:52:23 red webkit exit 1 :: red webkit 0/40
+13:55:29 fix4-witness red webkit exit 1: 13:55:24 red webkit exit 1 :: VERDICT red webkit 11/17
+13:57:29 fix2-witness red webkit exit 1: red webkit {"O-212":[14,20],"O-213 anchored":[2,4],"O-214 pointer":[0,4],"O-214 keyboard":[12,12],"G13":[2,4],"G14":[2,4],"Collapsible contract":[4,4],"Collapsible gap":[0,4],"Table one surface":[0,4]
+13:58:41 lane L1 red webkit: 13:58:41 red webkit tree=/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/c1-v1100 exit 1 :: FAIL O-169 tick {"mutated":["scroll-progress-rim|style","scroll-progress-rim|aria-valuenow"],"trace":null}
+14:01:40 lane L2 red webkit: 14:01:40 red webkit tree=/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/c1-v1100 exit 1 :: {"O-181":{"pass":0,"total":4},"O-196":{"pass":0,"total":4},"O-189":{"pass":0,"total":4},"O-171":{"pass":1,"total":5},"O-168":{"pass":1,"total":5},"O-173 paint":{"pass":0,"total":4,"unmeasurable":4},"O
+14:04:23 lane L3 red webkit: 14:04:23 red webkit tree=/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/c1-v1100 exit 1 :: {"O-158":{"pass":0,"total":4},"O-184":{"pass":0,"total":4},"O-178":{"pass":4,"total":4},"O-179":{"pass":2,"total":6}}
+14:05:16 lane L4 red webkit: 14:05:16 red webkit tree=/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/c1-v1100 pkg=/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l4-pack/package exit 1 :: probe exit 1, fontprobe exit 1
+14:07:50 lane L5 red webkit: 14:07:50 red webkit tree=/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/c1-v1100 exit 1 :: red webkit: 26/60
+14:07:50 PHASE-D-redw-DONE
+14:07:50 disk 67G free, load 16.13 12.97 13.48
+14:22:16 release wk (partA partB g6-4) exit 0: 14:22 chain wk done: partA partB g6-4
+14:27:40 release wk (g6-3 r2 owner fix2 c2) exit 0: 14:27 chain wk done: g6-3 r2 owner fix2 c2
+14:27:40 PHASE-D-relw-DONE
+14:27:40 disk 67G free, load 13.32 17.87 18.11
+14:34:28 e2e webkit branch exit 1:  37 failed  2 skipped  65 passed (6.6m) 
+14:41:21 e2e webkit v1100 exit 1:  37 failed  2 skipped  65 passed (6.7m) 
+14:41:21 PHASE-D-e2ew-DONE
+14:41:21 CHAIN-D-DONE partB l7 fix3 redw relw e2ew
