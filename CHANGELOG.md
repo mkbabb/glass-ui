@@ -2,9 +2,8 @@
 
 ## 11.0.2 — unreleased
 
-A patch on 11.0.1. Nothing is removed or renamed. The dock's edge stops reading one
-token, `--glass-border-dock`, and the Slider's thumb takes a new default colour; both
-are described below.
+A patch on 11.0.1. Nothing is removed or renamed. The Slider's thumb takes a new
+default colour, described below.
 
 - **`useGlobalDark` takes a `storageKey`.** `darkModeSyncScript({ storageKey })` could
   read a key of your choosing in the page head, but the composable always read and
@@ -42,14 +41,15 @@ are described below.
 - **A page with a GlassDock no longer crashes Playwright's WebKit.** The dock's edge
   mixed two translucent colours that were each a mix themselves, a value the WebKit
   build Playwright ships cannot compute, so every page with a dock died in it (Safari
-  was never affected). The edge now moves one ink strength between two new tokens,
-  `--glass-edge-floating` (5%) and `--glass-edge-dock` (8%), and computes the same
-  colour as before at rest, open and every step between. `--glass-border-floating` and
-  `--glass-border-dock` are now made from those strengths and keep their values. If you
-  recoloured the dock's edge by setting `--glass-border-dock`, the dock no longer reads
-  it: set `--glass-edge-dock` to a strength instead. The edge's ink is the dock's
-  `--foreground`. If you coloured either end of the edge with
-  `--dock-plate-expanded-border` or `--dock-plate-collapsed-border`, those still apply.
+  was never affected). The edge's open end is still `--glass-border-dock`, and its
+  folded end is now the dock's `--foreground` at a strength, so only one side of the
+  mix is itself a mix. It computes the same colour as before at rest, open and every
+  step between. Two new tokens hold the strengths, `--glass-edge-floating` (5%) and
+  `--glass-edge-dock` (8%), and `--glass-border-floating` and `--glass-border-dock` are
+  now made from them and keep their values. If you recoloured the dock's edge by
+  setting `--glass-border-dock`, it still colours the open end. If you coloured either
+  end of the edge with `--dock-plate-expanded-border` or
+  `--dock-plate-collapsed-border`, those still apply.
 
 - **A static dock's controls sample no backdrop.** With `backdrop-mode="static"` the
   dock's plate already drew no backdrop blur, but an active control kept the capsule's

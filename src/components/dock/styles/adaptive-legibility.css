@@ -98,6 +98,9 @@
            `--glass-edge-floating` on the shell (shell.css), so re-declaring it here
            was a byte-identical no-op. */
         --dock-plate-expanded-edge: var(--glass-edge-floating);
+        --_dock-edge-expanded-ink: rgb(
+            from var(--foreground) r g b / var(--dock-plate-expanded-edge)
+        );
         backdrop-filter: none;
         -webkit-backdrop-filter: none;
     }

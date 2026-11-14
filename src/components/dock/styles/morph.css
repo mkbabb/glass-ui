@@ -380,6 +380,9 @@
            already (shell.css) and is unread at `--dock-expand-t: 0` besides — a held
            dock is held OPEN — so declaring it here was a no-op twice over. */
         --dock-plate-expanded-edge: var(--glass-edge-floating);
+        --_dock-edge-expanded-ink: rgb(
+            from var(--foreground) r g b / var(--dock-plate-expanded-edge)
+        );
         transition: border-color var(--duration-fast) var(--ease-standard);
     }
 
