@@ -483,3 +483,7 @@ The fold seat wrote this file, `../design/dock/wi8/fold.md`, `../design/dock/wi8
 - The ledger found that `constants.ts:61` reads 3600 on both release branches, though O-306 placed 6000 in 11.0.2. This text takes 6 s as the token's default either way; the branch wants a look.
 - `../design/dock/LANDING.md` names OQ-1 and step 3 of the earlier text; they are OQ-4 and P-4 here.
 - The machine: every WebKit reading this wave owes waits on a reboot. `../design/dock/wi8/prototype/lists/wk-proto.txt` and `wk-red.txt` are ready.
+
+## Inputs after the fold (2026-11-14)
+
+- O-340 and O-341: the owner has asked for fully round docks five times and for more docks with a collapse state (Gregg's filters). The stadium is 11.1.0's; this wave owns what he names beyond it: the layer change as one clear movement (the leaving layer goes one way, the entering comes from the other, the width on the same clock), the reading-progress rim following a collapsed dock's outline through the morph, a halo colour token (one value, no added layer), and figure docks that unfold. Each is a gate to add at the build, not a new design pass.

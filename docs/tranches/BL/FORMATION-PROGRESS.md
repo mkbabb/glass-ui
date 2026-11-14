@@ -966,3 +966,5 @@ Disk episode, one line: on 2026-11-03 the volume went from 100% (15 GiB free) to
 - 2026-11-14 13:40 — reading done while the runs work: the owner's frames (O-339a), the fourier and color critiques split row by row (O-292a, O-297a; the Select chevron root cause found, first in 11.1.1), Gregg's stadium order booked (O-340: already built in 11.1.0 and 11.0.2). Live: fix 3 (11.0.2), critic 7 (11.1.0), the dock measuring seat.
 
 - 2026-11-14 13:42 — 11.1.1's driver written (`driver/glass-11.1.1.js`: six build seats A to F in order, Fable critics on a seven-item list, close); it launches when v11.1.0 is on master. Speedtest's smaller asks placed (O-337a).
+
+- 2026-11-14 13:46 — value.js's sorted list of the owner's review booked and answered (O-341); W-I.8 takes its dock items as post-fold inputs. Live: fix 3 (11.0.2), critic 7 (11.1.0), the dock measuring seat.
