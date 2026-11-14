@@ -69,6 +69,11 @@ default colour, described below.
   over 67 frames; it now costs one a frame. A host or content change during the motion
   is still measured on the frame it lands.
 
+- **The dock waits six seconds before it folds.** After the pointer and focus leave a
+  collapsible dock, it now stays open for six seconds instead of 3.6, so a reader who
+  moves to the page for a moment finds it still open. A dock mounted `"open"` folds six
+  seconds after mount. `DOCK_COLLAPSE_DELAY_MS` holds the new value.
+
 - **In dark, a hovered, pressed or selected dock seat is lighter than the dock.** Its
   fill was the dark scheme's veil ink, which is deeper than the plate, so a seat you
   hovered or selected drew darker than the dock around it. In dark,

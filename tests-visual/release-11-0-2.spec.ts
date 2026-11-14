@@ -565,8 +565,8 @@ test("fill · the light scheme's seat fills are the plate rungs", async ({ page 
     expect(r.selectedTab).toBe(r.floating);
 });
 
-// The layouts the page runs from 3 s to 5.5 s after mount, across the idle fold of an
-// untouched `collapse="open"` dock (it folds 3.6 s after mount) while the page scrolls
+// The layouts the page runs from 5.4 s to 7.9 s after mount, across the idle fold of an
+// untouched `collapse="open"` dock (it folds 6 s after mount) while the page scrolls
 // every frame, and the frames in which the fold's morph scalar moved. Chromium counts
 // layouts (CDP `LayoutCount`); WebKit has no counter.
 test("fold · an idle fold lays out once per morph frame on a scrolling page", async ({ page }, info) => {
@@ -578,7 +578,7 @@ test("fold · an idle fold lays out once per morph frame on a scrolling page", a
         (await cdp.send("Performance.getMetrics")).metrics.find((m) => m.name === "LayoutCount")!.value;
     await page.goto("/tests-visual/release-11-0-2/fold-harness.html");
     await page.locator("body[data-ready='1'] .fold-dock").waitFor();
-    await page.waitForTimeout(3000);
+    await page.waitForTimeout(5400);
     const before = await layouts();
     const r = await page.evaluate(async () => {
         const root = document.querySelector<HTMLElement>(".glass-dock")!;

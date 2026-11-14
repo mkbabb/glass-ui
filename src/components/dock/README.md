@@ -50,7 +50,7 @@ the existing Reka-backed menu, select, or popover families.
 - `false` never collapses: hover, focus, the idle window and outside clicks leave it
   open.
 
-A collapsible dock folds after one idle window, `DOCK_COLLAPSE_DELAY_MS` (3600 ms),
+A collapsible dock folds after one idle window, `DOCK_COLLAPSE_DELAY_MS` (6000 ms),
 once the pointer and focus have left it. A dock mounted `"open"` arms that window at
 mount. The exposed `expand()`, `collapse()`, `keepOpen()` and `release()` drive the
 posture from outside.
