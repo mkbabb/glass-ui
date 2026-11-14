@@ -6,9 +6,11 @@ already contains v11.0.1 (`git merge-base --is-ancestor v11.0.1 HEAD` exits 0), 
 no merge to do. It took critique 7's two findings and the two instructions in
 `orchestrator-note-after-fix-7.md`.
 
-**THE GUARD REFUSED at 15:23:46 (disk low: 37 GB free, under its 40 GB floor).** Per the
-machine law a refusal is a stop. What ran before it is recorded below. What it cut is listed
-under *Not run*. Nothing was deleted to free disk: the space belongs to other runs.
+**The guard refused at 15:23:46 (disk low: 37 GB free, under its 40 GB floor).** Per the
+machine law a refusal is a stop, and nothing was deleted to free disk. **Resumed at 16:59**
+(80 GB free): every cell the refusal cut ran, the guard admitted each one, and nothing was
+rebuilt. The resume added no commit to the source; it ran `bash fix-8/chain.sh p10w g63c g63w
+l1c l1w l7c l7w` then `bash fix-8/e2e.sh` (`fix-8/chain.log` from "RESUME"). See *The resume*.
 
 Commits, read from `git log`: `df8a65446` (the cure), `186364da4` (CHANGELOG),
 `bbce22058` (the restated cells), `b4fb41041` (the ratchet), and the records commit that
@@ -43,14 +45,16 @@ reads the arriving seat live each frame. Nothing changes in paint, motion or the
 | tree | Chromium | WebKit 2287 |
 | --- | --- | --- |
 | branch `bbce22058`, all 40 judged cells (cnav, tick, sep) | **40/40** | **40/40** |
-| pre-fix (`.cache/f8-pre`, `git archive a257d3f4f`), `tick` | **4/8** (the 390 cells, e.g. n8 longer: plate 132.9 vs paint 95; shorter: 132.8 vs 183, critic 7's own numbers) | not run (refused) |
-| v11.0.0, `tick` | 8/8 | not run (refused) |
-| v11.0.1, `tick` | 8/8 | not run (refused) |
+| pre-fix (`.cache/f8-pre`, `git archive a257d3f4f`), `tick` | **4/8** (the 390 cells, e.g. n8 longer: plate 132.9 vs paint 95; shorter: 132.8 vs 183, critic 7's own numbers) | **4/8** (the four 390 cells; n8 longer 133 vs 95, shorter 132.8 vs 183; n4 longer 119 vs 81, shorter 118.8 vs 169) |
+| v11.0.0, `tick` | 8/8 | 8/8 |
+| v11.0.1, `tick` | 8/8 | 8/8 |
 
 This was a regression on the branch, so the RED tree is the pre-fix tree. v11.0.0 and v11.0.1
 have no gliding mark, and each control paints its own plate, so the cells read green there, as
 critique 7 recorded. On the branch the 390 `tick` cells now read exactly what v11.0.0 reads.
-The branch's WebKit `tick` cells (8/8) are in `probe10/out/green-webkit.log`. Paint:
+The branch's WebKit run was repeated on the resume and read 40/40 again
+(`probe10/out/green-webkit.log`); the pre-fix, v11.0.0 and v11.0.1 WebKit cells are in
+`probe10/out/{pre,red,v1101}-webkit.log`. Paint:
 `probe10/out/png/{green,pre}-chromium-tick-*.png`.
 
 ## 2. The CHANGELOG headline did not list --radius-dock (low)
@@ -82,11 +86,14 @@ v11.0.0 and v11.0.1, except the line for no internal vocabulary.
 
   The CHANGELOG already states the behaviour in consumer words ("Pressing an always-visible
   control only presses it").
-  **The spec run was refused** in both engines, so these restatements are unmeasured.
+  **Measured on the resume:** `release-10-1-3.spec.ts` 60/60 passed in Chromium and 58 passed,
+  2 skipped in WebKit (the spec's own engine skips), exit 0 in both (`fix-8/release/g6-3-*.log`).
 - **Lane L7's stall cell** (`lane-L7/probe.mjs`, `bbce22058`) asks for two compositor frames
   inside the task. A cell with fewer is recorded as unmeasurable and not gated. Chromium saw
-  3-4 frames per task in every earlier round, so its gate is unchanged. **The rerun was
-  refused.**
+  3-4 frames per task in every earlier round, so its gate is unchanged. **Measured on the
+  resume:** branch 80/80 in Chromium (stall 12/12 gated) and 80/80 in WebKit (stall recorded
+  as unmeasurable, under two frames per task, not gated); v11.0.0 4/64 in Chromium and 16/64
+  in WebKit (`fix-8/rerun/lane-L7/out/*.log`).
 - The untracked capture outputs stay uncommitted and are untouched.
 
 ## Gates, `bbce22058` then `b4fb41041` (`fix-8/gates/head/chain.log`)
@@ -97,14 +104,18 @@ build 0, typecheck 0, demo:dist:build 0, vitest 0 (279 files; 2580 passed, 10 ex
 CHANGELOG line. The deliberate rebind is `b4fb41041`. verify:package on the committed tree
 after it: exit 0, CLEAN (`verify-package-rebound.log`).
 
-## Not run (the 15:23 refusal, disk low)
+## The resume (16:59-18:10, every run admitted)
 
-- probe10 `tick` in WebKit on the pre-fix tree, v11.0.0 and v11.0.1 (the RED half of item 1 in
-  WebKit).
-- `release-10-1-3.spec.ts` in both engines (the restated D-1 cells).
-- lane L1's witness on the branch in both engines (`fix-8/rerun/lane-L1`), and lane L7 on the
-  branch and v11.0.0 in both engines with the two-frame cell (`fix-8/rerun/lane-L7`).
-- the e2e set (`fix-8/e2e.sh`, written and not started).
+| run | Chromium | WebKit 2287 |
+| --- | --- | --- |
+| probe10, branch (all 40 cells) | 40/40 (before the refusal) | 40/40 |
+| probe10 `tick`, pre-fix / v11.0.0 / v11.0.1 | 4/8 / 8/8 / 8/8 | 4/8 / 8/8 / 8/8 |
+| `release-10-1-3.spec.ts` | 60 passed | 58 passed, 2 skipped |
+| lane L1 witness, branch | O-164 4/4, O-188 6/6, O-169 17/17 | O-164 4/4, O-188 6/6, O-169 17/17 |
+| lane L7 witness, branch / v11.0.0 | 80/80 / 4/64 | 80/80 / 16/64 |
+| e2e set (17 specs), branch | 65 passed, 37 failed, 2 skipped | 65 passed, 37 failed, 2 skipped |
 
-Each one reruns with `bash fix-8/chain.sh p10w g63c g63w l1c l1w l7c l7w` and `bash fix-8/e2e.sh`
-once the guard admits runs. The `p10w` phase repeats the branch WebKit run, which already passed.
+The e2e failures are exactly fix 7's branch set in each engine: 37 against 37, none new and
+none gone (`fix-8/e2e/{chromium,webkit}-fails.txt` against `-fails-fix7.txt`). The WebKit runs
+queued behind other sessions on the machine-wide WebKit lock and ran when it freed. The three
+old comparison trees were not needed. Nothing remains unmeasured from fix 8.
