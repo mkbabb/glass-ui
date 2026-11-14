@@ -833,6 +833,12 @@
         animation: none;
     }
 
+    /* W-I.8 R-1 (C-20, P-10): the carrier is the only writer of the plate's corner. While
+       a travel runs the cut cap stands down on the plate; the run keeps its own. */
+    .glass-dock[data-morphing] .dock-plate {
+        animation: none;
+    }
+
     /* ── THE LIVE REGION ─────────────────────────────────────────────────────────
        Reach announces to this node (useDockRun). Visually hidden by the canonical
        one-pixel clip rather than `display: none` or `visibility: hidden`, both of which
