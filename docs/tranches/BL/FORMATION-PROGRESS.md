@@ -962,3 +962,5 @@ Disk episode, one line: on 2026-11-03 the volume went from 100% (15 GiB free) to
 - 2026-11-13 13:14 — owner's 13:12 review booked (O-339, frames copied); 11.1.1 scope takes no-text-selection, the Card gleam off, the Slider lens. Clean stop before the owner's reboot: everything committed and pushed, nothing running.
 
 - 2026-11-14 13:38 — after the reboot (zone 66k, guard admits, ssh key added): 11.0.2 resumed (`wf_fc090cc6-e88`, fix 3 live with its RESUME note), 11.1.0 resumed (`wf_4cf2d226-a00`, critic 7 finishing its cut cells), one Opus measuring seat launched on the dock prototype (`bl/dock/wi8`, MEASURE.md owed). Disk list sent to gaggle (119 GB here; 21 GB regenerable now, deletion is the owner's word).
+
+- 2026-11-14 13:40 — reading done while the runs work: the owner's frames (O-339a), the fourier and color critiques split row by row (O-292a, O-297a; the Select chevron root cause found, first in 11.1.1), Gregg's stadium order booked (O-340: already built in 11.1.0 and 11.0.2). Live: fix 3 (11.0.2), critic 7 (11.1.0), the dock measuring seat.
