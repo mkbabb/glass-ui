@@ -1,8 +1,11 @@
-# 11.0.2 fix seat 3: D-1 from critique 2, then what critique 2 and the binding notes list as owed (unfinished: the WebKit sweep refused on low disk)
+# 11.0.2 fix seat 3: D-1 from critique 2, then what critique 2 and the binding notes list as owed
 
 Seat: claude-opus-5-5. Worktree `.claude/worktrees/release-11.0.2`, branch `release/11.0.2`,
 on critique 2 (`15a88380f`) and this seat's first attempt (`b8453c23d`, which measured
-nothing before the 2026-11-13 zone stop). Paths are relative to `docs/release-11.0.2/`
+nothing before the 2026-11-13 zone stop). The second attempt stopped at the 2026-11-14
+15:23 disk-low refusal (`13f5a1d4b`). The third attempt took the two rows of
+`orchestrator-note-slider-lens-reka.md`, then ran the WebKit legs, the gates and the
+ratchet. It redid no banked row or cell. Paths are relative to `docs/release-11.0.2/`
 unless they start with `src`, `tests` or `tests-visual`. Every run went through `guarded`,
 each WebKit run under `--exclusive webkit`, one browser a run, `--workers=1`, one heavy run
 at a time. Playwright runs: `fix-3/scripts/pw.sh` (critic 2's runner with this seat's logs
@@ -22,7 +25,9 @@ exit code. The v11.0.1 tree is `.cache/red-v11.0.1/tree` as earlier seats used i
 | O-295 reproduction, O-282 trace | `056489b32` | probes and logs |
 | orchestrator notes | `e080063b5` | the two untracked notes committed |
 | master merge | `b42405920` | the browser-free and sparse-checkout workflows |
-| ratchet | not rebound | the WebKit sweep legs were refused first; see the sweep section |
+| Slider `loupe` (binding note on the lens) | `64b280711` | the lens and the frost around a held Slider are opt-in |
+| reka-ui peer floor (same note) | `17bb7c95c` | `^2.10.1`, peer and dev |
+| ratchet | `a89bb5584` | rebound on the tree's own figure after the WebKit legs |
 
 ## D-1: the dock's edge reads `--glass-border-dock` again
 
@@ -219,7 +224,74 @@ branch's content byte for byte. No gate this seat added reads a docs file.
 | `npm run test:browser` | 0 | 2 files, 12 passed |
 | `npm run verify:package` | 1 | only `G-BUNDLE-RATCHET`: 2916314 < 2916696, the shrink the rebind takes |
 
-## The tip sweep (`b42405920`): unfinished, guarded refused
+## The Slider's lens is opt-in with `loupe` (`64b280711`)
+
+By the binding note `orchestrator-note-slider-lens-reka.md`. The owner's frame
+(`slider-lens-crop.png`) shows two faults, and both come from the one grasp predicate:
+- the lens (`.glass-loupe`), the capsule that floats away from the value;
+- the focus veil, the frost that fades the row. The Slider raises itself to
+  `--z-overlay` to sit over the veil, but inside a card with its own `backdrop-filter`
+  that raise cannot leave the card's stacking context, so the veil covers the Slider's
+  own row and track.
+
+Cure, in `Slider.vue`:
+- A `loupe` prop, default `false`, declared in `types.ts` and kept out of the props
+  forwarded to reka.
+- One predicate, `veiled` (grasping, a graspable variant and `loupe`), now gates the
+  veil, the inline raise and `data-focus-veil`. `loupeShown` reads `veiled` and keeps
+  its horizontal-only rule.
+- The grasp carriers on the fill are unchanged. No class or token is removed.
+
+The harnesses that read the lens opt in: the c1 row `on-25` in
+`release-10-1-5/harness.ts`, and the two Slider mounts in `tests/styles/focus-veil.test.ts`.
+
+**Witnesses.**
+- Unit, `tests/components/ui/slider/Slider.loupe.test.ts`. A default grasp mounts no lens
+  or veil and does not raise the Slider. With `loupe`, a horizontal Slider mounts both
+  and a vertical one mounts the veil alone. On v11.0.1 the default case is **RED** (1 of
+  3 failed, `loupe-unit-v1101.log`); on the tip all 3 pass (`loupe-unit-tip.log`).
+- Visual, `lens · a slow held drag on a default Slider mounts no lens, keeps the row at
+  opacity 1 and the track painted`. The harness `slider-harness.html?plate` puts the rows
+  on a card with `backdrop-filter`. The cell drags the md thumb 60 px over 600 ms, then
+  reads the lens and veil counts, the opacity product from the track up, and the mean
+  luminance of the track's unfilled end against rest.
+
+| tree | Chromium | coarse-touch | WebKit 2287 |
+|---|---|---|---|
+| v11.0.1 | **RED**: lens 1, veil 1, end luminance 0.580 to 0.471 (18.7%) | **RED** (same) | **RED**: lens 1, veil 1, 18.5% |
+| tip | GREEN: lens 0, veil 0, opacity 1, change 0 | GREEN | GREEN |
+
+The opacity product is 1 on both trees: the row fades because of the veil painted over
+it, not because of an opacity on the row. The luminance reading is what catches it.
+Logs: `lens-{tip,v1101}-{chco,wk}`. The c1 cell, which reads the lens on its opted-in
+row, is GREEN on the tip in Chromium (`c1-tip-ch`) and runs in WebKit in `sweep-wk-a`.
+
+## The reka-ui peer floor is 2.10.1 (`17bb7c95c`)
+
+- **What the overlay uses.** `ModalOverlay.vue` reads `root.unmountOnHide.value` from
+  `injectDialogRootContext()`. reka-ui 2.9.9's `DialogRoot` provides no `unmountOnHide`,
+  so that read throws as a modal Dialog's overlay renders; 2.10.0 adds it. `Presence`
+  and `injectDialogRootContext` are exported by all three versions read (2.9.9, 2.10.0,
+  2.10.1). From 2.10.0 to 2.10.1 the only change in these paths is `usePresence`
+  clearing its listeners and its pending timeout on unmount.
+- **Measured.** The full unit suite ran in a scratch copy inside the worktree
+  (`.cache/reka-scratch`: the tracked tree, with `node_modules` linked through to the
+  worktree's except `reka-ui`, which pointed at the unpacked tarball), once on each
+  version:
+  - 2.10.0: 4 failed. One is reka's: `Popover trigger contract › preserves click
+    placement, dismissal, focus return, and preventable autofocus`.
+  - 2.10.1: 3 failed, the same three as on 2.10.0, and all of them come from the scratch
+    copy rather than reka. `comment-ratio` counts `git ls-files`, which sees nothing
+    under the ignored `.cache/`, and `boot-graph` compares the copy's fresh mtimes with
+    `dist-demo`. Both pass in the worktree (the gates below).
+  - Logs: `reka-2.10.{0,1}-vitest.log`, `reka-2.10.{0,1}-fails.txt`.
+- So the floor is 2.10.1. The peer and the dev dependency are `^2.10.1`, and so are the
+  lock's root entry and the README's peer table. The CHANGELOG names the floor. The
+  scratch copy and the tarballs are deleted.
+- Static witness: v11.0.1's `package.json` declares `^2.0` (**RED**), and the tip
+  declares `^2.10.1`.
+
+## The tip sweep
 
 `fix-3/scripts/sweep.sh`:
 
@@ -227,22 +299,40 @@ branch's content byte for byte. No gate this seat added reads a docs file.
 |---|---|
 | 11.0.2 spec and the forced-colors spec, Chromium and coarse-touch | **93 passed, 17 skipped, 0 failed** (`sweep-chco`) |
 | release-10-1-2 to -5 and the six release-11-0-1 specs, Chromium | **300 passed, 0 failed** (`sweep-ch`), release-10-1-5 and the release-10-1-2 reversal titles among them |
-| the WebKit legs (2287 and 2311: the 11.0.2 spec, forced colors, 10-1-2, 10-1-5; then the 11.0.1 specs, 10-1-3, 10-1-4) | **not run**: `[guarded] REFUSED: disk low (2026-11-14 15:23:46 free=37G (set below 40G; clears above 60G))` (`sweep-wk-a.log`, `sweep-wk-b.log`, `rc=75`) |
+| `sweep-wk-a` at `17bb7c95c`: WebKit 2287 (the 11.0.2 spec, forced colors, 10-1-2, 10-1-5) and 2311 (the 11.0.2 spec) | **261 passed, 6 skipped, 1 failed**; the failure was not a fold fault (below) |
+| `sweep-wk-b` at `17bb7c95c`: WebKit 2287 (the six 11.0.1 specs, 10-1-3, 10-1-4) | **131 passed, 10 skipped, 0 failed** |
 
-As the task orders, I stopped at the refusal. At 15:31 the volume had 43G free, still
-under the 60G that clears it. No server, browser or run of this seat is left (ports 5341
-to 5346 free).
+The second attempt's WebKit legs were refused on low disk (`rc=75`, 37G free at 15:23).
+The third attempt ran them on `17bb7c95c`, with 80G free, after the two new rows. The
+Chromium legs above were banked on `b42405920`. Of the cells the new rows touch, the
+`lens ·` cell and c1 ran on the new tree in Chromium, and both ran again in WebKit in
+`sweep-wk-a`. Those legs cover the release-10-1-2 reversal titles and release-10-1-5 in
+WebKit.
 
-**The ratchet is not rebound.** It is to be rebound last on the tree that will be tagged,
-after the WebKit legs. The committed tree packs **2916314** bytes
-(`verify-package.log`), 382 under the datum. The next seat runs `sweep.sh`'s two WebKit
-lines, then writes 2916314 (or the tree's own figure, if anything changes) to
-`.bundle-ratchet` and runs `npm run verify:package` once more.
+**The one failure.** `fold · a horizontal dock's content stays inside the plate and fades
+by steps through the fold and unfold at 390` (2287) threw `TypeError: Cannot read
+properties of undefined (reading 'some')`. The `__frames` array the cell's rAF sampler
+writes on `window` was gone when it was read back, so the page's window state did not
+survive the read; the dock was never measured. Every earlier WebKit reading of this cell
+is GREEN. Run alone at `--repeat-each=3` on the same tree, it is **3 passed**
+(`fold390-wk-rerun`). No `src` change in this attempt reaches the dock.
 
-Since the merge, this seat's WebKit readings are only the targeted cells above: D-1's
-four `edge ·` cells in 2287 and 2311, `m3 O-176`, the `hold ·` cell, both `pager ·`
-cells, and the four O-271 ring cells (GREEN on the tip's `run.css`, `o271-a-wk`). All of
-them ran on the tree before the merge, which changed no `src` file.
+## Gates on the tip (`17bb7c95c`)
+
+`fix-3/scripts/gates.sh`, logs in `fix-3/logs/`.
+
+| gate | exit | read |
+|---|---|---|
+| `npm run typecheck` | 0 | |
+| `npm run build` | 0 | |
+| `npm run demo:dist:build` | 0 | |
+| `CI=true npx vitest run --maxWorkers=2` | 0 | 278 files, 2535 passed, 10 expected fail, 1 skipped |
+| `npm run test:browser` | 0 | 2 files, 12 passed |
+| `npm run verify:package` | 1 | only `G-BUNDLE-RATCHET`: 2916685 < 2916696 |
+
+**The ratchet (`a89bb5584`).** `.bundle-ratchet` is now the tree's own figure,
+**2916685**. Then `npm run verify:package` exited **0** with `"terminal":"CLEAN"`
+(`verify-package-rebound.log`). No server, browser or run of this seat is left.
 
 ## Open, for the orchestrator
 
@@ -251,4 +341,8 @@ them ran on the tree before the merge, which changed no `src` file.
 - **The `--glass-border-floating` hook** (from this seat's first attempt, not on the list).
   v11.0.1's collapsed end, and the held and static expanded end, read that token. The tip
   reads the `--glass-edge-floating` strength. It is not built here.
-- Not measured: real Safari; v11.0.0.
+- The `fold ·` 390 WebKit failure in `sweep-wk-a`: a lost window, GREEN 3 of 3 alone.
+  If it recurs, the cell's sampler is worth a guard against a reload, which belongs to a
+  later test change, not to this patch.
+- Not measured: real Safari; v11.0.0; reka-ui 2.9.9 in a scratch install. Its failure
+  is read from the source: `DialogRoot` provides no `unmountOnHide`.
