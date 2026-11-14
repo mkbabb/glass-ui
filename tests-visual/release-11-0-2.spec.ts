@@ -31,7 +31,9 @@
 //          50 and 100, light and dark, default and violet ink (luma at least 60 from the
 //          fill and 30 from the track); the thumb paints `--foreground` with
 //          `--slider-thumb-bg` unset, and the token when it is set
-//   pager  a PagerDots neighbour hop paints a neck no wider than the pitch plus one dot
+//   pager  a PagerDots neighbour hop paints a neck no wider than the pitch plus one dot;
+//          on eight dots and the library's rem token, a hop of 1, 3 or 7 paints a neck no
+//          wider than the hop plus one dot
 //   wheel  a vertical wheel over a horizontal dock's overflowing run scrolls the page; each
 //          run contains overscroll on its own scroll axis only
 //   rail   a start-anchored vertical dock whose consumer yields its open content on the
@@ -849,6 +851,51 @@ test("pager · a neighbour hop paints a neck no wider than the pitch plus a dot"
     for (const hop of hops) {
         expect(hop.frames, `the neck bridged the hop to ${hop.to}`).toBeGreaterThan(0);
         expect(hop.widest, `token ${geo.token}`).toBeLessThanOrEqual(geo.pitch + geo.dot + 0.5);
+    }
+});
+
+// Eight dots on the library's rem token (`.75rem`, `.5rem` on a coarse pointer), hops of 1, 3, 3 and 7: in every frame the
+// neck paints no wider than the hop's own distance plus one dot.
+test("pager · on the default token a hop of 1, 3 or 7 paints a neck no wider than the hop plus a dot", async ({ page }, info) => {
+    await page.goto("/tests-visual/release-11-0-2/pager-harness.html?count=8");
+    await page.locator("body[data-ready='1'] [data-witness='pager'] .goo-body").first().waitFor();
+    await page.waitForTimeout(400);
+    const geo = await page.evaluate(() => {
+        const dots = [...document.querySelectorAll<HTMLElement>("[data-witness='pager'] .goo-dot")];
+        const body = document.querySelector<HTMLElement>("[data-witness='pager'] .goo-body")!;
+        const a = dots[0]!.getBoundingClientRect();
+        const b = dots[1]!.getBoundingClientRect();
+        return { count: dots.length, pitch: b.left - a.left, dot: body.offsetWidth, token: getComputedStyle(body).getPropertyValue("--pager-dot-size").trim() };
+    });
+    expect(geo.count).toBe(8);
+    expect(geo.token, "the library's rem token").toMatch(/rem$/);
+    const hops: { from: number; to: number; frames: number; widest: number }[] = [];
+    let from = 0;
+    for (const to of [1, 4, 7, 0]) {
+        const widths = await page.evaluate(
+            (to) =>
+                new Promise<number[]>((resolve) => {
+                    const neck = document.querySelector<HTMLElement>("[data-witness='pager'] .goo-neck")!;
+                    const out: number[] = [];
+                    const t0 = performance.now();
+                    const tick = () => {
+                        if (getComputedStyle(neck).opacity !== "0") out.push(neck.getBoundingClientRect().width);
+                        if (performance.now() - t0 < 900) requestAnimationFrame(tick);
+                        else resolve(out);
+                    };
+                    (window as unknown as { __go: (i: number) => void }).__go(to);
+                    requestAnimationFrame(tick);
+                }),
+            to,
+        );
+        hops.push({ from, to, frames: widths.length, widest: widths.length ? Math.max(...widths) : 0 });
+        from = to;
+    }
+    info.annotations.push({ type: "pager", description: JSON.stringify({ geo, hops }) });
+    for (const hop of hops) {
+        const span = Math.abs(hop.to - hop.from) * geo.pitch;
+        expect(hop.frames, `the neck bridged ${hop.from} to ${hop.to}`).toBeGreaterThan(0);
+        expect(hop.widest, `${hop.from} to ${hop.to}`).toBeLessThanOrEqual(span + geo.dot + 0.5);
     }
 });
 
