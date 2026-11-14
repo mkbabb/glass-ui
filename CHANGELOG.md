@@ -17,6 +17,9 @@ without you doing anything, and each has its own entry below:
   `#persistent` one, and in a vertical dock the space after a `#persistent` control is
   half what it was;
 - the dock's paper grain is a fine dot field at the same faint strength;
+- the `--radius-dock` token is now the stadium, so a box you round with it or with the
+  `rounded-dock` utility gets fully round ends instead of a 16 px corner, and a
+  `--radius-dock` your theme sets shapes the dock again;
 - HandMark draws in your page's focal colour;
 - the `.dark` class alone decides the theme;
 - menus grow from their trigger instead of fading in;
