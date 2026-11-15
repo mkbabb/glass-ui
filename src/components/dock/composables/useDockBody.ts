@@ -498,8 +498,11 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
             }
             // R-1: a window resize seats every quantity at layout with no travel, and so
             // does a change before the dock's first frame: nothing has painted to glide from.
-            if (reduce || resized || !shown) {
-                if (resized || !shown) {
+            // A resize that arrives while a travel runs is a retarget like any other: each
+            // quantity already holds painted minus the new layout and glides on (C2-17).
+            const seated = (resized && raf === null && !travelling) || !shown;
+            if (reduce || seated) {
+                if (seated) {
                     eq.d = eq.v = 0;
                     u = uv = 0;
                 }
