@@ -328,9 +328,40 @@ export function useDockRun(options: UseDockRunOptions): UseDockRunReturn {
      * The stop follows the OPEN seat when there is one (returning to a dock puts focus
      * on where you are, not on where the list begins) and the first seat otherwise.
      */
+    /**
+     * W-I.8 R-13: the rows the keys rove. The run's own children are one row; the active
+     * face of a layer group that is a direct child of the run is another, its seats the
+     * face content's children. Each row has one Tab stop and its own arrows, and the
+     * face's row is re-derived when the face changes.
+     */
+    function faceRows(run: HTMLElement): HTMLElement[] {
+        return seatsOf(run)
+            .filter((child) => child.matches(".dock-layer-group"))
+            .map((group) => group.querySelector<HTMLElement>(":scope .dock-face.is-active > .dock-face-content"))
+            .filter((row): row is HTMLElement => !!row);
+    }
+
+    function syncRow(row: HTMLElement): void {
+        const seats = declaredSeatsOf(row);
+        const claim = isToolbar(row);
+        if (claim) {
+            row.setAttribute("role", "toolbar");
+            row.setAttribute("aria-orientation", vertical() ? "vertical" : "horizontal");
+        } else if (row.getAttribute("role") === "toolbar") {
+            row.removeAttribute("role");
+            row.removeAttribute("aria-orientation");
+        }
+        if (seats.length === 0) return;
+        const openIdx = openIndexOf(seats);
+        const focusedIdx = seats.findIndex((seat) => seat.contains(document.activeElement));
+        const stop = focusedIdx >= 0 ? focusedIdx : openIdx >= 0 ? openIdx : 0;
+        seats.forEach((seat, idx) => writeStop(seat, idx === stop ? 0 : -1));
+    }
+
     function syncRoving(): void {
         const run = runEl.value;
         if (!run) return;
+        for (const row of faceRows(run)) syncRow(row);
         toolbar.value = isToolbar(run);
         // A child the run wrote into and that has since dropped its declaration gets
         // its authored `tabindex` back: the run writes nothing into an undeclared child,
@@ -368,7 +399,9 @@ export function useDockRun(options: UseDockRunOptions): UseDockRunReturn {
         if (!run) return;
         // A key pressed inside an undeclared child belongs to that child: `from` stays
         // −1 for it and the handler returns before claiming the key.
-        const seats = declaredSeatsOf(run);
+        // R-13: a key inside a layer group's active face roves that face's row.
+        const row = faceRows(run).find((r) => r.contains(event.target as Node)) ?? run;
+        const seats = declaredSeatsOf(row);
         if (seats.length === 0) return;
         const from = seats.findIndex((seat) => seat.contains(event.target as Node));
         if (from < 0) return;
@@ -400,7 +433,12 @@ export function useDockRun(options: UseDockRunOptions): UseDockRunReturn {
         // is being taught by the cap.
         if (to < 0 || to >= seats.length) return;
         event.preventDefault();
-        moveTo(seats, to);
+        if (row === run) moveTo(seats, to);
+        else {
+            writeStop(seats[to]!, 0);
+            seats[to]!.focus({ preventScroll: true });
+            syncRow(row);
+        }
     }
 
     /**
@@ -462,6 +500,8 @@ export function useDockRun(options: UseDockRunOptions): UseDockRunReturn {
         if (record.attributeName === "aria-current" || record.attributeName === DOCK_SEAT_ATTR)
             return true;
         const target = record.target as HTMLElement;
+        // R-13: a layer group's face changing re-derives that row's stop.
+        if (record.attributeName === "class") return target.classList.contains("dock-face");
         return target.parentElement === run && !isDeclaredSeat(target);
     }
 
@@ -489,7 +529,7 @@ export function useDockRun(options: UseDockRunOptions): UseDockRunReturn {
             childList: true,
             subtree: true,
             attributes: true,
-            attributeFilter: ["aria-current", DOCK_SEAT_ATTR, "aria-hidden", "tabindex"],
+            attributeFilter: ["aria-current", DOCK_SEAT_ATTR, "aria-hidden", "tabindex", "class"],
         });
     });
 
