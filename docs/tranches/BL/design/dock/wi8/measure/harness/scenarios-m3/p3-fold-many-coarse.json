@@ -1,0 +1,119 @@
+{
+ "name": "p3-fold-many-coarse",
+ "url": "/?c=dock-wi8&cell=w-many",
+ "cells": [
+  {
+   "tag": "390-coarse-light",
+   "w": 390,
+   "h": 844,
+   "pointer": "coarse",
+   "scheme": "light"
+  }
+ ],
+ "ready": "[data-testid=w-many]",
+ "warmMs": 600,
+ "track": [
+  {
+   "as": "dock",
+   "sel": "[data-testid=w-many]",
+   "attrs": [
+    "class",
+    "data-morphing"
+   ],
+   "props": [
+    "--dock-expand-t",
+    "--dock-morph-t",
+    "--dock-curve-inset"
+   ],
+   "colors": [
+    "box-shadow"
+   ]
+  },
+  {
+   "as": "plate",
+   "sel": "[data-testid=w-many] .dock-plate",
+   "colors": [
+    "box-shadow",
+    "background-color"
+   ],
+   "styles": [
+    "clip-path"
+   ]
+  },
+  {
+   "as": "layers",
+   "sel": "[data-testid=w-many] .dock-layers",
+   "chain": true,
+   "styles": [
+    "clip-path"
+   ]
+  },
+  {
+   "as": "full",
+   "sel": "[data-testid=w-many] .dock-layer--full",
+   "chain": true,
+   "attrs": [
+    "data-compact"
+   ]
+  },
+  {
+   "as": "summary",
+   "sel": "[data-testid=w-many] .dock-layer--summary",
+   "chain": true
+  },
+  {
+   "as": "seat",
+   "sel": "[data-testid=w-many] .dock-layer--full > [data-glass-dock-seat]",
+   "all": true,
+   "chain": true,
+   "styles": [
+    "translate"
+   ]
+  },
+  {
+   "as": "kid",
+   "sel": "[data-testid=w-many] .dock-layer--full > *:not([data-dock-leaving])",
+   "all": true,
+   "chain": true
+  }
+ ],
+ "cropAs": [
+  "dock",
+  "plate"
+ ],
+ "cropPad": 24,
+ "gapMs": 250,
+ "strips": [],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "tap"
+  },
+  {
+   "do": "click",
+   "sel": "[data-testid=w-many] .dock-layer--summary"
+  },
+  {
+   "do": "settle",
+   "quietMs": 400,
+   "maxMs": 3000
+  },
+  {
+   "do": "mark",
+   "name": "outside"
+  },
+  {
+   "do": "click",
+   "sel": "[data-testid=anim-root]",
+   "at": [
+    0.005,
+    0.005
+   ]
+  },
+  {
+   "do": "settle",
+   "quietMs": 400,
+   "maxMs": 3000
+  }
+ ]
+}

@@ -1,0 +1,164 @@
+{
+ "name": "p3-swap-fold-during",
+ "url": "/?c=dock-wi8&cell=w-lseats",
+ "cells": [
+  {
+   "tag": "1440-fine-light",
+   "w": 1440,
+   "h": 900,
+   "pointer": "fine",
+   "scheme": "light"
+  }
+ ],
+ "ready": "[data-testid=w-lseats]",
+ "warmMs": 600,
+ "track": [
+  {
+   "as": "dock",
+   "sel": "[data-testid=w-lseats]",
+   "attrs": [
+    "class",
+    "data-morphing"
+   ],
+   "props": [
+    "--dock-expand-t",
+    "--dock-morph-t"
+   ],
+   "colors": [
+    "box-shadow"
+   ]
+  },
+  {
+   "as": "plate",
+   "sel": "[data-testid=w-lseats] .dock-plate",
+   "colors": [
+    "box-shadow",
+    "background-color"
+   ],
+   "styles": [
+    "clip-path"
+   ]
+  },
+  {
+   "as": "persistent",
+   "sel": "[data-testid=w-lseats] > .dock-controls > .dock-persistent:not(.dock-persistent-end)",
+   "chain": true,
+   "styles": [
+    "clip-path"
+   ]
+  },
+  {
+   "as": "pend",
+   "sel": "[data-testid=w-lseats] > .dock-controls > .dock-persistent-end",
+   "chain": true,
+   "styles": [
+    "clip-path"
+   ]
+  },
+  {
+   "as": "layers",
+   "sel": "[data-testid=w-lseats] .dock-layers",
+   "chain": true,
+   "styles": [
+    "clip-path"
+   ]
+  },
+  {
+   "as": "full",
+   "sel": "[data-testid=w-lseats] .dock-layer--full",
+   "chain": true
+  },
+  {
+   "as": "summary",
+   "sel": "[data-testid=w-lseats] .dock-layer--summary",
+   "chain": true
+  },
+  {
+   "as": "seat",
+   "sel": "[data-testid=w-lseats] .dock-layer--full > [data-glass-dock-seat], [data-testid=w-lseats] .dock-layer--full > * > [data-glass-dock-seat]",
+   "all": true,
+   "chain": true,
+   "styles": [
+    "translate"
+   ]
+  },
+  {
+   "as": "face",
+   "sel": "[data-testid=w-lseats] .dock-face",
+   "all": true,
+   "chain": true,
+   "styles": [
+    "translate"
+   ]
+  },
+  {
+   "as": "kid",
+   "sel": "[data-testid=w-lseats] .dock-layer--full > *:not([data-dock-leaving])",
+   "all": true,
+   "chain": true
+  }
+ ],
+ "cropAs": [
+  "dock",
+  "plate"
+ ],
+ "cropPad": 24,
+ "gapMs": 250,
+ "strips": [],
+ "steps": [
+  {
+   "do": "leave",
+   "to": [
+    8,
+    8
+   ]
+  },
+  {
+   "do": "hover",
+   "sel": "[data-testid=w-lseats]",
+   "ms": 100,
+   "hz": 60
+  },
+  {
+   "do": "settle",
+   "quietMs": 400,
+   "maxMs": 3000
+  },
+  {
+   "do": "focus",
+   "sel": "[data-testid=w-lseats] [role=tab][aria-selected=true]"
+  },
+  {
+   "do": "mark",
+   "name": "swap"
+  },
+  {
+   "do": "key",
+   "key": "ArrowDown"
+  },
+  {
+   "do": "wait",
+   "ms": 90
+  },
+  {
+   "do": "mark",
+   "name": "fold"
+  },
+  {
+   "do": "eval",
+   "js": "document.querySelector('[data-testid=w-lseats] .dock-run').dispatchEvent(new KeyboardEvent('keydown',{key:'Escape',bubbles:true}))"
+  },
+  {
+   "do": "leave",
+   "to": [
+    8,
+    800
+   ]
+  },
+  {
+   "do": "settle",
+   "quietMs": 500,
+   "maxMs": 3000
+  }
+ ]
+}

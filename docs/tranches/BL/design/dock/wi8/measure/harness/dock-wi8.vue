@@ -41,6 +41,11 @@
 //             changes the seat set (G-4)
 //   w-color   value.js's Tools/Tool swap: a DockCrossfade of two faces in an open dock
 //   w-kfcode  keyframes's code-pane controls dock: within="parent", corner top-end
+// MEASURE-3 cells (the five behaviours the second fold left unbuilt):
+//   w-many    O-358's dock: five tabs (the first current) and two avatar seats
+//   w-ctl6    a ControlsDock of six controls (the cap), at 360
+//   w-rim     a pill with the reading-progress rim at 40 % in its plate (#rim)
+//   w-long    a site dock of ten seats, so the run scrolls even when compact
 import { computed, defineComponent, h, ref } from "vue";
 import * as dock from "@glass/components/dock";
 import { Slider } from "@glass/components/slider";
@@ -50,6 +55,7 @@ import { DockTrigger } from "@glass/components/dock/trigger";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@glass/components/menu";
 import { Dialog, DialogClose, DialogContent, DialogTitle, DialogTrigger } from "@glass/components/dialog";
 import { SheetContent } from "@glass/components/sheet";
+import { ScrollProgressRim } from "@glass/components/scroll-progress-rim";
 import {
     Home,
     Search,
@@ -141,6 +147,18 @@ const lfaces = [
     { id: "view", label: "View", seats: [{ id: "grid", icon: Table2 }, { id: "zoom", icon: Search }] },
 ];
 const lface = ref("draw");
+// MEASURE-3: O-358's dock, five tabs and two avatar seats.
+const manyTabs = [
+    { id: "home", label: "Home", icon: Home },
+    { id: "search", label: "Search", icon: Search },
+    { id: "library", label: "Library", icon: Library },
+    { id: "marks", label: "Bookmarks", icon: Bookmark },
+    { id: "settings", label: "Settings", icon: Settings },
+];
+const manyCurrent = ref("home");
+// MEASURE-3: a run that scrolls even when compact (ten seats), for two changes within 90 ms.
+const longSeats = [Home, Search, Library, Bookmark, Settings, Layers, Palette, Filter, Table2, Image].map((icon, i) => ({ id: `s${i}`, label: `Seat ${i}`, icon }));
+const longCurrent = ref(0);
 /** Reports the dock context its slot sees (G-7: the outlet provides the dock's context). */
 const CtxProbe = defineComponent({
     setup() {
@@ -669,6 +687,60 @@ const stageStyle = computed(() =>
                 </DockCrossfade>
             </GlassDock>
         </template>
+        <!-- MEASURE-3 cells -->
+        <GlassDock v-if="cell === 'w-many'" data-testid="w-many" aria-label="dashboard" collapse="closed">
+            <DockControl
+                v-for="p in manyTabs"
+                :key="p.id"
+                :aria-label="p.label"
+                :data-testid="`w-many-${p.id}`"
+                :aria-current="manyCurrent === p.id ? 'page' : undefined"
+                @click="manyCurrent = p.id"
+            >
+                <component :is="p.icon" />
+            </DockControl>
+            <DockControl aria-label="Ana" data-testid="w-many-ana"><span class="wi8-avatar">A</span></DockControl>
+            <DockControl aria-label="Ben" data-testid="w-many-ben"><span class="wi8-avatar">B</span></DockControl>
+            <template #collapsed>
+                <Home class="h-4 w-4" aria-hidden="true" />
+            </template>
+        </GlassDock>
+        <GlassDock v-if="cell === 'w-long'" data-testid="w-long" aria-label="site" collapse="closed">
+            <DockControl
+                v-for="(p, i) in longSeats"
+                :key="p.id"
+                :aria-label="p.label"
+                :data-testid="`w-long-${i}`"
+                :aria-current="longCurrent === i ? 'page' : undefined"
+                @click="longCurrent = i"
+            >
+                <component :is="p.icon" />
+            </DockControl>
+            <template #collapsed>
+                <Home class="h-4 w-4" aria-hidden="true" />
+            </template>
+        </GlassDock>
+        <component :is="ControlsDock" v-if="ControlsDock && cell === 'w-ctl6'" data-testid="w-ctl6" label="Six controls" collapse="closed">
+            <DockControl aria-label="Table"><Table2 /></DockControl>
+            <DockControl aria-label="Filter"><Filter /></DockControl>
+            <DockControl aria-label="Palette"><Palette /></DockControl>
+            <DockControl aria-label="Panel"><PanelTop /></DockControl>
+            <DockControl aria-label="Layers"><Layers /></DockControl>
+            <DockControl aria-label="Theme"><Sun /></DockControl>
+            <template #collapsed>
+                <SlidersHorizontal class="h-4 w-4" aria-hidden="true" />
+            </template>
+        </component>
+        <GlassDock v-if="cell === 'w-rim'" data-testid="w-rim" aria-label="reader" collapse="closed">
+            <DockControl v-for="p in pages" :key="p.id" :aria-label="p.label"><component :is="p.icon" /></DockControl>
+            <template #collapsed>
+                <BookOpen class="h-4 w-4" aria-hidden="true" />
+            </template>
+            <template #rim>
+                <ScrollProgressRim :value="0.4" edge="border" data-testid="w-rim-rim" />
+            </template>
+        </GlassDock>
+
         <div v-if="ControlsDock && cell === 'w-kfcode'" class="wi8-figure" data-testid="w-kfcode-host">
             <component :is="ControlsDock" data-testid="w-kfcode" label="Code actions" within="parent" corner="top-end" collapse="closed">
                 <DockControl aria-label="Copy"><Bookmark /></DockControl>
@@ -731,6 +803,15 @@ const stageStyle = computed(() =>
 }
 .wi8-flow > .glass-dock {
     margin-inline: auto;
+}
+.wi8-avatar {
+    display: grid;
+    place-items: center;
+    inline-size: 1.5rem;
+    block-size: 1.5rem;
+    border-radius: 50%;
+    font: 600 12px/1 system-ui, sans-serif;
+    background: color-mix(in oklab, currentColor 14%, transparent);
 }
 .wi8-next {
     font: 13px/1.4 system-ui, sans-serif;

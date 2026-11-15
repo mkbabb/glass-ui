@@ -136,7 +136,7 @@ try {
     }
 } finally {
     if (browser) await browser.close();
-    const f = new URL(`../logs/g13.${engine}.json`, import.meta.url);
+    const f = new URL(`../logs/g13${process.env.LOG_TAG ? "-" + process.env.LOG_TAG : ""}.${engine}.json`, import.meta.url);
     writeFileSync(f, JSON.stringify(out, null, 1));
     console.log(JSON.stringify(out));
 }

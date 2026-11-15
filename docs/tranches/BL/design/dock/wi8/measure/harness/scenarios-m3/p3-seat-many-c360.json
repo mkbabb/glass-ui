@@ -1,0 +1,153 @@
+{
+ "name": "p3-seat-many-c360",
+ "url": "/?c=dock-wi8&cell=w-many",
+ "cells": [
+  {
+   "tag": "360-coarse-light",
+   "w": 360,
+   "h": 780,
+   "pointer": "coarse",
+   "scheme": "light"
+  }
+ ],
+ "ready": "[data-testid=w-many]",
+ "warmMs": 600,
+ "track": [
+  {
+   "as": "dock",
+   "sel": "[data-testid=w-many]",
+   "attrs": [
+    "class",
+    "data-morphing"
+   ],
+   "props": [
+    "--dock-expand-t",
+    "--dock-morph-t",
+    "--dock-curve-inset"
+   ],
+   "colors": [
+    "box-shadow"
+   ]
+  },
+  {
+   "as": "plate",
+   "sel": "[data-testid=w-many] .dock-plate",
+   "colors": [
+    "box-shadow",
+    "background-color"
+   ],
+   "styles": [
+    "clip-path"
+   ]
+  },
+  {
+   "as": "layers",
+   "sel": "[data-testid=w-many] .dock-layers",
+   "chain": true,
+   "styles": [
+    "clip-path"
+   ]
+  },
+  {
+   "as": "full",
+   "sel": "[data-testid=w-many] .dock-layer--full",
+   "chain": true,
+   "attrs": [
+    "data-compact"
+   ]
+  },
+  {
+   "as": "summary",
+   "sel": "[data-testid=w-many] .dock-layer--summary",
+   "chain": true
+  },
+  {
+   "as": "seat",
+   "sel": "[data-testid=w-many] .dock-layer--full > [data-glass-dock-seat]",
+   "all": true,
+   "chain": true,
+   "styles": [
+    "translate"
+   ]
+  },
+  {
+   "as": "kid",
+   "sel": "[data-testid=w-many] .dock-layer--full > *:not([data-dock-leaving])",
+   "all": true,
+   "chain": true
+  }
+ ],
+ "cropAs": [
+  "dock",
+  "plate"
+ ],
+ "cropPad": 24,
+ "gapMs": 250,
+ "strips": [],
+ "steps": [
+  {
+   "do": "click",
+   "sel": "[data-testid=w-many] .dock-layer--summary"
+  },
+  {
+   "do": "settle",
+   "quietMs": 400,
+   "maxMs": 3000,
+   "afterChange": false
+  },
+  {
+   "do": "mark",
+   "name": "neighbour"
+  },
+  {
+   "do": "eval",
+   "js": "document.querySelector('[data-testid=w-many-search]').click()"
+  },
+  {
+   "do": "settle",
+   "quietMs": 400,
+   "maxMs": 3000,
+   "afterChange": false
+  },
+  {
+   "do": "mark",
+   "name": "far"
+  },
+  {
+   "do": "eval",
+   "js": "document.querySelector('[data-testid=w-many-settings]').click()"
+  },
+  {
+   "do": "settle",
+   "quietMs": 400,
+   "maxMs": 3000,
+   "afterChange": false
+  },
+  {
+   "do": "mark",
+   "name": "twice"
+  },
+  {
+   "do": "eval",
+   "js": "document.querySelector('[data-testid=w-many-home]').click()"
+  },
+  {
+   "do": "wait",
+   "ms": 90
+  },
+  {
+   "do": "mark",
+   "name": "retarget"
+  },
+  {
+   "do": "eval",
+   "js": "document.querySelector('[data-testid=w-many-library]').click()"
+  },
+  {
+   "do": "settle",
+   "quietMs": 500,
+   "maxMs": 3000,
+   "afterChange": false
+  }
+ ]
+}

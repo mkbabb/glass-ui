@@ -87,6 +87,6 @@ try {
     }
 } finally {
     if (browser) await browser.close();
-    writeFileSync(new URL(`../logs/g7-p3.${engine}.json`, import.meta.url), JSON.stringify(out, null, 1));
+    writeFileSync(new URL(`../logs/g7-${process.env.LOG_TAG ?? "p3"}.${engine}.json`, import.meta.url), JSON.stringify(out, null, 1));
     console.log(JSON.stringify(out));
 }

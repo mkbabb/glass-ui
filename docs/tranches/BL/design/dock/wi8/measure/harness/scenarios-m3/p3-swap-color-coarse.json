@@ -1,0 +1,136 @@
+{
+ "name": "p3-swap-color-coarse",
+ "url": "/?c=dock-wi8&cell=w-color",
+ "cells": [
+  {
+   "tag": "390-coarse-light",
+   "w": 390,
+   "h": 844,
+   "pointer": "coarse",
+   "scheme": "light"
+  }
+ ],
+ "ready": "[data-testid=w-color]",
+ "warmMs": 600,
+ "track": [
+  {
+   "as": "dock",
+   "sel": "[data-testid=w-color]",
+   "attrs": [
+    "class",
+    "data-morphing"
+   ],
+   "props": [
+    "--dock-expand-t",
+    "--dock-morph-t"
+   ],
+   "colors": [
+    "box-shadow"
+   ]
+  },
+  {
+   "as": "plate",
+   "sel": "[data-testid=w-color] .dock-plate",
+   "colors": [
+    "box-shadow",
+    "background-color"
+   ],
+   "styles": [
+    "clip-path"
+   ]
+  },
+  {
+   "as": "persistent",
+   "sel": "[data-testid=w-color] > .dock-controls > .dock-persistent:not(.dock-persistent-end)",
+   "chain": true,
+   "styles": [
+    "clip-path"
+   ]
+  },
+  {
+   "as": "pend",
+   "sel": "[data-testid=w-color] > .dock-controls > .dock-persistent-end",
+   "chain": true,
+   "styles": [
+    "clip-path"
+   ]
+  },
+  {
+   "as": "layers",
+   "sel": "[data-testid=w-color] .dock-layers",
+   "chain": true,
+   "styles": [
+    "clip-path"
+   ]
+  },
+  {
+   "as": "full",
+   "sel": "[data-testid=w-color] .dock-layer--full",
+   "chain": true
+  },
+  {
+   "as": "summary",
+   "sel": "[data-testid=w-color] .dock-layer--summary",
+   "chain": true
+  },
+  {
+   "as": "seat",
+   "sel": "[data-testid=w-color] .dock-layer--full > [data-glass-dock-seat], [data-testid=w-color] .dock-layer--full > * > [data-glass-dock-seat]",
+   "all": true,
+   "chain": true,
+   "styles": [
+    "translate"
+   ]
+  },
+  {
+   "as": "face",
+   "sel": "[data-testid=w-color] .dock-face",
+   "all": true,
+   "chain": true,
+   "styles": [
+    "translate"
+   ]
+  },
+  {
+   "as": "kid",
+   "sel": "[data-testid=w-color] .dock-layer--full > *:not([data-dock-leaving])",
+   "all": true,
+   "chain": true
+  }
+ ],
+ "cropAs": [
+  "dock",
+  "plate"
+ ],
+ "cropPad": 24,
+ "gapMs": 250,
+ "strips": [],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "to-tool"
+  },
+  {
+   "do": "click",
+   "sel": "[data-testid=w-color-tool]"
+  },
+  {
+   "do": "settle",
+   "quietMs": 400,
+   "maxMs": 3000
+  },
+  {
+   "do": "mark",
+   "name": "to-tools"
+  },
+  {
+   "do": "click",
+   "sel": "[data-testid=w-color-tools]"
+  },
+  {
+   "do": "settle",
+   "quietMs": 400,
+   "maxMs": 3000
+  }
+ ]
+}

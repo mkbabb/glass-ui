@@ -1,0 +1,131 @@
+{
+ "name": "p3-fold-daraksha-coarse",
+ "url": "/?c=dock-wi8&cell=w-daraksha",
+ "cells": [
+  {
+   "tag": "390-coarse-light",
+   "w": 390,
+   "h": 844,
+   "pointer": "coarse",
+   "scheme": "light"
+  }
+ ],
+ "ready": "[data-testid=w-daraksha]",
+ "warmMs": 600,
+ "track": [
+  {
+   "as": "dock",
+   "sel": "[data-testid=w-daraksha]",
+   "attrs": [
+    "class",
+    "data-morphing"
+   ],
+   "props": [
+    "--dock-expand-t",
+    "--dock-morph-t"
+   ],
+   "colors": [
+    "box-shadow"
+   ]
+  },
+  {
+   "as": "plate",
+   "sel": "[data-testid=w-daraksha] .dock-plate",
+   "colors": [
+    "box-shadow",
+    "background-color"
+   ],
+   "styles": [
+    "clip-path"
+   ]
+  },
+  {
+   "as": "persistent",
+   "sel": "[data-testid=w-daraksha] > .dock-controls > .dock-persistent:not(.dock-persistent-end)",
+   "chain": true,
+   "styles": [
+    "clip-path"
+   ]
+  },
+  {
+   "as": "pend",
+   "sel": "[data-testid=w-daraksha] > .dock-controls > .dock-persistent-end",
+   "chain": true,
+   "styles": [
+    "clip-path"
+   ]
+  },
+  {
+   "as": "layers",
+   "sel": "[data-testid=w-daraksha] .dock-layers",
+   "chain": true,
+   "styles": [
+    "clip-path"
+   ]
+  },
+  {
+   "as": "full",
+   "sel": "[data-testid=w-daraksha] .dock-layer--full",
+   "chain": true
+  },
+  {
+   "as": "summary",
+   "sel": "[data-testid=w-daraksha] .dock-layer--summary",
+   "chain": true
+  },
+  {
+   "as": "seat",
+   "sel": "[data-testid=w-daraksha] .dock-layer--full > [data-glass-dock-seat], [data-testid=w-daraksha] .dock-layer--full > * > [data-glass-dock-seat]",
+   "all": true,
+   "chain": true,
+   "styles": [
+    "translate"
+   ]
+  },
+  {
+   "as": "kid",
+   "sel": "[data-testid=w-daraksha] .dock-layer--full > *:not([data-dock-leaving])",
+   "all": true,
+   "chain": true
+  }
+ ],
+ "cropAs": [
+  "dock",
+  "plate"
+ ],
+ "cropPad": 24,
+ "gapMs": 250,
+ "strips": [],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "tap"
+  },
+  {
+   "do": "click",
+   "sel": "[data-testid=w-daraksha] .dock-layer--summary"
+  },
+  {
+   "do": "settle",
+   "quietMs": 400,
+   "maxMs": 3000
+  },
+  {
+   "do": "mark",
+   "name": "outside"
+  },
+  {
+   "do": "click",
+   "sel": "[data-testid=anim-root]",
+   "at": [
+    0.005,
+    0.005
+   ]
+  },
+  {
+   "do": "settle",
+   "quietMs": 400,
+   "maxMs": 3000
+  }
+ ]
+}

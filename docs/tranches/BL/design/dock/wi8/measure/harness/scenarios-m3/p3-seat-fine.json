@@ -1,0 +1,174 @@
+{
+ "name": "p3-seat-fine",
+ "url": "/?c=dock-wi8&cell=w-seat",
+ "cells": [
+  {
+   "tag": "1440-fine-light",
+   "w": 1440,
+   "h": 900,
+   "pointer": "fine",
+   "scheme": "light"
+  }
+ ],
+ "ready": "[data-testid=w-seat]",
+ "warmMs": 600,
+ "track": [
+  {
+   "as": "dock",
+   "sel": "[data-testid=w-seat]",
+   "attrs": [
+    "class",
+    "data-morphing"
+   ],
+   "props": [
+    "--dock-expand-t",
+    "--dock-morph-t"
+   ],
+   "colors": [
+    "box-shadow"
+   ]
+  },
+  {
+   "as": "plate",
+   "sel": "[data-testid=w-seat] .dock-plate",
+   "colors": [
+    "box-shadow",
+    "background-color"
+   ],
+   "styles": [
+    "clip-path"
+   ]
+  },
+  {
+   "as": "persistent",
+   "sel": "[data-testid=w-seat] > .dock-controls > .dock-persistent:not(.dock-persistent-end)",
+   "chain": true,
+   "styles": [
+    "clip-path"
+   ]
+  },
+  {
+   "as": "pend",
+   "sel": "[data-testid=w-seat] > .dock-controls > .dock-persistent-end",
+   "chain": true,
+   "styles": [
+    "clip-path"
+   ]
+  },
+  {
+   "as": "layers",
+   "sel": "[data-testid=w-seat] .dock-layers",
+   "chain": true,
+   "styles": [
+    "clip-path"
+   ]
+  },
+  {
+   "as": "full",
+   "sel": "[data-testid=w-seat] .dock-layer--full",
+   "chain": true
+  },
+  {
+   "as": "summary",
+   "sel": "[data-testid=w-seat] .dock-layer--summary",
+   "chain": true
+  },
+  {
+   "as": "seat",
+   "sel": "[data-testid=w-seat] .dock-layer--full > [data-glass-dock-seat], [data-testid=w-seat] .dock-layer--full > * > [data-glass-dock-seat]",
+   "all": true,
+   "chain": true,
+   "styles": [
+    "translate"
+   ]
+  },
+  {
+   "as": "kid",
+   "sel": "[data-testid=w-seat] .dock-layer--full > *:not([data-dock-leaving])",
+   "all": true,
+   "chain": true
+  }
+ ],
+ "cropAs": [
+  "dock",
+  "plate"
+ ],
+ "cropPad": 24,
+ "gapMs": 250,
+ "strips": [],
+ "steps": [
+  {
+   "do": "leave",
+   "to": [
+    8,
+    8
+   ]
+  },
+  {
+   "do": "hover",
+   "sel": "[data-testid=w-seat]",
+   "ms": 100,
+   "hz": 60
+  },
+  {
+   "do": "settle",
+   "quietMs": 400,
+   "maxMs": 3000,
+   "afterChange": false
+  },
+  {
+   "do": "mark",
+   "name": "neighbour"
+  },
+  {
+   "do": "eval",
+   "js": "document.querySelector('[data-testid=w-seat-search]').click()"
+  },
+  {
+   "do": "settle",
+   "quietMs": 400,
+   "maxMs": 3000,
+   "afterChange": false
+  },
+  {
+   "do": "mark",
+   "name": "far"
+  },
+  {
+   "do": "eval",
+   "js": "document.querySelector('[data-testid=w-seat-marks]').click()"
+  },
+  {
+   "do": "settle",
+   "quietMs": 400,
+   "maxMs": 3000,
+   "afterChange": false
+  },
+  {
+   "do": "mark",
+   "name": "twice"
+  },
+  {
+   "do": "eval",
+   "js": "document.querySelector('[data-testid=w-seat-read]').click()"
+  },
+  {
+   "do": "wait",
+   "ms": 90
+  },
+  {
+   "do": "mark",
+   "name": "retarget"
+  },
+  {
+   "do": "eval",
+   "js": "document.querySelector('[data-testid=w-seat-library]').click()"
+  },
+  {
+   "do": "settle",
+   "quietMs": 500,
+   "maxMs": 3000,
+   "afterChange": false
+  }
+ ]
+}

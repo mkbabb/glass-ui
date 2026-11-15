@@ -1,0 +1,226 @@
+{
+ "name": "p3-hover-fine",
+ "url": "/?c=dock-wi8&cell=w-seat",
+ "cells": [
+  {
+   "tag": "1440-fine-light",
+   "w": 1440,
+   "h": 900,
+   "pointer": "fine",
+   "scheme": "light"
+  }
+ ],
+ "ready": "[data-testid=w-seat]",
+ "warmMs": 600,
+ "track": [
+  {
+   "as": "dock",
+   "sel": "[data-testid=w-seat]",
+   "attrs": [
+    "class",
+    "data-morphing"
+   ],
+   "props": [
+    "--dock-expand-t",
+    "--dock-morph-t"
+   ],
+   "colors": [
+    "box-shadow"
+   ]
+  },
+  {
+   "as": "plate",
+   "sel": "[data-testid=w-seat] .dock-plate",
+   "colors": [
+    "box-shadow",
+    "background-color"
+   ],
+   "styles": [
+    "clip-path"
+   ]
+  },
+  {
+   "as": "persistent",
+   "sel": "[data-testid=w-seat] > .dock-controls > .dock-persistent:not(.dock-persistent-end)",
+   "chain": true,
+   "styles": [
+    "clip-path"
+   ]
+  },
+  {
+   "as": "pend",
+   "sel": "[data-testid=w-seat] > .dock-controls > .dock-persistent-end",
+   "chain": true,
+   "styles": [
+    "clip-path"
+   ]
+  },
+  {
+   "as": "layers",
+   "sel": "[data-testid=w-seat] .dock-layers",
+   "chain": true,
+   "styles": [
+    "clip-path"
+   ]
+  },
+  {
+   "as": "full",
+   "sel": "[data-testid=w-seat] .dock-layer--full",
+   "chain": true
+  },
+  {
+   "as": "summary",
+   "sel": "[data-testid=w-seat] .dock-layer--summary",
+   "chain": true
+  },
+  {
+   "as": "seat",
+   "sel": "[data-testid=w-seat] .dock-layer--full > [data-glass-dock-seat], [data-testid=w-seat] .dock-layer--full > * > [data-glass-dock-seat]",
+   "all": true,
+   "chain": true,
+   "styles": [
+    "translate"
+   ]
+  },
+  {
+   "as": "kid",
+   "sel": "[data-testid=w-seat] .dock-layer--full > *:not([data-dock-leaving])",
+   "all": true,
+   "chain": true
+  }
+ ],
+ "cropAs": [
+  "dock",
+  "plate"
+ ],
+ "cropPad": 24,
+ "gapMs": 250,
+ "strips": [],
+ "steps": [
+  {
+   "do": "leave",
+   "to": [
+    8,
+    8
+   ]
+  },
+  {
+   "do": "hover",
+   "sel": "[data-testid=w-seat]",
+   "ms": 100,
+   "hz": 60
+  },
+  {
+   "do": "settle",
+   "quietMs": 400,
+   "maxMs": 3000
+  },
+  {
+   "do": "mark",
+   "name": "in-home"
+  },
+  {
+   "do": "hover",
+   "sel": "[data-testid=w-seat-home]",
+   "ms": 120,
+   "hz": 60
+  },
+  {
+   "do": "wait",
+   "ms": 300
+  },
+  {
+   "do": "mark",
+   "name": "in-read"
+  },
+  {
+   "do": "hover",
+   "sel": "[data-testid=w-seat-read]",
+   "ms": 120,
+   "hz": 60
+  },
+  {
+   "do": "wait",
+   "ms": 300
+  },
+  {
+   "do": "mark",
+   "name": "in-search"
+  },
+  {
+   "do": "hover",
+   "sel": "[data-testid=w-seat-search]",
+   "ms": 120,
+   "hz": 60
+  },
+  {
+   "do": "wait",
+   "ms": 300
+  },
+  {
+   "do": "mark",
+   "name": "in-library"
+  },
+  {
+   "do": "hover",
+   "sel": "[data-testid=w-seat-library]",
+   "ms": 120,
+   "hz": 60
+  },
+  {
+   "do": "wait",
+   "ms": 300
+  },
+  {
+   "do": "mark",
+   "name": "in-marks"
+  },
+  {
+   "do": "hover",
+   "sel": "[data-testid=w-seat-marks]",
+   "ms": 120,
+   "hz": 60
+  },
+  {
+   "do": "wait",
+   "ms": 300
+  },
+  {
+   "do": "mark",
+   "name": "in-settings"
+  },
+  {
+   "do": "hover",
+   "sel": "[data-testid=w-seat-settings]",
+   "ms": 120,
+   "hz": 60
+  },
+  {
+   "do": "wait",
+   "ms": 300
+  },
+  {
+   "do": "mark",
+   "name": "sweep"
+  },
+  {
+   "do": "move",
+   "to": {
+    "sel": "[data-testid=w-seat-settings]"
+   },
+   "ms": 0
+  },
+  {
+   "do": "move",
+   "to": {
+    "sel": "[data-testid=w-seat-home]"
+   },
+   "ms": 6000,
+   "hz": 60
+  },
+  {
+   "do": "wait",
+   "ms": 300
+  }
+ ]
+}

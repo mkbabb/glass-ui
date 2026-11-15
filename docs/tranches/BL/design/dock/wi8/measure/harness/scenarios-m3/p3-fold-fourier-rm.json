@@ -1,0 +1,141 @@
+{
+ "name": "p3-fold-fourier-rm",
+ "url": "/?c=dock-wi8&cell=w-fourier",
+ "cells": [
+  {
+   "tag": "1440-fine-light-rm",
+   "w": 1440,
+   "h": 900,
+   "pointer": "fine",
+   "scheme": "light",
+   "reducedMotion": true
+  }
+ ],
+ "ready": "[data-testid=w-fourier]",
+ "warmMs": 600,
+ "track": [
+  {
+   "as": "dock",
+   "sel": "[data-testid=w-fourier]",
+   "attrs": [
+    "class",
+    "data-morphing"
+   ],
+   "props": [
+    "--dock-expand-t",
+    "--dock-morph-t"
+   ],
+   "colors": [
+    "box-shadow"
+   ]
+  },
+  {
+   "as": "plate",
+   "sel": "[data-testid=w-fourier] .dock-plate",
+   "colors": [
+    "box-shadow",
+    "background-color"
+   ],
+   "styles": [
+    "clip-path"
+   ]
+  },
+  {
+   "as": "persistent",
+   "sel": "[data-testid=w-fourier] > .dock-controls > .dock-persistent:not(.dock-persistent-end)",
+   "chain": true,
+   "styles": [
+    "clip-path"
+   ]
+  },
+  {
+   "as": "pend",
+   "sel": "[data-testid=w-fourier] > .dock-controls > .dock-persistent-end",
+   "chain": true,
+   "styles": [
+    "clip-path"
+   ]
+  },
+  {
+   "as": "layers",
+   "sel": "[data-testid=w-fourier] .dock-layers",
+   "chain": true,
+   "styles": [
+    "clip-path"
+   ]
+  },
+  {
+   "as": "full",
+   "sel": "[data-testid=w-fourier] .dock-layer--full",
+   "chain": true
+  },
+  {
+   "as": "summary",
+   "sel": "[data-testid=w-fourier] .dock-layer--summary",
+   "chain": true
+  },
+  {
+   "as": "seat",
+   "sel": "[data-testid=w-fourier] .dock-layer--full > [data-glass-dock-seat], [data-testid=w-fourier] .dock-layer--full > * > [data-glass-dock-seat]",
+   "all": true,
+   "chain": true,
+   "styles": [
+    "translate"
+   ]
+  },
+  {
+   "as": "kid",
+   "sel": "[data-testid=w-fourier] .dock-layer--full > *:not([data-dock-leaving])",
+   "all": true,
+   "chain": true
+  }
+ ],
+ "cropAs": [
+  "dock",
+  "plate"
+ ],
+ "cropPad": 24,
+ "gapMs": 250,
+ "strips": [],
+ "steps": [
+  {
+   "do": "leave",
+   "to": [
+    8,
+    8
+   ]
+  },
+  {
+   "do": "mark",
+   "name": "enter"
+  },
+  {
+   "do": "hover",
+   "sel": "[data-testid=w-fourier]",
+   "ms": 120,
+   "hz": 60
+  },
+  {
+   "do": "settle",
+   "quietMs": 400,
+   "maxMs": 3000
+  },
+  {
+   "do": "mark",
+   "name": "outside"
+  },
+  {
+   "do": "click",
+   "sel": "[data-testid=anim-root]",
+   "at": [
+    0.005,
+    0.005
+   ]
+  },
+  {
+   "do": "settle",
+   "quietMs": 400,
+   "maxMs": 3000
+  }
+ ]
+}
