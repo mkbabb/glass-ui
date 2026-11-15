@@ -1,0 +1,92 @@
+/*
+ * depth.css — text behind and in front of a figure, and one layer that trails the page
+ * (W-B.19).
+ *
+ * A scene (`.depth`) is one stacking context holding three rungs: a run of text marked
+ * `behind`, one `figure`, a run marked `front`. Each run exists once, in reading order.
+ * One element per scene may trail the page under scroll: the figure (`data-depth-lag`)
+ * or the picture inside its window (`data-depth-lag="within"`). The words never move.
+ *
+ * Scroll is the only driver (a view timeline on `translate`); there is no clock and no
+ * script. Under reduced motion, and on an engine without view timelines, the animation
+ * never binds and every layer rests where the composition was drawn: the cover stays,
+ * the travel stops.
+ */
+
+:root {
+    /* The ratio glass already rules for the route push (1:8). A scene may lower it. */
+    --depth-lag: 0.125;
+}
+
+@layer components {
+    .depth {
+        /* Each way. The house travel (the ratio over half the block viewport), held
+           to half the scene's own width so a narrow scene stays one picture. Declared
+           on the scene, not the root: an unregistered property resolves its var() where
+           it is declared, so a root declaration would never see a scene's lower lag. */
+        --depth-travel: calc(var(--depth-lag) * min(50lvb, 50cqi));
+        display: grid;
+        isolation: isolate;
+        container-type: inline-size;
+        view-timeline: --depth block;
+    }
+
+    /* One cell. Each layer places itself in it (place-self, margin). */
+    :where(.depth) > * {
+        grid-area: 1 / 1;
+        min-inline-size: 0;
+    }
+
+    /* A run inside a heading is not a grid item, so it is positioned to take a
+       z-index. Zero specificity: a figure that positions itself keeps its own. */
+    :where([data-depth]) {
+        position: relative;
+    }
+
+    [data-depth="behind"] {
+        z-index: var(--z-background);
+    }
+    [data-depth="figure"] {
+        z-index: var(--z-content);
+    }
+    [data-depth="front"] {
+        z-index: calc(var(--z-content) + 1);
+    }
+
+    /* The window of a picture that trails. */
+    [data-depth="figure"]:has(> [data-depth-lag="within"]) {
+        overflow: clip;
+    }
+    [data-depth-lag="within"] {
+        position: absolute;
+        inset: 0;
+        inline-size: 100%;
+        block-size: 100%;
+        object-fit: cover;
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+        @supports ((animation-timeline: view()) and (animation-range: cover)) {
+            .depth [data-depth-lag] {
+                animation: depth-lag linear both;
+                animation-timeline: --depth;
+                animation-range: cover;
+            }
+            /* The picture is taller than its window by the travel, each way. */
+            .depth [data-depth-lag="within"] {
+                inset-block: calc(-1 * var(--depth-travel));
+                block-size: calc(100% + 2 * var(--depth-travel));
+            }
+        }
+    }
+
+    /* A far layer moves up less than the page, so it falls behind it. */
+    @keyframes depth-lag {
+        from {
+            translate: 0 calc(-1 * var(--depth-travel));
+        }
+        to {
+            translate: 0 var(--depth-travel);
+        }
+    }
+}
