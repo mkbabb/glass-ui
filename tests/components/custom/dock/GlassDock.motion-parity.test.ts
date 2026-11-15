@@ -54,6 +54,9 @@ describe("GlassDock isTransitioning — spring-settle source", () => {
             attachTo: document.body,
             props: { collapse: "closed", backdropMode: "static" },
         });
+        // W-I.8 R-1, restated: a change before the dock's first frame is seated with no
+        // travel (nothing painted to glide from), so the witness lets one frame paint.
+        await vi.advanceTimersByTimeAsync(20);
         const vm = wrapper.vm as unknown as Record<string, unknown>;
         const root = wrapper.get(".glass-dock").element;
 
@@ -82,6 +85,9 @@ describe("GlassDock isTransitioning — spring-settle source", () => {
             attachTo: document.body,
             props: { collapse: "closed", backdropMode: "static" },
         });
+        // W-I.8 R-1, restated: a change before the dock's first frame is seated with no
+        // travel (nothing painted to glide from), so the witness lets one frame paint.
+        await vi.advanceTimersByTimeAsync(20);
         const vm = wrapper.vm as unknown as Record<string, unknown>;
         const root = wrapper.get(".glass-dock").element;
 
@@ -110,6 +116,9 @@ describe("GlassDock isTransitioning — spring-settle source", () => {
             attachTo: document.body,
             props: { collapse: "closed", backdropMode: "static" },
         });
+        // W-I.8 R-1, restated: a change before the dock's first frame is seated with no
+        // travel (nothing painted to glide from), so the witness lets one frame paint.
+        await vi.advanceTimersByTimeAsync(20);
         const vm = wrapper.vm as unknown as Record<string, unknown>;
 
         (vm.expand as () => void)();
@@ -131,6 +140,9 @@ describe("GlassDock isTransitioning — spring-settle source", () => {
             attachTo: document.body,
             props: { collapse: "closed", backdropMode: "static" },
         });
+        // W-I.8 R-1, restated: a change before the dock's first frame is seated with no
+        // travel (nothing painted to glide from), so the witness lets one frame paint.
+        await vi.advanceTimersByTimeAsync(20);
         const vm = wrapper.vm as unknown as Record<string, unknown>;
         const root = wrapper.get<HTMLElement>(".glass-dock");
 
@@ -192,6 +204,7 @@ describe("GlassDock isTransitioning — spring-settle source", () => {
             attachTo: document.body,
             props: { collapse: "closed", backdropMode: "static" },
             });
+            await vi.advanceTimersByTimeAsync(20);
             const vm = wrapper.vm as unknown as Record<string, unknown>;
             const root = wrapper.get(".glass-dock").element;
 
@@ -204,6 +217,9 @@ describe("GlassDock isTransitioning — spring-settle source", () => {
             const event = { matches: true, media: media.media } as MediaQueryListEvent;
             for (const listener of listeners) listener(event);
             await wrapper.vm.$nextTick();
+            // W-I.8 R-11, restated: under reduced motion the geometry lands in the frame of
+            // the change and the content finishes on a linear 100 ms clock, never a cut.
+            await vi.advanceTimersByTimeAsync(140);
 
             expect(vm.isTransitioning).toBe(false);
             expect(root.hasAttribute("data-morphing")).toBe(false);

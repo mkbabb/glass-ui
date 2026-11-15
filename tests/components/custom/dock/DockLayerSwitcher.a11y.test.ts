@@ -73,6 +73,9 @@ async function mountSwitcher(withThirdFace = false) {
     dockVm.expand();
     await nextTick();
     await nextTick();
+    // W-I.8 R-1, restated: a change before the dock's first frame is seated with no
+    // travel; the witness lets the dock paint and land before it swaps.
+    if (vi.isFakeTimers()) await vi.advanceTimersByTimeAsync(1200);
     return { wrapper, active };
 }
 
@@ -283,7 +286,7 @@ describe("dock switcher a11y contract (APG tabs)", () => {
         expect(paneB.classList).toContain("is-leaving");
         expect(paneC.classList).toContain("is-active");
         expect(Number.parseFloat(paneB.style.opacity)).toBeCloseTo(before, 3);
-        expect(paneC.style.opacity).toBe("0");
+        expect(Number.parseFloat(paneC.style.opacity)).toBe(0);
 
         await vi.advanceTimersByTimeAsync(1200);
         expect(wrapper.find(".dock-face.is-leaving").exists()).toBe(false);

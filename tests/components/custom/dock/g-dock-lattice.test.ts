@@ -360,7 +360,10 @@ describe("G-DOCK-RUN — the platform is the detent engine", () => {
         // Declarations only: `from: 9999px` is NAMED in the docblock as the rejected
         // alternative, and a detector that cannot tell a rejection from a declaration
         // would RED the file for explaining itself.
-        expect(decls).not.toContain("9999px");
+        // W-I.8 R-1 (RU-13), restated: the cap is off the plate, so the law is that no
+        // keyframe carries a corner; a pill's rest corner of 9999px (its used value is half
+        // its cross extent at any height) is a rest, not a keyframe.
+        expect(decls).not.toMatch(/(from|to|\d+%)\s*\{[^}]*9999px/);
     });
 
     /**
