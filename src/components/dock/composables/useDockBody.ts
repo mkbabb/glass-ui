@@ -728,10 +728,24 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
         // and paints, and without a lane it painted over its neighbour (keyframes's transport).
         // R-5: each seat whose place changed rides its own translate to 0, and the run's
         // offset rides its quantity, so a seat's painted place is one curve.
+        // WebKit keeps a scroll offset whole, so an offset written with a fraction steps by
+        // a pixel when it rounds. The offset is written whole and its fraction rides the
+        // seats' translate, so the two together are the quantity (not in a right-to-left
+        // run, whose offsets count the other way; there the offset is written as it is).
         const rr = runEl();
-        if (rr && scrollRest !== null) writeScroll(rr, scrollRest + scrollQ.d);
+        let fx = 0;
+        let fy = 0;
+        if (rr && scrollRest !== null) {
+            const target = scrollRest + scrollQ.d;
+            const whole = flip ? target : Math.round(target);
+            writeScroll(rr, whole);
+            if (o.vertical()) fy = whole - target;
+            else fx = whole - target;
+        }
         for (const [el, t] of seats) {
-            if (t.x.d !== 0 || t.y.d !== 0) el.style.translate = `${t.x.d.toFixed(3)}px ${t.y.d.toFixed(3)}px`;
+            const x = t.x.d + fx;
+            const y = t.y.d + fy;
+            if (x !== 0 || y !== 0) el.style.translate = `${x.toFixed(3)}px ${y.toFixed(3)}px`;
             else if (el.style.translate) el.style.removeProperty("translate");
         }
         for (const t of order) {
