@@ -147,6 +147,12 @@ on the left, the dock with reduced motion turned on, and the timing of HandMark'
   short hold. The corner that tightens while controls are hidden past the dock's edge
   holds still too; the half-visible control at the edge still shows there is more.
 
+- **Resizing or rotating while the dock opens or closes is quiet again.** 11.0.2 could
+  make the browser report "ResizeObserver loop completed with undelivered notifications"
+  when the window was resized, or a phone rotated, while the dock was in the middle of
+  opening or closing. The dock now takes its new size on the next frame, so the error
+  no longer appears and the dock still lands at the right size.
+
 ### Motion and forms
 
 - **Dragging a `Slider` sends one update per frame.** A fast pointer can deliver two or
