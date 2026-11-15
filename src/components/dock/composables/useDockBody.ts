@@ -103,6 +103,8 @@ export interface UseDockBodyOptions {
     root: Ref<HTMLElement | null>;
     plate: Ref<HTMLElement | null>;
     regions: () => Array<{ key: string; el: HTMLElement | null }>;
+    /** The run: the box whose children are the seats (R-5, the open seat). */
+    run?: Ref<HTMLElement | null>;
     expanded: () => boolean;
     vertical: () => boolean;
     reducedMotion: () => boolean;
@@ -131,6 +133,9 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
     let rTo = 0;
     let capsule = true;
     const regions = new Map<string, RegionTrack>();
+    // R-5 (RU-8): each seat of the run, by its layout offset in the run; a seat whose place
+    // changes carries a translate from where it painted to 0.
+    const seats = new Map<HTMLElement, { lx: number; ly: number; x: Q; y: Q }>();
     let faces: FaceTrack[] = [];
     const pendingLeaves: PendingLeave[] = [];
     // Content windows and the posture coordinate.
@@ -262,6 +267,42 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
         for (const k of [...regions.keys()]) if (!seen.has(k)) regions.delete(k);
     }
 
+    /** Reads each seat's layout offset; returns true when a seat's place changed while the
+     *  run is the face on screen. Offsets are layout, so our translate is not in them. */
+    function readSeats(carry: boolean): boolean {
+        const run = o.run?.value;
+        if (!run || !run.isConnected) return false;
+        let movedAny = false;
+        const seen = new Set<HTMLElement>();
+        for (const child of run.children) {
+            if (!(child instanceof HTMLElement) || child.offsetParent === null) continue;
+            seen.add(child);
+            const lx = child.offsetLeft;
+            const ly = child.offsetTop;
+            const t = seats.get(child);
+            if (!t) {
+                seats.set(child, { lx, ly, x: { d: 0, v: 0 }, y: { d: 0, v: 0 } });
+                ro?.observe(child);
+                continue;
+            }
+            if (carry && (Math.abs(t.lx - lx) > 0.01 || Math.abs(t.ly - ly) > 0.01)) {
+                // Painted minus layout, with the velocity it had (a second change retargets).
+                t.x.d += t.lx - lx;
+                t.y.d += t.ly - ly;
+                movedAny = true;
+            }
+            t.lx = lx;
+            t.ly = ly;
+        }
+        for (const [el, t] of seats) {
+            if (seen.has(el)) continue;
+            el.style.removeProperty("translate");
+            seats.delete(el);
+            void t;
+        }
+        return movedAny;
+    }
+
     function sync(reason: string): void {
         const el = root();
         if (!el || !el.isConnected) return;
@@ -283,6 +324,8 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
             Math.abs(next.t - layout.t) > 0.01 ||
             Math.abs(next.b - layout.b) > 0.01;
 
+        // The seats carry only when the open face stays on screen (a content change).
+        const seatsMoved = readSeats(!postureChanged && posture);
         if (!layout) {
             layout = next;
             rFrom = rTo = rNext;
@@ -292,7 +335,7 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
             return;
         }
 
-        if (changed || postureChanged || pendingLeaves.length) {
+        if (changed || postureChanged || pendingLeaves.length || seatsMoved) {
             if (prevPainted && changed) {
                 // Each edge holds painted minus layout, with the velocity it had.
                 edge.l.d = prevPainted.l - next.l;
@@ -318,6 +361,7 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
                 eq.v = 0;
                 for (const q of Object.values(edge)) (q.d = 0), (q.v = 0);
                 for (const t of regions.values()) (t.x.d = t.y.d = t.x.v = t.y.v = 0);
+                for (const t of seats.values()) (t.x.d = t.y.d = t.x.v = t.y.v = 0);
             }
             if (postureChanged || changed) {
                 if (!travelling) {
@@ -395,7 +439,7 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
                 [q.d, q.v] = step(q.d, q.v, dt);
                 if (Math.abs(q.d) < 0.1 && Math.abs(q.v) < 6) (q.d = 0), (q.v = 0);
             }
-            for (const t of regions.values()) {
+            for (const t of [...regions.values(), ...seats.values()]) {
                 [t.x.d, t.x.v] = step(t.x.d, t.x.v, dt);
                 [t.y.d, t.y.v] = step(t.y.d, t.y.v, dt);
                 if (Math.abs(t.x.d) < 0.1 && Math.abs(t.x.v) < 6) (t.x.d = 0), (t.x.v = 0);
@@ -416,6 +460,7 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
         }
         for (const q of Object.values(edge)) if (q.d !== 0) live = true;
         for (const t of regions.values()) if (t.x.d !== 0 || t.y.d !== 0) live = true;
+        for (const t of seats.values()) if (t.x.d !== 0 || t.y.d !== 0) live = true;
         if (u !== 0) live = true;
         if (eq.d !== 0) live = true;
         if (live) {
@@ -474,6 +519,11 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
         const order = ["persistent", "layers", "persistent-end"]
             .map((k) => regions.get(k))
             .filter((t): t is RegionTrack => !!t && t.w > 0.5 && t.h > 0.5);
+        // R-5: each seat whose place changed rides its own translate to 0.
+        for (const [el, t] of seats) {
+            if (t.x.d !== 0 || t.y.d !== 0) el.style.translate = `${t.x.d.toFixed(3)}px ${t.y.d.toFixed(3)}px`;
+            else if (el.style.translate) el.style.removeProperty("translate");
+        }
         for (const t of order) {
             t.tx = t.x.d;
             t.ty = t.y.d;
@@ -551,6 +601,7 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
             plate.style.removeProperty("inset");
             plate.style.removeProperty("border-radius");
         }
+        for (const el of seats.keys()) el.style.removeProperty("translate");
         for (const t of regions.values()) {
             t.el.style.removeProperty("translate");
             t.el.style.removeProperty("clip-path");
@@ -595,6 +646,7 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
         const el = root();
         if (el) ro.observe(el);
         for (const { el: r } of o.regions()) if (r) ro.observe(r);
+        for (const seat of seats.keys()) ro.observe(seat);
     });
     onBeforeUnmount(() => {
         ro?.disconnect();

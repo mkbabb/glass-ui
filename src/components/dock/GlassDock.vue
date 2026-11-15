@@ -254,6 +254,7 @@ const body = useDockBody({
         { key: "layers", el: layersEl.value },
         { key: "persistent-end", el: persistentEndEl.value },
     ],
+    run: fullEl,
     expanded: () => visualExpanded.value,
     vertical: () => orientation.value === "vertical",
     reducedMotion: () => reducedMotion.value,
