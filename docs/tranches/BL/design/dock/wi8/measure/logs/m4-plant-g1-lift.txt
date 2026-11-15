@@ -1,0 +1,13 @@
+== g1-lift 14:46:58 (load { 7.56 7.98 7.59 })
+applied g1-lift - G-1 (f): the linger scheduled in the touch pointerup, before the tap's focus
+build rc=0
+reverted g1-lift
+{"finger":{"how":"CDP touchStart/touchEnd","opened":true,"foldedWhileHeld":false,"lifted":{"open":true,"pinned":false,"focus":"w-pill-read","focusSummary":false,"fv":false,"held":false,"exp":true},"foldAfterLiftMs":null,"end":{"open":true,"pinned":false,"focus":"w-pill-read","focusSummary":false,"fv":false,"held":false,"exp":true},"events":[[719,"pointerdown","touch"],[719,"pointerup","touch"],[720,"touchend",""],[720,"focusin",""],[720,"click","touch"],[1632,"pointerdown","touch"],[10636,"pointerup","touch"],[10637,"touchend",""],[10638,"focusin",""],[10639,"click","touch"]],"tDown":1631,"tUp":10635}}
+{"tapseat":{"foldAfterSeatTapMs":null,"end":{"open":true,"pinned":false,"focus":"w-pill-read","focusSummary":false,"fv":false,"held":false,"exp":true}}}
+{"c390":{"g":{"opened":true,"pinned":false,"foldAfterTapMs":6008},"hOutside":{"opened":true,"foldAfterTapOutsideMs":2.5}}}
+chromium rc=0
+{"finger":{"how":"dispatched pointerdown/pointerup, pointerType touch (WebKit has no held-touch input)","opened":true,"foldedWhileHeld":false,"foldAfterLiftMs":6006}}
+{"tapseat":{"foldAfterSeatTapMs":null,"end":{"open":true,"pinned":false,"focus":"w-pill-read","focusSummary":false,"fv":false,"held":false,"exp":true}}}
+{"c390":{"g":{"opened":true,"pinned":false,"foldAfterTapMs":6012},"hOutside":{"opened":true,"foldAfterTapOutsideMs":3}}}
+webkit rc=0
+== done 14:48:58

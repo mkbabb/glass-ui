@@ -1,0 +1,27 @@
+## G-10: 52/55 segments pass over 24 scenarios (2 with a failing segment); blank rows max 0
+   turns: p3-swap-layers-rm:leave 17/rev -<=-ms, p3-swap-xf-rm:leave 17/rev -<=-ms
+   2 × face#n fade n values over n ms   e.g. p3-swap-layers-rm 1440-fine-light-rm: face#1 fade 15 values over 714 ms
+   2 × geometry moves on n frames   e.g. p3-swap-layers-rm 1440-fine-light-rm: geometry moves on 2 frames
+   failing: p3-swap-layers-rm, p3-swap-xf-rm
+## G-2: 109/114 segments pass over 59 scenarios (5 with a failing segment); blank rows max 1
+   3 × hidden before covered in n unit-rows   e.g. p3-fold-outlet-coarse 390-coarse-light: hidden before covered in 1 unit-rows (seat#3 f10)
+   1 × no face showing for n ms   e.g. p3-fold-flow-dark 1440-fine-dark: no face showing for 19 ms (1 rows; bound 17 ms)
+   1 × first row n ms after tap   e.g. p3-fold-transport-coarse 390-coarse-light: first row 52 ms after tap (bound 34 ms)
+   failing: p3-fold-flow-dark, p3-fold-outlet-coarse, p3-fold-outlet-dark, p3-fold-outlet-fine, p3-fold-transport-coarse
+## G-3: 17/18 segments pass over 12 scenarios (1 with a failing segment); blank rows max 1
+   turns: p3-rev-fold-25-press:leave 17/rev 34<=39ms, p3-rev-fold-25-ptr:leave 16/rev 35<=40.4ms, p3-rev-fold-50-press:leave 18/rev 18<=29.7ms, p3-rev-fold-50-ptr:leave 17/rev 17<=29.1ms, p3-rev-fold-75-press:leave 17/rev 17<=21ms, p3-rev-fold-75-ptr:leave 18/rev 18<=17.7ms, p3-rev-unfold-25-esc:leave 15/rev 33<=41.4ms, p3-rev-unfold-25-out:leave 18/rev 32<=40.2ms, p3-rev-unfold-50-esc:leave 17/rev 17<=29.1ms, p3-rev-unfold-50-out:leave 14/rev 14<=31.1ms, p3-rev-unfold-75-esc:leave 16/rev 16<=19.1ms, p3-rev-unfold-75-out:leave 18/rev 18<=18.3ms
+   1 × L reverses n ms after reverse-n   e.g. p3-rev-fold-75-ptr 1440-fine-light: L reverses 18 ms after reverse-75 (bound 18 ms)
+   1 × R reverses n ms after reverse-n   e.g. p3-rev-fold-75-ptr 1440-fine-light: R reverses 18 ms after reverse-75 (bound 18 ms)
+   failing: p3-rev-fold-75-ptr
+## G-4: 32/36 segments pass over 13 scenarios (4 with a failing segment); blank rows max 2
+   turns: p3-swap-fold-during:leave -/rev -<=-ms, p3-swap-layers-coarse:leave 30/rev 12<=35.4ms, p3-swap-layers-dark:leave 14/rev 14<=34.5ms, p3-swap-layers-fine:leave 17/rev 17<=28.1ms, p3-swap-return-30:leave 14/rev 14<=34.5ms, p3-swap-return-60:leave 16/rev -<=-ms, p3-swap-xf-coarse:leave 33/rev -<=-ms, p3-swap-xf-dark:leave 33/rev -<=-ms, p3-swap-xf-fine:leave 36/rev -<=-ms
+   2 × T reverses n ms after third   e.g. p3-swap-xf-dark 1440-fine-dark: T reverses 67 ms after third (bound 66 ms)
+   2 × B reverses n ms after third   e.g. p3-swap-xf-dark 1440-fine-dark: B reverses 67 ms after third (bound 66 ms)
+   1 × hidden before covered in n unit-rows   e.g. p3-region-fine 1440-fine-light: hidden before covered in 1 unit-rows (seat#3 f19)
+   1 × R leaves its path n ms after fold   e.g. p3-swap-fold-during 1440-fine-light: R leaves its path 49 ms after fold
+   1 × L leaves its path n ms after third   e.g. p3-swap-xf-fine 1440-fine-light: L leaves its path 36 ms after third
+   1 × R leaves its path n ms after third   e.g. p3-swap-xf-fine 1440-fine-light: R leaves its path 36 ms after third
+   failing: p3-region-fine, p3-swap-fold-during, p3-swap-xf-dark, p3-swap-xf-fine
+## G-6: 1/1 segments pass over 1 scenarios (0 with a failing segment); blank rows max 0
+## G-9: 3/3 segments pass over 2 scenarios (0 with a failing segment); blank rows max 0
+   turns: p3-scope-rev:leave 10/rev 27<=45.9ms

@@ -1,0 +1,18 @@
+## G-10: 57/59 segments pass over 26 scenarios (2 with a failing segment); blank rows max 0
+   turns: p3-swap-layers-rm:leave 12/rev -<=-ms, p3-swap-xf-rm:leave 9/rev -<=-ms
+   2 × geometry moves on n frames   e.g. p3-swap-layers-rm 1440-fine-light-rm: geometry moves on 2 frames
+   1 × face#n fade n values over n ms   e.g. p3-swap-xf-rm 1440-fine-light-rm: face#2 fade 18 values over 193 ms
+   failing: p3-swap-layers-rm, p3-swap-xf-rm
+## G-2: 122/134 segments pass over 69 scenarios (6 with a failing segment); blank rows max 1
+   12 × hidden before covered past RU-n in n runs   e.g. p3-fold-fourier-coarse 390-coarse-light: hidden before covered past RU-21 in 1 runs (seat#2 306.0 ms)
+   failing: p3-fold-fourier-coarse, p3-fold-fourier-dark, p3-fold-fourier-fine, p3-fold-outlet-coarse, p3-fold-outlet-dark, p3-fold-outlet-fine
+## G-3: 20/20 segments pass over 12 scenarios (0 with a failing segment); blank rows max 1
+   turns: p3-rev-fold-25-press:leave 10/rev 29<=35.9ms, p3-rev-fold-25-ptr:leave 11/rev 30<=34.9ms, p3-rev-fold-50-press:leave 9/rev 19<=26.1ms, p3-rev-fold-50-ptr:leave 10/rev 22<=25.7ms, p3-rev-fold-75-press:leave 11/rev 11<=15.5ms, p3-rev-fold-75-ptr:leave 10/rev 10<=16.3ms, p3-rev-unfold-25-esc:leave 10/rev 30<=34ms, p3-rev-unfold-25-out:leave 9/rev 31<=31.4ms, p3-rev-unfold-50-esc:leave 12/rev 12<=17.6ms, p3-rev-unfold-50-out:leave 10/rev 10<=19.5ms
+## G-4: 36/43 segments pass over 16 scenarios (3 with a failing segment); blank rows max 0
+   turns: p3-swap-fold-during:leave -/rev -<=-ms, p3-swap-layers-coarse:leave 19/rev 19<=25ms, p3-swap-layers-dark:leave 20/rev 20<=24.4ms, p3-swap-layers-fine:leave 12/rev 21<=23.2ms, p3-swap-return-15:leave 12/rev 43<=43.5ms, p3-swap-return-30:leave 12/rev 22<=25.1ms, p3-swap-return-60:leave 10/rev -<=-ms, p3-swap-xf-coarse:leave 22/rev -<=-ms, p3-swap-xf-dark:leave 21/rev -<=-ms, p3-swap-xf-fine:leave 20/rev -<=-ms, p4-swap-layers-rtl-fine:leave 20/rev 20<=25.4ms
+   5 × hidden before covered past RU-n in n runs   e.g. p3-region-fine 1440-fine-light: hidden before covered past RU-21 in 1 runs (seat#3 235.0 ms)
+   2 × leaving face full moves n px in the first row   e.g. p4-swap-layers-rtl-fine 1440-fine-light: leaving face full moves 12.17 px in the first row (plate 0.00 px)
+   failing: p3-region-fine, p3-seatset-coarse, p4-swap-layers-rtl-fine
+## G-6: 3/3 segments pass over 3 scenarios (0 with a failing segment); blank rows max 0
+## G-9: 3/3 segments pass over 2 scenarios (0 with a failing segment); blank rows max 0
+   turns: p3-scope-rev:leave 9/rev 31<=32.6ms

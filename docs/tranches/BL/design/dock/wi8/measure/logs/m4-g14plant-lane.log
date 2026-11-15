@@ -1,0 +1,1136 @@
+== lane 15:52:21
+applied lane: no region is clipped to its lane while a travel runs
+
+Running 6 tests using 1 worker
+
+  ✘  1 [chromium-headless-new] › tests-visual/release-10-1-3.spec.ts:601:9 › 10.1.3 · 390 · right-anchored, the plate holds what it paints › D-1 (critique-4) · no control paints outside the plate on the expand or the collapse (3.7s)
+  ✘  2 [chromium-headless-new] › tests-visual/release-10-1-3.spec.ts:601:9 › 10.1.3 · 1440 · right-anchored, the plate holds what it paints › D-1 (critique-4) · no control paints outside the plate on the expand or the collapse (3.4s)
+  ✘  3 [chromium-headless-new] › tests-visual/release-10-1-3.spec.ts:601:9 › 10.1.3 · 390 · left-anchored, the plate holds what it paints › D-1 (critique-4) · no control paints outside the plate on the expand or the collapse (3.4s)
+  ✘  4 [chromium-headless-new] › tests-visual/release-10-1-3.spec.ts:601:9 › 10.1.3 · 390 · bottom-anchored, the plate holds what it paints › D-1 (critique-4) · no control paints outside the plate on the expand or the collapse (3.3s)
+  ✘  5 [chromium-headless-new] › tests-visual/release-10-1-3.spec.ts:637:9 › 10.1.3 · 390 · right-anchored double reversal, the plate holds what it paints › D-1 (critique-4) · no control paints outside the plate through a double reversal (2.7s)
+  ✘  6 [chromium-headless-new] › tests-visual/release-10-1-3.spec.ts:637:9 › 10.1.3 · 390 · bottom-anchored double reversal, the plate holds what it paints › D-1 (critique-4) · no control paints outside the plate through a double reversal (2.7s)
+
+
+  1) [chromium-headless-new] › tests-visual/release-10-1-3.spec.ts:601:9 › 10.1.3 · 390 · right-anchored, the plate holds what it paints › D-1 (critique-4) · no control paints outside the plate on the expand or the collapse 
+
+    Error: expand frames that paint a control outside the plate
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 96
+
+    - Array []
+    + Array [
+    +   Array [
+    +     Object {
+    +       "by": 95,
+    +       "label": "View layers",
+    +       "opacity": 0.18,
+    +     },
+    +     Object {
+    +       "by": 26,
+    +       "label": "Publish to Gallery",
+    +       "opacity": 0.18,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 80,
+    +       "label": "View layers",
+    +       "opacity": 0.3,
+    +     },
+    +     Object {
+    +       "by": 11,
+    +       "label": "Publish to Gallery",
+    +       "opacity": 0.3,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 69,
+    +       "label": "View layers",
+    +       "opacity": 0.38,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 56,
+    +       "label": "View layers",
+    +       "opacity": 0.48,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 46,
+    +       "label": "View layers",
+    +       "opacity": 0.55,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 39,
+    +       "label": "View layers",
+    +       "opacity": 0.61,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 31,
+    +       "label": "View layers",
+    +       "opacity": 0.67,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 24,
+    +       "label": "View layers",
+    +       "opacity": 0.72,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 18,
+    +       "label": "View layers",
+    +       "opacity": 0.77,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 13,
+    +       "label": "View layers",
+    +       "opacity": 0.81,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 7,
+    +       "label": "View layers",
+    +       "opacity": 0.85,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 4,
+    +       "label": "View layers",
+    +       "opacity": 0.88,
+    +     },
+    +   ],
+    + ]
+
+      621 |                 expand.filter((f) => f.spill.length).map((f) => f.spill),
+      622 |                 "expand frames that paint a control outside the plate",
+    > 623 |             ).toEqual([]);
+          |               ^
+      624 |             expect(
+      625 |                 collapse.filter((f) => f.spill.length).map((f) => f.spill),
+      626 |                 "collapse frames that paint a control outside the plate",
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/tests-visual/release-10-1-3.spec.ts:623:15
+
+    Error Context: tests-visual/test-results/release-10-1-3-10-1-3-·-39-fa87a--the-expand-or-the-collapse-chromium-headless-new/error-context.md
+
+  2) [chromium-headless-new] › tests-visual/release-10-1-3.spec.ts:601:9 › 10.1.3 · 1440 · right-anchored, the plate holds what it paints › D-1 (critique-4) · no control paints outside the plate on the expand or the collapse 
+
+    Error: expand frames that paint a control outside the plate
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -   1
+    + Received  + 108
+
+    - Array []
+    + Array [
+    +   Array [
+    +     Object {
+    +       "by": 104,
+    +       "label": "View layers",
+    +       "opacity": 0.11,
+    +     },
+    +     Object {
+    +       "by": 35,
+    +       "label": "Publish to Gallery",
+    +       "opacity": 0.11,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 90,
+    +       "label": "View layers",
+    +       "opacity": 0.22,
+    +     },
+    +     Object {
+    +       "by": 21,
+    +       "label": "Publish to Gallery",
+    +       "opacity": 0.22,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 77,
+    +       "label": "View layers",
+    +       "opacity": 0.32,
+    +     },
+    +     Object {
+    +       "by": 8,
+    +       "label": "Publish to Gallery",
+    +       "opacity": 0.32,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 65,
+    +       "label": "View layers",
+    +       "opacity": 0.41,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 54,
+    +       "label": "View layers",
+    +       "opacity": 0.49,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 44,
+    +       "label": "View layers",
+    +       "opacity": 0.57,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 36,
+    +       "label": "View layers",
+    +       "opacity": 0.63,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 28,
+    +       "label": "View layers",
+    +       "opacity": 0.69,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 22,
+    +       "label": "View layers",
+    +       "opacity": 0.74,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 16,
+    +       "label": "View layers",
+    +       "opacity": 0.79,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 11,
+    +       "label": "View layers",
+    +       "opacity": 0.82,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 7,
+    +       "label": "View layers",
+    +       "opacity": 0.86,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 3,
+    +       "label": "View layers",
+    +       "opacity": 0.88,
+    +     },
+    +   ],
+    + ]
+
+      621 |                 expand.filter((f) => f.spill.length).map((f) => f.spill),
+      622 |                 "expand frames that paint a control outside the plate",
+    > 623 |             ).toEqual([]);
+          |               ^
+      624 |             expect(
+      625 |                 collapse.filter((f) => f.spill.length).map((f) => f.spill),
+      626 |                 "collapse frames that paint a control outside the plate",
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/tests-visual/release-10-1-3.spec.ts:623:15
+
+    Error Context: tests-visual/test-results/release-10-1-3-10-1-3-·-14-d7aa4--the-expand-or-the-collapse-chromium-headless-new/error-context.md
+
+  3) [chromium-headless-new] › tests-visual/release-10-1-3.spec.ts:601:9 › 10.1.3 · 390 · left-anchored, the plate holds what it paints › D-1 (critique-4) · no control paints outside the plate on the expand or the collapse 
+
+    Error: expand frames that paint a control outside the plate
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 96
+
+    - Array []
+    + Array [
+    +   Array [
+    +     Object {
+    +       "by": 24,
+    +       "label": "Export frame",
+    +       "opacity": 0.2,
+    +     },
+    +     Object {
+    +       "by": 93,
+    +       "label": "Fullscreen",
+    +       "opacity": 0.2,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 11,
+    +       "label": "Export frame",
+    +       "opacity": 0.29,
+    +     },
+    +     Object {
+    +       "by": 80,
+    +       "label": "Fullscreen",
+    +       "opacity": 0.29,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 67,
+    +       "label": "Fullscreen",
+    +       "opacity": 0.39,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 56,
+    +       "label": "Fullscreen",
+    +       "opacity": 0.48,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 46,
+    +       "label": "Fullscreen",
+    +       "opacity": 0.56,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 37,
+    +       "label": "Fullscreen",
+    +       "opacity": 0.62,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 30,
+    +       "label": "Fullscreen",
+    +       "opacity": 0.68,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 23,
+    +       "label": "Fullscreen",
+    +       "opacity": 0.73,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 17,
+    +       "label": "Fullscreen",
+    +       "opacity": 0.78,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 12,
+    +       "label": "Fullscreen",
+    +       "opacity": 0.82,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 7,
+    +       "label": "Fullscreen",
+    +       "opacity": 0.85,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 4,
+    +       "label": "Fullscreen",
+    +       "opacity": 0.88,
+    +     },
+    +   ],
+    + ]
+
+      621 |                 expand.filter((f) => f.spill.length).map((f) => f.spill),
+      622 |                 "expand frames that paint a control outside the plate",
+    > 623 |             ).toEqual([]);
+          |               ^
+      624 |             expect(
+      625 |                 collapse.filter((f) => f.spill.length).map((f) => f.spill),
+      626 |                 "collapse frames that paint a control outside the plate",
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/tests-visual/release-10-1-3.spec.ts:623:15
+
+    Error Context: tests-visual/test-results/release-10-1-3-10-1-3-·-39-54988--the-expand-or-the-collapse-chromium-headless-new/error-context.md
+
+  4) [chromium-headless-new] › tests-visual/release-10-1-3.spec.ts:601:9 › 10.1.3 · 390 · bottom-anchored, the plate holds what it paints › D-1 (critique-4) · no control paints outside the plate on the expand or the collapse 
+
+    Error: expand frames that paint a control outside the plate
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -   1
+    + Received  + 115
+
+    - Array []
+    + Array [
+    +   Array [
+    +     Object {
+    +       "by": 96,
+    +       "label": "View layers",
+    +       "opacity": 0.2,
+    +     },
+    +     Object {
+    +       "by": 27,
+    +       "label": "Publish to Gallery",
+    +       "opacity": 0.2,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 82,
+    +       "label": "View layers",
+    +       "opacity": 0.3,
+    +     },
+    +     Object {
+    +       "by": 13,
+    +       "label": "Publish to Gallery",
+    +       "opacity": 0.3,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 70,
+    +       "label": "View layers",
+    +       "opacity": 0.4,
+    +     },
+    +     Object {
+    +       "by": 1,
+    +       "label": "Publish to Gallery",
+    +       "opacity": 0.4,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 60,
+    +       "label": "View layers",
+    +       "opacity": 0.48,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 50,
+    +       "label": "View layers",
+    +       "opacity": 0.55,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 41,
+    +       "label": "View layers",
+    +       "opacity": 0.62,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 33,
+    +       "label": "View layers",
+    +       "opacity": 0.68,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 27,
+    +       "label": "View layers",
+    +       "opacity": 0.73,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 21,
+    +       "label": "View layers",
+    +       "opacity": 0.78,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 16,
+    +       "label": "View layers",
+    +       "opacity": 0.82,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 11,
+    +       "label": "View layers",
+    +       "opacity": 0.85,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 8,
+    +       "label": "View layers",
+    +       "opacity": 0.88,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 4,
+    +       "label": "View layers",
+    +       "opacity": 0.9,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 2,
+    +       "label": "View layers",
+    +       "opacity": 0.92,
+    +     },
+    +   ],
+    + ]
+
+      621 |                 expand.filter((f) => f.spill.length).map((f) => f.spill),
+      622 |                 "expand frames that paint a control outside the plate",
+    > 623 |             ).toEqual([]);
+          |               ^
+      624 |             expect(
+      625 |                 collapse.filter((f) => f.spill.length).map((f) => f.spill),
+      626 |                 "collapse frames that paint a control outside the plate",
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/tests-visual/release-10-1-3.spec.ts:623:15
+
+    Error Context: tests-visual/test-results/release-10-1-3-10-1-3-·-39-fea16--the-expand-or-the-collapse-chromium-headless-new/error-context.md
+
+  5) [chromium-headless-new] › tests-visual/release-10-1-3.spec.ts:637:9 › 10.1.3 · 390 · right-anchored double reversal, the plate holds what it paints › D-1 (critique-4) · no control paints outside the plate through a double reversal 
+
+    Error: frames that paint a control outside the plate
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -   1
+    + Received  + 250
+
+    - Array []
+    + Array [
+    +   Array [
+    +     Object {
+    +       "by": 93,
+    +       "label": "View layers",
+    +       "opacity": 0.2,
+    +     },
+    +     Object {
+    +       "by": 24,
+    +       "label": "Publish to Gallery",
+    +       "opacity": 0.2,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 79,
+    +       "label": "View layers",
+    +       "opacity": 0.3,
+    +     },
+    +     Object {
+    +       "by": 10,
+    +       "label": "Publish to Gallery",
+    +       "opacity": 0.3,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 67,
+    +       "label": "View layers",
+    +       "opacity": 0.39,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 56,
+    +       "label": "View layers",
+    +       "opacity": 0.48,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 46,
+    +       "label": "View layers",
+    +       "opacity": 0.56,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 41,
+    +       "label": "View layers",
+    +       "opacity": 0.6,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 41,
+    +       "label": "View layers",
+    +       "opacity": 0.59,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 47,
+    +       "label": "View layers",
+    +       "opacity": 0.55,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 56,
+    +       "label": "View layers",
+    +       "opacity": 0.48,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 67,
+    +       "label": "View layers",
+    +       "opacity": 0.4,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 80,
+    +       "label": "View layers",
+    +       "opacity": 0.31,
+    +     },
+    +     Object {
+    +       "by": 11,
+    +       "label": "Publish to Gallery",
+    +       "opacity": 0.31,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 93,
+    +       "label": "View layers",
+    +       "opacity": 0.21,
+    +     },
+    +     Object {
+    +       "by": 24,
+    +       "label": "Publish to Gallery",
+    +       "opacity": 0.21,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 104,
+    +       "label": "View layers",
+    +       "opacity": 0.11,
+    +     },
+    +     Object {
+    +       "by": 35,
+    +       "label": "Publish to Gallery",
+    +       "opacity": 0.11,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 99,
+    +       "label": "View layers",
+    +       "opacity": 0.15,
+    +     },
+    +     Object {
+    +       "by": 30,
+    +       "label": "Publish to Gallery",
+    +       "opacity": 0.15,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 91,
+    +       "label": "View layers",
+    +       "opacity": 0.22,
+    +     },
+    +     Object {
+    +       "by": 22,
+    +       "label": "Publish to Gallery",
+    +       "opacity": 0.22,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 83,
+    +       "label": "View layers",
+    +       "opacity": 0.27,
+    +     },
+    +     Object {
+    +       "by": 14,
+    +       "label": "Publish to Gallery",
+    +       "opacity": 0.27,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 72,
+    +       "label": "View layers",
+    +       "opacity": 0.36,
+    +     },
+    +     Object {
+    +       "by": 3,
+    +       "label": "Publish to Gallery",
+    +       "opacity": 0.36,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 64,
+    +       "label": "View layers",
+    +       "opacity": 0.42,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 55,
+    +       "label": "View layers",
+    +       "opacity": 0.49,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 47,
+    +       "label": "View layers",
+    +       "opacity": 0.55,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 40,
+    +       "label": "View layers",
+    +       "opacity": 0.6,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 33,
+    +       "label": "View layers",
+    +       "opacity": 0.66,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 27,
+    +       "label": "View layers",
+    +       "opacity": 0.7,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 21,
+    +       "label": "View layers",
+    +       "opacity": 0.75,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 17,
+    +       "label": "View layers",
+    +       "opacity": 0.78,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 13,
+    +       "label": "View layers",
+    +       "opacity": 0.81,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 8,
+    +       "label": "View layers",
+    +       "opacity": 0.85,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 5,
+    +       "label": "View layers",
+    +       "opacity": 0.87,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 2,
+    +       "label": "View layers",
+    +       "opacity": 0.89,
+    +     },
+    +   ],
+    + ]
+
+      662 |                 morph.filter((f) => f.spill.length).map((f) => f.spill),
+      663 |                 "frames that paint a control outside the plate",
+    > 664 |             ).toEqual([]);
+          |               ^
+      665 |         });
+      666 |     });
+      667 | }
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/tests-visual/release-10-1-3.spec.ts:664:15
+
+    Error Context: tests-visual/test-results/release-10-1-3-10-1-3-·-39-a30a3-e-through-a-double-reversal-chromium-headless-new/error-context.md
+
+  6) [chromium-headless-new] › tests-visual/release-10-1-3.spec.ts:637:9 › 10.1.3 · 390 · bottom-anchored double reversal, the plate holds what it paints › D-1 (critique-4) · no control paints outside the plate through a double reversal 
+
+    Error: frames that paint a control outside the plate
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -   1
+    + Received  + 317
+
+    - Array []
+    + Array [
+    +   Array [
+    +     Object {
+    +       "by": 109,
+    +       "label": "View layers",
+    +       "opacity": 0.1,
+    +     },
+    +     Object {
+    +       "by": 40,
+    +       "label": "Publish to Gallery",
+    +       "opacity": 0.1,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 94,
+    +       "label": "View layers",
+    +       "opacity": 0.21,
+    +     },
+    +     Object {
+    +       "by": 25,
+    +       "label": "Publish to Gallery",
+    +       "opacity": 0.21,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 81,
+    +       "label": "View layers",
+    +       "opacity": 0.31,
+    +     },
+    +     Object {
+    +       "by": 12,
+    +       "label": "Publish to Gallery",
+    +       "opacity": 0.31,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 71,
+    +       "label": "View layers",
+    +       "opacity": 0.39,
+    +     },
+    +     Object {
+    +       "by": 2,
+    +       "label": "Publish to Gallery",
+    +       "opacity": 0.39,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 58,
+    +       "label": "View layers",
+    +       "opacity": 0.49,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 49,
+    +       "label": "View layers",
+    +       "opacity": 0.56,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 44,
+    +       "label": "View layers",
+    +       "opacity": 0.6,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 44,
+    +       "label": "View layers",
+    +       "opacity": 0.6,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 50,
+    +       "label": "View layers",
+    +       "opacity": 0.55,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 58,
+    +       "label": "View layers",
+    +       "opacity": 0.49,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 69,
+    +       "label": "View layers",
+    +       "opacity": 0.4,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 82,
+    +       "label": "View layers",
+    +       "opacity": 0.31,
+    +     },
+    +     Object {
+    +       "by": 13,
+    +       "label": "Publish to Gallery",
+    +       "opacity": 0.31,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 94,
+    +       "label": "View layers",
+    +       "opacity": 0.21,
+    +     },
+    +     Object {
+    +       "by": 25,
+    +       "label": "Publish to Gallery",
+    +       "opacity": 0.21,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 104,
+    +       "label": "View layers",
+    +       "opacity": 0.14,
+    +     },
+    +     Object {
+    +       "by": 35,
+    +       "label": "Publish to Gallery",
+    +       "opacity": 0.14,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 108,
+    +       "label": "View layers",
+    +       "opacity": 0.11,
+    +     },
+    +     Object {
+    +       "by": 39,
+    +       "label": "Publish to Gallery",
+    +       "opacity": 0.11,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 108,
+    +       "label": "View layers",
+    +       "opacity": 0.11,
+    +     },
+    +     Object {
+    +       "by": 39,
+    +       "label": "Publish to Gallery",
+    +       "opacity": 0.11,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 105,
+    +       "label": "View layers",
+    +       "opacity": 0.13,
+    +     },
+    +     Object {
+    +       "by": 36,
+    +       "label": "Publish to Gallery",
+    +       "opacity": 0.13,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 101,
+    +       "label": "View layers",
+    +       "opacity": 0.16,
+    +     },
+    +     Object {
+    +       "by": 32,
+    +       "label": "Publish to Gallery",
+    +       "opacity": 0.16,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 93,
+    +       "label": "View layers",
+    +       "opacity": 0.22,
+    +     },
+    +     Object {
+    +       "by": 24,
+    +       "label": "Publish to Gallery",
+    +       "opacity": 0.22,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 86,
+    +       "label": "View layers",
+    +       "opacity": 0.28,
+    +     },
+    +     Object {
+    +       "by": 17,
+    +       "label": "Publish to Gallery",
+    +       "opacity": 0.28,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 78,
+    +       "label": "View layers",
+    +       "opacity": 0.34,
+    +     },
+    +     Object {
+    +       "by": 9,
+    +       "label": "Publish to Gallery",
+    +       "opacity": 0.34,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 70,
+    +       "label": "View layers",
+    +       "opacity": 0.4,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 62,
+    +       "label": "View layers",
+    +       "opacity": 0.46,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 54,
+    +       "label": "View layers",
+    +       "opacity": 0.52,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 47,
+    +       "label": "View layers",
+    +       "opacity": 0.58,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 40,
+    +       "label": "View layers",
+    +       "opacity": 0.63,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 34,
+    +       "label": "View layers",
+    +       "opacity": 0.68,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 28,
+    +       "label": "View layers",
+    +       "opacity": 0.72,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 23,
+    +       "label": "View layers",
+    +       "opacity": 0.76,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 18,
+    +       "label": "View layers",
+    +       "opacity": 0.8,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 14,
+    +       "label": "View layers",
+    +       "opacity": 0.83,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 11,
+    +       "label": "View layers",
+    +       "opacity": 0.86,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 7,
+    +       "label": "View layers",
+    +       "opacity": 0.88,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 5,
+    +       "label": "View layers",
+    +       "opacity": 0.9,
+    +     },
+    +   ],
+    +   Array [
+    +     Object {
+    +       "by": 3,
+    +       "label": "View layers",
+    +       "opacity": 0.92,
+    +     },
+    +   ],
+    + ]
+
+      662 |                 morph.filter((f) => f.spill.length).map((f) => f.spill),
+      663 |                 "frames that paint a control outside the plate",
+    > 664 |             ).toEqual([]);
+          |               ^
+      665 |         });
+      666 |     });
+      667 | }
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/tests-visual/release-10-1-3.spec.ts:664:15
+
+    Error Context: tests-visual/test-results/release-10-1-3-10-1-3-·-39-998c7-e-through-a-double-reversal-chromium-headless-new/error-context.md
+
+  6 failed
+    [chromium-headless-new] › tests-visual/release-10-1-3.spec.ts:601:9 › 10.1.3 · 390 · right-anchored, the plate holds what it paints › D-1 (critique-4) · no control paints outside the plate on the expand or the collapse 
+    [chromium-headless-new] › tests-visual/release-10-1-3.spec.ts:601:9 › 10.1.3 · 1440 · right-anchored, the plate holds what it paints › D-1 (critique-4) · no control paints outside the plate on the expand or the collapse 
+    [chromium-headless-new] › tests-visual/release-10-1-3.spec.ts:601:9 › 10.1.3 · 390 · left-anchored, the plate holds what it paints › D-1 (critique-4) · no control paints outside the plate on the expand or the collapse 
+    [chromium-headless-new] › tests-visual/release-10-1-3.spec.ts:601:9 › 10.1.3 · 390 · bottom-anchored, the plate holds what it paints › D-1 (critique-4) · no control paints outside the plate on the expand or the collapse 
+    [chromium-headless-new] › tests-visual/release-10-1-3.spec.ts:637:9 › 10.1.3 · 390 · right-anchored double reversal, the plate holds what it paints › D-1 (critique-4) · no control paints outside the plate through a double reversal 
+    [chromium-headless-new] › tests-visual/release-10-1-3.spec.ts:637:9 › 10.1.3 · 390 · bottom-anchored double reversal, the plate holds what it paints › D-1 (critique-4) · no control paints outside the plate through a double reversal 
+rc=1
+reverted lane

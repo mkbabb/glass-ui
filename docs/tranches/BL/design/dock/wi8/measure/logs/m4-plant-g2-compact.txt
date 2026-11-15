@@ -1,0 +1,14 @@
+== g2-compact 14:44:26 (load { 7.54 8.25 7.60 })
+applied g2-compact - G-2 (the compact run): never compact
+build rc=0
+reverted g2-compact
+== p3-fold-many-coarse chromium 14:44:32
+{"cell":"390-coarse-light","rows":"p3-fold-many-coarse.wi8.chromium.390-coarse-light.rows.json","strips":[],"frames":208,"firstChange":92.9,"lastChange":1309.9,"screencast":null,"consoleErrors":0}
+chromium rc=0
+== p3-fold-many-coarse webkit 14:44:39
+{"cell":"390-coarse-light","rows":"p3-fold-many-coarse.wi8.webkit.390-coarse-light.rows.json","strips":[],"frames":167,"firstChange":73,"lastChange":1291,"screencast":null,"consoleErrors":0}
+webkit rc=0
+-- judge
+p3-fold-many-coarse | chromium | 390-coarse-light | curve 0.02 | held 0 | whole {"whole":4,"partial":[38],"absent":2,"of":7,"compact":false} | touch true | FAIL: 4 of 7 seats whole at open rest, partial [38] (compact false); the run is not compact where its seats with the name do not fit
+p3-fold-many-coarse | webkit | 390-coarse-light | curve 0.02 | held 0 | whole {"whole":4,"partial":[38],"absent":2,"of":7,"compact":false} | touch true | FAIL: 4 of 7 seats whole at open rest, partial [38] (compact false); the run is not compact where its seats with the name do not fit
+== done 14:44:47

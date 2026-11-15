@@ -1,0 +1,137 @@
+
+Running 24 tests using 1 worker
+
+  ✓   1 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:493:9 › O-101a · a host change during the morph · collapsed (1440->390) (2.6s)
+  ✘   2 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:493:9 › O-101a · a host change during the morph · reversal (1440->390) (1.5s)
+  ✓   3 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:493:9 › O-101a · a host change during the morph · mid-expand (1440->390) (948ms)
+  ✓   4 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:493:9 › O-101a · a host change during the morph · collapsed (390->1440) (2.2s)
+  ✓   5 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:493:9 › O-101a · a host change during the morph · reversal (390->1440) (1.5s)
+  ✓   6 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:493:9 › O-101a · a host change during the morph · mid-expand (390->1440) (972ms)
+  ✓   7 [chromium-headless-new] › tests-visual/release-10-1-3.spec.ts:385:9 › 10.1.3 · 390 · right-anchored reversal › D-1 (critique-3) · a collapse() mid-expand keeps the summary glyph inside the plate (2.9s)
+  ✓   8 [chromium-headless-new] › tests-visual/release-10-1-3.spec.ts:385:9 › 10.1.3 · 390 · left-anchored reversal › D-1 (critique-3) · a collapse() mid-expand keeps the summary glyph inside the plate (2.9s)
+  ✓   9 [chromium-headless-new] › tests-visual/release-10-1-3.spec.ts:385:9 › 10.1.3 · 390 · bottom-anchored reversal › D-1 (critique-3) · a collapse() mid-expand keeps the summary glyph inside the plate (2.9s)
+  ✘  10 [chromium-headless-new] › tests-visual/release-10-1-3.spec.ts:931:9 › 10.1.3 · 390 · right-anchored · ancestor zoom 1.25 › D-1 (critique-7) · the summary glyph holds its box through the expand and the collapse (3.9s)
+  ✓  11 [chromium-headless-new] › tests-visual/release-10-1-3.spec.ts:931:9 › 10.1.3 · 390 · left-anchored · ancestor zoom 1.25 › D-1 (critique-7) · the summary glyph holds its box through the expand and the collapse (3.9s)
+  ✘  12 [chromium-headless-new] › tests-visual/release-10-1-3.spec.ts:931:9 › 10.1.3 · 390 · bottom-anchored · ancestor zoom 1.25 › D-1 (critique-7) · the summary glyph holds its box through the expand and the collapse (3.9s)
+  ✓  13 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:493:9 › O-101a · a host change during the morph · collapsed (1440->390) (2.3s)
+  ✓  14 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:493:9 › O-101a · a host change during the morph · reversal (1440->390) (1.6s)
+  ✓  15 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:493:9 › O-101a · a host change during the morph · mid-expand (1440->390) (941ms)
+  ✓  16 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:493:9 › O-101a · a host change during the morph · collapsed (390->1440) (2.2s)
+  ✓  17 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:493:9 › O-101a · a host change during the morph · reversal (390->1440) (1.5s)
+  ✓  18 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:493:9 › O-101a · a host change during the morph · mid-expand (390->1440) (966ms)
+  ✓  19 [coarse-touch] › tests-visual/release-10-1-3.spec.ts:385:9 › 10.1.3 · 390 · right-anchored reversal › D-1 (critique-3) · a collapse() mid-expand keeps the summary glyph inside the plate (2.9s)
+  ✓  20 [coarse-touch] › tests-visual/release-10-1-3.spec.ts:385:9 › 10.1.3 · 390 · left-anchored reversal › D-1 (critique-3) · a collapse() mid-expand keeps the summary glyph inside the plate (2.9s)
+  ✓  21 [coarse-touch] › tests-visual/release-10-1-3.spec.ts:385:9 › 10.1.3 · 390 · bottom-anchored reversal › D-1 (critique-3) · a collapse() mid-expand keeps the summary glyph inside the plate (2.9s)
+  ✘  22 [coarse-touch] › tests-visual/release-10-1-3.spec.ts:931:9 › 10.1.3 · 390 · right-anchored · ancestor zoom 1.25 › D-1 (critique-7) · the summary glyph holds its box through the expand and the collapse (3.9s)
+  ✓  23 [coarse-touch] › tests-visual/release-10-1-3.spec.ts:931:9 › 10.1.3 · 390 · left-anchored · ancestor zoom 1.25 › D-1 (critique-7) · the summary glyph holds its box through the expand and the collapse (4.0s)
+  ✘  24 [coarse-touch] › tests-visual/release-10-1-3.spec.ts:931:9 › 10.1.3 · 390 · bottom-anchored · ancestor zoom 1.25 › D-1 (critique-7) · the summary glyph holds its box through the expand and the collapse (3.9s)
+
+
+  1) [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:493:9 › O-101a · a host change during the morph · reversal (1440->390) 
+
+    Error: morphing frames after the change reserving other than the settled 390px (56)
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 1
+
+      505 |                 stale.length,
+      506 |                 `morphing frames after the change reserving other than the settled ${rest.size}px (${[...new Set(stale.map((f) => f.reserved))].join(", ")})`,
+    > 507 |             ).toBe(0);
+          |               ^
+      508 |             const over = seq.filter((f) => f.scroll > f.client);
+      509 |             expect
+      510 |                 .soft(
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/tests-visual/release-10-1-2.spec.ts:507:15
+
+    Error Context: tests-visual/test-results/release-10-1-2-O-101a-·-a--0f88f-morph-·-reversal-1440--390--chromium-headless-new/error-context.md
+
+  2) [chromium-headless-new] › tests-visual/release-10-1-3.spec.ts:931:9 › 10.1.3 · 390 · right-anchored · ancestor zoom 1.25 › D-1 (critique-7) · the summary glyph holds its box through the expand and the collapse 
+
+    Error: the entering summary's largest visible frame step
+
+    expect(received).toBeLessThan(expected)
+
+    Expected: < 3
+    Received:   15.340545654296875
+
+       999 |             expect(morph.length, "the collapse morphed").toBeGreaterThan(3);
+      1000 |             expect(collapse.at(-1)!.morphing, "the morph settled").toBe(false);
+    > 1001 |             expect(jump(collapse), "the entering summary's largest visible frame step").toBeLessThan(3);
+           |                                                                                         ^
+      1002 |             expect(
+      1003 |                 Math.abs(axis(morph.at(-1)!) - restAt),
+      1004 |                 "the entering summary's last morph frame is its rest",
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/tests-visual/release-10-1-3.spec.ts:1001:89
+
+    Error Context: tests-visual/test-results/release-10-1-3-10-1-3-·-39-84eb3-the-expand-and-the-collapse-chromium-headless-new/error-context.md
+
+  3) [chromium-headless-new] › tests-visual/release-10-1-3.spec.ts:931:9 › 10.1.3 · 390 · bottom-anchored · ancestor zoom 1.25 › D-1 (critique-7) · the summary glyph holds its box through the expand and the collapse 
+
+    Error: the entering summary's largest visible frame step
+
+    expect(received).toBeLessThan(expected)
+
+    Expected: < 3
+    Received:   18.039276123046875
+
+       999 |             expect(morph.length, "the collapse morphed").toBeGreaterThan(3);
+      1000 |             expect(collapse.at(-1)!.morphing, "the morph settled").toBe(false);
+    > 1001 |             expect(jump(collapse), "the entering summary's largest visible frame step").toBeLessThan(3);
+           |                                                                                         ^
+      1002 |             expect(
+      1003 |                 Math.abs(axis(morph.at(-1)!) - restAt),
+      1004 |                 "the entering summary's last morph frame is its rest",
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/tests-visual/release-10-1-3.spec.ts:1001:89
+
+    Error Context: tests-visual/test-results/release-10-1-3-10-1-3-·-39-f860e-the-expand-and-the-collapse-chromium-headless-new/error-context.md
+
+  4) [coarse-touch] › tests-visual/release-10-1-3.spec.ts:931:9 › 10.1.3 · 390 · right-anchored · ancestor zoom 1.25 › D-1 (critique-7) · the summary glyph holds its box through the expand and the collapse 
+
+    Error: the entering summary's largest visible frame step
+
+    expect(received).toBeLessThan(expected)
+
+    Expected: < 3
+    Received:   13.63006591796875
+
+       999 |             expect(morph.length, "the collapse morphed").toBeGreaterThan(3);
+      1000 |             expect(collapse.at(-1)!.morphing, "the morph settled").toBe(false);
+    > 1001 |             expect(jump(collapse), "the entering summary's largest visible frame step").toBeLessThan(3);
+           |                                                                                         ^
+      1002 |             expect(
+      1003 |                 Math.abs(axis(morph.at(-1)!) - restAt),
+      1004 |                 "the entering summary's last morph frame is its rest",
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/tests-visual/release-10-1-3.spec.ts:1001:89
+
+    Error Context: tests-visual/test-results/release-10-1-3-10-1-3-·-39-84eb3-the-expand-and-the-collapse-coarse-touch/error-context.md
+
+  5) [coarse-touch] › tests-visual/release-10-1-3.spec.ts:931:9 › 10.1.3 · 390 · bottom-anchored · ancestor zoom 1.25 › D-1 (critique-7) · the summary glyph holds its box through the expand and the collapse 
+
+    Error: the entering summary's largest visible frame step
+
+    expect(received).toBeLessThan(expected)
+
+    Expected: < 3
+    Received:   19.18304443359375
+
+       999 |             expect(morph.length, "the collapse morphed").toBeGreaterThan(3);
+      1000 |             expect(collapse.at(-1)!.morphing, "the morph settled").toBe(false);
+    > 1001 |             expect(jump(collapse), "the entering summary's largest visible frame step").toBeLessThan(3);
+           |                                                                                         ^
+      1002 |             expect(
+      1003 |                 Math.abs(axis(morph.at(-1)!) - restAt),
+      1004 |                 "the entering summary's last morph frame is its rest",
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/tests-visual/release-10-1-3.spec.ts:1001:89
+
+    Error Context: tests-visual/test-results/release-10-1-3-10-1-3-·-39-f860e-the-expand-and-the-collapse-coarse-touch/error-context.md
+
+  5 failed
+    [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:493:9 › O-101a · a host change during the morph · reversal (1440->390) 
+    [chromium-headless-new] › tests-visual/release-10-1-3.spec.ts:931:9 › 10.1.3 · 390 · right-anchored · ancestor zoom 1.25 › D-1 (critique-7) · the summary glyph holds its box through the expand and the collapse 
+    [chromium-headless-new] › tests-visual/release-10-1-3.spec.ts:931:9 › 10.1.3 · 390 · bottom-anchored · ancestor zoom 1.25 › D-1 (critique-7) · the summary glyph holds its box through the expand and the collapse 
+    [coarse-touch] › tests-visual/release-10-1-3.spec.ts:931:9 › 10.1.3 · 390 · right-anchored · ancestor zoom 1.25 › D-1 (critique-7) · the summary glyph holds its box through the expand and the collapse 
+    [coarse-touch] › tests-visual/release-10-1-3.spec.ts:931:9 › 10.1.3 · 390 · bottom-anchored · ancestor zoom 1.25 › D-1 (critique-7) · the summary glyph holds its box through the expand and the collapse 
+  19 passed (1.1m)
+rc=1

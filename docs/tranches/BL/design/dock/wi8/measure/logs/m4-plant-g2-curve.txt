@@ -1,0 +1,14 @@
+== g2-curve 14:43:40 (load { 8.29 8.48 7.64 })
+applied g2-curve - G-2 (inside the curve): the curve inset never written
+build rc=0
+reverted g2-curve
+== p3-fold-layers-fine chromium 14:43:47
+{"cell":"1440-fine-light","rows":"p3-fold-layers-fine.wi8.chromium.1440-fine-light.rows.json","strips":[],"frames":224,"firstChange":252.9,"lastChange":1436.7,"screencast":null,"consoleErrors":0}
+chromium rc=0
+== p3-fold-layers-fine webkit 14:43:54
+{"cell":"1440-fine-light","rows":"p3-fold-layers-fine.wi8.webkit.1440-fine-light.rows.json","strips":[],"frames":179,"firstChange":233,"lastChange":1425,"screencast":null,"consoleErrors":0}
+webkit rc=0
+-- judge
+p3-fold-layers-fine | chromium | 1440-fine-light | curve 8.29 | held 0 | FAIL: content 8.29 px outside the plate's curve (kid#0 row 75 (rest))
+p3-fold-layers-fine | webkit | 1440-fine-light | curve 8.29 | held 0 | FAIL: content 8.29 px outside the plate's curve (kid#0 row 59 (rest))
+== done 14:44:01

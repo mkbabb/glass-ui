@@ -1,0 +1,14 @@
+== g4-join 14:46:00 (load { 7.74 8.11 7.61 })
+applied g4-join - G-4 (a control joins or leaves): the records ignored
+build rc=0
+reverted g4-join
+== p3-seatset-fine chromium 14:46:06
+{"cell":"1440-fine-light","rows":"p3-seatset-fine.wi8.chromium.1440-fine-light.rows.json","strips":[],"frames":367,"firstChange":229.2,"lastChange":2636.4,"screencast":null,"consoleErrors":0}
+chromium rc=0
+== p3-seatset-fine webkit 14:46:14
+{"cell":"1440-fine-light","rows":"p3-seatset-fine.wi8.webkit.1440-fine-light.rows.json","strips":[],"frames":316,"firstChange":208,"lastChange":2810,"screencast":null,"consoleErrors":0}
+webkit rc=0
+-- judge
+p3-seatset-fine | chromium | 1440-fine-light | curve 0.01 | held 0 | join {"step":1,"cuts":2,"fades":"in 8ms out 8ms"} | FAIL: joining seat steps 1.00 in 16.7 ms; joining seat cut in 2 rows; joining seat fade in 8ms (bound 75 ms); joining seat fade out 8ms (bound 75 ms)
+p3-seatset-fine | webkit | 1440-fine-light | curve 0 | held 0 | join {"step":1,"cuts":2,"fades":"in 11ms out 10ms"} | FAIL: joining seat steps 1.00 in 16.7 ms; joining seat cut in 2 rows; joining seat fade in 11ms (bound 75 ms); joining seat fade out 10ms (bound 75 ms)
+== done 14:46:23

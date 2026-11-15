@@ -1,0 +1,14 @@
+== g2-touch 14:44:01 (load { 7.83 8.36 7.62 })
+applied g2-touch - G-2 (no folded face under touch): the rule removed
+build rc=0
+reverted g2-touch
+== p3-fold-transport-coarse chromium 14:44:07
+{"cell":"390-coarse-light","rows":"p3-fold-transport-coarse.wi8.chromium.390-coarse-light.rows.json","strips":[],"frames":201,"firstChange":78,"lastChange":1242.4,"screencast":null,"consoleErrors":0}
+chromium rc=0
+== p3-fold-transport-coarse webkit 14:44:14
+{"cell":"390-coarse-light","rows":"p3-fold-transport-coarse.wi8.webkit.390-coarse-light.rows.json","strips":[],"frames":596,"firstChange":null,"lastChange":null,"screencast":null,"consoleErrors":0}
+webkit rc=0
+-- judge
+p3-fold-transport-coarse | chromium | 390-coarse-light | curve 0 | held 0 | touch true | restsOpen false | FAIL: keyframes's transport is folded under touch (glass-dock horizontal shape-pill collapsed)
+p3-fold-transport-coarse | webkit | 390-coarse-light | curve 0 | held 0 | touch true | restsOpen false | FAIL: keyframes's transport is folded under touch (glass-dock horizontal shape-pill collapsed)
+== done 14:44:26

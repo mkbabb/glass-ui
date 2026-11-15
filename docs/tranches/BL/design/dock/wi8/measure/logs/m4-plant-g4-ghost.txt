@@ -1,0 +1,14 @@
+== g4-ghost 14:49:56 (load { 9.68 8.76 7.97 })
+applied g4-ghost - G-4 (a control leaves): the removed control held inside the run's scroll port
+build rc=0
+reverted g4-ghost
+== p3-seatset-fine chromium 14:50:02
+{"cell":"1440-fine-light","rows":"p3-seatset-fine.wi8.chromium.1440-fine-light.rows.json","strips":[],"frames":427,"firstChange":232,"lastChange":3146.8,"screencast":null,"consoleErrors":0}
+chromium rc=0
+== p3-seatset-fine webkit 14:50:12
+{"cell":"1440-fine-light","rows":"p3-seatset-fine.wi8.webkit.1440-fine-light.rows.json","strips":[],"frames":366,"firstChange":211,"lastChange":3321,"screencast":null,"consoleErrors":0}
+webkit rc=0
+-- judge
+p3-seatset-fine | chromium | 1440-fine-light | curve 0 | held 0 | join {"step":0.26,"cuts":0,"fades":"in 182ms out 84ms"} | pass
+p3-seatset-fine | webkit | 1440-fine-light | curve 0.01 | held 0 | join {"step":0.3,"cuts":0,"fades":"in 193ms out 91ms"} | pass
+== done 14:50:21

@@ -1,0 +1,14 @@
+== g2-rim 14:44:47 (load { 7.88 8.28 7.62 })
+applied g2-rim - G-2 (the rim): the rim drawn on the root, not the plate
+build rc=0
+reverted g2-rim
+== p3-fold-rim-fine chromium 14:44:53
+{"cell":"1440-fine-light","rows":"p3-fold-rim-fine.wi8.chromium.1440-fine-light.rows.json","strips":[],"frames":223,"firstChange":253.7,"lastChange":1429.4,"screencast":null,"consoleErrors":0}
+chromium rc=0
+== p3-fold-rim-fine webkit 14:45:00
+{"cell":"1440-fine-light","rows":"p3-fold-rim-fine.wi8.webkit.1440-fine-light.rows.json","strips":[],"frames":179,"firstChange":232,"lastChange":1424,"screencast":null,"consoleErrors":0}
+webkit rc=0
+-- judge
+p3-fold-rim-fine | chromium | 1440-fine-light | curve 0.02 | held 0 | rim {"dev":54,"fill":"40..40%"} | FAIL: rim 54.00 px off the plate's edge
+p3-fold-rim-fine | webkit | 1440-fine-light | curve 0.01 | held 0 | rim {"dev":54,"fill":"40..40%"} | FAIL: rim 54.00 px off the plate's edge
+== done 14:45:07

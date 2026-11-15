@@ -1,0 +1,32 @@
+## G-10: 36/39 segments pass over 19 scenarios (2 with a failing segment); blank rows max 0
+   turns: p2-swap-layers-rm:undefinedms, p2-swap-xf-rm:nullms
+   2 × face#n fade n values over n ms   e.g. p2-swap-layers-rm 1440-fine-light-rm: face#1 fade 18 values over 716 ms
+   2 × geometry moves on n frames   e.g. p2-swap-layers-rm 1440-fine-light-rm: geometry moves on 2 frames
+   failing: p2-swap-layers-rm, p2-swap-xf-rm
+## G-2: 95/105 segments pass over 53 scenarios (9 with a failing segment); blank rows max 0
+   6 × hidden before covered in n unit-rows   e.g. p2-fold-fourier-coarse 390-coarse-light: hidden before covered in 1 unit-rows (seat#2 f9)
+   4 × L from rest n% > n% at n ms   e.g. p2-fold-vert-dark 1440-fine-dark: L from rest 3.7% > 3.6% at 13.0 ms
+   4 × R from rest n% > n% at n ms   e.g. p2-fold-vert-dark 1440-fine-dark: R from rest 3.7% > 3.6% at 13.0 ms
+   2 × R last n px   e.g. p2-fold-vert-fine 1440-fine-light: R last 0.06 px (2.0%, f28)
+   2 × L step n% > n%   e.g. p2-resize-pill-fine 1440-fine-light: L step 100.0% > 16.3% (f5, 17.0 ms)
+   2 × R step n% > n%   e.g. p2-resize-pill-fine 1440-fine-light: R step 100.0% > 16.3% (f5, 17.0 ms)
+   1 × L last n px   e.g. p2-resize-pill-fine 1440-fine-light: L last 120.00 px (100.0%, f5)
+   1 × leaving face summary moves n px in the first row   e.g. p2-resize-pill-fine 1440-fine-light: leaving face summary moves 120.00 px in the first row (plate 120.00 px)
+   1 × L n steps against travel   e.g. p2-resize-pill-fine 1440-fine-light: L 11 steps against travel (120.57 px, bound 0.26 px, not one run at the end)
+   1 × R n steps against travel   e.g. p2-resize-pill-fine 1440-fine-light: R 19 steps against travel (44.13 px, bound 0.26 px)
+   failing: p2-fold-fourier-coarse, p2-fold-fourier-dark, p2-fold-fourier-fine, p2-fold-outlet-coarse, p2-fold-outlet-dark, p2-fold-outlet-fine, p2-fold-vert-dark, p2-fold-vert-fine, p2-resize-pill-fine
+## G-3: 17/18 segments pass over 12 scenarios (1 with a failing segment); blank rows max 1
+   turns: p2-rev-fold-25-press:35ms, p2-rev-fold-25-ptr:32ms, p2-rev-fold-50-press:15ms, p2-rev-fold-50-ptr:17ms, p2-rev-fold-75-press:17ms, p2-rev-fold-75-ptr:17ms, p2-rev-unfold-25-esc:33ms, p2-rev-unfold-25-out:33ms, p2-rev-unfold-50-esc:17ms, p2-rev-unfold-50-out:17ms, p2-rev-unfold-75-esc:17ms, p2-rev-unfold-75-out:17ms
+   1 × L turns n ms after the reversal   e.g. p2-rev-fold-25-press 1440-fine-light: L turns 35 ms after the reversal
+   1 × R turns n ms after the reversal   e.g. p2-rev-fold-25-press 1440-fine-light: R turns 35 ms after the reversal
+   failing: p2-rev-fold-25-press
+## G-4: 17/20 segments pass over 8 scenarios (3 with a failing segment); blank rows max 5
+   turns: p2-swap-layers-coarse:29ms, p2-swap-layers-dark:17ms, p2-swap-layers-fine:35ms, p2-swap-xf-coarse:49ms, p2-swap-xf-dark:49ms, p2-swap-xf-fine:68ms
+   2 × n rows with no face showing   e.g. p2-swap-xf-coarse 390-coarse-light: 5 rows with no face showing
+   1 × opacity n in n Hz at face#n fn   e.g. p2-swap-xf-fine 1440-fine-light: opacity 0.93 in 60 Hz at face#3 f101
+   failing: p2-swap-xf-coarse, p2-swap-xf-dark, p2-swap-xf-fine
+## G-6: 1/1 segments pass over 1 scenarios (0 with a failing segment); blank rows max 0
+## G-8: 2/5 segments pass over 3 scenarios (3 with a failing segment); blank rows max 0
+   3 × hidden before covered in n unit-rows   e.g. p2-overlay-esc 1440-fine-light: hidden before covered in 1 unit-rows (seat#3 f19)
+   failing: p2-overlay-esc, p2-overlay-linger, p2-overlay-out
+## G-9: 2/2 segments pass over 1 scenarios (0 with a failing segment); blank rows max 0

@@ -1,0 +1,552 @@
+  [chromium-headless-new] › release-10-1-1.spec.ts:51:5 › 10.1.1 › G-1 · an open sheet is fixed and inside the viewport
+  [chromium-headless-new] › release-10-1-1.spec.ts:74:5 › 10.1.1 › G-2 · a menu and its submenu paint above the dock's rung
+  [chromium-headless-new] › release-10-1-1.spec.ts:84:5 › 10.1.1 › G-3 · a composite in a container seat keeps its tab stop and its arrows
+  [chromium-headless-new] › release-10-1-1.spec.ts:113:5 › 10.1.1 › G-3 · a composite seated directly in the run keeps its arrows
+  [chromium-headless-new] › release-10-1-1.spec.ts:137:9 › 10.1.1 › O-102(3) · a dropdown opened from a seat closes when the dock collapses
+  [chromium-headless-new] › release-10-1-1.spec.ts:137:9 › 10.1.1 › O-102(3) · a popover opened from a seat closes when the dock collapses
+  [chromium-headless-new] › release-10-1-1.spec.ts:137:9 › 10.1.1 › O-102(3) · a select opened from a seat closes when the dock collapses
+  [chromium-headless-new] › release-10-1-1.spec.ts:156:5 › 10.1.1 › O-102(3) · a collapse-closed menu hands focus to the summary, not <body>
+  [chromium-headless-new] › release-10-1-1.spec.ts:186:5 › 10.1.1 › O-102(3) · a popover opened from #persistent outlives the collapse, and the dock stays collapsed
+  [chromium-headless-new] › release-10-1-1.spec.ts:229:13 › 10.1.1 › O-102(6) · a tooltip opened from a seat is portalled out of the run and not clipped (desktop)
+  [chromium-headless-new] › release-10-1-1.spec.ts:229:13 › 10.1.1 › O-102(6) · a popover opened from a seat is portalled out of the run and not clipped (desktop)
+  [chromium-headless-new] › release-10-1-1.spec.ts:229:13 › 10.1.1 › O-102(6) · a popover-inline opened from a seat is portalled out of the run and not clipped (desktop)
+  [chromium-headless-new] › release-10-1-1.spec.ts:229:13 › 10.1.1 › O-102(6) · a hovercard opened from a seat is portalled out of the run and not clipped (desktop)
+  [chromium-headless-new] › release-10-1-1.spec.ts:229:13 › 10.1.1 › O-102(6) · a menu opened from a seat is portalled out of the run and not clipped (desktop)
+  [chromium-headless-new] › release-10-1-1.spec.ts:229:13 › 10.1.1 › O-102(6) · a select opened from a seat is portalled out of the run and not clipped (desktop)
+  [chromium-headless-new] › release-10-1-1.spec.ts:229:13 › 10.1.1 › O-102(6) · a tooltip opened from a seat is portalled out of the run and not clipped (phone)
+  [chromium-headless-new] › release-10-1-1.spec.ts:229:13 › 10.1.1 › O-102(6) · a popover opened from a seat is portalled out of the run and not clipped (phone)
+  [chromium-headless-new] › release-10-1-1.spec.ts:229:13 › 10.1.1 › O-102(6) · a popover-inline opened from a seat is portalled out of the run and not clipped (phone)
+  [chromium-headless-new] › release-10-1-1.spec.ts:229:13 › 10.1.1 › O-102(6) · a hovercard opened from a seat is portalled out of the run and not clipped (phone)
+  [chromium-headless-new] › release-10-1-1.spec.ts:229:13 › 10.1.1 › O-102(6) · a menu opened from a seat is portalled out of the run and not clipped (phone)
+  [chromium-headless-new] › release-10-1-1.spec.ts:229:13 › 10.1.1 › O-102(6) · a select opened from a seat is portalled out of the run and not clipped (phone)
+  [chromium-headless-new] › release-10-1-1.spec.ts:256:5 › 10.1.1 › Skeleton · shimmer travels, the plain tile breathes, an off-screen one is paused
+  [chromium-headless-new] › release-10-1-1.spec.ts:290:9 › 10.1.1 › Skeleton · the shimmer layer covers the tile through its whole cycle (ltr)
+  [chromium-headless-new] › release-10-1-1.spec.ts:290:9 › 10.1.1 › Skeleton · the shimmer layer covers the tile through its whole cycle (rtl)
+  [chromium-headless-new] › release-10-1-1.spec.ts:323:5 › 10.1.1 › Skeleton · shimmer holds still under reduced motion
+  [chromium-headless-new] › release-10-1-2.spec.ts:51:9 › 10.1.2 · 1440 › G-4 · the atlas shapes seated in a run are all Tab-reachable
+  [chromium-headless-new] › release-10-1-2.spec.ts:68:9 › 10.1.2 · 1440 › G-4 · arrows rove only the declared seats; an undeclared control keeps its keys
+  [chromium-headless-new] › release-10-1-2.spec.ts:84:9 › 10.1.2 · 1440 › G-4 · a run with an undeclared child claims no toolbar role
+  [chromium-headless-new] › release-10-1-2.spec.ts:92:9 › 10.1.2 · 1440 › G-4 · a focusable splitter is undeclared: its own stop, no toolbar role
+  [chromium-headless-new] › release-10-1-2.spec.ts:102:9 › 10.1.2 · 1440 › G-4 · an all-declared run is one toolbar stop with arrows across it
+  [chromium-headless-new] › release-10-1-2.spec.ts:119:9 › 10.1.2 · 1440 › G-4 · a DockTrigger for=select in a form keeps an all-declared run's toolbar
+  [chromium-headless-new] › release-10-1-2.spec.ts:137:9 › 10.1.2 · 1440 › G-4 · the toolbar claim follows a child's aria-hidden and tabindex in place
+  [chromium-headless-new] › release-10-1-2.spec.ts:158:9 › 10.1.2 · 1440 › G-4 · an aria-hidden wrapper around a Tab stop voids the toolbar claim
+  [chromium-headless-new] › release-10-1-2.spec.ts:169:9 › 10.1.2 · 1440 › G-4 · a child that drops its declaration is Tab-reachable again
+  [chromium-headless-new] › release-10-1-2.spec.ts:187:9 › 10.1.2 · 1440 › G-4 · a disabled DockTrigger holding the stop keeps the run in the Tab order
+  [chromium-headless-new] › release-10-1-2.spec.ts:203:9 › 10.1.2 · 1440 › G-4 · the arrows pass a disabled DockTrigger mid-run
+  [chromium-headless-new] › release-10-1-2.spec.ts:216:9 › 10.1.2 · 1440 › G-4 · a RadioGroup and a ToggleGroup seated directly keep their arrows
+  [chromium-headless-new] › release-10-1-2.spec.ts:51:9 › 10.1.2 · 390 › G-4 · the atlas shapes seated in a run are all Tab-reachable
+  [chromium-headless-new] › release-10-1-2.spec.ts:68:9 › 10.1.2 · 390 › G-4 · arrows rove only the declared seats; an undeclared control keeps its keys
+  [chromium-headless-new] › release-10-1-2.spec.ts:84:9 › 10.1.2 · 390 › G-4 · a run with an undeclared child claims no toolbar role
+  [chromium-headless-new] › release-10-1-2.spec.ts:92:9 › 10.1.2 · 390 › G-4 · a focusable splitter is undeclared: its own stop, no toolbar role
+  [chromium-headless-new] › release-10-1-2.spec.ts:102:9 › 10.1.2 · 390 › G-4 · an all-declared run is one toolbar stop with arrows across it
+  [chromium-headless-new] › release-10-1-2.spec.ts:119:9 › 10.1.2 · 390 › G-4 · a DockTrigger for=select in a form keeps an all-declared run's toolbar
+  [chromium-headless-new] › release-10-1-2.spec.ts:137:9 › 10.1.2 · 390 › G-4 · the toolbar claim follows a child's aria-hidden and tabindex in place
+  [chromium-headless-new] › release-10-1-2.spec.ts:158:9 › 10.1.2 · 390 › G-4 · an aria-hidden wrapper around a Tab stop voids the toolbar claim
+  [chromium-headless-new] › release-10-1-2.spec.ts:169:9 › 10.1.2 · 390 › G-4 · a child that drops its declaration is Tab-reachable again
+  [chromium-headless-new] › release-10-1-2.spec.ts:187:9 › 10.1.2 · 390 › G-4 · a disabled DockTrigger holding the stop keeps the run in the Tab order
+  [chromium-headless-new] › release-10-1-2.spec.ts:203:9 › 10.1.2 · 390 › G-4 · the arrows pass a disabled DockTrigger mid-run
+  [chromium-headless-new] › release-10-1-2.spec.ts:216:9 › 10.1.2 · 390 › G-4 · a RadioGroup and a ToggleGroup seated directly keep their arrows
+  [chromium-headless-new] › release-10-1-2.spec.ts:267:13 › 10.1.2 · 1440 · light › D-1 · a disabled DockTrigger paints disabled and takes no hover or press fill
+  [chromium-headless-new] › release-10-1-2.spec.ts:267:13 › 10.1.2 · 1440 · dark › D-1 · a disabled DockTrigger paints disabled and takes no hover or press fill
+  [chromium-headless-new] › release-10-1-2.spec.ts:267:13 › 10.1.2 · 390 · light › D-1 · a disabled DockTrigger paints disabled and takes no hover or press fill
+  [chromium-headless-new] › release-10-1-2.spec.ts:267:13 › 10.1.2 · 390 · dark › D-1 · a disabled DockTrigger paints disabled and takes no hover or press fill
+  [chromium-headless-new] › release-10-1-2.spec.ts:444:13 › O-101 · horizontal · pinned · the expanded endpoint follows the pane (1440->390)
+  [chromium-headless-new] › release-10-1-2.spec.ts:444:13 › O-101 · horizontal · collapsed · the expanded endpoint follows the pane (1440->390)
+  [chromium-headless-new] › release-10-1-2.spec.ts:444:13 › O-101 · horizontal · reversal · the expanded endpoint follows the pane (1440->390)
+  [chromium-headless-new] › release-10-1-2.spec.ts:444:13 › O-101 · horizontal · mid-expand · the expanded endpoint follows the pane (1440->390)
+  [chromium-headless-new] › release-10-1-2.spec.ts:444:13 › O-101 · horizontal · pinned · the expanded endpoint follows the pane (390->1440)
+  [chromium-headless-new] › release-10-1-2.spec.ts:444:13 › O-101 · horizontal · collapsed · the expanded endpoint follows the pane (390->1440)
+  [chromium-headless-new] › release-10-1-2.spec.ts:444:13 › O-101 · horizontal · reversal · the expanded endpoint follows the pane (390->1440)
+  [chromium-headless-new] › release-10-1-2.spec.ts:444:13 › O-101 · horizontal · mid-expand · the expanded endpoint follows the pane (390->1440)
+  [chromium-headless-new] › release-10-1-2.spec.ts:444:13 › O-101 · vertical · pinned · the expanded endpoint follows the pane (1440->390)
+  [chromium-headless-new] › release-10-1-2.spec.ts:444:13 › O-101 · vertical · collapsed · the expanded endpoint follows the pane (1440->390)
+  [chromium-headless-new] › release-10-1-2.spec.ts:444:13 › O-101 · vertical · reversal · the expanded endpoint follows the pane (1440->390)
+  [chromium-headless-new] › release-10-1-2.spec.ts:444:13 › O-101 · vertical · mid-expand · the expanded endpoint follows the pane (1440->390)
+  [chromium-headless-new] › release-10-1-2.spec.ts:444:13 › O-101 · vertical · pinned · the expanded endpoint follows the pane (390->1440)
+  [chromium-headless-new] › release-10-1-2.spec.ts:444:13 › O-101 · vertical · collapsed · the expanded endpoint follows the pane (390->1440)
+  [chromium-headless-new] › release-10-1-2.spec.ts:444:13 › O-101 · vertical · reversal · the expanded endpoint follows the pane (390->1440)
+  [chromium-headless-new] › release-10-1-2.spec.ts:444:13 › O-101 · vertical · mid-expand · the expanded endpoint follows the pane (390->1440)
+  [chromium-headless-new] › release-10-1-2.spec.ts:493:9 › O-101a · a host change during the morph · collapsed (1440->390)
+  [chromium-headless-new] › release-10-1-2.spec.ts:493:9 › O-101a · a host change during the morph · reversal (1440->390)
+  [chromium-headless-new] › release-10-1-2.spec.ts:493:9 › O-101a · a host change during the morph · mid-expand (1440->390)
+  [chromium-headless-new] › release-10-1-2.spec.ts:493:9 › O-101a · a host change during the morph · collapsed (390->1440)
+  [chromium-headless-new] › release-10-1-2.spec.ts:493:9 › O-101a · a host change during the morph · reversal (390->1440)
+  [chromium-headless-new] › release-10-1-2.spec.ts:493:9 › O-101a · a host change during the morph · mid-expand (390->1440)
+  [chromium-headless-new] › release-10-1-2.spec.ts:529:5 › O-101 · a capture keeps a scrolled run's scroll position (390)
+  [chromium-headless-new] › release-10-1-2.spec.ts:529:5 › O-101 · a capture keeps a scrolled run's scroll position (1440)
+  [chromium-headless-new] › release-10-1-3.spec.ts:143:13 › 10.1.3 · 360 · right-anchored (fourier f-w14v-au2 L2-15) › O-110 · a click on the anchored persistent seat of a collapsed dock reaches it
+  [chromium-headless-new] › release-10-1-3.spec.ts:167:13 › 10.1.3 · 360 · right-anchored (fourier f-w14v-au2 L2-15) › O-110 · the expand grows from the anchored edge from its first frame; the seat stays under the pointer
+  [chromium-headless-new] › release-10-1-3.spec.ts:226:13 › 10.1.3 · 360 · right-anchored (fourier f-w14v-au2 L2-15) › O-110 · a press on the anchored persistent seat mid-expand is kept
+  [chromium-headless-new] › release-10-1-3.spec.ts:143:13 › 10.1.3 · 360 · left-anchored (fourier f-w14v-au2 L2-15) › O-110 · a click on the anchored persistent seat of a collapsed dock reaches it
+  [chromium-headless-new] › release-10-1-3.spec.ts:167:13 › 10.1.3 · 360 · left-anchored (fourier f-w14v-au2 L2-15) › O-110 · the expand grows from the anchored edge from its first frame; the seat stays under the pointer
+  [chromium-headless-new] › release-10-1-3.spec.ts:226:13 › 10.1.3 · 360 · left-anchored (fourier f-w14v-au2 L2-15) › O-110 · a press on the anchored persistent seat mid-expand is kept
+  [chromium-headless-new] › release-10-1-3.spec.ts:143:13 › 10.1.3 · 390 · right-anchored (fourier f-w14v-au2 L2-15) › O-110 · a click on the anchored persistent seat of a collapsed dock reaches it
+  [chromium-headless-new] › release-10-1-3.spec.ts:167:13 › 10.1.3 · 390 · right-anchored (fourier f-w14v-au2 L2-15) › O-110 · the expand grows from the anchored edge from its first frame; the seat stays under the pointer
+  [chromium-headless-new] › release-10-1-3.spec.ts:226:13 › 10.1.3 · 390 · right-anchored (fourier f-w14v-au2 L2-15) › O-110 · a press on the anchored persistent seat mid-expand is kept
+  [chromium-headless-new] › release-10-1-3.spec.ts:143:13 › 10.1.3 · 390 · left-anchored (fourier f-w14v-au2 L2-15) › O-110 · a click on the anchored persistent seat of a collapsed dock reaches it
+  [chromium-headless-new] › release-10-1-3.spec.ts:167:13 › 10.1.3 · 390 · left-anchored (fourier f-w14v-au2 L2-15) › O-110 · the expand grows from the anchored edge from its first frame; the seat stays under the pointer
+  [chromium-headless-new] › release-10-1-3.spec.ts:226:13 › 10.1.3 · 390 · left-anchored (fourier f-w14v-au2 L2-15) › O-110 · a press on the anchored persistent seat mid-expand is kept
+  [chromium-headless-new] › release-10-1-3.spec.ts:143:13 › 10.1.3 · 430 · right-anchored (fourier f-w14v-au2 L2-15) › O-110 · a click on the anchored persistent seat of a collapsed dock reaches it
+  [chromium-headless-new] › release-10-1-3.spec.ts:167:13 › 10.1.3 · 430 · right-anchored (fourier f-w14v-au2 L2-15) › O-110 · the expand grows from the anchored edge from its first frame; the seat stays under the pointer
+  [chromium-headless-new] › release-10-1-3.spec.ts:226:13 › 10.1.3 · 430 · right-anchored (fourier f-w14v-au2 L2-15) › O-110 · a press on the anchored persistent seat mid-expand is kept
+  [chromium-headless-new] › release-10-1-3.spec.ts:143:13 › 10.1.3 · 430 · left-anchored (fourier f-w14v-au2 L2-15) › O-110 · a click on the anchored persistent seat of a collapsed dock reaches it
+  [chromium-headless-new] › release-10-1-3.spec.ts:167:13 › 10.1.3 · 430 · left-anchored (fourier f-w14v-au2 L2-15) › O-110 · the expand grows from the anchored edge from its first frame; the seat stays under the pointer
+  [chromium-headless-new] › release-10-1-3.spec.ts:226:13 › 10.1.3 · 430 · left-anchored (fourier f-w14v-au2 L2-15) › O-110 · a press on the anchored persistent seat mid-expand is kept
+  [chromium-headless-new] › release-10-1-3.spec.ts:143:13 › 10.1.3 · 1440 · right-anchored (fourier f-w14-control-row G-h) › O-110 · a click on the anchored persistent seat of a collapsed dock reaches it
+  [chromium-headless-new] › release-10-1-3.spec.ts:167:13 › 10.1.3 · 1440 · right-anchored (fourier f-w14-control-row G-h) › O-110 · the expand grows from the anchored edge from its first frame; the seat stays under the pointer
+  [chromium-headless-new] › release-10-1-3.spec.ts:226:13 › 10.1.3 · 1440 · right-anchored (fourier f-w14-control-row G-h) › O-110 · a press on the anchored persistent seat mid-expand is kept
+  [chromium-headless-new] › release-10-1-3.spec.ts:143:13 › 10.1.3 · 1440 · left-anchored (fourier f-w14-control-row G-h) › O-110 · a click on the anchored persistent seat of a collapsed dock reaches it
+  [chromium-headless-new] › release-10-1-3.spec.ts:167:13 › 10.1.3 · 1440 · left-anchored (fourier f-w14-control-row G-h) › O-110 · the expand grows from the anchored edge from its first frame; the seat stays under the pointer
+  [chromium-headless-new] › release-10-1-3.spec.ts:226:13 › 10.1.3 · 1440 · left-anchored (fourier f-w14-control-row G-h) › O-110 · a press on the anchored persistent seat mid-expand is kept
+  [chromium-headless-new] › release-10-1-3.spec.ts:277:9 › 10.1.3 · 390 · right-anchored, open-side seat › D-1 · a click on the open-side persistent seat of a collapsed dock reaches it
+  [chromium-headless-new] › release-10-1-3.spec.ts:277:9 › 10.1.3 · 1440 · right-anchored, open-side seat › D-1 · a click on the open-side persistent seat of a collapsed dock reaches it
+  [chromium-headless-new] › release-10-1-3.spec.ts:277:9 › 10.1.3 · 390 · left-anchored, open-side seat › D-1 · a click on the open-side persistent seat of a collapsed dock reaches it
+  [chromium-headless-new] › release-10-1-3.spec.ts:277:9 › 10.1.3 · 390 · bottom-anchored, open-side seat › D-1 · a click on the open-side persistent seat of a collapsed dock reaches it
+  [chromium-headless-new] › release-10-1-3.spec.ts:300:9 › 10.1.3 · 360 · touch · right-anchored, open-side seat › D-1 · a tap on the open-side persistent seat of a collapsed dock reaches it
+  [chromium-headless-new] › release-10-1-3.spec.ts:300:9 › 10.1.3 · 390 · touch · right-anchored, open-side seat › D-1 · a tap on the open-side persistent seat of a collapsed dock reaches it
+  [chromium-headless-new] › release-10-1-3.spec.ts:300:9 › 10.1.3 · 430 · touch · right-anchored, open-side seat › D-1 · a tap on the open-side persistent seat of a collapsed dock reaches it
+  [chromium-headless-new] › release-10-1-3.spec.ts:326:9 › 10.1.3 · 390 · right-anchored collapse › D-2 · the collapse shrinks toward the anchored edge and settles without a snap
+  [chromium-headless-new] › release-10-1-3.spec.ts:326:9 › 10.1.3 · 390 · left-anchored collapse › D-2 · the collapse shrinks toward the anchored edge and settles without a snap
+  [chromium-headless-new] › release-10-1-3.spec.ts:326:9 › 10.1.3 · 390 · bottom-anchored collapse › D-2 · the collapse shrinks toward the anchored edge and settles without a snap
+  [chromium-headless-new] › release-10-1-3.spec.ts:326:9 › 10.1.3 · 390 · top-anchored collapse › D-2 · the collapse shrinks toward the anchored edge and settles without a snap
+  [chromium-headless-new] › release-10-1-3.spec.ts:385:9 › 10.1.3 · 390 · right-anchored reversal › D-1 (critique-3) · a collapse() mid-expand keeps the summary glyph inside the plate
+  [chromium-headless-new] › release-10-1-3.spec.ts:385:9 › 10.1.3 · 390 · left-anchored reversal › D-1 (critique-3) · a collapse() mid-expand keeps the summary glyph inside the plate
+  [chromium-headless-new] › release-10-1-3.spec.ts:385:9 › 10.1.3 · 390 · bottom-anchored reversal › D-1 (critique-3) · a collapse() mid-expand keeps the summary glyph inside the plate
+  [chromium-headless-new] › release-10-1-3.spec.ts:441:5 › 10.1.3 · 390 · reduced motion › D-3 · under reduced motion the expand jumps to its rest
+  [chromium-headless-new] › release-10-1-3.spec.ts:473:9 › 10.1.3 · 390 · touch · run swipe, Escape, then focus › D-1 (critique-2) · after a clickless, cancel-less touch press, a focus expands the collapsed dock
+  [chromium-headless-new] › release-10-1-3.spec.ts:473:9 › 10.1.3 · 390 · touch · run swipe, Escape, then hover › D-1 (critique-2) · after a clickless, cancel-less touch press, a hover expands the collapsed dock
+  [chromium-headless-new] › release-10-1-3.spec.ts:520:5 › 10.1.3 · 390 · a touch press with no tap, then focus › D-1 (critique-2) · a focus after a clickless touch press expands the collapsed dock
+  [chromium-headless-new] › release-10-1-3.spec.ts:601:9 › 10.1.3 · 390 · right-anchored, the plate holds what it paints › D-1 (critique-4) · no control paints outside the plate on the expand or the collapse
+  [chromium-headless-new] › release-10-1-3.spec.ts:601:9 › 10.1.3 · 1440 · right-anchored, the plate holds what it paints › D-1 (critique-4) · no control paints outside the plate on the expand or the collapse
+  [chromium-headless-new] › release-10-1-3.spec.ts:601:9 › 10.1.3 · 390 · left-anchored, the plate holds what it paints › D-1 (critique-4) · no control paints outside the plate on the expand or the collapse
+  [chromium-headless-new] › release-10-1-3.spec.ts:601:9 › 10.1.3 · 390 · bottom-anchored, the plate holds what it paints › D-1 (critique-4) · no control paints outside the plate on the expand or the collapse
+  [chromium-headless-new] › release-10-1-3.spec.ts:637:9 › 10.1.3 · 390 · right-anchored double reversal, the plate holds what it paints › D-1 (critique-4) · no control paints outside the plate through a double reversal
+  [chromium-headless-new] › release-10-1-3.spec.ts:637:9 › 10.1.3 · 390 · bottom-anchored double reversal, the plate holds what it paints › D-1 (critique-4) · no control paints outside the plate through a double reversal
+  [chromium-headless-new] › release-10-1-3.spec.ts:728:9 › 10.1.3 · 390 · right-anchored expand, frozen at 40 % of its travel › D-1 (critique-4) · the stage beside the plate paints no control mid-expand
+  [chromium-headless-new] › release-10-1-3.spec.ts:728:9 › 10.1.3 · 390 · right-anchored collapse, frozen at 30 % of its travel › D-1 (critique-4) · the stage beside the plate paints no control mid-collapse
+  [chromium-headless-new] › release-10-1-3.spec.ts:818:13 › 10.1.3 · 390 · right-anchored · drag a dock link out, then focus › D-1 (critique-6) · after a press that became a native drag, a focus expands the collapsed dock
+  [chromium-headless-new] › release-10-1-3.spec.ts:818:13 › 10.1.3 · 390 · right-anchored · drag a dock link out, then hover › D-1 (critique-6) · after a press that became a native drag, a hover expands the collapsed dock
+  [chromium-headless-new] › release-10-1-3.spec.ts:818:13 › 10.1.3 · 390 · left-anchored · drag a dock link out, then focus › D-1 (critique-6) · after a press that became a native drag, a focus expands the collapsed dock
+  [chromium-headless-new] › release-10-1-3.spec.ts:818:13 › 10.1.3 · 390 · left-anchored · drag a dock link out, then hover › D-1 (critique-6) · after a press that became a native drag, a hover expands the collapsed dock
+  [chromium-headless-new] › release-10-1-3.spec.ts:843:5 › 10.1.3 · 390 · right-anchored · right-click a collapsed seat, then focus › D-1 (critique-6) · after a right-click, a focus expands the collapsed dock
+  [chromium-headless-new] › release-10-1-3.spec.ts:868:5 › 10.1.3 · 390 · right-anchored · hover-intent dwell across a right-click › D-1 (critique-6) · a hover dwell that completes after a right-click expands the collapsed dock
+  [chromium-headless-new] › release-10-1-3.spec.ts:899:5 › 10.1.3 · 390 · a mouse press with no release, a press outside, then focus › D-1 (critique-6) · a press outside the dock supersedes an unreleased mouse press
+  [chromium-headless-new] › release-10-1-3.spec.ts:931:9 › 10.1.3 · 390 · right-anchored · ancestor zoom 1.25 › D-1 (critique-7) · the summary glyph holds its box through the expand and the collapse
+  [chromium-headless-new] › release-10-1-3.spec.ts:931:9 › 10.1.3 · 390 · left-anchored · ancestor zoom 1.25 › D-1 (critique-7) · the summary glyph holds its box through the expand and the collapse
+  [chromium-headless-new] › release-10-1-3.spec.ts:931:9 › 10.1.3 · 390 · bottom-anchored · ancestor zoom 1.25 › D-1 (critique-7) · the summary glyph holds its box through the expand and the collapse
+  [chromium-headless-new] › release-10-1-4.spec.ts:104:5 › O-119 (g): DataTable learns its width on mount › a responsive DataTable in a 390 px box is a card list on the first observation, with no resize
+  [chromium-headless-new] › release-10-1-4.spec.ts:116:5 › O-119 (g): DataTable learns its width on mount › the same DataTable in a 900 px box stays a table
+  [chromium-headless-new] › release-10-1-4.spec.ts:136:9 › critique-3 F-4: a DataTable in a content-sized host settles › inline host: the projection settles from mount
+  [chromium-headless-new] › release-10-1-4.spec.ts:136:9 › critique-3 F-4: a DataTable in a content-sized host settles › grid host: the projection settles from mount
+  [chromium-headless-new] › release-10-1-4.spec.ts:136:9 › critique-3 F-4: a DataTable in a content-sized host settles › flex host: the projection settles from mount
+  [chromium-headless-new] › release-10-1-4.spec.ts:136:9 › critique-3 F-4: a DataTable in a content-sized host settles › fit host: the projection settles from mount
+  [chromium-headless-new] › release-10-1-4.spec.ts:146:5 › critique-3 F-4: a DataTable in a content-sized host settles › flex host, rows arriving after mount: the projection settles
+  [chromium-headless-new] › release-10-1-4.spec.ts:158:5 › O-119 (f), the @page half: only a deck prints at slide geometry › a page without a deck keeps the reader's print defaults
+  [chromium-headless-new] › release-10-1-4.spec.ts:170:5 › O-119 (f), the @page half: only a deck prints at slide geometry › a deck page takes the deck's print resets and its named page
+  [chromium-headless-new] › release-10-1-4.spec.ts:187:5 › O-119 (f), the @page half: only a deck prints at slide geometry › a deck in a modal dialog (top layer, out of flow) hands its named page to the document
+  [chromium-headless-new] › release-10-1-4.spec.ts:199:5 › O-119 (f), the @page half: only a deck prints at slide geometry › a deck page in flow: the document takes the deck's page too
+  [chromium-headless-new] › release-10-1-4.spec.ts:212:9 › O-119 (f), the @page half: only a deck prints at slide geometry › a deck in the library's own Dialog (a fixed plate) hands its named page to the document
+  [chromium-headless-new] › release-10-1-4.spec.ts:224:9 › O-119 (f), the @page half: only a deck prints at slide geometry › page.pdf: a deck in the library's own Dialog (a fixed plate) prints at slide geometry
+  [chromium-headless-new] › release-10-1-4.spec.ts:212:9 › O-119 (f), the @page half: only a deck prints at slide geometry › a deck in a fixed overlay hands its named page to the document
+  [chromium-headless-new] › release-10-1-4.spec.ts:224:9 › O-119 (f), the @page half: only a deck prints at slide geometry › page.pdf: a deck in a fixed overlay prints at slide geometry
+  [chromium-headless-new] › release-10-1-4.spec.ts:212:9 › O-119 (f), the @page half: only a deck prints at slide geometry › a deck in a non-modal <dialog open> (absolute) hands its named page to the document
+  [chromium-headless-new] › release-10-1-4.spec.ts:224:9 › O-119 (f), the @page half: only a deck prints at slide geometry › page.pdf: a deck in a non-modal <dialog open> (absolute) prints at slide geometry
+  [chromium-headless-new] › release-10-1-4.spec.ts:241:5 › O-119 (f), the @page half: only a deck prints at slide geometry › the deck's named page outranks a consumer's own @page
+  [chromium-headless-new] › release-10-1-4.spec.ts:257:5 › O-119 (f), the @page half: only a deck prints at slide geometry › page.pdf: a consumer's own @page does not resize the deck's sheets
+  [chromium-headless-new] › release-10-1-4.spec.ts:271:5 › O-119 (f), the @page half: only a deck prints at slide geometry › page.pdf: a consumer's own @page still sets the paper of a page with no deck
+  [chromium-headless-new] › release-10-1-4.spec.ts:284:5 › O-119 (f), the @page half: only a deck prints at slide geometry › page.pdf: a page without a deck prints on the default paper (Letter)
+  [chromium-headless-new] › release-10-1-4.spec.ts:296:5 › O-119 (f), the @page half: only a deck prints at slide geometry › page.pdf: a deck page prints one 1280x720 page per slide
+  [chromium-headless-new] › release-10-1-4.spec.ts:311:5 › O-119 (f), the @page half: only a deck prints at slide geometry › page.pdf: a deck in a modal dialog prints at slide geometry
+  [chromium-headless-new] › release-10-1-5.spec.ts:217:5 › coarse phone › g1 rest dock at 390: one corner = half its height, nothing to scroll, pointer off and on the trailing seat
+  [chromium-headless-new] › release-10-1-5.spec.ts:217:5 › coarse phone › g1 rest dock at 844: one corner = half its height, nothing to scroll, pointer off and on the trailing seat
+  [chromium-headless-new] › release-10-1-5.spec.ts:249:5 › coarse phone › g4 at 390 coarse the field type is at most 16px and at most 1.25x the pane subtitle
+  [chromium-headless-new] › release-10-1-5.spec.ts:217:5 › g1 rest dock at 1280: one corner = half its height, nothing to scroll, pointer off and on the trailing seat
+  [chromium-headless-new] › release-10-1-5.spec.ts:294:1 › g1 an overflowing run at scroll 0: the leading cap rests at half the block extent, a length; the trailing cap is cut
+  [chromium-headless-new] › release-10-1-5.spec.ts:318:1 › g2 collapsed: the plate is a circle, half its extent on both axes
+  [chromium-headless-new] › release-10-1-5.spec.ts:336:1 › g2 expanded (collapsible), each layer and input mode hold g1
+  [chromium-headless-new] › release-10-1-5.spec.ts:362:1 › g3 the Slider thumb is visible and one size at min, mid and max, inside the fill
+  [chromium-headless-new] › release-10-1-5.spec.ts:409:1 › g5 the DropdownMenuItem icon-to-label gap is the icon-slot token, the dock trigger's own
+  [chromium-headless-new] › release-10-1-5.spec.ts:439:1 › c1 a value mark is the thumb's centre at that value, on every axis; the loupe's value point is the thumb's centre
+  [chromium-headless-new] › release-10-1-5.spec.ts:507:5 › coarse phone, round 1 › c2 coarse: the -sm rung stays the quieter rung for every non-field reader; an sm field floors at 16px
+  [chromium-headless-new] › release-10-1-5.spec.ts:536:5 › coarse phone, round 1 › c4 coarse 390: a keyboard-focused seat under the pointer keeps its whole ring
+  [chromium-headless-new] › release-10-1-5.spec.ts:543:1 › c3 the disabled scrubber dims its thumb with its fill
+  [chromium-headless-new] › release-10-1-5.spec.ts:619:1 › c4 desktop: a keyboard-focused seat under the pointer keeps its whole ring
+  [chromium-headless-new] › release-10-1-5.spec.ts:638:5 › critique 2, coarse phone › e1 at 390: a label-wide tab under the pointer gives the run no reach and cuts no corner
+  [chromium-headless-new] › release-10-1-5.spec.ts:638:5 › critique 2, coarse phone › e1 at 844: a label-wide tab under the pointer gives the run no reach and cuts no corner
+  [chromium-headless-new] › release-10-1-5.spec.ts:662:5 › critique 2, coarse phone › e2 at 390: focused, hovered tab seats keep their whole ring on every edge
+  [chromium-headless-new] › release-10-1-5.spec.ts:674:5 › critique 2, coarse phone › e3 at 390: the run's clip and hit stop at the persistent seats, at rest and scrolled
+  [chromium-headless-new] › release-10-1-5.spec.ts:723:5 › critique 2, coarse phone › e4 at 390: a run whose seats all show, capped under its reserve, holds the fit law and keeps the end seat's ring
+  [chromium-headless-new] › release-10-1-5.spec.ts:638:5 › e1 at 390: a label-wide tab under the pointer gives the run no reach and cuts no corner
+  [chromium-headless-new] › release-10-1-5.spec.ts:638:5 › e1 at 1440: a label-wide tab under the pointer gives the run no reach and cuts no corner
+  [chromium-headless-new] › release-10-1-5.spec.ts:662:5 › e2 at 390: focused, hovered tab seats keep their whole ring on every edge
+  [chromium-headless-new] › release-10-1-5.spec.ts:662:5 › e2 at 1440: focused, hovered tab seats keep their whole ring on every edge
+  [chromium-headless-new] › release-10-1-5.spec.ts:674:5 › e3 at 390: the run's clip and hit stop at the persistent seats, at rest and scrolled
+  [chromium-headless-new] › release-10-1-5.spec.ts:723:5 › e4 at 1440: a run whose seats all show, capped under its reserve, holds the fit law and keeps the end seat's ring
+  [chromium-headless-new] › release-10-1-5.spec.ts:763:1 › f1 a SegmentedTabs under a fixed z:1 header paints beneath it; its labels paint over the indicator
+  [chromium-headless-new] › release-10-1-5.spec.ts:805:1 › f2 Table row and header rules paint in --border, light and dark
+  [chromium-headless-new] › release-10-1-5.spec.ts:840:9 › h1 at 2x › h1 house at 390: a seat cut by the trailing clip paints nothing past the plate's corner arc
+  [chromium-headless-new] › release-10-1-5.spec.ts:840:9 › h1 at 2x › h1 cockpit at 390: a seat cut by the trailing clip paints nothing past the plate's corner arc
+  [chromium-headless-new] › release-10-1-5.spec.ts:956:1 › h2 at 844: a labelled DockTrigger adds no reserve; the run's room is the icon dock's
+  [chromium-headless-new] › release-10-1-5.spec.ts:972:1 › h3 a ticking seat label constructs no ResizeObserver
+  [chromium-headless-new] › release-10-1-5.spec.ts:990:1 › h4 with no ResizeObserver the plate rests at half its block extent
+  [chromium-headless-new] › release-10-1-5.spec.ts:1150:1 › k2 vertical: a wide tab at a flush edge keeps its whole ring, at the start and at the end
+  [chromium-headless-new] › release-10-1-5.spec.ts:1087:5 › critique 5, coarse phone › k1 at 320: End, focus() and hover+focus land the end seat flush with its ring whole; Home lands the first
+  [chromium-headless-new] › release-10-1-5.spec.ts:1189:5 › critique 5, coarse phone › k3 at 320: a capped dock whose seats all show holds the fit law and rests round
+  [chromium-headless-new] › release-10-1-5.spec.ts:1087:5 › k1 at 320: End, focus() and hover+focus land the end seat flush with its ring whole; Home lands the first
+  [chromium-headless-new] › release-10-1-5.spec.ts:1189:5 › k3 at 320: a capped dock whose seats all show holds the fit law and rests round
+  [chromium-headless-new] › release-10-1-5.spec.ts:1278:13 › critique 6, coarse phone › l1 a cap lifted under a run scrolled to its end rests round (tab:Home,icon,icon,icon,tab:Settings)
+  [chromium-headless-new] › release-10-1-5.spec.ts:1278:13 › critique 6, coarse phone › l1 a cap lifted under a run scrolled to its mid rests round (tab:Home,icon,icon,icon,tab:Settings)
+  [chromium-headless-new] › release-10-1-5.spec.ts:1278:13 › critique 6, coarse phone › l1 a cap lifted under a run scrolled to its end rests round (icon,icon,icon,icon,icon,icon)
+  [chromium-headless-new] › release-10-1-5.spec.ts:1278:13 › critique 6, coarse phone › l1 a cap lifted under a run scrolled to its mid rests round (icon,icon,icon,icon,icon,icon)
+  [chromium-headless-new] › release-10-1-5.spec.ts:1295:5 › critique 6, coarse phone › l1 a viewport resize 390 → 844 under a run scrolled to its end rests round
+  [chromium-headless-new] › release-10-1-5.spec.ts:1311:5 › critique 6, coarse phone › l1 a vertical run's stage grown under a run scrolled to its end rests round
+  [chromium-headless-new] › release-10-1-5.spec.ts:1278:13 › l1 a cap lifted under a run scrolled to its end rests round (tab:Home,icon,icon,icon,tab:Settings)
+  [chromium-headless-new] › release-10-1-5.spec.ts:1278:13 › l1 a cap lifted under a run scrolled to its mid rests round (tab:Home,icon,icon,icon,tab:Settings)
+  [chromium-headless-new] › release-10-1-5.spec.ts:1278:13 › l1 a cap lifted under a run scrolled to its end rests round (icon,icon,icon,icon,icon,icon)
+  [chromium-headless-new] › release-10-1-5.spec.ts:1278:13 › l1 a cap lifted under a run scrolled to its mid rests round (icon,icon,icon,icon,icon,icon)
+  [chromium-headless-new] › release-10-1-5.spec.ts:1295:5 › l1 a viewport resize 390 → 844 under a run scrolled to its end rests round
+  [chromium-headless-new] › release-10-1-5.spec.ts:1311:5 › l1 a vertical run's stage grown under a run scrolled to its end rests round
+  [chromium-headless-new] › release-10-1-5.spec.ts:1383:9 › critique 7, coarse phone › m1 at 390: a collapse from a run scrolled to its mid seals round
+  [chromium-headless-new] › release-10-1-5.spec.ts:1383:9 › critique 7, coarse phone › m1 at 390: a collapse from a run scrolled to its end seals round
+  [chromium-headless-new] › release-10-1-5.spec.ts:1383:9 › critique 7, coarse phone › m1 at 1440: a collapse from a run scrolled to its end seals round
+  [chromium-headless-new] › release-10-1-5.spec.ts:1661:9 › critique 7, coarse phone › m5 O-182 horizontal: in dark nothing past the plate is lighter than the ground
+  [chromium-headless-new] › release-10-1-5.spec.ts:1661:9 › critique 7, coarse phone › m5 O-182 vertical: in dark nothing past the plate is lighter than the ground
+  [chromium-headless-new] › release-10-1-5.spec.ts:1661:9 › critique 7, coarse phone › m5 O-182 collapsed: in dark nothing past the plate is lighter than the ground
+  [chromium-headless-new] › release-10-1-5.spec.ts:1720:5 › critique 7, coarse phone › m5 O-182 light: the shadow is still the foreground
+  [chromium-headless-new] › release-10-1-5.spec.ts:1412:5 › critique 7, coarse phone › m2 a vertical run whose seats fit scrolls at most the ring floor's shortfall, across the fit edge
+  [chromium-headless-new] › release-10-1-5.spec.ts:1433:9 › critique 7, coarse phone › m4 at 390: a layered overflowing run rests at its start, the leading corner round
+  [chromium-headless-new] › release-10-1-5.spec.ts:1433:9 › critique 7, coarse phone › m4 at 1440: a layered overflowing run rests at its start, the leading corner round
+  [chromium-headless-new] › release-10-1-5.spec.ts:1453:5 › critique 7, coarse phone › m3 O-157 a static-backdrop plate follows --glass-veil-ink, light and dark
+  [chromium-headless-new] › release-10-1-5.spec.ts:1508:5 › critique 7, coarse phone › m3 O-162 the folded summary's ring follows the pill after Escape
+  [chromium-headless-new] › release-10-1-5.spec.ts:1535:5 › critique 7, coarse phone › m3 O-177 Tab onto the folded face expands the dock and lands on a seat
+  [chromium-headless-new] › release-10-1-5.spec.ts:1557:5 › critique 7, coarse phone › m3 O-176 a collapse=open dock left untouched idles shut, and after a remount
+  [chromium-headless-new] › release-10-1-5.spec.ts:1576:5 › critique 7, coarse phone › m3 O-177 a press during the expand activates its seat once
+  [chromium-headless-new] › release-10-1-5.spec.ts:1613:5 › critique 7, coarse phone › m3 O-167 the dock Slider's fill is a calm ink in dark and its thumb tracks the drag
+  [chromium-headless-new] › release-10-1-5.spec.ts:1488:5 › critique 7, coarse phone › m3 O-161 a tap leaves no hover paint on the DarkModeToggle or a DockControl
+  [chromium-headless-new] › release-10-1-5.spec.ts:1383:9 › m1 at 390: a collapse from a run scrolled to its mid seals round
+  [chromium-headless-new] › release-10-1-5.spec.ts:1383:9 › m1 at 390: a collapse from a run scrolled to its end seals round
+  [chromium-headless-new] › release-10-1-5.spec.ts:1383:9 › m1 at 1440: a collapse from a run scrolled to its end seals round
+  [chromium-headless-new] › release-10-1-5.spec.ts:1661:9 › m5 O-182 horizontal: in dark nothing past the plate is lighter than the ground
+  [chromium-headless-new] › release-10-1-5.spec.ts:1661:9 › m5 O-182 vertical: in dark nothing past the plate is lighter than the ground
+  [chromium-headless-new] › release-10-1-5.spec.ts:1661:9 › m5 O-182 collapsed: in dark nothing past the plate is lighter than the ground
+  [chromium-headless-new] › release-10-1-5.spec.ts:1720:5 › m5 O-182 light: the shadow is still the foreground
+  [chromium-headless-new] › release-10-1-5.spec.ts:1412:5 › m2 a vertical run whose seats fit scrolls at most the ring floor's shortfall, across the fit edge
+  [chromium-headless-new] › release-10-1-5.spec.ts:1433:9 › m4 at 390: a layered overflowing run rests at its start, the leading corner round
+  [chromium-headless-new] › release-10-1-5.spec.ts:1433:9 › m4 at 1440: a layered overflowing run rests at its start, the leading corner round
+  [chromium-headless-new] › release-10-1-5.spec.ts:1453:5 › m3 O-157 a static-backdrop plate follows --glass-veil-ink, light and dark
+  [chromium-headless-new] › release-10-1-5.spec.ts:1508:5 › m3 O-162 the folded summary's ring follows the pill after Escape
+  [chromium-headless-new] › release-10-1-5.spec.ts:1535:5 › m3 O-177 Tab onto the folded face expands the dock and lands on a seat
+  [chromium-headless-new] › release-10-1-5.spec.ts:1557:5 › m3 O-176 a collapse=open dock left untouched idles shut, and after a remount
+  [chromium-headless-new] › release-10-1-5.spec.ts:1576:5 › m3 O-177 a press during the expand activates its seat once
+  [chromium-headless-new] › release-10-1-5.spec.ts:1613:5 › m3 O-167 the dock Slider's fill is a calm ink in dark and its thumb tracks the drag
+  [chromium-headless-new] › release-10-1-5.spec.ts:1789:5 › critique 8, coarse phone › n1 a fitting vertical dock's seats do not step at the expand's settle or the collapse's start, across the fit edge
+  [chromium-headless-new] › release-10-1-5.spec.ts:1789:5 › n1 a fitting vertical dock's seats do not step at the expand's settle or the collapse's start, across the fit edge
+  [chromium-headless-new] › release-10-1-5.spec.ts:1890:5 › critique 9, coarse phone › p1 a dock its host resizes mid-expand holds every seat at the settle (horizontal clamp, vertical yield band)
+  [chromium-headless-new] › release-10-1-5.spec.ts:1890:5 › p1 a dock its host resizes mid-expand holds every seat at the settle (horizontal clamp, vertical yield band)
+  [chromium-headless-new] › release-10-1-5.spec.ts:1936:5 › critique 10, coarse phone › p2 a 1-2 px host change across the fit edge mid-expand holds every seat at the settle
+  [chromium-headless-new] › release-10-1-5.spec.ts:1936:5 › p2 a 1-2 px host change across the fit edge mid-expand holds every seat at the settle
+  [chromium-headless-new] › release-10-1-5.spec.ts:2040:5 › q1 O-186 at 1440: a fit-content static dock under hover on every control keeps one rest corner, half its cross extent, no percentage
+  [chromium-headless-new] › release-10-1-5.spec.ts:2070:5 › q2 O-187 at 1440: a nested .dock-run group keeps each hovered control's whole ink
+  [chromium-headless-new] › release-10-1-5.spec.ts:2102:5 › q3 O-187 at 1440: the plate has exactly one scroll timeline in scope, the visible run's
+  [chromium-headless-new] › release-10-1-5.spec.ts:2040:5 › q1 O-186 at 390: a fit-content static dock under hover on every control keeps one rest corner, half its cross extent, no percentage
+  [chromium-headless-new] › release-10-1-5.spec.ts:2070:5 › q2 O-187 at 390: a nested .dock-run group keeps each hovered control's whole ink
+  [chromium-headless-new] › release-10-1-5.spec.ts:2102:5 › q3 O-187 at 390: the plate has exactly one scroll timeline in scope, the visible run's
+  [chromium-headless-new] › release-10-1-5.spec.ts:2121:5 › r1 Q2 at 1440: a nested group holding the current seat paints every seat clear of the others, and the run's flag is its layout
+  [chromium-headless-new] › release-10-1-5.spec.ts:2121:5 › fix 10, coarse phone › r1 Q2 at 390: a nested group holding the current seat paints every seat clear of the others, and the run's flag is its layout
+  [chromium-headless-new] › release-10-1-5.spec.ts:2234:5 › s1 O-205 at 1440: no collapsed dock has a scrolling run, and a hidden wider face adds nothing to a fitting run
+  [chromium-headless-new] › release-10-1-5.spec.ts:2343:5 › s2 O-201 at 1440: at every cap through the fit edge the first and end seats keep their whole ring, and a run that hides nothing rests round
+  [chromium-headless-new] › release-10-1-5.spec.ts:2234:5 › fix 11, coarse phone › s1 O-205 at 390: no collapsed dock has a scrolling run, and a hidden wider face adds nothing to a fitting run
+  [chromium-headless-new] › release-10-1-5.spec.ts:2343:5 › fix 11, coarse phone › s2 O-201 at 390: at every cap through the fit edge the first and end seats keep their whole ring, and a run that hides nothing rests round
+  [chromium-headless-new] › release-10-1-5.spec.ts:2383:5 › fix 12, desktop › t1 O-201 vertical: through the fit edge the end seats keep their whole ring, bounded in the yield band
+  [chromium-headless-new] › release-10-1-5.spec.ts:2383:5 › fix 12, coarse phone › t1 O-201 vertical: through the fit edge the end seats keep their whole ring, bounded in the yield band
+  [chromium-headless-new] › release-10-1-5.spec.ts:2438:1 › s3 O-207 G3 a disclosure trigger's keyboard ring is the house outline, whatever it composes
+  [chromium-headless-new] › release-10-1-5.spec.ts:2456:1 › s4 a host padding change across the fit edge mid-expand holds every seat at the settle (vertical)
+  [chromium-headless-new] › release-10-1-5.spec.ts:2504:5 › fix 13, coarse phone › u1 a collapsing vertical run that does not fit keeps its scroll on the first morph frame
+  [chromium-headless-new] › release-10-1-5.spec.ts:2548:1 › m3 O-159 the dock README names every DockProps member and no other
+  [chromium-headless-new] › release-10-1-5.spec.ts:2562:1 › m3 O-160 no cut-cap or clip keyframe carries a percentage radius
+  [chromium-headless-new] › release-11-0-1.spec.ts:73:5 › o1 the wide label seat › o1 the hover plate of a compact 'Focus' label seat is a capsule, never an ellipse
+  [chromium-headless-new] › release-11-0-1.spec.ts:85:5 › o1 the wide label seat › o1 the active 'Name ›' seat's plate, at rest and under hover, is a capsule
+  [chromium-headless-new] › release-11-0-1.spec.ts:105:9 › o2 the dock's end, house tokens › o2 house tokens: open at rest, the plate and the box are round
+  [chromium-headless-new] › release-11-0-1.spec.ts:115:9 › o2 the dock's end, house tokens › o2 house tokens: collapsed with a persistent seat beside the summary, the plate and the box are round
+  [chromium-headless-new] › release-11-0-1.spec.ts:126:9 › o2 the dock's end, house tokens › o2 house tokens: open on the narrow face beside a wider one, with a #persistent-end seat, the plate is round
+  [chromium-headless-new] › release-11-0-1.spec.ts:105:9 › o2 the dock's end, radius-dock 1.875rem › o2 radius-dock 1.875rem: open at rest, the plate and the box are round
+  [chromium-headless-new] › release-11-0-1.spec.ts:115:9 › o2 the dock's end, radius-dock 1.875rem › o2 radius-dock 1.875rem: collapsed with a persistent seat beside the summary, the plate and the box are round
+  [chromium-headless-new] › release-11-0-1.spec.ts:126:9 › o2 the dock's end, radius-dock 1.875rem › o2 radius-dock 1.875rem: open on the narrow face beside a wider one, with a #persistent-end seat, the plate is round
+  [chromium-headless-new] › release-11-0-1.spec.ts:142:1 › o3 every frame of the expand and of the collapse paints a round end
+  [coarse-touch] › release-10-1-1.spec.ts:51:5 › 10.1.1 › G-1 · an open sheet is fixed and inside the viewport
+  [coarse-touch] › release-10-1-1.spec.ts:74:5 › 10.1.1 › G-2 · a menu and its submenu paint above the dock's rung
+  [coarse-touch] › release-10-1-1.spec.ts:84:5 › 10.1.1 › G-3 · a composite in a container seat keeps its tab stop and its arrows
+  [coarse-touch] › release-10-1-1.spec.ts:113:5 › 10.1.1 › G-3 · a composite seated directly in the run keeps its arrows
+  [coarse-touch] › release-10-1-1.spec.ts:137:9 › 10.1.1 › O-102(3) · a dropdown opened from a seat closes when the dock collapses
+  [coarse-touch] › release-10-1-1.spec.ts:137:9 › 10.1.1 › O-102(3) · a popover opened from a seat closes when the dock collapses
+  [coarse-touch] › release-10-1-1.spec.ts:137:9 › 10.1.1 › O-102(3) · a select opened from a seat closes when the dock collapses
+  [coarse-touch] › release-10-1-1.spec.ts:156:5 › 10.1.1 › O-102(3) · a collapse-closed menu hands focus to the summary, not <body>
+  [coarse-touch] › release-10-1-1.spec.ts:186:5 › 10.1.1 › O-102(3) · a popover opened from #persistent outlives the collapse, and the dock stays collapsed
+  [coarse-touch] › release-10-1-1.spec.ts:229:13 › 10.1.1 › O-102(6) · a tooltip opened from a seat is portalled out of the run and not clipped (desktop)
+  [coarse-touch] › release-10-1-1.spec.ts:229:13 › 10.1.1 › O-102(6) · a popover opened from a seat is portalled out of the run and not clipped (desktop)
+  [coarse-touch] › release-10-1-1.spec.ts:229:13 › 10.1.1 › O-102(6) · a popover-inline opened from a seat is portalled out of the run and not clipped (desktop)
+  [coarse-touch] › release-10-1-1.spec.ts:229:13 › 10.1.1 › O-102(6) · a hovercard opened from a seat is portalled out of the run and not clipped (desktop)
+  [coarse-touch] › release-10-1-1.spec.ts:229:13 › 10.1.1 › O-102(6) · a menu opened from a seat is portalled out of the run and not clipped (desktop)
+  [coarse-touch] › release-10-1-1.spec.ts:229:13 › 10.1.1 › O-102(6) · a select opened from a seat is portalled out of the run and not clipped (desktop)
+  [coarse-touch] › release-10-1-1.spec.ts:229:13 › 10.1.1 › O-102(6) · a tooltip opened from a seat is portalled out of the run and not clipped (phone)
+  [coarse-touch] › release-10-1-1.spec.ts:229:13 › 10.1.1 › O-102(6) · a popover opened from a seat is portalled out of the run and not clipped (phone)
+  [coarse-touch] › release-10-1-1.spec.ts:229:13 › 10.1.1 › O-102(6) · a popover-inline opened from a seat is portalled out of the run and not clipped (phone)
+  [coarse-touch] › release-10-1-1.spec.ts:229:13 › 10.1.1 › O-102(6) · a hovercard opened from a seat is portalled out of the run and not clipped (phone)
+  [coarse-touch] › release-10-1-1.spec.ts:229:13 › 10.1.1 › O-102(6) · a menu opened from a seat is portalled out of the run and not clipped (phone)
+  [coarse-touch] › release-10-1-1.spec.ts:229:13 › 10.1.1 › O-102(6) · a select opened from a seat is portalled out of the run and not clipped (phone)
+  [coarse-touch] › release-10-1-1.spec.ts:256:5 › 10.1.1 › Skeleton · shimmer travels, the plain tile breathes, an off-screen one is paused
+  [coarse-touch] › release-10-1-1.spec.ts:290:9 › 10.1.1 › Skeleton · the shimmer layer covers the tile through its whole cycle (ltr)
+  [coarse-touch] › release-10-1-1.spec.ts:290:9 › 10.1.1 › Skeleton · the shimmer layer covers the tile through its whole cycle (rtl)
+  [coarse-touch] › release-10-1-1.spec.ts:323:5 › 10.1.1 › Skeleton · shimmer holds still under reduced motion
+  [coarse-touch] › release-10-1-2.spec.ts:51:9 › 10.1.2 · 1440 › G-4 · the atlas shapes seated in a run are all Tab-reachable
+  [coarse-touch] › release-10-1-2.spec.ts:68:9 › 10.1.2 · 1440 › G-4 · arrows rove only the declared seats; an undeclared control keeps its keys
+  [coarse-touch] › release-10-1-2.spec.ts:84:9 › 10.1.2 · 1440 › G-4 · a run with an undeclared child claims no toolbar role
+  [coarse-touch] › release-10-1-2.spec.ts:92:9 › 10.1.2 · 1440 › G-4 · a focusable splitter is undeclared: its own stop, no toolbar role
+  [coarse-touch] › release-10-1-2.spec.ts:102:9 › 10.1.2 · 1440 › G-4 · an all-declared run is one toolbar stop with arrows across it
+  [coarse-touch] › release-10-1-2.spec.ts:119:9 › 10.1.2 · 1440 › G-4 · a DockTrigger for=select in a form keeps an all-declared run's toolbar
+  [coarse-touch] › release-10-1-2.spec.ts:137:9 › 10.1.2 · 1440 › G-4 · the toolbar claim follows a child's aria-hidden and tabindex in place
+  [coarse-touch] › release-10-1-2.spec.ts:158:9 › 10.1.2 · 1440 › G-4 · an aria-hidden wrapper around a Tab stop voids the toolbar claim
+  [coarse-touch] › release-10-1-2.spec.ts:169:9 › 10.1.2 · 1440 › G-4 · a child that drops its declaration is Tab-reachable again
+  [coarse-touch] › release-10-1-2.spec.ts:187:9 › 10.1.2 · 1440 › G-4 · a disabled DockTrigger holding the stop keeps the run in the Tab order
+  [coarse-touch] › release-10-1-2.spec.ts:203:9 › 10.1.2 · 1440 › G-4 · the arrows pass a disabled DockTrigger mid-run
+  [coarse-touch] › release-10-1-2.spec.ts:216:9 › 10.1.2 · 1440 › G-4 · a RadioGroup and a ToggleGroup seated directly keep their arrows
+  [coarse-touch] › release-10-1-2.spec.ts:51:9 › 10.1.2 · 390 › G-4 · the atlas shapes seated in a run are all Tab-reachable
+  [coarse-touch] › release-10-1-2.spec.ts:68:9 › 10.1.2 · 390 › G-4 · arrows rove only the declared seats; an undeclared control keeps its keys
+  [coarse-touch] › release-10-1-2.spec.ts:84:9 › 10.1.2 · 390 › G-4 · a run with an undeclared child claims no toolbar role
+  [coarse-touch] › release-10-1-2.spec.ts:92:9 › 10.1.2 · 390 › G-4 · a focusable splitter is undeclared: its own stop, no toolbar role
+  [coarse-touch] › release-10-1-2.spec.ts:102:9 › 10.1.2 · 390 › G-4 · an all-declared run is one toolbar stop with arrows across it
+  [coarse-touch] › release-10-1-2.spec.ts:119:9 › 10.1.2 · 390 › G-4 · a DockTrigger for=select in a form keeps an all-declared run's toolbar
+  [coarse-touch] › release-10-1-2.spec.ts:137:9 › 10.1.2 · 390 › G-4 · the toolbar claim follows a child's aria-hidden and tabindex in place
+  [coarse-touch] › release-10-1-2.spec.ts:158:9 › 10.1.2 · 390 › G-4 · an aria-hidden wrapper around a Tab stop voids the toolbar claim
+  [coarse-touch] › release-10-1-2.spec.ts:169:9 › 10.1.2 · 390 › G-4 · a child that drops its declaration is Tab-reachable again
+  [coarse-touch] › release-10-1-2.spec.ts:187:9 › 10.1.2 · 390 › G-4 · a disabled DockTrigger holding the stop keeps the run in the Tab order
+  [coarse-touch] › release-10-1-2.spec.ts:203:9 › 10.1.2 · 390 › G-4 · the arrows pass a disabled DockTrigger mid-run
+  [coarse-touch] › release-10-1-2.spec.ts:216:9 › 10.1.2 · 390 › G-4 · a RadioGroup and a ToggleGroup seated directly keep their arrows
+  [coarse-touch] › release-10-1-2.spec.ts:267:13 › 10.1.2 · 1440 · light › D-1 · a disabled DockTrigger paints disabled and takes no hover or press fill
+  [coarse-touch] › release-10-1-2.spec.ts:267:13 › 10.1.2 · 1440 · dark › D-1 · a disabled DockTrigger paints disabled and takes no hover or press fill
+  [coarse-touch] › release-10-1-2.spec.ts:267:13 › 10.1.2 · 390 · light › D-1 · a disabled DockTrigger paints disabled and takes no hover or press fill
+  [coarse-touch] › release-10-1-2.spec.ts:267:13 › 10.1.2 · 390 · dark › D-1 · a disabled DockTrigger paints disabled and takes no hover or press fill
+  [coarse-touch] › release-10-1-2.spec.ts:444:13 › O-101 · horizontal · pinned · the expanded endpoint follows the pane (1440->390)
+  [coarse-touch] › release-10-1-2.spec.ts:444:13 › O-101 · horizontal · collapsed · the expanded endpoint follows the pane (1440->390)
+  [coarse-touch] › release-10-1-2.spec.ts:444:13 › O-101 · horizontal · reversal · the expanded endpoint follows the pane (1440->390)
+  [coarse-touch] › release-10-1-2.spec.ts:444:13 › O-101 · horizontal · mid-expand · the expanded endpoint follows the pane (1440->390)
+  [coarse-touch] › release-10-1-2.spec.ts:444:13 › O-101 · horizontal · pinned · the expanded endpoint follows the pane (390->1440)
+  [coarse-touch] › release-10-1-2.spec.ts:444:13 › O-101 · horizontal · collapsed · the expanded endpoint follows the pane (390->1440)
+  [coarse-touch] › release-10-1-2.spec.ts:444:13 › O-101 · horizontal · reversal · the expanded endpoint follows the pane (390->1440)
+  [coarse-touch] › release-10-1-2.spec.ts:444:13 › O-101 · horizontal · mid-expand · the expanded endpoint follows the pane (390->1440)
+  [coarse-touch] › release-10-1-2.spec.ts:444:13 › O-101 · vertical · pinned · the expanded endpoint follows the pane (1440->390)
+  [coarse-touch] › release-10-1-2.spec.ts:444:13 › O-101 · vertical · collapsed · the expanded endpoint follows the pane (1440->390)
+  [coarse-touch] › release-10-1-2.spec.ts:444:13 › O-101 · vertical · reversal · the expanded endpoint follows the pane (1440->390)
+  [coarse-touch] › release-10-1-2.spec.ts:444:13 › O-101 · vertical · mid-expand · the expanded endpoint follows the pane (1440->390)
+  [coarse-touch] › release-10-1-2.spec.ts:444:13 › O-101 · vertical · pinned · the expanded endpoint follows the pane (390->1440)
+  [coarse-touch] › release-10-1-2.spec.ts:444:13 › O-101 · vertical · collapsed · the expanded endpoint follows the pane (390->1440)
+  [coarse-touch] › release-10-1-2.spec.ts:444:13 › O-101 · vertical · reversal · the expanded endpoint follows the pane (390->1440)
+  [coarse-touch] › release-10-1-2.spec.ts:444:13 › O-101 · vertical · mid-expand · the expanded endpoint follows the pane (390->1440)
+  [coarse-touch] › release-10-1-2.spec.ts:493:9 › O-101a · a host change during the morph · collapsed (1440->390)
+  [coarse-touch] › release-10-1-2.spec.ts:493:9 › O-101a · a host change during the morph · reversal (1440->390)
+  [coarse-touch] › release-10-1-2.spec.ts:493:9 › O-101a · a host change during the morph · mid-expand (1440->390)
+  [coarse-touch] › release-10-1-2.spec.ts:493:9 › O-101a · a host change during the morph · collapsed (390->1440)
+  [coarse-touch] › release-10-1-2.spec.ts:493:9 › O-101a · a host change during the morph · reversal (390->1440)
+  [coarse-touch] › release-10-1-2.spec.ts:493:9 › O-101a · a host change during the morph · mid-expand (390->1440)
+  [coarse-touch] › release-10-1-2.spec.ts:529:5 › O-101 · a capture keeps a scrolled run's scroll position (390)
+  [coarse-touch] › release-10-1-2.spec.ts:529:5 › O-101 · a capture keeps a scrolled run's scroll position (1440)
+  [coarse-touch] › release-10-1-3.spec.ts:143:13 › 10.1.3 · 360 · right-anchored (fourier f-w14v-au2 L2-15) › O-110 · a click on the anchored persistent seat of a collapsed dock reaches it
+  [coarse-touch] › release-10-1-3.spec.ts:167:13 › 10.1.3 · 360 · right-anchored (fourier f-w14v-au2 L2-15) › O-110 · the expand grows from the anchored edge from its first frame; the seat stays under the pointer
+  [coarse-touch] › release-10-1-3.spec.ts:226:13 › 10.1.3 · 360 · right-anchored (fourier f-w14v-au2 L2-15) › O-110 · a press on the anchored persistent seat mid-expand is kept
+  [coarse-touch] › release-10-1-3.spec.ts:143:13 › 10.1.3 · 360 · left-anchored (fourier f-w14v-au2 L2-15) › O-110 · a click on the anchored persistent seat of a collapsed dock reaches it
+  [coarse-touch] › release-10-1-3.spec.ts:167:13 › 10.1.3 · 360 · left-anchored (fourier f-w14v-au2 L2-15) › O-110 · the expand grows from the anchored edge from its first frame; the seat stays under the pointer
+  [coarse-touch] › release-10-1-3.spec.ts:226:13 › 10.1.3 · 360 · left-anchored (fourier f-w14v-au2 L2-15) › O-110 · a press on the anchored persistent seat mid-expand is kept
+  [coarse-touch] › release-10-1-3.spec.ts:143:13 › 10.1.3 · 390 · right-anchored (fourier f-w14v-au2 L2-15) › O-110 · a click on the anchored persistent seat of a collapsed dock reaches it
+  [coarse-touch] › release-10-1-3.spec.ts:167:13 › 10.1.3 · 390 · right-anchored (fourier f-w14v-au2 L2-15) › O-110 · the expand grows from the anchored edge from its first frame; the seat stays under the pointer
+  [coarse-touch] › release-10-1-3.spec.ts:226:13 › 10.1.3 · 390 · right-anchored (fourier f-w14v-au2 L2-15) › O-110 · a press on the anchored persistent seat mid-expand is kept
+  [coarse-touch] › release-10-1-3.spec.ts:143:13 › 10.1.3 · 390 · left-anchored (fourier f-w14v-au2 L2-15) › O-110 · a click on the anchored persistent seat of a collapsed dock reaches it
+  [coarse-touch] › release-10-1-3.spec.ts:167:13 › 10.1.3 · 390 · left-anchored (fourier f-w14v-au2 L2-15) › O-110 · the expand grows from the anchored edge from its first frame; the seat stays under the pointer
+  [coarse-touch] › release-10-1-3.spec.ts:226:13 › 10.1.3 · 390 · left-anchored (fourier f-w14v-au2 L2-15) › O-110 · a press on the anchored persistent seat mid-expand is kept
+  [coarse-touch] › release-10-1-3.spec.ts:143:13 › 10.1.3 · 430 · right-anchored (fourier f-w14v-au2 L2-15) › O-110 · a click on the anchored persistent seat of a collapsed dock reaches it
+  [coarse-touch] › release-10-1-3.spec.ts:167:13 › 10.1.3 · 430 · right-anchored (fourier f-w14v-au2 L2-15) › O-110 · the expand grows from the anchored edge from its first frame; the seat stays under the pointer
+  [coarse-touch] › release-10-1-3.spec.ts:226:13 › 10.1.3 · 430 · right-anchored (fourier f-w14v-au2 L2-15) › O-110 · a press on the anchored persistent seat mid-expand is kept
+  [coarse-touch] › release-10-1-3.spec.ts:143:13 › 10.1.3 · 430 · left-anchored (fourier f-w14v-au2 L2-15) › O-110 · a click on the anchored persistent seat of a collapsed dock reaches it
+  [coarse-touch] › release-10-1-3.spec.ts:167:13 › 10.1.3 · 430 · left-anchored (fourier f-w14v-au2 L2-15) › O-110 · the expand grows from the anchored edge from its first frame; the seat stays under the pointer
+  [coarse-touch] › release-10-1-3.spec.ts:226:13 › 10.1.3 · 430 · left-anchored (fourier f-w14v-au2 L2-15) › O-110 · a press on the anchored persistent seat mid-expand is kept
+  [coarse-touch] › release-10-1-3.spec.ts:143:13 › 10.1.3 · 1440 · right-anchored (fourier f-w14-control-row G-h) › O-110 · a click on the anchored persistent seat of a collapsed dock reaches it
+  [coarse-touch] › release-10-1-3.spec.ts:167:13 › 10.1.3 · 1440 · right-anchored (fourier f-w14-control-row G-h) › O-110 · the expand grows from the anchored edge from its first frame; the seat stays under the pointer
+  [coarse-touch] › release-10-1-3.spec.ts:226:13 › 10.1.3 · 1440 · right-anchored (fourier f-w14-control-row G-h) › O-110 · a press on the anchored persistent seat mid-expand is kept
+  [coarse-touch] › release-10-1-3.spec.ts:143:13 › 10.1.3 · 1440 · left-anchored (fourier f-w14-control-row G-h) › O-110 · a click on the anchored persistent seat of a collapsed dock reaches it
+  [coarse-touch] › release-10-1-3.spec.ts:167:13 › 10.1.3 · 1440 · left-anchored (fourier f-w14-control-row G-h) › O-110 · the expand grows from the anchored edge from its first frame; the seat stays under the pointer
+  [coarse-touch] › release-10-1-3.spec.ts:226:13 › 10.1.3 · 1440 · left-anchored (fourier f-w14-control-row G-h) › O-110 · a press on the anchored persistent seat mid-expand is kept
+  [coarse-touch] › release-10-1-3.spec.ts:277:9 › 10.1.3 · 390 · right-anchored, open-side seat › D-1 · a click on the open-side persistent seat of a collapsed dock reaches it
+  [coarse-touch] › release-10-1-3.spec.ts:277:9 › 10.1.3 · 1440 · right-anchored, open-side seat › D-1 · a click on the open-side persistent seat of a collapsed dock reaches it
+  [coarse-touch] › release-10-1-3.spec.ts:277:9 › 10.1.3 · 390 · left-anchored, open-side seat › D-1 · a click on the open-side persistent seat of a collapsed dock reaches it
+  [coarse-touch] › release-10-1-3.spec.ts:277:9 › 10.1.3 · 390 · bottom-anchored, open-side seat › D-1 · a click on the open-side persistent seat of a collapsed dock reaches it
+  [coarse-touch] › release-10-1-3.spec.ts:300:9 › 10.1.3 · 360 · touch · right-anchored, open-side seat › D-1 · a tap on the open-side persistent seat of a collapsed dock reaches it
+  [coarse-touch] › release-10-1-3.spec.ts:300:9 › 10.1.3 · 390 · touch · right-anchored, open-side seat › D-1 · a tap on the open-side persistent seat of a collapsed dock reaches it
+  [coarse-touch] › release-10-1-3.spec.ts:300:9 › 10.1.3 · 430 · touch · right-anchored, open-side seat › D-1 · a tap on the open-side persistent seat of a collapsed dock reaches it
+  [coarse-touch] › release-10-1-3.spec.ts:326:9 › 10.1.3 · 390 · right-anchored collapse › D-2 · the collapse shrinks toward the anchored edge and settles without a snap
+  [coarse-touch] › release-10-1-3.spec.ts:326:9 › 10.1.3 · 390 · left-anchored collapse › D-2 · the collapse shrinks toward the anchored edge and settles without a snap
+  [coarse-touch] › release-10-1-3.spec.ts:326:9 › 10.1.3 · 390 · bottom-anchored collapse › D-2 · the collapse shrinks toward the anchored edge and settles without a snap
+  [coarse-touch] › release-10-1-3.spec.ts:326:9 › 10.1.3 · 390 · top-anchored collapse › D-2 · the collapse shrinks toward the anchored edge and settles without a snap
+  [coarse-touch] › release-10-1-3.spec.ts:385:9 › 10.1.3 · 390 · right-anchored reversal › D-1 (critique-3) · a collapse() mid-expand keeps the summary glyph inside the plate
+  [coarse-touch] › release-10-1-3.spec.ts:385:9 › 10.1.3 · 390 · left-anchored reversal › D-1 (critique-3) · a collapse() mid-expand keeps the summary glyph inside the plate
+  [coarse-touch] › release-10-1-3.spec.ts:385:9 › 10.1.3 · 390 · bottom-anchored reversal › D-1 (critique-3) · a collapse() mid-expand keeps the summary glyph inside the plate
+  [coarse-touch] › release-10-1-3.spec.ts:441:5 › 10.1.3 · 390 · reduced motion › D-3 · under reduced motion the expand jumps to its rest
+  [coarse-touch] › release-10-1-3.spec.ts:473:9 › 10.1.3 · 390 · touch · run swipe, Escape, then focus › D-1 (critique-2) · after a clickless, cancel-less touch press, a focus expands the collapsed dock
+  [coarse-touch] › release-10-1-3.spec.ts:473:9 › 10.1.3 · 390 · touch · run swipe, Escape, then hover › D-1 (critique-2) · after a clickless, cancel-less touch press, a hover expands the collapsed dock
+  [coarse-touch] › release-10-1-3.spec.ts:520:5 › 10.1.3 · 390 · a touch press with no tap, then focus › D-1 (critique-2) · a focus after a clickless touch press expands the collapsed dock
+  [coarse-touch] › release-10-1-3.spec.ts:601:9 › 10.1.3 · 390 · right-anchored, the plate holds what it paints › D-1 (critique-4) · no control paints outside the plate on the expand or the collapse
+  [coarse-touch] › release-10-1-3.spec.ts:601:9 › 10.1.3 · 1440 · right-anchored, the plate holds what it paints › D-1 (critique-4) · no control paints outside the plate on the expand or the collapse
+  [coarse-touch] › release-10-1-3.spec.ts:601:9 › 10.1.3 · 390 · left-anchored, the plate holds what it paints › D-1 (critique-4) · no control paints outside the plate on the expand or the collapse
+  [coarse-touch] › release-10-1-3.spec.ts:601:9 › 10.1.3 · 390 · bottom-anchored, the plate holds what it paints › D-1 (critique-4) · no control paints outside the plate on the expand or the collapse
+  [coarse-touch] › release-10-1-3.spec.ts:637:9 › 10.1.3 · 390 · right-anchored double reversal, the plate holds what it paints › D-1 (critique-4) · no control paints outside the plate through a double reversal
+  [coarse-touch] › release-10-1-3.spec.ts:637:9 › 10.1.3 · 390 · bottom-anchored double reversal, the plate holds what it paints › D-1 (critique-4) · no control paints outside the plate through a double reversal
+  [coarse-touch] › release-10-1-3.spec.ts:728:9 › 10.1.3 · 390 · right-anchored expand, frozen at 40 % of its travel › D-1 (critique-4) · the stage beside the plate paints no control mid-expand
+  [coarse-touch] › release-10-1-3.spec.ts:728:9 › 10.1.3 · 390 · right-anchored collapse, frozen at 30 % of its travel › D-1 (critique-4) · the stage beside the plate paints no control mid-collapse
+  [coarse-touch] › release-10-1-3.spec.ts:818:13 › 10.1.3 · 390 · right-anchored · drag a dock link out, then focus › D-1 (critique-6) · after a press that became a native drag, a focus expands the collapsed dock
+  [coarse-touch] › release-10-1-3.spec.ts:818:13 › 10.1.3 · 390 · right-anchored · drag a dock link out, then hover › D-1 (critique-6) · after a press that became a native drag, a hover expands the collapsed dock
+  [coarse-touch] › release-10-1-3.spec.ts:818:13 › 10.1.3 · 390 · left-anchored · drag a dock link out, then focus › D-1 (critique-6) · after a press that became a native drag, a focus expands the collapsed dock
+  [coarse-touch] › release-10-1-3.spec.ts:818:13 › 10.1.3 · 390 · left-anchored · drag a dock link out, then hover › D-1 (critique-6) · after a press that became a native drag, a hover expands the collapsed dock
+  [coarse-touch] › release-10-1-3.spec.ts:843:5 › 10.1.3 · 390 · right-anchored · right-click a collapsed seat, then focus › D-1 (critique-6) · after a right-click, a focus expands the collapsed dock
+  [coarse-touch] › release-10-1-3.spec.ts:868:5 › 10.1.3 · 390 · right-anchored · hover-intent dwell across a right-click › D-1 (critique-6) · a hover dwell that completes after a right-click expands the collapsed dock
+  [coarse-touch] › release-10-1-3.spec.ts:899:5 › 10.1.3 · 390 · a mouse press with no release, a press outside, then focus › D-1 (critique-6) · a press outside the dock supersedes an unreleased mouse press
+  [coarse-touch] › release-10-1-3.spec.ts:931:9 › 10.1.3 · 390 · right-anchored · ancestor zoom 1.25 › D-1 (critique-7) · the summary glyph holds its box through the expand and the collapse
+  [coarse-touch] › release-10-1-3.spec.ts:931:9 › 10.1.3 · 390 · left-anchored · ancestor zoom 1.25 › D-1 (critique-7) · the summary glyph holds its box through the expand and the collapse
+  [coarse-touch] › release-10-1-3.spec.ts:931:9 › 10.1.3 · 390 · bottom-anchored · ancestor zoom 1.25 › D-1 (critique-7) · the summary glyph holds its box through the expand and the collapse
+  [coarse-touch] › release-10-1-4.spec.ts:104:5 › O-119 (g): DataTable learns its width on mount › a responsive DataTable in a 390 px box is a card list on the first observation, with no resize
+  [coarse-touch] › release-10-1-4.spec.ts:116:5 › O-119 (g): DataTable learns its width on mount › the same DataTable in a 900 px box stays a table
+  [coarse-touch] › release-10-1-4.spec.ts:136:9 › critique-3 F-4: a DataTable in a content-sized host settles › inline host: the projection settles from mount
+  [coarse-touch] › release-10-1-4.spec.ts:136:9 › critique-3 F-4: a DataTable in a content-sized host settles › grid host: the projection settles from mount
+  [coarse-touch] › release-10-1-4.spec.ts:136:9 › critique-3 F-4: a DataTable in a content-sized host settles › flex host: the projection settles from mount
+  [coarse-touch] › release-10-1-4.spec.ts:136:9 › critique-3 F-4: a DataTable in a content-sized host settles › fit host: the projection settles from mount
+  [coarse-touch] › release-10-1-4.spec.ts:146:5 › critique-3 F-4: a DataTable in a content-sized host settles › flex host, rows arriving after mount: the projection settles
+  [coarse-touch] › release-10-1-4.spec.ts:158:5 › O-119 (f), the @page half: only a deck prints at slide geometry › a page without a deck keeps the reader's print defaults
+  [coarse-touch] › release-10-1-4.spec.ts:170:5 › O-119 (f), the @page half: only a deck prints at slide geometry › a deck page takes the deck's print resets and its named page
+  [coarse-touch] › release-10-1-4.spec.ts:187:5 › O-119 (f), the @page half: only a deck prints at slide geometry › a deck in a modal dialog (top layer, out of flow) hands its named page to the document
+  [coarse-touch] › release-10-1-4.spec.ts:199:5 › O-119 (f), the @page half: only a deck prints at slide geometry › a deck page in flow: the document takes the deck's page too
+  [coarse-touch] › release-10-1-4.spec.ts:212:9 › O-119 (f), the @page half: only a deck prints at slide geometry › a deck in the library's own Dialog (a fixed plate) hands its named page to the document
+  [coarse-touch] › release-10-1-4.spec.ts:224:9 › O-119 (f), the @page half: only a deck prints at slide geometry › page.pdf: a deck in the library's own Dialog (a fixed plate) prints at slide geometry
+  [coarse-touch] › release-10-1-4.spec.ts:212:9 › O-119 (f), the @page half: only a deck prints at slide geometry › a deck in a fixed overlay hands its named page to the document
+  [coarse-touch] › release-10-1-4.spec.ts:224:9 › O-119 (f), the @page half: only a deck prints at slide geometry › page.pdf: a deck in a fixed overlay prints at slide geometry
+  [coarse-touch] › release-10-1-4.spec.ts:212:9 › O-119 (f), the @page half: only a deck prints at slide geometry › a deck in a non-modal <dialog open> (absolute) hands its named page to the document
+  [coarse-touch] › release-10-1-4.spec.ts:224:9 › O-119 (f), the @page half: only a deck prints at slide geometry › page.pdf: a deck in a non-modal <dialog open> (absolute) prints at slide geometry
+  [coarse-touch] › release-10-1-4.spec.ts:241:5 › O-119 (f), the @page half: only a deck prints at slide geometry › the deck's named page outranks a consumer's own @page
+  [coarse-touch] › release-10-1-4.spec.ts:257:5 › O-119 (f), the @page half: only a deck prints at slide geometry › page.pdf: a consumer's own @page does not resize the deck's sheets
+  [coarse-touch] › release-10-1-4.spec.ts:271:5 › O-119 (f), the @page half: only a deck prints at slide geometry › page.pdf: a consumer's own @page still sets the paper of a page with no deck
+  [coarse-touch] › release-10-1-4.spec.ts:284:5 › O-119 (f), the @page half: only a deck prints at slide geometry › page.pdf: a page without a deck prints on the default paper (Letter)
+  [coarse-touch] › release-10-1-4.spec.ts:296:5 › O-119 (f), the @page half: only a deck prints at slide geometry › page.pdf: a deck page prints one 1280x720 page per slide
+  [coarse-touch] › release-10-1-4.spec.ts:311:5 › O-119 (f), the @page half: only a deck prints at slide geometry › page.pdf: a deck in a modal dialog prints at slide geometry
+  [coarse-touch] › release-10-1-5.spec.ts:217:5 › coarse phone › g1 rest dock at 390: one corner = half its height, nothing to scroll, pointer off and on the trailing seat
+  [coarse-touch] › release-10-1-5.spec.ts:217:5 › coarse phone › g1 rest dock at 844: one corner = half its height, nothing to scroll, pointer off and on the trailing seat
+  [coarse-touch] › release-10-1-5.spec.ts:249:5 › coarse phone › g4 at 390 coarse the field type is at most 16px and at most 1.25x the pane subtitle
+  [coarse-touch] › release-10-1-5.spec.ts:217:5 › g1 rest dock at 1280: one corner = half its height, nothing to scroll, pointer off and on the trailing seat
+  [coarse-touch] › release-10-1-5.spec.ts:294:1 › g1 an overflowing run at scroll 0: the leading cap rests at half the block extent, a length; the trailing cap is cut
+  [coarse-touch] › release-10-1-5.spec.ts:318:1 › g2 collapsed: the plate is a circle, half its extent on both axes
+  [coarse-touch] › release-10-1-5.spec.ts:336:1 › g2 expanded (collapsible), each layer and input mode hold g1
+  [coarse-touch] › release-10-1-5.spec.ts:362:1 › g3 the Slider thumb is visible and one size at min, mid and max, inside the fill
+  [coarse-touch] › release-10-1-5.spec.ts:409:1 › g5 the DropdownMenuItem icon-to-label gap is the icon-slot token, the dock trigger's own
+  [coarse-touch] › release-10-1-5.spec.ts:439:1 › c1 a value mark is the thumb's centre at that value, on every axis; the loupe's value point is the thumb's centre
+  [coarse-touch] › release-10-1-5.spec.ts:507:5 › coarse phone, round 1 › c2 coarse: the -sm rung stays the quieter rung for every non-field reader; an sm field floors at 16px
+  [coarse-touch] › release-10-1-5.spec.ts:536:5 › coarse phone, round 1 › c4 coarse 390: a keyboard-focused seat under the pointer keeps its whole ring
+  [coarse-touch] › release-10-1-5.spec.ts:543:1 › c3 the disabled scrubber dims its thumb with its fill
+  [coarse-touch] › release-10-1-5.spec.ts:619:1 › c4 desktop: a keyboard-focused seat under the pointer keeps its whole ring
+  [coarse-touch] › release-10-1-5.spec.ts:638:5 › critique 2, coarse phone › e1 at 390: a label-wide tab under the pointer gives the run no reach and cuts no corner
+  [coarse-touch] › release-10-1-5.spec.ts:638:5 › critique 2, coarse phone › e1 at 844: a label-wide tab under the pointer gives the run no reach and cuts no corner
+  [coarse-touch] › release-10-1-5.spec.ts:662:5 › critique 2, coarse phone › e2 at 390: focused, hovered tab seats keep their whole ring on every edge
+  [coarse-touch] › release-10-1-5.spec.ts:674:5 › critique 2, coarse phone › e3 at 390: the run's clip and hit stop at the persistent seats, at rest and scrolled
+  [coarse-touch] › release-10-1-5.spec.ts:723:5 › critique 2, coarse phone › e4 at 390: a run whose seats all show, capped under its reserve, holds the fit law and keeps the end seat's ring
+  [coarse-touch] › release-10-1-5.spec.ts:638:5 › e1 at 390: a label-wide tab under the pointer gives the run no reach and cuts no corner
+  [coarse-touch] › release-10-1-5.spec.ts:638:5 › e1 at 1440: a label-wide tab under the pointer gives the run no reach and cuts no corner
+  [coarse-touch] › release-10-1-5.spec.ts:662:5 › e2 at 390: focused, hovered tab seats keep their whole ring on every edge
+  [coarse-touch] › release-10-1-5.spec.ts:662:5 › e2 at 1440: focused, hovered tab seats keep their whole ring on every edge
+  [coarse-touch] › release-10-1-5.spec.ts:674:5 › e3 at 390: the run's clip and hit stop at the persistent seats, at rest and scrolled
+  [coarse-touch] › release-10-1-5.spec.ts:723:5 › e4 at 1440: a run whose seats all show, capped under its reserve, holds the fit law and keeps the end seat's ring
+  [coarse-touch] › release-10-1-5.spec.ts:763:1 › f1 a SegmentedTabs under a fixed z:1 header paints beneath it; its labels paint over the indicator
+  [coarse-touch] › release-10-1-5.spec.ts:805:1 › f2 Table row and header rules paint in --border, light and dark
+  [coarse-touch] › release-10-1-5.spec.ts:840:9 › h1 at 2x › h1 house at 390: a seat cut by the trailing clip paints nothing past the plate's corner arc
+  [coarse-touch] › release-10-1-5.spec.ts:840:9 › h1 at 2x › h1 cockpit at 390: a seat cut by the trailing clip paints nothing past the plate's corner arc
+  [coarse-touch] › release-10-1-5.spec.ts:956:1 › h2 at 844: a labelled DockTrigger adds no reserve; the run's room is the icon dock's
+  [coarse-touch] › release-10-1-5.spec.ts:972:1 › h3 a ticking seat label constructs no ResizeObserver
+  [coarse-touch] › release-10-1-5.spec.ts:990:1 › h4 with no ResizeObserver the plate rests at half its block extent
+  [coarse-touch] › release-10-1-5.spec.ts:1150:1 › k2 vertical: a wide tab at a flush edge keeps its whole ring, at the start and at the end
+  [coarse-touch] › release-10-1-5.spec.ts:1087:5 › critique 5, coarse phone › k1 at 320: End, focus() and hover+focus land the end seat flush with its ring whole; Home lands the first
+  [coarse-touch] › release-10-1-5.spec.ts:1189:5 › critique 5, coarse phone › k3 at 320: a capped dock whose seats all show holds the fit law and rests round
+  [coarse-touch] › release-10-1-5.spec.ts:1087:5 › k1 at 320: End, focus() and hover+focus land the end seat flush with its ring whole; Home lands the first
+  [coarse-touch] › release-10-1-5.spec.ts:1189:5 › k3 at 320: a capped dock whose seats all show holds the fit law and rests round
+  [coarse-touch] › release-10-1-5.spec.ts:1278:13 › critique 6, coarse phone › l1 a cap lifted under a run scrolled to its end rests round (tab:Home,icon,icon,icon,tab:Settings)
+  [coarse-touch] › release-10-1-5.spec.ts:1278:13 › critique 6, coarse phone › l1 a cap lifted under a run scrolled to its mid rests round (tab:Home,icon,icon,icon,tab:Settings)
+  [coarse-touch] › release-10-1-5.spec.ts:1278:13 › critique 6, coarse phone › l1 a cap lifted under a run scrolled to its end rests round (icon,icon,icon,icon,icon,icon)
+  [coarse-touch] › release-10-1-5.spec.ts:1278:13 › critique 6, coarse phone › l1 a cap lifted under a run scrolled to its mid rests round (icon,icon,icon,icon,icon,icon)
+  [coarse-touch] › release-10-1-5.spec.ts:1295:5 › critique 6, coarse phone › l1 a viewport resize 390 → 844 under a run scrolled to its end rests round
+  [coarse-touch] › release-10-1-5.spec.ts:1311:5 › critique 6, coarse phone › l1 a vertical run's stage grown under a run scrolled to its end rests round
+  [coarse-touch] › release-10-1-5.spec.ts:1278:13 › l1 a cap lifted under a run scrolled to its end rests round (tab:Home,icon,icon,icon,tab:Settings)
+  [coarse-touch] › release-10-1-5.spec.ts:1278:13 › l1 a cap lifted under a run scrolled to its mid rests round (tab:Home,icon,icon,icon,tab:Settings)
+  [coarse-touch] › release-10-1-5.spec.ts:1278:13 › l1 a cap lifted under a run scrolled to its end rests round (icon,icon,icon,icon,icon,icon)
+  [coarse-touch] › release-10-1-5.spec.ts:1278:13 › l1 a cap lifted under a run scrolled to its mid rests round (icon,icon,icon,icon,icon,icon)
+  [coarse-touch] › release-10-1-5.spec.ts:1295:5 › l1 a viewport resize 390 → 844 under a run scrolled to its end rests round
+  [coarse-touch] › release-10-1-5.spec.ts:1311:5 › l1 a vertical run's stage grown under a run scrolled to its end rests round
+  [coarse-touch] › release-10-1-5.spec.ts:1383:9 › critique 7, coarse phone › m1 at 390: a collapse from a run scrolled to its mid seals round
+  [coarse-touch] › release-10-1-5.spec.ts:1383:9 › critique 7, coarse phone › m1 at 390: a collapse from a run scrolled to its end seals round
+  [coarse-touch] › release-10-1-5.spec.ts:1383:9 › critique 7, coarse phone › m1 at 1440: a collapse from a run scrolled to its end seals round
+  [coarse-touch] › release-10-1-5.spec.ts:1661:9 › critique 7, coarse phone › m5 O-182 horizontal: in dark nothing past the plate is lighter than the ground
+  [coarse-touch] › release-10-1-5.spec.ts:1661:9 › critique 7, coarse phone › m5 O-182 vertical: in dark nothing past the plate is lighter than the ground
+  [coarse-touch] › release-10-1-5.spec.ts:1661:9 › critique 7, coarse phone › m5 O-182 collapsed: in dark nothing past the plate is lighter than the ground
+  [coarse-touch] › release-10-1-5.spec.ts:1720:5 › critique 7, coarse phone › m5 O-182 light: the shadow is still the foreground
+  [coarse-touch] › release-10-1-5.spec.ts:1412:5 › critique 7, coarse phone › m2 a vertical run whose seats fit scrolls at most the ring floor's shortfall, across the fit edge
+  [coarse-touch] › release-10-1-5.spec.ts:1433:9 › critique 7, coarse phone › m4 at 390: a layered overflowing run rests at its start, the leading corner round
+  [coarse-touch] › release-10-1-5.spec.ts:1433:9 › critique 7, coarse phone › m4 at 1440: a layered overflowing run rests at its start, the leading corner round
+  [coarse-touch] › release-10-1-5.spec.ts:1453:5 › critique 7, coarse phone › m3 O-157 a static-backdrop plate follows --glass-veil-ink, light and dark
+  [coarse-touch] › release-10-1-5.spec.ts:1508:5 › critique 7, coarse phone › m3 O-162 the folded summary's ring follows the pill after Escape
+  [coarse-touch] › release-10-1-5.spec.ts:1535:5 › critique 7, coarse phone › m3 O-177 Tab onto the folded face expands the dock and lands on a seat
+  [coarse-touch] › release-10-1-5.spec.ts:1557:5 › critique 7, coarse phone › m3 O-176 a collapse=open dock left untouched idles shut, and after a remount
+  [coarse-touch] › release-10-1-5.spec.ts:1576:5 › critique 7, coarse phone › m3 O-177 a press during the expand activates its seat once
+  [coarse-touch] › release-10-1-5.spec.ts:1613:5 › critique 7, coarse phone › m3 O-167 the dock Slider's fill is a calm ink in dark and its thumb tracks the drag
+  [coarse-touch] › release-10-1-5.spec.ts:1488:5 › critique 7, coarse phone › m3 O-161 a tap leaves no hover paint on the DarkModeToggle or a DockControl
+  [coarse-touch] › release-10-1-5.spec.ts:1383:9 › m1 at 390: a collapse from a run scrolled to its mid seals round
+  [coarse-touch] › release-10-1-5.spec.ts:1383:9 › m1 at 390: a collapse from a run scrolled to its end seals round
+  [coarse-touch] › release-10-1-5.spec.ts:1383:9 › m1 at 1440: a collapse from a run scrolled to its end seals round
+  [coarse-touch] › release-10-1-5.spec.ts:1661:9 › m5 O-182 horizontal: in dark nothing past the plate is lighter than the ground
+  [coarse-touch] › release-10-1-5.spec.ts:1661:9 › m5 O-182 vertical: in dark nothing past the plate is lighter than the ground
+  [coarse-touch] › release-10-1-5.spec.ts:1661:9 › m5 O-182 collapsed: in dark nothing past the plate is lighter than the ground
+  [coarse-touch] › release-10-1-5.spec.ts:1720:5 › m5 O-182 light: the shadow is still the foreground
+  [coarse-touch] › release-10-1-5.spec.ts:1412:5 › m2 a vertical run whose seats fit scrolls at most the ring floor's shortfall, across the fit edge
+  [coarse-touch] › release-10-1-5.spec.ts:1433:9 › m4 at 390: a layered overflowing run rests at its start, the leading corner round
+  [coarse-touch] › release-10-1-5.spec.ts:1433:9 › m4 at 1440: a layered overflowing run rests at its start, the leading corner round
+  [coarse-touch] › release-10-1-5.spec.ts:1453:5 › m3 O-157 a static-backdrop plate follows --glass-veil-ink, light and dark
+  [coarse-touch] › release-10-1-5.spec.ts:1508:5 › m3 O-162 the folded summary's ring follows the pill after Escape
+  [coarse-touch] › release-10-1-5.spec.ts:1535:5 › m3 O-177 Tab onto the folded face expands the dock and lands on a seat
+  [coarse-touch] › release-10-1-5.spec.ts:1557:5 › m3 O-176 a collapse=open dock left untouched idles shut, and after a remount
+  [coarse-touch] › release-10-1-5.spec.ts:1576:5 › m3 O-177 a press during the expand activates its seat once
+  [coarse-touch] › release-10-1-5.spec.ts:1613:5 › m3 O-167 the dock Slider's fill is a calm ink in dark and its thumb tracks the drag
+  [coarse-touch] › release-10-1-5.spec.ts:1789:5 › critique 8, coarse phone › n1 a fitting vertical dock's seats do not step at the expand's settle or the collapse's start, across the fit edge
+  [coarse-touch] › release-10-1-5.spec.ts:1789:5 › n1 a fitting vertical dock's seats do not step at the expand's settle or the collapse's start, across the fit edge
+  [coarse-touch] › release-10-1-5.spec.ts:1890:5 › critique 9, coarse phone › p1 a dock its host resizes mid-expand holds every seat at the settle (horizontal clamp, vertical yield band)
+  [coarse-touch] › release-10-1-5.spec.ts:1890:5 › p1 a dock its host resizes mid-expand holds every seat at the settle (horizontal clamp, vertical yield band)
+  [coarse-touch] › release-10-1-5.spec.ts:1936:5 › critique 10, coarse phone › p2 a 1-2 px host change across the fit edge mid-expand holds every seat at the settle
+  [coarse-touch] › release-10-1-5.spec.ts:1936:5 › p2 a 1-2 px host change across the fit edge mid-expand holds every seat at the settle
+  [coarse-touch] › release-10-1-5.spec.ts:2040:5 › q1 O-186 at 1440: a fit-content static dock under hover on every control keeps one rest corner, half its cross extent, no percentage
+  [coarse-touch] › release-10-1-5.spec.ts:2070:5 › q2 O-187 at 1440: a nested .dock-run group keeps each hovered control's whole ink
+  [coarse-touch] › release-10-1-5.spec.ts:2102:5 › q3 O-187 at 1440: the plate has exactly one scroll timeline in scope, the visible run's
+  [coarse-touch] › release-10-1-5.spec.ts:2040:5 › q1 O-186 at 390: a fit-content static dock under hover on every control keeps one rest corner, half its cross extent, no percentage
+  [coarse-touch] › release-10-1-5.spec.ts:2070:5 › q2 O-187 at 390: a nested .dock-run group keeps each hovered control's whole ink
+  [coarse-touch] › release-10-1-5.spec.ts:2102:5 › q3 O-187 at 390: the plate has exactly one scroll timeline in scope, the visible run's
+  [coarse-touch] › release-10-1-5.spec.ts:2121:5 › r1 Q2 at 1440: a nested group holding the current seat paints every seat clear of the others, and the run's flag is its layout
+  [coarse-touch] › release-10-1-5.spec.ts:2121:5 › fix 10, coarse phone › r1 Q2 at 390: a nested group holding the current seat paints every seat clear of the others, and the run's flag is its layout
+  [coarse-touch] › release-10-1-5.spec.ts:2234:5 › s1 O-205 at 1440: no collapsed dock has a scrolling run, and a hidden wider face adds nothing to a fitting run
+  [coarse-touch] › release-10-1-5.spec.ts:2343:5 › s2 O-201 at 1440: at every cap through the fit edge the first and end seats keep their whole ring, and a run that hides nothing rests round
+  [coarse-touch] › release-10-1-5.spec.ts:2234:5 › fix 11, coarse phone › s1 O-205 at 390: no collapsed dock has a scrolling run, and a hidden wider face adds nothing to a fitting run
+  [coarse-touch] › release-10-1-5.spec.ts:2343:5 › fix 11, coarse phone › s2 O-201 at 390: at every cap through the fit edge the first and end seats keep their whole ring, and a run that hides nothing rests round
+  [coarse-touch] › release-10-1-5.spec.ts:2383:5 › fix 12, desktop › t1 O-201 vertical: through the fit edge the end seats keep their whole ring, bounded in the yield band
+  [coarse-touch] › release-10-1-5.spec.ts:2383:5 › fix 12, coarse phone › t1 O-201 vertical: through the fit edge the end seats keep their whole ring, bounded in the yield band
+  [coarse-touch] › release-10-1-5.spec.ts:2438:1 › s3 O-207 G3 a disclosure trigger's keyboard ring is the house outline, whatever it composes
+  [coarse-touch] › release-10-1-5.spec.ts:2456:1 › s4 a host padding change across the fit edge mid-expand holds every seat at the settle (vertical)
+  [coarse-touch] › release-10-1-5.spec.ts:2504:5 › fix 13, coarse phone › u1 a collapsing vertical run that does not fit keeps its scroll on the first morph frame
+  [coarse-touch] › release-10-1-5.spec.ts:2548:1 › m3 O-159 the dock README names every DockProps member and no other
+  [coarse-touch] › release-10-1-5.spec.ts:2562:1 › m3 O-160 no cut-cap or clip keyframe carries a percentage radius
+  [coarse-touch] › release-11-0-1.spec.ts:73:5 › o1 the wide label seat › o1 the hover plate of a compact 'Focus' label seat is a capsule, never an ellipse
+  [coarse-touch] › release-11-0-1.spec.ts:85:5 › o1 the wide label seat › o1 the active 'Name ›' seat's plate, at rest and under hover, is a capsule
+  [coarse-touch] › release-11-0-1.spec.ts:105:9 › o2 the dock's end, house tokens › o2 house tokens: open at rest, the plate and the box are round
+  [coarse-touch] › release-11-0-1.spec.ts:115:9 › o2 the dock's end, house tokens › o2 house tokens: collapsed with a persistent seat beside the summary, the plate and the box are round
+  [coarse-touch] › release-11-0-1.spec.ts:126:9 › o2 the dock's end, house tokens › o2 house tokens: open on the narrow face beside a wider one, with a #persistent-end seat, the plate is round
+  [coarse-touch] › release-11-0-1.spec.ts:105:9 › o2 the dock's end, radius-dock 1.875rem › o2 radius-dock 1.875rem: open at rest, the plate and the box are round
+  [coarse-touch] › release-11-0-1.spec.ts:115:9 › o2 the dock's end, radius-dock 1.875rem › o2 radius-dock 1.875rem: collapsed with a persistent seat beside the summary, the plate and the box are round
+  [coarse-touch] › release-11-0-1.spec.ts:126:9 › o2 the dock's end, radius-dock 1.875rem › o2 radius-dock 1.875rem: open on the narrow face beside a wider one, with a #persistent-end seat, the plate is round
+  [coarse-touch] › release-11-0-1.spec.ts:142:1 › o3 every frame of the expand and of the collapse paints a round end

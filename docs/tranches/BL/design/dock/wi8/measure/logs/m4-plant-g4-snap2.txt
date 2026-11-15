@@ -1,0 +1,20 @@
+== g4-snap2 14:46:23 (load { 7.68 8.05 7.60 })
+applied g4-snap2 - G-4 (the open seat changes in a scrolling run): the rest 9 px off its snap position
+build rc=0
+reverted g4-snap2
+== p3-seat-coarse chromium 14:46:29
+{"cell":"390-coarse-light","rows":"p3-seat-coarse.wi8.chromium.390-coarse-light.rows.json","strips":[],"frames":303,"firstChange":107.6,"lastChange":2015.9,"screencast":null,"consoleErrors":0}
+== p3-seat-long-coarse chromium 14:46:33
+{"cell":"390-coarse-light","rows":"p3-seat-long-coarse.wi8.chromium.390-coarse-light.rows.json","strips":[],"frames":394,"firstChange":92.9,"lastChange":2769.1,"screencast":null,"consoleErrors":0}
+chromium rc=0
+== p3-seat-coarse webkit 14:46:42
+{"cell":"390-coarse-light","rows":"p3-seat-coarse.wi8.webkit.390-coarse-light.rows.json","strips":[],"frames":283,"firstChange":71,"lastChange":2377,"screencast":null,"consoleErrors":0}
+== p3-seat-long-coarse webkit 14:46:47
+{"cell":"390-coarse-light","rows":"p3-seat-long-coarse.wi8.webkit.390-coarse-light.rows.json","strips":[],"frames":317,"firstChange":63,"lastChange":2726,"screencast":null,"consoleErrors":0}
+webkit rc=0
+-- judge
+p3-seat-coarse chromium 390-coarse-light [{"mark":"neighbour","seatsMoved":0,"largestPx":0,"plateMovePx":0,"viol":[]},{"mark":"far","seatsMoved":0,"largestPx":0,"plateMovePx":0,"viol":[]},{"mark":"twice","seatsMoved":5,"largestPx":4,"plateMovePx":0,"viol":[]}]
+p3-seat-coarse webkit 390-coarse-light [{"mark":"neighbour","seatsMoved":5,"largestPx":4,"plateMovePx":0,"viol":["seat#0 step 100.0% > 9.6%","seat#0 last 4.00 px","seat#1 step 100.0% > 9.6%","seat#1 last 4.00 px","seat#2 step 100.0% > 9.6%","seat#2 last 4.00 px"]},{"mark":"far","seatsMoved":5,"largestPx":4,"plateMovePx":0,"viol":[]},{"mark":"twice","seatsMoved":5,"largestPx":4,"plateMovePx":0,"viol":[]}]
+p3-seat-long-coarse chromium 390-coarse-light [{"mark":"neighbour","seatsMoved":10,"largestPx":8.7,"plateMovePx":0,"viol":["seat#0 step 100.0% > 7.6%","seat#0 last 8.71 px","seat#1 step 100.0% > 7.6%","seat#1 last 8.71 px","seat#2 step 100.0% > 7.6%","seat#2 last 8.71 px"]},{"mark":"far","seatsMoved":10,"largestPx":208.5,"plateMovePx":0,"viol":[]},{"mark":"twice","seatsMoved":10,"largestPx":208,"plateMovePx":0,"viol":["seat#0 last 8.93 px","seat#1 last 8.93 px","seat#2 last 8.93 px","seat#3 last 8.93 px","seat#4 last 8.93 px","seat#5 last 8.93 px"]}]
+p3-seat-long-coarse webkit 390-coarse-light [{"mark":"neighbour","seatsMoved":10,"largestPx":8.7,"plateMovePx":0,"viol":["seat#0 step 100.0% > 10.6%","seat#0 last 8.73 px","seat#1 step 100.0% > 10.6%","seat#1 last 8.73 px","seat#2 step 100.0% > 10.6%","seat#2 last 8.73 px"]},{"mark":"far","seatsMoved":10,"largestPx":208.5,"plateMovePx":0,"viol":[]},{"mark":"twice","seatsMoved":10,"largestPx":208,"plateMovePx":1.5,"viol":["seat#0 last 8.94 px","seat#1 last 8.94 px","seat#2 last 8.94 px","seat#3 last 8.94 px","seat#4 last 8.94 px","seat#5 last 8.94 px"]}]
+== done 14:46:58
