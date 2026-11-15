@@ -31,6 +31,8 @@ check("no border-radius on the plate in a scroll-timeline animation", grepRules(
 check("--dock-morph-origin, --dock-size-scale, --dock-pane-shift, --dock-rest-t absent", allCss.flatMap(([f, css]) => ["--dock-morph-origin", "--dock-size-scale", "--dock-pane-shift", "--dock-rest-t"].filter((t) => css.includes(t)).map((t) => `${f.replace(W + "/", "")}: ${t}`)));
 check("no [data-glyph selector under dock", dockCss.filter(([, s]) => s.includes("[data-glyph")).map(([f]) => f.replace(W + "/", "")));
 check("no millisecond literal for the intent or the linger in useDockState.ts", (() => { const s = readFileSync(`${W}/src/components/dock/composables/useDockState.ts`, "utf8"); const code = s.replace(/\/\*[\s\S]*?\*\//g, "").replace(/\/\/.*$/gm, ""); return [...code.matchAll(/(tokenMs\([^)]*\)|setTimeout\([^;]*?,\s*(\d+)\))/g)].filter((m) => m[2] && !m[0].includes("lapse") && m[2] !== "0").map((m) => m[0]); })());
+// MEASURE-5 (RU-35): the outputs the carrier writes on the root are read by no rule of glass.
+check("no rule of glass reads --dock-expanded-px, --dock-collapsed-px or --dock-plate-cross-px", walk(`${W}/src`, [".css"]).flatMap((f) => { const css = decomment(readFileSync(f, "utf8")); return ["--dock-expanded-px", "--dock-collapsed-px", "--dock-plate-cross-px"].filter((n) => css.includes(`var(${n}`)).map((n) => `${f.replace(W + "/", "")}: ${n}`); }));
 {
     const all = [...dockCss.map(([, s]) => s), ...dockTs.map(([, s]) => s)].join("\n");
     res.push({ clause: "[data-morphing], --dock-morph-t and --dock-expand-t present", pass: ["data-morphing", "--dock-morph-t", "--dock-expand-t"].every((t) => all.includes(t)), hits: [] });
@@ -38,5 +40,7 @@ check("no millisecond literal for the intent or the linger in useDockState.ts", 
 if (built && existsSync(built)) {
     const files = walk(built, [".js", ".mjs", ".css"]);
     check("__dockHold absent from the built bundle", files.filter((f) => readFileSync(f, "utf8").includes("__dockHold")).map((f) => f.replace(built + "/", "")));
+    // MEASURE-5 (RU-29): the pose and the trigger frame's marks are the hold build's only.
+    check("__dockPose and the marks dock:read, dock:flags, dock:reread, dock:write absent from the built bundle", files.flatMap((f) => { const t = readFileSync(f, "utf8"); return ["__dockPose", "dock:read", "dock:flags", "dock:reread", "dock:write", "dock:end"].filter((n) => t.includes(n)).map((n) => `${f.replace(built + "/", "")}: ${n}`); }));
 } else res.push({ clause: "__dockHold absent from the built bundle", pass: null, hits: ["no library build given"] });
 for (const r of res) console.log(`${r.pass === null ? "UNREAD" : r.pass ? "pass" : "FAIL"} · ${r.clause}${r.hits.length ? " · " + r.hits.join("; ") : ""}`);

@@ -243,6 +243,30 @@ for (const file of files) {
             if (at == null || at > 2) res.viol.push(`the host's cap lifted: every seat shows ${at == null ? "never" : `${at} rows`} after the change (bound 2)`);
         }
     }
+    // RU-28: a change of open seat changes no box. From the first open-seat mark on, no seat's
+    // width or height and no plate edge changes by more than 0.25 px between two rows (a seat's
+    // place may move, with the run's offset, in a scrolling run; seat4.mjs reads that travel).
+    {
+        const m0 = (d.marks || []).find((m) => /^(neighbour|far|twice)/.test(m.name));
+        if (m0 && /^p[345]-seat-/.test(scen)) {
+            const i0 = m0.row ?? m0.i ?? m0.frame;
+            let worst = 0, at = "";
+            for (let i = i0 + 1; i < rows.length; i++) {
+                const a = rows[i - 1].el, b = rows[i].el;
+                for (const k of Object.keys(b)) {
+                    if (!/^seat#/.test(k) || !a[k] || !b[k] || a[k].vis === 0 || b[k].vis === 0) continue;
+                    const dw = Math.max(Math.abs(b[k].w - a[k].w), Math.abs(b[k].h - a[k].h));
+                    if (dw > worst) { worst = dw; at = `${k} width, row ${i}`; }
+                }
+                if (a.plate && b.plate) {
+                    const dp = Math.max(Math.abs(b.plate.x - a.plate.x), Math.abs(b.plate.y - a.plate.y), Math.abs(b.plate.x + b.plate.w - a.plate.x - a.plate.w), Math.abs(b.plate.y + b.plate.h - a.plate.y - a.plate.h));
+                    if (dp > worst) { worst = dp; at = `plate, row ${i}`; }
+                }
+            }
+            res.openSeatStep = +worst.toFixed(2);
+            if (worst > 0.25) res.viol.push(`a change of open seat moves a box ${worst.toFixed(2)} px in one row (${at})`);
+        }
+    }
     // G-6: after the first hover of a seat the root and the plate do not move (0 px)
     if (/-hover-/.test(scen)) {
         const m0 = (d.marks || []).find((m) => /^in-/.test(m.name));
@@ -268,4 +292,4 @@ for (const file of files) {
     out.push(res);
 }
 if (json) console.log(JSON.stringify(out, null, 1));
-else for (const r of out) console.log(`${r.scen} | ${r.eng} | ${r.cell} | curve ${r.curve}${r.held != null ? ` | held ${r.held}` : ""}${r.ghost ? ` | ghost ${JSON.stringify(r.ghost)}` : ""}${r.join ? ` | join ${JSON.stringify(r.join)}` : ""}${r.rim ? ` | rim ${JSON.stringify(r.rim)}` : ""}${r.whole ? ` | whole ${JSON.stringify(r.whole)}` : ""}${r.touch != null ? ` | touch ${r.touch}` : ""}${r.still != null ? ` | still ${r.still}` : ""}${r.lift !== undefined ? ` | lift ${r.lift}` : ""}${r.restsOpen != null ? ` | restsOpen ${r.restsOpen}` : ""} | ${r.viol.length ? "FAIL: " + r.viol.join("; ") : "pass"}`);
+else for (const r of out) console.log(`${r.scen} | ${r.eng} | ${r.cell} | curve ${r.curve}${r.held != null ? ` | held ${r.held}` : ""}${r.ghost ? ` | ghost ${JSON.stringify(r.ghost)}` : ""}${r.join ? ` | join ${JSON.stringify(r.join)}` : ""}${r.rim ? ` | rim ${JSON.stringify(r.rim)}` : ""}${r.whole ? ` | whole ${JSON.stringify(r.whole)}` : ""}${r.touch != null ? ` | touch ${r.touch}` : ""}${r.still != null ? ` | still ${r.still}` : ""}${r.lift !== undefined ? ` | lift ${r.lift}` : ""}${r.openSeatStep != null ? ` | openSeat ${r.openSeatStep}` : ""}${r.restsOpen != null ? ` | restsOpen ${r.restsOpen}` : ""} | ${r.viol.length ? "FAIL: " + r.viol.join("; ") : "pass"}`);

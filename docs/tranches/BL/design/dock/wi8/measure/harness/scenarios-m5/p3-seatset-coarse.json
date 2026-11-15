@@ -1,6 +1,6 @@
 {
- "name": "p5-many-lift-coarse",
- "url": "/?c=dock-wi8&cell=w-many",
+ "name": "p3-seatset-coarse",
+ "url": "/?c=dock-wi8&cell=w-seatset",
  "cells": [
   {
    "tag": "390-coarse-light",
@@ -10,16 +10,15 @@
    "scheme": "light"
   }
  ],
- "ready": "[data-testid=w-many]",
+ "ready": "[data-testid=w-seatset]",
  "warmMs": 600,
  "track": [
   {
    "as": "dock",
-   "sel": "[data-testid=w-many]",
+   "sel": "[data-testid=w-seatset]",
    "attrs": [
     "class",
-    "data-morphing",
-    "data-run-fits"
+    "data-morphing"
    ],
    "props": [
     "--dock-expand-t",
@@ -32,7 +31,7 @@
   },
   {
    "as": "plate",
-   "sel": "[data-testid=w-many] .dock-plate",
+   "sel": "[data-testid=w-seatset] .dock-plate",
    "colors": [
     "box-shadow",
     "background-color"
@@ -43,7 +42,7 @@
   },
   {
    "as": "layers",
-   "sel": "[data-testid=w-many] .dock-layers",
+   "sel": "[data-testid=w-seatset] .dock-layers",
    "chain": true,
    "styles": [
     "clip-path"
@@ -51,20 +50,20 @@
   },
   {
    "as": "full",
-   "sel": "[data-testid=w-many] .dock-layer--full",
+   "sel": "[data-testid=w-seatset] .dock-layer--full",
    "chain": true,
    "attrs": [
-    "data-run-whole"
+    "data-compact"
    ]
   },
   {
    "as": "summary",
-   "sel": "[data-testid=w-many] .dock-layer--summary",
+   "sel": "[data-testid=w-seatset] .dock-layer--summary",
    "chain": true
   },
   {
    "as": "seat",
-   "sel": "[data-testid=w-many] .dock-layer--full > [data-glass-dock-seat], [data-testid=w-many] .dock-layers > [data-dock-leaving]",
+   "sel": "[data-testid=w-seatset] .dock-layer--full > [data-glass-dock-seat], [data-testid=w-seatset] [data-dock-leaving]",
    "all": true,
    "chain": true,
    "styles": [
@@ -74,21 +73,22 @@
   },
   {
    "as": "kid",
-   "sel": "[data-testid=w-many] .dock-layer--full > *:not([data-dock-leaving])",
+   "sel": "[data-testid=w-seatset] .dock-layer--full > *:not([data-dock-leaving])",
    "all": true,
    "chain": true,
    "stable": true
   },
   {
    "as": "ghost",
-   "sel": "[data-testid=w-many] .dock-layers > [data-dock-leaving]",
+   "sel": "[data-testid=w-seatset] [data-dock-leaving]",
    "all": true,
    "chain": true,
    "stable": true
   },
   {
-   "as": "stage",
-   "sel": "[data-testid=wi8-stage]"
+   "as": "extra",
+   "sel": "[data-testid=w-seatset-extra]",
+   "chain": true
   }
  ],
  "cropAs": [
@@ -100,20 +100,8 @@
  "strips": [],
  "steps": [
   {
-   "do": "eval",
-   "js": "document.querySelector(\"[data-testid=wi8-stage]\").style.maxInlineSize=\"300px\";document.querySelector(\"[data-testid=wi8-stage]\").style.marginInline=\"auto\""
-  },
-  {
-   "do": "wait",
-   "ms": 300
-  },
-  {
-   "do": "mark",
-   "name": "tap"
-  },
-  {
    "do": "click",
-   "sel": "[data-testid=w-many] .dock-layer--summary"
+   "sel": "[data-testid=w-seatset] .dock-layer--summary"
   },
   {
    "do": "settle",
@@ -122,16 +110,30 @@
   },
   {
    "do": "mark",
-   "name": "lift"
+   "name": "add"
   },
   {
    "do": "eval",
-   "js": "document.querySelector(\"[data-testid=wi8-stage]\").style.maxInlineSize=\"\""
+   "js": "document.querySelector('[data-testid=w-seatset-add]').click()"
+  },
+  {
+   "do": "settle",
+   "quietMs": 400,
+   "maxMs": 3000
+  },
+  {
+   "do": "mark",
+   "name": "remove"
+  },
+  {
+   "do": "eval",
+   "js": "document.querySelector('[data-testid=w-seatset-add]').click()"
   },
   {
    "do": "settle",
    "quietMs": 400,
    "maxMs": 3000
   }
- ]
+ ],
+ "note": "MEASURE-5: the removed control is tracked wherever glass holds it (the plant holds it inside the run), so the read sees it before the plant can bite"
 }
