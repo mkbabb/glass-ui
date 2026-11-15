@@ -20,6 +20,9 @@ const OMEGA = (2 * Math.PI) / DOCK_SPRING.response;
 const ZETA = DOCK_SPRING.dampingFraction;
 const WD = OMEGA * Math.sqrt(Math.max(1e-6, 1 - ZETA * ZETA));
 const MAX_DT = 0.033;
+/** The test-only pose (`__dockPose`): a build constant, so every branch that reads it is
+ *  dropped from the published bundle, and G-12 scans the built script for the name. */
+const POSE = import.meta.env.VITE_DOCK_HOLD === "1";
 /** R-3's one window: 1 at 0, 0 from 0.7 on. At the middle of a travel each face reads
  *  0.29, so the plate is never empty and neither face passes half strength while the
  *  other shows (P0a rule 4). At 0.55 each read 0.09 there: two 60 Hz frames of a fold
@@ -110,8 +113,9 @@ export interface DockBody {
     sync(reason: string): void;
     /** Subscribes to the end of the current travel (or now, at rest). */
     onSettle(cb: () => void): void;
-    /** Test-only: pose the open dock at a posture coordinate e (null releases). */
-    hold(e: number | null): void;
+    /** Test-only, present only in a build with VITE_DOCK_HOLD=1: pose the open dock at a
+     *  posture coordinate e (null releases). */
+    __dockPose?: (e: number | null) => void;
     readonly moving: Ref<boolean>;
 }
 
@@ -571,7 +575,7 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
         // A pill is half its painted cross extent in every frame: the owner's "Rounded."
         if (o.pill()) return Math.min(pw, ph) / 2;
         // A rounded or card dock: the lerp of its two rests on e in a posture travel.
-        if (postureTravel || held !== null) return restR[0] + (restR[1] - restR[0]) * clamp01(e);
+        if (postureTravel || (POSE && held !== null)) return restR[0] + (restR[1] - restR[0]) * clamp01(e);
         const f = 1 - u;
         return rFrom + (rTo - rFrom) * clamp01(f);
     }
@@ -686,7 +690,7 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
         const f = clamp01(1 - u);
         // The posture coordinate: its own quantity, never read from the plate's extent.
         e = clamp01((lastPosture ? 1 : 0) + eq.d);
-        if (held !== null) e = held;
+        if (POSE && held !== null) e = held;
         writeExpandT();
         // `--dock-morph-t` keeps master's meaning through 11.2.0 (R-10): the progress of the
         // current posture travel, 0 to 1, so a reversal reads 1 − t where it turns.
@@ -764,7 +768,7 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
         // coordinate is a linear 100 ms clock and each face fades across the whole of it.
         const reduce = o.reducedMotion();
         const win = reduce ? (x: number) => clamp01(1 - x) : w;
-        const posing = postureTravel || held !== null;
+        const posing = postureTravel || (POSE && held !== null);
         for (const face of faces) {
             let op: number;
             if (face.el === openFace && posing) op = win(1 - e);
@@ -847,7 +851,7 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
         else settleCbs.push(cb);
     }
 
-    function hold(pose: number | null): void {
+    function __dockPose(pose: number | null): void {
         held = pose;
         if (pose !== null) {
             root()?.setAttribute("data-morphing", "");
@@ -908,7 +912,8 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
         closedFace = closed ?? null;
     }
 
-    const body: DockBody = { postureFaces, exchange, sync, onSettle, hold, moving: o.moving };
+    const body: DockBody = { postureFaces, exchange, sync, onSettle, moving: o.moving };
+    if (POSE) body.__dockPose = __dockPose;
     provide(DOCK_BODY_KEY, body);
     return body;
 }

@@ -289,7 +289,7 @@ watch(visualExpanded, () => body.sync("posture"), { flush: "post" });
 if (import.meta.env.VITE_DOCK_HOLD === "1" && typeof window !== "undefined") {
     // Test-only hook: hold every travel of this dock at a given e.
     (window as unknown as { __dockHold?: Record<string, (f: number | null) => void> }).__dockHold ??= {};
-    (window as unknown as { __dockHold: Record<string, (f: number | null) => void> }).__dockHold[dockId] = body.hold;
+    (window as unknown as { __dockHold: Record<string, (f: number | null) => void> }).__dockHold[dockId] = body.__dockPose!;
 }
 
 const summaryIsDisclosure = computed(() => outerCurrentLayer.value === "summary");
