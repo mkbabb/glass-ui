@@ -427,6 +427,17 @@
         margin-inline-start: calc(-1 * var(--dock-run-gap));
     }
 
+    /* W-I.8 RU-23: a run whose seats, compact, still do not fit is cut to a whole number
+       of pitches by the carrier (`data-run-whole`), and snaps a seat's start to its
+       reserve, so at rest a seat is whole or absent at each end: no peek. */
+    .glass-dock :where(.dock-layers) > .dock-run[data-run-whole] {
+        scroll-padding-inline: var(--dock-run-reserve-inline);
+    }
+
+    .glass-dock.vertical :where(.dock-layers) > .dock-run[data-run-whole] {
+        scroll-padding-block: var(--dock-run-reserve-block);
+    }
+
     /* THE SEATS. Every direct child of the run is a snap target and none of them flex —
        a seat that grows is a seat that is no longer an integer number of pitches, and
        the lattice dies quietly the moment one does. `start` alignment is what the

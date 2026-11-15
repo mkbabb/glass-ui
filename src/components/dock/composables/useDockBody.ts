@@ -503,6 +503,12 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
             }
             return last > first ? last - first : 0;
         };
+        // RU-23: the whole-seat cap is lifted for the read, as the compact run is.
+        const whole = run.hasAttribute("data-run-whole");
+        if (whole) {
+            run.removeAttribute("data-run-whole");
+            run.style.removeProperty(v ? "max-block-size" : "max-inline-size");
+        }
         if (hasOpen) {
             if (was) run.removeAttribute("data-compact");
             // The run's reserve (its padding, the room a focus ring takes) is not a seat.
@@ -511,7 +517,37 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
             const port = (v ? run.clientHeight : run.clientWidth) - padStart;
             if (span() > port + 0.5) run.setAttribute("data-compact", "");
         } else if (was && open) run.removeAttribute("data-compact");
-        publishFit(run, span());
+        const sp = span();
+        fitWhole(run, sp);
+        publishFit(run, sp);
+    }
+
+    /** RU-23: when the seats, compact, still do not fit, the run scrolls, and at rest a seat
+     *  is either whole or absent at each end. The run's window for seats (its port less the
+     *  reserve at each end) is cut to a whole number of pitches, `n·P − gap`, by a cap on
+     *  the run's size; under `data-run-whole` the run snaps a seat's start to the reserve
+     *  (run.css), so every snap position, the last included, shows n whole seats. Seats of
+     *  unequal size have no pitch, and the run is left as it is. */
+    function fitWhole(run: HTMLElement, sp: number): void {
+        const v = o.vertical();
+        const kids = [...run.children].filter(
+            (c): c is HTMLElement => c instanceof HTMLElement && !ghosts.has(c) && c.offsetParent !== null,
+        );
+        if (kids.length < 2) return;
+        const size = (c: HTMLElement) => (v ? c.offsetHeight : c.offsetWidth);
+        const seat = size(kids[0]!);
+        if (kids.some((c) => Math.abs(size(c) - seat) > 0.5)) return;
+        const rs = getComputedStyle(run);
+        const reserve = Number.parseFloat(v ? rs.paddingBlockStart : rs.paddingInlineStart) || 0;
+        const gap = Number.parseFloat(v ? rs.rowGap : rs.columnGap) || 0;
+        const window = (v ? run.clientHeight : run.clientWidth) - 2 * reserve;
+        if (sp <= window + 0.5) return;
+        const pitch = seat + gap;
+        const n = Math.floor((window + gap) / pitch);
+        const left = window - (n * pitch - gap);
+        if (n < 1 || left <= 0.5) return;
+        run.setAttribute("data-run-whole", "");
+        run.style.setProperty(v ? "max-block-size" : "max-inline-size", `${(v ? run.offsetHeight : run.offsetWidth) - left}px`);
     }
 
     /** The fit law (10.1.5 e4, k3, p2): `data-run-fits` says the seats' span is no longer
