@@ -14,7 +14,7 @@ import type { Motion, Surface } from "../_shared/axes";
 import { useMotionAxis } from "../_shared/useMotionAxis";
 import { surfaceClass } from "../_shared/surface/resolve";
 import { scrimOpacity } from "../sheet/motion";
-import { returnFocusQuietly, useModalShortcutBarrier } from "../_shared/overlay";
+import { returnFocusQuietly, useDockParticipation, useModalShortcutBarrier } from "../_shared/overlay";
 import type { DismissableContentEmits } from "../_shared/interaction";
 
 /**
@@ -75,6 +75,15 @@ const dialogRoot = injectDialogRootContext();
 // page behind inert; a `modal={false}` dialog leaves the page operable and its
 // keyboard with it. Raised here, in setup, ahead of anything the slot registers.
 useModalShortcutBarrier(() => dialogRoot.open.value && dialogRoot.modal.value);
+
+// W-I.8 R-2 (RU-16): a dialog opened from a dock seat is part of that dock. While open it
+// holds the dock and its content carries the dock's mark, so focus moving into it and a
+// press inside it are not leaving the dock, however the dock was opened, and on close
+// focus returns to a live seat. It closes with the dock's fold, by its own exit (R-9).
+const dock = useDockParticipation({
+    hold: () => dialogRoot.open.value,
+    close: () => dialogRoot.onOpenChange(false),
+});
 
 // ONE mount spring, ONE curve. MOTION-CANON gives the MODAL a single row, so the curve
 // is named here once and the consumer chooses nothing — and the knob that used to offer
@@ -194,7 +203,7 @@ const contentClass = computed(() =>
              for. `sheet/SheetContent.vue` composes the same scrim and passes none. -->
         <ModalOverlay veil :opacity="scrimAlpha" :force-mount="scrimForceMount" />
         <RekaDialogContent
-            v-bind="{ ...forwarded, ...$attrs, inert: closingInert }"
+            v-bind="{ ...forwarded, ...$attrs, ...dock.portalAttrs.value, inert: closingInert }"
             :aria-modal="dialogRoot.modal.value ? 'true' : undefined"
             :force-mount="contentForceMount"
             :class="contentClass"

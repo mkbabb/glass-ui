@@ -13,7 +13,7 @@ import ModalOverlay from "../dialog/ModalOverlay.vue";
 import type { Motion, Surface } from "../_shared/axes";
 import { useMotionAxis } from "../_shared/useMotionAxis";
 import { surfaceClass } from "../_shared/surface/resolve";
-import { returnFocusQuietly, useModalShortcutBarrier } from "../_shared/overlay";
+import { returnFocusQuietly, useDockParticipation, useModalShortcutBarrier } from "../_shared/overlay";
 import {
     scrimDetentOpacity,
     scrimOpacity,
@@ -118,6 +118,15 @@ const dialogRoot = injectDialogRootContext();
 // does: while reka is enforcing modality, the app's accelerators are barriered off
 // and only what this sheet registers after this line answers a keystroke.
 useModalShortcutBarrier(() => dialogRoot.open.value && dialogRoot.modal.value);
+
+// W-I.8 R-2 (RU-16): a sheet opened from a dock seat is part of that dock. While open it
+// holds the dock and its content carries the dock's mark, so focus moving into it and a
+// press inside it are not leaving the dock, however the dock was opened, and on close
+// focus returns to a live seat. It closes with the dock's fold, by its own exit (R-9).
+const dock = useDockParticipation({
+    hold: () => dialogRoot.open.value,
+    close: () => dialogRoot.onOpenChange(false),
+});
 
 // ONE spring mount PER ARM, and the sheet has exactly one arm at a time. The slide's
 // panel spring is seated only on the SLIDING arm: a detented sheet is driven end to end
@@ -302,7 +311,7 @@ const contentStyle = computed<CSSProperties>(() => ({
              frost the middle of the page with nothing engaged inside it. -->
         <ModalOverlay :opacity="scrimAlpha" :force-mount="scrimForceMount" />
         <RekaDialogContent
-            v-bind="{ ...forwarded, ...$attrs, inert: closingInert }"
+            v-bind="{ ...forwarded, ...$attrs, ...dock.portalAttrs.value, inert: closingInert }"
             :aria-modal="dialogRoot.modal.value ? 'true' : undefined"
             :force-mount="contentForceMount"
             :class="contentClass"
