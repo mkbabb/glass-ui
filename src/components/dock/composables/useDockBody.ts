@@ -815,6 +815,7 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
             el.setAttribute("data-morphing", "");
             o.moving.value = true;
             start(reason === "ro");
+            if (POSE) performance.mark("dock:end");
         }
     }
 
