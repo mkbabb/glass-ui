@@ -1,223 +1,246 @@
 # Dock compositions that exist in the apps
 
-Eight distinct compositions across 21 dock components (`USAGE.md`). Each is a candidate demo
-page: one live dock built the way the apps build it. Props listed are the ones the composition
-needs; seats are what sits in the run.
+Trees read: value.js `origin/master` 216d0e066, keyframes.js `origin/master` f7d10f518, fourier-analysis `origin/master` ac9881552, daraksha `origin/master` e90682d91, atlas `.u-build/atlas-rc` 88bde3b35 (lt-integ-atlas 73c88cb52 noted), gregg working tree, speedtest 4af04ba0d, gaggle-site ad4ef65eb, slides 3cec2cba2, sci-report bbcbd503d, reddit 26907acc4, Home Assistant 6d5ac72a9; glass-ui master v11.0.2 `e1aebc2d0`.
+
+Eleven distinct compositions across 29 dock components (`USAGE.md`). Each is a candidate demo
+page: one live dock built the way the apps build it.
 
 ## 1. Site navigation tabs
 
-A row of page or section tabs with a few utilities at the end. Never collapses. Fixed at the
-top or bottom of the viewport, or in a header band.
+A row of page or section tabs with a few utilities at the end, fixed at the top or bottom of the
+viewport.
 
-- Apps: daraksha (pages dock), gregg (`PageDock`), gaggle-site (site dock, report `PageDock`,
-  `KitDock`), Home Assistant (shell dock). 6 docks, 4 apps.
-- Seats: 3–6 `DockControl shape="tab" :active` (gregg and gaggle add a travelling selection
-  plate under them); `DockSeparator`; a theme toggle; often a lamp or count seat; a Find seat
-  (gaggle ×3); a filter or account menu (`DockTrigger for="dropdown"`).
-- Slots: `default`; `persistent-end` for the trailing utilities (gregg, Home Assistant).
-- Props: `:collapse="false"`, `fit-content`; `backdrop-mode="static"` in 2 apps.
-- On a phone the tabs become one menu that names the current section (gregg, gaggle, Home
-  Assistant hides words). Every app in this group rebuilt that swap by hand.
+- Apps: gregg (`PageDock`), gaggle-site (site dock, report `PageDock`, `KitDock`), Home
+  Assistant (shell dock), atlas (phone bar), daraksha (site dock). 7 docks, 5 apps.
+- Seats: 3–6 `DockControl shape="tab"` (or `compact` with a word and an icon) marked `:active`
+  (gregg and gaggle add a travelling selection plate); `DockSeparator`; a theme seat; often a
+  data-age lamp or count; Find; a filter or account menu (`DockTrigger for="dropdown"`).
+- Slots: `default`; `persistent-end` for the trailing utilities (gregg, Home Assistant, atlas);
+  `persistent` for an identity crest (atlas).
+- Props: `:collapse="false"`, `fit-content`; `backdrop-mode="static"` in gregg, gaggle, atlas.
+  daraksha's folds (`#collapsed` page icon) and swaps to a second face holding the page's controls.
+- On a phone the tabs become one menu naming the current section (gregg, gaggle), lose their
+  words (Home Assistant), or the whole dock changes form (atlas rail → bar).
 
 ## 2. App chrome with a collapsed seal
 
 The app's one top dock: a select or menu that names where you are, a few menus, the account.
-Folds to a single glyph (the seal) when idle or on a phone.
+Folds to a single glyph when idle.
 
-- Apps: value.js (top dock), keyframes.js (`ChromeDock`), fourier-analysis (`AppDock`, which never
-  folds). 3 docks.
-- Seats: `DockTrigger for="select"` (view or scene), `DockTrigger for="dropdown"` ×1–3,
-  `DockTrigger for="popover"` (about), `DockSeparator`s, a theme toggle.
-- Slots: `default`, `collapsed` (a glyph or a swatch with the view's icon).
-- Props: `collapse="closed"` or `"open"` (desktop) / `false` (phone), `fit-content`,
-  `background-canvas`.
-- Needs: menus that hold the dock while open (all three hold by hand); a popup placed past the
-  dock's edge (keyframes measures it); value.js alone swaps whole faces (edit, slug edit, tools)
-  with `DockLayerGroup` + `DockCrossfade`.
+- Apps: value.js (top dock), keyframes.js (`ChromeDock`), fourier-analysis (`AppDock`). 3 docks.
+- Seats: `DockTrigger for="select"` (view or scene) or `for="dropdown"` (section), 1–3 more
+  `DockTrigger`s, `DockTrigger for="popover"` (about), `DockSeparator`s, a theme toggle.
+- Slots: `default`, `collapsed` (a swatch with the view icon, the scene glyph, the ℱ mark).
+- Props: `collapse="closed"` (keyframes, fourier) or `"open"` / `false` by width (value.js),
+  `fit-content`, `background-canvas`.
+- Needs: menus that hold the dock (all three hold by hand); fold on scroll (fourier does it);
+  popups past the dock edge (keyframes measures it); value.js swaps whole faces with
+  `DockLayerGroup` + `DockCrossfade`.
 
 ## 3. Vertical section rail
 
-A vertical card at the viewport's start edge: an identity crest, a numbered list of sections,
-a foot with settings and a collapse toggle. Collapses on scroll down and becomes a sheet on a phone.
+A vertical rail at the viewport's start edge: crest, search and selects, the section list, a foot
+with settings and theme. Folds to the crest disc and opens on hover or focus.
 
 - Apps: atlas (`Dock.vue`), so every atlas dashboard including sci-report. 1 dock.
-- Seats: app-built nav items (not `DockControl`), `DockSeparator`s, `DockTrigger for="dropdown"`.
-- Slots: `persistent` (crest), `default`.
-- Props: `orientation="vertical"`, `shape="card"`, `:collapse="isPhone ? 'closed' : 'open'"`.
-- Needs: collapse on scroll (atlas wrote `useScrollChrome` + an intent arbiter), a phone sheet
-  with scrim and Escape (atlas wrote both), a block-size cap (`--dock-max-block-size`).
+- Seats: app-built nav rows, `DockSeparator`s, `DockTrigger for="select"` (chevron removed).
+- Slots: `persistent`, `default`, `persistent-end`.
+- Props: `orientation="vertical"`, `anchor="start"`, `backdrop-mode="static"`, `:collapse="homeRail
+  ? false : 'closed'"`.
+- Needs: hover open with a leave grace (atlas re-implemented it as "bloom"), hold while a
+  teleported drawer is open, collapse arbitration (manual, layout, scroll, portal).
 
-## 4. A figure's filter dock
+## 4. A figure's tools dock
 
-One small dock per figure, in the figure's header at the end. Holds the figure's own choices
-(a tab run, a menu) and the chart/table pair. Many on a page, so a pointer sweep must open none.
-Folds to the current choice in words with a chevron when the row has no room.
+One small dock per figure at the end of its header: a primary seat that stays (Table view, the
+chart/table pair) and a tray that opens on a press (options, download, enlarge, or the figure's
+own choice run). Many on a page, so a pointer sweep must open none.
 
-- Apps: gregg (`Figure` ×17, `HeroPlate`), atlas (`VizGearDock`, a hand-built stand-in: a gear
-  that blooms Filters / Download / Enlarge on hover). 2 apps, 19 + one per atlas figure.
-- Seats: a `role="group"` tab run (`DockControl shape="tab"`) or a menu; `DockSeparator`; the
-  view pair (`DockControl :active` ×2). atlas: 3 `DockControl compact`.
-- Slots: `default`, `persistent-end` (the pair), `collapsed` (words + chevron).
-- Props: `expand-on="press"`, `:collapse="fits ? false : 'closed'"`, `collapsed-label`,
-  `fit-content`, `backdrop-mode="static"`.
-- Needs: fold decided by room (gregg's `dockFold.ts`), a summary that holds words, an "open" that
-  does not fold on the first outside press, a 44 px hit area on compact seats (atlas pads it).
+- Apps: gregg (`Figure` ×17, `HeroPlate`), atlas (`PlateDock`, one per figure). 2 apps.
+- Seats: `DockControl :active` (view), a tab run or a menu (gregg); Options popover, Download,
+  Enlarge, Close (atlas).
+- Slots: `persistent` (atlas) or `persistent-end` (gregg) for the seat that stays; `collapsed`
+  (a More handle, or the current choice in words with a chevron); `default`.
+- Props: `collapse="closed"`, `expand-on="press"`, `anchor="end"`, `collapsed-label`,
+  `backdrop-mode="static"`; atlas adds `data-preset="cockpit"`; gregg pins `false` where the
+  run fits.
+- Needs: fold decided by room (gregg's `dockFold.ts`), a summary that holds words, a tray that
+  holds while its popover is open (atlas holds by hand), and in lt-integ-atlas hover open with a
+  dwell (`hover-intent`, a prop glass does not have).
 
-## 5. Canvas tool dock
+## 5. A figure's dial bar
 
-A floating row over a canvas or stage: view toggles, export, fullscreen, with one primary tool
-that stays visible when folded. Folds to an ellipsis glyph.
+The figure's named filters in one capsule: a caption and a segmented strip per dial, parted by
+separators, then the figure's own control (a period stepper). Never folds.
+
+- Apps: atlas (`PlateControls` at 60 rem and wider; lt-integ-atlas `StickyScene` head). 1 app.
+- Seats: groups of a caption + `SegmentedTabs`; `DockSeparator`; `DockControl` + `DockTrigger`.
+- Props: `:collapse="false"`, `backdrop-mode="static"`, `data-preset="cockpit"`.
+- Narrower, atlas drops the dock and renders the dials as a grid.
+
+## 6. Canvas tool dock
+
+A floating row over a canvas: view toggles, export, fullscreen, with one primary tool that stays
+visible folded.
 
 - Apps: fourier-analysis (`CanvasControlsDock`, `EditorControlsDock`). 2 docks.
-- Seats: `DockControl` ×4–6 in Tooltips (some `:active`), `DockSeparator`s, a "more" menu
-  (`DockTrigger for="dropdown"`) holding sliders and items.
-- Slots: `default`, `collapsed` (glyph + status dot), `persistent` (count + Save) or
-  `persistent-end` (Edit).
-- Props: `fit-content`, `collapse` default.
-- Needs: menu holds (both hold by hand), an `update:expanded` (re-emitted from the exposed ref).
+- Seats: `DockControl` ×4–6 in Tooltips (some `:active`), `DockSeparator`s, a "more" menu.
+- Slots: `default`, `collapsed` (glyph + status dot), `persistent` or `persistent-end`.
+- Props: `fit-content`.
+- Needs: menu holds (both by hand), `update:expanded`.
 
-## 6. Transport
+## 7. Transport
 
-Play/Pause that never leaves, and the controls that open beside it: a channel or speed select,
-easing, reset, a timeline.
+Play/Pause that never leaves, with the controls that open beside it.
 
-- Apps: keyframes.js (`TransportDock`), fourier-analysis (`AnimationControls`), daraksha
-  (`NameDock` teleports Play and Again into the controls dock). 3 apps.
-- Seats: Play `DockControl` (persistent), `DockTrigger for="select"` or `for="dropdown"` ×1–2,
-  Reset `DockControl`, `DockSeparator`s, a readout.
+- Apps: keyframes.js (`TransportDock`), fourier-analysis (`AnimationControls`), daraksha (Name's
+  Play/Again teleported into the site dock). 3 apps.
+- Seats: Play `DockControl`, a select or menus (channel, speed, easing), Reset, a readout.
 - Slots: `persistent` (Play), `default`, `collapsed` (fourier: a mini progress bar).
 - Props: `collapse="closed"`, `fit-content`.
-- Needs: Play's click survives the collapse crossfade (keyframes actuates on pointerup instead);
-  the list opens past the dock's edge.
+- Needs: Play's click survives the collapse crossfade (keyframes actuates on pointerup).
 
-## 7. Pager and step controls
+## 8. Pager and step controls
 
-Previous / position / next, with home and settings: a deck's pager, a wizard's step bar with a
-primary CTA.
+Previous / position / next, with home and settings; a wizard's step bar with a primary CTA.
 
-- Apps: slides (deck dock: Home, Prev, `DeckPager` dots, Next, theme, settings), speedtest (app
-  dock: Back, Stop/Retake, a primary "Next" tab with glyph and label, settings). 2 docks.
-- Seats: `DockControl` ×3–4 (`disabled` at the ends), an app-built dot pager, a primary
-  `DockControl shape="tab"` with label, a settings menu.
-- Slots: `default` only.
-- Props: `:collapse="false"`. speedtest is large and rewrites the whole size table; slides is
-  small and rewrites it for phones.
-- Needs: a size step (both rewrite size knobs), a pager seat (slides built `DeckPager`), a
-  primary seat (speedtest paints `[data-tier="primary"]`).
+- Apps: slides (deck dock with an app-built dot pager), speedtest (app dock). 2 docks.
+- Seats: `DockControl` ×3–4 (`disabled` at the ends), a dot pager, a primary `DockControl
+  shape="tab"` with a label, a settings menu.
+- Props: `:collapse="false"`; both rewrite the size knobs.
 
-## 8. Page controls in an outlet, and inline action clusters
+## 9. A page's controls seat in a corner
 
-Controls that belong to the page or a card rather than the site.
+A page's own actions in one fixed place on every page. One action: a plain capsule. Several: a
+glyph that opens on a press (a column on a phone).
 
-- Outlet: daraksha's controls dock holds `<div id="dock-page">`; `ReaderDock` and `NameDock`
-  teleport their seats into it (surah stepper, view tabs, a `Popover keep-dock-open` panel). The
-  README names this as unsupported: context does not cross the Teleport.
-- Inline: fourier's `EquationResult` (`:collapse="false"`, Info + Copy in a card header);
-  value.js workbenches and atlas `VizPlate` use `DockControl`/`DockSeparator` with no
-  `GlassDock` at all, as glass icon buttons in a plain row.
-- Status strip: speedtest `SurveyResultDock` puts Badges and a step counter in a dock plate with
-  no controls (`--dock-layer-height: auto`).
+- Apps: daraksha (`ControlsSeat` on Colour, Motion, Name and Portraits). 1 app. The file says
+  glass will ship this as a named piece in 11.2.0.
+- Props: one action `:collapse="false"`, `fit-content`; several `collapse="closed"`,
+  `expand-on="press"`, `orientation` vertical on a phone, `collapsed-label`, `#collapsed` icon.
+- daraksha also teleports page seats into the site dock's outlets (`#dock-page`,
+  `#dock-persistent-end`), with its own hold (`dockHold.ts`) because context does not cross a Teleport.
+
+## 10. An inline action row
+
+A short row of actions inside a pane, card or drawer header. Never folds.
+
+- Apps: keyframes.js (`RibbonBar`: Apply CSS, Copy, Format, Copy compiled), fourier-analysis
+  (`EquationResult`, `PaperTocDrawer`). value.js and atlas use `DockControl` + `DockSeparator`
+  for such rows without a `GlassDock`. 4 apps.
+- Props: `:collapse="false"`, `fit-content`.
+
+## 11. A bare plate
+
+The dock as glass material with no run of controls: a one-seat theme plate, a plate behind a
+button that is not in the dock, a strip of read-outs.
+
+- Apps: daraksha (theme dock; `Star` and `Clasp`, inert docks holding an empty span), speedtest
+  (`SurveyResultDock`: Badges and a step count). 2 apps.
+- Props: `:collapse="false"`, `fit-content`; speedtest sets `--dock-layer-height: auto`.
 
 ## What the apps worked around, most common first
 
-1. **Menus do not hold the dock.** `Select` and `DropdownMenu` content pass no hold, so the idle
-   timer folds the dock under an open list. value.js, keyframes.js (×3), fourier-analysis (×3),
-   gaggle-site call `keepOpen()`/`release()` from each menu's `update:open`; keyframes and gaggle
-   add a watcher that re-expands a dock that folded anyway. Only `Popover` has `keep-dock-open`,
-   used once (daraksha, where the Teleport defeats it). 5 apps, 9 docks.
-2. **Collapse is turned off or arbitrated outside.** 11 docks pin `:collapse="false"`. gregg pins
-   docks that fit because `"open"` folds on the first outside press; gregg decides fold from room
-   (`dockFold.ts`); atlas arbitrates manual / phone / scroll intents (`useDockCollapse`,
-   `useScrollChrome`). 8 apps.
-3. **Size is rewritten with custom properties.** speedtest (the full table, plus a re-homed
-   `--dock-scale` because it is not registered), slides (`--dock-mobile-scale`, `--dock-scale`,
-   `--dock-control-size`), Home Assistant (seat = 44 px on every pointer), atlas, sci-report
-   (`--dock-control-size: 2.75rem`), gregg (`--dock-control-floor` at phone width), value.js
-   (icon padding). 7 apps. The floor keyed to `pointer: coarse` only is named by gregg, slides and
-   Home Assistant.
-4. **Ink and selection paint reset.** `--muted-foreground` / `--dock-fg-on-aurora` (value.js,
-   gregg, speedtest), `--dock-control-active-bg` (gregg, Home Assistant), ring colour and offset
-   (value.js, gregg, Home Assistant), the plate's veil (speedtest, slides, gregg). 6 apps.
-5. **Deep selectors into internals.** `.dock-plate`, `.dock-run > *`, `.dock-layer--full`,
-   `.dock-layer--summary`, `.dock-layers`, `.dock-*-button`, `$el` queries: value.js, keyframes.js,
-   atlas, gregg, slides, gaggle-site, Home Assistant. 7 apps.
-6. **The pill is not a stadium.** gregg and gaggle set `--radius-dock` and
-   `--dock-control-radius` to `9999px`; gregg pins the plate radius `!important` for WebKit hover.
-7. **A travelling selection mark.** gregg (`dockIndicator.ts`) and gaggle (`PickedPlate.vue`)
-   each built one for tab runs; `DockControl.active` paints only a per-seat fill.
-8. **The collapsed summary is a square cell.** gregg overrides it to hold words; keyframes cut its
-   label to a glyph.
-9. **Popups open inside the dock.** keyframes offsets every list past the dock edge
-   (`dockEdge.ts`, both docks).
-10. **Phone swap of tabs for a menu.** gregg, gaggle ×2, Home Assistant hand-swap a tab run for a
-    menu that names the current item.
-11. Smaller, one app each: own roving keys (Home Assistant `dock_keys.ts`), wrong status
-    announcement in a group (gregg `dockStatus.ts`), click lost in the collapse crossfade
-    (keyframes `usePlayActuation`), a Teleport outlet (daraksha), `update:expanded` re-emitted
-    (fourier), hover growth overflowing the run (slides).
+Ranked by apps, then docks.
 
-Version drift worth noting: value.js, keyframes.js, fourier-analysis and atlas import
-`DockTrigger` from `/dock` (10.1.x); sci-report is on 7.0.0. Several of their workarounds (the
-focusable collapsed Button in keyframes, the `DockTrigger` path) are for behaviour 11.x changed.
+1. **Collapse is turned off or decided by the app.** 10 apps. 15 of 29 docks pin
+   `:collapse="false"` and 5 more pin it in one layout. gregg folds from room and pins docks that
+   fit, because `"open"` folds on the first outside press; fourier folds AppDock after 48 px of
+   scroll; atlas arbitrates five intents and re-implements hover open ("bloom") and slides its
+   phone bar out on scroll; daraksha picks the posture per page; gaggle holds the dock open at the
+   top of the page.
+2. **Size is rewritten with custom properties.** 9 apps: speedtest (the whole table, and a
+   re-homed `--dock-scale`), slides, Home Assistant (seat = 44 px on every pointer), atlas (the
+   undocumented `data-preset="cockpit"` plus a dozen knobs), sci-report, gregg (touch floor at
+   phone width), value.js, daraksha and fourier (phone padding).
+3. **Deep selectors and internal variables.** 8 apps reach into `.dock-plate`, `.dock-run > *`,
+   `.dock-layer--full`, `.dock-layers`, `.dock-persistent(-end)`, `.dock-layer--summary`, the seat
+   classes, `[data-morphing]`, `--dock-expand-t`, `--dock-expanded-px`, and `$el`.
+4. **Overlays do not hold the dock.** 6 apps, 11 docks: value.js, keyframes.js, fourier,
+   gaggle-site, atlas (`PlateDock`) call `keepOpen()`/`release()` around each menu or popover;
+   daraksha routes every teleported overlay through one app hold. keyframes and gaggle re-expand a
+   dock that folded anyway. `Popover keep-dock-open` is used only by fourier.
+5. **The pill is not a stadium.** 6 apps set `--radius-dock` (four to `9999px`, daraksha to
+   `1.875rem`, atlas to a calc); 3 also set `--dock-control-radius`. Four of them note glass 11.1.0
+   will make the stadium the default.
+6. **Ink and plate paint reset.** 6 apps: muted text and `--dock-fg-on-aurora` (value.js, gregg,
+   speedtest), the active fill (gregg, Home Assistant), ring colour and offset (value.js, gregg,
+   Home Assistant), the plate's veil, tier and borders (speedtest, slides, gregg, atlas), the grain
+   (value.js).
+7. **Content does not follow the morph.** 4 apps: daraksha scales and fades teleported controls on
+   `--dock-expand-t` and drives a fission from the morph widths; atlas hides swapped content until
+   `data-morphing` clears; gregg rebuilt the summary's alignment and the arriving face's fade;
+   value.js waits for `data-morphing` to clear before its settle beat.
+8. **Tabs swap for a menu on a phone.** gregg, gaggle ×2, Home Assistant, and atlas (rail → bar).
+9. **A travelling selection mark.** gregg (`dockIndicator.ts`), gaggle (`PickedPlate.vue`).
+10. **Seats contributed from a route.** daraksha: two Teleport outlets and `dockHold.ts`.
+11. One app each: popups placed past the dock edge (keyframes), chevron removed through `#icon`
+    (atlas), a label that hides when it would overflow (fourier), a hover dwell passed as a
+    non-existent prop (lt-integ-atlas), roving keys (Home Assistant), the status announcing the
+    wrong control (gregg), a click lost in the crossfade (keyframes), the dock used as a bare
+    plate (daraksha), `update:expanded` re-emitted (fourier).
 
 ## What the dock could be
 
-The smallest surface that serves the eight compositions, props and slots only.
+The smallest surface that serves the eleven compositions, props and slots only.
 
 ### `GlassDock`
 
 | Prop | Values | Default | Why |
 | --- | --- | --- | --- |
-| `orientation` | `horizontal`, `vertical` | `horizontal` | the rail (3) |
-| `collapse` | `false`, `"idle"`, `"press"`, `"room"`, `"scroll"` | `false` | one member for the posture and what folds it: never (1, 7, 8), idle hover (2, 5, 6), press per figure (4), when the run does not fit (4), on scroll (3). Folds `expandOn` in. |
+| `orientation` | `horizontal`, `vertical` | `horizontal` | the rail (3), the corner seat on a phone (9) |
+| `collapse` | `false`, `"hover"`, `"press"`, `"room"`, `"scroll"` | `false` | one member for "never" and "what opens or folds it": never (1, 5, 8, 10, 11), hover with a dwell and leave grace (2, 3, 6, 7), press per figure or corner seat (4, 9), fold when the run does not fit (4), fold on scroll (2, 3). It replaces `expandOn` and the five app-side arbiters. |
 | `v-model:expanded` | boolean | — | replaces watching the exposed ref and calling `expand`/`collapse` |
-| `size` | `sm`, `md`, `lg` | `md` | replaces the rewritten size tables (speedtest `lg`, slides `sm`); the 44 px floor keyed to width as well as pointer |
-| `material` | `live`, `static` | `live` | today's `backdropMode`; the field canvas is found by convention (`data-glass-field-canvas`), so `backgroundCanvas` goes |
+| `size` | `sm`, `md`, `lg` | `md` | the rewritten size tables (slides `sm`, atlas's `cockpit`, speedtest `lg`); the 44 px floor keyed to width as well as pointer |
+| `material` | `live`, `static` | `live` | today's `backdropMode`; the field canvas is found by its data attribute, so `backgroundCanvas` goes |
 | `label` | string | — | names the dock and its folded face (today's `collapsedLabel` and the root `aria-label`) |
 
-`fitContent` becomes the only behaviour (15 of 21 set it; the rest are fixed-width by their own
-CSS). `shape` reduces to the stadium for a horizontal dock and the card for a vertical one,
-derived from `orientation`, with the radius a true half-height. `anchor` goes: it does nothing.
+`fitContent` becomes the only behaviour (20 of 29 set it; the rest size themselves in their own
+CSS). `shape` goes: no app passes anything but the default, and the radius should be a true
+half-height in every engine (6 apps patch it). `anchor` goes: it does nothing.
 
 Slots: `default` (the run), `start` and `end` (today's `persistent` / `persistent-end`),
 `collapsed`.
 
 Behaviour that replaces the most common workarounds, no new props: every overlay opened from a
-seat holds the dock while open and positions past the dock edge; the collapsed face sizes to its
-content (a glyph or words); a run's selection paints one travelling mark under the `active` seat.
+seat holds the dock while open and opens past the dock edge; content in the run scales and fades
+with the morph; the collapsed face sizes to its content; a run's `active` seat carries one
+travelling mark. A named outlet for seats a route contributes (daraksha's `#dock-page`) is the one
+addition the apps ask for by name.
 
 ### Seats
 
-- `DockControl`: `shape` (`icon`, `tab`), `active`, `disabled`, and `tone="primary"` for the
-  wizard CTA (speedtest). `compact` stays only if the hit area is held at 44 px (atlas had to pad it).
-- `DockTrigger`: `for` (`select`, `dropdown`, `popover`). Also accepted as `as-child` content of
-  any menu trigger, which is what gregg and slides do.
+- `DockControl`: `shape` (`icon`, `tab`), `active`, `disabled`, `compact` (4 apps; its hit area
+  held at 44 px), and `tone="primary"` for a CTA (speedtest).
+- `DockTrigger`: `for` (`select`, `dropdown`, `popover`), and `chevron` (boolean) in place of the
+  `#icon` slot atlas uses only to remove it.
 - `DockSeparator`: no props.
 
 ### Delete outright
 
-`DockBackgroundToggle`, `useDockSearch` and the `#search` slot, `useDockCtaReceive` on `/dock`,
-`useDockContext`, `provideDockContext`, `DOCK_CONTEXT_KEY`, all 17 exported types except the
-instance type, `graspHeld`, `isTransitioning`, `isPinned`, `isHeld` (one app, used to patch
-item 1), the `anchor` props on `GlassDock` and `DockSeparator`, `DockControl` `type`/`as`/`asChild`,
-`DockTrigger #icon`, `shape="rounded"`, `DockLayerGroup`'s switcher, drag and its three props
-(`orientation`, `switcherPosition`, `motion`), `DockLayer` `label`/`icon`. Of the 172 custom
-properties, keep a published handful (size via `size`, ink, active fill, ring) and make the rest
-private.
+`DockBackgroundToggle`; `useDockSearch` and the `#search` slot; `useDockCtaReceive` on `/dock`;
+`useDockContext`, `provideDockContext`, `DOCK_CONTEXT_KEY`; the 17 exported types (keep the
+instance type); `graspHeld`; `isPinned`, `isHeld` and `isTransitioning`, whose only uses (keyframes,
+fourier) patch around missing holds and label fitting; `anchor` on `GlassDock` and
+`DockSeparator`; `DockControl` `type`/`as`/`asChild`; `shape` on `GlassDock`; `DockLayerGroup`'s
+switcher and drag with its three props, since both of its users hide the switcher (one
+`DockCrossfade` with `DockLayer` children covers value.js and daraksha); `DockLayer` `icon`, and
+`label` once the switcher is gone. Of the 172 custom properties, publish a handful (ink, active
+fill, ring, radius) and make the rest private, `--dock-expand-t` included once content follows
+the morph.
 
-`DockLayerGroup` + `DockLayer` + `DockCrossfade` serve one app (value.js) with three components;
-one `DockCrossfade` with `DockLayer` children covers it. `useOptionalDockContext` stays only if
-the overlay hold moves into the overlays; today its two uses are that hold.
+### Presets (shown in the demo, one live dock each)
 
-### Presets (consumer-side compositions, shown in the demo)
+1. `nav` — `collapse=false`, tabs + end utilities, a phone menu swap (1).
+2. `chrome` — `collapse="hover"`, a select + menus, a seal in `#collapsed`, fold on scroll (2).
+3. `rail` — `orientation="vertical"`, `collapse="hover"`, crest in `#start`, foot in `#end` (3).
+4. `figure-tools` — `collapse="press"` + `"room"`, the view seat in `#start`, More or words in `#collapsed` (4).
+5. `dials` — `collapse=false`, `size="sm"`, captioned segmented groups (5).
+6. `canvas-tools` — `collapse="hover"`, a primary tool in `#start` or `#end`, a glyph folded (6).
+7. `transport` — Play in `#start`, `collapse="hover"` (7).
+8. `pager` — `collapse=false`, prev / dots / next (8).
+9. `corner-controls` — one action plain, several `collapse="press"`, vertical on a phone (9).
+10. `action-row` — `collapse=false` inside a card or pane header (10).
 
-1. `nav` — `collapse=false`, tabs + end utilities, phone menu swap (1).
-2. `chrome` — `collapse="idle"`, a select + menus, seal in `#collapsed` (2).
-3. `rail` — `orientation="vertical"`, `collapse="scroll"`, crest in `#start` (3).
-4. `figure` — `collapse="room"` with press to open, view pair in `#end`, words in `#collapsed` (4).
-5. `tools` — `collapse="idle"`, primary tool in `#start` or `#end`, glyph in `#collapsed` (5).
-6. `transport` — Play in `#start`, `collapse="idle"` (6).
-7. `pager` — `collapse=false`, prev / dots / next, `size` per app (7).
-
-These are the demo's dock pages: one live dock per preset, plus the outlet case (8) shown as a
-known gap until seats can be contributed from a route.
+The bare plate (11) belongs to glass's plate material rather than the dock; the demo should show
+it there, not as a dock page.

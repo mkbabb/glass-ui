@@ -1,206 +1,255 @@
 # Dock usage across the apps
 
-Read-only source audit, 2026-11-15, against glass-ui master v11.0.2 (`e1aebc2d0`). Each app's
-working tree was read as it stands (source directories only). Paths are relative to
-`/Users/mkbabb/Programming/`.
+Trees read: value.js `origin/master` 216d0e066, keyframes.js `origin/master` f7d10f518, fourier-analysis `origin/master` ac9881552, daraksha `origin/master` e90682d91 (all via `git show`/`git grep`, no checkout, no fetch); atlas `.u-build/atlas-rc` 88bde3b35 (newest: `.u-build/lt-integ-atlas` 73c88cb52); gregg working tree (no commits); speedtest 4af04ba0d (`glass-10.1`); gaggle-site ad4ef65eb (`site-redesign`); slides 3cec2cba2 (`npig`); sci-report bbcbd503d; reddit 26907acc4; Home Assistant `apx-ui-r11` 6d5ac72a9; glass-ui master v11.0.2 `e1aebc2d0`.
+
+Read-only source audit, 2026-11-15, second pass. Paths are relative to `/Users/mkbabb/Programming/`.
+Working trees were read as they stand, source directories only.
 
 ## The apps and the glass-ui each one pins
 
-| App | glass-ui | Docks (components / mounts) |
+| App | glass-ui | Dock components |
 | --- | --- | --- |
-| value.js (color demo, `demo/`) | 10.1.3 | 1 / 1, plus loose `DockControl` clusters in 4 workbenches |
-| keyframes.js (`demo/`) | 10.1.3 | 2 / 2 |
-| fourier-analysis (`web/src`) | 10.1.3 | 5 / 5 |
-| daraksha | 10.1.4 | 2 / 2, plus 2 route components that teleport seats in |
-| atlas (library, `src/`) | 10.1.0 (peer ^10.1.0) | 1 / 1, plus a hand-built per-figure "gear dock" |
-| sci-report (`dashboards/`) | 7.0.0, atlas 7.0.0 | 0 direct; hosts atlas's dock through `PlatformShell` |
-| gregg | 11.0.2 | 3 / 19 (17 figure docks) |
-| speedtest | 11.0.1 | 2 / 2 |
-| gaggle-site (`dashboard/src`) | 11.0.2 | 3 / 3 |
-| slides | 10.1.4 | 1 / 1 |
+| value.js (colour demo, `demo/`) | 11.0.2 | 1, plus loose `DockControl` rows in 4 workbenches |
+| keyframes.js (`demo/`) | 11.0.2 | 3 |
+| fourier-analysis (`web/src`) | 11.0.2 | 6 |
+| daraksha | 11.0.1 | 5 (site, theme, page controls seat, 2 bare plates), plus 4 route components that teleport seats in |
+| atlas (`.u-build/atlas-rc/src`) | package.json says 10.1.0, but it imports `/dock-trigger` (11.x) | 4 (rail, phone bar, per-figure tools dock, per-figure dial bar); 5 in lt-integ-atlas (plus a scene head dock) |
+| sci-report (`dashboards/`) | 7.0.0, atlas 7.0.0 | 0 direct; hosts atlas's docks |
+| gregg | 11.0.2 | 3 (17 figure docks mount) |
+| speedtest | 11.0.1 | 2 |
+| gaggle-site (`dashboard/src`) | 11.0.2 | 3 |
+| slides | 10.1.4 | 1 |
 | reddit (Packboard) | 10.1.3 | 0 |
-| Home Assistant (`hassio-config-worktrees/apx-ui-r11/frontend/src`) | 11.0.1 | 1 / 1 (render function) |
+| Home Assistant (`hassio-config-worktrees/apx-ui-r11/frontend/src`) | 11.0.1 | 1 (render function) |
 
-21 dock components, 37 mounted docks on a full render. The value.js `demo/` is the colour site;
-keyframes and fourier are separate repos, read in full. Four apps on 10.1.x (value.js,
-keyframes.js, fourier-analysis, atlas) import `DockTrigger` from `@mkbabb/glass-ui/dock`, which
-11.x moved to `/dock-trigger`: they break on upgrade.
+29 dock components (30 with lt-integ-atlas). gregg mounts 19 docks, and atlas mounts two per
+figure. Every app that imports `DockTrigger` now takes it from `/dock-trigger`.
 
 ## Per dock
 
-Props column: every prop passed to `GlassDock` with its value. "Hold" means the app calls the
-exposed `keepOpen()`/`release()` itself.
+Props: every prop passed to `GlassDock` with its value. "Hold" means the app calls
+`keepOpen()`/`release()` itself.
 
-### value.js
+### value.js (origin/master 216d0e066)
 
-**Top dock** — `value.js/demo/shell/dock/Dock.vue:279`. Site navigation plus app chrome: view
-select, tools, profile and account menus. Horizontal pill, in-flow in a top band.
+**Top dock** — `demo/shell/dock/Dock.vue:295`. Site navigation plus app chrome: view select,
+tools, profile and account menus. Horizontal pill, in-flow in a top band.
 
 - Props: `:collapse="isDesktop ? 'open' : false"`, `:fit-content="true"`,
   `:background-canvas="() => document.querySelector('canvas[data-glass-field-canvas]')"`,
-  `:style="bandInkStyle"` (rebinds `--foreground`, `--dock-fg-on-aurora`, `--muted-foreground`,
-  `--focus-ring-color` to the band's measured ink).
+  `:style="heldInkStyle"` (rebinds `--foreground`, `--dock-fg-on-aurora`, `--muted-foreground`,
+  `--focus-ring-color` to the band's measured ink, held still during a colour drag).
 - Default slot: `DockLayerGroup v-model:active :show-switcher="false"` holding 4 `DockLayer`s
   (`mobile-edit`, `slug-edit`, `action-bar`, `main`). `main`: `DockViewSelect` (a `DockTrigger
   for="select"` with `:style="{'--dock-ring': viewRing}"`), `ActionBarToggle` (`DockControl`),
-  `MobileMenuDropdown` (`DockTrigger for="dropdown"`), `ProfileSection` (3 `DockTrigger
-  for="dropdown"` + 1 `DockControl`). `action-bar`: Back `DockControl`, `DockSeparator`,
-  `ActionBarLayer`, which nests a `DockCrossfade reserve="inline"` with 2 `DockLayer`s (an
-  action row of `DockControl`s with Popover hover cards, and a colour text input).
+  `MobileMenuDropdown` (`DockTrigger for="dropdown"`, `DropdownMenu modal`), `ProfileSection` (3
+  `DockTrigger for="dropdown"` in modal menus + 1 `DockControl`). `action-bar`: Back
+  `DockControl`, `DockSeparator`, `ActionBarLayer`, which nests a `DockCrossfade reserve="inline"`
+  with 2 `DockLayer`s (an action row of `DockControl`s with Popover hover cards; a colour input).
   `mobile-edit`: two swatches, `DockSeparator`, Save/Cancel `DockControl`s.
 - `#collapsed`: a wax seal (WatercolorDot in the live colour plus the view icon).
-- Exposed: `expanded` (watched to exit slug edit), `keepOpen`/`release` (one predicate:
-  action bar, edit, or any popup open), `expand` on edit, `$el` (a MutationObserver on
-  `data-morphing` to time a settle beat; `.dock-plate` queried to measure ink).
-- Context: `ActionButton.vue:59` calls `useOptionalDockContext().keepOpen/release` while its
-  Popover hover card is open, instead of `Popover keep-dock-open`.
+- Exposed: `expanded` (watched to leave slug edit), `keepOpen`/`release` (one predicate: action
+  bar, edit, or any popup open), `expand` on edit, `$el` (a MutationObserver on `data-morphing`
+  to time a settle beat; `.dock-plate` queried to measure ink).
+- Context: `ActionButton.vue:67` calls `useOptionalDockContext().keepOpen/release` while its
+  Popover hover card is open.
 - CSS: `.glass-dock :deep(:is(.dock-layer-tab, .dock-icon-button, .dark-mode-toggle-button,
   .dock-tab-button, .dock-select-trigger, .dock-dropdown-trigger)) { --dock-ring-color:
-  var(--focus-ring-color) }` — "glass seats each control's ring at a 48 % mix of that knob,
-  which halves a certified ink back under the graphics floor on a light band".
-  `.dock-tools-btn { --dock-compact-control-padding: 0.5rem 0.75rem; --dock-icon-padding: 0.5rem
-  0.75rem }` — "`.glass-dock .dock-icon-button { padding: var(--dock-icon-padding, …) }` (0,2,0)
-  outranks `.dock-icon-button--compact` (0,1,0) inside the dock". `SlugEditLayer`:
-  `--dock-compact-control-size`. `styles/shell.css:373`: `.glass-dock { --input-on-glass:
-  var(--well-bg) }`. `foundation.css` declares an app-level `--dock-h`, which collides with
-  glass-ui's own `--dock-h` sizing token.
-- Wrappers: `useDockArrival` (boot reveal, finds `.glass-dock`), `useDockAdminMode`,
-  `usePopupMutex` (one popup open at a time), `useChromeAccentFn(dockPlate)` (ink certified
-  against the plate).
+  var(--focus-ring-color) }` — "glass seats each control's ring at a 48 % mix of that knob, which
+  halves a certified ink back under the graphics floor on a light band". New on origin/master:
+  `.glass-dock { --glass-grain-opacity: 0 }` — the plate's grain tile "was the page's final LCP
+  candidate … this line goes when that ships". `.dock-tools-btn { --dock-compact-control-padding;
+  --dock-icon-padding }` (specificity fight with `.dock-icon-button--compact`);
+  `--dock-compact-control-size` (SlugEditLayer); `.glass-dock { --input-on-glass }`; an
+  app-level `--dock-h` that collides with glass's own.
+- Wrappers: `useDockArrival`, `useDockAdminMode`, `usePopupMutex`, `useChromeAccentFn(dockPlate)`,
+  `useHeldWhileLive`.
 
-Loose clusters (no `GlassDock`): `MixResultDisplay.vue:138`, `ImageEyedropper.vue:28`,
-`GradientVisualizer.vue:292`, `ExtractWorkbench.vue:59` use `DockControl` (often `compact`) and
-`DockSeparator` as a plain glass icon button and divider inside ordinary flex rows.
+Loose rows (no `GlassDock`): `MixResultDisplay.vue`, `ImageEyedropper.vue`,
+`GradientVisualizer.vue`, `ExtractWorkbench.vue` use `DockControl` (often `compact`) and
+`DockSeparator` as a plain glass icon button and divider.
 
-### keyframes.js
+### keyframes.js (origin/master f7d10f518)
 
-**Chrome dock** — `keyframes.js/demo/app/dock/ChromeDock.vue:447`. Site navigation: the scene
-picker, the editor-surface menu, the @mbabb menu. Top, fixed, horizontal pill.
+**Chrome dock** — `demo/app/dock/ChromeDock.vue:445`. Site navigation: scene picker, editor
+surface menu, @mbabb menu. Top, fixed.
 
 - Props: `collapse="closed"`, `:fit-content="true"`, `:background-canvas="auroraCanvas"`.
-- Default slot: `Select` with `DockTrigger for="select"` (scene), `DockSeparator`,
-  `DropdownMenu` with `DockTrigger for="dropdown"` (surfaces), `DockSeparator`, a slot for
-  App's `MbabbMenu` (`DockTrigger for="dropdown"`).
-- `#collapsed`: a glass `Button` (icon-only) holding the scene glyph, made focusable because the
-  10.1.x summary was not, with a focus handler that calls `expand()` and moves focus.
-- Exposed: `expanded`, `isPinned`, `isHeld` (a watchdog re-expands a dock that collapsed while
-  held), `expand`, `keepOpen`/`release` around `isSelectOpen`, `$el` for popup offsets.
-- Context: `MbabbMenu.vue:375` holds through `useOptionalDockContext()`.
-- CSS: no glass knobs set; `.dock-glyph { width: var(--dock-icon-glyph) }` reads one.
-- Wrappers: `composables/dockEdge.ts` (`provideDockPlate` + `useDockEdgeOffset`): "a popup opened
-  from the top dock starts BELOW the dock, not inside it … the producer half — floating content
-  inside a dock offsets from the dock edge by itself — stays relay-only (O-59)".
+- Default slot: `Select` + `DockTrigger for="select"` (scene), `DockSeparator`, `DropdownMenu` +
+  `DockTrigger for="dropdown"` (surfaces), `DockSeparator`, App's `MbabbMenu` slot.
+- `#collapsed`: a glass `Button` (icon-only) with the scene glyph and a focus hand-off.
+- Exposed: `expanded`, `isPinned`, `isHeld` (a watchdog re-expands a dock that folded while held),
+  `expand`, `keepOpen`/`release` around `isSelectOpen`, `$el` for popup offsets.
+- Context: `MbabbMenu.vue:351` holds through `useOptionalDockContext()`, now also while a dialog
+  waits for the menu's exit (`dialogPending`).
+- Wrappers: `dockEdge.ts` (`useDockEdgeOffset`: popups placed past the dock's edge, "O-59").
 
-**Transport dock** — `keyframes.js/demo/components/instrument/transport/TransportDock.vue:33`.
-Animation transport. Bottom, fixed, horizontal pill.
+**Transport dock** — `demo/components/instrument/transport/TransportDock.vue:36`. Bottom, fixed,
+or in flow in an embed (`contained`).
 
 - Props: `collapse="closed"`, `:fit-content="true"`.
-- `#persistent`: Play/Pause `DockControl shape="icon"` in a Tooltip, actuated on
-  pointerup/keyup by `usePlayActuation` ("the dock's collapse crossfade can strand" a click).
-- Default slot: a `div.transport-row` holding `DockSeparator`, a channel `Select` with
-  `DockTrigger for="select"`, `DockSeparator`, Reset `DockControl`.
-- `#collapsed`: unauthored (Play is persistent).
-- Exposed: `expand` after play, `keepOpen`/`release` around the channel Select, `$el` for the
-  list's offset.
-- Wrappers: `useMenubarMeasure` publishes the dock host's height on `:root`.
+- `#persistent`: Play/Pause `DockControl shape="icon"` actuated on pointerup/keyup
+  (`usePlayActuation`: the collapse crossfade "can strand" a click).
+- Default slot: `div.transport-row`: `DockSeparator`, channel `Select` + `DockTrigger
+  for="select"`, `DockSeparator`, Reset `DockControl`.
+- Exposed: `expand`, `keepOpen`/`release` around the channel Select, `$el` for the list offset.
 
-### fourier-analysis
+**Ribbon dock** (new on origin/master) — `demo/components/instrument/pane/RibbonBar.vue:76`. A
+pane's action row: Apply CSS (`DockControl shape="tab" :active`), `DockSeparator`, Copy, Format,
+Copy compiled (`DockControl shape="icon"` in Tooltips). Props: `fit-content`, `:collapse="false"`.
 
-**App dock** — `fourier-analysis/web/src/components/layout/AppDock.vue:172`. Site navigation.
+App-wide CSS: `demo/styles/style.css:158 --radius-dock: 9999px` — "Fully round docks … REMOVE AT
+GLASS 11.1.0, which makes the stadium the default." Both bar docks add `view-transition-class:
+gl-list-item`.
 
-- Props: `orientation="horizontal"`, `shape="pill"`, `:collapse="false"`, `class="app-dock"`.
-- Default slot: `Popover` + `DockTrigger for="popover"` (about), `DockSeparator`, `DropdownMenu
-  :modal="false"` + `DockTrigger for="dropdown"` (page nav), `DockSeparator`, `UserSlugBar`
-  (`DockTrigger`), `DockSeparator`, `DarkModeToggle` (a `DockControl` inside).
-- CSS: `.app-dock { --dock-trigger-min-height: var(--dock-control-size) }`;
-  `DarkModeToggle.vue:257 .sun-moon-toggle { --dock-icon-glyph: var(--icon-xl) }`.
+### fourier-analysis (origin/master ac9881552)
 
-**Canvas controls dock** — `components/visualization/CanvasControlsDock.vue:63`. A canvas's view
-tools, floating over the visualisation in an anchor box.
+**App dock** — `web/src/components/layout/AppDock.vue:239`. Site navigation. Changed: it now folds.
 
-- Props: `fit-content` (collapse omitted, so `"closed"`).
-- Default slot: `ViewLayersMenu` (`DockTrigger for="dropdown"`), `DockSeparator`, Publish,
-  Equation (`:active`), Export `DockControl`s in Tooltips, `DockSeparator`, Fullscreen.
-- `#collapsed`: an ellipsis glyph and a `StatusDot`. `#persistent-end`: Edit `DockControl`.
-- Exposed: `keepOpen`/`release` from each menu's `update:open` (`holdDockWhileOpen`); `expanded`
-  watched and re-emitted as `update:expanded`, "rather than an out-of-band `defineExpose`".
+- Props: `orientation="horizontal"`, `shape="pill"`, `collapse="closed"`, `class="app-dock"`.
+- Default slot: `Popover keep-dock-open` + `DockTrigger for="popover"` (about), `DockSeparator`,
+  `DropdownMenu :modal="false" @update:open="holdDockWhileOpen"` + `DockTrigger for="dropdown"`
+  (page nav, with a label shown only when it fits), `DockSeparator`, `UserSlugBar` (an account
+  `DropdownMenu` held through `useOptionalDockContext()` — "glass's DropdownMenu has no such
+  prop" — or a login `Popover keep-dock-open`), `DockSeparator`, `DarkModeToggle`.
+- `#collapsed`: the ℱ mark.
+- Exposed: `expanded`, `isTransitioning` (both gate `fitNavLabel`, which probes every label and
+  hides the label if the run would overflow), `isHeld`, `collapse` (the app folds the dock after
+  48 px of scroll down), `keepOpen`/`release`, `$el`. A `ScrollProgressRim` sits on it.
+- CSS: `--dock-trigger-min-height: var(--dock-control-size)`; a phone `--dock-padding-block` from
+  `--dock-density-compact-padding-block`.
 
-**Editor controls dock** — `EditorControlsDock.vue:97`. Contour editor tools.
+**Canvas controls dock** — `components/visualization/CanvasControlsDock.vue:63`. Unchanged: props
+`fit-content`; view menu, Publish, Equation, Export, Fullscreen; `#collapsed` ellipsis + dot;
+`#persistent-end` Edit; holds; `expanded` re-emitted as `update:expanded`.
 
-- Props: `fit-content`.
-- `#persistent`: a point-count `Metric` and Save `DockControl`. `#collapsed`: ellipsis glyph.
-- Default slot: `div.dock-row` with Undo, Redo, `DockSeparator`, Delete, `ViewLayersMenu`,
-  a `DropdownMenu :modal="false"` (`DockTrigger for="dropdown"`) holding a slider, items and a
-  sub-menu.
-- Exposed: `keepOpen`/`release` (`holdDockWhileOpen`).
-- CSS: `.dock-row { gap: var(--dock-layer-gap) }`, `.dock-summary-glyph` reads `--dock-icon-glyph`.
+**Editor controls dock** — `EditorControlsDock.vue:103`. Props `fit-content`; `#persistent` count
++ Save; `#collapsed` ellipsis; default Undo/Redo/Delete/view menu/more menu (now glass Buttons as
+menu rows); holds.
 
-**Animation controls** — `AnimationControls.vue:141`. Transport.
+**Animation controls** — `AnimationControls.vue:142`. Unchanged: `#persistent` Play, `#collapsed`
+mini progress, speed and easing menus, holds.
 
-- Props: `class="animation-dock"`, `:style="{'--animation-dock-max-width': maxWidth}"`.
-- `#persistent`: Play/Pause `DockControl :active`. `#collapsed`: `MiniProgressReadout`.
-- Default slot: `div.transport-face` with a timeline readout and two `DropdownMenu`s
-  (`DockTrigger for="dropdown"`: speed, easing).
-- Exposed: `keepOpen`/`release`. CSS: width computed from `--dock-padding-inline`,
-  `--dock-layer-height`, `--dock-layer-gap`.
+**Equation actions** — `components/equation/EquationResult.vue:80`. Unchanged: `fit-content`,
+`:collapse="false"`, Info + Copy.
 
-**Equation actions** — `components/equation/EquationResult.vue:80`. An inline action cluster in
-a card header.
+**Contents drawer actions** (new) — `components/paper/PaperTocDrawer.vue:136`. A drawer header's
+action row: Scroll to top, Contents toggle (`CollapsibleTrigger as-child`), Hide. Props
+`fit-content`, `:collapse="false"`.
 
-- Props: `fit-content`, `:collapse="false"`. Default slot: a consumer `#actions` slot (an Info
-  `DockControl` under a Popover from `EquationView.vue:554`) and Copy `DockControl`.
+App-wide CSS: `web/src/style.css:526 :root { --radius-dock: 9999px }` — "DELETE AT THE glass
+11.1.0 BUMP, which makes the stadium the default."
 
-### daraksha
+### daraksha (origin/master e90682d91, glass-ui 11.0.1)
 
-**Pages dock** — `daraksha/src/shell/SiteDock.vue:31`. Site navigation.
+**Site dock** — `src/shell/SiteDock.vue:255`. Site navigation that swaps to the page's controls.
+Changed: it now folds and has two faces.
 
-- Props: `fit-content`, `:collapse="false"`, `class="pages"`, `aria-label="Pages"`.
-- Default slot: one `DockControl shape="tab" :active` per page.
+- Props: `fit-content`, `class="dock"`, `aria-label="Site"`, `:collapsed-label="<page>: open the
+  dock"` (collapse omitted, so `"closed"`).
+- `#collapsed`: the page icon. `#persistent-end` (Motion page only): `<div
+  id="dock-persistent-end">`, a Teleport outlet.
+- Default slot: `DockLayerGroup v-model:active :show-switcher="false"` with `DockLayer id="pages"
+  label="Pages"` (5 `DockControl compact :active` seats, each a word and an icon) and `DockLayer
+  id="page" :label="<page> controls"` (a Pages `DockControl shape="icon"`, `DockSeparator`, `<div
+  id="dock-page">`, the Teleport outlet).
+- Teleported in: `scripture/ReaderDock.vue`, `name/NameDock.vue`, `portraits/PortraitsDock.vue`
+  (into `#dock-page`), `pages/MotionPage.vue` (into `#dock-persistent-end`).
+- Exposed: `expanded`, `keepOpen("grasp")`/`keepOpen("morph")` and `release`, `collapse`, and the
+  root's `--dock-expand-t`, `--dock-expanded-px`, `--dock-collapsed-px` read to drive a "fission"
+  where the theme dock splits from the site dock as it opens.
+- Wrapper: `shell/dockHold.ts`, one app hold the teleported controls reach by injection: "glass's
+  `keep-dock-open` and its Slider's own hold never reach the dock … REMOVE AT GLASS 11.2.0
+  (glass's outlet for teleported page controls)". `shell/dockTip.ts` (tooltips only where there
+  is room).
+- CSS: `.site-dock :global(.glass-dock #dock-page > *)` scales and fades the teleported controls on
+  `--dock-expand-t` — "Glass's morph keeps a layer's content whole for the first part of a fold
+  … a wide control … stood outside the closing plate". Phone:
+  `--dock-density-comfortable-padding-inline: 0.375rem`. `src/styles.css`: `--radius-dock:
+  1.875rem` ("The dock is a stadium … retuned to half the dock's" height), `--shadow-dock-override:
+  var(--shadow-sm)`.
 
-**Controls dock** — `SiteDock.vue:42`. The page's controls, filled from outside.
+**Theme dock** — `SiteDock.vue:312`. One seat (`ThemeControl`). Props `:collapse="false"`,
+`fit-content`, `aria-label="Theme"`.
 
-- Props: `fit-content`, `:collapse="false"`, `aria-label="Controls"`.
-- Default slot: `<div id="dock-page" class="contents">` (a Teleport target) and `ThemeControl`
-  (`DockControl` with `aria-pressed`).
-- Teleported in: `scripture/ReaderDock.vue` (Surah tab, prev/next `DockControl`s, `DockSeparator`,
-  a `role="group"` of 3 tab `DockControl`s, `DockSeparator`, `Popover keep-dock-open` with a tab
-  trigger and a panel holding steppers and toggle groups); `name/NameDock.vue` (Play/Pause and
-  Again tabs, `DockSeparator`).
-- The two docks sit side by side in a fixed grid wrapper, stacked on a phone.
-- Wrapper: `shell/dockTip.ts` (tooltips only on a fine pointer at one-row width).
-- No glass knob overridden.
+**Page controls seat** (new) — `src/shell/ControlsSeat.vue:98` and `:101`. A page's own controls
+in one place on every page, top right: "a controls button that is a dock, too … Glass ships this
+composition as a named piece in 11.2.0: REPLACE THIS FILE'S DOCK WITH IT THEN". Used by Colour,
+Motion, Name and Portraits pages.
 
-### atlas (and sci-report through it)
+- One action: `:collapse="false"`, `fit-content`, `:aria-label`.
+- Several (`fold`): `collapse="closed"`, `expand-on="press"`, `:orientation="column ? 'vertical' :
+  'horizontal'"` (a column on a phone), `:collapsed-label`, `#collapsed` page icon.
+- Seats: the page's `DockControl`s in the default slot; holds through `dockHold`.
+- CSS: `--dock-density-comfortable-padding-inline: 0.375rem` on a phone.
 
-**Section rail** — `atlas/src/platform/chrome/dock/Dock.vue:228`. Site section navigation as a
-vertical rail at the left edge; a sheet on a phone.
+**Bare plates** (new) — `src/veil/Star.vue:31` and `src/veil/film/Clasp.vue:84`. A
+`GlassDock :collapse="false" fit-content` holding only an empty sizing span, `inert`, behind a
+button that is not in the dock: "glass's one-seat dock, never collapsing, the theme seat's
+material". The dock is used as a material plate.
 
-- Props: `orientation="vertical"`, `shape="card"`, `:collapse="isPhone ? 'closed' : 'open'"`,
-  `class="usf-dock"`, `aria-label="Section navigation"`.
-- `#persistent`: `DockCrest` (identity crest; a button on a phone). Default slot:
-  `.usf-dock__viewport` > `DockStepperRender` (nav items, `DockSeparator`), and `DockFoot`
-  (`DockSeparator`, `DockSettings` = `DockTrigger for="dropdown"`, a collapse toggle).
-- Exposed: `expanded`, `expand`, `collapse`, driven by `useDockCollapse` (an intent arbiter:
-  manual > register > scroll) and its own `useScrollChrome` (collapse on scroll down).
+### atlas (`.u-build/atlas-rc` 88bde3b35; sci-report shows these)
+
+**Section rail** — `src/platform/chrome/dock/Dock.vue:440`. Site and section navigation as a
+vertical rail at the start edge, 768 px and wider. Changed: no `shape="card"`; the rail folds to
+the crest disc and the app opens it on hover.
+
+- Props: `orientation="vertical"`, `anchor="start"`, `backdrop-mode="static"`, `:collapse="homeRail
+  ? false : 'closed'"`, `aria-label="Site navigation"`, several data attributes.
+- `#persistent`: `DockCrest`, `DockProgressRim`, then a search field (home) or a dashboard
+  `DockTrigger for="select"` (with `<template #icon><span hidden /></template>` to drop the
+  chevron), search, saved views. Default: `DockStepperRender` or `DockRoster`.
+  `#persistent-end`: `DockFoot` or saved views + theme toggle.
+- Collapse: `useDockCollapse` arbitrates intents (manual, register, scroll, portal, bloom) and calls
+  `expand()`/`collapse()`. "Bloom" re-implements hover/focus open with a 150 ms leave grace and
+  keyboard-vs-pointer tracking. `useDockPortals` pins it open while a teleported drawer or list is
+  open. Reads `data-morphing` off `$el`.
 - CSS (`Dock.css`): `--dock-control-size: 2.75rem; --dock-separator-height: 1.5rem;
-  --dock-max-block-size: calc(100dvh - …); --dock-card-radius: var(--cp-radius, 1.75rem);
-  --dock-morph-t: 1; --glass-opacity-dock: 0.9; --dock-plate-bg: …; --dock-rim-strength: …`
-  (the last two are read by no glass rule). Positioning (`position: fixed`, insets, inline size)
-  is set on the dock root itself.
-- Deep selectors: `:deep(.dock-layer--full)` (flex column), `.usf-dock--phone.collapsed
-  :deep(.dock-layers) { display: none }`, and a phone sheet restyle of the stepper rows.
-- Scrim and Escape handling for the phone sheet are the app's.
+  --dock-max-block-size; --dock-control-radius: var(--radius-stadium); --dock-layer-tab-radius;
+  --dock-padding-block: 0.875rem; --dock-padding-inline: 0; --dock-collapsed-padding: 0;
+  --dock-collapsed-summary-min-size: 2.75rem; --dock-layer-gap: 0.5rem; --dock-morph-t: 1;
+  --dock-plate-bg; --dock-rim-strength; --shadow-dock-override; --dock-plate-collapsed-border /
+  -expanded-border: transparent; --dock-seat; --dock-run-gap; --dock-open-pitches: 1`, a home
+  rail `--radius-dock: calc(max(1.375em, 22px) + 0.5em)`. Deep selectors: `.dock-layer--full`
+  (×5), `.dock-persistent-end` (×4), `.dock-persistent` (×3), `.dock-run`, `.dock-plate`,
+  `.dock-layers`, `.dock-progress-rim`, with `[data-morphing]` and `--dock-expand-t`.
 
-**Per-figure gear dock (stand-in)** — `atlas/src/charts/frame/VizGearDock.vue`, used at
-`VizPlate.vue:157`. A figure's filter/download/enlarge controls. Not a `GlassDock`: a hand-built
-group with a gear button that blooms the slotted controls on hover/focus (`max-inline-size`
-transition, 60 ms dwell). Seats: `DockControl compact` (Filters, with a count Badge),
-`DockControl compact` or `DockTrigger for="dropdown"` (Download), `DockControl compact`
-(Enlarge). CSS: `--dock-compact-control-padding: 0.875rem; --dock-trigger-padding-block/inline:
-0.875rem` — "0.875rem padding × 2 + the 1rem glyph = 44px", the hit floor the controls lacked.
+**Phone bar** — `Dock.vue:519`. The same navigation as a bottom bar under 768 px.
+
+- Props: `orientation="horizontal"`, `:collapse="false"`, `backdrop-mode="static"`.
+- `#persistent`: crest + progress rim. Default: dashboard select, section cell, search, saved views
+  (`DockTrigger for="select"`). `#persistent-end`: filter trigger (`DockControl`), theme toggle.
+- The bar slides out on scroll down (`barOut`), app-driven.
+
+**Figure tools dock** — `src/charts/frame/PlateDock.vue:145`, one per figure (`VizPlate.vue:249`,
+`ChapterStage.vue:283`). Replaces the old hand-built `VizGearDock`.
+
+- Props: `orientation="horizontal"`, `collapse="closed"`, `expand-on="press"`, `anchor="end"`,
+  `:collapsed-label="Tools for <title>"`, `backdrop-mode="static"`, `shape="pill"`,
+  `data-preset="cockpit"`.
+- `#persistent`: Table view `DockControl :active`. `#collapsed`: the More handle (ellipsis + dirty
+  dot). Default: Options (`Popover` anchored to its control), Raw data or Download, Enlarge, Close.
+- Exposed: `keepOpen`/`release` while Options or Download is open, `collapse` on Close, Escape and
+  a sheet taking the screen.
+
+**Figure dial bar** — `src/charts/frame/PlateControls.vue:117`, per figure at 60 rem of plate and
+wider. Named dial groups, each a caption and a `SegmentedTabs` pill strip, parted by
+`DockSeparator`, then the figure's own control (`PeriodControl`: `DockControl` + `DockTrigger`).
+Props: `orientation="horizontal"`, `:collapse="false"`, `backdrop-mode="static"`, `shape="pill"`,
+`data-preset="cockpit"`. Narrower, the same dials render as a grid with no dock.
+
+Differences in `.u-build/lt-integ-atlas` (73c88cb52):
+- `PlateDock.vue:280` opens on hover: `expand-on="hover"`, plus `:hover-intent="HOVER_INTENT_MS"`
+  and `run="plain"`. Neither prop exists on `GlassDock` v11.0.2, so both fall through as root
+  attributes and do nothing. Enlarge moves into `#persistent`; the tray lingers before closing
+  ("should not instantly teleport away … dwell time").
+- `src/charts/scene/StickyScene.vue:154` adds a scene head dock: `:collapse="false"`,
+  `backdrop-mode="static"`, `shape="pill"`, `data-preset="cockpit"`, slot `figure-control`.
+- The rail and phone bar props are the same.
 
 sci-report: no glass dock import. `home/gallery/GalleryView.vue:385` sets `--dock-control-size:
-2.75rem` on a control zone styled after atlas's dock foot.
+2.75rem` on a control zone styled after atlas's dock foot. It pins atlas 7.0.0, so the shipped
+site shows whichever atlas it was built with.
 
 ### gregg
 
@@ -377,6 +426,18 @@ warning count, an admin menu. Fixed under HA's toolbar, positioned from a spacer
 
 No dock.
 
-## Correction (2026-11-15, from value.js)
 
-For value.js, keyframes.js and fourier-analysis this table read local checkouts that sit on old branches. On each repo's origin/master all three are on glass-ui 11.0.2 and already import `DockTrigger` from `@mkbabb/glass-ui/dock-trigger`; daraksha's is origin/master e90682d. The version figures and the "drift" note for those three are stale; the compositions, slots and workarounds have not been re-read against origin/master and may differ in detail.
+## Correction (2026-11-15, second pass)
+
+The first pass read local checkouts on old branches for value.js, keyframes.js,
+fourier-analysis and daraksha, and an atlas tree months behind production. This file now
+reflects `origin/master` for the four and `.u-build/atlas-rc` for atlas. The corrected rows:
+
+| App | First pass | Corrected |
+| --- | --- | --- |
+| value.js | 10.1.3; `DockTrigger` from `/dock` | 11.0.2; `/dock-trigger`; menus `modal`; adds `.glass-dock { --glass-grain-opacity: 0 }`. Same one dock. |
+| keyframes.js | 10.1.3; 2 docks | 11.0.2; 3 docks (adds `RibbonBar`, a pane action row, `:collapse="false"`); `--radius-dock: 9999px` |
+| fourier-analysis | 10.1.3; 5 docks; AppDock `:collapse="false"` | 11.0.2; 6 docks (adds `PaperTocDrawer` header actions); AppDock `collapse="closed"` with `#collapsed` ℱ, app-driven fold on scroll, label fit probe, `Popover keep-dock-open`, `isTransitioning`/`isHeld`/`collapse` used; `--radius-dock: 9999px` |
+| daraksha | 10.1.4; 2 docks, both `:collapse="false"`, `#dock-page` outlet | 11.0.1; 5 docks: a folding site dock with `DockLayerGroup` + 2 labelled `DockLayer`s, `compact` seats, two Teleport outlets, a fission read off the morph variables; a theme dock; a page controls seat (`expand-on="press"`, vertical on a phone); 2 bare plates; `dockHold.ts`; `--radius-dock: 1.875rem` |
+| atlas | 1 rail (`shape="card"`, `:collapse="isPhone ? 'closed' : 'open'"`) and a hand-built `VizGearDock` | 4 docks: rail (`orientation="vertical"`, `anchor="start"`, static, no `shape`), phone bar, `PlateDock` (a real `GlassDock`, `expand-on="press"`, `anchor="end"`, `data-preset="cockpit"`), `PlateControls`; `VizGearDock` deleted; `DockTrigger #icon` used; `--radius-dock` on the home rail |
+| totals | 21 components | 29 components (30 with lt-integ-atlas) |
