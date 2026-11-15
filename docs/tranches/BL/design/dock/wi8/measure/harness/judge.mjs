@@ -56,7 +56,10 @@ function judge(file) {
     const fullTravel = {};
     for (const sg of segs) {
         const rs = rows.slice(sg.a, sg.b + 2).filter(Boolean);
-        const revMark = marks.find((mk) => /^reverse/.test(mk.name) && mk.i >= sg.a && mk.i <= sg.b);
+        // PROTOTYPE-2: a mark that lands inside a running travel (a reversal, or a second
+        // change that retargets it) is judged as a turn: the no-reversal bound is excepted
+        // after it and its response is read.
+        const revMark = marks.find((mk) => mk.i > sg.a + 1 && mk.i <= sg.b);
         const res = { scen, tree, eng, cell, rows: `f${sg.a}-f${sg.b}`, ms: +(rows[sg.b].t - rows[sg.a].t).toFixed(0), edges: {}, viol: [] };
         for (const k of ["L", "R", "T", "B"]) {
             const v = rs.map((r) => edges(r.el.plate)?.[k]);
@@ -74,7 +77,14 @@ function judge(file) {
             }
             if (!steps.length) continue;
             let span = Math.max(travel, Math.max(...v) - Math.min(...v));
-            if (revMark && fullTravel[k]) span = fullTravel[k];
+            // PROTOTYPE-2: the span is the travel the edge was heading for: the largest
+            // distance from its start to the root's layout edge over the segment (the root is
+            // never transformed, so its box is the layout). One travel: its own length.
+            for (let q = sg.a; q <= sg.b + 1 && q < rows.length; q++) {
+                const dk = edges(rows[q]?.el.dock)?.[k];
+                if (dk != null && Math.abs(dk - v[0]) > span) span = Math.abs(dk - v[0]);
+            }
+            if (revMark && fullTravel[k]) span = Math.max(span, fullTravel[k]);
             // PROTOTYPE-2 (build step 2): a reversed travel with no earlier segment takes its
             // span from the posture it was heading to, the root's layout box at the mark. The
             // first judge took the reversal segment's own extent, so a reversed unfold read
@@ -128,7 +138,8 @@ function judge(file) {
                 res.turn = res.turn ?? {};
                 const tms = turn ? rows[turn.i].t - rows[revMark.i].t : null;
                 res.turn[k] = tms == null ? null : +tms.toFixed(1);
-                if (tms != null && tms > FROM_REST_MS) res.viol.push(`${k} turns ${tms.toFixed(0)} ms after the reversal`);
+                // G-3's response applies to a reversal; a retarget (G-4) has no response clause.
+                if (/^reverse/.test(revMark.name) && tms != null && tms > FROM_REST_MS) res.viol.push(`${k} turns ${tms.toFixed(0)} ms after the reversal`);
                 const vs = steps.map((st) => st.s / st.dt);
                 let jump = 0;
                 for (let q = 1; q < steps.length; q++) if (steps[q].i >= revMark.i && steps[q].i <= revMark.i + 4) jump = Math.max(jump, Math.abs(vs[q] - vs[q - 1]) / span);
@@ -141,8 +152,9 @@ function judge(file) {
         // 0.25 px. A rounded or card dock: between its two rests within 0.5 px (its lerp on
         // e or f is not in the rows; the between-rests test is the weaker form, stated).
         let cornerBad = 0, capsuleBad = 0, cornerWorst = 0;
-        const radOf = (r) => (r?.el.plate?.rad || "").split("|").map((x) => parseFloat(x));
         const crossOf = (r) => { const p = r?.el.plate; return p ? Math.min(p.w, p.h) / 2 : NaN; };
+        // A radius larger than half the cross extent paints as half of it (the used value).
+        const radOf = (r) => (r?.el.plate?.rad || "").split("|").map((x) => Math.min(parseFloat(x), crossOf(r)));
         const c0 = radOf(rs[0]), c1 = radOf(rs[rs.length - 1]);
         const pill = c0.every((x) => Math.abs(x - crossOf(rs[0])) <= 0.75) && c1.every((x) => Math.abs(x - crossOf(rs[rs.length - 1])) <= 0.75);
         res.pill = pill;
@@ -150,6 +162,7 @@ function judge(file) {
             const p = r.el.plate;
             if (!p || !p.rad || /%/.test(p.rad)) continue;
             const c = radOf(r);
+            if (c.some((x) => Number.isNaN(x))) continue;
             if (Math.abs(c[0] - c[3]) > 0.25 || Math.abs(c[1] - c[2]) > 0.25) cornerBad++;
             if (pill) {
                 const off = Math.max(...c.map((x) => Math.abs(x - crossOf(r))));

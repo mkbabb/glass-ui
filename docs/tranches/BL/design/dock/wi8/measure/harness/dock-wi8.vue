@@ -15,10 +15,39 @@
 //   w-xf      an always-open DockCrossfade, faces of 2, 4, 1 and 3 rows
 //   w-flow    the layer dock in flow, with a paragraph under it
 //   w-rounded shape="rounded", no #collapsed, no regions (the empty summary)
-import { computed, ref } from "vue";
+// PROTOTYPE-2 cells (the spec after RULINGS-2):
+//   w-seat    the site dock: Home in #persistent, four page seats with aria-current, a
+//             divider and Settings; the open-seat cells change the current page
+//   w-card    shape="card", horizontal          w-vert   a vertical pill
+//   w-rail    atlas's vertical card rail (Home in #persistent)
+//   w-ctl     ControlsDock (&corner=, &within=viewport|parent), four seats
+//   w-ctl1    ControlsDock with one seat        w-ctlout  an outlet into a ControlsDock
+//   w-scope   a pill under [data-dock-scope] with a follower at var(--dock-expand-t) * 100px
+//   w-transport keyframes's transport: collapse closed, Play in #persistent, no #collapsed
+//   w-fourier fourier's canvas dock: ControlsDock within="parent", Edit in #persistent-end
+//   w-daraksha daraksha's composition: the site dock and a ControlsDock at the foot's end
+//             corner, the page's controls contributed through DockOutlet, the theme seat last
+//   w-sci     sci-report's filters: ControlsDock collapse="closed", words in #collapsed
+// PROTOTYPE-3 cells (the spec after RULINGS-2, the rest of build step 7):
+//   w-g8      overlays from run seats: a menu, a hover popover, a dialog, a sheet;
+//             &press=1 opens the dock by press (expandOn="press")
+//   w-g7      the outlet: two outlets into the run, one into #persistent-end on route A
+//             only, &order=outlet-first mounts the outlets before the dock; buttons
+//             unmount and remount the dock and switch the route; a probe in the
+//             contributed content reports the dock context's id
+//   w-lseats  a layer group whose faces hold DockControl seats (G-13 roving)
+//   w-two     the site dock and two controls docks at two corners (G-13)
+//   w-seatset the site dock with a seat added and removed by v-if, and a route that
+//             changes the seat set (G-4)
+//   w-color   value.js's Tools/Tool swap: a DockCrossfade of two faces in an open dock
+//   w-kfcode  keyframes's code-pane controls dock: within="parent", corner top-end
+import { computed, defineComponent, h, ref } from "vue";
 import * as dock from "@glass/components/dock";
 import { Slider } from "@glass/components/slider";
 import { Popover, PopoverContent, PopoverTrigger } from "@glass/components/popover";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@glass/components/menu";
+import { Dialog, DialogClose, DialogContent, DialogTitle, DialogTrigger } from "@glass/components/dialog";
+import { SheetContent } from "@glass/components/sheet";
 import {
     Home,
     Search,
@@ -44,6 +73,7 @@ import {
 } from "@lucide/vue";
 
 const { GlassDock, DockControl, DockSeparator, DockLayerGroup, DockLayer, DockCrossfade } = dock;
+const ControlsDock = (dock as Record<string, unknown>).ControlsDock as typeof GlassDock | undefined;
 const DockOutlet = (dock as Record<string, unknown>).DockOutlet as typeof GlassDock | undefined;
 const proto = !!DockOutlet;
 
@@ -53,6 +83,8 @@ const neck = q.get("neck") === "b" ? "b" : "a";
 const labelEnter = q.get("label") === "b" ? "b" : "a";
 const ground = q.get("ground") ?? "";
 const flags = { "data-neck": neck, "data-label-enter": labelEnter };
+const corner = q.get("corner") ?? "bottom-end";
+const within = q.get("within") === "parent" ? "parent" : "viewport";
 
 const dark = ref(document.documentElement.classList.contains("dark"));
 function toggleTheme(): void {
@@ -82,6 +114,35 @@ const xfPanes = [
 const volume = ref(40);
 const playing = ref(false);
 const popOpen = ref(false);
+// PROTOTYPE-3 state
+const press = q.get("press") === "1";
+const outletFirst = q.get("order") === "outlet-first";
+const g7Dock = ref(true);
+const g7Route = ref<"a" | "b">("a");
+const dialogOpen = ref(false);
+const sheetOpen = ref(false);
+const hoverOpen = ref(false);
+const extraSeat = ref(false);
+const seatRoute = ref<"x" | "y">("x");
+const routePages = computed(() =>
+    seatRoute.value === "x"
+        ? pages
+        : [pages[0]!, { id: "gallery", label: "Gallery", icon: Image }, { id: "type", label: "Type", icon: Type }],
+);
+const colorTool = ref("tools");
+const lfaces = [
+    { id: "draw", label: "Draw", seats: [{ id: "pen", icon: Type }, { id: "fill", icon: Palette }, { id: "erase", icon: Filter }] },
+    { id: "view", label: "View", seats: [{ id: "grid", icon: Table2 }, { id: "zoom", icon: Search }] },
+];
+const lface = ref("draw");
+/** Reports the dock context its slot sees (G-7: the outlet provides the dock's context). */
+const CtxProbe = defineComponent({
+    setup() {
+        const ctx = (dock as Record<string, unknown>).useOptionalDockContext as (() => { id: string } | undefined) | undefined;
+        const c = ctx?.();
+        return () => h("span", { "data-testid": "w-g7-ctx", "data-dock-id": c?.id ?? "", hidden: true });
+    },
+});
 const stageStyle = computed(() =>
     ground === "stripes"
         ? { background: "repeating-linear-gradient(90deg, #111 0 6px, #f4f4f4 6px 12px)" }
@@ -290,10 +351,330 @@ const stageStyle = computed(() =>
             <DockControl aria-label="Search"><Search /></DockControl>
             <DockControl aria-label="Settings"><Settings /></DockControl>
         </GlassDock>
+
+        <!-- PROTOTYPE-2 cells -->
+        <GlassDock v-if="cell === 'w-seat'" data-testid="w-seat" aria-label="site" collapse="closed">
+            <template #persistent>
+                <DockControl aria-label="Home" data-testid="w-seat-home"><Home /></DockControl>
+            </template>
+            <DockControl
+                v-for="p in pages"
+                :key="p.id"
+                :aria-label="p.label"
+                :data-testid="`w-seat-${p.id}`"
+                :aria-current="current === p.id ? 'page' : undefined"
+                @click="current = p.id"
+            >
+                <component :is="p.icon" />
+            </DockControl>
+            <DockSeparator />
+            <DockControl aria-label="Settings" data-testid="w-seat-settings"><Settings /></DockControl>
+            <template #collapsed>
+                <BookOpen class="h-4 w-4" aria-hidden="true" />
+            </template>
+        </GlassDock>
+        <GlassDock v-if="cell === 'w-card'" data-testid="w-card" aria-label="card" shape="card" collapse="closed">
+            <DockControl aria-label="Home"><Home /></DockControl>
+            <DockControl aria-label="Search"><Search /></DockControl>
+            <DockControl aria-label="Library"><Library /></DockControl>
+            <DockControl aria-label="Settings"><Settings /></DockControl>
+            <template #collapsed>
+                <Layers class="h-4 w-4" aria-hidden="true" />
+            </template>
+        </GlassDock>
+        <GlassDock v-if="cell === 'w-vert'" data-testid="w-vert" aria-label="vertical" orientation="vertical" collapse="closed">
+            <DockControl aria-label="Home"><Home /></DockControl>
+            <DockControl aria-label="Search"><Search /></DockControl>
+            <DockControl aria-label="Library"><Library /></DockControl>
+            <template #collapsed>
+                <Layers class="h-4 w-4" aria-hidden="true" />
+            </template>
+        </GlassDock>
+        <GlassDock v-if="cell === 'w-rail'" data-testid="w-rail" aria-label="rail" orientation="vertical" shape="card" collapse="closed">
+            <template #persistent>
+                <DockControl aria-label="Home"><Home /></DockControl>
+            </template>
+            <DockControl aria-label="Reader" aria-current="page"><BookOpen /></DockControl>
+            <DockControl aria-label="Search"><Search /></DockControl>
+            <DockControl aria-label="Library"><Library /></DockControl>
+            <template #collapsed>
+                <Layers class="h-4 w-4" aria-hidden="true" />
+            </template>
+        </GlassDock>
+        <template v-if="ControlsDock && cell === 'w-ctl'">
+            <div :class="within === 'parent' ? 'wi8-figure' : ''" data-testid="w-ctl-host">
+                <component :is="ControlsDock" data-testid="w-ctl" label="Figure controls" :corner="corner" :within="within" collapse="closed">
+                    <DockControl aria-label="Table"><Table2 /></DockControl>
+                    <DockControl aria-label="Filter"><Filter /></DockControl>
+                    <DockControl aria-label="Palette"><Palette /></DockControl>
+                    <DockControl aria-label="Panel"><PanelTop /></DockControl>
+                    <template #collapsed>
+                        <SlidersHorizontal class="h-4 w-4" aria-hidden="true" />
+                    </template>
+                </component>
+            </div>
+        </template>
+        <component :is="ControlsDock" v-if="ControlsDock && cell === 'w-ctl1'" data-testid="w-ctl1" label="Theme" :corner="corner">
+            <DockControl aria-label="Theme" @click="toggleTheme"><Moon v-if="dark" /><Sun v-else /></DockControl>
+        </component>
+        <template v-if="ControlsDock && cell === 'w-ctlout'">
+            <component :is="ControlsDock" id="wi8-controls" data-testid="w-ctlout" label="Page controls" collapse="closed">
+                <DockControl aria-label="Theme" @click="toggleTheme"><Moon v-if="dark" /><Sun v-else /></DockControl>
+                <template #collapsed>
+                    <SlidersHorizontal class="h-4 w-4" aria-hidden="true" />
+                </template>
+            </component>
+            <section class="wi8-page">
+                <component :is="DockOutlet" to="wi8-controls">
+                    <DockControl aria-label="Grid" data-testid="w-ctlout-grid"><Table2 /></DockControl>
+                    <DockControl aria-label="Gallery" data-testid="w-ctlout-gallery"><Image /></DockControl>
+                </component>
+            </section>
+        </template>
+        <div v-if="cell === 'w-scope'" data-dock-scope class="wi8-scope" data-testid="w-scope-host">
+            <GlassDock data-testid="w-scope" aria-label="scoped" collapse="closed">
+                <DockControl v-for="p in pages" :key="p.id" :aria-label="p.label"><component :is="p.icon" /></DockControl>
+                <template #collapsed>
+                    <BookOpen class="h-4 w-4" aria-hidden="true" />
+                </template>
+            </GlassDock>
+            <div class="wi8-follower" data-testid="w-scope-follower"></div>
+        </div>
+        <GlassDock v-if="cell === 'w-transport'" data-testid="w-transport" aria-label="transport" collapse="closed">
+            <template #persistent>
+                <DockControl :aria-label="playing ? 'Pause' : 'Play'" @click="playing = !playing"><Pause v-if="playing" /><Play v-else /></DockControl>
+            </template>
+            <DockControl aria-label="Volume"><Volume2 /></DockControl>
+            <DockControl aria-label="Settings"><Settings /></DockControl>
+        </GlassDock>
+        <div v-if="ControlsDock && cell === 'w-fourier'" class="wi8-figure wi8-canvas" data-testid="w-fourier-host">
+            <component :is="ControlsDock" data-testid="w-fourier" label="Canvas tools" within="parent" collapse="closed">
+                <DockControl aria-label="Layers"><Layers /></DockControl>
+                <DockControl aria-label="Palette"><Palette /></DockControl>
+                <DockControl aria-label="Filter"><Filter /></DockControl>
+                <template #persistent-end>
+                    <DockControl aria-label="Edit"><Type /></DockControl>
+                </template>
+                <template #collapsed>
+                    <SlidersHorizontal class="h-4 w-4" aria-hidden="true" />
+                </template>
+            </component>
+        </div>
+        <template v-if="ControlsDock && cell === 'w-daraksha'">
+            <GlassDock data-testid="w-daraksha-site" aria-label="site" collapse="closed">
+                <template #persistent>
+                    <DockControl aria-label="Home"><Home /></DockControl>
+                </template>
+                <DockControl v-for="p in pages" :key="p.id" :aria-label="p.label" :aria-current="current === p.id ? 'page' : undefined" @click="current = p.id">
+                    <component :is="p.icon" />
+                </DockControl>
+                <template #collapsed>
+                    <BookOpen class="h-4 w-4" aria-hidden="true" />
+                </template>
+            </GlassDock>
+            <component :is="ControlsDock" id="wi8-page-controls" data-testid="w-daraksha" label="Page controls">
+                <DockControl aria-label="Theme" data-testid="w-daraksha-theme" @click="toggleTheme"><Moon v-if="dark" /><Sun v-else /></DockControl>
+                <template #collapsed>
+                    <SlidersHorizontal class="h-4 w-4" aria-hidden="true" />
+                </template>
+            </component>
+            <section class="wi8-page">
+                <component :is="DockOutlet" to="wi8-page-controls">
+                    <DockControl aria-label="Picker" data-testid="w-daraksha-picker"><Palette /></DockControl>
+                    <DockControl aria-label="Grid"><Table2 /></DockControl>
+                    <DockControl aria-label="Gallery"><Image /></DockControl>
+                    <Popover v-model:open="popOpen" keep-dock-open>
+                        <PopoverTrigger as-child>
+                            <DockControl aria-label="Info" data-testid="w-daraksha-info"><BookOpen /></DockControl>
+                        </PopoverTrigger>
+                        <PopoverContent data-testid="w-daraksha-pop" class="w-56 p-3">
+                            <p class="text-small">About this page.</p>
+                        </PopoverContent>
+                    </Popover>
+                </component>
+            </section>
+        </template>
+        <component :is="ControlsDock" v-if="ControlsDock && cell === 'w-sci'" data-testid="w-sci" label="Filters" corner="top-end" collapse="closed">
+            <DockControl aria-label="Sort"><BarChart3 /></DockControl>
+            <DockControl aria-label="Filter"><Filter /></DockControl>
+            <DockControl aria-label="Group"><Layers /></DockControl>
+            <template #collapsed>
+                <span class="px-2 text-small">Filters · 3</span>
+            </template>
+        </component>
+
+        <!-- PROTOTYPE-3 cells -->
+        <template v-if="cell === 'w-g8'">
+            <GlassDock data-testid="w-g8" aria-label="overlays" collapse="closed" :expand-on="press ? 'press' : 'hover'">
+                <DockControl aria-label="Home" data-testid="w-g8-home"><Home /></DockControl>
+                <DropdownMenu>
+                    <DropdownMenuTrigger as-child>
+                        <DockControl aria-label="Menu" data-testid="w-g8-menu"><Layers /></DockControl>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent data-testid="w-g8-menu-content">
+                        <DropdownMenuItem>First</DropdownMenuItem>
+                        <DropdownMenuItem>Second</DropdownMenuItem>
+                    </DropdownMenuContent>
+                </DropdownMenu>
+                <Popover v-model:open="hoverOpen" trigger="hover" keep-dock-open>
+                    <PopoverTrigger as-child>
+                        <DockControl aria-label="Info" data-testid="w-g8-hover"><BookOpen /></DockControl>
+                    </PopoverTrigger>
+                    <PopoverContent data-testid="w-g8-hover-pop" class="w-56 p-3"><p class="text-small">On hover.</p></PopoverContent>
+                </Popover>
+                <Dialog v-model:open="dialogOpen">
+                    <DialogTrigger as-child>
+                        <DockControl aria-label="Dialog" data-testid="w-g8-dialog"><PanelTop /></DockControl>
+                    </DialogTrigger>
+                    <DialogContent data-testid="w-g8-dialog-content">
+                        <DialogTitle>Page settings</DialogTitle>
+                        <DialogClose as-child><button type="button" data-testid="w-g8-dialog-close">Done</button></DialogClose>
+                    </DialogContent>
+                </Dialog>
+                <Dialog v-model:open="sheetOpen">
+                    <DialogTrigger as-child>
+                        <DockControl aria-label="Sheet" data-testid="w-g8-sheet"><SlidersHorizontal /></DockControl>
+                    </DialogTrigger>
+                    <SheetContent side="bottom" data-testid="w-g8-sheet-content">
+                        <DialogTitle>Filters</DialogTitle>
+                        <DialogClose as-child><button type="button" data-testid="w-g8-sheet-close">Done</button></DialogClose>
+                    </SheetContent>
+                </Dialog>
+                <template #collapsed>
+                    <BookOpen class="h-4 w-4" aria-hidden="true" />
+                </template>
+            </GlassDock>
+        </template>
+        <template v-if="DockOutlet && cell === 'w-g7'">
+            <div style="display: flex; gap: 6px">
+                <button type="button" data-testid="w-g7-toggle-dock" @click="g7Dock = !g7Dock">dock</button>
+                <button type="button" data-testid="w-g7-toggle-route" @click="g7Route = g7Route === 'a' ? 'b' : 'a'">route</button>
+            </div>
+            <section v-if="outletFirst" class="wi8-page" data-testid="w-g7-page">
+                <component :is="DockOutlet" to="wi8-g7">
+                    <DockControl aria-label="Bookmark" data-testid="w-g7-mark"><Bookmark /></DockControl>
+                    <CtxProbe />
+                </component>
+                <component :is="DockOutlet" to="wi8-g7">
+                    <DockControl aria-label="Options" data-testid="w-g7-options"><Settings /></DockControl>
+                </component>
+                <component :is="DockOutlet" v-if="g7Route === 'a'" to="wi8-g7" region="persistent-end">
+                    <DockControl aria-label="Play" data-testid="w-g7-play"><Play /></DockControl>
+                </component>
+            </section>
+            <GlassDock v-if="g7Dock" id="wi8-g7" data-testid="w-g7" aria-label="reader" collapse="closed">
+                <DockControl aria-label="Reader" data-testid="w-g7-read"><BookOpen /></DockControl>
+                <DockControl aria-label="Search" data-testid="w-g7-search"><Search /></DockControl>
+                <template #collapsed>
+                    <BookOpen class="h-4 w-4" aria-hidden="true" />
+                </template>
+            </GlassDock>
+            <section v-if="!outletFirst" class="wi8-page" data-testid="w-g7-page">
+                <component :is="DockOutlet" to="wi8-g7">
+                    <DockControl aria-label="Bookmark" data-testid="w-g7-mark"><Bookmark /></DockControl>
+                    <CtxProbe />
+                </component>
+                <component :is="DockOutlet" to="wi8-g7">
+                    <DockControl aria-label="Options" data-testid="w-g7-options"><Settings /></DockControl>
+                </component>
+                <component :is="DockOutlet" v-if="g7Route === 'a'" to="wi8-g7" region="persistent-end">
+                    <DockControl aria-label="Play" data-testid="w-g7-play"><Play /></DockControl>
+                </component>
+            </section>
+        </template>
+        <GlassDock v-if="cell === 'w-lseats'" data-testid="w-lseats" aria-label="tools" fit-content collapse="closed">
+            <DockLayerGroup v-model:active="lface" motion="full">
+                <DockLayer v-for="f in lfaces" :id="f.id" :key="f.id" :label="f.label">
+                    <DockControl v-for="st in f.seats" :key="st.id" :aria-label="st.id" :data-testid="`w-lseats-${st.id}`"><component :is="st.icon" /></DockControl>
+                </DockLayer>
+            </DockLayerGroup>
+            <template #collapsed>
+                <Layers class="h-4 w-4" aria-hidden="true" />
+            </template>
+        </GlassDock>
+        <template v-if="ControlsDock && cell === 'w-two'">
+            <GlassDock data-testid="w-two-site" aria-label="site" collapse="closed">
+                <DockControl v-for="p in pages" :key="p.id" :aria-label="p.label"><component :is="p.icon" /></DockControl>
+                <template #collapsed>
+                    <BookOpen class="h-4 w-4" aria-hidden="true" />
+                </template>
+            </GlassDock>
+            <component :is="ControlsDock" data-testid="w-two-a" label="Page controls" corner="bottom-end">
+                <DockControl aria-label="Grid"><Table2 /></DockControl>
+                <DockControl aria-label="Theme" @click="toggleTheme"><Moon v-if="dark" /><Sun v-else /></DockControl>
+            </component>
+            <component :is="ControlsDock" data-testid="w-two-b" label="Filters" corner="top-end">
+                <DockControl aria-label="Filter"><Filter /></DockControl>
+                <DockControl aria-label="Sort"><BarChart3 /></DockControl>
+            </component>
+        </template>
+        <template v-if="cell === 'w-seatset'">
+            <div style="display: flex; gap: 6px">
+                <button type="button" data-testid="w-seatset-add" @click="extraSeat = !extraSeat">seat</button>
+                <button type="button" data-testid="w-seatset-route" @click="seatRoute = seatRoute === 'x' ? 'y' : 'x'">route</button>
+            </div>
+            <GlassDock data-testid="w-seatset" aria-label="site" collapse="closed">
+                <DockControl v-for="p in routePages" :key="p.id" :aria-label="p.label" :aria-current="p.id === routePages[0]!.id ? 'page' : undefined"><component :is="p.icon" /></DockControl>
+                <DockControl v-if="extraSeat" aria-label="Extra" data-testid="w-seatset-extra"><Palette /></DockControl>
+                <template #collapsed>
+                    <BookOpen class="h-4 w-4" aria-hidden="true" />
+                </template>
+            </GlassDock>
+        </template>
+        <template v-if="cell === 'w-color'">
+            <div style="display: flex; gap: 4px">
+                <button type="button" data-testid="w-color-tools" @click="colorTool = 'tools'">Tools</button>
+                <button type="button" data-testid="w-color-tool" @click="colorTool = 'tool'">Tool</button>
+            </div>
+            <GlassDock data-testid="w-color" aria-label="colour" :collapse="false" fit-content>
+                <DockCrossfade :active="colorTool">
+                    <DockLayer id="tools" label="Tools">
+                        <DockControl aria-label="Picker"><Palette /></DockControl>
+                        <DockControl aria-label="Mixer"><SlidersHorizontal /></DockControl>
+                        <DockControl aria-label="Gradient"><Layers /></DockControl>
+                        <DockControl aria-label="Library"><Library /></DockControl>
+                    </DockLayer>
+                    <DockLayer id="tool" label="Tool">
+                        <DockControl aria-label="Back"><Home /></DockControl>
+                        <div class="flex w-40 items-center px-2"><Slider v-model="volume" :max="100" :step="1" aria-label="Hue" /></div>
+                    </DockLayer>
+                </DockCrossfade>
+            </GlassDock>
+        </template>
+        <div v-if="ControlsDock && cell === 'w-kfcode'" class="wi8-figure" data-testid="w-kfcode-host">
+            <component :is="ControlsDock" data-testid="w-kfcode" label="Code actions" within="parent" corner="top-end" collapse="closed">
+                <DockControl aria-label="Copy"><Bookmark /></DockControl>
+                <DockControl aria-label="Format"><Type /></DockControl>
+                <DockControl aria-label="Run"><Play /></DockControl>
+                <template #collapsed>
+                    <SlidersHorizontal class="h-4 w-4" aria-hidden="true" />
+                </template>
+            </component>
+        </div>
     </div>
 </template>
 
 <style>
+.wi8-figure {
+    position: relative;
+    width: min(92vw, 640px);
+    height: 320px;
+    border-radius: 16px;
+    background: repeating-linear-gradient(45deg, rgba(0, 0, 0, 0.04) 0 10px, transparent 10px 20px);
+}
+.wi8-scope {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+}
+.wi8-follower {
+    width: 24px;
+    height: 8px;
+    border-radius: 4px;
+    background: currentColor;
+    translate: calc(var(--dock-expand-t, 0) * 100px) 0;
+}
 .wi8-stage {
     min-height: 360px;
     display: flex;

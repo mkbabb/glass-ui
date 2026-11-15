@@ -457,6 +457,10 @@ function driver(page, cdp, coarse) {
             case "scroll":
                 await page.mouse.wheel(s.dx || 0, s.dy || 0);
                 break;
+            // PROTOTYPE-2: a window resize (G-2's resize cell).
+            case "viewport":
+                await page.setViewportSize({ width: s.w, height: s.h });
+                break;
             default:
                 throw new Error("unknown step " + JSON.stringify(s));
         }
