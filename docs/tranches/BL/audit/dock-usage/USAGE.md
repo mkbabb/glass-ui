@@ -376,3 +376,7 @@ warning count, an admin menu. Fixed under HA's toolbar, positioned from a spacer
 ### reddit
 
 No dock.
+
+## Correction (2026-11-15, from value.js)
+
+For value.js, keyframes.js and fourier-analysis this table read local checkouts that sit on old branches. On each repo's origin/master all three are on glass-ui 11.0.2 and already import `DockTrigger` from `@mkbabb/glass-ui/dock-trigger`; daraksha's is origin/master e90682d. The version figures and the "drift" note for those three are stale; the compositions, slots and workarounds have not been re-read against origin/master and may differ in detail.
