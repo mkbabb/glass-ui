@@ -984,3 +984,5 @@ Disk episode, one line: on 2026-11-03 the volume went from 100% (15 GiB free) to
 - 2026-11-15 00:41 — O-346 (owner, all sites: the last-ten audit): glass's own pass launched as one Opus seat (`audit/last-ten/`). Live: close 11.0.2, critic 8 (11.1.0), depth prototype, dock measuring, last-ten audit (five seats).
 
 - 2026-11-15 01:16 — 11.1.0: critique 8 measured, two dock regressions (the gliding plate under a transform or zoom; a late `#collapsed` slot losing its role). Rulings in `orchestrator-note-after-critique-8.md`; round 9 runs as a fix then a finite gate, one clean round to the close (`lastRound: 10`, `cleanNeeded: 1`; args `resume/glass-11.1.0-round9.json`, with the critic-9 note as launched).
+
+- 2026-11-15 03:17 — overnight inbound booked and placed: O-347 (daraksha review), O-348 and O-350 (atlas phone and last-ten audits), O-349 (gaggle), O-351 (speedtest p6), O-352 (atlas's carry list marked; two rows corrected). Reduced motion ruled a fade for 11.1.1 (owner may reverse). Live: close 11.0.2, fix 9 (11.1.0), depth fold, dock measuring, last-ten audit.
