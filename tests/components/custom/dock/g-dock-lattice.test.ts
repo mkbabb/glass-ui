@@ -756,7 +756,7 @@ describe("G-DOCK-MATERIAL — the focus ring composes instead of competing", () 
             /* CAP   · W-I.8 RU-27's whole-seat window, on the scroll axis. It caps the CONTENT
                        box (the run is content-box), so the leading reserve stays in the padding
                        and the trailing one is inside the cap: the ring keeps its room. */
-            `${STYLES}/run.css: .glass-dock:not(.vertical) :where(.dock-layers) > .dock-run[data-run-whole] { max-inline-size: calc( round(down, 100% - var(--dock-run-reserve-inline) + var(--dock-run-gap), var(--dock-pitch)) - var(--dock-run-gap) + var(--dock-run-reserve-inline) ) }`,
+            `${STYLES}/run.css: .glass-dock.expanded:not(.vertical) :where(.dock-layers) > .dock-run[data-run-whole] { max-inline-size: calc( round(down, 100% - var(--dock-run-reserve-inline) + var(--dock-run-gap), var(--dock-pitch)) - var(--dock-run-gap) + var(--dock-run-reserve-inline) ) }`,
             /* FLOOR · the same release, rotated */
             `${STYLES}/run.css: .glass-dock.vertical :where(.dock-layers) > .dock-run { min-block-size: 0 }`,
             /* FLOOR · vertical layer stack */

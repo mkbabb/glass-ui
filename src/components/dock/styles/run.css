@@ -431,8 +431,10 @@
        left over, under one pitch, is room at the run's two ends inside the plate. A
        percentage cap is not counted in the run's own preferred size, so the dock still
        takes all the room its host gives, and the rounding is redone by layout whenever that
-       room changes. */
-    .glass-dock:not(.vertical) :where(.dock-layers) > .dock-run[data-run-whole] {
+       room changes. Only the open run is capped: a run leaving on a fold is placed out of
+       flow at its painted width, and a percentage of the folded region would collapse it
+       to its padding in the fold's first row. */
+    .glass-dock.expanded:not(.vertical) :where(.dock-layers) > .dock-run[data-run-whole] {
         max-inline-size: calc(
             round(down, 100% - var(--dock-run-reserve-inline) + var(--dock-run-gap), var(--dock-pitch)) -
                 var(--dock-run-gap) + var(--dock-run-reserve-inline)
