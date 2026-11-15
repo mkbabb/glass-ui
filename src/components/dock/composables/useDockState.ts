@@ -709,8 +709,12 @@ export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
                 syncDerived();
                 return;
             }
-            state.value = "collapsed";
+            // W-I.8 R-12 (RU-18): a dock that stops being always open (a one-seat controls
+            // dock given a second seat) does not fold in that frame: it lingers like any
+            // open dock, and folds as its collapse says.
+            state.value = "hover";
             syncDerived();
+            if (!pointerInside) scheduleCollapse();
         });
     } else if (alwaysExpanded) {
         state.value = "pinned";
