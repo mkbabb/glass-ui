@@ -1000,3 +1000,5 @@ Disk episode, one line: on 2026-11-03 the volume went from 100% (15 GiB free) to
 - 2026-11-15 06:46 — 11.0.2 tarball 200, `latest` = 11.0.2; master CI and demo deploy green; value.js, atlas, Gregg, speedtest and gaggle told.
 
 - 2026-11-15 08:28 — dock loop 2 DONE (`wf_83b55598-945`): rulings RU-1 to RU-20, third build measured in both engines (110/114 travels Chromium, 109/114 WebKit), challenge of nineteen folded, amended build `bl/dock/wi8` @ 62da68e53 read on thirty cells. NOT ready to close: no gate green with its counter-test; five ruled behaviours unbuilt; seven owner questions in `design/dock/wi8/OWNER-READ.md`. O-360 booked (color on 11.0.2). Live: critic 9 on 11.1.0.
+
+- 2026-11-15 10:34 — 11.1.0: critic 10 clean, **release close started** (`wf_4cf2d226-a00`, seat `release-close-1110`); it merges master (11.0.2) and `bl/ro-loop` (the resize-mid-morph cure, fca26fdbb) by the notes in its worktree. Booked today: O-360 to O-364 (the ResizeObserver loop reproduced and cured; the GPU-lane rule; gaggle and Gregg live on 11.0.2). Also live: the dock's third build-and-measure pass (Opus Agent seat).
