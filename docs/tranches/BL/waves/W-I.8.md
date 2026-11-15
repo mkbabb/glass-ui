@@ -488,3 +488,17 @@ The fold seat wrote this file, `../design/dock/wi8/fold.md`, `../design/dock/wi8
 
 - O-340 and O-341: the owner has asked for fully round docks five times and for more docks with a collapse state (Gregg's filters). The stadium is 11.1.0's; this wave owns what he names beyond it: the layer change as one clear movement (the leaving layer goes one way, the entering comes from the other, the width on the same clock), the reading-progress rim following a collapsed dock's outline through the morph, a halo colour token (one value, no added layer), and figure docks that unfold. Each is a gate to add at the build, not a new design pass.
 - O-347 (owner, 2026-11-15): a per-page controls dock, "like a controls button that is a dock, too": a small non-navigational dock of action seats (optional label, a fixed corner placement, folding to one seat on phones) that persists on every view. It is the same piece as the figure dock, fourier's canvas dock, keyframes' code-pane dock and the theme seat: this wave names it once and gives it a corner placement, so no site builds its own.
+
+## The measuring pass (2026-11-15 04:07)
+
+One Opus seat finished the measurement on one build (`bl/dock/wi8` @ a46a20906, results 14e29ff30; record `design/dock/wi8/MEASURE.md`, copied from the worktree) in Chromium and Playwright WebKit 2287. **No gate is green in both engines:** 10 fail (G-5 and G-6 also held), G-7 and G-13 are unread (their cells are not built), G-9 is open. Eight of the fold's amendments are built, one commit each; they cut the hidden-content rows in a Chromium fold from 48 to 8 and removed the 40 px overlap.
+
+Three findings change what the fold assumed, and the next design pass must rule on each before any build:
+
+1. **A press outside with an overlay open lingers about 7 s before folding** (v11.0.1: 31 ms). R-2 says that dismissal skips the linger: a regression of the prototype.
+2. **The 4 % first-step cap (G-2, G-3) cannot be met in WebKit at 60 Hz with this spring**: the preset's own first step there is 4.6 to 5.7 %, and a 35 % content window gives a fade two to three samples against five. Either the cap is stated per frame rate, or the travel's first frames change (a softer attack), or the windows widen.
+3. **In WebKit, scrolling the page under a still pointer opens the dock**, on the prototype and on v11.0.1 alike (G-1 b). A shipped defect: booked for 11.1.1.
+
+Not built at all, and too large for an amendment: the open-seat loop quantity, rest geometry on the posture class, the moved-dock trigger and the two-dock row, the fission seat's neck with tangent arcs, the labelled seat's room. The prototype also fails the shipped line (G-14: 13 of 215 dock unit specs, and release specs short on 10.1.2, 10.1.3 and 10.1.5).
+
+**Standing:** this design is not ready to build. 11.2.0's dock work needs one more design loop on the spec (the three rulings, then the five unbuilt pieces prototyped), with the inputs added since the fold: the controls dock and the non-scrolling run (O-347, O-352), atlas's two-axis growing rule as a reference build (89f1df7c1), the dwell-scaled linger, re-hover during a fold (LT-4), and the layer change as one movement.
