@@ -21,7 +21,8 @@ export interface PopoverProps {
     openDelay?: number;
     /** Delay before a fine-pointer hover preview closes, in milliseconds. */
     closeDelay?: number;
-    /** Hold an ancestor GlassDock open while this surface is visible. */
+    /** No longer read: a popover opened from a dock always holds it while open (W-I.8
+     *  R-2). Accepted through 11.2.0 and deleted in 12.0.0. */
     keepDockOpen?: boolean;
     /**
      * THE A11Y AXIS — one fact, and the consequences that actually derive from
@@ -95,7 +96,10 @@ providePopoverUnion({ usesHoverRoot, modal: computed(() => props.modal) });
    collapse owns the WHEN; the root owns the HOW, because the root is the one place
    that holds the open state for both arms, controlled and uncontrolled alike. */
 useDockParticipation({
-    hold: () => resolvedOpen.value && props.keepDockOpen,
+    // W-I.8 R-2 (RU-16, C2-10): every overlay opened from a dock is part of it and holds
+    // it while open, by default. A prop a consumer has to know is the local knowledge
+    // the controls dock removes.
+    hold: () => resolvedOpen.value,
     close: () => {
         if (resolvedOpen.value) updateOpen(false);
     },

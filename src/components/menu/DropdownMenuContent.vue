@@ -72,6 +72,8 @@ useModalShortcutBarrier(
 /* A menu a dock seat opened closes when that dock collapses: the collapse owns the
    close, through the menu root's own open channel (O-102 (3)). */
 const dock = useDockParticipation({
+    // W-I.8 R-2 (C2-10): an open menu holds the dock it was opened from.
+    hold: () => menuRoot?.open.value ?? false,
     close: () => {
         if (menuRoot?.open.value) menuRoot.onOpenChange(false);
     },

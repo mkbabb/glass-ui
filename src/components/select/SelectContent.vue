@@ -99,6 +99,8 @@ const rootAttrs = computed(() => ({
    same context strictly and throws, so a rootless SelectContent still fails loud;
    only a part rendered with reka stubbed out (the contract tests) reaches null. */
 const dock = useDockParticipation({
+    // W-I.8 R-2 (C2-10): an open listbox holds the dock it was opened from.
+    hold: () => selectRoot?.open.value ?? false,
     close: () => {
         if (selectRoot?.open.value) selectRoot.onOpenChange(false);
     },
