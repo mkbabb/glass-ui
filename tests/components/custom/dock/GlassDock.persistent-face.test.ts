@@ -1,6 +1,6 @@
 import { mount, type VueWrapper } from "@vue/test-utils";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { h, nextTick } from "vue";
+import { defineComponent, h, nextTick, ref } from "vue";
 
 import GlassDock from "@glass/components/dock/GlassDock.vue";
 import { DOCK_LONG_PRESS_MS, HOVER_INTENT_MS } from "@glass/components/dock/constants";
@@ -82,6 +82,33 @@ describe("the persistent face", () => {
         const summary = wrapper.find(".dock-layer--summary");
         expect(summary.attributes("role")).toBe("button");
         expect(summary.attributes("aria-label")).toBe("Expand dock");
+    });
+
+    it("follows a #collapsed slot that comes or goes after mount", async () => {
+        // A collapsed reading that exists only sometimes (`<template v-if #collapsed>`):
+        // the summary is the disclosure exactly while the slot is there.
+        const reading = ref(false);
+        const Host = defineComponent(() => () =>
+            h(GlassDock, { collapse: "closed", backdropMode: "static" }, {
+                default: () => h("button", { "data-seat": "run" }, "Run"),
+                persistent: () => h("button", { "aria-label": "Theme" }),
+                ...(reading.value ? { collapsed: () => h("span", "Now") } : {}),
+            }),
+        );
+        const wrapper = mount(Host, { attachTo: document.body });
+        wrappers.push(wrapper);
+        const summary = () => wrapper.find(".dock-layer--summary");
+        expect(summary().attributes("role")).toBeUndefined();
+        reading.value = true;
+        await nextTick();
+        expect(summary().attributes("role")).toBe("button");
+        expect(summary().attributes("tabindex")).toBe("0");
+        expect(summary().attributes("aria-label")).toBe("Expand dock");
+        reading.value = false;
+        await nextTick();
+        expect(summary().attributes("role")).toBeUndefined();
+        expect(summary().attributes("tabindex")).toBeUndefined();
+        expect(summary().attributes("aria-label")).toBeUndefined();
     });
 
     it("names the leading region as the start, the trailing as the end", () => {

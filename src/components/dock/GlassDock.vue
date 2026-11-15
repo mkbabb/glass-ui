@@ -251,14 +251,15 @@ const {
    spring) and it is no disclosure. A summary button beside the seats would put a
    second control on the collapsed dock, and wrapping a seat in it would nest a button
    in a button. Expansion follows `expand-on`: a hover or a keyboard focus on a seat, or
-   a long press on a coarse pointer (useDockState); a press on a seat is the seat's. */
+   a long press on a coarse pointer (useDockState); a press on a seat is the seat's.
+   Both reads are functions, decided on every render and every event: `useSlots()` is not
+   reactive, so a computed over it would keep the slots as they were at mount, and a
+   `#collapsed` that arrives later would sit in a summary with no role, tab stop or name. */
 const slots = useSlots();
-const persistentFace = computed(
-    () => !slots.collapsed && (!!slots.persistent || !!slots["persistent-end"]),
-);
-const summaryIsDisclosure = computed(
-    () => outerCurrentLayer.value === "summary" && !persistentFace.value,
-);
+const persistentFace = (): boolean =>
+    !slots.collapsed && (!!slots.persistent || !!slots["persistent-end"]);
+const summaryIsDisclosure = (): boolean =>
+    outerCurrentLayer.value === "summary" && !persistentFace();
 /** Once the expand has patched the full face live, focus its first seat. The full face
     is the fallback focus target (it carries `tabindex="-1"`): a dock whose expanded face
     holds NO focusable descendant would otherwise no-op to <body>, and the summary goes
@@ -273,7 +274,7 @@ async function focusFirstSeat(): Promise<void> {
 }
 
 async function onSummaryKeydown(event: KeyboardEvent) {
-    if (!summaryIsDisclosure.value || !["Enter", " "].includes(event.key)) return;
+    if (!summaryIsDisclosure() || !["Enter", " "].includes(event.key)) return;
     event.preventDefault();
     onClickCollapsed();
     await focusFirstSeat();
@@ -289,7 +290,7 @@ let summaryFocusFromCollapse = false;
 function onSummaryFocusIn(event: FocusEvent): void {
     const reach =
         !summaryFocusFromCollapse &&
-        summaryIsDisclosure.value &&
+        summaryIsDisclosure() &&
         !!summaryEl.value?.matches(":focus-visible");
     event.stopPropagation();
     if (!reach) return;
@@ -345,7 +346,7 @@ watch(visualExpanded, async (isExpanded, was) => {
             dockId;
     if (!held) return;
     await nextTick();
-    const target = persistentFace.value
+    const target = persistentFace()
         ? dockEl.value?.querySelector<HTMLElement>(
               `.dock-persistent :is(${FOCUSABLE_SELECTOR})`,
           )
@@ -570,11 +571,11 @@ defineExpose({
                     'is-leaving': outerLeavingLayer === 'summary',
                 }]"
                 :inert="(outerCurrentLayer !== 'summary') || undefined"
-                :role="summaryIsDisclosure ? 'button' : undefined"
-                :tabindex="summaryIsDisclosure ? 0 : undefined"
-                :aria-label="summaryIsDisclosure ? props.collapsedLabel : undefined"
-                :aria-expanded="summaryIsDisclosure ? 'false' : undefined"
-                :aria-controls="summaryIsDisclosure ? `${dockId}-full` : undefined"
+                :role="summaryIsDisclosure() ? 'button' : undefined"
+                :tabindex="summaryIsDisclosure() ? 0 : undefined"
+                :aria-label="summaryIsDisclosure() ? props.collapsedLabel : undefined"
+                :aria-expanded="summaryIsDisclosure() ? 'false' : undefined"
+                :aria-controls="summaryIsDisclosure() ? `${dockId}-full` : undefined"
                 @focusin="onSummaryFocusIn"
                 @keydown="onSummaryKeydown"
                 @click="onClickCollapsed"
