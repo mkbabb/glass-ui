@@ -796,27 +796,10 @@
        makes a deeply-scrolled run keep its leading cut instead of springing back. When
        there is NOTHING to scroll the animations are off (`data-run-fits`, below) and the
        plate paints its base corner. */
-    .glass-dock .dock-plate {
-        animation:
-            gl-dock-cap-inline-start linear both,
-            gl-dock-cap-inline-end linear both;
-        animation-timeline: --dock-run, --dock-run;
-        animation-range:
-            0 var(--dock-pitch),
-            calc(100% - var(--dock-pitch)) 100%;
-        animation-direction: normal, reverse;
-    }
-
-    .glass-dock.vertical .dock-plate {
-        animation:
-            gl-dock-cap-block-start linear both,
-            gl-dock-cap-block-end linear both;
-        animation-timeline: --dock-run, --dock-run;
-        animation-range:
-            0 var(--dock-pitch),
-            calc(100% - var(--dock-pitch)) 100%;
-        animation-direction: normal, reverse;
-    }
+    /* W-I.8 R-1 (RU-13): the cut cap's writes to the plate are deleted. The carrier is
+       the plate's only corner writer, in travel and at rest, so a pill is a stadium in
+       every frame and at every scroll position. What tells the reader that a run scrolls
+       is the run's to draw on its port (W-I.1), never the plate. */
 
     /* THE CAP RUNS ONLY ON A RUN THAT HIDES SOMETHING. An inactive scroll timeline
        does not release what it last resolved: when a scrolled run's overflow vanishes
@@ -828,14 +811,7 @@
        and clips square. When the seats overflow again the animations re-apply and bind
        to the timeline afresh. A collapsed dock's run is not the visible run, so it
        hides nothing either, and its plate is the circle. */
-    .glass-dock:is([data-run-fits], .collapsed) .dock-plate,
     .glass-dock:is([data-run-fits], .collapsed) :where(.dock-layers) > .dock-run {
-        animation: none;
-    }
-
-    /* W-I.8 R-1 (C-20, P-10): the carrier is the only writer of the plate's corner. While
-       a travel runs the cut cap stands down on the plate; the run keeps its own. */
-    .glass-dock[data-morphing] .dock-plate {
         animation: none;
     }
 
@@ -870,50 +846,6 @@
    finite shapes — and `to` is two rungs down the 4·10·16·24·stadium series. Both endpoints arrive through
    `--dock-cap-rest`/`--dock-cap-cut`, so retargeting a shape is a token line and never
    a keyframe edit. */
-@keyframes gl-dock-cap-inline-start {
-    from {
-        border-start-start-radius: var(--dock-cap-rest);
-        border-end-start-radius: var(--dock-cap-rest);
-    }
-    to {
-        border-start-start-radius: var(--dock-cap-cut);
-        border-end-start-radius: var(--dock-cap-cut);
-    }
-}
-
-@keyframes gl-dock-cap-inline-end {
-    from {
-        border-start-end-radius: var(--dock-cap-rest);
-        border-end-end-radius: var(--dock-cap-rest);
-    }
-    to {
-        border-start-end-radius: var(--dock-cap-cut);
-        border-end-end-radius: var(--dock-cap-cut);
-    }
-}
-
-@keyframes gl-dock-cap-block-start {
-    from {
-        border-start-start-radius: var(--dock-cap-rest);
-        border-start-end-radius: var(--dock-cap-rest);
-    }
-    to {
-        border-start-start-radius: var(--dock-cap-cut);
-        border-start-end-radius: var(--dock-cap-cut);
-    }
-}
-
-@keyframes gl-dock-cap-block-end {
-    from {
-        border-end-start-radius: var(--dock-cap-rest);
-        border-end-end-radius: var(--dock-cap-rest);
-    }
-    to {
-        border-end-start-radius: var(--dock-cap-cut);
-        border-end-end-radius: var(--dock-cap-cut);
-    }
-}
-
 /* The run's clip, on the plate's timeline (THE RUN'S CLIP, above): square where the run
    is flush, then the plate's corner less the run's inset on the scroll axis and the run's
    half cross extent on the cross axis, and square on an edge that is not the plate's.

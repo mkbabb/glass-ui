@@ -258,6 +258,7 @@ const body = useDockBody({
     expanded: () => visualExpanded.value,
     vertical: () => orientation.value === "vertical",
     reducedMotion: () => reducedMotion.value,
+    pill: () => shape.value === "pill",
     moving,
 });
 watch(moving, (m) => {

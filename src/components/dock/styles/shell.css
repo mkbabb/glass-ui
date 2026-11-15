@@ -480,10 +480,13 @@
        radii above are the rest endpoints for those shapes; this is the card shape's
        interpolated radius (mirroring the horizontal `:not(.vertical).shape-card`). */
     .glass-dock.vertical.shape-card {
-        border-radius: calc(
-            var(--radius-pill) + (var(--dock-card-radius) - var(--radius-pill)) *
-                var(--dock-expand-t)
-        );
+        border-radius: var(--dock-card-radius);
+    }
+
+    /* W-I.8 R-1 (RU-9): the card's two rests on the posture class; the carrier lerps
+       between them on e and writes the plate. */
+    .glass-dock.vertical.shape-card.collapsed {
+        border-radius: var(--radius-pill);
     }
 
     /* Horizontal-root shape rules. The `shape-*` class once bound ONLY under
@@ -505,10 +508,11 @@
        reliance on the deleted `border-radius var(--dock-motion-resize)` transition
        are RETIRED for this single interpolation. */
     .glass-dock:not(.vertical).shape-card {
-        border-radius: calc(
-            var(--radius-pill) + (var(--dock-card-radius) - var(--radius-pill)) *
-                var(--dock-expand-t)
-        );
+        border-radius: var(--dock-card-radius);
+    }
+
+    .glass-dock:not(.vertical).shape-card.collapsed {
+        border-radius: var(--radius-pill);
     }
 
     /* The big-dock IS the one squircle surface (the rounded-vs-squircle

@@ -113,6 +113,8 @@ export interface UseDockBodyOptions {
     expanded: () => boolean;
     vertical: () => boolean;
     reducedMotion: () => boolean;
+    /** `shape="pill"`: the corner is half the painted cross extent (R-1, RU-13). */
+    pill: () => boolean;
     moving: Ref<boolean>;
 }
 
@@ -136,7 +138,8 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
     };
     let rFrom = 0;
     let rTo = 0;
-    let capsule = true;
+    // R-1 (RU-13): the rest corner of each posture, each capped at half its cross extent.
+    const restR: [number, number] = [0, 0];
     const regions = new Map<string, RegionTrack>();
     // R-5 (RU-8): each seat of the run, by its layout offset in the run; a seat whose place
     // changes carries a translate from where it painted to 0.
@@ -179,7 +182,7 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
 
     function restRadius(el: HTMLElement, w: number, h: number): number {
         const cs = getComputedStyle(el);
-        return pxOf(cs.borderTopLeftRadius, Math.min(w, h));
+        return Math.min(Math.min(w, h) / 2, pxOf(cs.borderTopLeftRadius, Math.min(w, h)));
     }
 
     /** Pre-flush: remember where the leaving content paints. */
@@ -334,6 +337,8 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
         if (!layout) {
             layout = next;
             rFrom = rTo = rNext;
+            restR[posture ? 1 : 0] = rNext;
+            restR[posture ? 0 : 1] = rNext;
             readRegions();
             e = posture ? 1 : 0;
             writeExpandT();
@@ -351,10 +356,9 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
                 const ph = prevPainted.b - prevPainted.t;
                 rFrom = currentRadius(pw, ph);
                 rTo = rNext;
-                capsule =
-                    rFrom >= Math.min(pw, ph) / 2 - 0.75 && rNext >= Math.min(w, h) / 2 - 0.75;
                 layout = next;
             }
+            restR[posture ? 1 : 0] = rNext;
             if (postureChanged) {
                 // Painted minus target, with the velocity it had (a return turns it).
                 eq.d = e - (posture ? 1 : 0);
@@ -416,7 +420,10 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
     }
 
     function currentRadius(pw: number, ph: number): number {
-        if (capsule) return Math.min(pw, ph) / 2;
+        // A pill is half its painted cross extent in every frame: the owner's "Rounded."
+        if (o.pill()) return Math.min(pw, ph) / 2;
+        // A rounded or card dock: the lerp of its two rests on e in a posture travel.
+        if (postureTravel || held !== null) return restR[0] + (restR[1] - restR[0]) * clamp01(e);
         const f = 1 - u;
         return rFrom + (rTo - rFrom) * clamp01(f);
     }

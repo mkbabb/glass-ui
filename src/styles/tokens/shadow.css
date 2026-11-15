@@ -32,7 +32,9 @@
     /* Dock pills use an omnidirectional glow; instances can retune it through
        the dock's local override seam. */
     --shadow-dock:           0 0 20px color-mix(in srgb, var(--shadow-color) 14%, transparent);
-    --shadow-dock-collapsed: 0 0 12px color-mix(in srgb, var(--shadow-color) 12%, transparent);
+    /* W-I.8 R-1 (O-341 (12)): the dock's one halo colour, read by its one shadow. */
+    --dock-halo: color-mix(in srgb, var(--shadow-color) 12%, transparent);
+    --shadow-dock-collapsed: 0 0 12px var(--dock-halo);
 
     /* `--glass-material-rim` is NOT declared here. It was — as a non-inset dark 0.5px
        ring — while glass/rim.css declared the same name as the directional inset
